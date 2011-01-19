@@ -20,12 +20,16 @@
 package org.geometerplus.zlibrary.core.view;
 
 import java.util.*;
-import org.geometerplus.zlibrary.core.util.*;
 
+import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 
 final class DummyPaintContext extends ZLPaintContext {
 	DummyPaintContext() {
+	}
+
+	public void clear(ZLFile wallpaperFile) {
 	}
 
 	public void clear(ZLColor color) {

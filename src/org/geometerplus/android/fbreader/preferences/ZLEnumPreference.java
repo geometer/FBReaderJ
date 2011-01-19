@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 class ZLEnumPreference<T extends Enum<T>> extends ZLStringListPreference {
 	private final ZLEnumOption<T> myOption;
 
-	ZLEnumPreference(Context context, ZLResource resource, String resourceKey, ZLEnumOption<T> option) {
+	ZLEnumPreference(Context context, ZLEnumOption<T> option, ZLResource resource, String resourceKey) {
 		super(context, resource, resourceKey);
 		myOption = option;
 

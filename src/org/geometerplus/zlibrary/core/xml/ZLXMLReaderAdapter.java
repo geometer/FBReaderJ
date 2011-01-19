@@ -25,7 +25,9 @@ import java.io.InputStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class ZLXMLReaderAdapter implements ZLXMLReader {
-	public boolean read(ZLFile file) {
+	private Map<String,String> myNamespaceMap = Collections.emptyMap();
+
+ 	public boolean read(ZLFile file) {
 		return ZLXMLProcessor.read(this, file);
 	}
 	
@@ -62,7 +64,53 @@ public class ZLXMLReaderAdapter implements ZLXMLReader {
 		return false;
 	}
 
-	public void namespaceMapChangedHandler(HashMap<String,String> namespaces) {
+	public void namespaceMapChangedHandler(Map<String,String> namespaces) {
+		myNamespaceMap = namespaces != null ? namespaces : Collections.<String,String>emptyMap();
+	}
+
+	public String getAttributeValue(ZLStringMap attributes, String namespace, String name) {
+		if (namespace == null) {
+			return attributes.getValue(name);
+		}
+
+		final int size = attributes.getSize();
+		if (size == 0) {
+			return null;
+		}
+		final String postfix = ":" + name;
+		for (int i = size - 1; i >= 0; --i) {
+			final String key = attributes.getKey(i);
+			if (key.endsWith(postfix)) {
+				final String nsKey = key.substring(0, key.length() - postfix.length());
+				if (namespace.equals(myNamespaceMap.get(nsKey))) {
+					return attributes.getValue(i);
+				}
+			}
+		}
+		return null;
+	}
+
+	interface Predicate {
+		boolean accepts(String namespace);
+	}
+
+	protected String getAttributeValue(ZLStringMap attributes, Predicate predicate, String name) {
+		final int size = attributes.getSize();
+		if (size == 0) {
+			return null;
+		}
+		final String postfix = ":" + name;
+		for (int i = size - 1; i >= 0; --i) {
+			final String key = attributes.getKey(i);
+			if (key.endsWith(postfix)) {
+				final String ns =
+					myNamespaceMap.get(key.substring(0, key.length() - postfix.length()));
+				if (ns != null && predicate.accepts(ns)) {
+					return attributes.getValue(i);
+				}
+			}
+		}
+		return null;
 	}
 
 	public void addExternalEntities(HashMap<String,char[]> entityMap) {

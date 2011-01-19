@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011 -->
+<resources>
+	<node name="library">
+		<node name="unknownAuthor" value="Onbekende auteur"/>
+		<node name="booksWithNoTags" value="Boeken zonder trefwoorden"/>
+		<node name="demo" value="voorbeeld"/>
+	</node>
+	<node name="libraryView">
+		<node name="byAuthor" value="Auteurs">
+			<node name="summary" value="Boeken gesorteerd op auteur"/>
+		</node>
+		<node name="byTag" value="Trefwoorden">
+			<node name="summary" value="Boeken gesorteerd op trefwoord"/>
+		</node>
+		<node name="recent" value="Recent">
+			<node name="summary" value="Recent geopende boeken"/>
+		</node>
+		<node name="favorites" value="Favorieten">
+			<node name="summary" value="Mijn geselecteerde boeken"/>
+		</node>
+		<node name="searchResults" value="Gevonden">
+			<node name="summary" value="Zoekresultaten voor: %s"/>
+		</node>
+		<node name="fileTree" value="Bestanden">
+			<node name="summary" value="Bekijk bestandssysteem"/>
+		</node>
+		<node name="fileTreeRoot" value="Apparaat">
+			<node name="summary" value="Volledige bestandssysteem van het apparaat"/>
+		</node>
+		<node name="fileTreeCard" value="Geheugenkaart">
+			<node name="summary" value="Geheugenkaart geplaatst in het apparaat"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader bibliotheek">
+			<node name="summary" value="FBReader boeken map"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="Lokaal zoeken"/>
+		</node>
+		<node name="openBook" value="Boek openen"/>
+		<node name="showBookInfo" value="Boekinformatie"/>
+		<node name="deleteBook" value="Boek verwijderen"/>
+		<node name="addToFavorites" value="Toevoegen aan favorieten"/>
+		<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
+	</node>
+	<node name="networkView">
+		<node name="openCatalog" value="Open catalogus"/>
+		<node name="showResults" value="Toon resulten"/>
+		<node name="showBooks" value="Toon boeken"/>
+		<node name="download" value="Download"/>
+		<node name="read" value="Lees lokale kopie"/>
+		<node name="delete" value="Verwijder lokale kopie"/>
+		<node name="readDemo" value="Lees voorbeeld"/>
+		<node name="deleteDemo" value="Verwijder voorbeeld"/>
+		<node name="downloadDemo" value="Download voorbeeld"/>
+		<node name="buy" value="Koop (%s)"/>
+		<node name="openInBrowser" value="Openen in de browser" />
+		<node name="stopLoading" value="Stop loading" toBeTranslated="true" />
+		<node name="stopSearching" value="Stop searching" toBeTranslated="true" />
+		<node name="signIn" value="Sign in" toBeTranslated="true"/>
+		<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
+		<node name="refillAccount" value="Top up account (currently: %s)" toBeTranslated="true"/>
+		<node name="refillTitle" value="Top up account" toBeTranslated="true"/>
+		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
+		<node name="refillViaBrowser" value="Open pagina in de browser" />
+		<node name="refillSummary" value="Currently: %s" toBeTranslated="true"/>
+		<node name="alreadyDownloading" value="Boek wordt gedownload" />
+		<node name="alreadyDownloadingDemo" value="Voorbeeld wordt gedownload" />
+		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true" />
+		<node name="stoppingNetworkSearch" value="Stopping search" toBeTranslated="true" />
+		<node name="search" value="Zoeken" />
+		<node name="searchSummary" value="Zoeken naar boeken in catalogi" />
+		<node name="searchResults" value="Zoekresulten voor: %s" />
+		<node name="editCustomCatalog" value="Catalogus bewerken"/>
+		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
+		<node name="addCustomCatalog" value="Catalogus toevoegen"/>
+		<node name="addCustomCatalogSummary" value="Voeg handmatig eigen OPDS-catalogus toe"/>
+		<node name="confirmQuestions">
+			<node name="read" value="Wil je de lokale kopie lezen?"/>
+			<node name="download" value="Wil je dit boek downloaden?"/>
+			<node name="readDemo" value="Wil je het voorbeeld lezen?"/>
+			<node name="downloadDemo" value="Wil je het voorbeeld downloaden"/>
+			<node name="buy" value="Wil je dit boek kopen? (%s)" />
+			<node name="openInBrowser" value="Wil je deze catalous openen in de browser?" />
+		</node>
+		<node name="downloadingCatalogs" value="Downloading catalogs" toBeTranslated="true"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="Searching for books in network" toBeTranslated="true"/> <!-- used as notification title -->
+		<node name="menu">
+			<node name="networkSearch" value="Zoeken op het netwerk"/>
+			<node name="reload" value="Vernieuwen"/>
+			<node name="signIn" value="Sign in" toBeTranslated="true"/>
+			<node name="signUp" value="Sign up" toBeTranslated="true"/>
+			<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
+			<node name="refillAccount" value="Top up account" toBeTranslated="true"/>
+			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
+			<node name="refreshCatalogsList" value="Catalogi vernieuwen"/>
+			<node name="languages" value="Taalfilter"/>
+		</node>
+	</node>
+	<node name="networkBookView">
+		<node name="bookInfo" value="Boekinformatie" />
+		<node name="description" value="Beschrijving" />
+		<node name="noDescription" value="Geen beschrijving beschikbaar" />
+		<node name="title" value="Titel:" />
+		<node name="authors" value="Auteurs:" />
+		<node name="series" value="Serie:" />
+		<node name="indexInSeries" value="Nummer in serie:" />
+		<node name="tags" value="Trefwoorden:" />
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Boekinformatie" />
+		<node name="fileInfo" value="Bestandsinformatie" />
+		<node name="annotation" value="Annotatie" />
+		<node name="title" value="Titel:" />
+		<node name="authors" value="Auteurs:" />
+		<node name="series" value="Serie:" />
+		<node name="indexInSeries" value="Nummer in serie:" />
+		<node name="tags" value="Trefwoorden:" />
+		<node name="language" value="Taal:"/>
+		<node name="name" value="Naam:" />
+		<node name="type" value="Type:" />
+		<node name="size" value="Grootte:" />
+		<node name="time" value="Laatst gewijzigd:" />
+		<node name="sizeInBytes" value="%s byte(s)" />
+		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="menu">
+			<node name="edit" value="Bewerken" />
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Boek is gedownload" />
+		<node name="tickerError" value="Fout bij downloaden boek" />
+		<node name="contentSuccess" value="Klaar met downloaden" />
+		<node name="contentError" value="Download mislukt" />
+		<node name="downloadingStarted" value="Downloaden van boek is begonnen" />
+		<node name="alreadyDownloading" value="Boek wordt al gedownload" />
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Hoofdstukken tonen"/>
+		<node name="collapseTree" value="Hoofdstukken verbergen"/>
+		<node name="readText" value="Lees tekst"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Dit boek"/>
+		<node name="allBooks" value="Alle boeken"/>
+		<node name="searchResults" value="Gevonden"/>
+		<node name="new" value="Nieuwe bladwijzer"/>
+		<node name="open" value="Openen"/>
+		<node name="edit" value="Bladwijzer bewerken"/>
+		<node name="delete" value="Bladwijzer verwijderen"/>
+		<node name="menu">
+			<node name="search" value="Zoeken"/>
+		</node>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="Instellingen"/>
+		<node name="bookInfo" value="Boekinformatie"/>
+		<node name="library" value="Bibliotheek"/>
+		<node name="toc" value="Inhoud"/>
+		<node name="day" value="Dag"/>
+		<node name="night" value="Nacht"/>
+		<node name="networkLibrary" value="Netwerk bibliotheek"/>
+		<node name="navigate" value="Navigeer">
+			<node name="toc" value="Inhoudsopgave"/>
+			<node name="gotoHome" value="Begin van document"/>
+			<node name="gotoPageNumber" value="Ga naar pagina..."/>
+			<node name="gotoSectionStart" value="Ga naar het begin van de sectie" />
+			<node name="gotoSectionEnd" value="Ga naar het einde van de sectie" />
+			<node name="nextTOCSection" value="Ga naar het volgende hoofdstuk" />
+			<node name="previousTOCSection" value="Ga naar het vorige hoofdstuk" />
+			<node name="undo" value="Terug"/>
+			<node name="redo" value="Verder"/>
+		</node>
+		<node name="selection" value="Selectie">
+			<node name="copyToClipboard" value="Kopieer naar klembord"/>
+			<node name="openInDictionary" value="Openen in woordenboek"/>
+			<node name="clearSelection" value="Wissen"/>
+		</node>
+		<node name="search" value="Zoeken"/>
+		<node name="rotate" value="Scherm draaien"/>
+		<node name="increaseFont" value="Inzoomen" />
+		<node name="decreaseFont" value="Uitzoomen" />
+		<node name="toggleFullscreen" value="Volledig scherm"/>
+		<node name="bookmarks" value="Bladwijzers"/>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="Installeren" />
+			<node name="update" value="Bijwerken" />
+			<node name="skip" value="Overslaan" />
+			<node name="buy" value="Kopen" />
+			<node name="buyAndDownload" value="Kopen en downloaden" />
+			<node name="continue" value="Doorgaan" />
+			<node name="editUrl" value="URL bewerken" />
+			<node name="tryAgain" value="Probeer opnieuw" />
+			<node name="openBook" value="Lezen" />
+			<node name="editInfo" value="Bewerken" />
+			<node name="reloadInfo" value="Vernieuwen" />
+			<node name="refillAccount" value="Top up" toBeTranslated="true" />
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="Plug-in installeren"/>
+			<node name="updateTitle" value="Plug-in bijwerken"/>
+			<node name="dontAskAgain" value="Vraag niet opnieuw"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="Installeer woordenboek"/>
+			<node name="message" value="Wil je %s installeren?"/>
+		</node>
+		<node name="BookInfo">
+			<node name="fileName" value="Bestandsnaam"/>
+			<node name="title" value="Titel"/>
+			<node name="language" value="Taal"/>
+			<node name="encoding" value="Codering"/>
+		</node>
+		<node name="Preferences">
+			<node name="directories" value="Mappen">
+				<node name="summary" value="Waar zijn de bestanden opgeslagen"/>
+				<node name="books" value="Map met boeken"/>
+				<node name="fonts" value="Map met lettertypes"/>
+				<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
+			</node>
+			<node name="appearance" value="Weergave">
+				<node name="summary" value="Draaien, statusbalk"/>
+				<node name="autoOrientation" value="Automatisch draaien">
+					<node name="summaryOn" value="Het scherm zal draaien als het apparaat gedraaid wordt"/>
+					<node name="summaryOff" value="Het scherm zal niet draaien als het apparaat gedraaid wordt"/>
+				</node>
+				<node name="showStatusBar" value="Toon statusbalk">
+					<node name="summaryOn" value="Toon statusbalk tijdens lezen"/>
+					<node name="summaryOff" value="Verberg statusbalk tijdens lezen"/>
+				</node>
+			</node>
+			<node name="text" value="Tekst">
+				<node name="summary" value="Lettertype, Afbreken, etc."/>
+				<node name="font" value="Lettertype">
+					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				</node>
+				<node name="fontSize" value="Lettergrootte"/>
+				<node name="fontSizeDifference" value="Lettergrootte verschil"/>
+				<node name="fontStyle" value="Letterstijl">
+					<node name="regular" value="Normaal"/>
+					<node name="bold" value="Vet"/>
+					<node name="italic" value="Cursief"/>
+					<node name="boldItalic" value="Vet Cursief"/>
+				</node>
+				<node name="bold" value="Vet">
+					<node name="on" value="vet"/>
+					<node name="off" value="normaal"/>
+					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				</node>
+				<node name="italic" value="Cursief">
+					<node name="on" value="cursief"/>
+					<node name="off" value="normaal"/>
+					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				</node>
+				<node name="lineSpacing" value="Regelafstand">
+					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				</node>
+				<node name="alignment" value="Uitlijning">
+					<node name="left" value="Links"/>
+					<node name="right" value="Rechts"/>
+					<node name="center" value="Gecentreerd"/>
+					<node name="justify" value="Uitvullen"/>
+					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+				</node>
+				<node name="autoHyphenations" value="Automatisch afbreken">
+					<node name="summaryOn" value="Woorden automatisch afbreken"/>
+					<node name="summaryOff" value="Woorden niet automatisch afbreken"/>
+				</node>
+				<node name="allowHyphenations" value="Afbreken">
+					<node name="on" value="woorden afbreken"/>
+					<node name="off" value="woorden niet afbreken"/>
+					<node name="unchanged" value="&lt;ongewijzigd&gt;" />
+				</node>
+				<node name="firstLineIndent" value="Eerste regel inspringen" />
+				<node name="spaceBefore" value="Ruimte voor"/>
+				<node name="spaceAfter" value="Ruimte achter"/>
+				<node name="leftIndent" value="Links inspringen"/>
+				<node name="rightIndent" value="Rechts inspringen"/>
+				<node name="more" value="Meer stijlen">
+					<node name="summary" value="Aangepaste instellingen voor titels, paragrafen, etc."/>
+					<node name="Regular Paragraph" value="Normale paragraaf">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Title" value="Titel">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="Section Title" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="Poem Title" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="Subtitel">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="Annotatie">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="Epigraph" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="Stanza" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="Verse" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="Preformatted text" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="Afbeelding">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="Cite" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="Auteur">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="Datum">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="Interne hyperlink">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="Voetnote">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="Emphasis" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="Strong" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="Subscript">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="Superscript">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="Code">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="Doorhalen">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="Cursief">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="Vet">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="Definitie">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="Definition Description" toBeTranslated="true">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="Koptekst 1">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="Koptekst 2">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="Koptekst 3">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="Koptekst 4">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="Koptekst 5">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="Koptekst 6">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="Externe hyperlink">
+						<node name="summary" value=""/>
+					</node>
+				</node>
+			</node>
+			<node name="colors" value="Kleuren">
+				<node name="summary" value="Kleurinstellingen"/>
+				<node name="background" value="Achtergrond">
+					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
+					<node name="leather" value="Leather" toBeTranslated="true"/>
+					<node name="sepia" value="Sepia" toBeTranslated="true"/>
+					<node name="wood" value="Wood" toBeTranslated="true"/>
+				</node>
+				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
+				<node name="selectionBackground" value="Selectie achtergrond"/>
+				<node name="text" value="Normale tekst"/>
+				<node name="hyperlink" value="Hyperlink tekst"/>
+				<node name="highlighting" value="Achtergrond zoekresultaten"/>
+				<node name="footer" value="Voettekst" />
+			</node>
+			<node name="margins" value="Marges">
+				<node name="summary" value="Tekst marges"/>
+				<node name="left" value="Linkermarge"/>
+				<node name="right" value="Rechtermarge"/>
+				<node name="top" value="Bovenmarge"/>
+				<node name="bottom" value="Ondermarge"/>
+			</node>
+			<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
+				<node name="summary" value="Scrollbar &amp; footer settings" toBeTranslated="true"/>
+				<node name="scrollbarType" value="Scrollbar type" toBeTranslated="true">
+					<node name="hide" value="Hide" toBeTranslated="true"/>
+					<node name="show" value="Vertical slider" toBeTranslated="true"/>
+					<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
+					<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+				</node>
+				<node name="footerHeight" value="Footer height" toBeTranslated="true" />
+				<node name="footerColor" value="Footer color" toBeTranslated="true" />
+				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
+					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+				</node>
+				<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
+					<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
+					<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
+				</node>
+				<node name="showProgress" value="Toon paginanummer">
+					<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
+				</node>
+				<node name="showBattery" value="Toon batterijniveau">
+					<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
+				</node>
+				<node name="showClock" value="Toon klok">
+					<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
+				</node>
+				<node name="isSensitive" value="Navigation by tap on footer" toBeTranslated="true">
+					<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="font" value="Lettertype"/>
+			</node>
+			<node name="display" value="Scherm">
+				<node name="summary" value="Helderheid, Voorkom uitschakelen scherm"/>
+				<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
+					<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
+					<node name="summaryOff" value="Uitgeschakeld"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Voorkom uitschakelen scherm">
+					<node name="0" value="Altijd"/>
+					<node name="25" value="Zolang batterijniveau hoger is dan 25 procent"/>
+					<node name="50" value="Zolang batterijniveau hoger is dan 50 procent"/>
+					<node name="100" value="Nooit"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Voorkom uitschakelen scherm tijdens opladen">
+					<node name="summaryOn" value="Voorkom uitschakelen scherm tijdens het opladen"/>
+					<node name="summaryOff" value="Schakel scherm uit, zelfs tijdens het opladen"/>
+				</node>
+			</node>
+			<node name="scrolling" value="Omslaan">
+				<node name="summary" value="Hoe sla je de bladzijdes om"/>
+				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
+					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
+					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
+					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
+				</node>
+				<node name="enableDoubleTapDetection" value="Dubbel-tik detectie">
+					<node name="summaryOn" value="Dubbel-tik om navigatiescherm te openen"/>
+					<node name="summaryOff" value="Dubbel-tikken negeren"/>
+				</node>
+				<node name="volumeKeys" value="Omslaan met volumeknoppen">
+					<node name="summaryOn" value="Gebruik volumeknoppen om om te slaan"/>
+					<node name="summaryOff" value="Gebruik volumeknoppen voor geluid"/>
+				</node>
+				<node name="invertVolumeKeys" value="Richting volumeknoppen">
+					<node name="summaryOn" value="Harder (zachter) toets naar vorige (volgende) pagina"/>
+					<node name="summaryOff" value="Harder (zachter) toets naar volgende (vorige) pagina"/>
+				</node>
+				<node name="animation" value="Animatie">
+					<node name="none" value="Omslaan zonder animatie"/>
+					<node name="slide" value="Slide-animatie"/>
+					<node name="shift" value="Shift-animatie"/>
+				</node>
+				<node name="horizontal" value="Horizontaal omslaan">
+					<node name="summaryOn" value="Pagina's horizontaal omslaan"/>
+					<node name="summaryOff" value="Pagina's verticaal omslaan"/>
+				</node>
+			</node>
+			<node name="dictionary" value="Woordenboek">
+				<node name="summary" value="Woordenboek instellingen"/>
+				<node name="dictionary" value="Woordenboek"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+				</node>
+				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
+				</node>
+			</node>
+		</node>
+		<node name="OptionsDialog">
+			<node name="tab">
+				<node name="Language" value="Taal">
+					<node name="autoDetect" value="Taal en codering automatisch detecteren" />
+					<node name="defaultLanguage" value="Standaard taal"/>
+					<node name="defaultEncodingSet" value="Standaard coderingsset"/>
+					<node name="defaultEncoding" value="Standaard codering" />
+				</node>
+				<node name="Selection" value="Selectie">
+					<node name="enableSelection" value="Enable Text Selection" toBeTranslated="true"/>
+				</node>
+			</node>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="Het verwijderen van dit boek kan niet ongedaan worden gemaakt. Weet u het zeker?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="Bestand bestaat al. Opnieuw downloaden?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="Boek %s wordt gedownload" />
+			<node name="search" value="Bezig met zoeken. Een ogenblik..." />
+			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik..." />
+			<node name="loadingBookList" value="Bibliotheek wordt geladen. Een ogenblik..." />
+			<node name="creatingBooksDatabase" value="Boekendatabase wordt gemaakt. Een ogenblik..." />
+			<node name="updatingBooksDatabase" value="Boekendatabase wordt bijgewerkt. Een ogenblik..." />
+			<node name="loadingNetworkLibrary" value="Bibliotheek wordt geladen. Een ogenblik..." />
+			<node name="authentication" value="Authenticatie. Een ogenblik..." />
+			<node name="signOut" value="Afmelden. Een ogenblik..." />
+			<node name="purchaseBook" value="Boek wordt gekocht. Een ogenblik..." />
+			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik..." />
+			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik..."/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Interne serverfout" />
+			<node name="purchaseNotEnoughMoney" value="Niet genoeg geld" />
+			<node name="purchaseMissingBook" value="Missing book" toBeTranslated="true" />
+			<node name="purchaseAlreadyPurchased" value="Reeds aangeschaft" />
+			<node name="bookNotPurchased" value="Boek was niet aangeschaft" />
+			<node name="downloadLimitExceeded" value="Downloadlimiet bereikt" />
+			<node name="noUserEmail" value="Er is geen gebruik bekend met het opgegeven e-mailadres" />
+			<node name="unsupportedOperation" value="Bewerking wordt niet ondersteund" />
+			<node name="notAnOPDS" value="Dit is geen OPDS-catalogus" />
+			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true" />
+			<node name="cacheDirectoryError" value="Maken van de cache-directory is mislukt" />
+		</node>
+		<node name="emptyCatalogBox">
+			<node name="title" value="Informatie" />
+			<node name="message" value="Catalogus is leeg" />
+		</node>
+		<node name="emptySearchResults">
+			<node name="title" value="Zoekresultaten" />
+			<node name="message" value="Er zijn geen geschikte boeken gevonden" />
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Authenticatie" />
+			<node name="login" value="Gebruikersnaam" />
+			<node name="password" value="Wachtwoord" />
+			<node name="skipIP" value="Don't bound to ip-address" toBeTranslated="true" />
+			<node name="loginIsEmpty" value="Gebruikersnaam kan niet leeg zijn" />
+			<node name="register" value="Registeren" />
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="Andere catalogus" />
+			<node name="catalogTitle" value="Titel" />
+			<node name="catalogUrl" value="URL" />
+			<node name="catalogSummary" value="Beschrijving" />
+			<node name="catalogTitleExample" value="Bijv.: Project Gutenberg catalogus" />
+			<node name="catalogUrlExample" value="Bijv.: http://m.gutenberg.org/" />
+			<node name="catalogSummaryExample" value="Bijv.: Public domain boeken" />
+			<node name="titleIsEmpty" value="Titel kan niet leeg zijn" />
+			<node name="urlIsEmpty" value="URL kan niet leeg zijn" />
+			<node name="invalidUrl" value="Ongeldige URL" />
+			<node name="titleAlreadyExists" value="Deze titel wordt al gebruikt" />
+			<node name="siteAlreadyExists" value="Deze site wordt al gebruikt" />
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Taalfilter" />
+		</node>
+		<node name="purchaseConfirmBox">
+			<node name="title" value="Koop boek" />
+			<node name="message" value="Weet je zeker dat je het boek &#10;&#8220;%s&#8221;&#10; wilt kopen?" />
+		</node>
+		<node name="alreadyPurchasedBox">
+			<node name="title" value="Koop boek" />
+			<node name="message" value="Boek is al aangescahft" />
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Geen toegang tot de Android Market. Installeer %s handmatig"/>
+		<node name="textNotFound" value="Er is geen passende tekst in het boek"/>
+		<node name="bookNotFound" value="Er zijn geen passende boeken in de bibliotheek"/>
+		<node name="bookmarkNotFound" value="Er zijn geen passende bladwijzers gevonden" />
+		<node name="cannotOpenBook" value="Kan het boek nu niet openen"/>
+		<node name="dictionaryIsNotInstalled" value="Woordenboek is niet geïnstalleerd"/>
+		<node name="permissionDenied" value="Toegang geweigerd"/>
+		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Browser"/>
+		<node name="defaultBrowser" value="Standaardbrowser"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Onbekende fout"/>
+		<node name="unsupportedCompressionMethod" value="Compressiemethode niet ondersteund"/>
+		<node name="encriptedFile" value="DRM-beschermd bestand"/>
+	</node>
+</resources>

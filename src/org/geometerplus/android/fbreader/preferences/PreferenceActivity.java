@@ -45,16 +45,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addPreference(new ZLStringOptionPreference(
-			this, Paths.BooksDirectoryOption(),
-			directoriesScreen.Resource, "books"
-		));
+		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
 		if (AndroidFontUtil.areExternalFontsSupported()) {
-			directoriesScreen.addPreference(new ZLStringOptionPreference(
-				this, Paths.FontsDirectoryOption(),
-				directoriesScreen.Resource, "fonts"
-			));
+			directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
 		}
+		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addOption(androidApp.AutoOrientationOption, "autoOrientation");
@@ -204,28 +199,29 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 
 		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
+		final ZLPreferenceSet bgPreferences = new ZLPreferenceSet();
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
-		colorsScreen.addPreference(new ZLColorPreference(
-			this, colorsScreen.Resource, "background", profile.BackgroundOption
-		));
+		colorsScreen.addPreference(new WallpaperPreference(
+			this, profile, colorsScreen.Resource, "background"
+		) {
+			@Override
+			protected void onDialogClosed(boolean result) {
+				super.onDialogClosed(result);
+				bgPreferences.setEnabled("".equals(getValue()));
+			}
+		});
+		bgPreferences.add(
+			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
+		);
+		bgPreferences.setEnabled("".equals(profile.WallpaperOption.getValue()));
 		/*
-		colorsScreen.addPreference(new ZLColorPreference(
-			this, colorsScreen.Resource, "selectionBackground", profile.SelectionBackgroundOption
-		));
+		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
 		*/
-		colorsScreen.addPreference(new ZLColorPreference(
-			this, colorsScreen.Resource, "highlighting", profile.HighlightingOption
-		));
-		colorsScreen.addPreference(new ZLColorPreference(
-			this, colorsScreen.Resource, "text", profile.RegularTextOption
-		));
-		colorsScreen.addPreference(new ZLColorPreference(
-			this, colorsScreen.Resource, "hyperlink", profile.HyperlinkTextOption
-		));
-		footerPreferences.add(colorsScreen.addPreference(new ZLColorPreference(
-			this, colorsScreen.Resource, "footer", profile.FooterFillOption
-		)));
+		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
+		colorsScreen.addOption(profile.RegularTextOption, "text");
+		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
+		colorsScreen.addOption(profile.FooterFillOption, "footer");
 
 		final Screen marginsScreen = createPreferenceScreen("margins");
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
@@ -265,9 +261,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, statusLineScreen.Resource.getResource("footerHeight"),
 			fbReader.FooterHeightOption
 		)));
-		footerPreferences.add(statusLineScreen.addPreference(new ZLColorPreference(
-			this, statusLineScreen.Resource, "footerColor", profile.FooterFillOption
-		)));
+		footerPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerColor"));
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowTOCMarksOption, "tocMarks"));
 
 		/*
@@ -340,6 +334,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");
+		dictionaryScreen.addPreference(new DictionaryPreference(
+			this,
+			dictionaryScreen.Resource,
+			"dictionary"
+		));
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
 			this,
 			fbReader.NavigateAllWordsOption,
