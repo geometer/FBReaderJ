@@ -10,6 +10,9 @@
 		<node name="byAuthor" value="Auteurs">
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
 		<node name="byTag" value="Trefwoorden">
 			<node name="summary" value="Boeken gesorteerd op trefwoord"/>
 		</node>
