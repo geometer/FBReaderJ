@@ -9,6 +9,9 @@
 		<node name="byAuthor" value="Авторы">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>
+		<node name="byTitle" value="Названия">
+			<node name="summary" value="Книги, разложенные по названиям"/>
+		</node>
 		<node name="byTag" value="Категории">
 			<node name="summary" value="Книги, разложенные по категориям"/>
 		</node>

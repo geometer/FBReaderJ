@@ -38,6 +38,10 @@ public abstract class LibraryTree extends FBTree {
 		return new TagTree(this, tag);
 	}
 
+	TitleTree createTitleSubTree(String title) {
+		return new TitleTree(this, title);
+	}
+
 	AuthorTree createAuthorSubTree(Author author) {
 		return new AuthorTree(this, author);
 	}
