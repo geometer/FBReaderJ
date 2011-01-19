@@ -386,7 +386,13 @@
 			</node>
 			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Paramètres des couleurs"/>
-				<node name="background" value="Arrière-plan"/>
+				<node name="background" value="Arrière-plan">
+					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
+					<node name="leather" value="Leather" toBeTranslated="true"/>
+					<node name="sepia" value="Sepia" toBeTranslated="true"/>
+					<node name="wood" value="Wood" toBeTranslated="true"/>
+				</node>
+				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 				<node name="selectionBackground" value="Arrière-plan de sélection"/>
 				<node name="text" value="Texte normal"/>
 				<node name="hyperlink" value="Text d'hyperlien"/>

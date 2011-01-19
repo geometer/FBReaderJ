@@ -383,7 +383,13 @@
 			</node>
 			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="Color settings" toBeTranslated="true"/>
-				<node name="background" value="Фон"/>
+				<node name="background" value="Фон">
+					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
+					<node name="leather" value="Leather" toBeTranslated="true"/>
+					<node name="sepia" value="Sepia" toBeTranslated="true"/>
+					<node name="wood" value="Wood" toBeTranslated="true"/>
+				</node>
+				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 				<node name="selectionBackground" value="Фон позначки"/>
 				<node name="text" value="Звичайний текст"/>
 				<node name="hyperlink" value="Посилання"/>

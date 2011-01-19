@@ -199,9 +199,22 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 
 		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
+		final ZLPreferenceSet bgPreferences = new ZLPreferenceSet();
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
-		colorsScreen.addOption(profile.BackgroundOption, "background");
+		colorsScreen.addPreference(new WallpaperPreference(
+			this, profile, colorsScreen.Resource, "background"
+		) {
+			@Override
+			protected void onDialogClosed(boolean result) {
+				super.onDialogClosed(result);
+				bgPreferences.setEnabled("".equals(getValue()));
+			}
+		});
+		bgPreferences.add(
+			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
+		);
+		bgPreferences.setEnabled("".equals(profile.WallpaperOption.getValue()));
 		/*
 		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
 		*/

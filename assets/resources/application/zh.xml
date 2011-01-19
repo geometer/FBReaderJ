@@ -383,7 +383,13 @@
 			</node>
 			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
 				<node name="summary" value="设置颜色"/>
-				<node name="background" value="背景色" />
+				<node name="background" value="背景色">
+					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
+					<node name="leather" value="Leather" toBeTranslated="true"/>
+					<node name="sepia" value="Sepia" toBeTranslated="true"/>
+					<node name="wood" value="Wood" toBeTranslated="true"/>
+				</node>
+				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 				<node name="selectionBackground" value="选择背景色" />
 				<node name="text" value="普通文本" />
 				<node name="hyperlink" value="超链接文本" />
