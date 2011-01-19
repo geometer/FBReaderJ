@@ -49,6 +49,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		if (AndroidFontUtil.areExternalFontsSupported()) {
 			directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
 		}
+		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addOption(androidApp.AutoOrientationOption, "autoOrientation");

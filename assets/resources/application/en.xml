@@ -217,6 +217,7 @@
 				<node name="summary" value="Directories to seek for files"/>
 				<node name="books" value="Books directory"/>
 				<node name="fonts" value="Fonts directory"/>
+				<node name="wallpapers" value="Wallpapers directory"/>
 			</node>
 			<node name="appearance" value="Appearance">
 				<node name="summary" value="Rotation, status bar"/>

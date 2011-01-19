@@ -217,6 +217,7 @@
 				<node name="summary" value="Где искать файлы"/>
 				<node name="books" value="Каталог с книгами"/>
 				<node name="fonts" value="Каталог со шрифтами"/>
+				<node name="wallpapers" value="Каталог с обоями"/>
 			</node>
 			<node name="appearance" value="Внешний вид">
 				<node name="summary" value="Поворот, строка состояния"/>

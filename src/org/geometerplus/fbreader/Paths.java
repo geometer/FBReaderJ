@@ -32,6 +32,10 @@ public abstract class Paths {
 		return new ZLStringOption("Files", "FontsDirectory", Environment.getExternalStorageDirectory() + "/Fonts");
 	}
 
+	public static ZLStringOption WallpapersDirectoryOption() {
+		return new ZLStringOption("Files", "WallpapersDirectory", Environment.getExternalStorageDirectory() + "/Wallpapers");
+	}
+
 	public static String cacheDirectory() {
 		return BooksDirectoryOption().getValue() + "/.FBReader";
 	}
