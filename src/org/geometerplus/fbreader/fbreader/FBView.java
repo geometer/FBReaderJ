@@ -381,7 +381,16 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	public ZLFile getWallpaperFile() {
-		return ZLFile.createFileByPath("/sdcard/Wallpapers/FonSepiaSandstone.jpg");
+		final String filePath = myReader.getColorProfile().WallpaperOption.getValue();
+		if ("".equals(filePath)) {
+			return null;
+		}
+		
+		final ZLFile file = ZLFile.createFileByPath(filePath);
+		if (file == null || !file.exists()) {
+			return null;
+		}
+		return file;
 	}
 
 	@Override
