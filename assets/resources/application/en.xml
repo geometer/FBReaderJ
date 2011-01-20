@@ -194,7 +194,7 @@
 		<node name="decreaseFont" value="Zoom out" />
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
-		<node name="prevPage" value="Previous page"/>
+		<node name="previousPage" value="Previous page"/>
 		<node name="nextPage" value="Next page"/>
 		<node name="prevLine" value="Previous line"/>
 		<node name="nextLine" value="Next line"/>

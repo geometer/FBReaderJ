@@ -39,8 +39,8 @@ public interface ActionCode {
 	String SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS = "hyperlinksOnlyMode";
 	String SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS = "dictionaryMode";
 
-	String PREV_PAGE = "prevPage";
-	String NEXT_PAGE = "nextPage";
+	String TURN_TO_PREVIOUS_PAGE = "previousPage";
+	String TURN_TO_NEXT_PAGE = "nextPage";
 	String PREV_LINE = "prevLine";
 	String NEXT_LINE = "nextLine";
 	String PREV_LINK = "prevLink";

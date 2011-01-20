@@ -109,8 +109,8 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 
-		addAction(ActionCode.NEXT_PAGE, new ScrollAction(this, true, true));
-		addAction(ActionCode.PREV_PAGE, new ScrollAction(this, false, true));
+		addAction(ActionCode.TURN_TO_NEXT_PAGE, new ScrollAction(this, true, true));
+		addAction(ActionCode.TURN_TO_PREVIOUS_PAGE, new ScrollAction(this, false, true));
 		addAction(ActionCode.NEXT_LINE, new ScrollAction(this, true, false));
 		addAction(ActionCode.PREV_LINE, new ScrollAction(this, false, false));
 		//addAction(ActionCode.NEXT_LINK, new TrackballScrollingAction(this, true));
@@ -135,8 +135,8 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
 		addAction(ActionCode.SWITCH_PROFILE, new SwitchProfileAction(this, ""));
 
-		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_DOWN,	ActionCode.NEXT_PAGE);
-		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_UP,	ActionCode.PREV_PAGE);
+		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_DOWN,	ActionCode.TURN_TO_NEXT_PAGE);
+		myBindings.addKey(KeyEvent.KEYCODE_VOLUME_UP,	ActionCode.TURN_TO_PREVIOUS_PAGE);
 		myBindings.addKey(KeyEvent.KEYCODE_DPAD_CENTER,	ActionCode.PROCESS_HYPERLINK);
 		myBindings.addKey(KeyEvent.KEYCODE_DPAD_DOWN,	ActionCode.NEXT_LINK);
 		myBindings.addKey(KeyEvent.KEYCODE_DPAD_UP,		ActionCode.PREV_LINK);

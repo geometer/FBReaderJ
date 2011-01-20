@@ -198,7 +198,7 @@
 		<node name="decreaseFont" value="Diminuer la taille" />
 		<node name="toggleFullscreen" value="Plein écran"/>
 		<node name="bookmarks" value="Marque-pages"/>
-		<node name="prevPage" value="Previous page" toBeTranslated="true"/>
+		<node name="previousPage" value="Previous page" toBeTranslated="true"/>
 		<node name="nextPage" value="Next page" toBeTranslated="true"/>
 		<node name="prevLine" value="Previous line" toBeTranslated="true"/>
 		<node name="nextLine" value="Next line" toBeTranslated="true"/>

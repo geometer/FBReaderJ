@@ -196,7 +196,7 @@
 		<node name="decreaseFont" value="Уменьшить шрифт" />
 		<node name="toggleFullscreen" value="На весь экран"/>
 		<node name="bookmarks" value="Закладки"/>
-		<node name="prevPage" value="Предыдущая страница"/>
+		<node name="previousPage" value="Предыдущая страница"/>
 		<node name="nextPage" value="Следующая страница"/>
 		<node name="prevLine" value="Предыдущая строка"/>
 		<node name="nextLine" value="Следующая строка"/>

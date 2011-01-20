@@ -195,7 +195,7 @@
 		<node name="decreaseFont" value="Zmenšit" />
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
-		<node name="prevPage" value="Previous page" toBeTranslated="true"/>
+		<node name="previousPage" value="Previous page" toBeTranslated="true"/>
 		<node name="nextPage" value="Next page" toBeTranslated="true"/>
 		<node name="prevLine" value="Previous line" toBeTranslated="true"/>
 		<node name="nextLine" value="Next line" toBeTranslated="true"/>
