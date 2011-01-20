@@ -205,19 +205,20 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (getAnimationType() != Animation.none) {
-			final ScrollingPreferences.FingerScrolling fingerScrolling =
-				ScrollingPreferences.Instance().FingerScrollingOption.getValue();
-			if (fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
-				fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick) {
-				myStartX = x;
-				myStartY = y;
-				setScrollingActive(true);
-				myIsManualScrollingActive = true;
-			}
-		}
-
+		startManualScrolling(x, y);
 		return true;
+	}
+
+	private void startManualScrolling(int x, int y) {
+		final ScrollingPreferences.FingerScrolling fingerScrolling =
+			ScrollingPreferences.Instance().FingerScrollingOption.getValue();
+		if (fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick) {
+			myStartX = x;
+			myStartY = y;
+			setScrollingActive(true);
+			myIsManualScrollingActive = true;
+		}
 	}
 
 	public boolean onFingerMove(int x, int y) {
@@ -229,6 +230,7 @@ public final class FBView extends ZLTextView {
 			if (myIsBrightnessAdjustmentInProgress) {
 				if (x >= myContext.getWidth() / 5) {
 					myIsBrightnessAdjustmentInProgress = false;
+					startManualScrolling(x, y);
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / myContext.getHeight();
 					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
