@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.*;
+
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -68,9 +70,56 @@ public final class FBView extends ZLTextView {
 			HIndex = VIndex;
 			VIndex = swap;
 		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == this) {
+				return true;
+			}
+
+			if (!(o instanceof TapZone)) {
+				return false;
+			}
+
+			final TapZone tz = (TapZone)o;
+			return HIndex == tz.HIndex && VIndex == tz.VIndex;
+		}
+
+		@Override
+		public int hashCode() {
+			return (HIndex << 3) + VIndex;
+		}
 	}
 
-	TapZone getZoneByCoordinates(int x, int y, int grid) {
+	private String myZoneMapId;
+	private final HashMap<TapZone,String> myHorizontalZoneMap = new HashMap<TapZone,String>();
+	private final HashMap<TapZone,String> myVerticalZoneMap = new HashMap<TapZone,String>();
+	{
+		myHorizontalZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
+		myHorizontalZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_BACK);
+		myHorizontalZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
+		myHorizontalZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
+		myHorizontalZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
+		myHorizontalZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
+		myHorizontalZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_FORWARD);
+		myHorizontalZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+
+		myVerticalZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
+		myVerticalZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_BACK);
+		myVerticalZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
+		myVerticalZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
+		myVerticalZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
+		myVerticalZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
+		myVerticalZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_FORWARD);
+		myVerticalZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+	}
+
+	private Map<TapZone,String> getZoneMap() {
+		return ScrollingPreferences.Instance().HorizontalOption.getValue()
+			? myHorizontalZoneMap : myVerticalZoneMap;
+	}
+
+	private TapZone getZoneByCoordinates(int x, int y, int grid) {
 		return new TapZone(
 			x * grid / myContext.getWidth(),
 			y * grid / myContext.getHeight()
@@ -102,32 +151,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-
-		final TapZone tapZone = getZoneByCoordinates(x, y, 3);
-		if (!preferences.HorizontalOption.getValue()) {
-			tapZone.mirror45();
-		}
-		String actionCode = null;
-		switch (tapZone.HIndex) {
-			case 0:
-				actionCode = ActionCode.TURN_PAGE_BACK;
-				break;
-			case 1:
-				switch (tapZone.VIndex) {
-					case 0:
-						actionCode = ActionCode.SHOW_NAVIGATION;
-						break;
-					case 2:
-						actionCode = ActionCode.SHOW_MENU;
-						break;
-				}
-				break;
-			case 2:
-				actionCode = ActionCode.TURN_PAGE_FORWARD;
-				break;
-		}
-		myReader.doAction(actionCode);
+		myReader.doAction(getZoneMap().get(getZoneByCoordinates(x, y, 3)));
 
 		return true;
 	}
