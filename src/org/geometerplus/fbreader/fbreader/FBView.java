@@ -91,32 +91,65 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	private String myZoneMapId;
-	private final HashMap<TapZone,String> myHorizontalZoneMap = new HashMap<TapZone,String>();
-	private final HashMap<TapZone,String> myVerticalZoneMap = new HashMap<TapZone,String>();
-	{
-		myHorizontalZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
-		myHorizontalZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_BACK);
-		myHorizontalZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
-		myHorizontalZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
-		myHorizontalZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
-		myHorizontalZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
-		myHorizontalZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_FORWARD);
-		myHorizontalZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
-
-		myVerticalZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
-		myVerticalZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_BACK);
-		myVerticalZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
-		myVerticalZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
-		myVerticalZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
-		myVerticalZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
-		myVerticalZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_FORWARD);
-		myVerticalZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+	private enum ZoneMap {
+		HORIZONTAL_RIGHT_TO_LEFT,
+		HORIZONTAL_LEFT_TO_RIGHT,
+		VERTICAL_UP,
+		VERTICAL_DOWN
 	}
+	private ZoneMap myZoneMapId;
+	private final HashMap<TapZone,String> myZoneMap = new HashMap<TapZone,String>();
 
 	private Map<TapZone,String> getZoneMap() {
-		return ScrollingPreferences.Instance().HorizontalOption.getValue()
-			? myHorizontalZoneMap : myVerticalZoneMap;
+		final ZoneMap id = ScrollingPreferences.Instance().HorizontalOption.getValue()
+			? ZoneMap.HORIZONTAL_RIGHT_TO_LEFT : ZoneMap.VERTICAL_UP;
+		if (id != myZoneMapId) {
+			myZoneMapId = id;
+			myZoneMap.clear();
+			switch (id) {
+				case HORIZONTAL_RIGHT_TO_LEFT:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+					break;
+				case HORIZONTAL_LEFT_TO_RIGHT:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_BACK);
+					break;
+				case VERTICAL_UP:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+					break;
+				case VERTICAL_DOWN:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_BACK);
+					break;
+			}
+		}
+		return myZoneMap;
 	}
 
 	private TapZone getZoneByCoordinates(int x, int y, int grid) {
