@@ -136,8 +136,8 @@ public abstract class ZLApplication {
 
 	public String[] getGetSimpleActions() {
 		String[] actions = {
-				ActionCode.TURN_TO_PREVIOUS_PAGE,
-				ActionCode.TURN_TO_NEXT_PAGE,
+				ActionCode.TURN_PAGE_BACK,
+				ActionCode.TURN_PAGE_FORWARD,
 				ActionCode.PREV_LINE,
 				ActionCode.NEXT_LINE,
 				ActionCode.PREV_LINK,

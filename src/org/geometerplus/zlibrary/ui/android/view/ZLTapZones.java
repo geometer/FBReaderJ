@@ -314,11 +314,11 @@ public class ZLTapZones {
 		if(myZones.size() == 0) {
 			final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 			if (preferences.HorizontalOption.getValue()) {
-				addZone("prevPage", 0, 0, 0.5f, 1);
+				addZone("previousPage", 0, 0, 0.5f, 1);
 				addZone("nextPage", 0.5f, 0, 1, 1);
 			}
 			else {
-				addZone("prevPage", 0, 0, 1, 0.5f);
+				addZone("previousPage", 0, 0, 1, 0.5f);
 				addZone("nextPage", 0, 0.5f, 1, 1);
 			}
 		}

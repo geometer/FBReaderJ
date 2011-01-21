@@ -39,15 +39,16 @@ public interface ActionCode {
 	String SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS = "hyperlinksOnlyMode";
 	String SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS = "dictionaryMode";
 
-	String TURN_TO_PREVIOUS_PAGE = "previousPage";
-	String TURN_TO_NEXT_PAGE = "nextPage";
+	String TURN_PAGE_BACK = "previousPage";
+	String TURN_PAGE_FORWARD = "nextPage";
+
 	String PREV_LINE = "prevLine";
 	String NEXT_LINE = "nextLine";
 	String PREV_LINK = "prevLink";
 	String NEXT_LINK = "nextLink";
 
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
-	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
+	String VOLUME_KEY_SCROLL_BACK = "volumeKeyScrollBackward";
 	String SHOW_MENU = "menu";
 	String SHOW_NAVIGATION = "navigate";
 	String BACK = "back";

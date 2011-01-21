@@ -48,30 +48,6 @@ public final class FBView extends ZLTextView {
 		super.onScrollingFinished(viewPage);
 	}
 
-	final void doScrollPage(boolean forward) {
-		final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
-		if (getAnimationType() != Animation.none) {
-			if (forward) {
-				ZLTextWordCursor cursor = getEndCursor();
-				if (cursor != null &&
-					!cursor.isNull() &&
-					(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast())) {
-					startAutoScrolling(horizontal ? PAGE_RIGHT : PAGE_BOTTOM);
-				}
-			} else {
-				ZLTextWordCursor cursor = getStartCursor();
-				if (cursor != null &&
-					!cursor.isNull() &&
-					(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst())) {
-					startAutoScrolling(horizontal ? PAGE_LEFT : PAGE_TOP);
-				}
-			}
-		} else {
-			scrollPage(forward, ZLTextView.ScrollingMode.NO_OVERLAPPING, 0);
-			myReader.repaintView();
-		}
-	}
-
 	private int myStartX;
 	private int myStartY;
 	private boolean myIsManualScrollingActive;
@@ -127,38 +103,31 @@ public final class FBView extends ZLTextView {
 		}
 
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			preferences.FingerScrollingOption.getValue();
 
 		final TapZone tapZone = getZoneByCoordinates(x, y, 3);
 		if (!preferences.HorizontalOption.getValue()) {
 			tapZone.mirror45();
 		}
-		final boolean doTapScrolling =
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTap ||
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
+		String actionCode = null;
 		switch (tapZone.HIndex) {
 			case 0:
-				if (doTapScrolling) {
-					doScrollPage(false);
-				}
+				actionCode = ActionCode.TURN_PAGE_BACK;
 				break;
 			case 1:
 				switch (tapZone.VIndex) {
 					case 0:
-						myReader.doAction(ActionCode.SHOW_NAVIGATION);
+						actionCode = ActionCode.SHOW_NAVIGATION;
 						break;
 					case 2:
-						myReader.doAction(ActionCode.SHOW_MENU);
+						actionCode = ActionCode.SHOW_MENU;
 						break;
 				}
 				break;
 			case 2:
-				if (doTapScrolling) {
-					doScrollPage(true);
-				}
+				actionCode = ActionCode.TURN_PAGE_FORWARD;
 				break;
 		}
+		myReader.doAction(actionCode);
 
 		return true;
 	}
@@ -205,19 +174,20 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (getAnimationType() != Animation.none) {
-			final ScrollingPreferences.FingerScrolling fingerScrolling =
-				ScrollingPreferences.Instance().FingerScrollingOption.getValue();
-			if (fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
-				fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick) {
-				myStartX = x;
-				myStartY = y;
-				setScrollingActive(true);
-				myIsManualScrollingActive = true;
-			}
-		}
-
+		startManualScrolling(x, y);
 		return true;
+	}
+
+	private void startManualScrolling(int x, int y) {
+		final ScrollingPreferences.FingerScrolling fingerScrolling =
+			ScrollingPreferences.Instance().FingerScrollingOption.getValue();
+		if (fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick) {
+			myStartX = x;
+			myStartY = y;
+			setScrollingActive(true);
+			myIsManualScrollingActive = true;
+		}
 	}
 
 	public boolean onFingerMove(int x, int y) {
@@ -242,6 +212,7 @@ public final class FBView extends ZLTextView {
 			if (myIsBrightnessAdjustmentInProgress) {
 				if (x >= myContext.getWidth() / 5) {
 					myIsBrightnessAdjustmentInProgress = false;
+					startManualScrolling(x, y);
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / myContext.getHeight();
 					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
