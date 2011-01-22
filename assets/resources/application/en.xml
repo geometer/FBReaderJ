@@ -487,6 +487,15 @@
 					<node name="summaryOff" value="Scroll pages vertically"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones">
+				<node name="tapZonesScheme" value="Tap zones">
+					<node name="left_to_right" value="Left to right page scrolling"/>
+					<node name="right_to_left" value="Right to left page scrolling"/>
+					<node name="up" value="Down to up page scrolling"/>
+					<node name="down" value="Up to down page scrolling"/>
+					<node name="custom" value="Custom..."/>
+				</node>
+			</node>
 			<node name="dictionary" value="Dictionary">
 				<node name="summary" value="Dictionary settings"/>
 				<node name="dictionary" value="Dictionary"/>
