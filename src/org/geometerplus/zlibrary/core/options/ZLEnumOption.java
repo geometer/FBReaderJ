@@ -33,7 +33,10 @@ public final class ZLEnumOption<T extends Enum<T>> extends ZLOption {
 		if (!myIsSynchronized) {
 			final String value = getConfigValue(null);
 			if (value != null) {
-				myValue = (T)T.valueOf(myDefaultValue.getClass(), value);
+				try {
+					myValue = (T)T.valueOf(myDefaultValue.getClass(), value);
+				} catch (Throwable t) {
+				}
 			}
 			myIsSynchronized = true;
 		}
