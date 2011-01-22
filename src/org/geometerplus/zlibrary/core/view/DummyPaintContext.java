@@ -29,7 +29,7 @@ final class DummyPaintContext extends ZLPaintContext {
 	DummyPaintContext() {
 	}
 
-	public void clear(ZLFile wallpaperFile) {
+	public void clear(ZLFile wallpaperFile, boolean doMirror) {
 	}
 
 	public void clear(ZLColor color) {

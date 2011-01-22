@@ -328,8 +328,22 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
 		scrollingScreen.addOption(scrollingPreferences.FingerScrollingOption, "fingerScrolling");
 		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
-		scrollingScreen.addOption(scrollingPreferences.VolumeKeysOption, "volumeKeys");
-		scrollingScreen.addOption(scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys");
+
+		final ZLPreferenceSet volumeKeysPreferences = new ZLPreferenceSet();
+		scrollingScreen.addPreference(new ZLBooleanPreference(
+			this, scrollingPreferences.VolumeKeysOption, scrollingScreen.Resource, "volumeKeys"
+		) {
+			@Override
+			protected void onClick() {
+				super.onClick();
+				volumeKeysPreferences.setEnabled(isChecked());
+			}
+		});	
+		volumeKeysPreferences.add(scrollingScreen.addOption(
+			scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys"
+		));
+		volumeKeysPreferences.setEnabled(scrollingPreferences.VolumeKeysOption.getValue());
+
 		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 

@@ -24,6 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
@@ -256,7 +257,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myContext = context;
 		final ZLFile wallpaper = getWallpaperFile();
 		if (wallpaper != null) {
-			context.clear(wallpaper);
+			context.clear(wallpaper, wallpaper instanceof ZLResourceFile);
 		} else {
 			context.clear(getBackgroundColor());
 		}
