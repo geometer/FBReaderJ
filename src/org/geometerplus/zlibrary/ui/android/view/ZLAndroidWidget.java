@@ -177,11 +177,13 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 					shift += size;
 				}
 				// TODO: set color
-				myPaint.setColor(Color.rgb(127, 127, 127));
-				if (horizontal) {
-					canvas.drawLine(shift, 0, shift, h + 1, myPaint);
-				} else {
-					canvas.drawLine(0, shift, w + 1, shift, myPaint);
+				if (shift > 0 && shift < size) {
+					myPaint.setColor(Color.rgb(127, 127, 127));
+					if (horizontal) {
+						canvas.drawLine(shift, 0, shift, h + 1, myPaint);
+					} else {
+						canvas.drawLine(0, shift, w + 1, shift, myPaint);
+					}
 				}
 				break;
 		}
