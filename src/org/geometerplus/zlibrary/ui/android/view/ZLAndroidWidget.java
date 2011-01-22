@@ -91,7 +91,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final int w = getWidth();
 		final int h = getMainAreaHeight();
 
-		if ((myMainBitmap != null) && ((myMainBitmap.getWidth() != w) || (myMainBitmap.getHeight() != h))) {
+		if (myMainBitmap != null &&
+			(myMainBitmap.getWidth() != w || myMainBitmap.getHeight() != h)) {
 			myMainBitmap = null;
 			mySecondaryBitmap = null;
 			System.gc();
