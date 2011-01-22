@@ -481,6 +481,7 @@
 					<node name="none" value="Scroll with no animation"/>
 					<node name="slide" value="Slide animation"/>
 					<node name="shift" value="Shift animation"/>
+					<node name="paper3d" value="3D animation"/>
 				</node>
 				<node name="horizontal" value="Horizontal scrolling">
 					<node name="summaryOn" value="Scroll pages horizontally"/>

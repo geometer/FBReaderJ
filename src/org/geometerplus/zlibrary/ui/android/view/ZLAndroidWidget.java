@@ -150,6 +150,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				);
 				break;
 			case slide:
+			case paper3d:
 				canvas.drawBitmap(
 					mySecondaryBitmap,
 					0, 0,
@@ -184,6 +185,15 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 					canvas.drawLine(0, shift, w + 1, shift, myPaint);
 				}
 				break;
+			case paper3d:
+			{
+				myPaint.setColor(Color.rgb(127, 127, 127));
+				final int x = 100;
+				final int y = 100;
+				canvas.drawLine(0, h, w - x, h - y, myPaint);
+				canvas.drawLine(w, 0, w - x, h - y, myPaint);
+				break;
+			}
 		}
 
 		if (stopScrolling) {
