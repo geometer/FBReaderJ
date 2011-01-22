@@ -38,8 +38,11 @@ public interface ActionCode {
 	String SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS = "hyperlinksOnlyMode";
 	String SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS = "dictionaryMode";
 
+	String TURN_PAGE_BACK = "previousPage";
+	String TURN_PAGE_FORWARD = "nextPage";
+
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
-	String VOLUME_KEY_SCROLL_BACKWARD = "volumeKeyScrollBackward";
+	String VOLUME_KEY_SCROLL_BACK = "volumeKeyScrollBackward";
 	String SHOW_MENU = "menu";
 	String SHOW_NAVIGATION = "navigate";
 	String CANCEL = "cancel";

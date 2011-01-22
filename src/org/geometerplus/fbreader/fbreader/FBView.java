@@ -19,11 +19,14 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.*;
+
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
@@ -48,30 +51,6 @@ public final class FBView extends ZLTextView {
 		super.onScrollingFinished(viewPage);
 	}
 
-	final void doScrollPage(boolean forward) {
-		final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
-		if (getAnimationType() != Animation.none) {
-			if (forward) {
-				ZLTextWordCursor cursor = getEndCursor();
-				if (cursor != null &&
-					!cursor.isNull() &&
-					(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast())) {
-					startAutoScrolling(horizontal ? PAGE_RIGHT : PAGE_BOTTOM);
-				}
-			} else {
-				ZLTextWordCursor cursor = getStartCursor();
-				if (cursor != null &&
-					!cursor.isNull() &&
-					(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst())) {
-					startAutoScrolling(horizontal ? PAGE_LEFT : PAGE_TOP);
-				}
-			}
-		} else {
-			scrollPage(forward, ZLTextView.ScrollingMode.NO_OVERLAPPING, 0);
-			myReader.repaintView();
-		}
-	}
-
 	private int myStartX;
 	private int myStartY;
 	private boolean myIsManualScrollingActive;
@@ -92,9 +71,89 @@ public final class FBView extends ZLTextView {
 			HIndex = VIndex;
 			VIndex = swap;
 		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == this) {
+				return true;
+			}
+
+			if (!(o instanceof TapZone)) {
+				return false;
+			}
+
+			final TapZone tz = (TapZone)o;
+			return HIndex == tz.HIndex && VIndex == tz.VIndex;
+		}
+
+		@Override
+		public int hashCode() {
+			return (HIndex << 3) + VIndex;
+		}
 	}
 
-	TapZone getZoneByCoordinates(int x, int y, int grid) {
+	private enum ZoneMap {
+		HORIZONTAL_RIGHT_TO_LEFT,
+		HORIZONTAL_LEFT_TO_RIGHT,
+		VERTICAL_UP,
+		VERTICAL_DOWN
+	}
+	private ZoneMap myZoneMapId;
+	private final HashMap<TapZone,String> myZoneMap = new HashMap<TapZone,String>();
+
+	private Map<TapZone,String> getZoneMap() {
+		final ZoneMap id = ScrollingPreferences.Instance().HorizontalOption.getValue()
+			? ZoneMap.HORIZONTAL_RIGHT_TO_LEFT : ZoneMap.VERTICAL_UP;
+		if (id != myZoneMapId) {
+			myZoneMapId = id;
+			myZoneMap.clear();
+			switch (id) {
+				case HORIZONTAL_RIGHT_TO_LEFT:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+					break;
+				case HORIZONTAL_LEFT_TO_RIGHT:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_BACK);
+					break;
+				case VERTICAL_UP:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+					break;
+				case VERTICAL_DOWN:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_BACK);
+					break;
+			}
+		}
+		return myZoneMap;
+	}
+
+	private TapZone getZoneByCoordinates(int x, int y, int grid) {
 		return new TapZone(
 			x * grid / myContext.getWidth(),
 			y * grid / myContext.getHeight()
@@ -126,39 +185,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			preferences.FingerScrollingOption.getValue();
-
-		final TapZone tapZone = getZoneByCoordinates(x, y, 3);
-		if (!preferences.HorizontalOption.getValue()) {
-			tapZone.mirror45();
-		}
-		final boolean doTapScrolling =
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTap ||
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
-		switch (tapZone.HIndex) {
-			case 0:
-				if (doTapScrolling) {
-					doScrollPage(false);
-				}
-				break;
-			case 1:
-				switch (tapZone.VIndex) {
-					case 0:
-						myReader.doAction(ActionCode.SHOW_NAVIGATION);
-						break;
-					case 2:
-						myReader.doAction(ActionCode.SHOW_MENU);
-						break;
-				}
-				break;
-			case 2:
-				if (doTapScrolling) {
-					doScrollPage(true);
-				}
-				break;
-		}
+		myReader.doAction(getZoneMap().get(getZoneByCoordinates(x, y, 3)));
 
 		return true;
 	}
@@ -205,19 +232,20 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (getAnimationType() != Animation.none) {
-			final ScrollingPreferences.FingerScrolling fingerScrolling =
-				ScrollingPreferences.Instance().FingerScrollingOption.getValue();
-			if (fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
-				fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick) {
-				myStartX = x;
-				myStartY = y;
-				setScrollingActive(true);
-				myIsManualScrollingActive = true;
-			}
-		}
-
+		startManualScrolling(x, y);
 		return true;
+	}
+
+	private void startManualScrolling(int x, int y) {
+		final ScrollingPreferences.FingerScrolling fingerScrolling =
+			ScrollingPreferences.Instance().FingerScrollingOption.getValue();
+		if (fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick) {
+			myStartX = x;
+			myStartY = y;
+			setScrollingActive(true);
+			myIsManualScrollingActive = true;
+		}
 	}
 
 	public boolean onFingerMove(int x, int y) {
@@ -229,6 +257,7 @@ public final class FBView extends ZLTextView {
 			if (myIsBrightnessAdjustmentInProgress) {
 				if (x >= myContext.getWidth() / 5) {
 					myIsBrightnessAdjustmentInProgress = false;
+					startManualScrolling(x, y);
 				} else {
 					final int delta = (myStartBrightness + 30) * (myStartY - y) / myContext.getHeight();
 					ZLibrary.Instance().setScreenBrightness(myStartBrightness + delta);
@@ -522,7 +551,7 @@ public final class FBView extends ZLTextView {
 			final int infoWidth = context.getStringWidth(infoString);
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {
-				context.clear(wallpaper);
+				context.clear(wallpaper, wallpaper instanceof ZLResourceFile);
 			} else {
 				context.clear(getBackgroundColor());
 			}
