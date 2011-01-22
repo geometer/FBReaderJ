@@ -157,12 +157,34 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				);
 				break;
 		}
-		canvas.drawBitmap(
-			myMainBitmap,
-			horizontal ? myScrollingShift : 0,
-			horizontal ? 0 : myScrollingShift,
-			myPaint
-		);
+		switch (view.getAnimationType()) {
+			case none:
+				canvas.drawBitmap(
+					myMainBitmap,
+					0, 0,
+					myPaint
+				);
+				break;
+			case shift:
+			case slide:
+				canvas.drawBitmap(
+					myMainBitmap,
+					horizontal ? myScrollingShift : 0,
+					horizontal ? 0 : myScrollingShift,
+					myPaint
+				);
+				if (shift < 0) {
+					shift += size;
+				}
+				// TODO: set color
+				myPaint.setColor(Color.rgb(127, 127, 127));
+				if (horizontal) {
+					canvas.drawLine(shift, 0, shift, h + 1, myPaint);
+				} else {
+					canvas.drawLine(0, shift, w + 1, shift, myPaint);
+				}
+				break;
+		}
 
 		if (stopScrolling) {
 			if (myScrollingBound != 0) {
@@ -179,16 +201,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			myScrollingInProgress = false;
 			myScrollingShift = 0;
 		} else {
-			if (shift < 0) {
-				shift += size;
-			}
-			// TODO: set color
-			myPaint.setColor(Color.rgb(127, 127, 127));
-			if (horizontal) {
-				canvas.drawLine(shift, 0, shift, h + 1, myPaint);
-			} else {
-				canvas.drawLine(0, shift, w + 1, shift, myPaint);
-			}
 			if (myScrollingInProgress) {
 				postInvalidate();
 			}
