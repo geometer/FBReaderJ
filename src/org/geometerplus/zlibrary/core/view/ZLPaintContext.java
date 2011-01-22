@@ -41,7 +41,7 @@ abstract public class ZLPaintContext {
 	protected ZLPaintContext() {
 	}
 
-	abstract public void clear(ZLFile wallpaperFile);
+	abstract public void clear(ZLFile wallpaperFile, boolean doMirror);
 	abstract public void clear(ZLColor color);
 
 	private boolean myResetFont = true;

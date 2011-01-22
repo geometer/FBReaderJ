@@ -21,51 +21,49 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
-class TurnPageAction extends FBAction {
+class VolumeKeyTurnPageAction extends FBAction {
 	private final boolean myForward;
 
-	TurnPageAction(FBReaderApp fbreader, boolean forward) {
+	VolumeKeyTurnPageAction(FBReaderApp fbreader, boolean forward) {
 		super(fbreader);
 		myForward = forward;
 	}
 
 	public boolean isEnabled() {
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-
-		final ScrollingPreferences.FingerScrolling fingerScrolling =
-			preferences.FingerScrollingOption.getValue();
-		if (fingerScrolling != ScrollingPreferences.FingerScrolling.byTap &&
-			fingerScrolling != ScrollingPreferences.FingerScrolling.byTapAndFlick) {
-			return false;
-		}
-
-		if (myForward) {
-			ZLTextWordCursor cursor = Reader.getTextView().getEndCursor();
-			return
-				cursor != null &&
-				!cursor.isNull() &&
-				(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
-		} else {
-			ZLTextWordCursor cursor = Reader.getTextView().getStartCursor();
-			return
-				cursor != null &&
-				!cursor.isNull() &&
-				(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
-		}
+		return ScrollingPreferences.Instance().VolumeKeysOption.getValue();
 	}
 
 	public void run() {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+
+		boolean forward = myForward;
+		if (preferences.InvertVolumeKeysOption.getValue()) {
+			forward = !forward;
+		}
+
+		if (forward) {
+			ZLTextWordCursor cursor = Reader.getTextView().getEndCursor();
+			if (cursor == null || cursor.isNull() ||
+				(cursor.isEndOfParagraph() && cursor.getParagraphCursor().isLast())) {
+				return;
+			}
+		} else {
+			ZLTextWordCursor cursor = Reader.getTextView().getStartCursor();
+			if (cursor == null || cursor.isNull() ||
+				(cursor.isStartOfParagraph() && cursor.getParagraphCursor().isFirst())) {
+				return;
+			}
+		}
 		final FBView view = Reader.getTextView();
 		if (view.getAnimationType() != FBView.Animation.none) {
 			final boolean horizontal = preferences.HorizontalOption.getValue();
-			if (myForward) {
+			if (forward) {
 				view.startAutoScrolling(horizontal ? FBView.PAGE_RIGHT : FBView.PAGE_BOTTOM);
 			} else {
 				view.startAutoScrolling(horizontal ? FBView.PAGE_LEFT : FBView.PAGE_TOP);
 			}
 		} else {
-			view.scrollPage(myForward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
+			view.scrollPage(forward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
 			Reader.repaintView();
 		}
 	}

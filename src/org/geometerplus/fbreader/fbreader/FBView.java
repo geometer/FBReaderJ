@@ -19,11 +19,14 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.*;
+
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
@@ -68,9 +71,89 @@ public final class FBView extends ZLTextView {
 			HIndex = VIndex;
 			VIndex = swap;
 		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == this) {
+				return true;
+			}
+
+			if (!(o instanceof TapZone)) {
+				return false;
+			}
+
+			final TapZone tz = (TapZone)o;
+			return HIndex == tz.HIndex && VIndex == tz.VIndex;
+		}
+
+		@Override
+		public int hashCode() {
+			return (HIndex << 3) + VIndex;
+		}
 	}
 
-	TapZone getZoneByCoordinates(int x, int y, int grid) {
+	private enum ZoneMap {
+		HORIZONTAL_RIGHT_TO_LEFT,
+		HORIZONTAL_LEFT_TO_RIGHT,
+		VERTICAL_UP,
+		VERTICAL_DOWN
+	}
+	private ZoneMap myZoneMapId;
+	private final HashMap<TapZone,String> myZoneMap = new HashMap<TapZone,String>();
+
+	private Map<TapZone,String> getZoneMap() {
+		final ZoneMap id = ScrollingPreferences.Instance().HorizontalOption.getValue()
+			? ZoneMap.HORIZONTAL_RIGHT_TO_LEFT : ZoneMap.VERTICAL_UP;
+		if (id != myZoneMapId) {
+			myZoneMapId = id;
+			myZoneMap.clear();
+			switch (id) {
+				case HORIZONTAL_RIGHT_TO_LEFT:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+					break;
+				case HORIZONTAL_LEFT_TO_RIGHT:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_BACK);
+					break;
+				case VERTICAL_UP:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
+					break;
+				case VERTICAL_DOWN:
+					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
+					myZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
+					myZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
+					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_BACK);
+					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_BACK);
+					break;
+			}
+		}
+		return myZoneMap;
+	}
+
+	private TapZone getZoneByCoordinates(int x, int y, int grid) {
 		return new TapZone(
 			x * grid / myContext.getWidth(),
 			y * grid / myContext.getHeight()
@@ -102,32 +185,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-
-		final TapZone tapZone = getZoneByCoordinates(x, y, 3);
-		if (!preferences.HorizontalOption.getValue()) {
-			tapZone.mirror45();
-		}
-		String actionCode = null;
-		switch (tapZone.HIndex) {
-			case 0:
-				actionCode = ActionCode.TURN_PAGE_BACK;
-				break;
-			case 1:
-				switch (tapZone.VIndex) {
-					case 0:
-						actionCode = ActionCode.SHOW_NAVIGATION;
-						break;
-					case 2:
-						actionCode = ActionCode.SHOW_MENU;
-						break;
-				}
-				break;
-			case 2:
-				actionCode = ActionCode.TURN_PAGE_FORWARD;
-				break;
-		}
-		myReader.doAction(actionCode);
+		myReader.doAction(getZoneMap().get(getZoneByCoordinates(x, y, 3)));
 
 		return true;
 	}
@@ -507,7 +565,7 @@ public final class FBView extends ZLTextView {
 			final int infoWidth = context.getStringWidth(infoString);
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {
-				context.clear(wallpaper);
+				context.clear(wallpaper, wallpaper instanceof ZLResourceFile);
 			} else {
 				context.clear(getBackgroundColor());
 			}
