@@ -67,30 +67,12 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private ZLFile myWallpaperFile;
 	private Bitmap myWallpaper;
 	@Override
-	public void clear(ZLFile wallpaperFile, boolean doMirror) {
+	public void clear(ZLFile wallpaperFile) {
 		if (!wallpaperFile.equals(myWallpaperFile)) {
 			myWallpaperFile = wallpaperFile;
 			myWallpaper = null;
 			try {
-				final Bitmap fileBitmap =
-					new BitmapFactory().decodeStream(wallpaperFile.getInputStream());
-				if (doMirror) {
-					final int w = fileBitmap.getWidth();
-					final int h = fileBitmap.getHeight();
-					final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
-					for (int i = 0; i < w; ++i) {
-						for (int j = 0; j < h; ++j) {
-							int color = fileBitmap.getPixel(i, j);
-							wallpaper.setPixel(i, j, color);
-							wallpaper.setPixel(i, 2 * h - j - 1, color);
-							wallpaper.setPixel(2 * w - i - 1, j, color);
-							wallpaper.setPixel(2 * w - i - 1, 2 * h - j - 1, color);
-						}
-					}
-					myWallpaper = wallpaper;
-				} else {
-					myWallpaper = fileBitmap;
-				}
+				myWallpaper = new BitmapFactory().decodeStream(wallpaperFile.getInputStream());
 			} catch (Throwable t) {
 				t.printStackTrace();
 			}
