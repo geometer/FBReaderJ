@@ -64,13 +64,13 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myOutlinePaint.setMaskFilter(new EmbossMaskFilter(new float[] {1, 1, 1}, .4f, 6f, 3.5f));
 	}
 
-	private ZLFile myWallpaperFile;
-	private Bitmap myWallpaper;
+	private static ZLFile ourWallpaperFile;
+	private static Bitmap ourWallpaper;
 	@Override
 	public void clear(ZLFile wallpaperFile, boolean doMirror) {
-		if (!wallpaperFile.equals(myWallpaperFile)) {
-			myWallpaperFile = wallpaperFile;
-			myWallpaper = null;
+		if (!wallpaperFile.equals(ourWallpaperFile)) {
+			ourWallpaperFile = wallpaperFile;
+			ourWallpaper = null;
 			try {
 				final Bitmap fileBitmap =
 					new BitmapFactory().decodeStream(wallpaperFile.getInputStream());
@@ -87,20 +87,20 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 							wallpaper.setPixel(2 * w - i - 1, 2 * h - j - 1, color);
 						}
 					}
-					myWallpaper = wallpaper;
+					ourWallpaper = wallpaper;
 				} else {
-					myWallpaper = fileBitmap;
+					ourWallpaper = fileBitmap;
 				}
 			} catch (Throwable t) {
 				t.printStackTrace();
 			}
 		}
-		if (myWallpaper != null) {
-			final int w = myWallpaper.getWidth();
-			final int h = myWallpaper.getHeight();
+		if (ourWallpaper != null) {
+			final int w = ourWallpaper.getWidth();
+			final int h = ourWallpaper.getHeight();
 			for (int cw = 0, iw = 1; cw < myWidth; cw += w, ++iw) {
 				for (int ch = 0, ih = 1; ch < myHeight; ch += h, ++ih) {
-					myCanvas.drawBitmap(myWallpaper, cw, ch, myFillPaint);
+					myCanvas.drawBitmap(ourWallpaper, cw, ch, myFillPaint);
 				}
 			}
 		} else {
