@@ -324,8 +324,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 		*/
 
-		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
+
+		final Screen tapZonesScreen = createPreferenceScreen("tapZones");
+		tapZonesScreen.addOption(scrollingPreferences.TapZonesSchemeOption, "tapZonesScheme");
+
+		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		scrollingScreen.addOption(scrollingPreferences.FingerScrollingOption, "fingerScrolling");
 		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
 

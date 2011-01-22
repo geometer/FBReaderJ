@@ -46,11 +46,11 @@ public class ScrollingPreferences {
 
 	public final ZLBooleanOption HorizontalOption =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public enum TapZoneScheme {
+	public enum TapZonesScheme {
 		left_to_right, right_to_left, up, down, custom
 	}
-	public final ZLEnumOption<TapZoneScheme> TapZoneSchemeOption =
-		new ZLEnumOption<TapZoneScheme>("Scrolling", "TapZoneScheme", TapZoneScheme.right_to_left);
+	public final ZLEnumOption<TapZonesScheme> TapZonesSchemeOption =
+		new ZLEnumOption<TapZonesScheme>("Scrolling", "TapZonesScheme", TapZonesScheme.right_to_left);
 
 	private ScrollingPreferences() {
 		ourInstance = this;
