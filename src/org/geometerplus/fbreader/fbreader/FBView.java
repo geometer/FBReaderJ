@@ -551,7 +551,7 @@ public final class FBView extends ZLTextView {
 			final int infoWidth = context.getStringWidth(infoString);
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {
-				context.clear(wallpaper);
+				context.clear(wallpaper, wallpaper instanceof ZLResourceFile);
 			} else {
 				context.clear(getBackgroundColor());
 			}
