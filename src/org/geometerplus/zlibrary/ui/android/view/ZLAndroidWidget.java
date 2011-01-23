@@ -106,7 +106,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			drawOnBitmap(myMainBitmap);
 		}
 
-		if (myScrollingInProgress || (myScrollingShift != 0)) {
+		if (myScrollingInProgress || myScrollingShift != 0) {
 			onDrawInScrolling(canvas);
 		} else {
 			onDrawStatic(canvas);
@@ -140,7 +140,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
 			(myViewPageToScroll == ZLView.PAGE_LEFT);
 		final int size = horizontal ? w : h;
-		int shift = (myScrollingShift < 0) ? (myScrollingShift + size) : (myScrollingShift - size);
+		int shift = myScrollingShift < 0 ? myScrollingShift + size : myScrollingShift - size;
 		switch (view.getAnimationType()) {
 			case shift:
 				canvas.drawBitmap(
@@ -230,7 +230,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 	}
 
-	void scrollToPage(int viewPage, int shift) {
+	public void scrollToPage(int viewPage, int shift) {
 		switch (viewPage) {
 			case ZLView.PAGE_BOTTOM:
 			case ZLView.PAGE_RIGHT:
@@ -241,8 +241,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		if (myMainBitmap == null) {
 			return;
 		}
-		if (((shift > 0) && (myScrollingShift <= 0)) ||
-			((shift < 0) && (myScrollingShift >= 0))) {
+		if ((shift > 0 && myScrollingShift <= 0) ||
+			(shift < 0 && myScrollingShift >= 0)) {
 			mySecondaryBitmapIsUpToDate = false;
 		}
 		myScrollingShift = shift;
@@ -251,7 +251,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		postInvalidate();
 	}
 
-	void startAutoScrolling(int viewPage) {
+	public void startAutoScrolling(int viewPage) {
 		if (myMainBitmap == null) {
 			return;
 		}

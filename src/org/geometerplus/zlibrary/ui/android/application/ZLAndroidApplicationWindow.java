@@ -27,7 +27,6 @@ import android.view.MenuItem;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 
-import org.geometerplus.zlibrary.ui.android.view.ZLAndroidViewWidget;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
@@ -94,14 +93,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		// TODO: implement
 	}
 
-	private ZLAndroidViewWidget myViewWidget;
-	protected ZLAndroidViewWidget getViewWidget() {
-		if (myViewWidget == null) {
-			myViewWidget = new ZLAndroidViewWidget();
-		}
-		return myViewWidget;
-	}
-
 	protected void repaintView() {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
@@ -109,12 +100,18 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		widget.postInvalidate();
 	}
 
+	@Override
 	protected void scrollViewTo(int viewPage, int shift) {
-		getViewWidget().scrollTo(viewPage, shift);
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.scrollToPage(viewPage, shift);
 	}
 
+	@Override
 	protected void startViewAutoScrolling(int viewPage) {
-		getViewWidget().startAutoScrolling(viewPage);
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.startAutoScrolling(viewPage);
 	}
 
 	public void rotate() {
