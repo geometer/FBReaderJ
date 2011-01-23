@@ -39,8 +39,6 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
-	static BookmarksActivity Instance;
-
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
@@ -107,9 +105,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
 		pattern = pattern.toLowerCase();
-		for (Bookmark bookmark : BookmarksActivity.Instance.AllBooksBookmarks) {
-			if (ZLMiscUtil.matchesIgnoreCase(bookmark.getText(), pattern)) {
-				bookmarks.add(bookmark);
+		for (Bookmark b : AllBooksBookmarks) {
+			if (ZLMiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
+				bookmarks.add(b);
 			}
 		}	
 		return bookmarks;
@@ -126,7 +124,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
 		pattern = pattern.toLowerCase();
-		for (Bookmark b : BookmarksActivity.Instance.AllBooksBookmarks) {
+		for (Bookmark b : AllBooksBookmarks) {
 			if (ZLMiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
 				bookmarks.add(b);
 			}
@@ -139,23 +137,11 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		Instance = this;
-	}
-
-	@Override
 	public void onPause() {
 		for (Bookmark bookmark : AllBooksBookmarks) {
 			bookmark.save();
 		}
 		super.onPause();
-	}
-
-	@Override
-	public void onStop() {
-		Instance = null;
-		super.onStop();
 	}
 
 	@Override
