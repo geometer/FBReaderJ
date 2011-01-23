@@ -26,11 +26,9 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
+import android.os.Handler;
+import android.os.Message;
+import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -56,6 +54,8 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.android.fbreader.library.KillerCallback;
+
+import org.geometerplus.android.util.UIUtil;
 
 public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
@@ -152,6 +152,37 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			final Handler successHandler = new Handler() {
+				public void handleMessage(Message message) {
+					showTextSearchControls(true);
+				}
+			};
+			final Handler failureHandler = new Handler() {
+				public void handleMessage(Message message) {
+					UIUtil.showErrorMessage(FBReader.this, "textNotFound");
+				}
+			};
+			final Runnable runnable = new Runnable() {
+				public void run() {
+					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+					fbReader.TextSearchPatternOption.setValue(pattern);
+					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
+						successHandler.sendEmptyMessage(0);
+					} else {
+						failureHandler.sendEmptyMessage(0);
+					}
+				}
+			};
+			UIUtil.wait("search", runnable, this);
+		} else {
+			super.onNewIntent(intent);
+		}
 	}
 
 	@Override
