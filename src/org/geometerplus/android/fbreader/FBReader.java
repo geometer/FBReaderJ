@@ -59,26 +59,24 @@ public final class FBReader extends ZLAndroidActivity {
 
 	final static int REPAINT_CODE = 1;
 
-	static FBReader Instance;
-
 	private int myFullScreenFlag;
 
-	private static class NavigationButtonPanel extends ControlButtonPanel {
+	private class NavigationButtonPanel extends ControlButtonPanel {
 		public volatile boolean NavigateDragging;
 		public ZLTextPosition StartPosition;
 
 		@Override
 		public void onShow() {
-			if (Instance != null && myControlPanel != null) {
-				Instance.setupNavigation(myControlPanel);
+			if (myControlPanel != null) {
+				setupNavigation(myControlPanel);
 			}
 		}
 
 		@Override
 		public void updateStates() {
 			super.updateStates();
-			if (!NavigateDragging && Instance != null && myControlPanel != null) {
-				Instance.setupNavigation(myControlPanel);
+			if (!NavigateDragging && myControlPanel != null) {
+				setupNavigation(myControlPanel);
 			}
 		}
 	}
@@ -93,14 +91,6 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private static TextSearchButtonPanel myTextSearchPanel;
 	private static NavigationButtonPanel myNavigatePanel;
-
-	/*private String fileNameFromUri(Uri uri) {
-		if (uri.equals(Uri.parse("file:///"))) {
-			return Library.getHelpFile().getPath();
-		} else {
-			return uri.getPath();
-		}
-	}*/
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
@@ -117,7 +107,6 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Instance = this;
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		myFullScreenFlag =
 			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
