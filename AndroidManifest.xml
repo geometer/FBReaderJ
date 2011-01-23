@@ -50,15 +50,12 @@
 				<data android:mimeType="application/x-fictionbook+xml" />
 				<data android:mimeType="application/x-fictionbook" />
 			</intent-filter>
-			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.TextSearchActivity" />
-		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.BookInfoActivity" android:configChanges="orientation|keyboardHidden" android:process=":library"/>
-		<activity android:name="org.geometerplus.android.fbreader.TextSearchActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
 			</intent-filter>
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.BookInfoActivity" android:configChanges="orientation|keyboardHidden" android:process=":library"/>
 		<service android:name="org.geometerplus.android.fbreader.library.InitializationService" android:process=":library" />
 		<receiver android:name="org.geometerplus.android.fbreader.library.KillerCallback" android:process=":library" />
 		<activity android:name="org.geometerplus.android.fbreader.library.LibraryTopLevelActivity" android:launchMode="singleTask" android:process=":library" android:configChanges="orientation|keyboardHidden">
