@@ -219,7 +219,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 	}
 
-	void scrollToPage(int viewPage, int shift) {
+	public void scrollToPage(int viewPage, int shift) {
 		switch (viewPage) {
 			case ZLView.PAGE_BOTTOM:
 			case ZLView.PAGE_RIGHT:
@@ -240,7 +240,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		postInvalidate();
 	}
 
-	void startAutoScrolling(int viewPage) {
+	public void startAutoScrolling(int viewPage) {
 		if (myMainBitmap == null) {
 			return;
 		}
