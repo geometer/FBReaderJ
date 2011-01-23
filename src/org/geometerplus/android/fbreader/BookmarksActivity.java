@@ -29,6 +29,8 @@ import android.content.*;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -52,6 +54,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private ListView mySearchResultsView;
 
 	private final ZLResource myResource = ZLResource.resource("bookmarksView");
+	private final ZLStringOption myBookmarkSearchPatternOption =
+		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
 	private ListView createTab(String tag, int id) {
 		final TabHost host = getTabHost();
@@ -99,28 +103,13 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		findViewById(R.id.search_results).setVisibility(View.GONE);
 	}
 
-	public List<Bookmark> runSearch(String pattern) {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		fbreader.BookmarkSearchPatternOption.setValue(pattern);
-
-		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
-		pattern = pattern.toLowerCase();
-		for (Bookmark b : AllBooksBookmarks) {
-			if (ZLMiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
-				bookmarks.add(b);
-			}
-		}	
-		return bookmarks;
-	}
-
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			return;
 		}
 	   	String pattern = intent.getStringExtra(SearchManager.QUERY);
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		fbreader.BookmarkSearchPatternOption.setValue(pattern);
+		myBookmarkSearchPatternOption.setValue(pattern);
 
 		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
 		pattern = pattern.toLowerCase();
@@ -158,8 +147,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	@Override
 	public boolean onSearchRequested() {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		startSearch(fbreader.BookmarkSearchPatternOption.getValue(), true, null, false);
+		startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
 
