@@ -20,39 +20,72 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-public class TextSearchActivity extends SearchActivity {
+import org.geometerplus.android.util.UIUtil;
+
+public class TextSearchActivity extends Activity {
 	@Override
-	public void onSuccess() {
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
+
+		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
+		manager.setOnCancelListener(null);
+
+		final Intent intent = getIntent();
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			final Handler successHandler = new Handler() {
+				public void handleMessage(Message message) {
+					onSuccess();
+				}
+			};
+			final Handler failureHandler = new Handler() {
+				public void handleMessage(Message message) {
+					UIUtil.showErrorMessage(getParentActivity(), getFailureMessageResourceKey());
+				}
+			};
+			final Runnable runnable = new Runnable() {
+				public void run() {
+					if (runSearch(pattern)) {
+						successHandler.sendEmptyMessage(0);
+					} else {
+						failureHandler.sendEmptyMessage(0);
+					}
+				}
+			};
+			UIUtil.wait(getWaitMessageResourceKey(), runnable, getParentActivity());
+		}
+		finish();
+	}
+
+	private void onSuccess() {
 		FBReader.Instance.showTextSearchControls(true);
 	}
 
-	/*@Override
-	public void onFailure() {
-		FBReader.Instance.showTextSearchControls(false);
-	}*/
-
-	@Override
-	public String getFailureMessageResourceKey() {
+	private String getFailureMessageResourceKey() {
 		return "textNotFound";
 	}
 
-	@Override
-	public String getWaitMessageResourceKey() {
+	private String getWaitMessageResourceKey() {
 		return "search";
 	}
 
-	@Override
-	public boolean runSearch(final String pattern) {
+	private boolean runSearch(final String pattern) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		fbReader.TextSearchPatternOption.setValue(pattern);
 		return fbReader.getTextView().search(pattern, true, false, false, false) != 0;
 	}
 
-	@Override
-	public Activity getParentActivity() {
+	private Activity getParentActivity() {
 		return FBReader.Instance;
 	}
 }
