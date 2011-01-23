@@ -21,12 +21,13 @@ package org.geometerplus.android.fbreader;
 
 import java.util.*;
 
+import android.app.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
 import android.content.*;
-import android.app.TabActivity;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.text.view.*;
 
@@ -34,6 +35,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
+
+import org.geometerplus.android.util.UIUtil;
 
 public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	static BookmarksActivity Instance;
@@ -68,6 +71,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
+		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
+		manager.setOnCancelListener(null);
+
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
 
@@ -93,6 +99,43 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		new BookmarksAdapter(myAllBooksView, AllBooksBookmarks, false);
 
 		findViewById(R.id.search_results).setVisibility(View.GONE);
+	}
+
+	public List<Bookmark> runSearch(String pattern) {
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
+		fbreader.BookmarkSearchPatternOption.setValue(pattern);
+
+		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
+		pattern = pattern.toLowerCase();
+		for (Bookmark bookmark : BookmarksActivity.Instance.AllBooksBookmarks) {
+			if (ZLMiscUtil.matchesIgnoreCase(bookmark.getText(), pattern)) {
+				bookmarks.add(bookmark);
+			}
+		}	
+		return bookmarks;
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			return;
+		}
+	   	String pattern = intent.getStringExtra(SearchManager.QUERY);
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
+		fbreader.BookmarkSearchPatternOption.setValue(pattern);
+
+		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
+		pattern = pattern.toLowerCase();
+		for (Bookmark b : BookmarksActivity.Instance.AllBooksBookmarks) {
+			if (ZLMiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
+				bookmarks.add(b);
+			}
+		}
+		if (!bookmarks.isEmpty()) {
+			showSearchResultsTab(bookmarks);
+		} else {
+			UIUtil.showErrorMessage(this, "bookmarkNotFound");
+		}
 	}
 
 	@Override
