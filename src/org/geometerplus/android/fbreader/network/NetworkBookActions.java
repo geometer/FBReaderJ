@@ -60,8 +60,11 @@ class NetworkBookActions extends NetworkTreeActions {
 	public static final int BUY_DIRECTLY_ITEM_ID = 6;
 	public static final int BUY_IN_BROWSER_ITEM_ID = 7;
 	public static final int SHOW_BOOK_ACTIVITY_ITEM_ID = 8;
-
 	public static final int SHOW_BOOKS_ITEM_ID = 9;
+	public static final int ADD_BOOK_TO_BASKET = 10;
+	public static final int REMOVE_BOOK_FROM_BASKET = 11;
+	public static final int ADD_CATALOG_TO_FAVORITES = 12;
+	public static final int REMOVE_CATALOG_FROM_FAVORITES = 13;
 
 	private static boolean useFullReferences(NetworkBookItem book) {
 		return book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
@@ -184,6 +187,7 @@ class NetworkBookActions extends NetworkTreeActions {
 				final String price = ((BuyBookReference) reference).Price;
 				actions.add(new Action(id, "buy", price));
 			}
+			actions.add(new Action(ADD_BOOK_TO_BASKET, "addToBasket"));
 		}
 		return actions;
 	}

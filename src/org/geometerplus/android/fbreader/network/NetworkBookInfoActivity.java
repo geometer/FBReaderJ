@@ -228,9 +228,11 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		};
 		final Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook, myConnection);
 
-		final boolean skipSecondButton = actions.size() < buttons.length && (actions.size() % 2) == 1;
+		final boolean skipSecondButton =
+			actions.size() < buttons.length &&
+			actions.size() % 2 == 1;
 		int buttonNumber = 0;
-		for (final NetworkBookActions.Action a: actions) {
+		for (final NetworkBookActions.Action a : actions) {
 			if (skipSecondButton && buttonNumber == 1) {
 				++buttonNumber;
 			}
