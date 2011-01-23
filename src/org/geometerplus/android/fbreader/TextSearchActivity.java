@@ -45,44 +45,28 @@ public class TextSearchActivity extends Activity {
 	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Handler successHandler = new Handler() {
 				public void handleMessage(Message message) {
-					onSuccess();
+					FBReader.Instance.showTextSearchControls(true);
 				}
 			};
 			final Handler failureHandler = new Handler() {
 				public void handleMessage(Message message) {
-					UIUtil.showErrorMessage(getParentActivity(), getFailureMessageResourceKey());
+					UIUtil.showErrorMessage(getParentActivity(), "textNotFound");
 				}
 			};
 			final Runnable runnable = new Runnable() {
 				public void run() {
-					if (runSearch(pattern)) {
+					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+					fbReader.TextSearchPatternOption.setValue(pattern);
+					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
 						successHandler.sendEmptyMessage(0);
 					} else {
 						failureHandler.sendEmptyMessage(0);
 					}
 				}
 			};
-			UIUtil.wait(getWaitMessageResourceKey(), runnable, getParentActivity());
+			UIUtil.wait("search", runnable, getParentActivity());
 		}
 		finish();
-	}
-
-	private void onSuccess() {
-		FBReader.Instance.showTextSearchControls(true);
-	}
-
-	private String getFailureMessageResourceKey() {
-		return "textNotFound";
-	}
-
-	private String getWaitMessageResourceKey() {
-		return "search";
-	}
-
-	private boolean runSearch(final String pattern) {
-		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		fbReader.TextSearchPatternOption.setValue(pattern);
-		return fbReader.getTextView().search(pattern, true, false, false, false) != 0;
 	}
 
 	private Activity getParentActivity() {
