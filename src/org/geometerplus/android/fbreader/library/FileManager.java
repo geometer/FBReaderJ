@@ -138,7 +138,7 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 
 	private void startUpdate() {
 		new Thread(
-			new SmartFilter(ZLFile.createFileByPath(myPath))
+			new SmartFilter(this, ZLFile.createFileByPath(myPath))
 		).start();
 	}
 
@@ -406,43 +406,6 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 		}
 	}
 
-	private final class SmartFilter implements Runnable {
-		private final ZLFile myFile;
-
-		public SmartFilter(ZLFile file) {
-			myFile = file;
-		}
-
-		public void run() {
-			if (!myFile.isReadable()) {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
-					}
-				});
-				finish();
-				return;
-			}
-
-			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
-			Collections.sort(children, new FileComparator());
-			for (final ZLFile file : children) {
-				if (Thread.currentThread().isInterrupted()) {
-					break;
-				}
-				if (file.isDirectory() || file.isArchive() ||
-					PluginCollection.Instance().getPlugin(file) != null) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							FMBaseAdapter adapter = getAdapter();
-							adapter.add(new FileItem(file));
-							adapter.notifyDataSetChanged();				//hmm...
-						}
-					});
-				}
-			}
-		}	
-	}
 }
 
 interface HasAdapter{

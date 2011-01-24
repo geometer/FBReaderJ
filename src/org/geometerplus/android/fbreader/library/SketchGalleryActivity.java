@@ -108,7 +108,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	
 	private void startUpdate() {
 		new Thread(
-			new SmartFilter(ZLFile.createFileByPath(myPath))
+			new SmartFilter(this, ZLFile.createFileByPath(myPath))
 		).start();
 	}
 	
@@ -345,44 +345,5 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 		}
     	
 	}
-	
-	private final class SmartFilter implements Runnable {
-		private final ZLFile myFile;
-
-		public SmartFilter(ZLFile file) {
-			myFile = file;
-		}
-
-		public void run() {
-			if (!myFile.isReadable()) {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						UIUtil.showErrorMessage(SketchGalleryActivity.this, "permissionDenied");
-					}
-				});
-				finish();
-				return;
-			}
-
-			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
-			Collections.sort(children, new FileComparator());
-			for (final ZLFile file : children) {
-				if (Thread.currentThread().isInterrupted()) {
-					break;
-				}
-				if (file.isDirectory() || file.isArchive() ||
-					PluginCollection.Instance().getPlugin(file) != null) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							final FMBaseAdapter adapter = getAdapter();
-							adapter.add(new FileItem(file));
-							adapter.notifyDataSetChanged();				//hmm...
-						}
-					});
-				}
-			}
-		}	
-	}
-
 	
 }
