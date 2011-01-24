@@ -28,6 +28,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
@@ -155,8 +156,11 @@ public class BookInfoActivity extends Activity {
 	private void setupCover(Book book) {
 		final ImageView coverView = (ImageView)findViewById(R.id.book_cover);
 
-		final int maxHeight = 250; // FIXME: hardcoded constant
-		final int maxWidth = maxHeight * 3 / 4;
+		final DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+		final int maxHeight = metrics.heightPixels * 2 / 3;
+		final int maxWidth = maxHeight * 2 / 3;
 
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
