@@ -64,18 +64,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		
-		// TODO ... sclass
-		DatabaseInstance = SQLiteBooksDatabase.Instance();
-		if (DatabaseInstance == null) {
-			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
-		}
-		if (LibraryInstance == null) {
-			LibraryInstance = new Library();
-			startService(new Intent(getApplicationContext(), InitializationService.class));
-		}
-
 		GalleryAdapter galleryAdapter = new GalleryAdapter(); 
 		myGallery.setAdapter(galleryAdapter);
 		myGallery.setOnItemClickListener(galleryAdapter);
@@ -142,8 +131,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 				Intent.FLAG_ACTIVITY_CLEAR_TOP),
 				FileManager.CHILD_LIST_REQUEST);
 	}
-
-	
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
