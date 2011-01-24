@@ -2,6 +2,7 @@ package org.geometerplus.android.fbreader.library;
 
 import java.io.IOException;
 
+import org.geometerplus.android.fbreader.library.ViewChangeDialog.ViewType;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Book;
@@ -46,10 +47,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	private static final int MOVE_FILE_ITEM_ID = 12;
 	
 	private String myPath;
-//	private String myInsertPath;
-//	public static String myInsertPathStatic;
-//	public static SortType mySortType;
-//	public static ViewType myViewType;
 	
 	@Override 
 	public FMBaseAdapter getAdapter() {
@@ -76,6 +73,29 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
 		} else {
 			startUpdate();
+		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (FileManager.myViewType == ViewType.SIMPLE){
+			if (myPath != null){
+				FileManager.launchFileManagerActivity(this, myPath);
+				finish();
+			} else {
+				finish();
+			}
+			return;
+		}
+
+		if (FileManager.myInsertPathStatic != null) {
+			setTitle(myResource.getResource("moveTitle").getValue());
+		} else if (myPath == null) {
+			setTitle(myResource.getResource("fileTree").getValue());
+		} else {
+			setTitle(myPath);
 		}
 	}
 	

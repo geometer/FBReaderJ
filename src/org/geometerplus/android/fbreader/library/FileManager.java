@@ -35,7 +35,9 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -91,7 +93,6 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 		mySortType = SortingDialog.getOprionSortType();
 		myViewType = ViewChangeDialog.getOprionViewType(); 
 
-		// TODO 
 		if (myViewType == ViewType.SKETCH){
 			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
 			finish();
@@ -127,6 +128,17 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 	@Override
 	protected void onResume() {
 		super.onResume();
+
+		if (myViewType == ViewType.SKETCH){
+			if (myPath != null){
+				SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
+				finish();
+			} else {
+				finish();
+			}
+			return;
+		}
+
 		if (myInsertPathStatic != null) {
 			setTitle(myResource.getResource("moveTitle").getValue());
 		} else if (myPath == null) {
@@ -356,6 +368,14 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 		return mySelectedBookPath.startsWith(prefix);
 	}
 
+	public static void launchFileManagerActivity(Context context, String path){
+		((Activity) context).startActivityForResult(new Intent(
+				context, FileManager.class).putExtra(
+				FileManager.FILE_MANAGER_PATH, path).addFlags(
+				Intent.FLAG_ACTIVITY_CLEAR_TOP),
+				FileManager.CHILD_LIST_REQUEST);
+	}
+	
 	private final class FileListAdapter extends FMBaseAdapter {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
