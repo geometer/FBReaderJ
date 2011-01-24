@@ -25,8 +25,9 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
+import android.os.Handler;
+import android.os.Message;
+import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -51,31 +52,31 @@ import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.android.fbreader.library.KillerCallback;
 
+import org.geometerplus.android.util.UIUtil;
+
 public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
 	final static int REPAINT_CODE = 1;
 
-	static FBReader Instance;
-
 	private int myFullScreenFlag;
 
-	private static class NavigationButtonPanel extends ControlButtonPanel {
+	private class NavigationButtonPanel extends ControlButtonPanel {
 		public volatile boolean NavigateDragging;
 		public ZLTextPosition StartPosition;
 
 		@Override
 		public void onShow() {
-			if (Instance != null && myControlPanel != null) {
-				Instance.setupNavigation(myControlPanel);
+			if (myControlPanel != null) {
+				setupNavigation(myControlPanel);
 			}
 		}
 
 		@Override
 		public void updateStates() {
 			super.updateStates();
-			if (!NavigateDragging && Instance != null && myControlPanel != null) {
-				Instance.setupNavigation(myControlPanel);
+			if (!NavigateDragging && myControlPanel != null) {
+				setupNavigation(myControlPanel);
 			}
 		}
 	}
@@ -90,14 +91,6 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private static TextSearchButtonPanel myTextSearchPanel;
 	private static NavigationButtonPanel myNavigatePanel;
-
-	/*private String fileNameFromUri(Uri uri) {
-		if (uri.equals(Uri.parse("file:///"))) {
-			return Library.getHelpFile().getPath();
-		} else {
-			return uri.getPath();
-		}
-	}*/
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
@@ -114,7 +107,6 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Instance = this;
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		myFullScreenFlag =
 			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -143,6 +135,37 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			final Handler successHandler = new Handler() {
+				public void handleMessage(Message message) {
+					showTextSearchControls(true);
+				}
+			};
+			final Handler failureHandler = new Handler() {
+				public void handleMessage(Message message) {
+					UIUtil.showErrorMessage(FBReader.this, "textNotFound");
+				}
+			};
+			final Runnable runnable = new Runnable() {
+				public void run() {
+					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+					fbReader.TextSearchPatternOption.setValue(pattern);
+					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
+						successHandler.sendEmptyMessage(0);
+					} else {
+						failureHandler.sendEmptyMessage(0);
+					}
+				}
+			};
+			UIUtil.wait("search", runnable, this);
+		} else {
+			super.onNewIntent(intent);
+		}
 	}
 
 	@Override

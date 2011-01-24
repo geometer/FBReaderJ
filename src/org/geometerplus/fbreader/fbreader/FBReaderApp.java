@@ -36,8 +36,6 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
-	public final ZLStringOption BookmarkSearchPatternOption =
-		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
 	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
