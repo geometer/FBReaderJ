@@ -53,9 +53,9 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 				if (index == 0) {
 					link = reader.myReferencePrefix + href.substring(1);
 				} else if (index > 0) {
-					link = reader.getFileAlias(href.substring(0, index)) + href.substring(index);
+					link = reader.getFileAlias(reader.myLocalPathPrefix + href.substring(0, index)) + href.substring(index);
 				} else {
-					link = reader.getFileAlias(href);
+					link = reader.getFileAlias(reader.myLocalPathPrefix + href);
 				}
 			}
 			myHyperlinkStack[myHyperlinkStackSize++] = hyperlinkType;

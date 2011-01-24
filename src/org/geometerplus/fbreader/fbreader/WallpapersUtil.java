@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.view;
+package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import java.util.List;
 
-public class ZLAndroidViewWidget {
-	//@Override
-	public void scrollTo(int viewPage, int shift) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToPage(viewPage, shift);
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
+import org.geometerplus.fbreader.Paths;
+
+public abstract class WallpapersUtil {
+	public static List<ZLFile> predefinedWallpaperFiles() {
+		return ZLFile.createFileByPath("wallpapers").children();
 	}
 
-	//@Override
-	public void startAutoScrolling(int viewPage) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(viewPage);
+	public static List<ZLFile> externalWallpaperFiles() {
+		return ZLFile.createFileByPath(Paths.WallpapersDirectoryOption().getValue()).children();
 	}
 }

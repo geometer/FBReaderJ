@@ -151,10 +151,12 @@ public class ZLTTFInfoDetector {
 		if (nameInfo == null || nameInfo.Offset < myPosition || nameInfo.Length <= 0) {
 			return null;
 		}
-		if (nameInfo.Length > 10240) {
-			throw new IOException("Name table size is too large: " + nameInfo.Length);
-		}
-		final byte[] buffer = readTable(nameInfo);
+		byte[] buffer;
+		try {
+			buffer = readTable(nameInfo);
+		} catch (Throwable e) {
+			return null;
+		} 
 		if (getInt16(buffer, 0) != 0) {
 			throw new IOException("Name table format is invalid");
 		}

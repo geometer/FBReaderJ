@@ -36,14 +36,12 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
-	public final ZLStringOption BookmarkSearchPatternOption =
-		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
 	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
 
 	public final ZLBooleanOption EnableDoubleTapOption =
-		new ZLBooleanOption("Options", "EnableDoubleTap", true);
+		new ZLBooleanOption("Options", "EnableDoubleTap", false);
 	public final ZLBooleanOption NavigateAllWordsOption =
 		new ZLBooleanOption("Options", "NavigateAllWords", false);
 
@@ -107,8 +105,11 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 
-		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyScrollingAction(this, true));
-		addAction(ActionCode.VOLUME_KEY_SCROLL_BACKWARD, new VolumeKeyScrollingAction(this, false));
+		addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
+		addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
+
+		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(this, true));
+		addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(this, false));
 
 		addAction(ActionCode.CANCEL, new CancelAction(this));
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));

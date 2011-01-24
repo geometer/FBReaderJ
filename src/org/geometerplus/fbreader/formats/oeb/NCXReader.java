@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.formats.oeb;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLArchiveEntryFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.bookmodel.*;
@@ -109,7 +110,10 @@ class NCXReader extends ZLXMLReaderAdapter {
 				} else if (tag == TAG_CONTENT) {
 					final int size = myPointStack.size();
 					if (size > 0) {
-						myPointStack.get(size - 1).ContentHRef = myLocalPathPrefix + attributes.getValue("src");
+						myPointStack.get(size - 1).ContentHRef =
+							ZLArchiveEntryFile.normalizeEntryName(
+								myLocalPathPrefix + attributes.getValue("src")
+							);
 					}
 				}
 				break;

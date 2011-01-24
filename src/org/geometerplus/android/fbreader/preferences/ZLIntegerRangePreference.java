@@ -46,11 +46,12 @@ class ZLIntegerRangePreference extends ListPreference implements ZLPreference {
 	protected void onDialogClosed(boolean result) {
 		super.onDialogClosed(result);
 		if (result) {
-			setSummary(getValue());
+			final String value = getValue();
+			setSummary(value);
+			myOption.setValue(myOption.MinValue + findIndexOfValue(value));
 		}
 	}
 
 	public void onAccept() {
-		myOption.setValue(myOption.MinValue + findIndexOfValue(getValue()));
 	}
 }

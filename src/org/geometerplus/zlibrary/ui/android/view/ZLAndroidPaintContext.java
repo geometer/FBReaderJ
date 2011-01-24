@@ -27,6 +27,7 @@ import android.graphics.*;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
@@ -63,6 +64,51 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myOutlinePaint.setMaskFilter(new EmbossMaskFilter(new float[] {1, 1, 1}, .4f, 6f, 3.5f));
 	}
 
+	private static ZLFile ourWallpaperFile;
+	private static Bitmap ourWallpaper;
+	@Override
+	public void clear(ZLFile wallpaperFile, boolean doMirror) {
+		if (!wallpaperFile.equals(ourWallpaperFile)) {
+			ourWallpaperFile = wallpaperFile;
+			ourWallpaper = null;
+			try {
+				final Bitmap fileBitmap =
+					new BitmapFactory().decodeStream(wallpaperFile.getInputStream());
+				if (doMirror) {
+					final int w = fileBitmap.getWidth();
+					final int h = fileBitmap.getHeight();
+					final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
+					for (int i = 0; i < w; ++i) {
+						for (int j = 0; j < h; ++j) {
+							int color = fileBitmap.getPixel(i, j);
+							wallpaper.setPixel(i, j, color);
+							wallpaper.setPixel(i, 2 * h - j - 1, color);
+							wallpaper.setPixel(2 * w - i - 1, j, color);
+							wallpaper.setPixel(2 * w - i - 1, 2 * h - j - 1, color);
+						}
+					}
+					ourWallpaper = wallpaper;
+				} else {
+					ourWallpaper = fileBitmap;
+				}
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
+		}
+		if (ourWallpaper != null) {
+			final int w = ourWallpaper.getWidth();
+			final int h = ourWallpaper.getHeight();
+			for (int cw = 0, iw = 1; cw < myWidth; cw += w, ++iw) {
+				for (int ch = 0, ih = 1; ch < myHeight; ch += h, ++ih) {
+					myCanvas.drawBitmap(ourWallpaper, cw, ch, myFillPaint);
+				}
+			}
+		} else {
+			clear(new ZLColor(128, 128, 128));
+		}
+	}
+
+	@Override
 	public void clear(ZLColor color) {
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
 		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);

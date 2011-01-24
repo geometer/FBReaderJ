@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,18 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.fbreader.library;
 
-class VolumeKeyScrollingAction extends FBAction {
-	private final boolean myForward;
+public final class TitleTree extends LibraryTree {
+	public final String Title;
 
-	VolumeKeyScrollingAction(FBReaderApp fbreader, boolean forward) {
-		super(fbreader);
-		myForward = forward;
+	TitleTree(LibraryTree parent, String title) {
+		super(parent);
+		Title = title;
 	}
 
-	public boolean isEnabled() {
-		return ScrollingPreferences.Instance().VolumeKeysOption.getValue();
-	}
-
-	public void run() {
-		boolean isInverted = ScrollingPreferences.Instance().InvertVolumeKeysOption.getValue();
-		Reader.getTextView().doScrollPage(isInverted ? !myForward : myForward);
+	@Override
+	public String getName() {
+		return Title;
 	}
 }

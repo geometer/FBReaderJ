@@ -45,6 +45,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	static final String PATH_SEARCH_RESULTS = "searchResults";
 	static final String PATH_RECENT = "recent";
 	static final String PATH_BY_AUTHOR = "byAuthor";
+	static final String PATH_BY_TITLE = "byTitle";
 	static final String PATH_BY_TAG = "byTag";
 
 	static final ZLStringOption BookSearchPatternOption =
@@ -201,6 +202,10 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 		}
 		if (tree instanceof AuthorTree) {
 			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
+		}
+		if (tree instanceof TitleTree) {
+			final String title = mySelectedBook.getTitle();
+			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
 		}
 		if (tree instanceof SeriesTree) {
 			final SeriesInfo info = mySelectedBook.getSeriesInfo();

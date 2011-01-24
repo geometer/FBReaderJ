@@ -204,9 +204,8 @@ public abstract class ZLAndroidActivity extends Activity {
 	}
 
 	@Override
-	public void onNewIntent(Intent intent) {
+	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-
 		ZLApplication.Instance().openFile(fileFromIntent(intent));
 	}
 
