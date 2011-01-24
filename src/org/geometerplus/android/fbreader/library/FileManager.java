@@ -474,5 +474,9 @@ public final class FileManager extends BaseActivity {
 			}
 		}	
 	}
-
 }
+
+interface HasAdapter{
+	FMBaseAdapter getAdapter();
+}
+
