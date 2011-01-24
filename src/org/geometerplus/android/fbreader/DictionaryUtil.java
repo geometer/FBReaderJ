@@ -161,6 +161,7 @@ public abstract class DictionaryUtil {
 		}
 	}
 
+/*
 	public static void openWordInDictionary(Activity activity, String text) { 
 		if (text == null) {
 			return;
@@ -181,6 +182,7 @@ public abstract class DictionaryUtil {
 			DictionaryUtil.installDictionaryIfNotInstalled(activity);
 		}
 	}
+*/
 
 	public static void installDictionaryIfNotInstalled(final Activity activity) {
 		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test"))) {
