@@ -19,28 +19,33 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import android.app.*;
+import org.geometerplus.android.fbreader.BookInfoActivity;
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BooksDatabase;
+import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+
+import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.*;
+import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.*;
-
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.fbreader.library.*;
-
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.BookInfoActivity;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 abstract class BaseActivity extends ListActivity {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";

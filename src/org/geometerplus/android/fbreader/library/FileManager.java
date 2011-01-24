@@ -381,7 +381,6 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 			if (myPath == null)
 				return;
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-
 			final FileItem item = getItem(position);
 
 			menu.setHeaderTitle(item.getName());

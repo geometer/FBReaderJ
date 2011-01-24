@@ -1,14 +1,9 @@
 package org.geometerplus.android.fbreader.library;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -20,7 +15,9 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -32,9 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -221,7 +216,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 //				new RenameDialog(this, fileItem.getFile()).show();
 //				return true;
 			case DELETE_FILE_ITEM_ID:
-				//deleteFileItem(fileItem); // TODO in base class
+				deleteFileItem(fileItem); // TODO in base class
 				return true;
 		}
 		return super.onContextItemSelected(item);
@@ -236,6 +231,47 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 		);
     }
 	
+	private void deleteFileItem(FileItem fileItem){
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+
+		String message;
+		if (fileItem.getFile().isDirectory()){
+			message = dialogResource.getResource("deleteDirBox").getResource("message").getValue();
+		} else {
+			message = dialogResource.getResource("deleteFileBox").getResource("message").getValue();
+		}
+		new AlertDialog.Builder(this)
+			.setTitle(fileItem.getName())
+			.setMessage(message)
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new FileDeleter(fileItem))
+			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+			.create().show();
+		
+	}
+	
+	private class FileDeleter implements DialogInterface.OnClickListener {
+		private final FileItem myFileItem;
+
+		FileDeleter(FileItem fileItem) {
+			myFileItem = fileItem;
+		}
+
+		public void onClick(DialogInterface dialog, int which) {
+			for (Book book : FileUtil.getBooksList(myFileItem.getFile())){
+				BaseActivity.LibraryInstance.removeBook(book, Library.REMOVE_FROM_LIBRARY);
+			}
+			FMBaseAdapter adapter = getAdapter();
+			adapter.remove(myFileItem);
+			adapter.notifyDataSetChanged();
+			ZLFile file = myFileItem.getFile();
+			if(file != null){
+				file.getPhysicalFile().delete();
+			}
+		}
+	}
+    
 	public class GalleryAdapter extends FMBaseAdapter implements OnItemClickListener, OnItemSelectedListener {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
