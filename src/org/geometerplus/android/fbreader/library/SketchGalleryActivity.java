@@ -41,7 +41,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class SketchGalleryActivity extends BaseGalleryActivity {
+public class SketchGalleryActivity extends BaseGalleryActivity implements HasAdapter {
 	public static String LOG = "FileManager";
 	
 //	public static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
@@ -56,6 +56,10 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 //	public static SortType mySortType;
 //	public static ViewType myViewType;
 	
+	@Override 
+	public FMBaseAdapter getAdapter() {
+		return (FMBaseAdapter)myGallery.getAdapter();
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,13 +97,13 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 	
 	private void addItem(String path, String resourceKey) {
 		final ZLResource resource = myResource.getResource(resourceKey);
-		GalleryAdapter adapter = ((GalleryAdapter)myGallery.getAdapter());
+		FMBaseAdapter adapter = getAdapter();
 		adapter.add(new FileItem(
 			ZLFile.createFileByPath(path),
 			resource.getValue(),
 			resource.getResource("summary").getValue()
 		));
-		adapter.notifyDataSetChanged();
+		adapter.notifyDataSetChanged(); // TODO see ...
 	}
 	
 	private void startUpdate() {
@@ -126,7 +130,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-		((GalleryAdapter)myGallery.getAdapter()).deleteFile(book.File);
+		getAdapter().deleteFile(book.File);
 		myGallery.invalidate();
 	}
 	
@@ -214,8 +218,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		GalleryAdapter adapter = ((GalleryAdapter)myGallery.getAdapter()); 
-		final FileItem fileItem = adapter.getItem(position);
+		final FileItem fileItem = getAdapter().getItem(position);
 		final Book book = fileItem.getBook(); 
 		if (book != null) {
 			onContextItemSelected(item.getItemId(), book);
@@ -246,44 +249,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 		);
     }
 	
-	public class GalleryAdapter extends BaseAdapter 
-		implements OnItemClickListener, OnItemSelectedListener, OnCreateContextMenuListener {
-		
-		private List<FileItem> myItems = new ArrayList<FileItem>();
-		public int position = 0;
-		
-		public synchronized void clear() {
-			myItems.clear();
-		}
-
-		public synchronized void add(FileItem item){
-			myItems.add(item);
-		}
-		
-		public synchronized void remove(FileItem fileItem) {
-			myItems.remove(fileItem);
-		}
-
-		public synchronized void deleteFile(ZLFile file) {
-			for (FileItem item : myItems) {
-				if (file.equals(item.getFile())) {
-					myItems.remove(item);
-					break;
-				}
-			}
-		}
-		
-        public synchronized int getCount() {
-            return myItems.size();
-        }
-
-        public synchronized FileItem getItem(int position) {
-            return myItems.get(position);
-        }
-
-        public synchronized long getItemId(int position) {
-            return position;
-        }
+	public class GalleryAdapter extends FMBaseAdapter implements OnItemClickListener, OnItemSelectedListener {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			runItem(myItems.get(position)); 
@@ -292,7 +258,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 		@Override
 		public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
 			view.setSelected(false);
-			this.position = position;
 		}
 
 		@Override
@@ -409,7 +374,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity {
 					PluginCollection.Instance().getPlugin(file) != null) {
 					runOnUiThread(new Runnable() {
 						public void run() {
-							final GalleryAdapter adapter = (GalleryAdapter)myGallery.getAdapter();
+							final FMBaseAdapter adapter = getAdapter();
 							adapter.add(new FileItem(file));
 							adapter.notifyDataSetChanged();				//hmm...
 						}

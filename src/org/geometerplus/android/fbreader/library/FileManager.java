@@ -53,7 +53,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public final class FileManager extends BaseActivity {
+public final class FileManager extends BaseActivity implements HasAdapter {
 	public static String LOG = "FileManager";
 	
 //	public static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
@@ -68,6 +68,11 @@ public final class FileManager extends BaseActivity {
 	public static String myInsertPathStatic;
 	public static SortType mySortType;
 	public static ViewType myViewType;
+	
+	@Override 
+	public FMBaseAdapter getAdapter() {
+		return (FMBaseAdapter)getListAdapter();
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +110,7 @@ public final class FileManager extends BaseActivity {
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				runItem(((FileListAdapter)getListAdapter()).getItem(position));
+				runItem(getAdapter().getItem(position));
 			}
 		});
 	}
@@ -114,7 +119,7 @@ public final class FileManager extends BaseActivity {
 	protected void onRestart() {
 		super.onRestart();
 		if (myPath != null){
-			((FileListAdapter)getListAdapter()).clear();
+			getAdapter().clear();
 			startUpdate();
 		}
 	}
@@ -141,7 +146,7 @@ public final class FileManager extends BaseActivity {
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
 			if (myPath != null) {
-				((FileListAdapter)getListAdapter()).clear();
+				getAdapter().clear();
 				startUpdate();
 			}
 			getListView().invalidateViews();
@@ -154,8 +159,7 @@ public final class FileManager extends BaseActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		FileListAdapter adapter = ((FileListAdapter)getListAdapter()); 
-		final FileItem fileItem = adapter.getItem(position);
+		final FileItem fileItem = getAdapter().getItem(position);
 		final Book book = fileItem.getBook(); 
 		if (book != null) {
 			onContextItemSelected(item.getItemId(), book);
@@ -188,7 +192,7 @@ public final class FileManager extends BaseActivity {
 			for (Book book : FileUtil.getBooksList(myFileItem.getFile())){
 				LibraryInstance.removeBook(book, Library.REMOVE_FROM_LIBRARY);
 			}
-			FileListAdapter adapter = (FileListAdapter)getListAdapter();
+			FMBaseAdapter adapter = getAdapter();
 			adapter.remove(myFileItem);
 			adapter.notifyDataSetChanged();
 			ZLFile file = myFileItem.getFile();
@@ -221,7 +225,7 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-		((FileListAdapter)getListAdapter()).deleteFile(book.File);
+		getAdapter().deleteFile(book.File);
 		getListView().invalidateViews();
 	}
 
@@ -242,7 +246,7 @@ public final class FileManager extends BaseActivity {
 
 	private void addItem(String path, String resourceKey) {
 		final ZLResource resource = myResource.getResource(resourceKey);
-		((FileListAdapter)getListAdapter()).add(new FileItem(
+		getAdapter().add(new FileItem(
 			ZLFile.createFileByPath(path),
 			resource.getValue(),
 			resource.getResource("summary").getValue()
@@ -352,41 +356,25 @@ public final class FileManager extends BaseActivity {
 		return mySelectedBookPath.startsWith(prefix);
 	}
 
-	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
-		private List<FileItem> myItems = new ArrayList<FileItem>();
-		public Gallery myGallery; 
-		
-		public synchronized void clear() {
-			myItems.clear();
-		}
+	private final class FileListAdapter extends FMBaseAdapter {
 
-		public synchronized void add(FileItem item){
-			myItems.add(item);
-		}
-		
-		public synchronized void remove(FileItem fileItem) {
-			myItems.remove(fileItem);
-		}
-
-		public synchronized void deleteFile(ZLFile file) {
-			for (FileItem item : myItems) {
-				if (file.equals(item.getFile())) {
-					myItems.remove(item);
-					break;
-				}
+		public View getView(int position, View convertView, ViewGroup parent) {
+            final FileItem item = getItem(position);
+			final View view = createView(convertView, parent, item.getName(), item.getSummary());
+			if (isItemSelected(item)) {
+				view.setBackgroundColor(0xff555555);
+			} else {
+				view.setBackgroundColor(0);
 			}
-		}
+			final ImageView coverView = getCoverView(view);
+			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
 
-		public synchronized int getCount() {
-			return myItems.size();
-		}
-
-		public synchronized FileItem getItem(int position) {
-			return myItems.get(position);
-		}
-
-		public long getItemId(int position) {
-			return position;
+			if (coverBitmap != null) {
+				coverView.setImageBitmap(coverBitmap);
+			} else {
+				coverView.setImageResource(item.getIcon());
+			}
+            return view;
 		}
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -415,25 +403,6 @@ public final class FileManager extends BaseActivity {
 					menu.add(0, DELETE_FILE_ITEM_ID, 0, myResource.getResource("delete").getValue());
 				}
 			}
-		}
-
-		public View getView(int position, View convertView, ViewGroup parent) {
-            final FileItem item = getItem(position);
-			final View view = createView(convertView, parent, item.getName(), item.getSummary());
-			if (isItemSelected(item)) {
-				view.setBackgroundColor(0xff555555);
-			} else {
-				view.setBackgroundColor(0);
-			}
-			final ImageView coverView = getCoverView(view);
-			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
-
-			if (coverBitmap != null) {
-				coverView.setImageBitmap(coverBitmap);
-			} else {
-				coverView.setImageResource(item.getIcon());
-			}
-            return view;
 		}
 	}
 
@@ -465,7 +434,7 @@ public final class FileManager extends BaseActivity {
 					PluginCollection.Instance().getPlugin(file) != null) {
 					runOnUiThread(new Runnable() {
 						public void run() {
-							final FileListAdapter adapter = (FileListAdapter)getListAdapter();
+							FMBaseAdapter adapter = getAdapter();
 							adapter.add(new FileItem(file));
 							adapter.notifyDataSetChanged();				//hmm...
 						}
