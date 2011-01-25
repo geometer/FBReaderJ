@@ -136,11 +136,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	
 
 	public static void launchSketchGalleryActivity(Context context, String path){
-//		((Activity) context).startActivityForResult(new Intent(
-//				context, SketchGalleryActivity.class).putExtra(
-//				FileManager.FILE_MANAGER_PATH, path).addFlags(
-//				Intent.FLAG_ACTIVITY_CLEAR_TOP),
-//				FileManager.CHILD_LIST_REQUEST);
 		Intent i = new Intent(context, SketchGalleryActivity.class)
 			.putExtra(FileManager.FILE_MANAGER_PATH, path)
 			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -197,7 +192,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	    		try {
 	    			FileUtil.moveFile(FileManager.myInsertPathStatic, myPath);
 	    			FileManager.myInsertPathStatic = null;
-	    			//refresh();	// TODO
+	    			refresh(getClass());
 	    			runOnUiThread(messFileMoved);
 	    		} catch (IOException e) {
     				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -250,7 +245,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 				FileManager.CHILD_LIST_REQUEST
 		);
     }
-	
+    
 	private void deleteFileItem(FileItem fileItem){
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");

@@ -365,11 +365,6 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 	}
 
 	public static void launchFileManagerActivity(Context context, String path){
-//		((Activity) context).startActivityForResult(new Intent(
-//				context, FileManager.class).putExtra(
-//				FileManager.FILE_MANAGER_PATH, path).addFlags(
-//				Intent.FLAG_ACTIVITY_CLEAR_TOP),
-//				FileManager.CHILD_LIST_REQUEST);
 		Intent i = new Intent(context, FileManager.class)
 			.putExtra(FILE_MANAGER_PATH, path)
 			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
