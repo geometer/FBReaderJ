@@ -18,11 +18,9 @@
 		android:id="@+id/sketch_item_summary"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="5dip"
 		android:layout_below="@id/library_tree_item_name"
 		android:singleLine="true"
+		android:layout_marginTop="5dip"
 		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:ellipsize="marquee"
-		android:marqueeRepeatLimit="marquee_forever"
 	/>
 </LinearLayout>
