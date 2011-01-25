@@ -48,6 +48,15 @@ public final class SmartFilter implements Runnable {
 			return;
 		}
 
+		if (myFile.children().size() == 0){
+			myActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					ToastMaker.MakeToast(myActivity, "messEmptyDirectory");
+				}
+			});
+			return;
+		}
+		
 		final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
 		Collections.sort(children, new FileComparator());
 		for (final ZLFile file : children) {

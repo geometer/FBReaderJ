@@ -332,7 +332,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 			} else {
 				imageView.setImageResource(fileItem.getIcon());
 			}
-//			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             return view;
         }

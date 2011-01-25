@@ -61,6 +61,7 @@
 		<node name="messDirectoryIntoArchive" value="Невозможно создать папку внутри архива"/>
 		<node name="messInsertIntoArchive" value="Невозможно вставить файл в архив"/>
 		<node name="messRenameFailed" value="Переименование файла не выполнено"/>
+		<node name="messEmptyDirectory" value="Папка не содержит файлов"/>
 		
 		<node name="sortingBox">
 			<node name="title" value="Сортировка"/>
