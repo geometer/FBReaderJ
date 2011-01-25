@@ -81,12 +81,8 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 		super.onResume();
 
 		if (FileManager.myViewType == ViewType.SIMPLE){
-			if (myPath != null){
-				FileManager.launchFileManagerActivity(this, myPath);
-				finish();
-			} else {
-				finish();
-			}
+			FileManager.launchFileManagerActivity(this, myPath);
+			finish();
 			return;
 		}
 
@@ -140,11 +136,15 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	
 
 	public static void launchSketchGalleryActivity(Context context, String path){
-		((Activity) context).startActivityForResult(new Intent(
-				context, SketchGalleryActivity.class).putExtra(
-				FileManager.FILE_MANAGER_PATH, path).addFlags(
-				Intent.FLAG_ACTIVITY_CLEAR_TOP),
-				FileManager.CHILD_LIST_REQUEST);
+//		((Activity) context).startActivityForResult(new Intent(
+//				context, SketchGalleryActivity.class).putExtra(
+//				FileManager.FILE_MANAGER_PATH, path).addFlags(
+//				Intent.FLAG_ACTIVITY_CLEAR_TOP),
+//				FileManager.CHILD_LIST_REQUEST);
+		Intent i = new Intent(context, SketchGalleryActivity.class)
+			.putExtra(FileManager.FILE_MANAGER_PATH, path)
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		((Activity) context).startActivity(i);
 	}
 	
     @Override

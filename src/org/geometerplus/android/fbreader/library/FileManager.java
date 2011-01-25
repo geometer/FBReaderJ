@@ -130,12 +130,8 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 		super.onResume();
 
 		if (myViewType == ViewType.SKETCH){
-			if (myPath != null){
-				SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
-				finish();
-			} else {
-				finish();
-			}
+			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
+			finish();
 			return;
 		}
 
@@ -369,11 +365,15 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 	}
 
 	public static void launchFileManagerActivity(Context context, String path){
-		((Activity) context).startActivityForResult(new Intent(
-				context, FileManager.class).putExtra(
-				FileManager.FILE_MANAGER_PATH, path).addFlags(
-				Intent.FLAG_ACTIVITY_CLEAR_TOP),
-				FileManager.CHILD_LIST_REQUEST);
+//		((Activity) context).startActivityForResult(new Intent(
+//				context, FileManager.class).putExtra(
+//				FileManager.FILE_MANAGER_PATH, path).addFlags(
+//				Intent.FLAG_ACTIVITY_CLEAR_TOP),
+//				FileManager.CHILD_LIST_REQUEST);
+		Intent i = new Intent(context, FileManager.class)
+			.putExtra(FILE_MANAGER_PATH, path)
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		((Activity) context).startActivity(i);
 	}
 	
 	private final class FileListAdapter extends FMBaseAdapter {

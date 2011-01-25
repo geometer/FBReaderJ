@@ -62,7 +62,7 @@ VR:
 	* Реализация layout файла для эскизного представления
 	DONE Работоспособное контекстное меню											(24.01.11)
 	DONE Параметры вида сохраняются между запусками										(28.12.10)
-	* Смена видов и корректное перемещение назад
+	DONE Смена видов и корректное перемещение назад										(25.01.11)
 
 
 	DONE ZLFile.createFileByPath("/sdcard/Books").getParent() = null --> FileUtil.getParent(zlfile) return parent for directory.	(29.12.10)
