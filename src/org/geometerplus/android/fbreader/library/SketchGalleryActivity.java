@@ -23,13 +23,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -220,7 +223,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 		if (book != null) {
 			onContextItemSelected(item.getItemId(), book);
 		}
-		
 		switch (item.getItemId()) {
 			case MOVE_FILE_ITEM_ID:
 				Log.v(LOG, "MOVE_FILE_ITEM_ID"); 
@@ -308,34 +310,46 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
     			LayoutInflater.from(parent.getContext()).inflate(R.layout.sketch_item, parent, false);
             
             final FileItem fileItem = getItem(position);
+    		String summary = fileItem.getSummary();
+    		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
+    		summary = summary != null ? summary : fileItem.getName();  
+    		summary = summary.length() > 16 ? summary.substring(0, 15) : summary; 
+    		summaryTextView.setText(summary);
 
-    		final int maxHeight = 180; // FIXME: hardcoded constant
+            Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+    		final int maxHeight = display.getHeight() - 120;
     		final int maxWidth = maxHeight * 3 / 4;
-
-            ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
+    		
+    		Log.v(FileManager.LOG, "maxHeight = " + maxHeight + " maxWidth = " + maxWidth);
+    		
+    		ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
 			imageView.getLayoutParams().height = maxHeight;
 			imageView.getLayoutParams().width = maxWidth;
-            
+			
     		final Bitmap coverBitmap = getBitmap(fileItem.getCover(), maxWidth, maxHeight);
 			if (coverBitmap != null) {
 				imageView.setImageBitmap(coverBitmap);
 			} else {
 				imageView.setImageResource(fileItem.getIcon());
 			}
-			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-    		String name = fileItem.getName();
-    		//name = name.length() > 10 ? name.substring(0, 10) : name; 
-    		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
-    		String summary = fileItem.getSummary();
-    		//summary = summary.length() > 10 ? summary.substring(0, 10) : summary; 
-    		if (summary != null ){
-    			summaryTextView.setText(summary);
-    		} else {
-    			summaryTextView.setText(name);
-    		}
             return view;
         }
+        
+    	protected ImageView getCoverView(View parent) {
+    		parent.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    		int myCoverHeight = parent.getMeasuredHeight();
+    		int myCoverWidth = myCoverHeight * 3 / 4;
+    		parent.requestLayout();
+    		
+    		final ImageView coverView = (ImageView)parent.findViewById(R.id.sketch_item_image);
+    		coverView.getLayoutParams().width = myCoverWidth;
+    		coverView.getLayoutParams().height = myCoverHeight;
+    		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+    		coverView.requestLayout();
+    		return coverView;
+    	}
         
     	private Bitmap getBitmap(ZLImage cover, int maxWidth, int maxHeight) {
     		if (cover instanceof ZLLoadableImage) {
