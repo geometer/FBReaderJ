@@ -182,7 +182,7 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 			if (length <= 0) {
 				break;
 			}
-			addImage("" + index, new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, Model.Book.File, offset, length));
+			addImage("" + (index + 1), new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, Model.Book.File, offset, length));
 		}
 	}
 
