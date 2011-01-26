@@ -1,8 +1,0 @@
-* response parser: add namespaces processing
-* return full result from response parser
-* full SOAP types list: support in request and in parser
-
-
-** коды возврата для работы приложения не требуются: при возникновении ошибок на стороне сервера перехватывать их и отправлять по SOAP в событии fault
-** какой vendor_id ?????
-** что такое marketplace_id ?????
