@@ -39,6 +39,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class FileUtil {
 	
@@ -137,6 +139,14 @@ public class FileUtil {
 			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
 			.create().show();
     }
+    
+    public static MenuItem addMenuItem(Menu menu, int index, ZLResource resource, String resourceKey, int iconId) {
+        final String label = resource.getResource("menu").getResource(resourceKey).getValue();
+        final MenuItem item = menu.add(0, index, Menu.NONE, label);
+        item.setIcon(iconId);
+        return item;
+    }
+
 
  }
 

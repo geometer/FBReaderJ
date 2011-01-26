@@ -20,25 +20,16 @@
 package org.geometerplus.android.fbreader.library;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import org.geometerplus.android.fbreader.library.SortingDialog.SortType;
-import org.geometerplus.android.fbreader.library.ViewChangeDialog.ViewType;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -50,8 +41,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -223,20 +212,13 @@ public final class FileManager extends BaseActivity implements HasAdapter {
     public boolean onCreateOptionsMenu(Menu menu) {
     	Log.v(LOG, "onCreateOptionsMenu");
     	super.onCreateOptionsMenu(menu);
-    	addMenuItem(menu, 0, "insert", R.drawable.ic_menu_sorting);
-    	addMenuItem(menu, 1, "mkdir", R.drawable.ic_menu_mkdir);
-    	addMenuItem(menu, 2, "sorting", R.drawable.ic_menu_sorting);
-    	addMenuItem(menu, 3, "view", R.drawable.ic_menu_sorting);	
+    	FileUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
+    	FileUtil.addMenuItem(menu, 1, myResource, "mkdir", R.drawable.ic_menu_mkdir);
+    	FileUtil.addMenuItem(menu, 2, myResource, "sorting", R.drawable.ic_menu_sorting);
+    	FileUtil.addMenuItem(menu, 3, myResource, "view", R.drawable.ic_menu_sorting);	
     	return true;
     }
 
-    private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
-        final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
-        final MenuItem item = menu.add(0, index, Menu.NONE, label);
-        item.setIcon(iconId);
-        return item;
-    }
-    
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		Log.v(LOG, "onPrepareOptionsMenu - start");
@@ -368,7 +350,6 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 			}
 		}
 	}
-
 }
 
 interface HasAdapter{

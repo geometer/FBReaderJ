@@ -19,12 +19,21 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.io.IOException;
+
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
@@ -32,7 +41,8 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
 	private String myTreePathString;
-
+	public static ViewType myViewType;
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -41,7 +51,12 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			finish();
 			return;
 		}
-
+		
+		myViewType = LibraryViewChangeDialog.getOprionViewType();
+		if (myViewType == ViewType.SKETCH){
+			// TODO
+		}
+		
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			if (runSearch(intent)) {
@@ -121,4 +136,29 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			new OpenTreeRunnable(LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
 		}
 	}
+	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	super.onCreateOptionsMenu(menu);
+    	FileUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_sorting);	
+    	return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	    	case 0:
+	    		new LibraryViewChangeDialog(this, mySelectedBookPath, myTreePathString).show();
+	    		return true;
+        	default:
+        		return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static void launchActivity(Activity activity, String selectedBookPath, String treePath){
+		Intent intent = new Intent(activity, LibraryTreeActivity.class)
+			.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath)
+			.putExtra(TREE_PATH_KEY, treePath);
+		activity.startActivityForResult(intent, CHILD_LIST_REQUEST);
+    }
 }
