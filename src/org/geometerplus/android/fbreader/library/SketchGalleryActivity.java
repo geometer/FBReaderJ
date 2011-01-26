@@ -195,7 +195,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	    		try {
 	    			FileUtil.moveFile(FileManager.myInsertPathStatic, myPath);
 	    			FileManager.myInsertPathStatic = null;
-	    			refresh(getClass());
+	    			FileUtil.refreshActivity(this, myPath);
 	    			runOnUiThread(messFileMoved);
 	    		} catch (IOException e) {
     				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -227,66 +227,16 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 			case MOVE_FILE_ITEM_ID:
 				Log.v(LOG, "MOVE_FILE_ITEM_ID"); 
 				FileManager.myInsertPathStatic = fileItem.getFile().getPhysicalFile().getPath();
-				refresh(this.getClass());			
+				FileUtil.refreshActivity(this, myPath);			
 				return true;
 //			case RENAME_FILE_ITEM_ID:
 //				new RenameDialog(this, fileItem.getFile()).show();
 //				return true;
 			case DELETE_FILE_ITEM_ID:
-				deleteFileItem(fileItem); // TODO in base class
+				FileUtil.deleteFileItem(this, fileItem);
 				return true;
 		}
 		return super.onContextItemSelected(item);
-	}
-	
-    public void refresh(Class<?> cl){
-		startActivityForResult(
-				new Intent(this, cl)
-					.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
-					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
-				FileManager.CHILD_LIST_REQUEST
-		);
-    }
-    
-	private void deleteFileItem(FileItem fileItem){
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-
-		String message;
-		if (fileItem.getFile().isDirectory()){
-			message = dialogResource.getResource("deleteDirBox").getResource("message").getValue();
-		} else {
-			message = dialogResource.getResource("deleteFileBox").getResource("message").getValue();
-		}
-		new AlertDialog.Builder(this)
-			.setTitle(fileItem.getName())
-			.setMessage(message)
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new FileDeleter(fileItem))
-			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-			.create().show();
-		
-	}
-	
-	private class FileDeleter implements DialogInterface.OnClickListener {
-		private final FileItem myFileItem;
-
-		FileDeleter(FileItem fileItem) {
-			myFileItem = fileItem;
-		}
-
-		public void onClick(DialogInterface dialog, int which) {
-			for (Book book : FileUtil.getBooksList(myFileItem.getFile())){
-				BaseActivity.LibraryInstance.removeBook(book, Library.REMOVE_FROM_LIBRARY);
-			}
-			FMBaseAdapter adapter = getAdapter();
-			adapter.remove(myFileItem);
-			adapter.notifyDataSetChanged();
-			ZLFile file = myFileItem.getFile();
-			if(file != null){
-				file.getPhysicalFile().delete();
-			}
-		}
 	}
     
 	public class GalleryAdapter extends FMBaseAdapter implements OnItemClickListener, OnItemSelectedListener {

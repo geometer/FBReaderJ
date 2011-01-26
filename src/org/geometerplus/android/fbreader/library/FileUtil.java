@@ -30,8 +30,15 @@ import java.util.List;
 
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 
 public class FileUtil {
 	
@@ -96,6 +103,63 @@ public class FileUtil {
 			return ZLFile.createFileByPath(path);
 		}
 		return ZLFile.createFileByPath(file.getParent().getPath());
+	}
+	
+    public static void launchActivity(Activity parent, Class<?> cl, String path){
+		parent.startActivityForResult(
+				new Intent(parent, cl)
+					.putExtra(FileManager.FILE_MANAGER_PATH, path)
+					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
+				FileManager.CHILD_LIST_REQUEST
+		);
+    }
+    
+    public static void refreshActivity(Activity parent, String path){
+    	launchActivity(parent, parent.getClass(), path);
+    }
+    
+    public static void deleteFileItem(Context parent, FileItem fileItem){
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+
+		String message;
+		if (fileItem.getFile().isDirectory()){
+			message = dialogResource.getResource("deleteDirBox").getResource("message").getValue();
+		} else {
+			message = dialogResource.getResource("deleteFileBox").getResource("message").getValue();
+		}
+		HasAdapter activity = (HasAdapter) parent;
+		new AlertDialog.Builder(parent)
+			.setTitle(fileItem.getName())
+			.setMessage(message)
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), new FileDeleter(activity, fileItem))
+			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+			.create().show();
+    }
+
+ }
+
+class FileDeleter implements DialogInterface.OnClickListener {
+	private final HasAdapter myActivity;
+	private final FileItem myFileItem;
+
+	FileDeleter(HasAdapter activity, FileItem fileItem) {
+		myActivity = activity;
+		myFileItem = fileItem;
+	}
+
+	public void onClick(DialogInterface dialog, int which) {
+		for (Book book : FileUtil.getBooksList(myFileItem.getFile())){
+			BaseActivity.LibraryInstance.removeBook(book, Library.REMOVE_FROM_LIBRARY);
+		}
+		FMBaseAdapter adapter = myActivity.getAdapter();
+		adapter.remove(myFileItem);
+		adapter.notifyDataSetChanged();
+		ZLFile file = myFileItem.getFile();
+		if(file != null){
+			file.getPhysicalFile().delete();
+		}
 	}
 }
 

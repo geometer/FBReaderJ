@@ -79,72 +79,27 @@ public class BaseGalleryActivity extends Activity {
 	}
 
 	
-	// TODO recoding
-	protected View createView(View convertView, ViewGroup parent, String name, String summary) {
-		final View view = (convertView != null) ?  convertView :
-			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-		
-		TextView nameTextView = (TextView)view.findViewById(R.id.library_tree_item_name);
-		nameTextView.setText(name);
-
-		TextView summaryTextView = (TextView)view.findViewById(R.id.library_tree_item_childrenlist); 
-        summaryTextView.setText(summary);
-
-        if (summary == null || summary.equals("")){
-            summaryTextView.setVisibility(View.GONE);
-        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 0.5f));
-        	nameTextView.setPadding(0, 0, 0, 6);
-        	nameTextView.setGravity(Gravity.CENTER_VERTICAL);
-        } else {
-        	summaryTextView.setVisibility(View.VISIBLE);
-        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
-        }
-		return view;
-	}
-
-	// TODO recoding
-	private int myCoverWidth = -1;
-	private int myCoverHeight = -1;
-	private final Runnable myInvalidateViewsRunnable = new Runnable() {
-		public void run() {
-//			getView().invalidateViews();
-		}
-	};
-
-//	protected ImageView getCoverView(View parent) {
-//		if (myCoverWidth == -1) {
-//			parent.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//			myCoverHeight = parent.getMeasuredHeight();
-//			myCoverWidth = myCoverHeight * 15 / 32;
-//			parent.requestLayout();
-//		}
+//	// TODO recoding
+//	protected View createView(View convertView, ViewGroup parent, String name, String summary) {
+//		final View view = (convertView != null) ?  convertView :
+//			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
+//		
+//		TextView nameTextView = (TextView)view.findViewById(R.id.library_tree_item_name);
+//		nameTextView.setText(name);
 //
-//		final ImageView coverView = (ImageView)parent.findViewById(R.id.library_tree_item_icon);
-//		coverView.getLayoutParams().width = myCoverWidth;
-//		coverView.getLayoutParams().height = myCoverHeight;
-//		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//		coverView.requestLayout();
-//		return coverView;
-//	}
-
-//	protected Bitmap getCoverBitmap(ZLImage cover) {
-//		if (cover == null) {
-//			return null;
-//		}
+//		TextView summaryTextView = (TextView)view.findViewById(R.id.library_tree_item_childrenlist); 
+//        summaryTextView.setText(summary);
 //
-//		ZLAndroidImageData data = null;
-//		final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-//		if (cover instanceof ZLLoadableImage) {
-//			final ZLLoadableImage img = (ZLLoadableImage)cover;
-//			if (img.isSynchronized()) {
-//				data = mgr.getImageData(img);
-//			} else {
-//				img.startSynchronization(myInvalidateViewsRunnable);
-//			}
-//		} else {
-//			data = mgr.getImageData(cover);
-//		}
-//		return data != null ? data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight) : null;
+//        if (summary == null || summary.equals("")){
+//            summaryTextView.setVisibility(View.GONE);
+//        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 0.5f));
+//        	nameTextView.setPadding(0, 0, 0, 6);
+//        	nameTextView.setGravity(Gravity.CENTER_VERTICAL);
+//        } else {
+//        	summaryTextView.setVisibility(View.VISIBLE);
+//        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
+//        }
+//		return view;
 //	}
 
 	private class BookDeleter implements DialogInterface.OnClickListener {

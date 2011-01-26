@@ -175,59 +175,17 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 		
 		switch (item.getItemId()) {
 			case MOVE_FILE_ITEM_ID:
-				Log.v(LOG, "MOVE_FILE_ITEM_ID");
 				myInsertPathStatic = fileItem.getFile().getPhysicalFile().getPath();
-				refresh();
+				FileUtil.refreshActivity(this, myPath);
 				return true;
 //			case RENAME_FILE_ITEM_ID:
 //				new RenameDialog(this, fileItem.getFile()).show();
 //				return true;
 			case DELETE_FILE_ITEM_ID:
-				deleteFileItem(fileItem);
+				FileUtil.deleteFileItem(this, fileItem);
 				return true;
 		}
 		return super.onContextItemSelected(item);
-	}
-
-	private class FileDeleter implements DialogInterface.OnClickListener {
-		private final FileItem myFileItem;
-
-		FileDeleter(FileItem fileItem) {
-			myFileItem = fileItem;
-		}
-
-		public void onClick(DialogInterface dialog, int which) {
-			for (Book book : FileUtil.getBooksList(myFileItem.getFile())){
-				LibraryInstance.removeBook(book, Library.REMOVE_FROM_LIBRARY);
-			}
-			FMBaseAdapter adapter = getAdapter();
-			adapter.remove(myFileItem);
-			adapter.notifyDataSetChanged();
-			ZLFile file = myFileItem.getFile();
-			if(file != null){
-				file.getPhysicalFile().delete();
-			}
-		}
-	}
-	
-	private void deleteFileItem(FileItem fileItem){
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-
-		String message;
-		if (fileItem.getFile().isDirectory()){
-			message = dialogResource.getResource("deleteDirBox").getResource("message").getValue();
-		} else {
-			message = dialogResource.getResource("deleteFileBox").getResource("message").getValue();
-		}
-		new AlertDialog.Builder(this)
-			.setTitle(fileItem.getName())
-			.setMessage(message)
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new FileDeleter(fileItem))
-			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-			.create().show();
-		
 	}
 	
 	@Override
@@ -311,7 +269,7 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 	    		try {
 	    			FileUtil.moveFile(myInsertPathStatic, myPath);
 	    			myInsertPathStatic = null;
-	    			refresh();
+	    			FileUtil.refreshActivity(this, myPath);
 	    			runOnUiThread(messFileMoved);
 	    		} catch (IOException e) {
     				Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -331,15 +289,6 @@ public final class FileManager extends BaseActivity implements HasAdapter {
         }
     }
     
-    public void refresh(){
-		startActivityForResult(
-				new Intent(this, FileManager.class)
-					.putExtra(FILE_MANAGER_PATH, myPath)
-					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
-				FileManager.CHILD_LIST_REQUEST
-		);
-    }
-
 	private boolean isItemSelected(FileItem item) {
 		if (mySelectedBookPath == null || !item.isSelectable()) {
 			return false;
