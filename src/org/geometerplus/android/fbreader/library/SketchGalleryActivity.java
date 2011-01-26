@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -254,6 +255,11 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 		public void onNothingSelected(AdapterView<?> arg0) {
 		
 		}
+
+		private int maxHeight = 0;
+		private int maxWidth = 0;
+		private int paddingTop = 0;
+		private int orientation = -1;
 		
         public View getView(int position, View convertView, ViewGroup parent) {
             final View view = (convertView != null) ?  convertView :
@@ -267,13 +273,26 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
     		summaryTextView.setText(summary);
 
             Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-    		final int maxHeight = display.getHeight() - 120;
-    		final int maxWidth = maxHeight * 3 / 4;
-    		
-    		Log.v(FileManager.LOG, "maxHeight = " + maxHeight + " maxWidth = " + maxWidth);
-    		
+            if (orientation != display.getOrientation()){
+            	orientation = display.getOrientation();
+            	switch (display.getOrientation()) {
+					case 0:
+						maxWidth = display.getWidth() / 2;
+						maxHeight = maxWidth * 4 / 3;
+					break;
+
+					case 1:
+						maxWidth = (int) (display.getWidth() / 3);
+						maxHeight = maxWidth * 4 / 3;
+						paddingTop = (display.getHeight() - maxHeight) / 4;
+					break;
+            	}
+            }
+            	
+    		Log.v(FileManager.LOG, "maxHeight = " + maxHeight + " maxWidth = " + maxWidth + " orientation = " + display.getOrientation());
     		ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
-			imageView.getLayoutParams().height = maxHeight;
+    		imageView.setPadding(0, paddingTop, 0, 0);
+    		imageView.getLayoutParams().height = maxHeight;
 			imageView.getLayoutParams().width = maxWidth;
 			
     		final Bitmap coverBitmap = getBitmap(fileItem.getCover(), maxWidth, maxHeight);
