@@ -22,7 +22,9 @@ package org.geometerplus.fbreader.formats.pdb;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.encoding.ZLEncodingCollection;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
@@ -202,20 +204,14 @@ public class MobipocketPlugin extends PdbPlugin {
 				coverIndex = thumbIndex;
 			}
 
-			// TODO: implement
-			/*final MobipocketStream mpStream = new MobipocketStream(file);
-
-			int index = pbStream.firstImageLocationIndex(file.path());
-			if (index >= 0) {
-				std::pair<int,int> imageLocation = pbStream.imageLocation(pbStream.header(), index + coverIndex);
-				if ((imageLocation.first > 0) && (imageLocation.second > 0)) {
-					return new ZLFileImage(
-						file,
-						imageLocation.first,
-						imageLocation.second
-					);
+			MobipocketStream myMobipocketStream = new MobipocketStream(file);
+			int start = myMobipocketStream.getImageOffset(coverIndex);
+			if (start >= 0) {
+				int len = myMobipocketStream.getImageLength(coverIndex);
+				if (len > 0) {
+					return new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, file, start, len);
 				}
-			}*/
+			}
 			return null; 
 		} catch (IOException e) {
 			return null;
