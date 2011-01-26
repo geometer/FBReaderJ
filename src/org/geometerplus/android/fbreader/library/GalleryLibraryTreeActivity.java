@@ -19,42 +19,33 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.io.IOException;
+import org.geometerplus.android.fbreader.library.LibraryBaseActivity.LibraryAdapter;
+import org.geometerplus.android.fbreader.library.LibraryBaseActivity.OpenTreeRunnable;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BookTree;
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.BookTree;
-import org.geometerplus.fbreader.tree.FBTree;
-
-public class LibraryTreeActivity extends LibraryBaseActivity {
+public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
 	private String myTreePathString;
 	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (DatabaseInstance == null || LibraryInstance == null) {
+		if (BaseActivity.DatabaseInstance == null || BaseActivity.LibraryInstance == null) {
 			finish();
 			return;
 		}
-		
-//		FileManager.myViewType = ViewChangeDialog.getOprionViewType();
-//		if (FileManager.myViewType == ViewType.SKETCH){
-//			// TODO
-//		}
 		
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -89,17 +80,17 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 
 		FBTree tree = null;
 		if (PATH_RECENT.equals(path[0])) {
-			tree = LibraryInstance.recentBooks();
+			tree = BaseActivity.LibraryInstance.recentBooks();
 		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
-			tree = LibraryInstance.searchResults();
+			tree = BaseActivity.LibraryInstance.searchResults();
 		} else if (PATH_BY_AUTHOR.equals(path[0])) {
-			tree = LibraryInstance.byAuthor();
+			tree = BaseActivity.LibraryInstance.byAuthor();
 		} else if (PATH_BY_TITLE.equals(path[0])) {
-			tree = LibraryInstance.byTitle();
+			tree = BaseActivity.LibraryInstance.byTitle();
 		} else if (PATH_BY_TAG.equals(path[0])) {
-			tree = LibraryInstance.byTag();
+			tree = BaseActivity.LibraryInstance.byTag();
 		} else if (PATH_FAVORITES.equals(path[0])) {
-			tree = LibraryInstance.favorites();
+			tree = BaseActivity.LibraryInstance.favorites();
 		}
         
 		for (int i = 1; i < path.length; ++i) {
@@ -118,23 +109,25 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		}
         
 		if (tree != null) {
-			final LibraryAdapter adapter = new LibraryAdapter(tree.subTrees());
-			setListAdapter(adapter);
-			getListView().setOnCreateContextMenuListener(adapter);
-			System.err.println("SELECTED: " + adapter.getFirstSelectedItemIndex());
-			setSelection(adapter.getFirstSelectedItemIndex());
+//			final LibraryAdapter adapter = new LibraryAdapter(tree.subTrees());			// TODO
+//			setListAdapter(adapter);													// TODO
+//			getListView().setOnCreateContextMenuListener(adapter);						// TODO
+//			System.err.println("SELECTED: " + adapter.getFirstSelectedItemIndex());		
+			//setSelection(adapter.getFirstSelectedItemIndex());						// TODO
 		}
 	}
 
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
-		if (tree instanceof BookTree) {
-			showBookInfo(((BookTree)tree).Book);
-		} else {
-			new OpenTreeRunnable(LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
-		}
-	}
+	// TODO
+//	@Override
+//	public void onListItemClick(ListView listView, View view, int position, long rowId) {
+//		//BTree tree = ((LibraryAdapter)getListAdapter()).getItem(position); // TODO
+//		FBTree tree = null;													 // FIXME
+//		if (tree instanceof BookTree) {
+//			showBookInfo(((BookTree)tree).Book);
+//		} else {
+//			new OpenTreeRunnable(BaseActivity.LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
+//		}
+//	}
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

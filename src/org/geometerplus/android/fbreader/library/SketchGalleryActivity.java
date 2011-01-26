@@ -101,7 +101,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 			resource.getValue(),
 			resource.getResource("summary").getValue()
 		));
-		adapter.notifyDataSetChanged(); // TODO see ...
+		adapter.notifyDataSetChanged();
 	}
 	
 	private void startUpdate() {

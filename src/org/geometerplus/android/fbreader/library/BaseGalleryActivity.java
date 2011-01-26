@@ -21,10 +21,11 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class BaseGalleryActivity extends Activity {
-//	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
+	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 	private static final int OPEN_BOOK_ITEM_ID = 0;
 	private static final int SHOW_BOOK_INFO_ITEM_ID = 1;
 	private static final int ADD_TO_FAVORITES_ITEM_ID = 2;
@@ -163,4 +164,5 @@ public class BaseGalleryActivity extends Activity {
 		}
 		return false;
 	}
+
 }

@@ -299,7 +299,7 @@ class ViewChangeDialog extends RadioButtonDialog{
 	private static String VIEW_GROUP = "viewGroup";
 	private static String VIEW_OPTION_NAME = "viewOptionName";
 	private static int VIEW_DEF_VALUE = 0;
-	private static ZLIntegerOption myViewOption = new ZLIntegerOption(VIEW_GROUP, VIEW_OPTION_NAME, VIEW_DEF_VALUE);
+	public static ZLIntegerOption myViewOption = new ZLIntegerOption(VIEW_GROUP, VIEW_OPTION_NAME, VIEW_DEF_VALUE);
 
 	public ViewChangeDialog(Context content, String path) {
 		super(content, myTitle, myItems, myViewOption.getValue());
@@ -332,14 +332,8 @@ class LibraryViewChangeDialog extends RadioButtonDialog{
 	private String mySelectedBook;
 	private String myTreePathString;
 
-	private static String LIB_VIEW_GROUP = "libraryViewGroup";
-	private static String LIB_VIEW_OPTION_NAME = "libraryViewOptionName";
-	private static int LIB_VIEW_DEF_VALUE = 0;
-	private static ZLIntegerOption myViewOption = 
-		new ZLIntegerOption(LIB_VIEW_GROUP,	LIB_VIEW_OPTION_NAME, LIB_VIEW_DEF_VALUE);
-
 	public LibraryViewChangeDialog(Context content, String selectedBook, String treePathString) {
-		super(content, myTitle, myItems, myViewOption.getValue());
+		super(content, myTitle, myItems, ViewChangeDialog.myViewOption.getValue());
 		mySelectedBook = selectedBook;
 		myTreePathString = treePathString;
 	}
@@ -348,19 +342,19 @@ class LibraryViewChangeDialog extends RadioButtonDialog{
 	protected void itemSelected(DialogInterface dialog, int item){
 		super.itemSelected(dialog, item);
 		if (getOprionViewType().ordinal() != item){
-			myViewOption.setValue(item);
-			LibraryTreeActivity.myViewType = ViewType.values()[item];
-			if (LibraryTreeActivity.myViewType == ViewType.SIMPLE){
+			ViewChangeDialog.myViewOption.setValue(item);
+			FileManager.myViewType = ViewType.values()[item];
+			if (FileManager.myViewType == ViewType.SIMPLE){
 				LibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);
-			} else if (LibraryTreeActivity.myViewType == ViewType.SKETCH){
-				LibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);
+			} else if (FileManager.myViewType == ViewType.SKETCH){
+				LibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);	// TODO
 			}
 			((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP
 		}
 	}
 	
 	public static ViewType getOprionViewType(){
-		return ViewType.values()[myViewOption.getValue()];
+		return ViewType.values()[ViewChangeDialog.myViewOption.getValue()];
 	}
 }
 
