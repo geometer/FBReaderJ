@@ -226,12 +226,7 @@ class NetworkBookActions extends NetworkTreeActions {
 
 
 	private void showBooks(NetworkBaseActivity activity, NetworkTree tree) {
-		String key = null;
-		if (tree instanceof NetworkAuthorTree) {
-			key = PACKAGE + ".Authors:" + ((NetworkAuthorTree) tree).Author.DisplayName;
-		} else if (tree instanceof NetworkSeriesTree) {
-			key = PACKAGE + ".Series:" + ((NetworkSeriesTree) tree).SeriesTitle;
-		}
+		final String key = tree.getUniqueKey();
 		if (key != null) {
 			NetworkView.Instance().openTree(activity, tree, key);
 		}

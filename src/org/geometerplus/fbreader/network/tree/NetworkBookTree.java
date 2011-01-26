@@ -72,4 +72,9 @@ public class NetworkBookTree extends NetworkTree {
 	public NetworkLibraryItem getHoldedItem() {
 		return Book;
 	}
+
+	@Override
+	public String getUniqueKey() {
+		return null;
+	}
 }

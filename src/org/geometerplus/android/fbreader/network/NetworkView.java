@@ -33,6 +33,7 @@ import android.view.Menu;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 class NetworkView {
 	private static NetworkView ourInstance;
@@ -177,7 +178,7 @@ class NetworkView {
 		return getItemsLoadingRunnable(key) != null;
 	}
 
-	public void tryResumeLoading(NetworkBaseActivity activity, NetworkTree tree, String key, Runnable expandRunnable) {
+	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, String key, Runnable expandRunnable) {
 		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(key);
 		if (runnable != null && runnable.tryResumeLoading()) {
 			openTree(activity, tree, key);

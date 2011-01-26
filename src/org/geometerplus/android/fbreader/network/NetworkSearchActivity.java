@@ -36,7 +36,7 @@ import org.geometerplus.fbreader.network.*;
 
 public class NetworkSearchActivity extends Activity {
 
-	public static final String SEARCH_RUNNABLE_KEY = "org.geometerplus.android.fbreader.network.NetworkSearchActivity";
+	static final String SEARCH_RUNNABLE_KEY = "org.geometerplus.android.fbreader.network.NetworkSearchActivity";
 
 	@Override
 	public void onCreate(Bundle icicle) {

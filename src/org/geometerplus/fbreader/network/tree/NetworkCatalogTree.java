@@ -167,4 +167,10 @@ public class NetworkCatalogTree extends NetworkTree {
 		ChildrenItems.removeAll(items);
 		super.removeItems(items);
 	}
+
+	@Override
+	public String getUniqueKey() {
+		// FIXME: URL can be the same for POST queries!!!
+		return Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
+	}
 }

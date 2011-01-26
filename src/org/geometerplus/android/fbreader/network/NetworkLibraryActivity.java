@@ -217,11 +217,15 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		return true;
 	}
 
+	private static boolean searchIsInProgress() {
+		return NetworkView.Instance().containsItemsLoadingRunnable(
+				NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+	}
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		menu.findItem(MENU_SEARCH).setEnabled(!searchInProgress);
+		menu.findItem(MENU_SEARCH).setEnabled(!searchIsInProgress());
 		return true;
 	}
 
@@ -289,7 +293,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	@Override
 	public boolean onSearchRequested() {
-		if (NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY)) {
+		if (searchIsInProgress()) {
 			return false;
 		}
 		final NetworkLibrary library = NetworkLibrary.Instance();

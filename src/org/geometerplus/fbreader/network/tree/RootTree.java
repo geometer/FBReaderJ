@@ -32,4 +32,9 @@ public final class RootTree extends NetworkTree {
 	public NetworkLibraryItem getHoldedItem() {
 		return null;
 	}
+
+	@Override
+	public String getUniqueKey() {
+		return null;
+	}
 }

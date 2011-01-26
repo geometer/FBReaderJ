@@ -102,4 +102,9 @@ public class SearchItemTree extends NetworkTree implements ZLAndroidTree {
 	public NetworkLibraryItem getHoldedItem() {
 		return null;
 	}
+
+	@Override
+	public String getUniqueKey() {
+		return NetworkSearchActivity.SEARCH_RUNNABLE_KEY;
+	}
 }
