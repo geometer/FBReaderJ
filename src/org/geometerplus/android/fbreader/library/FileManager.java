@@ -56,6 +56,7 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 	
 	private String myPath;
 //	private String myInsertPath;
+	
 	public static String myInsertPathStatic;
 	public static SortType mySortType;
 	public static ViewType myViewType;
