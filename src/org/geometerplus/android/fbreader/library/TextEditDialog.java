@@ -52,7 +52,7 @@ public class TextEditDialog extends Dialog{
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         myEditText = new EditText(myContext);
         linearLayout.addView(myEditText);
-
+        
         LinearLayout btnLayout = new LinearLayout(myContext);
         btnLayout.setOrientation(LinearLayout.HORIZONTAL);
         btnLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -358,56 +358,3 @@ class LibraryViewChangeDialog extends RadioButtonDialog{
 	}
 }
 
-
-enum SortType{
-	BY_NAME{
-		public String getName() {
-			return myResource.getResource("byName").getValue();
-		}
-	},
-	BY_DATE{
-		public String getName() {
-			return myResource.getResource("byDate").getValue();
-		}
-	};
-
-	private static ZLResource myResource = ZLResource.resource("libraryView").getResource("sortingBox");
-	
-	public abstract String getName();
-	
-	public static String[] toStringArray(){
-		SortType[] sourse = values();
-		String[] result = new String[sourse.length];
-		for (int i = 0; i < sourse.length; i++){
-			result[i] = sourse[i].getName();
-		}
-		return result;
-	}
-}
-
-enum ViewType{
-
-	SIMPLE{
-		public String getName() {
-			return myResource.getResource("simple").getValue();
-		}
-	},
-	SKETCH{
-		public String getName() {
-			return myResource.getResource("sketch").getValue();
-		}
-	};
-	
-	private static ZLResource myResource = ZLResource.resource("libraryView").getResource("viewBox");
-	
-	public abstract String getName();
-
-	public static String[] toStringArray(){
-		ViewType[] sourse = values();
-		String[] result = new String[sourse.length];
-		for (int i = 0; i < sourse.length; i++){
-			result[i] = sourse[i].getName();
-		}
-		return result;
-	}
-}
