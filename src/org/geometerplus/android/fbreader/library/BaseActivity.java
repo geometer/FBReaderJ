@@ -47,18 +47,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-abstract class BaseActivity extends ListActivity {
-	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
-	private static final int OPEN_BOOK_ITEM_ID = 0;
-	private static final int SHOW_BOOK_INFO_ITEM_ID = 1;
-	private static final int ADD_TO_FAVORITES_ITEM_ID = 2;
-	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 3;
-	private static final int DELETE_BOOK_ITEM_ID = 4;
-
-	protected static final int CHILD_LIST_REQUEST = 0;
-	protected static final int BOOK_INFO_REQUEST = 1;
-	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
-	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
+abstract class BaseActivity extends ListActivity 
+	implements HasBaseConstants {
 
 	static BooksDatabase DatabaseInstance;
 	static Library LibraryInstance;

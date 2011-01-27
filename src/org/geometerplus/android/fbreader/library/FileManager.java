@@ -56,12 +56,9 @@ public final class FileManager extends BaseActivity
 			finish();
 			return;
 		}
-
+		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
 		FileListAdapter adapter = new FileListAdapter();
 		setListAdapter(adapter);
-
-		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
-//		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
 		
 		LibraryCommon.SortTypeInstance = SortingDialog.getOprionSortType();			// TODO move inisialization
 		LibraryCommon.ViewTypeInstance = ViewChangeDialog.getOprionViewType(); 		// TODO move inisialization
