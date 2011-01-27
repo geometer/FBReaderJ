@@ -224,7 +224,11 @@ public class BookInfoActivity extends Activity {
 			}
 		}
 		setupInfoPair(R.id.book_tags, "tags", buffer);
-		setupInfoPair(R.id.book_language, "language", ZLLanguageUtil.languageName(book.getLanguage()));
+		String language = book.getLanguage();
+		if (!ZLLanguageUtil.languageCodes().contains(language)) {
+			language = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
+		}
+		setupInfoPair(R.id.book_language, "language", ZLLanguageUtil.languageName(language));
 	}
 
 	private void setupAnnotation(Book book) {
