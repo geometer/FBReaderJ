@@ -28,6 +28,8 @@ import android.net.Uri;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
@@ -47,6 +49,7 @@ public abstract class DictionaryUtil {
 		String MARGIN_TOP = "EXTRA_MARGIN_TOP";
 		String MARGIN_BOTTOM = "EXTRA_MARGIN_BOTTOM";
 		String MARGIN_RIGHT = "EXTRA_MARGIN_RIGHT";
+		String FULLSCREEN = "EXTRA_FULLSCREEN";
 	}
 
 	private static Map<PackageInfo,Boolean> infos() {
@@ -163,6 +166,8 @@ public abstract class DictionaryUtil {
 		if (dictionaryInfo.IntentKey != null) {
 			intent.putExtra(ColorDict3.HEIGHT, 300);
 			intent.putExtra(ColorDict3.GRAVITY, android.view.Gravity.BOTTOM);
+			final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+			intent.putExtra(ColorDict3.FULLSCREEN, !application.ShowStatusBarOption.getValue());
 			return intent.putExtra(dictionaryInfo.IntentKey, text);
 		} else {
 			return intent.setData(Uri.parse(text));
