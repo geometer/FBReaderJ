@@ -34,20 +34,25 @@ import org.geometerplus.fbreader.library.Tag;
 import org.geometerplus.fbreader.library.TagTree;
 import org.geometerplus.fbreader.library.TitleTree;
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.ContextMenu;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	implements MenuItem.OnMenuItemClickListener, HasLibraryConstants {
@@ -110,18 +115,29 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
         }
     }
 
-    // TODO 
-	protected final class GalleryLibraryAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
-		private final List<FBTree> myItems;
+    // FIXME 
+	protected final class GalleryLibraryAdapter extends LibraryBaseAdapter 
+		implements OnItemClickListener, OnItemSelectedListener{
 
 		public GalleryLibraryAdapter(List<FBTree> items) {
-			myItems = items;
+			super(items);
 		}
 
-		public final int getCount() {
-			return myItems.size();
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
 		}
 
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view,
+				int position, long id) {
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+		}
+		
+		@Override
 		public int getFirstSelectedItemIndex() {
 			int index = 0;
 			for (FBTree t : myItems) {
@@ -133,14 +149,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 			return -1;
 		}
 
-		public final FBTree getItem(int position) {
-			return myItems.get(position);
-		}
-
-		public final long getItemId(int position) {
-			return position;
-		}
-
+		@Override
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			final LibraryTree tree = (LibraryTree)getItem(position);
@@ -148,37 +157,51 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 				createBookContextMenu(menu, ((BookTree)tree).Book);
 			}
 		}
+		
+		private int maxHeight = 0;
+		private int maxWidth = 0;
+		private int paddingTop = 0;
+		private int orientation = -1;
 
+		@Override
 		public View getView(int position, View convertView, final ViewGroup parent) {
-			// TODO
 			final FBTree tree = getItem(position);
-			final View view = null;
-//			final View view = createView(convertView, parent, tree.getName(), tree.getSecondString());
-//			if (isTreeSelected(tree)) {
-//				view.setBackgroundColor(0xff555555);
-//			} else {
-//				view.setBackgroundColor(0);
-//			}
-//
-//			final ImageView coverView = getCoverView(view);
-//
-//			if (tree instanceof ZLAndroidTree) {
-//				coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
-//			} else {
-//				final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
-//				if (coverBitmap != null) {
-//					coverView.setImageBitmap(coverBitmap);
-//				} else if (tree instanceof AuthorTree) {
-//					coverView.setImageResource(R.drawable.ic_list_library_author);
-//				} else if (tree instanceof TagTree) {
-//					coverView.setImageResource(R.drawable.ic_list_library_tag);
-//				} else if (tree instanceof BookTree) {
-//					coverView.setImageResource(R.drawable.ic_list_library_book);
-//				} else {
-//					coverView.setImageResource(R.drawable.ic_list_library_books);
-//				}
-//			}
+		
+			Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+            if (orientation != display.getOrientation()){
+            	orientation = display.getOrientation();
+            	switch (display.getOrientation()) {
+					case 0:
+						maxWidth = display.getWidth() / 2;
+						maxHeight = maxWidth * 4 / 3;
+					break;
 
+					case 1:
+						maxWidth = (int) (display.getWidth() / 3);
+						maxHeight = maxWidth * 4 / 3;
+						paddingTop = (display.getHeight() - maxHeight) / 4;
+					break;
+            	}
+            }
+            String summary = tree.getName();
+            ZLImage cover = tree.getCover();
+            int idIcon = 0; 
+     		if (tree instanceof ZLAndroidTree) {
+				idIcon = ((ZLAndroidTree)tree).getCoverResourceId();
+			} else {
+				if (tree instanceof AuthorTree) {
+					idIcon = R.drawable.ic_list_library_author;
+				} else if (tree instanceof TagTree) {
+					idIcon = R.drawable.ic_list_library_tag;
+				} else if (tree instanceof BookTree) {
+					idIcon = R.drawable.ic_list_library_book;
+				} else {
+					idIcon = R.drawable.ic_list_library_books;
+				}
+			}
+     		
+			View view = GalleryAdapterUtil.getView(convertView, 
+					parent, summary, cover, idIcon, maxHeight, maxWidth, paddingTop);
 			return view;
 		}
 	}

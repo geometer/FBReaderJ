@@ -3,7 +3,13 @@ package org.geometerplus.android.fbreader.library;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+import org.geometerplus.fbreader.library.AuthorTree;
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BookTree;
+import org.geometerplus.fbreader.library.LibraryTree;
+import org.geometerplus.fbreader.library.TagTree;
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
@@ -22,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -29,7 +36,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public abstract class FMBaseAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
+abstract class FMBaseAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	protected List<FileItem> myItems = new ArrayList<FileItem>();
 
 	public synchronized void clear() {
@@ -72,10 +79,36 @@ public abstract class FMBaseAdapter extends BaseAdapter implements View.OnCreate
 	public abstract void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo);
 }
 
+abstract class LibraryBaseAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
+	protected final List<FBTree> myItems;
 
-abstract class GalleryAdapter extends FMBaseAdapter {
+	public LibraryBaseAdapter(List<FBTree> items) {
+		myItems = items;
+	}
 
-	public View getView(View convertView, ViewGroup parent,
+	public final int getCount() {
+		return myItems.size();
+	}
+
+	public final FBTree getItem(int position) {
+		return myItems.get(position);
+	}
+
+	public final long getItemId(int position) {
+		return position;
+	}
+
+	public abstract int getFirstSelectedItemIndex(); 
+
+	@Override
+	public abstract View getView(int position, View convertView, ViewGroup parent);
+	
+	@Override
+	public abstract void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo);
+}
+
+class GalleryAdapterUtil {
+	public static View getView(View convertView, ViewGroup parent,
 			String summary, ZLImage cover, int idIcon,
 			int maxHeight, int maxWidth, int paddingTop){
         
@@ -99,7 +132,7 @@ abstract class GalleryAdapter extends FMBaseAdapter {
         return view;
 	}
 	
-	private Bitmap getBitmap(ZLImage cover, int maxWidth, int maxHeight) {
+	private static Bitmap getBitmap(ZLImage cover, int maxWidth, int maxHeight) {
 		if (cover instanceof ZLLoadableImage) {
 			final ZLLoadableImage loadableImage = (ZLLoadableImage)cover;
 			if (!loadableImage.isSynchronized()) {

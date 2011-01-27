@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -224,7 +225,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		return super.onContextItemSelected(item);
 	}
     
-	public class FileGalleryAdapter extends GalleryAdapter implements OnItemClickListener, OnItemSelectedListener {
+	public class FileGalleryAdapter extends FMBaseAdapter implements OnItemClickListener, OnItemSelectedListener {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			runItem(myItems.get(position)); 
@@ -266,8 +267,9 @@ public class SketchGalleryActivity extends BaseGalleryActivity
             String summary = fileItem.getSummary();
     		summary = summary != null ? summary : fileItem.getName();  
     		summary = summary.length() > 16 ? summary.substring(0, 15) : summary; 
-    		View view = getView(convertView, parent, summary, fileItem.getCover(), fileItem.getIcon(),
-            		maxHeight, maxWidth, paddingTop);
+    		
+    		View view = GalleryAdapterUtil.getView(convertView, parent, summary, fileItem.getCover(), 
+    				fileItem.getIcon(), maxHeight, maxWidth, paddingTop);
             return view;
         }
         
