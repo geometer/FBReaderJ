@@ -67,7 +67,7 @@ public final class SmartFilter implements Runnable {
 				PluginCollection.Instance().getPlugin(file) != null) {
 				myActivity.runOnUiThread(new Runnable() {
 					public void run() {
-						final FMBaseAdapter adapter = ((HasAdapter)myActivity).getAdapter();
+						final FMBaseAdapter adapter = ((FMBaseAdapter.HasAdapter)myActivity).getAdapter();
 						adapter.add(new FileItem(file));
 						adapter.notifyDataSetChanged();				//hmm...
 					}

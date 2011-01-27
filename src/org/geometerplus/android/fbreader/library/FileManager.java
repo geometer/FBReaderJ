@@ -45,7 +45,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public final class FileManager extends BaseActivity 
-	implements HasAdapter, HasFileManagerConstants {
+	implements FMBaseAdapter.HasAdapter, HasFileManagerConstants {
 	private String myPath;
 	
 	@Override

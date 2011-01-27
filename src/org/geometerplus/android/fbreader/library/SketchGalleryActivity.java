@@ -38,10 +38,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class SketchGalleryActivity extends BaseGalleryActivity 
-	implements HasAdapter, HasFileManagerConstants {
+	implements FMBaseAdapter.HasAdapter, HasFileManagerConstants {
 
 	private String myPath;
-//	public static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
 	
 	@Override 
 	public FMBaseAdapter getAdapter() {
@@ -273,23 +272,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity
             return view;
         }
         
-    	private Bitmap getBitmap(ZLImage cover, int maxWidth, int maxHeight) {
-    		if (cover instanceof ZLLoadableImage) {
-    			final ZLLoadableImage loadableImage = (ZLLoadableImage)cover;
-    			if (!loadableImage.isSynchronized()) {
-    				loadableImage.synchronize();
-    			}
-    		}
-    		final ZLAndroidImageData data =
-    			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(cover);
-    		if (data == null) {
-    			return null;
-    		}
-
-    		final Bitmap coverBitmap = data.getBitmap(2 * maxWidth, 2 * maxHeight);
-    		return coverBitmap;
-    	}
-    	
     	@Override
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			if (myPath == null)

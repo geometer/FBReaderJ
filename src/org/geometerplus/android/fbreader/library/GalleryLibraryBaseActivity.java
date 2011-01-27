@@ -41,7 +41,6 @@ import org.geometerplus.zlibrary.ui.android.R;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.Menu;
@@ -55,13 +54,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
-	implements MenuItem.OnMenuItemClickListener, HasLibraryConstants {
+	implements MenuItem.OnMenuItemClickListener, HasLibraryConstants, LibraryBaseAdapter.HasAdapter {
 
 	static final ZLStringOption BookSearchPatternOption =
-		new ZLStringOption("BookSearch", "Pattern", "");
-
+		new ZLStringOption("BookSearch", "Pattern", "");		// TODO deleter later
 	protected Book mySelectedBook;
 
+	@Override
+	public LibraryBaseAdapter getAdapter() {
+		return (LibraryBaseAdapter) myGallery.getAdapter();
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
@@ -209,8 +212,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		//final FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position); 	//TODO
-		final FBTree tree = null;														//FIXME
+		final FBTree tree = getAdapter().getItem(position); 		// FIXME
 		if (tree instanceof BookTree) {
 			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
 		}
@@ -220,7 +222,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-//		getListView().invalidateViews();		// TODO
+		getAdapter().notifyDataSetChanged();	// FIXME
 	}
 
 	protected boolean isTreeSelected(FBTree tree) {

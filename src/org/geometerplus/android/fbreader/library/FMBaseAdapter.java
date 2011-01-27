@@ -77,6 +77,10 @@ abstract class FMBaseAdapter extends BaseAdapter implements View.OnCreateContext
 	
 	@Override
 	public abstract void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo);
+	
+	interface HasAdapter{
+		FMBaseAdapter getAdapter();
+	}
 }
 
 abstract class LibraryBaseAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
@@ -105,6 +109,10 @@ abstract class LibraryBaseAdapter extends BaseAdapter implements View.OnCreateCo
 	
 	@Override
 	public abstract void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo);
+	
+	interface HasAdapter{
+		LibraryBaseAdapter getAdapter();
+	}
 }
 
 class GalleryAdapterUtil {

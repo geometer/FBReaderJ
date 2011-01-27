@@ -130,7 +130,7 @@ public class FileUtil {
 		} else {
 			message = dialogResource.getResource("deleteFileBox").getResource("message").getValue();
 		}
-		HasAdapter activity = (HasAdapter) parent;
+		FMBaseAdapter.HasAdapter activity = (FMBaseAdapter.HasAdapter) parent;
 		new AlertDialog.Builder(parent)
 			.setTitle(fileItem.getName())
 			.setMessage(message)
@@ -151,10 +151,10 @@ public class FileUtil {
  }
 
 class FileDeleter implements DialogInterface.OnClickListener {
-	private final HasAdapter myActivity;
+	private final FMBaseAdapter.HasAdapter myActivity;
 	private final FileItem myFileItem;
 
-	FileDeleter(HasAdapter activity, FileItem fileItem) {
+	FileDeleter(FMBaseAdapter.HasAdapter activity, FileItem fileItem) {
 		myActivity = activity;
 		myFileItem = fileItem;
 	}
