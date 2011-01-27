@@ -40,6 +40,15 @@ interface HasLibraryConstants {
 	static final String PATH_BY_TAG = "byTag";
 }
 
+interface HasFileManagerConstants {
+//	static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
+	static String FILE_MANAGER_PATH = "FileManagerPath";
+	
+	static final int DELETE_FILE_ITEM_ID = 10;
+//	static final int RENAME_FILE_ITEM_ID = 11; //FIXME delete later
+	static final int MOVE_FILE_ITEM_ID = 12;
+}
+
 enum SortType{
 	BY_NAME{
 		public String getName() {

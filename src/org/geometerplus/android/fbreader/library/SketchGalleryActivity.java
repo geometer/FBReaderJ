@@ -35,16 +35,11 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class SketchGalleryActivity extends BaseGalleryActivity implements HasAdapter {
-	public static String LOG = "FileManager";
-	
-//	public static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
-	
-	private static final int DELETE_FILE_ITEM_ID = 10;
-//	private static final int RENAME_FILE_ITEM_ID = 11; //FIXME delete later
-	private static final int MOVE_FILE_ITEM_ID = 12;
-	
+public class SketchGalleryActivity extends BaseGalleryActivity 
+	implements HasAdapter, HasFileManagerConstants {
+
 	private String myPath;
+//	public static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
 	
 	@Override 
 	public FMBaseAdapter getAdapter() {
@@ -63,8 +58,9 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 		
 		myPath = getIntent().getStringExtra(FileManager.FILE_MANAGER_PATH);
 //		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
-		FileManager.mySortType = SortingDialog.getOprionSortType();
-		FileManager.myViewType = ViewChangeDialog.getOprionViewType(); 
+		
+		LibraryCommon.SortTypeInstance = SortingDialog.getOprionSortType();		// TODO move inisialization
+		LibraryCommon.ViewTypeInstance = ViewChangeDialog.getOprionViewType(); 	// TODO move inisialization
 
 		if (myPath == null) {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
@@ -78,7 +74,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	protected void onResume() {
 		super.onResume();
 
-		if (FileManager.myViewType == ViewType.SIMPLE){
+		if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 			FileManager.launchFileManagerActivity(this, myPath);
 			finish();
 			return;
@@ -142,7 +138,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	Log.v(LOG, "onCreateOptionsMenu");
+    	Log.v(FileManager.LOG, "onCreateOptionsMenu");
     	super.onCreateOptionsMenu(menu);
     	FileUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
     	FileUtil.addMenuItem(menu, 1, myResource,  "mkdir", R.drawable.ic_menu_mkdir);
@@ -153,7 +149,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		Log.v(LOG, "onPrepareOptionsMenu - start");
+		Log.v(FileManager.LOG, "onPrepareOptionsMenu - start");
 		super.onPrepareOptionsMenu(menu);
 		
 		if (FileManager.myInsertPathStatic == null){
@@ -164,7 +160,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 			menu.findItem(1).setVisible(true).setEnabled(true);
         }
 		
-		Log.v(LOG, "onPrepareOptionsMenu - finish");
+		Log.v(FileManager.LOG, "onPrepareOptionsMenu - finish");
 		return true;
 	}
 	
@@ -213,7 +209,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity implements HasAda
 		}
 		switch (item.getItemId()) {
 			case MOVE_FILE_ITEM_ID:
-				Log.v(LOG, "MOVE_FILE_ITEM_ID"); 
+				Log.v(FileManager.LOG, "MOVE_FILE_ITEM_ID"); 
 				FileManager.myInsertPathStatic = fileItem.getFile().getPhysicalFile().getPath();
 				FileUtil.refreshActivity(this, myPath);			
 				return true;

@@ -266,11 +266,11 @@ class SortingDialog extends RadioButtonDialog{
 		super.itemSelected(dialog, item);
 		if (getOprionSortType().ordinal() != item){
 			mySortOption.setValue(item);
-			FileManager.mySortType = SortType.values()[item];
+			LibraryCommon.SortTypeInstance = SortType.values()[item];
 			
-			if (FileManager.myViewType == ViewType.SIMPLE){
+			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 				startActivity(FileManager.class);
-			} else if (FileManager.myViewType == ViewType.SKETCH) {
+			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH) {
 				startActivity(SketchGalleryActivity.class);
 			}
 		}
@@ -311,10 +311,10 @@ class ViewChangeDialog extends RadioButtonDialog{
 		super.itemSelected(dialog, item);
 		if (getOprionViewType().ordinal() != item){
 			myViewOption.setValue(item);
-			FileManager.myViewType = ViewType.values()[item];
-			if (FileManager.myViewType == ViewType.SIMPLE){
+			LibraryCommon.ViewTypeInstance = ViewType.values()[item];
+			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 				FileManager.launchFileManagerActivity(myContext, myPath);
-			} else if (FileManager.myViewType == ViewType.SKETCH){
+			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 				SketchGalleryActivity.launchSketchGalleryActivity(myContext, myPath);
 			}
 			((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -343,10 +343,10 @@ class LibraryViewChangeDialog extends RadioButtonDialog{
 		super.itemSelected(dialog, item);
 		if (getOprionViewType().ordinal() != item){
 			ViewChangeDialog.myViewOption.setValue(item);
-			FileManager.myViewType = ViewType.values()[item];
-			if (FileManager.myViewType == ViewType.SIMPLE){
+			LibraryCommon.ViewTypeInstance = ViewType.values()[item];
+			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 				LibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);
-			} else if (FileManager.myViewType == ViewType.SKETCH){
+			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 				LibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);	// TODO
 			}
 			((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP

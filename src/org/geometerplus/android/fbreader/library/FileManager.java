@@ -44,22 +44,14 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public final class FileManager extends BaseActivity implements HasAdapter {
+public final class FileManager extends BaseActivity 
+	implements HasAdapter, HasFileManagerConstants {
+	
 	public static String LOG = "FileManager";
-	
-//	public static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
-	
-	private static final int DELETE_FILE_ITEM_ID = 10;
-//	private static final int RENAME_FILE_ITEM_ID = 11; //FIXME delete later
-	private static final int MOVE_FILE_ITEM_ID = 12;
-	public static String FILE_MANAGER_PATH = "FileManagerPath";
 	
 	private String myPath;
 //	private String myInsertPath;
-	
 	public static String myInsertPathStatic;
-	public static SortType mySortType;
-	public static ViewType myViewType;
 	
 	@Override 
 	public FMBaseAdapter getAdapter() {
@@ -80,10 +72,11 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 
 		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
 //		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
-		mySortType = SortingDialog.getOprionSortType();
-		myViewType = ViewChangeDialog.getOprionViewType(); 
+		
+		LibraryCommon.SortTypeInstance = SortingDialog.getOprionSortType();			// TODO move inisialization
+		LibraryCommon.ViewTypeInstance = ViewChangeDialog.getOprionViewType(); 		// TODO move inisialization
 
-		if (myViewType == ViewType.SKETCH){
+		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
 			finish();
 		}
@@ -119,7 +112,7 @@ public final class FileManager extends BaseActivity implements HasAdapter {
 	protected void onResume() {
 		super.onResume();
 
-		if (myViewType == ViewType.SKETCH){
+		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
 			finish();
 			return;

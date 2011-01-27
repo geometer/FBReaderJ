@@ -19,17 +19,11 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.List;
-
-import org.geometerplus.android.fbreader.library.LibraryBaseActivity.LibraryAdapter;
-import org.geometerplus.android.fbreader.library.LibraryBaseActivity.StartTreeActivityRunnable;
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.library.AuthorTree;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.library.SeriesInfo;
 import org.geometerplus.fbreader.library.SeriesTree;
 import org.geometerplus.fbreader.library.Tag;
@@ -41,27 +35,12 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
-abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity implements MenuItem.OnMenuItemClickListener {
-
-	static final String TREE_PATH_KEY = "TreePath";
-	static final String PARAMETER_KEY = "Parameter";
-
-	static final String PATH_FAVORITES = "favorites";
-	static final String PATH_SEARCH_RESULTS = "searchResults";
-	static final String PATH_RECENT = "recent";
-	static final String PATH_BY_AUTHOR = "byAuthor";
-	static final String PATH_BY_TITLE = "byTitle";
-	static final String PATH_BY_TAG = "byTag";
+abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
+	implements MenuItem.OnMenuItemClickListener, HasLibraryConstants {
 
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");

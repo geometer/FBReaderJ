@@ -176,7 +176,7 @@ class FileDeleter implements DialogInterface.OnClickListener {
 class FileComparator implements Comparator<ZLFile> {
 	public int compare(ZLFile f0, ZLFile f1) {
 		int result = -1;
-		switch (FileManager.mySortType) {
+		switch (LibraryCommon.SortTypeInstance) {
 			case BY_NAME:
 				result = compareByName(f0, f1);
 				break;
