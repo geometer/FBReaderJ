@@ -46,17 +46,7 @@ import android.widget.Toast;
 
 public final class FileManager extends BaseActivity 
 	implements HasAdapter, HasFileManagerConstants {
-	
-	public static String LOG = "FileManager";
-	
 	private String myPath;
-//	private String myInsertPath;
-	public static String myInsertPathStatic;
-	
-	@Override 
-	public FMBaseAdapter getAdapter() {
-		return (FMBaseAdapter)getListAdapter();
-	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +108,7 @@ public final class FileManager extends BaseActivity
 			return;
 		}
 
-		if (myInsertPathStatic != null) {
+		if (FMCommon.InsertPath != null) {
 			setTitle(myResource.getResource("moveTitle").getValue());
 		} else if (myPath == null) {
 			setTitle(myResource.getResource("fileTree").getValue());
@@ -158,7 +148,7 @@ public final class FileManager extends BaseActivity
 		
 		switch (item.getItemId()) {
 			case MOVE_FILE_ITEM_ID:
-				myInsertPathStatic = fileItem.getFile().getPhysicalFile().getPath();
+				FMCommon.InsertPath = fileItem.getFile().getPhysicalFile().getPath();
 				FileUtil.refreshActivity(this, myPath);
 				return true;
 //			case RENAME_FILE_ITEM_ID:
@@ -204,7 +194,7 @@ public final class FileManager extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	Log.v(LOG, "onCreateOptionsMenu");
+    	Log.v(FMCommon.LOG, "onCreateOptionsMenu");
     	super.onCreateOptionsMenu(menu);
     	FileUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
     	FileUtil.addMenuItem(menu, 1, myResource, "mkdir", R.drawable.ic_menu_mkdir);
@@ -215,10 +205,10 @@ public final class FileManager extends BaseActivity
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		Log.v(LOG, "onPrepareOptionsMenu - start");
+		Log.v(FMCommon.LOG, "onPrepareOptionsMenu - start");
 		super.onPrepareOptionsMenu(menu);
 		
-		if (myInsertPathStatic == null){
+		if (FMCommon.InsertPath == null){
 			menu.findItem(0).setVisible(false).setEnabled(false);
 			menu.findItem(1).setVisible(false).setEnabled(false);
         }else{
@@ -226,7 +216,7 @@ public final class FileManager extends BaseActivity
 			menu.findItem(1).setVisible(true).setEnabled(true);
         }
 		
-		Log.v(LOG, "onPrepareOptionsMenu - finish");
+		Log.v(FMCommon.LOG, "onPrepareOptionsMenu - finish");
 		return true;
 	}
 
@@ -243,8 +233,8 @@ public final class FileManager extends BaseActivity
         switch (item.getItemId()) {
 	    	case 0:
 	    		try {
-	    			FileUtil.moveFile(myInsertPathStatic, myPath);
-	    			myInsertPathStatic = null;
+	    			FileUtil.moveFile(FMCommon.InsertPath, myPath);
+	    			FMCommon.InsertPath = null;
 	    			FileUtil.refreshActivity(this, myPath);
 	    			runOnUiThread(messFileMoved);
 	    		} catch (IOException e) {
@@ -252,7 +242,7 @@ public final class FileManager extends BaseActivity
     			}
 	    		return true;
         	case 1:
-        		new MkDirDialog(this, myPath, myInsertPathStatic).show();
+        		new MkDirDialog(this, myPath).show();
         		return true;
         	case 2:
         		new SortingDialog(this, myPath).show();
@@ -289,6 +279,11 @@ public final class FileManager extends BaseActivity
 		return mySelectedBookPath.startsWith(prefix);
 	}
 
+	@Override 
+	public FMBaseAdapter getAdapter() {
+		return (FMBaseAdapter)getListAdapter();
+	}
+	
 	public static void launchFileManagerActivity(Context context, String path){
 		Intent i = new Intent(context, FileManager.class)
 			.putExtra(FILE_MANAGER_PATH, path)

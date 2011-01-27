@@ -174,11 +174,10 @@ class RenameDialog extends TextEditDialog{
 class MkDirDialog extends TextEditDialog{
 	private Context myContext;
 	private String myPath;
-	private String myInsertPath;
 	
 	private static ZLResource myResource = ZLResource.resource("libraryView");
 	
-	MkDirDialog(Context context, String curPath, String insertPath) {
+	MkDirDialog(Context context, String curPath) {
 		super(context,
 				myResource.getResource("newDirectory").getValue(),
 				ZLResource.resource("dialog").getResource("button").getResource("ok").getValue(),
@@ -186,7 +185,6 @@ class MkDirDialog extends TextEditDialog{
 				);
 		myContext = context;
 		myPath = curPath;
-		myInsertPath = insertPath;
 		setText(myResource.getResource("newDirectory").getValue());
 	}
 
@@ -208,7 +206,6 @@ class MkDirDialog extends TextEditDialog{
 			
 		if (!FileUtil.contain(newName, file)){
 			ZLFile.createFileByPath(myPath + "/" + newName).mkdir();
-			FileManager.myInsertPathStatic = myInsertPath;					// TODO ???
 			FileUtil.refreshActivity((Activity)myContext, myPath);
 			dismiss();
 		}else{

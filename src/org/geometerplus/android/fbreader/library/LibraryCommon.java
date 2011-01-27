@@ -14,6 +14,11 @@ class LibraryCommon {
 	static SortType SortTypeInstance; 						// for FileManager
 }
 
+class FMCommon {
+	static String LOG = "FileManager";
+	static String InsertPath;
+}
+
 interface HasBaseConstants {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 	static final int OPEN_BOOK_ITEM_ID = 0;
@@ -41,11 +46,9 @@ interface HasLibraryConstants {
 }
 
 interface HasFileManagerConstants {
-//	static String FILE_MANAGER_INSERT_MODE = "FileManagerInsertMode";
 	static String FILE_MANAGER_PATH = "FileManagerPath";
-	
 	static final int DELETE_FILE_ITEM_ID = 10;
-//	static final int RENAME_FILE_ITEM_ID = 11; //FIXME delete later
+//	static final int RENAME_FILE_ITEM_ID = 11; //TODO may be later
 	static final int MOVE_FILE_ITEM_ID = 12;
 }
 

@@ -49,10 +49,10 @@ public class BaseGalleryActivity extends Activity
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
 		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, myResource.getResource("showBookInfo").getValue());
 		if (BaseActivity.LibraryInstance.isBookInFavorites(book)) {
-			Log.v(FileManager.LOG, "LibraryInstance.isBookInFavorites(book)");
+			Log.v(FMCommon.LOG, "LibraryInstance.isBookInFavorites(book)");
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
 		} else {
-			Log.v(FileManager.LOG, "not LibraryInstance.isBookInFavorites(book)");
+			Log.v(FMCommon.LOG, "not LibraryInstance.isBookInFavorites(book)");
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
 		}
 		if ((BaseActivity.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {

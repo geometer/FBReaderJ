@@ -80,7 +80,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 			return;
 		}
 
-		if (FileManager.myInsertPathStatic != null) {
+		if (FMCommon.InsertPath != null) {
 			setTitle(myResource.getResource("moveTitle").getValue());
 		} else if (myPath == null) {
 			setTitle(myResource.getResource("fileTree").getValue());
@@ -138,7 +138,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	Log.v(FileManager.LOG, "onCreateOptionsMenu");
+    	Log.v(FMCommon.LOG, "onCreateOptionsMenu");
     	super.onCreateOptionsMenu(menu);
     	FileUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
     	FileUtil.addMenuItem(menu, 1, myResource,  "mkdir", R.drawable.ic_menu_mkdir);
@@ -149,10 +149,10 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		Log.v(FileManager.LOG, "onPrepareOptionsMenu - start");
+		Log.v(FMCommon.LOG, "onPrepareOptionsMenu - start");
 		super.onPrepareOptionsMenu(menu);
 		
-		if (FileManager.myInsertPathStatic == null){
+		if (FMCommon.InsertPath == null){
 			menu.findItem(0).setVisible(false).setEnabled(false);
 			menu.findItem(1).setVisible(false).setEnabled(false);
         }else{
@@ -160,7 +160,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 			menu.findItem(1).setVisible(true).setEnabled(true);
         }
 		
-		Log.v(FileManager.LOG, "onPrepareOptionsMenu - finish");
+		Log.v(FMCommon.LOG, "onPrepareOptionsMenu - finish");
 		return true;
 	}
 	
@@ -177,8 +177,8 @@ public class SketchGalleryActivity extends BaseGalleryActivity
         switch (item.getItemId()) {
 	    	case 0:
 	    		try {
-	    			FileUtil.moveFile(FileManager.myInsertPathStatic, myPath);
-	    			FileManager.myInsertPathStatic = null;
+	    			FileUtil.moveFile(FMCommon.InsertPath, myPath);
+	    			FMCommon.InsertPath = null;
 	    			FileUtil.refreshActivity(this, myPath);
 	    			runOnUiThread(messFileMoved);
 	    		} catch (IOException e) {
@@ -186,7 +186,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
     			}
 	    		return true;
         	case 1:
-        		new MkDirDialog(this, myPath, FileManager.myInsertPathStatic).show();
+        		new MkDirDialog(this, myPath).show();
         		return true;
         	case 2:
         		new SortingDialog(this, myPath).show();
@@ -209,8 +209,8 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		}
 		switch (item.getItemId()) {
 			case MOVE_FILE_ITEM_ID:
-				Log.v(FileManager.LOG, "MOVE_FILE_ITEM_ID"); 
-				FileManager.myInsertPathStatic = fileItem.getFile().getPhysicalFile().getPath();
+				Log.v(FMCommon.LOG, "MOVE_FILE_ITEM_ID"); 
+				FMCommon.InsertPath = fileItem.getFile().getPhysicalFile().getPath();
 				FileUtil.refreshActivity(this, myPath);			
 				return true;
 //			case RENAME_FILE_ITEM_ID:
@@ -272,7 +272,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
             	}
             }
             	
-    		Log.v(FileManager.LOG, "maxHeight = " + maxHeight + " maxWidth = " + maxWidth + " orientation = " + display.getOrientation());
+    		Log.v(FMCommon.LOG, "maxHeight = " + maxHeight + " maxWidth = " + maxWidth + " orientation = " + display.getOrientation());
     		ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
     		imageView.setPadding(0, paddingTop, 0, 0);
     		imageView.getLayoutParams().height = maxHeight;
