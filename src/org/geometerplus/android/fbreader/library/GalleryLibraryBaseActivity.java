@@ -19,11 +19,15 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.util.List;
+
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.library.AuthorTree;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.library.SeriesInfo;
 import org.geometerplus.fbreader.library.SeriesTree;
 import org.geometerplus.fbreader.library.Tag;
@@ -35,9 +39,15 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
 abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	implements MenuItem.OnMenuItemClickListener, HasLibraryConstants {
@@ -50,7 +60,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
-//			getListView().invalidateViews();					// TODO										
+			((BaseAdapter)myGallery.getAdapter()).notifyDataSetChanged();
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
 		}
 	}
@@ -101,46 +111,48 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
     }
 
     // TODO 
-//	protected final class LibraryAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
-//		private final List<FBTree> myItems;
-//
-//		public LibraryAdapter(List<FBTree> items) {
-//			myItems = items;
-//		}
-//
-//		public final int getCount() {
-//			return myItems.size();
-//		}
-//
-//		public int getFirstSelectedItemIndex() {
-//			int index = 0;
-//			for (FBTree t : myItems) {
-//				if (isTreeSelected(t)) {
-//					return index;
-//				}
-//				++index;
-//			}
-//			return -1;
-//		}
-//
-//		public final FBTree getItem(int position) {
-//			return myItems.get(position);
-//		}
-//
-//		public final long getItemId(int position) {
-//			return position;
-//		}
-//
-//		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-//			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-//			final LibraryTree tree = (LibraryTree)getItem(position);
-//			if (tree instanceof BookTree) {
-//				createBookContextMenu(menu, ((BookTree)tree).Book);
-//			}
-//		}
-//
-//		public View getView(int position, View convertView, final ViewGroup parent) {
-//			final FBTree tree = getItem(position);
+	protected final class GalleryLibraryAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
+		private final List<FBTree> myItems;
+
+		public GalleryLibraryAdapter(List<FBTree> items) {
+			myItems = items;
+		}
+
+		public final int getCount() {
+			return myItems.size();
+		}
+
+		public int getFirstSelectedItemIndex() {
+			int index = 0;
+			for (FBTree t : myItems) {
+				if (isTreeSelected(t)) {
+					return index;
+				}
+				++index;
+			}
+			return -1;
+		}
+
+		public final FBTree getItem(int position) {
+			return myItems.get(position);
+		}
+
+		public final long getItemId(int position) {
+			return position;
+		}
+
+		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+			final LibraryTree tree = (LibraryTree)getItem(position);
+			if (tree instanceof BookTree) {
+				createBookContextMenu(menu, ((BookTree)tree).Book);
+			}
+		}
+
+		public View getView(int position, View convertView, final ViewGroup parent) {
+			// TODO
+			final FBTree tree = getItem(position);
+			final View view = null;
 //			final View view = createView(convertView, parent, tree.getName(), tree.getSecondString());
 //			if (isTreeSelected(tree)) {
 //				view.setBackgroundColor(0xff555555);
@@ -166,10 +178,10 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 //					coverView.setImageResource(R.drawable.ic_list_library_books);
 //				}
 //			}
-//
-//			return view;
-//		}
-//	}
+
+			return view;
+		}
+	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {

@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
@@ -50,7 +51,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		GalleryAdapter galleryAdapter = new GalleryAdapter(); 
+		FileGalleryAdapter galleryAdapter = new FileGalleryAdapter(); 
 		myGallery.setAdapter(galleryAdapter);
 		myGallery.setOnItemClickListener(galleryAdapter);
 		myGallery.setOnItemSelectedListener(galleryAdapter);
@@ -223,7 +224,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		return super.onContextItemSelected(item);
 	}
     
-	public class GalleryAdapter extends FMBaseAdapter implements OnItemClickListener, OnItemSelectedListener {
+	public class FileGalleryAdapter extends GalleryAdapter implements OnItemClickListener, OnItemSelectedListener {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			runItem(myItems.get(position)); 
@@ -245,16 +246,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		private int orientation = -1;
 		
         public View getView(int position, View convertView, ViewGroup parent) {
-            final View view = (convertView != null) ?  convertView :
-    			LayoutInflater.from(parent.getContext()).inflate(R.layout.sketch_item, parent, false);
-            
             final FileItem fileItem = getItem(position);
-    		String summary = fileItem.getSummary();
-    		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
-    		summary = summary != null ? summary : fileItem.getName();  
-    		summary = summary.length() > 16 ? summary.substring(0, 15) : summary; 
-    		summaryTextView.setText(summary);
-
             Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
             if (orientation != display.getOrientation()){
             	orientation = display.getOrientation();
@@ -271,37 +263,13 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 					break;
             	}
             }
-            	
-    		Log.v(FMCommon.LOG, "maxHeight = " + maxHeight + " maxWidth = " + maxWidth + " orientation = " + display.getOrientation());
-    		ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
-    		imageView.setPadding(0, paddingTop, 0, 0);
-    		imageView.getLayoutParams().height = maxHeight;
-			imageView.getLayoutParams().width = maxWidth;
-			
-    		final Bitmap coverBitmap = getBitmap(fileItem.getCover(), maxWidth, maxHeight);
-			if (coverBitmap != null) {
-				imageView.setImageBitmap(coverBitmap);
-			} else {
-				imageView.setImageResource(fileItem.getIcon());
-			}
-			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
+            String summary = fileItem.getSummary();
+    		summary = summary != null ? summary : fileItem.getName();  
+    		summary = summary.length() > 16 ? summary.substring(0, 15) : summary; 
+    		View view = getView(convertView, parent, summary, fileItem.getCover(), fileItem.getIcon(),
+            		maxHeight, maxWidth, paddingTop);
             return view;
         }
-        
-    	protected ImageView getCoverView(View parent) {
-    		parent.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    		int myCoverHeight = parent.getMeasuredHeight();
-    		int myCoverWidth = myCoverHeight * 3 / 4;
-    		parent.requestLayout();
-    		
-    		final ImageView coverView = (ImageView)parent.findViewById(R.id.sketch_item_image);
-    		coverView.getLayoutParams().width = myCoverWidth;
-    		coverView.getLayoutParams().height = myCoverHeight;
-    		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-    		coverView.requestLayout();
-    		return coverView;
-    	}
         
     	private Bitmap getBitmap(ZLImage cover, int maxWidth, int maxHeight) {
     		if (cover instanceof ZLLoadableImage) {

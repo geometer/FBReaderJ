@@ -59,7 +59,6 @@ public class BaseGalleryActivity extends Activity
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
         }
 	}
-
 	
 //	// TODO recoding
 //	protected View createView(View convertView, ViewGroup parent, String name, String summary) {

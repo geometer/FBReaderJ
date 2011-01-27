@@ -52,6 +52,10 @@ interface HasFileManagerConstants {
 	static final int MOVE_FILE_ITEM_ID = 12;
 }
 
+interface HasAdapter{
+	FMBaseAdapter getAdapter();
+}
+
 enum SortType{
 	BY_NAME{
 		public String getName() {
