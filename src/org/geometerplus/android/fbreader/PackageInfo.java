@@ -26,15 +26,17 @@ public class PackageInfo {
 	public final String Title;
 
 	public final String IntentAction;
+	public final String IntentKey;
 	public final String IntentDataPattern;
 
-	PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentDataPattern) {
+	PackageInfo(String id, String packageName, String className, String title, String intentAction, String intentKey, String intentDataPattern) {
 		Id = id;
 		PackageName = packageName;
 		ClassName = className;
 		Title = title;
 
 		IntentAction = intentAction;
+		IntentKey = intentKey;
 		IntentDataPattern = intentDataPattern;
 	}
 }
