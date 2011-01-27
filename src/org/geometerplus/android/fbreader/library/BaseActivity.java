@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.library;
 import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.BooksDatabase;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
@@ -49,10 +48,6 @@ import android.widget.TextView;
 
 abstract class BaseActivity extends ListActivity 
 	implements HasBaseConstants {
-
-	static BooksDatabase DatabaseInstance;
-	static Library LibraryInstance;
-
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
 
@@ -78,12 +73,12 @@ abstract class BaseActivity extends ListActivity
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
 		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, myResource.getResource("showBookInfo").getValue());
-		if (LibraryInstance.isBookInFavorites(book)) {
+		if (LibraryCommon.LibraryInstance.isBookInFavorites(book)) {
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
 		}
-		if ((LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+		if ((LibraryCommon.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
         }
 	}
@@ -183,7 +178,7 @@ abstract class BaseActivity extends ListActivity
 	}
 
 	protected void deleteBook(Book book, int mode) {
-		LibraryInstance.removeBook(book, mode);
+		LibraryCommon.LibraryInstance.removeBook(book, mode);
 	}
 
 	protected void showBookInfo(Book book) {
@@ -203,10 +198,10 @@ abstract class BaseActivity extends ListActivity
 				showBookInfo(book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
-				LibraryInstance.addBookToFavorites(book);
+				LibraryCommon.LibraryInstance.addBookToFavorites(book);
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
-				LibraryInstance.removeBookFromFavorites(book);
+				LibraryCommon.LibraryInstance.removeBookFromFavorites(book);
 				getListView().invalidateViews();
 				return true;
 			case DELETE_BOOK_ITEM_ID:

@@ -47,12 +47,12 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		DatabaseInstance = SQLiteBooksDatabase.Instance();
-		if (DatabaseInstance == null) {
-			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
+		LibraryCommon.DatabaseInstance = SQLiteBooksDatabase.Instance();
+		if (LibraryCommon.DatabaseInstance == null) {
+			LibraryCommon.DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
 		}
-		if (LibraryInstance == null) {
-			LibraryInstance = new Library();
+		if (LibraryCommon.LibraryInstance == null) {
+			LibraryCommon.LibraryInstance = new Library();
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
@@ -60,9 +60,9 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
 			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(LibraryInstance, new StartTreeActivityRunnable(PATH_FAVORITES, null) {
+			new OpenTreeRunnable(LibraryCommon.LibraryInstance, new StartTreeActivityRunnable(PATH_FAVORITES, null) {
 				public void run() {
-					if (LibraryInstance.favorites().hasChildren()) {
+					if (LibraryCommon.LibraryInstance.favorites().hasChildren()) {
 						super.run();
 					} else {
 						UIUtil.showErrorMessage(LibraryTopLevelActivity.this, "noFavorites");
@@ -73,22 +73,22 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_RECENT),
 			R.drawable.ic_list_library_recent,
-			new OpenTreeRunnable(LibraryInstance, PATH_RECENT)
+			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_RECENT)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_AUTHOR),
 			R.drawable.ic_list_library_authors,
-			new OpenTreeRunnable(LibraryInstance, PATH_BY_AUTHOR)
+			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_BY_AUTHOR)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_TITLE),
 			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(LibraryInstance, PATH_BY_TITLE)
+			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_BY_TITLE)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_TAG),
 			R.drawable.ic_list_library_tags,
-			new OpenTreeRunnable(LibraryInstance, PATH_BY_TAG)
+			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_BY_TAG)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource("fileTree"),
@@ -109,7 +109,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 	@Override
 	public void onDestroy() {
-		LibraryInstance = null;
+		LibraryCommon.LibraryInstance = null;
 		super.onDestroy();
 	}
 
@@ -128,7 +128,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			myResource.getResource(PATH_SEARCH_RESULTS),
 			pattern,
 			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(LibraryInstance, PATH_SEARCH_RESULTS, pattern)
+			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_SEARCH_RESULTS, pattern)
 		);
 		myItems.add(0, mySearchResultsItem);
 		getListView().invalidateViews();

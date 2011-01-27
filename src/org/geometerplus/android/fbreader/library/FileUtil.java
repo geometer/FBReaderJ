@@ -161,7 +161,7 @@ class FileDeleter implements DialogInterface.OnClickListener {
 
 	public void onClick(DialogInterface dialog, int which) {
 		for (Book book : FileUtil.getBooksList(myFileItem.getFile())){
-			BaseActivity.LibraryInstance.removeBook(book, Library.REMOVE_FROM_LIBRARY);
+			LibraryCommon.LibraryInstance.removeBook(book, Library.REMOVE_FROM_LIBRARY);
 		}
 		FMBaseAdapter adapter = myActivity.getAdapter();
 		adapter.remove(myFileItem);

@@ -75,7 +75,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 			return false;
 		}
 		BookSearchPatternOption.setValue(pattern);
-		return LibraryInstance.searchBooks(pattern).hasChildren();
+		return LibraryCommon.LibraryInstance.searchBooks(pattern).hasChildren();
 	}
 
 	protected void showNotFoundToast() {

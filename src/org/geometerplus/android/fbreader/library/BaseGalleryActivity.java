@@ -48,14 +48,14 @@ public class BaseGalleryActivity extends Activity
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
 		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, myResource.getResource("showBookInfo").getValue());
-		if (BaseActivity.LibraryInstance.isBookInFavorites(book)) {
+		if (LibraryCommon.LibraryInstance.isBookInFavorites(book)) {
 			Log.v(FMCommon.LOG, "LibraryInstance.isBookInFavorites(book)");
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
 		} else {
 			Log.v(FMCommon.LOG, "not LibraryInstance.isBookInFavorites(book)");
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
 		}
-		if ((BaseActivity.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+		if ((LibraryCommon.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
         }
 	}
@@ -113,7 +113,7 @@ public class BaseGalleryActivity extends Activity
 	}
 
 	protected void deleteBook(Book book, int mode) {
-		BaseActivity.LibraryInstance.removeBook(book, mode);
+		LibraryCommon.LibraryInstance.removeBook(book, mode);
 	}
 
 	protected void showBookInfo(Book book) {
@@ -133,10 +133,10 @@ public class BaseGalleryActivity extends Activity
 				showBookInfo(book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
-				BaseActivity.LibraryInstance.addBookToFavorites(book);
+				LibraryCommon.LibraryInstance.addBookToFavorites(book);
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
-				BaseActivity.LibraryInstance.removeBookFromFavorites(book);
+				LibraryCommon.LibraryInstance.removeBookFromFavorites(book);
 				((FMBaseAdapter)myGallery.getAdapter()).notifyDataSetChanged();
 				return true;
 			case DELETE_BOOK_ITEM_ID:

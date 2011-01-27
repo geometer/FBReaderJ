@@ -69,7 +69,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 			return false;
 		}
 		BookSearchPatternOption.setValue(pattern);
-		return BaseActivity.LibraryInstance.searchBooks(pattern).hasChildren();
+		return LibraryCommon.LibraryInstance.searchBooks(pattern).hasChildren();
 	}
 
 	protected void showNotFoundToast() {

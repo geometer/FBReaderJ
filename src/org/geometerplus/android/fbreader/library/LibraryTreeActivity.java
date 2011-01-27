@@ -19,25 +19,19 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.io.IOException;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BookTree;
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.BookTree;
-import org.geometerplus.fbreader.tree.FBTree;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
 	private String myTreePathString;
@@ -46,7 +40,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (DatabaseInstance == null || LibraryInstance == null) {
+		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
 			finish();
 			return;
 		}
@@ -89,17 +83,17 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 
 		FBTree tree = null;
 		if (PATH_RECENT.equals(path[0])) {
-			tree = LibraryInstance.recentBooks();
+			tree = LibraryCommon.LibraryInstance.recentBooks();
 		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
-			tree = LibraryInstance.searchResults();
+			tree = LibraryCommon.LibraryInstance.searchResults();
 		} else if (PATH_BY_AUTHOR.equals(path[0])) {
-			tree = LibraryInstance.byAuthor();
+			tree = LibraryCommon.LibraryInstance.byAuthor();
 		} else if (PATH_BY_TITLE.equals(path[0])) {
-			tree = LibraryInstance.byTitle();
+			tree = LibraryCommon.LibraryInstance.byTitle();
 		} else if (PATH_BY_TAG.equals(path[0])) {
-			tree = LibraryInstance.byTag();
+			tree = LibraryCommon.LibraryInstance.byTag();
 		} else if (PATH_FAVORITES.equals(path[0])) {
-			tree = LibraryInstance.favorites();
+			tree = LibraryCommon.LibraryInstance.favorites();
 		}
         
 		for (int i = 1; i < path.length; ++i) {
@@ -132,7 +126,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {
-			new OpenTreeRunnable(LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
+			new OpenTreeRunnable(LibraryCommon.LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
 		}
 	}
 	

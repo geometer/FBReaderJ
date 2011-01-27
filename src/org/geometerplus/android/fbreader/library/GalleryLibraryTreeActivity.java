@@ -42,7 +42,7 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (BaseActivity.DatabaseInstance == null || BaseActivity.LibraryInstance == null) {
+		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
 			finish();
 			return;
 		}
@@ -80,17 +80,17 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
 
 		FBTree tree = null;
 		if (PATH_RECENT.equals(path[0])) {
-			tree = BaseActivity.LibraryInstance.recentBooks();
+			tree = LibraryCommon.LibraryInstance.recentBooks();
 		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
-			tree = BaseActivity.LibraryInstance.searchResults();
+			tree = LibraryCommon.LibraryInstance.searchResults();
 		} else if (PATH_BY_AUTHOR.equals(path[0])) {
-			tree = BaseActivity.LibraryInstance.byAuthor();
+			tree = LibraryCommon.LibraryInstance.byAuthor();
 		} else if (PATH_BY_TITLE.equals(path[0])) {
-			tree = BaseActivity.LibraryInstance.byTitle();
+			tree = LibraryCommon.LibraryInstance.byTitle();
 		} else if (PATH_BY_TAG.equals(path[0])) {
-			tree = BaseActivity.LibraryInstance.byTag();
+			tree = LibraryCommon.LibraryInstance.byTag();
 		} else if (PATH_FAVORITES.equals(path[0])) {
-			tree = BaseActivity.LibraryInstance.favorites();
+			tree = LibraryCommon.LibraryInstance.favorites();
 		}
         
 		for (int i = 1; i < path.length; ++i) {
