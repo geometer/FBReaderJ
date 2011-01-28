@@ -24,9 +24,13 @@ import java.util.*;
 import android.app.*;
 import android.content.*;
 import android.net.Uri;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.text.view.ZLTextWordRegion;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
@@ -58,7 +62,7 @@ public abstract class DictionaryUtil {
 				"ColorDict",										// Id
 				null,												// Package
 				null,												// Class
-				"ColorDict",										// Title
+				"ColorDict 3",										// Title
 				ColorDict3.ACTION,
 				ColorDict3.QUERY,
 				"%s"
@@ -164,21 +168,14 @@ public abstract class DictionaryUtil {
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		text = dictionaryInfo.IntentDataPattern.replace("%s", text);
 		if (dictionaryInfo.IntentKey != null) {
-			intent.putExtra(ColorDict3.HEIGHT, 300);
-			intent.putExtra(ColorDict3.GRAVITY, android.view.Gravity.BOTTOM);
-			final ZLAndroidApplication application = ZLAndroidApplication.Instance();
-			intent.putExtra(ColorDict3.FULLSCREEN, !application.ShowStatusBarOption.getValue());
 			return intent.putExtra(dictionaryInfo.IntentKey, text);
 		} else {
 			return intent.setData(Uri.parse(text));
 		}			
 	}
 
-	public static void openWordInDictionary(Activity activity, String text) { 
-		if (text == null) {
-			return;
-		}
-
+	public static void openWordInDictionary(Activity activity, ZLTextWordRegion region) { 
+		String text = region.Word.toString();
 		int start = 0;
 		int end = text.length();
 		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
@@ -187,8 +184,24 @@ public abstract class DictionaryUtil {
 			return;
 		}
 
-		final Intent intent = DictionaryUtil.getDictionaryIntent(text.substring(start, end));
+		final PackageInfo info = getCurrentDictionaryInfo();
+		final Intent intent = getDictionaryIntent(info, text.substring(start, end));
 		try {
+			if ("ColorDict".equals(info.Id)) {
+				final DisplayMetrics metrics = new DisplayMetrics();
+				activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+				final int screenHeight = metrics.heightPixels;
+				final int topSpace = region.getTop();
+				final int bottomSpace = metrics.heightPixels - region.getBottom();
+				final boolean showAtBottom = bottomSpace >= topSpace;
+				final int space = (showAtBottom ? bottomSpace : topSpace) - 20;
+				final int maxHeight = Math.min(400, screenHeight * 2 / 3);
+				final int minHeight = Math.min(200, screenHeight * 2 / 3);
+				intent.putExtra(ColorDict3.HEIGHT, Math.max(minHeight, Math.min(maxHeight, space)));
+				intent.putExtra(ColorDict3.GRAVITY, showAtBottom ? Gravity.BOTTOM : Gravity.TOP);
+				final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+				intent.putExtra(ColorDict3.FULLSCREEN, !application.ShowStatusBarOption.getValue());
+			}
 			activity.startActivity(intent);
 		} catch(ActivityNotFoundException e){
 			DictionaryUtil.installDictionaryIfNotInstalled(activity);

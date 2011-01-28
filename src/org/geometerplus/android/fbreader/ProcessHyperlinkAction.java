@@ -63,7 +63,7 @@ class ProcessHyperlinkAction extends FBAction {
 			return;
 		} else if (region instanceof ZLTextWordRegion) {
 			DictionaryUtil.openWordInDictionary(
-				myBaseActivity, ((ZLTextWordRegion)region).Word.toString()
+				myBaseActivity, (ZLTextWordRegion)region
 			);
 		}
 	}
