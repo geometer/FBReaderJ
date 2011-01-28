@@ -387,9 +387,7 @@ public final class FBView extends ZLTextView {
 		if (myReader.DictionaryTappingActionOption.getValue() ==
 			FBReaderApp.DictionaryTappingAction.openDictionary) {
 			final ZLTextElementRegion region = currentRegion();
-			if (region instanceof ZLTextWordRegion) {
-				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
-			}
+			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
 
