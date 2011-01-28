@@ -122,8 +122,11 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Log.v(FMCommon.LOG, "GalleryLibraryAdapter - onItemClick - ");
-			TopLevelTree tree = (TopLevelTree)getAdapter().getItem(position);
-			tree.run();
+			// FIXME
+			// FIXME
+			// FIXME
+//			TopLevelTree tree = (TopLevelTree)getAdapter().getItem(position);
+//			tree.run();
 		}
 
 		@Override

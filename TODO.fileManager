@@ -64,8 +64,10 @@ VR:
 	DONE Смена видов и корректное перемещение назад										(25.01.11)
 
 	
-	* Bug: (GalleryLibraryTopLevelActivity) не работает кнопка Search
+	DONE Bug: (GalleryLibraryTopLevelActivity) не работает кнопка Search
 	* Bug: (GalleryLibraryTopLevelActivity) смена ориентации экрана -> выходим на FBReader.java
+	* Bug: (GalleryLibraryTopLevelActivity) не заботает запуск активити ФМ, нажатие на Любимые -exception
+	
 
 	DONE ZLFile.createFileByPath("/sdcard/Books").getParent() = null --> FileUtil.getParent(zlfile) return parent for directory.	(29.12.10)
 	DONE ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена
