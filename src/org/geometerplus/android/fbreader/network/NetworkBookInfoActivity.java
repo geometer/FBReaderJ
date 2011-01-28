@@ -24,6 +24,7 @@ import java.util.Set;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -179,7 +180,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		final View rootView = findViewById(R.id.network_book_root);
 		final ImageView coverView = (ImageView) findViewById(R.id.network_book_cover);
 
-		final int maxHeight = 300; // FIXME: hardcoded constant
+		final DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+		final int maxHeight = metrics.heightPixels * 2 / 3;
 		final int maxWidth = maxHeight * 2 / 3;
 		Bitmap coverBitmap = null;
 		final ZLImage cover = NetworkTree.createCover(myBook);

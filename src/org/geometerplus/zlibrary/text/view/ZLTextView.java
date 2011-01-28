@@ -1309,17 +1309,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return elementRegions.get(index);
 	}
 
-	public ZLTextHyperlink getCurrentHyperlink() {
-		final ZLTextElementRegion area = getCurrentElementRegion(myCurrentPage);
-		return (area instanceof ZLTextHyperlinkRegion) ? ((ZLTextHyperlinkRegion)area).Hyperlink : null;
-	}
-
-	public String getSelectedText() {
-		final ZLTextElementRegion area = getCurrentElementRegion(myCurrentPage);
-		if (area instanceof ZLTextWordRegion) {
-			return ((ZLTextWordRegion)area).Word.toString();
-		}
-		return null;
+	public ZLTextElementRegion getSelectedRegion() {
+		return getCurrentElementRegion(myCurrentPage);
 	}
 
 	protected ZLTextElementRegion findRegion(int x, int y, int maxDistance, ZLTextElementRegion.Filter filter) {
