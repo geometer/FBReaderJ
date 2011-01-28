@@ -34,6 +34,12 @@ public abstract class ZLTextElementRegion {
 		}
 	};
 
+	public static Filter HyperlinkFilter = new Filter() {
+		public boolean accepts(ZLTextElementRegion region) {
+			return region instanceof ZLTextHyperlinkRegion;
+		}
+	};
+
 	public static Filter ImageOrHyperlinkFilter = new Filter() {
 		public boolean accepts(ZLTextElementRegion region) {
 			return

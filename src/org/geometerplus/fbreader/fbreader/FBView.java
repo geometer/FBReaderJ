@@ -177,7 +177,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.ImageOrHyperlinkFilter);
+		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
