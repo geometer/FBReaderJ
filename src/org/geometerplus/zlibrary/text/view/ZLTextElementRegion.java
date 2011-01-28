@@ -28,9 +28,17 @@ public abstract class ZLTextElementRegion {
 		boolean accepts(ZLTextElementRegion region);
 	}
 
-	public static Filter Filter = new Filter() {
+	public static Filter AnyRegionFilter = new Filter() {
 		public boolean accepts(ZLTextElementRegion region) {
 			return true;
+		}
+	};
+
+	public static Filter ImageOrHyperlinkFilter = new Filter() {
+		public boolean accepts(ZLTextElementRegion region) {
+			return
+				region instanceof ZLTextImageRegion ||
+				region instanceof ZLTextHyperlinkRegion;
 		}
 	};
 
