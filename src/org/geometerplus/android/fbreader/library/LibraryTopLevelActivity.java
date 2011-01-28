@@ -171,7 +171,8 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	public static void launchActivity(Activity activity, String selectedBookPath){
 		Intent intent = new Intent(activity.getApplicationContext(), LibraryTopLevelActivity.class);
 		intent.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		activity.startActivity(intent);
 	}
 }

@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.List;
 
+import org.geometerplus.android.fbreader.library.LibraryBaseActivity.LibraryAdapter;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.library.AuthorTree;
@@ -41,6 +42,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.Menu;
@@ -118,13 +120,15 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 		}
 
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			Log.v(FMCommon.LOG, "GalleryLibraryAdapter - onItemClick - ");
+			TopLevelTree tree = (TopLevelTree)getAdapter().getItem(position);
+			tree.run();
 		}
 
 		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			view.setSelected(false);
 		}
 
 		@Override

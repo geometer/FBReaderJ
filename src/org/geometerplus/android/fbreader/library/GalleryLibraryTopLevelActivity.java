@@ -86,6 +86,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 			R.drawable.ic_list_library_folder,
 			new Runnable() {
 				public void run() {
+					Log.v(FMCommon.LOG, "launch file Tree");
 					startActivity(
 						new Intent(GalleryLibraryTopLevelActivity.this, FileManager.class)
 							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
@@ -93,7 +94,11 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 				}
 			}
 		));
-		myGallery.setAdapter(new GalleryLibraryAdapter(myItems));
+		GalleryLibraryAdapter adapter = new GalleryLibraryAdapter(myItems); 
+		myGallery.setAdapter(adapter);
+		myGallery.setOnItemClickListener(adapter);
+		myGallery.setOnItemSelectedListener(adapter);
+		myGallery.setOnCreateContextMenuListener(adapter);
 		onNewIntent(getIntent());
 	}
 
@@ -140,7 +145,8 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 	public static void launchActivity(Activity activity, String selectedBookPath){
 		Intent intent = new Intent(activity.getApplicationContext(), GalleryLibraryTopLevelActivity.class);
 		intent.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		activity.startActivity(intent);
 	}
 }
