@@ -170,16 +170,18 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			if (!NetworkView.Instance().isInitialized()) {
 				return 0;
 			}
-			return myTree.subTrees().size() + 2; // subtrees + <search item>
+			return myTree.subTrees().size() + 3; // subtrees + <basket> + <search item> + <add custom catalog item>
 		}
 
 		public final NetworkTree getItem(int position) {
 			final int size = myTree.subTrees().size();
 			if (position == 0) {
 				return NetworkView.Instance().getSearchItemTree();
-			} else if (position > 0 && position <= size) {
-				return (NetworkTree)myTree.subTrees().get(position - 1);
-			} else if (position == size + 1) {
+			} else if (position == 1) {
+				return new BasketTree();
+			} else if (position > 1 && position <= size + 1) {
+				return (NetworkTree)myTree.subTrees().get(position - 2);
+			} else if (position == size + 2) {
 				return NetworkView.Instance().getAddCustomCatalogItemTree();
 			}
 			return null;
