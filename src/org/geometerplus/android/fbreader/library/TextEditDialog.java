@@ -288,13 +288,21 @@ class SortingDialog extends RadioButtonDialog{
 	}
 }
 
-class ViewChangeDialog extends RadioButtonDialog{
+abstract class AbstractViewChangeDialog extends RadioButtonDialog{
 	private static String myTitle = ZLResource.resource("libraryView").getResource("viewBox").getResource("title").getValue();
 	private static String[] myItems = ViewType.toStringArray();
+	
+	public AbstractViewChangeDialog(Context content) {
+		super(content, myTitle, myItems, ViewTypeConf.getValue());
+		myContext = content;
+	}	
+}
+
+class ViewChangeDialog extends AbstractViewChangeDialog{
 	private String myPath;
 	
 	public ViewChangeDialog(Context content, String path) {
-		super(content, myTitle, myItems, ViewTypeConf.getValue());
+		super(content);
 		myPath = path;
 	}
 
@@ -314,14 +322,12 @@ class ViewChangeDialog extends RadioButtonDialog{
 	}
 }
 
-class LibraryViewChangeDialog extends RadioButtonDialog{
-	private static String myTitle = ZLResource.resource("libraryView").getResource("viewBox").getResource("title").getValue();
-	private static String[] myItems = ViewType.toStringArray();
+class LibraryTreeChanger extends AbstractViewChangeDialog{
 	private String mySelectedBook;
 	private String myTreePathString;
 
-	public LibraryViewChangeDialog(Context content, String selectedBook, String treePathString) {
-		super(content, myTitle, myItems, ViewTypeConf.getValue());
+	public LibraryTreeChanger(Context content, String selectedBook, String treePathString) {
+		super(content);
 		mySelectedBook = selectedBook;
 		myTreePathString = treePathString;
 	}
@@ -343,13 +349,11 @@ class LibraryViewChangeDialog extends RadioButtonDialog{
 }
 
 
-class LibraryTopLevelViewChanger extends RadioButtonDialog{
-	private static String myTitle = ZLResource.resource("libraryView").getResource("viewBox").getResource("title").getValue();
-	private static String[] myItems = ViewType.toStringArray();
+class LibraryTopLevelViewChanger extends AbstractViewChangeDialog{
 	private String mySelectedBookPath;
 
 	public LibraryTopLevelViewChanger(Context content, String selectedBookPath) {
-		super(content, myTitle, myItems, ViewTypeConf.getValue());
+		super(content);
 		mySelectedBookPath = selectedBookPath;
 	}
 

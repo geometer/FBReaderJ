@@ -140,7 +140,7 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 	    	case 0:
-	    		new LibraryViewChangeDialog(this, mySelectedBookPath, myTreePathString).show();
+	    		new LibraryTreeChanger(this, mySelectedBookPath, myTreePathString).show();
 	    		return true;
         	default:
         		return super.onOptionsItemSelected(item);

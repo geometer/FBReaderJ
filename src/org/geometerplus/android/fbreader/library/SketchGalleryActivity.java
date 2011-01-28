@@ -50,16 +50,14 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		myPath = getIntent().getStringExtra(FileManager.FILE_MANAGER_PATH);
 		
 		FileGalleryAdapter galleryAdapter = new FileGalleryAdapter(); 
 		myGallery.setAdapter(galleryAdapter);
 		myGallery.setOnItemClickListener(galleryAdapter);
 		myGallery.setOnItemSelectedListener(galleryAdapter);
 		myGallery.setOnCreateContextMenuListener(galleryAdapter);
-		
-		myPath = getIntent().getStringExtra(FileManager.FILE_MANAGER_PATH);
-//		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
-		
+
 		LibraryCommon.SortTypeInstance = SortingDialog.getOprionSortType();		// TODO move inisialization
 		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType(); 			// TODO move inisialization
 
