@@ -29,6 +29,8 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.Window;
 
 public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
@@ -38,22 +40,13 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-//		requestWindowFeature(Window.FEATURE_NO_TITLE);
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);					// TODO think about
 
 		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
 			finish();
 			return;
 		}
 		
-//		LibraryCommon.DatabaseInstance = SQLiteBooksDatabase.Instance();
-//		if (LibraryCommon.DatabaseInstance == null) {
-//			LibraryCommon.DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
-//		}
-//		if (LibraryCommon.LibraryInstance == null) {
-//			LibraryCommon.LibraryInstance = new Library();
-//			startService(new Intent(getApplicationContext(), InitializationService.class));
-//		}
-
 		myItems = new LinkedList<FBTree>();
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
@@ -101,8 +94,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 			}
 		));
 		myGallery.setAdapter(new GalleryLibraryAdapter(myItems));
-		
-		//onNewIntent(getIntent());
+		onNewIntent(getIntent());
 	}
 
 	@Override
@@ -139,10 +131,21 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 		}
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 0:
+			new LibraryTopLevelViewChanger(this, mySelectedBookPath).show();	
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
 	public static void launchActivity(Activity activity, String selectedBookPath){
 		Intent intent = new Intent(activity.getApplicationContext(), GalleryLibraryTopLevelActivity.class);
 		intent.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		activity.startActivity(intent);
 	}
 }

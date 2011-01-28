@@ -94,19 +94,12 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
-        return true;
+    	super.onCreateOptionsMenu(menu);
+    	FileUtil.addMenuItem(menu, 1, myResource, "localSearch", R.drawable.ic_menu_search);
+    	FileUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_sorting);
+    	return true;
     }
-
-    private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
-        final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
-        final MenuItem item = menu.add(0, index, Menu.NONE, label);
-        item.setOnMenuItemClickListener(this);
-        item.setIcon(iconId);
-        return item;
-    }
-
+	
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case 1:

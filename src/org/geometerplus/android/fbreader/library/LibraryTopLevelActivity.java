@@ -48,7 +48,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//	requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		LibraryCommon.DatabaseInstance = SQLiteBooksDatabase.Instance();
 		if (LibraryCommon.DatabaseInstance == null) {
@@ -57,6 +57,13 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		if (LibraryCommon.LibraryInstance == null) {
 			LibraryCommon.LibraryInstance = new Library();
 			startService(new Intent(getApplicationContext(), InitializationService.class));
+		}
+		
+		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType();
+		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
+			GalleryLibraryTopLevelActivity.launchActivity(this, mySelectedBookPath);
+			finish();
+			return;
 		}
 		
 		myItems = new LinkedList<FBTree>();
@@ -106,7 +113,6 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			}
 		));
 		setListAdapter(new LibraryAdapter(myItems));
-
 		onNewIntent(getIntent());
 	}
 
@@ -150,12 +156,10 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		}
 	}
 	
-	// TODO
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 0:
-			Log.v(FMCommon.LOG, "onOptionsItemSelected(MenuItem item) - LibraryTopLevelActivity");
 			new LibraryTopLevelViewChanger(this, mySelectedBookPath).show();	
 			return true;
 		default:
@@ -166,7 +170,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	public static void launchActivity(Activity activity, String selectedBookPath){
 		Intent intent = new Intent(activity.getApplicationContext(), LibraryTopLevelActivity.class);
 		intent.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		activity.startActivity(intent);
 	}
 }
