@@ -60,6 +60,14 @@ public abstract class ZLTextElementRegion {
 		return myHull;
 	}
 
+	public int getTop() {
+		return myList.get(myFromIndex).YStart;
+	}
+
+	public int getBottom() {
+		return myList.get(myToIndex - 1).YEnd;
+	}
+
 	void draw(ZLPaintContext context) {
 		convexHull().draw(context);
 	}
