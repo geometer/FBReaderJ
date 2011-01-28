@@ -53,8 +53,7 @@ VR:
 	DONE Пункт меню "View". -> запуск диалога выбора вида.									(28.12.10)
 	DONE Эскизный вид - список, прокручивающийся в горизонтальном направлении; (в нем для книг большие обложки, если обложки нет (не книга, или книга без обложки) - болшая иконка + название	(08.01.11)
 	DONE Реализовать горизонтальный список (нужна визуализация навигации) 							(08.01.11)
-	* Общий интерфейс (IsFMName.java) содержащий общие текстовые константы
-	* Общий базовый класс для двух BaseActivity (где есть runItem)
+	DONE Общие интерфейсы, содержащиe текстовые константы
 	DONE Отделить класс SmartFilter 											(24.01.11)
 	DONE Общий базовый класс для двух адаптеров (FileListAdapter и GalleryAdapter)						(24.01.11)
 	DONE Реализация общего механизма получения данних для двух видов.							(24.01.11)
@@ -64,6 +63,9 @@ VR:
 	DONE Параметры вида сохраняются между запусками										(28.12.10)
 	DONE Смена видов и корректное перемещение назад										(25.01.11)
 
+	
+	* Bug: (GalleryLibraryTopLevelActivity) не работает кнопка Search
+	* Bug: (GalleryLibraryTopLevelActivity) смена ориентации экрана -> выходим на FBReader.java
 
 	DONE ZLFile.createFileByPath("/sdcard/Books").getParent() = null --> FileUtil.getParent(zlfile) return parent for directory.	(29.12.10)
 	DONE ZLFILE.createFileByPAth("/sdcard/Books").getPhysicalFile().delete(); -> директория не удалена

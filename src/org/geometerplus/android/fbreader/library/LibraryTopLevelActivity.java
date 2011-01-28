@@ -48,7 +48,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		//	requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		LibraryCommon.DatabaseInstance = SQLiteBooksDatabase.Instance();
 		if (LibraryCommon.DatabaseInstance == null) {
@@ -158,6 +158,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		onMenuItemClick(item);
 		switch (item.getItemId()) {
 		case 0:
 			new LibraryTopLevelViewChanger(this, mySelectedBookPath).show();	
@@ -170,7 +171,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	public static void launchActivity(Activity activity, String selectedBookPath){
 		Intent intent = new Intent(activity.getApplicationContext(), LibraryTopLevelActivity.class);
 		intent.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		activity.startActivity(intent);
 	}
 }

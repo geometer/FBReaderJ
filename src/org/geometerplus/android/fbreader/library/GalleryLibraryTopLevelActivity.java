@@ -31,7 +31,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.Window;
 
 public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 	private LinkedList<FBTree> myItems;
@@ -44,6 +43,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 
 		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
 			finish();
+			Log.v(FMCommon.LOG, "GalleryLibraryTopLevelActivity - finish");
 			return;
 		}
 		
@@ -97,12 +97,6 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 		onNewIntent(getIntent());
 	}
 
-	@Override
-	public void onDestroy() {
-		LibraryCommon.LibraryInstance = null;
-		super.onDestroy();
-	}
-
 	private void setSearchResults(Intent intent) {
 		if (myItems.get(0) == mySearchResultsItem) {
 			myItems.remove(0);
@@ -133,6 +127,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		onMenuItemClick(item);
 		switch (item.getItemId()) {
 		case 0:
 			new LibraryTopLevelViewChanger(this, mySelectedBookPath).show();	
@@ -145,7 +140,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 	public static void launchActivity(Activity activity, String selectedBookPath){
 		Intent intent = new Intent(activity.getApplicationContext(), GalleryLibraryTopLevelActivity.class);
 		intent.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		activity.startActivity(intent);
 	}
 }
