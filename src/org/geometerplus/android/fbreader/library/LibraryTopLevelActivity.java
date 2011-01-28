@@ -21,9 +21,12 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.LinkedList;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
@@ -55,7 +58,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			LibraryCommon.LibraryInstance = new Library();
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
-
+		
 		myItems = new LinkedList<FBTree>();
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
@@ -145,6 +148,26 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		} else if (ACTION_FOUND.equals(intent.getAction())) {
 			setSearchResults(intent);
 		}
+	}
+	
+	// TODO
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 0:
+			Log.v(FMCommon.LOG, "onOptionsItemSelected(MenuItem item) - LibraryTopLevelActivity");
+			new LibraryTopLevelViewChanger(this, mySelectedBookPath).show();	
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	public static void launchActivity(Activity activity, String selectedBookPath){
+		Intent intent = new Intent(activity.getApplicationContext(), LibraryTopLevelActivity.class);
+		intent.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(intent);
 	}
 }
 

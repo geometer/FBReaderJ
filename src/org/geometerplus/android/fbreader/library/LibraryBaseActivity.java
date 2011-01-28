@@ -21,36 +21,35 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.List;
 
-import android.app.*;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.view.*;
-import android.widget.*;
-
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.fbreader.library.AuthorTree;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BookTree;
+import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.library.LibraryTree;
+import org.geometerplus.fbreader.library.SeriesInfo;
+import org.geometerplus.fbreader.library.SeriesTree;
+import org.geometerplus.fbreader.library.Tag;
+import org.geometerplus.fbreader.library.TagTree;
+import org.geometerplus.fbreader.library.TitleTree;
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.library.*;
-
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 
-abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
-	static final String TREE_PATH_KEY = "TreePath";
-	static final String PARAMETER_KEY = "Parameter";
-
-	static final String PATH_FAVORITES = "favorites";
-	static final String PATH_SEARCH_RESULTS = "searchResults";
-	static final String PATH_RECENT = "recent";
-	static final String PATH_BY_AUTHOR = "byAuthor";
-	static final String PATH_BY_TITLE = "byTitle";
-	static final String PATH_BY_TAG = "byTag";
-
-	static final ZLStringOption BookSearchPatternOption =
-		new ZLStringOption("BookSearch", "Pattern", "");
-
+abstract class LibraryBaseActivity extends BaseActivity
+	implements HasLibraryConstants, MenuItem.OnMenuItemClickListener {
+	
 	protected Book mySelectedBook;
 
 	@Override
@@ -63,7 +62,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 
 	@Override
 	public boolean onSearchRequested() {
-		startSearch(BookSearchPatternOption.getValue(), true, null, false);
+		startSearch(LibraryCommon.BookSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
 
@@ -74,7 +73,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 		if (pattern == null || pattern.length() == 0) {
 			return false;
 		}
-		BookSearchPatternOption.setValue(pattern);
+		LibraryCommon.BookSearchPatternOption.setValue(pattern);
 		return LibraryCommon.LibraryInstance.searchBooks(pattern).hasChildren();
 	}
 
@@ -84,17 +83,10 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
-        return true;
-    }
-
-    private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
-        final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
-        final MenuItem item = menu.add(0, index, Menu.NONE, label);
-        item.setOnMenuItemClickListener(this);
-        item.setIcon(iconId);
-        return item;
+    	super.onCreateOptionsMenu(menu);
+    	FileUtil.addMenuItem(menu, 1, myResource, "localSearch", R.drawable.ic_menu_search);
+    	FileUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_sorting);
+    	return true;
     }
 
     public boolean onMenuItemClick(MenuItem item) {

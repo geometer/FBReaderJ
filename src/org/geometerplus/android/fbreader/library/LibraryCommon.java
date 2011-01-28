@@ -2,6 +2,7 @@ package org.geometerplus.android.fbreader.library;
 
 import org.geometerplus.fbreader.library.BooksDatabase;
 import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -75,6 +76,25 @@ enum SortType{
 			result[i] = sourse[i].getName();
 		}
 		return result;
+	}
+}
+
+class ViewTypeConf{
+	private static String VIEW_GROUP = "viewGroup";
+	private static String VIEW_OPTION_NAME = "viewOptionName";
+	private static int VIEW_DEF_VALUE = 0;
+	private static ZLIntegerOption myViewOption = new ZLIntegerOption(VIEW_GROUP, VIEW_OPTION_NAME, VIEW_DEF_VALUE);
+	
+	public static ViewType getViewType(){
+		return ViewType.values()[myViewOption.getValue()];
+	}
+
+	public static int getValue(){
+		return myViewOption.getValue();
+	}
+
+	public static void setValue(int value){
+		myViewOption.setValue(value);
 	}
 }
 

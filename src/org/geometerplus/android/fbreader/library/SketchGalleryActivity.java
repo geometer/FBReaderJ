@@ -61,7 +61,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 //		myInsertPath = getIntent().getStringExtra(FILE_MANAGER_INSERT_MODE);
 		
 		LibraryCommon.SortTypeInstance = SortingDialog.getOprionSortType();		// TODO move inisialization
-		LibraryCommon.ViewTypeInstance = ViewChangeDialog.getOprionViewType(); 	// TODO move inisialization
+		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType(); 			// TODO move inisialization
 
 		if (myPath == null) {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");

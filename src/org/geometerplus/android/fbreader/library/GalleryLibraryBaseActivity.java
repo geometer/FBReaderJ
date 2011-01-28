@@ -56,8 +56,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	implements MenuItem.OnMenuItemClickListener, HasLibraryConstants, LibraryBaseAdapter.HasAdapter {
 
-	static final ZLStringOption BookSearchPatternOption =
-		new ZLStringOption("BookSearch", "Pattern", "");		// TODO deleter later
 	protected Book mySelectedBook;
 
 	@Override
@@ -75,7 +73,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 
 	@Override
 	public boolean onSearchRequested() {
-		startSearch(BookSearchPatternOption.getValue(), true, null, false);
+		startSearch(LibraryCommon.BookSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
 
@@ -86,7 +84,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 		if (pattern == null || pattern.length() == 0) {
 			return false;
 		}
-		BookSearchPatternOption.setValue(pattern);
+		LibraryCommon.BookSearchPatternOption.setValue(pattern);
 		return LibraryCommon.LibraryInstance.searchBooks(pattern).hasChildren();
 	}
 

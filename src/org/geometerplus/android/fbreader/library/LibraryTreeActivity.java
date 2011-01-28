@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,11 +45,6 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			finish();
 			return;
 		}
-		
-//		FileManager.myViewType = ViewChangeDialog.getOprionViewType();
-//		if (FileManager.myViewType == ViewType.SKETCH){
-//			// TODO
-//		}
 		
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -130,28 +126,24 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		}
 	}
 	
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	super.onCreateOptionsMenu(menu);
-    	FileUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_sorting);	
-    	return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-	    	case 0:
-	    		new LibraryViewChangeDialog(this, mySelectedBookPath, myTreePathString).show();
-	    		return true;
-        	default:
-        		return super.onOptionsItemSelected(item);
-        }
-    }
-
     public static void launchActivity(Activity activity, String selectedBookPath, String treePath){
 		Intent intent = new Intent(activity, LibraryTreeActivity.class)
 			.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath)
 			.putExtra(TREE_PATH_KEY, treePath);
 		activity.startActivityForResult(intent, CHILD_LIST_REQUEST);
     }
+    
+    
+	// TODO
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 0:
+			Log.v(FMCommon.LOG, "onOptionsItemSelected(MenuItem item) - LibraryTreeActivity");
+			//new LibraryViewChangeDialog(this, mySelectedBookPath, myTreePathString).show();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 }

@@ -61,7 +61,7 @@ public final class FileManager extends BaseActivity
 		setListAdapter(adapter);
 		
 		LibraryCommon.SortTypeInstance = SortingDialog.getOprionSortType();			// TODO move inisialization
-		LibraryCommon.ViewTypeInstance = ViewChangeDialog.getOprionViewType(); 		// TODO move inisialization
+		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType(); 				// TODO move inisialization
 
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);

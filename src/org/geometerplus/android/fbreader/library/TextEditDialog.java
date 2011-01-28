@@ -292,22 +292,17 @@ class ViewChangeDialog extends RadioButtonDialog{
 	private static String myTitle = ZLResource.resource("libraryView").getResource("viewBox").getResource("title").getValue();
 	private static String[] myItems = ViewType.toStringArray();
 	private String myPath;
-
-	private static String VIEW_GROUP = "viewGroup";
-	private static String VIEW_OPTION_NAME = "viewOptionName";
-	private static int VIEW_DEF_VALUE = 0;
-	public static ZLIntegerOption myViewOption = new ZLIntegerOption(VIEW_GROUP, VIEW_OPTION_NAME, VIEW_DEF_VALUE);
-
+	
 	public ViewChangeDialog(Context content, String path) {
-		super(content, myTitle, myItems, myViewOption.getValue());
+		super(content, myTitle, myItems, ViewTypeConf.getValue());
 		myPath = path;
 	}
 
 	@Override
 	protected void itemSelected(DialogInterface dialog, int item){
 		super.itemSelected(dialog, item);
-		if (getOprionViewType().ordinal() != item){
-			myViewOption.setValue(item);
+		if (ViewTypeConf.getValue() != item){
+			ViewTypeConf.setValue(item);
 			LibraryCommon.ViewTypeInstance = ViewType.values()[item];
 			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 				FileManager.launchFileManagerActivity(myContext, myPath);
@@ -316,10 +311,6 @@ class ViewChangeDialog extends RadioButtonDialog{
 			}
 			((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP
 		}
-	}
-	
-	public static ViewType getOprionViewType(){
-		return ViewType.values()[myViewOption.getValue()];
 	}
 }
 
@@ -330,7 +321,7 @@ class LibraryViewChangeDialog extends RadioButtonDialog{
 	private String myTreePathString;
 
 	public LibraryViewChangeDialog(Context content, String selectedBook, String treePathString) {
-		super(content, myTitle, myItems, ViewChangeDialog.myViewOption.getValue());
+		super(content, myTitle, myItems, ViewTypeConf.getValue());
 		mySelectedBook = selectedBook;
 		myTreePathString = treePathString;
 	}
@@ -338,9 +329,9 @@ class LibraryViewChangeDialog extends RadioButtonDialog{
 	@Override
 	protected void itemSelected(DialogInterface dialog, int item){
 		super.itemSelected(dialog, item);
-		if (getOprionViewType().ordinal() != item){
-			ViewChangeDialog.myViewOption.setValue(item);
-			LibraryCommon.ViewTypeInstance = ViewType.values()[item];
+		if (ViewTypeConf.getValue() != item){
+			ViewTypeConf.setValue(item);
+			LibraryCommon.ViewTypeInstance = ViewType.values()[item];		// TODO think about
 			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 				LibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);
 			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
@@ -349,9 +340,32 @@ class LibraryViewChangeDialog extends RadioButtonDialog{
 			((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP
 		}
 	}
-	
-	public static ViewType getOprionViewType(){
-		return ViewType.values()[ViewChangeDialog.myViewOption.getValue()];
+}
+
+
+class LibraryTopLevelViewChanger extends RadioButtonDialog{
+	private static String myTitle = ZLResource.resource("libraryView").getResource("viewBox").getResource("title").getValue();
+	private static String[] myItems = ViewType.toStringArray();
+	private String mySelectedBookPath;
+
+	public LibraryTopLevelViewChanger(Context content, String selectedBookPath) {
+		super(content, myTitle, myItems, ViewTypeConf.getValue());
+		mySelectedBookPath = selectedBookPath;
+	}
+
+	@Override
+	protected void itemSelected(DialogInterface dialog, int item){
+		super.itemSelected(dialog, item);
+		if (ViewTypeConf.getValue() != item){
+			ViewTypeConf.setValue(item);
+			LibraryCommon.ViewTypeInstance = ViewType.values()[item];
+			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
+				LibraryTopLevelActivity.launchActivity((Activity) myContext, mySelectedBookPath);
+			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
+				LibraryTopLevelActivity.launchActivity((Activity) myContext, mySelectedBookPath);
+			}
+			//((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP
+		}
 	}
 }
 

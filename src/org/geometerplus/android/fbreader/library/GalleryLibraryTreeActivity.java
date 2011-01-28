@@ -52,7 +52,7 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
 			if (runSearch(intent)) {
 				startActivity(intent
 					.setAction(ACTION_FOUND)
-					.setClass(getApplicationContext(), LibraryTopLevelActivity.class)
+					.setClass(getApplicationContext(), LibraryTopLevelActivity.class)					// TODO attention
 					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
 				);
 			} else {

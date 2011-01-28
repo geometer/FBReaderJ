@@ -33,7 +33,6 @@ import android.os.Bundle;
 import android.view.Window;
 
 public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
-
 	private LinkedList<FBTree> myItems;
 	private TopLevelTree mySearchResultsItem;
 
@@ -97,8 +96,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 				}
 			}
 		));
-		// setListAdapter(new LibraryAdapter(myItems)); 		// TODO
-
+		myGallery.setAdapter(new GalleryLibraryAdapter(myItems));
 		onNewIntent(getIntent());
 	}
 
@@ -107,13 +105,6 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 		LibraryCommon.LibraryInstance = null;
 		super.onDestroy();
 	}
-
-	// TODO
-//	@Override
-//	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-//		//TopLevelTree tree = (TopLevelTree)((LibraryAdapter)getListAdapter()).getItem(position);	// TODO
-//		//tree.run();																				// TODO
-//	}
 
 	private void setSearchResults(Intent intent) {
 		if (myItems.get(0) == mySearchResultsItem) {
@@ -127,7 +118,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_SEARCH_RESULTS, pattern)
 		);
 		myItems.add(0, mySearchResultsItem);
-//		getListView().invalidateViews();			// TODO
+		getAdapter().notifyDataSetChanged();
 		mySearchResultsItem.run();
 	}
 
