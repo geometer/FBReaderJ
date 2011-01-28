@@ -21,12 +21,11 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.LinkedList;
 
-import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.ui.android.R;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,16 +38,21 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		LibraryCommon.DatabaseInstance = SQLiteBooksDatabase.Instance();
-		if (LibraryCommon.DatabaseInstance == null) {
-			LibraryCommon.DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
+		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
+			finish();
+			return;
 		}
-		if (LibraryCommon.LibraryInstance == null) {
-			LibraryCommon.LibraryInstance = new Library();
-			startService(new Intent(getApplicationContext(), InitializationService.class));
-		}
+		
+//		LibraryCommon.DatabaseInstance = SQLiteBooksDatabase.Instance();
+//		if (LibraryCommon.DatabaseInstance == null) {
+//			LibraryCommon.DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
+//		}
+//		if (LibraryCommon.LibraryInstance == null) {
+//			LibraryCommon.LibraryInstance = new Library();
+//			startService(new Intent(getApplicationContext(), InitializationService.class));
+//		}
 
 		myItems = new LinkedList<FBTree>();
 		myItems.add(new TopLevelTree(
@@ -97,7 +101,8 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 			}
 		));
 		myGallery.setAdapter(new GalleryLibraryAdapter(myItems));
-		onNewIntent(getIntent());
+		
+		//onNewIntent(getIntent());
 	}
 
 	@Override
@@ -134,4 +139,10 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 		}
 	}
 	
+	public static void launchActivity(Activity activity, String selectedBookPath){
+		Intent intent = new Intent(activity.getApplicationContext(), GalleryLibraryTopLevelActivity.class);
+		intent.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(intent);
+	}
 }

@@ -344,7 +344,7 @@ class LibraryTopLevelViewChanger extends AbstractViewChangeDialog{
 			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 				LibraryTopLevelActivity.launchActivity((Activity) myContext, mySelectedBookPath);
 			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
-				LibraryTopLevelActivity.launchActivity((Activity) myContext, mySelectedBookPath);
+				GalleryLibraryTopLevelActivity.launchActivity((Activity) myContext, mySelectedBookPath);
 			}
 			//((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP
 		}

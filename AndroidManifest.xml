@@ -76,6 +76,8 @@
 		<activity android:name="org.geometerplus.android.fbreader.library.FileManager" android:process=":library"/>
 		<activity android:name="org.geometerplus.android.fbreader.library.BaseGalleryActivity" android:process=":library"/>
 		<activity android:name="org.geometerplus.android.fbreader.library.SketchGalleryActivity" android:process=":library"/>
+		<activity android:name="org.geometerplus.android.fbreader.library.GalleryLibraryBaseActivity" android:process=":library"/>
+		<activity android:name="org.geometerplus.android.fbreader.library.GalleryLibraryTopLevelActivity" android:process=":library"/>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:launchMode="singleTask" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
