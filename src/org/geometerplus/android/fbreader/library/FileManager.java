@@ -60,7 +60,7 @@ public final class FileManager extends BaseActivity
 		FileListAdapter adapter = new FileListAdapter();
 		setListAdapter(adapter);
 		
-		LibraryCommon.SortTypeInstance = SortingDialog.getOprionSortType();			// TODO move inisialization
+		LibraryCommon.SortTypeInstance = SortTypeConf.getSortType();				// TODO move inisialization
 		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType(); 				// TODO move inisialization
 
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){

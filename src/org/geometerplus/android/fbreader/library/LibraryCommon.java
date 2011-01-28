@@ -53,6 +53,25 @@ interface HasFileManagerConstants {
 	static final int MOVE_FILE_ITEM_ID = 12;
 }
 
+class SortTypeConf{
+	private static String SORT_GROUP = "sortGroup";
+	private static String SORT_OPTION_NAME = "sortOptionName";
+	private static int SORT_DEF_VALUE = 0;
+	private static ZLIntegerOption mySortOption = new ZLIntegerOption(SORT_GROUP, SORT_OPTION_NAME, SORT_DEF_VALUE);
+
+	public static SortType getSortType(){
+		return SortType.values()[mySortOption.getValue()];
+	}
+
+	public static int getValue(){
+		return mySortOption.getValue();
+	}
+
+	public static void setValue(int value){
+		mySortOption.setValue(value);
+	}
+}
+
 enum SortType{
 	BY_NAME{
 		public String getName() {

@@ -58,7 +58,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		myGallery.setOnItemSelectedListener(galleryAdapter);
 		myGallery.setOnCreateContextMenuListener(galleryAdapter);
 
-		LibraryCommon.SortTypeInstance = SortingDialog.getOprionSortType();		// TODO move inisialization
+		LibraryCommon.SortTypeInstance = SortTypeConf.getSortType();			// TODO move inisialization
 		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType(); 			// TODO move inisialization
 
 		if (myPath == null) {

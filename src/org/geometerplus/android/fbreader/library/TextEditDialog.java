@@ -19,9 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import android.app.Activity;
@@ -29,7 +27,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -248,43 +245,24 @@ class SortingDialog extends RadioButtonDialog{
 	private static String[] myItems = SortType.toStringArray();
 	private String myPath;
 
-	private static String SORT_GROUP = "sortGroup";
-	private static String SORT_OPTION_NAME = "sortOptionName";
-	private static int SORT_DEF_VALUE = 0;
-	private static ZLIntegerOption mySortOption = new ZLIntegerOption(SORT_GROUP, SORT_OPTION_NAME, SORT_DEF_VALUE);
-
 	public SortingDialog(Context content, String path) {
-		super(content, myTitle, myItems, mySortOption.getValue());
+		super(content, myTitle, myItems, SortTypeConf.getValue());
 		myPath = path;
 	}
 
 	@Override
 	protected void itemSelected(DialogInterface dialog, int item){
 		super.itemSelected(dialog, item);
-		if (getOprionSortType().ordinal() != item){
-			mySortOption.setValue(item);
+		if (SortTypeConf.getValue() != item){
+			SortTypeConf.setValue(item);
 			LibraryCommon.SortTypeInstance = SortType.values()[item];
 			
 			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
-				startActivity(FileManager.class);
+				FileManager.launchFileManagerActivity(myContext, myPath);
 			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH) {
-				startActivity(SketchGalleryActivity.class);
+				SketchGalleryActivity.launchSketchGalleryActivity(myContext, myPath);
 			}
 		}
-	}
-
-	private void startActivity(Class<?> c){
-		((Activity) myContext).startActivityForResult(
-				new Intent(myContext, c)
-					.putExtra(FileManager.FILE_MANAGER_PATH, myPath)
-					.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),
-				FileManager.CHILD_LIST_REQUEST
-		);
-	
-	}
-	
-	public static SortType getOprionSortType(){
-		return SortType.values()[mySortOption.getValue()];
 	}
 }
 
