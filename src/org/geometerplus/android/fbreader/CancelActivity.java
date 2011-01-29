@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,27 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.content.Intent;
+import android.app.Activity;
 
-import org.geometerplus.fbreader.fbreader.FBAction;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-
-class CancelAction extends FBAction {
-	private final FBReader myBaseActivity;
-
-	CancelAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(fbreader);
-		myBaseActivity = baseActivity;
-	}
-
-	public void run() {
-		if (Reader.getCurrentView() != Reader.BookTextView) {
-			Reader.showBookTextView();
-		} else {
-			final Intent intent = new Intent();
-			intent.setClass(myBaseActivity, CancelActivity.class);
-			myBaseActivity.startActivity(intent);
-			//Reader.closeWindow();
-		}
-	}
+public class CancelActivity extends Activity {
 }
