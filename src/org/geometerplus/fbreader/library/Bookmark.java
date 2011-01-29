@@ -21,8 +21,7 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
-import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
+import org.geometerplus.zlibrary.text.view.*;
 
 public final class Bookmark extends ZLTextFixedPosition {
 	public final static int CREATION = 0;
@@ -68,13 +67,13 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myIsChanged = false;
 	}
 
-	public Bookmark(Book book, String text, String modelId, ZLTextWordCursor cursor) {
+	public Bookmark(Book book, String modelId, ZLTextWordCursor cursor) {
 		super(cursor);
 
 		myId = -1;
 		myBookId = book.getId();
 		myBookTitle = book.getTitle();
-		myText = text;
+		myText = createBookmarkText(cursor, 20);
 		myCreationDate = new Date();
 		myModelId = modelId;
 		myIsChanged = true;
@@ -151,5 +150,91 @@ public final class Bookmark extends ZLTextFixedPosition {
 		public int compare(Bookmark bm0, Bookmark bm1) {
 			return bm1.getTime(LATEST).compareTo(bm0.getTime(LATEST));
 		}
+	}
+
+	public static String createBookmarkText(ZLTextWordCursor cursor, int maxWords) {
+		cursor = new ZLTextWordCursor(cursor);
+
+		final StringBuilder builder = new StringBuilder();
+		final StringBuilder sentenceBuilder = new StringBuilder();
+		final StringBuilder phraseBuilder = new StringBuilder();
+
+		int wordCounter = 0;
+		int sentenceCounter = 0;
+		int storedWordCounter = 0;
+		boolean lineIsNonEmpty = false;
+		boolean appendLineBreak = false;
+mainLoop:
+		while (wordCounter < maxWords && sentenceCounter < 3) {
+			while (cursor.isEndOfParagraph()) {
+				if (!cursor.nextParagraph()) {
+					break mainLoop;
+				}
+				if ((builder.length() > 0) && cursor.getParagraphCursor().isEndOfSection()) {
+					break mainLoop;
+				}
+				if (phraseBuilder.length() > 0) {
+					sentenceBuilder.append(phraseBuilder);
+					phraseBuilder.delete(0, phraseBuilder.length());
+				}
+				if (sentenceBuilder.length() > 0) {
+					if (appendLineBreak) {
+						builder.append("\n");
+					}
+					builder.append(sentenceBuilder);
+					sentenceBuilder.delete(0, sentenceBuilder.length());
+					++sentenceCounter;
+					storedWordCounter = wordCounter;
+				}
+				lineIsNonEmpty = false;
+				if (builder.length() > 0) {
+					appendLineBreak = true;
+				}
+			}
+			final ZLTextElement element = cursor.getElement();
+			if (element instanceof ZLTextWord) {
+				final ZLTextWord word = (ZLTextWord)element;
+				if (lineIsNonEmpty) {
+					phraseBuilder.append(" ");
+				}
+				phraseBuilder.append(word.Data, word.Offset, word.Length);
+				++wordCounter;
+				lineIsNonEmpty = true;
+				switch (word.Data[word.Offset + word.Length - 1]) {
+					case ',':
+					case ':':
+					case ';':
+					case ')':
+						sentenceBuilder.append(phraseBuilder);
+						phraseBuilder.delete(0, phraseBuilder.length());
+						break;
+					case '.':
+					case '!':
+					case '?':
+						++sentenceCounter;
+						if (appendLineBreak) {
+							builder.append("\n");
+							appendLineBreak = false;
+						}
+						sentenceBuilder.append(phraseBuilder);
+						phraseBuilder.delete(0, phraseBuilder.length());
+						builder.append(sentenceBuilder);
+						sentenceBuilder.delete(0, sentenceBuilder.length());
+						storedWordCounter = wordCounter;
+						break;
+				}
+			}
+			cursor.nextWord();
+		}
+		if (storedWordCounter < 4) {
+			if (sentenceBuilder.length() == 0) {
+				sentenceBuilder.append(phraseBuilder);
+			}
+			if (appendLineBreak) {
+				builder.append("\n");
+			}
+			builder.append(sentenceBuilder);
+		}
+		return builder.toString();
 	}
 }

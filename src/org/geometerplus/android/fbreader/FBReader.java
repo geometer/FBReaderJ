@@ -283,14 +283,14 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	private final void createNavigation(View layout) {
-		final SeekBar slider = (SeekBar) layout.findViewById(R.id.book_position_slider);
-		final TextView text = (TextView) layout.findViewById(R.id.book_position_text);
+		final SeekBar slider = (SeekBar)layout.findViewById(R.id.book_position_slider);
+		final TextView text = (TextView)layout.findViewById(R.id.book_position_text);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
 				final ZLView view = ZLApplication.Instance().getCurrentView();
 				if (view instanceof ZLTextView) {
-					ZLTextView textView = (ZLTextView) view;
+					ZLTextView textView = (ZLTextView)view;
 					if (page == 1) {
 						textView.gotoHome();
 					} else {
@@ -318,14 +318,14 @@ public final class FBReader extends ZLAndroidActivity {
 			}
 		});
 
-		final Button btnOk = (Button) layout.findViewById(android.R.id.button1);
-		final Button btnCancel = (Button) layout.findViewById(android.R.id.button3);
+		final Button btnOk = (Button)layout.findViewById(android.R.id.button1);
+		final Button btnCancel = (Button)layout.findViewById(android.R.id.button3);
 		View.OnClickListener listener = new View.OnClickListener() {
 			public void onClick(View v) {
 				final ZLTextPosition position = myNavigatePanel.StartPosition;
 				myNavigatePanel.StartPosition = null;
 				if (v == btnCancel && position != null) {
-					((ZLTextView) ZLApplication.Instance().getCurrentView()).gotoPosition(position);
+					((ZLTextView)ZLApplication.Instance().getCurrentView()).gotoPosition(position);
 				}
 				myNavigatePanel.hide(true);
 			}
@@ -338,10 +338,10 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	private final void setupNavigation(ControlPanel panel) {
-		final SeekBar slider = (SeekBar) panel.findViewById(R.id.book_position_slider);
-		final TextView text = (TextView) panel.findViewById(R.id.book_position_text);
+		final SeekBar slider = (SeekBar)panel.findViewById(R.id.book_position_slider);
+		final TextView text = (TextView)panel.findViewById(R.id.book_position_text);
 
-		final ZLTextView textView = (ZLTextView) ZLApplication.Instance().getCurrentView();
+		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		final int page = textView.computeCurrentPage();
 		final int pagesNumber = textView.computePageNumber();
 
