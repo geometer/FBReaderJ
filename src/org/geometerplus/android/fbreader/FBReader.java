@@ -135,6 +135,8 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
+
+		fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader));
 	}
 
 	@Override
@@ -345,8 +347,7 @@ public final class FBReader extends ZLAndroidActivity {
 		final int page = textView.computeCurrentPage();
 		final int pagesNumber = textView.computePageNumber();
 
-		if (slider.getMax() != (pagesNumber - 1)
-				|| slider.getProgress() != (page - 1)) {
+		if (slider.getMax() != pagesNumber - 1 || slider.getProgress() != page - 1) {
 			slider.setMax(pagesNumber - 1);
 			slider.setProgress(page - 1);
 			text.setText(makeProgressText(page, pagesNumber));
