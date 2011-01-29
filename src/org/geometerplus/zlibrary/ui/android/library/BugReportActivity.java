@@ -56,7 +56,7 @@ public class BugReportActivity extends Activity {
 			new View.OnClickListener() {
 				public void onClick(View view) {
 					Intent sendIntent = new Intent(Intent.ACTION_SEND);
-					sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "exception@fbreader.org" });
+					sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "exception@geometerplus.com" });
 					sendIntent.putExtra(Intent.EXTRA_TEXT, stackTrace);
 					sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + versionName + " exception report");
 					sendIntent.setType("message/rfc822");
