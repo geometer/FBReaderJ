@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.image;
+package org.geometerplus.zlibrary.text.view;
 
-public interface ZLImage {
-	String getURI();
+import java.util.List;
+
+public class ZLTextImageRegion extends ZLTextElementRegion {
+	public final ZLTextImageElement ImageElement;
+
+	ZLTextImageRegion(ZLTextImageElement imageElement, List<ZLTextElementArea> list, int fromIndex) {
+		super(list, fromIndex);
+		ImageElement = imageElement;
+	}
+
+	public boolean equals(Object other) {
+		if (!(other instanceof ZLTextImageRegion)) {
+			return false;
+		}
+		return ImageElement == ((ZLTextImageRegion)other).ImageElement;
+	}
 }

@@ -38,6 +38,11 @@ public class DocCompressedFileImage extends ZLSingleImage {
 		myCompressedSize = compressedSize;
 	}
 
+	public String getURI() {
+		// TODO: implement
+		return null;
+	}
+
 	public byte[] byteData() {
 		try {
 			final InputStream stream = myFile.getInputStream();

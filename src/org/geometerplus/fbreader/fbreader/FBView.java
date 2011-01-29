@@ -177,7 +177,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextHyperlinkRegion.Filter);
+		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
@@ -366,7 +366,7 @@ public final class FBView extends ZLTextView {
 
 		if (myReader.DictionaryTappingActionOption.getValue() !=
 			FBReaderApp.DictionaryTappingAction.doNothing) {
-			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.Filter);
+			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
 				myReader.repaintView();
@@ -384,7 +384,7 @@ public final class FBView extends ZLTextView {
 
 		if (myReader.DictionaryTappingActionOption.getValue() !=
 			FBReaderApp.DictionaryTappingAction.doNothing) {
-			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.Filter);
+			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
 				myReader.repaintView();
@@ -401,9 +401,7 @@ public final class FBView extends ZLTextView {
 		if (myReader.DictionaryTappingActionOption.getValue() ==
 			FBReaderApp.DictionaryTappingAction.openDictionary) {
 			final ZLTextElementRegion region = currentRegion();
-			if (region instanceof ZLTextWordRegion) {
-				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
-			}
+			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
 
@@ -422,7 +420,7 @@ public final class FBView extends ZLTextView {
 		ZLTextElementRegion region = currentRegion();
 		final ZLTextElementRegion.Filter filter =
 			region instanceof ZLTextWordRegion || myReader.NavigateAllWordsOption.getValue()
-				? ZLTextElementRegion.Filter : ZLTextHyperlinkRegion.Filter;
+				? ZLTextElementRegion.AnyRegionFilter : ZLTextElementRegion.ImageOrHyperlinkFilter;
 		region = nextRegion(direction, filter);
 		if (region != null) {
 			selectRegion(region);
