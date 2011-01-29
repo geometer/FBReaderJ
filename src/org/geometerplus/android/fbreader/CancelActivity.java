@@ -19,7 +19,53 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.app.Activity;
+import android.app.ListActivity;
+import android.os.Bundle;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+import android.view.*;
 
-public class CancelActivity extends Activity {
+import org.geometerplus.zlibrary.ui.android.R;
+
+public class CancelActivity extends ListActivity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setListAdapter(new ActionListAdapter());
+	}
+
+	private class ActionListAdapter extends BaseAdapter {
+		@Override
+		public final int getCount() {
+			return 5;
+		}
+
+		@Override
+		public final Integer getItem(int position) {
+			return position;
+		}
+
+		@Override
+		public final long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, final ViewGroup parent) {
+			final View view = convertView != null
+				? convertView
+				: LayoutInflater.from(parent.getContext()).inflate(R.layout.cancel_item, parent, false);
+			final TextView titleView = (TextView)view.findViewById(R.id.cancel_item_title);
+			final TextView summaryView = (TextView)view.findViewById(R.id.cancel_item_summary);
+			if (position == 0) {
+				titleView.setText("Open previous book");
+			} else if (position == getCount() - 1) {
+				titleView.setText("Close FBReader");
+			} else {
+				titleView.setText("Go to page");
+			}
+			return view;
+		}
+	}
 }
