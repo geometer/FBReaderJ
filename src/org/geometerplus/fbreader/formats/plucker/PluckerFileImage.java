@@ -37,6 +37,11 @@ public class PluckerFileImage extends ZLSingleImage {
 		mySize = size;
 	}
 
+	public String getURI() {
+		// TODO: implement
+		return null;
+	}
+
 	public byte[] byteData() {
 		try {
 			final InputStream stream = myFile.getInputStream();

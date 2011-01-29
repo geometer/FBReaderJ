@@ -34,6 +34,10 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 
 	public abstract ZLSingleImage getRealImage();
 
+	public String getURI() {
+		return getRealImage().getURI();
+	}
+
 	@Override
 	public final byte[] byteData() {
 		return myImage != null ? myImage.byteData() : null;

@@ -35,6 +35,7 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 
 import org.geometerplus.android.fbreader.network.BookDownloader;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
+import org.geometerplus.android.fbreader.image.ImageViewActivity;
 
 class ProcessHyperlinkAction extends FBAction {
 	private final FBReader myBaseActivity;
@@ -61,6 +62,18 @@ class ProcessHyperlinkAction extends FBAction {
 					break;
 			}
 			return;
+		} else if (region instanceof ZLTextImageRegion) {
+			final String uriString = ((ZLTextImageRegion)region).ImageElement.URI;
+			if (uriString != null) {
+				try {
+					final Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setClass(myBaseActivity, ImageViewActivity.class);
+					intent.setData(Uri.parse(uriString));
+					myBaseActivity.startActivity(intent);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		} else if (region instanceof ZLTextWordRegion) {
 			DictionaryUtil.openWordInDictionary(
 				myBaseActivity, (ZLTextWordRegion)region
