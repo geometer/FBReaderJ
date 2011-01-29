@@ -17,11 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
+
+import org.geometerplus.fbreader.fbreader.FBAction;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class CancelAction extends FBAction {
-	CancelAction(FBReaderApp fbreader) {
+	private final FBReader myBaseActivity;
+
+	CancelAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(fbreader);
+		myBaseActivity = baseActivity;
 	}
 
 	public void run() {

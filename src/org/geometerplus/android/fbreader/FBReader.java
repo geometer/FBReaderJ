@@ -135,6 +135,8 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
+
+		fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader));
 	}
 
 	@Override
