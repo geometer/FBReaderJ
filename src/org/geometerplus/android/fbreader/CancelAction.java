@@ -21,25 +21,76 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class CancelAction extends FBAction {
 	private final FBReader myBaseActivity;
 
+	enum Type {
+		OPEN_BOOK,
+		GOTO,
+		CLOSE
+	}
+
+	static final class Description {
+		final Type Type;
+		final String Title;
+		final String Summary;
+
+		Description(Type type, String title, String summary) {
+			Type = type;
+			Title = title;
+			Summary = summary;
+		}
+	}
+
 	CancelAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(fbreader);
 		myBaseActivity = baseActivity;
+	}
+
+	private void fillDescriptionList() {
+		final ZLResource resource = ZLResource.resource("cancelMenu");
+		myBaseActivity.CancelActionsList.clear();
+		myBaseActivity.CancelActionsList.add(new Description(
+			Type.OPEN_BOOK, resource.getResource("previousBook").getValue(), "this is a summary"
+		));
+		myBaseActivity.CancelActionsList.add(new Description(
+			Type.GOTO, resource.getResource("goto").getValue(), "this is a summary"
+		));
+		myBaseActivity.CancelActionsList.add(new Description(
+			Type.GOTO, resource.getResource("goto").getValue(), "this is a summary"
+		));
+		myBaseActivity.CancelActionsList.add(new Description(
+			Type.GOTO, resource.getResource("goto").getValue(), "this is a summary"
+		));
+		myBaseActivity.CancelActionsList.add(new Description(
+			Type.CLOSE, resource.getResource("close").getValue(), null
+		));
 	}
 
 	public void run() {
 		if (Reader.getCurrentView() != Reader.BookTextView) {
 			Reader.showBookTextView();
 		} else {
-			final Intent intent = new Intent();
-			intent.setClass(myBaseActivity, CancelActivity.class);
-			myBaseActivity.startActivity(intent);
-			//Reader.closeWindow();
+			fillDescriptionList();
+			if (myBaseActivity.CancelActionsList.size() == 1) {
+				Reader.closeWindow();
+			} else {
+				final Intent intent = new Intent();
+				intent.setClass(myBaseActivity, CancelActivity.class);
+				intent.putExtra(CancelActivity.LIST_SIZE, myBaseActivity.CancelActionsList.size());
+				int index = 0;
+				for (Description description : myBaseActivity.CancelActionsList) {
+					intent.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
+					intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
+					++index;
+				}
+				myBaseActivity.startActivityForResult(intent, FBReader.CANCEL_CODE);
+			}
 		}
 	}
 }

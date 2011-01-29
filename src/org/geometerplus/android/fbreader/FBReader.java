@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.app.SearchManager;
@@ -58,6 +59,7 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
 	final static int REPAINT_CODE = 1;
+	final static int CANCEL_CODE = 2;
 
 	private int myFullScreenFlag;
 
@@ -252,6 +254,9 @@ public final class FBReader extends ZLAndroidActivity {
 		return true;
 	}
 
+	final ArrayList<CancelAction.Description> CancelActionsList =
+		new ArrayList<CancelAction.Description>(5);
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
@@ -270,6 +275,14 @@ public final class FBReader extends ZLAndroidActivity {
 				fbreader.repaintView();
 				break;
 			}
+			case CANCEL_CODE:
+				if (resultCode >= 0 && resultCode < CancelActionsList.size()) {
+					final CancelAction.Description description = CancelActionsList.get(resultCode);
+					if (description.Type == CancelAction.Type.CLOSE) {
+						finish();
+					}
+				} 
+				break;
 		}
 	}
 

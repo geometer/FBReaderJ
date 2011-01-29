@@ -154,6 +154,11 @@
 			<node name="search" value="Search"/>
 		</node>
 	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="Open previous book"/>
+		<node name="goto" value="Go to position"/>
+		<node name="close" value="Close FBReader"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>

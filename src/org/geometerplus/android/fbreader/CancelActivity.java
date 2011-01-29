@@ -20,25 +20,37 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.*;
 import android.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class CancelActivity extends ListActivity {
+	static final String LIST_SIZE = "listSize";
+	static final String ITEM_TITLE = "title";
+	static final String ITEM_SUMMARY = "summary";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setListAdapter(new ActionListAdapter());
+		final ActionListAdapter adapter = new ActionListAdapter(getIntent());
+		setListAdapter(adapter);
+		getListView().setOnItemClickListener(adapter);
 	}
 
-	private class ActionListAdapter extends BaseAdapter {
+	private class ActionListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+		private final Intent myIntent;
+
+		ActionListAdapter(Intent intent) {
+			myIntent = intent;
+		}
+
 		@Override
 		public final int getCount() {
-			return 5;
+			return myIntent.getIntExtra(LIST_SIZE, 0);
 		}
 
 		@Override
@@ -56,16 +68,18 @@ public class CancelActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.cancel_item, parent, false);
-			final TextView titleView = (TextView)view.findViewById(R.id.cancel_item_title);
-			final TextView summaryView = (TextView)view.findViewById(R.id.cancel_item_summary);
-			if (position == 0) {
-				titleView.setText("Open previous book");
-			} else if (position == getCount() - 1) {
-				titleView.setText("Close FBReader");
-			} else {
-				titleView.setText("Go to page");
-			}
+			((TextView)view.findViewById(R.id.cancel_item_title)).setText(
+				myIntent.getStringExtra(ITEM_TITLE + position)
+			);
+			((TextView)view.findViewById(R.id.cancel_item_summary)).setText(
+				myIntent.getStringExtra(ITEM_SUMMARY + position)
+			);
 			return view;
+		}
+
+		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			setResult((int)id);
+			finish();
 		}
 	}
 }

@@ -89,7 +89,6 @@ public class TOCActivity extends ListActivity {
 	}
 
 	private final class TOCAdapter extends ZLTreeAdapter {
-
 		TOCAdapter(TOCTree root) {
 			super(getListView(), root);
 		}
