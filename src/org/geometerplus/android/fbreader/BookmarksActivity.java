@@ -123,29 +123,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			return;
 		}
 	   	String pattern = intent.getStringExtra(SearchManager.QUERY);
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		fbreader.BookmarkSearchPatternOption.setValue(pattern);
-
-		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
-		pattern = pattern.toLowerCase();
-		for (Bookmark b : BookmarksActivity.Instance.AllBooksBookmarks) {
-			if (ZLMiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
-				bookmarks.add(b);
-			}
-		}
-		if (!bookmarks.isEmpty()) {
-			showSearchResultsTab(bookmarks);
-		} else {
-			UIUtil.showErrorMessage(this, "bookmarkNotFound");
-		}
-	}
-
-	@Override
-	protected void onNewIntent(Intent intent) {
-		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			return;
-		}
-	   	String pattern = intent.getStringExtra(SearchManager.QUERY);
 		myBookmarkSearchPatternOption.setValue(pattern);
 
 		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
