@@ -10,8 +10,8 @@
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>
-		<node name="byTitle" value="By title" toBeTranslated="true">
-			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		<node name="byTitle" value="Podle názvu">
+			<node name="summary" value="Knihy seřazeny podle názvu"/>
 		</node>
 		<node name="byTag" value="Podle štítku">
 			<node name="summary" value="Knihy seřazeny podle štítku"/>
@@ -137,6 +137,8 @@
 		<node name="contentError" value="Stahování selhalo" />
 		<node name="downloadingStarted" value="Stahování knihy bylo zahájeno" />
 		<node name="alreadyDownloading" value="Kniha se již stahuje" />
+		<node name="cannotCreateDirectory" value="Unable to create directory %s" toBeTranslated="true"/>
+		<node name="cannotCreateFile" value="Unable to create file %s" toBeTranslated="true"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Rozbalit strom"/>
@@ -154,6 +156,11 @@
 		<node name="menu">
 			<node name="search" value="Hledat"/>
 		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
+		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Nastavení"/>
@@ -221,7 +228,7 @@
 				<node name="summary" value="Adresáře pro hledání souborů"/>
 				<node name="books" value="Adresář s knihami"/>
 				<node name="fonts" value="Adresář s písmy"/>
-				<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
+				<node name="wallpapers" value="Adresář s tapetami"/>
 			</node>
 			<node name="appearance" value="Vzhled">
 				<node name="summary" value="Otáčení, stavový řádek"/>
@@ -384,15 +391,15 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
+			<node name="colors" value="Barvy a tapety">
 				<node name="summary" value="Nastavení barev"/>
 				<node name="background" value="Pozadí">
-					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
-					<node name="leather" value="Leather" toBeTranslated="true"/>
-					<node name="sepia" value="Sepia" toBeTranslated="true"/>
-					<node name="wood" value="Wood" toBeTranslated="true"/>
+					<node name="solidColor" value="Plná barva"/>
+					<node name="leather" value="Kůže"/>
+					<node name="sepia" value="Sépie"/>
+					<node name="wood" value="Dřevo"/>
 				</node>
-				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
+				<node name="backgroundColor" value="Barva pozadí"/>
 				<node name="selectionBackground" value="Pozadí výběru"/>
 				<node name="text" value="Běžný text"/>
 				<node name="hyperlink" value="Hypertextový odkaz"/>

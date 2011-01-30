@@ -21,13 +21,16 @@ package org.geometerplus.android.fbreader;
 
 import java.util.*;
 
+import android.app.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
 import android.content.*;
-import android.app.TabActivity;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -35,9 +38,9 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.library.*;
 
-public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
-	static BookmarksActivity Instance;
+import org.geometerplus.android.util.UIUtil;
 
+public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuItemClickListener {
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
@@ -51,6 +54,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private ListView mySearchResultsView;
 
 	private final ZLResource myResource = ZLResource.resource("bookmarksView");
+	private final ZLStringOption myBookmarkSearchPatternOption =
+		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
 	private ListView createTab(String tag, int id) {
 		final TabHost host = getTabHost();
@@ -67,6 +72,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
+		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
+		manager.setOnCancelListener(null);
 
 		final TabHost host = getTabHost();
 		LayoutInflater.from(this).inflate(R.layout.bookmarks, host.getTabContentView(), true);
@@ -96,9 +104,25 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		Instance = this;
+	protected void onNewIntent(Intent intent) {
+		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			return;
+		}
+	   	String pattern = intent.getStringExtra(SearchManager.QUERY);
+		myBookmarkSearchPatternOption.setValue(pattern);
+
+		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
+		pattern = pattern.toLowerCase();
+		for (Bookmark b : AllBooksBookmarks) {
+			if (ZLMiscUtil.matchesIgnoreCase(b.getText(), pattern)) {
+				bookmarks.add(b);
+			}
+		}
+		if (!bookmarks.isEmpty()) {
+			showSearchResultsTab(bookmarks);
+		} else {
+			UIUtil.showErrorMessage(this, "bookmarkNotFound");
+		}
 	}
 
 	@Override
@@ -107,12 +131,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			bookmark.save();
 		}
 		super.onPause();
-	}
-
-	@Override
-	public void onStop() {
-		Instance = null;
-		super.onStop();
 	}
 
 	@Override
@@ -129,8 +147,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	@Override
 	public boolean onSearchRequested() {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		startSearch(fbreader.BookmarkSearchPatternOption.getValue(), true, null, false);
+		startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
 
@@ -192,112 +209,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		return super.onContextItemSelected(item);
 	}
 
-	private String createBookmarkText(ZLTextWordCursor cursor) {
-		cursor = new ZLTextWordCursor(cursor);
-
-		final StringBuilder builder = new StringBuilder();
-		final StringBuilder sentenceBuilder = new StringBuilder();
-		final StringBuilder phraseBuilder = new StringBuilder();
-
-		int wordCounter = 0;
-		int sentenceCounter = 0;
-		int storedWordCounter = 0;
-		boolean lineIsNonEmpty = false;
-		boolean appendLineBreak = false;
-mainLoop:
-		while ((wordCounter < 20) && (sentenceCounter < 3)) {
-			while (cursor.isEndOfParagraph()) {
-				if (!cursor.nextParagraph()) {
-					break mainLoop;
-				}
-				if ((builder.length() > 0) && cursor.getParagraphCursor().isEndOfSection()) {
-					break mainLoop;
-				}
-				if (phraseBuilder.length() > 0) {
-					sentenceBuilder.append(phraseBuilder);
-					phraseBuilder.delete(0, phraseBuilder.length());
-				}
-				if (sentenceBuilder.length() > 0) {
-					if (appendLineBreak) {
-						builder.append("\n");
-					}
-					builder.append(sentenceBuilder);
-					sentenceBuilder.delete(0, sentenceBuilder.length());
-					++sentenceCounter;
-					storedWordCounter = wordCounter;
-				}
-				lineIsNonEmpty = false;
-				if (builder.length() > 0) {
-					appendLineBreak = true;
-				}
-			}
-			final ZLTextElement element = cursor.getElement();
-			if (element instanceof ZLTextWord) {
-				final ZLTextWord word = (ZLTextWord)element;
-				if (lineIsNonEmpty) {
-					phraseBuilder.append(" ");
-				}
-				phraseBuilder.append(word.Data, word.Offset, word.Length);
-				++wordCounter;
-				lineIsNonEmpty = true;
-				switch (word.Data[word.Offset + word.Length - 1]) {
-					case ',':
-					case ':':
-					case ';':
-					case ')':
-						sentenceBuilder.append(phraseBuilder);
-						phraseBuilder.delete(0, phraseBuilder.length());
-						break;
-					case '.':
-					case '!':
-					case '?':
-						++sentenceCounter;
-						if (appendLineBreak) {
-							builder.append("\n");
-							appendLineBreak = false;
-						}
-						sentenceBuilder.append(phraseBuilder);
-						phraseBuilder.delete(0, phraseBuilder.length());
-						builder.append(sentenceBuilder);
-						sentenceBuilder.delete(0, sentenceBuilder.length());
-						storedWordCounter = wordCounter;
-						break;
-				}
-			}
-			cursor.nextWord();
-		}
-		if (storedWordCounter < 4) {
-			if (sentenceBuilder.length() == 0) {
-				sentenceBuilder.append(phraseBuilder);
-			}
-			if (appendLineBreak) {
-				builder.append("\n");
-			}
-			builder.append(sentenceBuilder);
-		}
-		return builder.toString();
-	}
-
 	private void addBookmark() {
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		final ZLTextView textView = fbreader.getTextView();
-		final ZLTextWordCursor cursor = textView.getStartCursor();
-
-		if (cursor.isNull()) {
-			// TODO: implement
-			return;
+		final Bookmark bookmark = fbreader.addBookmark(20, true);
+		if (bookmark != null) {
+			myThisBookBookmarks.add(0, bookmark);
+			AllBooksBookmarks.add(0, bookmark);
+			invalidateAllViews();
 		}
-
-		// TODO: text edit dialog
-		final Bookmark bookmark = new Bookmark(
-			fbreader.Model.Book,
-			createBookmarkText(cursor),
-			textView.getModel().getId(),
-			cursor
-		);
-		myThisBookBookmarks.add(0, bookmark);
-		AllBooksBookmarks.add(0, bookmark);
-		invalidateAllViews();
 	}
 
 	private void gotoBookmark(Bookmark bookmark) {

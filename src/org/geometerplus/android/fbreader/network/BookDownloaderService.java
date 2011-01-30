@@ -123,11 +123,7 @@ public class BookDownloaderService extends Service {
 
 		if (myDownloadingURLs.contains(url)) {
 			if ((notifications & Notifications.ALREADY_DOWNLOADING) != 0) {
-				Toast.makeText(
-					getApplicationContext(),
-					getResource().getResource("alreadyDownloading").getValue(),
-					Toast.LENGTH_SHORT
-				).show();
+				showMessage("alreadyDownloading");
 			}
 			doStop();
 			return;
@@ -144,12 +140,12 @@ public class BookDownloaderService extends Service {
 			final String dir = fileName.substring(0, index);
 			final File dirFile = new File(dir);
 			if (!dirFile.exists() && !dirFile.mkdirs()) {
-				// TODO: error message
+				showMessage("cannotCreateDirectory", dirFile.getPath());
 				doStop();
 				return;
 			}
 			if (!dirFile.exists() || !dirFile.isDirectory()) {
-				// TODO: error message
+				showMessage("cannotCreateDirectory", dirFile.getPath());
 				doStop();
 				return;
 			}
@@ -158,7 +154,7 @@ public class BookDownloaderService extends Service {
 		final File fileFile = new File(fileName);
 		if (fileFile.exists()) {
 			if (!fileFile.isFile()) {
-				// TODO: error message
+				showMessage("cannotCreateFile", fileFile.getPath());
 				doStop();
 				return;
 			}
@@ -172,14 +168,26 @@ public class BookDownloaderService extends Service {
 			title = fileFile.getName();
 		}
 		if ((notifications & Notifications.DOWNLOADING_STARTED) != 0) {
-			Toast.makeText(
-				getApplicationContext(),
-				getResource().getResource("downloadingStarted").getValue(),
-				Toast.LENGTH_SHORT
-			).show();
+			showMessage("downloadingStarted");
 		}
 		final String sslCertificate = intent.getStringExtra(SSL_CERTIFICATE_KEY);
 		startFileDownload(url, sslCertificate, fileFile, title);
+	}
+
+	private void showMessage(String key) {
+		Toast.makeText(
+			getApplicationContext(),
+			getResource().getResource(key).getValue(),
+			Toast.LENGTH_SHORT
+		).show();
+	}
+
+	private void showMessage(String key, String parameter) {
+		Toast.makeText(
+			getApplicationContext(),
+			getResource().getResource(key).getValue().replace("%s", parameter),
+			Toast.LENGTH_SHORT
+		).show();
 	}
 
 	private Intent getFBReaderIntent(final File file) {

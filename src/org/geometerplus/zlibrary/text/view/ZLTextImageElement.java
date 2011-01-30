@@ -24,10 +24,11 @@ import org.geometerplus.zlibrary.core.image.ZLImageData;
 public final class ZLTextImageElement extends ZLTextElement {
 	public final String Id;
 	public final ZLImageData ImageData;
+	public final String URI;
     
-	ZLTextImageElement(String id, ZLImageData imageData) {
+	ZLTextImageElement(String id, ZLImageData imageData, String uri) {
 		Id = id;
 		ImageData = imageData;
+		URI = uri;
 	}
 }
-

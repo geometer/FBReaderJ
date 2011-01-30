@@ -25,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public abstract class ZLBase64EncodedImage extends ZLSingleImage {
-
 	private boolean myIsDecoded;
 
 	protected ZLBase64EncodedImage(String mimeType) {
@@ -57,6 +56,16 @@ public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 				return 64;
 		}
 		return -1;
+	}
+
+	public String getURI() {
+		try {
+			decode();
+			final File file = new File(decodedFileName());
+			return "imagefile://" + decodedFileName() + "\0000\000" + (int)file.length();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	protected abstract String encodedFileName();
@@ -136,5 +145,4 @@ public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 			return null;
 		}
 	}
-
 }

@@ -137,6 +137,8 @@
 		<node name="contentError" value="Download mislukt" />
 		<node name="downloadingStarted" value="Downloaden van boek is begonnen" />
 		<node name="alreadyDownloading" value="Boek wordt al gedownload" />
+		<node name="cannotCreateDirectory" value="Unable to create directory %s" toBeTranslated="true"/>
+		<node name="cannotCreateFile" value="Unable to create file %s" toBeTranslated="true"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Hoofdstukken tonen"/>
@@ -154,6 +156,11 @@
 		<node name="menu">
 			<node name="search" value="Zoeken"/>
 		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
+		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Instellingen"/>

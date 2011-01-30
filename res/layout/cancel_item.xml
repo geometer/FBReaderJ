@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:minHeight="?android:attr/listPreferredItemHeight"
+	android:orientation="horizontal"
+>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+		android:orientation="vertical"
+	>
+		<TextView
+			android:id="@+id/cancel_item_title"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:ellipsize="marquee"
+			android:marqueeRepeatLimit="marquee_forever"
+		/>
+		<TextView
+			android:id="@+id/cancel_item_summary"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dip"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:ellipsize="marquee"
+			android:marqueeRepeatLimit="marquee_forever"
+		/>
+	</LinearLayout>
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+	/>
+</LinearLayout>
