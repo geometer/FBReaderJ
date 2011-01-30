@@ -375,7 +375,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void addInvisibleBookmark(ZLTextWordCursor cursor) {
-		if (Model.Book != null && getTextView() == BookTextView) {
+		if (cursor != null && Model != null && Model.Book != null && getTextView() == BookTextView) {
 			updateInvisibleBookmarksList(new Bookmark(
 				Model.Book,
 				getTextView().getModel().getId(),
