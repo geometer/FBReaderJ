@@ -204,7 +204,10 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
+		final Context context = getApplicationContext();
+		if (context != null) {
+			sendBroadcast(new Intent(context, KillerCallback.class));
+		}
 		ControlButtonPanel.restoreVisibilities();
 	}
 
