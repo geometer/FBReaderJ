@@ -89,7 +89,6 @@ public class TOCActivity extends ListActivity {
 	}
 
 	private final class TOCAdapter extends ZLTreeAdapter {
-
 		TOCAdapter(TOCTree root) {
 			super(getListView(), root);
 		}
@@ -122,6 +121,7 @@ public class TOCActivity extends ListActivity {
 			if (reference != null) {
 				finish();
 				final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
+				fbreader.addInvisibleBookmark();
 				fbreader.BookTextView.gotoPosition(reference.ParagraphIndex, 0, 0);
 				fbreader.showBookTextView();
 			}

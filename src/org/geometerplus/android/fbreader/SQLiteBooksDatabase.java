@@ -60,7 +60,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 13;
+		final int currentVersion = 14;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -95,6 +95,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables11();
 					case 12:
 						updateTables12();
+					case 13:
+						updateTables13();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -695,10 +697,11 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return ids;
 	}
 
-	protected List<Bookmark> loadBookmarks(long bookId) {
+	@Override
+	protected List<Bookmark> loadBookmarks(long bookId, boolean visible) {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE book_id = ?", new String[] { "" + bookId }
+			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE Bookmarks.book_id = ? AND Bookmarks.visible = ?", new String[] { "" + bookId, visible ? "1" : "0" }
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
@@ -713,18 +716,20 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				cursor.getString(8),
 				(int)cursor.getLong(9),
 				(int)cursor.getLong(10),
-				(int)cursor.getLong(11)
+				(int)cursor.getLong(11),
+				visible
 			));
 		}
 		cursor.close();
 		return list;
 	}
 
-	protected List<Bookmark> loadAllBookmarks() {
+	@Override
+	protected List<Bookmark> loadAllVisibleBookmarks() {
 		LinkedList<Bookmark> list = new LinkedList<Bookmark>();
 		myDatabase.execSQL("DELETE FROM Bookmarks WHERE book_id = -1");
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id", null
+			"SELECT Bookmarks.bookmark_id,Bookmarks.book_id,Books.title,Bookmarks.bookmark_text,Bookmarks.creation_time,Bookmarks.modification_time,Bookmarks.access_time,Bookmarks.access_counter,Bookmarks.model_id,Bookmarks.paragraph,Bookmarks.word,Bookmarks.char FROM Bookmarks INNER JOIN Books ON Books.book_id = Bookmarks.book_id WHERE Bookmarks.visible = 1", null
 		);
 		while (cursor.moveToNext()) {
 			list.add(createBookmark(
@@ -739,7 +744,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				cursor.getString(8),
 				(int)cursor.getLong(9),
 				(int)cursor.getLong(10),
-				(int)cursor.getLong(11)
+				(int)cursor.getLong(11),
+				true
 			));
 		}
 		cursor.close();
@@ -748,19 +754,20 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private SQLiteStatement myInsertBookmarkStatement;
 	private SQLiteStatement myUpdateBookmarkStatement;
+	@Override
 	protected long saveBookmark(Bookmark bookmark) {
 		SQLiteStatement statement;
 		if (bookmark.getId() == -1) {
 			if (myInsertBookmarkStatement == null) {
 				myInsertBookmarkStatement = myDatabase.compileStatement(
-					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char) VALUES (?,?,?,?,?,?,?,?,?,?)"
+					"INSERT OR IGNORE INTO Bookmarks (book_id,bookmark_text,creation_time,modification_time,access_time,access_counter,model_id,paragraph,word,char,visible) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 				);
 			}
 			statement = myInsertBookmarkStatement;
 		} else {
 			if (myUpdateBookmarkStatement == null) {
 				myUpdateBookmarkStatement = myDatabase.compileStatement(
-					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ? WHERE bookmark_id = ?"
+					"UPDATE Bookmarks SET book_id = ?, bookmark_text = ?, creation_time =?, modification_time = ?,access_time = ?, access_counter = ?, model_id = ?, paragraph = ?, word = ?, char = ?, visible = ? WHERE bookmark_id = ?"
 				);
 			}
 			statement = myUpdateBookmarkStatement;
@@ -772,22 +779,24 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		bindDate(statement, 4, bookmark.getTime(Bookmark.MODIFICATION));
 		bindDate(statement, 5, bookmark.getTime(Bookmark.ACCESS));
 		statement.bindLong(6, bookmark.getAccessCount());
-		bindString(statement, 7, bookmark.getModelId());
+		bindString(statement, 7, bookmark.ModelId);
 		statement.bindLong(8, bookmark.ParagraphIndex);
 		statement.bindLong(9, bookmark.ElementIndex);
 		statement.bindLong(10, bookmark.CharIndex);
+		statement.bindLong(11, bookmark.IsVisible ? 1 : 0);
 
 		if (statement == myInsertBookmarkStatement) {
 			return statement.executeInsert();
 		} else {
 			final long id = bookmark.getId();
-			statement.bindLong(11, id);
+			statement.bindLong(12, id);
 			statement.execute();
 			return id;
 		}
 	}
 
 	private SQLiteStatement myDeleteBookmarkStatement;
+	@Override
 	protected void deleteBookmark(Bookmark bookmark) {
 		if (myDeleteBookmarkStatement == null) {
 			myDeleteBookmarkStatement = myDatabase.compileStatement(
@@ -1133,5 +1142,11 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables12() {
 		myDatabase.execSQL("DELETE FROM Files WHERE parent_id IN (SELECT file_id FROM Files WHERE name LIKE '%.epub')");
+	}
+
+	private void updateTables13() {
+		myDatabase.execSQL(
+			"ALTER TABLE Bookmarks ADD COLUMN visible INTEGER DEFAULT 1"
+		);
 	}
 }

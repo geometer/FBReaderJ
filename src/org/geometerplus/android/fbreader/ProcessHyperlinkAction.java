@@ -66,7 +66,7 @@ class ProcessHyperlinkAction extends FBAction {
 			final String uriString = ((ZLTextImageRegion)region).ImageElement.URI;
 			if (uriString != null) {
 				try {
-					final Intent intent = new Intent(Intent.ACTION_VIEW);
+					final Intent intent = new Intent();
 					intent.setClass(myBaseActivity, ImageViewActivity.class);
 					intent.setData(Uri.parse(uriString));
 					myBaseActivity.startActivity(intent);

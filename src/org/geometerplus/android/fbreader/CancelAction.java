@@ -19,6 +19,10 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.List;
+
+import android.content.Intent;
+
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
@@ -34,7 +38,22 @@ class CancelAction extends FBAction {
 		if (Reader.getCurrentView() != Reader.BookTextView) {
 			Reader.showBookTextView();
 		} else {
-			Reader.closeWindow();
+			final List<FBReaderApp.CancelActionDescription> descriptionList =
+				Reader.getCancelActionsList();
+			if (descriptionList.size() == 1) {
+				Reader.closeWindow();
+			} else {
+				final Intent intent = new Intent();
+				intent.setClass(myBaseActivity, CancelActivity.class);
+				intent.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
+				int index = 0;
+				for (FBReaderApp.CancelActionDescription description : descriptionList) {
+					intent.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
+					intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
+					++index;
+				}
+				myBaseActivity.startActivityForResult(intent, FBReader.CANCEL_CODE);
+			}
 		}
 	}
 }
