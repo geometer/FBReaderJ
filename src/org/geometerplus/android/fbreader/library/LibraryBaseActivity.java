@@ -264,6 +264,9 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 		}
 
 		public void run() {
+			if (myLibrary == null) {
+				return;
+			}
 			if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
 				myPostRunnable.run();
 			} else {
