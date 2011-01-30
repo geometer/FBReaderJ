@@ -156,6 +156,11 @@
 			<node name="search" value="Поиск"/>
 		</node>
 	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="Открыть предыдущую книгу"/>
+		<node name="goto" value="Перейти на ..."/>
+		<node name="close" value="Закрыть FBReader"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>

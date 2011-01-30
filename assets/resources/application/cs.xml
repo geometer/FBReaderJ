@@ -157,6 +157,11 @@
 			<node name="search" value="Hledat"/>
 		</node>
 	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
+		<node name="goto" value="Go to position" toBeTranslated="true"/>
+		<node name="close" value="Close FBReader" toBeTranslated="true"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
