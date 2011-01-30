@@ -175,6 +175,7 @@ public final class FBView extends ZLTextView {
 		if (myReader.FooterIsSensitiveOption.getValue()) {
 			Footer footer = getFooterArea();
 			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
+				myReader.addInvisibleBookmark();
 				footer.setProgress(x);
 				return true;
 			}

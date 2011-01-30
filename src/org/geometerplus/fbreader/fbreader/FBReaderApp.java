@@ -364,16 +364,31 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	public void addInvisibleBookmark() {
-		if (Model.Book != null) {
-			final Bookmark b = addBookmark(6, false);
-			if (b != null) {
-				b.save();
-				final List<Bookmark> bookmarks = Bookmark.invisibleBookmarks(Model.Book);
-				for (int i = 3; i < bookmarks.size(); ++i) {
-					bookmarks.get(i).delete();
-				}
+	private void updateInvisibleBookmarksList(Bookmark b) {
+		if (Model.Book != null && b != null) {
+			b.save();
+			final List<Bookmark> bookmarks = Bookmark.invisibleBookmarks(Model.Book);
+			for (int i = 3; i < bookmarks.size(); ++i) {
+				bookmarks.get(i).delete();
 			}
+		}
+	}
+
+	public void addInvisibleBookmark(ZLTextWordCursor cursor) {
+		if (Model.Book != null && getTextView() == BookTextView) {
+			updateInvisibleBookmarksList(new Bookmark(
+				Model.Book,
+				getTextView().getModel().getId(),
+				cursor,
+				6,
+				false
+			));
+		}
+	}
+
+	public void addInvisibleBookmark() {
+		if (Model.Book != null && getTextView() == BookTextView) {
+			updateInvisibleBookmarksList(addBookmark(6, false));
 		}
 	}
 
