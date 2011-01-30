@@ -19,6 +19,9 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.*;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
@@ -279,6 +282,65 @@ public final class FBReaderApp extends ZLApplication {
 	public void onWindowClosing() {
 		if ((Model != null) && (BookTextView != null)) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
+		}
+	}
+
+	static enum CancelActionType {
+		previousBook,
+		gotoPosition,
+		close
+	}
+
+	public static class CancelActionDescription {
+		final CancelActionType Type;
+		public final String Title;
+		public final String Summary;
+
+		CancelActionDescription(CancelActionType type, String summary) {
+			final ZLResource resource = ZLResource.resource("cancelMenu");
+			Type = type;
+			Title = resource.getResource(type.toString()).getValue();
+			Summary = summary;
+		}
+	}
+
+	private final ArrayList<CancelActionDescription> myCancelActionsList =
+		new ArrayList<CancelActionDescription>();
+
+	public List<CancelActionDescription> getCancelActionsList() {
+		myCancelActionsList.clear();
+		myCancelActionsList.add(new CancelActionDescription(
+			CancelActionType.previousBook, "this is a summary"
+		));
+		myCancelActionsList.add(new CancelActionDescription(
+			CancelActionType.gotoPosition, "this is a summary"
+		));
+		myCancelActionsList.add(new CancelActionDescription(
+			CancelActionType.gotoPosition, "this is a summary"
+		));
+		myCancelActionsList.add(new CancelActionDescription(
+			CancelActionType.gotoPosition, "this is a summary"
+		));
+		myCancelActionsList.add(new CancelActionDescription(
+			CancelActionType.close, null
+		));
+		return myCancelActionsList;
+	}
+
+	public void runCancelAction(int index) {
+		if (index < 0 || index >= myCancelActionsList.size()) {
+			return;
+		}
+
+		final CancelActionDescription description = myCancelActionsList.get(index);
+		switch (description.Type) {
+			case previousBook:
+				break;
+			case gotoPosition:
+				break;
+			case close:
+				closeWindow();
+				break;
 		}
 	}
 }

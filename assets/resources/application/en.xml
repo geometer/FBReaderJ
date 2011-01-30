@@ -158,7 +158,7 @@
 	</node>
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book"/>
-		<node name="goto" value="Go to position"/>
+		<node name="gotoPosition" value="Go to position"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="menu">

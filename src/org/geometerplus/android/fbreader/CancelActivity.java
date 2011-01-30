@@ -68,12 +68,18 @@ public class CancelActivity extends ListActivity {
 			final View view = convertView != null
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.cancel_item, parent, false);
-			((TextView)view.findViewById(R.id.cancel_item_title)).setText(
-				myIntent.getStringExtra(ITEM_TITLE + position)
-			);
-			((TextView)view.findViewById(R.id.cancel_item_summary)).setText(
-				myIntent.getStringExtra(ITEM_SUMMARY + position)
-			);
+			final TextView titleView = (TextView)view.findViewById(R.id.cancel_item_title);
+			final TextView summaryView = (TextView)view.findViewById(R.id.cancel_item_summary);
+			final String title = myIntent.getStringExtra(ITEM_TITLE + position);
+			final String summary = myIntent.getStringExtra(ITEM_SUMMARY + position);
+			titleView.setText(title);
+			if (summary != null) {
+				summaryView.setVisibility(View.VISIBLE);
+				summaryView.setText(summary);
+			} else {
+				summaryView.setVisibility(View.GONE);
+				titleView.setGravity(Gravity.CENTER_VERTICAL);
+			}
 			return view;
 		}
 

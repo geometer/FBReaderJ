@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.app.SearchManager;
@@ -254,15 +253,12 @@ public final class FBReader extends ZLAndroidActivity {
 		return true;
 	}
 
-	final ArrayList<CancelAction.Description> CancelActionsList =
-		new ArrayList<CancelAction.Description>(5);
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		switch (requestCode) {
 			case REPAINT_CODE:
 			{
-				final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 				final BookModel model = fbreader.Model;
 				if (model != null) {
 					final Book book = model.Book;
@@ -276,12 +272,7 @@ public final class FBReader extends ZLAndroidActivity {
 				break;
 			}
 			case CANCEL_CODE:
-				if (resultCode >= 0 && resultCode < CancelActionsList.size()) {
-					final CancelAction.Description description = CancelActionsList.get(resultCode);
-					if (description.Type == CancelAction.Type.CLOSE) {
-						finish();
-					}
-				} 
+				fbreader.runCancelAction(resultCode);
 				break;
 		}
 	}
