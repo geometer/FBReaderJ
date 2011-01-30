@@ -89,12 +89,12 @@ public abstract class BooksDatabase {
 	protected abstract void addToFavorites(long bookId);
 	protected abstract void removeFromFavorites(long bookId);
 
-	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex) {
-		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex);
+	protected Bookmark createBookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCounter, String modelId, int paragraphIndex, int wordIndex, int charIndex, boolean isVisible) {
+		return new Bookmark(id, bookId, bookTitle, text, creationDate, modificationDate, accessDate, accessCounter, modelId, paragraphIndex, wordIndex, charIndex, isVisible);
 	}
 
-	protected abstract List<Bookmark> loadBookmarks(long bookId);
-	protected abstract List<Bookmark> loadAllBookmarks();
+	protected abstract List<Bookmark> loadBookmarks(long bookId, boolean isVisible);
+	protected abstract List<Bookmark> loadAllVisibleBookmarks();
 	protected abstract long saveBookmark(Bookmark bookmark);
 	protected abstract void deleteBookmark(Bookmark bookmark);
 

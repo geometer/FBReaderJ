@@ -36,8 +36,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
-import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
@@ -61,12 +60,13 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
 	final static int REPAINT_CODE = 1;
+	final static int CANCEL_CODE = 2;
 
 	private int myFullScreenFlag;
 
 	private class NavigationButtonPanel extends ControlButtonPanel {
 		public volatile boolean NavigateDragging;
-		public ZLTextPosition StartPosition;
+		public ZLTextWordCursor StartPosition;
 
 		@Override
 		public void onShow() {
@@ -275,10 +275,10 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		switch (requestCode) {
 			case REPAINT_CODE:
 			{
-				final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 				final BookModel model = fbreader.Model;
 				if (model != null) {
 					final Book book = model.Book;
@@ -291,6 +291,9 @@ public final class FBReader extends ZLAndroidActivity {
 				fbreader.repaintView();
 				break;
 			}
+			case CANCEL_CODE:
+				fbreader.runCancelAction(resultCode);
+				break;
 		}
 	}
 
@@ -300,27 +303,25 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.NavigateDragging = false;
-		myNavigatePanel.StartPosition = new ZLTextFixedPosition(textView.getStartCursor());
+		myNavigatePanel.StartPosition = new ZLTextWordCursor(textView.getStartCursor());
 		myNavigatePanel.show(true);
 		return true;
 	}
 
 	private final void createNavigation(View layout) {
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		final SeekBar slider = (SeekBar)layout.findViewById(R.id.book_position_slider);
 		final TextView text = (TextView)layout.findViewById(R.id.book_position_text);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
-				final ZLView view = ZLApplication.Instance().getCurrentView();
-				if (view instanceof ZLTextView) {
-					ZLTextView textView = (ZLTextView)view;
-					if (page == 1) {
-						textView.gotoHome();
-					} else {
-						textView.gotoPage(page);
-					}
-					ZLApplication.Instance().repaintView();
+				final ZLTextView view = fbreader.getTextView();
+				if (page == 1) {
+					view.gotoHome();
+				} else {
+					view.gotoPage(page);
 				}
+				fbreader.repaintView();
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
@@ -345,10 +346,12 @@ public final class FBReader extends ZLAndroidActivity {
 		final Button btnCancel = (Button)layout.findViewById(android.R.id.button3);
 		View.OnClickListener listener = new View.OnClickListener() {
 			public void onClick(View v) {
-				final ZLTextPosition position = myNavigatePanel.StartPosition;
+				final ZLTextWordCursor position = myNavigatePanel.StartPosition;
 				myNavigatePanel.StartPosition = null;
 				if (v == btnCancel && position != null) {
-					((ZLTextView)ZLApplication.Instance().getCurrentView()).gotoPosition(position);
+					fbreader.getTextView().gotoPosition(position);
+				} else if (v == btnOk) {
+					fbreader.addInvisibleBookmark(position);
 				}
 				myNavigatePanel.hide(true);
 			}

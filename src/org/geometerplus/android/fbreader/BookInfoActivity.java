@@ -85,10 +85,12 @@ public class BookInfoActivity extends Activity {
 
 		final Book book = Book.getByFile(myFile);
 
-		setupCover(book);
-		setupBookInfo(book);
-		setupAnnotation(book);
-		setupFileInfo(book);
+		if (book != null) {
+			setupCover(book);
+			setupBookInfo(book);
+			setupAnnotation(book);
+			setupFileInfo(book);
+		}
 
 		if (myHideOpenButton) {
 			findButton(R.id.book_info_button_open).setVisibility(View.GONE);
@@ -115,8 +117,10 @@ public class BookInfoActivity extends Activity {
 		});
 		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
 			public void onClick(View view) {
-				book.reloadInfoFromFile();
-				setupBookInfo(book);
+				if (book != null) {
+					book.reloadInfoFromFile();
+					setupBookInfo(book);
+				}
 			}
 		});
 
@@ -128,7 +132,9 @@ public class BookInfoActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		final Book book = Book.getByFile(myFile);
-		setupBookInfo(book);
+		if (book != null) {
+			setupBookInfo(book);
+		}
 	}
 
 	private Button findButton(int buttonId) {

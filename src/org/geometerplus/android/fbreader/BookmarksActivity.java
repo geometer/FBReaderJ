@@ -211,23 +211,12 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	private void addBookmark() {
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		final ZLTextView textView = fbreader.getTextView();
-		final ZLTextWordCursor cursor = textView.getStartCursor();
-
-		if (cursor.isNull()) {
-			// TODO: implement
-			return;
+		final Bookmark bookmark = fbreader.addBookmark(20, true);
+		if (bookmark != null) {
+			myThisBookBookmarks.add(0, bookmark);
+			AllBooksBookmarks.add(0, bookmark);
+			invalidateAllViews();
 		}
-
-		// TODO: text edit dialog
-		final Bookmark bookmark = new Bookmark(
-			fbreader.Model.Book,
-			textView.getModel().getId(),
-			cursor
-		);
-		myThisBookBookmarks.add(0, bookmark);
-		AllBooksBookmarks.add(0, bookmark);
-		invalidateAllViews();
 	}
 
 	private void gotoBookmark(Bookmark bookmark) {

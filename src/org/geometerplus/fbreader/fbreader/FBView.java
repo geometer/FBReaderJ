@@ -175,6 +175,7 @@ public final class FBView extends ZLTextView {
 		if (myReader.FooterIsSensitiveOption.getValue()) {
 			Footer footer = getFooterArea();
 			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
+				myReader.addInvisibleBookmark();
 				footer.setProgress(x);
 				return true;
 			}
@@ -515,12 +516,12 @@ public final class FBView extends ZLTextView {
 			return myReader.FooterHeightOption.getValue();
 		}
 
-		public void resetTOCMarks() {
+		public synchronized void resetTOCMarks() {
 			myTOCMarks = null;
 		}
 
 		private final int MAX_TOC_MARKS_NUMBER = 100;
-		private void updateTOCMarks(BookModel model) {
+		private synchronized void updateTOCMarks(BookModel model) {
 			myTOCMarks = new ArrayList<TOCTree>();
 			TOCTree toc = model.TOCTree;
 			if (toc == null) {
@@ -548,7 +549,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
-		public void paint(ZLPaintContext context) {
+		public synchronized void paint(ZLPaintContext context) {
 			final FBReaderApp reader = myReader;
 			if (reader == null) {
 				return;

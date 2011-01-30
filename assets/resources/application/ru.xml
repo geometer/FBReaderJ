@@ -136,6 +136,8 @@
 		<node name="contentError" value="Не удалось скачать" />
 		<node name="downloadingStarted" value="Скачивание книги запущено" />
 		<node name="alreadyDownloading" value="Книга уже скачивается" />
+		<node name="cannotCreateDirectory" value="Невозможно создать каталог %s" />
+		<node name="cannotCreateFile" value="Невозможно создать файл %s" />
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Развернуть ветвь дерева"/>
@@ -164,6 +166,11 @@
 		<node name="&lt;PadRight&gt;" value="Джойстик вправо"/>
 		<node name="&lt;PadLeft&gt;" value="Джойстик влево"/>
 		<node name="&lt;Camera&gt;" value="Камера"/>
+	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="Открыть предыдущую книгу"/>
+		<node name="returnTo" value="Вернуться к ..."/>
+		<node name="close" value="Закрыть FBReader"/>
 	</node>
 	<node name="actions">
 		<node name="preferences" value="Настройки"/>

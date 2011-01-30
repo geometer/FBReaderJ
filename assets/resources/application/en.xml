@@ -136,6 +136,8 @@
 		<node name="contentError" value="Download failed" />
 		<node name="downloadingStarted" value="Book downloading has been started" />
 		<node name="alreadyDownloading" value="Book is already being downloaded" />
+		<node name="cannotCreateDirectory" value="Unable to create directory %s" />
+		<node name="cannotCreateFile" value="Unable to create file %s" />
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Expand tree"/>
@@ -164,6 +166,11 @@
 		<node name="&lt;PadRight&gt;" value="Pad Right"/>
 		<node name="&lt;PadLeft&gt;" value="Pad Left"/>
 		<node name="&lt;Camera&gt;" value="Camera"/>
+	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="Open previous book"/>
+		<node name="returnTo" value="Return to ..."/>
+		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="actions">
 		<node name="preferences" value="Settings"/>

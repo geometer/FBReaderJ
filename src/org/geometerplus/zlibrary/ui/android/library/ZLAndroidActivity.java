@@ -201,6 +201,12 @@ public abstract class ZLAndroidActivity extends Activity {
 	}
 
 	@Override
+	public void onLowMemory() {
+		ZLApplication.Instance().onWindowClosing();
+		super.onLowMemory();
+	}
+
+	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		ZLApplication.Instance().openFile(fileFromIntent(intent));
