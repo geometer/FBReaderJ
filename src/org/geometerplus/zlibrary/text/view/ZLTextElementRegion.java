@@ -28,9 +28,23 @@ public abstract class ZLTextElementRegion {
 		boolean accepts(ZLTextElementRegion region);
 	}
 
-	public static Filter Filter = new Filter() {
+	public static Filter AnyRegionFilter = new Filter() {
 		public boolean accepts(ZLTextElementRegion region) {
 			return true;
+		}
+	};
+
+	public static Filter HyperlinkFilter = new Filter() {
+		public boolean accepts(ZLTextElementRegion region) {
+			return region instanceof ZLTextHyperlinkRegion;
+		}
+	};
+
+	public static Filter ImageOrHyperlinkFilter = new Filter() {
+		public boolean accepts(ZLTextElementRegion region) {
+			return
+				region instanceof ZLTextImageRegion ||
+				region instanceof ZLTextHyperlinkRegion;
 		}
 	};
 
@@ -58,6 +72,14 @@ public abstract class ZLTextElementRegion {
 			myHull = new ZLTextHorizontalConvexHull(textAreas());
 		}
 		return myHull;
+	}
+
+	public int getTop() {
+		return myList.get(myFromIndex).YStart;
+	}
+
+	public int getBottom() {
+		return myList.get(myToIndex - 1).YEnd;
 	}
 
 	void draw(ZLPaintContext context) {

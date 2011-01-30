@@ -25,8 +25,9 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
+import android.os.Handler;
+import android.os.Message;
+import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -34,8 +35,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
-import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
-import org.geometerplus.zlibrary.text.view.ZLTextPosition;
+import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
@@ -51,31 +51,32 @@ import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.android.fbreader.library.KillerCallback;
 
+import org.geometerplus.android.util.UIUtil;
+
 public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
 	final static int REPAINT_CODE = 1;
-
-	static FBReader Instance;
+	final static int CANCEL_CODE = 2;
 
 	private int myFullScreenFlag;
 
-	private static class NavigationButtonPanel extends ControlButtonPanel {
+	private class NavigationButtonPanel extends ControlButtonPanel {
 		public volatile boolean NavigateDragging;
-		public ZLTextPosition StartPosition;
+		public ZLTextWordCursor StartPosition;
 
 		@Override
 		public void onShow() {
-			if (Instance != null && myControlPanel != null) {
-				Instance.setupNavigation(myControlPanel);
+			if (myControlPanel != null) {
+				setupNavigation(myControlPanel);
 			}
 		}
 
 		@Override
 		public void updateStates() {
 			super.updateStates();
-			if (!NavigateDragging && Instance != null && myControlPanel != null) {
-				Instance.setupNavigation(myControlPanel);
+			if (!NavigateDragging && myControlPanel != null) {
+				setupNavigation(myControlPanel);
 			}
 		}
 	}
@@ -90,14 +91,6 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private static TextSearchButtonPanel myTextSearchPanel;
 	private static NavigationButtonPanel myNavigatePanel;
-
-	/*private String fileNameFromUri(Uri uri) {
-		if (uri.equals(Uri.parse("file:///"))) {
-			return Library.getHelpFile().getPath();
-		} else {
-			return uri.getPath();
-		}
-	}*/
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
@@ -114,7 +107,6 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Instance = this;
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		myFullScreenFlag =
 			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -143,6 +135,39 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
+
+		fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader));
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			final Handler successHandler = new Handler() {
+				public void handleMessage(Message message) {
+					showTextSearchControls(true);
+				}
+			};
+			final Handler failureHandler = new Handler() {
+				public void handleMessage(Message message) {
+					UIUtil.showErrorMessage(FBReader.this, "textNotFound");
+				}
+			};
+			final Runnable runnable = new Runnable() {
+				public void run() {
+					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+					fbReader.TextSearchPatternOption.setValue(pattern);
+					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
+						successHandler.sendEmptyMessage(0);
+					} else {
+						failureHandler.sendEmptyMessage(0);
+					}
+				}
+			};
+			UIUtil.wait("search", runnable, this);
+		} else {
+			super.onNewIntent(intent);
+		}
 	}
 
 	@Override
@@ -229,10 +254,10 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		switch (requestCode) {
 			case REPAINT_CODE:
 			{
-				final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 				final BookModel model = fbreader.Model;
 				if (model != null) {
 					final Book book = model.Book;
@@ -245,6 +270,9 @@ public final class FBReader extends ZLAndroidActivity {
 				fbreader.repaintView();
 				break;
 			}
+			case CANCEL_CODE:
+				fbreader.runCancelAction(resultCode);
+				break;
 		}
 	}
 
@@ -254,27 +282,25 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.NavigateDragging = false;
-		myNavigatePanel.StartPosition = new ZLTextFixedPosition(textView.getStartCursor());
+		myNavigatePanel.StartPosition = new ZLTextWordCursor(textView.getStartCursor());
 		myNavigatePanel.show(true);
 		return true;
 	}
 
 	private final void createNavigation(View layout) {
-		final SeekBar slider = (SeekBar) layout.findViewById(R.id.book_position_slider);
-		final TextView text = (TextView) layout.findViewById(R.id.book_position_text);
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
+		final SeekBar slider = (SeekBar)layout.findViewById(R.id.book_position_slider);
+		final TextView text = (TextView)layout.findViewById(R.id.book_position_text);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
-				final ZLView view = ZLApplication.Instance().getCurrentView();
-				if (view instanceof ZLTextView) {
-					ZLTextView textView = (ZLTextView) view;
-					if (page == 1) {
-						textView.gotoHome();
-					} else {
-						textView.gotoPage(page);
-					}
-					ZLApplication.Instance().repaintView();
+				final ZLTextView view = fbreader.getTextView();
+				if (page == 1) {
+					view.gotoHome();
+				} else {
+					view.gotoPage(page);
 				}
+				fbreader.repaintView();
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
@@ -295,14 +321,16 @@ public final class FBReader extends ZLAndroidActivity {
 			}
 		});
 
-		final Button btnOk = (Button) layout.findViewById(android.R.id.button1);
-		final Button btnCancel = (Button) layout.findViewById(android.R.id.button3);
+		final Button btnOk = (Button)layout.findViewById(android.R.id.button1);
+		final Button btnCancel = (Button)layout.findViewById(android.R.id.button3);
 		View.OnClickListener listener = new View.OnClickListener() {
 			public void onClick(View v) {
-				final ZLTextPosition position = myNavigatePanel.StartPosition;
+				final ZLTextWordCursor position = myNavigatePanel.StartPosition;
 				myNavigatePanel.StartPosition = null;
 				if (v == btnCancel && position != null) {
-					((ZLTextView) ZLApplication.Instance().getCurrentView()).gotoPosition(position);
+					fbreader.getTextView().gotoPosition(position);
+				} else if (v == btnOk) {
+					fbreader.addInvisibleBookmark(position);
 				}
 				myNavigatePanel.hide(true);
 			}
@@ -315,15 +343,14 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	private final void setupNavigation(ControlPanel panel) {
-		final SeekBar slider = (SeekBar) panel.findViewById(R.id.book_position_slider);
-		final TextView text = (TextView) panel.findViewById(R.id.book_position_text);
+		final SeekBar slider = (SeekBar)panel.findViewById(R.id.book_position_slider);
+		final TextView text = (TextView)panel.findViewById(R.id.book_position_text);
 
-		final ZLTextView textView = (ZLTextView) ZLApplication.Instance().getCurrentView();
+		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		final int page = textView.computeCurrentPage();
 		final int pagesNumber = textView.computePageNumber();
 
-		if (slider.getMax() != (pagesNumber - 1)
-				|| slider.getProgress() != (page - 1)) {
+		if (slider.getMax() != pagesNumber - 1 || slider.getProgress() != page - 1) {
 			slider.setMax(pagesNumber - 1);
 			slider.setProgress(page - 1);
 			text.setText(makeProgressText(page, pagesNumber));
