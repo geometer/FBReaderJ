@@ -2,7 +2,7 @@
 <FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Về FBReaderJ</book-title> <lang>en</lang></title-info></description>
 <body>
 <title><p>Về phiên bản FBReaderJ &FBReaderVersion;</p></title>
-<p><code>(Dịch sang Tiếng Việt bởi Phạm Văn Hùng_Firestork (Có thể không chính xác 100% do trình độ người dịch có hạn. Nếu muốn hiểu kĩ vui lòng đọc bản  tiếng Anh))</code> </p>
+<p><code>(Dịch sang Tiếng Việt bởi Phạm Văn Hùng_Firestork (Có thể không chính xác 100% do trình độ người dịch có hạn. Nếu muốn hiểu kĩ, vui lòng đọc bản tiếng Anh))</code> </p>
 <empty-line/>
 <p>FBReaderJ là một chương trình đọc sách diện tử cho <a l:href="http://www.android.com/"> nền tảng Android</a>. Nó là một bản sao của <a l:href="http://www.fbreader.org/"> trình đọc sách điện tử FBReader</a>  được viết lại bằng Java bởi cùng các tác giả. FBReaderJ hỗ trợ nhiều định dạng sách: <code>oeb</code>, <code>epub</code>, <code>fb2</code>.  Trong tương lai danh sách này sẽ được mở rộng để hỗ trợ các định dạng giống như bản gốc FBReader. Việc đọc trực tiếp từ các định dạng nén <code>zip</code>, <code>tar</code> and <code>gzip</code> cũng được hỗ trợ.</p>
 <p>Bạn có thể tùy chỉnh FBReader để đọc sách theo ý thích. Màu sắc, phông chữ, các phím kết hợp và nhiều lựa chọn khác có thể thay đổi tại  <code>Bảng Tùy Chỉnh</code>.</p>

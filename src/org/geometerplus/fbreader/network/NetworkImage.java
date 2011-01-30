@@ -145,6 +145,11 @@ public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
 		return Url;
 	}
 
+	public String getURI() {
+		// TODO: implement
+		return null;
+	}
+
 	@Override
 	public void synchronize() {
 		synchronizeInternal(false);

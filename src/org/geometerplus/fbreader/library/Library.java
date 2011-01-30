@@ -378,6 +378,11 @@ public final class Library {
 		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
 	}
 
+	public static Book getPreviousBook() {
+		List<Long> recentIds = BooksDatabase.Instance().loadRecentBookIds();
+		return (recentIds.size() > 1) ? Book.getById(recentIds.get(1)) : null;
+	}
+
 	public LibraryTree favorites() {
 		waitForState(STATE_FULLY_INITIALIZED);
 		return myFavorites;

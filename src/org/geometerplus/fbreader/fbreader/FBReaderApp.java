@@ -19,12 +19,16 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import java.util.*;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Library;
@@ -36,8 +40,6 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("LookNFeel", "AllowScreenBrightnessAdjustment", true);
 	public final ZLStringOption TextSearchPatternOption =
 		new ZLStringOption("TextSearch", "Pattern", "");
-	public final ZLStringOption BookmarkSearchPatternOption =
-		new ZLStringOption("BookmarkSearch", "Pattern", "");
 
 	public final ZLBooleanOption UseSeparateBindingsOption =
 		new ZLBooleanOption("KeysOptions", "UseSeparateBindings", false);
@@ -113,7 +115,6 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(this, true));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(this, false));
 
-		addAction(ActionCode.CANCEL, new CancelAction(this));
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
 		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
@@ -144,6 +145,9 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark) {
+		if (book == null) {
+			return;
+		}
 		if (Model != null) {
 			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
@@ -186,6 +190,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (Model != null) {
 			BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
+				addInvisibleBookmark();
 				if (label.ModelId == null) {
 					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
 				} else {
@@ -234,7 +239,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void gotoBookmark(Bookmark bookmark) {
-		final String modelId = bookmark.getModelId();
+		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			BookTextView.gotoPosition(bookmark);
 			setView(BookTextView);
@@ -280,8 +285,127 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void onWindowClosing() {
-		if ((Model != null) && (BookTextView != null)) {
+		if (Model != null && BookTextView != null) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
 		}
+	}
+
+	static enum CancelActionType {
+		previousBook,
+		returnTo,
+		close
+	}
+
+	public static class CancelActionDescription {
+		final CancelActionType Type;
+		public final String Title;
+		public final String Summary;
+
+		CancelActionDescription(CancelActionType type, String summary) {
+			final ZLResource resource = ZLResource.resource("cancelMenu");
+			Type = type;
+			Title = resource.getResource(type.toString()).getValue();
+			Summary = summary;
+		}
+	}
+
+	private static class BookmarkDescription extends CancelActionDescription {
+		final Bookmark Bookmark;
+		
+		BookmarkDescription(Bookmark b) {
+			super(CancelActionType.returnTo, b.getText());
+			Bookmark = b;
+		}
+	}
+
+	private final ArrayList<CancelActionDescription> myCancelActionsList =
+		new ArrayList<CancelActionDescription>();
+
+	public List<CancelActionDescription> getCancelActionsList() {
+		myCancelActionsList.clear();
+		final Book previousBook = Library.getPreviousBook();
+		if (previousBook != null) {
+			myCancelActionsList.add(new CancelActionDescription(
+				CancelActionType.previousBook, previousBook.getTitle()
+			));
+		}
+		if (Model != null && Model.Book != null) {
+			for (Bookmark bookmark : Bookmark.invisibleBookmarks(Model.Book)) {
+				myCancelActionsList.add(new BookmarkDescription(bookmark));
+			}
+		}
+		myCancelActionsList.add(new CancelActionDescription(
+			CancelActionType.close, null
+		));
+		return myCancelActionsList;
+	}
+
+	public void runCancelAction(int index) {
+		if (index < 0 || index >= myCancelActionsList.size()) {
+			return;
+		}
+
+		final CancelActionDescription description = myCancelActionsList.get(index);
+		switch (description.Type) {
+			case previousBook:
+				openBook(Library.getPreviousBook(), null);
+				break;
+			case returnTo:
+			{
+				final Bookmark b = ((BookmarkDescription)description).Bookmark;
+				b.delete();
+				addInvisibleBookmark();
+				gotoBookmark(b);
+				break;
+			}
+			case close:
+				closeWindow();
+				break;
+		}
+	}
+
+	private void updateInvisibleBookmarksList(Bookmark b) {
+		if (Model.Book != null && b != null) {
+			b.save();
+			final List<Bookmark> bookmarks = Bookmark.invisibleBookmarks(Model.Book);
+			for (int i = 3; i < bookmarks.size(); ++i) {
+				bookmarks.get(i).delete();
+			}
+		}
+	}
+
+	public void addInvisibleBookmark(ZLTextWordCursor cursor) {
+		if (cursor != null && Model != null && Model.Book != null && getTextView() == BookTextView) {
+			updateInvisibleBookmarksList(new Bookmark(
+				Model.Book,
+				getTextView().getModel().getId(),
+				cursor,
+				6,
+				false
+			));
+		}
+	}
+
+	public void addInvisibleBookmark() {
+		if (Model.Book != null && getTextView() == BookTextView) {
+			updateInvisibleBookmarksList(addBookmark(6, false));
+		}
+	}
+
+	public Bookmark addBookmark(int maxLength, boolean visible) {
+		final FBView view = getTextView();
+		final ZLTextWordCursor cursor = view.getStartCursor();
+
+		if (cursor.isNull()) {
+			return null;
+		}
+
+		return new Bookmark(
+			Model.Book,
+			view.getModel().getId(),
+			cursor,
+			maxLength,
+			visible
+		);
 	}
 }

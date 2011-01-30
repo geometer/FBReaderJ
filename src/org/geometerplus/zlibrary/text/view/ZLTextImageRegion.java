@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.view;
+package org.geometerplus.zlibrary.text.view;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import java.util.List;
 
-public class ZLAndroidViewWidget {
-	//@Override
-	public void scrollTo(int viewPage, int shift) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToPage(viewPage, shift);
+public class ZLTextImageRegion extends ZLTextElementRegion {
+	public final ZLTextImageElement ImageElement;
+
+	ZLTextImageRegion(ZLTextImageElement imageElement, List<ZLTextElementArea> list, int fromIndex) {
+		super(list, fromIndex);
+		ImageElement = imageElement;
 	}
 
-	//@Override
-	public void startAutoScrolling(int viewPage) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(viewPage);
+	public boolean equals(Object other) {
+		if (!(other instanceof ZLTextImageRegion)) {
+			return false;
+		}
+		return ImageElement == ((ZLTextImageRegion)other).ImageElement;
 	}
 }

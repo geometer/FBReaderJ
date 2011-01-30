@@ -24,9 +24,15 @@ import java.util.*;
 import android.app.*;
 import android.content.*;
 import android.net.Uri;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.text.view.ZLTextWordRegion;
+
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
@@ -37,14 +43,37 @@ public abstract class DictionaryUtil {
 		new LinkedHashMap<PackageInfo,Boolean>();
 	private static ZLStringOption ourDictionaryOption;
 
+	private interface ColorDict3 {
+		String ACTION = "colordict.intent.action.SEARCH";
+		String QUERY = "EXTRA_QUERY";
+		String HEIGHT = "EXTRA_HEIGHT";
+		String WIDTH = "EXTRA_WIDTH";
+		String GRAVITY = "EXTRA_GRAVITY";
+		String MARGIN_LEFT = "EXTRA_MARGIN_LEFT";
+		String MARGIN_TOP = "EXTRA_MARGIN_TOP";
+		String MARGIN_BOTTOM = "EXTRA_MARGIN_BOTTOM";
+		String MARGIN_RIGHT = "EXTRA_MARGIN_RIGHT";
+		String FULLSCREEN = "EXTRA_FULLSCREEN";
+	}
+
 	private static Map<PackageInfo,Boolean> infos() {
 		if (ourDictionaryInfos.isEmpty()) {
 			ourDictionaryInfos.put(new PackageInfo(
 				"ColorDict",										// Id
+				null,												// Package
+				null,												// Class
+				"ColorDict 3",										// Title
+				ColorDict3.ACTION,
+				ColorDict3.QUERY,
+				"%s"
+			), false);
+			ourDictionaryInfos.put(new PackageInfo(
+				"ColorDict2",										// Id
 				"com.socialnmobile.colordict",						// Package
 				"com.socialnmobile.colordict.activity.Main",		// Class
-				"ColorDict",										// Title
+				"ColorDict Old Style",								// Title
 				Intent.ACTION_SEARCH,
+				SearchManager.QUERY,
 				"%s"
 			), false);
 			ourDictionaryInfos.put(new PackageInfo(
@@ -53,6 +82,7 @@ public abstract class DictionaryUtil {
 				"com.ngc.fora.ForaDictionary",						// Class
 				"Fora Dictionary",									// Title
 				Intent.ACTION_SEARCH,
+				SearchManager.QUERY,
 				"%s"
 			), false);
 			ourDictionaryInfos.put(new PackageInfo(
@@ -61,6 +91,7 @@ public abstract class DictionaryUtil {
 				"org.freedictionary.MainActivity",					// Class
 				"Free Dictionary . org",							// Title
 				Intent.ACTION_VIEW,
+				null,
 				"%s"
 			), false);
 			ourDictionaryInfos.put(new PackageInfo(
@@ -69,6 +100,7 @@ public abstract class DictionaryUtil {
 				"com.slovoed.noreg.english_german.deluxe.Start",	// Class
 				"SlovoEd Deluxe German->English",					// Title
 				Intent.ACTION_VIEW,
+				null,
 				"%s/808464950"
 			), true);
 			ourDictionaryInfos.put(new PackageInfo(
@@ -77,6 +109,7 @@ public abstract class DictionaryUtil {
 				"com.slovoed.noreg.english_german.deluxe.Start",	// Class
 				"SlovoEd Deluxe English->German",					// Title
 				Intent.ACTION_VIEW,
+				null,
 				"%s/808464949"
 			), true);
 		}
@@ -126,25 +159,23 @@ public abstract class DictionaryUtil {
 	}
 
 	public static Intent getDictionaryIntent(PackageInfo dictionaryInfo, String text) {
-		final Intent intent = new Intent(dictionaryInfo.IntentAction)
-			.setComponent(new ComponentName(
-				dictionaryInfo.PackageName,
-				dictionaryInfo.ClassName
-			))
-			.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		final Intent intent = new Intent(dictionaryInfo.IntentAction);
+		if (dictionaryInfo.PackageName != null) {
+			intent.setComponent(new ComponentName(
+				dictionaryInfo.PackageName, dictionaryInfo.ClassName
+			));
+		}
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		text = dictionaryInfo.IntentDataPattern.replace("%s", text);
-		if (Intent.ACTION_SEARCH.equals(dictionaryInfo.IntentAction)) {
-			return intent.putExtra(SearchManager.QUERY, text);
+		if (dictionaryInfo.IntentKey != null) {
+			return intent.putExtra(dictionaryInfo.IntentKey, text);
 		} else {
 			return intent.setData(Uri.parse(text));
 		}			
 	}
 
-	public static void openWordInDictionary(Activity activity, String text) { 
-		if (text == null) {
-			return;
-		}
-
+	public static void openWordInDictionary(Activity activity, ZLTextWordRegion region) { 
+		String text = region.Word.toString();
 		int start = 0;
 		int end = text.length();
 		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
@@ -153,8 +184,24 @@ public abstract class DictionaryUtil {
 			return;
 		}
 
-		final Intent intent = DictionaryUtil.getDictionaryIntent(text.substring(start, end));
+		final PackageInfo info = getCurrentDictionaryInfo();
+		final Intent intent = getDictionaryIntent(info, text.substring(start, end));
 		try {
+			if ("ColorDict".equals(info.Id)) {
+				final DisplayMetrics metrics = new DisplayMetrics();
+				activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+				final int screenHeight = metrics.heightPixels;
+				final int topSpace = region.getTop();
+				final int bottomSpace = metrics.heightPixels - region.getBottom();
+				final boolean showAtBottom = bottomSpace >= topSpace;
+				final int space = (showAtBottom ? bottomSpace : topSpace) - 20;
+				final int maxHeight = Math.min(400, screenHeight * 2 / 3);
+				final int minHeight = Math.min(200, screenHeight * 2 / 3);
+				intent.putExtra(ColorDict3.HEIGHT, Math.max(minHeight, Math.min(maxHeight, space)));
+				intent.putExtra(ColorDict3.GRAVITY, showAtBottom ? Gravity.BOTTOM : Gravity.TOP);
+				final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+				intent.putExtra(ColorDict3.FULLSCREEN, !application.ShowStatusBarOption.getValue());
+			}
 			activity.startActivity(intent);
 		} catch(ActivityNotFoundException e){
 			DictionaryUtil.installDictionaryIfNotInstalled(activity);

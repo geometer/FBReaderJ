@@ -130,13 +130,26 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		}
 	}
 
-	public final Iterator<T> iterator() {
-		return new TreeIterator();
+	public final TreeIterator iterator() {
+		return new TreeIterator(Integer.MAX_VALUE);
+	}
+
+	public final Iterable<T> allSubTrees(final int maxLevel) {
+		return new Iterable<T>() {
+			public TreeIterator iterator() {
+				return new TreeIterator(maxLevel);
+			}
+		};
 	}
 
 	private class TreeIterator implements Iterator<T> {
 		private T myCurrentElement = (T)ZLTree.this;
 		private final LinkedList<Integer> myIndexStack = new LinkedList<Integer>();
+		private final int myMaxLevel;
+
+		TreeIterator(int maxLevel) {
+			myMaxLevel = maxLevel;
+		}
 
 		public boolean hasNext() {
 			return myCurrentElement != null;
@@ -144,7 +157,7 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 
 		public T next() {
 			final T element = myCurrentElement;
-			if (element.hasChildren()) {
+			if (element.hasChildren() && element.Level < myMaxLevel) {
 				myCurrentElement = (T)element.mySubTrees.get(0);
 				myIndexStack.add(0);
 			} else {

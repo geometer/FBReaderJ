@@ -37,20 +37,7 @@ final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 	@Override
 	public boolean add(ZLTextElementArea area) {
 		final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
-		if (hyperlink.Id == null) {
-			if (area.Element instanceof ZLTextWord && ((ZLTextWord)area.Element).isAWord()) {
-				if (!(myCurrentElementRegion instanceof ZLTextWordRegion) ||
-					((ZLTextWordRegion)myCurrentElementRegion).Word != area.Element) {
-					myCurrentElementRegion =
-						new ZLTextWordRegion((ZLTextWord)area.Element, this, size());
-					ElementRegions.add(myCurrentElementRegion);
-				} else {
-					myCurrentElementRegion.extend();
-				}
-			} else {
-				myCurrentElementRegion = null;
-			}
-		} else {
+		if (hyperlink.Id != null) {
 			if (!(myCurrentElementRegion instanceof ZLTextHyperlinkRegion) ||
 				((ZLTextHyperlinkRegion)myCurrentElementRegion).Hyperlink != hyperlink) {
 				myCurrentElementRegion = new ZLTextHyperlinkRegion(hyperlink, this, size());
@@ -58,6 +45,20 @@ final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 			} else {
 				myCurrentElementRegion.extend();
 			}
+		} else if (area.Element instanceof ZLTextImageElement) {
+			ElementRegions.add(new ZLTextImageRegion((ZLTextImageElement)area.Element, this, size()));
+			myCurrentElementRegion = null;
+		} else if (area.Element instanceof ZLTextWord && ((ZLTextWord)area.Element).isAWord()) {
+			if (!(myCurrentElementRegion instanceof ZLTextWordRegion) ||
+				((ZLTextWordRegion)myCurrentElementRegion).Word != area.Element) {
+				myCurrentElementRegion =
+					new ZLTextWordRegion((ZLTextWord)area.Element, this, size());
+				ElementRegions.add(myCurrentElementRegion);
+			} else {
+				myCurrentElementRegion.extend();
+			}
+		} else {
+			myCurrentElementRegion = null;
 		}
 		return super.add(area);
 	}
