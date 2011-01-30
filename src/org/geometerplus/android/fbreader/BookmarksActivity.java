@@ -223,7 +223,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final Bookmark bookmark = new Bookmark(
 			fbreader.Model.Book,
 			textView.getModel().getId(),
-			cursor
+			cursor,
+			true
 		);
 		myThisBookBookmarks.add(0, bookmark);
 		AllBooksBookmarks.add(0, bookmark);

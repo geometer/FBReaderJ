@@ -144,6 +144,9 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark) {
+		if (book == null) {
+			return;
+		}
 		if (Model != null) {
 			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
@@ -234,7 +237,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void gotoBookmark(Bookmark bookmark) {
-		final String modelId = bookmark.getModelId();
+		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			BookTextView.gotoPosition(bookmark);
 			setView(BookTextView);
@@ -309,9 +312,12 @@ public final class FBReaderApp extends ZLApplication {
 
 	public List<CancelActionDescription> getCancelActionsList() {
 		myCancelActionsList.clear();
-		myCancelActionsList.add(new CancelActionDescription(
-			CancelActionType.previousBook, "this is a summary"
-		));
+		final Book previousBook = Library.getPreviousBook();
+		if (previousBook != null) {
+			myCancelActionsList.add(new CancelActionDescription(
+				CancelActionType.previousBook, previousBook.getTitle()
+			));
+		}
 		myCancelActionsList.add(new CancelActionDescription(
 			CancelActionType.gotoPosition, "this is a summary"
 		));
@@ -335,6 +341,7 @@ public final class FBReaderApp extends ZLApplication {
 		final CancelActionDescription description = myCancelActionsList.get(index);
 		switch (description.Type) {
 			case previousBook:
+				openBook(Library.getPreviousBook(), null);
 				break;
 			case gotoPosition:
 				break;

@@ -30,7 +30,7 @@ public final class Bookmark extends ZLTextFixedPosition {
 	public final static int LATEST = 3;
 
 	public static List<Bookmark> bookmarks() {
-		return BooksDatabase.Instance().loadAllBookmarks();
+		return BooksDatabase.Instance().loadAllVisibleBookmarks();
 	}
 
 	private long myId;
@@ -42,11 +42,13 @@ public final class Bookmark extends ZLTextFixedPosition {
 	private Date myAccessDate;
 	private int myAccessCount;
 	private Date myLatestDate;
-	private final String myModelId;
+
+	public final String ModelId;
+	public final boolean IsVisible;
 
 	private boolean myIsChanged;
 
-	Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int elementIndex, int charIndex) {
+	Bookmark(long id, long bookId, String bookTitle, String text, Date creationDate, Date modificationDate, Date accessDate, int accessCount, String modelId, int paragraphIndex, int elementIndex, int charIndex, boolean isVisible) {
 		super(paragraphIndex, elementIndex, charIndex);
 
 		myId = id;
@@ -63,11 +65,12 @@ public final class Bookmark extends ZLTextFixedPosition {
 			}
 		}
 		myAccessCount = accessCount;
-		myModelId = modelId;
+		ModelId = modelId;
+		IsVisible = isVisible;
 		myIsChanged = false;
 	}
 
-	public Bookmark(Book book, String modelId, ZLTextWordCursor cursor) {
+	public Bookmark(Book book, String modelId, ZLTextWordCursor cursor, boolean isVisible) {
 		super(cursor);
 
 		myId = -1;
@@ -75,7 +78,8 @@ public final class Bookmark extends ZLTextFixedPosition {
 		myBookTitle = book.getTitle();
 		myText = createBookmarkText(cursor, 20);
 		myCreationDate = new Date();
-		myModelId = modelId;
+		ModelId = modelId;
+		IsVisible = isVisible;
 		myIsChanged = true;
 	}
 
@@ -93,10 +97,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 
 	public String getBookTitle() {
 		return myBookTitle;
-	}
-
-	public String getModelId() {
-		return myModelId;
 	}
 
 	public Date getTime(int timeStamp) {

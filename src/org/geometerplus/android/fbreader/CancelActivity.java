@@ -39,6 +39,7 @@ public class CancelActivity extends ListActivity {
 		final ActionListAdapter adapter = new ActionListAdapter(getIntent());
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(adapter);
+		setResult(-1);
 	}
 
 	private class ActionListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
@@ -76,9 +77,14 @@ public class CancelActivity extends ListActivity {
 			if (summary != null) {
 				summaryView.setVisibility(View.VISIBLE);
 				summaryView.setText(summary);
+        		titleView.setLayoutParams(new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+				));
 			} else {
 				summaryView.setVisibility(View.GONE);
-				titleView.setGravity(Gravity.CENTER_VERTICAL);
+        		titleView.setLayoutParams(new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT
+				));
 			}
 			return view;
 		}

@@ -16,6 +16,7 @@
 			android:id="@+id/cancel_item_title"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
 			android:singleLine="true"
 			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:ellipsize="marquee"
