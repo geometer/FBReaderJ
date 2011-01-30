@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Library;
@@ -349,5 +350,22 @@ public final class FBReaderApp extends ZLApplication {
 				closeWindow();
 				break;
 		}
+	}
+
+	public Bookmark addBookmark(int maxLength, boolean visible) {
+		final FBView view = getTextView();
+		final ZLTextWordCursor cursor = view.getStartCursor();
+
+		if (cursor.isNull()) {
+			return null;
+		}
+
+		return new Bookmark(
+			Model.Book,
+			view.getModel().getId(),
+			cursor,
+			maxLength,
+			visible
+		);
 	}
 }
