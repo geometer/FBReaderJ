@@ -190,6 +190,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (Model != null) {
 			BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
+				addInvisibleBookmark();
 				if (label.ModelId == null) {
 					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
 				} else {
@@ -291,7 +292,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	static enum CancelActionType {
 		previousBook,
-		gotoPosition,
+		returnTo,
 		close
 	}
 
@@ -308,6 +309,15 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
+	private static class BookmarkDescription extends CancelActionDescription {
+		final Bookmark Bookmark;
+		
+		BookmarkDescription(Bookmark b) {
+			super(CancelActionType.returnTo, b.getText());
+			Bookmark = b;
+		}
+	}
+
 	private final ArrayList<CancelActionDescription> myCancelActionsList =
 		new ArrayList<CancelActionDescription>();
 
@@ -319,15 +329,11 @@ public final class FBReaderApp extends ZLApplication {
 				CancelActionType.previousBook, previousBook.getTitle()
 			));
 		}
-		myCancelActionsList.add(new CancelActionDescription(
-			CancelActionType.gotoPosition, "this is a summary"
-		));
-		myCancelActionsList.add(new CancelActionDescription(
-			CancelActionType.gotoPosition, "this is a summary"
-		));
-		myCancelActionsList.add(new CancelActionDescription(
-			CancelActionType.gotoPosition, "this is a summary"
-		));
+		if (Model.Book != null) {
+			for (Bookmark bookmark : Bookmark.invisibleBookmarks(Model.Book)) {
+				myCancelActionsList.add(new BookmarkDescription(bookmark));
+			}
+		}
 		myCancelActionsList.add(new CancelActionDescription(
 			CancelActionType.close, null
 		));
@@ -344,11 +350,30 @@ public final class FBReaderApp extends ZLApplication {
 			case previousBook:
 				openBook(Library.getPreviousBook(), null);
 				break;
-			case gotoPosition:
+			case returnTo:
+			{
+				final Bookmark b = ((BookmarkDescription)description).Bookmark;
+				b.delete();
+				addInvisibleBookmark();
+				gotoBookmark(b);
 				break;
+			}
 			case close:
 				closeWindow();
 				break;
+		}
+	}
+
+	public void addInvisibleBookmark() {
+		if (Model.Book != null) {
+			final Bookmark b = addBookmark(6, false);
+			if (b != null) {
+				b.save();
+				final List<Bookmark> bookmarks = Bookmark.invisibleBookmarks(Model.Book);
+				for (int i = 3; i < bookmarks.size(); ++i) {
+					bookmarks.get(i).delete();
+				}
+			}
 		}
 	}
 
