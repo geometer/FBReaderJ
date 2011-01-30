@@ -285,7 +285,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void onWindowClosing() {
-		if ((Model != null) && (BookTextView != null)) {
+		if (Model != null && BookTextView != null) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
 		}
 	}
