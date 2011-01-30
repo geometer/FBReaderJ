@@ -26,8 +26,7 @@ import android.net.Uri;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.zlibrary.text.view.ZLTextView;
-import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
+import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -36,6 +35,7 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 
 import org.geometerplus.android.fbreader.network.BookDownloader;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
+import org.geometerplus.android.fbreader.image.ImageViewActivity;
 
 class ProcessHyperlinkAction extends FBAction {
 	private final FBReader myBaseActivity;
@@ -46,15 +46,13 @@ class ProcessHyperlinkAction extends FBAction {
 	}
 
 	public boolean isEnabled() {
-		final ZLTextView view = Reader.getTextView();
-		return
-			view.getSelectedText() != null ||
-			view.getCurrentHyperlink() != null;
+		return Reader.getTextView().getSelectedRegion() != null;
 	}
 
 	public void run() {
-		final ZLTextHyperlink hyperlink = Reader.getTextView().getCurrentHyperlink();
-		if (hyperlink != null) {
+		final ZLTextElementRegion region = Reader.getTextView().getSelectedRegion();
+		if (region instanceof ZLTextHyperlinkRegion) {
+			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegion)region).Hyperlink;
 			switch (hyperlink.Type) {
 				case FBHyperlinkType.EXTERNAL:
 					openInBrowser(hyperlink.Id);
@@ -64,9 +62,23 @@ class ProcessHyperlinkAction extends FBAction {
 					break;
 			}
 			return;
+		} else if (region instanceof ZLTextImageRegion) {
+			final String uriString = ((ZLTextImageRegion)region).ImageElement.URI;
+			if (uriString != null) {
+				try {
+					final Intent intent = new Intent();
+					intent.setClass(myBaseActivity, ImageViewActivity.class);
+					intent.setData(Uri.parse(uriString));
+					myBaseActivity.startActivity(intent);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} else if (region instanceof ZLTextWordRegion) {
+			DictionaryUtil.openWordInDictionary(
+				myBaseActivity, (ZLTextWordRegion)region
+			);
 		}
-
-		DictionaryUtil.openWordInDictionary(myBaseActivity, Reader.getTextView().getSelectedText());
 	}
 
 	private void openInBrowser(String urlString) {

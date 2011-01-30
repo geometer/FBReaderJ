@@ -28,19 +28,27 @@ public abstract class ZLAndroidImageData implements ZLImageData {
 	private Bitmap myBitmap;
 	private int myRealWidth;
 	private int myRealHeight;
-	private int myLastRequestedWidth;
-	private int myLastRequestedHeight;
+	private int myLastRequestedWidth = -1;
+	private int myLastRequestedHeight = -1;
 
 	protected ZLAndroidImageData() {
 	}
 
 	protected abstract Bitmap decodeWithOptions(BitmapFactory.Options options);
 
-	public synchronized Bitmap getBitmap(int maxWidth, int maxHeight) {
-		if ((maxWidth == 0) || (maxHeight == 0)) {
+	public Bitmap getFullSizeBitmap() {
+		return getBitmap(0, 0, true);
+	}
+
+	public Bitmap getBitmap(int maxWidth, int maxHeight) {
+		return getBitmap(maxWidth, maxHeight, false);
+	}
+
+	private synchronized Bitmap getBitmap(int maxWidth, int maxHeight, boolean ignoreSize) {
+		if (!ignoreSize && (maxWidth == 0 || maxHeight == 0)) {
 			return null;
 		}
-		if ((maxWidth != myLastRequestedWidth) || (maxHeight != myLastRequestedHeight)) {
+		if (maxWidth != myLastRequestedWidth || maxHeight != myLastRequestedHeight) {
 			if (myBitmap != null) {
 				myBitmap.recycle();
 				myBitmap = null;
@@ -55,9 +63,11 @@ public abstract class ZLAndroidImageData implements ZLImageData {
 				}
 				options.inJustDecodeBounds = false;
 				int coefficient = 1;
-				while ((myRealHeight > maxHeight * coefficient) ||
-					   (myRealWidth > maxWidth *coefficient)) {
-					coefficient *= 2;
+				if (!ignoreSize) {
+					while ((myRealHeight > maxHeight * coefficient) ||
+						   (myRealWidth > maxWidth *coefficient)) {
+						coefficient *= 2;
+					}
 				}
 				options.inSampleSize = coefficient;
 				myBitmap = decodeWithOptions(options);

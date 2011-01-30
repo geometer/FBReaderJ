@@ -45,6 +45,9 @@ public final class FBView extends ZLTextView {
 	public void setModel(ZLTextModel model) {
 		myIsManualScrollingActive = false;
 		super.setModel(model);
+		if (myFooter != null) {
+			myFooter.resetTOCMarks();
+		}
 	}
 
 	public void onScrollingFinished(int viewPage) {
@@ -172,12 +175,13 @@ public final class FBView extends ZLTextView {
 		if (myReader.FooterIsSensitiveOption.getValue()) {
 			Footer footer = getFooterArea();
 			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
+				myReader.addInvisibleBookmark();
 				footer.setProgress(x);
 				return true;
 			}
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextHyperlinkRegion.Filter);
+		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.repaintView();
@@ -352,7 +356,7 @@ public final class FBView extends ZLTextView {
 
 		if (myReader.DictionaryTappingActionOption.getValue() !=
 			FBReaderApp.DictionaryTappingAction.doNothing) {
-			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.Filter);
+			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
 				myReader.repaintView();
@@ -370,7 +374,7 @@ public final class FBView extends ZLTextView {
 
 		if (myReader.DictionaryTappingActionOption.getValue() !=
 			FBReaderApp.DictionaryTappingAction.doNothing) {
-			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.Filter);
+			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
 				myReader.repaintView();
@@ -387,9 +391,7 @@ public final class FBView extends ZLTextView {
 		if (myReader.DictionaryTappingActionOption.getValue() ==
 			FBReaderApp.DictionaryTappingAction.openDictionary) {
 			final ZLTextElementRegion region = currentRegion();
-			if (region instanceof ZLTextWordRegion) {
-				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
-			}
+			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
 
@@ -408,7 +410,7 @@ public final class FBView extends ZLTextView {
 		ZLTextElementRegion region = currentRegion();
 		final ZLTextElementRegion.Filter filter =
 			region instanceof ZLTextWordRegion || myReader.NavigateAllWordsOption.getValue()
-				? ZLTextElementRegion.Filter : ZLTextHyperlinkRegion.Filter;
+				? ZLTextElementRegion.AnyRegionFilter : ZLTextElementRegion.ImageOrHyperlinkFilter;
 		region = nextRegion(direction, filter);
 		if (region != null) {
 			selectRegion(region);
@@ -494,11 +496,46 @@ public final class FBView extends ZLTextView {
 			}
 		};
 
+		private ArrayList<TOCTree> myTOCMarks;
+
 		public int getHeight() {
 			return myReader.FooterHeightOption.getValue();
 		}
 
-		public void paint(ZLPaintContext context) {
+		public synchronized void resetTOCMarks() {
+			myTOCMarks = null;
+		}
+
+		private final int MAX_TOC_MARKS_NUMBER = 100;
+		private synchronized void updateTOCMarks(BookModel model) {
+			myTOCMarks = new ArrayList<TOCTree>();
+			TOCTree toc = model.TOCTree;
+			if (toc == null) {
+				return;
+			}
+			int maxLevel = Integer.MAX_VALUE;
+			if (toc.getSize() >= MAX_TOC_MARKS_NUMBER) {
+				final int[] sizes = new int[10];
+				for (TOCTree tocItem : toc) {
+					if (tocItem.Level < 10) {
+						++sizes[tocItem.Level];
+					}
+				}
+				for (int i = 1; i < sizes.length; ++i) {
+					sizes[i] += sizes[i - 1];
+				}
+				for (maxLevel = sizes.length - 1; maxLevel >= 0; --maxLevel) {
+					if (sizes[maxLevel] < MAX_TOC_MARKS_NUMBER) {
+						break;
+					}
+				}
+			}
+			for (TOCTree tocItem : toc.allSubTrees(maxLevel)) {
+				myTOCMarks.add(tocItem);
+			}
+		}
+
+		public synchronized void paint(ZLPaintContext context) {
 			final FBReaderApp reader = myReader;
 			if (reader == null) {
 				return;
@@ -578,17 +615,17 @@ public final class FBView extends ZLTextView {
 			context.fillRectangle(left + lineWidth, height - 2 * lineWidth, gaugeInternalRight, 2 * lineWidth);
 
 			if (reader.FooterShowTOCMarksOption.getValue()) {
-				TOCTree toc = model.TOCTree;
-				if (toc != null) {
-					final int fullLength = sizeOfFullText();
-					for (TOCTree tocItem : toc) {
-						TOCTree.Reference reference = tocItem.getReference();
-						if (reference != null) {
-							final int refCoord = sizeOfTextBeforeParagraph(reference.ParagraphIndex);
-							final int xCoord =
-								left + 2 * lineWidth + (int)(1.0 * myGaugeWidth * refCoord / fullLength);
-							context.drawLine(xCoord, height - lineWidth, xCoord, lineWidth);
-						}
+				if (myTOCMarks == null) {
+					updateTOCMarks(model);
+				}
+				final int fullLength = sizeOfFullText();
+				for (TOCTree tocItem : myTOCMarks) {
+					TOCTree.Reference reference = tocItem.getReference();
+					if (reference != null) {
+						final int refCoord = sizeOfTextBeforeParagraph(reference.ParagraphIndex);
+						final int xCoord =
+							left + 2 * lineWidth + (int)(1.0 * myGaugeWidth * refCoord / fullLength);
+						context.drawLine(xCoord, height - lineWidth, xCoord, lineWidth);
 					}
 				}
 			}

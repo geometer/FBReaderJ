@@ -43,7 +43,7 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 		new File(myDirName).mkdirs();
 		myFileNumber = ourCounter++;
 		try {
-			myStreamWriter = new OutputStreamWriter(new FileOutputStream(myDirName + "/image" + myFileNumber), "UTF-8");
+			myStreamWriter = new OutputStreamWriter(new FileOutputStream(encodedFileName()), "UTF-8");
 		} catch (IOException e) {
 		}
 	}
