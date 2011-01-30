@@ -329,7 +329,7 @@ public final class FBReaderApp extends ZLApplication {
 				CancelActionType.previousBook, previousBook.getTitle()
 			));
 		}
-		if (Model.Book != null) {
+		if (Model != null && Model.Book != null) {
 			for (Bookmark bookmark : Bookmark.invisibleBookmarks(Model.Book)) {
 				myCancelActionsList.add(new BookmarkDescription(bookmark));
 			}
