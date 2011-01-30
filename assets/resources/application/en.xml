@@ -136,6 +136,8 @@
 		<node name="contentError" value="Download failed" />
 		<node name="downloadingStarted" value="Book downloading has been started" />
 		<node name="alreadyDownloading" value="Book is already being downloaded" />
+		<node name="cannotCreateDirectory" value="Unable to create directory %s" />
+		<node name="cannotCreateFile" value="Unable to create file %s" />
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Expand tree"/>
