@@ -13,7 +13,7 @@
 			<node name="title" value="Chyba sítě" />
 			<node name="unknownErrorMessage" value="Neznámá chyba" />
 			<node name="operationTimedOutMessage" value="Vypršel časový limit operace" />
-			<node name="somethingWrongMessage" value="Něco se pokazilo s&#10;%s" />
+			<node name="somethingWrongMessage" value="Něco není v pořádku s&#10;%s" />
 			<node name="couldntCreateDirectoryMessage" value="Nelze vytvořit adresář&#10;%s" />
 			<node name="couldntCreateFileMessage" value="Nelze vytvořit soubor&#10;%s" />
 			<node name="couldntConnectToNetworkMessage" value="Nelze se připojit k síti" />

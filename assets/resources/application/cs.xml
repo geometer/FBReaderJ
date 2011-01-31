@@ -137,8 +137,8 @@
 		<node name="contentError" value="Stahování selhalo" />
 		<node name="downloadingStarted" value="Stahování knihy bylo zahájeno" />
 		<node name="alreadyDownloading" value="Kniha se již stahuje" />
-		<node name="cannotCreateDirectory" value="Unable to create directory %s" toBeTranslated="true"/>
-		<node name="cannotCreateFile" value="Unable to create file %s" toBeTranslated="true"/>
+		<node name="cannotCreateDirectory" value="Nelze vytvořit adresář %s"/>
+		<node name="cannotCreateFile" value="Nelze vytvořit soubor %s"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Rozbalit strom"/>
@@ -158,9 +158,9 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
-		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
-		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
-		<node name="close" value="Close FBReader" toBeTranslated="true"/>
+		<node name="previousBook" value="Otevřít předchozí knihu"/>
+		<node name="returnTo" value="Vrátit se na..."/>
+		<node name="close" value="Zavřít FBReader"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Nastavení"/>
