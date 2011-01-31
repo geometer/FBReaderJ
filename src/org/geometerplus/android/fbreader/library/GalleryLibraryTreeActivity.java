@@ -115,8 +115,7 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity
 			myGallery.setOnItemClickListener(this);
 			myGallery.setOnItemSelectedListener(adapter);
 			myGallery.setOnCreateContextMenuListener(adapter);
-//			System.err.println("SELECTED: " + adapter.getFirstSelectedItemIndex());	// TODO		
-//			myGallery.setSelection(adapter.getFirstSelectedItemIndex());						
+//			myGallery.setSelection(adapter.getFirstSelectedItemIndex());	// TODO						
 		} else {
 			Log.v(FMCommon.LOG, "GalleryLibraryTreeActivity - tree == null");
 		}

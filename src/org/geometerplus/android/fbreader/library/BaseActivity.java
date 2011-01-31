@@ -61,12 +61,7 @@ abstract class BaseActivity extends ListActivity
 	}
 
 	protected void openBook(Book book) {
-		startActivity(
-			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(Intent.ACTION_VIEW)
-				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-		);
+		LibraryUtil.openBook(this, book);
 	}
 
 	protected void createBookContextMenu(ContextMenu menu, Book book) {

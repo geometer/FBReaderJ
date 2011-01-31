@@ -1,10 +1,16 @@
 package org.geometerplus.android.fbreader.library;
 
+import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BooksDatabase;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 
 class LibraryCommon {
 	static BooksDatabase DatabaseInstance;
@@ -51,6 +57,19 @@ interface HasFileManagerConstants {
 	static final int DELETE_FILE_ITEM_ID = 10;
 //	static final int RENAME_FILE_ITEM_ID = 11; //TODO may be later
 	static final int MOVE_FILE_ITEM_ID = 12;
+}
+
+class LibraryUtil {
+	
+	public static void openBook(Activity activity, Book book) {
+		activity.startActivity(new Intent(activity.getApplicationContext(), FBReader.class)
+			.setAction(Intent.ACTION_VIEW)
+			.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+	}
+
+	
+	
 }
 
 class SortTypeConf{

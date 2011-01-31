@@ -36,12 +36,7 @@ public class BaseGalleryActivity extends Activity
 
 	
 	protected void openBook(Book book) {
-		startActivity(
-			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(Intent.ACTION_VIEW)
-				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-		);
+		LibraryUtil.openBook(this, book);
 	}
 
 	protected void createBookContextMenu(ContextMenu menu, Book book) {
@@ -60,29 +55,6 @@ public class BaseGalleryActivity extends Activity
         }
 	}
 	
-//	// TODO recoding
-//	protected View createView(View convertView, ViewGroup parent, String name, String summary) {
-//		final View view = (convertView != null) ?  convertView :
-//			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-//		
-//		TextView nameTextView = (TextView)view.findViewById(R.id.library_tree_item_name);
-//		nameTextView.setText(name);
-//
-//		TextView summaryTextView = (TextView)view.findViewById(R.id.library_tree_item_childrenlist); 
-//        summaryTextView.setText(summary);
-//
-//        if (summary == null || summary.equals("")){
-//            summaryTextView.setVisibility(View.GONE);
-//        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 0.5f));
-//        	nameTextView.setPadding(0, 0, 0, 6);
-//        	nameTextView.setGravity(Gravity.CENTER_VERTICAL);
-//        } else {
-//        	summaryTextView.setVisibility(View.VISIBLE);
-//        	nameTextView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
-//        }
-//		return view;
-//	}
-
 	private class BookDeleter implements DialogInterface.OnClickListener {
 		private final Book myBook;
 		private final int myMode;
