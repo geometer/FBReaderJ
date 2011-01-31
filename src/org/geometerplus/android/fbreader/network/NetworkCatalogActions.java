@@ -422,6 +422,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					}
 				}
 
+				/* FIXME: if catalog's loading will be very fast
+				 * then it is possible that loading message is lost
+				 * (see ExpandCatalogHandler.afterUpdateCatalog method).
+				 * 
+				 * For example, this can be fixed via adding method
+				 * NetworkView.postCatalogLoadingResult, that will do the following:
+				 * 1) If there is activity, then show message
+				 * 2) If there is no activity, then save message, and show when activity is created
+				 * 3) Remove unused messages (say, by timeout)
+				 */
 				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, key);
 				NetworkView.Instance().startItemsLoading(
 					activity,

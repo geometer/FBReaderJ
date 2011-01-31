@@ -170,7 +170,6 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public String getUniqueKey() {
-		// FIXME: URL can be the same for POST queries!!!
-		return Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
+		return Item.getFullRequestString();
 	}
 }

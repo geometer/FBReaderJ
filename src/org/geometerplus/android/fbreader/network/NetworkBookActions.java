@@ -49,8 +49,6 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 class NetworkBookActions extends NetworkTreeActions {
-	private static final String PACKAGE = "org.geometerplus.android.fbreader.network";
-
 	public static final int DOWNLOAD_BOOK_ITEM_ID = 0;
 	public static final int DOWNLOAD_DEMO_ITEM_ID = 1;
 	public static final int READ_BOOK_ITEM_ID = 2;
