@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader;
 import java.util.LinkedList;
 
 import android.app.SearchManager;
-import android.content.Content;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
