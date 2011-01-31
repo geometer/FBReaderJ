@@ -105,7 +105,17 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
 		myGallery.setOnCreateContextMenuListener(adapter);
 		onNewIntent(getIntent());
 	}
-	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
+			LibraryTopLevelActivity.launchActivity(this, mySelectedBookPath);
+			finish();
+			return;
+		}
+	}
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		TopLevelTree tree = (TopLevelTree)getAdapter().getItem(position);

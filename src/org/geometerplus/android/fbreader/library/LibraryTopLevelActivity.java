@@ -113,6 +113,16 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
+			GalleryLibraryTopLevelActivity.launchActivity(this, mySelectedBookPath);
+			finish();
+			return;
+		}
+	}
+	
+	@Override
 	public void onDestroy() {
 //		LibraryCommon.LibraryInstance = null;	// TODO
 		super.onDestroy();

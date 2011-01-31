@@ -124,6 +124,16 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
+			LibraryTreeActivity.launchActivity(this, mySelectedBookPath, myTreePathString);
+			finish();
+			return;
+		}
+	}
+	
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		FBTree tree = getAdapter().getItem(position);
 		if (tree instanceof BookTree) {
