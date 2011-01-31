@@ -31,8 +31,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
+public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
+	implements OnItemClickListener {
 	private LinkedList<FBTree> myItems;
 	private TopLevelTree mySearchResultsItem;
 
@@ -96,10 +100,16 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity {
 		));
 		GalleryLibraryAdapter adapter = new GalleryLibraryAdapter(myItems); 
 		myGallery.setAdapter(adapter);
-		myGallery.setOnItemClickListener(adapter);
+		myGallery.setOnItemClickListener(this);
 		myGallery.setOnItemSelectedListener(adapter);
 		myGallery.setOnCreateContextMenuListener(adapter);
 		onNewIntent(getIntent());
+	}
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		TopLevelTree tree = (TopLevelTree)getAdapter().getItem(position);
+		tree.run();
 	}
 
 	private void setSearchResults(Intent intent) {

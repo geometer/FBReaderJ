@@ -52,6 +52,7 @@ public final class FileManager extends BaseActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Log.v(FMCommon.LOG, "FileManager - onCreate(Bundle savedInstanceState)");
 		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
 			finish();
 			return;
@@ -64,6 +65,7 @@ public final class FileManager extends BaseActivity
 		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType(); 				// TODO move inisialization
 
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
+			Log.v(FMCommon.LOG, "FileManager - LibraryCommon.ViewTypeInstance == ViewType.SKETCH");
 			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
 			finish();
 		}

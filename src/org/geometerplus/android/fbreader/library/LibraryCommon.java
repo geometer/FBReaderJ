@@ -10,9 +10,9 @@ class LibraryCommon {
 	static BooksDatabase DatabaseInstance;
 	static Library LibraryInstance;
 	static ViewType ViewTypeInstance;
+	static SortType SortTypeInstance; 						// for FileManager
 	static final ZLStringOption BookSearchPatternOption = 
 		new ZLStringOption("BookSearch", "Pattern", "");	// for LibraryBaseActivity
-	static SortType SortTypeInstance; 						// for FileManager
 }
 
 class FMCommon {

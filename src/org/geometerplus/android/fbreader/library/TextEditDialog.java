@@ -319,7 +319,7 @@ class LibraryTreeChanger extends AbstractViewChangeDialog{
 			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 				LibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);
 			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
-				LibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);	// TODO
+				GalleryLibraryTreeActivity.launchActivity((Activity) myContext, mySelectedBook, myTreePathString);	
 			}
 			((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP
 		}

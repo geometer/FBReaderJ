@@ -23,13 +23,11 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -112,7 +110,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			setListAdapter(adapter);
 			getListView().setOnCreateContextMenuListener(adapter);
 			System.err.println("SELECTED: " + adapter.getFirstSelectedItemIndex());
-			setSelection(adapter.getFirstSelectedItemIndex());
+			setSelection(adapter.getFirstSelectedItemIndex());		// TODO
 		}
 	}
 
@@ -133,17 +131,15 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		activity.startActivityForResult(intent, CHILD_LIST_REQUEST);
     }
     
-    
-	// TODO
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case 0:
-			Log.v(FMCommon.LOG, "onOptionsItemSelected(MenuItem item) - LibraryTreeActivity");
-			//new LibraryViewChangeDialog(this, mySelectedBookPath, myTreePathString).show();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	    	case 0:
+				Log.v(FMCommon.LOG, "onOptionsItemSelected(MenuItem item) - LibraryTreeActivity");
+	    		new LibraryTreeChanger(this, mySelectedBookPath, myTreePathString).show();
+	    		return true;
+        	default:
+        		return super.onOptionsItemSelected(item);
+        }
+    }
 }

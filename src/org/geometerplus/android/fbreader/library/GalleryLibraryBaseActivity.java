@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.List;
 
-import org.geometerplus.android.fbreader.library.LibraryBaseActivity.LibraryAdapter;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.library.AuthorTree;
@@ -36,13 +35,11 @@ import org.geometerplus.fbreader.library.TagTree;
 import org.geometerplus.fbreader.library.TitleTree;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.Menu;
@@ -52,7 +49,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
@@ -113,20 +109,10 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 
     // FIXME 
 	protected final class GalleryLibraryAdapter extends LibraryBaseAdapter 
-		implements OnItemClickListener, OnItemSelectedListener{
+		implements OnItemSelectedListener{
 
 		public GalleryLibraryAdapter(List<FBTree> items) {
 			super(items);
-		}
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			Log.v(FMCommon.LOG, "GalleryLibraryAdapter - onItemClick - ");
-			// FIXME
-			// FIXME
-			// FIXME
-//			TopLevelTree tree = (TopLevelTree)getAdapter().getItem(position);
-//			tree.run();
 		}
 
 		@Override
@@ -268,7 +254,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 
 		public void run() {
 			startActivityForResult(
-				new Intent(GalleryLibraryBaseActivity.this, LibraryTreeActivity.class)
+				new Intent(GalleryLibraryBaseActivity.this, GalleryLibraryTreeActivity.class)	// FIXME
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
 					.putExtra(TREE_PATH_KEY, myTreePath)
 					.putExtra(PARAMETER_KEY, myParameter),

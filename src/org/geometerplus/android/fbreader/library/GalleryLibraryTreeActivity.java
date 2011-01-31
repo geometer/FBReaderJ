@@ -19,23 +19,23 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import org.geometerplus.android.fbreader.library.LibraryBaseActivity.LibraryAdapter;
-import org.geometerplus.android.fbreader.library.LibraryBaseActivity.OpenTreeRunnable;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
+public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity
+	implements OnItemClickListener {
+	
 	private String myTreePathString;
 	
 	@Override
@@ -43,6 +43,7 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
 		super.onCreate(icicle);
 
 		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
+			Log.v(FMCommon.LOG, "GalleryLibraryTreeActivity - LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null");
 			finish();
 			return;
 		}
@@ -109,33 +110,29 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
 		}
         
 		if (tree != null) {
-//			final LibraryAdapter adapter = new LibraryAdapter(tree.subTrees());			// TODO
-//			setListAdapter(adapter);													// TODO
-//			getListView().setOnCreateContextMenuListener(adapter);						// TODO
-//			System.err.println("SELECTED: " + adapter.getFirstSelectedItemIndex());		
-			//setSelection(adapter.getFirstSelectedItemIndex());						// TODO
+			final GalleryLibraryAdapter adapter = new GalleryLibraryAdapter(tree.subTrees());			
+			myGallery.setAdapter(adapter);
+			myGallery.setOnItemClickListener(this);
+			myGallery.setOnItemSelectedListener(adapter);
+			myGallery.setOnCreateContextMenuListener(adapter);
+//			System.err.println("SELECTED: " + adapter.getFirstSelectedItemIndex());	// TODO		
+//			myGallery.setSelection(adapter.getFirstSelectedItemIndex());						
+		} else {
+			Log.v(FMCommon.LOG, "GalleryLibraryTreeActivity - tree == null");
 		}
+		
 	}
 
-	// TODO
-//	@Override
-//	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-//		//BTree tree = ((LibraryAdapter)getListAdapter()).getItem(position); // TODO
-//		FBTree tree = null;													 // FIXME
-//		if (tree instanceof BookTree) {
-//			showBookInfo(((BookTree)tree).Book);
-//		} else {
-//			new OpenTreeRunnable(BaseActivity.LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
-//		}
-//	}
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		FBTree tree = getAdapter().getItem(position);
+		if (tree instanceof BookTree) {
+			showBookInfo(((BookTree)tree).Book);
+		} else {
+			new OpenTreeRunnable(LibraryCommon.LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
+		}
+	}
 	
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	super.onCreateOptionsMenu(menu);
-    	FileUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_sorting);	
-    	return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -148,7 +145,7 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity  {
     }
 
     public static void launchActivity(Activity activity, String selectedBookPath, String treePath){
-		Intent intent = new Intent(activity, LibraryTreeActivity.class)
+		Intent intent = new Intent(activity, GalleryLibraryTreeActivity.class)
 			.putExtra(SELECTED_BOOK_PATH_KEY, selectedBookPath)
 			.putExtra(TREE_PATH_KEY, treePath);
 		activity.startActivityForResult(intent, CHILD_LIST_REQUEST);

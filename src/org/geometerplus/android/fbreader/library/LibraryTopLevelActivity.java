@@ -21,25 +21,21 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.LinkedList;
 
+import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.ui.android.R;
+
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ListView;
-
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.tree.FBTree;
-
-import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	private LinkedList<FBTree> myItems;
@@ -54,10 +50,10 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		if (LibraryCommon.DatabaseInstance == null) {
 			LibraryCommon.DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
 		}
-		if (LibraryCommon.LibraryInstance == null) {
+//		if (LibraryCommon.LibraryInstance == null) {	// TODO
 			LibraryCommon.LibraryInstance = new Library();
 			startService(new Intent(getApplicationContext(), InitializationService.class));
-		}
+//		}
 		
 		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType();
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
@@ -118,7 +114,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 	@Override
 	public void onDestroy() {
-		LibraryCommon.LibraryInstance = null;
+//		LibraryCommon.LibraryInstance = null;	// TODO
 		super.onDestroy();
 	}
 
