@@ -102,7 +102,6 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
 		myGallery.setAdapter(adapter);
 		myGallery.setOnItemClickListener(this);
 		myGallery.setOnItemSelectedListener(adapter);
-		myGallery.setOnCreateContextMenuListener(adapter);
 		onNewIntent(getIntent());
 	}
 
