@@ -33,7 +33,7 @@ import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class BasketTree extends NetworkTree implements ZLAndroidTree {
 	public BasketTree() {
-		super(1);
+		super(2);
 	}
 
 	@Override
