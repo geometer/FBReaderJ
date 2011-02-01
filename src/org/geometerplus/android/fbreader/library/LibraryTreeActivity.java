@@ -75,28 +75,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		}
 		setTitle(title);
 
-		FBTree tree = null;
-		if (PATH_RECENT.equals(path[0])) {
-			tree = LibraryCommon.LibraryInstance.recentBooks();
-		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
-			tree = LibraryCommon.LibraryInstance.searchResults();
-		} else if (PATH_BY_AUTHOR.equals(path[0])) {
-			tree = LibraryCommon.LibraryInstance.byAuthor();
-		} else if (PATH_BY_TITLE.equals(path[0])) {
-			tree = LibraryCommon.LibraryInstance.byTitle();
-		} else if (PATH_BY_TAG.equals(path[0])) {
-			tree = LibraryCommon.LibraryInstance.byTag();
-		} else if (PATH_FAVORITES.equals(path[0])) {
-			tree = LibraryCommon.LibraryInstance.favorites();
-		}
-        
-		for (int i = 1; i < path.length; ++i) {
-			if (tree == null) {
-				break;
-			}
-			tree = tree.getSubTreeByName(path[i]);
-		}
-
+		FBTree tree = LibraryUtil.getTree(path);
 		mySelectedBook = null;
 		if (mySelectedBookPath != null) {
 			final ZLFile file = ZLFile.createFileByPath(mySelectedBookPath);
