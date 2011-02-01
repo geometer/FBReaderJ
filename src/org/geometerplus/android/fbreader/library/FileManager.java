@@ -66,7 +66,7 @@ public final class FileManager extends BaseActivity
 
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 			Log.v(FMCommon.LOG, "FileManager - LibraryCommon.ViewTypeInstance == ViewType.SKETCH");
-			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
+			SketchGalleryActivity.launchActivity(this, myPath);
 			finish();
 		}
 		
@@ -102,7 +102,7 @@ public final class FileManager extends BaseActivity
 		super.onResume();
 
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
-			SketchGalleryActivity.launchSketchGalleryActivity(this, myPath);
+			SketchGalleryActivity.launchActivity(this, myPath);
 			finish();
 			return;
 		}
@@ -195,18 +195,16 @@ public final class FileManager extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
     	Log.v(FMCommon.LOG, "onCreateOptionsMenu");
     	super.onCreateOptionsMenu(menu);
-    	FileUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
-    	FileUtil.addMenuItem(menu, 1, myResource, "mkdir", R.drawable.ic_menu_mkdir);
-    	FileUtil.addMenuItem(menu, 2, myResource, "sorting", R.drawable.ic_menu_sorting);
-    	FileUtil.addMenuItem(menu, 3, myResource, "view", R.drawable.ic_menu_sorting);	
+    	LibraryUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
+    	LibraryUtil.addMenuItem(menu, 1, myResource, "mkdir", R.drawable.ic_menu_mkdir);
+    	LibraryUtil.addMenuItem(menu, 2, myResource, "sorting", R.drawable.ic_menu_sorting);
+    	LibraryUtil.addMenuItem(menu, 3, myResource, "view", R.drawable.ic_menu_sorting);	
     	return true;
     }
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		Log.v(FMCommon.LOG, "onPrepareOptionsMenu - start");
 		super.onPrepareOptionsMenu(menu);
-		
 		if (FMCommon.InsertPath == null){
 			menu.findItem(0).setVisible(false).setEnabled(false);
 			menu.findItem(1).setVisible(false).setEnabled(false);
@@ -214,16 +212,12 @@ public final class FileManager extends BaseActivity
         	menu.findItem(0).setVisible(true).setEnabled(true);
 			menu.findItem(1).setVisible(true).setEnabled(true);
         }
-		
-		Log.v(FMCommon.LOG, "onPrepareOptionsMenu - finish");
 		return true;
 	}
 
     private Runnable messFileMoved = new Runnable() {
 		public void run() {
-			Toast.makeText(FileManager.this,
-					myResource.getResource("messFileMoved").getValue(), 
-					Toast.LENGTH_SHORT).show();
+			ToastMaker.MakeToast(FileManager.this, "messFileMoved");
 		}
 	};
     
@@ -283,7 +277,7 @@ public final class FileManager extends BaseActivity
 		return (FMBaseAdapter)getListAdapter();
 	}
 	
-	public static void launchFileManagerActivity(Context context, String path){
+	public static void launchActivity(Context context, String path){
 		Intent i = new Intent(context, FileManager.class)
 			.putExtra(FILE_MANAGER_PATH, path)
 			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

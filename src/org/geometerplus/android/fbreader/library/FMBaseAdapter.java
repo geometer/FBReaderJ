@@ -3,12 +3,6 @@ package org.geometerplus.android.fbreader.library;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
-import org.geometerplus.fbreader.library.AuthorTree;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.BookTree;
-import org.geometerplus.fbreader.library.LibraryTree;
-import org.geometerplus.fbreader.library.TagTree;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -17,24 +11,14 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 abstract class FMBaseAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	protected List<FileItem> myItems = new ArrayList<FileItem>();
@@ -119,7 +103,9 @@ class GalleryAdapterUtil {
 	public static View getView(View convertView, ViewGroup parent,
 			String summary, ZLImage cover, int idIcon,
 			int maxHeight, int maxWidth, int paddingTop){
-        
+        int maxLength = 20;
+		summary = summary.length() > maxLength ? summary.substring(0, maxLength - 1) : summary;
+		
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.sketch_item, parent, false);
         

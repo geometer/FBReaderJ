@@ -6,33 +6,23 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Gallery;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -74,7 +64,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		super.onResume();
 
 		if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
-			FileManager.launchFileManagerActivity(this, myPath);
+			FileManager.launchActivity(this, myPath);
 			finish();
 			return;
 		}
@@ -119,16 +109,16 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 			UIUtil.showErrorMessage(SketchGalleryActivity.this, "permissionDenied");
 		}
 	}
-	
+
+	// FIXME
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
 		getAdapter().deleteFile(book.File);
-		myGallery.invalidate();
+		getAdapter().notifyDataSetChanged();
 	}
 	
-
-	public static void launchSketchGalleryActivity(Context context, String path){
+	public static void launchActivity(Context context, String path){
 		Intent i = new Intent(context, SketchGalleryActivity.class)
 			.putExtra(FileManager.FILE_MANAGER_PATH, path)
 			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -139,18 +129,16 @@ public class SketchGalleryActivity extends BaseGalleryActivity
     public boolean onCreateOptionsMenu(Menu menu) {
     	Log.v(FMCommon.LOG, "onCreateOptionsMenu");
     	super.onCreateOptionsMenu(menu);
-    	FileUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
-    	FileUtil.addMenuItem(menu, 1, myResource,  "mkdir", R.drawable.ic_menu_mkdir);
-    	FileUtil.addMenuItem(menu, 2, myResource, "sorting", R.drawable.ic_menu_sorting);
-    	FileUtil.addMenuItem(menu, 3, myResource, "view", R.drawable.ic_menu_sorting);	
+    	LibraryUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
+    	LibraryUtil.addMenuItem(menu, 1, myResource,  "mkdir", R.drawable.ic_menu_mkdir);
+    	LibraryUtil.addMenuItem(menu, 2, myResource, "sorting", R.drawable.ic_menu_sorting);
+    	LibraryUtil.addMenuItem(menu, 3, myResource, "view", R.drawable.ic_menu_sorting);	
     	return true;
     }
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		Log.v(FMCommon.LOG, "onPrepareOptionsMenu - start");
 		super.onPrepareOptionsMenu(menu);
-		
 		if (FMCommon.InsertPath == null){
 			menu.findItem(0).setVisible(false).setEnabled(false);
 			menu.findItem(1).setVisible(false).setEnabled(false);
@@ -158,16 +146,12 @@ public class SketchGalleryActivity extends BaseGalleryActivity
         	menu.findItem(0).setVisible(true).setEnabled(true);
 			menu.findItem(1).setVisible(true).setEnabled(true);
         }
-		
-		Log.v(FMCommon.LOG, "onPrepareOptionsMenu - finish");
 		return true;
 	}
 	
     private Runnable messFileMoved = new Runnable() {
 		public void run() {
-			Toast.makeText(SketchGalleryActivity.this,
-					myResource.getResource("messFileMoved").getValue(), 
-					Toast.LENGTH_SHORT).show();
+			ToastMaker.MakeToast(SketchGalleryActivity.this, "messFileMoved");
 		}
 	};
     
@@ -263,8 +247,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity
             }
             String summary = fileItem.getSummary();
     		summary = summary != null ? summary : fileItem.getName();  
-    		summary = summary.length() > 16 ? summary.substring(0, 15) : summary; 
-    		
     		View view = GalleryAdapterUtil.getView(convertView, parent, summary, fileItem.getCover(), 
     				fileItem.getIcon(), maxHeight, maxWidth, paddingTop);
             return view;

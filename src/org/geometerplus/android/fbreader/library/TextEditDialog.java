@@ -35,6 +35,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+class ToastMaker{
+	private static ZLResource myResource = ZLResource.resource("libraryView");
+
+	public static void MakeToast(Context context, String messageKey){
+		Toast.makeText(context,	myResource.getResource(messageKey).getValue(),
+				Toast.LENGTH_SHORT).show();
+	}
+}
+
 public class TextEditDialog extends Dialog{
 	private Context myContext;
 	private EditText myEditText;
@@ -100,14 +109,6 @@ public class TextEditDialog extends Dialog{
 	
 }
 
-class ToastMaker{
-	private static ZLResource myResource = ZLResource.resource("libraryView");
-
-	public static void MakeToast(Context context, String messageKey){
-		Toast.makeText(context,	myResource.getResource(messageKey).getValue(),
-				Toast.LENGTH_SHORT).show();
-	}
-}
 
 /*
 class RenameDialog extends TextEditDialog{
@@ -258,9 +259,9 @@ class SortingDialog extends RadioButtonDialog{
 			LibraryCommon.SortTypeInstance = SortType.values()[item];
 			
 			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
-				FileManager.launchFileManagerActivity(myContext, myPath);
+				FileManager.launchActivity(myContext, myPath);
 			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH) {
-				SketchGalleryActivity.launchSketchGalleryActivity(myContext, myPath);
+				SketchGalleryActivity.launchActivity(myContext, myPath);
 			}
 		}
 	}
@@ -291,9 +292,9 @@ class ViewChangeDialog extends AbstractViewChangeDialog{
 			ViewTypeConf.setValue(item);
 			LibraryCommon.ViewTypeInstance = ViewType.values()[item];
 			if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
-				FileManager.launchFileManagerActivity(myContext, myPath);
+				FileManager.launchActivity(myContext, myPath);
 			} else if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
-				SketchGalleryActivity.launchSketchGalleryActivity(myContext, myPath);
+				SketchGalleryActivity.launchActivity(myContext, myPath);
 			}
 			((Activity)myContext).finish();			// TODO ??? Intent.FLAG_ACTIVITY_CLEAR_TOP
 		}

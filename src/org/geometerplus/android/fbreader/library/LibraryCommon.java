@@ -2,7 +2,6 @@ package org.geometerplus.android.fbreader.library;
 
 import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.library.GalleryLibraryBaseActivity.StartTreeActivityRunnable;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.library.AuthorTree;
 import org.geometerplus.fbreader.library.Book;
@@ -24,6 +23,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 
 class LibraryCommon {
 	static BooksDatabase DatabaseInstance;
@@ -73,6 +74,13 @@ interface HasFileManagerConstants {
 }
 
 class LibraryUtil {
+	
+    public static MenuItem addMenuItem(Menu menu, int index, ZLResource resource, String resourceKey, int iconId) {
+        final String label = resource.getResource("menu").getResource(resourceKey).getValue();
+        final MenuItem item = menu.add(0, index, Menu.NONE, label);
+        item.setIcon(iconId);
+        return item;
+    }
 	
 	public static void openBook(Activity activity, Book book) {
 		activity.startActivity(new Intent(activity.getApplicationContext(), FBReader.class)
@@ -177,6 +185,7 @@ class LibraryUtil {
 		}
 		return tree;
 	}
+	
 
 }
 

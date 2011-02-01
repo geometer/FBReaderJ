@@ -89,8 +89,8 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	super.onCreateOptionsMenu(menu);
-    	FileUtil.addMenuItem(menu, 1, myResource, "localSearch", R.drawable.ic_menu_search);
-    	FileUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_sorting);
+    	LibraryUtil.addMenuItem(menu, 1, myResource, "localSearch", R.drawable.ic_menu_search);
+    	LibraryUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_sorting);
     	return true;
     }
 	
@@ -102,7 +102,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
                 return true;
         }
     }
-
+    
 	protected final class GalleryLibraryAdapter extends LibraryBaseAdapter 
 		implements OnItemSelectedListener{
 
@@ -165,6 +165,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 					break;
             	}
             }
+            
             String summary = tree.getName();
             ZLImage cover = tree.getCover();
             int idIcon = 0; 
@@ -198,11 +199,11 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 		return super.onContextItemSelected(item);
 	}
 
-	// TODO 
+	// FIXME 
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-		getAdapter().notifyDataSetChanged();	// FIXME
+		getAdapter().notifyDataSetChanged();	
 	}
 
 	protected boolean isTreeSelected(FBTree tree) {
