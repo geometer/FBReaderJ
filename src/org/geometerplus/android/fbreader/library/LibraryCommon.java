@@ -1,5 +1,6 @@
 package org.geometerplus.android.fbreader.library;
 
+import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BooksDatabase;
@@ -9,8 +10,10 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.ContextMenu;
 
 class LibraryCommon {
 	static BooksDatabase DatabaseInstance;
@@ -67,10 +70,57 @@ class LibraryUtil {
 			.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
 			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
-
 	
+	public static void showBookInfo(Activity activity, Book book) {
+		activity.startActivityForResult(
+			new Intent(activity.getApplicationContext(), BookInfoActivity.class)
+				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath()),
+			HasBaseConstants.BOOK_INFO_REQUEST
+		);
+	}
+	
+	public static void createBookContextMenu(ContextMenu menu, Book book, ZLResource resource) {
+		menu.setHeaderTitle(book.getTitle());
+		menu.add(0, HasBaseConstants.OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
+		menu.add(0, HasBaseConstants.SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
+		if (LibraryCommon.LibraryInstance.isBookInFavorites(book)) {
+			menu.add(0, HasBaseConstants.REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
+		} else {
+			menu.add(0, HasBaseConstants.ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
+		}
+		if ((LibraryCommon.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+			menu.add(0, HasBaseConstants.DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
+        }
+	}
+	
+	public static void tryToDeleteBook(Activity activity, Book book, AbstractBookDeleter bookDeleter) {
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
+		new AlertDialog.Builder(activity)
+			.setTitle(book.getTitle())
+			.setMessage(boxResource.getResource("message").getValue())
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("yes").getValue(), bookDeleter)
+			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+			.create().show();
+	}
 	
 }
+
+abstract class AbstractBookDeleter implements DialogInterface.OnClickListener {
+	protected final Book myBook;
+	protected final int myMode;
+
+	AbstractBookDeleter(Book book, int removeMode) {
+		myBook = book;
+		myMode = removeMode;
+	}
+
+	public abstract void onClick(DialogInterface dialog, int which);
+}
+
+
 
 class SortTypeConf{
 	private static String SORT_GROUP = "sortGroup";
@@ -116,6 +166,8 @@ enum SortType{
 		return result;
 	}
 }
+
+
 
 class ViewTypeConf{
 	private static String VIEW_GROUP = "viewGroup";

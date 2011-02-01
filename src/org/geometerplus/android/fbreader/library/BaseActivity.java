@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import org.geometerplus.android.fbreader.BookInfoActivity;
-import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -30,10 +28,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -65,17 +61,7 @@ abstract class BaseActivity extends ListActivity
 	}
 
 	protected void createBookContextMenu(ContextMenu menu, Book book) {
-		menu.setHeaderTitle(book.getTitle());
-		menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
-		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, myResource.getResource("showBookInfo").getValue());
-		if (LibraryCommon.LibraryInstance.isBookInFavorites(book)) {
-			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
-		} else {
-			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
-		}
-		if ((LibraryCommon.LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
-			menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
-        }
+		LibraryUtil.createBookContextMenu(menu, book, myResource);
 	}
 
 	protected View createView(View convertView, ViewGroup parent, String name, String summary) {
@@ -144,13 +130,10 @@ abstract class BaseActivity extends ListActivity
 		return data != null ? data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight) : null;
 	}
 
-	private class BookDeleter implements DialogInterface.OnClickListener {
-		private final Book myBook;
-		private final int myMode;
-
+	
+	private class BookDeleter extends AbstractBookDeleter {
 		BookDeleter(Book book, int removeMode) {
-			myBook = book;
-			myMode = removeMode;
+			super(book, removeMode);
 		}
 
 		public void onClick(DialogInterface dialog, int which) {
@@ -158,18 +141,9 @@ abstract class BaseActivity extends ListActivity
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
 		}
 	}
-
+	
 	private void tryToDeleteBook(Book book) {
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
-		new AlertDialog.Builder(this)
-			.setTitle(book.getTitle())
-			.setMessage(boxResource.getResource("message").getValue())
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book, Library.REMOVE_FROM_DISK))
-			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-			.create().show();
+		LibraryUtil.tryToDeleteBook(this, book,  new BookDeleter(book, Library.REMOVE_FROM_DISK));
 	}
 
 	protected void deleteBook(Book book, int mode) {
@@ -177,11 +151,7 @@ abstract class BaseActivity extends ListActivity
 	}
 
 	protected void showBookInfo(Book book) {
-		startActivityForResult(
-			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath()),
-			BOOK_INFO_REQUEST
-		);
+		LibraryUtil.showBookInfo(this, book);
 	}
 
 	protected boolean onContextItemSelected(int itemId, Book book) {
