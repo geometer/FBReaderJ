@@ -1,13 +1,11 @@
 package org.geometerplus.android.fbreader.library;
 
-import org.geometerplus.android.fbreader.library.BaseActivity.BookDeleter;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -40,11 +38,13 @@ public class BaseGalleryActivity extends Activity
 		LibraryUtil.createBookContextMenu(menu, book, myResource);
 	}
 	
-	private class BookDeleter extends AbstractBookDeleter {
+	private class BookDeleter implements DialogInterface.OnClickListener {
+		private Book myBook;
+		private int myMode;
 		BookDeleter(Book book, int removeMode) {
-			super(book, removeMode);
+			myBook = book;
+			myMode = removeMode;
 		}
-
 		public void onClick(DialogInterface dialog, int which) {
 			deleteBook(myBook, myMode);
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
@@ -54,6 +54,7 @@ public class BaseGalleryActivity extends Activity
 	private void tryToDeleteBook(Book book) {
 		LibraryUtil.tryToDeleteBook(this, book,  new BookDeleter(book, Library.REMOVE_FROM_DISK));
 	}
+	
 	protected void deleteBook(Book book, int mode) {
 		LibraryCommon.LibraryInstance.removeBook(book, mode);
 	}

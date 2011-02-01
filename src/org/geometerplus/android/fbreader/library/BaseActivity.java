@@ -131,11 +131,13 @@ abstract class BaseActivity extends ListActivity
 	}
 
 	
-	private class BookDeleter extends AbstractBookDeleter {
+	private class BookDeleter implements DialogInterface.OnClickListener {
+		private Book myBook;
+		private int myMode;
 		BookDeleter(Book book, int removeMode) {
-			super(book, removeMode);
+			myBook = book;
+			myMode = removeMode;
 		}
-
 		public void onClick(DialogInterface dialog, int which) {
 			deleteBook(myBook, myMode);
 			setResult(RESULT_DO_INVALIDATE_VIEWS);

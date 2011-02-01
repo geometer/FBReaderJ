@@ -2,9 +2,19 @@ package org.geometerplus.android.fbreader.library;
 
 import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.library.GalleryLibraryBaseActivity.StartTreeActivityRunnable;
+import org.geometerplus.android.util.UIUtil;
+import org.geometerplus.fbreader.library.AuthorTree;
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.library.BooksDatabase;
 import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.library.SeriesInfo;
+import org.geometerplus.fbreader.library.SeriesTree;
+import org.geometerplus.fbreader.library.Tag;
+import org.geometerplus.fbreader.library.TagTree;
+import org.geometerplus.fbreader.library.TitleTree;
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -93,7 +103,7 @@ class LibraryUtil {
         }
 	}
 	
-	public static void tryToDeleteBook(Activity activity, Book book, AbstractBookDeleter bookDeleter) {
+	public static void tryToDeleteBook(Activity activity, Book book, DialogInterface.OnClickListener bookDeleter) {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
@@ -106,21 +116,78 @@ class LibraryUtil {
 			.create().show();
 	}
 	
-}
+	
+	// from LibraryBaseActivity and GalleryLibraryBaseActivity
+	public static boolean isTreeSelected(FBTree tree, Book selectedBook) {
+		if (selectedBook == null) {
+			return false;
+		}
 
-abstract class AbstractBookDeleter implements DialogInterface.OnClickListener {
-	protected final Book myBook;
-	protected final int myMode;
-
-	AbstractBookDeleter(Book book, int removeMode) {
-		myBook = book;
-		myMode = removeMode;
+		if (tree instanceof BookTree) {
+			return selectedBook.equals(((BookTree)tree).Book);
+		}
+		if (tree instanceof AuthorTree) {
+			return selectedBook.authors().contains(((AuthorTree)tree).Author);
+		}
+		if (tree instanceof TitleTree) {
+			final String title = selectedBook.getTitle();
+			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
+		}
+		if (tree instanceof SeriesTree) {
+			final SeriesInfo info = selectedBook.getSeriesInfo();
+			final String series = ((SeriesTree)tree).Series;
+			return info != null && series != null && series.equals(info.Name);
+		}
+		if (tree instanceof TagTree) {
+			final Tag tag = ((TagTree)tree).Tag;
+			for (Tag t : selectedBook.tags()) {
+				for (; t != null; t = t.Parent) {
+					if (t == tag) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		return false;
 	}
 
-	public abstract void onClick(DialogInterface dialog, int which);
 }
 
+abstract class AStartTreeActivityRunnable implements Runnable {
+	protected final String myTreePath;
+	protected final String myParameter;
+	public AStartTreeActivityRunnable(String treePath, String parameter) {
+		myTreePath = treePath;
+		myParameter = parameter;
+	}
+}
 
+abstract class AOpenTreeRunnable implements Runnable {
+	private final Library myLibrary;
+	private final Runnable myPostRunnable;
+	private final Activity myActivity;
+	
+	public AOpenTreeRunnable(Library library, Runnable postRunnable, Activity activity) {
+		myLibrary = library;
+		myPostRunnable = postRunnable;
+		myActivity = activity;
+	}
+
+	public void run() {
+		if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
+			myPostRunnable.run();
+		} else {
+			UIUtil.runWithMessage(myActivity, "loadingBookList",
+			new Runnable() {
+				public void run() {
+					myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
+				}
+			},
+			myPostRunnable);
+		}
+	}
+}
 
 class SortTypeConf{
 	private static String SORT_GROUP = "sortGroup";

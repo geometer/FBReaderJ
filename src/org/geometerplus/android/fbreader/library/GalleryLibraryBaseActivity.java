@@ -28,11 +28,7 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.LibraryTree;
-import org.geometerplus.fbreader.library.SeriesInfo;
-import org.geometerplus.fbreader.library.SeriesTree;
-import org.geometerplus.fbreader.library.Tag;
 import org.geometerplus.fbreader.library.TagTree;
-import org.geometerplus.fbreader.library.TitleTree;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -107,7 +103,6 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
         }
     }
 
-    // FIXME 
 	protected final class GalleryLibraryAdapter extends LibraryBaseAdapter 
 		implements OnItemSelectedListener{
 
@@ -196,13 +191,14 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FBTree tree = getAdapter().getItem(position); 		// FIXME
+		final FBTree tree = getAdapter().getItem(position); 	
 		if (tree instanceof BookTree) {
 			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
 		}
 		return super.onContextItemSelected(item);
 	}
 
+	// TODO 
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
@@ -210,51 +206,17 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	}
 
 	protected boolean isTreeSelected(FBTree tree) {
-		if (mySelectedBook == null) {
-			return false;
-		}
-
-		if (tree instanceof BookTree) {
-			return mySelectedBook.equals(((BookTree)tree).Book);
-		}
-		if (tree instanceof AuthorTree) {
-			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
-		}
-		if (tree instanceof TitleTree) {
-			final String title = mySelectedBook.getTitle();
-			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
-		}
-		if (tree instanceof SeriesTree) {
-			final SeriesInfo info = mySelectedBook.getSeriesInfo();
-			final String series = ((SeriesTree)tree).Series;
-			return info != null && series != null && series.equals(info.Name);
-		}
-		if (tree instanceof TagTree) {
-			final Tag tag = ((TagTree)tree).Tag;
-			for (Tag t : mySelectedBook.tags()) {
-				for (; t != null; t = t.Parent) {
-					if (t == tag) {
-						return true;
-					}
-				}
-			}
-			return false;
-		}
-		return false;
+		return LibraryUtil.isTreeSelected(tree, mySelectedBook);
 	}
 
-	protected class StartTreeActivityRunnable implements Runnable {
-		private final String myTreePath;
-		private final String myParameter;
-
+	protected class StartTreeActivityRunnable extends AStartTreeActivityRunnable {
 		public StartTreeActivityRunnable(String treePath, String parameter) {
-			myTreePath = treePath;
-			myParameter = parameter;
+			super(treePath, parameter);
 		}
 
 		public void run() {
 			startActivityForResult(
-				new Intent(GalleryLibraryBaseActivity.this, GalleryLibraryTreeActivity.class)	// FIXME
+				new Intent(GalleryLibraryBaseActivity.this, GalleryLibraryTreeActivity.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
 					.putExtra(TREE_PATH_KEY, myTreePath)
 					.putExtra(PARAMETER_KEY, myParameter),
@@ -263,35 +225,15 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 		}
 	}
 
-	protected class OpenTreeRunnable implements Runnable {
-		private final Library myLibrary;
-		private final Runnable myPostRunnable;
-
+	protected class OpenTreeRunnable extends AOpenTreeRunnable {
 		public OpenTreeRunnable(Library library, String treePath) {
 			this(library, treePath, null);
 		}
-
 		public OpenTreeRunnable(Library library, String treePath, String parameter) {
 			this(library, new StartTreeActivityRunnable(treePath, parameter));
 		}
-
 		public OpenTreeRunnable(Library library, Runnable postRunnable) {
-			myLibrary = library;
-			myPostRunnable = postRunnable;
-		}
-
-		public void run() {
-			if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
-				myPostRunnable.run();
-			} else {
-				UIUtil.runWithMessage(GalleryLibraryBaseActivity.this, "loadingBookList",
-				new Runnable() {
-					public void run() {
-						myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
-					}
-				},
-				myPostRunnable);
-			}
+			super(library, postRunnable, GalleryLibraryBaseActivity.this);
 		}
 	}
 	
