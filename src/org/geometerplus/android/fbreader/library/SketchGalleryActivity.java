@@ -25,7 +25,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class SketchGalleryActivity extends BaseGalleryActivity 
 	implements FMBaseAdapter.HasAdapter, HasFileManagerConstants {
@@ -47,7 +46,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		FileGalleryAdapter galleryAdapter = new FileGalleryAdapter(); 
 		myGallery.setAdapter(galleryAdapter);
 		myGallery.setOnItemClickListener(galleryAdapter);
-		myGallery.setOnItemSelectedListener(galleryAdapter);
 		myGallery.setOnCreateContextMenuListener(galleryAdapter);
 
 		LibraryCommon.SortTypeInstance = SortTypeConf.getSortType();			// TODO move inisialization
@@ -206,20 +204,10 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		return super.onContextItemSelected(item);
 	}
     
-	public class FileGalleryAdapter extends FMBaseAdapter implements OnItemClickListener, OnItemSelectedListener {
+	public class FileGalleryAdapter extends FMBaseAdapter implements OnItemClickListener {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			runItem(myItems.get(position)); 
-		}
-
-		@Override
-		public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
-			view.setSelected(false);
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> arg0) {
-		
+			runItem(myItems.get(position));
 		}
 
 		private int maxHeight = 0;
@@ -249,7 +237,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
     		summary = summary != null ? summary : fileItem.getName();  
     		View view = GalleryAdapterUtil.getView(convertView, parent, summary, fileItem.getCover(), 
     				fileItem.getIcon(), maxHeight, maxWidth, paddingTop);
-            return view;
+    		return view;
         }
         
     	@Override

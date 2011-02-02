@@ -45,7 +45,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 	implements MenuItem.OnMenuItemClickListener, HasLibraryConstants, LibraryBaseAdapter.HasAdapter {
@@ -103,22 +102,12 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
         }
     }
     
-	protected final class GalleryLibraryAdapter extends LibraryBaseAdapter 
-		implements OnItemSelectedListener{
+	protected final class GalleryLibraryAdapter extends LibraryBaseAdapter {
 
 		public GalleryLibraryAdapter(List<FBTree> items) {
 			super(items);
 		}
 
-		@Override
-		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			view.setSelected(false);
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> parent) {
-		}
-		
 		@Override
 		public int getFirstSelectedItemIndex() {
 			int index = 0;

@@ -11,12 +11,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
 public class BaseGalleryActivity extends Activity 
-	implements HasBaseConstants {
+	implements HasBaseConstants, Gallery.OnItemSelectedListener {
 	
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
@@ -27,10 +29,11 @@ public class BaseGalleryActivity extends Activity
 		super.onCreate(icicle);
 		setContentView(R.layout.gallery);
 	    myGallery = (Gallery) findViewById(R.id.gallery);
+	    myGallery.setOnItemSelectedListener(this);
 
 	    Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		mySelectedBookPath = getIntent().getStringExtra(FileManager.SELECTED_BOOK_PATH_KEY);
-		setResult(RESULT_DONT_INVALIDATE_VIEWS);
+		setResult(RESULT_DONT_INVALIDATE_VIEWS);		
 	}
 
 	
@@ -89,6 +92,16 @@ public class BaseGalleryActivity extends Activity
 		return false;
 	}
 	
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+		view.setSelected(false);
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+//		((View) parent.getSelectedItem()).setSelected(false);
+	}
+
 	protected void trySetSelection1(){
 		try{
 			BaseAdapter adapter = (BaseAdapter)myGallery.getAdapter();
@@ -98,4 +111,5 @@ public class BaseGalleryActivity extends Activity
             }
 		} catch (Exception e) {}
 	}
+
 }

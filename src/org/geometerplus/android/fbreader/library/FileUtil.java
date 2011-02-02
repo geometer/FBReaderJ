@@ -197,7 +197,7 @@ class FileComparator implements Comparator<ZLFile> {
 		}
 		Date date0 = f0.getPhysicalFile().lastModified();
 		Date date1 = f1.getPhysicalFile().lastModified();
-		return date0.compareTo(date1);
+		return date1.compareTo(date0);
 	}
 }
 

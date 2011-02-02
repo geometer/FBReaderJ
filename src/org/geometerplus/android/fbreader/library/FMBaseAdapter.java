@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 abstract class FMBaseAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
+	int myNotifyCount = 0;
 	protected List<FileItem> myItems = new ArrayList<FileItem>();
 
 	public synchronized void clear() {

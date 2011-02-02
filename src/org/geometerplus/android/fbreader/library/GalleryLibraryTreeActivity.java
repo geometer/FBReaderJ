@@ -92,7 +92,6 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity
 			final GalleryLibraryAdapter adapter = new GalleryLibraryAdapter(tree.subTrees());			
 			myGallery.setAdapter(adapter);
 			myGallery.setOnItemClickListener(this);
-			myGallery.setOnItemSelectedListener(adapter);
 			myGallery.setOnCreateContextMenuListener(adapter);
 //			myGallery.setSelection(adapter.getFirstSelectedItemIndex());	// TODO						
 		} else {

@@ -27,11 +27,13 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import android.app.Activity;
+import android.util.Log;
 
 public final class SmartFilter implements Runnable {
 	private final Activity myActivity;
 	private final ZLFile myFile;
-
+	private int myIdx;
+	
 	public SmartFilter(Activity activity, ZLFile file) {
 		myActivity = activity; 
 		myFile = file;
@@ -48,6 +50,7 @@ public final class SmartFilter implements Runnable {
 			return;
 		}
 
+		final int step = 5;
 		final FMBaseAdapter adapter = ((FMBaseAdapter.HasAdapter)myActivity).getAdapter();
 		final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
 		Collections.sort(children, new FileComparator());
@@ -60,11 +63,14 @@ public final class SmartFilter implements Runnable {
 				myActivity.runOnUiThread(new Runnable() {
 					public void run() {
 						adapter.add(new FileItem(file));
-						adapter.notifyDataSetChanged();				//hmm...
+						if (adapter.getCount() % step == 0){
+							adapter.notifyDataSetChanged();				
+						} 
 					}
 				});
 			}
 		}
+		adapter.notifyDataSetChanged();			
 
 		if (adapter.getCount() == 0){
 			myActivity.runOnUiThread(new Runnable() {
