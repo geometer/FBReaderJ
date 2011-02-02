@@ -59,14 +59,13 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		} else {
 			startUpdate();
 		}
+		trySetSelection1();				// TODO delete later
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		Log.v(FMCommon.LOG, "SketchGalleryActivity - onResume()");
-		
 		if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 			FileManager.launchActivity(this, myPath);
 			finish();

@@ -6,9 +6,13 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
 public class BaseGalleryActivity extends Activity 
@@ -84,5 +88,14 @@ public class BaseGalleryActivity extends Activity
 		}
 		return false;
 	}
-
+	
+	protected void trySetSelection1(){
+		try{
+			BaseAdapter adapter = (BaseAdapter)myGallery.getAdapter();
+            Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+            if (display.getOrientation() == 1 && adapter.getCount() > 2){
+    			myGallery.setSelection(1);
+            }
+		} catch (Exception e) {}
+	}
 }
