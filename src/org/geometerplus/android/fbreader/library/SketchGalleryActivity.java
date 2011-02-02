@@ -40,6 +40,8 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.v(FMCommon.LOG, "SketchGalleryActivity - onCreate(Bundle savedInstanceState)");
+		
 		myPath = getIntent().getStringExtra(FileManager.FILE_MANAGER_PATH);
 		
 		FileGalleryAdapter galleryAdapter = new FileGalleryAdapter(); 
@@ -63,6 +65,8 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 	protected void onResume() {
 		super.onResume();
 
+		Log.v(FMCommon.LOG, "SketchGalleryActivity - onResume()");
+		
 		if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
 			FileManager.launchActivity(this, myPath);
 			finish();
@@ -90,9 +94,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 	}
 	
 	private void startUpdate() {
-		new Thread(
-			new SmartFilter(this, ZLFile.createFileByPath(myPath))
-		).start();
+		runOnUiThread(new SmartFilter(this, ZLFile.createFileByPath(myPath)));
 	}
 	
 	public void runItem(FileItem item) {
@@ -110,7 +112,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		}
 	}
 
-	// FIXME
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
@@ -279,7 +280,5 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 				}
 			}
 		}
-    	
 	}
-	
 }

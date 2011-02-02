@@ -88,8 +88,12 @@ public final class FileManager extends BaseActivity
 		});
 	}
 	
+	
+	// FIXME delete later
 	@Override
 	protected void onRestart() {
+		Log.v(FMCommon.LOG, "FileManager - onRestart()");
+
 		super.onRestart();
 		if (myPath != null){
 			getAdapter().clear();
@@ -99,8 +103,9 @@ public final class FileManager extends BaseActivity
 
 	@Override
 	protected void onResume() {
-		super.onResume();
+		Log.v(FMCommon.LOG, "FileManager - onResume()");
 
+		super.onResume();
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 			SketchGalleryActivity.launchActivity(this, myPath);
 			finish();
@@ -117,9 +122,7 @@ public final class FileManager extends BaseActivity
 	}
 
 	private void startUpdate() {
-		new Thread(
-			new SmartFilter(this, ZLFile.createFileByPath(myPath))
-		).start();
+		runOnUiThread(new SmartFilter(this, ZLFile.createFileByPath(myPath)));
 	}
 
 	@Override
