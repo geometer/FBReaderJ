@@ -6,4 +6,9 @@
 	    android:layout_height="wrap_content"
 	    android:spacing="20px"
 	    android:scrollX="20px"
-	    />
+	    android:focusableInTouchMode="false"
+	    android:focusable="false"
+	    android:gravity="left"
+		/>
+<!--android:unselectedAlpha="0.5"-->
+	    

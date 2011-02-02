@@ -48,15 +48,7 @@ public final class SmartFilter implements Runnable {
 			return;
 		}
 
-		if (myFile.children().size() == 0){
-			myActivity.runOnUiThread(new Runnable() {
-				public void run() {
-					ToastMaker.MakeToast(myActivity, "messEmptyDirectory");
-				}
-			});
-			return;
-		}
-		
+		final FMBaseAdapter adapter = ((FMBaseAdapter.HasAdapter)myActivity).getAdapter();
 		final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
 		Collections.sort(children, new FileComparator());
 		for (final ZLFile file : children) {
@@ -67,12 +59,20 @@ public final class SmartFilter implements Runnable {
 				PluginCollection.Instance().getPlugin(file) != null) {
 				myActivity.runOnUiThread(new Runnable() {
 					public void run() {
-						final FMBaseAdapter adapter = ((FMBaseAdapter.HasAdapter)myActivity).getAdapter();
 						adapter.add(new FileItem(file));
 						adapter.notifyDataSetChanged();				//hmm...
 					}
 				});
 			}
+		}
+
+		if (adapter.getCount() == 0){
+			myActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					ToastMaker.MakeToast(myActivity, "messEmptyDirectory");
+				}
+			});
+			return;
 		}
 	}	
 }

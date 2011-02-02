@@ -59,7 +59,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		} else {
 			startUpdate();
 		}
-		trySetSelection1();				// TODO delete later
+		//trySetSelection1();				// TODO delete later
 	}
 	
 	@Override
