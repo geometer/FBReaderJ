@@ -198,7 +198,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 //				return true;
 			case DELETE_FILE_ITEM_ID:
 				FileUtil.deleteFileItem(this, fileItem);
-				myGallery.setSelection(myGallery.getSelectedItemPosition(), false);
+				myGallery.invalidate();
 				return true;
 		}
 		return super.onContextItemSelected(item);

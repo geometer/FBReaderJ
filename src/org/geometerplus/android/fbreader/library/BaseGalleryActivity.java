@@ -31,7 +31,7 @@ public class BaseGalleryActivity extends Activity
 		setContentView(R.layout.gallery);
 	    myGallery = (Gallery) findViewById(R.id.gallery);
 	    myGallery.setOnItemSelectedListener(this);
-
+	    
 	    Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		mySelectedBookPath = getIntent().getStringExtra(FileManager.SELECTED_BOOK_PATH_KEY);
 		setResult(RESULT_DONT_INVALIDATE_VIEWS);		
