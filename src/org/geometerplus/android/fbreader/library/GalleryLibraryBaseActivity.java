@@ -36,6 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.Menu;
@@ -180,15 +181,17 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		Log.v(FMCommon.LOG, "onContextItemSelected(MenuItem item) - 1");
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final FBTree tree = getAdapter().getItem(position); 	
 		if (tree instanceof BookTree) {
+			Log.v(FMCommon.LOG, "onContextItemSelected(MenuItem item) - 2");
 			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
 		}
+		Log.v(FMCommon.LOG, "onContextItemSelected(MenuItem item) - 3");
 		return super.onContextItemSelected(item);
 	}
 
-	// FIXME 
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);

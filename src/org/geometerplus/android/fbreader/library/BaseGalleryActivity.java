@@ -90,7 +90,7 @@ public class BaseGalleryActivity extends Activity
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
 				LibraryCommon.LibraryInstance.removeBookFromFavorites(book);
-				((FMBaseAdapter)myGallery.getAdapter()).notifyDataSetChanged();
+				((BaseAdapter)myGallery.getAdapter()).notifyDataSetChanged();
 				return true;
 			case DELETE_BOOK_ITEM_ID:
 				tryToDeleteBook(book);
