@@ -268,6 +268,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void gotoBookmark(Bookmark bookmark) {
+		addInvisibleBookmark();
 		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
 			BookTextView.gotoPosition(bookmark);
@@ -383,7 +384,6 @@ public final class FBReaderApp extends ZLApplication {
 			{
 				final Bookmark b = ((BookmarkDescription)description).Bookmark;
 				b.delete();
-				addInvisibleBookmark();
 				gotoBookmark(b);
 				break;
 			}

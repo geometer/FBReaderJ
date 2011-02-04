@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -225,7 +226,10 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
+		final Context context = getApplicationContext();
+		if (context != null) {
+			sendBroadcast(new Intent(context, KillerCallback.class));
+		}
 		ControlButtonPanel.restoreVisibilities();
 	}
 
