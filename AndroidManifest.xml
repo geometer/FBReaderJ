@@ -75,7 +75,7 @@
 			</intent-filter>
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
 		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.library.FileManager" android:process=":library"/>
+		<activity android:name="org.geometerplus.android.fbreader.library.FileManager" android:process=":library" android:configChanges="orientation|keyboardHidden"/>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:launchMode="singleTask" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
