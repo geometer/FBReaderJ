@@ -31,13 +31,6 @@ public class BaseGalleryActivity extends Activity
 		setContentView(R.layout.gallery);
 	    myGallery = (Gallery) findViewById(R.id.gallery);
 	    myGallery.setOnItemSelectedListener(this);
-	    myGallery.setOnFocusChangeListener(this);	// TODO delete later
-	    myGallery.setUnselectedAlpha(1.5f);			// TODO delete later
-	    myGallery.dispatchSetSelected(false);		// TODO delete later
-	    myGallery.dispatchWindowFocusChanged(false);// TODO delete later
-	    myGallery.setFocusable(false);				// TODO delete later
-	    myGallery.setFocusableInTouchMode(false);	// TODO delete later
-	    myGallery.setCallbackDuringFling(false);	// TODO delete later
 
 	    Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		mySelectedBookPath = getIntent().getStringExtra(FileManager.SELECTED_BOOK_PATH_KEY);
