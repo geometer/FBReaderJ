@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.View;
@@ -18,7 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
 public class BaseGalleryActivity extends Activity 
-	implements HasBaseConstants, Gallery.OnItemSelectedListener {
+	implements HasBaseConstants, Gallery.OnItemSelectedListener, Gallery.OnFocusChangeListener {
 	
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
@@ -30,13 +31,19 @@ public class BaseGalleryActivity extends Activity
 		setContentView(R.layout.gallery);
 	    myGallery = (Gallery) findViewById(R.id.gallery);
 	    myGallery.setOnItemSelectedListener(this);
+	    myGallery.setOnFocusChangeListener(this);	// TODO delete later
+	    myGallery.setUnselectedAlpha(1.5f);			// TODO delete later
+	    myGallery.dispatchSetSelected(false);		// TODO delete later
+	    myGallery.dispatchWindowFocusChanged(false);// TODO delete later
+	    myGallery.setFocusable(false);				// TODO delete later
+	    myGallery.setFocusableInTouchMode(false);	// TODO delete later
+	    myGallery.setCallbackDuringFling(false);	// TODO delete later
 
 	    Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		mySelectedBookPath = getIntent().getStringExtra(FileManager.SELECTED_BOOK_PATH_KEY);
 		setResult(RESULT_DONT_INVALIDATE_VIEWS);		
 	}
 
-	
 	protected void openBook(Book book) {
 		LibraryUtil.openBook(this, book);
 	}
@@ -94,12 +101,12 @@ public class BaseGalleryActivity extends Activity
 	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//		Log.v(FMCommon.LOG, "view = " + view);
 		view.setSelected(false);
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
-//		((View) parent.getSelectedItem()).setSelected(false);
 	}
 
 	protected void trySetSelection1(){
@@ -112,4 +119,8 @@ public class BaseGalleryActivity extends Activity
 		} catch (Exception e) {}
 	}
 
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		Log.v(FMCommon.LOG, "onFocusChange(View v, boolean hasFocus)");
+	}
 }

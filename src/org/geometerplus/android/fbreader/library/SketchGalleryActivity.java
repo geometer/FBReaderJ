@@ -57,7 +57,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		} else {
 			startUpdate();
 		}
-		//trySetSelection1();				// TODO delete later
 	}
 	
 	@Override
@@ -137,7 +136,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		if (FMCommon.InsertPath == null){
+		if (FMCommon.InsertPath == null || myPath == null){
 			menu.findItem(0).setVisible(false).setEnabled(false);
 			menu.findItem(1).setVisible(false).setEnabled(false);
         }else{
@@ -199,6 +198,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 //				return true;
 			case DELETE_FILE_ITEM_ID:
 				FileUtil.deleteFileItem(this, fileItem);
+				myGallery.setSelection(myGallery.getSelectedItemPosition(), false);
 				return true;
 		}
 		return super.onContextItemSelected(item);
@@ -237,7 +237,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
     		summary = summary != null ? summary : fileItem.getName();  
     		View view = GalleryAdapterUtil.getView(convertView, parent, summary, fileItem.getCover(), 
     				fileItem.getIcon(), maxHeight, maxWidth, paddingTop);
-    		return view;
+      		return view;
         }
         
     	@Override

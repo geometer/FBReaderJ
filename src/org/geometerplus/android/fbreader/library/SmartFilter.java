@@ -27,13 +27,11 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import android.app.Activity;
-import android.util.Log;
 
 public final class SmartFilter implements Runnable {
 	private final Activity myActivity;
 	private final ZLFile myFile;
-	private int myIdx;
-	
+
 	public SmartFilter(Activity activity, ZLFile file) {
 		myActivity = activity; 
 		myFile = file;

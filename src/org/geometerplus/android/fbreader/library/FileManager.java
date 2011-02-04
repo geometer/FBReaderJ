@@ -88,19 +88,6 @@ public final class FileManager extends BaseActivity
 		});
 	}
 	
-	
-	// FIXME delete later
-	@Override
-	protected void onRestart() {
-		Log.v(FMCommon.LOG, "FileManager - onRestart()");
-
-		super.onRestart();
-		if (myPath != null){
-			getAdapter().clear();
-			startUpdate();
-		}
-	}
-
 	@Override
 	protected void onResume() {
 		Log.v(FMCommon.LOG, "FileManager - onResume()");
