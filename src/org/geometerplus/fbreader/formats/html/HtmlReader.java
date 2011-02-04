@@ -259,6 +259,9 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 					if (ref.charAt(0) == '#') {
 						myHyperlinkType = FBTextKind.FOOTNOTE;
 						ref = ref.substring(1);
+					} else if (ref.charAt(0) == '&') {
+						myHyperlinkType = FBTextKind.INTERNAL_HYPERLINK;
+						ref = ref.substring(1);
 					} else {
 						myHyperlinkType = FBTextKind.EXTERNAL_HYPERLINK;
 					}
