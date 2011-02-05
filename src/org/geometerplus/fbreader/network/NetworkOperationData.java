@@ -29,8 +29,12 @@ public class NetworkOperationData {
 
 		void commitItems(INetworkLink link);
 
-		// returns true to confirm interrupt reading; return false to continue reading.
-		// once true has been returned, all next calls must return true.
+		/**
+		 * @return <code>true</code> to confirm interrupt reading; 
+		 *         <code>false</code> to continue reading.
+		 *         Once <code>true</code> has been returned,
+		 *         all next calls MUST return <code>true</code>.
+		 */
 		boolean confirmInterrupt();
 	}
 
@@ -43,11 +47,11 @@ public class NetworkOperationData {
 		Listener = listener;
 	}
 
-	public void clear() {
+	protected void clear() {
 		ResumeURI = null;
 	}
 
-	public ZLNetworkRequest resume() {
+	public final ZLNetworkRequest resume() {
 		final ZLNetworkRequest request = Link.resume(this);
 		clear();
 		return request;

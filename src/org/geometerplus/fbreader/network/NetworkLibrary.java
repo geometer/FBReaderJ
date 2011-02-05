@@ -442,7 +442,7 @@ public class NetworkLibrary {
 
 		synchronized (myLinks) {
 			for (INetworkLink link : activeLinks()) {
-				final NetworkOperationData data = link.createOperationData(link, synchronizedListener);
+				final NetworkOperationData data = link.createOperationData(synchronizedListener);
 				final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
 				if (request != null) {
 					dataList.add(data);
