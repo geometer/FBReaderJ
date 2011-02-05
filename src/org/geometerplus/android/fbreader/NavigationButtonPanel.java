@@ -35,10 +35,18 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 final class NavigationButtonPanel extends ControlButtonPanel {
-	public volatile boolean NavigateDragging;
+	private volatile boolean myIsInProgress;
 
 	NavigationButtonPanel(FBReaderApp fbReader) {
 		super(fbReader);
+	}
+
+	public void runNavigation() {
+		if (!getVisibility()) {
+			myIsInProgress = false;
+			initPosition();
+			show(true);
+		}
 	}
 
 	@Override
@@ -51,7 +59,7 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 	@Override
 	public void updateStates() {
 		super.updateStates();
-		if (!NavigateDragging && myControlPanel != null) {
+		if (!myIsInProgress && myControlPanel != null) {
 			setupNavigation(myControlPanel);
 		}
 	}
@@ -77,11 +85,11 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				NavigateDragging = false;
+				myIsInProgress = false;
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				NavigateDragging = true;
+				myIsInProgress = true;
 			}
 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

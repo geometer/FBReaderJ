@@ -226,13 +226,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	public boolean navigate() {
-		if (ourNavigatePanel.getVisibility()) {
-			return false;
-		}
-		ourNavigatePanel.NavigateDragging = false;
-		ourNavigatePanel.initPosition();
-		ourNavigatePanel.show(true);
-		return true;
+	public void navigate() {
+		ourNavigatePanel.runNavigation();
 	}
 }
