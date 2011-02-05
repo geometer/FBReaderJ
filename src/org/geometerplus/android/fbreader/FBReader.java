@@ -140,17 +140,18 @@ public final class FBReader extends ZLAndroidActivity {
 	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Handler successHandler = new Handler() {
 				public void handleMessage(Message message) {
-					myTextSearchPanel.initPosition();
 					myTextSearchPanel.show(true);
 				}
 			};
 			final Handler failureHandler = new Handler() {
 				public void handleMessage(Message message) {
 					UIUtil.showErrorMessage(FBReader.this, "textNotFound");
+					myTextSearchPanel.StartPosition = null;
 				}
 			};
 			final Runnable runnable = new Runnable() {
 				public void run() {
+					myTextSearchPanel.initPosition();
 					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 					fbReader.TextSearchPatternOption.setValue(pattern);
 					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
