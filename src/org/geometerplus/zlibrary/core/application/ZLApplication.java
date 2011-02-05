@@ -199,7 +199,10 @@ public abstract class ZLApplication {
 		void updateStates();
 		void hide();
 	}
-	private final HashSet<ButtonPanel> myPanels = new HashSet<ButtonPanel>();
+	private final List<ButtonPanel> myPanels = new LinkedList<ButtonPanel>();
+	public final List<ButtonPanel> buttonPanels() {
+		return Collections.unmodifiableList(myPanels);
+	}
 	public final void registerButtonPanel(ButtonPanel panel) {
 		myPanels.add(panel);
 	}

@@ -52,8 +52,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	private BookDownloaderServiceConnection myConnection;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 
 		if (!NetworkView.Instance().isInitialized()) {
 			finish();
