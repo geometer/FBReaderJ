@@ -22,14 +22,13 @@ package org.geometerplus.android.fbreader;
 import java.util.LinkedList;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.*;
-import android.widget.*;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
