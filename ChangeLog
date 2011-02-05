@@ -1,3 +1,9 @@
+===== 0.99.11 (Feb 01, 2011) =====
+* Galician translation has been added (by Miguel Anxo Bouzada)
+* Czech translation has been updated (by Marek Pavelka)
+* Mobipocket images/cover/links support has been added (by Steffen Siebert)
+* Small fixes
+
 ===== 0.99.10 (Jan 30, 2011) =====
 * Full-size image view
 * ColorDict3 support (floating window)
