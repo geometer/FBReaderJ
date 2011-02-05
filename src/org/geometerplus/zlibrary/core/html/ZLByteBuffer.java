@@ -37,6 +37,11 @@ public final class ZLByteBuffer {
 		this(20);
 	}
 
+	public ZLByteBuffer(String value) {
+		myLength = value.length();
+		myData = value.getBytes();
+	}
+
 	ZLByteBuffer(ZLByteBuffer container) {
 		final int len = container.myLength;
 		myData = ZLArrayUtils.createCopy(container.myData, len, len);

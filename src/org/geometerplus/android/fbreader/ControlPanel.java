@@ -19,14 +19,10 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.ArrayList;
-
 import android.os.Handler;
 import android.os.Message;
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.*;
 import android.view.animation.AlphaAnimation;
 import android.widget.*;
 
@@ -34,22 +30,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-class ActionButton extends ZoomButton {
-	final String ActionId;
-	final boolean IsCloseButton;
-
-	ActionButton(Context context, String actionId, boolean isCloseButton) {
-		super(context);
-		ActionId = actionId;
-		IsCloseButton = isCloseButton;
-	}
-}
-
-public class ControlPanel extends LinearLayout implements View.OnClickListener {
-	private final ArrayList<ActionButton> myButtons = new ArrayList<ActionButton>();
-	private final LinearLayout myPlateLayout;
-
-	public ControlPanel(Context context) {
+public class ControlPanel extends LinearLayout {
+	public ControlPanel(Context context, RelativeLayout root, boolean fillWidth) {
 		super(context);
 
 		setFocusable(false);
@@ -57,25 +39,18 @@ public class ControlPanel extends LinearLayout implements View.OnClickListener {
 		final LayoutInflater inflater =
 			(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.control_panel, this, true);
-		myPlateLayout = (LinearLayout)findViewById(R.id.tools_plate);
+
+		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
+			RelativeLayout.LayoutParams.WRAP_CONTENT
+		);
+		p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		root.addView(this, p);
+
+		setVisibility(View.GONE);
 	}
 
-	public void addButton(String actionId, boolean isCloseButton, int imageId) {
-		final ActionButton button = new ActionButton(getContext(), actionId, isCloseButton);
-		button.setImageResource(imageId);
-		button.setOnClickListener(this);
-		myPlateLayout.addView(button);
-		myButtons.add(button);
-	}
-
-	public void onClick(View view) {
-		final ActionButton button = (ActionButton)view;
-		ZLApplication.Instance().doAction(button.ActionId);
-		if (button.IsCloseButton) {
-			hide(true);
-		}
-	}
-	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return true;
@@ -121,28 +96,8 @@ public class ControlPanel extends LinearLayout implements View.OnClickListener {
 		startAnimation(animation);
 		setVisibility(visibility);
 	}
-	
-	public void updateStates() {
-		final ZLApplication application = ZLApplication.Instance();
-		for (ActionButton button : myButtons) {
-			button.setEnabled(application.isActionEnabled(button.ActionId));
-		}
-	}
-	
-	@Override
-	public boolean hasFocus() {
-		for (ActionButton button : myButtons) {
-			if (button.hasFocus()) {
-				return true;
-			}
-		}
-		return false;
-	}
 
-	public void setExtension(View view) {
-		if (view != null) {
-			myPlateLayout.removeAllViews();
-			myPlateLayout.addView(view);
-		}
+	public void addView(View view) {
+		((LinearLayout)findViewById(R.id.tools_plate)).addView(view);
 	}
 }
