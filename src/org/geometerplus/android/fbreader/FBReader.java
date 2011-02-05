@@ -180,6 +180,7 @@ public final class FBReader extends ZLAndroidActivity {
 		super.onStop();
 	}
 
+	@Override
 	protected FBReaderApp createApplication(ZLFile file) {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "READER");
