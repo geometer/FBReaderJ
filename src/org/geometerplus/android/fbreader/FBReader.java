@@ -31,12 +31,8 @@ import android.os.Message;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.view.ZLView;
 
-import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -45,7 +41,6 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBView;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 
@@ -86,7 +81,7 @@ public final class FBReader extends ZLAndroidActivity {
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
 
-		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if (ourTextSearchPanel == null) {
 			ourTextSearchPanel = new TextSearchButtonPanel(fbReader);
 		}
@@ -171,22 +166,22 @@ public final class FBReader extends ZLAndroidActivity {
 			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
 		} catch (Throwable t) {
 		}
-		ControlButtonPanel.restoreVisibilities(ZLApplication.Instance());
+		ControlButtonPanel.restoreVisibilities(FBReaderApp.Instance());
 	}
 
 	@Override
 	public void onPause() {
-		ControlButtonPanel.saveVisibilities(ZLApplication.Instance());
+		ControlButtonPanel.saveVisibilities(FBReaderApp.Instance());
 		super.onPause();
 	}
 
 	@Override
 	public void onStop() {
-		ControlButtonPanel.removeControlPanels(ZLApplication.Instance());
+		ControlButtonPanel.removeControlPanels(FBReaderApp.Instance());
 		super.onStop();
 	}
 
-	protected ZLApplication createApplication(ZLFile file) {
+	protected FBReaderApp createApplication(ZLFile file) {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "READER");
 		}
@@ -196,7 +191,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public boolean onSearchRequested() {
 		final LinkedList<Boolean> visibilities = new LinkedList<Boolean>();
-		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		ControlButtonPanel.saveVisibilitiesTo(fbreader, visibilities);
 		ControlButtonPanel.hideAllPendingNotify(fbreader);
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
@@ -212,7 +207,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
+		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		switch (requestCode) {
 			case REPAINT_CODE:
 			{
