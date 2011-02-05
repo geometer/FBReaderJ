@@ -35,8 +35,8 @@ public class ImageViewActivity extends Activity {
 	Bitmap myBitmap;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
