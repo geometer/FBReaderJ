@@ -62,10 +62,14 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private int myFullScreenFlag;
 
-	private class NavigationButtonPanel extends ControlButtonPanel {
+	private static class NavigationButtonPanel extends ControlButtonPanel {
 		public volatile boolean NavigateDragging;
 		public ZLTextWordCursor StartPosition;
 
+		NavigationButtonPanel(FBReaderApp fbReader) {
+			super(fbReader);
+		}
+ 
 		@Override
 		public void onShow() {
 			if (myControlPanel != null) {
@@ -83,10 +87,15 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	private static class TextSearchButtonPanel extends ControlButtonPanel {
+		public ZLTextWordCursor StartPosition;
+
+		TextSearchButtonPanel(FBReaderApp fbReader) {
+			super(fbReader);
+		}
+ 
 		@Override
 		public void onHide() {
-			final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
-			textView.clearFindResults();
+			Reader.getTextView().clearFindResults();
 		}
 	}
 
@@ -114,16 +123,15 @@ public final class FBReader extends ZLAndroidActivity {
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
-		if (myTextSearchPanel == null) {
-			myTextSearchPanel = new TextSearchButtonPanel();
-			myTextSearchPanel.register();
-		}
-		if (myNavigatePanel == null) {
-			myNavigatePanel = new NavigationButtonPanel();
-			myNavigatePanel.register();
-		}
 
 		final FBReaderApp fbReader = (FBReaderApp)ZLApplication.Instance();
+		if (myTextSearchPanel == null) {
+			myTextSearchPanel = new TextSearchButtonPanel(fbReader);
+		}
+		if (myNavigatePanel == null) {
+			myNavigatePanel = new NavigationButtonPanel(fbReader);
+		}
+
 		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_BOOK_INFO, new ShowBookInfoAction(this, fbReader));
@@ -143,10 +151,13 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+			final ZLTextView textView = fbReader.getTextView();
 	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Handler successHandler = new Handler() {
 				public void handleMessage(Message message) {
-					showTextSearchControls(true);
+					myTextSearchPanel.StartPosition = new ZLTextWordCursor(textView.getStartCursor());
+					myTextSearchPanel.show(true);
 				}
 			};
 			final Handler failureHandler = new Handler() {
@@ -156,9 +167,8 @@ public final class FBReader extends ZLAndroidActivity {
 			};
 			final Runnable runnable = new Runnable() {
 				public void run() {
-					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 					fbReader.TextSearchPatternOption.setValue(pattern);
-					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
+					if (textView.search(pattern, true, false, false, false) != 0) {
 						successHandler.sendEmptyMessage(0);
 					} else {
 						failureHandler.sendEmptyMessage(0);
@@ -224,14 +234,6 @@ public final class FBReader extends ZLAndroidActivity {
 		super.onStop();
 	}
 
-	void showTextSearchControls(boolean show) {
-		if (show) {
-			myTextSearchPanel.show(true);
-		} else {
-			myTextSearchPanel.hide(false);
-		}
-	}
-
 	protected ZLApplication createApplication(ZLFile file) {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "READER");
@@ -284,8 +286,8 @@ public final class FBReader extends ZLAndroidActivity {
 		if (myNavigatePanel.getVisibility()) {
 			return false;
 		}
-		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.NavigateDragging = false;
+		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
 		myNavigatePanel.StartPosition = new ZLTextWordCursor(textView.getStartCursor());
 		myNavigatePanel.show(true);
 		return true;
@@ -346,7 +348,7 @@ public final class FBReader extends ZLAndroidActivity {
 		btnCancel.setText(buttonResource.getResource("cancel").getValue());
 	}
 
-	private final void setupNavigation(ControlPanel panel) {
+	private static final void setupNavigation(ControlPanel panel) {
 		final SeekBar slider = (SeekBar)panel.findViewById(R.id.book_position_slider);
 		final TextView text = (TextView)panel.findViewById(R.id.book_position_text);
 

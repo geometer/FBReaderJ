@@ -29,12 +29,21 @@ import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+
 class ControlButtonPanel implements ZLApplication.ButtonPanel {
+	public final FBReaderApp Reader;
 	private boolean myVisible;
+
 	protected ControlPanel myControlPanel;
 
 	private static LinkedList<ControlButtonPanel> ourPanels = new LinkedList<ControlButtonPanel>();
 
+	ControlButtonPanel(FBReaderApp fbReader) {
+		Reader = fbReader;
+		fbReader.registerButtonPanel(this);
+		ourPanels.add(this);
+	}
 
 	public final void hide() {
 		hide(false);
@@ -44,11 +53,6 @@ class ControlButtonPanel implements ZLApplication.ButtonPanel {
 		if (myControlPanel != null) {
 			myControlPanel.updateStates();
 		}
-	}
-
-	public final void register() {
-		ZLApplication.Instance().registerButtonPanel(this);
-		ourPanels.add(this);
 	}
 
 	public final boolean hasControlPanel() {
@@ -124,7 +128,7 @@ class ControlButtonPanel implements ZLApplication.ButtonPanel {
 		return false;
 	}
 
-	public final void setVisibility(boolean visible) {
+	private void setVisibility(boolean visible) {
 		if (visible) {
 			show(false);
 		} else {
