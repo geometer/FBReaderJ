@@ -25,10 +25,29 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 
+class SortedCatalogItem extends NetworkCatalogItem {
+	private final List<NetworkLibraryItem> myChildren = new LinkedList<NetworkLibraryItem>();
+
+	public SortedCatalogItem(NetworkCatalogItem parent, List<NetworkLibraryItem> children) {
+		//super(parent.Link, "by author", "books by author", "", Collections.<Integer,String>emptyMap());
+		super(parent.Link, "by author", "books by author", "", parent.URLByType);
+		myChildren.addAll(children);
+	}
+
+	@Override
+	public void onDisplayItem() {
+	}
+
+	@Override
+	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+		for (NetworkLibraryItem child : myChildren) {
+			listener.onNewItem(Link, child);
+		}
+	}
+}
+
 public class LitResBookshelfItem extends NetworkCatalogItem {
-
 	private boolean myForceReload;
-
 
 	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType) {
 		super(link, title, summary, cover, urlByType);
@@ -49,7 +68,7 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 
 	@Override
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
-		LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
+		final LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
 
 		// TODO: Maybe it's better to call isAuthorised(true) directly 
 		// and let exception fly through???
@@ -65,9 +84,15 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 			// TODO: implement asynchronous loading
 			LinkedList<NetworkLibraryItem> children = new LinkedList<NetworkLibraryItem>();
 			mgr.collectPurchasedBooks(children);
-			Collections.sort(children, new NetworkBookItemComparator());
-			for (NetworkLibraryItem item: children) {
-				listener.onNewItem(Link, item);
+			if (children.size() <= 5) {
+				Collections.sort(children, new NetworkBookItemComparator());
+				for (NetworkLibraryItem item : children) {
+					listener.onNewItem(Link, item);
+				}
+			} else {
+				listener.onNewItem(Link, new SortedCatalogItem(this, children));
+				listener.onNewItem(Link, new SortedCatalogItem(this, children));
+				listener.onNewItem(Link, new SortedCatalogItem(this, children));
 			}
 			listener.commitItems(Link);
 		}
