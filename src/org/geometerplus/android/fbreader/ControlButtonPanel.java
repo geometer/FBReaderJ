@@ -19,10 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -41,12 +37,9 @@ abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 
 	protected ControlPanel myControlPanel;
 
-	private static LinkedList<ControlButtonPanel> ourPanels = new LinkedList<ControlButtonPanel>();
-
 	ControlButtonPanel(FBReaderApp fbReader) {
 		Reader = fbReader;
 		fbReader.registerButtonPanel(this);
-		ourPanels.add(this);
 	}
 
 	public final void hide() {
@@ -89,20 +82,6 @@ abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 		}
 	}
 
-	public static void restoreVisibilitiesFrom(ZLApplication application, List<Boolean> buffer) {
-		Iterator<Boolean> it = buffer.iterator();
-		for (ZLApplication.ButtonPanel panel : application.buttonPanels()) {
-			((ControlButtonPanel)panel).setVisibility(it.next());
-		}
-	}
-
-	public static void saveVisibilitiesTo(ZLApplication application, List<Boolean> buffer) {
-		buffer.clear();
-		for (ZLApplication.ButtonPanel panel : application.buttonPanels()) {
-			buffer.add(((ControlButtonPanel)panel).getVisibility());
-		}
-	}
-
 	public static void hideAllPendingNotify(ZLApplication application) {
 		for (ZLApplication.ButtonPanel panel : application.buttonPanels()) {
 			final ControlButtonPanel p = (ControlButtonPanel)panel;
@@ -137,7 +116,6 @@ abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 
 	public final void show(boolean animate) {
 		if (myControlPanel != null && !getVisibility()) {
-			myVisible = true;
 			hideOthers();
 			onShow();
 			myControlPanel.show(animate);
@@ -158,7 +136,6 @@ abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 	}
 
 	public final void hide(boolean animate) {
-		myVisible = false;
 		if (myControlPanel != null && getVisibility()) {
 			onHide();
 			myControlPanel.hide(animate);

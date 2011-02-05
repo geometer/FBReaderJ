@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.LinkedList;
-
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -190,14 +188,13 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public boolean onSearchRequested() {
-		final LinkedList<Boolean> visibilities = new LinkedList<Boolean>();
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		ControlButtonPanel.saveVisibilitiesTo(fbreader, visibilities);
+		ControlButtonPanel.saveVisibilities(fbreader);
 		ControlButtonPanel.hideAllPendingNotify(fbreader);
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 		manager.setOnCancelListener(new SearchManager.OnCancelListener() {
 			public void onCancel() {
-				ControlButtonPanel.restoreVisibilitiesFrom(fbreader, visibilities);
+				ControlButtonPanel.restoreVisibilities(fbreader);
 				manager.setOnCancelListener(null);
 			}
 		});
