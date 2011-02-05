@@ -33,7 +33,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-class ControlButtonPanel implements ZLApplication.ButtonPanel {
+abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 	public final FBReaderApp Reader;
 	public ZLTextWordCursor StartPosition;
 
@@ -177,6 +177,7 @@ class ControlButtonPanel implements ZLApplication.ButtonPanel {
 		}
 	}
 
+	public abstract void createControlPanel(FBReader activity, RelativeLayout root);
 
 	// callback methods
 	public void onShow() {}

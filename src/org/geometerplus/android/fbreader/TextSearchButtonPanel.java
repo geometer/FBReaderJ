@@ -54,6 +54,7 @@ final class TextSearchButtonPanel extends ControlButtonPanel implements View.OnC
 		Reader.getTextView().clearFindResults();
 	}
 
+	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root) {
 		final ControlPanel panel = new ControlPanel(activity);
 		setControlPanel(panel, root, false);
