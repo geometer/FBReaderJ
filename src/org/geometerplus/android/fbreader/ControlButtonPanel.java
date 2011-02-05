@@ -19,10 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -33,7 +29,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-class ControlButtonPanel implements ZLApplication.ButtonPanel {
+abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 	public final FBReaderApp Reader;
 	public ZLTextWordCursor StartPosition;
 
@@ -41,12 +37,9 @@ class ControlButtonPanel implements ZLApplication.ButtonPanel {
 
 	protected ControlPanel myControlPanel;
 
-	private static LinkedList<ControlButtonPanel> ourPanels = new LinkedList<ControlButtonPanel>();
-
 	ControlButtonPanel(FBReaderApp fbReader) {
 		Reader = fbReader;
 		fbReader.registerButtonPanel(this);
-		ourPanels.add(this);
 	}
 
 	public final void hide() {
@@ -58,18 +51,6 @@ class ControlButtonPanel implements ZLApplication.ButtonPanel {
 
 	public final boolean hasControlPanel() {
 		return myControlPanel != null;
-	}
-
-	public final void setControlPanel(ControlPanel panel, RelativeLayout root, boolean fillWidth) {
-		myControlPanel = panel;
-		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
-			RelativeLayout.LayoutParams.WRAP_CONTENT
-		);
-		p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		myControlPanel.setVisibility(View.GONE);
-		root.addView(myControlPanel, p);
 	}
 
 	private final void removeControlPanel() {
@@ -98,20 +79,6 @@ class ControlButtonPanel implements ZLApplication.ButtonPanel {
 		for (ZLApplication.ButtonPanel panel : application.buttonPanels()) {
 			final ControlButtonPanel p = (ControlButtonPanel)panel;
 			p.myVisible = p.getVisibility();
-		}
-	}
-
-	public static void restoreVisibilitiesFrom(ZLApplication application, List<Boolean> buffer) {
-		Iterator<Boolean> it = buffer.iterator();
-		for (ZLApplication.ButtonPanel panel : application.buttonPanels()) {
-			((ControlButtonPanel)panel).setVisibility(it.next());
-		}
-	}
-
-	public static void saveVisibilitiesTo(ZLApplication application, List<Boolean> buffer) {
-		buffer.clear();
-		for (ZLApplication.ButtonPanel panel : application.buttonPanels()) {
-			buffer.add(((ControlButtonPanel)panel).getVisibility());
 		}
 	}
 
@@ -149,7 +116,6 @@ class ControlButtonPanel implements ZLApplication.ButtonPanel {
 
 	public final void show(boolean animate) {
 		if (myControlPanel != null && !getVisibility()) {
-			myVisible = true;
 			hideOthers();
 			onShow();
 			myControlPanel.show(animate);
@@ -170,13 +136,13 @@ class ControlButtonPanel implements ZLApplication.ButtonPanel {
 	}
 
 	public final void hide(boolean animate) {
-		myVisible = false;
 		if (myControlPanel != null && getVisibility()) {
 			onHide();
 			myControlPanel.hide(animate);
 		}
 	}
 
+	public abstract void createControlPanel(FBReader activity, RelativeLayout root);
 
 	// callback methods
 	public void onShow() {}
