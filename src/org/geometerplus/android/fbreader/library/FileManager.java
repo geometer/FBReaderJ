@@ -49,8 +49,8 @@ public final class FileManager extends BaseActivity
 	private String myPath;
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 
 		Log.v(FMCommon.LOG, "FileManager - onCreate(Bundle savedInstanceState)");
 		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
