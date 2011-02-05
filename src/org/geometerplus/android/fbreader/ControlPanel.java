@@ -22,9 +22,7 @@ package org.geometerplus.android.fbreader;
 import android.os.Handler;
 import android.os.Message;
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.*;
 import android.view.animation.AlphaAnimation;
 import android.widget.*;
 
@@ -33,7 +31,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 public class ControlPanel extends LinearLayout {
-	public ControlPanel(Context context) {
+	public ControlPanel(Context context, RelativeLayout root, boolean fillWidth) {
 		super(context);
 
 		setFocusable(false);
@@ -41,6 +39,16 @@ public class ControlPanel extends LinearLayout {
 		final LayoutInflater inflater =
 			(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.control_panel, this, true);
+
+		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
+			RelativeLayout.LayoutParams.WRAP_CONTENT
+		);
+		p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		p.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		root.addView(this, p);
+
+		setVisibility(View.GONE);
 	}
 
 	@Override
