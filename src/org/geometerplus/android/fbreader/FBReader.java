@@ -27,7 +27,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -263,7 +263,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public boolean  onContextItemSelected(MenuItem item) {
 		super.onContextItemSelected(item);
-		ZLApplication.Instance().doAction(myMenuActions.get(item.getItemId()));
+		FBReaderApp.Instance().doAction(myMenuActions.get(item.getItemId()));
 		return true;
 	}
 }
