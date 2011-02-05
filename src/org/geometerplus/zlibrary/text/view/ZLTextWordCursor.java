@@ -208,24 +208,4 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 	public String toString() {
 		return super.toString() + " (" + myParagraphCursor + "," + myElementIndex + "," + myCharIndex + ")";
 	}
-
-	@Override
-	public int hashCode() {
-		return (myElementIndex << 8) + myCharIndex;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (object == this) {
-			return true;
-		}
-		if (!(object instanceof ZLTextWordCursor)) {
-			return false;
-		}
-		final ZLTextWordCursor cursor = (ZLTextWordCursor)object;
-		return
-			myParagraphCursor == cursor.myParagraphCursor &&
-			myElementIndex == cursor.myElementIndex &&
-			myCharIndex == cursor.myCharIndex;
-	}
 }

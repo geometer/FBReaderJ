@@ -366,6 +366,11 @@ public final class FBReaderApp extends ZLApplication {
 
 	private void updateInvisibleBookmarksList(Bookmark b) {
 		if (Model.Book != null && b != null) {
+			for (Bookmark bm : Bookmark.invisibleBookmarks(Model.Book)) {
+				if (b.equals(bm)) {
+					bm.delete();
+				}
+			}
 			b.save();
 			final List<Bookmark> bookmarks = Bookmark.invisibleBookmarks(Model.Book);
 			for (int i = 3; i < bookmarks.size(); ++i) {
