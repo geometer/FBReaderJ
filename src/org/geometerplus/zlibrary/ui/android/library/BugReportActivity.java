@@ -39,8 +39,8 @@ public class BugReportActivity extends Activity {
 		}
 	}
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 		setContentView(R.layout.bug_report_view);
 		final String stackTrace = getIntent().getStringExtra(STACKTRACE);
 		final TextView reportTextView = (TextView)findViewById(R.id.report_text);

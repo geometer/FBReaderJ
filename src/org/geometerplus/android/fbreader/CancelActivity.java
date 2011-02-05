@@ -33,8 +33,8 @@ public class CancelActivity extends ListActivity {
 	static final String ITEM_SUMMARY = "summary";
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		final ActionListAdapter adapter = new ActionListAdapter(getIntent());
 		setListAdapter(adapter);
