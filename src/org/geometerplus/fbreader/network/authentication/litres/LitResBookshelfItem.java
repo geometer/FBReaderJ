@@ -35,7 +35,6 @@ class SortedCatalogItem extends NetworkCatalogItem {
 	}
 
 	public SortedCatalogItem(NetworkCatalogItem parent, String resourceKey, List<NetworkLibraryItem> children) {
-		//super(parent.Link, "by author", "books by author", "", Collections.<Integer,String>emptyMap());
 		this(parent, ZLResource.resource("networkView").getResource(resourceKey), children);
 	}
 
@@ -88,9 +87,9 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 					listener.onNewItem(Link, item);
 				}
 			} else {
+				listener.onNewItem(Link, new SortedCatalogItem(this, "byDate", children));
 				listener.onNewItem(Link, new SortedCatalogItem(this, "byAuthor", children));
 				listener.onNewItem(Link, new SortedCatalogItem(this, "byTitle", children));
-				listener.onNewItem(Link, new SortedCatalogItem(this, "byDate", children));
 			}
 			listener.commitItems(Link);
 		}
