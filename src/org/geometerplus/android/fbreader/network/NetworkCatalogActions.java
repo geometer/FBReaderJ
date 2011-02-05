@@ -28,7 +28,6 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.ContextMenu;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -318,30 +317,18 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			ZLResource boxResource = null;
+			if (!NetworkView.Instance().isInitialized()) {
+				return;
+			}
+			final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(myKey);
+			if (activity == null) {
+				return;
+			}
 			String msg = null;
 			if (errorMessage != null) {
-				boxResource = dialogResource.getResource("networkError");
-				msg = errorMessage;
+				UIUtil.showErrorMessageText(activity, errorMessage);
 			} else if (childrenEmpty) {
-				// TODO: make ListView's empty view instead
-				boxResource = dialogResource.getResource("emptyCatalogBox");
-				msg = boxResource.getResource("message").getValue();
-			}
-			if (msg != null) {
-				if (NetworkView.Instance().isInitialized()) {
-					final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(myKey);
-					if (activity != null) {
-						final ZLResource buttonResource = dialogResource.getResource("button");
-						new AlertDialog.Builder(activity)
-							.setTitle(boxResource.getResource("title").getValue())
-							.setMessage(msg)
-							.setIcon(0)
-							.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-							.create().show();
-					}
-				}
+				UIUtil.showErrorMessage(activity, "emptyCatalog");
 			}
 		}
 	}

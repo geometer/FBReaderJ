@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
@@ -28,10 +29,14 @@ import org.geometerplus.fbreader.network.*;
 class SortedCatalogItem extends NetworkCatalogItem {
 	private final List<NetworkLibraryItem> myChildren = new LinkedList<NetworkLibraryItem>();
 
-	public SortedCatalogItem(NetworkCatalogItem parent, List<NetworkLibraryItem> children) {
-		//super(parent.Link, "by author", "books by author", "", Collections.<Integer,String>emptyMap());
-		super(parent.Link, "by author", "books by author", "", parent.URLByType);
+	private SortedCatalogItem(NetworkCatalogItem parent, ZLResource resource, List<NetworkLibraryItem> children) {
+		super(parent.Link, resource.getValue(), resource.getResource("summary").getValue(), "", parent.URLByType);
 		myChildren.addAll(children);
+	}
+
+	public SortedCatalogItem(NetworkCatalogItem parent, String resourceKey, List<NetworkLibraryItem> children) {
+		//super(parent.Link, "by author", "books by author", "", Collections.<Integer,String>emptyMap());
+		this(parent, ZLResource.resource("networkView").getResource(resourceKey), children);
 	}
 
 	@Override
@@ -43,6 +48,7 @@ class SortedCatalogItem extends NetworkCatalogItem {
 		for (NetworkLibraryItem child : myChildren) {
 			listener.onNewItem(Link, child);
 		}
+		listener.commitItems(Link);
 	}
 }
 
@@ -82,9 +88,9 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 					listener.onNewItem(Link, item);
 				}
 			} else {
-				listener.onNewItem(Link, new SortedCatalogItem(this, children));
-				listener.onNewItem(Link, new SortedCatalogItem(this, children));
-				listener.onNewItem(Link, new SortedCatalogItem(this, children));
+				listener.onNewItem(Link, new SortedCatalogItem(this, "byAuthor", children));
+				listener.onNewItem(Link, new SortedCatalogItem(this, "byTitle", children));
+				listener.onNewItem(Link, new SortedCatalogItem(this, "byDate", children));
 			}
 			listener.commitItems(Link);
 		}
