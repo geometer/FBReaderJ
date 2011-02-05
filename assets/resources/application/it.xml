@@ -240,6 +240,10 @@
 					<node name="summaryOn" value="Mostra barra di stato in modalità lettura"/>
 					<node name="summaryOff" value="Nascondi barra di stato in modalità lettura"/>
 				</node>
+				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
+					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
 				<node name="summary" value="Font, hyphenations, etc." toBeTranslated="true"/>
