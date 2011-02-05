@@ -60,18 +60,6 @@ abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 		return myControlPanel != null;
 	}
 
-	public final void setControlPanel(ControlPanel panel, RelativeLayout root, boolean fillWidth) {
-		myControlPanel = panel;
-		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
-			RelativeLayout.LayoutParams.WRAP_CONTENT
-		);
-		p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		myControlPanel.setVisibility(View.GONE);
-		root.addView(myControlPanel, p);
-	}
-
 	private final void removeControlPanel() {
 		if (myControlPanel != null) {
 			ViewGroup root = (ViewGroup) myControlPanel.getParent();

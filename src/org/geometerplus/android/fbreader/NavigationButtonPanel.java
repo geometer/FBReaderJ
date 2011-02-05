@@ -58,8 +58,9 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 
 	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root) {
-		final ControlPanel panel = new ControlPanel(activity);
-		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, panel, false);
+		myControlPanel = new ControlPanel(activity, root, true);
+
+		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myControlPanel, false);
 
 		final SeekBar slider = (SeekBar)layout.findViewById(R.id.book_position_slider);
 		final TextView text = (TextView)layout.findViewById(R.id.book_position_text);
@@ -113,8 +114,7 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 		btnOk.setText(buttonResource.getResource("ok").getValue());
 		btnCancel.setText(buttonResource.getResource("cancel").getValue());
 
-		panel.addView(layout);
-		setControlPanel(panel, root, true);
+		myControlPanel.addView(layout);
 	}
 
 	private void setupNavigation(ControlPanel panel) {
