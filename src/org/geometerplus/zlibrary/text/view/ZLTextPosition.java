@@ -44,4 +44,24 @@ public abstract class ZLTextPosition implements Comparable<ZLTextPosition> {
 
 		return getCharIndex() - position.getCharIndex();
 	}
+
+	@Override
+	public int hashCode() {
+		return (getParagraphIndex() << 16) + (getElementIndex() << 8) + getCharIndex();
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == this) {
+			return true;
+		}
+		if (!(object instanceof ZLTextPosition)) {
+			return false;
+		}
+		final ZLTextPosition position = (ZLTextPosition)object;
+		return
+			getParagraphIndex() == position.getParagraphIndex() &&
+			getElementIndex() == position.getElementIndex() &&
+			getCharIndex() == position.getCharIndex();
+	}
 }

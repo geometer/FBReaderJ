@@ -55,7 +55,7 @@ abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 
 	private final void removeControlPanel() {
 		if (myControlPanel != null) {
-			ViewGroup root = (ViewGroup) myControlPanel.getParent();
+			ViewGroup root = (ViewGroup)myControlPanel.getParent();
 			myControlPanel.hide(false);
 			root.removeView(myControlPanel);
 			myControlPanel = null;
