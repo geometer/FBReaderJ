@@ -64,7 +64,6 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private static class NavigationButtonPanel extends ControlButtonPanel {
 		public volatile boolean NavigateDragging;
-		public ZLTextWordCursor StartPosition;
 
 		NavigationButtonPanel(FBReaderApp fbReader) {
 			super(fbReader);
@@ -83,19 +82,6 @@ public final class FBReader extends ZLAndroidActivity {
 			if (!NavigateDragging && myControlPanel != null) {
 				setupNavigation(myControlPanel);
 			}
-		}
-	}
-
-	private static class TextSearchButtonPanel extends ControlButtonPanel {
-		public ZLTextWordCursor StartPosition;
-
-		TextSearchButtonPanel(FBReaderApp fbReader) {
-			super(fbReader);
-		}
- 
-		@Override
-		public void onHide() {
-			Reader.getTextView().clearFindResults();
 		}
 	}
 
@@ -151,12 +137,10 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-			final ZLTextView textView = fbReader.getTextView();
 	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Handler successHandler = new Handler() {
 				public void handleMessage(Message message) {
-					myTextSearchPanel.StartPosition = new ZLTextWordCursor(textView.getStartCursor());
+					myTextSearchPanel.initPosition();
 					myTextSearchPanel.show(true);
 				}
 			};
@@ -167,8 +151,9 @@ public final class FBReader extends ZLAndroidActivity {
 			};
 			final Runnable runnable = new Runnable() {
 				public void run() {
+					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 					fbReader.TextSearchPatternOption.setValue(pattern);
-					if (textView.search(pattern, true, false, false, false) != 0) {
+					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
 						successHandler.sendEmptyMessage(0);
 					} else {
 						failureHandler.sendEmptyMessage(0);
@@ -195,19 +180,13 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
 		if (!myTextSearchPanel.hasControlPanel()) {
-			final ControlPanel panel = new ControlPanel(this);
-
-			panel.addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
-			panel.addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
-			panel.addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
-
-			myTextSearchPanel.setControlPanel(panel, root, false);
+			myTextSearchPanel.createControlPanel(this, root);
 		}
 		if (!myNavigatePanel.hasControlPanel()) {
 			final ControlPanel panel = new ControlPanel(this);
 			final View layout = getLayoutInflater().inflate(R.layout.navigate, panel, false);
 			createNavigation(layout);
-			panel.setExtension(layout);
+			panel.addView(layout);
 			myNavigatePanel.setControlPanel(panel, root, true);
 		}
 	}
@@ -215,22 +194,22 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		final Context context = getApplicationContext();
-		if (context != null) {
-			sendBroadcast(new Intent(context, KillerCallback.class));
+		try {
+			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
+		} catch (Throwable t) {
 		}
-		ControlButtonPanel.restoreVisibilities();
+		ControlButtonPanel.restoreVisibilities(ZLApplication.Instance());
 	}
 
 	@Override
 	public void onPause() {
-		ControlButtonPanel.saveVisibilities();
+		ControlButtonPanel.saveVisibilities(ZLApplication.Instance());
 		super.onPause();
 	}
 
 	@Override
 	public void onStop() {
-		ControlButtonPanel.removeControlPanels();
+		ControlButtonPanel.removeControlPanels(ZLApplication.Instance());
 		super.onStop();
 	}
 
@@ -244,16 +223,16 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public boolean onSearchRequested() {
 		final LinkedList<Boolean> visibilities = new LinkedList<Boolean>();
-		ControlButtonPanel.saveVisibilitiesTo(visibilities);
-		ControlButtonPanel.hideAllPendingNotify();
+		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
+		ControlButtonPanel.saveVisibilitiesTo(fbreader, visibilities);
+		ControlButtonPanel.hideAllPendingNotify(fbreader);
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 		manager.setOnCancelListener(new SearchManager.OnCancelListener() {
 			public void onCancel() {
-				ControlButtonPanel.restoreVisibilitiesFrom(visibilities);
+				ControlButtonPanel.restoreVisibilitiesFrom(fbreader, visibilities);
 				manager.setOnCancelListener(null);
 			}
 		});
-		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
@@ -287,8 +266,7 @@ public final class FBReader extends ZLAndroidActivity {
 			return false;
 		}
 		myNavigatePanel.NavigateDragging = false;
-		final ZLTextView textView = (ZLTextView)ZLApplication.Instance().getCurrentView();
-		myNavigatePanel.StartPosition = new ZLTextWordCursor(textView.getStartCursor());
+		myNavigatePanel.initPosition();
 		myNavigatePanel.show(true);
 		return true;
 	}
@@ -332,12 +310,12 @@ public final class FBReader extends ZLAndroidActivity {
 		View.OnClickListener listener = new View.OnClickListener() {
 			public void onClick(View v) {
 				final ZLTextWordCursor position = myNavigatePanel.StartPosition;
-				myNavigatePanel.StartPosition = null;
 				if (v == btnCancel && position != null) {
 					fbreader.getTextView().gotoPosition(position);
 				} else if (v == btnOk) {
-					fbreader.addInvisibleBookmark(position);
+					myNavigatePanel.storePosition();
 				}
+				myNavigatePanel.StartPosition = null;
 				myNavigatePanel.hide(true);
 			}
 		};
