@@ -60,4 +60,5 @@ interface OPDSConstants {
 	// Entry level / OPDS Link Conditions
 	String REL_CONDITION_NEVER = "http://data.fbreader.org/condition/never";
 	String REL_CONDITION_SIGNED_IN = "http://data.fbreader.org/condition/signed-in";
+	String REL_CONDITION_HAS_BOOKS = "http://data.fbreader.org/condition/has-books";
 }

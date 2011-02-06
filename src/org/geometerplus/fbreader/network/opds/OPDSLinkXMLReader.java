@@ -98,8 +98,9 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			final String language = entry.DCLanguage;
 
 			String icon = null; 
-			final HashMap<String, String> links = new HashMap<String, String>();
-			final HashMap<String, Integer> urlConditions = new HashMap<String, Integer>();
+			final HashMap<String,String> links = new HashMap<String,String>();
+			final HashMap<String,OPDSNetworkLink.FeedCondition> urlConditions =
+				new HashMap<String,OPDSNetworkLink.FeedCondition>();
 			for (ATOMLink link: entry.Links) {
 				final String href = link.getHref();
 				final String type = ZLNetworkUtil.filterMimeType(link.getType());
@@ -138,6 +139,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 					urlConditions.put(href, OPDSNetworkLink.FeedCondition.NEVER);
 				} else if (rel == REL_CONDITION_SIGNED_IN) {
 					urlConditions.put(href, OPDSNetworkLink.FeedCondition.SIGNED_IN);
+				} else if (rel == REL_CONDITION_HAS_BOOKS) {
+					urlConditions.put(href, OPDSNetworkLink.FeedCondition.HAS_BOOKS);
 				}
 			}
 
@@ -156,8 +159,16 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			return false; 
 		}
 
-		private INetworkLink link(String siteName, String title, String summary, String icon, String language,
-				Map<String, String> links, HashMap<String, Integer> urlConditions, String sslCertificate) {
+		private INetworkLink link(
+			String siteName,
+			String title,
+			String summary,
+			String icon,
+			String language,
+			Map<String,String> links,
+			HashMap<String,OPDSNetworkLink.FeedCondition> urlConditions,
+			String sslCertificate
+		) {
 			if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
 				return null;
 			}

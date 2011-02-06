@@ -36,16 +36,16 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 class OPDSNetworkLink extends AbstractNetworkLink {
-
-	public interface FeedCondition {
-		int REGULAR = 0;
-		int NEVER = 1;
-		int SIGNED_IN = 2;
+	public enum FeedCondition {
+		REGULAR,
+		NEVER,
+		SIGNED_IN,
+		HAS_BOOKS
 	}
 
 	private TreeMap<RelationAlias, String> myRelationAliases;
 
-	private TreeMap<String, Integer> myUrlConditions;
+	private TreeMap<String,FeedCondition> myUrlConditions;
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
@@ -66,9 +66,9 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		}
 	}
 
-	final void setUrlConditions(Map<String, Integer> conditions) {
+	final void setUrlConditions(Map<String,FeedCondition> conditions) {
 		if (conditions != null && conditions.size() > 0) {
-			myUrlConditions = new TreeMap<String, Integer>(conditions);
+			myUrlConditions = new TreeMap<String,FeedCondition>(conditions);
 		} else {
 			myUrlConditions = null;
 		}
@@ -169,15 +169,12 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		return url;
 	}
 
-	int getCondition(String url) {
+	FeedCondition getCondition(String url) {
 		if (myUrlConditions == null) {
 			return FeedCondition.REGULAR;
 		}
-		Integer cond = myUrlConditions.get(url);
-		if (cond == null) {
-			return FeedCondition.REGULAR;
-		}
-		return cond.intValue();
+		FeedCondition cond = myUrlConditions.get(url);
+		return cond != null ? cond : FeedCondition.REGULAR;
 	}
 
 	// rel and type must be either null or interned String objects.
