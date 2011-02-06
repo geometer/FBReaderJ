@@ -55,6 +55,9 @@
 		<node name="byDate" value="By date">
 			<node name="summary" value="Books sorted by date of purchasing"/>
 		</node>
+		<node name="bySeries" value="By series">
+			<node name="summary" value="Books sorted by series"/>
+		</node>
 		<node name="openCatalog" value="Open catalog"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
