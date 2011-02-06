@@ -239,6 +239,10 @@
 					<node name="summaryOn" value="Строка состояния видна во время чтения"/>
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
 				</node>
+				<node name="showStatusBarWhenMenuIsActive" value="Показывать строку состояния при активации меню">
+					<node name="summaryOn" value="Показывать строку состояния, когда меню появляется на экране"/>
+					<node name="summaryOff" value="Не показывать строку состояния, когда меню появляется на экране"/>
+				</node>
 			</node>
 			<node name="text" value="Текст">
 				<node name="summary" value="Шрифты, переносы, и т.д."/>

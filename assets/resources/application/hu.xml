@@ -240,6 +240,10 @@
 					<node name="summaryOn" value="Az állapotsor látszik olvasás közben"/>
 					<node name="summaryOff" value="Az állapotsor nem látszik olvasás közben"/>
 				</node>
+				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
+					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="text" value="Szöveg">
 				<node name="summary" value="Betűtípus, elválasztás stb."/>
