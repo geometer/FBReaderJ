@@ -559,10 +559,6 @@
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true" />
 			<node name="cacheDirectoryError" value="Maken van de cache-directory is mislukt" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Informatie" />
-			<node name="message" value="Catalogus is leeg" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Zoekresultaten" />
 			<node name="message" value="Er zijn geen geschikte boeken gevonden" />
@@ -610,6 +606,7 @@
 		<node name="dictionaryIsNotInstalled" value="Woordenboek is niet geïnstalleerd"/>
 		<node name="permissionDenied" value="Toegang geweigerd"/>
 		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
+		<node name="emptyCatalog" value="Catalogus is leeg"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

@@ -562,10 +562,6 @@
 			<node name="noRequiredInformation" value="Certaines informations requises sont absentes du catalogue" />
 			<node name="cacheDirectoryError" value="Impossible de créer le répertoire contenant le cache" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Information"/>
-			<node name="message" value="Le catalogue est vide"/>
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Résultats de la recherche" />
 			<node name="message" value="Aucun livre correspondant trouvé." />
@@ -613,6 +609,7 @@
 		<node name="dictionaryIsNotInstalled" value="Désolé mais le dictionnaire n'est pas installé"/>
 		<node name="permissionDenied" value="Désolé, accès refusé"/>
 		<node name="noFavorites" value="Votre liste de favoris est vide"/>
+		<node name="emptyCatalog" value="Le catalogue est vide"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navigateur"/>

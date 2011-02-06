@@ -560,10 +560,6 @@
 			<node name="noRequiredInformation" value="Die benötigte Information ist in dem Katalog nicht spezifiziert." />
 			<node name="cacheDirectoryError" value="Es kann kein Cache-Verzeichns angelegt werden." />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Information" />
-			<node name="message" value="Der Katalog ist leer." />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Suchergebnisse" />
 			<node name="message" value="Es wurden kein Bücher, die zu ihrer Eingabe passen, gefunden." />
@@ -611,6 +607,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
 		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="Der Katalog ist leer."/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

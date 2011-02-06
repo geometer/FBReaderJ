@@ -559,10 +559,6 @@
 			<node name="noRequiredInformation" value="Необхідна інформація не знайдена в каталозі" />
 			<node name="cacheDirectoryError" value="Не вдається створити каталог для кеша" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Інформація" />
-			<node name="message" value="Каталог порожній" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Результати пошуку" />
 			<node name="message" value="Відповідних книг не знайдено" />
@@ -610,6 +606,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
 		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="Каталог порожній"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>
