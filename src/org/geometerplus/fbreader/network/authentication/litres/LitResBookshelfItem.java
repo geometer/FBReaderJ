@@ -34,11 +34,11 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 		super(link, title, summary, cover, urlByType);
 	}
 
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, AccessibilityType accessibility) {
+	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility) {
 		super(link, title, summary, cover, urlByType, accessibility);
 	}
 
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, AccessibilityType accessibility, int catalogType) {
+	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, int catalogType) {
 		super(link, title, summary, cover, urlByType, accessibility, catalogType);
 	}
 

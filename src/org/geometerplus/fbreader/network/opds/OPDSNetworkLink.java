@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 class OPDSNetworkLink extends AbstractNetworkLink {
 	private TreeMap<RelationAlias, String> myRelationAliases;
 
-	private TreeMap<String,NetworkCatalogItem.AccessibilityType> myUrlConditions;
+	private TreeMap<String,NetworkCatalogItem.Accessibility> myUrlConditions;
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
@@ -58,9 +58,9 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		}
 	}
 
-	final void setUrlConditions(Map<String,NetworkCatalogItem.AccessibilityType> conditions) {
+	final void setUrlConditions(Map<String,NetworkCatalogItem.Accessibility> conditions) {
 		if (conditions != null && conditions.size() > 0) {
-			myUrlConditions = new TreeMap<String,NetworkCatalogItem.AccessibilityType>(conditions);
+			myUrlConditions = new TreeMap<String,NetworkCatalogItem.Accessibility>(conditions);
 		} else {
 			myUrlConditions = null;
 		}
@@ -161,12 +161,12 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		return url;
 	}
 
-	NetworkCatalogItem.AccessibilityType getCondition(String url) {
+	NetworkCatalogItem.Accessibility getCondition(String url) {
 		if (myUrlConditions == null) {
-			return NetworkCatalogItem.AccessibilityType.ALWAYS;
+			return NetworkCatalogItem.Accessibility.ALWAYS;
 		}
-		NetworkCatalogItem.AccessibilityType cond = myUrlConditions.get(url);
-		return cond != null ? cond : NetworkCatalogItem.AccessibilityType.ALWAYS;
+		NetworkCatalogItem.Accessibility cond = myUrlConditions.get(url);
+		return cond != null ? cond : NetworkCatalogItem.Accessibility.ALWAYS;
 	}
 
 	// rel and type must be either null or interned String objects.

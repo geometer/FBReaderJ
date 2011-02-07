@@ -116,7 +116,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		if (!isVisible && !hasItems) {
-			switch (item.Accessibility) {
+			switch (item.getAccessibility()) {
 				case SIGNED_IN:
 					if (item.Link.authenticationManager() != null) {
 						addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
@@ -137,7 +137,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			return OPEN_IN_BROWSER_ITEM_ID;
 		}
 		if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
-			switch (item.Accessibility) {
+			switch (item.getAccessibility()) {
 				case SIGNED_IN:
 					if (item.Link.authenticationManager() != null) {
 						return SIGNIN_ITEM_ID;
@@ -211,7 +211,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (catalogTree.Item.getVisibility() == ZLBoolean3.B3_TRUE) {
 			return false;
 		}
-		switch (catalogTree.Item.Accessibility) {
+		switch (catalogTree.Item.getAccessibility()) {
 			case SIGNED_IN:
 				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
 					public void run() {

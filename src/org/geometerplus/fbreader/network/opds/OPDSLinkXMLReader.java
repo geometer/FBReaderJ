@@ -100,8 +100,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 
 			String icon = null; 
 			final HashMap<String,String> links = new HashMap<String,String>();
-			final HashMap<String,NetworkCatalogItem.AccessibilityType> urlConditions =
-				new HashMap<String,NetworkCatalogItem.AccessibilityType>();
+			final HashMap<String,NetworkCatalogItem.Accessibility> urlConditions =
+				new HashMap<String,NetworkCatalogItem.Accessibility>();
 			for (ATOMLink link: entry.Links) {
 				final String href = link.getHref();
 				final String type = ZLNetworkUtil.filterMimeType(link.getType());
@@ -137,11 +137,11 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
 					links.put(INetworkLink.URL_RECOVER_PASSWORD, href);
 				} else if (rel == REL_CONDITION_NEVER) {
-					urlConditions.put(href, NetworkCatalogItem.AccessibilityType.NEVER);
+					urlConditions.put(href, NetworkCatalogItem.Accessibility.NEVER);
 				} else if (rel == REL_CONDITION_SIGNED_IN) {
-					urlConditions.put(href, NetworkCatalogItem.AccessibilityType.SIGNED_IN);
+					urlConditions.put(href, NetworkCatalogItem.Accessibility.SIGNED_IN);
 				} else if (rel == REL_CONDITION_HAS_BOOKS) {
-					urlConditions.put(href, NetworkCatalogItem.AccessibilityType.HAS_BOOKS);
+					urlConditions.put(href, NetworkCatalogItem.Accessibility.HAS_BOOKS);
 				}
 			}
 
@@ -167,7 +167,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			String icon,
 			String language,
 			Map<String,String> links,
-			HashMap<String,NetworkCatalogItem.AccessibilityType> urlConditions,
+			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
 			String sslCertificate
 		) {
 			if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {

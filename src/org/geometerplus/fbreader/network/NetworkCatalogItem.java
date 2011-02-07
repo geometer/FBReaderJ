@@ -31,7 +31,7 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	public static final int CATALOG_BY_AUTHORS = 1;
 
 	// catalog accessibility types:
-	public static enum AccessibilityType {
+	public static enum Accessibility {
 		NEVER,
 		ALWAYS,
 		SIGNED_IN,
@@ -43,12 +43,12 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	public static final int URL_CATALOG = 1;
 	public static final int URL_HTML_PAGE = 2;
 
-	public final AccessibilityType Accessibility;
+	private final Accessibility myAccessibility;
 	public final int CatalogType;
 	public final TreeMap<Integer, String> URLByType;
 
 	/**
-	 * Creates new NetworkCatalogItem instance with <code>AccessibilityType.ALWAYS</code> accessibility and <code>CATALOG_OTHER</code> type.
+	 * Creates new NetworkCatalogItem instance with <code>Accessibility.ALWAYS</code> accessibility and <code>CATALOG_OTHER</code> type.
 	 *
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
@@ -57,7 +57,7 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
 	 */
 	public NetworkCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType) {
-		this(link, title, summary, cover, urlByType, AccessibilityType.ALWAYS, CATALOG_OTHER);
+		this(link, title, summary, cover, urlByType, Accessibility.ALWAYS, CATALOG_OTHER);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 * @param accessibility value defines when this library item will be accessible
 	 *                      in the network library view. 
 	 */
-	public NetworkCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, AccessibilityType accessibility) {
+	public NetworkCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility) {
 		this(link, title, summary, cover, urlByType, accessibility, CATALOG_OTHER);
 	}
 
@@ -87,9 +87,9 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	 *                      in the network library view. 
 	 * @param catalogType   value defines type of this catalog. Can be one of the CATALOG_* values.
 	 */
-	public NetworkCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, AccessibilityType accessibility, int catalogType) {
+	public NetworkCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, int catalogType) {
 		super(link, title, summary, cover);
-		Accessibility = accessibility;
+		myAccessibility = accessibility;
 		CatalogType = catalogType;
 		URLByType = new TreeMap<Integer, String>(urlByType);
 	}
@@ -117,8 +117,12 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	public void onDisplayItem() {
 	}
 
+	public Accessibility getAccessibility() {
+		return myAccessibility;
+	}
+
 	public ZLBoolean3 getVisibility() {
-		switch (Accessibility) {
+		switch (myAccessibility) {
 			case NEVER:
 				return ZLBoolean3.B3_FALSE;
 			case ALWAYS:
