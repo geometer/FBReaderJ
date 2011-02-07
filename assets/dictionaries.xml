@@ -56,7 +56,7 @@
 		package="com.slovoed.noreg.langenscheidt.professional.german_english"
 		class=".Start"
 		action="android.intent.action.VIEW"
-		pattern="s/808661296"
+		pattern="%s/808661296"
 		list="installed"
 	/>
 	<dictionary
@@ -64,7 +64,7 @@
 		package="com.slovoed.noreg.langenscheidt.professional.german_english"
 		class=".Start"
 		action="android.intent.action.VIEW"
-		pattern="s/808661297"
+		pattern="%s/808661297"
 		list="installed"
 	/>
 	<dictionary
@@ -72,7 +72,7 @@
 		package="com.slovoed.noreg.duden.duden_german_explanatory_dictionary"
 		class=".Start"
 		action="android.intent.action.VIEW"
-		pattern="s/808596281"
+		pattern="%s/808596281"
 		list="installed"
 	/>
 	<dictionary
@@ -80,7 +80,7 @@
 		package="com.slovoed.noreg.merriam_webster.english_english_unabridged"
 		class=".Start"
 		action="android.intent.action.VIEW"
-		pattern="s/808595524"
+		pattern="%s/808595524"
 		list="installed"
 	/>
 	<dictionary
@@ -88,7 +88,7 @@
 		package="com.slovoed.french_russian.deluxe"
 		class=".Start"
 		action="android.intent.action.VIEW"
-		pattern="s/808532019"
+		pattern="%s/808532019"
 		list="installed"
 	/>
 	<dictionary
@@ -96,7 +96,7 @@
 		package="com.slovoed.french_russian.deluxe"
 		class=".Start"
 		action="android.intent.action.VIEW"
-		pattern="s/808532018"
+		pattern="%s/808532018"
 		list="installed"
 	/>
 </dictionaries>
