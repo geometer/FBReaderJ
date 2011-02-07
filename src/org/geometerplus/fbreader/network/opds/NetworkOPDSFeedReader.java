@@ -189,7 +189,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		myData.LoadedIds.add(entry.Id.Uri);
 
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
-		if (opdsLink.getCondition(entry.Id.Uri) == OPDSNetworkLink.FeedCondition.NEVER) {
+		if (opdsLink.getCondition(entry.Id.Uri) == NetworkCatalogItem.AccessibilityType.NEVER) {
 			return tryInterrupt();
 		}
 		boolean hasBookLink = false;
@@ -422,9 +422,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			htmlURL = null;
 		}
 
-		final boolean dependsOnAccount =
-			OPDSNetworkLink.FeedCondition.SIGNED_IN == opdsLink.getCondition(entry.Id.Uri);
-
 		final String annotation;
 		if (entry.Summary != null) {
 			annotation = entry.Summary.replace("\n", "");
@@ -448,7 +445,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				annotation,
 				coverURL,
 				urlMap,
-				dependsOnAccount ? NetworkCatalogItem.AccessibilityType.SIGNED_IN : NetworkCatalogItem.AccessibilityType.ALWAYS
+				opdsLink.getCondition(entry.Id.Uri)
 			);
 		} else {
 			return new OPDSCatalogItem(
@@ -457,7 +454,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				annotation,
 				coverURL,
 				urlMap,
-				dependsOnAccount ? NetworkCatalogItem.AccessibilityType.SIGNED_IN : NetworkCatalogItem.AccessibilityType.ALWAYS,
+				opdsLink.getCondition(entry.Id.Uri),
 				catalogType
 			);
 		}

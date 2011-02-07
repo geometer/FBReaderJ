@@ -34,18 +34,10 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-
 class OPDSNetworkLink extends AbstractNetworkLink {
-	public enum FeedCondition {
-		REGULAR,
-		NEVER,
-		SIGNED_IN,
-		HAS_BOOKS
-	}
-
 	private TreeMap<RelationAlias, String> myRelationAliases;
 
-	private TreeMap<String,FeedCondition> myUrlConditions;
+	private TreeMap<String,NetworkCatalogItem.AccessibilityType> myUrlConditions;
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
@@ -66,9 +58,9 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		}
 	}
 
-	final void setUrlConditions(Map<String,FeedCondition> conditions) {
+	final void setUrlConditions(Map<String,NetworkCatalogItem.AccessibilityType> conditions) {
 		if (conditions != null && conditions.size() > 0) {
-			myUrlConditions = new TreeMap<String,FeedCondition>(conditions);
+			myUrlConditions = new TreeMap<String,NetworkCatalogItem.AccessibilityType>(conditions);
 		} else {
 			myUrlConditions = null;
 		}
@@ -169,12 +161,12 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 		return url;
 	}
 
-	FeedCondition getCondition(String url) {
+	NetworkCatalogItem.AccessibilityType getCondition(String url) {
 		if (myUrlConditions == null) {
-			return FeedCondition.REGULAR;
+			return NetworkCatalogItem.AccessibilityType.ALWAYS;
 		}
-		FeedCondition cond = myUrlConditions.get(url);
-		return cond != null ? cond : FeedCondition.REGULAR;
+		NetworkCatalogItem.AccessibilityType cond = myUrlConditions.get(url);
+		return cond != null ? cond : NetworkCatalogItem.AccessibilityType.ALWAYS;
 	}
 
 	// rel and type must be either null or interned String objects.
