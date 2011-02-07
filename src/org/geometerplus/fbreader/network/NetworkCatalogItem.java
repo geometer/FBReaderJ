@@ -117,7 +117,7 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	public void onDisplayItem() {
 	}
 
-	public int getVisibility() {
+	public ZLBoolean3 getVisibility() {
 		switch (Accessibility) {
 			case NEVER:
 				return ZLBoolean3.B3_FALSE;
