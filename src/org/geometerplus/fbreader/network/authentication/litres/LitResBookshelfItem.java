@@ -26,20 +26,10 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.*;
 
 public class LitResBookshelfItem extends NetworkCatalogItem {
-
 	private boolean myForceReload;
-
-
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType) {
-		super(link, title, summary, cover, urlByType);
-	}
 
 	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility) {
 		super(link, title, summary, cover, urlByType, accessibility);
-	}
-
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, int catalogType) {
-		super(link, title, summary, cover, urlByType, accessibility, catalogType);
 	}
 
 	@Override
@@ -49,7 +39,8 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 
 	@Override
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
-		LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
+		final LitResAuthenticationManager mgr =
+			(LitResAuthenticationManager)Link.authenticationManager();
 
 		// TODO: Maybe it's better to call isAuthorised(true) directly 
 		// and let exception fly through???

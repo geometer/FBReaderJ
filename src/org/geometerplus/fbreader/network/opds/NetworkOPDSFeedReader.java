@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
+import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 
 class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes {
 	private final String myBaseURL;
@@ -370,9 +371,9 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		String url = null;
 		boolean urlIsAlternate = false;
 		String htmlURL = null;
-		boolean litresCatalogue = false;
+		String litresRel = null;
 		int catalogType = NetworkCatalogItem.CATALOG_OTHER;
-		for (ATOMLink link: entry.Links) {
+		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
@@ -388,8 +389,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 						url = href;
 						urlIsAlternate = true;
 					}
-				} else if (url == null
-						|| rel == null || rel.equals(REL_SUBSECTION)) {
+				} else if (url == null || rel == null || rel.equals(REL_SUBSECTION)) {
 					url = href;
 					urlIsAlternate = false;
 					if (REL_CATALOG_AUTHOR.equals(rel)) {
@@ -404,10 +404,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					htmlURL = href;
 				}
 			} else if (MIME_APP_LITRES.equals(type)) {
-				if (REL_BOOKSHELF.equals(rel)) {
-					litresCatalogue = true;
-					url = href; // FIXME: mimeType ???
-				}
+				litresRel = rel;
+				url = href;
 			}
 		}
 
@@ -435,15 +433,28 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		if (htmlURL != null) {
 			urlMap.put(NetworkCatalogItem.URL_HTML_PAGE, htmlURL);
 		}
-		if (litresCatalogue) {
-			return new LitResBookshelfItem(
-				opdsLink,
-				entry.Title,
-				annotation,
-				coverURL,
-				urlMap,
-				opdsLink.getCondition(entry.Id.Uri)
-			);
+		if (litresRel != null) {
+			if (REL_BOOKSHELF.equals(litresRel)) {
+				return new LitResBookshelfItem(
+					opdsLink,
+					entry.Title,
+					annotation,
+					coverURL,
+					urlMap,
+					opdsLink.getCondition(entry.Id.Uri)
+				);
+			} else if (REL_RECOMMENDATIONS.equals(litresRel)) {
+				return new LitResRecommendationsItem(
+					opdsLink,
+					entry.Title,
+					annotation,
+					coverURL,
+					urlMap,
+					opdsLink.getCondition(entry.Id.Uri)
+				);
+			} else {
+				return null;
+			}
 		} else {
 			return new OPDSCatalogItem(
 				opdsLink,

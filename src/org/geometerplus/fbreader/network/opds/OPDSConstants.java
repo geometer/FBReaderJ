@@ -21,9 +21,8 @@ package org.geometerplus.fbreader.network.opds;
 
 
 interface OPDSConstants {
-
 	// Feed level
-	String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
+	String REL_BOOKSHELF = "http://data.fbreader.org/rel/bookshelf";
 	String REL_RECOMMENDATIONS = "http://data.fbreader.org/rel/recommendations";
 	//String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
 
