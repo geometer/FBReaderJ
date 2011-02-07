@@ -63,10 +63,10 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 		} finally {
 			myForceReload = true;
 			// TODO: implement asynchronous loading
-			LinkedList<NetworkLibraryItem> children = new LinkedList<NetworkLibraryItem>();
-			mgr.collectPurchasedBooks(children);
+			ArrayList<NetworkBookItem> children =
+				new ArrayList<NetworkBookItem>(mgr.purchasedBooks());
 			Collections.sort(children, new NetworkBookItemComparator());
-			for (NetworkLibraryItem item: children) {
+			for (NetworkLibraryItem item : children) {
 				listener.onNewItem(Link, item);
 			}
 			listener.commitItems(Link);

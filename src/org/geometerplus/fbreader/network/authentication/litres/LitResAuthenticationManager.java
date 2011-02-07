@@ -286,10 +286,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 	}
 
-	synchronized void collectPurchasedBooks(List<NetworkLibraryItem> list) {
-		list.addAll(myPurchasedBooks.values());
+	@Override
+	public synchronized List<NetworkBookItem> purchasedBooks() {
+		return new ArrayList(myPurchasedBooks.values());
 	}
-
 
 	@Override
 	public synchronized boolean needsInitialization() {

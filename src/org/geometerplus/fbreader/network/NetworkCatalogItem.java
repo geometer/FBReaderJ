@@ -24,6 +24,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+
 public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 
 	// catalog types:
@@ -118,24 +120,28 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	}
 
 	public ZLBoolean3 getVisibility() {
+		final NetworkAuthenticationManager mgr = Link.authenticationManager();
 		switch (myAccessibility) {
-			case NEVER:
+			default:
 				return ZLBoolean3.B3_FALSE;
 			case ALWAYS:
 				return ZLBoolean3.B3_TRUE;
 			case SIGNED_IN:
-				if (Link.authenticationManager() == null) {
+				if (mgr == null) {
 					return ZLBoolean3.B3_FALSE;
 				}
 				try {
-					return Link.authenticationManager().isAuthorised(false) ?
+					return mgr.isAuthorised(false) ?
 							ZLBoolean3.B3_TRUE : ZLBoolean3.B3_UNDEFINED;
 				} catch (ZLNetworkException e) {
 					return ZLBoolean3.B3_UNDEFINED;
 				}
 			case HAS_BOOKS:
-				return ZLBoolean3.B3_FALSE;
+				if (mgr != null && mgr.purchasedBooks().size() > 0) {
+					return ZLBoolean3.B3_TRUE;
+				} else {
+					return ZLBoolean3.B3_FALSE;
+				}
 		}
-		return ZLBoolean3.B3_FALSE;
 	}
 }
