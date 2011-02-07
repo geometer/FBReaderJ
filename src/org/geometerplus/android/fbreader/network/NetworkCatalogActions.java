@@ -116,12 +116,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		if (!isVisible && !hasItems) {
-			switch (item.Visibility) {
-			case NetworkCatalogItem.VISIBLE_LOGGED_USER:
-				if (item.Link.authenticationManager() != null) {
-					addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
-				}
-				break;
+			switch (item.Accessibility) {
+				case SIGNED_IN:
+					if (item.Link.authenticationManager() != null) {
+						addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
+					}
+					break;
 			}
 		}
 	}
@@ -137,12 +137,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			return OPEN_IN_BROWSER_ITEM_ID;
 		}
 		if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
-			switch (item.Visibility) {
-			case NetworkCatalogItem.VISIBLE_LOGGED_USER:
-				if (item.Link.authenticationManager() != null) {
-					return SIGNIN_ITEM_ID;
-				}
-				break;
+			switch (item.Accessibility) {
+				case SIGNED_IN:
+					if (item.Link.authenticationManager() != null) {
+						return SIGNIN_ITEM_ID;
+					}
+					break;
 			}
 			return TREE_NO_ACTION;
 		}
@@ -211,19 +211,19 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (catalogTree.Item.getVisibility() == ZLBoolean3.B3_TRUE) {
 			return false;
 		}
-		switch (catalogTree.Item.Visibility) {
-		case NetworkCatalogItem.VISIBLE_LOGGED_USER:
-			NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
-				public void run() {
-					if (catalogTree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
-						return;
+		switch (catalogTree.Item.Accessibility) {
+			case SIGNED_IN:
+				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
+					public void run() {
+						if (catalogTree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
+							return;
+						}
+						if (actionCode != SIGNIN_ITEM_ID) {
+							runAction(activity, tree, actionCode);
+						}
 					}
-					if (actionCode != SIGNIN_ITEM_ID) {
-						runAction(activity, tree, actionCode);
-					}
-				}
-			});
-			break;
+				});
+				break;
 		}
 		return true;
 	}

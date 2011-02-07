@@ -448,7 +448,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				annotation,
 				coverURL,
 				urlMap,
-				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS
+				dependsOnAccount ? NetworkCatalogItem.AccessibilityType.SIGNED_IN : NetworkCatalogItem.AccessibilityType.ALWAYS
 			);
 		} else {
 			return new OPDSCatalogItem(
@@ -457,7 +457,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				annotation,
 				coverURL,
 				urlMap,
-				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS,
+				dependsOnAccount ? NetworkCatalogItem.AccessibilityType.SIGNED_IN : NetworkCatalogItem.AccessibilityType.ALWAYS,
 				catalogType
 			);
 		}
