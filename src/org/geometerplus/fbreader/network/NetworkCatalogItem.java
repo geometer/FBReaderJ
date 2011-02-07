@@ -117,10 +117,6 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	public void onDisplayItem() {
 	}
 
-	public Accessibility getAccessibility() {
-		return myAccessibility;
-	}
-
 	public ZLBoolean3 getVisibility() {
 		switch (myAccessibility) {
 			case NEVER:
