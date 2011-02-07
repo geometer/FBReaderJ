@@ -73,7 +73,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			}
 			return false;
 		}
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link: feed.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
@@ -139,7 +139,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		String id = null;
 		int idType = 0;
 
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link: entry.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
@@ -188,10 +188,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		}
 		myData.LoadedIds.add(entry.Id.Uri);
 
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
-		if (opdsLink.getCondition(entry.Id.Uri) == NetworkCatalogItem.AccessibilityType.NEVER) {
-			return tryInterrupt();
-		}
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
@@ -221,7 +218,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 	private static final String AuthorsPrefix = "authors:";
 
 	private NetworkLibraryItem readBookItem(OPDSEntry entry) {
-		final OPDSNetworkLink opdsNetworkLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsNetworkLink = (OPDSNetworkLink)myData.Link;
 		/*final String date;
 		if (entry.DCIssued != null) {
 			date = entry.DCIssued.getDateTime(true);
@@ -254,7 +251,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					cover = href;
 				}
 			} else if (BookReference.Type.BUY == referenceType) {
-				final OPDSLink opdsLink = (OPDSLink) link; 
+				final OPDSLink opdsLink = (OPDSLink)link; 
 				String price = null;
 				final OPDSPrice opdsPrice = opdsLink.selectBestPrice();
 				if (opdsPrice != null) {
@@ -368,7 +365,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 	}
 
 	private NetworkLibraryItem readCatalogItem(OPDSEntry entry) {
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		String coverURL = null;
 		String url = null;
 		boolean urlIsAlternate = false;
