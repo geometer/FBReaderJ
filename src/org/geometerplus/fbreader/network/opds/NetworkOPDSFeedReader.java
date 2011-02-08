@@ -372,7 +372,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		boolean urlIsAlternate = false;
 		String htmlURL = null;
 		String litresRel = null;
-		int catalogType = NetworkCatalogItem.CATALOG_OTHER;
+		NetworkCatalogItem.CatalogType catalogType = NetworkCatalogItem.CatalogType.OTHER;
 		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
@@ -393,7 +393,9 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					url = href;
 					urlIsAlternate = false;
 					if (REL_CATALOG_AUTHOR.equals(rel)) {
-						catalogType = NetworkCatalogItem.CATALOG_BY_AUTHORS;
+						catalogType = NetworkCatalogItem.CatalogType.BY_AUTHOR;
+					} else if (REL_CATALOG_SERIES.equals(rel)) {
+						catalogType = NetworkCatalogItem.CatalogType.BY_SERIES;
 					}
 				}
 			} else if (MIME_TEXT_HTML.equals(type)) {

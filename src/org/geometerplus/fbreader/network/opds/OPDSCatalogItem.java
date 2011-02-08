@@ -44,7 +44,7 @@ public class OPDSCatalogItem extends NetworkCatalogItem {
 		myExtraData = extraData;
 	}
 
-	public OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, int catalogType) {
+	public OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, CatalogType catalogType) {
 		super(link, title, summary, cover, urlByType, accessibility, catalogType);
 		myExtraData = null;
 	}
