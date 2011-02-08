@@ -38,7 +38,7 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 		super(link, title, summary, cover, urlByType, visibility);
 	}
 
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility, int catalogType) {
+	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility, CatalogType catalogType) {
 		super(link, title, summary, cover, urlByType, visibility, catalogType);
 	}
 
