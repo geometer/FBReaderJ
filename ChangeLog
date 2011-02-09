@@ -1,3 +1,9 @@
+===== 0.99.12 (Feb ??, 2011) =====
+* Added support for more dictionaries (by Steffen Siebert)
+* Option 'show status bar when menu becomes visible' (by Steffen Siebert)
+* Litres: series list has been added
+* Litres: recommendation list has been added
+
 ===== 0.99.11 (Feb 01, 2011) =====
 * Galician translation has been added (by Miguel Anxo Bouzada)
 * Czech translation has been updated (by Marek Pavelka)

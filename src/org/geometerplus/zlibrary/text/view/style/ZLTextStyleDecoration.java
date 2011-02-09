@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
@@ -37,7 +38,7 @@ public class ZLTextStyleDecoration {
 
 	private final String myName;
 
-	public ZLTextStyleDecoration(String name, int fontSizeDelta, int bold, int italic, int underline, int verticalShift, int allowHyphenations) {
+	public ZLTextStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, int verticalShift, ZLBoolean3 allowHyphenations) {
 		myName = name;
 		FontFamilyOption = new ZLStringOption(STYLE, name + ":fontFamily", "");
 		FontSizeDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
