@@ -50,10 +50,11 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		if (LibraryCommon.DatabaseInstance == null) {
 			LibraryCommon.DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
 		}
-//		if (LibraryCommon.LibraryInstance == null) {	// TODO
+		if (LibraryCommon.LibraryInstance == null) {	// TODO
 			LibraryCommon.LibraryInstance = new Library();
+			LibraryCommon.incLibCount();
 			startService(new Intent(getApplicationContext(), InitializationService.class));
-//		}
+		}
 		
 		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType();
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
@@ -124,7 +125,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	
 	@Override
 	public void onDestroy() {
-//		LibraryCommon.LibraryInstance = null;	// TODO
+		LibraryCommon.DestroyLibInstance();	// TODO
 		super.onDestroy();
 	}
 
@@ -180,6 +181,8 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 //		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		activity.startActivity(intent);
+	
+		LibraryCommon.incLibCount();
 	}
 }
 

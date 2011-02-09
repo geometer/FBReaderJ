@@ -28,11 +28,22 @@ import android.view.MenuItem;
 
 class LibraryCommon {
 	static BooksDatabase DatabaseInstance;
-	static Library LibraryInstance;
 	static ViewType ViewTypeInstance;
 	static SortType SortTypeInstance; 						// for FileManager
 	static final ZLStringOption BookSearchPatternOption = 
 		new ZLStringOption("BookSearch", "Pattern", "");	// for LibraryBaseActivity
+	
+	static Library LibraryInstance;
+	private static int LibCount = 0;
+	public static void incLibCount(){
+		LibCount++;
+	}
+	public static void DestroyLibInstance(){
+		LibCount--;
+		if (LibCount < 1){
+			LibraryInstance = null;
+		}
+	}
 }
 
 class FMCommon {

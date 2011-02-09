@@ -116,6 +116,12 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
 	}
 
 	@Override
+	public void onDestroy() {
+		LibraryCommon.DestroyLibInstance();	// TODO
+		super.onDestroy();
+	}
+	
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		TopLevelTree tree = (TopLevelTree)getAdapter().getItem(position);
 		tree.run();
@@ -167,5 +173,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 //		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		activity.startActivity(intent);
+		
+		LibraryCommon.incLibCount();
 	}
 }
