@@ -57,7 +57,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		} else {
 			startUpdate();
 		}
-		trySetSelection1();
+		myGallery.setSelection(0);
 	}
 	
 	@Override
@@ -77,6 +77,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		} else {
 			setTitle(myPath);
 		}
+		tryUpadteSelection1();
 	}
 	
 	private void addItem(String path, String resourceKey) {

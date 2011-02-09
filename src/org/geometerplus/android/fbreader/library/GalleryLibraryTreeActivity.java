@@ -97,7 +97,7 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity
 		} else {
 			Log.v(FMCommon.LOG, "GalleryLibraryTreeActivity - tree == null");
 		}
-		trySetSelection1();
+//		trySetSelection1();
 	}
 
 	@Override
@@ -108,6 +108,7 @@ public class GalleryLibraryTreeActivity extends GalleryLibraryBaseActivity
 			finish();
 			return;
 		}
+		tryUpadteSelection1();
 	}
 	
 	@Override

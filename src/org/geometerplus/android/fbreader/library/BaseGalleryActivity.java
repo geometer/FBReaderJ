@@ -28,7 +28,7 @@ public class BaseGalleryActivity extends Activity
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.gallery);
-	    myGallery = (Gallery) findViewById(R.id.gallery);
+		myGallery = (Gallery) findViewById(R.id.gallery);
 	    myGallery.setOnItemSelectedListener(this);
 	    
 	    Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
@@ -101,11 +101,11 @@ public class BaseGalleryActivity extends Activity
 	public void onNothingSelected(AdapterView<?> parent) {
 	}
 
-	protected void trySetSelection1(){
+	protected void tryUpadteSelection1(){
 		try{
 			BaseAdapter adapter = (BaseAdapter)myGallery.getAdapter();
             Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-            if (display.getOrientation() == 1 && adapter.getCount() > 2){
+            if (display.getOrientation() == 1 && adapter.getCount() > 1 && myGallery.getSelectedItemPosition() == 0){
     			myGallery.setSelection(1);
             }
 		} catch (Exception e) {}
