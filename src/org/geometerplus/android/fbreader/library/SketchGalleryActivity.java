@@ -77,7 +77,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		} else {
 			setTitle(myPath);
 		}
-		tryUpadteSelection1();
+		trySelectElement(1);
 	}
 	
 	private void addItem(String path, String resourceKey) {

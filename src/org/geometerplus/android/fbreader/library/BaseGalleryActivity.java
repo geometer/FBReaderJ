@@ -101,12 +101,12 @@ public class BaseGalleryActivity extends Activity
 	public void onNothingSelected(AdapterView<?> parent) {
 	}
 
-	protected void tryUpadteSelection1(){
+	protected void trySelectElement(int pos){
 		try{
 			BaseAdapter adapter = (BaseAdapter)myGallery.getAdapter();
             Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
             if (display.getOrientation() == 1 && adapter.getCount() > 1 && myGallery.getSelectedItemPosition() == 0){
-    			myGallery.setSelection(1);
+    			myGallery.setSelection(pos);
             }
 		} catch (Exception e) {}
 	}
