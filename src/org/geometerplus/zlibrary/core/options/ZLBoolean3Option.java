@@ -22,27 +22,27 @@ package org.geometerplus.zlibrary.core.options;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 public final class ZLBoolean3Option extends ZLOption {
-	private int myValue;
-	private final int myDefaultValue;
+	private ZLBoolean3 myValue;
+	private final ZLBoolean3 myDefaultValue;
 
-	public ZLBoolean3Option(String group, String optionName, int defaultValue) {
+	public ZLBoolean3Option(String group, String optionName, ZLBoolean3 defaultValue) {
 		super(group, optionName);
 		myDefaultValue = defaultValue;
 		myValue = myDefaultValue;
 	}
 
-	public int getValue() {
+	public ZLBoolean3 getValue() {
 		if (!myIsSynchronized) {
 			String value = getConfigValue(null);
 			if (value != null) {
-				myValue = ZLBoolean3.getByString(value);
+				myValue = ZLBoolean3.getByName(value);
 			}
 			myIsSynchronized = true;
 		}
 		return myValue;
 	}
 
-	public void setValue(int value) {
+	public void setValue(ZLBoolean3 value) {
 		if (myIsSynchronized && (myValue == value)) {
 			return;
 		}
@@ -52,7 +52,7 @@ public final class ZLBoolean3Option extends ZLOption {
 		if (myValue == myDefaultValue) {
 			unsetConfigValue();
 		} else {
-			setConfigValue(ZLBoolean3.getName(myValue));
+			setConfigValue(myValue.Name);
 		}
 	}
 }

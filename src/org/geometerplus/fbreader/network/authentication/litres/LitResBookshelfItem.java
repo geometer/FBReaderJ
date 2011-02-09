@@ -26,20 +26,10 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.*;
 
 public class LitResBookshelfItem extends NetworkCatalogItem {
-
 	private boolean myForceReload;
 
-
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType) {
-		super(link, title, summary, cover, urlByType);
-	}
-
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility) {
-		super(link, title, summary, cover, urlByType, visibility);
-	}
-
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility, int catalogType) {
-		super(link, title, summary, cover, urlByType, visibility, catalogType);
+	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility) {
+		super(link, title, summary, cover, urlByType, accessibility);
 	}
 
 	@Override
@@ -49,7 +39,8 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 
 	@Override
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
-		LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
+		final LitResAuthenticationManager mgr =
+			(LitResAuthenticationManager)Link.authenticationManager();
 
 		// TODO: Maybe it's better to call isAuthorised(true) directly 
 		// and let exception fly through???
@@ -63,10 +54,10 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 		} finally {
 			myForceReload = true;
 			// TODO: implement asynchronous loading
-			LinkedList<NetworkLibraryItem> children = new LinkedList<NetworkLibraryItem>();
-			mgr.collectPurchasedBooks(children);
+			ArrayList<NetworkBookItem> children =
+				new ArrayList<NetworkBookItem>(mgr.purchasedBooks());
 			Collections.sort(children, new NetworkBookItemComparator());
-			for (NetworkLibraryItem item: children) {
+			for (NetworkLibraryItem item : children) {
 				listener.onNewItem(Link, item);
 			}
 			listener.commitItems(Link);
