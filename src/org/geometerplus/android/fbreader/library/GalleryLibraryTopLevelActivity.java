@@ -102,6 +102,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
 		myGallery.setAdapter(adapter);
 		myGallery.setOnItemClickListener(this);
 		onNewIntent(getIntent());
+		trySetSelection1();
 	}
 
 	@Override

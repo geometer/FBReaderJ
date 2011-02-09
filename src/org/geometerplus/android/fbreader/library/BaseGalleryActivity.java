@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.View;
@@ -19,7 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
 public class BaseGalleryActivity extends Activity 
-	implements HasBaseConstants, Gallery.OnItemSelectedListener, Gallery.OnFocusChangeListener {
+	implements HasBaseConstants, Gallery.OnItemSelectedListener {
 	
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
@@ -110,10 +109,5 @@ public class BaseGalleryActivity extends Activity
     			myGallery.setSelection(1);
             }
 		} catch (Exception e) {}
-	}
-
-	@Override
-	public void onFocusChange(View v, boolean hasFocus) {
-		Log.v(FMCommon.LOG, "onFocusChange(View v, boolean hasFocus)");
 	}
 }

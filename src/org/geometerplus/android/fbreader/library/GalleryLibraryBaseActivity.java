@@ -132,7 +132,6 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 		
 		private int maxHeight = 0;
 		private int maxWidth = 0;
-		private int paddingTop = 0;
 		private int orientation = -1;
 
 		@Override
@@ -149,9 +148,8 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 					break;
 
 					case 1:
-						maxWidth = (int) (display.getWidth() / 3);
+						maxWidth = display.getWidth() / 3;
 						maxHeight = maxWidth * 4 / 3;
-						paddingTop = (display.getHeight() - maxHeight) / 4;
 					break;
             	}
             }
@@ -173,8 +171,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 				}
 			}
      		
-			View view = GalleryAdapterUtil.getView(convertView, 
-					parent, summary, cover, idIcon, maxHeight, maxWidth, paddingTop);
+			View view = GalleryAdapterUtil.getView(convertView, parent, summary, cover, idIcon, maxHeight, maxWidth);
 			return view;
 		}
 	}

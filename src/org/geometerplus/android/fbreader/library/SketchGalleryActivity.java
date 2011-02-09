@@ -57,6 +57,7 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 		} else {
 			startUpdate();
 		}
+		trySetSelection1();
 	}
 	
 	@Override
@@ -212,7 +213,6 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 
 		private int maxHeight = 0;
 		private int maxWidth = 0;
-		private int paddingTop = 0;
 		private int orientation = -1;
 		
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -227,16 +227,15 @@ public class SketchGalleryActivity extends BaseGalleryActivity
 					break;
 
 					case 1:
-						maxWidth = (int) (display.getWidth() / 3);
+						maxWidth = display.getWidth() / 3;
 						maxHeight = maxWidth * 4 / 3;
-						paddingTop = (display.getHeight() - maxHeight) / 4;
 					break;
             	}
             }
             String summary = fileItem.getSummary();
     		summary = summary != null ? summary : fileItem.getName();  
     		View view = GalleryAdapterUtil.getView(convertView, parent, summary, fileItem.getCover(), 
-    				fileItem.getIcon(), maxHeight, maxWidth, paddingTop);
+    				fileItem.getIcon(), maxHeight, maxWidth);
       		return view;
         }
         

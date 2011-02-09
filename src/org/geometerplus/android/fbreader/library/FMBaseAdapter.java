@@ -101,17 +101,17 @@ abstract class LibraryBaseAdapter extends BaseAdapter implements View.OnCreateCo
 }
 
 class GalleryAdapterUtil {
+	private final static int DEFAULT_PADDING = 10;
+	
 	public static View getView(View convertView, ViewGroup parent,
 			String summary, ZLImage cover, int idIcon,
-			int maxHeight, int maxWidth, int paddingTop){
-        int maxLength = 20;
-		summary = summary.length() > maxLength ? summary.substring(0, maxLength - 1) : summary;
+			int maxHeight, int maxWidth){
 		
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.sketch_item, parent, false);
         
 		ImageView imageView = (ImageView)view.findViewById(R.id.sketch_item_image);
-		imageView.setPadding(0, paddingTop, 0, 0);
+		imageView.setPadding(DEFAULT_PADDING, 0, DEFAULT_PADDING, 0);
 		imageView.getLayoutParams().height = maxHeight;
 		imageView.getLayoutParams().width = maxWidth;
 
@@ -122,9 +122,12 @@ class GalleryAdapterUtil {
 			imageView.setImageResource(idIcon);
 		}
 		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
 		TextView summaryTextView = (TextView)view.findViewById(R.id.sketch_item_summary); 
 		summaryTextView.setText(summary);
-        return view;
+        summaryTextView.setWidth(maxWidth - DEFAULT_PADDING * 2);
+		
+		return view;
 	}
 	
 	private static Bitmap getBitmap(ZLImage cover, int maxWidth, int maxHeight) {
