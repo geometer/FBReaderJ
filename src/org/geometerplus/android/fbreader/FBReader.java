@@ -109,10 +109,7 @@ public final class FBReader extends ZLAndroidActivity {
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		if (!application.ShowStatusBarOption.getValue() &&
 			application.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
-			final Window window = getWindow();
-			final WindowManager.LayoutParams attrs = window.getAttributes();
-			attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-			window.setAttributes(attrs);
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -123,10 +120,7 @@ public final class FBReader extends ZLAndroidActivity {
 		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
 		if (!application.ShowStatusBarOption.getValue() &&
 			application.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
-			final Window window = getWindow();
-			final WindowManager.LayoutParams attrs = window.getAttributes();
-			attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-			window.setAttributes(attrs);
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 	}
 
