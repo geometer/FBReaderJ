@@ -107,4 +107,6 @@ public abstract class BooksDatabase {
 
 	protected abstract void storeVisitedLinks(long bookId);
 	protected abstract void loadVisitedLinks(long bookId);
+	protected abstract void storeLinkHistory(long bookId);
+	protected abstract void loadLinkHistory(long bookId);
 }

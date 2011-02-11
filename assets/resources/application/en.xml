@@ -159,6 +159,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book"/>
 		<node name="returnTo" value="Return to ..."/>
+		<node name="back" value="Back"/>
+		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="menu">
@@ -242,6 +244,10 @@
 				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active">
 					<node name="summaryOn" value="Show status bar when menu becomes active"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
+				</node>
+				<node name="longCancelMenu" value="Short cancel press goes back in history, long cancel press opens menu">
+					<node name="summaryOn" value="Short cancel press goes back in history, long cancel press opens menu"/>
+					<node name="summaryOff" value="Cancel press opens menu"/>
 				</node>
 			</node>
 			<node name="text" value="Text">

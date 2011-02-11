@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidHyperlinkHistoryManager;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidVisitedLinkManager;
 
 public class ZLAndroidApplication extends Application {
@@ -37,6 +38,7 @@ public class ZLAndroidApplication extends Application {
 	public final ZLBooleanOption AutoOrientationOption = new ZLBooleanOption("LookNFeel", "AutoOrientation", false);
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
 	public final ZLBooleanOption ShowStatusBarWhenMenuIsActiveOption = new ZLBooleanOption("LookNFeel", "ShowStatusBarWithMenu", true);
+	public final ZLBooleanOption LongCancelMenu = new ZLBooleanOption("LookNFeel", "LongCancelMenu", false);
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
@@ -65,6 +67,7 @@ public class ZLAndroidApplication extends Application {
 		new ZLSQLiteConfig(this);
 		new ZLAndroidImageManager();
 		new ZLAndroidVisitedLinkManager();
+		new ZLAndroidHyperlinkHistoryManager();
 		new ZLAndroidDialogManager();
 		new ZLAndroidLibrary(this);
 	}

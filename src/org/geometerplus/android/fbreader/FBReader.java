@@ -27,7 +27,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.WindowManager;
-import android.view.Window;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -54,6 +53,7 @@ public final class FBReader extends ZLAndroidActivity {
 	final static int CANCEL_CODE = 2;
 
 	private int myFullScreenFlag;
+	private Boolean myLongCancelMenu = null;
 
 	private static TextSearchButtonPanel ourTextSearchPanel;
 	private static NavigationButtonPanel ourNavigatePanel;
@@ -101,7 +101,23 @@ public final class FBReader extends ZLAndroidActivity {
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
-		fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader));
+		fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader, false));
+		setCancelActions(application);
+	}
+
+	private void setCancelActions(ZLAndroidApplication application) {
+		final boolean longCancelMenu = application.LongCancelMenu.getValue();
+		if (myLongCancelMenu == null || myLongCancelMenu.booleanValue() != longCancelMenu) {
+			final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+			myLongCancelMenu = new Boolean(longCancelMenu);
+			if (myLongCancelMenu) {
+				fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader, false));
+				fbReader.addAction(ActionCode.LONG_CANCEL, new CancelAction(this, fbReader, true));
+			} else {
+				fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader, true));
+				fbReader.removeAction(ActionCode.LONG_CANCEL);
+			}
+		}
 	}
 
  	@Override
@@ -240,6 +256,7 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 				fbreader.clearTextCaches();
 				fbreader.repaintView();
+				setCancelActions(ZLAndroidApplication.Instance());
 				break;
 			}
 			case CANCEL_CODE:

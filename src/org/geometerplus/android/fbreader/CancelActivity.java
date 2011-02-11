@@ -31,6 +31,7 @@ public class CancelActivity extends ListActivity {
 	static final String LIST_SIZE = "listSize";
 	static final String ITEM_TITLE = "title";
 	static final String ITEM_SUMMARY = "summary";
+	static final String ITEM_ENABLED = "enabled";
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -52,6 +53,16 @@ public class CancelActivity extends ListActivity {
 		@Override
 		public final int getCount() {
 			return myIntent.getIntExtra(LIST_SIZE, 0);
+		}
+
+		@Override
+		public boolean areAllItemsEnabled() {
+			return false;
+		}
+
+		@Override
+		public boolean isEnabled(int position) {
+			return myIntent.getBooleanExtra(ITEM_ENABLED + position, true);
 		}
 
 		@Override
@@ -77,12 +88,12 @@ public class CancelActivity extends ListActivity {
 			if (summary != null) {
 				summaryView.setVisibility(View.VISIBLE);
 				summaryView.setText(summary);
-        		titleView.setLayoutParams(new LinearLayout.LayoutParams(
+				titleView.setLayoutParams(new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
 				));
 			} else {
 				summaryView.setVisibility(View.GONE);
-        		titleView.setLayoutParams(new LinearLayout.LayoutParams(
+				titleView.setLayoutParams(new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT
 				));
 			}
