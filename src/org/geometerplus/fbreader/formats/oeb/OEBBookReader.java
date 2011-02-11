@@ -85,6 +85,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 
 			myModelReader.addHyperlinkLabel(referenceName);
 			myTOCLabels.put(referenceName, myModelReader.Model.BookTextModel.getParagraphsNumber());
+			myModelReader.addPageLink(referenceName);
 			reader.readFile(xhtmlFile, referenceName + '#');
 			myModelReader.insertEndOfSectionParagraph();
 		}

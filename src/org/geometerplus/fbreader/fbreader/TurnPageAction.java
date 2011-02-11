@@ -57,6 +57,7 @@ class TurnPageAction extends FBAction {
 	public void run() {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		final FBView view = Reader.getTextView();
+		view.checkInvalidCache();
 		if (view.getAnimationType() != FBView.Animation.none) {
 			final boolean horizontal = preferences.HorizontalOption.getValue();
 			if (myForward) {

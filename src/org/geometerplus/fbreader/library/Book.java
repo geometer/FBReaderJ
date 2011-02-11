@@ -364,6 +364,18 @@ public class Book {
 		}
 	}
 
+	public void loadVisitedLinks() {
+		if (myId != -1) {
+			BooksDatabase.Instance().loadVisitedLinks(myId);
+		}
+	}
+
+	public void storeVisitedLinks() {
+		if (myId != -1) {
+			BooksDatabase.Instance().storeVisitedLinks(myId);
+		}
+	}
+
 	public void insertIntoBookList() {
 		if (myId != -1) {
 			BooksDatabase.Instance().insertIntoBookList(myId);

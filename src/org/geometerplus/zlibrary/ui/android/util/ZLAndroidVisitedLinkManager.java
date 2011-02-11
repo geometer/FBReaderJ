@@ -17,20 +17,9 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+package org.geometerplus.zlibrary.ui.android.util;
 
-public interface ZLTextWritableModel extends ZLTextModel {
-	void createParagraph(byte kind);
+import org.geometerplus.zlibrary.core.util.ZLVisitedLinkManager;
 
-	void addControl(byte textKind, boolean isStart);
-	void addText(char[] text);
-	void addText(char[] text, int offset, int length);
-
-	//void addControl(ZLTextForcedControlEntry entry);
-	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
-	void addPageLink(String id);
-	void addImage(String id, short vOffset);
-	void addFixedHSpace(short length);
-
-	void stopReading();
+public final class ZLAndroidVisitedLinkManager extends ZLVisitedLinkManager {
 }

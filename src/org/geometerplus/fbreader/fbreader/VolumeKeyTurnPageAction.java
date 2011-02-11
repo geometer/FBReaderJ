@@ -55,6 +55,7 @@ class VolumeKeyTurnPageAction extends FBAction {
 			}
 		}
 		final FBView view = Reader.getTextView();
+		view.checkInvalidCache();
 		if (view.getAnimationType() != FBView.Animation.none) {
 			final boolean horizontal = preferences.HorizontalOption.getValue();
 			if (forward) {

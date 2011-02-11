@@ -406,6 +406,7 @@
 				<node name="selectionBackground" value="Selection background"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text"/>
 				<node name="highlighting" value="Search results background"/>
 				<node name="footer" value="Footer" />
 			</node>

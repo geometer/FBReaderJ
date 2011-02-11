@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.net.Uri;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLVisitedLinkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.text.view.*;
@@ -58,7 +58,10 @@ class ProcessHyperlinkAction extends FBAction {
 					openInBrowser(hyperlink.Id);
 					break;
 				case FBHyperlinkType.INTERNAL:
+				case FBHyperlinkType.INTERNAL_VISITED:
+					ZLVisitedLinkManager.Instance().markLinkVisited(hyperlink.Id);
 					Reader.tryOpenFootnote(hyperlink.Id);
+					hyperlink.Type = FBHyperlinkType.INTERNAL_VISITED;
 					break;
 			}
 			return;
