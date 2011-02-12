@@ -54,4 +54,9 @@ public class BasketTree extends NetworkTree implements ZLAndroidTree {
 	public NetworkLibraryItem getHoldedItem() {
 		return null;
 	}
+
+	@Override
+	public String getUniqueKey() {
+		return null;
+	}
 }
