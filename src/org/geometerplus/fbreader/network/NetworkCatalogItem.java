@@ -68,21 +68,6 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 	}
 
 	/**
-	 * Creates new NetworkCatalogItem instance with specified accessibility and <code>CatalogType.OTHER</code> type.
-	 *
-	 * @param link          corresponding NetworkLink object. Must be not <code>null</code>.
-	 * @param title         title of this library item. Must be not <code>null</code>.
-	 * @param summary       description of this library item. Can be <code>null</code>.
-	 * @param cover         cover url. Can be <code>null</code>.
-	 * @param urlByType     map contains URLs and their types. Must be not <code>null</code>.
-	 * @param accessibility value defines when this library item will be accessible
-	 *                      in the network library view. 
-	 */
-	public NetworkCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility) {
-		this(link, title, summary, cover, urlByType, accessibility, CatalogType.OTHER);
-	}
-
-	/**
 	 * Creates new NetworkCatalogItem instance with specified accessibility and type.
 	 *
 	 * @param link          corresponding NetworkLink object. Must be not <code>null</code>.
