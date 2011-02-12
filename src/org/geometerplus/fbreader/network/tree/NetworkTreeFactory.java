@@ -50,11 +50,12 @@ public class NetworkTreeFactory {
 				throw new RuntimeException("Unable to insert NetworkBookItem to the middle of the catalog");
 			}
 
-			final boolean showAuthors = parent.Item.CatalogType != NetworkCatalogItem.CATALOG_BY_AUTHORS;
+			final NetworkCatalogItem.CatalogType catalogType = parent.Item.getCatalogType();
+			final boolean showAuthors = catalogType != NetworkCatalogItem.CatalogType.BY_AUTHOR;
 
 			NetworkBookItem book = (NetworkBookItem) item;
 			String seriesTitle = book.SeriesTitle;
-			if (seriesTitle == null) {
+			if (seriesTitle == null || catalogType == NetworkCatalogItem.CatalogType.BY_SERIES) {
 				return new NetworkBookTree(parent, (NetworkBookItem) item, position, showAuthors);
 			}
 
