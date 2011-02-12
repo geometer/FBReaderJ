@@ -229,9 +229,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 
 		final LinkedList<String> tags = new LinkedList<String>();
 		for (ATOMCategory category: entry.Categories) {
-			String term = category.getTerm();
-			if (term != null) {
-				tags.add(term);
+			String label = category.getLabel();
+			if (label == null) {
+				label = category.getTerm();
+			}
+			if (label != null) {
+				tags.add(label);
 			}
 		}
 

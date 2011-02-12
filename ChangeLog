@@ -1,3 +1,7 @@
+===== 0.99.13 (??? ??, 2011) =====
+* Color channel values in color dialog
+* Fixed categories processing in feedbooks feed
+
 ===== 0.99.12 (Feb 09, 2011) =====
 * Added support for more dictionaries (by Steffen Siebert)
 * Option 'show status bar when menu becomes visible' (by Steffen Siebert)
