@@ -51,4 +51,9 @@ public class AddCustomCatalogItemTree extends NetworkTree implements ZLAndroidTr
 	public int getCoverResourceId() {
 		return R.drawable.ic_list_plus;
 	}
+
+	@Override
+	public String getUniqueKey() {
+		return null;
+	}
 }

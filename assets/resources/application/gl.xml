@@ -559,10 +559,6 @@
 			<node name="noRequiredInformation" value="A información requirida non está indicada no catálogo" />
 			<node name="cacheDirectoryError" value="Non é posíbel crear o cartafol da caché" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Información" />
-			<node name="message" value="O catálogo está baleiro" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Resultados da busca" />
 			<node name="message" value="Non se atopa ningún libro coincidente" />
@@ -610,6 +606,7 @@
 		<node name="dictionaryIsNotInstalled" value="O dicionario non está instalado"/>
 		<node name="permissionDenied" value="Permiso denegado"/>
 		<node name="noFavorites" value="A súa lista de preferencias está baleira"/>
+		<node name="emptyCatalog" value="O catálogo está baleiro"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>

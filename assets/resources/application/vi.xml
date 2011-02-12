@@ -559,10 +559,6 @@
 			<node name="noRequiredInformation" value="Thông tin yêu cầu không định vị được trong catalo" />
 			<node name="cacheDirectoryError" value="Không thể tạo thư mục đệm" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Thông tin" />
-			<node name="message" value="Danh mục rỗng" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Kết quả Tìm kiếm" />
 			<node name="message" value="Không tìm thấy sách thích hợp" />
@@ -610,6 +606,7 @@
 		<node name="dictionaryIsNotInstalled" value="Xin lỗi, từ điển chưa được cài"/>
 		<node name="permissionDenied" value="Xin lỗi, từ chối cho phép "/>
 		<node name="noFavorites" value="Xin lỗi, danh sách yêu thích của bạn đang trống"/>
+		<node name="emptyCatalog" value="Danh mục rỗng"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Trình duyệt"/>

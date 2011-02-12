@@ -29,7 +29,6 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.*;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
@@ -112,21 +111,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		setProgressBarIndeterminateVisibility(myInProgress);
 	}
 
-	private static String getNetworkTreeKey(NetworkTree tree, boolean recursive) {
-		if (tree instanceof NetworkCatalogTree) {
-			return ((NetworkCatalogTree) tree).Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		} else if (tree instanceof SearchItemTree) {
-			return NetworkSearchActivity.SEARCH_RUNNABLE_KEY;
-		} else if (recursive && tree.Parent instanceof NetworkTree) {
-			if (tree instanceof NetworkAuthorTree
-					|| tree instanceof NetworkSeriesTree) {
-				return getNetworkTreeKey((NetworkTree) tree.Parent, true);
-			}
-		}
-		return null;
-	}
-
-
 	@Override
 	public void onDestroy() {
 		if (myTree != null && myCatalogKey != null && NetworkView.Instance().isInitialized()) {
@@ -201,10 +185,18 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		}
 	}
 
+	private static String getLoadableNetworkTreeKey(NetworkTree tree) {
+		if ((tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree)
+				&& tree.Parent instanceof NetworkTree) {
+			return getLoadableNetworkTreeKey((NetworkTree) tree.Parent);
+		}
+		return tree.getUniqueKey();
+	}
+
 	@Override
 	public void onModelChanged() {
 		final NetworkView networkView = NetworkView.Instance();
-		final String key = getNetworkTreeKey(myTree, true);
+		final String key = getLoadableNetworkTreeKey(myTree);
 		myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
 		getListView().invalidateViews();
 
@@ -228,7 +220,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private void doStopLoading() {
-		final String key = getNetworkTreeKey(myTree, false);
+		final String key = myCatalogKey;
 		if (key != null && NetworkView.Instance().isInitialized()) {
 			final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
 			if (runnable != null) {

@@ -113,9 +113,8 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	@Override
-	public OPDSCatalogItem.State createOperationData(INetworkLink link,
-			NetworkOperationData.OnNewItemListener listener) {
-		return new OPDSCatalogItem.State(link, listener);
+	public OPDSCatalogItem.State createOperationData(NetworkOperationData.OnNewItemListener listener) {
+		return new OPDSCatalogItem.State(this, listener);
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {

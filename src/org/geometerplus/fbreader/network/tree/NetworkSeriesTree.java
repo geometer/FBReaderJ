@@ -98,4 +98,17 @@ public class NetworkSeriesTree extends NetworkTree {
 			removeSelf();
 		}
 	}
+
+	@Override
+	public String getUniqueKey() {
+		final StringBuilder buffer = new StringBuilder();
+
+		final String parentKey = ((NetworkTree)Parent).getUniqueKey();
+		if (parentKey != null) {
+			buffer.append(parentKey).append("///");
+		}
+		buffer.append("org.geometerplus.fbreader.network.tree.Series:").append(SeriesTitle);
+
+		return buffer.toString();
+	}
 }

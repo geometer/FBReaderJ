@@ -558,10 +558,6 @@
 			<node name="noRequiredInformation" value="Информация нет в каталоге" />
 			<node name="cacheDirectoryError" value="Не удается создать каталог для кэша" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Информация" />
-			<node name="message" value="Каталог пуст" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Результаты поиска" />
 			<node name="message" value="Подходящих книг не найдено" />
@@ -609,6 +605,7 @@
 		<node name="dictionaryIsNotInstalled" value="Не удалось запустить словарь"/>
 		<node name="permissionDenied" value="Нет доступа к файлам" />
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
+		<node name="emptyCatalog" value="Каталог пуст"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>

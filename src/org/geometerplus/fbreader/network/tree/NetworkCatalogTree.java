@@ -170,4 +170,9 @@ public class NetworkCatalogTree extends NetworkTree {
 		ChildrenItems.removeAll(items);
 		super.removeItems(items);
 	}
+
+	@Override
+	public String getUniqueKey() {
+		return Item.getFullRequestString();
+	}
 }

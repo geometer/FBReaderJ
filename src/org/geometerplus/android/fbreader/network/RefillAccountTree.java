@@ -73,4 +73,9 @@ class RefillAccountTree extends NetworkTree implements ZLAndroidTree {
 	public int getCoverResourceId() {
 		return R.drawable.ic_list_library_wallet;
 	}
+
+	@Override
+	public String getUniqueKey() {
+		return null;
+	}
 }

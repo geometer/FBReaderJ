@@ -41,12 +41,19 @@ public interface INetworkLink {
 	String getSummary();
 	String getIcon();
 	String getLink(String urlKey);
+
+	/**
+	 * @return 2-letters language code or special token "multi"
+	 */
 	String getLanguage();
 
 	Set<String> getLinkKeys();
 
-	NetworkOperationData createOperationData(INetworkLink link,
-			NetworkOperationData.OnNewItemListener listener);
+	/**
+	 * @param listener Network operation listener
+	 * @return instance, which represents the state of the network operation.
+	 */
+	NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener);
 
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);

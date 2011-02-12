@@ -559,10 +559,6 @@
 			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
 			<node name="cacheDirectoryError" toBeTranslated="true" value="Unable to create cache directory" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Informazioni" />
-			<node name="message" value="Il catalogo è vuoto" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Risultati ricerca" />
 			<node name="message" value="Non sono stati trovati libri adatti" />
@@ -610,6 +606,7 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
 		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

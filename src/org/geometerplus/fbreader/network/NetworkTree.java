@@ -90,6 +90,12 @@ public abstract class NetworkTree extends FBTree {
 
 	public abstract NetworkLibraryItem getHoldedItem();
 
+	/**
+	 * Returns unique identifier which can be used in NetworkView methods
+	 * @return unique String instance
+	 */
+	public abstract String getUniqueKey();
+
 	public void removeItems(Set<NetworkLibraryItem> items) {
 		if (items.isEmpty() || subTrees().isEmpty()) {
 			return;

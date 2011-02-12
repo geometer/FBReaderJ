@@ -123,4 +123,9 @@ public class NetworkAuthorTree extends NetworkTree {
 	public NetworkLibraryItem getHoldedItem() {
 		return null;
 	}
+
+	@Override
+	public String getUniqueKey() {
+		return "org.geometerplus.fbreader.network.tree.Authors:" + Author.DisplayName;
+	}
 }

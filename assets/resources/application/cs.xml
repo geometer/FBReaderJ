@@ -559,10 +559,6 @@
 			<node name="noRequiredInformation" value="Požadovaná informace není uvedena v katalogu" />
 			<node name="cacheDirectoryError" value="Nelze vytvořit adresář mezipaměti" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Informace" />
-			<node name="message" value="Katalog je prázdný" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Výsledky vyhledávání" />
 			<node name="message" value="Nebyly nalezeny žádné vhodné knihy" />
@@ -610,6 +606,7 @@
 		<node name="dictionaryIsNotInstalled" value="Slovník není bohužel nainstalován"/>
 		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
+		<node name="emptyCatalog" value="Katalog je prázdný"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>

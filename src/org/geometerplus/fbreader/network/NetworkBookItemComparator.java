@@ -22,9 +22,7 @@ package org.geometerplus.fbreader.network;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-
 public final class NetworkBookItemComparator implements Comparator<NetworkLibraryItem> {
-
 	public int compare(NetworkLibraryItem item0, NetworkLibraryItem item1) {
 		final boolean item0isABook = item0 instanceof NetworkBookItem;
 		final boolean item1isABook = item1 instanceof NetworkBookItem;

@@ -52,37 +52,36 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		myLinks = new TreeMap<String, String>(links);
 	}
 
-	public String getSiteName() {
+	public final String getSiteName() {
 		return mySiteName;
 	}
 
-	public String getTitle() {
+	public final String getTitle() {
 		return myTitle;
 	}
 
-	public String getSummary() {
+	public final String getSummary() {
 		return mySummary;
 	}
 
-	public String getIcon() {
+	public final String getIcon() {
 		return myIcon;
 	}
 
-	public String getLanguage() {
+	public final String getLanguage() {
 		return myLanguage;
 	}
 
-	public String getLink(String urlKey) {
+	public final String getLink(String urlKey) {
 		return myLinks.get(urlKey);
 	}
 
-	public Set<String> getLinkKeys() {
+	public final Set<String> getLinkKeys() {
 		return myLinks.keySet();
 	}
 
-	public NetworkOperationData createOperationData(INetworkLink link,
-			NetworkOperationData.OnNewItemListener listener) {
-		return new NetworkOperationData(link, listener);
+	public NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener) {
+		return new NetworkOperationData(this, listener);
 	}
 
 	@Override
