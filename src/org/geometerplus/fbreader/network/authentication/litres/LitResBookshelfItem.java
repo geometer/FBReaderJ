@@ -140,8 +140,8 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 public class LitResBookshelfItem extends NetworkCatalogItem {
 	private boolean myForceReload;
 
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility) {
-		super(link, title, summary, cover, urlByType, visibility, CATALOG_OTHER);
+	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility) {
+		super(link, title, summary, cover, urlByType, accessibility, CatalogType.OTHER);
 	}
 
 	@Override
@@ -151,7 +151,8 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 
 	@Override
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
-		final LitResAuthenticationManager mgr = (LitResAuthenticationManager) Link.authenticationManager();
+		final LitResAuthenticationManager mgr =
+			(LitResAuthenticationManager)Link.authenticationManager();
 
 		// TODO: Maybe it's better to call isAuthorised(true) directly 
 		// and let exception fly through???
@@ -165,8 +166,8 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 		} finally {
 			myForceReload = true;
 			// TODO: implement asynchronous loading
-			LinkedList<NetworkLibraryItem> children = new LinkedList<NetworkLibraryItem>();
-			mgr.collectPurchasedBooks(children);
+			ArrayList<NetworkLibraryItem> children =
+				new ArrayList<NetworkLibraryItem>(mgr.purchasedBooks());
 			if (children.size() <= 5) {
 				Collections.sort(children, new NetworkBookItemComparator());
 				for (NetworkLibraryItem item : children) {

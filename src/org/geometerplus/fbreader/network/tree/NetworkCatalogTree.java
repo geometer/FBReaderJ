@@ -105,14 +105,17 @@ public class NetworkCatalogTree extends NetworkTree {
 				}
 				NetworkCatalogTree child = (NetworkCatalogTree) currentNode;
 				if (child.Item == currentItem) {
-					final int visibility = child.Item.getVisibility();
-					if (visibility == ZLBoolean3.B3_TRUE) {
-						child.updateVisibility();
-					} else if (visibility == ZLBoolean3.B3_FALSE) {
-						toRemove.add(child);
-					} else {
-						child.clear();
-						child.ChildrenItems.clear();
+					switch (child.Item.getVisibility()) {
+						case B3_TRUE:
+							child.updateVisibility();
+							break;
+						case B3_FALSE:
+							toRemove.add(child);
+							break;
+						case B3_UNDEFINED:
+							child.clear();
+							child.ChildrenItems.clear();
+							break;
 					}
 					currentNode = null;
 					++nodeCount;
