@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -98,8 +99,9 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			final String language = entry.DCLanguage;
 
 			String icon = null; 
-			final HashMap<String, String> links = new HashMap<String, String>();
-			final HashMap<String, Integer> urlConditions = new HashMap<String, Integer>();
+			final HashMap<String,String> links = new HashMap<String,String>();
+			final HashMap<String,NetworkCatalogItem.Accessibility> urlConditions =
+				new HashMap<String,NetworkCatalogItem.Accessibility>();
 			for (ATOMLink link: entry.Links) {
 				final String href = link.getHref();
 				final String type = ZLNetworkUtil.filterMimeType(link.getType());
@@ -135,9 +137,11 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
 					links.put(INetworkLink.URL_RECOVER_PASSWORD, href);
 				} else if (rel == REL_CONDITION_NEVER) {
-					urlConditions.put(href, OPDSNetworkLink.FeedCondition.NEVER);
+					urlConditions.put(href, NetworkCatalogItem.Accessibility.NEVER);
 				} else if (rel == REL_CONDITION_SIGNED_IN) {
-					urlConditions.put(href, OPDSNetworkLink.FeedCondition.SIGNED_IN);
+					urlConditions.put(href, NetworkCatalogItem.Accessibility.SIGNED_IN);
+				} else if (rel == REL_CONDITION_HAS_BOOKS) {
+					urlConditions.put(href, NetworkCatalogItem.Accessibility.HAS_BOOKS);
 				}
 			}
 
@@ -156,8 +160,16 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			return false; 
 		}
 
-		private INetworkLink link(String siteName, String title, String summary, String icon, String language,
-				Map<String, String> links, HashMap<String, Integer> urlConditions, String sslCertificate) {
+		private INetworkLink link(
+			String siteName,
+			String title,
+			String summary,
+			String icon,
+			String language,
+			Map<String,String> links,
+			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
+			String sslCertificate
+		) {
 			if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
 				return null;
 			}

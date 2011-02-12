@@ -74,7 +74,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
 
-		final boolean isVisible = item.getVisibility() == ZLBoolean3.B3_TRUE;
 		boolean hasItems = false;
 
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
@@ -84,7 +83,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		if (tree instanceof NetworkCatalogRootTree) {
-			if (isVisible) {
+			if (item.getVisibility() == ZLBoolean3.B3_TRUE) {
 				final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 				if (mgr != null) {
 					if (mgr.mayBeAuthorised(false)) {
@@ -115,14 +114,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 		}
 
-		if (!isVisible && !hasItems) {
-			switch (item.Visibility) {
-			case NetworkCatalogItem.VISIBLE_LOGGED_USER:
-				if (item.Link.authenticationManager() != null) {
-					addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
-				}
-				break;
-			}
+		if (item.getVisibility() == ZLBoolean3.B3_UNDEFINED &&
+			!hasItems && item.Link.authenticationManager() != null) {
+			addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
 		}
 	}
 
@@ -136,15 +130,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE) != null) {
 			return OPEN_IN_BROWSER_ITEM_ID;
 		}
-		if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
-			switch (item.Visibility) {
-			case NetworkCatalogItem.VISIBLE_LOGGED_USER:
-				if (item.Link.authenticationManager() != null) {
-					return SIGNIN_ITEM_ID;
-				}
-				break;
-			}
-			return TREE_NO_ACTION;
+		if (item.getVisibility() == ZLBoolean3.B3_UNDEFINED &&
+			item.Link.authenticationManager() != null) {
+			return SIGNIN_ITEM_ID;
 		}
 		return TREE_NO_ACTION;
 	}
@@ -208,22 +196,21 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	private boolean consumeByVisibility(final NetworkBaseActivity activity, final NetworkTree tree, final int actionCode) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
-		if (catalogTree.Item.getVisibility() == ZLBoolean3.B3_TRUE) {
-			return false;
-		}
-		switch (catalogTree.Item.Visibility) {
-		case NetworkCatalogItem.VISIBLE_LOGGED_USER:
-			NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
-				public void run() {
-					if (catalogTree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
-						return;
+		switch (catalogTree.Item.getVisibility()) {
+			case B3_TRUE:
+				return false;
+			case B3_UNDEFINED:
+				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
+					public void run() {
+						if (catalogTree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
+							return;
+						}
+						if (actionCode != SIGNIN_ITEM_ID) {
+							runAction(activity, tree, actionCode);
+						}
 					}
-					if (actionCode != SIGNIN_ITEM_ID) {
-						runAction(activity, tree, actionCode);
-					}
-				}
-			});
-			break;
+				});
+				break;
 		}
 		return true;
 	}
