@@ -159,9 +159,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 
-		final String key = tree.getUniqueKey();
-		final boolean isLoading = (key != null) ?
-			NetworkView.Instance().containsItemsLoadingRunnable(key) : false;
+		final boolean isLoading =
+			NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey());
 
 		prepareOptionsItem(menu, RELOAD_ITEM_ID,
 				item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null && !isLoading);
@@ -375,9 +374,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	public void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		final String key = tree.getUniqueKey();
-		if (key == null) {
-			throw new RuntimeException("Catalog tree has null unique key. That's impossible!!!");
-		}
 		NetworkView.Instance().tryResumeLoading(activity, tree, key, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
@@ -423,9 +419,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		final String key = tree.getUniqueKey();
-		if (key == null) {
-			throw new RuntimeException("Catalog tree has null unique key. That's impossible!!!");
-		}
 		if (NetworkView.Instance().containsItemsLoadingRunnable(key)) {
 			return;
 		}

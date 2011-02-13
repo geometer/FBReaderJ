@@ -217,21 +217,13 @@ class NetworkBookActions extends NetworkTreeActions {
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			switch (actionCode) {
-			case SHOW_BOOKS_ITEM_ID:
-				showBooks(activity, tree);
-				return true;
+				case SHOW_BOOKS_ITEM_ID:
+					NetworkView.Instance().openTree(activity, tree, tree.getUniqueKey());
+					return true;
 			}
 			return false;
 		}
 		return runAction(activity, ((NetworkBookTree) tree).Book, actionCode);
-	}
-
-
-	private void showBooks(NetworkBaseActivity activity, NetworkTree tree) {
-		final String key = tree.getUniqueKey();
-		if (key != null) {
-			NetworkView.Instance().openTree(activity, tree, key);
-		}
 	}
 
 	static boolean runAction(Activity activity, NetworkBookItem book, int actionCode) {
