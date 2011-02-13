@@ -72,6 +72,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			)
 		);
 		statusBarPreferences.setEnabled(!androidApp.ShowStatusBarOption.getValue());
+		appearanceScreen.addOption(androidApp.LongCancelMenu, "longCancelMenu");
 
 		final Screen textScreen = createPreferenceScreen("text");
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
@@ -239,6 +240,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		colorsScreen.addOption(profile.HighlightingOption, "highlighting");
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
+		colorsScreen.addOption(profile.HyperlinkVisitedTextOption, "hyperlinkVisited");
 		colorsScreen.addOption(profile.FooterFillOption, "footer");
 
 		final Screen marginsScreen = createPreferenceScreen("margins");

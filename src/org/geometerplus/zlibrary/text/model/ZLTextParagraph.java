@@ -26,6 +26,7 @@ public interface ZLTextParagraph {
 		byte CONTROL = 3;
 		byte FORCED_CONTROL = 4;
 		byte FIXED_HSPACE = 5;
+		byte PAGELINK = 6;
 	}
 
 	interface EntryIterator {
@@ -41,6 +42,7 @@ public interface ZLTextParagraph {
 		byte getHyperlinkType();
 		String getHyperlinkId();
 
+		String getPageLink();
 		ZLImageEntry getImageEntry();
 
 		short getFixedHSpaceLength();
@@ -58,6 +60,7 @@ public interface ZLTextParagraph {
 		byte AFTER_SKIP_PARAGRAPH = 3;
 		byte END_OF_SECTION_PARAGRAPH = 4;
 		byte END_OF_TEXT_PARAGRAPH = 5;
+		byte START_OF_SECTION_PARAGRAPH = 6;
 	};
 
 	byte getKind();

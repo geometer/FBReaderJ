@@ -24,9 +24,14 @@ import android.graphics.*;
 import android.view.*;
 import android.util.AttributeSet;
 
+import org.geometerplus.android.util.KeyTracker;
+import org.geometerplus.android.util.LongPressBackKeyTracker;
+import org.geometerplus.android.util.KeyTracker.Stage;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
+import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
@@ -41,6 +46,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private int myScrollingShift;
 	private float myScrollingSpeed;
 	private int myScrollingBound;
+	private KeyTracker myKeyTracker;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -58,6 +64,17 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	private void init() {
+		myKeyTracker = new KeyTracker(new LongPressBackKeyTracker() {
+			@Override
+			public void onLongPressBack(int keyCode, KeyEvent event, Stage stage, int duration) {
+				ZLApplication.Instance().doAction(ActionCode.LONG_CANCEL);
+			}
+
+			@Override
+			public void onShortPressBack(int keyCode, KeyEvent event, Stage stage, int duration) {
+				ZLApplication.Instance().doAction(ActionCode.CANCEL);
+			}
+		});
 		// next line prevent ignoring first onKeyDown DPad event
 		// after any dialog was closed
 		setFocusableInTouchMode(true);
@@ -473,6 +490,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (myKeyTracker.doKeyDown(keyCode, event)) {
+			return true;
+		}
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
@@ -498,6 +518,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (myKeyTracker.doKeyUp(keyCode, event)) {
+			return true;
+		}
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:

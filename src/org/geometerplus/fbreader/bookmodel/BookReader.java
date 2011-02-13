@@ -147,6 +147,14 @@ public class BookReader {
 		}
 	}
 	
+	public final void beginStartOfSectionParagraph() {
+		final ZLTextWritableModel textModel = myCurrentTextModel;
+		if (textModel != null) {
+			textModel.createParagraph(ZLTextParagraph.Kind.START_OF_SECTION_PARAGRAPH);
+			myTextParagraphExists = true;
+		}
+	}
+
 	public final void insertEndOfSectionParagraph() {
 		insertEndParagraph(ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
 	}
@@ -391,6 +399,15 @@ public class BookReader {
 				textModel.addControl(FBTextKind.IMAGE, false);
 				endParagraph();
 			}
+		}
+	}
+
+	public final void addPageLink(String ref) {
+		final ZLTextWritableModel textModel = myCurrentTextModel;
+		if (textModel != null) {
+			beginStartOfSectionParagraph();
+			textModel.addPageLink(ref);
+			endParagraph();
 		}
 	}
 
