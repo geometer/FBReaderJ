@@ -55,10 +55,16 @@ abstract class Util implements UserRegistrationConstants {
 
 	static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		try {
-			activity.startActivityForResult(new Intent(
+			final Intent intent = new Intent(
 				REGISTRATION_ACTION,
 				Uri.parse(link.getLink(INetworkLink.URL_SIGN_UP))
-			), USER_REGISTRATION_REQUEST_CODE);
+			);
+			if (PackageUtil.canBeStarted(activity, intent)) {
+				activity.startActivityForResult(new Intent(
+					REGISTRATION_ACTION,
+					Uri.parse(link.getLink(INetworkLink.URL_SIGN_UP))
+				), USER_REGISTRATION_REQUEST_CODE);
+			}
 		} catch (ActivityNotFoundException e) {
 		}
 	}
@@ -93,21 +99,19 @@ abstract class Util implements UserRegistrationConstants {
 
 	static void runSmsDialog(Activity activity, INetworkLink link) {
 		try {
-			System.err.println("runSmsDialog 0");
 			final Intent intent = new Intent(
 				SMS_REFILLING_ACTION,
 				Uri.parse(link.getLink(INetworkLink.URL_MAIN))
 			);
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			if (mgr != null) {
-			System.err.println("runSmsDialog 1");
 				for (Map.Entry<String,String> entry : mgr.getSmsRefillingData().entrySet()) {
 					intent.putExtra(entry.getKey(), entry.getValue());
 				}
 			}
-			System.err.println("runSmsDialog 2");
-			activity.startActivity(intent);
-			System.err.println("runSmsDialog 3");
+			if (PackageUtil.canBeStarted(activity, intent)) {
+				activity.startActivity(intent);
+			}
 		} catch (ActivityNotFoundException e) {
 		}
 	}

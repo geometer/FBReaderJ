@@ -167,7 +167,7 @@
 		<node name="bookInfo" value="书籍信息" />
 		<node name="library" value="本地藏书" />
 		<node name="toc" value="目录" />
-		<node name="day" value="白低黑字" />
+		<node name="day" value="白底黑字" />
 		<node name="night" value="黑底白字" />
 		<node name="networkLibrary" value="在线书库" />
 		<node name="navigate" value="导航">
