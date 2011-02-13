@@ -1,4 +1,5 @@
 ===== 0.99.13 (??? ??, 2011) =====
+* Fixed book/position forgetting bug
 * Color channel values in color dialog
 * Fixed categories processing in feedbooks feed
 
