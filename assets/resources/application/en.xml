@@ -181,9 +181,12 @@
 			<node name="redo" value="Go Forward"/>
 		</node>
 		<node name="selection" value="Selection">
+			<node name="quickHelp" value="Select some text" />
+			<node name="textInBuffer" value="Text in the buffer:" />
 			<node name="copyToClipboard" value="Copy to Clipboard"/>
 			<node name="openInDictionary" value="Open in Dictionary"/>
 			<node name="clearSelection" value="Clear"/>
+			<node name="quoteFrom" value="Quote from" />
 		</node>
 		<node name="search" value="Search"/>
 		<node name="rotate" value="Rotate screen"/>
