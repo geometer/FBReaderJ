@@ -312,6 +312,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		if (page == myCurrentPage) {
 			mySelectionModel.update();
+			mySelection.update();
 		}
 
 		y = getTopMargin();
@@ -1424,7 +1425,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	protected abstract boolean isSelectionModeActive();
 
 	protected abstract void onSelectingStarted();
-	protected abstract void onSelectingEnded();
+	
+	protected void onSelectingEnded() {
+		mySelection.stop();
+	}
 
 	protected boolean startSelection(int x, int y) {
 		if (!mySelection.start(x, y))

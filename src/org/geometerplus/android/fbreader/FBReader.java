@@ -137,11 +137,19 @@ public final class FBReader extends ZLAndroidActivity {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Handler successHandler = new Handler() {
 				public void handleMessage(Message message) {
+					// this is a hack, but otherwise there is no way to cancel the selection: the SelectionPanel when searching
+					// is activated doesn't go through the normal hiding process, so it can't call this.
+					((FBReaderApp)FBReaderApp.Instance()).getTextView().deactivateSelectionMode();
+					
 					ourTextSearchPanel.show(true);
 				}
 			};
 			final Handler failureHandler = new Handler() {
 				public void handleMessage(Message message) {
+					// this is a hack, but otherwise there is no way to cancel the selection: the SelectionPanel when searching
+					// is activated doesn't go through the normal hiding process, so it can't call this.
+					((FBReaderApp)FBReaderApp.Instance()).getTextView().deactivateSelectionMode();
+
 					UIUtil.showErrorMessage(FBReader.this, "textNotFound");
 					ourTextSearchPanel.StartPosition = null;
 				}

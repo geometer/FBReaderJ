@@ -11,6 +11,7 @@ public class ZLTextSelection {
 	private final StringBuilder myText;
 	private boolean myIsTextValid;
 	private ZLTextView myView;
+	private Scroller myScroller;
 
 	public ZLTextSelection(ZLTextView view) {
 		myView = view;
@@ -18,6 +19,7 @@ public class ZLTextSelection {
 		myBounds = new Bound[2];
 		myBounds[0] = new StartBound();
 		myBounds[1] = new EndBound();
+		myScroller = new Scroller();
 		clear();
 	}
 
@@ -47,6 +49,12 @@ public class ZLTextSelection {
 		myBounds[1].set(newSelectedRegion);
 		return true;
 	}
+	public void stop() {
+		myScroller.stop();
+	}
+	public void update() {
+		myScroller.update();
+	}
 	private boolean expandBy(int boundID, ZLTextElementRegion newSelectedRegion) {
 		if (myBounds[boundID].expandBy(newSelectedRegion)) {
 			myCurrentChangingBoundID = boundID;
@@ -61,45 +69,17 @@ public class ZLTextSelection {
 		}
 		return false;
 	}
-	private final Timer myTimer = new Timer();
-	private TimerTask myScrollingTask;
-
-	private void startSelectionScrolling(final boolean forward) {
-		stopSelectionScrolling();
-		myScrollingTask = new TimerTask() {
-			public void run() {
-				myView.scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
-			}
-		};
-		myTimer.schedule(myScrollingTask, 200, 400);
-	}
-
-	private void stopSelectionScrolling() {
-		if (myScrollingTask != null) {
-			myScrollingTask.cancel();
-		}
-		myScrollingTask = null;
-	}
-
-	private boolean checkForScrolling(int x, int y) {
-		final ZLTextElementArea endPageArea = getTextElementMap().get(getTextElementMap().size() - 1);
-		if (endPageArea.YEnd < y) {
-			startSelectionScrolling(true);
-			return true;
-		}
-		return false;
-	}
 	public boolean expandTo(int x, int y) { // TODO scroll if out of page.
 		if (isEmpty()) {
 			return start(x, y);
 		}
 		final ZLTextElementRegion newSelectedRegion = findSelectedRegion(x, y);
 
-		if (newSelectedRegion == null) // whitespace.
-			return checkForScrolling(x, y);
-		if (equalsTo(0, newSelectedRegion) || equalsTo(1, newSelectedRegion))
-			return false;
-
+		myScroller.stop();
+		// possible page rim.
+		if (newSelectedRegion == null || equalsTo(0, newSelectedRegion) || equalsTo(1, newSelectedRegion))
+			return myScroller.handle(x, y, newSelectedRegion);
+		
 		if (!expandBy(0, newSelectedRegion) && !expandBy(1, newSelectedRegion))
 			myBounds[myCurrentChangingBoundID].set(newSelectedRegion); // selection is now being shrinked
 
@@ -152,7 +132,7 @@ public class ZLTextSelection {
 	}
 	public boolean areaWithinSelection(ZLTextElementArea area) {
 		return myBounds[1].myTextBound.isGreaterThan(area) &&
-				myBounds[0].myTextBound.isLessThan(area);
+		myBounds[0].myTextBound.isLessThan(area);
 	}
 	public boolean areaWithinStartBound(ZLTextElementArea area) {
 		return ((myBounds[1].myTextBound.isGreaterThan(area) 
@@ -161,8 +141,8 @@ public class ZLTextSelection {
 	}
 	public boolean areaWithinEndBound(ZLTextElementArea area) {
 		return myBounds[1].myTextBound.isGreaterThan(area) 
-				&& (myBounds[0].myTextBound.isLessThan(area) 
-						|| myBounds[0].myTextBound.equalsTo(area));
+		&& (myBounds[0].myTextBound.isLessThan(area) 
+				|| myBounds[0].myTextBound.equalsTo(area));
 	}
 	public int getStartAreaID(ZLTextPage page) {
 		final int id = page.TextElementMap.indexOf(myBounds[0].myArea);
@@ -212,6 +192,10 @@ public class ZLTextSelection {
 
 	private ZLTextElementRegion findSelectedRegion(int x, int y) { // TODO fast find
 		return myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextElementRegion.AnyRegionFilter);
+	}
+
+	private ZLTextElementRegion findNearestRegion(int x, int y) { // TODO fast find
+		return myView.findRegion(x, y, Integer.MAX_VALUE - 1, ZLTextElementRegion.AnyRegionFilter);
 	}
 
 	private abstract class TextBound {
@@ -308,6 +292,7 @@ public class ZLTextSelection {
 		}
 
 		protected abstract ZLTextElementArea getArea(ZLTextElementRegion region);
+		protected abstract boolean isYOutOfPage(int y);
 	}
 
 	private class StartBound extends Bound {
@@ -317,6 +302,10 @@ public class ZLTextSelection {
 		protected ZLTextElementArea getArea(ZLTextElementRegion region) {
 			return getTextElementMap().get(region.getFromIndex());
 		}
+		protected boolean isYOutOfPage(int y) {
+			final ZLTextElementArea startPageArea = getTextElementMap().get(0);
+			return (startPageArea.YStart + startPageArea.YEnd) / 2 > y;
+		}
 	}
 
 	private class EndBound extends Bound {
@@ -325,6 +314,58 @@ public class ZLTextSelection {
 		}
 		protected ZLTextElementArea getArea(ZLTextElementRegion region) {
 			return getTextElementMap().get(region.getToIndex() - 1);
+		}
+		protected boolean isYOutOfPage(int y) {
+			final ZLTextElementArea endPageArea = getTextElementMap().get(getTextElementMap().size() - 1);
+			return (endPageArea.YStart + endPageArea.YEnd) / 2 < y;
+		}
+	}
+	
+	private class Scroller {
+		private final Timer myTimer = new Timer();
+		private TimerTask myScrollingTask;
+		private int myStoredX, myStoredY;
+		private boolean myScollForward;
+
+		private void start(int x, int y) {
+			myStoredX = x;
+			myStoredY = y;
+			myScrollingTask = new TimerTask() {
+				public void run() {
+					myView.scrollPage(myScollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+				}
+			};
+			myTimer.schedule(myScrollingTask, 200, 400);
+		}
+
+		private void stop() {
+			if (myScrollingTask != null) {
+				myScrollingTask.cancel();
+			}
+			myScrollingTask = null;
+		}
+		
+		private void update() {
+			if (myScrollingTask != null)
+				expandTo(myStoredX, myStoredY);
+		}
+		private boolean isYOutOfPage(int boundID, int y) {
+			if (!myBounds[boundID].isYOutOfPage(y))
+				return false;
+			myScollForward = boundID == 1;
+			return true;
+		}
+		private boolean handle(int x, int y, ZLTextElementRegion newSelectedRegion) {
+			if (!isYOutOfPage(0, y) && !isYOutOfPage(1, y))
+				return false; // the whitespace is within the page.
+			
+			final ZLTextElementRegion nearestRegion = newSelectedRegion == null? findNearestRegion(x, y) : newSelectedRegion;
+			if (nearestRegion != null)
+				if (expandBy(0, nearestRegion) || expandBy(1, nearestRegion))
+					return true;
+			
+			start(x, y);
+			return false;
 		}
 	}
 }

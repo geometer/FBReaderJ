@@ -752,6 +752,7 @@ public final class FBView extends ZLTextView {
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}
 	protected void onSelectingEnded() {
+		super.onSelectingEnded();
 		myIsNowSelecting = false;
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}
