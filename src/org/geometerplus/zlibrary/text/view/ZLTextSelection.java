@@ -97,6 +97,7 @@ public class ZLTextSelection {
 
 		if (newSelectedRegion == null) // whitespace.
 			return checkForScrolling(x, y);
+		stopSelectionScrolling();
 		if (equalsTo(0, newSelectedRegion) || equalsTo(1, newSelectedRegion))
 			return false;
 
