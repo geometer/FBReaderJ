@@ -37,7 +37,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	private NetworkTree myTree;
 	private String myCatalogKey;
-	private boolean myInProgress;
+	private volatile boolean myInProgress;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -125,7 +125,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private final class CatalogAdapter extends BaseAdapter {
-
 		private ArrayList<NetworkTree> mySpecialItems;
 
 		public CatalogAdapter() {

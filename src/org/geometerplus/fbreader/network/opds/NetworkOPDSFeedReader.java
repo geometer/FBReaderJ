@@ -457,6 +457,15 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					urlMap,
 					opdsLink.getCondition(entry.Id.Uri)
 				);
+			} else if (REL_BASKET.equals(litresRel)) {
+				return new LitResRecommendationsItem(
+					opdsLink,
+					entry.Title,
+					annotation,
+					coverURL,
+					urlMap,
+					opdsLink.getCondition(entry.Id.Uri)
+				);
 			} else {
 				return null;
 			}
