@@ -11,8 +11,8 @@ public class SelectionDictionaryAction extends SelectionProcessAction {
     public void run() {
         final FBView fbview = Reader.getTextView();
         final int selectionStartY = fbview.getSelectionStartY(), selectionEndY = fbview.getSelectionEndY();
-        Reader.getTextView().deactivateSelectionMode();
         String text = fbview.getSelectedText();
+        Reader.getTextView().deactivateSelectionMode();
         DictionaryUtil.openTextInDictionary(myActivity, text, selectionStartY, selectionEndY);
     }
 

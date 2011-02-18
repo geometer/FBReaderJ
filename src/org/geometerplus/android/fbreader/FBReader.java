@@ -238,7 +238,7 @@ public final class FBReader extends ZLAndroidActivity {
 			ourSelectionPanel.move(selectionStartY, selectionEndY);
 			ourSelectionPanel.show(false);
 		}
-		else
+		else if (ourSelectionPanel.getVisibility())
 			ourSelectionPanel.hide();
 	}
 

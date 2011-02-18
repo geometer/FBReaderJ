@@ -561,11 +561,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final ZLTextElementArea endArea = page.TextElementMap.get(endAreaID);
 				final int top = y + 1;
 				int left, right, bottom = y + info.Height + info.Descent;
-				if (startAreaID > startSelectAreaID)
+				if (mySelection.areaWithinStartBound(startArea))
 					left = getLeftMargin();
 				else 
 					left = startArea.XStart;
-				if (endAreaID < endSelectedAreaID)
+				if (mySelection.areaWithinEndBound(endArea))
 				{
 					right = getRightLine();
 					bottom += info.VSpaceAfter;

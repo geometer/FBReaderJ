@@ -120,26 +120,60 @@ public class ZLTextSelection {
 	public int getEndElementID () {
 		return myBounds[1].getElementID();
 	}
-	public int getStartAreaID(ZLTextPage page) { // TODO
-		int id = page.TextElementMap.indexOf(myBounds[0].myArea); 
+	public boolean areaWithinSelection(ZLTextElementArea area) {
+		return myBounds[1].myTextBound.isGreaterThan(area) &&
+				myBounds[0].myTextBound.isLessThan(area);
+	}
+	public boolean areaWithinStartBound(ZLTextElementArea area) {
+		return ((myBounds[1].myTextBound.isGreaterThan(area) 
+				|| myBounds[1].myTextBound.equalsTo(area)) 
+				&& myBounds[0].myTextBound.isLessThan(area));
+	}
+	public boolean areaWithinEndBound(ZLTextElementArea area) {
+		return myBounds[1].myTextBound.isGreaterThan(area) 
+				&& (myBounds[0].myTextBound.isLessThan(area) 
+						|| myBounds[0].myTextBound.equalsTo(area));
+	}
+	public int getStartAreaID(ZLTextPage page) {
+		final int id = page.TextElementMap.indexOf(myBounds[0].myArea);
+		if (id == -1) {
+			if (areaWithinSelection(page.TextElementMap.get(0)))
+				return 0;
+		}
 		return id;
 	}
 	public int getEndAreaID(ZLTextPage page) {
-		int id = page.TextElementMap.indexOf(myBounds[1].myArea); 
+		final int id = page.TextElementMap.indexOf(myBounds[1].myArea); 
+		if (id == -1) {
+			final int lastID = page.TextElementMap.size() - 1;
+			if (areaWithinSelection(page.TextElementMap.get(lastID)))
+				return lastID;
+		}
 		return id;
 	}
+	private ZLTextElementArea getArea(int areaID) {
+		if (areaID != -1)
+			return getTextElementMap().get(areaID);
+		return null;
+	}
 	private ZLTextElementArea getStartArea() {
-		return getTextElementMap().get(getStartAreaID(myView.myCurrentPage));
+		return getArea(getStartAreaID(myView.myCurrentPage));
 	}
 	private ZLTextElementArea getEndArea() {
-		return getTextElementMap().get(getEndAreaID(myView.myCurrentPage));
+		return getArea(getEndAreaID(myView.myCurrentPage));
 	}
 
 	public int getStartY() {
-		return getStartArea().YStart;
+		final ZLTextElementArea startArea = getStartArea();
+		if (startArea != null)
+			return startArea.YStart;
+		return 0;
 	}
 	public int getEndY() {
-		return getEndArea().YEnd;
+		final ZLTextElementArea endArea = getEndArea();
+		if (endArea != null)
+			return endArea.YEnd;
+		return 0;
 	}
 
 	private ZLTextElementAreaVector getTextElementMap() {

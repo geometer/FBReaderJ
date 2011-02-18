@@ -36,7 +36,6 @@ public interface ActionCode {
 	String CLEAR_FIND_RESULTS = "clearFindResults";
 
 	String SELECTION_PANEL_VISIBILITY = "selectionTogglePanelVisibility";
-	String SELECTION_CANCEL = "selectionCancel";
 	String SELECTION_COPY = "selectionCopy";
 	String SELECTION_SHARE = "selectionShare";
 	String SELECTION_DICTIONARY = "selectionDictionary";

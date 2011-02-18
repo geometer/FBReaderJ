@@ -186,6 +186,7 @@
 			<node name="copyToClipboard" value="Скопировать в буфер"/>
 			<node name="openInDictionary" value="Посмотреть в словаре"/>
 			<node name="clearSelection" value="Убрать пометку"/>
+			<node name="quoteFrom" value="Цитата из" />
 		</node>
 		<node name="search" value="Поиск"/>
 		<node name="rotate" value="Повернуть"/>

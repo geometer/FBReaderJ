@@ -15,6 +15,8 @@ public class SelectionButtonPanel extends SeveralButtonsPanel {
 
     @Override
     public void onHide() {
+    	if (!Reader.getTextView().isNowSelecting())
+    		Reader.getTextView().deactivateSelectionMode();
     }
 
     @Override
