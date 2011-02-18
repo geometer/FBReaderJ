@@ -1,5 +1,8 @@
 package org.geometerplus.zlibrary.text.view;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ZLTextSelection {
 	private static final int SELECTION_DISTANCE = 10;  
 
@@ -58,6 +61,34 @@ public class ZLTextSelection {
 		}
 		return false;
 	}
+	private final Timer myTimer = new Timer();
+	private TimerTask myScrollingTask;
+
+	private void startSelectionScrolling(final boolean forward) {
+		stopSelectionScrolling();
+		myScrollingTask = new TimerTask() {
+			public void run() {
+				myView.scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+			}
+		};
+		myTimer.schedule(myScrollingTask, 200, 400);
+	}
+
+	private void stopSelectionScrolling() {
+		if (myScrollingTask != null) {
+			myScrollingTask.cancel();
+		}
+		myScrollingTask = null;
+	}
+
+	private boolean checkForScrolling(int x, int y) {
+		final ZLTextElementArea endPageArea = getTextElementMap().get(getTextElementMap().size() - 1);
+		if (endPageArea.YEnd < y) {
+			startSelectionScrolling(true);
+			return true;
+		}
+		return false;
+	}
 	public boolean expandTo(int x, int y) { // TODO scroll if out of page.
 		if (isEmpty()) {
 			return start(x, y);
@@ -65,8 +96,7 @@ public class ZLTextSelection {
 		final ZLTextElementRegion newSelectedRegion = findSelectedRegion(x, y);
 
 		if (newSelectedRegion == null) // whitespace.
-			return false;
-
+			return checkForScrolling(x, y);
 		if (equalsTo(0, newSelectedRegion) || equalsTo(1, newSelectedRegion))
 			return false;
 
