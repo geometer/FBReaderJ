@@ -56,7 +56,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
 
 	public ZLTextView() {
- 		mySelectionModel = new ZLTextSelectionModel(this);
+		mySelectionModel = new ZLTextSelectionModel(this);
+		mySelection = new ZLTextSelection(this);
 	}
 
 	public synchronized void setModel(ZLTextModel model) {
@@ -551,6 +552,30 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		final ZLPaintContext context = myContext;
+
+		if (!mySelection.isEmpty() && (from != to) && !mySelection.isEmptyOnPage(page)) {
+			final int startSelectAreaID = mySelection.getStartAreaID(page), endSelectedAreaID = mySelection.getEndAreaID(page);
+			final int startAreaID = Math.max(from, startSelectAreaID), endAreaID = Math.min(to - 1, endSelectedAreaID);
+			if (startAreaID <= endAreaID) {
+				final ZLTextElementArea startArea = page.TextElementMap.get(startAreaID);
+				final ZLTextElementArea endArea = page.TextElementMap.get(endAreaID);
+				final int top = y + 1;
+				int left, right, bottom = y + info.Height + info.Descent;
+				if (startAreaID > startSelectAreaID)
+					left = getLeftMargin();
+				else 
+					left = startArea.XStart;
+				if (endAreaID < endSelectedAreaID)
+				{
+					right = getRightLine();
+					bottom += info.VSpaceAfter;
+				}
+				else
+					right = endArea.XEnd;
+				context.setFillColor(getSelectedBackgroundColor());
+				context.fillRectangle(left, top, right, bottom);
+			}
+		}
 
 		if ((page == myCurrentPage) && !mySelectionModel.isEmpty() && (from != to)) {
 			final int paragraphIndex = paragraph.Index;
@@ -1273,23 +1298,84 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		return leftIndex;
 	}*/
-
 	@Override
-	public boolean onFingerMove(int x, int y) {
-		if (mySelectionModel.extendTo(x, y)) {
+	public boolean onFingerSingleTap(int x, int y) {
+		 //        if (!mySelection.isEmpty()){
+		 //        	clearSelection();
+		 //            return true;
+		 //        }
+
+		if (!mySelectionModel.isEmpty()){
+			mySelectionModel.clear();
 			ZLApplication.Instance().repaintView();
 			return true;
 		}
 		return false;
 	}
-
 	@Override
-	public boolean onFingerRelease(int x, int y) {
-		mySelectionModel.deactivate();
+	public boolean onFingerDoubleTap(int x, int y) {
+
+		 //        if (!mySelectionModel.isEmpty()){
+		 //            String text = mySelectionModel.getText();
+		 //            ClipboardManager clipboard =
+		 //                (ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
+		 //            clipboard.setText(text);
+		 //            mySelectionModel.clear();
+		 //            ZLApplication.Instance().repaintView();
+		 //            return true;
+		 //        }
+		 //        if (!mySelection.isEmpty()) {
+		 //            String text = mySelection.getText();
+		 //            ClipboardManager clipboard =
+		 //                (ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
+		 //            clipboard.setText(text);
+		 //            mySelection.clear();
+		 //            ZLApplication.Instance().repaintView();
+		 //            return true;
+		 //        }
+		return false; 
+	}
+	public boolean onFingerPress(int x, int y) {
+		 //        if (isSelectionActive()) {
+		 //            startSelection(x, y);
+		 //            return true;
+		 //        }
+		return false;
+	}
+	@Override
+	public boolean onFingerMove(int x, int y) {
+		 //		public boolean onFingerMoveAfterLongPress(int x, int y) {
+		 //		if (myMode == MODE_SELECT) {
+		 //        if (isSelectionActive()) {
+		 //            expandSelectionTo(x, y);
+		 //            return true;
+		 //        }
+		 //        if (!mySelectionModel.isActive()){
+		 //            activateSelection(x, y);
+		 //            return true;
+		 //        }
+		 //		}
+		 //        if (mySelectionModel.extendTo(x, y)) {
+		 //            ZLApplication.Instance().repaintView();
+		 //            return true;
+		 //        }
 		return false;
 	}
 
-	protected abstract boolean isSelectionEnabled();
+	@Override
+	public boolean onFingerRelease(int x, int y) {
+		 //        if (isSelectionModeActive()) { // TODO
+		 //            onSelectingEnded();
+		 //        }
+		 //		public boolean onFingerReleaseAfterLongPress(int x, int y) {
+		 //        mySelectionModel.deactivate();
+		 //		if (mySelectionModel.isActive())
+		 //		{
+		 //			mySelectionModel.getText();
+		 //			return true;
+		 //		}
+		return false;
+	}
 
 	protected void activateSelection(int x, int y) {
 		if (isSelectionEnabled()) {
@@ -1299,6 +1385,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private ZLTextElementRegion mySelectedRegion;
+	private ZLTextSelection mySelection;
 
 	private ZLTextElementRegion getCurrentElementRegion(ZLTextPage page) {
 		final ArrayList<ZLTextElementRegion> elementRegions = page.TextElementMap.ElementRegions;
@@ -1332,6 +1419,43 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		mySelectedRegion = region;
 	}
 
+	protected abstract boolean isSelectionEnabled();
+
+	protected abstract boolean isSelectionModeActive();
+
+	protected abstract void onSelectingStarted();
+	protected abstract void onSelectingEnded();
+
+	protected boolean startSelection(int x, int y) {
+		if (!mySelection.start(x, y))
+			return false;
+		ZLApplication.Instance().repaintView();
+		onSelectingStarted();
+		return true;
+	}
+	protected boolean expandSelectionTo(int x, int y) {
+		if (!mySelection.expandTo(x, y))
+			return false;
+		ZLApplication.Instance().repaintView();
+		return true;
+	}
+	protected void clearSelection() {
+		if (mySelection.clear())
+			ZLApplication.Instance().repaintView();
+	}
+	public String getSelectedText() {
+		return mySelection.getText();
+	}
+	public int getSelectionStartY() {
+		return mySelection.getStartY();
+	}
+	public int getSelectionEndY() {
+		return mySelection.getEndY();
+	}
+
+	public boolean isSelectionEmpty() {
+		return mySelection.isEmpty();
+	}
 	public void resetRegionPointer() {
 		mySelectedRegion = null;
 	}

@@ -168,6 +168,11 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		if (isSelectionModeActive()) {
+			deactivateSelectionMode();
+			return true;
+		}
+
 		if (isScrollingActive()) {
 			return false;
 		}
@@ -217,6 +222,11 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		if (myHasSelectionExpanded) {
+			onSelectingStarted();
+			return true;
+		}
+
 		if (isScrollingActive()) {
 			return false;
 		}
@@ -258,6 +268,12 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
+
+			if (isSelectionModeActive()) {
+				expandSelectionTo(x, y);
+				return true;
+			}
+
 			if (myIsBrightnessAdjustmentInProgress) {
 				if (x >= myContext.getWidth() / 5) {
 					myIsBrightnessAdjustmentInProgress = false;
@@ -304,6 +320,10 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
+			if (myHasSelectionExpanded) {
+				onSelectingEnded();
+				return true;
+			}
 			myIsBrightnessAdjustmentInProgress = false;
 			if (isScrollingActive() && myIsManualScrollingActive) {
 				setScrollingActive(false);
@@ -354,6 +374,9 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		activateSelectionMode(x, y);
+
+
 		if (myReader.DictionaryTappingActionOption.getValue() !=
 			FBReaderApp.DictionaryTappingAction.doNothing) {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
@@ -372,14 +395,16 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myReader.DictionaryTappingActionOption.getValue() !=
-			FBReaderApp.DictionaryTappingAction.doNothing) {
-			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
-			if (region != null) {
-				selectRegion(region);
-				myReader.repaintView();
-			}
-		}
+		expandSelectionTo(x, y); 
+		//        if (myReader.DictionaryTappingActionOption.getValue() !=
+			//            FBReaderApp.DictionaryTappingAction.doNothing) {
+			//
+			//            final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
+			//            if (region != null) {
+				//                selectRegion(region);
+				//                myReader.repaintView();
+				//            }
+			//        }
 		return true;
 	}
 
@@ -388,13 +413,20 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myReader.DictionaryTappingActionOption.getValue() ==
-			FBReaderApp.DictionaryTappingAction.openDictionary) {
-			final ZLTextElementRegion region = currentRegion();
-			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
+		if (myHasSelectionExpanded) {
+			onSelectingEnded();
 			return true;
 		}
-
+		else {
+			deactivateSelectionMode();
+			if (myReader.DictionaryTappingActionOption.getValue() ==
+				FBReaderApp.DictionaryTappingAction.openDictionary) {
+				final ZLTextElementRegion region = currentRegion();
+				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
+				selectRegion(null);
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -677,6 +709,53 @@ public final class FBView extends ZLTextView {
 	protected boolean isSelectionEnabled() {
 		return myReader.SelectionEnabledOption.getValue();
 	}
+
+	private boolean myIsSelectionModeActive;
+	private boolean myHasSelectionExpanded;
+	private boolean myIsNowSelecting;
+
+	@Override
+	public boolean isSelectionModeActive() {
+		return myIsSelectionModeActive;
+	}
+
+	public boolean isNowSelecting() {
+		return myIsNowSelecting;
+	}
+	private void activateSelectionMode(int x, int y) {
+		if (isSelectionModeActive())
+			deactivateSelectionMode();
+		if (startSelection(x, y)) {
+			myIsSelectionModeActive = true;
+		}
+		//        myReader.doAction(ActionCode.SELECTION);
+	}
+	public void deactivateSelectionMode() {
+		if (!isSelectionModeActive())
+			return;
+		clearSelection();
+		myIsSelectionModeActive = false;
+		myHasSelectionExpanded = false;
+		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
+	}
+
+	protected boolean expandSelectionTo(int x, int y) {
+		if (!super.expandSelectionTo(x, y))
+		    return false;
+	    myHasSelectionExpanded = true;
+		selectRegion(null); // removing the rendering of initially selected region.
+		return true;
+	}
+
+	protected void onSelectingStarted() {
+		myIsNowSelecting = true;
+		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
+	}
+	protected void onSelectingEnded() {
+		myIsNowSelecting = false;
+		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
+	}
+
 
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
 

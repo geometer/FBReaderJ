@@ -27,7 +27,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.WindowManager;
-import android.view.Window;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -57,6 +56,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private static TextSearchButtonPanel ourTextSearchPanel;
 	private static NavigationButtonPanel ourNavigatePanel;
+	private static SelectionButtonPanel ourSelectionPanel;
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
@@ -87,6 +87,9 @@ public final class FBReader extends ZLAndroidActivity {
 		if (ourNavigatePanel == null) {
 			ourNavigatePanel = new NavigationButtonPanel(fbReader);
 		}
+		if (ourSelectionPanel == null) {
+			ourSelectionPanel = new SelectionButtonPanel(fbReader);
+		}
 
 		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, fbReader));
@@ -98,6 +101,10 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_MENU, new ShowMenuAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_PANEL_VISIBILITY, new SelectionPanelVisibilityAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_COPY, new SelectionCopyAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_SHARE, new SelectionShareAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_DICTIONARY, new SelectionDictionaryAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
@@ -176,6 +183,9 @@ public final class FBReader extends ZLAndroidActivity {
 		if (!ourNavigatePanel.hasControlPanel()) {
 			ourNavigatePanel.createControlPanel(this, root);
 		}
+		if (!ourSelectionPanel.hasControlPanel()) {
+			ourSelectionPanel.createControlPanel(this, root);
+		}
 	}
 
 	@Override
@@ -222,6 +232,14 @@ public final class FBReader extends ZLAndroidActivity {
 		});
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
+	}
+	public void onShowSelectionPanel(boolean show, int selectionStartY, int selectionEndY) {
+		if (show) {
+			ourSelectionPanel.move(selectionStartY, selectionEndY);
+			ourSelectionPanel.show(false);
+		}
+		else
+			ourSelectionPanel.hide();
 	}
 
 	@Override

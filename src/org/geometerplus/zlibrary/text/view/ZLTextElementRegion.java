@@ -74,6 +74,12 @@ public abstract class ZLTextElementRegion {
 		return myHull;
 	}
 
+	public int getFromIndex() {
+	    return myFromIndex;
+	}
+	public int getToIndex() {
+	    return myToIndex;
+	}
 	public int getTop() {
 		return myList.get(myFromIndex).YStart;
 	}
