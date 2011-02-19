@@ -132,7 +132,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 				final NetworkCatalogRootTree rootTree = (NetworkCatalogRootTree)myTree;
 				mySpecialItems = new ArrayList<NetworkTree>();
 				if (Util.isAccountRefillingSupported(NetworkCatalogActivity.this, rootTree.Item.Link)) {
-					mySpecialItems.add(new BasketTree());
 					mySpecialItems.add(new RefillAccountTree(rootTree));
 				}
 				if (mySpecialItems.size() > 0) {

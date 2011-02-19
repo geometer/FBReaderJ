@@ -61,5 +61,10 @@ public interface INetworkLink {
 	NetworkCatalogItem libraryItem();
 	NetworkAuthenticationManager authenticationManager();
 
+	boolean supportsBasket();
+	void addToBasket(NetworkBookItem book);
+	void removeFromBasket(NetworkBookItem book);
+	boolean isBookInBasket(NetworkBookItem book);
+
 	String rewriteUrl(String url, boolean isUrlExternal);
 }

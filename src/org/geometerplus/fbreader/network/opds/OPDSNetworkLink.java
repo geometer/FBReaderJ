@@ -34,13 +34,16 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-class OPDSNetworkLink extends AbstractNetworkLink {
+public class OPDSNetworkLink extends AbstractNetworkLink {
 	private TreeMap<RelationAlias, String> myRelationAliases;
 
 	private TreeMap<String,NetworkCatalogItem.Accessibility> myUrlConditions;
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
+
+	private boolean mySupportsBasket;
+	private final List<String> myBooksInBasket = new LinkedList<String>();
 
 	private final boolean myHasStableIdentifiers;
 
@@ -141,6 +144,34 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 
 	public NetworkAuthenticationManager authenticationManager() {
 		return myAuthenticationManager;
+	}
+
+	public final void setSupportsBasket() {
+		mySupportsBasket = true;
+	}
+
+	public final boolean supportsBasket() {
+		return mySupportsBasket;
+	}
+
+	public final void addToBasket(NetworkBookItem book) {
+		if (supportsBasket()) {
+			myBooksInBasket.add(book.Id);
+		}
+	}
+
+	public final void removeFromBasket(NetworkBookItem book) {
+		if (supportsBasket()) {
+			myBooksInBasket.remove(book.Id);
+		}
+	}
+
+	public final boolean isBookInBasket(NetworkBookItem book) {
+		return myBooksInBasket.contains(book.Id);
+	}
+
+	public final List<String> booksInBasket() {
+		return Collections.unmodifiableList(myBooksInBasket);
 	}
 
 	public String rewriteUrl(String url, boolean isUrlExternal) {

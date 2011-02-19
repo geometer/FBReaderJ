@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
+import org.geometerplus.fbreader.network.authentication.litres.LitResBasketItem;
 import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
 import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 
@@ -458,7 +459,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					opdsLink.getCondition(entry.Id.Uri)
 				);
 			} else if (REL_BASKET.equals(litresRel)) {
-				return new LitResRecommendationsItem(
+				return new LitResBasketItem(
 					opdsLink,
 					entry.Title,
 					annotation,
