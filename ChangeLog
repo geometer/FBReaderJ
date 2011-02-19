@@ -1,3 +1,6 @@
+===== 0.99.14 (??? ??, 2011) =====
+* Thai localization (by Samphan Pojanasophanakul)
+
 ===== 0.99.13 (Feb 13, 2011) =====
 * Fixed book/position forgetting bug
 * Color channel values in color dialog
