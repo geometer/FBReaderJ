@@ -75,6 +75,7 @@
 		<node name="pt" value="葡萄牙语" />
 		<node name="ru" value="俄罗斯语" />
 		<node name="sv" value="瑞典语" />
+		<node name="th" value="Thai" toBeTranslated="true"/>
 		<node name="tr" value="土耳其语" />
 		<node name="uk" value="乌克兰语" />
 		<node name="vi" value="越南语" />

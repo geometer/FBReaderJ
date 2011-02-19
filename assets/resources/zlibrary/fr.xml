@@ -75,6 +75,7 @@
 		<node name="pt" value="Portugais"/>
 		<node name="ru" value="Russe"/>
 		<node name="sv" value="Suédois"/>
+		<node name="th" value="Thai" toBeTranslated="true"/>
 		<node name="tr" value="Turc"/>
 		<node name="uk" value="Ukrainien"/>
 		<node name="vi" value="Vietnamien" />
