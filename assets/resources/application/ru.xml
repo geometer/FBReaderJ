@@ -407,6 +407,7 @@
 				</node>
 				<node name="backgroundColor" value="Цвет фона"/>
 				<node name="selectionBackground" value="Фон пометки"/>
+				<node name="selectionForeground" value="Цвет помеченного текста"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
 				<node name="highlighting" value="Фон результатов поиска"/>
@@ -505,7 +506,7 @@
 				<node name="summary" value="Настройки словаря"/>
 				<node name="dictionary" value="Словарь"/>
 				<node name="tappingAction" value="Действие при долгом нажатии на экран">
-					<node name="doNothing" value="Не делать ничего"/>
+					<node name="doNothing" value="Начинать выделение"/>
 					<node name="selectWord" value="Выделять слово"/>
 					<node name="openDictionary" value="Выделять слово, а при отпускании &#8211; запускать словарь"/>
 				</node>

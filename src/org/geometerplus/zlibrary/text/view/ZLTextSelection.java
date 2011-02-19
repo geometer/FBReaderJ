@@ -151,19 +151,21 @@ public class ZLTextSelection {
 	public int getEndElementID () {
 		return myBounds[1].getElementID();
 	}
-	public boolean areaWithinSelection(ZLTextElementArea area) {
-		return myBounds[1].myTextBound.isGreaterThan(area) &&
-				myBounds[0].myTextBound.isLessThan(area);
+	private boolean areaWithinSelection(ZLTextElementArea area) {
+		return myBounds[0].myTextBound.isAreaWithin(area)
+		 		&& myBounds[1].myTextBound.isAreaWithin(area);
 	}
 	public boolean areaWithinStartBound(ZLTextElementArea area) {
-		return ((myBounds[1].myTextBound.isGreaterThan(area) 
-				|| myBounds[1].myTextBound.equalsTo(area)) 
-				&& myBounds[0].myTextBound.isLessThan(area));
+		return !myBounds[1].myTextBound.isExpandedBy(area) 
+				&& myBounds[0].myTextBound.isAreaWithin(area);
 	}
 	public boolean areaWithinEndBound(ZLTextElementArea area) {
-		return myBounds[1].myTextBound.isGreaterThan(area) 
-				&& (myBounds[0].myTextBound.isLessThan(area) 
-						|| myBounds[0].myTextBound.equalsTo(area));
+		return !myBounds[0].myTextBound.isExpandedBy(area) 
+				&& myBounds[1].myTextBound.isAreaWithin(area);
+	}
+	public boolean isAreaSelected(ZLTextElementArea area) {
+		return !myBounds[0].myTextBound.isExpandedBy(area) 
+				&& !myBounds[1].myTextBound.isExpandedBy(area);
 	}
 	public int getStartAreaID(ZLTextPage page) {
 		final int id = page.TextElementMap.indexOf(myBounds[0].myArea);
@@ -240,6 +242,8 @@ public class ZLTextSelection {
 		}
 
 		protected abstract boolean isExpandedBy(ZLTextElementArea area);
+		
+		protected abstract boolean isAreaWithin(ZLTextElementArea area);
 
 		protected abstract void clear();
 
@@ -254,6 +258,10 @@ public class ZLTextSelection {
 		protected boolean isExpandedBy(ZLTextElementArea area) {
 			return isGreaterThan(area);
 		}
+		@Override
+		protected boolean isAreaWithin(ZLTextElementArea area) {
+			return isLessThan(area);
+		}
 	}
 
 	private class EndTextBound extends TextBound {
@@ -264,6 +272,10 @@ public class ZLTextSelection {
 		@Override
 		protected boolean isExpandedBy(ZLTextElementArea area) {
 			return isLessThan(area);
+		}
+		@Override
+		protected boolean isAreaWithin(ZLTextElementArea area) {
+			return isGreaterThan(area);
 		}
 	}
 

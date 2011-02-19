@@ -407,6 +407,7 @@
 				</node>
 				<node name="backgroundColor" value="Background color"/>
 				<node name="selectionBackground" value="Selection background"/>
+				<node name="selectionForeground" value="Selection foreground"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
 				<node name="highlighting" value="Search results background"/>
@@ -505,7 +506,7 @@
 				<node name="summary" value="Dictionary settings"/>
 				<node name="dictionary" value="Dictionary"/>
 				<node name="tappingAction" value="Long tapping action">
-					<node name="doNothing" value="Long tapping does nothing"/>
+					<node name="doNothing" value="Long tapping only initiates selecting"/>
 					<node name="selectWord" value="Long tapping selects the word"/>
 					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary"/>
 				</node>
