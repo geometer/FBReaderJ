@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -43,7 +44,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	private NetworkAuthenticationManager myAuthenticationManager;
 
 	private boolean mySupportsBasket;
-	private final List<String> myBooksInBasket = new LinkedList<String>();
+	private final ZLStringListOption myBooksInBasketOption;
 
 	private final boolean myHasStableIdentifiers;
 
@@ -51,6 +52,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 			Map<String, String> links, boolean hasStableIdentifiers) {
 		super(siteName, title, summary, icon, language, links);
 		myHasStableIdentifiers = hasStableIdentifiers;
+		myBooksInBasketOption = new ZLStringListOption(siteName, "Basket", null);
 	}
 
 	final void setRelationAliases(Map<RelationAlias, String> relationAliases) {
@@ -156,22 +158,32 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 
 	public final void addToBasket(NetworkBookItem book) {
 		if (supportsBasket()) {
-			myBooksInBasket.add(book.Id);
+			List<String> ids = myBooksInBasketOption.getValue();
+			if (!ids.contains(book.Id)) {
+				ids = new ArrayList(ids);
+				ids.add(book.Id);
+				myBooksInBasketOption.setValue(ids);
+			}
 		}
 	}
 
 	public final void removeFromBasket(NetworkBookItem book) {
 		if (supportsBasket()) {
-			myBooksInBasket.remove(book.Id);
+			List<String> ids = myBooksInBasketOption.getValue();
+			if (ids.contains(book.Id)) {
+				ids = new ArrayList(ids);
+				ids.remove(book.Id);
+				myBooksInBasketOption.setValue(ids);
+			}
 		}
 	}
 
 	public final boolean isBookInBasket(NetworkBookItem book) {
-		return myBooksInBasket.contains(book.Id);
+		return myBooksInBasketOption.getValue().contains(book.Id);
 	}
 
 	public final List<String> booksInBasket() {
-		return Collections.unmodifiableList(myBooksInBasket);
+		return myBooksInBasketOption.getValue();
 	}
 
 	public String rewriteUrl(String url, boolean isUrlExternal) {

@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
+import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 
 public class LitResRecommendationsItem extends OPDSCatalogItem {
 	public LitResRecommendationsItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType, Accessibility accessibility) {
@@ -45,6 +46,14 @@ public class LitResRecommendationsItem extends OPDSCatalogItem {
 				flag = true;
 			}
 			builder.append(book.Id);
+		}
+		for (String bookId : ((OPDSNetworkLink)Link).booksInBasket()) {
+			if (flag) {
+				builder.append(',');
+			} else {
+				flag = true;
+			}
+			builder.append(bookId);
 		}
 
 		return ZLNetworkUtil.appendParameter(URLByType.get(URL_CATALOG), "ids", builder.toString());
