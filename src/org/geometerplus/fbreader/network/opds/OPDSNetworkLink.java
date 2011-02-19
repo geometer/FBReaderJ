@@ -157,7 +157,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public final void addToBasket(NetworkBookItem book) {
-		if (supportsBasket()) {
+		if (supportsBasket() && book.Id != null && !"".equals(book.Id)) {
 			List<String> ids = myBooksInBasketOption.getValue();
 			if (!ids.contains(book.Id)) {
 				ids = new ArrayList(ids);
@@ -168,7 +168,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public final void removeFromBasket(NetworkBookItem book) {
-		if (supportsBasket()) {
+		if (supportsBasket() && book.Id != null && !"".equals(book.Id)) {
 			List<String> ids = myBooksInBasketOption.getValue();
 			if (ids.contains(book.Id)) {
 				ids = new ArrayList(ids);

@@ -43,6 +43,9 @@ public class ZLStringListOption extends ZLOption {
 	}
 
 	private static List<String> stringToList(String str) {
+		if (str == null || "".equals(str)) {
+			return Collections.emptyList();
+		}
 		return Arrays.asList(str.split(","));
 	}
 
