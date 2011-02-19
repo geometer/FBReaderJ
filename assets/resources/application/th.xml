@@ -1,0 +1,623 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Thai FBReaderJ resources, by Samphan Pojanasophanakul -->
+<resources>
+	<node name="library">
+		<node name="unknownAuthor" value="ไม่ทราบชื่อผู้แต่ง"/>
+		<node name="booksWithNoTags" value="หนังสือที่ไม่มีแท็ก"/>
+		<node name="demo" value="ตัวอย่าง"/>
+	</node>
+	<node name="libraryView">
+		<node name="byAuthor" value="ชื่อผู้แต่ง ">
+			<node name="summary" value="เรียงตามชื่อผู้แต่ง"/>
+		</node>
+		<node name="byTitle" value="ชื่อหนังสือ">
+			<node name="summary" value="เรียงตามชื่อหนังสือ"/>
+		</node>
+		<node name="byTag" value="แท็ก">
+			<node name="summary" value="เรียงตามแท็ก"/>
+		</node>
+		<node name="recent" value="หนังสือที่อ่านบ่อย">
+			<node name="summary" value="หนังสือที่อ่านล่าสุด"/>
+		</node>
+		<node name="favorites" value="หนังสือเล่มโปรด">
+			<node name="summary" value="หนังสือที่เลือก"/>
+		</node>
+		<node name="searchResults" value="ค้นพบ">
+			<node name="summary" value="ผลการค้นหาสำหรับ: %s"/>
+		</node>
+		<node name="fileTree" value="คลังไฟล์">
+			<node name="summary" value="เปิดหาจากระบบไฟล์"/>
+		</node>
+		<node name="fileTreeRoot" value="ตัวเครื่อง">
+			<node name="summary" value="ไฟล์ทั้งหมดที่อยู่ในตัวเครื่อง"/>
+		</node>
+		<node name="fileTreeCard" value="การ์ดหน่วยความจำ">
+			<node name="summary" value="การ์ดหน่วยความจำที่พบในตัวเครื่อง"/>
+		</node>
+		<node name="fileTreeLibrary" value="คลังหนังสือของ FBReader">
+			<node name="summary" value="ไดเรคทอรีหนังสือของ FBReader"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="ค้นหา"/>
+		</node>
+		<node name="openBook" value="อ่านหนังสือ"/>
+		<node name="showBookInfo" value="ข้อมูลหนังสือ"/>
+		<node name="deleteBook" value="ลบหนังสือ"/>
+		<node name="addToFavorites" value="เพิ่มเป็นหนังสือเล่มโปรด"/>
+		<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
+	</node>
+	<node name="networkView">
+		<node name="openCatalog" value="เปิดแคตตาล็อก"/>
+		<node name="showResults" value="แสดงผลการค้นหา"/>
+		<node name="showBooks" value="แสดงหนังสือ"/>
+		<node name="download" value="ดาวน์โหลด"/>
+		<node name="read" value="อ่านหนังสือที่คัดลอกไว้"/>
+		<node name="delete" value="ลบหนังสือที่คัดลอกไว้"/>
+		<node name="readDemo" value="อ่านหนังสือตัวอย่าง"/>
+		<node name="deleteDemo" value="ลบหนังสือตัวอย่าง"/>
+		<node name="downloadDemo" value="ดาวน์โหลดหนังสือตัวอย่าง"/>
+		<node name="buy" value="ซื้อ (%s)"/>
+		<node name="openInBrowser" value="เปิดในเว็บบราวเซอร์"/>
+		<node name="stopLoading" value="หยุดการโหลด"/>
+		<node name="stopSearching" value="หยุดการค้นหา"/>
+		<node name="signIn" value="ลงชื่อเข้าระบบ"/>
+		<node name="signOut" value="ออกจากระบบ (%s)"/>
+		<node name="refillAccount" value="เติมเงินเข้าบัญชีผู้ใช้ (ปัจจุบันคือ: %s)"/>
+		<node name="refillTitle" value="เติมเงินเข้าบัญชี"/>
+		<node name="refillViaSms" value="ข้อความ"/>
+		<node name="refillViaBrowser" value="เปิดในเว็บเบราว์เซอร์"/>
+		<node name="refillSummary" value="ปัจจุบัน: %s"/>
+		<node name="alreadyDownloading" value="กำลังดาวน์โหลดหนังสือ"/>
+		<node name="alreadyDownloadingDemo" value="กำลังดาวน์โหลดหนังสือตัวอย่าง"/>
+		<node name="stoppingCatalogLoading" value="หยุดการโหลด"/>
+		<node name="stoppingNetworkSearch" value="หยุดการค้นหา"/>
+		<node name="search" value="ค้นหา"/>
+		<node name="searchSummary" value="ค้นหาหนังสือในแคตตาล็อก"/>
+		<node name="searchResults" value="ผลการค้นหาสำหรับ: %s"/>
+		<node name="editCustomCatalog" value="แก้ไขแคตตาล็อก"/>
+		<node name="removeCustomCatalog" value="ลบแคตตาล็อก"/>
+		<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
+		<node name="addCustomCatalogSummary" value="เพิ่ม OPDS แคตตาล็อกที่ด้วยตนเอง"/>
+		<node name="confirmQuestions">
+			<node name="read" value="คุณต้องการอ่านหนังสือที่คัดลอกไว้หรือไม่?"/>
+			<node name="download" value="คุณต้องการดาวน์โหลดหนังสือหรือไม่?"/>
+			<node name="readDemo" value="คุณต้องการอ่านหนังสือตัวอย่างหรือไม่?"/>
+			<node name="downloadDemo" value="คุณต้องการดาวน์โหลดหนังสือตัวอย่างหรือไม่?"/>
+			<node name="buy" value="คุณต้องการซื้อหนังสือเล่มนี้หรือไม่? (%s)"/>
+			<node name="openInBrowser" value="คุณต้องการเปิดแคตตาล็อกในเว็บเบราว์เซอร์หรือไม่?"/>
+		</node>
+		<node name="downloadingCatalogs" value="กำลังดาวน์โหลดแคตตาล็อก"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="ค้นหาหนังสือในระบบเครือข่าย"/> <!-- used as notification title -->
+		<node name="menu">
+			<node name="networkSearch" value="ค้นหาในระบบเครือข่าย"/>
+			<node name="reload" value="โหลดใหม่"/>
+			<node name="signIn" value="ลงชื่อเข้าระบบ"/>
+			<node name="signUp" value="ลงทะเบียนเข้าระบบ"/>
+			<node name="signOut" value="ออกจากระบบ (%s)"/>
+			<node name="refillAccount" value="เติมเงินเข้าบัญชี"/>
+			<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
+			<node name="refreshCatalogsList" value="รีเฟรชแคตตาล็อก"/>
+			<node name="languages" value="ตัวกรองภาษา"/>
+		</node>
+	</node>
+	<node name="networkBookView">
+		<node name="bookInfo" value="ข้อมูลหนังสือ"/>
+		<node name="description" value="รายละเอียดหนังสือ"/>
+		<node name="noDescription" value="ไม่พบรายละเอียดหนังสือ"/>
+		<node name="title" value="ชื่อหนังสือ:"/>
+		<node name="authors" value="ชื่อผู้แต่ง:"/>
+		<node name="series" value="ชุดหนังสือ:"/>
+		<node name="indexInSeries" value="ดัชนีชุดหนังสือ:"/>
+		<node name="tags" value="แท็ก:"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="ข้อมูลหนังสือ"/>
+		<node name="fileInfo" value="ข้อมูลไฟล์"/>
+		<node name="annotation" value="บันทึกย่อ"/>
+		<node name="title" value="ชื่อหนังสือ:"/>
+		<node name="authors" value="ชื่อผู้แต่ง:"/>
+		<node name="series" value="ชุดหนังสือ:"/>
+		<node name="indexInSeries" value="ดัชนีชุดหนังสือ:"/>
+		<node name="tags" value="แท็ก:"/>
+		<node name="language" value="ภาษา:"/>
+		<node name="name" value="ชื่อ:"/>
+		<node name="type" value="ชนิด:"/>
+		<node name="size" value="ขนาด:"/>
+		<node name="time" value="แก้ไขล่าสุดเมื่อ:"/>
+		<node name="sizeInBytes" value="%s ไบต์"/>
+		<node name="sizeInKiloBytes" value="%s กิโลไบต์"/>
+		<node name="menu">
+			<node name="edit" value="แก้ไข"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="หนังสือที่ถูกดาวน์โหลดแล้ว"/>
+		<node name="tickerError" value="หนังสือที่ดาวน์โหลดผิดพลาด"/>
+		<node name="contentSuccess" value="ดาวน์โหลดเรียบร้อย"/>
+		<node name="contentError" value="ดาวน์โหลดล้มเหลว"/>
+		<node name="downloadingStarted" value="เริ่มต้นดาวน์โหลดหนังสือ"/>
+		<node name="alreadyDownloading" value="เสร็จสิ้นการดาวน์โหลดหนังสือ"/>
+		<node name="cannotCreateDirectory" value="ไม่สามารถสร้างไดเรตทอรี %s"/>
+		<node name="cannotCreateFile" value="ไม่สามารถสร้างไฟล์ %s"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="ขยายออก"/>
+		<node name="collapseTree" value="ย่อลง"/>
+		<node name="readText" value="อ่านข้อความ"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="หนังสือเล่มนี้"/>
+		<node name="allBooks" value="หนังสือทั้งหมด"/>
+		<node name="searchResults" value="ค้นพบ"/>
+		<node name="new" value="สร้างบุ๊คมาร์คใหม่"/>
+		<node name="open" value="เปิดบุ๊คมาร์ค"/>
+		<node name="edit" value="แก้ไขบุ๊คมาร์ค"/>
+		<node name="delete" value="ลบบุ๊คมาร์ค"/>
+		<node name="menu">
+			<node name="search" value="ค้นหา"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="เปิดหนังสือเล่มก่อนหน้า"/>
+		<node name="returnTo" value="กลับไป ..."/>
+		<node name="close" value="ปิด FBReader"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="การตั้งค่า"/>
+		<node name="bookInfo" value="ข้อมูลหนังสือ"/>
+		<node name="library" value="คลังหนังสือ"/>
+		<node name="toc" value="สารบัญ"/>
+		<node name="day" value="กลางวัน"/>
+		<node name="night" value="กลางคืน"/>
+		<node name="networkLibrary" value="คลังหนังสือบนระบบเครือข่าย"/>
+		<node name="navigate" value="ตัวนำทาง">
+			<node name="toc" value="สารบัญ"/>
+			<node name="gotoHome" value="ไปที่จุดเริ่มต้น"/>
+			<node name="gotoPageNumber" value="ไปที่หน้า..."/>
+			<node name="gotoSectionStart" value="ไปที่จุดเริ่มต้นของข้อความส่วนนี้"/>
+			<node name="gotoSectionEnd" value="ไปที่จุดสุดท้ายของข้อความส่วนนี้"/>
+			<node name="nextTOCSection" value="ไปที่บทถัดไปในสารบัญ"/>
+			<node name="previousTOCSection" value="ไปที่บทก่อนหน้าในสารบัญ"/>
+			<node name="undo" value="ย้อนกลับ"/>
+			<node name="redo" value="ไปข้างหน้า"/>
+		</node>
+		<node name="selection" value="เลือก">
+			<node name="copyToClipboard" value="คัดลอกไปที่คลิปบอร์ด"/>
+			<node name="openInDictionary" value="เปิดในพจนานุกรม"/>
+			<node name="clearSelection" value="ล้างข้อมูล"/>
+		</node>
+		<node name="search" value="ค้นหา"/>
+		<node name="rotate" value="หมุนหน้าจอ"/>
+		<node name="increaseFont" value="ซูมเข้า"/>
+		<node name="decreaseFont" value="ซูมออก"/>
+		<node name="toggleFullscreen" value="เต็มจอ"/>
+		<node name="bookmarks" value="บุ๊คมาร์ค"/>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="ติดตั้ง"/>
+			<node name="update" value="อัพเดต"/>
+			<node name="skip" value="ข้าม"/>
+			<node name="buy" value="ซื้อ"/>
+			<node name="buyAndDownload" value="ซื้อและดาวน์โหลด"/>
+			<node name="continue" value="ต่อไป"/>
+			<node name="editUrl" value="แก้ไข URL"/>
+			<node name="tryAgain" value="ลองใหม่อีกครั้ง"/>
+			<node name="openBook" value="อ่าน"/>
+			<node name="editInfo" value="แก้ไข"/>
+			<node name="reloadInfo" value="โหลดใหม่"/>
+			<node name="refillAccount" value="เติมเงิน"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="ติดตั้งปลั๊กอิน"/>
+			<node name="updateTitle" value="แก้ไขปลั๊กอิน"/>
+			<node name="dontAskAgain" value="ไม่ต้องถามอีก"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="ติดตั้งพจนานุกรม"/>
+			<node name="message" value="คุณต้องการที่จะติดตั้ง %s หรือไม่?"/>
+		</node>
+		<node name="BookInfo">
+			<node name="fileName" value="ชื่อไฟล์"/>
+			<node name="title" value="ชื่อหนังสือ"/>
+			<node name="language" value="ภาษา"/>
+			<node name="encoding" value="การเข้ารหัสภาษา"/>
+		</node>
+		<node name="Preferences">
+			<node name="directories" value="ไดเรคทอรี">
+				<node name="summary" value="ไดเรคทอรีในการค้นหาไฟล์"/>
+				<node name="books" value="ไดเรคทอรีของหนังสือ"/>
+				<node name="fonts" value="ไดเรคทอรีของแบบตัวอักษร"/>
+				<node name="wallpapers" value="ไดเรคทอรีของวอลล์เปเปอร์"/>
+			</node>
+			<node name="appearance" value="ลักษณะการแสดงผล">
+				<node name="summary" value="การหมุนหน้าจอ, แถบสถานะ"/>
+				<node name="autoOrientation" value="หมุนหน้าจออัตโนมัติ">
+					<node name="summaryOn" value="หมุนหน้าจอเมื่อหมุนตัวเครื่อง"/>
+					<node name="summaryOff" value="ไม่หมุนหน้าจอเมื่อหมุนตัวเครื่อง"/>
+				</node>
+				<node name="showStatusBar" value="แสดงแถบสถานะ">
+					<node name="summaryOn" value="แสดงแถบสถานะเมื่อแสดงเมนู"/>
+					<node name="summaryOff" value="ซ่อนแถบสถานะเมื่อแสดง"/>
+				</node>
+				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
+					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="text" value="ข้อความ">
+				<node name="summary" value="ตัวอักษร, ยัติภังค์, อื่นๆ"/>
+				<node name="font" value="รูปแบบอักษร">
+					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				</node>
+				<node name="fontSize" value="ขนาดอักษร"/>
+				<node name="fontSizeDifference" value="ความแตกต่างของขนาดตัวอักษร"/>
+				<node name="fontStyle" value="รูปแบบของตัวอักษร">
+					<node name="regular" value="ปกติ"/>
+					<node name="bold" value="ตัวหนา"/>
+					<node name="italic" value="ตัวเอียง"/>
+					<node name="boldItalic" value="ตัวหนาและเอียง"/>
+				</node>
+				<node name="bold" value="ตัวหนา">
+					<node name="on" value="ตัวหนา"/>
+					<node name="off" value="ปกติ"/>
+					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				</node>
+				<node name="italic" value="ตัวเอียง">
+					<node name="on" value="ตัวเอียง"/>
+					<node name="off" value="ปกติ"/>
+					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				</node>
+				<node name="lineSpacing" value="ระยะห่างระหว่างบรรทัด">
+					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				</node>
+				<node name="alignment" value="การจัดตำแหน่ง">
+					<node name="left" value="ชิดซ้าย"/>
+					<node name="right" value="ชิดขวา"/>
+					<node name="center" value="กึ่งกลาง"/>
+					<node name="justify" value="จัดบรรทัดให้เท่ากัน"/>
+					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				</node>
+				<node name="autoHyphenations" value="เพิ่มยัติภังค์อัตโนมัติ">
+					<node name="summaryOn" value="เพิ่มยัติภังค์อัตโนมัติ"/>
+					<node name="summaryOff" value="ไม่เพิ่มยัติภังค์อัตโนมัติ"/>
+				</node>
+				<node name="allowHyphenations" value="อนุญาตให้ใช้ยัติภังค์">
+					<node name="on" value="คำยัติภังค์"/>
+					<node name="off" value="ไม่ใช้คำยัติภังค์"/>
+					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="การเยื้องบรรทัดแรกของย่อหน้า"/>
+				<node name="spaceBefore" value="ช่องว่างด้านหน้า"/>
+				<node name="spaceAfter" value="ช่องว่างด้านหลัง"/>
+				<node name="leftIndent" value="เยื้องซ้าย"/>
+				<node name="rightIndent" value="เยื้องขวา"/>
+				<node name="more" value="รูปแบบอื่น">
+					<node name="summary" value="แยกการตั้งค่าของชื่อเรื่อง, คำอ้างอิง, อื่นๆ"/>
+					<node name="Regular Paragraph" value="ย่อหน้า">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Title" value="ชื่อเรื่อง">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="หมวด">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="บทกวี">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="หัวข้อย่อย">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="บันทึกย่อ">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="คำอ้างอิง">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="ฉันท์">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="ร้อยกลอง">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="ข้อความที่ไม่ได้จัดรูปแบบ">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="รูปภาพ">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="อ้างอิง">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="ชื่อผู้แต่ง">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="วันที่">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="การเชื่อมโยงภายใน">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="คำอธิบายเพิ่มเติม">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="ตัวเน้น">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="ตัวเข้ม">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="ตัวห้อย">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="ตัวยก">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="โค้ด">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="ตัวขีดฆ่า">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="ตัวเอียง">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="ตัวหนา">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="คำนิยาม">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="การอธิบายคำนิยาม">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="หัวเรื่อง  1">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="หัวเรื่อง 2">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="หัวเรื่อง 3">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="หัวเรื่อง 4">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="หัวเรื่อง 5">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="หัวเรื่อง 6">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="การเชื่อมโยงภายนอก">
+						<node name="summary" value=""/>
+					</node>
+				</node>
+			</node>
+			<node name="colors" value="สี &amp; วอลล์เปเปอร์">
+				<node name="summary" value="การตั้งค่าสี"/>
+				<node name="background" value="พื้นหลัง">
+					<node name="solidColor" value="สีทึบ"/>
+					<node name="leather" value="ลายหนัง"/>
+					<node name="sepia" value="ซีเปีย"/>
+					<node name="wood" value="ลายไม้"/>
+				</node>
+				<node name="backgroundColor" value="สีพื้นหลัง"/>
+				<node name="selectionBackground" value="พื้นหลังที่เลือก"/>
+				<node name="text" value="ข้อความ"/>
+				<node name="hyperlink" value="ลิ้งค์ข้อความ"/>
+				<node name="highlighting" value="สีไฮไลท์ผลการค้นหาคำ"/>
+				<node name="footer" value="ข้อความท้ายหน้า"/>
+			</node>
+			<node name="margins" value="ตั้งค่าขอบ">
+				<node name="summary" value="ตั้งค่าขอบข้อความ"/>
+				<node name="left" value="ขอบซ้าย"/>
+				<node name="right" value="ขอบขวา"/>
+				<node name="top" value="ขอบบน"/>
+				<node name="bottom" value="ขอบล่าง"/>
+			</node>
+			<node name="scrollBar" value="แถบเลื่อน">
+				<node name="summary" value="แถบเลื่อน &amp; การตั้งค่าข้อความท้ายหน้า"/>
+				<node name="scrollbarType" value="ชนิดแถบเลื่อน">
+					<node name="hide" value="ซ่อน"/>
+					<node name="show" value="สไลเดอร์แนวตั้ง"/>
+					<node name="showAsProgress" value="แถบแนวตั้งแสดงความก้าวหน้าในการอ่าน"/>
+					<node name="showAsFooter" value="แถบแสดงแนวนอนท้ายหน้า"/>
+				</node>
+				<node name="footerHeight" value="ความสูงแถบแสดงท้ายหน้า"/>
+				<node name="footerColor" value="สีแถบแสดงท้ายหน้า"/>
+				<node name="tocMarks" value="แสดงสารบัญ">
+					<node name="summaryOn" value="แสดงสารบัญท้ายหน้า"/>
+					<node name="summaryOff" value="ไม่แสดงสัญลักษณ์สารบัญท้ายหน้า"/>
+				</node>
+				<node name="footerLongTap" value="เมื่อกดค้างที่ท้ายหน้า">
+					<node name="longTapRevert" value="กลับตำแหน่งเดิม"/>
+					<node name="longTapNavigate" value="ไปที่ตำแหน่ง"/>
+				</node>
+				<node name="showProgress" value="แสดงเลขหน้า">
+					<node name="summaryOn" value="แสดงเลขหน้าที่ท้ายหน้า"/>
+					<node name="summaryOff" value="ไม่แสดงเลขหน้าที่ท้ายหน้า"/>
+				</node>
+				<node name="showBattery" value="แสดงระดับแบตเตอรี่">
+					<node name="summaryOn" value="แสดงระดับแบตเตอรี่ที่ท้ายหน้า"/>
+					<node name="summaryOff" value="ไม่แสดงระดับแบตเตอรี่ที่ท้ายหน้า"/>
+				</node>
+				<node name="showClock" value="แสดงนาฬิกา">
+					<node name="summaryOn" value="แสดงนาฬิกาที่ท้ายหน้า"/>
+					<node name="summaryOff" value="ไม่แสดงนาฬิกาที่ท้ายหน้า"/>
+				</node>
+				<node name="isSensitive" value="นำทางโดยแตะที่ท้ายหน้า">
+					<node name="summaryOn" value="เปิดการใช้งานตัวนำทาง"/>
+					<node name="summaryOff" value="ปิดการใช้งานตัวนำทาง"/>
+				</node>
+				<node name="font" value="รูปแบบอักษร"/>
+			</node>
+			<node name="display" value="การแสดงผล">
+				<node name="summary" value="ระดับความสว่าง, การป้องกันการพักหน้าจอ"/>
+				<node name="allowScreenBrightnessAdjustment" value="การปรับความสว่างหน้าจอ">
+					<node name="summaryOn" value="ลากนิ้วขึ้นลงด้านซ้ายของหน้าจอ"/>
+					<node name="summaryOff" value="ปิดการใช้งาน"/>
+				</node>
+				<node name="dontTurnScreenOff" value="การป้องกันการพักหน้าจอ">
+					<node name="0" value="ตลอดเวลา"/>
+					<node name="25" value="ขณะที่ระดับแบตเตอรี่มากกว่า 25% "/>
+					<node name="50" value="ขณะที่ระดับแบตเตอรี่มากกว่า 50% "/>
+					<node name="100" value="ไม่มีการพักหน้าจอ"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="ป้องกันการพักหน้าจอระหว่างการชาร์ต">
+					<node name="summaryOn" value="ป้องกันการพักหน้าจอขณะชาร์ต"/>
+					<node name="summaryOff" value="พักหน้าจอขณะชาร์ต"/>
+				</node>
+			</node>
+			<node name="scrolling" value="การเลื่อนหน้า">
+				<node name="summary" value="การเลื่อนข้อความ"/>
+				<node name="fingerScrolling" value="เลื่อนหน้าโดยการสัมผัสหน้าจอ">
+					<node name="byTap" value="เลื่อนหน้าโดยการแตะที่หน้าจอ"/>
+					<node name="byFlick" value="เลื่อนหน้าโดยการเลื่อนที่หน้าจอ"/>
+					<node name="byTapAndFlick" value="เลื่อนหน้าโดยการแตะหรือเลื่อนที่หน้าจอ"/>
+				</node>
+				<node name="enableDoubleTapDetection" value="การทำงานเมื่อแตะหน้าจอสองครั้งติดกัน">
+					<node name="summaryOn" value="แตะหน้าจอติดกันเพื่อเปิดเมนูตัวนำทาง"/>
+					<node name="summaryOff" value="ปิดการใช้งาน"/>
+				</node>
+				<node name="volumeKeys" value="เปลี่ยนหน้าโดยการใช้ปุ่มปรับระดับเสียง">
+					<node name="summaryOn" value="ใช้ปุ่มปรับระดับเสียงในการเปลี่ยนหน้า"/>
+					<node name="summaryOff" value="ไม่ใช้ปุ่มปรับระดับเสียงในการเปลี่ยนหน้า"/>
+				</node>
+				<node name="invertVolumeKeys" value="ปรับเปลี่ยนทิศทางปุ่มปรับระดับเสียงในการเปลี่ยนหน้า">
+					<node name="summaryOn" value="ปุ่มเพิ่มเสียง (ปุ่มลดเสียง) ใช้เปลี่ยนไปหน้าก่อนหน้า(หน้าถัดไป)"/>
+					<node name="summaryOff" value="ปุ่มลดเสียง (ปุ่มเพิ่มเสียง) ใช้เปลี่ยนไปหน้าถัดไป(หน้าก่อนหน้า)"/>
+				</node>
+				<node name="animation" value="แอนิเมชั่น">
+					<node name="none" value="ไม่มีแอนิเมชั่นในการเลื่อนหน้า"/>
+					<node name="slide" value="เลื่อนหน้าแบบสไลด์"/>
+					<node name="shift" value="เลื่อนหน้าแบบสลับ"/>
+				</node>
+				<node name="horizontal" value="เลื่อนหน้าในแนวนอน">
+					<node name="summaryOn" value="เลื่อนหน้าตามแนวนอน"/>
+					<node name="summaryOff" value="เลื่อนหน้าตามแนวตั้ง"/>
+				</node>
+			</node>
+			<node name="dictionary" value="พจนานุกรม">
+				<node name="summary" value="การตั้งค่าพจนานุกรม"/>
+				<node name="dictionary" value="พจนานุกรม"/>
+				<node name="tappingAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
+					<node name="doNothing" value="ไม่มีอะไรเกิดขึ้น"/>
+					<node name="selectWord" value="เลือกคำเมื่อกดค้างที่หน้าจอ"/>
+					<node name="openDictionary" value="เลือกคำเมื่อกดค้างที่หน้าจอและไปยังพจนานุกรมเมื่อปล่อย"/>
+				</node>
+				<node name="navigateOverAllWords" value="ตัวเลือกคำสามารถเลือกได้ทุกคำ">
+					<node name="summaryOn" value="ตัวเลือกคำสามารถเลือกได้ทุกคำ"/>
+					<node name="summaryOff" value="ตัวเลือกคำเลือกได้เฉพาะลิ้งค์ข้อความ"/>
+				</node>
+			</node>
+		</node>
+		<node name="OptionsDialog">
+			<node name="tab">
+				<node name="Language" value="ภาษา">
+					<node name="autoDetect" value="เลือกภาษาโดยอัตโนมัติ"/>
+					<node name="defaultLanguage" value="ภาษาเริ่มต้น"/>
+					<node name="defaultEncodingSet" value="ค่าชุดการเข้ารหัสภาษาเริ่มต้น"/>
+					<node name="defaultEncoding" value="ค่าการเข้ารหัสภาษาเริ่มต้น"/>
+				</node>
+				<node name="Selection" value="การเลือก">
+					<node name="enableSelection" value="เปิดใช้งานการเลือกข้อความ"/>
+				</node>
+			</node>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="ไฟล์นี้จะถูกลบอย่างถาวร คุณแน่ใจหรือไม่?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="มีไฟล์นี้อยู่แล้วในระบบ ต้องการที่จะดาวน์โหลดใหม่หรือไม่?" />
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="กำลังดาวน์โหลดหนังสือ %s"/>
+			<node name="search" value="กำลังค้นหา, กรุณารอสักครู่..."/>
+			<node name="loadingBook" value="กำลังเปิดหนังสือ, กรุณารอสักครู่..."/>
+			<node name="loadingBookList" value="กำลังเปิดคลังหนังสือ, กรุณารอสักครู่..."/>
+			<node name="creatingBooksDatabase" value="กำลังสร้างคลังข้อมูลสำหรับหนังสือ, กรุณารอสักครู่..."/>
+			<node name="updatingBooksDatabase" value="กำลังอัพเดตคลังข้อมูลสำหรับหนังสือ, กรุณารอสักครู่..."/>
+			<node name="loadingNetworkLibrary" value="กำลังเปิดคลังหนังสือ, กรุณารอสักครู่..."/>
+			<node name="authentication" value="กำลังตรวจสอบความถูกต้องในการเข้าระบบ, กรุณารอสักครู่..."/>
+			<node name="signOut" value="กำลังออกจากระบบ, กรุณารอสักครู่..."/>
+			<node name="purchaseBook" value="กำลังซื้อหนังสือ, กรุณารอสักครู่..."/>
+			<node name="loadingCatalogInfo" value="กำลังดาวน์โหลข้อมูลของแคตตาล็อก, กรุณารอสักครู่..."/>
+			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..." />
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="เซิร์ฟเวอร์ภายในเกิดขัดข้อง"/>
+			<node name="purchaseNotEnoughMoney" value="เงินไม่พอจ่าย"/>
+			<node name="purchaseMissingBook" value="ไม่พบหยังสือ"/>
+			<node name="purchaseAlreadyPurchased" value="ซื้อเรียบร้อยแล้ว"/>
+			<node name="bookNotPurchased" value="ไม่ได้ซื้อหนังสือ"/>
+			<node name="downloadLimitExceeded" value="เกินขีดจำกัดการดาวน์โหลด"/>
+			<node name="noUserEmail" value="ไม่มีชื่อผู้ใช้งานที่ลงทะเบียนด้วยอีเมลล์ได้ระบุไว้ "/>
+			<node name="unsupportedOperation" value="ไม่รองรับการทำงานนี้"/>
+			<node name="notAnOPDS" value="ไม่ใช่ OPDS แคตตาล็อก"/>
+			<node name="noRequiredInformation" value="ข้อมูลที่ต้องการไม่ได้ระบุในแคตตาล็อก"/>
+			<node name="cacheDirectoryError" value="ไม่สามารถสร้างแคชสำหรับไดเรคทอรี"/>
+		</node>
+		<node name="emptyCatalogBox">
+			<node name="title" value="ข้อมูล"/>
+			<node name="message" value="แคตตาล็อกไม่มีข้อมูล"/>
+		</node>
+		<node name="emptySearchResults">
+			<node name="title" value="ผลการค้นหา"/>
+			<node name="message" value="ไม่พบหนังสือที่ต้องการค้นหา"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="การตรวจสอบสิทธิ์"/>
+			<node name="login" value="ชื่อผู้ใช้"/>
+			<node name="password" value="รหัสผ่าน"/>
+			<node name="skipIP" value="ไม่ผูกกับไอพีนี้"/>
+			<node name="loginIsEmpty" value="กรุณาใส่ชื่อผู้ใช้"/>
+			<node name="register" value="ลงทะเบียน"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="แคตตาล็อกที่กำหนดเอง"/>
+			<node name="catalogTitle" value="ชื่อแคตตาล็อก"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="สรุป"/>
+			<node name="catalogTitleExample" value="เช่น: Project Gutenberg catalog"/>
+			<node name="catalogUrlExample" value="เช่น: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="เช่น: Public domain books"/>
+			<node name="titleIsEmpty" value="กรุณาใส่ชื่อแคตตาล็อก"/>
+			<node name="urlIsEmpty" value="กรุณาใส่ URL"/>
+			<node name="invalidUrl" value="URL ไม่ถูกต้อง"/>
+			<node name="titleAlreadyExists" value="ชื่อนี้ถูกใข้แล้ว"/>
+			<node name="siteAlreadyExists" value="URL นี้ถูกใช้แล้ว"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="ตัวกรองภาษา"/>
+		</node>
+		<node name="purchaseConfirmBox">
+			<node name="title" value="ซื้อหนังสือ"/>
+			<node name="message" value="คุณแน่ใจว่าจะซื้อหนังสือ&#10;&#8220;%s&#8221;&#10;?"/>
+		</node>
+		<node name="alreadyPurchasedBox">
+			<node name="title" value="ซื้อหนังสือ"/>
+			<node name="message" value="หนังสือถูกซื้อเรียบร้อยแล้ว"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="ไม่สามารถเชื่อมต่อกับ Android Market ได้ กรุณาติดตั้ง %s ด้วยตัวเอง"/>
+		<node name="textNotFound" value="ขออภัย, ไม่พบหนังสือที่ต้องการค้นหา "/>
+		<node name="bookNotFound" value="ขออภัย, ไม่พบหนังสือที่ต้องการค้นหาในคลังหนังสือ "/>
+		<node name="bookmarkNotFound" value="ขออภัย, ไม่พบบุ๊คมาร์คที่ต้องการค้นหาในคลังหนังสือ "/>
+		<node name="cannotOpenBook" value="ขออภัย, ไม่สามารถเปิดหนังสือเล่มนี้ได้ในขณะนี้ "/>
+		<node name="dictionaryIsNotInstalled" value="ขออภัย, พจนานุกรมไม่ได้รับการติดตั้ง"/>
+		<node name="permissionDenied" value="ขออภัย, ไม่ได้รับการอนุญาต"/>
+		<node name="noFavorites" value="ขออภัย, ไม่มีข้อมูลในรายการโปรดของคุณ"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="เว็บเบราว์เซอร์"/>
+		<node name="defaultBrowser" value="เว็บเบราว์เซอร์เริ่มต้น"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="ข้อผิดพลาดได้ที่ไม่สามารถระบุได้"/>
+		<node name="unsupportedCompressionMethod" value="ไม่รองรับการบีบอัดข้อมูลชนิดนี้"/>
+		<node name="encriptedFile" value="ไฟล์ถูกป้องกันด้วย DRM"/>
+	</node>
+</resources>
