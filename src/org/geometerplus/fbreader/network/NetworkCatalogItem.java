@@ -131,7 +131,8 @@ public abstract class NetworkCatalogItem extends NetworkLibraryItem {
 					return ZLBoolean3.B3_UNDEFINED;
 				}
 			case HAS_BOOKS:
-				if (mgr != null && mgr.purchasedBooks().size() > 0) {
+				if (Link.booksInBasket().size() > 0 ||
+					(mgr != null && mgr.purchasedBooks().size() > 0)) {
 					return ZLBoolean3.B3_TRUE;
 				} else {
 					return ZLBoolean3.B3_FALSE;

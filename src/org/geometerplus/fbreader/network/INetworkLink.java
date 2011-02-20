@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.List;
 import java.util.Set;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -65,6 +66,7 @@ public interface INetworkLink {
 	void addToBasket(NetworkBookItem book);
 	void removeFromBasket(NetworkBookItem book);
 	boolean isBookInBasket(NetworkBookItem book);
+	List<String> booksInBasket();
 
 	String rewriteUrl(String url, boolean isUrlExternal);
 }

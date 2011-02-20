@@ -38,7 +38,7 @@ public class LitResBasketItem extends OPDSCatalogItem {
 	protected String getUrl() {
 		final StringBuilder builder = new StringBuilder();
 		boolean flag = false;
-		for (String bookId : ((OPDSNetworkLink)Link).booksInBasket()) {
+		for (String bookId : Link.booksInBasket()) {
 			if (flag) {
 				builder.append(',');
 			} else {

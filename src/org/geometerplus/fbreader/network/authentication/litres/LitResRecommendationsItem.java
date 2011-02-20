@@ -47,7 +47,7 @@ public class LitResRecommendationsItem extends OPDSCatalogItem {
 			}
 			builder.append(book.Id);
 		}
-		for (String bookId : ((OPDSNetworkLink)Link).booksInBasket()) {
+		for (String bookId : Link.booksInBasket()) {
 			if (flag) {
 				builder.append(',');
 			} else {
