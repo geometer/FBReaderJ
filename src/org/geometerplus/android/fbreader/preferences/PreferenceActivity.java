@@ -240,6 +240,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		colorsScreen.addOption(profile.RegularTextOption, "text");
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
 		colorsScreen.addOption(profile.FooterFillOption, "footer");
+		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
+		colorsScreen.addOption(profile.SelectionForegroundOption, "selectionForeground");
 
 		final Screen marginsScreen = createPreferenceScreen("margins");
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
