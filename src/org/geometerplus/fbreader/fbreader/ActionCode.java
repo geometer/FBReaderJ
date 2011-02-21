@@ -39,6 +39,7 @@ public interface ActionCode {
 	String SELECTION_COPY = "selectionCopy";
 	String SELECTION_SHARE = "selectionShare";
 	String SELECTION_DICTIONARY = "selectionDictionary";
+	String SELECTION_BOOKMARK = "selectionBookmark";
 
 	String SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS = "hyperlinksOnlyMode";
 	String SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS = "dictionaryMode";

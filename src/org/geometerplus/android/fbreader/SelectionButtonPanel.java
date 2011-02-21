@@ -24,6 +24,7 @@ public class SelectionButtonPanel extends SeveralButtonsPanel {
         addButton(ActionCode.SELECTION_COPY, true, R.drawable.selection_copy);
         addButton(ActionCode.SELECTION_SHARE, false, R.drawable.selection_share);
         addButton(ActionCode.SELECTION_DICTIONARY, false, R.drawable.selection_dictionary);
+        addButton(ActionCode.SELECTION_BOOKMARK, true, R.drawable.selection_bookmark);
     }
     
     public void move(int selectionStartY, int selectionEndY) {

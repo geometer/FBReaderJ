@@ -152,8 +152,11 @@
 		<node name="open" value="Open"/>
 		<node name="edit" value="Edit bookmark"/>
 		<node name="delete" value="Delete bookmark"/>
+		<node name="quotes" value="Quotes"/>
+		<node name="quotesFrom" value="Quotes from"/>
 		<node name="menu">
 			<node name="search" value="Search"/>
+			<node name="share" value="Share"/>
 		</node>
 	</node>
 	<node name="cancelMenu">
