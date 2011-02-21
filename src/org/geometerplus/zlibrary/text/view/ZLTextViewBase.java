@@ -51,6 +51,7 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLFile getWallpaperFile();
 	public abstract ZLColor getBackgroundColor();
 	public abstract ZLColor getSelectedBackgroundColor();
+	public abstract ZLColor getSelectedForegroundColor();
 	public abstract ZLColor getTextColor(byte hyperlinkType);
 	public abstract ZLColor getHighlightingColor();
 
@@ -183,17 +184,17 @@ abstract class ZLTextViewBase extends ZLView {
 		return 0;
 	}
 
-	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
+	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign, boolean selected) {
 		final ZLPaintContext context = myContext;
 		context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 		if ((start == 0) && (length == -1)) {
-			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
+			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0, selected);
 		} else {
 			if (length == -1) {
 				length = word.Length - start;
 			}
 			if (!addHyphenationSign) {
-				drawString(x, y, word.Data, word.Offset + start, length, word.getMark(), start);
+				drawString(x, y, word.Data, word.Offset + start, length, word.getMark(), start, selected);
 			} else {
 				char[] part = myWordPartArray;
 				if (length + 1 > part.length) {
@@ -202,14 +203,15 @@ abstract class ZLTextViewBase extends ZLView {
 				}
 				System.arraycopy(word.Data, word.Offset + start, part, 0, length);
 				part[length] = '-';
-				drawString(x, y, part, 0, length + 1, word.getMark(), start);
+				drawString(x, y, part, 0, length + 1, word.getMark(), start, selected);
 			}
 		}
 	}
 
-	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
+	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift, boolean selected) {
 		final ZLPaintContext context = myContext;
-		context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
+		final ZLColor color = selected ? getSelectedForegroundColor() : getTextColor(myTextStyle.Hyperlink.Type);
+		context.setTextColor(color);
 		if (mark == null) {
 			context.drawString(x, y, str, offset, length);
 		} else {
@@ -240,7 +242,7 @@ abstract class ZLTextViewBase extends ZLView {
 					context.fillRectangle(x, y - context.getStringHeight(), endX - 1, y + context.getDescent());
 					context.drawString(x, y, str, offset + markStart, endPos - markStart);
 					x = endX;
-					context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
+					context.setTextColor(color);
 				}
 				pos = markStart + markLen;
 			}

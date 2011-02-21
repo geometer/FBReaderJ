@@ -374,7 +374,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		activateSelectionMode(x, y);
+		boolean res = activateSelectionMode(x, y);
 
 
 		if (myReader.DictionaryTappingActionOption.getValue() !=
@@ -387,7 +387,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
-		return false;
+		return res;
 	}
 
 	public boolean onFingerMoveAfterLongPress(int x, int y) {
@@ -397,14 +397,14 @@ public final class FBView extends ZLTextView {
 
 		expandSelectionTo(x, y); 
 		//        if (myReader.DictionaryTappingActionOption.getValue() !=
-			//            FBReaderApp.DictionaryTappingAction.doNothing) {
-			//
-			//            final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
-			//            if (region != null) {
-				//                selectRegion(region);
-				//                myReader.repaintView();
-				//            }
-			//        }
+		//            FBReaderApp.DictionaryTappingAction.doNothing) {
+		//
+		//            final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
+		//            if (region != null) {
+		//                selectRegion(region);
+		//                myReader.repaintView();
+		//            }
+		//        }
 		return true;
 	}
 
@@ -501,6 +501,10 @@ public final class FBView extends ZLTextView {
 	@Override
 	public ZLColor getSelectedBackgroundColor() {
 		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
+	}
+	@Override
+	public ZLColor getSelectedForegroundColor() {
+		return myReader.getColorProfile().SelectionForegroundOption.getValue();
 	}
 
 	@Override
@@ -722,13 +726,16 @@ public final class FBView extends ZLTextView {
 	public boolean isNowSelecting() {
 		return myIsNowSelecting;
 	}
-	private void activateSelectionMode(int x, int y) {
+	private boolean activateSelectionMode(int x, int y) {
 		if (isSelectionModeActive())
 			deactivateSelectionMode();
 		if (startSelection(x, y)) {
 			myIsSelectionModeActive = true;
+			myHasSelectionExpanded = myReader.DictionaryTappingActionOption.getValue() ==
+				FBReaderApp.DictionaryTappingAction.doNothing;
+			return true;
 		}
-		//        myReader.doAction(ActionCode.SELECTION);
+		return false;
 	}
 	public void deactivateSelectionMode() {
 		if (!isSelectionModeActive())
@@ -741,8 +748,8 @@ public final class FBView extends ZLTextView {
 
 	protected boolean expandSelectionTo(int x, int y) {
 		if (!super.expandSelectionTo(x, y))
-		    return false;
-	    myHasSelectionExpanded = true;
+			return false;
+		myHasSelectionExpanded = true;
 		selectRegion(null); // removing the rendering of initially selected region.
 		return true;
 	}
@@ -752,6 +759,7 @@ public final class FBView extends ZLTextView {
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}
 	protected void onSelectingEnded() {
+		super.onSelectingEnded();
 		myIsNowSelecting = false;
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}

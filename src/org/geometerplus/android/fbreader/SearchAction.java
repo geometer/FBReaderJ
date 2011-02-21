@@ -35,7 +35,6 @@ class SearchAction extends FBAction {
 	}
 
 	public void run() {
-		Reader.getTextView().deactivateSelectionMode();
 		myActivity.onSearchRequested();
 	}
 }

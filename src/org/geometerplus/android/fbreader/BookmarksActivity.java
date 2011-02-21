@@ -31,8 +31,6 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-import org.geometerplus.zlibrary.text.view.*;
-
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -44,6 +42,13 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	private static final int OPEN_ITEM_ID = 0;
 	private static final int EDIT_ITEM_ID = 1;
 	private static final int DELETE_ITEM_ID = 2;
+	
+	private static final int MENU_SEARCH_ID = 1;
+	private static final int MENU_SHARE_ID = 2;
+	private static final int MENU_DELETE_ALL_ID = 3;
+	
+	private static final int DIALOG_DELETE_ALL_BOOKMARKS_ID = 1;
+//	private static final int DIALOG_DELETE_BOOKMARK_ID = 2;
 
 	List<Bookmark> AllBooksBookmarks;
 	private final List<Bookmark> myThisBookBookmarks = new LinkedList<Bookmark>();
@@ -136,19 +141,86 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		final MenuItem item = menu.add(
-			0, 1, Menu.NONE,
+		final MenuItem itemSearch = menu.add(
+			0, MENU_SEARCH_ID, Menu.NONE,
 			myResource.getResource("menu").getResource("search").getValue()
 		);
-		item.setOnMenuItemClickListener(this);
-		item.setIcon(R.drawable.ic_menu_search);
+		itemSearch.setOnMenuItemClickListener(this);
+		itemSearch.setIcon(R.drawable.ic_menu_search);
+
+		final MenuItem itemShare = menu.add(
+				0, MENU_SHARE_ID, Menu.NONE,
+				myResource.getResource("menu").getResource("share").getValue()
+			);
+			itemShare.setOnMenuItemClickListener(this);
+			itemShare.setIcon(R.drawable.selection_share_default);
+
+		final MenuItem itemDeleteAll = menu.add(
+					0, MENU_DELETE_ALL_ID, Menu.NONE,
+					myResource.getResource("menu").getResource("deleteAll").getValue()
+				);
+				itemDeleteAll.setOnMenuItemClickListener(this);
+				itemDeleteAll.setIcon(R.drawable.ic_menu_trash);
 		return true;
+	}
+	@Override 
+	protected Dialog onCreateDialog(int id) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setNegativeButton(myResource.getResource("dialog").getResource("no").getValue(), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
+		builder.setCancelable(false);
+
+		switch(id) {
+			case DIALOG_DELETE_ALL_BOOKMARKS_ID:
+				builder.setMessage(myResource.getResource("dialog").getResource("deleteAllPrompt").getValue())
+				.setPositiveButton(myResource.getResource("dialog").getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						deleteAllBookmarks((ListView)getTabHost().getCurrentView());
+					}
+				});
+				break;
+//			case DIALOG_DELETE_BOOKMARK_ID:
+//				builder.setMessage(myResource.getResource("dialog").getResource("deletePrompt").getValue())
+//				.setPositiveButton(myResource.getResource("dialog").getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int id) {
+//						deleteAllBookmarks((ListView)getTabHost().getCurrentView());d
+//					}
+//				});
+//				break;
+			default:
+				return null;
+		}
+		return builder.create();
 	}
 
 	@Override
 	public boolean onSearchRequested() {
 		startSearch(myBookmarkSearchPatternOption.getValue(), true, null, false);
 		return true;
+	}
+	
+
+	private void shareBookmarks() {
+		final TabHost host = getTabHost();
+		ListView currentView = (ListView)host.getCurrentView();
+		String text = getBookmaksText(currentView);
+
+		String subject;
+		if (currentView == myThisBookView) {
+			final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
+			String title = fbreader.Model.Book.getTitle();
+			subject = myResource.getResource("quotesFrom").getValue() + " " + title;
+		}
+		else 
+			subject = myResource.getResource("quotes").getValue();
+		Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+		shareIntent.setType("text/plain");
+		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+		startActivity(Intent.createChooser(shareIntent, null));
 	}
 
 	void showSearchResultsTab(LinkedList<Bookmark> results) {
@@ -166,8 +238,14 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
-			case 1:
+			case MENU_SEARCH_ID:
 				return onSearchRequested();
+			case MENU_SHARE_ID:
+				shareBookmarks();
+				return true;
+			case MENU_DELETE_ALL_ID:
+				showDialog(DIALOG_DELETE_ALL_BOOKMARKS_ID);
+				return true;
 			default:
 				return true;
 		}
@@ -199,11 +277,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				// TODO: implement
 				return true;
 			case DELETE_ITEM_ID:
-				bookmark.delete();
-				myThisBookBookmarks.remove(bookmark);
-				AllBooksBookmarks.remove(bookmark);
-				mySearchResults.remove(bookmark);
-				invalidateAllViews();
+//				showDialog(DIALOG_DELETE_BOOKMARK_ID);
+				deleteBookmark(bookmark);
 				return true;
 		}
 		return super.onContextItemSelected(item);
@@ -217,6 +292,13 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			AllBooksBookmarks.add(0, bookmark);
 			invalidateAllViews();
 		}
+	}
+	private void deleteBookmark(Bookmark bookmark) {
+		bookmark.delete();
+		myThisBookBookmarks.remove(bookmark);
+		AllBooksBookmarks.remove(bookmark);
+		mySearchResults.remove(bookmark);
+		invalidateAllViews();
 	}
 
 	private void gotoBookmark(Bookmark bookmark) {
@@ -241,6 +323,48 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		}
 	}
 
+	private String getBookmarkText(Bookmark bookmark) {
+		final int maxLen = 64;
+		String text = bookmark.getText();
+		if (text.length() > maxLen)
+			return text.substring(0, maxLen - 3) + "...";
+		return text;
+	}
+	private String getBookmaksText(ListView currentView) {
+		List<Bookmark> bookmarks = getBookmarks(currentView);
+		
+		String text = "";
+		for (Bookmark b: bookmarks) {
+			if (b.IsVisible)
+				if (bookmarks != myThisBookBookmarks)
+					text += b.getBookTitle() + "\n";
+				text += b.getText() + "\n\n";
+		}
+		return text;
+	}
+	private List<Bookmark> getBookmarks(ListView currentView) {
+		if (currentView == myThisBookView)
+			return myThisBookBookmarks;
+		else if (currentView == myAllBooksView)
+			return AllBooksBookmarks;
+		return mySearchResults;
+	}
+	private void deleteAllBookmarks(ListView currentView) {
+		List<Bookmark> bookmarks = getBookmarks(currentView);
+
+		for (Bookmark b: bookmarks)
+			b.delete();
+
+		if (myThisBookBookmarks != bookmarks)
+			myThisBookBookmarks.removeAll(bookmarks);
+		if (AllBooksBookmarks != bookmarks)
+			AllBooksBookmarks.removeAll(bookmarks);
+		if (mySearchResults != bookmarks)
+			mySearchResults.removeAll(bookmarks);
+
+		bookmarks.clear();
+		invalidateAllViews();
+	}
 	private final class BookmarksAdapter extends BaseAdapter implements AdapterView.OnItemClickListener, View.OnCreateContextMenuListener {
 		private final List<Bookmark> myBookmarks;
 		private final boolean myCurrentBook;
@@ -256,7 +380,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			if (getItem(position) != null) {
-				menu.setHeaderTitle(getItem(position).getText());
+				menu.setHeaderTitle(getBookmarkText(getItem(position)));
 				final ZLResource resource = ZLResource.resource("bookmarksView");
 				menu.add(0, OPEN_ITEM_ID, 0, resource.getResource("open").getValue());
 				//menu.add(0, EDIT_ITEM_ID, 0, resource.getResource("edit").getValue());
@@ -279,7 +403,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				bookTitleView.setVisibility(View.GONE);
 			} else {
 				imageView.setVisibility(View.GONE);
-				textView.setText(bookmark.getText());
+				textView.setText(getBookmarkText(bookmark));
 				if (myCurrentBook) {
 					bookTitleView.setVisibility(View.GONE);
 				} else {

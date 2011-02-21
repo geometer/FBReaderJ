@@ -16,7 +16,6 @@ public class SelectionCopyAction extends SelectionProcessAction {
 
 	public void run() {
 		String text = Reader.getTextView().getSelectedText();
-//		Reader.getTextView().deactivateSelectionMode();
 		ClipboardManager clipboard =
 			(ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
 		clipboard.setText(text);

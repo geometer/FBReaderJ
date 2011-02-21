@@ -19,21 +19,24 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import java.util.*;
-
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.application.*;
-import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
-import org.geometerplus.zlibrary.core.options.*;
-
-import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
-import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Bookmark;
+import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.options.ZLEnumOption;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -114,6 +117,8 @@ public final class FBReaderApp extends ZLApplication {
 
 		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(this, true));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(this, false));
+
+		addAction(ActionCode.SELECTION_BOOKMARK, new SelectionBookmarkAction(this));
 
 		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
 		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
@@ -413,4 +418,17 @@ public final class FBReaderApp extends ZLApplication {
 			visible
 		);
 	}
+	public Bookmark addBookmark() {
+		final FBView fbview = getTextView();
+
+		return new Bookmark(
+			Model.Book,
+			fbview.getModel().getId(),
+			fbview.getSelectedText(), 
+			fbview.getSelectionStartParagraphID(), 
+			fbview.getSelectionStartElementID(),
+			0
+		);
+	}
+
 }

@@ -152,8 +152,15 @@
 		<node name="open" value="Открыть"/>
 		<node name="edit" value="Поправить закладку"/>
 		<node name="delete" value="Стереть закладку"/>
+		<node name="dialog">
+			<node name="deleteAllPrompt" value="Вы действительно хотите стереть все закладки?"/>
+			<node name="no" value="Нет"/>
+			<node name="yes" value="Да"/>
+		</node>
 		<node name="menu">
 			<node name="search" value="Поиск"/>
+			<node name="share" value="Передать"/>
+			<node name="deleteAll" value="Стереть все"/>
 		</node>
 	</node>
 	<node name="cancelMenu">
@@ -407,6 +414,7 @@
 				</node>
 				<node name="backgroundColor" value="Цвет фона"/>
 				<node name="selectionBackground" value="Фон пометки"/>
+				<node name="selectionForeground" value="Цвет помеченного текста"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
 				<node name="highlighting" value="Фон результатов поиска"/>
@@ -505,7 +513,7 @@
 				<node name="summary" value="Настройки словаря"/>
 				<node name="dictionary" value="Словарь"/>
 				<node name="tappingAction" value="Действие при долгом нажатии на экран">
-					<node name="doNothing" value="Не делать ничего"/>
+					<node name="doNothing" value="Начинать выделение"/>
 					<node name="selectWord" value="Выделять слово"/>
 					<node name="openDictionary" value="Выделять слово, а при отпускании &#8211; запускать словарь"/>
 				</node>
