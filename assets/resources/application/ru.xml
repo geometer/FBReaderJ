@@ -152,8 +152,15 @@
 		<node name="open" value="Открыть"/>
 		<node name="edit" value="Поправить закладку"/>
 		<node name="delete" value="Стереть закладку"/>
+		<node name="dialog">
+			<node name="deleteAllPrompt" value="Вы действительно хотите стереть все закладки?"/>
+			<node name="no" value="Нет"/>
+			<node name="yes" value="Да"/>
+		</node>
 		<node name="menu">
 			<node name="search" value="Поиск"/>
+			<node name="share" value="Передать"/>
+			<node name="deleteAll" value="Стереть все"/>
 		</node>
 	</node>
 	<node name="cancelMenu">
