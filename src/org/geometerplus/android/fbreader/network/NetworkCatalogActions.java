@@ -372,7 +372,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	public void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
+	private void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		final String key = tree.getUniqueKey();
 		NetworkView.Instance().tryResumeLoading(activity, tree, key, new Runnable() {
 			public void run() {
