@@ -27,7 +27,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 
-class OPDSCatalogItem extends NetworkCatalogItem {
+public class OPDSCatalogItem extends NetworkCatalogItem {
 	static class State extends NetworkOperationData {
 		public String LastLoadedId;
 		public final HashSet<String> LoadedIds = new HashSet<String>();
@@ -44,8 +44,8 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		myExtraData = extraData;
 	}
 
-	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, int visibility, int catalogType) {
-		super(link, title, summary, cover, urlByType, visibility, catalogType);
+	public OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, CatalogType catalogType) {
+		super(link, title, summary, cover, urlByType, accessibility, catalogType);
 		myExtraData = null;
 	}
 
@@ -70,6 +70,10 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		return myExtraData;
 	}
 
+	protected String getUrl() {
+		return URLByType.get(URL_CATALOG);
+	}
+
 	@Override
 	public final void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		OPDSNetworkLink opdsLink = (OPDSNetworkLink) Link;
@@ -77,7 +81,7 @@ class OPDSCatalogItem extends NetworkCatalogItem {
 		myLoadingState = opdsLink.createOperationData(Link, listener);
 
 		ZLNetworkRequest networkRequest =
-			opdsLink.createNetworkData(URLByType.get(URL_CATALOG), myLoadingState);
+			opdsLink.createNetworkData(getUrl(), myLoadingState);
 
 		doLoadChildren(listener, networkRequest);
 	}

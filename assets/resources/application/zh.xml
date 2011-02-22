@@ -167,7 +167,7 @@
 		<node name="bookInfo" value="书籍信息" />
 		<node name="library" value="本地藏书" />
 		<node name="toc" value="目录" />
-		<node name="day" value="白低黑字" />
+		<node name="day" value="白底黑字" />
 		<node name="night" value="黑底白字" />
 		<node name="networkLibrary" value="在线书库" />
 		<node name="navigate" value="导航">
@@ -239,6 +239,10 @@
 				<node name="showStatusBar" value="显示状态栏">
 					<node name="summaryOn" value="阅读模式下显示状态栏" />
 					<node name="summaryOff" value="阅读模式下隐藏状态栏" />
+				</node>
+				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
+					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="text" value="文字">

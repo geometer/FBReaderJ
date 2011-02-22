@@ -41,9 +41,11 @@ public class ZLTTFInfoDetector {
 					}
 					if ("bold".equalsIgnoreCase(info.SubFamilyName)) {
 						table[1] = f;
-					} else if ("italic".equalsIgnoreCase(info.SubFamilyName)) {
+					} else if ("italic".equalsIgnoreCase(info.SubFamilyName) ||
+							   "oblique".equalsIgnoreCase(info.SubFamilyName)) {
 						table[2] = f;
-					} else if ("bold italic".equalsIgnoreCase(info.SubFamilyName)) {
+					} else if ("bold italic".equalsIgnoreCase(info.SubFamilyName) ||
+							   "bold oblique".equalsIgnoreCase(info.SubFamilyName)) {
 						table[3] = f;
 					} else {
 						table[0] = f;
@@ -166,13 +168,14 @@ public class ZLTTFInfoDetector {
 		for (int i = 0; i < count; ++i) {
 			final int platformId = getInt16(buffer, 12 * i + 6);
 			//final int platformSpecificId = getInt16(buffer, 12 * i + 8);
-			//final int languageId = getInt16(buffer, 12 * i + 10);
+			final int languageId = getInt16(buffer, 12 * i + 10);
 			final int nameId = getInt16(buffer, 12 * i + 12);
 			final int length = getInt16(buffer, 12 * i + 14);
 			final int offset = getInt16(buffer, 12 * i + 16);
 			switch (nameId) {
 				case 1:
-					if (fontInfo.FamilyName == null && stringOffset + offset + length <= buffer.length) {
+					if ((fontInfo.FamilyName == null || languageId == 1033) &&
+						stringOffset + offset + length <= buffer.length) {
 						fontInfo.FamilyName = new String(
 							buffer, stringOffset + offset, length,
 							platformId == 1 ? "windows-1252" : "UTF-16BE"
@@ -180,7 +183,8 @@ public class ZLTTFInfoDetector {
 					}
 					break;
 				case 2:
-					if (fontInfo.SubFamilyName == null && stringOffset + offset + length <= buffer.length) {
+					if ((fontInfo.FamilyName == null || languageId == 1033) &&
+						stringOffset + offset + length <= buffer.length) {
 						fontInfo.SubFamilyName = new String(
 							buffer, stringOffset + offset, length,
 							platformId == 1 ? "windows-1252" : "UTF-16BE"

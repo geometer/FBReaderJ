@@ -1,3 +1,18 @@
+===== 0.99.14 (??? ??, 2011) =====
+* Thai localization (by Samphan Pojanasophanakul)
+* Fixed TTF font style detection
+
+===== 0.99.13 (Feb 13, 2011) =====
+* Fixed book/position forgetting bug
+* Color channel values in color dialog
+* Fixed categories displaying in feedbooks feed
+
+===== 0.99.12 (Feb 09, 2011) =====
+* Added support for more dictionaries (by Steffen Siebert)
+* Option 'show status bar when menu becomes visible' (by Steffen Siebert)
+* Litres: series list has been added
+* Litres: recommendation list has been added
+
 ===== 0.99.11 (Feb 01, 2011) =====
 * Galician translation has been added (by Miguel Anxo Bouzada)
 * Czech translation has been updated (by Marek Pavelka)

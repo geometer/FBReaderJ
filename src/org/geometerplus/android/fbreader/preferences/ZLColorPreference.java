@@ -61,7 +61,7 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 		slider.setProgressDrawable(new SeekBarDrawable(
 			slider.getProgressDrawable(),
 			ZLResource.resource("color").getResource(resourceKey).getValue(),
-			value < 128
+			slider
 		));
 		return slider;
 	}
@@ -135,13 +135,15 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 	}
 
 	static class SeekBarDrawable extends Drawable {
+		private final SeekBar mySlider;
 		private final Drawable myBase;
 		private final String myText;
 		private final Paint myPaint;
 		private final Paint myOutlinePaint;
 		private boolean myLabelOnRight;
 
-		public SeekBarDrawable(Drawable base, String text, boolean labelOnRight) {
+		public SeekBarDrawable(Drawable base, String text, SeekBar slider) {
+			mySlider = slider;
 			myBase = base;
 			myText = text;
 
@@ -155,7 +157,7 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 			myOutlinePaint.setStrokeWidth(3);
 			myOutlinePaint.setColor(0xFFAAAAAA);
 
-			myLabelOnRight = labelOnRight;
+			myLabelOnRight = mySlider.getProgress() < 128;
 		}
 
 		@Override
@@ -194,11 +196,12 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 			myOutlinePaint.setTextSize(textSize);
 			final Rect textBounds = new Rect();
 			myPaint.getTextBounds("a", 0, 1, textBounds);
-			final float textWidth = myOutlinePaint.measureText(myText);
+			final String text = myText + ": " + mySlider.getProgress();
+			final float textWidth = myOutlinePaint.measureText(text);
 			final float x = myLabelOnRight ? bounds.width() - textWidth - 6 : 6;
 			final float y = bounds.height() / 2 + textBounds.height();
-			canvas.drawText(myText, x, y, myOutlinePaint);
-			canvas.drawText(myText, x, y, myPaint);
+			canvas.drawText(text, x, y, myOutlinePaint);
+			canvas.drawText(text, x, y, myPaint);
 		}
 
 		@Override

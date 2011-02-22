@@ -27,8 +27,11 @@ import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.zlibrary.text.view.ZLTextWordRegion;
 
@@ -42,6 +45,31 @@ public abstract class DictionaryUtil {
 	private static LinkedHashMap<PackageInfo,Boolean> ourDictionaryInfos =
 		new LinkedHashMap<PackageInfo,Boolean>();
 	private static ZLStringOption ourDictionaryOption;
+
+	private static class InfoReader extends ZLXMLReaderAdapter {
+		@Override
+		public boolean dontCacheAttributeValues() {
+			return true;
+		}
+
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			if ("dictionary".equals(tag)) {
+				final String id = attributes.getValue("id");
+				final String title = attributes.getValue("title");
+				ourDictionaryInfos.put(new PackageInfo(
+					id,
+					attributes.getValue("package"),
+					attributes.getValue("class"),
+					title != null ? title : id,
+					attributes.getValue("action"),
+					attributes.getValue("dataKey"),
+					attributes.getValue("pattern")
+				), !"always".equals(attributes.getValue("list")));
+			}
+			return false;
+		}
+	}
 
 	private interface ColorDict3 {
 		String ACTION = "colordict.intent.action.SEARCH";
@@ -58,60 +86,7 @@ public abstract class DictionaryUtil {
 
 	private static Map<PackageInfo,Boolean> infos() {
 		if (ourDictionaryInfos.isEmpty()) {
-			ourDictionaryInfos.put(new PackageInfo(
-				"ColorDict",										// Id
-				null,												// Package
-				null,												// Class
-				"ColorDict 3",										// Title
-				ColorDict3.ACTION,
-				ColorDict3.QUERY,
-				"%s"
-			), false);
-			ourDictionaryInfos.put(new PackageInfo(
-				"ColorDict2",										// Id
-				"com.socialnmobile.colordict",						// Package
-				"com.socialnmobile.colordict.activity.Main",		// Class
-				"ColorDict Old Style",								// Title
-				Intent.ACTION_SEARCH,
-				SearchManager.QUERY,
-				"%s"
-			), false);
-			ourDictionaryInfos.put(new PackageInfo(
-				"Fora Dictionary",									// Id
-				"com.ngc.fora",										// Package
-				"com.ngc.fora.ForaDictionary",						// Class
-				"Fora Dictionary",									// Title
-				Intent.ACTION_SEARCH,
-				SearchManager.QUERY,
-				"%s"
-			), false);
-			ourDictionaryInfos.put(new PackageInfo(
-				"Free Dictionary . org",							// Id
-				"org.freedictionary",								// Package
-				"org.freedictionary.MainActivity",					// Class
-				"Free Dictionary . org",							// Title
-				Intent.ACTION_VIEW,
-				null,
-				"%s"
-			), false);
-			ourDictionaryInfos.put(new PackageInfo(
-				"SlovoEd Deluxe German->English",					// Id
-				"com.slovoed.noreg.english_german.deluxe",			// Package
-				"com.slovoed.noreg.english_german.deluxe.Start",	// Class
-				"SlovoEd Deluxe German->English",					// Title
-				Intent.ACTION_VIEW,
-				null,
-				"%s/808464950"
-			), true);
-			ourDictionaryInfos.put(new PackageInfo(
-				"SlovoEd Deluxe English->German",					// Id
-				"com.slovoed.noreg.english_german.deluxe",			// Package
-				"com.slovoed.noreg.english_german.deluxe.Start",	// Class
-				"SlovoEd Deluxe English->German",					// Title
-				Intent.ACTION_VIEW,
-				null,
-				"%s/808464949"
-			), true);
+			new InfoReader().read(ZLFile.createFileByPath("dictionaries.xml"));
 		}
 		return ourDictionaryInfos;
 	}
@@ -161,8 +136,12 @@ public abstract class DictionaryUtil {
 	public static Intent getDictionaryIntent(PackageInfo dictionaryInfo, String text) {
 		final Intent intent = new Intent(dictionaryInfo.IntentAction);
 		if (dictionaryInfo.PackageName != null) {
+			String cls = dictionaryInfo.ClassName;
+			if (cls != null && cls.startsWith(".")) {
+				cls = dictionaryInfo.PackageName + cls;
+			}
 			intent.setComponent(new ComponentName(
-				dictionaryInfo.PackageName, dictionaryInfo.ClassName
+				dictionaryInfo.PackageName, cls
 			));
 		}
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -240,6 +240,10 @@
 					<node name="summaryOn" value="Zobrazit stavový řádek v režimu čtení"/>
 					<node name="summaryOff" value="Skrýt stavový řádek v režimu čtení"/>
 				</node>
+				<node name="showStatusBarWhenMenuIsActive" value="Zobrazit stavový řádek, když je menu aktivní">
+					<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
+					<node name="summaryOff" value="Nezobrazovat stavový řádek, když se menu aktivuje"/>
+				</node>
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Písmo, dělení slov atd."/>
