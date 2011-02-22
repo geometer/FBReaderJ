@@ -76,8 +76,8 @@ public class ZLTextStyleCollection {
 			return "true".equals(attributes.getValue(name));
 		}
 
-		private static int b3Value(ZLStringMap attributes, String name) {
-			return ZLBoolean3.getByString(attributes.getValue(name));
+		private static ZLBoolean3 b3Value(ZLStringMap attributes, String name) {
+			return ZLBoolean3.getByName(attributes.getValue(name));
 		}
 
 		public TextStyleReader(ZLTextStyleCollection collection) {
@@ -98,11 +98,11 @@ public class ZLTextStyleCollection {
 					ZLTextStyleDecoration decoration;
 
 					int fontSizeDelta = intValue(attributes, "fontSizeDelta", 0);
-					int bold = b3Value(attributes, "bold");
-					int italic = b3Value(attributes, "italic");
-					int underline = b3Value(attributes, "underline");
+					ZLBoolean3 bold = b3Value(attributes, "bold");
+					ZLBoolean3 italic = b3Value(attributes, "italic");
+					ZLBoolean3 underline = b3Value(attributes, "underline");
 					int verticalShift = intValue(attributes, "vShift", 0);
-					int allowHyphenations = b3Value(attributes, "allowHyphenations");
+					ZLBoolean3 allowHyphenations = b3Value(attributes, "allowHyphenations");
 
 					if (booleanValue(attributes, "partial")) {
 						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, underline, verticalShift, allowHyphenations);

@@ -286,10 +286,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 	}
 
-	synchronized void collectPurchasedBooks(List<NetworkLibraryItem> list) {
-		list.addAll(myPurchasedBooks.values());
+	@Override
+	public synchronized List<NetworkBookItem> purchasedBooks() {
+		return new ArrayList(myPurchasedBooks.values());
 	}
-
 
 	@Override
 	public synchronized boolean needsInitialization() {
@@ -361,11 +361,11 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	private void loadPurchasedBooksOnSuccess(LitResNetworkRequest purchasedBooksRequest) {
-		LitResXMLReader reader = (LitResXMLReader) purchasedBooksRequest.Reader;
+		LitResXMLReader reader = (LitResXMLReader)purchasedBooksRequest.Reader;
 		myPurchasedBooks.clear();
 		for (NetworkLibraryItem item: reader.Books) {
 			if (item instanceof NetworkBookItem) {
-				NetworkBookItem book = (NetworkBookItem) item;
+				NetworkBookItem book = (NetworkBookItem)item;
 				myPurchasedBooks.put(book.Id, book);
 			}
 		}
@@ -390,7 +390,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	private void loadAccountOnSuccess(LitResNetworkRequest accountRequest) {
-		LitResPurchaseXMLReader reader = (LitResPurchaseXMLReader) accountRequest.Reader;
+		LitResPurchaseXMLReader reader = (LitResPurchaseXMLReader)accountRequest.Reader;
 		myAccount = BuyBookReference.price(reader.Account, "RUB");
 	}
 

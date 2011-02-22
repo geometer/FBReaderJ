@@ -46,9 +46,9 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected boolean isBoldInternal() {
 		switch (myDecoration.BoldOption.getValue()) {
-			case ZLBoolean3.B3_TRUE:
+			case B3_TRUE:
 				return true;
-			case ZLBoolean3.B3_FALSE:
+			case B3_FALSE:
 				return false;
 			default:
 				return Base.isBold();
@@ -58,9 +58,9 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected boolean isItalicInternal() {
 		switch (myDecoration.ItalicOption.getValue()) {
-			case ZLBoolean3.B3_TRUE:
+			case B3_TRUE:
 				return true;
-			case ZLBoolean3.B3_FALSE:
+			case B3_FALSE:
 				return false;
 			default:
 				return Base.isItalic();
@@ -70,9 +70,9 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle {
 	@Override
 	protected boolean isUnderlineInternal() {
 		switch (myDecoration.UnderlineOption.getValue()) {
-			case ZLBoolean3.B3_TRUE:
+			case B3_TRUE:
 				return true;
-			case ZLBoolean3.B3_FALSE:
+			case B3_FALSE:
 				return false;
 			default:
 				return Base.isUnderline();
@@ -121,7 +121,13 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle {
 
 	@Override
 	public boolean allowHyphenations() {
-		int a = myDecoration.AllowHyphenationsOption.getValue();
-		return (a == ZLBoolean3.B3_UNDEFINED) ? Base.allowHyphenations() : (a == ZLBoolean3.B3_TRUE);
+		switch (myDecoration.AllowHyphenationsOption.getValue()) {
+			case B3_FALSE:
+				return false;
+			case B3_TRUE:
+				return true;
+			default:
+				return Base.allowHyphenations();
+		} 
 	}
 }

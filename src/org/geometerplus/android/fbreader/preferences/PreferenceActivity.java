@@ -51,9 +51,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
 
+		final ZLPreferenceSet statusBarPreferences = new ZLPreferenceSet();
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addOption(androidApp.AutoOrientationOption, "autoOrientation");
-		appearanceScreen.addOption(androidApp.ShowStatusBarOption, "showStatusBar");
+		appearanceScreen.addPreference(
+			new ZLBooleanPreference(
+				this, androidApp.ShowStatusBarOption, appearanceScreen.Resource, "showStatusBar"
+			) {
+				@Override
+				public void onClick() {
+					super.onClick();
+					statusBarPreferences.setEnabled(!isChecked());
+				}
+			}
+		);
+		statusBarPreferences.add(
+			appearanceScreen.addOption(
+				androidApp.ShowStatusBarWhenMenuIsActiveOption,
+				"showStatusBarWhenMenuIsActive"
+			)
+		);
+		statusBarPreferences.setEnabled(!androidApp.ShowStatusBarOption.getValue());
 
 		final Screen textScreen = createPreferenceScreen("text");
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();

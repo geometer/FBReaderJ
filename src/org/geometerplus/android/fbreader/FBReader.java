@@ -25,7 +25,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Menu;
 import android.view.WindowManager;
+import android.view.Window;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -102,10 +104,30 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader));
 	}
 
+ 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+		if (!application.ShowStatusBarOption.getValue() &&
+			application.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public void onOptionsMenuClosed(Menu menu) {
+		super.onOptionsMenuClosed(menu);
+		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+		if (!application.ShowStatusBarOption.getValue() &&
+			application.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		}
+	}
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-	   		final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Handler successHandler = new Handler() {
 				public void handleMessage(Message message) {
 					ourTextSearchPanel.show(true);

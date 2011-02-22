@@ -39,13 +39,13 @@ class ZLBoolean3Preference extends ZLStringListPreference {
 		setList(new String[] { ON, OFF, UNCHANGED });
 
 		switch (option.getValue()) {
-			case ZLBoolean3.B3_TRUE:
+			case B3_TRUE:
 				setInitialValue(ON);
 				break;
-			case ZLBoolean3.B3_FALSE:
+			case B3_FALSE:
 				setInitialValue(OFF);
 				break;
-			case ZLBoolean3.B3_UNDEFINED:
+			case B3_UNDEFINED:
 				setInitialValue(UNCHANGED);
 				break;
 		}

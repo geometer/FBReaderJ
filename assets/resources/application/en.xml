@@ -239,6 +239,10 @@
 					<node name="summaryOn" value="Show status bar in reading mode"/>
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
+				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active">
+					<node name="summaryOn" value="Show status bar when menu becomes active"/>
+					<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
+				</node>
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Font, hyphenations, etc."/>

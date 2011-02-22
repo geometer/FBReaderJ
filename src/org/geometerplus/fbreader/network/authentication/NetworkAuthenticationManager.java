@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.network.authentication;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -95,6 +94,10 @@ public abstract class NetworkAuthenticationManager {
 
 	public void purchaseBook(NetworkBookItem book) throws ZLNetworkException {
 		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
+	}
+
+	public List<NetworkBookItem> purchasedBooks() {
+		return Collections.emptyList();
 	}
 
 	public String currentAccount() {

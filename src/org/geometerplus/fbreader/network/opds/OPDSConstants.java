@@ -21,13 +21,14 @@ package org.geometerplus.fbreader.network.opds;
 
 
 interface OPDSConstants {
-
 	// Feed level
-	String REL_BOOKSHELF = "http://opds-spec.org/bookshelf";
+	String REL_BOOKSHELF = "http://data.fbreader.org/rel/bookshelf";
+	String REL_RECOMMENDATIONS = "http://data.fbreader.org/rel/recommendations";
 	//String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
 
 	// Entry level / catalog types
 	String REL_CATALOG_AUTHOR = "http://data.fbreader.org/catalog/author";
+	String REL_CATALOG_SERIES = "http://data.fbreader.org/catalog/series";
 	String REL_SUBSECTION = "subsection";
 
 	// Entry level / acquisition links
@@ -60,4 +61,5 @@ interface OPDSConstants {
 	// Entry level / OPDS Link Conditions
 	String REL_CONDITION_NEVER = "http://data.fbreader.org/condition/never";
 	String REL_CONDITION_SIGNED_IN = "http://data.fbreader.org/condition/signed-in";
+	String REL_CONDITION_HAS_BOOKS = "http://data.fbreader.org/condition/has-books";
 }

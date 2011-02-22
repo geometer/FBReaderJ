@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
+import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 
 class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes {
 	private final String myBaseURL;
@@ -73,7 +74,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			}
 			return false;
 		}
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link: feed.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
@@ -139,7 +140,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		String id = null;
 		int idType = 0;
 
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link: entry.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
@@ -188,10 +189,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		}
 		myData.LoadedIds.add(entry.Id.Uri);
 
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
-		if (opdsLink.getCondition(entry.Id.Uri) == OPDSNetworkLink.FeedCondition.NEVER) {
-			return tryInterrupt();
-		}
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
@@ -221,7 +219,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 	private static final String AuthorsPrefix = "authors:";
 
 	private NetworkLibraryItem readBookItem(OPDSEntry entry) {
-		final OPDSNetworkLink opdsNetworkLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsNetworkLink = (OPDSNetworkLink)myData.Link;
 		/*final String date;
 		if (entry.DCIssued != null) {
 			date = entry.DCIssued.getDateTime(true);
@@ -231,9 +229,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 
 		final LinkedList<String> tags = new LinkedList<String>();
 		for (ATOMCategory category: entry.Categories) {
-			String term = category.getTerm();
-			if (term != null) {
-				tags.add(term);
+			String label = category.getLabel();
+			if (label == null) {
+				label = category.getTerm();
+			}
+			if (label != null) {
+				tags.add(label);
 			}
 		}
 
@@ -254,7 +255,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					cover = href;
 				}
 			} else if (BookReference.Type.BUY == referenceType) {
-				final OPDSLink opdsLink = (OPDSLink) link; 
+				final OPDSLink opdsLink = (OPDSLink)link; 
 				String price = null;
 				final OPDSPrice opdsPrice = opdsLink.selectBestPrice();
 				if (opdsPrice != null) {
@@ -368,14 +369,14 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 	}
 
 	private NetworkLibraryItem readCatalogItem(OPDSEntry entry) {
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink) myData.Link;
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		String coverURL = null;
 		String url = null;
 		boolean urlIsAlternate = false;
 		String htmlURL = null;
-		boolean litresCatalogue = false;
-		int catalogType = NetworkCatalogItem.CATALOG_OTHER;
-		for (ATOMLink link: entry.Links) {
+		String litresRel = null;
+		NetworkCatalogItem.CatalogType catalogType = NetworkCatalogItem.CatalogType.OTHER;
+		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
@@ -391,12 +392,13 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 						url = href;
 						urlIsAlternate = true;
 					}
-				} else if (url == null
-						|| rel == null || rel.equals(REL_SUBSECTION)) {
+				} else if (url == null || rel == null || rel.equals(REL_SUBSECTION)) {
 					url = href;
 					urlIsAlternate = false;
 					if (REL_CATALOG_AUTHOR.equals(rel)) {
-						catalogType = NetworkCatalogItem.CATALOG_BY_AUTHORS;
+						catalogType = NetworkCatalogItem.CatalogType.BY_AUTHOR;
+					} else if (REL_CATALOG_SERIES.equals(rel)) {
+						catalogType = NetworkCatalogItem.CatalogType.BY_SERIES;
 					}
 				}
 			} else if (MIME_TEXT_HTML.equals(type)) {
@@ -407,10 +409,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					htmlURL = href;
 				}
 			} else if (MIME_APP_LITRES.equals(type)) {
-				if (REL_BOOKSHELF.equals(rel)) {
-					litresCatalogue = true;
-					url = href; // FIXME: mimeType ???
-				}
+				litresRel = rel;
+				url = href;
 			}
 		}
 
@@ -421,9 +421,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		if (url != null && !urlIsAlternate) {
 			htmlURL = null;
 		}
-
-		final boolean dependsOnAccount =
-			OPDSNetworkLink.FeedCondition.SIGNED_IN == opdsLink.getCondition(entry.Id.Uri);
 
 		final String annotation;
 		if (entry.Summary != null) {
@@ -441,15 +438,28 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		if (htmlURL != null) {
 			urlMap.put(NetworkCatalogItem.URL_HTML_PAGE, htmlURL);
 		}
-		if (litresCatalogue) {
-			return new LitResBookshelfItem(
-				opdsLink,
-				entry.Title,
-				annotation,
-				coverURL,
-				urlMap,
-				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS
-			);
+		if (litresRel != null) {
+			if (REL_BOOKSHELF.equals(litresRel)) {
+				return new LitResBookshelfItem(
+					opdsLink,
+					entry.Title,
+					annotation,
+					coverURL,
+					urlMap,
+					opdsLink.getCondition(entry.Id.Uri)
+				);
+			} else if (REL_RECOMMENDATIONS.equals(litresRel)) {
+				return new LitResRecommendationsItem(
+					opdsLink,
+					entry.Title,
+					annotation,
+					coverURL,
+					urlMap,
+					opdsLink.getCondition(entry.Id.Uri)
+				);
+			} else {
+				return null;
+			}
 		} else {
 			return new OPDSCatalogItem(
 				opdsLink,
@@ -457,7 +467,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				annotation,
 				coverURL,
 				urlMap,
-				dependsOnAccount ? NetworkCatalogItem.VISIBLE_LOGGED_USER : NetworkCatalogItem.VISIBLE_ALWAYS,
+				opdsLink.getCondition(entry.Id.Uri),
 				catalogType
 			);
 		}

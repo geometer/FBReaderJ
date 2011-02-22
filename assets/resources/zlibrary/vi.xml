@@ -75,6 +75,7 @@
 		<node name="pt" value="Tiếng Bồ Đào Nha" />
 		<node name="ru" value="Tiếng Nga" />
 		<node name="sv" value="Tiếng Thụy Điển" />
+		<node name="th" value="Thai" toBeTranslated="true"/>
 		<node name="tr" value="Tiếng Thổ Nhĩ kỳ" />
 		<node name="uk" value="Tiếng Ukraina" />
 		<node name="vi" value="Tiếng Việt" />
