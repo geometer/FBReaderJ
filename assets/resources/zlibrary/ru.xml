@@ -74,6 +74,7 @@
 		<node name="pt" value="португальский" />
 		<node name="ru" value="русский" />
 		<node name="sv" value="шведский" />
+		<node name="th" value="тайский" />
 		<node name="tr" value="турецкий" />
 		<node name="uk" value="украинский" />
 		<node name="vi" value="вьетнамский" />
