@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Podle autora">
+			<node name="summary" value="Knihy seřazeny podle autora"/>
+		</node>
+		<node name="byTitle" value="Podle názvu">
+			<node name="summary" value="Knihy seřazeny podle názvu"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>
 		<node name="showResults" value="Zobrazit výsledky"/>
 		<node name="showBooks" value="Zobrazit knihy"/>

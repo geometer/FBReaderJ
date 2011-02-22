@@ -50,6 +50,18 @@
 		<node name="removeFromFavorites" value="Supprimer des favoris"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Par auteur">
+			<node name="summary" value="Livres triés par auteur"/>
+		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Ouvrir le catalogue"/>
 		<node name="showResults" value="Afficher les résultats"/>
 		<node name="showBooks" value="Afficher les livres"/>
