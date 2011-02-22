@@ -75,6 +75,7 @@
 		<node name="pl" value="Pools" />
 		<node name="ru" value="Russisch" />
 		<node name="sv" value="Zweeds" />
+		<node name="th" value="Thai" toBeTranslated="true"/>
 		<node name="tr" value="Turks" />
 		<node name="uk" value="Oekraïens" />
 		<node name="vi" value="Vietnamees" />
