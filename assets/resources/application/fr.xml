@@ -60,6 +60,8 @@
 		<node name="deleteDemo" value="Supprimer l'extrait"/>
 		<node name="downloadDemo" value="Télécharger l'extrait"/>
 		<node name="buy" value="Acheter (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
 		<node name="stopLoading" value="Arrêt du chargement" />
 		<node name="stopSearching" value="Arrêt de la recherche" />

@@ -57,6 +57,8 @@
 		<node name="deleteDemo" value="Odstranit ukázku"/>
 		<node name="downloadDemo" value="Stáhnout ukázku"/>
 		<node name="buy" value="Zakoupit (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Otevřít v prohlížeči" />
 		<node name="stopLoading" value="Zastavit načítání" />
 		<node name="stopSearching" value="Zastavit vyhledávání" />

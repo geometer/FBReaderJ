@@ -57,6 +57,8 @@
 		<node name="deleteDemo" value="Verwijder voorbeeld"/>
 		<node name="downloadDemo" value="Download voorbeeld"/>
 		<node name="buy" value="Koop (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Openen in de browser" />
 		<node name="stopLoading" value="Stop loading" toBeTranslated="true" />
 		<node name="stopSearching" value="Stop searching" toBeTranslated="true" />

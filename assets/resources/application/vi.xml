@@ -57,6 +57,8 @@
 		<node name="deleteDemo" value="Xóa bản thử"/>
 		<node name="downloadDemo" value="Tải về bản thử"/>
 		<node name="buy" value="Mua (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Mở trình duyệt" />
 		<node name="stopLoading" value="Dừng tải" />
 		<node name="stopSearching" value="Dừng tìm kiếm" />

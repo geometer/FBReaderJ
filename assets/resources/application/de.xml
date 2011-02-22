@@ -58,6 +58,8 @@
 		<node name="deleteDemo" value="Leseprobe löschen"/>
 		<node name="downloadDemo" value="Leseprobe herunterladen"/>
 		<node name="buy" value="(%s) kaufen"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Im Browser öffnen" />
 		<node name="stopLoading" value="Herunterladen abbrechen" />
 		<node name="stopSearching" value="Suchen stoppen" />

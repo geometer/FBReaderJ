@@ -68,6 +68,8 @@
 		<node name="deleteDemo" value="Удалить фрагмент"/>
 		<node name="downloadDemo" value="Скачать фрагмент"/>
 		<node name="buy" value="Купить (%s)"/>
+		<node name="addToBasket" value="Добавить в корзину"/>
+		<node name="removeFromBasket" value="Убрать из корзины"/>
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="stopLoading" value="Остановить загрузку" />
 		<node name="stopSearching" value="Остановить поиск" />

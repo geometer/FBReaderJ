@@ -57,6 +57,8 @@
 		<node name="deleteDemo" value="ลบหนังสือตัวอย่าง"/>
 		<node name="downloadDemo" value="ดาวน์โหลดหนังสือตัวอย่าง"/>
 		<node name="buy" value="ซื้อ (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="เปิดในเว็บบราวเซอร์"/>
 		<node name="stopLoading" value="หยุดการโหลด"/>
 		<node name="stopSearching" value="หยุดการค้นหา"/>

@@ -57,6 +57,8 @@
 		<node name="deleteDemo" value="Cancella esempio"/>
 		<node name="downloadDemo" value="Scarica esempio"/>
 		<node name="buy" value="Compra (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Apri nel browser" />
 		<node name="stopLoading" value="Ferma caricamento" />
 		<node name="stopSearching" value="Ferma ricerca" />

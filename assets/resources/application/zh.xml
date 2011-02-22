@@ -57,6 +57,8 @@
 		<node name="deleteDemo" value="删除试读本" />
 		<node name="downloadDemo" value="下载试读本" />
 		<node name="buy" value="购买(%s)" />
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="在浏览器中打开" />
 		<node name="stopLoading" value="停止加载" />
 		<node name="stopSearching" value="停止搜索" />

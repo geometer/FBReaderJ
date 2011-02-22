@@ -57,6 +57,8 @@
 		<node name="deleteDemo" value="Видалити уривок"/>
 		<node name="downloadDemo" value="Завантажити уривок"/>
 		<node name="buy" value="Придбати (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Показати у браузері" />
 		<node name="stopLoading" value="Припинити завантаження" />
 		<node name="stopSearching" value="Припинити пошук" />

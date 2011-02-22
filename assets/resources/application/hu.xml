@@ -57,6 +57,8 @@
 		<node name="deleteDemo" value="Minta törlése"/>
 		<node name="downloadDemo" value="Minta letöltése"/>
 		<node name="buy" value="Vásárlás (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Megnyitás böngészőben" />
 		<node name="stopLoading" value="Letöltés leállítása" />
 		<node name="stopSearching" value="Keresés leállítása" />
