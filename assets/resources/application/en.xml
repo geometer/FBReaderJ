@@ -575,7 +575,7 @@
 			<node name="register" value="Sign up" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="Custom catalog" />
+			<node name="title" value="FBReader: add custom catalog" />
 			<node name="catalogTitle" value="Title" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Summary" />

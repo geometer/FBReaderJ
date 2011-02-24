@@ -576,7 +576,7 @@
 			<node name="register" value="ลงทะเบียน"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="แคตตาล็อกที่กำหนดเอง"/>
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
 			<node name="catalogTitle" value="ชื่อแคตตาล็อก"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="สรุป"/>

@@ -576,7 +576,7 @@
 			<node name="register" value="Зареєструватися" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="Користувацький каталог" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
 			<node name="catalogTitle" value="Назва" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Опис" />

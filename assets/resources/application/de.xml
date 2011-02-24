@@ -577,7 +577,7 @@
 			<node name="register" value="Anmelden" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="Benutzerspezifischer Katalog" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
 			<node name="catalogTitle" value="Titel" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Zusammenfassung" />

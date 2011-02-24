@@ -575,7 +575,7 @@
 			<node name="register" value="Зарегистрироваться" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="Пользовательский каталог" />
+			<node name="title" value="FBReader: добавление каталога" />
 			<node name="catalogTitle" value="Название" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Описание" />
