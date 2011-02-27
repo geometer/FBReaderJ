@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.ContextMenu;
 
@@ -70,6 +71,6 @@ class AddCustomCatalogItemActions extends NetworkTreeActions {
 	}
 
 	public static void addCustomCatalog(Activity activity) {
-		NetworkDialog.show(activity, NetworkDialog.DIALOG_CUSTOM_CATALOG, null, null);
+		activity.startActivity(new Intent(activity, AddCustomCatalogActivity.class));
 	}
 }
