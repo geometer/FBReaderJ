@@ -39,7 +39,6 @@ abstract class NetworkDialog {
 
 	// dialog identifiers
 	public static final int DIALOG_AUTHENTICATION = 0;
-	public static final int DIALOG_CUSTOM_CATALOG = 1;
 
 	private static final TreeMap<Integer, NetworkDialog> ourInstances = new TreeMap<Integer, NetworkDialog>();
 
@@ -49,9 +48,6 @@ abstract class NetworkDialog {
 			switch (id) {
 			case DIALOG_AUTHENTICATION:
 				dlg = new AuthenticationDialog();
-				break;
-			case DIALOG_CUSTOM_CATALOG:
-				dlg = new CustomCatalogDialog();
 				break;
 			}
 			if (dlg != null) {
