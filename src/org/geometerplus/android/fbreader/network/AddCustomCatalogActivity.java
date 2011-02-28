@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -64,6 +65,11 @@ public class AddCustomCatalogActivity extends Activity {
 		setupButton(
 			R.id.add_custom_catalog_ok_button, "ok", new View.OnClickListener() {
 				public void onClick(View view) {
+					final InputMethodManager imm =
+						(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(findViewById(R.id.add_custom_catalog_url).getWindowToken(), 0);
+					imm.hideSoftInputFromWindow(findViewById(R.id.add_custom_catalog_title).getWindowToken(), 0);
+					imm.hideSoftInputFromWindow(findViewById(R.id.add_custom_catalog_summary).getWindowToken(), 0);
 					onOkButton();
 				}
 			}
