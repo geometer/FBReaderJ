@@ -46,11 +46,11 @@ import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
 	final static String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
-	final static String EDIT_CATALOG = "android.fbreader.action.EDIT_CATALOG";
 
 	final static String ADD_CATALOG_TITLE_KEY = "title";
 	final static String ADD_CATALOG_SUMMARY_KEY = "summary";
-	final static String EDIT_CATALOG_ID_KEY = "id";
+	final static String ADD_CATALOG_ICON_KEY = "icon";
+	final static String ADD_CATALOG_ID_KEY = "id";
 
 	private NetworkTree myTree;
 	private volatile Intent myIntent;
@@ -78,24 +78,26 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			final Uri uri = intent.getData();
 			final String title = intent.getStringExtra(ADD_CATALOG_TITLE_KEY);
 			final String summary = intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY);
-			if (uri != null && title != null) {
-				final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(
-					uri.getHost(), title, summary, uri.toString()
-				);
-				if (link != null) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							final NetworkLibrary library = NetworkLibrary.Instance();
-							library.addCustomLink(link);
-							library.updateChildren();
-							library.synchronize();
-							NetworkView.Instance().fireModelChangedAsync();
-							getListView().invalidateViews();
-						}
-					});
-				}
+			final String icon = intent.getStringExtra(ADD_CATALOG_ICON_KEY);
+			final int id = intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID);
+			if (uri == null || title == null) {
+				return;
 			}
-		} else if (EDIT_CATALOG.equals(action)) {
+			final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(
+				id, uri.getHost(), title, summary, icon, uri.toString()
+			);
+			if (link != null) {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						final NetworkLibrary library = NetworkLibrary.Instance();
+						library.addCustomLink(link);
+						library.updateChildren();
+						library.synchronize();
+						NetworkView.Instance().fireModelChangedAsync();
+						getListView().invalidateViews();
+					}
+				});
+			}
 		}
 	}
 

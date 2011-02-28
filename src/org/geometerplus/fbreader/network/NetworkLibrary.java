@@ -182,7 +182,6 @@ public class NetworkLibrary {
 						final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
 						if (link != null) {
 							addLinkInternal(link);
-							link.setSaveLinkListener(myChangesListener);
 						}
 					}
 				}
@@ -463,12 +462,6 @@ public class NetworkLibrary {
 		}
 	}
 
-	private ICustomNetworkLink.SaveLinkListener myChangesListener = new ICustomNetworkLink.SaveLinkListener() {
-		public void onSaveLink(ICustomNetworkLink link) {
-			NetworkDatabase.Instance().saveCustomLink(link);
-		}
-	};
-
 	private <T extends INetworkLink> void addLinkInternal(T link) {
 		synchronized (myLinks) {
 			myLinks.add(link);
@@ -476,9 +469,20 @@ public class NetworkLibrary {
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
-		addLinkInternal(link);
-		link.setSaveLinkListener(myChangesListener);
-		link.saveLink();
+		final int id = link.getId();
+		if (id == ICustomNetworkLink.INVALID_ID) {
+			addLinkInternal(link);
+		} else {
+			for (int i = myLinks.size() - 1; i >= 0; --i) {
+				final INetworkLink l = myLinks.get(i);
+				if (l instanceof ICustomNetworkLink &&
+					((ICustomNetworkLink)l).getId() == id) {
+					myLinks.set(i, link);
+					break;
+				}
+			}
+		}
+		NetworkDatabase.Instance().saveCustomLink(link);
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
@@ -486,7 +490,6 @@ public class NetworkLibrary {
 			myLinks.remove(link);
 		}
 		NetworkDatabase.Instance().deleteCustomLink(link);
-		link.setSaveLinkListener(null);
 	}
 
 	public boolean hasCustomLinkTitle(String title, INetworkLink exceptFor) {

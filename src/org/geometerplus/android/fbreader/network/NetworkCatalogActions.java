@@ -258,7 +258,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 							.setData(Uri.parse(textUrl))
 							.putExtra(NetworkLibraryActivity.ADD_CATALOG_TITLE_KEY, link.getTitle())
 							.putExtra(NetworkLibraryActivity.ADD_CATALOG_SUMMARY_KEY, link.getSummary())
-							.putExtra(NetworkLibraryActivity.EDIT_CATALOG_ID_KEY, link.getId())
+							.putExtra(NetworkLibraryActivity.ADD_CATALOG_ICON_KEY, link.getIcon())
+							.putExtra(NetworkLibraryActivity.ADD_CATALOG_ID_KEY, link.getId())
 					);
 				}
 				return true;
