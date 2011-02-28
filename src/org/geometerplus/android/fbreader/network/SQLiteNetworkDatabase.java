@@ -56,7 +56,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		myDatabase.endTransaction();
 
 		myDatabase.execSQL("VACUUM");
-		//myDatabase.setVersion(currentCodeVersion);
+		myDatabase.setVersion(currentCodeVersion);
 	}
 
 	protected void executeAsATransaction(Runnable actions) {

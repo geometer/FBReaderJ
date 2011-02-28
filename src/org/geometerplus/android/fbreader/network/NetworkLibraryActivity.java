@@ -46,9 +46,11 @@ import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
 	final static String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
+	final static String EDIT_CATALOG = "android.fbreader.action.EDIT_CATALOG";
 
 	final static String ADD_CATALOG_TITLE_KEY = "title";
 	final static String ADD_CATALOG_SUMMARY_KEY = "summary";
+	final static String EDIT_CATALOG_ID_KEY = "id";
 
 	private NetworkTree myTree;
 	private volatile Intent myIntent;
@@ -71,7 +73,8 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	private void processIntent(Intent intent) {
-		if (ADD_CATALOG.equals(intent.getAction())) {
+		final String action = intent.getAction();
+		if (ADD_CATALOG.equals(action)) {
 			final Uri uri = intent.getData();
 			final String title = intent.getStringExtra(ADD_CATALOG_TITLE_KEY);
 			final String summary = intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY);
@@ -92,6 +95,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 					});
 				}
 			}
+		} else if (EDIT_CATALOG.equals(action)) {
 		}
 	}
 

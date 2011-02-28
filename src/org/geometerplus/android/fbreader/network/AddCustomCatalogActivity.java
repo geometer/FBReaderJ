@@ -41,7 +41,7 @@ import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
 	private ZLResource myResource;
-	private ICustomNetworkLink myLink;
+	private Integer myCatalogId;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -75,12 +75,20 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		);
 
-		final Uri uri = getIntent().getData();
+		final Intent intent = getIntent();
+		final Uri uri = intent.getData();
+		myCatalogId = null;
 		if (uri != null) {
-			loadInfoByUri(uri);
+			if (intent.hasExtra(NetworkLibraryActivity.EDIT_CATALOG_ID_KEY)) {
+				myCatalogId = intent.getIntExtra(NetworkLibraryActivity.EDIT_CATALOG_ID_KEY, 0);
+				setTextById(R.id.add_custom_catalog_url, uri.toString());
+				setTextById(R.id.add_custom_catalog_title, intent.getStringExtra(NetworkLibraryActivity.ADD_CATALOG_TITLE_KEY));
+				setTextById(R.id.add_custom_catalog_summary, intent.getStringExtra(NetworkLibraryActivity.ADD_CATALOG_SUMMARY_KEY));
+			} else {
+				loadInfoByUri(uri);
+			}
 			setExtraFieldsVisibility(true);
 		} else {
-			myLink = null;
 			setExtraFieldsVisibility(false);
 		}
 	}
@@ -108,28 +116,35 @@ public class AddCustomCatalogActivity extends Activity {
 			setErrorByKey("invalidUrl");
 			return;
 		}
-		if (myLink == null) {
+		if (!getExtraFieldsVisibility()) {
 			loadInfoByUri(uri);
 		} else if (isEmptyString(title)) {
 			setErrorByKey("titleIsEmpty");
 		} else {
-			startActivity(
-				new Intent(
-					NetworkLibraryActivity.ADD_CATALOG,
-					uri,
-					AddCustomCatalogActivity.this,
-					NetworkLibraryActivity.class
-				)
-					.putExtra(NetworkLibraryActivity.ADD_CATALOG_TITLE_KEY, title)
-					.putExtra(NetworkLibraryActivity.ADD_CATALOG_SUMMARY_KEY, summary)
-					.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP)
-			);
+			final String action = myCatalogId == null ?
+				NetworkLibraryActivity.ADD_CATALOG : NetworkLibraryActivity.EDIT_CATALOG;
+			final Intent intent = new Intent(
+				action, uri,
+				AddCustomCatalogActivity.this,
+				NetworkLibraryActivity.class
+			)
+				.putExtra(NetworkLibraryActivity.ADD_CATALOG_TITLE_KEY, title)
+				.putExtra(NetworkLibraryActivity.ADD_CATALOG_SUMMARY_KEY, summary)
+				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			if (myCatalogId != null) {
+				intent.putExtra(NetworkLibraryActivity.EDIT_CATALOG_ID_KEY, (int)myCatalogId);
+			}
+			startActivity(intent);
 			finish();
 		}
 	}
 
 	private boolean isEmptyString(String s) {
 		return s == null || s.length() == 0;
+	}
+
+	private boolean getExtraFieldsVisibility() {
+		return findViewById(R.id.add_custom_catalog_title_group).getVisibility() == View.VISIBLE;
 	}
 
 	private void setExtraFieldsVisibility(boolean show) {
@@ -229,7 +244,8 @@ public class AddCustomCatalogActivity extends Activity {
 		if (siteName.startsWith("www.")) {
 			siteName = siteName.substring(4);
 		}
-		myLink = OPDSLinkReader.createCustomLink(siteName, null, null, textUrl);
+		final ICustomNetworkLink link =
+			OPDSLinkReader.createCustomLink(siteName, null, null, textUrl);
 
 		final Runnable loadInfoRunnable = new Runnable() {
 			private String myError;
@@ -237,15 +253,15 @@ public class AddCustomCatalogActivity extends Activity {
 			public void run() {
 				try {
 					myError = null;
-					myLink.reloadInfo();
+					link.reloadInfo();
 				} catch (ZLNetworkException e) {
 					myError = e.getMessage();
 				}
 				runOnUiThread(new Runnable() {
 					public void run() {
 						if (myError == null) {
-							setTextById(R.id.add_custom_catalog_title, myLink.getTitle());
-							setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
+							setTextById(R.id.add_custom_catalog_title, link.getTitle());
+							setTextById(R.id.add_custom_catalog_summary, link.getSummary());
 							setExtraFieldsVisibility(true);
 						} else {
 							runErrorDialog(myError);
