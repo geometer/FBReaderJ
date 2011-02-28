@@ -576,7 +576,7 @@
 			<node name="register" value="注册" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="自定义书库目录" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
 			<node name="catalogTitle" value="目录名称" />
 			<node name="catalogUrl" value="目录网址" />
 			<node name="catalogSummary" value="简介" />

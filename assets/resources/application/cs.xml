@@ -576,7 +576,7 @@
 			<node name="register" value="Přihlásit" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="Vlastní katalog" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
 			<node name="catalogTitle" value="Název" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Stručný obsah" />

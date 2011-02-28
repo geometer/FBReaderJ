@@ -576,7 +576,7 @@
 			<node name="register" value="Regisztráció" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="Saját katalógus" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
 			<node name="catalogTitle" value="Cím" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Leírás" />
