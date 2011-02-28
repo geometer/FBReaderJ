@@ -22,18 +22,10 @@ package org.geometerplus.fbreader.network;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 public interface ICustomNetworkLink extends INetworkLink {
-
 	public static final int INVALID_ID = -1;
 
 	int getId();
 	void setId(int id);
-
-	interface SaveLinkListener {
-		void onSaveLink(ICustomNetworkLink link);
-	}
-
-	void setSaveLinkListener(SaveLinkListener listener);
-	void saveLink();
 
 	void setSiteName(String name);
 	void setTitle(String title);

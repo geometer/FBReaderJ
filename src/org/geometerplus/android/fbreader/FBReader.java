@@ -27,7 +27,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.WindowManager;
-import android.view.Window;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
