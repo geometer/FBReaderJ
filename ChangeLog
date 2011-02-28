@@ -1,6 +1,7 @@
 ===== 0.99.14 (??? ??, 2011) =====
 * Thai localization (by Samphan Pojanasophanakul)
 * Fixed TTF font style detection
+* opds:// URLs support has been implemented
 
 ===== 0.99.13 (Feb 13, 2011) =====
 * Fixed book/position forgetting bug
