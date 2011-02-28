@@ -46,10 +46,10 @@ public class OPDSLinkReader {
 		return new OPDSCustomLink(id, siteName, title, summary, icon, links);
 	}
 
-	public static ICustomNetworkLink createCustomLinkWithoutInfo(String siteName, String url) {
+	public static ICustomNetworkLink createCustomLink(String siteName, String title, String summary, String url) {
 		final HashMap<String, String> links = new HashMap<String, String>();
 		links.put(INetworkLink.URL_MAIN, url);
-		return new OPDSCustomLink(ICustomNetworkLink.INVALID_ID, siteName, null, null, null, links);
+		return new OPDSCustomLink(ICustomNetworkLink.INVALID_ID, siteName, title, summary, null, links);
 	}
 
 	public static final int CACHE_LOAD = 0;

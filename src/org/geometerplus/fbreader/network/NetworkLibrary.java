@@ -303,11 +303,6 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
-
-	private static boolean linksEqual(INetworkLink l1, INetworkLink l2) {
-		return l1 == l2 || l1.getSiteName().equals(l2.getSiteName());
-	}
-
 	private static boolean linkIsInvalid(INetworkLink link, INetworkLink nodeLink) {
 		if (link instanceof ICustomNetworkLink) {
 			if (link != nodeLink) {
@@ -347,7 +342,7 @@ public class NetworkLibrary {
 						continue;
 					}
 					final INetworkLink nodeLink = ((NetworkCatalogTree) currentNode).Item.Link;
-					if (linksEqual(link, nodeLink)) {
+					if (link == nodeLink) {
 						if (linkIsInvalid(link, nodeLink)) {
 							toRemove.add(currentNode);
 						} else {
@@ -360,7 +355,7 @@ public class NetworkLibrary {
 						INetworkLink newNodeLink = null;
 						for (int j = i; j < links.size(); ++j) {
 							final INetworkLink jlnk = links.get(j);
-							if (linksEqual(nodeLink, jlnk)) {
+							if (nodeLink == jlnk) {
 								newNodeLink = jlnk;
 								break;
 							}

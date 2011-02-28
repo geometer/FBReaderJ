@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -40,9 +41,17 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.ICustomNetworkLink;
+import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
+	final static String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
+
+	final static String ADD_CATALOG_TITLE_KEY = "title";
+	final static String ADD_CATALOG_SUMMARY_KEY = "summary";
+
 	private NetworkTree myTree;
+	private volatile Intent myIntent;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -50,6 +59,40 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
+		myIntent = getIntent();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+
+		processIntent(intent);
+	}
+
+	private void processIntent(Intent intent) {
+		if (ADD_CATALOG.equals(intent.getAction())) {
+			final Uri uri = intent.getData();
+			final String title = intent.getStringExtra(ADD_CATALOG_TITLE_KEY);
+			final String summary = intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY);
+			if (uri != null && title != null) {
+				final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(
+					uri.getHost(), title, summary, uri.toString()
+				);
+				if (link != null) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							final NetworkLibrary library = NetworkLibrary.Instance();
+							library.addCustomLink(link);
+							library.updateChildren();
+							library.synchronize();
+							NetworkView.Instance().fireModelChangedAsync();
+							getListView().invalidateViews();
+						}
+					});
+				}
+			}
+		}
 	}
 
 	private void prepareView() {
@@ -74,6 +117,10 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			}
 		} else {
 			prepareView();
+			if (myIntent != null) {
+				processIntent(myIntent);
+				myIntent = null;
+			}
 		}
 	}
 
@@ -114,6 +161,10 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 					String error = null;
 					try {
 						NetworkView.Instance().initialize();
+						if (myActivity.myIntent != null) {
+							myActivity.processIntent(myActivity.myIntent);
+							myActivity.myIntent = null;
+						}
 					} catch (ZLNetworkException e) {
 						error = e.getMessage();
 					}

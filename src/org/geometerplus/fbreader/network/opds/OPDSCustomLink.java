@@ -33,9 +33,7 @@ import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
 
-
 class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
-
 	private int myId;
 	private SaveLinkListener myListener;
 

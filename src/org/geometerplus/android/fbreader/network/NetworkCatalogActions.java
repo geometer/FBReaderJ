@@ -246,7 +246,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				new RefillAccountActions().runStandalone(activity, ((RefillAccountTree)activity.getDefaultTree()).Link);
 				return true;
 			case CUSTOM_CATALOG_EDIT:
-				NetworkDialog.show(activity, NetworkDialog.DIALOG_CUSTOM_CATALOG, ((NetworkCatalogTree)tree).Item.Link, null);
+				//NetworkDialog.show(activity, NetworkDialog.DIALOG_CUSTOM_CATALOG, ((NetworkCatalogTree)tree).Item.Link, null);
 				return true;
 			case CUSTOM_CATALOG_REMOVE:
 				removeCustomLink((ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link);
