@@ -182,7 +182,6 @@ public class NetworkLibrary {
 						final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
 						if (link != null) {
 							addLinkInternal(link);
-							link.setSaveLinkListener(myChangesListener);
 						}
 					}
 				}
@@ -303,11 +302,6 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
-
-	private static boolean linksEqual(INetworkLink l1, INetworkLink l2) {
-		return l1 == l2 || l1.getSiteName().equals(l2.getSiteName());
-	}
-
 	private static boolean linkIsInvalid(INetworkLink link, INetworkLink nodeLink) {
 		if (link instanceof ICustomNetworkLink) {
 			if (link != nodeLink) {
@@ -347,7 +341,7 @@ public class NetworkLibrary {
 						continue;
 					}
 					final INetworkLink nodeLink = ((NetworkCatalogTree) currentNode).Item.Link;
-					if (linksEqual(link, nodeLink)) {
+					if (link == nodeLink) {
 						if (linkIsInvalid(link, nodeLink)) {
 							toRemove.add(currentNode);
 						} else {
@@ -360,7 +354,7 @@ public class NetworkLibrary {
 						INetworkLink newNodeLink = null;
 						for (int j = i; j < links.size(); ++j) {
 							final INetworkLink jlnk = links.get(j);
-							if (linksEqual(nodeLink, jlnk)) {
+							if (nodeLink == jlnk) {
 								newNodeLink = jlnk;
 								break;
 							}
@@ -468,12 +462,6 @@ public class NetworkLibrary {
 		}
 	}
 
-	private ICustomNetworkLink.SaveLinkListener myChangesListener = new ICustomNetworkLink.SaveLinkListener() {
-		public void onSaveLink(ICustomNetworkLink link) {
-			NetworkDatabase.Instance().saveCustomLink(link);
-		}
-	};
-
 	private <T extends INetworkLink> void addLinkInternal(T link) {
 		synchronized (myLinks) {
 			myLinks.add(link);
@@ -481,9 +469,20 @@ public class NetworkLibrary {
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
-		addLinkInternal(link);
-		link.setSaveLinkListener(myChangesListener);
-		link.saveLink();
+		final int id = link.getId();
+		if (id == ICustomNetworkLink.INVALID_ID) {
+			addLinkInternal(link);
+		} else {
+			for (int i = myLinks.size() - 1; i >= 0; --i) {
+				final INetworkLink l = myLinks.get(i);
+				if (l instanceof ICustomNetworkLink &&
+					((ICustomNetworkLink)l).getId() == id) {
+					myLinks.set(i, link);
+					break;
+				}
+			}
+		}
+		NetworkDatabase.Instance().saveCustomLink(link);
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
@@ -491,7 +490,6 @@ public class NetworkLibrary {
 			myLinks.remove(link);
 		}
 		NetworkDatabase.Instance().deleteCustomLink(link);
-		link.setSaveLinkListener(null);
 	}
 
 	public boolean hasCustomLinkTitle(String title, INetworkLink exceptFor) {

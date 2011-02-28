@@ -33,11 +33,8 @@ import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
 
-
 class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
-
 	private int myId;
-	private SaveLinkListener myListener;
 
 	private boolean myHasChanges;
 
@@ -52,18 +49,6 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 
 	public void setId(int id) {
 		myId = id;
-	}
-
-	public void setSaveLinkListener(SaveLinkListener listener) {
-		myListener = listener;
-	}
-
-	public void saveLink() {
-		if (myListener != null) {
-			myListener.onSaveLink(this);
-		} else {
-			throw new RuntimeException("Unable to save link: SaveLinkListener hasn't been set");
-		}
 	}
 
 	public boolean hasChanges() {

@@ -41,7 +41,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentCodeVersion = 1;
+		final int currentCodeVersion = 2;
 		if (version >= currentCodeVersion) {
 			return;
 		}
@@ -49,6 +49,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		switch (version) {
 			case 0:
 				createTables();
+			case 1:
+				updateTables1();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();
@@ -155,7 +157,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					if (dbValue == null) {
 						if (myInsertCustomLinkUrlStatement == null) {
 							myInsertCustomLinkUrlStatement = myDatabase.compileStatement(
-									"INSERT INTO CustomLinkUrls(url,link_id,key) VALUES (?,?,?)");
+									"INSERT OR REPLACE INTO CustomLinkUrls(url,link_id,key) VALUES (?,?,?)");
 						}
 						urlStatement = myInsertCustomLinkUrlStatement;
 					} else if (!value.equals(dbValue)) {
@@ -229,5 +231,18 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					"link_id INTEGER NOT NULL REFERENCES CustomLinks(link_id)," +
 					"url TEXT NOT NULL," +
 					"CONSTRAINT CustomLinkUrls_PK PRIMARY KEY (key, link_id))");
+	}
+
+	private void updateTables1() {
+		myDatabase.execSQL("ALTER TABLE CustomLinks RENAME TO CustomLinks_Obsolete");
+		myDatabase.execSQL(
+				"CREATE TABLE CustomLinks(" +
+					"link_id INTEGER PRIMARY KEY," +
+					"title TEXT NOT NULL," +
+					"site_name TEXT NOT NULL," +
+					"summary TEXT," +
+					"icon TEXT)");
+		myDatabase.execSQL("INSERT INTO CustomLinks (link_id,title,site_name,summary,icon) SELECT link_id,title,site_name,summary,icon FROM CustomLinks_Obsolete");
+		myDatabase.execSQL("DROP TABLE CustomLinks_Obsolete");
 	}
 }

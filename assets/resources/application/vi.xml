@@ -576,7 +576,7 @@
 			<node name="register" value="Đăng ký" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="Tùy chỉnh catalo" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
 			<node name="catalogTitle" value="Tiêu đề" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Tóm tắt" />

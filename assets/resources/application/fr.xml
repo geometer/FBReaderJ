@@ -579,7 +579,7 @@
 			<node name="register" value="Inscription"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="Catalogue personalisé" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
 			<node name="catalogTitle" value="Titre" />
 			<node name="catalogUrl" value="Adresse du catalogue sur le réseau" />
 			<node name="catalogSummary" value="Description" />

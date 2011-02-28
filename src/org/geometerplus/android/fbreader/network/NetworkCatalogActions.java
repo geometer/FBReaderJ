@@ -23,6 +23,8 @@ import java.util.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Message;
 import android.os.Handler;
 import android.view.Menu;
@@ -246,8 +248,22 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				new RefillAccountActions().runStandalone(activity, ((RefillAccountTree)activity.getDefaultTree()).Link);
 				return true;
 			case CUSTOM_CATALOG_EDIT:
-				NetworkDialog.show(activity, NetworkDialog.DIALOG_CUSTOM_CATALOG, ((NetworkCatalogTree)tree).Item.Link, null);
+			{
+				final ICustomNetworkLink link =
+					(ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link;
+				final String textUrl = link.getLink(INetworkLink.URL_MAIN);
+				if (textUrl != null) {
+					activity.startActivity(
+						new Intent(activity, AddCustomCatalogActivity.class)
+							.setData(Uri.parse(textUrl))
+							.putExtra(NetworkLibraryActivity.ADD_CATALOG_TITLE_KEY, link.getTitle())
+							.putExtra(NetworkLibraryActivity.ADD_CATALOG_SUMMARY_KEY, link.getSummary())
+							.putExtra(NetworkLibraryActivity.ADD_CATALOG_ICON_KEY, link.getIcon())
+							.putExtra(NetworkLibraryActivity.ADD_CATALOG_ID_KEY, link.getId())
+					);
+				}
 				return true;
+			}
 			case CUSTOM_CATALOG_REMOVE:
 				removeCustomLink((ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link);
 				return true;
