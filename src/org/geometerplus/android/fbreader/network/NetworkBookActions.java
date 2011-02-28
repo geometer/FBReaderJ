@@ -308,7 +308,7 @@ class NetworkBookActions extends NetworkTreeActions {
 					Uri.fromFile(new File(local)),
 					activity.getApplicationContext(),
 					FBReader.class
-				).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+				).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
 			);
 		}
 	}
