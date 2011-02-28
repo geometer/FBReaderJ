@@ -20,6 +20,8 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
 	private ZLResource myResource;
+	private String myURL;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -60,11 +63,28 @@ public class AddCustomCatalogActivity extends Activity {
 		setupButton(
 			R.id.add_custom_catalog_ok_button, "ok", new View.OnClickListener() {
 				public void onClick(View view) {
-					startActivity(
-						new Intent(AddCustomCatalogActivity.this, NetworkLibraryActivity.class)
-							.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP)
-					);
-					finish();
+					if (isEmptyString(myURL)) {
+						final String url = getTextById(R.id.add_custom_catalog_url);
+						if (isEmptyString(url)) {
+							setErrorByKey("urlIsEmpty");
+						} else {
+							try {
+								Uri uri = Uri.parse(url);
+								if (isEmptyString(uri.getScheme())) {
+									uri = Uri.parse("http://" + url);
+								}
+								if (isEmptyString(uri.getHost())) {
+									setErrorByKey("invalidUrl");
+								} else {
+									loadInfoByUri(uri);
+								}
+							} catch (Throwable t) {
+								setErrorByKey("invalidUrl");
+							}
+						}
+					} else {
+						gotoNetworkLibrary();
+					}
 				}
 			}
 		);
@@ -79,14 +99,42 @@ public class AddCustomCatalogActivity extends Activity {
 		final Uri uri = getIntent().getData();
 		if (uri != null) {
 			loadInfoByUri(uri);
+			setExtraFieldsVisibility(true);
 		} else {
-			findViewById(R.id.add_custom_catalog_title_group).setVisibility(View.GONE);
-			findViewById(R.id.add_custom_catalog_summary_group).setVisibility(View.GONE);
+			myURL = null;
+			setExtraFieldsVisibility(false);
 		}
 	}
 
-	private void setText(int id, String text) {
+	private boolean isEmptyString(String s) {
+		return s == null || s.length() == 0;
+	}
+
+	private void setExtraFieldsVisibility(boolean show) {
+		final int visibility = show ? View.VISIBLE : View.GONE;
+		runOnUiThread(new Runnable() {
+			public void run() {
+				findViewById(R.id.add_custom_catalog_title_group).setVisibility(visibility);
+				findViewById(R.id.add_custom_catalog_summary_group).setVisibility(visibility);
+			}
+		});
+	}
+
+	private void gotoNetworkLibrary() {
+		startActivity(
+			new Intent(AddCustomCatalogActivity.this, NetworkLibraryActivity.class)
+				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP)
+		);
+		finish();
+	}
+
+	private void setTextById(int id, String text) {
 		((TextView)findViewById(id)).setText(text);
+	}
+
+	private String getTextById(int id) {
+		final String text = ((TextView)findViewById(id)).getText().toString();
+		return text != null ? text.trim() : null;
 	}
 
 	private void setupButton(int id, String resourceKey, View.OnClickListener listener) {
@@ -98,22 +146,69 @@ public class AddCustomCatalogActivity extends Activity {
 	}
 
 	private void setTextFromResource(int id, String resourceKey) {
-		setText(id, myResource.getResource(resourceKey).getValue());
+		setTextById(id, myResource.getResource(resourceKey).getValue());
+	}
+
+	private void setErrorText(final String errorText) {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				final TextView errorView = (TextView)findViewById(R.id.add_custom_catalog_error);
+				if (errorText != null) {
+					errorView.setText(errorText);
+					errorView.setVisibility(View.VISIBLE);
+				} else {
+					errorView.setVisibility(View.GONE);
+				}
+			}
+		});
+	}
+
+	private void setErrorByKey(final String resourceKey) {
+		setErrorText(myResource.getResource(resourceKey).getValue());
+	}
+
+	private void runErrorDialog(final String errorText) {
+		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+					case DialogInterface.BUTTON_POSITIVE:
+						setExtraFieldsVisibility(true);
+						break;
+					case DialogInterface.BUTTON_NEUTRAL:
+						break;
+					case DialogInterface.BUTTON_NEGATIVE:
+						AddCustomCatalogActivity.this.finish();
+						break;
+				}
+			}
+		};
+
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final ZLResource boxResource = dialogResource.getResource("networkError");
+		final ZLResource buttonResource = dialogResource.getResource("button");
+		new AlertDialog.Builder(this)
+			.setTitle(boxResource.getResource("title").getValue())
+			.setMessage(errorText)
+			.setIcon(0)
+			.setPositiveButton(buttonResource.getResource("continue").getValue(), listener)
+			.setNeutralButton(buttonResource.getResource("editUrl").getValue(), listener)
+			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
+			.create().show();
 	}
 
 	private void loadInfoByUri(Uri uri) {
-		String httpUrl = uri.toString();
-		if (uri.getScheme() == null) {
-			httpUrl = "http://" + httpUrl;
-			uri = Uri.parse(httpUrl);
+		myURL = uri.toString();
+		if (isEmptyString(uri.getScheme())) {
+			myURL = "http://" + myURL;
+			uri = Uri.parse(myURL);
 		} else if ("opds".equals(uri.getScheme())) {
-			httpUrl = "http" + uri.toString().substring(4);
+			myURL = "http" + uri.toString().substring(4);
 		}
 
-		setText(R.id.add_custom_catalog_url, httpUrl);
+		setTextById(R.id.add_custom_catalog_url, myURL);
 		String siteName = uri.getHost();
-		if (siteName == null) {
-			setTextFromResource(R.id.add_custom_catalog_error, "invalidUrl");
+		if (isEmptyString(siteName)) {
+			setErrorByKey("invalidUrl");
 			return;
 		}
 
@@ -121,24 +216,30 @@ public class AddCustomCatalogActivity extends Activity {
 			siteName = siteName.substring(4);
 		}
 		final ICustomNetworkLink link =
-		OPDSLinkReader.createCustomLinkWithoutInfo(siteName, httpUrl);
+		OPDSLinkReader.createCustomLinkWithoutInfo(siteName, myURL);
 
 		final Runnable loadInfoRunnable = new Runnable() {
 			private String myError;
 
 			public void run() {
 				try {
+					myError = null;
 					link.reloadInfo();
 				} catch (ZLNetworkException e) {
 					myError = e.getMessage();
 				}
 				runOnUiThread(new Runnable() {
 					public void run() {
-						setText(R.id.add_custom_catalog_title, link.getTitle());
-						setText(R.id.add_custom_catalog_summary, link.getSummary());
-						setText(R.id.add_custom_catalog_error, myError);
+						if (myError == null) {
+							setTextById(R.id.add_custom_catalog_title, link.getTitle());
+							setTextById(R.id.add_custom_catalog_summary, link.getSummary());
+							setExtraFieldsVisibility(true);
+						} else {
+							runErrorDialog(myError);
+						}
 					}
 				});
+				setErrorText(myError);
 			}
 		}; 
 		UIUtil.wait("loadingCatalogInfo", loadInfoRunnable, this);
