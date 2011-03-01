@@ -67,38 +67,6 @@ public abstract class NetworkTree extends FBTree {
 		public String toString() {
 			return Parent == null ? Id : Parent.toString() + " :: " + Id;
 		}
-
-		/*
-		private void writeObject(ObjectOutputStream os) throws IOException {
-			if (Parent != null) {
-				Parent.writeObject(os);
-			}
-			os.writeBytes(Id);
-			os.writeBytes("\000");
-		}
-
-		private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-			Parent = null;
-			Id = null;
-
-			final StringBuilder builder = new StringBuilder();
-			try {
-				while (true) {
-					char c = is.readChar();
-					if (c != '\000') {
-						builder.append(c);
-					} else {
-						if (Id != null) {
-							Parent = new Key(Parent, Id);
-						}
-						Id = builder.toString();
-						builder.delete(0, builder.length());
-					}
-				}
-			} catch (IOException e) {
-			}
-		}
-		*/
 	}
 
 	protected NetworkTree() {
