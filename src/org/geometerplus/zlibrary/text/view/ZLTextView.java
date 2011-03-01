@@ -205,6 +205,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return;
 		}
 
+		checkInvalidCache();
 		setScrollingActive(true);
 		ZLApplication.Instance().startViewAutoScrolling(viewPage);
 	}
@@ -977,6 +978,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return;
 		}
 
+		checkInvalidCache();
 		preparePaintInfo(myCurrentPage);
 		myPreviousPage.reset();
 		myNextPage.reset();
