@@ -389,7 +389,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	private void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		final NetworkTree.Key key = tree.getUniqueKey();
-		NetworkView.Instance().tryResumeLoading(activity, tree, key, new Runnable() {
+		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
 				if (tree.hasChildren()) {
@@ -397,7 +397,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						if (tree.Item.supportsResumeLoading()) {
 							resumeNotLoad = true;
 						} else {
-							NetworkView.Instance().openTree(activity, tree, key);
+							NetworkView.Instance().openTree(activity, tree);
 							return;
 						}
 					} else {
@@ -425,7 +425,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				);
 				processExtraData(activity, tree.Item.extraData(), new Runnable() {
 					public void run() {
-						NetworkView.Instance().openTree(activity, tree, key);
+						NetworkView.Instance().openTree(activity, tree);
 					}
 				});
 			}

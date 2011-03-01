@@ -224,7 +224,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			switch (actionCode) {
 				case SHOW_BOOKS_ITEM_ID:
-					NetworkView.Instance().openTree(activity, tree, tree.getUniqueKey());
+					NetworkView.Instance().openTree(activity, tree);
 					return true;
 			}
 			return false;

@@ -183,10 +183,10 @@ class NetworkView {
 		return getItemsLoadingRunnable(key) != null;
 	}
 
-	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, NetworkTree.Key key, Runnable expandRunnable) {
-		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(key);
+	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
+		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(tree.getUniqueKey());
 		if (runnable != null && runnable.tryResumeLoading()) {
-			openTree(activity, tree, key);
+			openTree(activity, tree);
 			return;
 		}
 		if (runnable == null) {
@@ -274,7 +274,7 @@ class NetworkView {
 	private final HashMap<NetworkTree.Key,NetworkCatalogActivity> myOpenedActivities =
 		new HashMap<NetworkTree.Key,NetworkCatalogActivity>();
 
-	public void openTree(Context context, NetworkTree tree, NetworkTree.Key key) {
+	public void openTree(Context context, NetworkTree tree) {
 		final int level = tree.Level - 1; // tree.Level == 1 for catalog's root element
 		if (level > myOpenedStack.size()) {
 			throw new RuntimeException("Unable to open catalog with Level greater than the number of opened catalogs.\n"
@@ -290,7 +290,7 @@ class NetworkView {
 		context.startActivity(
 			new Intent(context.getApplicationContext(), NetworkCatalogActivity.class)
 				.putExtra(NetworkCatalogActivity.CATALOG_LEVEL_KEY, level)
-				.putExtra(NetworkCatalogActivity.CATALOG_KEY_KEY, key)
+				.putExtra(NetworkCatalogActivity.CATALOG_KEY_KEY, tree.getUniqueKey())
 		);
 	}
 

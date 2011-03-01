@@ -163,6 +163,6 @@ public class NetworkSearchActivity extends Activity {
 			NetworkTree.SearchKey,
 			new SearchRunnable(handler, pattern)
 		);
-		NetworkView.Instance().openTree(this, tree, NetworkTree.SearchKey);
+		NetworkView.Instance().openTree(this, tree);
 	}
 }

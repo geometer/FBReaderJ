@@ -54,12 +54,12 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		final Intent intent = getIntent();
 		final int level = intent.getIntExtra(CATALOG_LEVEL_KEY, -1);
 		if (level == -1) {
-			throw new RuntimeException("Catalog's Level was not specified!!!");
+			throw new RuntimeException("Catalog Level was not specified!!!");
 		}
 
 		myCatalogKey = (NetworkTree.Key)intent.getSerializableExtra(CATALOG_KEY_KEY);
 		if (myCatalogKey == null) {
-			throw new RuntimeException("Catalog's Key was not specified!!!");
+			throw new RuntimeException("Catalog Key was not specified!!!");
 		}
 
 		myTree = networkView.getOpenedTree(level);
