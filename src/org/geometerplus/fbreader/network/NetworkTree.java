@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network;
 
 import java.util.LinkedList;
 import java.util.Set;
-import java.io.*;
+import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -32,18 +32,15 @@ public abstract class NetworkTree extends FBTree {
 	public static final Key SearchKey = new Key(null, "@Search");
 
 	public static class Key implements Serializable {
-		private Key myParent;
-		private String myId;
+		final Key Parent;
+		final String Id;
 
 		private Key(Key parent, String id) {
 			if (id == null) {
 				throw new IllegalArgumentException("NetworkTree string id must be non-null");
 			}
-			myParent = parent;
-			myId = id;
-		}
-
-		private Key() {
+			Parent = parent;
+			Id = id;
 		}
 
 		@Override
@@ -55,25 +52,34 @@ public abstract class NetworkTree extends FBTree {
 				return false;
 			}
 			final NetworkTree.Key key = (NetworkTree.Key)other;
-			return myParent == key.myParent && myId.equals(key.myId);
+			if (Parent == null) {
+				return key.Parent == null && Id.equals(key.Id);
+			}
+			return Id.equals(key.Id) && Parent.equals(key.Parent);
 		}
 
 		@Override
 		public int hashCode() {
-			return myId.hashCode();
+			return Id.hashCode();
 		}
 
+		@Override
+		public String toString() {
+			return Parent == null ? Id : Parent.toString() + " :: " + Id;
+		}
+
+		/*
 		private void writeObject(ObjectOutputStream os) throws IOException {
-			if (myParent != null) {
-				myParent.writeObject(os);
+			if (Parent != null) {
+				Parent.writeObject(os);
 			}
-			os.writeBytes(myId);
+			os.writeBytes(Id);
 			os.writeBytes("\000");
 		}
 
 		private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
-			myParent = null;
-			myId = null;
+			Parent = null;
+			Id = null;
 
 			final StringBuilder builder = new StringBuilder();
 			try {
@@ -82,16 +88,17 @@ public abstract class NetworkTree extends FBTree {
 					if (c != '\000') {
 						builder.append(c);
 					} else {
-						if (myId != null) {
-							myParent = new Key(myParent, myId);
+						if (Id != null) {
+							Parent = new Key(Parent, Id);
 						}
-						myId = builder.toString();
+						Id = builder.toString();
 						builder.delete(0, builder.length());
 					}
 				}
 			} catch (IOException e) {
 			}
 		}
+		*/
 	}
 
 	protected NetworkTree() {

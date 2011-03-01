@@ -28,6 +28,7 @@ import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.*;
 
@@ -36,7 +37,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
 
 	private NetworkTree myTree;
-	private NetworkTree.Key myCatalogKey;
 	private volatile boolean myInProgress;
 
 	@Override
@@ -57,14 +57,16 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 			throw new RuntimeException("Catalog Level was not specified!!!");
 		}
 
-		myCatalogKey = (NetworkTree.Key)intent.getSerializableExtra(CATALOG_KEY_KEY);
-		if (myCatalogKey == null) {
-			throw new RuntimeException("Catalog Key was not specified!!!");
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(CATALOG_KEY_KEY);
+		myTree = library.getTreeByKey(key);
+
+		System.err.println("KEY = " + key);
+		if (myTree == null) {
+			throw new RuntimeException("Tree not found for key " + key);
 		}
 
-		myTree = networkView.getOpenedTree(level);
-
-		networkView.setOpenedActivity(myCatalogKey, this);
+		networkView.setOpenedActivity(key, this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
@@ -113,8 +115,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public void onDestroy() {
-		if (myTree != null && myCatalogKey != null && NetworkView.Instance().isInitialized()) {
-			NetworkView.Instance().setOpenedActivity(myCatalogKey, null);
+		if (myTree != null && NetworkView.Instance().isInitialized()) {
+			NetworkView.Instance().setOpenedActivity(myTree.getUniqueKey(), null);
 		}
 		super.onDestroy();
 	}
@@ -220,7 +222,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	private void doStopLoading() {
 		if (NetworkView.Instance().isInitialized()) {
 			final ItemsLoadingRunnable runnable =
-				NetworkView.Instance().getItemsLoadingRunnable(myCatalogKey);
+				NetworkView.Instance().getItemsLoadingRunnable(myTree.getUniqueKey());
 			if (runnable != null) {
 				runnable.interruptLoading();
 			}

@@ -417,6 +417,23 @@ public class NetworkLibrary {
 		return myRootTree;
 	}
 
+	public NetworkTree getTreeByKey(NetworkTree.Key key) {
+		if (key.Parent == null) {
+			return key.equals(myRootTree.getUniqueKey()) ? myRootTree : null;
+		}
+		final NetworkTree parentTree = getTreeByKey(key.Parent);
+		if (parentTree == null) {
+			return null;
+		}
+		for (FBTree tree : parentTree.subTrees()) {
+			final NetworkTree nTree = (NetworkTree)tree;
+			if (key.equals(nTree.getUniqueKey())) {
+				return nTree;
+			}
+		}
+		return null;
+	}
+
 	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
