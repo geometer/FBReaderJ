@@ -33,7 +33,6 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.*;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
-	public static final String CATALOG_LEVEL_KEY = "org.geometerplus.android.fbreader.network.CatalogLevel";
 	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
 
 	private NetworkTree myTree;
@@ -52,10 +51,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		}
 
 		final Intent intent = getIntent();
-		final int level = intent.getIntExtra(CATALOG_LEVEL_KEY, -1);
-		if (level == -1) {
-			throw new RuntimeException("Catalog Level was not specified!!!");
-		}
 
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(CATALOG_KEY_KEY);

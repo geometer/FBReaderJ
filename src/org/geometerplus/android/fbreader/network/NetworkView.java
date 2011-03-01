@@ -270,26 +270,12 @@ class NetworkView {
 	 * Opening Catalogs & managing opened catalogs stack
 	 */
 
-	private final LinkedList<NetworkTree> myOpenedStack = new LinkedList<NetworkTree>();
 	private final HashMap<NetworkTree.Key,NetworkCatalogActivity> myOpenedActivities =
 		new HashMap<NetworkTree.Key,NetworkCatalogActivity>();
 
 	public void openTree(Context context, NetworkTree tree) {
-		final int level = tree.Level - 1; // tree.Level == 1 for catalog's root element
-		if (level > myOpenedStack.size()) {
-			throw new RuntimeException("Unable to open catalog with Level greater than the number of opened catalogs.\n"
-				+ "Catalog: " + tree.getName() + "\n"
-				+ "Level: " + level + "\n"
-				+ "Opened catalogs: " + myOpenedStack.size());
-		}
-		while (level < myOpenedStack.size()) {
-			myOpenedStack.removeLast();
-		}
-		myOpenedStack.add(tree);
-
 		context.startActivity(
 			new Intent(context.getApplicationContext(), NetworkCatalogActivity.class)
-				.putExtra(NetworkCatalogActivity.CATALOG_LEVEL_KEY, level)
 				.putExtra(NetworkCatalogActivity.CATALOG_KEY_KEY, tree.getUniqueKey())
 		);
 	}
@@ -304,13 +290,6 @@ class NetworkView {
 
 	public NetworkCatalogActivity getOpenedActivity(NetworkTree.Key key) {
 		return myOpenedActivities.get(key);
-	}
-
-	public NetworkTree getOpenedTree(int level) {
-		if (level < 0 || level >= myOpenedStack.size()) {
-			return null;
-		}
-		return myOpenedStack.get(level);
 	}
 
 	/*
