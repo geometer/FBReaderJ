@@ -75,7 +75,7 @@ class RefillAccountTree extends NetworkTree implements ZLAndroidTree {
 	}
 
 	@Override
-	public String getUniqueKey() {
-		return null;
+	protected String getStringId() {
+		return "@TopUp Account";
 	}
 }

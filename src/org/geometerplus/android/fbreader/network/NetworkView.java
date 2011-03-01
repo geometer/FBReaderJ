@@ -141,9 +141,10 @@ class NetworkView {
 	 * Code for loading network items (running items-loading service and managing items-loading runnables).
 	 */
 
-	private final HashMap<String, ItemsLoadingRunnable> myItemsLoadingRunnables = new HashMap<String, ItemsLoadingRunnable>();
+	private final HashMap<NetworkTree.Key,ItemsLoadingRunnable> myItemsLoadingRunnables =
+		new HashMap<NetworkTree.Key,ItemsLoadingRunnable>();
 
-	public void startItemsLoading(Context context, String key, ItemsLoadingRunnable runnable) {
+	public void startItemsLoading(Context context, NetworkTree.Key key, ItemsLoadingRunnable runnable) {
 		boolean doDownload = false;
 		synchronized (myItemsLoadingRunnables) {
 			if (!myItemsLoadingRunnables.containsKey(key)) {
@@ -159,13 +160,13 @@ class NetworkView {
 		}
 	}
 
-	ItemsLoadingRunnable getItemsLoadingRunnable(String key) {
+	ItemsLoadingRunnable getItemsLoadingRunnable(NetworkTree.Key key) {
 		synchronized (myItemsLoadingRunnables) {
 			return myItemsLoadingRunnables.get(key);
 		}
 	}
 
-	void removeItemsLoadingRunnable(String key) {
+	void removeItemsLoadingRunnable(NetworkTree.Key key) {
 		synchronized (myItemsLoadingRunnables) {
 			ItemsLoadingRunnable runnable = myItemsLoadingRunnables.remove(key);
 			if (runnable != null) {
@@ -174,11 +175,11 @@ class NetworkView {
 		}
 	}
 
-	public final boolean containsItemsLoadingRunnable(String key) {
+	public final boolean containsItemsLoadingRunnable(NetworkTree.Key key) {
 		return getItemsLoadingRunnable(key) != null;
 	}
 
-	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, String key, Runnable expandRunnable) {
+	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, NetworkTree.Key key, Runnable expandRunnable) {
 		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(key);
 		if (runnable != null && runnable.tryResumeLoading()) {
 			openTree(activity, tree, key);
@@ -266,9 +267,10 @@ class NetworkView {
 	 */
 
 	private final LinkedList<NetworkTree> myOpenedStack = new LinkedList<NetworkTree>();
-	private final HashMap<String, NetworkCatalogActivity> myOpenedActivities = new HashMap<String, NetworkCatalogActivity>();
+	private final HashMap<NetworkTree.Key,NetworkCatalogActivity> myOpenedActivities =
+		new HashMap<NetworkTree.Key,NetworkCatalogActivity>();
 
-	public void openTree(Context context, NetworkTree tree, String key) {
+	public void openTree(Context context, NetworkTree tree, NetworkTree.Key key) {
 		final int level = tree.Level - 1; // tree.Level == 1 for catalog's root element
 		if (level > myOpenedStack.size()) {
 			throw new RuntimeException("Unable to open catalog with Level greater than the number of opened catalogs.\n"
@@ -288,7 +290,7 @@ class NetworkView {
 		);
 	}
 
-	void setOpenedActivity(String key, NetworkCatalogActivity activity) {
+	void setOpenedActivity(NetworkTree.Key key, NetworkCatalogActivity activity) {
 		if (activity == null) {
 			myOpenedActivities.remove(key);
 		} else {
@@ -296,7 +298,7 @@ class NetworkView {
 		}
 	}
 
-	public NetworkCatalogActivity getOpenedActivity(String key) {
+	public NetworkCatalogActivity getOpenedActivity(NetworkTree.Key key) {
 		return myOpenedActivities.get(key);
 	}
 

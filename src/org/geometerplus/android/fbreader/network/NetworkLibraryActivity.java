@@ -275,8 +275,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	private static boolean searchIsInProgress() {
-		return NetworkView.Instance().containsItemsLoadingRunnable(
-				NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		return NetworkView.Instance().containsItemsLoadingRunnable(NetworkTree.SearchKey);
 	}
 
 	@Override

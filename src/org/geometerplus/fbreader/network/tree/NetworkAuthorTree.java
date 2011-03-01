@@ -125,7 +125,7 @@ public class NetworkAuthorTree extends NetworkTree {
 	}
 
 	@Override
-	public String getUniqueKey() {
-		return "org.geometerplus.fbreader.network.tree.Authors:" + Author.DisplayName;
+	protected String getStringId() {
+		return "@Author:" + Author.DisplayName + ":" + Author.SortKey;
 	}
 }

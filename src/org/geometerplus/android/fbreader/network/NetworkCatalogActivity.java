@@ -36,7 +36,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
 
 	private NetworkTree myTree;
-	private String myCatalogKey;
+	private NetworkTree.Key myCatalogKey;
 	private volatile boolean myInProgress;
 
 	@Override
@@ -57,7 +57,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 			throw new RuntimeException("Catalog's Level was not specified!!!");
 		}
 
-		myCatalogKey = intent.getStringExtra(CATALOG_KEY_KEY);
+		myCatalogKey = (NetworkTree.Key)intent.getSerializableExtra(CATALOG_KEY_KEY);
 		if (myCatalogKey == null) {
 			throw new RuntimeException("Catalog's Key was not specified!!!");
 		}
@@ -183,10 +183,10 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		}
 	}
 
-	private static String getLoadableNetworkTreeKey(NetworkTree tree) {
+	private static NetworkTree.Key getLoadableNetworkTreeKey(NetworkTree tree) {
 		if ((tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree)
 				&& tree.Parent instanceof NetworkTree) {
-			return getLoadableNetworkTreeKey((NetworkTree) tree.Parent);
+			return getLoadableNetworkTreeKey((NetworkTree)tree.Parent);
 		}
 		return tree.getUniqueKey();
 	}
@@ -194,7 +194,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	@Override
 	public void onModelChanged() {
 		final NetworkView networkView = NetworkView.Instance();
-		final String key = getLoadableNetworkTreeKey(myTree);
+		final NetworkTree.Key key = getLoadableNetworkTreeKey(myTree);
 		myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
 		getListView().invalidateViews();
 
@@ -218,9 +218,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private void doStopLoading() {
-		final String key = myCatalogKey;
-		if (key != null && NetworkView.Instance().isInitialized()) {
-			final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
+		if (NetworkView.Instance().isInitialized()) {
+			final ItemsLoadingRunnable runnable =
+				NetworkView.Instance().getItemsLoadingRunnable(myCatalogKey);
 			if (runnable != null) {
 				runnable.interruptLoading();
 			}

@@ -172,7 +172,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	@Override
-	public String getUniqueKey() {
+	protected String getStringId() {
 		return Item.getFullRequestString();
 	}
 }

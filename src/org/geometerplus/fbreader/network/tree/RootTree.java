@@ -34,7 +34,7 @@ public final class RootTree extends NetworkTree {
 	}
 
 	@Override
-	public String getUniqueKey() {
-		return null;
+	protected String getStringId() {
+		return "@Root";
 	}
 }

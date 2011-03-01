@@ -272,11 +272,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 
 	private static class ExpandCatalogHandler extends ItemsLoadingHandler {
-
-		private final String myKey;
+		private final NetworkTree.Key myKey;
 		private final NetworkCatalogTree myTree;
 
-		ExpandCatalogHandler(NetworkCatalogTree tree, String key) {
+		ExpandCatalogHandler(NetworkCatalogTree tree, NetworkTree.Key key) {
 			myTree = tree;
 			myKey = key;
 		}
@@ -389,7 +388,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	private void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		final String key = tree.getUniqueKey();
+		final NetworkTree.Key key = tree.getUniqueKey();
 		NetworkView.Instance().tryResumeLoading(activity, tree, key, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
@@ -434,7 +433,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		final String key = tree.getUniqueKey();
+		final NetworkTree.Key key = tree.getUniqueKey();
 		if (NetworkView.Instance().containsItemsLoadingRunnable(key)) {
 			return;
 		}

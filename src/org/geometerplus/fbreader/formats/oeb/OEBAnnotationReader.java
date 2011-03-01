@@ -32,7 +32,7 @@ class OEBAnnotationReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private static final int READ_DESCRIPTION = 1;
 	private int myReadState;
 
-	private final StringBuffer myBuffer = new StringBuffer();
+	private final StringBuilder myBuffer = new StringBuilder();
 
 	String readAnnotation(ZLFile file) {
 		myReadState = READ_NONE;

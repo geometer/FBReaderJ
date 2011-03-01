@@ -59,7 +59,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 				return false;
 			}
 			final AuthorData data = (AuthorData) o;
-			return SortKey == data.SortKey && DisplayName == data.DisplayName;
+			return SortKey.equals(data.SortKey) && DisplayName.equals(data.DisplayName);
 		}
 
 		@Override

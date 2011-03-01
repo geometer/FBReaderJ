@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network;
 
 import java.util.LinkedList;
 import java.util.Set;
+import java.io.*;
 
 import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -28,6 +29,71 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
+	public static final Key SearchKey = new Key(null, "@Search");
+
+	public static class Key implements Serializable {
+		private Key myParent;
+		private String myId;
+
+		private Key(Key parent, String id) {
+			if (id == null) {
+				throw new IllegalArgumentException("NetworkTree string id must be non-null");
+			}
+			myParent = parent;
+			myId = id;
+		}
+
+		private Key() {
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (other == this) {
+				return true;
+			}
+			if (!(other instanceof NetworkTree.Key)) {
+				return false;
+			}
+			final NetworkTree.Key key = (NetworkTree.Key)other;
+			return myParent == key.myParent && myId.equals(key.myId);
+		}
+
+		@Override
+		public int hashCode() {
+			return myId.hashCode();
+		}
+
+		private void writeObject(ObjectOutputStream os) throws IOException {
+			if (myParent != null) {
+				myParent.writeObject(os);
+			}
+			os.writeBytes(myId);
+			os.writeBytes("\000");
+		}
+
+		private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+			myParent = null;
+			myId = null;
+
+			final StringBuilder builder = new StringBuilder();
+			try {
+				while (true) {
+					char c = is.readChar();
+					if (c != '\000') {
+						builder.append(c);
+					} else {
+						if (myId != null) {
+							myParent = new Key(myParent, myId);
+						}
+						myId = builder.toString();
+						builder.delete(0, builder.length());
+					}
+				}
+			} catch (IOException e) {
+			}
+		}
+	}
+
 	protected NetworkTree(int level) {
 		super(level);
 	}
@@ -90,11 +156,28 @@ public abstract class NetworkTree extends FBTree {
 
 	public abstract NetworkLibraryItem getHoldedItem();
 
+	private Key myKey;
 	/**
 	 * Returns unique identifier which can be used in NetworkView methods
-	 * @return unique String instance
+	 * @return unique Key instance
 	 */
-	public abstract String getUniqueKey();
+	public final Key getUniqueKey() {
+		if (myKey == null) {
+			//final ZLTree parentTree = getParent();
+			final Key parentKey = Parent instanceof NetworkTree ?
+				((NetworkTree)Parent).getUniqueKey() : null;
+			myKey = new Key(parentKey, getStringId());
+		}
+		return myKey;
+	}
+
+	/**
+	 * Returns id used as a part of unique key above. This string must be
+	 *    not null
+     * and
+     *    be unique for all children of same tree
+	 */
+	protected abstract String getStringId();
 
 	public void removeItems(Set<NetworkLibraryItem> items) {
 		if (items.isEmpty() || subTrees().isEmpty()) {

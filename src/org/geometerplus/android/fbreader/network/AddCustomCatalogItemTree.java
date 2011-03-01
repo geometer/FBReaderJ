@@ -53,7 +53,7 @@ public class AddCustomCatalogItemTree extends NetworkTree implements ZLAndroidTr
 	}
 
 	@Override
-	public String getUniqueKey() {
-		return null;
+	protected String getStringId() {
+		return "@Add Custom Catalog";
 	}
 }

@@ -74,7 +74,7 @@ public class NetworkBookTree extends NetworkTree {
 	}
 
 	@Override
-	public String getUniqueKey() {
-		return null;
+	protected String getStringId() {
+		return "@Book:" + Book.Id + ":" + Book.Title;
 	}
 }

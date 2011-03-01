@@ -35,9 +35,6 @@ import org.geometerplus.fbreader.network.*;
 
 
 public class NetworkSearchActivity extends Activity {
-
-	static final String SEARCH_RUNNABLE_KEY = "org.geometerplus.android.fbreader.network.NetworkSearchActivity";
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -109,7 +106,7 @@ public class NetworkSearchActivity extends Activity {
 			}
 			if (msg != null) {
 				if (NetworkView.Instance().isInitialized()) {
-					final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(SEARCH_RUNNABLE_KEY);
+					final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(NetworkTree.SearchKey);
 					if (activity != null) {
 						final ZLResource buttonResource = dialogResource.getResource("button");
 						new AlertDialog.Builder(activity)
@@ -148,7 +145,7 @@ public class NetworkSearchActivity extends Activity {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
-		if (NetworkView.Instance().containsItemsLoadingRunnable(SEARCH_RUNNABLE_KEY)) {
+		if (NetworkView.Instance().containsItemsLoadingRunnable(NetworkTree.SearchKey)) {
 			return;
 		}
 
@@ -163,9 +160,9 @@ public class NetworkSearchActivity extends Activity {
 		final SearchHandler handler = new SearchHandler(tree);
 		NetworkView.Instance().startItemsLoading(
 			this,
-			SEARCH_RUNNABLE_KEY,
+			NetworkTree.SearchKey,
 			new SearchRunnable(handler, pattern)
 		);
-		NetworkView.Instance().openTree(this, tree, SEARCH_RUNNABLE_KEY);
+		NetworkView.Instance().openTree(this, tree, NetworkTree.SearchKey);
 	}
 }

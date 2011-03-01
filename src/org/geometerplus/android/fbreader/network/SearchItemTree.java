@@ -104,7 +104,7 @@ public class SearchItemTree extends NetworkTree implements ZLAndroidTree {
 	}
 
 	@Override
-	public String getUniqueKey() {
-		return NetworkSearchActivity.SEARCH_RUNNABLE_KEY;
+	protected String getStringId() {
+		return "@Search";
 	}
 }
