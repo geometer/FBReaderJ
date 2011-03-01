@@ -27,10 +27,6 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	public final int Level;
 	private ArrayList<T> mySubTrees;
 
-	protected ZLTree(int level) {
-		this(level, null, 0);
-	}
-
 	protected ZLTree() {
 		this(null);
 	}

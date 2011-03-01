@@ -69,6 +69,10 @@ class NetworkView {
 		myActions.add(new AddCustomCatalogItemActions());
 		myActions.trimToSize();
 
+		final NetworkTree root = library.getRootTree();
+		mySearchItem = new SearchItemTree(root);
+		myAddCustomCatalogItem = new AddCustomCatalogItemTree(root);
+
 		myInitialized = true;
 	}
 
@@ -313,8 +317,8 @@ class NetworkView {
 	 * Special view items item
 	 */
 
-	private final SearchItemTree mySearchItem = new SearchItemTree();
-	private final AddCustomCatalogItemTree myAddCustomCatalogItem = new AddCustomCatalogItemTree();
+	private SearchItemTree mySearchItem;
+	private AddCustomCatalogItemTree myAddCustomCatalogItem;
 
 	public SearchItemTree getSearchItemTree() {
 		return mySearchItem;

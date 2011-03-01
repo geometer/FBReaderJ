@@ -29,8 +29,8 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class AddCustomCatalogItemTree extends NetworkTree implements ZLAndroidTree {
-	public AddCustomCatalogItemTree() {
-		super(1);
+	public AddCustomCatalogItemTree(NetworkTree parent) {
+		super(parent);
 	}
 
 	@Override

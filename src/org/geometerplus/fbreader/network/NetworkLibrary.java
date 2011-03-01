@@ -413,10 +413,9 @@ public class NetworkLibrary {
 		}
 	}
 
-	public NetworkTree getTree() {
+	public NetworkTree getRootTree() {
 		return myRootTree;
 	}
-
 
 	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();

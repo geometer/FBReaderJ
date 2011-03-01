@@ -34,11 +34,10 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class SearchItemTree extends NetworkTree implements ZLAndroidTree {
-
 	private SearchResult myResult;
 
-	public SearchItemTree() {
-		super(1);
+	public SearchItemTree(NetworkTree parent) {
+		super(parent);
 	}
 
 	@Override

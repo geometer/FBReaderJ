@@ -99,7 +99,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		new RefillAccountActions().buildContextMenu(this, menu, new RefillAccountTree(myBook.Link));
+		new RefillAccountActions().buildContextMenu(this, menu, myBook.Link);
 	}
 
 	@Override

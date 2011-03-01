@@ -103,7 +103,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	private void prepareView() {
 		if (myTree == null) {
-			myTree = NetworkLibrary.Instance().getTree();
+			myTree = NetworkLibrary.Instance().getRootTree();
 			setListAdapter(new LibraryAdapter());
 			getListView().invalidateViews();
 		}

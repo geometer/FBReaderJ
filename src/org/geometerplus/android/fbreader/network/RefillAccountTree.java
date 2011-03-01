@@ -36,13 +36,8 @@ class RefillAccountTree extends NetworkTree implements ZLAndroidTree {
 	public final INetworkLink Link;
 
 	public RefillAccountTree(NetworkCatalogTree parentTree) {
-		super(parentTree.Level + 1);
+		super(parentTree);
 		Link = parentTree.Item.Link;
-	}
-
-	public RefillAccountTree(INetworkLink link) {
-		super(1);
-		Link = link;
 	}
 
 	@Override

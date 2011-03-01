@@ -41,9 +41,12 @@ class RefillAccountActions extends NetworkTreeActions {
 
 	@Override
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
+		buildContextMenu(activity, menu, ((RefillAccountTree)tree).Link);
+	}
+
+	public void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
 		menu.setHeaderTitle(getTitleValue("refillTitle"));
 
-		final INetworkLink link = ((RefillAccountTree)tree).Link;
 		if (Util.isSmsAccountRefillingSupported(activity, link)) {
 			addMenuItem(menu, REFILL_VIA_SMS_ITEM_ID, "refillViaSms");
 		}

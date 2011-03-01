@@ -94,10 +94,6 @@ public abstract class NetworkTree extends FBTree {
 		}
 	}
 
-	protected NetworkTree(int level) {
-		super(level);
-	}
-
 	protected NetworkTree() {
 		super();
 	}
