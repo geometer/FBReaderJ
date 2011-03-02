@@ -451,7 +451,7 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		} catch (ZLNetworkException e) {
 		}
-		NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, book.Link, buyRunnable);
+		AuthenticationDialog.show(activity, book.Link, buyRunnable);
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {

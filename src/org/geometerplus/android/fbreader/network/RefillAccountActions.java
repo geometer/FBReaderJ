@@ -134,7 +134,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		if (mgr.mayBeAuthorised(false)) {
 			refiller.run();
 		} else {
-			NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, link, new Runnable() {
+			AuthenticationDialog.show(activity, link, new Runnable() {
 				public void run() {
 					if (mgr.mayBeAuthorised(false)) {
 						refiller.run();

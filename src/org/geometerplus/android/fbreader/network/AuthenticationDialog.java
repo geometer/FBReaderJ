@@ -19,32 +19,96 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.app.Dialog;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.util.UIUtil;
 
+class AuthenticationDialog {
+	private static AuthenticationDialog ourDialog;
 
-class AuthenticationDialog extends NetworkDialog {
+	public static AuthenticationDialog getDialog() {
+		if (ourDialog == null) {
+			ourDialog = new AuthenticationDialog();
+		}
+		return ourDialog;
+	}
+
+	private class DialogHandler extends Handler {
+		@Override
+		public void handleMessage(Message message) {
+			if (!NetworkView.Instance().isInitialized()) {
+				return;
+			}
+			final NetworkLibrary library = NetworkLibrary.Instance();
+			library.invalidateVisibility();
+			library.synchronize();
+			NetworkView.Instance().fireModelChanged();
+			if (message.what < 0) {
+				myErrorMessage = (String) message.obj;
+				myActivity.showDialog(0);
+				return;
+			} else if (message.what > 0) {
+				if (myOnSuccessRunnable != null) {
+					myOnSuccessRunnable.run();
+				}
+			}
+		}
+	};
+
+
+	protected final ZLResource myResource;
+
+	protected INetworkLink myLink;
+	protected String myErrorMessage;
+	protected Runnable myOnSuccessRunnable;
+	protected Activity myActivity;
+
+	protected final DialogHandler myHandler = new DialogHandler();
+
 	public AuthenticationDialog() {
-		super("AuthenticationDialog");
+		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
 	}
 
-	@Override
-	protected void clearData() {
+	public static void show(Activity activity, INetworkLink link, Runnable onSuccessRunnable) {
+		getDialog().showInternal(activity, link, onSuccessRunnable);
 	}
 
-	@Override
-	public View createLayout() {
+	private void showInternal(Activity activity, INetworkLink link, Runnable onSuccessRunnable) {
+		myLink = link;
+		myErrorMessage = null;
+		myOnSuccessRunnable = onSuccessRunnable;
+		activity.showDialog(0);
+	}
+
+	protected void sendSuccess() {
+		myHandler.sendMessage(myHandler.obtainMessage(1, null));
+	}
+
+	protected void sendCancel() {
+		myHandler.sendMessage(myHandler.obtainMessage(0, null));
+	}
+
+	protected void sendError(String message) {
+		myHandler.sendMessage(myHandler.obtainMessage(-1, message));
+	}
+
+	private View createLayout() {
 		final View layout = myActivity.getLayoutInflater().inflate(R.layout.network_authentication_dialog, null);
 
 		((TextView) layout.findViewById(R.id.network_authentication_login_text)).setText(myResource.getResource("login").getValue());
@@ -56,7 +120,7 @@ class AuthenticationDialog extends NetworkDialog {
 			public void onClick(View view) {
 				//final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (Util.isRegistrationSupported(myActivity, myLink)) {
-					myActivity.dismissDialog(NetworkDialog.DIALOG_AUTHENTICATION);
+					myActivity.dismissDialog(0);
 					Util.runRegistrationDialog(myActivity, myLink);
 				}
 			}
@@ -64,8 +128,7 @@ class AuthenticationDialog extends NetworkDialog {
 		return layout;
 	}
 
-	@Override
-	protected void onPositive(DialogInterface dialog) {
+	private void onPositive(DialogInterface dialog) {
 		AlertDialog alert = (AlertDialog) dialog;
 		final String login = ((TextView) alert.findViewById(R.id.network_authentication_login)).getText().toString().trim();
 		final String password = ((TextView) alert.findViewById(R.id.network_authentication_password)).getText().toString();
@@ -96,8 +159,7 @@ class AuthenticationDialog extends NetworkDialog {
 		UIUtil.wait("authentication", runnable, myActivity);
 	}
 
-	@Override
-	protected void onNegative(DialogInterface dialog) {
+	private void onNegative(DialogInterface dialog) {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
@@ -110,8 +172,36 @@ class AuthenticationDialog extends NetworkDialog {
 		UIUtil.wait("signOut", runnable, myActivity);
 	}
 
-	@Override
-	public void prepareDialogInternal(Dialog dialog) {
+	public final Dialog createDialog(final Activity activity) {
+		myActivity = activity;
+		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				if (which == DialogInterface.BUTTON_POSITIVE) {
+					onPositive(dialog);
+				} else {
+					onNegative(dialog);
+				}
+			}
+		};
+
+		final View layout = createLayout();
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		return new AlertDialog.Builder(activity)
+			.setView(layout)
+			.setTitle(myResource.getResource("title").getValue())
+			.setPositiveButton(buttonResource.getResource("ok").getValue(), listener)
+			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
+			.setOnCancelListener(new DialogInterface.OnCancelListener() {
+				public void onCancel(DialogInterface dialog) {
+					onNegative(dialog);
+				}
+			})
+			.create();
+	}
+
+	public final void prepareDialog(final Activity activity, Dialog dialog) {
+		myActivity = activity;
+
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 
 		((TextView) dialog.findViewById(R.id.network_authentication_login)).setText(mgr.UserNameOption.getValue());

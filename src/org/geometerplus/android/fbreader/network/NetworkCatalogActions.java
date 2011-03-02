@@ -201,7 +201,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case B3_TRUE:
 				return false;
 			case B3_UNDEFINED:
-				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
+				AuthenticationDialog.show(activity, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
 					public void run() {
 						if (catalogTree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
 							return;
@@ -235,7 +235,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doReloadCatalog(activity, (NetworkCatalogTree)tree);
 				return true;
 			case SIGNIN_ITEM_ID:
-				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, null);
+				AuthenticationDialog.show(activity, ((NetworkCatalogTree)tree).Item.Link, null);
 				return true;
 			case SIGNUP_ITEM_ID:
 				Util.runRegistrationDialog(activity, ((NetworkCatalogTree)tree).Item.Link);

@@ -260,7 +260,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		if (!NetworkView.Instance().isInitialized()) {
 			return null;
 		}
-		final NetworkDialog dlg = NetworkDialog.getDialog(id);
+		final AuthenticationDialog dlg = AuthenticationDialog.getDialog();
 		if (dlg != null) {
 			return dlg.createDialog(this);
 		}
@@ -271,10 +271,10 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		super.onPrepareDialog(id, dialog);
 
-		final NetworkDialog dlg = NetworkDialog.getDialog(id);
+		final AuthenticationDialog dlg = AuthenticationDialog.getDialog();
 		if (dlg != null) {
 			dlg.prepareDialog(this, dialog);
-		}		
+		}
 	}
 
 	@Override
