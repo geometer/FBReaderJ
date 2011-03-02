@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.SearchItemTree;
 
 
 public class NetworkSearchActivity extends Activity {
@@ -54,7 +55,6 @@ public class NetworkSearchActivity extends Activity {
 	}
 
 	private class SearchHandler extends ItemsLoadingHandler {
-
 		private final SearchItemTree myTree;
 
 		public SearchHandler(SearchItemTree tree) {
@@ -152,6 +152,7 @@ public class NetworkSearchActivity extends Activity {
 		final String summary = ZLResource.resource("networkView").getResource("searchResults").getValue().replace("%s", pattern);
 		final SearchResult result = new SearchResult(summary);
 
+		/*
 		final SearchItemTree tree = NetworkView.Instance().getSearchItemTree();
 
 		tree.setSearchResult(result);
@@ -164,5 +165,6 @@ public class NetworkSearchActivity extends Activity {
 			new SearchRunnable(handler, pattern)
 		);
 		NetworkView.Instance().openTree(this, tree);
+		*/
 	}
 }

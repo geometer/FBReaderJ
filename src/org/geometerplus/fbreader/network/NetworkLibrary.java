@@ -364,6 +364,7 @@ public class NetworkLibrary {
 			tree.removeSelf();
 		}
 		new AddCustomCatalogItemTree(myRootTree);
+		new SearchItemTree(myRootTree, 0);
 	}
 
 	private void updateVisibility() {

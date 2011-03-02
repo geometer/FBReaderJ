@@ -25,6 +25,7 @@ import android.view.ContextMenu;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.SearchResult;
+import org.geometerplus.fbreader.network.tree.SearchItemTree;
 
 class SearchItemActions extends NetworkTreeActions {
 

@@ -108,7 +108,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	private static Initializator myInitializator; 
+	private static Initializator myInitializator;
 
 	@Override
 	public void onResume() {
@@ -226,17 +226,11 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			if (!NetworkView.Instance().isInitialized()) {
 				return 0;
 			}
-			return myTree.subTrees().size() + 1; // subtrees + <search item>
+			return myTree.subTrees().size();
 		}
 
 		public final NetworkTree getItem(int position) {
-			final int size = myTree.subTrees().size();
-			if (position == 0) {
-				return NetworkView.Instance().getSearchItemTree();
-			} else if (position > 0 && position <= size) {
-				return (NetworkTree)myTree.subTrees().get(position - 1);
-			}
-			return null;
+			return (NetworkTree)myTree.subTrees().get(position);
 		}
 
 		public final long getItemId(int position) {

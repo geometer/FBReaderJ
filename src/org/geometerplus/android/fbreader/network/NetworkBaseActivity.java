@@ -39,11 +39,9 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
-
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+import org.geometerplus.fbreader.network.tree.SearchItemTree;
 
 abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
-
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
 	public BookDownloaderServiceConnection Connection;
@@ -110,8 +108,8 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			coverView.setImageResource(R.drawable.ic_list_plus);
 			return;
 		}
-		if (tree instanceof ZLAndroidTree) {
-			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
+		if (tree instanceof SearchItemTree) {
+			coverView.setImageResource(R.drawable.ic_list_searchresult);
 			return;
 		}
 

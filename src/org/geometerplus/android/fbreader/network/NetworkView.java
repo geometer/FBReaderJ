@@ -69,9 +69,6 @@ class NetworkView {
 		myActions.add(new AddCustomCatalogItemActions());
 		myActions.trimToSize();
 
-		final NetworkTree root = library.getRootTree();
-		mySearchItem = new SearchItemTree(root);
-
 		myInitialized = true;
 	}
 
@@ -289,15 +286,5 @@ class NetworkView {
 
 	public NetworkCatalogActivity getOpenedActivity(NetworkTree.Key key) {
 		return myOpenedActivities.get(key);
-	}
-
-	/*
-	 * Special view items item
-	 */
-
-	private SearchItemTree mySearchItem;
-
-	public SearchItemTree getSearchItemTree() {
-		return mySearchItem;
 	}
 }
