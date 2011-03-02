@@ -59,11 +59,10 @@ class AuthenticationDialog {
 			library.invalidateVisibility();
 			library.synchronize();
 			NetworkView.Instance().fireModelChanged();
-			if (message.what < 0) {
+			if (message.what == -1) {
 				myErrorMessage = (String) message.obj;
 				myActivity.showDialog(0);
-				return;
-			} else if (message.what > 0) {
+			} else if (message.what == 1) {
 				if (myOnSuccessRunnable != null) {
 					myOnSuccessRunnable.run();
 				}
@@ -115,7 +114,6 @@ class AuthenticationDialog {
 		registerText.setText(myResource.getResource("register").getValue());
 		registerText.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				//final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 				if (Util.isRegistrationSupported(myActivity, myLink)) {
 					myActivity.dismissDialog(0);
 					Util.runRegistrationDialog(myActivity, myLink);
