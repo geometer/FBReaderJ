@@ -66,7 +66,7 @@ public class NetworkSearchActivity extends Activity {
 			SearchResult result = myTree.getSearchResult();
 			for (NetworkLibraryItem item: items) {
 				if (item instanceof NetworkBookItem) {
-					result.addBook((NetworkBookItem) item);
+					result.addBook((NetworkBookItem)item);
 				}
 			}
 		}
@@ -96,7 +96,7 @@ public class NetworkSearchActivity extends Activity {
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			ZLResource boxResource = null;
-			String msg = null;
+			String msg;
 			if (errorMessage != null) {
 				boxResource = dialogResource.getResource("networkError");
 				msg = errorMessage;
