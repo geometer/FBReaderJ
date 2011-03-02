@@ -38,6 +38,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
@@ -105,6 +106,10 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	};
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
+		if (tree instanceof AddCustomCatalogItemTree) {
+			coverView.setImageResource(R.drawable.ic_list_plus);
+			return;
+		}
 		if (tree instanceof ZLAndroidTree) {
 			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
 			return;

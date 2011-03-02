@@ -25,7 +25,7 @@ import android.view.Menu;
 import android.view.ContextMenu;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.AddCustomCatalogItemTree;
+import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 
 class AddCustomCatalogItemActions extends NetworkTreeActions {
 	public static final int RUN_ITEM_ID = 0;
