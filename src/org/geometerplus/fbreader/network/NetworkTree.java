@@ -29,8 +29,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
-	public static final Key SearchKey = new Key(null, "@Search");
-
 	public static class Key implements Serializable {
 		final Key Parent;
 		final String Id;

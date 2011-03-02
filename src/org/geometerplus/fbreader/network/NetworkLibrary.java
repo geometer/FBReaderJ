@@ -149,6 +149,7 @@ public class NetworkLibrary {
 	}
 
 	private final RootTree myRootTree = new RootTree();
+	private SearchItemTree mySearchItemTree;
 
 	private boolean myChildrenAreInvalid = true;
 	private boolean myUpdateVisibility;
@@ -364,7 +365,7 @@ public class NetworkLibrary {
 			tree.removeSelf();
 		}
 		new AddCustomCatalogItemTree(myRootTree);
-		new SearchItemTree(myRootTree, 0);
+		mySearchItemTree = new SearchItemTree(myRootTree, 0);
 	}
 
 	private void updateVisibility() {
@@ -388,6 +389,10 @@ public class NetworkLibrary {
 
 	public NetworkTree getRootTree() {
 		return myRootTree;
+	}
+
+	public SearchItemTree getSearchItemTree() {
+		return mySearchItemTree;
 	}
 
 	public NetworkTree getTreeByKey(NetworkTree.Key key) {
