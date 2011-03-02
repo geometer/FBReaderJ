@@ -272,6 +272,8 @@ public final class FBView extends ZLTextView {
 			if (isScrollingActive() && myIsManualScrollingActive) {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
+				final FBView view = myReader.getTextView();
+				view.checkInvalidCache();
 				if (diff > 0) {
 					ZLTextWordCursor cursor = getStartCursor();
 					if (cursor == null || cursor.isNull()) {

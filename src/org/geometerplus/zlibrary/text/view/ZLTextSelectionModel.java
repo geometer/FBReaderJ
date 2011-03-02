@@ -271,7 +271,6 @@ final class ZLTextSelectionModel {
 		stopSelectionScrolling();
 		myScrollingTask = new TimerTask() {
 			public void run() {
-				myView.checkInvalidCache();
 				myView.scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myDoUpdate = true;
 				ZLApplication.Instance().repaintView();
