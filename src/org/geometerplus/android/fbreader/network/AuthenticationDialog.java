@@ -60,7 +60,7 @@ class AuthenticationDialog {
 			library.synchronize();
 			NetworkView.Instance().fireModelChanged();
 			if (message.what == -1) {
-				myErrorMessage = (String) message.obj;
+				myErrorMessage = (String)message.obj;
 				myActivity.showDialog(0);
 			} else if (message.what == 1) {
 				if (myOnSuccessRunnable != null) {
@@ -107,10 +107,10 @@ class AuthenticationDialog {
 	private View createLayout() {
 		final View layout = myActivity.getLayoutInflater().inflate(R.layout.network_authentication_dialog, null);
 
-		((TextView) layout.findViewById(R.id.network_authentication_login_text)).setText(myResource.getResource("login").getValue());
-		((TextView) layout.findViewById(R.id.network_authentication_password_text)).setText(myResource.getResource("password").getValue());
+		((TextView)layout.findViewById(R.id.network_authentication_login_text)).setText(myResource.getResource("login").getValue());
+		((TextView)layout.findViewById(R.id.network_authentication_password_text)).setText(myResource.getResource("password").getValue());
 
-		final TextView registerText = (TextView) layout.findViewById(R.id.network_authentication_register);
+		final TextView registerText = (TextView)layout.findViewById(R.id.network_authentication_register);
 		registerText.setText(myResource.getResource("register").getValue());
 		registerText.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -124,9 +124,9 @@ class AuthenticationDialog {
 	}
 
 	private void onPositive(DialogInterface dialog) {
-		AlertDialog alert = (AlertDialog) dialog;
-		final String login = ((TextView) alert.findViewById(R.id.network_authentication_login)).getText().toString().trim();
-		final String password = ((TextView) alert.findViewById(R.id.network_authentication_password)).getText().toString();
+		AlertDialog alert = (AlertDialog)dialog;
+		final String login = ((TextView)alert.findViewById(R.id.network_authentication_login)).getText().toString().trim();
+		final String password = ((TextView)alert.findViewById(R.id.network_authentication_password)).getText().toString();
 
 		if (login.length() == 0) {
 			final String err = myResource.getResource("loginIsEmpty").getValue();
@@ -199,10 +199,10 @@ class AuthenticationDialog {
 
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 
-		((TextView) dialog.findViewById(R.id.network_authentication_login)).setText(mgr.UserNameOption.getValue());
-		((TextView) dialog.findViewById(R.id.network_authentication_password)).setText("");
+		((TextView)dialog.findViewById(R.id.network_authentication_login)).setText(mgr.UserNameOption.getValue());
+		((TextView)dialog.findViewById(R.id.network_authentication_password)).setText("");
 
-		final TextView error = (TextView) dialog.findViewById(R.id.network_authentication_error);
+		final TextView error = (TextView)dialog.findViewById(R.id.network_authentication_error);
 		if (myErrorMessage == null) {
 			error.setVisibility(View.GONE);
 			error.setText("");
