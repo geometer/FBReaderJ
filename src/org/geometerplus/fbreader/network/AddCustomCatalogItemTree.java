@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 

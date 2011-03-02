@@ -71,7 +71,6 @@ class NetworkView {
 
 		final NetworkTree root = library.getRootTree();
 		mySearchItem = new SearchItemTree(root);
-		myAddCustomCatalogItem = new AddCustomCatalogItemTree(root);
 
 		myInitialized = true;
 	}
@@ -297,13 +296,8 @@ class NetworkView {
 	 */
 
 	private SearchItemTree mySearchItem;
-	private AddCustomCatalogItemTree myAddCustomCatalogItem;
 
 	public SearchItemTree getSearchItemTree() {
 		return mySearchItem;
-	}
-
-	public AddCustomCatalogItemTree getAddCustomCatalogItemTree() {
-		return myAddCustomCatalogItem;
 	}
 }

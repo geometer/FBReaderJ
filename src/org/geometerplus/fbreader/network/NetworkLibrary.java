@@ -119,6 +119,7 @@ public class NetworkLibrary {
 		allCodes.removeAll(languageCodes());
 		allCodes.addAll(codes);
 		activeLanguageCodesOption().setValue(commaSeparatedString(allCodes));
+		invalidateChildren();
 	}
 
 	private String commaSeparatedString(Collection<String> codes) {
@@ -149,8 +150,7 @@ public class NetworkLibrary {
 
 	private final RootTree myRootTree = new RootTree();
 
-	private boolean myUpdateChildren = true;
-	private boolean myInvalidateChildren;
+	private boolean myChildrenAreInvalid = true;
 	private boolean myUpdateVisibility;
 
 	private NetworkLibrary() {
@@ -188,24 +188,6 @@ public class NetworkLibrary {
 			);
 		}
 
-		/*testDate(new ATOMUpdated(2010,  1,  1,  1,  0,  0,  0,  2,  0),
-				 new ATOMUpdated(2009, 12, 31, 23,  0,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2010, 12, 31, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2011,  1,  1,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2010,  1, 31, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2010,  2,  1,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2010,  2, 28, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2010,  3,  1,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2012,  2, 28, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2012,  2, 29,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2012,  2, 16,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  1,  0,  3, 30),
-				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));
-		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30),
-				 new ATOMUpdated(2012,  2, 15, 23, 40,  1,  0,  3, 30));
-		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0.001f,  3, 30),
-				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));*/
 		myIsAlreadyInitialized = true;
 	}
 
@@ -272,7 +254,7 @@ public class NetworkLibrary {
 			synchronized (myLinks) {
 				removeAllLoadedLinks();
 				myLinks.addAll(myBackgroundLinks);
-				updateChildren();
+				invalidateChildren();
 			}
 		}
 	}
@@ -291,30 +273,22 @@ public class NetworkLibrary {
 	}
 
 	public void invalidateChildren() {
-		myInvalidateChildren = true;
-	}
-
-	public void updateChildren() {
-		myUpdateChildren = true;
+		myChildrenAreInvalid = true;
 	}
 
 	public void invalidateVisibility() {
 		myUpdateVisibility = true;
 	}
 
-	private static boolean linkIsInvalid(INetworkLink link, INetworkLink nodeLink) {
-		if (link instanceof ICustomNetworkLink) {
-			if (link != nodeLink) {
-				throw new RuntimeException("Two equal custom links!!! That's impossible");
-			}
-			return ((ICustomNetworkLink) link).hasChanges();
-		}
-		return !link.equals(nodeLink);
+	private static boolean linkIsChanged(INetworkLink link) {
+		return
+			link instanceof ICustomNetworkLink &&
+			((ICustomNetworkLink)link).hasChanges();
 	}
 
 	private static void makeValid(INetworkLink link) {
 		if (link instanceof ICustomNetworkLink) {
-			((ICustomNetworkLink) link).resetChanges();
+			((ICustomNetworkLink)link).resetChanges();
 		}
 	}
 
@@ -340,9 +314,9 @@ public class NetworkLibrary {
 						++nodeCount;
 						continue;
 					}
-					final INetworkLink nodeLink = ((NetworkCatalogTree) currentNode).Item.Link;
+					final INetworkLink nodeLink = ((NetworkCatalogTree)currentNode).Item.Link;
 					if (link == nodeLink) {
-						if (linkIsInvalid(link, nodeLink)) {
+						if (linkIsChanged(link)) {
 							toRemove.add(currentNode);
 						} else {
 							processed = true;
@@ -359,7 +333,7 @@ public class NetworkLibrary {
 								break;
 							}
 						}
-						if (newNodeLink == null || linkIsInvalid(newNodeLink, nodeLink)) {
+						if (newNodeLink == null || linkIsChanged(nodeLink)) {
 							toRemove.add(currentNode);
 							currentNode = null;
 							++nodeCount;
@@ -390,6 +364,7 @@ public class NetworkLibrary {
 		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 		}
+		new AddCustomCatalogItemTree(myRootTree);
 	}
 
 	private void updateVisibility() {
@@ -402,9 +377,8 @@ public class NetworkLibrary {
 	}
 
 	public void synchronize() {
-		if (myUpdateChildren || myInvalidateChildren) {
-			myUpdateChildren = false;
-			myInvalidateChildren = false;
+		if (myChildrenAreInvalid) {
+			myChildrenAreInvalid = false;
 			makeUpToDate();
 		}
 		if (myUpdateVisibility) {
@@ -499,6 +473,7 @@ public class NetworkLibrary {
 			}
 		}
 		NetworkDatabase.Instance().saveCustomLink(link);
+		invalidateChildren();
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
@@ -506,6 +481,7 @@ public class NetworkLibrary {
 			myLinks.remove(link);
 		}
 		NetworkDatabase.Instance().deleteCustomLink(link);
+		invalidateChildren();
 	}
 
 	public boolean hasCustomLinkTitle(String title, INetworkLink exceptFor) {

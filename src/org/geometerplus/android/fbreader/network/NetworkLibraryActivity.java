@@ -91,7 +91,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 					public void run() {
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						library.addCustomLink(link);
-						library.updateChildren();
 						library.synchronize();
 						NetworkView.Instance().fireModelChangedAsync();
 						getListView().invalidateViews();
@@ -227,7 +226,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			if (!NetworkView.Instance().isInitialized()) {
 				return 0;
 			}
-			return myTree.subTrees().size() + 2; // subtrees + <search item> + <add custom catalog item>
+			return myTree.subTrees().size() + 1; // subtrees + <search item>
 		}
 
 		public final NetworkTree getItem(int position) {
@@ -236,8 +235,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 				return NetworkView.Instance().getSearchItemTree();
 			} else if (position > 0 && position <= size) {
 				return (NetworkTree)myTree.subTrees().get(position - 1);
-			} else if (position == size + 1) {
-				return NetworkView.Instance().getAddCustomCatalogItemTree();
 			}
 			return null;
 		}
@@ -319,7 +316,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 						}
 					}
 					library.setActiveLanguageCodes(newActiveCodes);
-					library.invalidateChildren();
 					library.synchronize();
 					NetworkView.Instance().fireModelChanged();
 				}
