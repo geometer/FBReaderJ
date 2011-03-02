@@ -310,6 +310,7 @@ public class NetworkLibrary {
 						currentNode = nodeIterator.next();
 					}
 					if (!(currentNode instanceof NetworkCatalogTree)) {
+						toRemove.add(currentNode);
 						currentNode = null;
 						++nodeCount;
 						continue;
@@ -355,9 +356,7 @@ public class NetworkLibrary {
 			if (currentNode == null) {
 				currentNode = nodeIterator.next();
 			}
-			if (currentNode instanceof NetworkCatalogTree) {
-				toRemove.add(currentNode);
-			}
+			toRemove.add(currentNode);
 			currentNode = null;
 		}
 
