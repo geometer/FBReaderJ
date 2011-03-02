@@ -72,18 +72,15 @@ class AuthenticationDialog {
 	};
 
 
-	protected final ZLResource myResource;
+	private final ZLResource myResource =
+		ZLResource.resource("dialog").getResource("AuthenticationDialog");
 
-	protected INetworkLink myLink;
-	protected String myErrorMessage;
-	protected Runnable myOnSuccessRunnable;
-	protected Activity myActivity;
+	private INetworkLink myLink;
+	private String myErrorMessage;
+	private Runnable myOnSuccessRunnable;
+	private Activity myActivity;
 
-	protected final DialogHandler myHandler = new DialogHandler();
-
-	public AuthenticationDialog() {
-		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
-	}
+	private final DialogHandler myHandler = new DialogHandler();
 
 	public static void show(Activity activity, INetworkLink link, Runnable onSuccessRunnable) {
 		getDialog().showInternal(activity, link, onSuccessRunnable);
@@ -96,15 +93,15 @@ class AuthenticationDialog {
 		activity.showDialog(0);
 	}
 
-	protected void sendSuccess() {
+	private void sendSuccess() {
 		myHandler.sendMessage(myHandler.obtainMessage(1, null));
 	}
 
-	protected void sendCancel() {
+	private void sendCancel() {
 		myHandler.sendMessage(myHandler.obtainMessage(0, null));
 	}
 
-	protected void sendError(String message) {
+	private void sendError(String message) {
 		myHandler.sendMessage(myHandler.obtainMessage(-1, message));
 	}
 
