@@ -72,7 +72,7 @@ class AuthenticationDialog extends NetworkDialog {
 
 		if (login.length() == 0) {
 			final String err = myResource.getResource("loginIsEmpty").getValue();
-			sendError(true, false, err);
+			sendError(err);
 			return;
 		}
 
@@ -87,10 +87,10 @@ class AuthenticationDialog extends NetworkDialog {
 					}
 				} catch (ZLNetworkException e) {
 					mgr.logOut();
-					sendError(true, false, e.getMessage());
+					sendError(e.getMessage());
 					return;
 				}
-				sendSuccess(false);
+				sendSuccess();
 			}
 		};
 		UIUtil.wait("authentication", runnable, myActivity);
@@ -103,7 +103,7 @@ class AuthenticationDialog extends NetworkDialog {
 			public void run() {
 				if (mgr.mayBeAuthorised(false)) {
 					mgr.logOut();
-					sendCancel(false);
+					sendCancel();
 				}
 			}
 		};

@@ -272,7 +272,7 @@ public class NetworkLibrary {
 		return url;
 	}
 
-	public void invalidateChildren() {
+	private void invalidateChildren() {
 		myChildrenAreInvalid = true;
 	}
 
@@ -369,10 +369,9 @@ public class NetworkLibrary {
 
 	private void updateVisibility() {
 		for (FBTree tree : myRootTree.subTrees()) {
-			if (!(tree instanceof NetworkCatalogTree)) {
-				continue;
+			if (tree instanceof NetworkCatalogTree) {
+				((NetworkCatalogTree)tree).updateVisibility();
 			}
-			((NetworkCatalogTree) tree).updateVisibility();
 		}
 	}
 

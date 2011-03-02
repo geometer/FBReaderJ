@@ -58,41 +58,20 @@ abstract class NetworkDialog {
 		return dlg;
 	}
 
-
 	private class DialogHandler extends Handler {
-
-		public Message obtainMessage(int code, boolean invalidateLibrary, String message) {
-			return obtainMessage(code, invalidateLibrary ? 1 : 0, 0, message);
-		}
-
 		@Override
 		public void handleMessage(Message message) {
 			if (!NetworkView.Instance().isInitialized()) {
 				return;
 			}
 			final NetworkLibrary library = NetworkLibrary.Instance();
-			if (message.arg1 != 0) {
-				library.invalidateChildren();
-			}
 			library.invalidateVisibility();
 			library.synchronize();
 			NetworkView.Instance().fireModelChanged();
 			if (message.what < 0) {
-				if (message.what == -2) {
-					final ZLResource dialogResource = ZLResource.resource("dialog");
-					final ZLResource boxResource = dialogResource.getResource("networkError");
-					final ZLResource buttonResource = dialogResource.getResource("button");
-					new AlertDialog.Builder(myActivity)
-						.setTitle(boxResource.getResource("title").getValue())
-						.setMessage((String) message.obj)
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-						.create().show();
-				} else {
-					myErrorMessage = (String) message.obj;
-					myActivity.showDialog(myId);
-					return;
-				}
+				myErrorMessage = (String) message.obj;
+				myActivity.showDialog(myId);
+				return;
 			} else if (message.what > 0) {
 				if (myOnSuccessRunnable != null) {
 					myOnSuccessRunnable.run();
@@ -130,16 +109,16 @@ abstract class NetworkDialog {
 	}
 
 
-	protected void sendSuccess(boolean invalidateLibrary) {
-		myHandler.sendMessage(myHandler.obtainMessage(1, invalidateLibrary, null));
+	protected void sendSuccess() {
+		myHandler.sendMessage(myHandler.obtainMessage(1, null));
 	}
 
-	protected void sendCancel(boolean invalidateLibrary) {
-		myHandler.sendMessage(myHandler.obtainMessage(0, invalidateLibrary, null));
+	protected void sendCancel() {
+		myHandler.sendMessage(myHandler.obtainMessage(0, null));
 	}
 
-	protected void sendError(boolean restart, boolean invalidateLibrary, String message) {
-		myHandler.sendMessage(myHandler.obtainMessage(restart ? -1 : -2, invalidateLibrary, message));
+	protected void sendError(String message) {
+		myHandler.sendMessage(myHandler.obtainMessage(-1, message));
 	}
 
 	protected abstract View createLayout();
