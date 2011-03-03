@@ -19,9 +19,7 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
@@ -31,7 +29,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	protected String mySummary;
 	protected String myIcon;
 	protected final String myLanguage;
-	protected final TreeMap<String, String> myLinks;
+	protected final TreeMap<String,URLInfo> myInfos;
 
 	/**
 	 * Creates new NetworkLink instance.
@@ -41,15 +39,15 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	 * @param summary    description of the corresponding library item. Can be <code>null</code>.
 	 * @param icon       string contains link's icon data/url. Can be <code>null</code>.
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
-	 * @param links      map contains URLs with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
+	 * @param infos      map contains URL infos with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
 	 */
-	public AbstractNetworkLink(String siteName, String title, String summary, String icon, String language, Map<String, String> links) {
+	public AbstractNetworkLink(String siteName, String title, String summary, String icon, String language, Map<String,URLInfo> infos) {
 		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
 		myIcon = icon;
 		myLanguage = language != null ? language : "multi";
-		myLinks = new TreeMap<String, String>(links);
+		myInfos = new TreeMap<String,URLInfo>(infos);
 	}
 
 	public final String getSiteName() {
@@ -72,12 +70,13 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return myLanguage;
 	}
 
-	public final String getLink(String urlKey) {
-		return myLinks.get(urlKey);
+	public final URLInfo getUrlInfo(String urlKey) {
+		final URLInfo info = myInfos.get(urlKey);
+		return info != null ? info : URLInfo.NULL;
 	}
 
-	public final Set<String> getLinkKeys() {
-		return myLinks.keySet();
+	public final Set<String> getUrlKeys() {
+		return myInfos.keySet();
 	}
 
 	public NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener) {
@@ -96,7 +95,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 			+ "; title=" + myTitle
 			+ "; summary=" + mySummary
 			+ "; icon=" + icon
-			+ "; links=" + myLinks
+			+ "; infos=" + myInfos
 			+ "}";
 	}
 
@@ -114,7 +113,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 				|| !myTitle.equals(lnk.myTitle)
 				|| !ZLMiscUtil.equals(mySummary, lnk.mySummary)
 				|| !ZLMiscUtil.equals(myIcon, lnk.myIcon)
-				|| !ZLMiscUtil.mapsEquals(myLinks, lnk.myLinks)) {
+				|| !ZLMiscUtil.mapsEquals(myInfos, lnk.myInfos)) {
 			return false;
 		}
 		return true;

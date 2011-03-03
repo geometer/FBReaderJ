@@ -89,7 +89,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			sid = mySidOption.getValue();
 		}
 
-		String url = Link.getLink(INetworkLink.URL_SIGN_IN);
+		String url = Link.getUrlInfo(INetworkLink.URL_SIGN_IN).URL;
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -119,7 +119,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void authorise(String password) throws ZLNetworkException {
-		String url = Link.getLink(INetworkLink.URL_SIGN_IN);
+		String url = Link.getUrlInfo(INetworkLink.URL_SIGN_IN).URL;
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -241,7 +241,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		final String url = Link.getLink(INetworkLink.URL_REFILL_ACCOUNT);
+		final String url = Link.getUrlInfo(INetworkLink.URL_REFILL_ACCOUNT).URL;
 		if (url == null) {
 			return null;
 		}
@@ -401,7 +401,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void recoverPassword(String email) throws ZLNetworkException {
-		String url = Link.getLink(INetworkLink.URL_RECOVER_PASSWORD);
+		String url = Link.getUrlInfo(INetworkLink.URL_RECOVER_PASSWORD).URL;
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}

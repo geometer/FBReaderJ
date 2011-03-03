@@ -179,8 +179,8 @@ public class NetworkLibrary {
 			db.loadCustomLinks(
 				new NetworkDatabase.ICustomLinksHandler() {
 					public void handleCustomLinkData(int id, String siteName,
-							String title, String summary, String icon, Map<String, String> links) {
-						final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
+							String title, String summary, String icon, Map<String,URLInfo> infos) {
+						final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, infos);
 						if (link != null) {
 							addLinkInternal(link);
 						}

@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
+import org.geometerplus.fbreader.network.URLInfo;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -99,7 +100,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			final String language = entry.DCLanguage;
 
 			String icon = null; 
-			final HashMap<String,String> links = new HashMap<String,String>();
+			final HashMap<String,URLInfo> infos = new HashMap<String,URLInfo>();
 			final HashMap<String,NetworkCatalogItem.Accessibility> urlConditions =
 				new HashMap<String,NetworkCatalogItem.Accessibility>();
 			for (ATOMLink link: entry.Links) {
@@ -116,26 +117,26 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 					}
 				} else if (rel == null) {
 					if (type == MIME_APP_ATOM) {
-						links.put(INetworkLink.URL_MAIN, href);
+						infos.put(INetworkLink.URL_MAIN, new URLInfo(href));
 					}
 				} else if (rel == "search") {
 					if (type == MIME_APP_ATOM) {
 						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href);
 						if (descr.isValid()) {
 							// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
-							links.put(INetworkLink.URL_SEARCH, descr.makeQuery("%s"));
+							infos.put(INetworkLink.URL_SEARCH, new URLInfo(descr.makeQuery("%s")));
 						}
 					}
 				} else if (rel == REL_LINK_SIGN_IN) {
-					links.put(INetworkLink.URL_SIGN_IN, href);
+					infos.put(INetworkLink.URL_SIGN_IN, new URLInfo(href));
 				} else if (rel == REL_LINK_SIGN_OUT) {
-					links.put(INetworkLink.URL_SIGN_OUT, href);
+					infos.put(INetworkLink.URL_SIGN_OUT, new URLInfo(href));
 				} else if (rel == REL_LINK_SIGN_UP) {
-					links.put(INetworkLink.URL_SIGN_UP, href);
+					infos.put(INetworkLink.URL_SIGN_UP, new URLInfo(href));
 				} else if (rel == REL_LINK_REFILL_ACCOUNT) {
-					links.put(INetworkLink.URL_REFILL_ACCOUNT, href);
+					infos.put(INetworkLink.URL_REFILL_ACCOUNT, new URLInfo(href));
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
-					links.put(INetworkLink.URL_RECOVER_PASSWORD, href);
+					infos.put(INetworkLink.URL_RECOVER_PASSWORD, new URLInfo(href));
 				} else if (rel == REL_CONDITION_NEVER) {
 					urlConditions.put(href, NetworkCatalogItem.Accessibility.NEVER);
 				} else if (rel == REL_CONDITION_SIGNED_IN) {
@@ -153,7 +154,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				sslCertificate = null;
 			}
 
-			INetworkLink result = link(siteName, title, summary, icon, language, links, urlConditions, sslCertificate);
+			INetworkLink result = link(siteName, title, summary, icon, language, infos, urlConditions, sslCertificate);
 			if (result != null) {
 				myListener.onNewLink(result);
 			}
@@ -166,11 +167,11 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			String summary,
 			String icon,
 			String language,
-			Map<String,String> links,
+			Map<String,URLInfo> infos,
 			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
 			String sslCertificate
 		) {
-			if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
+			if (siteName == null || title == null || infos.get(INetworkLink.URL_MAIN) == null) {
 				return null;
 			}
 
@@ -180,7 +181,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				summary,
 				icon,
 				language,
-				links,
+				infos,
 				myHasStableIdentifiers
 			);
 

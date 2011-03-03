@@ -49,8 +49,8 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	private final boolean myHasStableIdentifiers;
 
 	OPDSNetworkLink(String siteName, String title, String summary, String icon, String language,
-			Map<String, String> links, boolean hasStableIdentifiers) {
-		super(siteName, title, summary, icon, language, links);
+			Map<String,URLInfo> infos, boolean hasStableIdentifiers) {
+		super(siteName, title, summary, icon, language, infos);
 		myHasStableIdentifiers = hasStableIdentifiers;
 		myBooksInBasketOption = new ZLStringListOption(siteName, "Basket", null);
 	}
@@ -123,7 +123,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
-		final String url = getLink(URL_SEARCH);
+		final String url = getUrlInfo(URL_SEARCH).URL;
 		if (url == null) {
 			return null;
 		}
@@ -139,8 +139,8 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public NetworkCatalogItem libraryItem() {
-		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
-		urlMap.put(NetworkCatalogItem.URL_CATALOG, getLink(URL_MAIN));
+		TreeMap<Integer,String> urlMap = new TreeMap<Integer,String>();
+		urlMap.put(NetworkCatalogItem.URL_CATALOG, getUrlInfo(URL_MAIN).URL);
 		return new OPDSCatalogItem(this, getTitle(), getSummary(), getIcon(), urlMap, myExtraData);
 	}
 

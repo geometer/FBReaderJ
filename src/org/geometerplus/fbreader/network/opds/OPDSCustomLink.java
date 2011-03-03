@@ -32,14 +32,15 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
+import org.geometerplus.fbreader.network.URLInfo;
 
 class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private int myId;
 
 	private boolean myHasChanges;
 
-	OPDSCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
-		super(siteName, title, summary, icon, null, links, false);
+	OPDSCustomLink(int id, String siteName, String title, String summary, String icon, Map<String,URLInfo> infos) {
+		super(siteName, title, summary, icon, null, infos, false);
 		myId = id;
 	}
 
@@ -80,17 +81,13 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		myTitle = title;
 	}
 
-	public final void setLink(String urlKey, String url) {
-		if (url == null) {
-			removeLink(urlKey);
-		} else {
-			final String oldUrl = myLinks.put(urlKey, url);
-			myHasChanges = myHasChanges || !url.equals(oldUrl);
-		}
+	public final void setUrl(String urlKey, String url) {
+		myInfos.put(urlKey, new URLInfo(url, new Date()));
+		myHasChanges = true;
 	}
 
-	public final void removeLink(String urlKey) {
-		final String oldUrl = myLinks.remove(urlKey);
+	public final void removeUrl(String urlKey) {
+		final URLInfo oldUrl = myInfos.remove(urlKey);
 		myHasChanges = myHasChanges || oldUrl != null;
 	}
 
@@ -101,7 +98,7 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 
 		ZLNetworkException error = null;
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getLink(INetworkLink.URL_MAIN)) {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrlInfo(INetworkLink.URL_MAIN).URL) {
 				@Override
 				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 					final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);
@@ -151,7 +148,7 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 
 		if (!descriptions.isEmpty()) {
 			// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
-			setLink(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
+			setUrl(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
 		}
 		if (error != null) {
 			throw error;

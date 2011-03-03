@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkDatabase;
+import org.geometerplus.fbreader.network.URLInfo;
 
 import org.geometerplus.android.util.SQLiteUtil;
 
@@ -74,7 +75,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	@Override
 	protected void loadCustomLinks(ICustomLinksHandler handler) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary,icon FROM CustomLinks", null);
-		final HashMap<String,String> linksMap = new HashMap<String,String>();
+		final HashMap<String,URLInfo> linksMap = new HashMap<String,URLInfo>();
 		while (cursor.moveToNext()) {
 			final int id = cursor.getInt(0);
 			final String title = cursor.getString(1);
@@ -83,9 +84,15 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			final String icon = cursor.getString(4);
 
 			linksMap.clear();
-			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url FROM LinkUrls WHERE url NOT NULL AND link_id = " + id, null);
+			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE url NOT NULL AND link_id = " + id, null);
 			while (linksCursor.moveToNext()) {
-				linksMap.put(linksCursor.getString(0), linksCursor.getString(1));
+				linksMap.put(
+					linksCursor.getString(0),
+					new URLInfo(
+						linksCursor.getString(1),
+						SQLiteUtil.getDate(linksCursor, 2)
+					)
+				);
 			}
 			linksCursor.close();
 
@@ -127,7 +134,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				SQLiteUtil.bindString(statement, 4, link.getIcon());
 
 				final long id;
-				final HashMap<String,String> linksMap = new HashMap<String,String>();
+				final HashMap<String,URLInfo> linksMap = new HashMap<String,URLInfo>();
 
 				if (statement == myInsertCustomLinkStatement) {
 					id = statement.executeInsert();
@@ -137,35 +144,42 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					statement.bindLong(5, id);
 					statement.execute();
 					
-					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url FROM LinkUrls WHERE url NOT NULL AND link_id = " + link.getId(), null);
+					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE url NOT NULL AND link_id = " + link.getId(), null);
 					while (linksCursor.moveToNext()) {
-						linksMap.put(linksCursor.getString(0), linksCursor.getString(1));
+						linksMap.put(
+							linksCursor.getString(0),
+							new URLInfo(
+								linksCursor.getString(1),
+								SQLiteUtil.getDate(linksCursor, 2)
+							)
+						);
 					}
 					linksCursor.close();
 				}
 
-				for (String key: link.getLinkKeys()) {
-					final String value = link.getLink(key);
-					final String dbValue = linksMap.remove(key);
+				for (String key : link.getUrlKeys()) {
+					final URLInfo info = link.getUrlInfo(key);
+					final URLInfo dbInfo = linksMap.remove(key);
 					final SQLiteStatement urlStatement;
-					if (dbValue == null) {
+					if (dbInfo == null) {
 						if (myInsertCustomLinkUrlStatement == null) {
 							myInsertCustomLinkUrlStatement = myDatabase.compileStatement(
-									"INSERT OR REPLACE INTO LinkUrls(url,link_id,key) VALUES (?,?,?)");
+									"INSERT OR REPLACE INTO LinkUrls(url,update_time,link_id,key) VALUES (?,?,?,?)");
 						}
 						urlStatement = myInsertCustomLinkUrlStatement;
-					} else if (!value.equals(dbValue)) {
+					} else if (!info.equals(dbInfo)) {
 						if (myUpdateCustomLinkUrlStatement == null) {
 							myUpdateCustomLinkUrlStatement = myDatabase.compileStatement(
-									"UPDATE LinkUrls SET url = ? WHERE link_id = ? AND key = ?");
+									"UPDATE LinkUrls SET url = ?, update_time = ? WHERE link_id = ? AND key = ?");
 						}
 						urlStatement = myUpdateCustomLinkUrlStatement;
 					} else {
 						continue;
 					}
-					urlStatement.bindString(1, value);
-					urlStatement.bindLong(2, id);
-					urlStatement.bindString(3, key);
+					SQLiteUtil.bindString(urlStatement, 1, info.URL);
+					SQLiteUtil.bindDate(urlStatement, 2, info.Updated);
+					urlStatement.bindLong(3, id);
+					urlStatement.bindString(4, key);
 					urlStatement.execute();
 				}
 				for (String key: linksMap.keySet()) {

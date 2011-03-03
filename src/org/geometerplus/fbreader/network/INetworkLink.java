@@ -28,7 +28,6 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 public interface INetworkLink {
-
 	String URL_MAIN = "main";
 	String URL_SEARCH = "search";
 	String URL_SIGN_IN = "signIn";
@@ -41,14 +40,14 @@ public interface INetworkLink {
 	String getTitle();
 	String getSummary();
 	String getIcon();
-	String getLink(String urlKey);
+
+	URLInfo getUrlInfo(String urlKey);
+	Set<String> getUrlKeys();
 
 	/**
 	 * @return 2-letters language code or special token "multi"
 	 */
 	String getLanguage();
-
-	Set<String> getLinkKeys();
 
 	/**
 	 * @param listener Network operation listener

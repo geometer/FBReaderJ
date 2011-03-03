@@ -250,7 +250,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			{
 				final ICustomNetworkLink link =
 					(ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link;
-				final String textUrl = link.getLink(INetworkLink.URL_MAIN);
+				final String textUrl = link.getUrlInfo(INetworkLink.URL_MAIN).URL;
 				if (textUrl != null) {
 					activity.startActivity(
 						new Intent(activity, AddCustomCatalogActivity.class)

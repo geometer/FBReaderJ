@@ -39,17 +39,17 @@ import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 public class OPDSLinkReader {
 	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.2.xml";
 
-	public static ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
-		if (siteName == null || title == null || links.get(INetworkLink.URL_MAIN) == null) {
+	public static ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, Map<String,URLInfo> infos) {
+		if (siteName == null || title == null || infos.get(INetworkLink.URL_MAIN) == null) {
 			return null;
 		}
-		return new OPDSCustomLink(id, siteName, title, summary, icon, links);
+		return new OPDSCustomLink(id, siteName, title, summary, icon, infos);
 	}
 
 	public static ICustomNetworkLink createCustomLink(int id, String siteName, String title, String summary, String icon, String url) {
-		final HashMap<String, String> links = new HashMap<String, String>();
-		links.put(INetworkLink.URL_MAIN, url);
-		return new OPDSCustomLink(id, siteName, title, summary, icon, links);
+		final HashMap<String,URLInfo> infos = new HashMap<String,URLInfo>();
+		infos.put(INetworkLink.URL_MAIN, new URLInfo(url));
+		return new OPDSCustomLink(id, siteName, title, summary, icon, infos);
 	}
 
 	public static ICustomNetworkLink createCustomLink(String siteName, String title, String summary, String icon, String url) {

@@ -32,8 +32,8 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void setSummary(String summary);
 	void setIcon(String icon);
 
-	void setLink(String urlKey, String url);
-	void removeLink(String urlKey);
+	void setUrl(String urlKey, String url);
+	void removeUrl(String urlKey);
 
 	void reloadInfo() throws ZLNetworkException;
 

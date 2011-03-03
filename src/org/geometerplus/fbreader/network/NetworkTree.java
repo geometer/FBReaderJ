@@ -25,6 +25,7 @@ import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -50,10 +51,7 @@ public abstract class NetworkTree extends FBTree {
 				return false;
 			}
 			final NetworkTree.Key key = (NetworkTree.Key)other;
-			if (Parent == null) {
-				return key.Parent == null && Id.equals(key.Id);
-			}
-			return Id.equals(key.Id) && Parent.equals(key.Parent);
+			return Id.equals(key.Id) && ZLMiscUtil.equals(Parent, key.Parent);
 		}
 
 		@Override
