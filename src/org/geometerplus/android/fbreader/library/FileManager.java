@@ -63,7 +63,8 @@ public final class FileManager extends BaseActivity
 		
 		LibraryCommon.SortTypeInstance = SortTypeConf.getSortType();				// TODO move inisialization
 		LibraryCommon.ViewTypeInstance = ViewTypeConf.getViewType(); 				// TODO move inisialization
-
+		onResume();
+		
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 			Log.v(FMCommon.LOG, "FileManager - LibraryCommon.ViewTypeInstance == ViewType.SKETCH");
 			SketchGalleryActivity.launchActivity(this, myPath);
@@ -91,7 +92,6 @@ public final class FileManager extends BaseActivity
 	@Override
 	protected void onResume() {
 		Log.v(FMCommon.LOG, "FileManager - onResume()");
-
 		super.onResume();
 		if (LibraryCommon.ViewTypeInstance == ViewType.SKETCH){
 			SketchGalleryActivity.launchActivity(this, myPath);

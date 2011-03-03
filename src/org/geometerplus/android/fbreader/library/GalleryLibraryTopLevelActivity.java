@@ -45,12 +45,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
 		super.onCreate(icicle);
 //		requestWindowFeature(Window.FEATURE_NO_TITLE);					// TODO think about
 
-		if (LibraryCommon.DatabaseInstance == null || LibraryCommon.LibraryInstance == null) {
-			finish();
-			Log.v(FMCommon.LOG, "GalleryLibraryTopLevelActivity - finish");
-			return;
-		}
-		
+		onResume();
 		myItems = new LinkedList<FBTree>();
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),

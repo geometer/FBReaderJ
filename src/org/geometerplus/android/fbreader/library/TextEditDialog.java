@@ -89,6 +89,8 @@ public class TextEditDialog extends Dialog{
         btnLayout.addView(cancel, llppp);
         linearLayout.addView(btnLayout);
         setContentView(linearLayout);
+        
+        getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 	}
 
 	public void setText(String text){
