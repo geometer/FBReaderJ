@@ -60,7 +60,7 @@ public final class ZipFile {
 		}
 		if (header.FileName != null) {
         	myFileHeaders.put(header.FileName, header);
-			if (header.FileName.equals(fileToFind)) {
+			if (header.FileName.equalsIgnoreCase(fileToFind)) {
 				return true;
 			}
 		}
