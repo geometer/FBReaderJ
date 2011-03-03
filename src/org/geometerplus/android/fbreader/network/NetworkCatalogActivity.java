@@ -56,7 +56,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(CATALOG_KEY_KEY);
 		myTree = library.getTreeByKey(key);
 
-		System.err.println("KEY = " + key);
 		if (myTree == null) {
 			throw new RuntimeException("Tree not found for key " + key);
 		}

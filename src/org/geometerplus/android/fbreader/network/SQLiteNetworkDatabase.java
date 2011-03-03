@@ -31,6 +31,8 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkDatabase;
 
+import org.geometerplus.android.util.SQLiteUtil;
+
 class SQLiteNetworkDatabase extends NetworkDatabase {
 	private final SQLiteDatabase myDatabase;
 
@@ -69,14 +71,6 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		}
 	}
 
-	private static void bindString(SQLiteStatement statement, int index, String value) {
-		if (value != null) {
-			statement.bindString(index, value);
-		} else {
-			statement.bindNull(index);
-		}
-	}
-
 	@Override
 	protected void loadCustomLinks(ICustomLinksHandler handler) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary,icon FROM CustomLinks", null);
@@ -89,7 +83,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			final String icon = cursor.getString(4);
 
 			linksMap.clear();
-			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url FROM CustomLinkUrls WHERE link_id = " + id, null);
+			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url FROM LinkUrls WHERE url NOT NULL AND link_id = " + id, null);
 			while (linksCursor.moveToNext()) {
 				linksMap.put(linksCursor.getString(0), linksCursor.getString(1));
 			}
@@ -129,8 +123,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 				statement.bindString(1, link.getTitle());
 				statement.bindString(2, link.getSiteName());
-				bindString(statement, 3, link.getSummary());
-				bindString(statement, 4, link.getIcon());
+				SQLiteUtil.bindString(statement, 3, link.getSummary());
+				SQLiteUtil.bindString(statement, 4, link.getIcon());
 
 				final long id;
 				final HashMap<String,String> linksMap = new HashMap<String,String>();
@@ -143,7 +137,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					statement.bindLong(5, id);
 					statement.execute();
 					
-					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url FROM CustomLinkUrls WHERE link_id = " + link.getId(), null);
+					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url FROM LinkUrls WHERE url NOT NULL AND link_id = " + link.getId(), null);
 					while (linksCursor.moveToNext()) {
 						linksMap.put(linksCursor.getString(0), linksCursor.getString(1));
 					}
@@ -157,13 +151,13 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					if (dbValue == null) {
 						if (myInsertCustomLinkUrlStatement == null) {
 							myInsertCustomLinkUrlStatement = myDatabase.compileStatement(
-									"INSERT OR REPLACE INTO CustomLinkUrls(url,link_id,key) VALUES (?,?,?)");
+									"INSERT OR REPLACE INTO LinkUrls(url,link_id,key) VALUES (?,?,?)");
 						}
 						urlStatement = myInsertCustomLinkUrlStatement;
 					} else if (!value.equals(dbValue)) {
 						if (myUpdateCustomLinkUrlStatement == null) {
 							myUpdateCustomLinkUrlStatement = myDatabase.compileStatement(
-									"UPDATE CustomLinkUrls SET url = ? WHERE link_id = ? AND key = ?");
+									"UPDATE LinkUrls SET url = ? WHERE link_id = ? AND key = ?");
 						}
 						urlStatement = myUpdateCustomLinkUrlStatement;
 					} else {
@@ -177,7 +171,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				for (String key: linksMap.keySet()) {
 					if (myDeleteCustomLinkUrlStatement == null) {
 						myDeleteCustomLinkUrlStatement = myDatabase.compileStatement(
-								"DELETE FROM CustomLinkUrls WHERE link_id = ? AND key = ?");
+								"DELETE FROM LinkUrls WHERE link_id = ? AND key = ?");
 					}
 					myDeleteCustomLinkUrlStatement.bindLong(1, id);
 					myDeleteCustomLinkUrlStatement.bindString(2, key);
@@ -199,7 +193,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				final long id = link.getId();
 				if (myDeleteAllCustomLinksStatement == null) {
 					myDeleteAllCustomLinksStatement = myDatabase.compileStatement(
-							"DELETE FROM CustomLinkUrls WHERE link_id = ?");
+							"DELETE FROM LinkUrls WHERE link_id = ?");
 				}
 				myDeleteAllCustomLinksStatement.bindLong(1, id);
 				myDeleteAllCustomLinksStatement.execute();
@@ -244,5 +238,15 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					"icon TEXT)");
 		myDatabase.execSQL("INSERT INTO CustomLinks (link_id,title,site_name,summary,icon) SELECT link_id,title,site_name,summary,icon FROM CustomLinks_Obsolete");
 		myDatabase.execSQL("DROP TABLE CustomLinks_Obsolete");
+
+		myDatabase.execSQL(
+				"CREATE TABLE LinkUrls(" +
+					"key TEXT NOT NULL," +
+					"link_id INTEGER NOT NULL REFERENCES CustomLinks(link_id)," +
+					"url TEXT," +
+					"update_time INTEGER," +
+					"CONSTRAINT LinkUrls_PK PRIMARY KEY (key, link_id))");
+		myDatabase.execSQL("INSERT INTO LinkUrls (key,link_id,url) SELECT key,link_id,url FROM CustomLinkUrls");
+		myDatabase.execSQL("DROP TABLE CustomLinkUrls");
 	}
 }

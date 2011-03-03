@@ -82,6 +82,9 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			if (MIME_APP_ATOM.equals(type) && "next".equals(rel)) {
 				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
+			if ("search".equals(rel)) {
+				System.err.println(type + " :: " + link.getHref());
+			}
 		}
 		return false;
 	}
