@@ -21,7 +21,17 @@ public final class ZipFile {
 	}
 
     private final InputStreamHolder myStreamHolder;
-    private final LinkedHashMap<String,LocalFileHeader> myFileHeaders = new LinkedHashMap<String,LocalFileHeader>();
+    private final LinkedHashMap<String,LocalFileHeader> myFileHeaders = new LinkedHashMap<String,LocalFileHeader>() {
+		@Override
+		public LocalFileHeader get(Object key) {
+			return super.get(((String)key).toLowerCase());
+		}
+
+		@Override
+		public LocalFileHeader put(String key, LocalFileHeader value) {
+			return super.put(key.toLowerCase(), value);
+		}
+	};
 
     private boolean myAllFilesAreRead;
 
