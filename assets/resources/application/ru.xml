@@ -68,6 +68,11 @@
 			<node name="byName" value="По имени"/>
 			<node name="byDate" value="По дате создания"/>
 		</node>
+		<node name="viewBox">
+			<node name="title" value="Вид"/>
+			<node name="simple" value="Простой"/>
+			<node name="sketch" value="Эскизный"/>
+		</node>	
 	</node>
 	<node name="networkView">
 		<node name="openCatalog" value="Открыть каталог"/>
