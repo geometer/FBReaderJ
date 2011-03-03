@@ -167,6 +167,7 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 			};
 			UIUtil.wait("search", runnable, this);
+			startActivity(new Intent(this, getClass()));
 		} else {
 			super.onNewIntent(intent);
 		}
