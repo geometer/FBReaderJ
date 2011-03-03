@@ -90,7 +90,7 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
     public boolean onCreateOptionsMenu(Menu menu) {
     	super.onCreateOptionsMenu(menu);
     	LibraryUtil.addMenuItem(menu, 1, myResource, "localSearch", R.drawable.ic_menu_search);
-    	LibraryUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_sorting);
+    	LibraryUtil.addMenuItem(menu, 0, myResource, "view", R.drawable.ic_menu_view);
     	return true;
     }
 	

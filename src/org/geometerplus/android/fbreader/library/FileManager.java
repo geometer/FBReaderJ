@@ -185,10 +185,10 @@ public final class FileManager extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
     	Log.v(FMCommon.LOG, "onCreateOptionsMenu");
     	super.onCreateOptionsMenu(menu);
-    	LibraryUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_sorting);
-    	LibraryUtil.addMenuItem(menu, 1, myResource, "mkdir", R.drawable.ic_menu_mkdir);
-    	LibraryUtil.addMenuItem(menu, 2, myResource, "sorting", R.drawable.ic_menu_sorting);
-    	LibraryUtil.addMenuItem(menu, 3, myResource, "view", R.drawable.ic_menu_sorting);	
+    	LibraryUtil.addMenuItem(menu, 0, myResource, "insert", R.drawable.ic_menu_insert);
+    	LibraryUtil.addMenuItem(menu, 1, myResource,  "mkdir", R.drawable.ic_menu_mkdir);
+    	LibraryUtil.addMenuItem(menu, 2, myResource, "sorting", R.drawable.ic_menu_sort);
+    	LibraryUtil.addMenuItem(menu, 3, myResource, "view", R.drawable.ic_menu_view);
     	return true;
     }
 
