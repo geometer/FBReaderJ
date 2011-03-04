@@ -133,7 +133,7 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 				requests.add(new ZLNetworkRequest(url) {
 					@Override
 					public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
-						new OpenSearchXMLReader(URL, descriptions, 20).read(inputStream);
+						new OpenSearchXMLReader(URL, descriptions).read(inputStream);
 					}
 				});
 			}
@@ -149,6 +149,7 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		if (!descriptions.isEmpty()) {
 			// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
 			setUrl(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
+			System.err.println(descriptions.get(0).makeQuery("%s"));
 		}
 		if (error != null) {
 			throw error;

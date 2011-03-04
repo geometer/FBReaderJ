@@ -51,6 +51,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	final static String ADD_CATALOG_SUMMARY_KEY = "summary";
 	final static String ADD_CATALOG_ICON_KEY = "icon";
 	final static String ADD_CATALOG_ID_KEY = "id";
+	final static String ADD_CATALOG_URLS_BUNDLE_KEY = "urls";
 
 	private NetworkTree myTree;
 	private volatile Intent myIntent;
