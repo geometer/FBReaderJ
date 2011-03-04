@@ -85,7 +85,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			final String summary = cursor.getString(3);
 
 			linksMap.clear();
-			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE url NOT NULL AND link_id = " + id, null);
+			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE link_id = " + id, null);
 			while (linksCursor.moveToNext()) {
 				linksMap.put(
 					linksCursor.getString(0),
@@ -141,10 +141,10 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					link.setId((int) id);
 				} else {
 					id = link.getId();
-					statement.bindLong(5, id);
+					statement.bindLong(4, id);
 					statement.execute();
 					
-					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE url NOT NULL AND link_id = " + link.getId(), null);
+					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE link_id = " + link.getId(), null);
 					while (linksCursor.moveToNext()) {
 						linksMap.put(
 							linksCursor.getString(0),

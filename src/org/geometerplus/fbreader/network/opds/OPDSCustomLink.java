@@ -85,13 +85,29 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 		myHasChanges = myHasChanges || oldUrl != null;
 	}
 
-	public void reloadInfo(boolean urlsOnly) throws ZLNetworkException {
+	public boolean isObsolete(long milliSeconds) {
+		final long old = System.currentTimeMillis() - milliSeconds;
+		
+		final Date searchUpdateDate = getUrlInfo(URL_SEARCH).Updated;
+		if (searchUpdateDate == null || searchUpdateDate.getTime() < old) {
+			return true;
+		}
+
+		final Date iconUpdateDate = getUrlInfo(URL_ICON).Updated;
+		if (iconUpdateDate == null || iconUpdateDate.getTime() < old) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void reloadInfo(final boolean urlsOnly) throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
 
 		ZLNetworkException error = null;
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrlInfo(INetworkLink.URL_MAIN).URL) {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrlInfo(URL_MAIN).URL) {
 				@Override
 				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 					final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);
@@ -103,11 +119,13 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 					if (info.Title == null) {
 						throw new ZLNetworkException(NetworkException.ERROR_NO_REQUIRED_INFORMATION);
 					}
-					myTitle = info.Title;
 					setUrl(URL_ICON, info.Icon);
-					mySummary = info.Summary;
 					if (info.DirectOpenSearchDescription != null) {
 						descriptions.add(info.DirectOpenSearchDescription);
+					}
+					if (!urlsOnly) {
+						myTitle = info.Title;
+						mySummary = info.Summary;
 					}
 				}
 			});

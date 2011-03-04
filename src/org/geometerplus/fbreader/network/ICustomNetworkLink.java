@@ -37,6 +37,7 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void setUrl(String urlKey, String url);
 	void removeUrl(String urlKey);
 
+	boolean isObsolete(long milliSeconds);
 	void reloadInfo(boolean urlsOnly) throws ZLNetworkException;
 
 	// returns true if next methods have changed link's data:

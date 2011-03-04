@@ -244,6 +244,15 @@ public class NetworkLibrary {
 					}
 				}
 			}
+			for (INetworkLink link : myLinks) {
+				if (link instanceof ICustomNetworkLink) {
+					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
+					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
+						customLink.reloadInfo(true);
+						NetworkDatabase.Instance().saveCustomLink(customLink);
+					}
+				}
+			}
 		}
 	}
 
@@ -253,12 +262,11 @@ public class NetworkLibrary {
 	// synchronize() method MUST be called after this method
 	public void finishBackgroundUpdate() {
 		synchronized (myBackgroundLock) {
-			if (myBackgroundLinks == null) {
-				return;
-			}
 			synchronized (myLinks) {
-				removeAllLoadedLinks();
-				myLinks.addAll(myBackgroundLinks);
+				if (myBackgroundLinks != null) {
+					removeAllLoadedLinks();
+					myLinks.addAll(myBackgroundLinks);
+				}
 				invalidateChildren();
 			}
 		}
