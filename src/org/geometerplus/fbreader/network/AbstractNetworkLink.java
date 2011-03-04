@@ -90,10 +90,12 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	@Override
 	public String toString() {
 		String icon = myIcon;
-		if (icon.length() > 64) {
-			icon = icon.substring(0, 61) + "...";
+		if (icon != null) {
+			if (icon.length() > 64) {
+				icon = icon.substring(0, 61) + "...";
+			}
+			icon = icon.replaceAll("\n", "");
 		}
-		icon = icon.replaceAll("\n", "");
 		return "AbstractNetworkLink: {"
 			+ "siteName=" + mySiteName
 			+ "; title=" + myTitle

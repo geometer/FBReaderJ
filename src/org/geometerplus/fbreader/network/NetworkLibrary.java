@@ -180,8 +180,12 @@ public class NetworkLibrary {
 				new NetworkDatabase.ICustomLinksHandler() {
 					public void handleCustomLinkData(int id, String siteName,
 							String title, String summary, String icon, Map<String,UrlInfo> infos) {
-						final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, infos);
-						if (link != null) {
+						if (title != null &&
+							siteName != null &&
+							infos.get(INetworkLink.URL_MAIN) != null) {
+							final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(
+								id, siteName, title, summary, icon, infos
+							);
 							addLinkInternal(link);
 						}
 					}

@@ -40,7 +40,6 @@ public interface INetworkLink {
 	String getSummary();
 	String getIcon();
 
-	HashMap<String,UrlInfo> urlInfoMap();
 	UrlInfo getUrlInfo(String urlKey);
 	Set<String> getUrlKeys();
 

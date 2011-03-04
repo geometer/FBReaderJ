@@ -248,19 +248,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return true;
 			case CUSTOM_CATALOG_EDIT:
 			{
-				final ICustomNetworkLink link =
-					(ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link;
-				final String textUrl = link.getUrlInfo(INetworkLink.URL_MAIN).URL;
-				if (textUrl != null) {
-					activity.startActivity(
-						new Intent(activity, AddCustomCatalogActivity.class)
-							.setData(Uri.parse(textUrl))
-							.putExtra(NetworkLibraryActivity.ADD_CATALOG_TITLE_KEY, link.getTitle())
-							.putExtra(NetworkLibraryActivity.ADD_CATALOG_SUMMARY_KEY, link.getSummary())
-							.putExtra(NetworkLibraryActivity.ADD_CATALOG_ICON_KEY, link.getIcon())
-							.putExtra(NetworkLibraryActivity.ADD_CATALOG_ID_KEY, link.getId())
-					);
-				}
+				final Intent intent = new Intent(activity, AddCustomCatalogActivity.class);
+				NetworkLibraryActivity.addLinkToIntent(
+					intent,
+					(ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link
+				);
+				activity.startActivity(intent);
 				return true;
 			}
 			case CUSTOM_CATALOG_REMOVE:
