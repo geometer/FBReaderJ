@@ -34,13 +34,13 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.UrlInfo;
 
-class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
+public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private int myId;
 
 	private boolean myHasChanges;
 
-	OPDSCustomLink(int id, String siteName, String title, String summary, String icon, Map<String,UrlInfo> infos) {
-		super(siteName, title, summary, icon, null, infos, false);
+	public OPDSCustomLink(int id, String siteName, String title, String summary, Map<String,UrlInfo> infos) {
+		super(siteName, title, summary, null, infos, false);
 		myId = id;
 	}
 
@@ -58,11 +58,6 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 
 	public void resetChanges() {
 		myHasChanges = false;
-	}
-
-	public final void setIcon(String icon) {
-		myHasChanges = myHasChanges || !ZLMiscUtil.equals(myIcon, icon);
-		myIcon = icon;
 	}
 
 	public final void setSiteName(String name) {
@@ -90,8 +85,7 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		myHasChanges = myHasChanges || oldUrl != null;
 	}
 
-
-	public void reloadInfo() throws ZLNetworkException {
+	public void reloadInfo(boolean urlsOnly) throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
 
@@ -110,12 +104,8 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 						throw new ZLNetworkException(NetworkException.ERROR_NO_REQUIRED_INFORMATION);
 					}
 					myTitle = info.Title;
-					if (info.Icon != null) {
-						myIcon = info.Icon;
-					}
-					if (info.Summary != null) {
-						mySummary = info.Summary;
-					}
+					setUrl(URL_ICON, info.Icon);
+					mySummary = info.Summary;
 					if (info.DirectOpenSearchDescription != null) {
 						descriptions.add(info.DirectOpenSearchDescription);
 					}
@@ -148,7 +138,8 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		if (!descriptions.isEmpty()) {
 			// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
 			setUrl(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
-			System.err.println(descriptions.get(0).makeQuery("%s"));
+		} else {
+			setUrl(URL_SEARCH, null);
 		}
 		if (error != null) {
 			throw error;

@@ -44,7 +44,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentCodeVersion = 2;
+		final int currentCodeVersion = 3;
 		if (version >= currentCodeVersion) {
 			return;
 		}
@@ -54,6 +54,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				createTables();
 			case 1:
 				updateTables1();
+			case 2:
+				updateTables2();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();
@@ -74,14 +76,13 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	@Override
 	protected void loadCustomLinks(ICustomLinksHandler handler) {
-		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary,icon FROM CustomLinks", null);
+		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary FROM Links", null);
 		final HashMap<String,UrlInfo> linksMap = new HashMap<String,UrlInfo>();
 		while (cursor.moveToNext()) {
 			final int id = cursor.getInt(0);
 			final String title = cursor.getString(1);
 			final String siteName = cursor.getString(2);
 			final String summary = cursor.getString(3);
-			final String icon = cursor.getString(4);
 
 			linksMap.clear();
 			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE url NOT NULL AND link_id = " + id, null);
@@ -96,7 +97,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			}
 			linksCursor.close();
 
-			handler.handleCustomLinkData(id, siteName, title, summary, icon, linksMap);
+			handler.handleCustomLinkData(id, siteName, title, summary, linksMap);
 		}
 		cursor.close();
 	}
@@ -114,14 +115,14 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				if (link.getId() == ICustomNetworkLink.INVALID_ID) {
 					if (myInsertCustomLinkStatement == null) {
 						myInsertCustomLinkStatement = myDatabase.compileStatement(
-							"INSERT INTO CustomLinks (title,site_name,summary,icon) VALUES (?,?,?,?)"
+							"INSERT INTO Links (title,site_name,summary) VALUES (?,?,?)"
 						);
 					}
 					statement = myInsertCustomLinkStatement;
 				} else {
 					if (myUpdateCustomLinkStatement == null) {
 						myUpdateCustomLinkStatement = myDatabase.compileStatement(
-							"UPDATE CustomLinks SET title = ?, site_name = ?, summary =?, icon = ? "
+							"UPDATE Links SET title = ?, site_name = ?, summary =? "
 								+ "WHERE link_id = ?"
 						);
 					}
@@ -131,7 +132,6 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				statement.bindString(1, link.getTitle());
 				statement.bindString(2, link.getSiteName());
 				SQLiteUtil.bindString(statement, 3, link.getSummary());
-				SQLiteUtil.bindString(statement, 4, link.getIcon());
 
 				final long id;
 				final HashMap<String,UrlInfo> linksMap = new HashMap<String,UrlInfo>();
@@ -214,7 +214,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 				if (myDeleteCustomLinkStatement == null) {
 					myDeleteCustomLinkStatement = myDatabase.compileStatement(
-						"DELETE FROM CustomLinks WHERE link_id = ?"
+						"DELETE FROM Links WHERE link_id = ?"
 					);
 				}
 				myDeleteCustomLinkStatement.bindLong(1, id);
@@ -262,5 +262,24 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					"CONSTRAINT LinkUrls_PK PRIMARY KEY (key, link_id))");
 		myDatabase.execSQL("INSERT INTO LinkUrls (key,link_id,url) SELECT key,link_id,url FROM CustomLinkUrls");
 		myDatabase.execSQL("DROP TABLE CustomLinkUrls");
+	}
+
+	private void updateTables2() {
+		myDatabase.execSQL(
+				"CREATE TABLE Links(" +
+					"link_id INTEGER PRIMARY KEY," +
+					"title TEXT NOT NULL," +
+					"site_name TEXT NOT NULL," +
+					"summary TEXT)");
+		myDatabase.execSQL("INSERT INTO Links (link_id,title,site_name,summary) SELECT link_id,title,site_name,summary FROM CustomLinks");
+		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,icon FROM CustomLinks", null);
+		while (cursor.moveToNext()) {
+			final int id = cursor.getInt(0);
+			final String url = cursor.getString(1);
+			myDatabase.execSQL("INSERT INTO LinkUrls (key,link_id,url) VALUES " +
+				"('icon'," + id + ",'" + url + "')");
+		}
+		cursor.close();
+		myDatabase.execSQL("DROP TABLE CustomLinks");
 	}
 }

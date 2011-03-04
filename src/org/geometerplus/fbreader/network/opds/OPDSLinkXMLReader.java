@@ -99,7 +99,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			final String summary = entry.Content;
 			final String language = entry.DCLanguage;
 
-			String icon = null; 
 			final HashMap<String,UrlInfo> infos = new HashMap<String,UrlInfo>();
 			final HashMap<String,NetworkCatalogItem.Accessibility> urlConditions =
 				new HashMap<String,NetworkCatalogItem.Accessibility>();
@@ -109,11 +108,12 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				final String rel = link.getRel();
 				if (rel == REL_IMAGE_THUMBNAIL || rel == REL_THUMBNAIL) {
 					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
-						icon = href;
+						infos.put(INetworkLink.URL_ICON, new UrlInfo(href));
 					}
 				} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || rel == REL_COVER) {
-					if (icon == null && (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG)) {
-						icon = href;
+					if (infos.get(INetworkLink.URL_ICON) == null &&
+						(type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG)) {
+						infos.put(INetworkLink.URL_ICON, new UrlInfo(href));
 					}
 				} else if (rel == null) {
 					if (type == MIME_APP_ATOM) {
@@ -154,7 +154,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				sslCertificate = null;
 			}
 
-			INetworkLink result = link(siteName, title, summary, icon, language, infos, urlConditions, sslCertificate);
+			INetworkLink result = link(siteName, title, summary, language, infos, urlConditions, sslCertificate);
 			if (result != null) {
 				myListener.onNewLink(result);
 			}
@@ -165,7 +165,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			String siteName,
 			String title,
 			String summary,
-			String icon,
 			String language,
 			Map<String,UrlInfo> infos,
 			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
@@ -179,7 +178,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				siteName,
 				title,
 				summary,
-				icon,
 				language,
 				infos,
 				myHasStableIdentifiers

@@ -27,7 +27,6 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	protected String mySiteName;
 	protected String myTitle;
 	protected String mySummary;
-	protected String myIcon;
 	protected final String myLanguage;
 	protected final TreeMap<String,UrlInfo> myInfos;
 
@@ -37,15 +36,13 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	 * @param siteName   name of the corresponding website. Must be not <code>null</code>.
 	 * @param title      title of the corresponding library item. Must be not <code>null</code>.
 	 * @param summary    description of the corresponding library item. Can be <code>null</code>.
-	 * @param icon       string contains link's icon data/url. Can be <code>null</code>.
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
 	 * @param infos      map contains URL infos with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
 	 */
-	public AbstractNetworkLink(String siteName, String title, String summary, String icon, String language, Map<String,UrlInfo> infos) {
+	public AbstractNetworkLink(String siteName, String title, String summary, String language, Map<String,UrlInfo> infos) {
 		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
-		myIcon = icon;
 		myLanguage = language != null ? language : "multi";
 		myInfos = new TreeMap<String,UrlInfo>(infos);
 	}
@@ -63,7 +60,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	}
 
 	public final String getIcon() {
-		return myIcon;
+		return getUrlInfo(URL_ICON).URL;
 	}
 
 	public final String getLanguage() {
@@ -89,7 +86,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 
 	@Override
 	public String toString() {
-		String icon = myIcon;
+		String icon = getIcon();
 		if (icon != null) {
 			if (icon.length() > 64) {
 				icon = icon.substring(0, 61) + "...";
@@ -118,7 +115,6 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		if (!mySiteName.equals(lnk.mySiteName)
 				|| !myTitle.equals(lnk.myTitle)
 				|| !ZLMiscUtil.equals(mySummary, lnk.mySummary)
-				|| !ZLMiscUtil.equals(myIcon, lnk.myIcon)
 				|| !ZLMiscUtil.mapsEquals(myInfos, lnk.myInfos)) {
 			return false;
 		}

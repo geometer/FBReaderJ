@@ -48,9 +48,9 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 
 	private final boolean myHasStableIdentifiers;
 
-	OPDSNetworkLink(String siteName, String title, String summary, String icon, String language,
+	OPDSNetworkLink(String siteName, String title, String summary, String language,
 			Map<String,UrlInfo> infos, boolean hasStableIdentifiers) {
-		super(siteName, title, summary, icon, language, infos);
+		super(siteName, title, summary, language, infos);
 		myHasStableIdentifiers = hasStableIdentifiers;
 		myBooksInBasketOption = new ZLStringListOption(siteName, "Basket", null);
 	}
@@ -127,7 +127,6 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 		if (url == null) {
 			return null;
 		}
-		System.err.println("URL = " + url);
 		try {
 			pattern = URLEncoder.encode(pattern, "utf-8");
 		} catch (UnsupportedEncodingException e) {

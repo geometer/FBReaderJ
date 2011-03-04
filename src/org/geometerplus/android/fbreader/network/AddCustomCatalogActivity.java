@@ -38,7 +38,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
+import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -245,8 +245,8 @@ public class AddCustomCatalogActivity extends Activity {
 		}
 		final HashMap<String,UrlInfo> infos = new HashMap<String,UrlInfo>();
 		infos.put(INetworkLink.URL_MAIN, new UrlInfo(textUrl));
-		myLink = OPDSLinkReader.createCustomLink(
-			ICustomNetworkLink.INVALID_ID, siteName, null, null, null, infos
+		myLink = new OPDSCustomLink(
+			ICustomNetworkLink.INVALID_ID, siteName, null, null, infos
 		);
 
 		final Runnable loadInfoRunnable = new Runnable() {
@@ -255,7 +255,7 @@ public class AddCustomCatalogActivity extends Activity {
 			public void run() {
 				try {
 					myError = null;
-					myLink.reloadInfo();
+					myLink.reloadInfo(false);
 				} catch (ZLNetworkException e) {
 					myError = e.getMessage();
 				}

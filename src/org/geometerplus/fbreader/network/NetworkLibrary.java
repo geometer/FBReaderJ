@@ -31,8 +31,8 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
-
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;
@@ -179,12 +179,12 @@ public class NetworkLibrary {
 			db.loadCustomLinks(
 				new NetworkDatabase.ICustomLinksHandler() {
 					public void handleCustomLinkData(int id, String siteName,
-							String title, String summary, String icon, Map<String,UrlInfo> infos) {
+							String title, String summary, Map<String,UrlInfo> infos) {
 						if (title != null &&
 							siteName != null &&
 							infos.get(INetworkLink.URL_MAIN) != null) {
-							final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(
-								id, siteName, title, summary, icon, infos
+							final ICustomNetworkLink link = new OPDSCustomLink(
+								id, siteName, title, summary, infos
 							);
 							addLinkInternal(link);
 						}

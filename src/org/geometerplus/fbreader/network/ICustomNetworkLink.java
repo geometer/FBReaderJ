@@ -32,13 +32,12 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void setSiteName(String name);
 	void setTitle(String title);
 	void setSummary(String summary);
-	void setIcon(String icon);
 
 	HashMap<String,UrlInfo> urlInfoMap();
 	void setUrl(String urlKey, String url);
 	void removeUrl(String urlKey);
 
-	void reloadInfo() throws ZLNetworkException;
+	void reloadInfo(boolean urlsOnly) throws ZLNetworkException;
 
 	// returns true if next methods have changed link's data:
 	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink
