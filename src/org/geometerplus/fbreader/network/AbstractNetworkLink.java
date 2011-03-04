@@ -59,10 +59,6 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return mySummary;
 	}
 
-	public final String getIcon() {
-		return getUrlInfo(URL_ICON).URL;
-	}
-
 	public final String getLanguage() {
 		return myLanguage;
 	}
@@ -86,7 +82,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 
 	@Override
 	public String toString() {
-		String icon = getIcon();
+		String icon = getUrlInfo(URL_ICON).URL;
 		if (icon != null) {
 			if (icon.length() > 64) {
 				icon = icon.substring(0, 61) + "...";

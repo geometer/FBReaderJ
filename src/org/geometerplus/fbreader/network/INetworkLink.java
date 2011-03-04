@@ -39,7 +39,6 @@ public interface INetworkLink {
 	String getSiteName();
 	String getTitle();
 	String getSummary();
-	String getIcon();
 
 	UrlInfo getUrlInfo(String urlKey);
 	Set<String> getUrlKeys();
