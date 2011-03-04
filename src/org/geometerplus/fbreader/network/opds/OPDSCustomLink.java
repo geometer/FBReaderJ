@@ -60,7 +60,6 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		myHasChanges = false;
 	}
 
-
 	public final void setIcon(String icon) {
 		myHasChanges = myHasChanges || !ZLMiscUtil.equals(myIcon, icon);
 		myIcon = icon;
