@@ -29,7 +29,7 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	protected String mySummary;
 	protected String myIcon;
 	protected final String myLanguage;
-	protected final TreeMap<String,URLInfo> myInfos;
+	protected final TreeMap<String,UrlInfo> myInfos;
 
 	/**
 	 * Creates new NetworkLink instance.
@@ -41,13 +41,13 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
 	 * @param infos      map contains URL infos with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
 	 */
-	public AbstractNetworkLink(String siteName, String title, String summary, String icon, String language, Map<String,URLInfo> infos) {
+	public AbstractNetworkLink(String siteName, String title, String summary, String icon, String language, Map<String,UrlInfo> infos) {
 		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
 		myIcon = icon;
 		myLanguage = language != null ? language : "multi";
-		myInfos = new TreeMap<String,URLInfo>(infos);
+		myInfos = new TreeMap<String,UrlInfo>(infos);
 	}
 
 	public final String getSiteName() {
@@ -70,9 +70,13 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		return myLanguage;
 	}
 
-	public final URLInfo getUrlInfo(String urlKey) {
-		final URLInfo info = myInfos.get(urlKey);
-		return info != null ? info : URLInfo.NULL;
+	public final HashMap<String,UrlInfo> urlInfoMap() {
+		return new HashMap(myInfos);
+	}
+
+	public final UrlInfo getUrlInfo(String urlKey) {
+		final UrlInfo info = myInfos.get(urlKey);
+		return info != null ? info : UrlInfo.NULL;
 	}
 
 	public final Set<String> getUrlKeys() {

@@ -49,7 +49,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	private final boolean myHasStableIdentifiers;
 
 	OPDSNetworkLink(String siteName, String title, String summary, String icon, String language,
-			Map<String,URLInfo> infos, boolean hasStableIdentifiers) {
+			Map<String,UrlInfo> infos, boolean hasStableIdentifiers) {
 		super(siteName, title, summary, icon, language, infos);
 		myHasStableIdentifiers = hasStableIdentifiers;
 		myBooksInBasketOption = new ZLStringListOption(siteName, "Basket", null);

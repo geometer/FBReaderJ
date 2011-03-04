@@ -19,26 +19,41 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.Map;
+import java.util.Date;
+import java.io.Serializable;
 
-public abstract class NetworkDatabase {
-	private static NetworkDatabase ourInstance;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
-	public static NetworkDatabase Instance() {
-		return ourInstance;
+public final class UrlInfo implements Serializable {
+	public static final UrlInfo NULL = new UrlInfo(null, null);
+
+	public final String URL;
+	public final Date Updated;
+
+	public UrlInfo(String url, Date updated) {
+		URL = url;
+		Updated = updated;
 	}
 
-	protected NetworkDatabase() {
-		ourInstance = this;
+	public UrlInfo(String url) {
+		this(url, new Date());
 	}
 
-	protected abstract void executeAsATransaction(Runnable actions);
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof UrlInfo)) {
+			return false;
+		}
 
-	public interface ICustomLinksHandler {
-		void handleCustomLinkData(int id, String siteName, String title, String summary, String icon, Map<String,UrlInfo> infos);
+		final UrlInfo info = (UrlInfo)o;
+		return ZLMiscUtil.equals(URL, info.URL) && ZLMiscUtil.equals(Updated, info.Updated);
 	}
 
-	protected abstract void loadCustomLinks(ICustomLinksHandler handler);
-	protected abstract void saveCustomLink(ICustomNetworkLink link);
-	protected abstract void deleteCustomLink(ICustomNetworkLink link);
+	@Override
+	public int hashCode() {
+		return ZLMiscUtil.hashCode(URL) + ZLMiscUtil.hashCode(Updated);
+	}
 }
