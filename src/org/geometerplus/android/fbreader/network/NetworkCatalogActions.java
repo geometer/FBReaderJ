@@ -40,11 +40,11 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
+import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.authentication.*;
 
 
 class NetworkCatalogActions extends NetworkTreeActions {
-
 	public static final int OPEN_CATALOG_ITEM_ID = 0;
 	public static final int OPEN_IN_BROWSER_ITEM_ID = 1;
 	public static final int RELOAD_ITEM_ID = 2;
@@ -55,6 +55,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	public static final int CUSTOM_CATALOG_EDIT = 7;
 	public static final int CUSTOM_CATALOG_REMOVE = 8;
+
+	public static final int BASKET_CLEAR = 9;
+	public static final int BASKET_BUY_ALL_BOOKS = 10;
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
@@ -153,6 +156,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		addOptionsItem(menu, SIGNUP_ITEM_ID, "signUp");
 		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
 		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount");
+		if (((NetworkCatalogTree)tree).Item instanceof BasketItem) {
+			addOptionsItem(menu, BASKET_CLEAR, "clearBasket");
+			addOptionsItem(menu, BASKET_BUY_ALL_BOOKS, "buyAllBooks");
+		}
 		return true;
 	}
 

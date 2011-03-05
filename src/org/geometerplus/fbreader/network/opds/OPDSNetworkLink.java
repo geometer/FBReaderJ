@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -43,16 +42,12 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
-	private boolean mySupportsBasket;
-	private final ZLStringListOption myBooksInBasketOption;
-
 	private final boolean myHasStableIdentifiers;
 
 	OPDSNetworkLink(String siteName, String title, String summary, String language,
 			Map<String,UrlInfo> infos, boolean hasStableIdentifiers) {
 		super(siteName, title, summary, language, infos);
 		myHasStableIdentifiers = hasStableIdentifiers;
-		myBooksInBasketOption = new ZLStringListOption(siteName, "Basket", null);
 	}
 
 	final void setRelationAliases(Map<RelationAlias, String> relationAliases) {
@@ -146,44 +141,6 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 
 	public NetworkAuthenticationManager authenticationManager() {
 		return myAuthenticationManager;
-	}
-
-	public final void setSupportsBasket() {
-		mySupportsBasket = true;
-	}
-
-	public final boolean supportsBasket() {
-		return mySupportsBasket;
-	}
-
-	public final void addToBasket(NetworkBookItem book) {
-		if (supportsBasket() && book.Id != null && !"".equals(book.Id)) {
-			List<String> ids = myBooksInBasketOption.getValue();
-			if (!ids.contains(book.Id)) {
-				ids = new ArrayList(ids);
-				ids.add(book.Id);
-				myBooksInBasketOption.setValue(ids);
-			}
-		}
-	}
-
-	public final void removeFromBasket(NetworkBookItem book) {
-		if (supportsBasket() && book.Id != null && !"".equals(book.Id)) {
-			List<String> ids = myBooksInBasketOption.getValue();
-			if (ids.contains(book.Id)) {
-				ids = new ArrayList(ids);
-				ids.remove(book.Id);
-				myBooksInBasketOption.setValue(ids);
-			}
-		}
-	}
-
-	public final boolean isBookInBasket(NetworkBookItem book) {
-		return myBooksInBasketOption.getValue().contains(book.Id);
-	}
-
-	public final List<String> booksInBasket() {
-		return myBooksInBasketOption.getValue();
 	}
 
 	public String rewriteUrl(String url, boolean isUrlExternal) {

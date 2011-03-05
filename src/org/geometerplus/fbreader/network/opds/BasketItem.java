@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.authentication.litres;
+package org.geometerplus.fbreader.network.opds;
 
 import java.util.Map;
 
@@ -28,10 +28,10 @@ import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
 
-public class LitResBasketItem extends OPDSCatalogItem {
-	public LitResBasketItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType, Accessibility accessibility) {
+public class BasketItem extends OPDSCatalogItem {
+	BasketItem(OPDSNetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType, Accessibility accessibility) {
 		super(link, title, summary, cover, urlByType, accessibility, CatalogType.BY_SERIES);
-		((OPDSNetworkLink)link).setSupportsBasket();
+		link.setSupportsBasket();
 	}
 
 	@Override

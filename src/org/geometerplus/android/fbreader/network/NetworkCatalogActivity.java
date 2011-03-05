@@ -69,15 +69,11 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		System.err.println("onCreateContextMenu 0");
 		if (menuInfo == null && myTree instanceof NetworkCatalogTree) {
-		System.err.println("onCreateContextMenu 1");
 			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
 			if (Util.isAccountRefillingSupported(this, link)) {
-		System.err.println("onCreateContextMenu 2");
 				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
 				if (actions != null) {
-		System.err.println("onCreateContextMenu 3");
 					actions.buildContextMenu(this, menu, link);
 					return;
 				}
