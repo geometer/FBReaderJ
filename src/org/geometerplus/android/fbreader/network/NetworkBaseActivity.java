@@ -40,7 +40,6 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 import org.geometerplus.fbreader.network.tree.SearchItemTree;
-import org.geometerplus.fbreader.network.tree.TopUpTree;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
@@ -113,10 +112,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		}
 		if (tree instanceof SearchItemTree) {
 			coverView.setImageResource(R.drawable.ic_list_searchresult);
-			return;
-		}
-		if (tree instanceof TopUpTree) {
-			coverView.setImageResource(R.drawable.ic_list_library_wallet);
 			return;
 		}
 		if (tree instanceof ZLAndroidTree) {

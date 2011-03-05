@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.TopUpItem;
@@ -51,6 +52,11 @@ public class TopUpTree extends NetworkTree {
 		} catch (ZLNetworkException e) {
 		}
 		return null;
+	}
+
+	@Override
+	protected ZLImage createCover() {
+		return createCover(Item);
 	}
 
 	@Override
