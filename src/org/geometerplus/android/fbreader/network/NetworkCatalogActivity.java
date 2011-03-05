@@ -28,8 +28,7 @@ import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -66,10 +65,39 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
 		setupTitle();
-		if (myTree instanceof NetworkCatalogTree &&
-			Util.isAccountRefillingSupported(this, ((NetworkCatalogTree)myTree).Item.Link)) {
-			//setDefaultTree(new RefillAccountTree((NetworkCatalogTree)myTree));
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+		System.err.println("onCreateContextMenu 0");
+		if (menuInfo == null && myTree instanceof NetworkCatalogTree) {
+		System.err.println("onCreateContextMenu 1");
+			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
+			if (Util.isAccountRefillingSupported(this, link)) {
+		System.err.println("onCreateContextMenu 2");
+				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
+				if (actions != null) {
+		System.err.println("onCreateContextMenu 3");
+					actions.buildContextMenu(this, menu, link);
+					return;
+				}
+			}
 		}
+		super.onCreateContextMenu(menu, view, menuInfo);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if ((item == null || item.getMenuInfo() == null) && myTree instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
+			if (Util.isAccountRefillingSupported(this, link)) {
+				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
+				if (actions != null && actions.runAction(this, link, item.getItemId())) {
+					return true;
+				}
+			}
+		}
+		return super.onContextItemSelected(item);
 	}
 
 	@Override

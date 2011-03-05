@@ -187,42 +187,31 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		NetworkTree tree = null;
+		System.err.println("onCreateContextMenu -1");
 		if (menuInfo != null) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			tree = (NetworkTree)getListAdapter().getItem(position);
-		} else {
-			tree = getDefaultTree();
-		}
-		if (tree != null) {
-			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-			if (actions != null) {
-				actions.buildContextMenu(this, menu, tree);
+			final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+			if (tree != null) {
+				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
+				if (actions != null) {
+					actions.buildContextMenu(this, menu, tree);
+					return;
+				}
 			}
 		}
-	}
-
-	private NetworkTree myDefaultTree;
-	protected NetworkTree getDefaultTree() {
-		return myDefaultTree;
-	}
-	protected void setDefaultTree(NetworkTree tree) {
-		myDefaultTree = tree;
+		super.onCreateContextMenu(menu, view, menuInfo);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		NetworkTree tree = null;
 		if (item != null && item.getMenuInfo() != null) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-			tree = (NetworkTree)getListAdapter().getItem(position);
-		} else {
-			tree = getDefaultTree();
-		}
-		if (tree != null) {
-			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-			if (actions != null && actions.runAction(this, tree, item.getItemId())) {
-				return true;
+			final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+			if (tree != null) {
+				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
+				if (actions != null && actions.runAction(this, tree, item.getItemId())) {
+					return true;
+				}
 			}
 		}
 		return super.onContextItemSelected(item);

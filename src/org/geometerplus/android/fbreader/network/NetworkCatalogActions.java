@@ -71,7 +71,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
-		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
 
@@ -244,7 +244,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut(activity, (NetworkCatalogTree)tree);
 				return true;
 			case REFILL_ACCOUNT_ITEM_ID:
-				//new RefillAccountActions().runStandalone(activity, ((RefillAccountTree)activity.getDefaultTree()).Link);
+				new RefillAccountActions().runStandalone(activity, ((NetworkCatalogTree)tree).Item.Link);
 				return true;
 			case CUSTOM_CATALOG_EDIT:
 			{
