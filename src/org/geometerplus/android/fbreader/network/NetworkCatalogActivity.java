@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.tree.FBTree;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
 	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
@@ -143,6 +144,11 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		void onModelChanged() {
 			notifyDataSetChanged();
+			for (FBTree child : myTree.subTrees()) {
+				if (child instanceof TopUpTree) {
+					child.invalidateChildren();
+				}
+			}
 		}
 	}
 
