@@ -244,7 +244,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut(activity, (NetworkCatalogTree)tree);
 				return true;
 			case REFILL_ACCOUNT_ITEM_ID:
-				new RefillAccountActions().runStandalone(activity, ((RefillAccountTree)activity.getDefaultTree()).Link);
+				//new RefillAccountActions().runStandalone(activity, ((RefillAccountTree)activity.getDefaultTree()).Link);
 				return true;
 			case CUSTOM_CATALOG_EDIT:
 			{

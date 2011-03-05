@@ -80,6 +80,8 @@ public class NetworkTreeFactory {
 			}
 
 			return new NetworkBookTree(parent, book, position, showAuthors);
+		} else if (item instanceof TopUpItem) {
+			return new TopUpTree(parent, (TopUpItem)item);
 		}
 		return null;
 	}

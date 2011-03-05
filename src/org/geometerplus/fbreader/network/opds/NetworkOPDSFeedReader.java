@@ -467,6 +467,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					urlMap,
 					opdsLink.getCondition(entry.Id.Uri)
 				);
+			} else if (REL_TOPUP.equals(litresRel)) {
+				return new TopUpItem(opdsLink, coverURL);
 			} else {
 				return null;
 			}

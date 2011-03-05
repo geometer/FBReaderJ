@@ -28,7 +28,6 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 
 public class NetworkCatalogTree extends NetworkTree {
-
 	public final NetworkCatalogItem Item;
 	public final ArrayList<NetworkLibraryItem> ChildrenItems = new ArrayList<NetworkLibraryItem>();
 
@@ -62,7 +61,6 @@ public class NetworkCatalogTree extends NetworkTree {
 		return createCover(Item);
 	}
 
-
 	public boolean isContentValid() {
 		if (myLoadedTime < 0) {
 			return false;
@@ -79,7 +77,6 @@ public class NetworkCatalogTree extends NetworkTree {
 			tree = tree.Parent;
 		}
 	}
-
 
 	public void updateVisibility() {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();

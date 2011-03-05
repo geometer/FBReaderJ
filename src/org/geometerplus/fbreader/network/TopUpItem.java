@@ -19,26 +19,15 @@
 
 package org.geometerplus.fbreader.network;
 
-public abstract class NetworkLibraryItem {
-	public final INetworkLink Link;
-	public final String Title;
-	public final String Summary;
-	public final String Cover;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-	//public org.geometerplus.fbreader.network.atom.ATOMEntry dbgEntry;
-
-	/**
-	 * Creates new NetworkLibraryItem instance.
-	 *
-	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
-	 * @param title      title of this library item. Must be not <code>null</code>.
-	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param cover      cover url. Can be <code>null</code>.
-	 */
-	protected NetworkLibraryItem(INetworkLink link, String title, String summary, String cover) {
-		Link = link;
-		Title = title;
-		Summary = summary;
-		Cover = cover;
+public class TopUpItem extends NetworkLibraryItem {
+	public TopUpItem(INetworkLink link, String cover) {
+		super(
+			link,
+			ZLResource.resource("networkView").getResource("refillTitle").getValue(),
+			ZLResource.resource("networkView").getResource("refillSummary").getValue(),
+			cover
+		);
 	}
 }

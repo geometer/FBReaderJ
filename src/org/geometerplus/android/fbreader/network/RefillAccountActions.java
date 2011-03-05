@@ -26,8 +26,8 @@ import android.view.ContextMenu;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.tree.TopUpTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-
 
 class RefillAccountActions extends NetworkTreeActions {
 	public static final int REFILL_VIA_SMS_ITEM_ID = 0;
@@ -36,12 +36,12 @@ class RefillAccountActions extends NetworkTreeActions {
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
-		return tree instanceof RefillAccountTree;
+		return tree instanceof TopUpTree;
 	}
 
 	@Override
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
-		buildContextMenu(activity, menu, ((RefillAccountTree)tree).Link);
+		buildContextMenu(activity, menu, ((TopUpTree)tree).Item.Link);
 	}
 
 	public void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
@@ -57,7 +57,7 @@ class RefillAccountActions extends NetworkTreeActions {
 
 	@Override
 	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
-		return getDefaultActionCode(activity, ((RefillAccountTree)tree).Link);
+		return getDefaultActionCode(activity, ((TopUpTree)tree).Item.Link);
 	}
 	private int getDefaultActionCode(Activity activity, INetworkLink link) {
 		final boolean sms = Util.isSmsAccountRefillingSupported(activity, link);
@@ -89,9 +89,10 @@ class RefillAccountActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
-		final INetworkLink link = ((RefillAccountTree)tree).Link;
+		final INetworkLink link = ((TopUpTree)tree).Item.Link;
 		return runAction(activity, link, actionCode);
 	}
+
 	public boolean runAction(Activity activity, INetworkLink link, int actionCode) {
 		Runnable refillRunnable = null;
 		switch (actionCode) {

@@ -67,7 +67,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		setupTitle();
 		if (myTree instanceof NetworkCatalogTree &&
 			Util.isAccountRefillingSupported(this, ((NetworkCatalogTree)myTree).Item.Link)) {
-			setDefaultTree(new RefillAccountTree((NetworkCatalogTree)myTree));
+			//setDefaultTree(new RefillAccountTree((NetworkCatalogTree)myTree));
 		}
 	}
 
@@ -121,43 +121,15 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private final class CatalogAdapter extends BaseAdapter {
-		private ArrayList<NetworkTree> mySpecialItems;
-
-		public CatalogAdapter() {
-			if (myTree instanceof NetworkCatalogRootTree) {
-				final NetworkCatalogRootTree rootTree = (NetworkCatalogRootTree)myTree;
-				mySpecialItems = new ArrayList<NetworkTree>();
-				if (Util.isAccountRefillingSupported(NetworkCatalogActivity.this, rootTree.Item.Link)) {
-					mySpecialItems.add(new RefillAccountTree(rootTree));
-				}
-				if (mySpecialItems.size() > 0) {
-					mySpecialItems.trimToSize();
-				} else {
-					mySpecialItems = null;
-				}
-			}
-		}
-
 		public final int getCount() {
-			return myTree.subTrees().size() +
-				((mySpecialItems != null && !myInProgress) ? mySpecialItems.size() : 0);
+			return myTree.subTrees().size();
 		}
 
 		public final NetworkTree getItem(int position) {
-			if (position < 0) {
+			if (position < 0 || position >= myTree.subTrees().size()) {
 				return null;
 			}
-			if (position < myTree.subTrees().size()) {
-				return (NetworkTree) myTree.subTrees().get(position);
-			}
-			if (myInProgress) {
-				return null;
-			}
-			position -= myTree.subTrees().size();
-			if (mySpecialItems != null && position < mySpecialItems.size()) {
-				return mySpecialItems.get(position);
-			}
-			return null;
+			return (NetworkTree)myTree.subTrees().get(position);
 		}
 
 		public final long getItemId(int position) {
@@ -171,11 +143,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		void onModelChanged() {
 			notifyDataSetChanged();
-			if (mySpecialItems != null) {
-				for (NetworkTree tree: mySpecialItems) {
-					tree.invalidateChildren(); // call to update secondString
-				}
-			}
 		}
 	}
 
