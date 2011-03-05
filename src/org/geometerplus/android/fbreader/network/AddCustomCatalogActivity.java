@@ -234,14 +234,10 @@ public class AddCustomCatalogActivity extends Activity {
 		}
 
 		setTextById(R.id.add_custom_catalog_url, textUrl);
-		String siteName = uri.getHost();
+		final String siteName = uri.getHost();
 		if (isEmptyString(siteName)) {
 			setErrorByKey("invalidUrl");
 			return;
-		}
-
-		if (siteName.startsWith("www.")) {
-			siteName = siteName.substring(4);
 		}
 		final HashMap<String,UrlInfo> infos = new HashMap<String,UrlInfo>();
 		infos.put(INetworkLink.URL_MAIN, new UrlInfo(textUrl));

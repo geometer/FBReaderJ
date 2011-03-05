@@ -39,8 +39,15 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 
 	private boolean myHasChanges;
 
+	private static String removeWWWPrefix(String siteName) {
+		if (siteName != null && siteName.startsWith("www.")) {
+			return siteName.substring(4);
+		}
+		return siteName;
+	}
+
 	public OPDSCustomLink(int id, String siteName, String title, String summary, Map<String,UrlInfo> infos) {
-		super(siteName, title, summary, null, infos, false);
+		super(removeWWWPrefix(siteName), title, summary, null, infos, false);
 		myId = id;
 	}
 

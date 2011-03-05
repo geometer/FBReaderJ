@@ -499,26 +499,4 @@ public class NetworkLibrary {
 		NetworkDatabase.Instance().deleteCustomLink(link);
 		invalidateChildren();
 	}
-
-	public boolean hasCustomLinkTitle(String title, INetworkLink exceptFor) {
-		synchronized (myLinks) {
-			for (INetworkLink link : myLinks) {
-				if (link != exceptFor && link.getTitle().equals(title)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public boolean hasCustomLinkSite(String siteName, INetworkLink exceptFor) {
-		synchronized (myLinks) {
-			for (INetworkLink link : myLinks) {
-				if (link != exceptFor && link.getSiteName().equals(siteName)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 }
