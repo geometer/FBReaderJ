@@ -123,6 +123,7 @@
 		<node name="series" value="系列:" />
 		<node name="indexInSeries" value="系列序号:" />
 		<node name="tags" value="标签:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="书籍信息" />

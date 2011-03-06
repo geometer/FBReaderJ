@@ -126,6 +126,7 @@
 		<node name="series" value="Series:" />
 		<node name="indexInSeries" value="Index in series:" />
 		<node name="tags" value="Tags:" />
+		<node name="catalog" value="Catalog:" />
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Book Info" />
