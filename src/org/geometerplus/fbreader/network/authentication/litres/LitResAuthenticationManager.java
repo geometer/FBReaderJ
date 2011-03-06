@@ -39,7 +39,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	private String myInitializedDataSid;
 	private String myAccount;
-	private final HashMap<String, NetworkLibraryItem> myPurchasedBooks = new HashMap<String, NetworkLibraryItem>();
+	private final HashMap<String, NetworkItem> myPurchasedBooks = new HashMap<String, NetworkItem>();
 
 	public LitResAuthenticationManager(INetworkLink link, String sslCertificate) {
 		super(link, sslCertificate);
@@ -89,7 +89,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			sid = mySidOption.getValue();
 		}
 
-		String url = Link.getLink(INetworkLink.URL_SIGN_IN);
+		String url = Link.getUrlInfo(INetworkLink.URL_SIGN_IN).URL;
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -119,7 +119,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void authorise(String password) throws ZLNetworkException {
-		String url = Link.getLink(INetworkLink.URL_SIGN_IN);
+		String url = Link.getUrlInfo(INetworkLink.URL_SIGN_IN).URL;
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -241,7 +241,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		final String url = Link.getLink(INetworkLink.URL_REFILL_ACCOUNT);
+		final String url = Link.getUrlInfo(INetworkLink.URL_REFILL_ACCOUNT).URL;
 		if (url == null) {
 			return null;
 		}
@@ -352,7 +352,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
 			SSLCertificate,
-			new LitResXMLReader(Link, new LinkedList<NetworkLibraryItem>())
+			new LitResXMLReader(Link, new LinkedList<NetworkItem>())
 		);
 	}
 
@@ -363,7 +363,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private void loadPurchasedBooksOnSuccess(LitResNetworkRequest purchasedBooksRequest) {
 		LitResXMLReader reader = (LitResXMLReader)purchasedBooksRequest.Reader;
 		myPurchasedBooks.clear();
-		for (NetworkLibraryItem item: reader.Books) {
+		for (NetworkItem item: reader.Books) {
 			if (item instanceof NetworkBookItem) {
 				NetworkBookItem book = (NetworkBookItem)item;
 				myPurchasedBooks.put(book.Id, book);
@@ -401,7 +401,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void recoverPassword(String email) throws ZLNetworkException {
-		String url = Link.getLink(INetworkLink.URL_RECOVER_PASSWORD);
+		String url = Link.getUrlInfo(INetworkLink.URL_RECOVER_PASSWORD).URL;
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}

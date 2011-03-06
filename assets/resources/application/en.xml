@@ -46,6 +46,18 @@
 		<node name="removeFromFavorites" value="Remove from favorites"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="By author">
+			<node name="summary" value="Books sorted by author"/>
+		</node>
+		<node name="byTitle" value="By title">
+			<node name="summary" value="Books sorted by title"/>
+		</node>
+		<node name="byDate" value="By date">
+			<node name="summary" value="Books sorted by date of purchasing"/>
+		</node>
+		<node name="bySeries" value="By series">
+			<node name="summary" value="Books sorted by series"/>
+		</node>
 		<node name="openCatalog" value="Open catalog"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
@@ -56,6 +68,8 @@
 		<node name="deleteDemo" value="Delete sample"/>
 		<node name="downloadDemo" value="Download sample"/>
 		<node name="buy" value="Buy (%s)"/>
+		<node name="addToBasket" value="Add to basket"/>
+		<node name="removeFromBasket" value="Remove from basket"/>
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="stopLoading" value="Stop loading" />
 		<node name="stopSearching" value="Stop searching" />
@@ -66,6 +80,8 @@
 		<node name="refillViaSms" value="Text messages"/>
 		<node name="refillViaBrowser" value="Open page in browser"/>
 		<node name="refillSummary" value="Currently: %s"/>
+		<node name="basket" value="Basket"/>
+		<node name="basketSummary" value="Books I want to buy"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />
@@ -97,6 +113,8 @@
 			<node name="addCustomCatalog" value="Add catalog"/>
 			<node name="refreshCatalogsList" value="Refresh catalogs"/>
 			<node name="languages" value="Language filter"/>
+			<node name="clearBasket" value="Clear basket"/>
+			<node name="buyAllBooks" value="Buy all books"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -108,6 +126,7 @@
 		<node name="series" value="Series:" />
 		<node name="indexInSeries" value="Index in series:" />
 		<node name="tags" value="Tags:" />
+		<node name="catalog" value="Catalog:" />
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Book Info" />
@@ -559,10 +578,6 @@
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" />
 			<node name="cacheDirectoryError" value="Unable to create cache directory" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Information" />
-			<node name="message" value="Catalog is empty" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Search results" />
 			<node name="message" value="There are no suitable books found" />
@@ -610,6 +625,8 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
+		<node name="emptyCatalog" value="Catalog is empty, sorry" />
+		<node name="emptyBasket" value="Your basket is empty, sorry" />
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

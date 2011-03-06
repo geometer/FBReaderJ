@@ -24,6 +24,8 @@ interface OPDSConstants {
 	// Feed level
 	String REL_BOOKSHELF = "http://data.fbreader.org/rel/bookshelf";
 	String REL_RECOMMENDATIONS = "http://data.fbreader.org/rel/recommendations";
+	String REL_BASKET = "http://data.fbreader.org/rel/basket";
+	String REL_TOPUP = "http://data.fbreader.org/rel/topup";
 	//String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
 
 	// Entry level / catalog types

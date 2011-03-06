@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.Set;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
@@ -27,9 +27,9 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 
 public interface INetworkLink {
-
 	String URL_MAIN = "main";
 	String URL_SEARCH = "search";
+	String URL_ICON = "icon";
 	String URL_SIGN_IN = "signIn";
 	String URL_SIGN_OUT = "signOut";
 	String URL_SIGN_UP = "signUp";
@@ -39,20 +39,28 @@ public interface INetworkLink {
 	String getSiteName();
 	String getTitle();
 	String getSummary();
-	String getIcon();
-	String getLink(String urlKey);
+
+	UrlInfo getUrlInfo(String urlKey);
+	Set<String> getUrlKeys();
+
+	/**
+	 * @return 2-letters language code or special token "multi"
+	 */
 	String getLanguage();
 
-	Set<String> getLinkKeys();
-
-	NetworkOperationData createOperationData(INetworkLink link,
-			NetworkOperationData.OnNewItemListener listener);
+	/**
+	 * @param listener Network operation listener
+	 * @return instance, which represents the state of the network operation.
+	 */
+	NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener);
 
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);
 
 	NetworkCatalogItem libraryItem();
 	NetworkAuthenticationManager authenticationManager();
+
+	Basket basket();
 
 	String rewriteUrl(String url, boolean isUrlExternal);
 }

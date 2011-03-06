@@ -172,7 +172,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 	private int myState = START;
 
-	private final StringBuffer myBuffer = new StringBuffer();
+	private final StringBuilder myBuffer = new StringBuilder();
 	private HtmlToString myHtmlToString = new HtmlToString();
 
 	private boolean myFeedMetadataProcessed;

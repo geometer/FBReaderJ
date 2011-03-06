@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="ชื่อผู้แต่ง ">
+			<node name="summary" value="เรียงตามชื่อผู้แต่ง"/>
+		</node>
+		<node name="byTitle" value="ชื่อหนังสือ">
+			<node name="summary" value="เรียงตามชื่อหนังสือ"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="เปิดแคตตาล็อก"/>
 		<node name="showResults" value="แสดงผลการค้นหา"/>
 		<node name="showBooks" value="แสดงหนังสือ"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="ลบหนังสือตัวอย่าง"/>
 		<node name="downloadDemo" value="ดาวน์โหลดหนังสือตัวอย่าง"/>
 		<node name="buy" value="ซื้อ (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="เปิดในเว็บบราวเซอร์"/>
 		<node name="stopLoading" value="หยุดการโหลด"/>
 		<node name="stopSearching" value="หยุดการค้นหา"/>
@@ -109,6 +123,7 @@
 		<node name="series" value="ชุดหนังสือ:"/>
 		<node name="indexInSeries" value="ดัชนีชุดหนังสือ:"/>
 		<node name="tags" value="แท็ก:"/>
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="ข้อมูลหนังสือ"/>
@@ -237,12 +252,12 @@
 					<node name="summaryOff" value="ไม่หมุนหน้าจอเมื่อหมุนตัวเครื่อง"/>
 				</node>
 				<node name="showStatusBar" value="แสดงแถบสถานะ">
-					<node name="summaryOn" value="แสดงแถบสถานะเมื่อแสดงเมนู"/>
-					<node name="summaryOff" value="ซ่อนแถบสถานะเมื่อแสดง"/>
+					<node name="summaryOn" value="แสดงแถบสถานะขณะอ่านหนังสือ"/>
+					<node name="summaryOff" value="ซ่อนแถบสถานะขณะอ่านหนังสือ"/>
 				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
-					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+				<node name="showStatusBarWhenMenuIsActive" value="แสดงแถบสถานะเมื่อแสดงเมนู">
+					<node name="summaryOn" value="แสดงแถบสถานะเมื่อแสดงเมนู" />
+					<node name="summaryOff" value="ไม่แสดงแถบสถานะเมื่อแสดงเมนู" />
 				</node>
 			</node>
 			<node name="text" value="ข้อความ">
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" value="ข้อมูลที่ต้องการไม่ได้ระบุในแคตตาล็อก"/>
 			<node name="cacheDirectoryError" value="ไม่สามารถสร้างแคชสำหรับไดเรคทอรี"/>
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="ข้อมูล"/>
-			<node name="message" value="แคตตาล็อกไม่มีข้อมูล"/>
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="ผลการค้นหา"/>
 			<node name="message" value="ไม่พบหนังสือที่ต้องการค้นหา"/>
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="ขออภัย, พจนานุกรมไม่ได้รับการติดตั้ง"/>
 		<node name="permissionDenied" value="ขออภัย, ไม่ได้รับการอนุญาต"/>
 		<node name="noFavorites" value="ขออภัย, ไม่มีข้อมูลในรายการโปรดของคุณ"/>
+		<node name="emptyCatalog" value="แคตตาล็อกไม่มีข้อมูล"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="เว็บเบราว์เซอร์"/>
