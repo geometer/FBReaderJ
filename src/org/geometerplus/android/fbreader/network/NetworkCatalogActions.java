@@ -69,7 +69,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (tree instanceof NetworkCatalogRootTree) {
 			return tree.getName();
 		}
-		return tree.getName() + " - " + ((NetworkCatalogTree) tree).Item.Link.getSiteName();
+		return tree.getName() + " - " + ((NetworkCatalogTree)tree).Item.Link.getSiteName();
 	}
 
 	@Override
@@ -127,7 +127,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
-		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		if (item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null) {
 			return OPEN_CATALOG_ITEM_ID;
@@ -166,7 +166,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
-		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 
 		final boolean isLoading =
@@ -203,15 +203,14 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		return true;
 	}
 
-	private boolean consumeByVisibility(final NetworkBaseActivity activity, final NetworkTree tree, final int actionCode) {
-		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
-		switch (catalogTree.Item.getVisibility()) {
+	private boolean consumeByVisibility(final NetworkBaseActivity activity, final NetworkCatalogTree tree, final int actionCode) {
+		switch (tree.Item.getVisibility()) {
 			case B3_TRUE:
 				return false;
 			case B3_UNDEFINED:
-				AuthenticationDialog.show(activity, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
+				AuthenticationDialog.show(activity, tree.Item.Link, new Runnable() {
 					public void run() {
-						if (catalogTree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
+						if (tree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
 							return;
 						}
 						if (actionCode != SIGNIN_ITEM_ID) {
@@ -226,10 +225,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
-		if (consumeByVisibility(activity, tree, actionCode)) {
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
+		if (consumeByVisibility(activity, catalogTree, actionCode)) {
 			return true;
 		}
-		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		switch (actionCode) {
 			case OPEN_CATALOG_ITEM_ID:
 			{
