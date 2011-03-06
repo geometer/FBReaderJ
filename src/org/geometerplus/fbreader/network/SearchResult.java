@@ -23,13 +23,12 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class SearchResult {
-
 	public final String Summary;
-	public final LinkedHashMap<NetworkBookItem.AuthorData, LinkedList<NetworkBookItem>> BooksMap;
+	public final LinkedHashMap<NetworkBookItem.AuthorData, LinkedList<NetworkBookItem>> BooksMap =
+		new LinkedHashMap<NetworkBookItem.AuthorData, LinkedList<NetworkBookItem>>();
 
 	public SearchResult(String summary) {
 		Summary = summary;
-		BooksMap = new LinkedHashMap<NetworkBookItem.AuthorData, LinkedList<NetworkBookItem>>();
 	}
 
 	public void addBook(NetworkBookItem book) {
@@ -43,7 +42,7 @@ public class SearchResult {
 		}
 	}
 
-	public boolean empty() {
+	public boolean isEmpty() {
 		return BooksMap.size() == 0;
 	}
 }

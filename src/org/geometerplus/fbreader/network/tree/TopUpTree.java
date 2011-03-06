@@ -17,47 +17,36 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkLibraryItem;
+import org.geometerplus.fbreader.network.TopUpItem;
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-import org.geometerplus.zlibrary.ui.android.R;
+public class TopUpTree extends NetworkTree {
+	public final TopUpItem Item;
 
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
-
-class RefillAccountTree extends NetworkTree implements ZLAndroidTree {
-	public final INetworkLink Link;
-
-	public RefillAccountTree(NetworkCatalogTree parentTree) {
-		super(parentTree.Level + 1);
-		Link = parentTree.Item.Link;
-	}
-
-	public RefillAccountTree(INetworkLink link) {
-		super(1);
-		Link = link;
+	TopUpTree(NetworkCatalogTree parentTree, TopUpItem item) {
+		super(parentTree);
+		Item = item;
 	}
 
 	@Override
 	public String getName() {
-		return ZLResource.resource("networkView").getResource("refillTitle").getValue();
+		return Item.Title;
 	}
 
 	@Override
 	public String getSummary() {
-		final NetworkAuthenticationManager mgr = Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = Item.Link.authenticationManager();
 		try {
 			if (mgr.isAuthorised(false)) {
 				final String account = mgr.currentAccount();
 				if (account != null) {
-					return ZLResource.resource("networkView").getResource("refillSummary").getValue().replace("%s", account);
+					return Item.Summary.replace("%s", account);
 				}
 			}
 		} catch (ZLNetworkException e) {
@@ -66,11 +55,17 @@ class RefillAccountTree extends NetworkTree implements ZLAndroidTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
-		return null;
+	protected ZLImage createCover() {
+		return createCover(Item);
 	}
 
-	public int getCoverResourceId() {
-		return R.drawable.ic_list_library_wallet;
+	@Override
+	public TopUpItem getHoldedItem() {
+		return Item;
+	}
+
+	@Override
+	protected String getStringId() {
+		return "@TopUp Account";
 	}
 }

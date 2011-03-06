@@ -25,6 +25,7 @@ import android.os.Message;
 import android.app.Service;
 import android.content.Intent;
 
+import org.geometerplus.fbreader.network.NetworkTree;
 
 public class ItemsLoadingService extends Service {
 
@@ -53,7 +54,7 @@ public class ItemsLoadingService extends Service {
 		super.onStart(intent, startId);
 		doStart();
 
-		final String key = intent.getStringExtra(ITEMS_LOADING_RUNNABLE_KEY);
+		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(ITEMS_LOADING_RUNNABLE_KEY);
 		if (key == null) {
 			doStop();
 			return;

@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Auteurs">
+			<node name="summary" value="Boeken gesorteerd op auteur"/>
+		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Open catalogus"/>
 		<node name="showResults" value="Toon resulten"/>
 		<node name="showBooks" value="Toon boeken"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="Verwijder voorbeeld"/>
 		<node name="downloadDemo" value="Download voorbeeld"/>
 		<node name="buy" value="Koop (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Openen in de browser" />
 		<node name="stopLoading" value="Stop loading" toBeTranslated="true" />
 		<node name="stopSearching" value="Stop searching" toBeTranslated="true" />
@@ -109,6 +123,7 @@
 		<node name="series" value="Serie:" />
 		<node name="indexInSeries" value="Nummer in serie:" />
 		<node name="tags" value="Trefwoorden:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Boekinformatie" />
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true" />
 			<node name="cacheDirectoryError" value="Maken van de cache-directory is mislukt" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Informatie" />
-			<node name="message" value="Catalogus is leeg" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Zoekresultaten" />
 			<node name="message" value="Er zijn geen geschikte boeken gevonden" />
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="Woordenboek is niet geïnstalleerd"/>
 		<node name="permissionDenied" value="Toegang geweigerd"/>
 		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
+		<node name="emptyCatalog" value="Catalogus is leeg"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

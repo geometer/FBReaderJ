@@ -29,7 +29,7 @@ import android.os.Message;
 import android.os.Handler;
 
 import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkLibraryItem;
+import org.geometerplus.fbreader.network.NetworkItem;
 
 
 abstract class ItemsLoadingHandler extends Handler {
@@ -37,20 +37,20 @@ abstract class ItemsLoadingHandler extends Handler {
 	private static final int WHAT_UPDATE_ITEMS = 0;
 	private static final int WHAT_FINISHED = 1;
 
-	private final LinkedList<NetworkLibraryItem> myItems = new LinkedList<NetworkLibraryItem>();
-	private final HashMap<INetworkLink, LinkedList<NetworkLibraryItem>> myUncommitedItems = new HashMap<INetworkLink, LinkedList<NetworkLibraryItem>>();
+	private final LinkedList<NetworkItem> myItems = new LinkedList<NetworkItem>();
+	private final HashMap<INetworkLink, LinkedList<NetworkItem>> myUncommitedItems = new HashMap<INetworkLink, LinkedList<NetworkItem>>();
 	private final Object myItemsMonitor = new Object();
 
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
 
 
-	public final void addItem(INetworkLink link, NetworkLibraryItem item) {
+	public final void addItem(INetworkLink link, NetworkItem item) {
 		synchronized (myItemsMonitor) {
 			myItems.add(item);
-			LinkedList<NetworkLibraryItem> uncommited = myUncommitedItems.get(link);
+			LinkedList<NetworkItem> uncommited = myUncommitedItems.get(link);
 			if (uncommited == null) {
-				uncommited = new LinkedList<NetworkLibraryItem>();
+				uncommited = new LinkedList<NetworkItem>();
 				myUncommitedItems.put(link, uncommited);
 			}
 			uncommited.add(item);
@@ -59,7 +59,7 @@ abstract class ItemsLoadingHandler extends Handler {
 
 	public final void commitItems(INetworkLink link) {
 		synchronized (myItemsMonitor) {
-			LinkedList<NetworkLibraryItem> uncommited = myUncommitedItems.get(link);
+			LinkedList<NetworkItem> uncommited = myUncommitedItems.get(link);
 			if (uncommited != null) {
 				uncommited.clear();
 			}
@@ -98,9 +98,9 @@ abstract class ItemsLoadingHandler extends Handler {
 	}
 
 	private final void doProcessFinish(String errorMessage, boolean interrupted) {
-		HashSet<NetworkLibraryItem> uncommitedItems = new HashSet<NetworkLibraryItem>();
+		HashSet<NetworkItem> uncommitedItems = new HashSet<NetworkItem>();
 		synchronized (myUncommitedItems) {
-			for (LinkedList<NetworkLibraryItem> items: myUncommitedItems.values()) {
+			for (LinkedList<NetworkItem> items: myUncommitedItems.values()) {
 				uncommitedItems.addAll(items);
 			}
 		}
@@ -124,9 +124,9 @@ abstract class ItemsLoadingHandler extends Handler {
 
 
 	// callbacks
-	public abstract void onUpdateItems(List<NetworkLibraryItem> items);
+	public abstract void onUpdateItems(List<NetworkItem> items);
 	public abstract void afterUpdateItems();
-	public abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkLibraryItem> uncommitedItems);
+	public abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems);
 
 
 	@Override

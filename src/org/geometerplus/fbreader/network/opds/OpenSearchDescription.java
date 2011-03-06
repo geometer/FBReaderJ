@@ -23,22 +23,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class OpenSearchDescription {
-
 	public static OpenSearchDescription createDefault(String template) {
-		return new OpenSearchDescription(template, 20, -1, -1);
+		return new OpenSearchDescription(template, -1, -1);
 	}
 
 	public final String Template;
 	public final int IndexOffset;
 	public final int PageOffset;
 
-	public final int ItemsPerPage;
+	public final int ItemsPerPage = 20;
 
-	public OpenSearchDescription(String template, int itemsPerPage, int indexOffset, int pageOffset) {
+	OpenSearchDescription(String template, int indexOffset, int pageOffset) {
 		Template = template;
 		IndexOffset = indexOffset;
 		PageOffset = pageOffset;
-		ItemsPerPage = itemsPerPage;
 	}
 
 	public boolean isValid() {
@@ -62,13 +60,7 @@ class OpenSearchDescription {
 			if (name == "searchTerms") {
 				m.appendReplacement(query, searchTerms);
 			} else if (name == "count") {
-				if (ItemsPerPage > 0) {
-					m.appendReplacement(query, String.valueOf(ItemsPerPage));
-				} else if (optional) {
-					m.appendReplacement(query, "");
-				} else {
-					return null;
-				}
+				m.appendReplacement(query, String.valueOf(ItemsPerPage));
 			} else if (optional) {
 				m.appendReplacement(query, "");
 			} else if (name == "startIndex") {

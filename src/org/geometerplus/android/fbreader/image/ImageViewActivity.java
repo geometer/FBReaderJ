@@ -53,7 +53,7 @@ public class ImageViewActivity extends Activity {
 		setContentView(new ImageView());
 
 		final Uri uri = getIntent().getData();
-		if ("imagefile".equals(uri.getScheme())) {
+		if (ZLFileImage.SCHEME.equals(uri.getScheme())) {
 			try {
 				final String[] data = uri.getPath().split("\000");
 				final ZLFileImage image = new ZLFileImage(

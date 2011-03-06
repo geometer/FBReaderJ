@@ -30,7 +30,6 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.ContextMenu;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -41,11 +40,11 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
+import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.authentication.*;
 
 
 class NetworkCatalogActions extends NetworkTreeActions {
-
 	public static final int OPEN_CATALOG_ITEM_ID = 0;
 	public static final int OPEN_IN_BROWSER_ITEM_ID = 1;
 	public static final int RELOAD_ITEM_ID = 2;
@@ -56,6 +55,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	public static final int CUSTOM_CATALOG_EDIT = 7;
 	public static final int CUSTOM_CATALOG_REMOVE = 8;
+
+	public static final int BASKET_CLEAR = 9;
+	public static final int BASKET_BUY_ALL_BOOKS = 10;
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
@@ -72,14 +74,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
-		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		menu.setHeaderTitle(tree.getName());
 
 		boolean hasItems = false;
 
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		if (catalogUrl != null) {
+		if (catalogUrl != null &&
+			(!(item instanceof BasketItem) || item.Link.basket().bookIds().size() > 0)) {
 			addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
 			hasItems = true;
 		}
@@ -154,6 +157,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		addOptionsItem(menu, SIGNUP_ITEM_ID, "signUp");
 		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
 		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount");
+		if (((NetworkCatalogTree)tree).Item instanceof BasketItem) {
+			addOptionsItem(menu, BASKET_CLEAR, "clearBasket");
+			addOptionsItem(menu, BASKET_BUY_ALL_BOOKS, "buyAllBooks");
+		}
 		return true;
 	}
 
@@ -162,11 +169,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree) tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 
-		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		final boolean isLoading = (catalogUrl != null) ?
-			NetworkView.Instance().containsItemsLoadingRunnable(catalogUrl) : false;
+		final boolean isLoading =
+			NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey());
 
-		prepareOptionsItem(menu, RELOAD_ITEM_ID, catalogUrl != null && !isLoading);
+		prepareOptionsItem(menu, RELOAD_ITEM_ID,
+				item.URLByType.get(NetworkCatalogItem.URL_CATALOG) != null && !isLoading);
 
 		boolean signIn = false;
 		boolean signOut = false;
@@ -202,7 +209,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case B3_TRUE:
 				return false;
 			case B3_UNDEFINED:
-				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
+				AuthenticationDialog.show(activity, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
 					public void run() {
 						if (catalogTree.Item.getVisibility() != ZLBoolean3.B3_TRUE) {
 							return;
@@ -222,50 +229,56 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		if (consumeByVisibility(activity, tree, actionCode)) {
 			return true;
 		}
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		switch (actionCode) {
 			case OPEN_CATALOG_ITEM_ID:
-				doExpandCatalog(activity, (NetworkCatalogTree)tree);
-				return true;
-			case OPEN_IN_BROWSER_ITEM_ID:
-				Util.openInBrowser(
-					activity,
-					((NetworkCatalogTree)tree).Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE)
-				);
-				return true;
-			case RELOAD_ITEM_ID:
-				doReloadCatalog(activity, (NetworkCatalogTree)tree);
-				return true;
-			case SIGNIN_ITEM_ID:
-				NetworkDialog.show(activity, NetworkDialog.DIALOG_AUTHENTICATION, ((NetworkCatalogTree)tree).Item.Link, null);
-				return true;
-			case SIGNUP_ITEM_ID:
-				Util.runRegistrationDialog(activity, ((NetworkCatalogTree)tree).Item.Link);
-				return true;
-			case SIGNOUT_ITEM_ID:
-				doSignOut(activity, (NetworkCatalogTree)tree);
-				return true;
-			case REFILL_ACCOUNT_ITEM_ID:
-				new RefillAccountActions().runStandalone(activity, ((RefillAccountTree)activity.getDefaultTree()).Link);
-				return true;
-			case CUSTOM_CATALOG_EDIT:
 			{
-				final ICustomNetworkLink link =
-					(ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link;
-				final String textUrl = link.getLink(INetworkLink.URL_MAIN);
-				if (textUrl != null) {
-					activity.startActivity(
-						new Intent(activity, AddCustomCatalogActivity.class)
-							.setData(Uri.parse(textUrl))
-							.putExtra(NetworkLibraryActivity.ADD_CATALOG_TITLE_KEY, link.getTitle())
-							.putExtra(NetworkLibraryActivity.ADD_CATALOG_SUMMARY_KEY, link.getSummary())
-							.putExtra(NetworkLibraryActivity.ADD_CATALOG_ICON_KEY, link.getIcon())
-							.putExtra(NetworkLibraryActivity.ADD_CATALOG_ID_KEY, link.getId())
-					);
+				final NetworkCatalogItem item = catalogTree.Item;
+				if (item instanceof BasketItem && item.Link.basket().bookIds().size() == 0) {
+					UIUtil.showErrorMessage(activity, "emptyBasket");
+				} else {
+					doExpandCatalog(activity, catalogTree);
 				}
 				return true;
 			}
+			case OPEN_IN_BROWSER_ITEM_ID:
+				Util.openInBrowser(
+					activity,
+					catalogTree.Item.URLByType.get(NetworkCatalogItem.URL_HTML_PAGE)
+				);
+				return true;
+			case RELOAD_ITEM_ID:
+				doReloadCatalog(activity, catalogTree);
+				return true;
+			case SIGNIN_ITEM_ID:
+				AuthenticationDialog.show(activity, catalogTree.Item.Link, null);
+				return true;
+			case SIGNUP_ITEM_ID:
+				Util.runRegistrationDialog(activity, catalogTree.Item.Link);
+				return true;
+			case SIGNOUT_ITEM_ID:
+				doSignOut(activity, catalogTree);
+				return true;
+			case REFILL_ACCOUNT_ITEM_ID:
+				new RefillAccountActions().runStandalone(activity, catalogTree.Item.Link);
+				return true;
+			case CUSTOM_CATALOG_EDIT:
+			{
+				final Intent intent = new Intent(activity, AddCustomCatalogActivity.class);
+				NetworkLibraryActivity.addLinkToIntent(
+					intent,
+					(ICustomNetworkLink)catalogTree.Item.Link
+				);
+				activity.startActivity(intent);
+				return true;
+			}
 			case CUSTOM_CATALOG_REMOVE:
-				removeCustomLink((ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link);
+				removeCustomLink((ICustomNetworkLink)catalogTree.Item.Link);
+				return true;
+			case BASKET_CLEAR:
+				catalogTree.Item.Link.basket().clear();
+				return true;
+			case BASKET_BUY_ALL_BOOKS:
 				return true;
 		}
 		return false;
@@ -273,18 +286,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 
 	private static class ExpandCatalogHandler extends ItemsLoadingHandler {
-
-		private final String myKey;
+		private final NetworkTree.Key myKey;
 		private final NetworkCatalogTree myTree;
 
-		ExpandCatalogHandler(NetworkCatalogTree tree, String key) {
+		ExpandCatalogHandler(NetworkCatalogTree tree, NetworkTree.Key key) {
 			myTree = tree;
 			myKey = key;
 		}
 
 		@Override
-		public void onUpdateItems(List<NetworkLibraryItem> items) {
-			for (NetworkLibraryItem item: items) {
+		public void onUpdateItems(List<NetworkItem> items) {
+			for (NetworkItem item: items) {
 				myTree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(myTree, item);
 			}
@@ -299,7 +311,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		@Override
 		public void onFinish(String errorMessage, boolean interrupted,
-				Set<NetworkLibraryItem> uncommitedItems) {
+				Set<NetworkItem> uncommitedItems) {
 			if (interrupted &&
 					(!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
 				myTree.ChildrenItems.clear();
@@ -320,30 +332,18 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			ZLResource boxResource = null;
+			if (!NetworkView.Instance().isInitialized()) {
+				return;
+			}
+			final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(myKey);
+			if (activity == null) {
+				return;
+			}
 			String msg = null;
 			if (errorMessage != null) {
-				boxResource = dialogResource.getResource("networkError");
-				msg = errorMessage;
+				UIUtil.showErrorMessageText(activity, errorMessage);
 			} else if (childrenEmpty) {
-				// TODO: make ListView's empty view instead
-				boxResource = dialogResource.getResource("emptyCatalogBox");
-				msg = boxResource.getResource("message").getValue();
-			}
-			if (msg != null) {
-				if (NetworkView.Instance().isInitialized()) {
-					final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(myKey);
-					if (activity != null) {
-						final ZLResource buttonResource = dialogResource.getResource("button");
-						new AlertDialog.Builder(activity)
-							.setTitle(boxResource.getResource("title").getValue())
-							.setMessage(msg)
-							.setIcon(0)
-							.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-							.create().show();
-					}
-				}
+				UIUtil.showErrorMessage(activity, "emptyCatalog");
 			}
 		}
 	}
@@ -401,12 +401,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	public void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		if (url == null) {
-			throw new RuntimeException("That's impossible!!!");
-		}
-		NetworkView.Instance().tryResumeLoading(activity, tree, url, new Runnable() {
+	private void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
+		final NetworkTree.Key key = tree.getUniqueKey();
+		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
 				if (tree.hasChildren()) {
@@ -414,7 +411,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						if (tree.Item.supportsResumeLoading()) {
 							resumeNotLoad = true;
 						} else {
-							NetworkView.Instance().openTree(activity, tree, url);
+							NetworkView.Instance().openTree(activity, tree);
 							return;
 						}
 					} else {
@@ -424,15 +421,25 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					}
 				}
 
-				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, url);
+				/* FIXME: if catalog's loading will be very fast
+				 * then it is possible that loading message is lost
+				 * (see ExpandCatalogHandler.afterUpdateCatalog method).
+				 * 
+				 * For example, this can be fixed via adding method
+				 * NetworkView.postCatalogLoadingResult, that will do the following:
+				 * 1) If there is activity, then show message
+				 * 2) If there is no activity, then save message, and show when activity is created
+				 * 3) Remove unused messages (say, by timeout)
+				 */
+				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, key);
 				NetworkView.Instance().startItemsLoading(
 					activity,
-					url,
+					key,
 					new ExpandCatalogRunnable(handler, tree, true, resumeNotLoad)
 				);
 				processExtraData(activity, tree.Item.extraData(), new Runnable() {
 					public void run() {
-						NetworkView.Instance().openTree(activity, tree, url);
+						NetworkView.Instance().openTree(activity, tree);
 					}
 				});
 			}
@@ -440,20 +447,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		final String url = tree.Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		if (url == null) {
-			throw new RuntimeException("That's impossible!!!");
-		}
-		if (NetworkView.Instance().containsItemsLoadingRunnable(url)) {
+		final NetworkTree.Key key = tree.getUniqueKey();
+		if (NetworkView.Instance().containsItemsLoadingRunnable(key)) {
 			return;
 		}
 		tree.ChildrenItems.clear();
 		tree.clear();
 		NetworkView.Instance().fireModelChangedAsync();
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, url);
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, key);
 		NetworkView.Instance().startItemsLoading(
 			activity,
-			url,
+			key,
 			new ExpandCatalogRunnable(handler, tree, false, false)
 		);
 	}
@@ -484,7 +488,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	private void removeCustomLink(ICustomNetworkLink link) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.removeCustomLink(link);
-		library.updateChildren();
 		library.synchronize();
 		NetworkView.Instance().fireModelChangedAsync();
 	}

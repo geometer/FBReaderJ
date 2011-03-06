@@ -46,6 +46,18 @@
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Авторы">
+			<node name="summary" value="Книги, разложенные по авторам"/>
+		</node>
+		<node name="byTitle" value="Названия">
+			<node name="summary" value="Книги, разложенные по названиям"/>
+		</node>
+		<node name="byDate" value="Дата">
+			<node name="summary" value="Книги, разложенные по дате покупки"/>
+		</node>
+		<node name="bySeries" value="По сериям">
+			<node name="summary" value="Книги, разложенные по сериям"/>
+		</node>
 		<node name="openCatalog" value="Открыть каталог"/>
 		<node name="showResults" value="Показать результаты"/>
 		<node name="showBooks" value="Показать книги"/>
@@ -56,6 +68,8 @@
 		<node name="deleteDemo" value="Удалить фрагмент"/>
 		<node name="downloadDemo" value="Скачать фрагмент"/>
 		<node name="buy" value="Купить (%s)"/>
+		<node name="addToBasket" value="Добавить в корзину"/>
+		<node name="removeFromBasket" value="Убрать из корзины"/>
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="stopLoading" value="Остановить загрузку" />
 		<node name="stopSearching" value="Остановить поиск" />
@@ -108,6 +122,7 @@
 		<node name="series" value="Серия:" />
 		<node name="indexInSeries" value="Номер в серии:" />
 		<node name="tags" value="Категории:" />
+		<node name="catalog" value="Каталог:" />
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Информация о книге" />
@@ -558,10 +573,6 @@
 			<node name="noRequiredInformation" value="Информация нет в каталоге" />
 			<node name="cacheDirectoryError" value="Не удается создать каталог для кэша" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Информация" />
-			<node name="message" value="Каталог пуст" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Результаты поиска" />
 			<node name="message" value="Подходящих книг не найдено" />
@@ -609,6 +620,8 @@
 		<node name="dictionaryIsNotInstalled" value="Не удалось запустить словарь"/>
 		<node name="permissionDenied" value="Нет доступа к файлам" />
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
+		<node name="emptyCatalog" value="Каталог пуст"/>
+		<node name="emptyBasket" value="В корзине нет книг"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>
