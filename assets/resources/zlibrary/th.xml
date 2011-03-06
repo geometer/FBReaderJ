@@ -75,7 +75,7 @@
 		<node name="pt" value="โปรตุเกส"/>
 		<node name="ru" value="รัสเซีย"/>
 		<node name="sv" value="สวีเดน"/>
-		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="th" value="ไทย" />
 		<node name="tr" value="ตุรกี"/>
 		<node name="uk" value="ยูเครน"/>
 		<node name="vi" value="เวียดนาม"/>
