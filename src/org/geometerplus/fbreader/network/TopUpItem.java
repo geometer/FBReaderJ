@@ -17,24 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.tree;
+package org.geometerplus.fbreader.network;
 
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public final class RootTree extends NetworkTree {
-	@Override
-	public String getName() {
-		return null;
-	}
-
-	@Override
-	public NetworkItem getHoldedItem() {
-		return null;
-	}
-
-	@Override
-	protected String getStringId() {
-		return "@Root";
+public class TopUpItem extends NetworkItem {
+	public TopUpItem(INetworkLink link, String cover) {
+		super(
+			link,
+			ZLResource.resource("networkView").getResource("refillTitle").getValue(),
+			ZLResource.resource("networkView").getResource("refillSummary").getValue(),
+			cover
+		);
 	}
 }

@@ -21,15 +21,48 @@ package org.geometerplus.fbreader.network;
 
 import java.util.LinkedList;
 import java.util.Set;
+import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
-	protected NetworkTree(int level) {
-		super(level);
+	public static class Key implements Serializable {
+		final Key Parent;
+		final String Id;
+
+		private Key(Key parent, String id) {
+			if (id == null) {
+				throw new IllegalArgumentException("NetworkTree string id must be non-null");
+			}
+			Parent = parent;
+			Id = id;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (other == this) {
+				return true;
+			}
+			if (!(other instanceof NetworkTree.Key)) {
+				return false;
+			}
+			final NetworkTree.Key key = (NetworkTree.Key)other;
+			return Id.equals(key.Id) && ZLMiscUtil.equals(Parent, key.Parent);
+		}
+
+		@Override
+		public int hashCode() {
+			return Id.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			return Parent == null ? Id : Parent.toString() + " :: " + Id;
+		}
 	}
 
 	protected NetworkTree() {
@@ -44,7 +77,7 @@ public abstract class NetworkTree extends FBTree {
 		super(parent, position);
 	}
 
-	public static ZLImage createCover(NetworkLibraryItem item) {
+	public static ZLImage createCover(NetworkItem item) {
 		if (item.Cover == null) {
 			return null;
 		}
@@ -88,15 +121,38 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 
-	public abstract NetworkLibraryItem getHoldedItem();
+	public abstract NetworkItem getHoldedItem();
 
-	public void removeItems(Set<NetworkLibraryItem> items) {
+	private Key myKey;
+	/**
+	 * Returns unique identifier which can be used in NetworkView methods
+	 * @return unique Key instance
+	 */
+	public final Key getUniqueKey() {
+		if (myKey == null) {
+			//final ZLTree parentTree = getParent();
+			final Key parentKey = Parent instanceof NetworkTree ?
+				((NetworkTree)Parent).getUniqueKey() : null;
+			myKey = new Key(parentKey, getStringId());
+		}
+		return myKey;
+	}
+
+	/**
+	 * Returns id used as a part of unique key above. This string must be
+	 *    not null
+     * and
+     *    be unique for all children of same tree
+	 */
+	protected abstract String getStringId();
+
+	public void removeItems(Set<NetworkItem> items) {
 		if (items.isEmpty() || subTrees().isEmpty()) {
 			return;
 		}
 		final LinkedList<FBTree> treesList = new LinkedList<FBTree>();
 		for (FBTree tree: subTrees()) {
-			final NetworkLibraryItem treeItem = ((NetworkTree)tree).getHoldedItem();
+			final NetworkItem treeItem = ((NetworkTree)tree).getHoldedItem();
 			if (treeItem != null && items.contains(treeItem)) {
 				treesList.add(tree);
 				items.remove(treeItem);

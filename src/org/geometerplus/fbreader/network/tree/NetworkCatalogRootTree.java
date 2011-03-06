@@ -22,8 +22,7 @@ package org.geometerplus.fbreader.network.tree;
 import org.geometerplus.fbreader.network.*;
 
 public class NetworkCatalogRootTree extends NetworkCatalogTree {
-
 	public NetworkCatalogRootTree(RootTree parent, INetworkLink link, int position) {
-		super(parent, (NetworkCatalogItem) link.libraryItem(), position);
+		super(parent, (NetworkCatalogItem)link.libraryItem(), position);
 	}
 }
