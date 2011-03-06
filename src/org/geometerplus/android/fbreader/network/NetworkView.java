@@ -186,7 +186,7 @@ class NetworkView {
 	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
 		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(tree.getUniqueKey());
 		if (runnable != null && runnable.tryResumeLoading()) {
-			openTree(activity, tree);
+			Util.openTree(activity, tree);
 			return;
 		}
 		if (runnable == null) {
@@ -249,36 +249,11 @@ class NetworkView {
 
 
 	/*
-	 * Starting BookInfo activity
-	 */
-
-	private NetworkBookItem myBookInfoItem;
-
-	public void showBookInfoActivity(Context context, NetworkBookItem book) {
-		myBookInfoItem = book;
-		context.startActivity(
-			new Intent(context.getApplicationContext(), NetworkBookInfoActivity.class)
-		);
-	}
-
-	NetworkBookItem getBookInfoItem() {
-		return myBookInfoItem;
-	}
-
-
-	/*
 	 * Opening Catalogs & managing opened catalogs stack
 	 */
 
 	private final HashMap<NetworkTree.Key,NetworkCatalogActivity> myOpenedActivities =
 		new HashMap<NetworkTree.Key,NetworkCatalogActivity>();
-
-	public void openTree(Context context, NetworkTree tree) {
-		context.startActivity(
-			new Intent(context.getApplicationContext(), NetworkCatalogActivity.class)
-				.putExtra(NetworkCatalogActivity.CATALOG_KEY_KEY, tree.getUniqueKey())
-		);
-	}
 
 	void setOpenedActivity(NetworkTree.Key key, NetworkCatalogActivity activity) {
 		if (activity == null) {

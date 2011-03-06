@@ -225,16 +225,23 @@ class NetworkBookActions extends NetworkTreeActions {
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			switch (actionCode) {
 				case SHOW_BOOKS_ITEM_ID:
-					NetworkView.Instance().openTree(activity, tree);
+					Util.openTree(activity, tree);
 					return true;
 			}
 			return false;
+		} else if (tree instanceof NetworkBookTree) {
+			return runActionStatic(activity, ((NetworkBookTree)tree), actionCode);
+		} else {
+			return false;
 		}
-		return runAction(activity, ((NetworkBookTree) tree).Book, actionCode);
 	}
 
-	static boolean runAction(Activity activity, NetworkBookItem book, int actionCode) {
+	static boolean runActionStatic(Activity activity, NetworkBookTree tree, int actionCode) {
+		final NetworkBookItem book = tree.Book;
 		switch (actionCode) {
+			case SHOW_BOOK_ACTIVITY_ITEM_ID:
+				Util.openTree(activity, tree);
+				return true;
 			case DOWNLOAD_BOOK_ITEM_ID:
 				doDownloadBook(activity, book, false);
 				return true;
@@ -258,9 +265,6 @@ class NetworkBookActions extends NetworkTreeActions {
 				return true;
 			case BUY_IN_BROWSER_ITEM_ID:
 				doBuyInBrowser(activity, book);
-				return true;
-			case SHOW_BOOK_ACTIVITY_ITEM_ID:
-				NetworkView.Instance().showBookInfoActivity(activity, book);
 				return true;
 			case ADD_BOOK_TO_BASKET:
 				book.Link.basket().add(book);

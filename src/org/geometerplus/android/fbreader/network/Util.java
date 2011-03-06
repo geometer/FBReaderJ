@@ -29,9 +29,9 @@ import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
 import org.geometerplus.android.util.PackageUtil;
 
@@ -125,5 +125,22 @@ abstract class Util implements UserRegistrationConstants {
 			url = NetworkLibrary.Instance().rewriteUrl(url, true);
 			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
+	}
+
+	private static final String TREE_KEY_KEY = "org.geometerplus.android.fbreader.network.TreeKey";
+
+	static void openTree(Context context, NetworkTree tree) {
+		final Class<?> clz = tree instanceof NetworkBookTree
+			? NetworkBookInfoActivity.class : NetworkCatalogActivity.class;
+		context.startActivity(
+			new Intent(context.getApplicationContext(), clz)
+				.putExtra(TREE_KEY_KEY, tree.getUniqueKey())
+		);
+	}
+
+	public static NetworkTree getTreeFromIntent(Intent intent) {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
+		return library.getTreeByKey(key);
 	}
 }

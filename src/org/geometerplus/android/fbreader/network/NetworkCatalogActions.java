@@ -411,7 +411,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						if (tree.Item.supportsResumeLoading()) {
 							resumeNotLoad = true;
 						} else {
-							NetworkView.Instance().openTree(activity, tree);
+							Util.openTree(activity, tree);
 							return;
 						}
 					} else {
@@ -439,7 +439,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				);
 				processExtraData(activity, tree.Item.extraData(), new Runnable() {
 					public void run() {
-						NetworkView.Instance().openTree(activity, tree);
+						Util.openTree(activity, tree);
 					}
 				});
 			}
