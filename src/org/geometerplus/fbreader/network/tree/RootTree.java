@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-import org.geometerplus.fbreader.network.NetworkLibraryItem;
+import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.NetworkTree;
 
 public final class RootTree extends NetworkTree {
@@ -29,7 +29,12 @@ public final class RootTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
+	public NetworkItem getHoldedItem() {
 		return null;
+	}
+
+	@Override
+	protected String getStringId() {
+		return "@Root";
 	}
 }

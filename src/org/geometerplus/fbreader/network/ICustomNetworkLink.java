@@ -21,29 +21,24 @@ package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-public interface ICustomNetworkLink extends INetworkLink {
+import java.util.HashMap;
 
+public interface ICustomNetworkLink extends INetworkLink {
 	public static final int INVALID_ID = -1;
 
 	int getId();
 	void setId(int id);
 
-	interface SaveLinkListener {
-		void onSaveLink(ICustomNetworkLink link);
-	}
-
-	void setSaveLinkListener(SaveLinkListener listener);
-	void saveLink();
-
 	void setSiteName(String name);
 	void setTitle(String title);
 	void setSummary(String summary);
-	void setIcon(String icon);
 
-	void setLink(String urlKey, String url);
-	void removeLink(String urlKey);
+	HashMap<String,UrlInfo> urlInfoMap();
+	void setUrl(String urlKey, String url);
+	void removeUrl(String urlKey);
 
-	void reloadInfo() throws ZLNetworkException;
+	boolean isObsolete(long milliSeconds);
+	void reloadInfo(boolean urlsOnly) throws ZLNetworkException;
 
 	// returns true if next methods have changed link's data:
 	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink

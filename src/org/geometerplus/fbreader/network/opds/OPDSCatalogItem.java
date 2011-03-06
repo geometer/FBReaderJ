@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
@@ -49,19 +48,12 @@ public class OPDSCatalogItem extends NetworkCatalogItem {
 		myExtraData = null;
 	}
 
-	private void doLoadChildren(NetworkOperationData.OnNewItemListener listener,
-			ZLNetworkRequest networkRequest) throws ZLNetworkException {
-		while (networkRequest != null) {
-			try {
-				ZLNetworkManager.Instance().perform(networkRequest);
-			} catch (ZLNetworkException e) {
-				myLoadingState = null;
-				throw e;
-			}
-			if (listener.confirmInterrupt()) {
-				return;
-			}
-			networkRequest = myLoadingState.resume();
+	private void doLoadChildren(ZLNetworkRequest networkRequest) throws ZLNetworkException {
+		try {
+			super.doLoadChildren(myLoadingState, networkRequest);
+		} catch (ZLNetworkException e) {
+			myLoadingState = null;
+			throw e;
 		}
 	}
 
@@ -78,12 +70,12 @@ public class OPDSCatalogItem extends NetworkCatalogItem {
 	public final void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		OPDSNetworkLink opdsLink = (OPDSNetworkLink) Link;
 
-		myLoadingState = opdsLink.createOperationData(Link, listener);
+		myLoadingState = opdsLink.createOperationData(listener);
 
 		ZLNetworkRequest networkRequest =
 			opdsLink.createNetworkData(getUrl(), myLoadingState);
 
-		doLoadChildren(listener, networkRequest);
+		doLoadChildren(networkRequest);
 	}
 
 	@Override
@@ -96,7 +88,7 @@ public class OPDSCatalogItem extends NetworkCatalogItem {
 		if (myLoadingState != null) {
 			myLoadingState.Listener = listener;
 			ZLNetworkRequest networkRequest = myLoadingState.resume();
-			doLoadChildren(listener, networkRequest);
+			doLoadChildren(networkRequest);
 		}
 	}
 }

@@ -33,6 +33,7 @@ import android.view.Menu;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 class NetworkView {
 	private static NetworkView ourInstance;
@@ -44,11 +45,12 @@ class NetworkView {
 		return ourInstance;
 	}
 
+	private volatile boolean myInitialized;
+	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
+	private RefillAccountActions myTopUpActions;
+
 	private NetworkView() {
 	}
-
-
-	private volatile boolean myInitialized;
 
 	public boolean isInitialized() {
 		return myInitialized;
@@ -64,7 +66,8 @@ class NetworkView {
 		myActions.add(new NetworkBookActions());
 		myActions.add(new NetworkCatalogActions());
 		myActions.add(new SearchItemActions());
-		myActions.add(new RefillAccountActions());
+		myTopUpActions = new RefillAccountActions();
+		myActions.add(myTopUpActions);
 		myActions.add(new AddCustomCatalogItemActions());
 		myActions.trimToSize();
 
@@ -85,10 +88,12 @@ class NetworkView {
 	}
 
 	/*
-	 * NetworkLibraryItem's actions
+	 * NetworkItem's actions
 	 */
 
-	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
+	public RefillAccountActions getTopUpActions() {
+		return myTopUpActions;
+	}
 
 	public NetworkTreeActions getActions(NetworkTree tree) {
 		for (NetworkTreeActions actions: myActions) {
@@ -140,9 +145,10 @@ class NetworkView {
 	 * Code for loading network items (running items-loading service and managing items-loading runnables).
 	 */
 
-	private final HashMap<String, ItemsLoadingRunnable> myItemsLoadingRunnables = new HashMap<String, ItemsLoadingRunnable>();
+	private final HashMap<NetworkTree.Key,ItemsLoadingRunnable> myItemsLoadingRunnables =
+		new HashMap<NetworkTree.Key,ItemsLoadingRunnable>();
 
-	public void startItemsLoading(Context context, String key, ItemsLoadingRunnable runnable) {
+	public void startItemsLoading(Context context, NetworkTree.Key key, ItemsLoadingRunnable runnable) {
 		boolean doDownload = false;
 		synchronized (myItemsLoadingRunnables) {
 			if (!myItemsLoadingRunnables.containsKey(key)) {
@@ -158,13 +164,13 @@ class NetworkView {
 		}
 	}
 
-	ItemsLoadingRunnable getItemsLoadingRunnable(String key) {
+	ItemsLoadingRunnable getItemsLoadingRunnable(NetworkTree.Key key) {
 		synchronized (myItemsLoadingRunnables) {
 			return myItemsLoadingRunnables.get(key);
 		}
 	}
 
-	void removeItemsLoadingRunnable(String key) {
+	void removeItemsLoadingRunnable(NetworkTree.Key key) {
 		synchronized (myItemsLoadingRunnables) {
 			ItemsLoadingRunnable runnable = myItemsLoadingRunnables.remove(key);
 			if (runnable != null) {
@@ -173,14 +179,14 @@ class NetworkView {
 		}
 	}
 
-	public final boolean containsItemsLoadingRunnable(String key) {
+	public final boolean containsItemsLoadingRunnable(NetworkTree.Key key) {
 		return getItemsLoadingRunnable(key) != null;
 	}
 
-	public void tryResumeLoading(NetworkBaseActivity activity, NetworkTree tree, String key, Runnable expandRunnable) {
-		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(key);
+	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
+		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(tree.getUniqueKey());
 		if (runnable != null && runnable.tryResumeLoading()) {
-			openTree(activity, tree, key);
+			openTree(activity, tree);
 			return;
 		}
 		if (runnable == null) {
@@ -264,30 +270,17 @@ class NetworkView {
 	 * Opening Catalogs & managing opened catalogs stack
 	 */
 
-	private final LinkedList<NetworkTree> myOpenedStack = new LinkedList<NetworkTree>();
-	private final HashMap<String, NetworkCatalogActivity> myOpenedActivities = new HashMap<String, NetworkCatalogActivity>();
+	private final HashMap<NetworkTree.Key,NetworkCatalogActivity> myOpenedActivities =
+		new HashMap<NetworkTree.Key,NetworkCatalogActivity>();
 
-	public void openTree(Context context, NetworkTree tree, String key) {
-		final int level = tree.Level - 1; // tree.Level == 1 for catalog's root element
-		if (level > myOpenedStack.size()) {
-			throw new RuntimeException("Unable to open catalog with Level greater than the number of opened catalogs.\n"
-				+ "Catalog: " + tree.getName() + "\n"
-				+ "Level: " + level + "\n"
-				+ "Opened catalogs: " + myOpenedStack.size());
-		}
-		while (level < myOpenedStack.size()) {
-			myOpenedStack.removeLast();
-		}
-		myOpenedStack.add(tree);
-
+	public void openTree(Context context, NetworkTree tree) {
 		context.startActivity(
 			new Intent(context.getApplicationContext(), NetworkCatalogActivity.class)
-				.putExtra(NetworkCatalogActivity.CATALOG_LEVEL_KEY, level)
-				.putExtra(NetworkCatalogActivity.CATALOG_KEY_KEY, key)
+				.putExtra(NetworkCatalogActivity.CATALOG_KEY_KEY, tree.getUniqueKey())
 		);
 	}
 
-	void setOpenedActivity(String key, NetworkCatalogActivity activity) {
+	void setOpenedActivity(NetworkTree.Key key, NetworkCatalogActivity activity) {
 		if (activity == null) {
 			myOpenedActivities.remove(key);
 		} else {
@@ -295,29 +288,7 @@ class NetworkView {
 		}
 	}
 
-	public NetworkCatalogActivity getOpenedActivity(String key) {
+	public NetworkCatalogActivity getOpenedActivity(NetworkTree.Key key) {
 		return myOpenedActivities.get(key);
-	}
-
-	public NetworkTree getOpenedTree(int level) {
-		if (level < 0 || level >= myOpenedStack.size()) {
-			return null;
-		}
-		return myOpenedStack.get(level);
-	}
-
-	/*
-	 * Special view items item
-	 */
-
-	private final SearchItemTree mySearchItem = new SearchItemTree();
-	private final AddCustomCatalogItemTree myAddCustomCatalogItem = new AddCustomCatalogItemTree();
-
-	public SearchItemTree getSearchItemTree() {
-		return mySearchItem;
-	}
-
-	public AddCustomCatalogItemTree getAddCustomCatalogItemTree() {
-		return myAddCustomCatalogItem;
 	}
 }

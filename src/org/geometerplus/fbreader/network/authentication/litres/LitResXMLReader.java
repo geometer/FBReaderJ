@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.opds.HtmlToString;
 class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	public final INetworkLink Link;
-	public final List<NetworkLibraryItem> Books;
+	public final List<NetworkItem> Books;
 
 	private int myIndex;
 
@@ -55,7 +55,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private HashMap<Integer, String> myURLByType = new HashMap<Integer, String>(); // TODO: remove
 	private LinkedList<BookReference> myReferences = new LinkedList<BookReference>();
 
-	public LitResXMLReader(INetworkLink link, List<NetworkLibraryItem> books) {
+	public LitResXMLReader(INetworkLink link, List<NetworkItem> books) {
 		super(link.getSiteName());
 		Link = link;
 		Books = books;

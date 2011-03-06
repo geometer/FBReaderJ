@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.fbreader.network.tree;
 
 import java.util.Set;
 import java.util.LinkedList;
@@ -29,16 +29,11 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
-
-public class SearchItemTree extends NetworkTree implements ZLAndroidTree {
-
+public class SearchItemTree extends NetworkTree {
 	private SearchResult myResult;
 
-	public SearchItemTree() {
-		super(1);
+	public SearchItemTree(NetworkTree parent, int position) {
+		super(parent, position);
 	}
 
 	@Override
@@ -49,10 +44,6 @@ public class SearchItemTree extends NetworkTree implements ZLAndroidTree {
 	@Override
 	public String getSummary() {
 		return ZLResource.resource("networkView").getResource("searchSummary").getValue();
-	}
-
-	public int getCoverResourceId() {
-		return R.drawable.ic_list_searchresult;
 	}
 
 	public void setSearchResult(SearchResult result) {
@@ -99,7 +90,12 @@ public class SearchItemTree extends NetworkTree implements ZLAndroidTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
+	public NetworkItem getHoldedItem() {
 		return null;
+	}
+
+	@Override
+	protected String getStringId() {
+		return "@Search";
 	}
 }

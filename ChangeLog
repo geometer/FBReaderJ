@@ -1,7 +1,16 @@
-===== 0.99.13 (??? ??, 2011) =====
+===== 0.99.14 (Mar ??, 2011) =====
+* Thai localization (by Samphan Pojanasophanakul)
+* Fixed TTF font style detection
+* opds:// URLs support has been implemented
+* Unexpected search call has been fixed
+* Ignore case comparison for zip entry names
+* Fixed custom OPDS link search
+* Periodical update of custom links information has been added
+
+===== 0.99.13 (Feb 13, 2011) =====
 * Fixed book/position forgetting bug
 * Color channel values in color dialog
-* Fixed categories processing in feedbooks feed
+* Fixed categories displaying in feedbooks feed
 
 ===== 0.99.12 (Feb 09, 2011) =====
 * Added support for more dictionaries (by Steffen Siebert)

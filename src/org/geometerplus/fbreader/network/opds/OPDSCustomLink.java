@@ -32,17 +32,22 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
+import org.geometerplus.fbreader.network.UrlInfo;
 
-
-class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
-
+public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private int myId;
-	private SaveLinkListener myListener;
 
 	private boolean myHasChanges;
 
-	OPDSCustomLink(int id, String siteName, String title, String summary, String icon, Map<String, String> links) {
-		super(siteName, title, summary, icon, null, links, false);
+	private static String removeWWWPrefix(String siteName) {
+		if (siteName != null && siteName.startsWith("www.")) {
+			return siteName.substring(4);
+		}
+		return siteName;
+	}
+
+	public OPDSCustomLink(int id, String siteName, String title, String summary, Map<String,UrlInfo> infos) {
+		super(removeWWWPrefix(siteName), title, summary, null, infos, false);
 		myId = id;
 	}
 
@@ -54,30 +59,12 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		myId = id;
 	}
 
-	public void setSaveLinkListener(SaveLinkListener listener) {
-		myListener = listener;
-	}
-
-	public void saveLink() {
-		if (myListener != null) {
-			myListener.onSaveLink(this);
-		} else {
-			throw new RuntimeException("Unable to save link: SaveLinkListener hasn't been set");
-		}
-	}
-
 	public boolean hasChanges() {
 		return myHasChanges;
 	}
 
 	public void resetChanges() {
 		myHasChanges = false;
-	}
-
-
-	public final void setIcon(String icon) {
-		myHasChanges = myHasChanges || !ZLMiscUtil.equals(myIcon, icon);
-		myIcon = icon;
 	}
 
 	public final void setSiteName(String name) {
@@ -95,28 +82,39 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 		myTitle = title;
 	}
 
-	public final void setLink(String urlKey, String url) {
-		if (url == null) {
-			removeLink(urlKey);
-		} else {
-			final String oldUrl = myLinks.put(urlKey, url);
-			myHasChanges = myHasChanges || !url.equals(oldUrl);
-		}
+	public final void setUrl(String urlKey, String url) {
+		myInfos.put(urlKey, new UrlInfo(url, new Date()));
+		myHasChanges = true;
 	}
 
-	public final void removeLink(String urlKey) {
-		final String oldUrl = myLinks.remove(urlKey);
+	public final void removeUrl(String urlKey) {
+		final UrlInfo oldUrl = myInfos.remove(urlKey);
 		myHasChanges = myHasChanges || oldUrl != null;
 	}
 
+	public boolean isObsolete(long milliSeconds) {
+		final long old = System.currentTimeMillis() - milliSeconds;
+		
+		final Date searchUpdateDate = getUrlInfo(URL_SEARCH).Updated;
+		if (searchUpdateDate == null || searchUpdateDate.getTime() < old) {
+			return true;
+		}
 
-	public void reloadInfo() throws ZLNetworkException {
+		final Date iconUpdateDate = getUrlInfo(URL_ICON).Updated;
+		if (iconUpdateDate == null || iconUpdateDate.getTime() < old) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void reloadInfo(final boolean urlsOnly) throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
 
 		ZLNetworkException error = null;
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getLink(INetworkLink.URL_MAIN)) {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrlInfo(URL_MAIN).URL) {
 				@Override
 				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 					final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);
@@ -128,15 +126,13 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 					if (info.Title == null) {
 						throw new ZLNetworkException(NetworkException.ERROR_NO_REQUIRED_INFORMATION);
 					}
-					myTitle = info.Title;
-					if (info.Icon != null) {
-						myIcon = info.Icon;
-					}
-					if (info.Summary != null) {
-						mySummary = info.Summary;
-					}
+					setUrl(URL_ICON, info.Icon);
 					if (info.DirectOpenSearchDescription != null) {
 						descriptions.add(info.DirectOpenSearchDescription);
+					}
+					if (!urlsOnly) {
+						myTitle = info.Title;
+						mySummary = info.Summary;
 					}
 				}
 			});
@@ -151,7 +147,7 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 				requests.add(new ZLNetworkRequest(url) {
 					@Override
 					public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
-						new OpenSearchXMLReader(URL, descriptions, 20).read(inputStream);
+						new OpenSearchXMLReader(URL, descriptions).read(inputStream);
 					}
 				});
 			}
@@ -166,7 +162,9 @@ class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 
 		if (!descriptions.isEmpty()) {
 			// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
-			setLink(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
+			setUrl(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
+		} else {
+			setUrl(URL_SEARCH, null);
 		}
 		if (error != null) {
 			throw error;

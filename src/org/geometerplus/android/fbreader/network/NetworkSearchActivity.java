@@ -32,12 +32,10 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.SearchItemTree;
 
 
 public class NetworkSearchActivity extends Activity {
-
-	public static final String SEARCH_RUNNABLE_KEY = "org.geometerplus.android.fbreader.network.NetworkSearchActivity";
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -57,7 +55,6 @@ public class NetworkSearchActivity extends Activity {
 	}
 
 	private class SearchHandler extends ItemsLoadingHandler {
-
 		private final SearchItemTree myTree;
 
 		public SearchHandler(SearchItemTree tree) {
@@ -65,11 +62,11 @@ public class NetworkSearchActivity extends Activity {
 		}
 
 		@Override
-		public void onUpdateItems(List<NetworkLibraryItem> items) {
+		public void onUpdateItems(List<NetworkItem> items) {
 			SearchResult result = myTree.getSearchResult();
-			for (NetworkLibraryItem item: items) {
+			for (NetworkItem item: items) {
 				if (item instanceof NetworkBookItem) {
-					result.addBook((NetworkBookItem) item);
+					result.addBook((NetworkBookItem)item);
 				}
 			}
 		}
@@ -84,12 +81,12 @@ public class NetworkSearchActivity extends Activity {
 
 		@Override
 		public void onFinish(String errorMessage, boolean interrupted,
-				Set<NetworkLibraryItem> uncommitedItems) {
+				Set<NetworkItem> uncommitedItems) {
 			if (interrupted) {
 				myTree.setSearchResult(null);
 			} else {
 				myTree.updateSubTrees();
-				afterUpdateCatalog(errorMessage, myTree.getSearchResult().empty());
+				afterUpdateCatalog(errorMessage, myTree.getSearchResult().isEmpty());
 			}
 			if (NetworkView.Instance().isInitialized()) {
 				NetworkView.Instance().fireModelChangedAsync();
@@ -99,27 +96,36 @@ public class NetworkSearchActivity extends Activity {
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			ZLResource boxResource = null;
-			String msg = null;
+			String msg;
 			if (errorMessage != null) {
 				boxResource = dialogResource.getResource("networkError");
 				msg = errorMessage;
 			} else if (childrenEmpty) {
 				boxResource = dialogResource.getResource("emptySearchResults");
 				msg = boxResource.getResource("message").getValue();
+			} else {
+				return;
 			}
-			if (msg != null) {
-				if (NetworkView.Instance().isInitialized()) {
-					final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(SEARCH_RUNNABLE_KEY);
-					if (activity != null) {
-						final ZLResource buttonResource = dialogResource.getResource("button");
-						new AlertDialog.Builder(activity)
-							.setTitle(boxResource.getResource("title").getValue())
-							.setMessage(msg)
-							.setIcon(0)
-							.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-							.create().show();
-					}
-				}
+
+			if (!NetworkView.Instance().isInitialized()) {
+				return;
+			}
+
+			final SearchItemTree tree = NetworkLibrary.Instance().getSearchItemTree();
+			if (tree == null) {
+				return;
+			}
+
+			final NetworkCatalogActivity activity =
+				NetworkView.Instance().getOpenedActivity(tree.getUniqueKey());
+			if (activity != null) {
+				final ZLResource buttonResource = dialogResource.getResource("button");
+				new AlertDialog.Builder(activity)
+					.setTitle(boxResource.getResource("title").getValue())
+					.setMessage(msg)
+					.setIcon(0)
+					.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+					.create().show();
 			}
 		}
 	}
@@ -148,14 +154,14 @@ public class NetworkSearchActivity extends Activity {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
-		if (NetworkView.Instance().containsItemsLoadingRunnable(SEARCH_RUNNABLE_KEY)) {
+		final SearchItemTree tree = library.getSearchItemTree();
+		if (tree == null ||
+			NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey())) {
 			return;
 		}
 
 		final String summary = ZLResource.resource("networkView").getResource("searchResults").getValue().replace("%s", pattern);
 		final SearchResult result = new SearchResult(summary);
-
-		final SearchItemTree tree = NetworkView.Instance().getSearchItemTree();
 
 		tree.setSearchResult(result);
 		NetworkView.Instance().fireModelChangedAsync();
@@ -163,9 +169,9 @@ public class NetworkSearchActivity extends Activity {
 		final SearchHandler handler = new SearchHandler(tree);
 		NetworkView.Instance().startItemsLoading(
 			this,
-			SEARCH_RUNNABLE_KEY,
+			tree.getUniqueKey(),
 			new SearchRunnable(handler, pattern)
 		);
-		NetworkView.Instance().openTree(this, tree, SEARCH_RUNNABLE_KEY);
+		NetworkView.Instance().openTree(this, tree);
 	}
 }
