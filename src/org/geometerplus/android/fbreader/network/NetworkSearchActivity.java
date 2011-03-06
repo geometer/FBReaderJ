@@ -62,9 +62,9 @@ public class NetworkSearchActivity extends Activity {
 		}
 
 		@Override
-		public void onUpdateItems(List<NetworkLibraryItem> items) {
+		public void onUpdateItems(List<NetworkItem> items) {
 			SearchResult result = myTree.getSearchResult();
-			for (NetworkLibraryItem item: items) {
+			for (NetworkItem item: items) {
 				if (item instanceof NetworkBookItem) {
 					result.addBook((NetworkBookItem)item);
 				}
@@ -81,7 +81,7 @@ public class NetworkSearchActivity extends Activity {
 
 		@Override
 		public void onFinish(String errorMessage, boolean interrupted,
-				Set<NetworkLibraryItem> uncommitedItems) {
+				Set<NetworkItem> uncommitedItems) {
 			if (interrupted) {
 				myTree.setSearchResult(null);
 			} else {

@@ -295,8 +295,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		@Override
-		public void onUpdateItems(List<NetworkLibraryItem> items) {
-			for (NetworkLibraryItem item: items) {
+		public void onUpdateItems(List<NetworkItem> items) {
+			for (NetworkItem item: items) {
 				myTree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(myTree, item);
 			}
@@ -311,7 +311,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		@Override
 		public void onFinish(String errorMessage, boolean interrupted,
-				Set<NetworkLibraryItem> uncommitedItems) {
+				Set<NetworkItem> uncommitedItems) {
 			if (interrupted &&
 					(!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
 				myTree.ChildrenItems.clear();

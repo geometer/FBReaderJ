@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network.tree;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.network.NetworkLibraryItem;
+import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.NetworkTree;
 
 public class AddCustomCatalogItemTree extends NetworkTree {
@@ -40,7 +40,7 @@ public class AddCustomCatalogItemTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
+	public NetworkItem getHoldedItem() {
 		return null;
 	}
 

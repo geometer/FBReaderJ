@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.network.*;
 
 public class NetworkCatalogTree extends NetworkTree {
 	public final NetworkCatalogItem Item;
-	public final ArrayList<NetworkLibraryItem> ChildrenItems = new ArrayList<NetworkLibraryItem>();
+	public final ArrayList<NetworkItem> ChildrenItems = new ArrayList<NetworkItem>();
 
 	private long myLoadedTime = -1;
 
@@ -86,7 +86,7 @@ public class NetworkCatalogTree extends NetworkTree {
 		int nodeCount = 0;
 
 		for (int i = 0; i < ChildrenItems.size(); ++i) {
-			NetworkLibraryItem currentItem = ChildrenItems.get(i);
+			NetworkItem currentItem = ChildrenItems.get(i);
 			if (!(currentItem instanceof NetworkCatalogItem)) {
 				continue;
 			}
@@ -158,12 +158,12 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
+	public NetworkItem getHoldedItem() {
 		return Item;
 	}
 
 	@Override
-	public void removeItems(Set<NetworkLibraryItem> items) {
+	public void removeItems(Set<NetworkItem> items) {
 		ChildrenItems.removeAll(items);
 		super.removeItems(items);
 	}

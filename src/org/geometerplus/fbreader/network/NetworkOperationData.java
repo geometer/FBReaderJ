@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 public class NetworkOperationData {
 
 	public interface OnNewItemListener {
-		void onNewItem(INetworkLink link, NetworkLibraryItem item);
+		void onNewItem(INetworkLink link, NetworkItem item);
 
 		void commitItems(INetworkLink link);
 

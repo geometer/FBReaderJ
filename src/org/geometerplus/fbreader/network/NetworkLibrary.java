@@ -429,7 +429,7 @@ public class NetworkLibrary {
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
 		final NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
-			public synchronized void onNewItem(INetworkLink link, NetworkLibraryItem item) {
+			public synchronized void onNewItem(INetworkLink link, NetworkItem item) {
 				listener.onNewItem(link, item);
 			}
 			public synchronized boolean confirmInterrupt() {

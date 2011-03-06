@@ -77,7 +77,7 @@ public abstract class NetworkTree extends FBTree {
 		super(parent, position);
 	}
 
-	public static ZLImage createCover(NetworkLibraryItem item) {
+	public static ZLImage createCover(NetworkItem item) {
 		if (item.Cover == null) {
 			return null;
 		}
@@ -121,7 +121,7 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 
-	public abstract NetworkLibraryItem getHoldedItem();
+	public abstract NetworkItem getHoldedItem();
 
 	private Key myKey;
 	/**
@@ -146,13 +146,13 @@ public abstract class NetworkTree extends FBTree {
 	 */
 	protected abstract String getStringId();
 
-	public void removeItems(Set<NetworkLibraryItem> items) {
+	public void removeItems(Set<NetworkItem> items) {
 		if (items.isEmpty() || subTrees().isEmpty()) {
 			return;
 		}
 		final LinkedList<FBTree> treesList = new LinkedList<FBTree>();
 		for (FBTree tree: subTrees()) {
-			final NetworkLibraryItem treeItem = ((NetworkTree)tree).getHoldedItem();
+			final NetworkItem treeItem = ((NetworkTree)tree).getHoldedItem();
 			if (treeItem != null && items.contains(treeItem)) {
 				treesList.add(tree);
 				items.remove(treeItem);

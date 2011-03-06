@@ -90,7 +90,7 @@ public class SearchItemTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
+	public NetworkItem getHoldedItem() {
 		return null;
 	}
 

@@ -27,16 +27,16 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.*;
 
 abstract class SortedCatalogItem extends NetworkCatalogItem {
-	private final List<NetworkLibraryItem> myChildren = new LinkedList<NetworkLibraryItem>();
+	private final List<NetworkItem> myChildren = new LinkedList<NetworkItem>();
 
-	private SortedCatalogItem(NetworkCatalogItem parent, ZLResource resource, List<NetworkLibraryItem> children) {
+	private SortedCatalogItem(NetworkCatalogItem parent, ZLResource resource, List<NetworkItem> children) {
 		super(parent.Link, resource.getValue(), resource.getResource("summary").getValue(), "", parent.URLByType);
-		for (NetworkLibraryItem child : children) {
+		for (NetworkItem child : children) {
 			if (accepts(child)) {
 				myChildren.add(child);
 			}
 		}
-		final Comparator<NetworkLibraryItem> comparator = getComparator();
+		final Comparator<NetworkItem> comparator = getComparator();
 		if (comparator != null) {
 			Collections.sort(myChildren, comparator);
 		}
@@ -46,12 +46,12 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 		return myChildren.isEmpty();
 	}
 
-	protected abstract Comparator<NetworkLibraryItem> getComparator();
-	protected boolean accepts(NetworkLibraryItem item) {
+	protected abstract Comparator<NetworkItem> getComparator();
+	protected boolean accepts(NetworkItem item) {
 		return item instanceof NetworkBookItem;
 	}
 
-	public SortedCatalogItem(NetworkCatalogItem parent, String resourceKey, List<NetworkLibraryItem> children) {
+	public SortedCatalogItem(NetworkCatalogItem parent, String resourceKey, List<NetworkItem> children) {
 		this(parent, ZLResource.resource("networkView").getResource(resourceKey), children);
 	}
 
@@ -61,7 +61,7 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 
 	@Override
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
-		for (NetworkLibraryItem child : myChildren) {
+		for (NetworkItem child : myChildren) {
 			listener.onNewItem(Link, child);
 		}
 		listener.commitItems(Link);
@@ -69,25 +69,25 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 }
 
 class ByAuthorCatalogItem extends SortedCatalogItem {
-	ByAuthorCatalogItem(NetworkCatalogItem parent, List<NetworkLibraryItem> children) {
+	ByAuthorCatalogItem(NetworkCatalogItem parent, List<NetworkItem> children) {
 		super(parent, "byAuthor", children);
 	}
 
 	@Override
-	protected Comparator<NetworkLibraryItem> getComparator() {
+	protected Comparator<NetworkItem> getComparator() {
 		return new NetworkBookItemComparator();
 	}
 }
 
 class ByTitleCatalogItem extends SortedCatalogItem {
-	ByTitleCatalogItem(NetworkCatalogItem parent, List<NetworkLibraryItem> children) {
+	ByTitleCatalogItem(NetworkCatalogItem parent, List<NetworkItem> children) {
 		super(parent, "byTitle", children);
 	}
 
 	@Override
-	protected Comparator<NetworkLibraryItem> getComparator() {
-		return new Comparator<NetworkLibraryItem>() {
-			public int compare(NetworkLibraryItem item0, NetworkLibraryItem item1) {
+	protected Comparator<NetworkItem> getComparator() {
+		return new Comparator<NetworkItem>() {
+			public int compare(NetworkItem item0, NetworkItem item1) {
 				return item0.Title.compareTo(item1.Title);
 			}
 		};
@@ -95,14 +95,14 @@ class ByTitleCatalogItem extends SortedCatalogItem {
 }
 
 class ByDateCatalogItem extends SortedCatalogItem {
-	ByDateCatalogItem(NetworkCatalogItem parent, List<NetworkLibraryItem> children) {
+	ByDateCatalogItem(NetworkCatalogItem parent, List<NetworkItem> children) {
 		super(parent, "byDate", children);
 	}
 
 	@Override
-	protected Comparator<NetworkLibraryItem> getComparator() {
-		return new Comparator<NetworkLibraryItem>() {
-			public int compare(NetworkLibraryItem item0, NetworkLibraryItem item1) {
+	protected Comparator<NetworkItem> getComparator() {
+		return new Comparator<NetworkItem>() {
+			public int compare(NetworkItem item0, NetworkItem item1) {
 				return 0;
 			}
 		};
@@ -110,14 +110,14 @@ class ByDateCatalogItem extends SortedCatalogItem {
 }
 
 class BySeriesCatalogItem extends SortedCatalogItem {
-	BySeriesCatalogItem(NetworkCatalogItem parent, List<NetworkLibraryItem> children) {
+	BySeriesCatalogItem(NetworkCatalogItem parent, List<NetworkItem> children) {
 		super(parent, "bySeries", children);
 	}
 
 	@Override
-	protected Comparator<NetworkLibraryItem> getComparator() {
-		return new Comparator<NetworkLibraryItem>() {
-			public int compare(NetworkLibraryItem item0, NetworkLibraryItem item1) {
+	protected Comparator<NetworkItem> getComparator() {
+		return new Comparator<NetworkItem>() {
+			public int compare(NetworkItem item0, NetworkItem item1) {
 				final NetworkBookItem book0 = (NetworkBookItem)item0;
 				final NetworkBookItem book1 = (NetworkBookItem)item1;
 				int diff = book0.SeriesTitle.compareTo(book1.SeriesTitle);
@@ -130,7 +130,7 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 	}
 
 	@Override
-	protected boolean accepts(NetworkLibraryItem item) {
+	protected boolean accepts(NetworkItem item) {
 		return
 			item instanceof NetworkBookItem &&
 			((NetworkBookItem)item).SeriesTitle != null;
@@ -166,11 +166,11 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 		} finally {
 			myForceReload = true;
 			// TODO: implement asynchronous loading
-			ArrayList<NetworkLibraryItem> children =
-				new ArrayList<NetworkLibraryItem>(mgr.purchasedBooks());
+			ArrayList<NetworkItem> children =
+				new ArrayList<NetworkItem>(mgr.purchasedBooks());
 			if (children.size() <= 5) {
 				Collections.sort(children, new NetworkBookItemComparator());
-				for (NetworkLibraryItem item : children) {
+				for (NetworkItem item : children) {
 					listener.onNewItem(Link, item);
 				}
 			} else {

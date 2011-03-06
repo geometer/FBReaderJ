@@ -120,7 +120,7 @@ public class NetworkAuthorTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
+	public NetworkItem getHoldedItem() {
 		return null;
 	}
 

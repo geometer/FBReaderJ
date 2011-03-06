@@ -87,12 +87,12 @@ public class NetworkSeriesTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
+	public NetworkItem getHoldedItem() {
 		return null;
 	}
 
 	@Override
-	public void removeItems(Set<NetworkLibraryItem> items) {
+	public void removeItems(Set<NetworkItem> items) {
 		super.removeItems(items);
 		if (subTrees().isEmpty()) {
 			removeSelf();

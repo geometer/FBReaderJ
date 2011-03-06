@@ -25,11 +25,11 @@ import org.geometerplus.fbreader.network.*;
 
 public class NetworkTreeFactory {
 
-	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkLibraryItem item) {
+	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkItem item) {
 		return createNetworkTree(parent, item, -1);
 	}
 
-	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkLibraryItem item, int position) {
+	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkItem item, int position) {
 		final int subtreesSize = parent.subTrees().size();
 		if (position == -1) {
 			position = subtreesSize;

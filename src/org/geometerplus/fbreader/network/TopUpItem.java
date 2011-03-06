@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class TopUpItem extends NetworkLibraryItem {
+public class TopUpItem extends NetworkItem {
 	public TopUpItem(INetworkLink link, String cover) {
 		super(
 			link,

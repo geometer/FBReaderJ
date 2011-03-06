@@ -88,7 +88,7 @@ class NetworkView {
 	}
 
 	/*
-	 * NetworkLibraryItem's actions
+	 * NetworkItem's actions
 	 */
 
 	public RefillAccountActions getTopUpActions() {

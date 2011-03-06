@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-public abstract class NetworkCatalogItem extends NetworkLibraryItem {
+public abstract class NetworkCatalogItem extends NetworkItem {
 
 	// catalog types:
 	public static enum CatalogType {

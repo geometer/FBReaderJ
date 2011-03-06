@@ -39,7 +39,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	private String myInitializedDataSid;
 	private String myAccount;
-	private final HashMap<String, NetworkLibraryItem> myPurchasedBooks = new HashMap<String, NetworkLibraryItem>();
+	private final HashMap<String, NetworkItem> myPurchasedBooks = new HashMap<String, NetworkItem>();
 
 	public LitResAuthenticationManager(INetworkLink link, String sslCertificate) {
 		super(link, sslCertificate);
@@ -352,7 +352,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		return new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
 			SSLCertificate,
-			new LitResXMLReader(Link, new LinkedList<NetworkLibraryItem>())
+			new LitResXMLReader(Link, new LinkedList<NetworkItem>())
 		);
 	}
 
@@ -363,7 +363,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private void loadPurchasedBooksOnSuccess(LitResNetworkRequest purchasedBooksRequest) {
 		LitResXMLReader reader = (LitResXMLReader)purchasedBooksRequest.Reader;
 		myPurchasedBooks.clear();
-		for (NetworkLibraryItem item: reader.Books) {
+		for (NetworkItem item: reader.Books) {
 			if (item instanceof NetworkBookItem) {
 				NetworkBookItem book = (NetworkBookItem)item;
 				myPurchasedBooks.put(book.Id, book);
