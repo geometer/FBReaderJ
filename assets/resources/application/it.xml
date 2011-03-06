@@ -621,6 +621,7 @@
 		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

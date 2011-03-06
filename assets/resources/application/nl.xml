@@ -621,6 +621,7 @@
 		<node name="permissionDenied" value="Toegang geweigerd"/>
 		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
 		<node name="emptyCatalog" value="Catalogus is leeg"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

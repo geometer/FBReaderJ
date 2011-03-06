@@ -624,6 +624,7 @@
 		<node name="permissionDenied" value="Désolé, accès refusé"/>
 		<node name="noFavorites" value="Votre liste de favoris est vide"/>
 		<node name="emptyCatalog" value="Le catalogue est vide"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navigateur"/>

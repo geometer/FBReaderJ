@@ -620,6 +620,7 @@
 		<node name="permissionDenied" value="Нет доступа к файлам" />
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
 		<node name="emptyCatalog" value="Каталог пуст"/>
+		<node name="emptyBasket" value="В корзине нет книг"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>

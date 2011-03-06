@@ -573,10 +573,6 @@
 			<node name="noRequiredInformation" value="ข้อมูลที่ต้องการไม่ได้ระบุในแคตตาล็อก"/>
 			<node name="cacheDirectoryError" value="ไม่สามารถสร้างแคชสำหรับไดเรคทอรี"/>
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="ข้อมูล"/>
-			<node name="message" value="แคตตาล็อกไม่มีข้อมูล"/>
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="ผลการค้นหา"/>
 			<node name="message" value="ไม่พบหนังสือที่ต้องการค้นหา"/>
@@ -624,6 +620,8 @@
 		<node name="dictionaryIsNotInstalled" value="ขออภัย, พจนานุกรมไม่ได้รับการติดตั้ง"/>
 		<node name="permissionDenied" value="ขออภัย, ไม่ได้รับการอนุญาต"/>
 		<node name="noFavorites" value="ขออภัย, ไม่มีข้อมูลในรายการโปรดของคุณ"/>
+		<node name="emptyCatalog" value="แคตตาล็อกไม่มีข้อมูล"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="เว็บเบราว์เซอร์"/>

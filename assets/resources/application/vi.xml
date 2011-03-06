@@ -621,6 +621,7 @@
 		<node name="permissionDenied" value="Xin lỗi, từ chối cho phép "/>
 		<node name="noFavorites" value="Xin lỗi, danh sách yêu thích của bạn đang trống"/>
 		<node name="emptyCatalog" value="Danh mục rỗng"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Trình duyệt"/>

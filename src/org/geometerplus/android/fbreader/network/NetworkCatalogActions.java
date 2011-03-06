@@ -81,7 +81,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		boolean hasItems = false;
 
 		final String catalogUrl = item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		if (catalogUrl != null) {
+		if (catalogUrl != null &&
+			(!(item instanceof BasketItem) || item.Link.basket().bookIds().size() > 0)) {
 			addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
 			hasItems = true;
 		}
@@ -231,8 +232,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		switch (actionCode) {
 			case OPEN_CATALOG_ITEM_ID:
-				doExpandCatalog(activity, catalogTree);
+			{
+				final NetworkCatalogItem item = catalogTree.Item;
+				if (item instanceof BasketItem && item.Link.basket().bookIds().size() == 0) {
+					UIUtil.showErrorMessage(activity, "emptyBasket");
+				} else {
+					doExpandCatalog(activity, catalogTree);
+				}
 				return true;
+			}
 			case OPEN_IN_BROWSER_ITEM_ID:
 				Util.openInBrowser(
 					activity,

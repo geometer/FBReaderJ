@@ -621,6 +621,7 @@
 		<node name="permissionDenied" value="对不起，没有权限"/>
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
 		<node name="emptyCatalog" value="空书库目录"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="浏览器" />

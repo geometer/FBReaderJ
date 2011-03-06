@@ -621,6 +621,7 @@
 		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
 		<node name="emptyCatalog" value="Katalog je prázdný"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>
