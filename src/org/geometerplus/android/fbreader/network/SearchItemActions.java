@@ -25,7 +25,7 @@ import android.view.ContextMenu;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.SearchResult;
-
+import org.geometerplus.fbreader.network.tree.SearchItemTree;
 
 class SearchItemActions extends NetworkTreeActions {
 
@@ -39,7 +39,7 @@ class SearchItemActions extends NetworkTreeActions {
 
 	@Override
 	public String getTreeTitle(NetworkTree tree) {
-		final SearchResult result = ((SearchItemTree) tree).getSearchResult();
+		final SearchResult result = ((SearchItemTree)tree).getSearchResult();
 		if (result != null) {
 			return result.Summary;
 		}
@@ -50,7 +50,7 @@ class SearchItemActions extends NetworkTreeActions {
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
 
-		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey());
 
 		if (!isLoading) {
 			addMenuItem(menu, RUN_SEARCH_ITEM_ID, "search");
@@ -61,7 +61,7 @@ class SearchItemActions extends NetworkTreeActions {
 
 	@Override
 	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
-		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
+		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey());
 		if (!isLoading) {
 			return RUN_SEARCH_ITEM_ID;
 		}

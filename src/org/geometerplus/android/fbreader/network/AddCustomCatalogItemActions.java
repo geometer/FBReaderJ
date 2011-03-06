@@ -20,14 +20,14 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.ContextMenu;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-
+import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 
 class AddCustomCatalogItemActions extends NetworkTreeActions {
-
 	public static final int RUN_ITEM_ID = 0;
 
 	@Override
@@ -70,6 +70,6 @@ class AddCustomCatalogItemActions extends NetworkTreeActions {
 	}
 
 	public static void addCustomCatalog(Activity activity) {
-		NetworkDialog.show(activity, NetworkDialog.DIALOG_CUSTOM_CATALOG, null, null);
+		activity.startActivity(new Intent(activity, AddCustomCatalogActivity.class));
 	}
 }

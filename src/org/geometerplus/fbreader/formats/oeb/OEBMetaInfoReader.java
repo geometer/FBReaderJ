@@ -83,7 +83,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private int myReadState;
 	private boolean myReadMetaData;
 
-	private final StringBuffer myBuffer = new StringBuffer();
+	private final StringBuilder myBuffer = new StringBuilder();
 
 	@Override
 	public boolean processNamespaces() {

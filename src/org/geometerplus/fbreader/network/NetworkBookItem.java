@@ -25,7 +25,7 @@ import java.io.File;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 
-public final class NetworkBookItem extends NetworkLibraryItem {
+public final class NetworkBookItem extends NetworkItem {
 
 	public static class AuthorData implements Comparable<AuthorData> {
 		public final String DisplayName;
@@ -59,7 +59,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 				return false;
 			}
 			final AuthorData data = (AuthorData) o;
-			return SortKey == data.SortKey && DisplayName == data.DisplayName;
+			return SortKey.equals(data.SortKey) && DisplayName.equals(data.DisplayName);
 		}
 
 		@Override
@@ -80,7 +80,7 @@ public final class NetworkBookItem extends NetworkLibraryItem {
 	private final LinkedList<BookReference> myReferences;
 
 	/**
-	 * Creates new NetworkLibraryItem instance.
+	 * Creates new NetworkItem instance.
 	 *
 	 * @param link          corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param id            string that uniquely identifies this book item. Must be not <code>null</code>.

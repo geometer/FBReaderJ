@@ -31,8 +31,8 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
-
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;
@@ -119,6 +119,7 @@ public class NetworkLibrary {
 		allCodes.removeAll(languageCodes());
 		allCodes.addAll(codes);
 		activeLanguageCodesOption().setValue(commaSeparatedString(allCodes));
+		invalidateChildren();
 	}
 
 	private String commaSeparatedString(Collection<String> codes) {
@@ -148,9 +149,9 @@ public class NetworkLibrary {
 	}
 
 	private final RootTree myRootTree = new RootTree();
+	private SearchItemTree mySearchItemTree;
 
-	private boolean myUpdateChildren = true;
-	private boolean myInvalidateChildren;
+	private boolean myChildrenAreInvalid = true;
 	private boolean myUpdateVisibility;
 
 	private NetworkLibrary() {
@@ -178,35 +179,20 @@ public class NetworkLibrary {
 			db.loadCustomLinks(
 				new NetworkDatabase.ICustomLinksHandler() {
 					public void handleCustomLinkData(int id, String siteName,
-							String title, String summary, String icon, Map<String, String> links) {
-						final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(id, siteName, title, summary, icon, links);
-						if (link != null) {
+							String title, String summary, Map<String,UrlInfo> infos) {
+						if (title != null &&
+							siteName != null &&
+							infos.get(INetworkLink.URL_MAIN) != null) {
+							final ICustomNetworkLink link = new OPDSCustomLink(
+								id, siteName, title, summary, infos
+							);
 							addLinkInternal(link);
-							link.setSaveLinkListener(myChangesListener);
 						}
 					}
 				}
 			);
 		}
 
-		/*testDate(new ATOMUpdated(2010,  1,  1,  1,  0,  0,  0,  2,  0),
-				 new ATOMUpdated(2009, 12, 31, 23,  0,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2010, 12, 31, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2011,  1,  1,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2010,  1, 31, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2010,  2,  1,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2010,  2, 28, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2010,  3,  1,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2012,  2, 28, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2012,  2, 29,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0, -1, -30),
-				 new ATOMUpdated(2012,  2, 16,  1, 10,  0,  0,  0,  0));
-		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  1,  0,  3, 30),
-				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));
-		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30),
-				 new ATOMUpdated(2012,  2, 15, 23, 40,  1,  0,  3, 30));
-		testDate(new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0.001f,  3, 30),
-				 new ATOMUpdated(2012,  2, 15, 23, 40,  0,  0,  3, 30));*/
 		myIsAlreadyInitialized = true;
 	}
 
@@ -258,6 +244,15 @@ public class NetworkLibrary {
 					}
 				}
 			}
+			for (INetworkLink link : myLinks) {
+				if (link instanceof ICustomNetworkLink) {
+					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
+					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
+						customLink.reloadInfo(true);
+						NetworkDatabase.Instance().saveCustomLink(customLink);
+					}
+				}
+			}
 		}
 	}
 
@@ -267,13 +262,12 @@ public class NetworkLibrary {
 	// synchronize() method MUST be called after this method
 	public void finishBackgroundUpdate() {
 		synchronized (myBackgroundLock) {
-			if (myBackgroundLinks == null) {
-				return;
-			}
 			synchronized (myLinks) {
-				removeAllLoadedLinks();
-				myLinks.addAll(myBackgroundLinks);
-				updateChildren();
+				if (myBackgroundLinks != null) {
+					removeAllLoadedLinks();
+					myLinks.addAll(myBackgroundLinks);
+				}
+				invalidateChildren();
 			}
 		}
 	}
@@ -291,36 +285,23 @@ public class NetworkLibrary {
 		return url;
 	}
 
-	public void invalidateChildren() {
-		myInvalidateChildren = true;
-	}
-
-	public void updateChildren() {
-		myUpdateChildren = true;
+	private void invalidateChildren() {
+		myChildrenAreInvalid = true;
 	}
 
 	public void invalidateVisibility() {
 		myUpdateVisibility = true;
 	}
 
-
-	private static boolean linksEqual(INetworkLink l1, INetworkLink l2) {
-		return l1 == l2 || l1.getSiteName().equals(l2.getSiteName());
-	}
-
-	private static boolean linkIsInvalid(INetworkLink link, INetworkLink nodeLink) {
-		if (link instanceof ICustomNetworkLink) {
-			if (link != nodeLink) {
-				throw new RuntimeException("Two equal custom links!!! That's impossible");
-			}
-			return ((ICustomNetworkLink) link).hasChanges();
-		}
-		return !link.equals(nodeLink);
+	private static boolean linkIsChanged(INetworkLink link) {
+		return
+			link instanceof ICustomNetworkLink &&
+			((ICustomNetworkLink)link).hasChanges();
 	}
 
 	private static void makeValid(INetworkLink link) {
 		if (link instanceof ICustomNetworkLink) {
-			((ICustomNetworkLink) link).resetChanges();
+			((ICustomNetworkLink)link).resetChanges();
 		}
 	}
 
@@ -342,13 +323,14 @@ public class NetworkLibrary {
 						currentNode = nodeIterator.next();
 					}
 					if (!(currentNode instanceof NetworkCatalogTree)) {
+						toRemove.add(currentNode);
 						currentNode = null;
 						++nodeCount;
 						continue;
 					}
-					final INetworkLink nodeLink = ((NetworkCatalogTree) currentNode).Item.Link;
-					if (linksEqual(link, nodeLink)) {
-						if (linkIsInvalid(link, nodeLink)) {
+					final INetworkLink nodeLink = ((NetworkCatalogTree)currentNode).Item.Link;
+					if (link == nodeLink) {
+						if (linkIsChanged(link)) {
 							toRemove.add(currentNode);
 						} else {
 							processed = true;
@@ -360,12 +342,12 @@ public class NetworkLibrary {
 						INetworkLink newNodeLink = null;
 						for (int j = i; j < links.size(); ++j) {
 							final INetworkLink jlnk = links.get(j);
-							if (linksEqual(nodeLink, jlnk)) {
+							if (nodeLink == jlnk) {
 								newNodeLink = jlnk;
 								break;
 							}
 						}
-						if (newNodeLink == null || linkIsInvalid(newNodeLink, nodeLink)) {
+						if (newNodeLink == null || linkIsChanged(nodeLink)) {
 							toRemove.add(currentNode);
 							currentNode = null;
 							++nodeCount;
@@ -387,30 +369,28 @@ public class NetworkLibrary {
 			if (currentNode == null) {
 				currentNode = nodeIterator.next();
 			}
-			if (currentNode instanceof NetworkCatalogTree) {
-				toRemove.add(currentNode);
-			}
+			toRemove.add(currentNode);
 			currentNode = null;
 		}
 
 		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 		}
+		new AddCustomCatalogItemTree(myRootTree);
+		mySearchItemTree = new SearchItemTree(myRootTree, 0);
 	}
 
 	private void updateVisibility() {
 		for (FBTree tree : myRootTree.subTrees()) {
-			if (!(tree instanceof NetworkCatalogTree)) {
-				continue;
+			if (tree instanceof NetworkCatalogTree) {
+				((NetworkCatalogTree)tree).updateVisibility();
 			}
-			((NetworkCatalogTree) tree).updateVisibility();
 		}
 	}
 
 	public void synchronize() {
-		if (myUpdateChildren || myInvalidateChildren) {
-			myUpdateChildren = false;
-			myInvalidateChildren = false;
+		if (myChildrenAreInvalid) {
+			myChildrenAreInvalid = false;
 			makeUpToDate();
 		}
 		if (myUpdateVisibility) {
@@ -419,17 +399,37 @@ public class NetworkLibrary {
 		}
 	}
 
-	public NetworkTree getTree() {
+	public NetworkTree getRootTree() {
 		return myRootTree;
 	}
 
+	public SearchItemTree getSearchItemTree() {
+		return mySearchItemTree;
+	}
+
+	public NetworkTree getTreeByKey(NetworkTree.Key key) {
+		if (key.Parent == null) {
+			return key.equals(myRootTree.getUniqueKey()) ? myRootTree : null;
+		}
+		final NetworkTree parentTree = getTreeByKey(key.Parent);
+		if (parentTree == null) {
+			return null;
+		}
+		for (FBTree tree : parentTree.subTrees()) {
+			final NetworkTree nTree = (NetworkTree)tree;
+			if (key.equals(nTree.getUniqueKey())) {
+				return nTree;
+			}
+		}
+		return null;
+	}
 
 	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
 		final NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
-			public synchronized void onNewItem(INetworkLink link, NetworkLibraryItem item) {
+			public synchronized void onNewItem(INetworkLink link, NetworkItem item) {
 				listener.onNewItem(link, item);
 			}
 			public synchronized boolean confirmInterrupt() {
@@ -442,7 +442,7 @@ public class NetworkLibrary {
 
 		synchronized (myLinks) {
 			for (INetworkLink link : activeLinks()) {
-				final NetworkOperationData data = link.createOperationData(link, synchronizedListener);
+				final NetworkOperationData data = link.createOperationData(synchronizedListener);
 				final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
 				if (request != null) {
 					dataList.add(data);
@@ -468,12 +468,6 @@ public class NetworkLibrary {
 		}
 	}
 
-	private ICustomNetworkLink.SaveLinkListener myChangesListener = new ICustomNetworkLink.SaveLinkListener() {
-		public void onSaveLink(ICustomNetworkLink link) {
-			NetworkDatabase.Instance().saveCustomLink(link);
-		}
-	};
-
 	private <T extends INetworkLink> void addLinkInternal(T link) {
 		synchronized (myLinks) {
 			myLinks.add(link);
@@ -481,9 +475,21 @@ public class NetworkLibrary {
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
-		addLinkInternal(link);
-		link.setSaveLinkListener(myChangesListener);
-		link.saveLink();
+		final int id = link.getId();
+		if (id == ICustomNetworkLink.INVALID_ID) {
+			addLinkInternal(link);
+		} else {
+			for (int i = myLinks.size() - 1; i >= 0; --i) {
+				final INetworkLink l = myLinks.get(i);
+				if (l instanceof ICustomNetworkLink &&
+					((ICustomNetworkLink)l).getId() == id) {
+					myLinks.set(i, link);
+					break;
+				}
+			}
+		}
+		NetworkDatabase.Instance().saveCustomLink(link);
+		invalidateChildren();
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
@@ -491,28 +497,6 @@ public class NetworkLibrary {
 			myLinks.remove(link);
 		}
 		NetworkDatabase.Instance().deleteCustomLink(link);
-		link.setSaveLinkListener(null);
-	}
-
-	public boolean hasCustomLinkTitle(String title, INetworkLink exceptFor) {
-		synchronized (myLinks) {
-			for (INetworkLink link : myLinks) {
-				if (link != exceptFor && link.getTitle().equals(title)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public boolean hasCustomLinkSite(String siteName, INetworkLink exceptFor) {
-		synchronized (myLinks) {
-			for (INetworkLink link : myLinks) {
-				if (link != exceptFor && link.getSiteName().equals(siteName)) {
-					return true;
-				}
-			}
-		}
-		return false;
+		invalidateChildren();
 	}
 }
