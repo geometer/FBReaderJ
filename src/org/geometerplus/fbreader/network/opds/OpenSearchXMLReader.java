@@ -30,15 +30,12 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 class OpenSearchXMLReader extends ZLXMLReaderAdapter {
-
 	private final List<OpenSearchDescription> myDescriptions;
-	private final int myItemsPerPage;
 
 	private final String myBaseURL;
 
-	public OpenSearchXMLReader(String baseUrl, List<OpenSearchDescription> descriptions, int itemsPerPage) {
+	public OpenSearchXMLReader(String baseUrl, List<OpenSearchDescription> descriptions) {
 		myDescriptions = descriptions;
-		myItemsPerPage = itemsPerPage;
 		myBaseURL = baseUrl;
 	}
 
@@ -115,7 +112,7 @@ class OpenSearchXMLReader extends ZLXMLReaderAdapter {
 					final int indexOffset = parseInt(attributes.getValue("indexOffset"));
 					final int pageOffset = parseInt(attributes.getValue("pageOffset"));
 					final OpenSearchDescription descr =
-						new OpenSearchDescription(template, myItemsPerPage, indexOffset, pageOffset);
+						new OpenSearchDescription(template, indexOffset, pageOffset);
 					if (descr.isValid()) {
 						myDescriptions.add(descr);
 					}

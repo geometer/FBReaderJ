@@ -1,7 +1,11 @@
-===== 0.99.14 (??? ??, 2011) =====
+===== 0.99.14 (Mar ??, 2011) =====
 * Thai localization (by Samphan Pojanasophanakul)
 * Fixed TTF font style detection
 * opds:// URLs support has been implemented
+* Unexpected search call has been fixed
+* Ignore case comparison for zip entry names
+* Fixed custom OPDS link search
+* Periodical update of custom links information has been added
 
 ===== 0.99.13 (Feb 13, 2011) =====
 * Fixed book/position forgetting bug

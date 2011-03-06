@@ -34,7 +34,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-class OPDSNetworkLink extends AbstractNetworkLink {
+public class OPDSNetworkLink extends AbstractNetworkLink {
 	private TreeMap<RelationAlias, String> myRelationAliases;
 
 	private TreeMap<String,NetworkCatalogItem.Accessibility> myUrlConditions;
@@ -44,9 +44,9 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 
 	private final boolean myHasStableIdentifiers;
 
-	OPDSNetworkLink(String siteName, String title, String summary, String icon, String language,
-			Map<String, String> links, boolean hasStableIdentifiers) {
-		super(siteName, title, summary, icon, language, links);
+	OPDSNetworkLink(String siteName, String title, String summary, String language,
+			Map<String,UrlInfo> infos, boolean hasStableIdentifiers) {
+		super(siteName, title, summary, language, infos);
 		myHasStableIdentifiers = hasStableIdentifiers;
 	}
 
@@ -113,13 +113,12 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	@Override
-	public OPDSCatalogItem.State createOperationData(INetworkLink link,
-			NetworkOperationData.OnNewItemListener listener) {
-		return new OPDSCatalogItem.State(link, listener);
+	public OPDSCatalogItem.State createOperationData(NetworkOperationData.OnNewItemListener listener) {
+		return new OPDSCatalogItem.State(this, listener);
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
-		final String url = getLink(URL_SEARCH);
+		final String url = getUrlInfo(URL_SEARCH).URL;
 		if (url == null) {
 			return null;
 		}
@@ -135,9 +134,9 @@ class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public NetworkCatalogItem libraryItem() {
-		TreeMap<Integer, String> urlMap = new TreeMap<Integer, String>();
-		urlMap.put(NetworkCatalogItem.URL_CATALOG, getLink(URL_MAIN));
-		return new OPDSCatalogItem(this, getTitle(), getSummary(), getIcon(), urlMap, myExtraData);
+		TreeMap<Integer,String> urlMap = new TreeMap<Integer,String>();
+		urlMap.put(NetworkCatalogItem.URL_CATALOG, getUrlInfo(URL_MAIN).URL);
+		return new OPDSCatalogItem(this, getTitle(), getSummary(), getUrlInfo(URL_ICON).URL, urlMap, myExtraData);
 	}
 
 	public NetworkAuthenticationManager authenticationManager() {

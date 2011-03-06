@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Per autore">
+			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Apri catalogo"/>
 		<node name="showResults" value="Mostra risultati"/>
 		<node name="showBooks" value="Mostra libri"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="Cancella esempio"/>
 		<node name="downloadDemo" value="Scarica esempio"/>
 		<node name="buy" value="Compra (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Apri nel browser" />
 		<node name="stopLoading" value="Ferma caricamento" />
 		<node name="stopSearching" value="Ferma ricerca" />
@@ -109,6 +123,7 @@
 		<node name="series" value="Serie:" />
 		<node name="indexInSeries" value="Indice in serie:" />
 		<node name="tags" value="Etichette:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Info Libro" />
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" toBeTranslated="true" value="Required information is not specified in the catalog" />
 			<node name="cacheDirectoryError" toBeTranslated="true" value="Unable to create cache directory" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Informazioni" />
-			<node name="message" value="Il catalogo è vuoto" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Risultati ricerca" />
 			<node name="message" value="Non sono stati trovati libri adatti" />
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
 		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

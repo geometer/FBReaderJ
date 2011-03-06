@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="从收藏中移除"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="作者">
+			<node name="summary" value="按作者排序" />
+		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="打开书库目录" />
 		<node name="showResults" value="显示结果"/>
 		<node name="showBooks" value="显示书籍"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="删除试读本" />
 		<node name="downloadDemo" value="下载试读本" />
 		<node name="buy" value="购买(%s)" />
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="在浏览器中打开" />
 		<node name="stopLoading" value="停止加载" />
 		<node name="stopSearching" value="停止搜索" />
@@ -109,6 +123,7 @@
 		<node name="series" value="系列:" />
 		<node name="indexInSeries" value="系列序号:" />
 		<node name="tags" value="标签:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="书籍信息" />
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" value="书库目录中必须的信息没有定义" />
 			<node name="cacheDirectoryError" value="无法创建缓存目录" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="信息" />
-			<node name="message" value="空书库目录" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="搜索结果" />
 			<node name="message" value="没有找到对应的书籍." />
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="抱歉，你没有安装字典."/>
 		<node name="permissionDenied" value="对不起，没有权限"/>
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
+		<node name="emptyCatalog" value="空书库目录"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="浏览器" />

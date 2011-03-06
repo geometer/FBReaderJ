@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
-import org.geometerplus.fbreader.network.NetworkLibraryItem;
+import org.geometerplus.fbreader.network.NetworkItem;
 
 abstract class ItemsLoadingRunnable implements Runnable {
 	private final ItemsLoadingHandler myHandler;
@@ -99,7 +99,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 			doLoading(new NetworkOperationData.OnNewItemListener() {
 				private long myUpdateTime;
 				private int myItemsNumber;
-				public void onNewItem(INetworkLink link, NetworkLibraryItem item) {
+				public void onNewItem(INetworkLink link, NetworkItem item) {
 					myHandler.addItem(link, item);
 					++myItemsNumber;
 					final long now = System.currentTimeMillis();

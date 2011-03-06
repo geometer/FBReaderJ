@@ -17,24 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.tree;
+package org.geometerplus.fbreader.network;
 
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkTree;
+import java.util.*;
 
-public final class RootTree extends NetworkTree {
-	@Override
-	public String getName() {
-		return null;
-	}
-
-	@Override
-	public NetworkItem getHoldedItem() {
-		return null;
-	}
-
-	@Override
-	protected String getStringId() {
-		return "@Root";
-	}
+public interface Basket {
+	void add(NetworkBookItem book);
+	void remove(NetworkBookItem book);
+	boolean contains(NetworkBookItem book);
+	List<String> bookIds();
+	void clear();
 }

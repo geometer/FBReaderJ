@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -151,6 +152,7 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 			};
 			UIUtil.wait("search", runnable, this);
+			startActivity(new Intent(this, getClass()));
 		} else {
 			super.onNewIntent(intent);
 		}

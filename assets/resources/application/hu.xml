@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Szerzők">
+			<node name="summary" value="Könyvek szerzők szerint"/>
+		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Katalógus megnyitása"/>
 		<node name="showResults" value="Eredmények"/>
 		<node name="showBooks" value="Könyvek"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="Minta törlése"/>
 		<node name="downloadDemo" value="Minta letöltése"/>
 		<node name="buy" value="Vásárlás (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Megnyitás böngészőben" />
 		<node name="stopLoading" value="Letöltés leállítása" />
 		<node name="stopSearching" value="Keresés leállítása" />
@@ -109,6 +123,7 @@
 		<node name="series" value="Sorozat:" />
 		<node name="indexInSeries" value="Sorszám:" />
 		<node name="tags" value="Címkék:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Könyv adatai" />
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" value="Szükséges információ nincs megadva a katalógusban" />
 			<node name="cacheDirectoryError" value="Gyorsítótár létrehozása sikertelen" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Információ" />
-			<node name="message" value="A katalógus üres" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Eredmények" />
 			<node name="message" value="Nem található megfelelő könyv" />
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="Sajnos nincs telepítve szótár"/>
 		<node name="permissionDenied" value="Sanos nem engedélyezett"/>
 		<node name="noFavorites" value="A Kedvencek listája üres"/>
+		<node name="emptyCatalog" value="A katalógus üres"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Böngésző"/>

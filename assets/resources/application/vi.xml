@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Theo tác giả">
+			<node name="summary" value="Sách được xếp theo tác giả"/>
+		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Mở danh mục"/>
 		<node name="showResults" value="Hiện kết quả"/>
 		<node name="showBooks" value="Show books"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="Xóa bản thử"/>
 		<node name="downloadDemo" value="Tải về bản thử"/>
 		<node name="buy" value="Mua (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Mở trình duyệt" />
 		<node name="stopLoading" value="Dừng tải" />
 		<node name="stopSearching" value="Dừng tìm kiếm" />
@@ -109,6 +123,7 @@
 		<node name="series" value="Bộ sách:" />
 		<node name="indexInSeries" value="Chỉ mục trong bộ:" />
 		<node name="tags" value="Từ khóa:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Thông tin sách" />
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" value="Thông tin yêu cầu không định vị được trong catalo" />
 			<node name="cacheDirectoryError" value="Không thể tạo thư mục đệm" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Thông tin" />
-			<node name="message" value="Danh mục rỗng" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Kết quả Tìm kiếm" />
 			<node name="message" value="Không tìm thấy sách thích hợp" />
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="Xin lỗi, từ điển chưa được cài"/>
 		<node name="permissionDenied" value="Xin lỗi, từ chối cho phép "/>
 		<node name="noFavorites" value="Xin lỗi, danh sách yêu thích của bạn đang trống"/>
+		<node name="emptyCatalog" value="Danh mục rỗng"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Trình duyệt"/>

@@ -69,7 +69,12 @@ public class NetworkBookTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkLibraryItem getHoldedItem() {
+	public NetworkItem getHoldedItem() {
 		return Book;
+	}
+
+	@Override
+	protected String getStringId() {
+		return "@Book:" + Book.Id + ":" + Book.Title;
 	}
 }

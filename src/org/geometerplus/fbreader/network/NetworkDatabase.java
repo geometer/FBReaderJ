@@ -35,7 +35,7 @@ public abstract class NetworkDatabase {
 	protected abstract void executeAsATransaction(Runnable actions);
 
 	public interface ICustomLinksHandler {
-		void handleCustomLinkData(int id, String siteName, String title, String summary, String icon, Map<String, String> links);
+		void handleCustomLinkData(int id, String siteName, String title, String summary, Map<String,UrlInfo> infos);
 	}
 
 	protected abstract void loadCustomLinks(ICustomLinksHandler handler);
