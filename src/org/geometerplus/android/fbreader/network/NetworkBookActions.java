@@ -185,8 +185,9 @@ class NetworkBookActions extends NetworkTreeActions {
 				final String price = ((BuyBookReference) reference).Price;
 				actions.add(new Action(id, "buy", price));
 			}
-			if (book.Link.supportsBasket()) {
-				if (book.Link.isBookInBasket(book)) {
+			final Basket basket = book.Link.basket();
+			if (basket != null) {
+				if (basket.contains(book)) {
 					actions.add(new Action(REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
 				} else {
 					actions.add(new Action(ADD_BOOK_TO_BASKET, "addToBasket"));
@@ -262,10 +263,10 @@ class NetworkBookActions extends NetworkTreeActions {
 				NetworkView.Instance().showBookInfoActivity(activity, book);
 				return true;
 			case ADD_BOOK_TO_BASKET:
-				book.Link.addToBasket(book);
+				book.Link.basket().add(book);
 				return true;
 			case REMOVE_BOOK_FROM_BASKET:
-				book.Link.removeFromBasket(book);
+				book.Link.basket().remove(book);
 				return true;
 		}
 		return false;

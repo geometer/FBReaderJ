@@ -24,15 +24,14 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
-public abstract class AbstractNetworkLink implements INetworkLink {
+public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	protected String mySiteName;
 	protected String myTitle;
 	protected String mySummary;
 	protected final String myLanguage;
 	protected final TreeMap<String,UrlInfo> myInfos;
 
-	private boolean mySupportsBasket;
-	private final ZLStringListOption myBooksInBasketOption;
+	private ZLStringListOption myBooksInBasketOption;
 
 	/**
 	 * Creates new NetworkLink instance.
@@ -49,7 +48,6 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		mySummary = summary;
 		myLanguage = language != null ? language : "multi";
 		myInfos = new TreeMap<String,UrlInfo>(infos);
-		myBooksInBasketOption = new ZLStringListOption(siteName, "Basket", null);
 	}
 
 	public final String getSiteName() {
@@ -82,15 +80,18 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 	}
 
 	public final void setSupportsBasket() {
-		mySupportsBasket = true;
+		if (myBooksInBasketOption == null) {
+			myBooksInBasketOption = new ZLStringListOption(mySiteName, "Basket", null);
+		}
 	}
 
-	public final boolean supportsBasket() {
-		return mySupportsBasket;
+	public final Basket basket() {
+		return myBooksInBasketOption != null ? this : null;
 	}
 
-	public final void addToBasket(NetworkBookItem book) {
-		if (supportsBasket() && book.Id != null && !"".equals(book.Id)) {
+	// method from Basket interface
+	public final void add(NetworkBookItem book) {
+		if (book.Id != null && !"".equals(book.Id)) {
 			List<String> ids = myBooksInBasketOption.getValue();
 			if (!ids.contains(book.Id)) {
 				ids = new ArrayList(ids);
@@ -100,8 +101,9 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		}
 	}
 
-	public final void removeFromBasket(NetworkBookItem book) {
-		if (supportsBasket() && book.Id != null && !"".equals(book.Id)) {
+	// method from Basket interface
+	public final void remove(NetworkBookItem book) {
+		if (book.Id != null && !"".equals(book.Id)) {
 			List<String> ids = myBooksInBasketOption.getValue();
 			if (ids.contains(book.Id)) {
 				ids = new ArrayList(ids);
@@ -111,11 +113,18 @@ public abstract class AbstractNetworkLink implements INetworkLink {
 		}
 	}
 
-	public final boolean isBookInBasket(NetworkBookItem book) {
+	// method from Basket interface
+	public final void clear() {
+		myBooksInBasketOption.setValue(null);
+	}
+
+	// method from Basket interface
+	public final boolean contains(NetworkBookItem book) {
 		return myBooksInBasketOption.getValue().contains(book.Id);
 	}
 
-	public final List<String> booksInBasket() {
+	// method from Basket interface
+	public final List<String> bookIds() {
 		return myBooksInBasketOption.getValue();
 	}
 

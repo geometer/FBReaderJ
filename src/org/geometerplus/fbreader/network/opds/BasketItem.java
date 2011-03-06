@@ -38,7 +38,7 @@ public class BasketItem extends OPDSCatalogItem {
 	protected String getUrl() {
 		final StringBuilder builder = new StringBuilder();
 		boolean flag = false;
-		for (String bookId : Link.booksInBasket()) {
+		for (String bookId : Link.basket().bookIds()) {
 			if (flag) {
 				builder.append(',');
 			} else {
