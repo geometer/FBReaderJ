@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="Retirar de preferidos"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Por autor">
+			<node name="summary" value="Libros ordenados por autor"/>
+		</node>
+		<node name="byTitle" value="Por título">
+			<node name="summary" value="Libros ordenados por título"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Abrir o catalogo"/>
 		<node name="showResults" value="Mostrar resultados"/>
 		<node name="showBooks" value="Mostrar libros"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="Eliminar mostra"/>
 		<node name="downloadDemo" value="Descargar mostra"/>
 		<node name="buy" value="Comprar (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Abrir no navegador" />
 		<node name="stopLoading" value="Deter a carga" />
 		<node name="stopSearching" value="Deter a busca" />
@@ -109,6 +123,7 @@
 		<node name="series" value="Series:" />
 		<node name="indexInSeries" value="Índices das series:" />
 		<node name="tags" value="Etiquetas:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Información do libro" />
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" value="A información requirida non está indicada no catálogo" />
 			<node name="cacheDirectoryError" value="Non é posíbel crear o cartafol da caché" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Información" />
-			<node name="message" value="O catálogo está baleiro" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Resultados da busca" />
 			<node name="message" value="Non se atopa ningún libro coincidente" />
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="O dicionario non está instalado"/>
 		<node name="permissionDenied" value="Permiso denegado"/>
 		<node name="noFavorites" value="A súa lista de preferencias está baleira"/>
+		<node name="emptyCatalog" value="O catálogo está baleiro"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>

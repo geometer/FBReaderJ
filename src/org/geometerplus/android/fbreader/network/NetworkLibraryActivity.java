@@ -39,18 +39,41 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.ICustomNetworkLink;
-import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
-	final static String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
+	static final String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
 
-	final static String ADD_CATALOG_TITLE_KEY = "title";
-	final static String ADD_CATALOG_SUMMARY_KEY = "summary";
-	final static String ADD_CATALOG_ICON_KEY = "icon";
-	final static String ADD_CATALOG_ID_KEY = "id";
+	private static final String ADD_CATALOG_TITLE_KEY = "title";
+	private static final String ADD_CATALOG_SUMMARY_KEY = "summary";
+	private static final String ADD_CATALOG_ID_KEY = "id";
+	private static final String ADD_CATALOG_URLS_MAP_KEY = "urls";
+
+	static void addLinkToIntent(Intent intent, ICustomNetworkLink link) {
+		final String textUrl = link.getUrlInfo(INetworkLink.URL_MAIN).URL;
+		intent.setData(Uri.parse(textUrl));
+		intent
+			.putExtra(ADD_CATALOG_TITLE_KEY, link.getTitle())
+			.putExtra(ADD_CATALOG_SUMMARY_KEY, link.getSummary())
+			.putExtra(ADD_CATALOG_ID_KEY, link.getId())
+			.putExtra(ADD_CATALOG_URLS_MAP_KEY, link.urlInfoMap());
+	}
+
+	static ICustomNetworkLink getLinkFromIntent(Intent intent) {
+		final Uri uri = intent.getData();
+		if (uri == null || !intent.hasExtra(ADD_CATALOG_ID_KEY)) {
+			return null;
+		}
+
+		return new OPDSCustomLink(
+			intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID),
+			uri.getHost(),
+			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
+			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
+			(HashMap<String,UrlInfo>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
+		);
+	}
 
 	private NetworkTree myTree;
 	private volatile Intent myIntent;
@@ -73,25 +96,14 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	private void processIntent(Intent intent) {
-		final String action = intent.getAction();
-		if (ADD_CATALOG.equals(action)) {
-			final Uri uri = intent.getData();
-			final String title = intent.getStringExtra(ADD_CATALOG_TITLE_KEY);
-			final String summary = intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY);
-			final String icon = intent.getStringExtra(ADD_CATALOG_ICON_KEY);
-			final int id = intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID);
-			if (uri == null || title == null) {
-				return;
-			}
-			final ICustomNetworkLink link = OPDSLinkReader.createCustomLink(
-				id, uri.getHost(), title, summary, icon, uri.toString()
-			);
+		if (ADD_CATALOG.equals(intent.getAction())) {
+			final ICustomNetworkLink link = getLinkFromIntent(intent);
+			System.err.println("LINK = " + link);
 			if (link != null) {
 				runOnUiThread(new Runnable() {
 					public void run() {
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						library.addCustomLink(link);
-						library.updateChildren();
 						library.synchronize();
 						NetworkView.Instance().fireModelChangedAsync();
 						getListView().invalidateViews();
@@ -103,13 +115,13 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	private void prepareView() {
 		if (myTree == null) {
-			myTree = NetworkLibrary.Instance().getTree();
+			myTree = NetworkLibrary.Instance().getRootTree();
 			setListAdapter(new LibraryAdapter());
 			getListView().invalidateViews();
 		}
 	}
 
-	private static Initializator myInitializator; 
+	private static Initializator myInitializator;
 
 	@Override
 	public void onResume() {
@@ -227,19 +239,11 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			if (!NetworkView.Instance().isInitialized()) {
 				return 0;
 			}
-			return myTree.subTrees().size() + 2; // subtrees + <search item>
+			return myTree.subTrees().size();
 		}
 
 		public final NetworkTree getItem(int position) {
-			final int size = myTree.subTrees().size();
-			if (position == 0) {
-				return NetworkView.Instance().getSearchItemTree();
-			} else if (position > 0 && position <= size) {
-				return (NetworkTree)myTree.subTrees().get(position - 1);
-			} else if (position == size + 1) {
-				return NetworkView.Instance().getAddCustomCatalogItemTree();
-			}
-			return null;
+			return (NetworkTree)myTree.subTrees().get(position);
 		}
 
 		public final long getItemId(int position) {
@@ -274,11 +278,16 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		return true;
 	}
 
+	private static boolean searchIsInProgress() {
+		return NetworkView.Instance().containsItemsLoadingRunnable(
+			NetworkLibrary.Instance().getSearchItemTree().getUniqueKey()
+		);
+	}
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		final boolean searchInProgress = NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY);
-		menu.findItem(MENU_SEARCH).setEnabled(!searchInProgress);
+		menu.findItem(MENU_SEARCH).setEnabled(!searchIsInProgress());
 		return true;
 	}
 
@@ -316,7 +325,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 						}
 					}
 					library.setActiveLanguageCodes(newActiveCodes);
-					library.invalidateChildren();
 					library.synchronize();
 					NetworkView.Instance().fireModelChanged();
 				}
@@ -346,7 +354,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	@Override
 	public boolean onSearchRequested() {
-		if (NetworkView.Instance().containsItemsLoadingRunnable(NetworkSearchActivity.SEARCH_RUNNABLE_KEY)) {
+		if (searchIsInProgress()) {
 			return false;
 		}
 		final NetworkLibrary library = NetworkLibrary.Instance();

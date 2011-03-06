@@ -134,6 +134,7 @@
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkLibraryActivity" android:process=":networkLibrary" android:launchMode="singleTask" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.network.NetworkSearchActivity" />
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.network.AuthenticationActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog"/>
 		<activity android:name="org.geometerplus.android.fbreader.network.AddCustomCatalogActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />

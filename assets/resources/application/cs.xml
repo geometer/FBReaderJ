@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Podle autora">
+			<node name="summary" value="Knihy seřazeny podle autora"/>
+		</node>
+		<node name="byTitle" value="Podle názvu">
+			<node name="summary" value="Knihy seřazeny podle názvu"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>
 		<node name="showResults" value="Zobrazit výsledky"/>
 		<node name="showBooks" value="Zobrazit knihy"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="Odstranit ukázku"/>
 		<node name="downloadDemo" value="Stáhnout ukázku"/>
 		<node name="buy" value="Zakoupit (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Otevřít v prohlížeči" />
 		<node name="stopLoading" value="Zastavit načítání" />
 		<node name="stopSearching" value="Zastavit vyhledávání" />
@@ -109,6 +123,7 @@
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Díl v sérii:" />
 		<node name="tags" value="Štítky:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informace o knize" />
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" value="Požadovaná informace není uvedena v katalogu" />
 			<node name="cacheDirectoryError" value="Nelze vytvořit adresář mezipaměti" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Informace" />
-			<node name="message" value="Katalog je prázdný" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Výsledky vyhledávání" />
 			<node name="message" value="Nebyly nalezeny žádné vhodné knihy" />
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="Slovník není bohužel nainstalován"/>
 		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
+		<node name="emptyCatalog" value="Katalog je prázdný"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>

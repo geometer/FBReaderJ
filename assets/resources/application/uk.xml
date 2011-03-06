@@ -47,6 +47,18 @@
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
 	<node name="networkView">
+		<node name="byAuthor" value="Автори">
+			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
+		</node>
+		<node name="byTitle" value="By title" toBeTranslated="true">
+			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="byDate" value="By date" toBeTranslated="true">
+			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="openCatalog" value="Відкрити теку"/>
 		<node name="showResults" value="Показати результати"/>
 		<node name="showBooks" value="Показати книжки"/>
@@ -57,6 +69,8 @@
 		<node name="deleteDemo" value="Видалити уривок"/>
 		<node name="downloadDemo" value="Завантажити уривок"/>
 		<node name="buy" value="Придбати (%s)"/>
+		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
+		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Показати у браузері" />
 		<node name="stopLoading" value="Припинити завантаження" />
 		<node name="stopSearching" value="Припинити пошук" />
@@ -109,6 +123,7 @@
 		<node name="series" value="Серія:" />
 		<node name="indexInSeries" value="Номер у серії:" />
 		<node name="tags" value="Категорії:" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Інформація про книгу" />
@@ -559,10 +574,6 @@
 			<node name="noRequiredInformation" value="Необхідна інформація не знайдена в каталозі" />
 			<node name="cacheDirectoryError" value="Не вдається створити каталог для кеша" />
 		</node>
-		<node name="emptyCatalogBox">
-			<node name="title" value="Інформація" />
-			<node name="message" value="Каталог порожній" />
-		</node>
 		<node name="emptySearchResults">
 			<node name="title" value="Результати пошуку" />
 			<node name="message" value="Відповідних книг не знайдено" />
@@ -610,6 +621,8 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry" toBeTranslated="true"/>
 		<node name="permissionDenied" value="Permission denied, sorry" toBeTranslated="true"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="Каталог порожній"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>

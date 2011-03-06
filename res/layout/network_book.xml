@@ -101,116 +101,12 @@
 				android:paddingRight="10dp"
 				android:paddingTop="10dp"
 			>
-				<LinearLayout
-					android:id="@+id/network_book_title"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:orientation="horizontal"
-					android:paddingBottom="10dp"
-				>
-					<TextView
-						android:id="@+id/network_book_title_key"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-						android:textStyle="bold"
-						android:paddingRight="10dp"
-					/>
-					<TextView
-						android:id="@+id/network_book_title_value"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-					/>
-				</LinearLayout>
-				<LinearLayout
-					android:id="@+id/network_book_authors"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:orientation="horizontal"
-					android:paddingBottom="10dp"
-				>
-					<TextView
-						android:id="@+id/network_book_authors_key"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-						android:textStyle="bold"
-						android:paddingRight="10dp"
-					/>
-					<TextView
-						android:id="@+id/network_book_authors_value"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-					/>
-				</LinearLayout>
-				<LinearLayout
-					android:id="@+id/network_book_series"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:orientation="horizontal"
-					android:paddingBottom="10dp"
-				>
-					<TextView
-						android:id="@+id/network_book_series_key"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-						android:textStyle="bold"
-						android:paddingRight="10dp"
-					/>
-					<TextView
-						android:id="@+id/network_book_series_value"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-					/>
-				</LinearLayout>
-				<LinearLayout
-					android:id="@+id/network_book_series_index"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:orientation="horizontal"
-					android:paddingBottom="10dp"
-				>
-					<TextView
-						android:id="@+id/network_book_series_index_key"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-						android:textStyle="bold"
-						android:paddingRight="10dp"
-					/>
-					<TextView
-						android:id="@+id/network_book_series_index_value"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-					/>
-				</LinearLayout>
-				<LinearLayout
-					android:id="@+id/network_book_tags"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:orientation="horizontal"
-					android:paddingBottom="10dp"
-				>
-					<TextView
-						android:id="@+id/network_book_tags_key"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-						android:textStyle="bold"
-						android:paddingRight="10dp"
-					/>
-					<TextView
-						android:id="@+id/network_book_tags_value"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:textAppearance="?android:attr/textAppearanceMedium"
-					/>
-				</LinearLayout>
+				<include layout="@layout/book_info_pair" android:id="@+id/network_book_title" />
+				<include layout="@layout/book_info_pair" android:id="@+id/network_book_authors" />
+				<include layout="@layout/book_info_pair" android:id="@+id/network_book_series_title" />
+				<include layout="@layout/book_info_pair" android:id="@+id/network_book_series_index" />
+				<include layout="@layout/book_info_pair" android:id="@+id/network_book_tags" />
+				<include layout="@layout/book_info_pair" android:id="@+id/network_book_catalog" />
 			</LinearLayout>
 			<TextView
 				android:id="@+id/network_book_description_title"

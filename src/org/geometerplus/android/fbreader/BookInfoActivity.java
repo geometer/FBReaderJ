@@ -149,7 +149,7 @@ public class BookInfoActivity extends Activity {
 	}
 
 	private void setupInfoPair(int id, String key, CharSequence value) {
-		LinearLayout layout = (LinearLayout)findViewById(id);
+		final LinearLayout layout = (LinearLayout)findViewById(id);
 		if (value == null || value.length() == 0) {
 			layout.setVisibility(View.GONE);
 			return;

@@ -17,24 +17,43 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.tree;
+package org.geometerplus.fbreader.network;
 
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkTree;
+import java.util.Date;
+import java.io.Serializable;
 
-public final class RootTree extends NetworkTree {
-	@Override
-	public String getName() {
-		return null;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+
+public final class UrlInfo implements Serializable {
+	public static final UrlInfo NULL = new UrlInfo(null, null);
+
+	public final String URL;
+	public final Date Updated;
+
+	public UrlInfo(String url, Date updated) {
+		URL = url;
+		Updated = updated;
+	}
+
+	public UrlInfo(String url) {
+		this(url, new Date());
 	}
 
 	@Override
-	public NetworkItem getHoldedItem() {
-		return null;
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof UrlInfo)) {
+			return false;
+		}
+
+		final UrlInfo info = (UrlInfo)o;
+		return ZLMiscUtil.equals(URL, info.URL) && ZLMiscUtil.equals(Updated, info.Updated);
 	}
 
 	@Override
-	protected String getStringId() {
-		return "@Root";
+	public int hashCode() {
+		return ZLMiscUtil.hashCode(URL) + ZLMiscUtil.hashCode(Updated);
 	}
 }
