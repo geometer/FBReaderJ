@@ -127,7 +127,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	private static NetworkInitializer ourInitializer;
+	static NetworkInitializer ourInitializer;
 
 	@Override
 	public void onResume() {

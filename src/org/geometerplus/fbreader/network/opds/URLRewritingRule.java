@@ -90,7 +90,13 @@ class URLRewritingRule {
 					return url;
 				}
 				final Matcher matcher = Pattern.compile(pattern).matcher(url);
-				return matcher.matches() ? replacement.replace("%s", matcher.group(1)) : url;
+				if (matcher.matches()) {
+					System.err.println(matcher.groupCount());
+					for (int i = matcher.groupCount(); i >= 1; --i) {
+						url = replacement.replace("%" + i, matcher.group(1));
+					}
+				}
+				return url;
 			}
 		}
 	}
