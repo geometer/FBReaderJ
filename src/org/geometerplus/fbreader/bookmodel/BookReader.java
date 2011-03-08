@@ -312,6 +312,10 @@ public class BookReader {
 			myContentsBuffer.append(data, offset, length);
 		}
 	}
+
+	public final boolean hasContentsData() {
+		return myContentsBuffer.length() > 0;
+	}
 	
 	public final void beginContentsParagraph(int referenceNumber) {
 		beginContentsParagraph(Model.BookTextModel, referenceNumber);
