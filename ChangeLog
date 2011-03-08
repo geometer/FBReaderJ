@@ -6,6 +6,7 @@
 * Ignore case comparison for zip entry names
 * Fixed custom OPDS link search
 * Periodical update of custom links information has been added
+* Epub rendering issues (like unexpected paragraph ends) were fixed
 
 ===== 0.99.13 (Feb 13, 2011) =====
 * Fixed book/position forgetting bug
