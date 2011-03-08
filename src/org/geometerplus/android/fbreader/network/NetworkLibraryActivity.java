@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -96,10 +95,16 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		processIntent(intent);
 	}
 
+	void processSavedIntent() {
+		if (myIntent != null) {
+			processIntent(myIntent);
+			myIntent = null;
+		}
+	}
+
 	private void processIntent(Intent intent) {
 		if (ADD_CATALOG.equals(intent.getAction())) {
 			final ICustomNetworkLink link = getLinkFromIntent(intent);
-			System.err.println("LINK = " + link);
 			if (link != null) {
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -114,7 +119,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	private void prepareView() {
+	void prepareView() {
 		if (myTree == null) {
 			myTree = NetworkLibrary.Instance().getRootTree();
 			setListAdapter(new LibraryAdapter());
@@ -122,17 +127,17 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	private static Initializator ourInitializator;
+	private static NetworkInitializer ourInitializer;
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (!NetworkView.Instance().isInitialized()) {
-			if (ourInitializator == null) {
-				ourInitializator = new Initializator(this);
-				ourInitializator.start();
+			if (ourInitializer == null) {
+				ourInitializer = new NetworkInitializer(this);
+				ourInitializer.start();
 			} else {
-				ourInitializator.setActivity(this);
+				ourInitializer.setActivity(this);
 			}
 		} else {
 			prepareView();
@@ -145,94 +150,11 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	@Override
 	public void onDestroy() {
-		if (!NetworkView.Instance().isInitialized() && ourInitializator != null) {
-			ourInitializator.setActivity(null);
+		if (!NetworkView.Instance().isInitialized() && ourInitializer != null) {
+			ourInitializer.setActivity(null);
 		}
 		super.onDestroy();
 	}
-
-	private static class Initializator extends Handler {
-		private NetworkLibraryActivity myActivity;
-
-		public Initializator(NetworkLibraryActivity activity) {
-			myActivity = activity;
-		}
-
-		public void setActivity(NetworkLibraryActivity activity) {
-			myActivity = activity;
-		}
-
-		final DialogInterface.OnClickListener myListener = new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				if (which == DialogInterface.BUTTON_POSITIVE) {
-					Initializator.this.start();
-				} else if (myActivity != null) {
-					myActivity.finish();
-				}
-			}
-		};
-
-		// run this method only if myActivity != null
-		private void runInitialization() {
-			UIUtil.wait("loadingNetworkLibrary", new Runnable() {
-				public void run() {
-					String error = null;
-					try {
-						NetworkView.Instance().initialize();
-						if (myActivity.myIntent != null) {
-							myActivity.processIntent(myActivity.myIntent);
-							myActivity.myIntent = null;
-						}
-					} catch (ZLNetworkException e) {
-						error = e.getMessage();
-					}
-					Initializator.this.end(error);
-				}
-			}, myActivity);
-		}
-
-		// run this method only if myActivity != null
-		private void showTryAgainDialog(Activity activity, String error) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			final ZLResource boxResource = dialogResource.getResource("networkError");
-			final ZLResource buttonResource = dialogResource.getResource("button");
-			new AlertDialog.Builder(activity)
-				.setTitle(boxResource.getResource("title").getValue())
-				.setMessage(error)
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("tryAgain").getValue(), myListener)
-				.setNegativeButton(buttonResource.getResource("cancel").getValue(), myListener)
-				.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					public void onCancel(DialogInterface dialog) {
-						myListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-					}
-				})
-				.create().show();
-		}
-
-		@Override
-		public void handleMessage(Message message) {
-			if (myActivity == null) {
-				return;
-			} else if (message.what == 0) {
-				runInitialization(); // run initialization process
-			} else if (message.obj == null) {
-				myActivity.startService(new Intent(myActivity.getApplicationContext(), LibraryInitializationService.class));
-				myActivity.prepareView(); // initialization is complete successfully
-			} else {
-				showTryAgainDialog(myActivity, (String)message.obj); // handle initialization error
-			}
-		}
-
-		public void start() {
-			sendEmptyMessage(0);
-		}
-
-		private void end(String error) {
-			sendMessage(obtainMessage(1, error));
-		}
-	}
-
 
 	private final class LibraryAdapter extends BaseAdapter {
 		public final int getCount() {
