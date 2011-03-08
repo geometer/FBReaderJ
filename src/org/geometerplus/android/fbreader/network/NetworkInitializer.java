@@ -32,10 +32,13 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.android.util.UIUtil;
 
 class NetworkInitializer extends Handler {
+	static NetworkInitializer Instance;
+
 	private Activity myActivity;
 
 	public NetworkInitializer(Activity activity) {
-		myActivity = activity;
+		Instance = this;
+		setActivity(activity);
 	}
 
 	public void setActivity(Activity activity) {

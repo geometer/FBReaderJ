@@ -59,11 +59,11 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		super.onCreate(icicle);
 
 		if (!NetworkView.Instance().isInitialized()) {
-			if (NetworkLibraryActivity.ourInitializer == null) {
-				NetworkLibraryActivity.ourInitializer = new NetworkInitializer(this);
-				NetworkLibraryActivity.ourInitializer.start();
+			if (NetworkInitializer.Instance == null) {
+				new NetworkInitializer(this);
+				NetworkInitializer.Instance.start();
 			} else {
-				NetworkLibraryActivity.ourInitializer.setActivity(this);
+				NetworkInitializer.Instance.setActivity(this);
 			}
 			return;
 		}
@@ -107,8 +107,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onDestroy() {
-		if (!NetworkView.Instance().isInitialized() && NetworkLibraryActivity.ourInitializer != null) {
-			NetworkLibraryActivity.ourInitializer.setActivity(null);
+		if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
+			NetworkInitializer.Instance.setActivity(null);
 		}
 		if (myConnection != null) {
 			unbindService(myConnection);

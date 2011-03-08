@@ -127,17 +127,15 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	static NetworkInitializer ourInitializer;
-
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (!NetworkView.Instance().isInitialized()) {
-			if (ourInitializer == null) {
-				ourInitializer = new NetworkInitializer(this);
-				ourInitializer.start();
+			if (NetworkInitializer.Instance == null) {
+				new NetworkInitializer(this);
+				NetworkInitializer.Instance.start();
 			} else {
-				ourInitializer.setActivity(this);
+				NetworkInitializer.Instance.setActivity(this);
 			}
 		} else {
 			prepareView();
@@ -150,8 +148,8 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	@Override
 	public void onDestroy() {
-		if (!NetworkView.Instance().isInitialized() && ourInitializer != null) {
-			ourInitializer.setActivity(null);
+		if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
+			NetworkInitializer.Instance.setActivity(null);
 		}
 		super.onDestroy();
 	}
