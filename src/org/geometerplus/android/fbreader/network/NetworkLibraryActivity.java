@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -121,17 +122,17 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	private static Initializator myInitializator;
+	private static Initializator ourInitializator;
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (!NetworkView.Instance().isInitialized()) {
-			if (myInitializator == null) {
-				myInitializator = new Initializator(this);
-				myInitializator.start();
+			if (ourInitializator == null) {
+				ourInitializator = new Initializator(this);
+				ourInitializator.start();
 			} else {
-				myInitializator.setActivity(this);
+				ourInitializator.setActivity(this);
 			}
 		} else {
 			prepareView();
@@ -144,9 +145,8 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	@Override
 	public void onDestroy() {
-		if (!NetworkView.Instance().isInitialized()
-				&& myInitializator != null) {
-			myInitializator.setActivity(null);
+		if (!NetworkView.Instance().isInitialized() && ourInitializator != null) {
+			ourInitializator.setActivity(null);
 		}
 		super.onDestroy();
 	}
@@ -192,11 +192,11 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 
 		// run this method only if myActivity != null
-		private void processResults(String error) {
+		private void showTryAgainDialog(Activity activity, String error) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			final ZLResource boxResource = dialogResource.getResource("networkError");
 			final ZLResource buttonResource = dialogResource.getResource("button");
-			new AlertDialog.Builder(myActivity)
+			new AlertDialog.Builder(activity)
 				.setTitle(boxResource.getResource("title").getValue())
 				.setMessage(error)
 				.setIcon(0)
@@ -220,7 +220,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 				myActivity.startService(new Intent(myActivity.getApplicationContext(), LibraryInitializationService.class));
 				myActivity.prepareView(); // initialization is complete successfully
 			} else {
-				processResults((String) message.obj); // handle initialization error
+				showTryAgainDialog(myActivity, (String)message.obj); // handle initialization error
 			}
 		}
 
