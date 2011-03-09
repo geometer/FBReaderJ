@@ -174,7 +174,7 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 					listener.onNewItem(Link, item);
 				}
 			} else {
-				listener.onNewItem(Link, new ByDateCatalogItem(this, children));
+				//listener.onNewItem(Link, new ByDateCatalogItem(this, children));
 				listener.onNewItem(Link, new ByAuthorCatalogItem(this, children));
 				listener.onNewItem(Link, new ByTitleCatalogItem(this, children));
 				final BySeriesCatalogItem bySeries = new BySeriesCatalogItem(this, children);

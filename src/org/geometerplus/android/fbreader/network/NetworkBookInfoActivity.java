@@ -48,7 +48,7 @@ import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
-	private NetworkBookTree myTree;
+	private NetworkBookItem myBook;
 	private View myMainView;
 
 	private final ZLResource myResource = ZLResource.resource("networkBookView");
@@ -58,6 +58,15 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		myMainView = getLayoutInflater().inflate(R.layout.network_book, null, false);
+		setContentView(myMainView);
+		myMainView.setOnCreateContextMenuListener(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
 		if (!NetworkView.Instance().isInitialized()) {
 			if (NetworkInitializer.Instance == null) {
 				new NetworkInitializer(this);
@@ -65,32 +74,30 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			} else {
 				NetworkInitializer.Instance.setActivity(this);
 			}
-			return;
 		}
 
-		final NetworkTree tree = Util.getTreeFromIntent(getIntent());
-		if (!(tree instanceof NetworkBookTree)) {
-			finish();
-			return;
+		if (myBook == null) {
+			final NetworkTree tree = Util.getTreeFromIntent(getIntent());
+			if (!(tree instanceof NetworkBookTree)) {
+				finish();
+				return;
+			}
+			myBook = ((NetworkBookTree)tree).Book;
+        
+			myConnection = new BookDownloaderServiceConnection();
+			bindService(
+				new Intent(getApplicationContext(), BookDownloaderService.class),
+				myConnection,
+				BIND_AUTO_CREATE
+			);
+        
+			setTitle(myBook.Title);
+        
+			setupDescription();
+			setupInfo();
+			setupCover();
+			setupButtons();
 		}
-		myTree = (NetworkBookTree)tree;
-
-		myConnection = new BookDownloaderServiceConnection();
-		bindService(
-			new Intent(getApplicationContext(), BookDownloaderService.class),
-			myConnection,
-			BIND_AUTO_CREATE
-		);
-
-		setTitle(myTree.Book.Title);
-		myMainView = getLayoutInflater().inflate(R.layout.network_book, null, false);
-		setContentView(myMainView);
-		myMainView.setOnCreateContextMenuListener(this);
-
-		setupDescription();
-		setupInfo();
-		setupCover();
-		setupButtons();
 	}
 
 	View getMainView() {
@@ -119,19 +126,19 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		NetworkView.Instance().getTopUpActions().buildContextMenu(this, menu, myTree.Book.Link);
+		NetworkView.Instance().getTopUpActions().buildContextMenu(this, menu, myBook.Link);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		RefillAccountActions.runAction(this, myTree.Book.Link, item.getItemId());
+		RefillAccountActions.runAction(this, myBook.Link, item.getItemId());
 		return true;
 	}
 
 	private final void setupDescription() {
 		setTextFromResource(R.id.network_book_description_title, "description");
 
-		String description = myTree.Book.Summary;
+		String description = myBook.Summary;
 		if (description == null) {
 			description = myResource.getResource("noDescription").getValue();
 		}
@@ -150,8 +157,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	}
 
 	private void setupInfo() {
-		final NetworkBookItem book = myTree.Book;
-
 		setTextFromResource(R.id.network_book_info_title, "bookInfo");
 
 		setPairLabelTextFromResource(R.id.network_book_title, "title");
@@ -161,12 +166,12 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		setPairLabelTextFromResource(R.id.network_book_tags, "tags");
 		setPairLabelTextFromResource(R.id.network_book_catalog, "catalog");
 
-		setPairValueText(R.id.network_book_title, book.Title);
+		setPairValueText(R.id.network_book_title, myBook.Title);
 
-		if (book.Authors.size() > 0) {
+		if (myBook.Authors.size() > 0) {
 			findViewById(R.id.network_book_authors).setVisibility(View.VISIBLE);
 			final StringBuilder authorsText = new StringBuilder();
-			for (NetworkBookItem.AuthorData author : book.Authors) {
+			for (NetworkBookItem.AuthorData author : myBook.Authors) {
 				if (authorsText.length() > 0) {
 					authorsText.append(", ");
 				}
@@ -177,11 +182,11 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			findViewById(R.id.network_book_authors).setVisibility(View.GONE);
 		}
 
-		if (book.SeriesTitle != null) {
+		if (myBook.SeriesTitle != null) {
 			findViewById(R.id.network_book_series_title).setVisibility(View.VISIBLE);
-			setPairValueText(R.id.network_book_series_title, book.SeriesTitle);
-			if (book.IndexInSeries > 0) {
-				setPairValueText(R.id.network_book_series_index, String.valueOf(book.IndexInSeries));
+			setPairValueText(R.id.network_book_series_title, myBook.SeriesTitle);
+			if (myBook.IndexInSeries > 0) {
+				setPairValueText(R.id.network_book_series_index, String.valueOf(myBook.IndexInSeries));
 				findViewById(R.id.network_book_series_index).setVisibility(View.VISIBLE);
 			} else {
 				findViewById(R.id.network_book_series_index).setVisibility(View.GONE);
@@ -191,10 +196,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			findViewById(R.id.network_book_series_index).setVisibility(View.GONE);
 		}
 
-		if (book.Tags.size() > 0) {
+		if (myBook.Tags.size() > 0) {
 			findViewById(R.id.network_book_tags).setVisibility(View.VISIBLE);
 			final StringBuilder tagsText = new StringBuilder();
-			for (String tag : book.Tags) {
+			for (String tag : myBook.Tags) {
 				if (tagsText.length() > 0) {
 					tagsText.append(", ");
 				}
@@ -205,7 +210,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			findViewById(R.id.network_book_tags).setVisibility(View.GONE);
 		}
 
-		setPairValueText(R.id.network_book_catalog, book.Link.getTitle());
+		setPairValueText(R.id.network_book_catalog, myBook.Link.getTitle());
 	}
 
 	private final void setupCover() {
@@ -218,7 +223,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		final int maxHeight = metrics.heightPixels * 2 / 3;
 		final int maxWidth = maxHeight * 2 / 3;
 		Bitmap coverBitmap = null;
-		final ZLImage cover = NetworkTree.createCover(myTree.Book);
+		final ZLImage cover = NetworkTree.createCover(myBook);
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
@@ -262,7 +267,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 				R.id.network_book_button2,
 				R.id.network_book_button3,
 		};
-		final Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myTree.Book, myConnection);
+		final Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook, myConnection);
 
 		final boolean skipSecondButton =
 			actions.size() < buttons.length &&
@@ -289,7 +294,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			button.setVisibility(View.VISIBLE);
 			button.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					NetworkBookActions.runActionStatic(NetworkBookInfoActivity.this, myTree, a.Id);
+					NetworkBookActions.runActionStatic(NetworkBookInfoActivity.this, myBook, a.Id);
 					NetworkBookInfoActivity.this.updateView();
 				}
 			});

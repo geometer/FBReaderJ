@@ -378,5 +378,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			"navigateOverAllWords"
 		));
 		dictionaryScreen.addOption(fbReader.DictionaryTappingActionOption, "tappingAction");
+
+		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
+		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");
+		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");
 	}
 }

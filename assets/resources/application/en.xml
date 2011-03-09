@@ -530,6 +530,17 @@
 					<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
 				</node>
 			</node>
+			<node name="cancelMenu" value="Cancel menu">
+				<node name="summary" value="Back button action list"/>
+				<node name="previousBook" value="Previous book">
+					<node name="summaryOn" value="Show 'return to previous book' item"/>
+					<node name="summaryOff" value="Don't show 'return to previous book' item"/>
+				</node>
+				<node name="positions" value="Last 3 positions">
+					<node name="summaryOn" value="Show items for last 3 positions in the book"/>
+					<node name="summaryOff" value="Don't show items for last 3 positions in the book"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
