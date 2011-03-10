@@ -134,7 +134,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 
 	public NetworkCatalogItem libraryItem() {
 		TreeMap<Integer,String> urlMap = new TreeMap<Integer,String>();
-		urlMap.put(NetworkCatalogItem.URL_CATALOG, getUrlInfo(URL_MAIN).URL);
+		urlMap.put(NetworkURLCatalogItem.URL_CATALOG, getUrlInfo(URL_MAIN).URL);
 		return new OPDSCatalogItem(this, getTitle(), getSummary(), getUrlInfo(URL_ICON).URL, urlMap, myExtraData);
 	}
 
