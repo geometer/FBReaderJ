@@ -29,7 +29,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 public abstract class NetworkCatalogItem extends NetworkItem {
-
 	// catalog types:
 	public static enum CatalogType {
 		OTHER,
@@ -52,7 +51,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 
 	private final Accessibility myAccessibility;
 	private final CatalogType myCatalogType;
-	public final TreeMap<Integer, String> URLByType;
+	public final TreeMap<Integer,String> URLByType;
 
 	/**
 	 * Creates new NetworkCatalogItem instance with <code>Accessibility.ALWAYS</code> accessibility and <code>CatalogType.OTHER</code> type.
@@ -83,7 +82,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 		super(link, title, summary, cover);
 		myAccessibility = accessibility;
 		myCatalogType = catalogType;
-		URLByType = new TreeMap<Integer, String>(urlByType);
+		URLByType = new TreeMap<Integer,String>(urlByType);
 	}
 
 	public Map<String,String> extraData() {
