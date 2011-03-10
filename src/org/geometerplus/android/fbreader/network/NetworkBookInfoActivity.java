@@ -69,10 +69,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 		if (!NetworkView.Instance().isInitialized()) {
 			if (NetworkInitializer.Instance == null) {
-				new NetworkInitializer(this);
+				new NetworkInitializer(null);
 				NetworkInitializer.Instance.start();
 			} else {
-				NetworkInitializer.Instance.setActivity(this);
+				NetworkInitializer.Instance.setActivity(null);
 			}
 		}
 

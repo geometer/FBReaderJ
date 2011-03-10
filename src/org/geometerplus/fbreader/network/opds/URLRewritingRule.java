@@ -91,7 +91,6 @@ class URLRewritingRule {
 				}
 				final Matcher matcher = Pattern.compile(pattern).matcher(url);
 				if (matcher.matches()) {
-					System.err.println(matcher.groupCount());
 					for (int i = matcher.groupCount(); i >= 1; --i) {
 						url = replacement.replace("%" + i, matcher.group(1));
 					}
