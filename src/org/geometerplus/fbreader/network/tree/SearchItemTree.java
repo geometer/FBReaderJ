@@ -67,7 +67,7 @@ public class SearchItemTree extends NetworkTree {
 					if (!(currentNode instanceof NetworkAuthorTree)) {
 						throw new RuntimeException("That's impossible!!!");
 					}
-					NetworkAuthorTree child = (NetworkAuthorTree) currentNode;
+					NetworkAuthorTree child = (NetworkAuthorTree)currentNode;
 					if (!child.Author.equals(author)) {
 						throw new RuntimeException("That's impossible!!!");
 					}

@@ -375,7 +375,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		boolean urlIsAlternate = false;
 		String htmlURL = null;
 		String litresRel = null;
-		NetworkCatalogItem.CatalogType catalogType = NetworkCatalogItem.CatalogType.OTHER;
+		int catalogType = NetworkCatalogItem.FLAGS_DEFAULT;
 		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
@@ -396,9 +396,9 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					url = href;
 					urlIsAlternate = false;
 					if (REL_CATALOG_AUTHOR.equals(rel)) {
-						catalogType = NetworkCatalogItem.CatalogType.BY_AUTHOR;
+						catalogType &= ~NetworkCatalogItem.FLAG_SHOW_AUTHOR;
 					} else if (REL_CATALOG_SERIES.equals(rel)) {
-						catalogType = NetworkCatalogItem.CatalogType.BY_SERIES;
+						catalogType &= ~NetworkCatalogItem.FLAGS_GROUP;
 					}
 				}
 			} else if (MIME_TEXT_HTML.equals(type)) {
@@ -431,12 +431,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			annotation = null;
 		}
 
-		HashMap<Integer, String> urlMap = new HashMap<Integer, String>();
+		HashMap<Integer,String> urlMap = new HashMap<Integer,String>();
 		if (url != null) {
-			urlMap.put(NetworkCatalogItem.URL_CATALOG, url);
+			urlMap.put(NetworkURLCatalogItem.URL_CATALOG, url);
 		}
 		if (htmlURL != null) {
-			urlMap.put(NetworkCatalogItem.URL_HTML_PAGE, htmlURL);
+			urlMap.put(NetworkURLCatalogItem.URL_HTML_PAGE, htmlURL);
 		}
 		if (litresRel != null) {
 			if (REL_BOOKSHELF.equals(litresRel)) {

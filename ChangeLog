@@ -1,4 +1,5 @@
-===== 0.99.14 (Mar ??, 2011) =====
+===== 0.99.14 (Mar 11, 2011) =====
+* New application icon
 * Thai localization (by Samphan Pojanasophanakul)
 * Fixed TTF font style detection
 * opds:// URLs support has been implemented
@@ -6,6 +7,10 @@
 * Ignore case comparison for zip entry names
 * Fixed custom OPDS link search
 * Periodical update of custom links information has been added
+* Epub rendering issues (like unexpected paragraph ends) were fixed
+* Multi-body fb2 file processing has been fixed
+* 'Cancel menu' preferences section
+* LitRes: several views for purchased books
 
 ===== 0.99.13 (Feb 13, 2011) =====
 * Fixed book/position forgetting bug

@@ -526,6 +526,17 @@
 					<node name="summaryOff" value="При перемещении с помощью кнопок помечать только гиперссылки"/>
 				</node>
 			</node>
+			<node name="cancelMenu" value="Меню выхода из программы">
+				<node name="summary" value="Список действий при нажатии на кнопку 'Назад'"/>
+				<node name="previousBook" value="Предыдущая книга">
+					<node name="summaryOn" value="Показать пункт меню для возврата к предыдущей книге"/>
+					<node name="summaryOff" value="Не нужна возможность возврата к предыдущей книге"/>
+				</node>
+				<node name="positions" value="Возврат по ссылкам">
+					<node name="summaryOn" value="Показывать пункты меню для последних 3 позиций в книге"/>
+					<node name="summaryOff" value="Не нужна возможность возврата по ссылкам"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
