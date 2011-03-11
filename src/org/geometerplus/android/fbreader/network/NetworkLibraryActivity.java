@@ -199,9 +199,12 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	private static boolean searchIsInProgress() {
-		return NetworkView.Instance().containsItemsLoadingRunnable(
-			NetworkLibrary.Instance().getSearchItemTree().getUniqueKey()
-		);
+		final NetworkView nView = NetworkView.Instance();
+		return
+			nView != null &&
+			nView.containsItemsLoadingRunnable(
+				NetworkLibrary.Instance().getSearchItemTree().getUniqueKey()
+			);
 	}
 
 	@Override

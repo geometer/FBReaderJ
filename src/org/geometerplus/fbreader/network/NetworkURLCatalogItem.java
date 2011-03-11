@@ -100,6 +100,10 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 
 	@Override
 	public String getStringId() {
-		return URLByType.get(URL_CATALOG);
+		String id = URLByType.get(URL_CATALOG);
+		if (id == null) {
+			id = URLByType.get(URL_HTML_PAGE);
+		}
+		return id != null ? id : String.valueOf(hashCode());
 	}
 }
