@@ -84,6 +84,7 @@ class URLRewritingRule {
 			}
 			case REWRITE:
 			{
+				/*
 				final String pattern = myParameters.get("pattern");
 				final String replacement = myParameters.get("replacement");
 				if (pattern == null || replacement == null) {
@@ -95,6 +96,7 @@ class URLRewritingRule {
 						url = replacement.replace("%" + i, matcher.group(1));
 					}
 				}
+				*/
 				return url;
 			}
 		}
