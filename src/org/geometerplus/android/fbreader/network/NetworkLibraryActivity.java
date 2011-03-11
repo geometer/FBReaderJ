@@ -202,6 +202,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		final NetworkView nView = NetworkView.Instance();
 		return
 			nView != null &&
+			nView.isInitialized() &&
 			nView.containsItemsLoadingRunnable(
 				NetworkLibrary.Instance().getSearchItemTree().getUniqueKey()
 			);
