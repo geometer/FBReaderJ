@@ -52,7 +52,7 @@ public class TapZoneMap {
 	private static class Zone {
 		int HIndex;
 		int VIndex;
-		
+
 		Zone(int h, int v) {
 			HIndex = h;
 			VIndex = v;
