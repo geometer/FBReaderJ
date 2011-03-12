@@ -1,3 +1,7 @@
+===== 0.99.16 (Mar 12, 2011) =====
+* Menu/navigation dialog will not shown by single tap if double tap is enabled
+* NPE fixes
+
 ===== 0.99.14 (Mar 11, 2011) =====
 * New application icon
 * Thai localization (by Samphan Pojanasophanakul)
