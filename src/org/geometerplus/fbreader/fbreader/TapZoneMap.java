@@ -26,9 +26,16 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public class TapZoneMap {
+	public static enum Tap {
+		singleTap,
+		singleNotDoubleTap,
+		doubleTap
+	};
+
 	private int myVerticalSize = 3;
 	private int myHorizontalSize = 3;
 	private final HashMap<Zone,String> myZoneMap = new HashMap<Zone,String>();
+	private final HashMap<Zone,String> myZoneMap2 = new HashMap<Zone,String>();
 
 	TapZoneMap(int v, int h) {
 		myVerticalSize = v;
@@ -42,11 +49,23 @@ public class TapZoneMap {
 		new Reader().read(mapFile);
 	}
 
-	public String getActionByCoordinates(int x, int y, int width, int height) {
+	public String getActionByCoordinates(int x, int y, int width, int height, Tap tap) {
 		if (width == 0 || height == 0) {
 			return null;
 		}
-		return myZoneMap.get(new Zone(myHorizontalSize * x / width, myVerticalSize * y / height));
+		final Zone zone = new Zone(myHorizontalSize * x / width, myVerticalSize * y / height);
+		switch (tap) {
+			case singleTap:
+			{
+				final String action = myZoneMap.get(zone);
+				return action != null ? action : myZoneMap2.get(zone);
+			}
+			case singleNotDoubleTap:
+				return myZoneMap.get(zone);
+			case doubleTap:
+				return myZoneMap2.get(zone);
+		}
+		return null;
 	}
 
 	private static class Zone {
@@ -89,11 +108,15 @@ public class TapZoneMap {
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			try {
 				if ("zone".equals(tag)) {
-					final String x = attributes.getValue("x");
-					final String y = attributes.getValue("y");
+					final int x = Integer.parseInt(attributes.getValue("x"));
+					final int y = Integer.parseInt(attributes.getValue("y"));
 					final String action = attributes.getValue("action");
-					if (x != null && y != null && action != null) {
-						myZoneMap.put(new Zone(Integer.parseInt(x), Integer.parseInt(y)), action);
+					final String action2 = attributes.getValue("action2");
+					if (action != null) {
+						myZoneMap.put(new Zone(x, y), action);
+					}
+					if (action2 != null) {
+						myZoneMap2.put(new Zone(x, y), action2);
 					}
 				} else if ("tapZones".equals(tag)) {
 					final String v = attributes.getValue("v");
@@ -105,7 +128,7 @@ public class TapZoneMap {
 						myHorizontalSize = Integer.parseInt(h);
 					}
 				}
-			} catch (NumberFormatException e) {
+			} catch (Throwable e) {
 			}
 			return false;
 		}
