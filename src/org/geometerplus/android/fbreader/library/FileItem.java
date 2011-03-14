@@ -85,23 +85,44 @@ public final class FileItem {
 	}
 
 	public int getIcon() {
-		if (getBook() != null) {
-			return R.drawable.ic_list_library_book;
-		} else if (myFile.isDirectory()) {
-			if (myFile.isReadable()) {
-				return R.drawable.ic_list_library_folder;
+		if (LibraryCommon.ViewTypeInstance == ViewType.SIMPLE){
+			if (getBook() != null) {
+				return R.drawable.ic_list_library_book;
+			} else if (myFile.isDirectory()) {
+				if (myFile.isReadable()) {
+					return R.drawable.ic_list_library_folder;
+				} else {
+					return R.drawable.ic_list_library_permission_denied;
+				}
+			} else if (myFile.isArchive()) {
+				return R.drawable.ic_list_library_zip;
 			} else {
+				System.err.println(
+					"File " + myFile.getPath() +
+					" that is not a directory, not a book and not an archive " +
+					"has been found in getIcon()"
+				);
 				return R.drawable.ic_list_library_permission_denied;
 			}
-		} else if (myFile.isArchive()) {
-			return R.drawable.ic_list_library_zip;
 		} else {
-			System.err.println(
-				"File " + myFile.getPath() +
-				" that is not a directory, not a book and not an archive " +
-				"has been found in getIcon()"
-			);
-			return R.drawable.ic_list_library_permission_denied;
+			if (getBook() != null) {
+				return R.drawable.big_ic_list_library_book;
+			} else if (myFile.isDirectory()) {
+				if (myFile.isReadable()) {
+					return R.drawable.big_ic_list_library_folder;
+				} else {
+					return R.drawable.big_ic_list_library_permission_denied;
+				}
+			} else if (myFile.isArchive()) {
+				return R.drawable.big_ic_list_library_zip;
+			} else {
+				System.err.println(
+					"File " + myFile.getPath() +
+					" that is not a directory, not a book and not an archive " +
+					"has been found in getIcon()"
+				);
+				return R.drawable.big_ic_list_library_permission_denied;
+			}
 		}
 	}
 

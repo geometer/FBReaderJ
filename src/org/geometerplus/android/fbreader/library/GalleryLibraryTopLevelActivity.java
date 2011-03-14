@@ -49,7 +49,7 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
 		myItems = new LinkedList<FBTree>();
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
-			R.drawable.ic_list_library_favorites,
+			R.drawable.big_ic_list_library_favorites,
 			new OpenTreeRunnable(LibraryCommon.LibraryInstance, new StartTreeActivityRunnable(PATH_FAVORITES, null) {
 				public void run() {
 					if (LibraryCommon.LibraryInstance.favorites().hasChildren()) {
@@ -62,27 +62,27 @@ public class GalleryLibraryTopLevelActivity extends GalleryLibraryBaseActivity
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_RECENT),
-			R.drawable.ic_list_library_recent,
+			R.drawable.big_ic_list_library_recent,
 			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_RECENT)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_AUTHOR),
-			R.drawable.ic_list_library_authors,
+			R.drawable.big_ic_list_library_authors,
 			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_BY_AUTHOR)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_TITLE),
-			R.drawable.ic_list_library_books,
+			R.drawable.big_ic_list_library_books,
 			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_BY_TITLE)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_TAG),
-			R.drawable.ic_list_library_tags,
+			R.drawable.big_ic_list_library_tags,
 			new OpenTreeRunnable(LibraryCommon.LibraryInstance, PATH_BY_TAG)
 		));
 		myItems.add(new TopLevelTree(
 			myResource.getResource("fileTree"),
-			R.drawable.ic_list_library_folder,
+			R.drawable.big_ic_list_library_folder,
 			new Runnable() {
 				public void run() {
 					Log.v(FMCommon.LOG, "launch file Tree");

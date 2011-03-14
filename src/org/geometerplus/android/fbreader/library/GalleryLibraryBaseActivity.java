@@ -161,13 +161,13 @@ abstract public class GalleryLibraryBaseActivity extends BaseGalleryActivity
 				idIcon = ((ZLAndroidTree)tree).getCoverResourceId();
 			} else {
 				if (tree instanceof AuthorTree) {
-					idIcon = R.drawable.ic_list_library_author;
+					idIcon = R.drawable.big_ic_list_library_author;
 				} else if (tree instanceof TagTree) {
-					idIcon = R.drawable.ic_list_library_tag;
+					idIcon = R.drawable.big_ic_list_library_tag;
 				} else if (tree instanceof BookTree) {
-					idIcon = R.drawable.ic_list_library_book;
+					idIcon = R.drawable.big_ic_list_library_book;
 				} else {
-					idIcon = R.drawable.ic_list_library_books;
+					idIcon = R.drawable.big_ic_list_library_books;
 				}
 			}
      		
