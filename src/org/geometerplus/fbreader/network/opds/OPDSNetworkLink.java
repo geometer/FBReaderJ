@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
@@ -135,7 +134,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 
 	public NetworkCatalogItem libraryItem() {
 		TreeMap<Integer,String> urlMap = new TreeMap<Integer,String>();
-		urlMap.put(NetworkCatalogItem.URL_CATALOG, getUrlInfo(URL_MAIN).URL);
+		urlMap.put(NetworkURLCatalogItem.URL_CATALOG, getUrlInfo(URL_MAIN).URL);
 		return new OPDSCatalogItem(this, getTitle(), getSummary(), getUrlInfo(URL_ICON).URL, urlMap, myExtraData);
 	}
 
@@ -144,17 +143,11 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public String rewriteUrl(String url, boolean isUrlExternal) {
+		final int apply = isUrlExternal
+			? URLRewritingRule.APPLY_EXTERNAL : URLRewritingRule.APPLY_INTERNAL;
 		for (URLRewritingRule rule: myUrlRewritingRules) {
-			if (rule.Apply != URLRewritingRule.APPLY_ALWAYS) {
-				if ((rule.Apply == URLRewritingRule.APPLY_EXTERNAL && !isUrlExternal)
-					|| (rule.Apply == URLRewritingRule.APPLY_INTERNAL && isUrlExternal)) {
-					continue;
-				}
-			}
-			switch (rule.Type) {
-			case URLRewritingRule.ADD_URL_PARAMETER:
-				url = ZLNetworkUtil.appendParameter(url, rule.Name, rule.Value);
-				break;
+			if ((rule.whereToApply() & apply) != 0) {
+				url = rule.apply(url);
 			}
 		}
 		return url;

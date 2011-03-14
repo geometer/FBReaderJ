@@ -171,6 +171,13 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 			case FB2Tag.BODY:
 				myBookReader.popKind();
 				myReadMainText = false;
+				if (myReadMainText) {
+					myBookReader.insertEndOfSectionParagraph();
+				}
+				if (mySectionDepth > 0) {
+					myBookReader.endContentsParagraph();
+					mySectionDepth = 0;
+				}
 				myBookReader.unsetCurrentTextModel();
 				break;
 			
@@ -308,16 +315,24 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 					myBookReader.pushKind(FBTextKind.TITLE);
 				} else {
 					myBookReader.pushKind(FBTextKind.SECTION_TITLE);
-					myInsideTitle = true;
-					myBookReader.enterTitle();
+					if (!myBookReader.hasContentsData()) {
+						myInsideTitle = true;
+						myBookReader.enterTitle();
+					}
 				}
 				break;
 				
 			case FB2Tag.BODY:
 				++myBodyCounter;
 				myParagraphsBeforeBodyNumber = myBookReader.Model.BookTextModel.getParagraphsNumber();
-				if ((myBodyCounter == 1) || (attributes.getValue("name") == null)) {
+				final String name = attributes.getValue("name");
+				if (myBodyCounter == 1 || !"notes".equals(name)) {
 					myBookReader.setMainTextModel();
+					if (name != null) {
+						myBookReader.beginContentsParagraph();
+						myBookReader.addContentsData(name.toCharArray());
+						++mySectionDepth;
+					}
 					myReadMainText = true;
 				}
 				myBookReader.pushKind(FBTextKind.REGULAR);

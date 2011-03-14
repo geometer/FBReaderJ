@@ -408,6 +408,9 @@ public class NetworkLibrary {
 	}
 
 	public NetworkTree getTreeByKey(NetworkTree.Key key) {
+		if (key == null) {
+			return null;
+		}
 		if (key.Parent == null) {
 			return key.equals(myRootTree.getUniqueKey()) ? myRootTree : null;
 		}
