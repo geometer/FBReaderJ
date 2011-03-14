@@ -356,7 +356,7 @@ public final class FBReaderApp extends ZLApplication {
 			final Book previousBook = Library.getPreviousBook();
 			if (previousBook != null) {
 				myCancelActionsList.add(new CancelActionDescription(
-					CancelActionType.previousBook, previousBook.getTitle()
+					CancelActionType.previousBook, previousBook.getTitle(), true
 				));
 			}
 		}
