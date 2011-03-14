@@ -1,3 +1,6 @@
+===== 0.99.17 (Mar 13, 2011) =====
+* Fixed vertical tap scrolling
+
 ===== 0.99.16 (Mar 12, 2011) =====
 * Menu/navigation dialog will not shown by single tap if double tap is enabled
 * NPE fixes
