@@ -172,6 +172,6 @@ public class NetworkSearchActivity extends Activity {
 			tree.getUniqueKey(),
 			new SearchRunnable(handler, pattern)
 		);
-		NetworkView.Instance().openTree(this, tree);
+		Util.openTree(this, tree);
 	}
 }

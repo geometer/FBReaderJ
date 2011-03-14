@@ -170,6 +170,6 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	protected String getStringId() {
-		return Item.getFullRequestString();
+		return Item.getStringId();
 	}
 }

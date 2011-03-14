@@ -145,7 +145,14 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkCatalogActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" />
 		<service android:name="org.geometerplus.android.fbreader.network.ItemsLoadingService" android:process=":networkLibrary" />
-		<activity android:name="org.geometerplus.android.fbreader.network.NetworkBookInfoActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="org.geometerplus.android.fbreader.network.NetworkBookInfoActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:host="*" android:scheme="fbreader" />
+			</intent-filter>
+		</activity>
 		<receiver android:name="org.geometerplus.android.fbreader.network.BookDownloaderCallback" android:process=":networkLibrary" />
 		<service android:name="org.geometerplus.android.fbreader.network.LibraryInitializationService" android:process=":networkLibrary" />
 	</application>

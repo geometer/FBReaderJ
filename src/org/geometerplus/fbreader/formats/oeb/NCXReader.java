@@ -112,7 +112,7 @@ class NCXReader extends ZLXMLReaderAdapter {
 					if (size > 0) {
 						myPointStack.get(size - 1).ContentHRef =
 							ZLArchiveEntryFile.normalizeEntryName(
-								myLocalPathPrefix + attributes.getValue("src")
+								myLocalPathPrefix + MiscUtil.decodeHtmlReference(attributes.getValue("src"))
 							);
 					}
 				}

@@ -95,10 +95,16 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		processIntent(intent);
 	}
 
+	void processSavedIntent() {
+		if (myIntent != null) {
+			processIntent(myIntent);
+			myIntent = null;
+		}
+	}
+
 	private void processIntent(Intent intent) {
 		if (ADD_CATALOG.equals(intent.getAction())) {
 			final ICustomNetworkLink link = getLinkFromIntent(intent);
-			System.err.println("LINK = " + link);
 			if (link != null) {
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -113,7 +119,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	private void prepareView() {
+	void prepareView() {
 		if (myTree == null) {
 			myTree = NetworkLibrary.Instance().getRootTree();
 			setListAdapter(new LibraryAdapter());
@@ -121,17 +127,15 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	private static Initializator myInitializator;
-
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (!NetworkView.Instance().isInitialized()) {
-			if (myInitializator == null) {
-				myInitializator = new Initializator(this);
-				myInitializator.start();
+			if (NetworkInitializer.Instance == null) {
+				new NetworkInitializer(this);
+				NetworkInitializer.Instance.start();
 			} else {
-				myInitializator.setActivity(this);
+				NetworkInitializer.Instance.setActivity(this);
 			}
 		} else {
 			prepareView();
@@ -144,95 +148,11 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 
 	@Override
 	public void onDestroy() {
-		if (!NetworkView.Instance().isInitialized()
-				&& myInitializator != null) {
-			myInitializator.setActivity(null);
+		if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
+			NetworkInitializer.Instance.setActivity(null);
 		}
 		super.onDestroy();
 	}
-
-	private static class Initializator extends Handler {
-		private NetworkLibraryActivity myActivity;
-
-		public Initializator(NetworkLibraryActivity activity) {
-			myActivity = activity;
-		}
-
-		public void setActivity(NetworkLibraryActivity activity) {
-			myActivity = activity;
-		}
-
-		final DialogInterface.OnClickListener myListener = new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				if (which == DialogInterface.BUTTON_POSITIVE) {
-					Initializator.this.start();
-				} else if (myActivity != null) {
-					myActivity.finish();
-				}
-			}
-		};
-
-		// run this method only if myActivity != null
-		private void runInitialization() {
-			UIUtil.wait("loadingNetworkLibrary", new Runnable() {
-				public void run() {
-					String error = null;
-					try {
-						NetworkView.Instance().initialize();
-						if (myActivity.myIntent != null) {
-							myActivity.processIntent(myActivity.myIntent);
-							myActivity.myIntent = null;
-						}
-					} catch (ZLNetworkException e) {
-						error = e.getMessage();
-					}
-					Initializator.this.end(error);
-				}
-			}, myActivity);
-		}
-
-		// run this method only if myActivity != null
-		private void processResults(String error) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			final ZLResource boxResource = dialogResource.getResource("networkError");
-			final ZLResource buttonResource = dialogResource.getResource("button");
-			new AlertDialog.Builder(myActivity)
-				.setTitle(boxResource.getResource("title").getValue())
-				.setMessage(error)
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("tryAgain").getValue(), myListener)
-				.setNegativeButton(buttonResource.getResource("cancel").getValue(), myListener)
-				.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					public void onCancel(DialogInterface dialog) {
-						myListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-					}
-				})
-				.create().show();
-		}
-
-		@Override
-		public void handleMessage(Message message) {
-			if (myActivity == null) {
-				return;
-			} else if (message.what == 0) {
-				runInitialization(); // run initialization process
-			} else if (message.obj == null) {
-				myActivity.startService(new Intent(myActivity.getApplicationContext(), LibraryInitializationService.class));
-				myActivity.prepareView(); // initialization is complete successfully
-			} else {
-				processResults((String) message.obj); // handle initialization error
-			}
-		}
-
-		public void start() {
-			sendEmptyMessage(0);
-		}
-
-		private void end(String error) {
-			sendMessage(obtainMessage(1, error));
-		}
-	}
-
 
 	private final class LibraryAdapter extends BaseAdapter {
 		public final int getCount() {
@@ -279,9 +199,13 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	private static boolean searchIsInProgress() {
-		return NetworkView.Instance().containsItemsLoadingRunnable(
-			NetworkLibrary.Instance().getSearchItemTree().getUniqueKey()
-		);
+		final NetworkView nView = NetworkView.Instance();
+		return
+			nView != null &&
+			nView.isInitialized() &&
+			nView.containsItemsLoadingRunnable(
+				NetworkLibrary.Instance().getSearchItemTree().getUniqueKey()
+			);
 	}
 
 	@Override
