@@ -44,7 +44,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		buildContextMenu(activity, menu, ((TopUpTree)tree).Item.Link);
 	}
 
-	public void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
+	void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
 		menu.setHeaderTitle(getTitleValue("refillTitle"));
 
 		if (Util.isSmsAccountRefillingSupported(activity, link)) {
@@ -93,7 +93,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		return runAction(activity, link, actionCode);
 	}
 
-	public boolean runAction(Activity activity, INetworkLink link, int actionCode) {
+	static boolean runAction(Activity activity, INetworkLink link, int actionCode) {
 		Runnable refillRunnable = null;
 		switch (actionCode) {
 			case REFILL_VIA_SMS_ITEM_ID:
@@ -111,7 +111,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		return true;
 	}
 
-	private Runnable browserRefillRunnable(final Activity activity, final INetworkLink link) {
+	private static Runnable browserRefillRunnable(final Activity activity, final INetworkLink link) {
 		return new Runnable() {
 			public void run() {
 				Util.openInBrowser(
@@ -122,7 +122,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		};
 	}
 
-	private Runnable smsRefillRunnable(final Activity activity, final INetworkLink link) {
+	private static Runnable smsRefillRunnable(final Activity activity, final INetworkLink link) {
 		return new Runnable() {
 			public void run() {
 				Util.runSmsDialog(activity, link);
@@ -130,7 +130,7 @@ class RefillAccountActions extends NetworkTreeActions {
 		};
 	}
 
-	private void doRefill(final Activity activity, final INetworkLink link, final Runnable refiller) {
+	private static void doRefill(final Activity activity, final INetworkLink link, final Runnable refiller) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		if (mgr.mayBeAuthorised(false)) {
 			refiller.run();

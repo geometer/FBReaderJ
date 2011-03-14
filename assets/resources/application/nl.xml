@@ -527,6 +527,17 @@
 					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 				</node>
 			</node>
+			<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
+				<node name="summary" value="Back button action list" toBeTranslated="true"/>
+				<node name="previousBook" value="Previous book" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'return to previous book' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'return to previous book' item" toBeTranslated="true"/>
+				</node>
+				<node name="positions" value="Last 3 positions" toBeTranslated="true">
+					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">

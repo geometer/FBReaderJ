@@ -38,14 +38,19 @@ public class ScrollingPreferences {
 
 	public final ZLBooleanOption VolumeKeysOption =
 		new ZLBooleanOption("Scrolling", "VolumeKeys", true);
+	public final ZLBooleanOption InvertVolumeKeysOption =
+		new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
 
 	public final ZLEnumOption<ZLView.Animation> AnimationOption =
 		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
 
 	public final ZLBooleanOption HorizontalOption =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public final ZLBooleanOption InvertVolumeKeysOption =
-		new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
+	public enum TapZonesScheme {
+		left_to_right, right_to_left, up, down, custom
+	}
+	public final ZLEnumOption<TapZonesScheme> TapZonesSchemeOption =
+		new ZLEnumOption<TapZonesScheme>("Scrolling", "TapZonesScheme", TapZonesScheme.right_to_left);
 
 	private ScrollingPreferences() {
 		ourInstance = this;
