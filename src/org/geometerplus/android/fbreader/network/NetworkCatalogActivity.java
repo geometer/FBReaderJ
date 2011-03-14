@@ -28,17 +28,15 @@ import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.tree.FBTree;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
-	public static final String CATALOG_LEVEL_KEY = "org.geometerplus.android.fbreader.network.CatalogLevel";
 	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
 
 	private NetworkTree myTree;
-	private String myCatalogKey;
-	private boolean myInProgress;
+	private volatile boolean myInProgress;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -53,27 +51,49 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		}
 
 		final Intent intent = getIntent();
-		final int level = intent.getIntExtra(CATALOG_LEVEL_KEY, -1);
-		if (level == -1) {
-			throw new RuntimeException("Catalog's Level was not specified!!!");
+
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(CATALOG_KEY_KEY);
+		myTree = library.getTreeByKey(key);
+
+		if (myTree == null) {
+			throw new RuntimeException("Tree not found for key " + key);
 		}
 
-		myCatalogKey = intent.getStringExtra(CATALOG_KEY_KEY);
-		if (myCatalogKey == null) {
-			throw new RuntimeException("Catalog's Key was not specified!!!");
-		}
-
-		myTree = networkView.getOpenedTree(level);
-
-		networkView.setOpenedActivity(myCatalogKey, this);
+		networkView.setOpenedActivity(key, this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
 		setupTitle();
-		if (myTree instanceof NetworkCatalogTree &&
-			Util.isAccountRefillingSupported(this, ((NetworkCatalogTree)myTree).Item.Link)) {
-			setDefaultTree(new RefillAccountTree((NetworkCatalogTree)myTree));
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+		if (menuInfo == null && myTree instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
+			if (Util.isAccountRefillingSupported(this, link)) {
+				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
+				if (actions != null) {
+					actions.buildContextMenu(this, menu, link);
+					return;
+				}
+			}
 		}
+		super.onCreateContextMenu(menu, view, menuInfo);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if ((item == null || item.getMenuInfo() == null) && myTree instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
+			if (Util.isAccountRefillingSupported(this, link)) {
+				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
+				if (actions != null && actions.runAction(this, link, item.getItemId())) {
+					return true;
+				}
+			}
+		}
+		return super.onContextItemSelected(item);
 	}
 
 	@Override
@@ -112,25 +132,10 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		setProgressBarIndeterminateVisibility(myInProgress);
 	}
 
-	private static String getNetworkTreeKey(NetworkTree tree, boolean recursive) {
-		if (tree instanceof NetworkCatalogTree) {
-			return ((NetworkCatalogTree) tree).Item.URLByType.get(NetworkCatalogItem.URL_CATALOG);
-		} else if (tree instanceof SearchItemTree) {
-			return NetworkSearchActivity.SEARCH_RUNNABLE_KEY;
-		} else if (recursive && tree.Parent instanceof NetworkTree) {
-			if (tree instanceof NetworkAuthorTree
-					|| tree instanceof NetworkSeriesTree) {
-				return getNetworkTreeKey((NetworkTree) tree.Parent, true);
-			}
-		}
-		return null;
-	}
-
-
 	@Override
 	public void onDestroy() {
-		if (myTree != null && myCatalogKey != null && NetworkView.Instance().isInitialized()) {
-			NetworkView.Instance().setOpenedActivity(myCatalogKey, null);
+		if (myTree != null && NetworkView.Instance().isInitialized()) {
+			NetworkView.Instance().setOpenedActivity(myTree.getUniqueKey(), null);
 		}
 		super.onDestroy();
 	}
@@ -141,44 +146,15 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private final class CatalogAdapter extends BaseAdapter {
-
-		private ArrayList<NetworkTree> mySpecialItems;
-
-		public CatalogAdapter() {
-			if (myTree instanceof NetworkCatalogRootTree) {
-				final NetworkCatalogRootTree rootTree = (NetworkCatalogRootTree)myTree;
-				mySpecialItems = new ArrayList<NetworkTree>();
-				if (Util.isAccountRefillingSupported(NetworkCatalogActivity.this, rootTree.Item.Link)) {
-					mySpecialItems.add(new RefillAccountTree(rootTree));
-				}
-				if (mySpecialItems.size() > 0) {
-					mySpecialItems.trimToSize();
-				} else {
-					mySpecialItems = null;
-				}
-			}
-		}
-
 		public final int getCount() {
-			return myTree.subTrees().size() +
-				((mySpecialItems != null && !myInProgress) ? mySpecialItems.size() : 0);
+			return myTree.subTrees().size();
 		}
 
 		public final NetworkTree getItem(int position) {
-			if (position < 0) {
+			if (position < 0 || position >= myTree.subTrees().size()) {
 				return null;
 			}
-			if (position < myTree.subTrees().size()) {
-				return (NetworkTree) myTree.subTrees().get(position);
-			}
-			if (myInProgress) {
-				return null;
-			}
-			position -= myTree.subTrees().size();
-			if (mySpecialItems != null && position < mySpecialItems.size()) {
-				return mySpecialItems.get(position);
-			}
-			return null;
+			return (NetworkTree)myTree.subTrees().get(position);
 		}
 
 		public final long getItemId(int position) {
@@ -192,18 +168,26 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		void onModelChanged() {
 			notifyDataSetChanged();
-			if (mySpecialItems != null) {
-				for (NetworkTree tree: mySpecialItems) {
-					tree.invalidateChildren(); // call to update secondString
+			for (FBTree child : myTree.subTrees()) {
+				if (child instanceof TopUpTree) {
+					child.invalidateChildren();
 				}
 			}
 		}
 	}
 
+	private static NetworkTree.Key getLoadableNetworkTreeKey(NetworkTree tree) {
+		if ((tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree)
+				&& tree.Parent instanceof NetworkTree) {
+			return getLoadableNetworkTreeKey((NetworkTree)tree.Parent);
+		}
+		return tree.getUniqueKey();
+	}
+
 	@Override
 	public void onModelChanged() {
 		final NetworkView networkView = NetworkView.Instance();
-		final String key = getNetworkTreeKey(myTree, true);
+		final NetworkTree.Key key = getLoadableNetworkTreeKey(myTree);
 		myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
 		getListView().invalidateViews();
 
@@ -227,9 +211,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private void doStopLoading() {
-		final String key = getNetworkTreeKey(myTree, false);
-		if (key != null && NetworkView.Instance().isInitialized()) {
-			final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
+		if (NetworkView.Instance().isInitialized()) {
+			final ItemsLoadingRunnable runnable =
+				NetworkView.Instance().getItemsLoadingRunnable(myTree.getUniqueKey());
 			if (runnable != null) {
 				runnable.interruptLoading();
 			}
