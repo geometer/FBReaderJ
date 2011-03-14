@@ -342,8 +342,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 		*/
 
-		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
+
+		//final Screen tapZonesScreen = createPreferenceScreen("tapZones");
+		//tapZonesScreen.addOption(scrollingPreferences.TapZonesSchemeOption, "tapZonesScheme");
+
+		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		scrollingScreen.addOption(scrollingPreferences.FingerScrollingOption, "fingerScrolling");
 		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
 
@@ -378,5 +382,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			"navigateOverAllWords"
 		));
 		dictionaryScreen.addOption(fbReader.DictionaryTappingActionOption, "tappingAction");
+
+		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
+		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");
+		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");
 	}
 }

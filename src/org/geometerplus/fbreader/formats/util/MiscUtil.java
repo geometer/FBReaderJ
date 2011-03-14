@@ -41,6 +41,10 @@ public class MiscUtil {
 	}
 
 	public static String decodeHtmlReference(String name) {
+		if (name == null) {
+			return null;
+		}
+
 		int index = 0;
 		while (true) {
 			index = name.indexOf('%', index);

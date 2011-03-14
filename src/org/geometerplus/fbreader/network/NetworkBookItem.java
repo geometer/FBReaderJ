@@ -35,11 +35,11 @@ public final class NetworkBookItem extends NetworkItem {
 		 * Creates new AuthorData instance. 
 		 *
 		 * @param displayName author's name. Must be not <code>null</code>.
-		 * @param sortKey     string that defines sorting order of book's authors. Must be not <code>null</code>.
+		 * @param sortKey     string that defines sorting order of book's authors.
 		 */
 		public AuthorData(String displayName, String sortKey) {
 			DisplayName = displayName.intern();
-			SortKey = sortKey.intern();
+			SortKey = sortKey != null ? sortKey.intern() : DisplayName.toLowerCase().intern();
 		}
 
 		public int compareTo(AuthorData data) {
