@@ -175,6 +175,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
 		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
@@ -422,6 +424,7 @@
 				<node name="selectionBackground" value="选择背景色" />
 				<node name="text" value="普通文本" />
 				<node name="hyperlink" value="超链接文本" />
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="搜索结果背景" />
 				<node name="footer" value="页脚"/>
 			</node>

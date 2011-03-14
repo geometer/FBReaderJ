@@ -176,6 +176,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
 		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">

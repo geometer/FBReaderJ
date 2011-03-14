@@ -175,6 +175,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
 		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
@@ -422,6 +424,7 @@
 				<node name="selectionBackground" value="Фон позначки"/>
 				<node name="text" value="Звичайний текст"/>
 				<node name="hyperlink" value="Посилання"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Фон результатів пошуку"/>
 				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
