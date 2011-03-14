@@ -237,11 +237,17 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	static boolean runActionStatic(Activity activity, NetworkBookTree tree, int actionCode) {
-		final NetworkBookItem book = tree.Book;
 		switch (actionCode) {
 			case SHOW_BOOK_ACTIVITY_ITEM_ID:
 				Util.openTree(activity, tree);
 				return true;
+			default:
+				return runActionStatic(activity, tree.Book, actionCode);
+		}
+	}
+
+	static boolean runActionStatic(Activity activity, NetworkBookItem book, int actionCode) {
+		switch (actionCode) {
 			case DOWNLOAD_BOOK_ITEM_ID:
 				doDownloadBook(activity, book, false);
 				return true;

@@ -517,6 +517,16 @@
 					<node name="summaryOff" value="Scroll pages vertically"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones">
+				<node name="summary" value="Actions on finger tap"/>
+				<node name="tapZonesScheme" value="Tap zones scheme">
+					<node name="left_to_right" value="Left to right page scrolling"/>
+					<node name="right_to_left" value="Right to left page scrolling"/>
+					<node name="up" value="Down to up page scrolling"/>
+					<node name="down" value="Up to down page scrolling"/>
+					<node name="custom" value="Custom..."/>
+				</node>
+			</node>
 			<node name="dictionary" value="Dictionary">
 				<node name="summary" value="Dictionary settings"/>
 				<node name="dictionary" value="Dictionary"/>
@@ -528,6 +538,17 @@
 				<node name="navigateOverAllWords" value="Navigate over all words">
 					<node name="summaryOn" value="Key navigation visits all words"/>
 					<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
+				</node>
+			</node>
+			<node name="cancelMenu" value="Cancel menu">
+				<node name="summary" value="Back button action list"/>
+				<node name="previousBook" value="Previous book">
+					<node name="summaryOn" value="Show 'return to previous book' item"/>
+					<node name="summaryOff" value="Don't show 'return to previous book' item"/>
+				</node>
+				<node name="positions" value="Last 3 positions">
+					<node name="summaryOn" value="Show items for last 3 positions in the book"/>
+					<node name="summaryOff" value="Don't show items for last 3 positions in the book"/>
 				</node>
 			</node>
 		</node>

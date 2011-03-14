@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 
-public class OPDSCatalogItem extends NetworkCatalogItem {
+public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	static class State extends NetworkOperationData {
 		public String LastLoadedId;
 		public final HashSet<String> LoadedIds = new HashSet<String>();
@@ -43,8 +43,8 @@ public class OPDSCatalogItem extends NetworkCatalogItem {
 		myExtraData = extraData;
 	}
 
-	public OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, CatalogType catalogType) {
-		super(link, title, summary, cover, urlByType, accessibility, catalogType);
+	public OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, int flags) {
+		super(link, title, summary, cover, urlByType, accessibility, flags);
 		myExtraData = null;
 	}
 
