@@ -64,8 +64,11 @@ public final class FBView extends ZLTextView {
 	private TapZoneMap myZoneMap;
 
 	private TapZoneMap getZoneMap() {
+		//final String id =
+		//	ScrollingPreferences.Instance().TapZonesSchemeOption.getValue().toString();
 		final String id =
-			ScrollingPreferences.Instance().TapZonesSchemeOption.getValue().toString();
+			ScrollingPreferences.Instance().HorizontalOption.getValue()
+				? "right_to_left" : "up";
 		if (!id.equals(myZoneMapId)) {
 			myZoneMap = new TapZoneMap(id);
 			myZoneMapId = id;
