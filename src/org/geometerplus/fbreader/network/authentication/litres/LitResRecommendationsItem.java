@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 
 public class LitResRecommendationsItem extends OPDSCatalogItem {
 	public LitResRecommendationsItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType, Accessibility accessibility) {
-		super(link, title, summary, cover, urlByType, accessibility, CatalogType.BY_SERIES);
+		super(link, title, summary, cover, urlByType, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
 	}
 
 	@Override

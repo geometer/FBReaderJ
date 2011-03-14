@@ -187,7 +187,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		System.err.println("onCreateContextMenu -1");
 		if (menuInfo != null) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
