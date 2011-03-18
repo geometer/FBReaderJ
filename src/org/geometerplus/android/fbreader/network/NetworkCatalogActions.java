@@ -381,12 +381,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			final INetworkLink link = myTree.Item.Link;
 			if (myCheckAuthentication && link.authenticationManager() != null) {
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
-				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
-					try {
+				try {
+					if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
 						mgr.initialize();
-					} catch (ZLNetworkException e) {
-						mgr.logOut();
 					}
+				} catch (ZLNetworkException e) {
+					mgr.logOut();
 				}
 			}
 		}
