@@ -26,25 +26,15 @@ import android.graphics.BitmapFactory;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
-final class ZLAndroidArrayBasedImageData extends ZLAndroidImageData {
+final class InputStreamImageData extends ZLAndroidImageData {
 	private final ZLSingleImage myImage;
-	private Bitmap myBitmap;
-	private boolean myCannotDecode;
 
-	ZLAndroidArrayBasedImageData(ZLSingleImage image) {
+	InputStreamImageData(ZLSingleImage image) {
 		myImage = image;
 	}
 
 	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
-		if (myBitmap == null && !myCannotDecode) {
-			final InputStream stream = myImage.inputStream();
-			if (stream != null) {
-				myBitmap = BitmapFactory.decodeStream(stream);
-				if (myBitmap == null) {
-					myCannotDecode = true;
-				}
-			}
-		}
-		return myBitmap;
+		final InputStream stream = myImage.inputStream();
+		return stream != null ? BitmapFactory.decodeStream(stream) : null;
 	}
 }

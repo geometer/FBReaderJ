@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
-import java.io.InputStream;
-
 import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.*;
 
@@ -34,13 +32,7 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 			if (MimeTypes.MIME_IMAGE_PALM.equals(singleImage.mimeType())) {
 				return null;
 			}
-			/*
-			final byte[] array = singleImage.byteData();
-			if (array == null) {
-				return null;
-			}
-			*/
-			return new ZLAndroidArrayBasedImageData(singleImage);
+			return new InputStreamImageData(singleImage);
 		} else {
 			//TODO
 			return null;
