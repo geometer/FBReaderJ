@@ -98,7 +98,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						if (Util.isTopupSupported(activity, item.Link)) {
 							final String account = mgr.currentAccount();
 							if (account != null) {
-								addMenuItem(menu, TOPUP_ITEM_ID, "refillAccount", account);
+								addMenuItem(menu, TOPUP_ITEM_ID, "topup", account);
 							}
 						}
 					} else {
@@ -161,7 +161,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		addOptionsItem(menu, SIGNIN_ITEM_ID, "signIn");
 		addOptionsItem(menu, SIGNUP_ITEM_ID, "signUp");
 		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
-		addOptionsItem(menu, TOPUP_ITEM_ID, "refillAccount");
+		addOptionsItem(menu, TOPUP_ITEM_ID, "topup");
 		if (((NetworkCatalogTree)tree).Item instanceof BasketItem) {
 			addOptionsItem(menu, BASKET_CLEAR, "clearBasket");
 			addOptionsItem(menu, BASKET_BUY_ALL_BOOKS, "buyAllBooks");

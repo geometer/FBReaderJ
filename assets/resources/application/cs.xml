@@ -76,11 +76,11 @@
 		<node name="stopSearching" value="Zastavit vyhledávání" />
 		<node name="signIn" value="Přihlásit"/>
 		<node name="signOut" value="Odhlásit (%s)"/>
-		<node name="refillAccount" value="Doplnit účet (aktuálně: %s)"/>
-		<node name="refillTitle" value="Doplnit účet"/>
-		<node name="refillViaSms" value="Textová zpráva"/>
-		<node name="refillViaBrowser" value="Otevřít stránku v prohlížeči"/>
-		<node name="refillSummary" value="Aktuálně: %s"/>
+		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
+		<node name="topupTitle" value="Doplnit účet"/>
+		<node name="topupViaSms" value="Textová zpráva"/>
+		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
+		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
 		<node name="basketSummary" value="Knihy, které chci zakoupit"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje" />
@@ -110,7 +110,7 @@
 			<node name="signIn" value="Přihlásit"/>
 			<node name="signUp" value="Přihlásit" />
 			<node name="signOut" value="Odhlásit (%s)"/>
-			<node name="refillAccount" value="Doplnit účet"/>
+			<node name="topup" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
 			<node name="languages" value="Filtr jazyků"/>
@@ -225,7 +225,7 @@
 			<node name="openBook" value="Číst" />
 			<node name="editInfo" value="Upravit" />
 			<node name="reloadInfo" value="Znovu načíst" />
-			<node name="refillAccount" value="Doplnit účet"/>
+			<node name="topup" value="Doplnit účet"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk" />

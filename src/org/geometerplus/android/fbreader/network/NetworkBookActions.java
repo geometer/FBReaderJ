@@ -387,7 +387,7 @@ class NetworkBookActions extends NetworkTreeActions {
 							if (NetworkException.ERROR_PURCHASE_NOT_ENOUGH_MONEY.equals(
 								exception.getCode())
 							) {
-								buttonKey = "refillAccount";
+								buttonKey = "topup";
 								action = new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int which) {
 										new TopupActions().runStandalone(activity, book.Link);

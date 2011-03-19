@@ -45,16 +45,16 @@ class TopupActions extends NetworkTreeActions {
 	}
 
 	void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
-		menu.setHeaderTitle(getTitleValue("refillTitle"));
+		menu.setHeaderTitle(getTitleValue("topupTitle"));
 
 		if (Util.isSmsTopupSupported(activity, link)) {
-			addMenuItem(menu, TOPUP_VIA_CREDIT_CARD_ITEM_ID, "refillViaCreditCard");
+			addMenuItem(menu, TOPUP_VIA_CREDIT_CARD_ITEM_ID, "topupViaCreditCard");
 		}
 		if (Util.isSmsTopupSupported(activity, link)) {
-			addMenuItem(menu, TOPUP_VIA_SMS_ITEM_ID, "refillViaSms");
+			addMenuItem(menu, TOPUP_VIA_SMS_ITEM_ID, "topupViaSms");
 		}
 		if (Util.isBrowserTopupSupported(activity, link)) {
-			addMenuItem(menu, TOPUP_VIA_BROWSER_ITEM_ID, "refillViaBrowser");
+			addMenuItem(menu, TOPUP_VIA_BROWSER_ITEM_ID, "topupViaBrowser");
 		}
 	}
 
