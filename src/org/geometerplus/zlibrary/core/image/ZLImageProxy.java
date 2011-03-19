@@ -46,11 +46,6 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 	}
 
 	@Override
-	public final byte[] byteData() {
-		return myImage != null ? myImage.byteData() : null;
-	}
-
-	@Override
 	public final synchronized void synchronize() {
 		myImage = getRealImage();
 		setSynchronized();

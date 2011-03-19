@@ -29,14 +29,8 @@ public abstract class ZLSingleImage implements ZLImage {
 		myMimeType = mimeType;
 	}
 
-	public InputStream inputStream() {
-		final byte[] array = byteData();
-		System.err.println("returning ByteArrayInputStream from " + getClass().getName());
-		return array != null ? new ByteArrayInputStream(array) : null;
-	}
+	public abstract InputStream inputStream();
 
-	public abstract byte[] byteData();
-	
 	public final String mimeType() {
 		return myMimeType;
 	}

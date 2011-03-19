@@ -129,26 +129,7 @@ public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 	public final InputStream inputStream() {
 		try {
 			decode();
-			System.err.println("returning FileInputStream");
 			return new FileInputStream(new File(decodedFileName()));
-		} catch (IOException e) {
-			return null;
-		}
-	}
-
-	@Override
-	public final byte[] byteData() {
-		try {
-			decode();
-			final File file = new File(decodedFileName());
-			final byte[] data = new byte[(int)file.length()];
-			final FileInputStream stream = new FileInputStream(file);
-			try {
-				stream.read(data);
-			} finally {
-				stream.close();
-			}
-			return data;
 		} catch (IOException e) {
 			return null;
 		}
