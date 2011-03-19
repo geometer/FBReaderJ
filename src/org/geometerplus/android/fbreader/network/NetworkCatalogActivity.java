@@ -66,8 +66,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		if (menuInfo == null && myTree instanceof NetworkCatalogTree) {
 			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
-			if (Util.isAccountRefillingSupported(this, link)) {
-				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
+			if (Util.isTopupSupported(this, link)) {
+				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null) {
 					actions.buildContextMenu(this, menu, link);
 					return;
@@ -81,8 +81,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public boolean onContextItemSelected(MenuItem item) {
 		if ((item == null || item.getMenuInfo() == null) && myTree instanceof NetworkCatalogTree) {
 			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
-			if (Util.isAccountRefillingSupported(this, link)) {
-				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
+			if (Util.isTopupSupported(this, link)) {
+				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null && actions.runAction(this, link, item.getItemId())) {
 					return true;
 				}
