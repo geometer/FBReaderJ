@@ -214,7 +214,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case B3_TRUE:
 				return false;
 			case B3_UNDEFINED:
-				AuthenticationDialog.show(activity, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
+				AuthenticationDialog.show(activity, item.Link, new Runnable() {
 					public void run() {
 						if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
 							return;
@@ -231,11 +231,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
-		if (consumeByVisibility(activity, tree, actionCode)) {
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
+		if (consumeByVisibility(activity, catalogTree, actionCode)) {
 			return true;
 		}
 
-		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		switch (actionCode) {
 			case OPEN_CATALOG_ITEM_ID:
