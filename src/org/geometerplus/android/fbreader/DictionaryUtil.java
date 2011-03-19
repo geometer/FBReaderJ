@@ -96,7 +96,7 @@ public abstract class DictionaryUtil {
 		for (Map.Entry<PackageInfo,Boolean> entry : infos().entrySet()) {
 			final PackageInfo info = entry.getKey();
 			if (!entry.getValue() ||
-				PackageUtil.canBeStarted(context, getDictionaryIntent(info, "test"))) {
+				PackageUtil.canBeStarted(context, getDictionaryIntent(info, "test"), false)) {
 				list.add(info);
 			}
 		}
@@ -188,7 +188,7 @@ public abstract class DictionaryUtil {
 	}
 
 	public static void installDictionaryIfNotInstalled(final Activity activity) {
-		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test"))) {
+		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test"), false)) {
 			return;
 		}
 		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo();

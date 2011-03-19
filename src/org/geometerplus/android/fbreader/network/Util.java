@@ -42,7 +42,7 @@ abstract class Util implements UserRegistrationConstants {
 		"android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING";
 
 	private static boolean testService(Activity activity, String action, String url) {
-		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)));
+		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
 	}
 
 	static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
@@ -59,7 +59,7 @@ abstract class Util implements UserRegistrationConstants {
 				REGISTRATION_ACTION,
 				Uri.parse(link.getUrlInfo(INetworkLink.URL_SIGN_UP).URL)
 			);
-			if (PackageUtil.canBeStarted(activity, intent)) {
+			if (PackageUtil.canBeStarted(activity, intent, true)) {
 				activity.startActivityForResult(new Intent(
 					REGISTRATION_ACTION,
 					Uri.parse(link.getUrlInfo(INetworkLink.URL_SIGN_UP).URL)
@@ -109,7 +109,7 @@ abstract class Util implements UserRegistrationConstants {
 					intent.putExtra(entry.getKey(), entry.getValue());
 				}
 			}
-			if (PackageUtil.canBeStarted(activity, intent)) {
+			if (PackageUtil.canBeStarted(activity, intent, true)) {
 				activity.startActivity(intent);
 			}
 		} catch (ActivityNotFoundException e) {
