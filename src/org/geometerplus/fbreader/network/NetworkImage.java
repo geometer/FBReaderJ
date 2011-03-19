@@ -205,15 +205,19 @@ public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
 		}
 	}
 
+	private ZLFileImage myFileImage;
 	@Override
-	public byte[] byteData() {
-		if (!isSynchronized()) {
-			return null;
+	public InputStream inputStream() {
+		if (myFileImage == null) {
+			if (!isSynchronized()) {
+				return null;
+			}
+			final String path = getFilePath();
+			if (path == null) {
+				return null;
+			}
+			myFileImage = new ZLFileImage(mimeType(), ZLFile.createFileByPath(path));
 		}
-		final String path = getFilePath();
-		if (path == null) {
-			return null;
-		}
-		return new ZLFileImage(mimeType(), ZLFile.createFileByPath(path)).byteData();
+		return myFileImage.inputStream();
 	}
 }
