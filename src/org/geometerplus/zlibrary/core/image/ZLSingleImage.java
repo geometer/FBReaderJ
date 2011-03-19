@@ -19,11 +19,20 @@
 
 package org.geometerplus.zlibrary.core.image;
 
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+
 public abstract class ZLSingleImage implements ZLImage {
 	private final String myMimeType;
 	
 	public ZLSingleImage(final String mimeType) {
 		myMimeType = mimeType;
+	}
+
+	public InputStream inputStream() {
+		final byte[] array = byteData();
+		System.err.println("returning ByteArrayInputStream from " + getClass().getName());
+		return array != null ? new ByteArrayInputStream(array) : null;
 	}
 
 	public abstract byte[] byteData();

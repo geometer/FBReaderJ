@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.image;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.SliceInputStream;
 
 public class ZLFileImage extends ZLSingleImage {
 	public static final String SCHEME = "imagefile";
@@ -43,6 +44,16 @@ public class ZLFileImage extends ZLSingleImage {
 
 	public String getURI() {
 		return SCHEME + "://" + myFile.getPath() + "\000" + myOffset + "\000" + myLength;
+	}
+
+	@Override
+	public InputStream inputStream() {
+		System.err.println("return SliceInputStream from " + getClass().getName());
+		try {
+			return new SliceInputStream(myFile.getInputStream(), myOffset, myLength);
+		} catch (IOException e) {
+			return null;
+		}
 	}
 
 	@Override
