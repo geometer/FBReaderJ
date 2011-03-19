@@ -390,7 +390,7 @@ class NetworkBookActions extends NetworkTreeActions {
 								buttonKey = "refillAccount";
 								action = new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int which) {
-										new RefillAccountActions().runStandalone(activity, book.Link);
+										new TopupActions().runStandalone(activity, book.Link);
 									}
 								};
 							} else {

@@ -29,10 +29,10 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.TopUpTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-class RefillAccountActions extends NetworkTreeActions {
-	public static final int REFILL_VIA_SMS_ITEM_ID = 0;
-	public static final int REFILL_VIA_BROWSER_ITEM_ID = 1;
-
+class TopupActions extends NetworkTreeActions {
+	public static final int TOPUP_VIA_SMS_ITEM_ID = 0;
+	public static final int TOPUP_VIA_BROWSER_ITEM_ID = 1;
+	public static final int TOPUP_VIA_CREDIT_CARD_ITEM_ID = 2;
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
@@ -47,11 +47,14 @@ class RefillAccountActions extends NetworkTreeActions {
 	void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
 		menu.setHeaderTitle(getTitleValue("refillTitle"));
 
-		if (Util.isSmsAccountRefillingSupported(activity, link)) {
-			addMenuItem(menu, REFILL_VIA_SMS_ITEM_ID, "refillViaSms");
+		if (Util.isSmsTopupSupported(activity, link)) {
+			addMenuItem(menu, TOPUP_VIA_CREDIT_CARD_ITEM_ID, "refillViaCreditCard");
 		}
-		if (Util.isBrowserAccountRefillingSupported(activity, link)) {
-			addMenuItem(menu, REFILL_VIA_BROWSER_ITEM_ID, "refillViaBrowser");
+		if (Util.isSmsTopupSupported(activity, link)) {
+			addMenuItem(menu, TOPUP_VIA_SMS_ITEM_ID, "refillViaSms");
+		}
+		if (Util.isBrowserTopupSupported(activity, link)) {
+			addMenuItem(menu, TOPUP_VIA_BROWSER_ITEM_ID, "refillViaBrowser");
 		}
 	}
 
@@ -60,15 +63,22 @@ class RefillAccountActions extends NetworkTreeActions {
 		return getDefaultActionCode(activity, ((TopUpTree)tree).Item.Link);
 	}
 	private int getDefaultActionCode(Activity activity, INetworkLink link) {
-		final boolean sms = Util.isSmsAccountRefillingSupported(activity, link);
-		final boolean browser = Util.isBrowserAccountRefillingSupported(activity, link);
+		final boolean sms = Util.isSmsTopupSupported(activity, link);
+		final boolean browser = Util.isBrowserTopupSupported(activity, link);
+		final boolean creditCard = Util.isCreditCardTopupSupported(activity, link);
+		final int count =
+			(sms ? 1 : 0) +
+			(browser ? 1 : 0) +
+			(creditCard ? 1 : 0);
 
-		if (sms && browser) {
+		if (count > 1) {
 			return TREE_SHOW_CONTEXT_MENU;
 		} else if (sms) {
-			return REFILL_VIA_SMS_ITEM_ID;
+			return TOPUP_VIA_SMS_ITEM_ID;
+		} else if (creditCard) {
+			return TOPUP_VIA_CREDIT_CARD_ITEM_ID;
 		} else /* if (browser) */ { 
-			return REFILL_VIA_BROWSER_ITEM_ID;
+			return TOPUP_VIA_BROWSER_ITEM_ID;
 		}
 	}
 
@@ -94,51 +104,62 @@ class RefillAccountActions extends NetworkTreeActions {
 	}
 
 	static boolean runAction(Activity activity, INetworkLink link, int actionCode) {
-		Runnable refillRunnable = null;
+		Runnable topupRunnable = null;
 		switch (actionCode) {
-			case REFILL_VIA_SMS_ITEM_ID:
-				refillRunnable = smsRefillRunnable(activity, link);
+			case TOPUP_VIA_SMS_ITEM_ID:
+				topupRunnable = smsTopupRunnable(activity, link);
 				break;
-			case REFILL_VIA_BROWSER_ITEM_ID:
-				refillRunnable = browserRefillRunnable(activity, link);
+			case TOPUP_VIA_BROWSER_ITEM_ID:
+				topupRunnable = browserTopupRunnable(activity, link);
+				break;
+			case TOPUP_VIA_CREDIT_CARD_ITEM_ID:
+				topupRunnable = creditCardTopupRunnable(activity, link);
 				break;
 		}
 
-		if (refillRunnable == null) {
+		if (topupRunnable == null) {
 			return false;
 		}
-		doRefill(activity, link, refillRunnable);
+		doTopup(activity, link, topupRunnable);
 		return true;
 	}
 
-	private static Runnable browserRefillRunnable(final Activity activity, final INetworkLink link) {
+	private static Runnable browserTopupRunnable(final Activity activity, final INetworkLink link) {
 		return new Runnable() {
 			public void run() {
 				Util.openInBrowser(
 					activity,
-					link.authenticationManager().refillAccountLink()
+					link.authenticationManager().topupLink()
 				);
 			}
 		};
 	}
 
-	private static Runnable smsRefillRunnable(final Activity activity, final INetworkLink link) {
+	private static Runnable smsTopupRunnable(final Activity activity, final INetworkLink link) {
 		return new Runnable() {
 			public void run() {
-				Util.runSmsDialog(activity, link);
+				Util.runSmsTopupDialog(activity, link);
 			}
 		};
 	}
 
-	private static void doRefill(final Activity activity, final INetworkLink link, final Runnable refiller) {
+	private static Runnable creditCardTopupRunnable(final Activity activity, final INetworkLink link) {
+		return new Runnable() {
+			public void run() {
+				Util.runCreditCardTopupDialog(activity, link);
+			}
+		};
+	}
+
+	private static void doTopup(final Activity activity, final INetworkLink link, final Runnable action) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		if (mgr.mayBeAuthorised(false)) {
-			refiller.run();
+			action.run();
 		} else {
 			AuthenticationDialog.show(activity, link, new Runnable() {
 				public void run() {
 					if (mgr.mayBeAuthorised(false)) {
-						refiller.run();
+						action.run();
 					}
 				}
 			});
@@ -146,8 +167,8 @@ class RefillAccountActions extends NetworkTreeActions {
 	}
 
 	public void runStandalone(Activity activity, INetworkLink link) {
-		final int refillActionCode = getDefaultActionCode(activity, link);
-		if (refillActionCode == TREE_SHOW_CONTEXT_MENU) {
+		final int topupActionCode = getDefaultActionCode(activity, link);
+		if (topupActionCode == TREE_SHOW_CONTEXT_MENU) {
 			//activity.getListView().showContextMenu();
 			View view = null;
 			if (activity instanceof NetworkBaseActivity) {	
@@ -158,8 +179,8 @@ class RefillAccountActions extends NetworkTreeActions {
 			if (view != null) {
 				view.showContextMenu();
 			}
-		} else if (refillActionCode >= 0) {
-			runAction(activity, link, refillActionCode);
+		} else if (topupActionCode >= 0) {
+			runAction(activity, link, topupActionCode);
 		}
 	}
 }

@@ -38,8 +38,10 @@ import org.geometerplus.android.util.PackageUtil;
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
-	private static final String SMS_REFILLING_ACTION =
+	private static final String SMS_TOPUP_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING";
+	private static final String CREDIT_CARD_TOPUP_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_CREDIT_CARD_TOPUP";
 
 	private static boolean testService(Activity activity, String action, String url) {
 		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
@@ -83,29 +85,46 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static boolean isAccountRefillingSupported(Activity activity, INetworkLink link) {
+	static boolean isTopupSupported(Activity activity, INetworkLink link) {
 		return
-			isBrowserAccountRefillingSupported(activity, link) ||
-			isSmsAccountRefillingSupported(activity, link);
+			isBrowserTopupSupported(activity, link) ||
+			isCreditCardTopupSupported(activity, link) ||
+			isSmsTopupSupported(activity, link);
 	}
 
-	static boolean isSmsAccountRefillingSupported(Activity activity, INetworkLink link) {
+	static boolean isSmsTopupSupported(Activity activity, INetworkLink link) {
 		return testService(
 			activity,
-			SMS_REFILLING_ACTION,
+			SMS_TOPUP_ACTION,
 			link.getUrlInfo(INetworkLink.URL_MAIN).URL
 		);
 	}
 
-	static void runSmsDialog(Activity activity, INetworkLink link) {
+	static boolean isCreditCardTopupSupported(Activity activity, INetworkLink link) {
+		return testService(
+			activity,
+			CREDIT_CARD_TOPUP_ACTION,
+			link.getUrlInfo(INetworkLink.URL_MAIN).URL
+		);
+	}
+
+	static void runSmsTopupDialog(Activity activity, INetworkLink link) {
+		runTopupDialog(activity, link, SMS_TOPUP_ACTION);
+	}
+
+	static void runCreditCardTopupDialog(Activity activity, INetworkLink link) {
+		runTopupDialog(activity, link, CREDIT_CARD_TOPUP_ACTION);
+	}
+
+	private static void runTopupDialog(Activity activity, INetworkLink link, String action) {
 		try {
 			final Intent intent = new Intent(
-				SMS_REFILLING_ACTION,
+				action,
 				Uri.parse(link.getUrlInfo(INetworkLink.URL_MAIN).URL)
 			);
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			if (mgr != null) {
-				for (Map.Entry<String,String> entry : mgr.getSmsRefillingData().entrySet()) {
+				for (Map.Entry<String,String> entry : mgr.getTopupData().entrySet()) {
 					intent.putExtra(entry.getKey(), entry.getValue());
 				}
 			}
@@ -116,8 +135,8 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static boolean isBrowserAccountRefillingSupported(Activity activity, INetworkLink link) {
-		return link.getUrlInfo(INetworkLink.URL_REFILL_ACCOUNT).URL != null;
+	static boolean isBrowserTopupSupported(Activity activity, INetworkLink link) {
+		return link.getUrlInfo(INetworkLink.URL_TOPUP).URL != null;
 	}
 
 	static void openInBrowser(Context context, String url) {

@@ -126,12 +126,12 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		NetworkView.Instance().getTopUpActions().buildContextMenu(this, menu, myBook.Link);
+		NetworkView.Instance().getTopupActions().buildContextMenu(this, menu, myBook.Link);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		RefillAccountActions.runAction(this, myBook.Link, item.getItemId());
+		TopupActions.runAction(this, myBook.Link, item.getItemId());
 		return true;
 	}
 

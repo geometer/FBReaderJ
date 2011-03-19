@@ -47,7 +47,7 @@ class NetworkView {
 
 	private volatile boolean myInitialized;
 	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
-	private RefillAccountActions myTopUpActions;
+	private TopupActions myTopupActions;
 
 	private NetworkView() {
 	}
@@ -66,8 +66,8 @@ class NetworkView {
 		myActions.add(new NetworkBookActions());
 		myActions.add(new NetworkCatalogActions());
 		myActions.add(new SearchItemActions());
-		myTopUpActions = new RefillAccountActions();
-		myActions.add(myTopUpActions);
+		myTopupActions = new TopupActions();
+		myActions.add(myTopupActions);
 		myActions.add(new AddCustomCatalogItemActions());
 		myActions.trimToSize();
 
@@ -91,8 +91,8 @@ class NetworkView {
 	 * NetworkItem's actions
 	 */
 
-	public RefillAccountActions getTopUpActions() {
-		return myTopUpActions;
+	public TopupActions getTopupActions() {
+		return myTopupActions;
 	}
 
 	public NetworkTreeActions getActions(NetworkTree tree) {
