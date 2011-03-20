@@ -33,6 +33,7 @@ class TopupActions extends NetworkTreeActions {
 	public static final int TOPUP_VIA_SMS_ITEM_ID = 0;
 	public static final int TOPUP_VIA_BROWSER_ITEM_ID = 1;
 	public static final int TOPUP_VIA_CREDIT_CARD_ITEM_ID = 2;
+	public static final int TOPUP_VIA_SELF_SERVICE_ITEM_ID = 3;
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
@@ -47,11 +48,14 @@ class TopupActions extends NetworkTreeActions {
 	void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
 		menu.setHeaderTitle(getTitleValue("topupTitle"));
 
-		if (Util.isCreditCardTopupSupported(activity, link)) {
+		if (Util.isTopupSupported(activity, link, Util.CREDIT_CARD_TOPUP_ACTION)) {
 			addMenuItem(menu, TOPUP_VIA_CREDIT_CARD_ITEM_ID, "topupViaCreditCard");
 		}
-		if (Util.isSmsTopupSupported(activity, link)) {
+		if (Util.isTopupSupported(activity, link, Util.SMS_TOPUP_ACTION)) {
 			addMenuItem(menu, TOPUP_VIA_SMS_ITEM_ID, "topupViaSms");
+		}
+		if (Util.isTopupSupported(activity, link, Util.SELF_SERVICE_KIOSK_TOPUP_ACTION)) {
+			addMenuItem(menu, TOPUP_VIA_SELF_SERVICE_ITEM_ID, "topupViaSelfServiceKiosk");
 		}
 		if (Util.isBrowserTopupSupported(activity, link)) {
 			addMenuItem(menu, TOPUP_VIA_BROWSER_ITEM_ID, "topupViaBrowser");
@@ -63,13 +67,15 @@ class TopupActions extends NetworkTreeActions {
 		return getDefaultActionCode(activity, ((TopUpTree)tree).Item.Link);
 	}
 	private int getDefaultActionCode(Activity activity, INetworkLink link) {
-		final boolean sms = Util.isSmsTopupSupported(activity, link);
 		final boolean browser = Util.isBrowserTopupSupported(activity, link);
-		final boolean creditCard = Util.isCreditCardTopupSupported(activity, link);
+		final boolean sms = Util.isTopupSupported(activity, link, Util.SMS_TOPUP_ACTION);
+		final boolean creditCard = Util.isTopupSupported(activity, link, Util.CREDIT_CARD_TOPUP_ACTION);
+		final boolean selfService = Util.isTopupSupported(activity, link, Util.SELF_SERVICE_KIOSK_TOPUP_ACTION);
 		final int count =
 			(sms ? 1 : 0) +
 			(browser ? 1 : 0) +
-			(creditCard ? 1 : 0);
+			(creditCard ? 1 : 0) +
+			(selfService ? 1 : 0);
 
 		if (count > 1) {
 			return TREE_SHOW_CONTEXT_MENU;
@@ -77,6 +83,8 @@ class TopupActions extends NetworkTreeActions {
 			return TOPUP_VIA_SMS_ITEM_ID;
 		} else if (creditCard) {
 			return TOPUP_VIA_CREDIT_CARD_ITEM_ID;
+		} else if (selfService) {
+			return TOPUP_VIA_SELF_SERVICE_ITEM_ID;
 		} else /* if (browser) */ { 
 			return TOPUP_VIA_BROWSER_ITEM_ID;
 		}
@@ -107,13 +115,16 @@ class TopupActions extends NetworkTreeActions {
 		Runnable topupRunnable = null;
 		switch (actionCode) {
 			case TOPUP_VIA_SMS_ITEM_ID:
-				topupRunnable = smsTopupRunnable(activity, link);
+				topupRunnable = topupRunnable(activity, link, Util.SMS_TOPUP_ACTION);
 				break;
 			case TOPUP_VIA_BROWSER_ITEM_ID:
 				topupRunnable = browserTopupRunnable(activity, link);
 				break;
 			case TOPUP_VIA_CREDIT_CARD_ITEM_ID:
-				topupRunnable = creditCardTopupRunnable(activity, link);
+				topupRunnable = topupRunnable(activity, link, Util.CREDIT_CARD_TOPUP_ACTION);
+				break;
+			case TOPUP_VIA_SELF_SERVICE_ITEM_ID:
+				topupRunnable = topupRunnable(activity, link, Util.SELF_SERVICE_KIOSK_TOPUP_ACTION);
 				break;
 		}
 
@@ -135,18 +146,10 @@ class TopupActions extends NetworkTreeActions {
 		};
 	}
 
-	private static Runnable smsTopupRunnable(final Activity activity, final INetworkLink link) {
+	private static Runnable topupRunnable(final Activity activity, final INetworkLink link, final String action) {
 		return new Runnable() {
 			public void run() {
-				Util.runSmsTopupDialog(activity, link);
-			}
-		};
-	}
-
-	private static Runnable creditCardTopupRunnable(final Activity activity, final INetworkLink link) {
-		return new Runnable() {
-			public void run() {
-				Util.runCreditCardTopupDialog(activity, link);
+				Util.runTopupDialog(activity, link, action);
 			}
 		};
 	}

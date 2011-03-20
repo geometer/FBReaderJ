@@ -79,6 +79,8 @@
 		<node name="signOut" value="Ausloggen (%s)"/>
 		<node name="topup" value="Konto aufladen (derzeit: %s)"/>
 		<node name="topupTitle" value="Konto aufladen"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
 		<node name="topupViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="topupSummary" value="Derzeit: %s"/>

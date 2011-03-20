@@ -38,10 +38,12 @@ import org.geometerplus.android.util.PackageUtil;
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
-	private static final String SMS_TOPUP_ACTION =
+	static final String SMS_TOPUP_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING";
-	private static final String CREDIT_CARD_TOPUP_ACTION =
+	static final String CREDIT_CARD_TOPUP_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_CREDIT_CARD_TOPUP";
+	static final String SELF_SERVICE_KIOSK_TOPUP_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_SELF_SERVICE_KIOSK_TOPUP";
 
 	private static boolean testService(Activity activity, String action, String url) {
 		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
@@ -88,35 +90,20 @@ abstract class Util implements UserRegistrationConstants {
 	static boolean isTopupSupported(Activity activity, INetworkLink link) {
 		return
 			isBrowserTopupSupported(activity, link) ||
-			isCreditCardTopupSupported(activity, link) ||
-			isSmsTopupSupported(activity, link);
+			isTopupSupported(activity, link, SMS_TOPUP_ACTION) ||
+			isTopupSupported(activity, link, CREDIT_CARD_TOPUP_ACTION) ||
+			isTopupSupported(activity, link, SELF_SERVICE_KIOSK_TOPUP_ACTION);
 	}
 
-	static boolean isSmsTopupSupported(Activity activity, INetworkLink link) {
+	static boolean isTopupSupported(Activity activity, INetworkLink link, String action) {
 		return testService(
 			activity,
-			SMS_TOPUP_ACTION,
+			action,
 			link.getUrlInfo(INetworkLink.URL_MAIN).URL
 		);
 	}
 
-	static boolean isCreditCardTopupSupported(Activity activity, INetworkLink link) {
-		return testService(
-			activity,
-			CREDIT_CARD_TOPUP_ACTION,
-			link.getUrlInfo(INetworkLink.URL_MAIN).URL
-		);
-	}
-
-	static void runSmsTopupDialog(Activity activity, INetworkLink link) {
-		runTopupDialog(activity, link, SMS_TOPUP_ACTION);
-	}
-
-	static void runCreditCardTopupDialog(Activity activity, INetworkLink link) {
-		runTopupDialog(activity, link, CREDIT_CARD_TOPUP_ACTION);
-	}
-
-	private static void runTopupDialog(Activity activity, INetworkLink link, String action) {
+	static void runTopupDialog(Activity activity, INetworkLink link, String action) {
 		try {
 			final Intent intent = new Intent(
 				action,
