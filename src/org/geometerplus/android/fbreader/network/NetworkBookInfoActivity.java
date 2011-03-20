@@ -186,7 +186,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			findViewById(R.id.network_book_series_title).setVisibility(View.VISIBLE);
 			setPairValueText(R.id.network_book_series_title, myBook.SeriesTitle);
 			if (myBook.IndexInSeries > 0) {
-				setPairValueText(R.id.network_book_series_index, String.valueOf(myBook.IndexInSeries));
+				setPairValueText(R.id.network_book_series_index, String.format("%.1f", myBook.IndexInSeries));
 				findViewById(R.id.network_book_series_index).setVisibility(View.VISIBLE);
 			} else {
 				findViewById(R.id.network_book_series_index).setVisibility(View.GONE);

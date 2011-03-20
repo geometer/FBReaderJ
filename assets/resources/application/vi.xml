@@ -78,6 +78,8 @@
 		<node name="signOut" value="Đăng xuất (%s)"/>
 		<node name="topup" value="Làm đầy lại tài khoản (hiện tại: %s)"/>
 		<node name="topupTitle" value="Làm đầy lại tài khoản"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
 		<node name="topupViaSms" value="Tin nhắn"/>
 		<node name="topupViaBrowser" value="Mở trang trong trình duyệt"/>
 		<node name="topupSummary" value="Hiện tại: %s"/>

@@ -61,7 +61,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 14;
+		final int currentVersion = 15;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -98,6 +98,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables12();
 					case 13:
 						updateTables13();
+					case 14:
+						updateTables14();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -240,7 +242,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			if (book != null) {
 				String series = seriesById.get(cursor.getLong(1));
 				if (series != null) {
-					setSeriesInfo(book, series, cursor.getLong(2));
+					setSeriesInfo(book, series, cursor.getFloat(2));
 				}
 			}
 		}
@@ -461,7 +463,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 			myInsertBookSeriesStatement.bindLong(1, bookId);
 			myInsertBookSeriesStatement.bindLong(2, seriesId);
-			myInsertBookSeriesStatement.bindLong(3, seriesInfo.Index);
+			myInsertBookSeriesStatement.bindDouble(3, seriesInfo.Index);
 			myInsertBookSeriesStatement.execute();
 		}
 	}
@@ -470,7 +472,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { "" + bookId });
 		SeriesInfo info = null;
 		if (cursor.moveToNext()) {
-			info = new SeriesInfo(cursor.getString(0), cursor.getLong(1));
+			info = new SeriesInfo(cursor.getString(0), cursor.getFloat(1));
 		}
 		cursor.close();	
 		return info;
@@ -1126,5 +1128,16 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL(
 			"ALTER TABLE Bookmarks ADD COLUMN visible INTEGER DEFAULT 1"
 		);
+	}
+
+	private void updateTables14() {
+		myDatabase.execSQL("ALTER TABLE BookSeries RENAME TO BookSeries_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE BookSeries(" +
+				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
+				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"book_index REAL)");
+		myDatabase.execSQL("INSERT INTO BookSeries (series_id,book_id,book_index) SELECT series_id,book_id,book_index FROM BookSeries_Obsolete");
+		myDatabase.execSQL("DROP TABLE BookSeries_Obsolete");
 	}
 }

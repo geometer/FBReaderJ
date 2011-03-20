@@ -135,11 +135,15 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 			public int compare(NetworkItem item0, NetworkItem item1) {
 				final NetworkBookItem book0 = (NetworkBookItem)item0;
 				final NetworkBookItem book1 = (NetworkBookItem)item1;
-				int diff = book0.SeriesTitle.compareTo(book1.SeriesTitle);
-				if (diff == 0) {
-					diff = book0.IndexInSeries - book1.IndexInSeries;
+				final int diff = book0.SeriesTitle.compareTo(book1.SeriesTitle);
+				if (diff != 0) {
+					return diff;
 				}
-				return diff != 0 ? diff : book0.Title.compareTo(book1.Title);
+				final float fdiff = book0.IndexInSeries - book1.IndexInSeries;
+				if (fdiff != 0) {
+					return fdiff > 0 ? 1 : -1;
+				}
+				return book0.Title.compareTo(book1.Title);
 			}
 		};
 	}

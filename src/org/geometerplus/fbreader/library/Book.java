@@ -231,11 +231,11 @@ public class Book {
 		return mySeriesInfo;
 	}
 
-	void setSeriesInfoWithNoCheck(String name, long index) {
+	void setSeriesInfoWithNoCheck(String name, float index) {
 		mySeriesInfo = new SeriesInfo(name, index);
 	}
 
-	public void setSeriesInfo(String name, long index) {
+	public void setSeriesInfo(String name, float index) {
 		if (mySeriesInfo == null) {
 			if (name != null) {
 				mySeriesInfo = new SeriesInfo(name, index);
@@ -244,7 +244,7 @@ public class Book {
 		} else if (name == null) {
 			mySeriesInfo = null;
 			myIsSaved = false;
-		} else if (!mySeriesInfo.Name.equals(name) || (mySeriesInfo.Index != index)) {
+		} else if (!name.equals(mySeriesInfo.Name) || mySeriesInfo.Index != index) {
 			mySeriesInfo = new SeriesInfo(name, index);
 			myIsSaved = false;
 		}

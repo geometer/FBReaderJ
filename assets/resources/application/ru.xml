@@ -77,8 +77,10 @@
 		<node name="signOut" value="Выйти (%s)"/>
 		<node name="topup" value="Пополнить счёт (текущий счёт: %s)" />
 		<node name="topupTitle" value="Пополнить счёт"/>
-		<node name="topupViaSms" value="Варианты SMS"/>
-		<node name="topupViaBrowser" value="Окно браузера"/>
+		<node name="topupViaCreditCard" value="Кредитной картой"/>
+		<node name="topupViaSelfServiceKiosk" value="В платежном терминале"/>
+		<node name="topupViaSms" value="Платной SMS"/>
+		<node name="topupViaBrowser" value="В окне браузера"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />

@@ -78,6 +78,8 @@
 		<node name="signOut" value="Вийти (%s)"/>
 		<node name="topup" value="Поповнити рахунок (поточний рахунок: %s)" />
 		<node name="topupTitle" value="Поповнити рахунок"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
 		<node name="topupViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="topupSummary" value="Поточний рахунок: %s"/>
