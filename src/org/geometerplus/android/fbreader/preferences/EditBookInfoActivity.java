@@ -99,6 +99,11 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		final ZLFile file = ZLFile.createFileByPath(path);
 		myBook = Book.getByFile(file);
 
+		if (myBook == null) {
+			finish();
+			return;
+		}
+
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
 	}
@@ -106,6 +111,8 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		myBook.save();
+		if (myBook != null) {
+			myBook.save();
+		}
 	}
 }

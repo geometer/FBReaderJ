@@ -49,7 +49,7 @@ public abstract class BooksDatabase {
 	protected void addTag(Book book, Tag tag) {
 		book.addTagWithNoCheck(tag);
 	}
-	protected void setSeriesInfo(Book book, String series, long index) {
+	protected void setSeriesInfo(Book book, String series, float index) {
 		book.setSeriesInfoWithNoCheck(series, index);
 	}
 

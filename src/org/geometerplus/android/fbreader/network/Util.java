@@ -38,11 +38,15 @@ import org.geometerplus.android.util.PackageUtil;
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
-	private static final String SMS_REFILLING_ACTION =
+	static final String SMS_TOPUP_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING";
+	static final String CREDIT_CARD_TOPUP_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_CREDIT_CARD_TOPUP";
+	static final String SELF_SERVICE_KIOSK_TOPUP_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_SELF_SERVICE_KIOSK_TOPUP";
 
 	private static boolean testService(Activity activity, String action, String url) {
-		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)));
+		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
 	}
 
 	static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
@@ -59,7 +63,7 @@ abstract class Util implements UserRegistrationConstants {
 				REGISTRATION_ACTION,
 				Uri.parse(link.getUrlInfo(INetworkLink.URL_SIGN_UP).URL)
 			);
-			if (PackageUtil.canBeStarted(activity, intent)) {
+			if (PackageUtil.canBeStarted(activity, intent, true)) {
 				activity.startActivityForResult(new Intent(
 					REGISTRATION_ACTION,
 					Uri.parse(link.getUrlInfo(INetworkLink.URL_SIGN_UP).URL)
@@ -83,41 +87,43 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static boolean isAccountRefillingSupported(Activity activity, INetworkLink link) {
+	static boolean isTopupSupported(Activity activity, INetworkLink link) {
 		return
-			isBrowserAccountRefillingSupported(activity, link) ||
-			isSmsAccountRefillingSupported(activity, link);
+			isBrowserTopupSupported(activity, link) ||
+			isTopupSupported(activity, link, SMS_TOPUP_ACTION) ||
+			isTopupSupported(activity, link, CREDIT_CARD_TOPUP_ACTION) ||
+			isTopupSupported(activity, link, SELF_SERVICE_KIOSK_TOPUP_ACTION);
 	}
 
-	static boolean isSmsAccountRefillingSupported(Activity activity, INetworkLink link) {
+	static boolean isTopupSupported(Activity activity, INetworkLink link, String action) {
 		return testService(
 			activity,
-			SMS_REFILLING_ACTION,
+			action,
 			link.getUrlInfo(INetworkLink.URL_MAIN).URL
 		);
 	}
 
-	static void runSmsDialog(Activity activity, INetworkLink link) {
+	static void runTopupDialog(Activity activity, INetworkLink link, String action) {
 		try {
 			final Intent intent = new Intent(
-				SMS_REFILLING_ACTION,
+				action,
 				Uri.parse(link.getUrlInfo(INetworkLink.URL_MAIN).URL)
 			);
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			if (mgr != null) {
-				for (Map.Entry<String,String> entry : mgr.getSmsRefillingData().entrySet()) {
+				for (Map.Entry<String,String> entry : mgr.getTopupData().entrySet()) {
 					intent.putExtra(entry.getKey(), entry.getValue());
 				}
 			}
-			if (PackageUtil.canBeStarted(activity, intent)) {
+			if (PackageUtil.canBeStarted(activity, intent, true)) {
 				activity.startActivity(intent);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
 	}
 
-	static boolean isBrowserAccountRefillingSupported(Activity activity, INetworkLink link) {
-		return link.getUrlInfo(INetworkLink.URL_REFILL_ACCOUNT).URL != null;
+	static boolean isBrowserTopupSupported(Activity activity, INetworkLink link) {
+		return link.getUrlInfo(INetworkLink.URL_TOPUP).URL != null;
 	}
 
 	static void openInBrowser(Context context, String url) {
