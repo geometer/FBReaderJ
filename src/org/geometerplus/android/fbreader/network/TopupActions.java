@@ -47,7 +47,7 @@ class TopupActions extends NetworkTreeActions {
 	void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
 		menu.setHeaderTitle(getTitleValue("topupTitle"));
 
-		if (Util.isSmsTopupSupported(activity, link)) {
+		if (Util.isCreditCardTopupSupported(activity, link)) {
 			addMenuItem(menu, TOPUP_VIA_CREDIT_CARD_ITEM_ID, "topupViaCreditCard");
 		}
 		if (Util.isSmsTopupSupported(activity, link)) {
