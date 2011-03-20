@@ -30,6 +30,7 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 
 	private static boolean isReference(String text) {
 		return
+			text.startsWith("fbreader-action://") ||
 			text.startsWith("http://") ||
 			text.startsWith("https://") ||
 			text.startsWith("mailto:") ||
