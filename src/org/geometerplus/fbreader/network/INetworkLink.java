@@ -33,7 +33,7 @@ public interface INetworkLink {
 	String URL_SIGN_IN = "signIn";
 	String URL_SIGN_OUT = "signOut";
 	String URL_SIGN_UP = "signUp";
-	String URL_REFILL_ACCOUNT = "refillAccount";
+	String URL_TOPUP = "topup";
 	String URL_RECOVER_PASSWORD = "recoverPassword";
 
 	String getSiteName();

@@ -233,7 +233,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public String refillAccountLink() {
+	public String topupLink() {
 		final String sid;
 		synchronized (this) {
 			sid = mySidOption.getValue();
@@ -241,7 +241,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		final String url = Link.getUrlInfo(INetworkLink.URL_REFILL_ACCOUNT).URL;
+		final String url = Link.getUrlInfo(INetworkLink.URL_TOPUP).URL;
 		if (url == null) {
 			return null;
 		}
@@ -411,7 +411,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public Map<String,String> getSmsRefillingData() {
+	public Map<String,String> getTopupData() {
 		final HashMap<String,String> map = new HashMap<String,String>();
 		map.put("litres:userId", myUserIdOption.getValue());
 		map.put("litres:sid", mySidOption.getValue());

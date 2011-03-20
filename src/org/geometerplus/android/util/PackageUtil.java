@@ -54,18 +54,20 @@ public abstract class PackageUtil {
 	public static boolean isPluginInstalled(Activity activity, String pkg) {
 		return canBeStarted(
 			activity,
-			new Intent("android.fbreader.action.TEST", homeUri(pkg))
+			new Intent("android.fbreader.action.TEST", homeUri(pkg)),
+			true
 		);
 	}
 
 	public static boolean isPluginInstalled(Activity activity, String pkg, String version) {
 		return canBeStarted(
 			activity,
-			new Intent("android.fbreader.action.TEST", homeUri(pkg, version))
+			new Intent("android.fbreader.action.TEST", homeUri(pkg, version)),
+			true
 		);
 	}
 
-	public static boolean canBeStarted(Context context, Intent intent) {
+	public static boolean canBeStarted(Context context, Intent intent, boolean checkSignature) {
 		final PackageManager manager = context.getApplicationContext().getPackageManager();
 		final ResolveInfo info =
 			manager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
@@ -75,6 +77,9 @@ public abstract class PackageUtil {
 		final ActivityInfo activityInfo = info.activityInfo;
 		if (activityInfo == null) {
 			return false;
+		}
+		if (!checkSignature) {
+			return true;
 		}
 		return
 			PackageManager.SIGNATURE_MATCH ==

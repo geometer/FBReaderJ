@@ -25,8 +25,8 @@ public class TopUpItem extends NetworkItem {
 	public TopUpItem(INetworkLink link, String cover) {
 		super(
 			link,
-			ZLResource.resource("networkView").getResource("refillTitle").getValue(),
-			ZLResource.resource("networkView").getResource("refillSummary").getValue(),
+			ZLResource.resource("networkView").getResource("topupTitle").getValue(),
+			ZLResource.resource("networkView").getResource("topupSummary").getValue(),
 			cover
 		);
 	}
