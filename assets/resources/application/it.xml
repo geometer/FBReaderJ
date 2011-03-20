@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="Ferma ricerca" />
 		<node name="signIn" value="Entra"/>
 		<node name="signOut" value="Esci (%s)"/>
-		<node name="refillAccount" value="Ricarica account (corrente: %s)"/>
-		<node name="refillTitle" value="Ricarica account"/>
-		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
-		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
-		<node name="refillSummary" value="Corrente: %s"/>
+		<node name="topup" value="Ricarica account (corrente: %s)"/>
+		<node name="topupTitle" value="Ricarica account"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="Text messages" toBeTranslated="true"/>
+		<node name="topupViaBrowser" value="Open page in browser" toBeTranslated="true"/>
+		<node name="topupSummary" value="Corrente: %s"/>
 		<node name="alreadyDownloading" value="Sto scaricando il libro" />
 		<node name="alreadyDownloadingDemo" value="Sto scaricando il libro d'esempio" />
 		<node name="stoppingCatalogLoading" value="Sto fermando il caricamento" />
@@ -108,7 +110,7 @@
 			<node name="signIn" value="Entra"/>
 			<node name="signOut" value="Esci (%s)"/>
 			<node name="signUp" value="Registrati" />
-			<node name="refillAccount" value="Ricarica account"/>
+			<node name="topup" value="Ricarica account"/>
 			<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 			<node name="refreshCatalogsList" toBeTranslated="true" value="Refresh catalogs"/>
 			<node name="languages" toBeTranslated="true" value="Language filter"/>
@@ -251,7 +253,7 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
-			<node name="refillAccount" value="Ricarica account"/>
+			<node name="topup" value="Ricarica account"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin" toBeTranslated="true" />

@@ -75,11 +75,13 @@
 		<node name="stopSearching" value="Остановить поиск" />
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
-		<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
-		<node name="refillTitle" value="Пополнить счёт"/>
-		<node name="refillViaSms" value="Варианты SMS"/>
-		<node name="refillViaBrowser" value="Окно браузера"/>
-		<node name="refillSummary" value="Текущий счёт: %s"/>
+		<node name="topup" value="Пополнить счёт (текущий счёт: %s)" />
+		<node name="topupTitle" value="Пополнить счёт"/>
+		<node name="topupViaCreditCard" value="Кредитной картой"/>
+		<node name="topupViaSelfServiceKiosk" value="В платежном терминале"/>
+		<node name="topupViaSms" value="Платной SMS"/>
+		<node name="topupViaBrowser" value="В окне браузера"/>
+		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
@@ -107,7 +109,7 @@
 			<node name="signIn" value="Войти"/>
 			<node name="signOut" value="Выйти (%s)"/>
 			<node name="signUp" value="Регистрация"/>
-			<node name="refillAccount" value="Пополнить счёт"/>
+			<node name="topup" value="Пополнить счёт"/>
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
 			<node name="languages" value="Фильтр по языку"/>
@@ -252,7 +254,7 @@
 			<node name="openBook" value="Читать" />
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
-			<node name="refillAccount" value="Пополнить счёт"/>
+			<node name="topup" value="Пополнить счёт"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>

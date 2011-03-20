@@ -75,11 +75,13 @@
 		<node name="stopSearching" value="Stop searching" />
 		<node name="signIn" value="Sign in"/>
 		<node name="signOut" value="Sign out (%s)"/>
-		<node name="refillAccount" value="Top up account (currently: %s)"/>
-		<node name="refillTitle" value="Top up account"/>
-		<node name="refillViaSms" value="Text messages"/>
-		<node name="refillViaBrowser" value="Open page in browser"/>
-		<node name="refillSummary" value="Currently: %s"/>
+		<node name="topup" value="Top up account (currently: %s)"/>
+		<node name="topupTitle" value="Top up account"/>
+		<node name="topupViaCreditCard" value="Credit card"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk"/>
+		<node name="topupViaSms" value="Text messages"/>
+		<node name="topupViaBrowser" value="Open page in browser"/>
+		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummary" value="Books I want to buy"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
@@ -109,7 +111,7 @@
 			<node name="signIn" value="Sign in"/>
 			<node name="signUp" value="Sign up"/>
 			<node name="signOut" value="Sign out (%s)"/>
-			<node name="refillAccount" value="Top up account"/>
+			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="Add catalog"/>
 			<node name="refreshCatalogsList" value="Refresh catalogs"/>
 			<node name="languages" value="Language filter"/>
@@ -289,7 +291,7 @@
 			<node name="openBook" value="Read" />
 			<node name="editInfo" value="Edit" />
 			<node name="reloadInfo" value="Reload" />
-			<node name="refillAccount" value="Top up"/>
+			<node name="topup" value="Top up"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>

@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="Deter a busca" />
 		<node name="signIn" value="Acceder"/>
 		<node name="signOut" value="Saír (%s)"/>
-		<node name="refillAccount" value="Actualizar a conta (actualmente: %s)"/>
-		<node name="refillTitle" value="Actualizar a conta"/>
-		<node name="refillViaSms" value="Mensaxes de texto"/>
-		<node name="refillViaBrowser" value="Abrir a páxina no navegador"/>
-		<node name="refillSummary" value="Actualmente: %s"/>
+		<node name="topup" value="Actualizar a conta (actualmente: %s)"/>
+		<node name="topupTitle" value="Actualizar a conta"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="Mensaxes de texto"/>
+		<node name="topupViaBrowser" value="Abrir a páxina no navegador"/>
+		<node name="topupSummary" value="Actualmente: %s"/>
 		<node name="alreadyDownloading" value="O libro está a ser descargado" />
 		<node name="alreadyDownloadingDemo" value="A mostra está a ser descargada" />
 		<node name="stoppingCatalogLoading" value="Detendo a carga" />
@@ -108,7 +110,7 @@
 			<node name="signIn" value="Acceder"/>
 			<node name="signUp" value="Rexistrarse"/>
 			<node name="signOut" value="Saír (%s)"/>
-			<node name="refillAccount" value="Recargar a conta"/>
+			<node name="topup" value="Recargar a conta"/>
 			<node name="addCustomCatalog" value="Engadir catálogo"/>
 			<node name="refreshCatalogsList" value="Actualizar catálogos"/>
 			<node name="languages" value="Filtro de idioma"/>
@@ -221,7 +223,7 @@
 			<node name="openBook" value="Ler" />
 			<node name="editInfo" value="Editar" />
 			<node name="reloadInfo" value="Recargar" />
-			<node name="refillAccount" value="Comletar"/>
+			<node name="topup" value="Comletar"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar complemento"/>

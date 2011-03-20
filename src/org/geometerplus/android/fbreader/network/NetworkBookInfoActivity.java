@@ -126,12 +126,12 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		NetworkView.Instance().getTopUpActions().buildContextMenu(this, menu, myBook.Link);
+		NetworkView.Instance().getTopupActions().buildContextMenu(this, menu, myBook.Link);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		RefillAccountActions.runAction(this, myBook.Link, item.getItemId());
+		TopupActions.runAction(this, myBook.Link, item.getItemId());
 		return true;
 	}
 
@@ -186,7 +186,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			findViewById(R.id.network_book_series_title).setVisibility(View.VISIBLE);
 			setPairValueText(R.id.network_book_series_title, myBook.SeriesTitle);
 			if (myBook.IndexInSeries > 0) {
-				setPairValueText(R.id.network_book_series_index, String.valueOf(myBook.IndexInSeries));
+				setPairValueText(R.id.network_book_series_index, String.format("%.1f", myBook.IndexInSeries));
 				findViewById(R.id.network_book_series_index).setVisibility(View.VISIBLE);
 			} else {
 				findViewById(R.id.network_book_series_index).setVisibility(View.GONE);

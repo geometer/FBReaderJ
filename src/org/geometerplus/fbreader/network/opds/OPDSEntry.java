@@ -28,7 +28,7 @@ class OPDSEntry extends ATOMEntry {
 	public DCDate DCIssued;
 
 	public String SeriesTitle;
-	public int SeriesIndex;
+	public float SeriesIndex;
 
 	@Override
 	public String toString() {

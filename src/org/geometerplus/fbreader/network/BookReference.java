@@ -65,7 +65,7 @@ public class BookReference {
 		URI uri;
 		try {
 			uri = new URI(url);
-		} catch (java.net.URISyntaxException ex) {
+		} catch (Throwable ex) {
 			return null;
 		}
 

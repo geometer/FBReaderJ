@@ -51,7 +51,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int SIGNUP_ITEM_ID = 3;
 	public static final int SIGNIN_ITEM_ID = 4;
 	public static final int SIGNOUT_ITEM_ID = 5;
-	public static final int REFILL_ACCOUNT_ITEM_ID = 6;
+	public static final int TOPUP_ITEM_ID = 6;
 
 	public static final int CUSTOM_CATALOG_EDIT = 7;
 	public static final int CUSTOM_CATALOG_REMOVE = 8;
@@ -95,10 +95,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				if (mgr != null) {
 					if (mgr.mayBeAuthorised(false)) {
 						addMenuItem(menu, SIGNOUT_ITEM_ID, "signOut", mgr.currentUserName());
-						if (mgr.refillAccountLink() != null) {
+						if (Util.isTopupSupported(activity, item.Link)) {
 							final String account = mgr.currentAccount();
 							if (account != null) {
-								addMenuItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount", account);
+								addMenuItem(menu, TOPUP_ITEM_ID, "topup", account);
 							}
 						}
 					} else {
@@ -161,7 +161,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		addOptionsItem(menu, SIGNIN_ITEM_ID, "signIn");
 		addOptionsItem(menu, SIGNUP_ITEM_ID, "signUp");
 		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
-		addOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, "refillAccount");
+		addOptionsItem(menu, TOPUP_ITEM_ID, "topup");
 		if (((NetworkCatalogTree)tree).Item instanceof BasketItem) {
 			addOptionsItem(menu, BASKET_CLEAR, "clearBasket");
 			addOptionsItem(menu, BASKET_BUY_ALL_BOOKS, "buyAllBooks");
@@ -182,7 +182,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		boolean signIn = false;
 		boolean signOut = false;
-		boolean refill = false;
+		boolean topup = false;
 		String userName = null;
 		String account = null;
 		NetworkAuthenticationManager mgr = item.Link.authenticationManager();
@@ -191,8 +191,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				userName = mgr.currentUserName();
 				signOut = true;
 				account = mgr.currentAccount();
-				if (mgr.refillAccountLink() != null && account != null) {
-					refill = true;
+				if (account != null && Util.isTopupSupported(activity, item.Link)) {
+					topup = true;
 				}
 			} else {
 				signIn = true;
@@ -204,7 +204,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		prepareOptionsItem(menu, SIGNIN_ITEM_ID, signIn);
 		prepareOptionsItem(menu, SIGNUP_ITEM_ID, signIn & Util.isRegistrationSupported(activity, item.Link));
 		prepareOptionsItem(menu, SIGNOUT_ITEM_ID, signOut, "signOut", userName);
-		prepareOptionsItem(menu, REFILL_ACCOUNT_ITEM_ID, refill);
+		prepareOptionsItem(menu, TOPUP_ITEM_ID, topup);
 		return true;
 	}
 
@@ -214,7 +214,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case B3_TRUE:
 				return false;
 			case B3_UNDEFINED:
-				AuthenticationDialog.show(activity, ((NetworkCatalogTree)tree).Item.Link, new Runnable() {
+				AuthenticationDialog.show(activity, item.Link, new Runnable() {
 					public void run() {
 						if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
 							return;
@@ -231,11 +231,11 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
-		if (consumeByVisibility(activity, tree, actionCode)) {
+		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
+		if (consumeByVisibility(activity, catalogTree, actionCode)) {
 			return true;
 		}
 
-		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		final NetworkCatalogItem item = catalogTree.Item;
 		switch (actionCode) {
 			case OPEN_CATALOG_ITEM_ID:
@@ -267,8 +267,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case SIGNOUT_ITEM_ID:
 				doSignOut(activity, catalogTree);
 				return true;
-			case REFILL_ACCOUNT_ITEM_ID:
-				new RefillAccountActions().runStandalone(activity, item.Link);
+			case TOPUP_ITEM_ID:
+				new TopupActions().runStandalone(activity, item.Link);
 				return true;
 			case CUSTOM_CATALOG_EDIT:
 			{
@@ -381,12 +381,12 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			final INetworkLink link = myTree.Item.Link;
 			if (myCheckAuthentication && link.authenticationManager() != null) {
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
-				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
-					try {
+				try {
+					if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
 						mgr.initialize();
-					} catch (ZLNetworkException e) {
-						mgr.logOut();
 					}
+				} catch (ZLNetworkException e) {
+					mgr.logOut();
 				}
 			}
 		}

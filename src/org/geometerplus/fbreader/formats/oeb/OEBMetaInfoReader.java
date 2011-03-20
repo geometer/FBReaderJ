@@ -41,7 +41,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private String myMetaTag = "meta";
 
 	private String mySeriesTitle = "";
-	private int mySeriesIndex = 0;
+	private float mySeriesIndex = 0;
 	
 	private final ArrayList<String> myAuthorList = new ArrayList<String>();
 	private final ArrayList<String> myAuthorList2 = new ArrayList<String>();
@@ -138,7 +138,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 				} else if (attributes.getValue("name").equals("calibre:series_index")) {
 					final String strIndex = attributes.getValue("content");
 					try {
-						mySeriesIndex = Integer.parseInt(strIndex);
+						mySeriesIndex = Float.parseFloat(strIndex);
 					} catch (NumberFormatException e) {
 					}
 				}
@@ -200,7 +200,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 			}
 		} else {
 			if (tag.equals(myMetaTag)) {
-				if (!mySeriesTitle.equals("") && mySeriesIndex > 0) {
+				if (!"".equals(mySeriesTitle) && mySeriesIndex > 0) {
 					myBook.setSeriesInfo(mySeriesTitle, mySeriesIndex);
 				}
 			}

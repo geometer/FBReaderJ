@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="Keresés leállítása" />
 		<node name="signIn" value="Bejelentkezés"/>
 		<node name="signOut" value="Kijelentkezés (%s)"/>
-		<node name="refillAccount" value="Számla feltöltése (Jelenleg: %s)"/>
-		<node name="refillTitle" value="Számla feltöltése"/>
-		<node name="refillViaSms" value="SMS üzenetek"/>
-		<node name="refillViaBrowser" value="Oldal megnyitása böngészőben"/>
-		<node name="refillSummary" value="Jelenleg: %s"/>
+		<node name="topup" value="Számla feltöltése (Jelenleg: %s)"/>
+		<node name="topupTitle" value="Számla feltöltése"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="SMS üzenetek"/>
+		<node name="topupViaBrowser" value="Oldal megnyitása böngészőben"/>
+		<node name="topupSummary" value="Jelenleg: %s"/>
 		<node name="alreadyDownloading" value="Könyv letöltése folyamatban" />
 		<node name="alreadyDownloadingDemo" value="Minta letöltése folyamatban" />
 		<node name="stoppingCatalogLoading" value="Letöltés leállítása" />
@@ -108,7 +110,7 @@
 			<node name="signIn" value="Bejelentkezés"/>
 			<node name="signOut" value="Kijelentkezés (%s)"/>
 			<node name="signUp" value="Regisztráció" />
-			<node name="refillAccount" value="Számla feltöltése"/>
+			<node name="topup" value="Számla feltöltése"/>
 			<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
 			<node name="refreshCatalogsList" value="Katalógusok frissítése"/>
 			<node name="languages" value="Nyelvi szűrő"/>
@@ -251,7 +253,7 @@
 			<node name="openBook" value="Olvasás" />
 			<node name="editInfo" value="Szerkesztés" />
 			<node name="reloadInfo" value="Újratölt" />
-			<node name="refillAccount" value="Számla feltöltése"/>
+			<node name="topup" value="Számla feltöltése"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin telepítése" />

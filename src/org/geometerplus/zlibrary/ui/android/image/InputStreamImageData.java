@@ -19,17 +19,22 @@
 
 package org.geometerplus.zlibrary.ui.android.image;
 
+import java.io.InputStream;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-final class ZLAndroidArrayBasedImageData extends ZLAndroidImageData {
-	private final byte[] myArray;
+import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
-	ZLAndroidArrayBasedImageData(byte[] array) {
-		myArray = array;
+final class InputStreamImageData extends ZLAndroidImageData {
+	private final ZLSingleImage myImage;
+
+	InputStreamImageData(ZLSingleImage image) {
+		myImage = image;
 	}
 
 	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
-		return BitmapFactory.decodeByteArray(myArray, 0, myArray.length, options);
+		final InputStream stream = myImage.inputStream();
+		return stream != null ? BitmapFactory.decodeStream(stream) : null;
 	}
 }

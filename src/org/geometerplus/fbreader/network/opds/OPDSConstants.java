@@ -57,7 +57,7 @@ interface OPDSConstants {
 	String REL_LINK_SIGN_IN = "http://data.fbreader.org/catalog/sign-in";
 	String REL_LINK_SIGN_OUT = "http://data.fbreader.org/catalog/sign-out";
 	String REL_LINK_SIGN_UP = "http://data.fbreader.org/catalog/sign-up";
-	String REL_LINK_REFILL_ACCOUNT = "http://data.fbreader.org/catalog/refill-account";
+	String REL_LINK_TOPUP = "http://data.fbreader.org/catalog/refill-account";
 	String REL_LINK_RECOVER_PASSWORD = "http://data.fbreader.org/catalog/recover-password";
 
 	// Entry level / OPDS Link Conditions

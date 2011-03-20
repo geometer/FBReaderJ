@@ -50,6 +50,9 @@ abstract class ZLStringListPreference extends ListPreference implements ZLPrefer
 	}
 
 	protected final boolean setInitialValue(String value) {
+		if (value == null || "".equals(value)) {
+			return false;
+		}
 		final int index = findIndexOfValue(value);
 		if (index >= 0) {
 			setValueIndex(index);

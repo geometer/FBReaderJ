@@ -681,7 +681,7 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 				if (tagPrefix == myCalibreNamespaceId && tag == CALIBRE_TAG_SERIES_INDEX) {
 					if (bufferContent != null) {
 						try {
-							myEntry.SeriesIndex = Integer.parseInt(bufferContent);
+							myEntry.SeriesIndex = Float.parseFloat(bufferContent);
 						} catch (NumberFormatException ex) {
 						}
 					}
