@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="Stop searching" toBeTranslated="true" />
 		<node name="signIn" value="Sign in" toBeTranslated="true"/>
 		<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
-		<node name="refillAccount" value="Top up account (currently: %s)" toBeTranslated="true"/>
-		<node name="refillTitle" value="Top up account" toBeTranslated="true"/>
-		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
-		<node name="refillViaBrowser" value="Open pagina in de browser" />
-		<node name="refillSummary" value="Currently: %s" toBeTranslated="true"/>
+		<node name="topup" value="Top up account (currently: %s)" toBeTranslated="true"/>
+		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="Text messages" toBeTranslated="true"/>
+		<node name="topupViaBrowser" value="Open pagina in de browser" />
+		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
 		<node name="alreadyDownloading" value="Boek wordt gedownload" />
 		<node name="alreadyDownloadingDemo" value="Voorbeeld wordt gedownload" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true" />
@@ -108,7 +110,7 @@
 			<node name="signIn" value="Sign in" toBeTranslated="true"/>
 			<node name="signUp" value="Sign up" toBeTranslated="true"/>
 			<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
-			<node name="refillAccount" value="Top up account" toBeTranslated="true"/>
+			<node name="topup" value="Top up account" toBeTranslated="true"/>
 			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 			<node name="refreshCatalogsList" value="Catalogi vernieuwen"/>
 			<node name="languages" value="Taalfilter"/>
@@ -223,7 +225,7 @@
 			<node name="openBook" value="Lezen" />
 			<node name="editInfo" value="Bewerken" />
 			<node name="reloadInfo" value="Vernieuwen" />
-			<node name="refillAccount" value="Top up" toBeTranslated="true" />
+			<node name="topup" value="Top up" toBeTranslated="true" />
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-in installeren"/>

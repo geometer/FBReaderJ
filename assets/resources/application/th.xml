@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="หยุดการค้นหา"/>
 		<node name="signIn" value="ลงชื่อเข้าระบบ"/>
 		<node name="signOut" value="ออกจากระบบ (%s)"/>
-		<node name="refillAccount" value="เติมเงินเข้าบัญชีผู้ใช้ (ปัจจุบันคือ: %s)"/>
-		<node name="refillTitle" value="เติมเงินเข้าบัญชี"/>
-		<node name="refillViaSms" value="ข้อความ"/>
-		<node name="refillViaBrowser" value="เปิดในเว็บเบราว์เซอร์"/>
-		<node name="refillSummary" value="ปัจจุบัน: %s"/>
+		<node name="topup" value="เติมเงินเข้าบัญชีผู้ใช้ (ปัจจุบันคือ: %s)"/>
+		<node name="topupTitle" value="เติมเงินเข้าบัญชี"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="ข้อความ"/>
+		<node name="topupViaBrowser" value="เปิดในเว็บเบราว์เซอร์"/>
+		<node name="topupSummary" value="ปัจจุบัน: %s"/>
 		<node name="alreadyDownloading" value="กำลังดาวน์โหลดหนังสือ"/>
 		<node name="alreadyDownloadingDemo" value="กำลังดาวน์โหลดหนังสือตัวอย่าง"/>
 		<node name="stoppingCatalogLoading" value="หยุดการโหลด"/>
@@ -108,7 +110,7 @@
 			<node name="signIn" value="ลงชื่อเข้าระบบ"/>
 			<node name="signUp" value="ลงทะเบียนเข้าระบบ"/>
 			<node name="signOut" value="ออกจากระบบ (%s)"/>
-			<node name="refillAccount" value="เติมเงินเข้าบัญชี"/>
+			<node name="topup" value="เติมเงินเข้าบัญชี"/>
 			<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 			<node name="refreshCatalogsList" value="รีเฟรชแคตตาล็อก"/>
 			<node name="languages" value="ตัวกรองภาษา"/>
@@ -223,7 +225,7 @@
 			<node name="openBook" value="อ่าน"/>
 			<node name="editInfo" value="แก้ไข"/>
 			<node name="reloadInfo" value="โหลดใหม่"/>
-			<node name="refillAccount" value="เติมเงิน"/>
+			<node name="topup" value="เติมเงิน"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="ติดตั้งปลั๊กอิน"/>

@@ -32,7 +32,7 @@ public class NetworkAuthorTree extends NetworkTree {
 	private int myBooksNumber;
 	private HashMap<String, Integer> mySeriesMap;
 
-	public NetworkAuthorTree(NetworkTree parent, NetworkBookItem.AuthorData author) {
+	NetworkAuthorTree(NetworkTree parent, NetworkBookItem.AuthorData author) {
 		super(parent);
 		Author = author;
 	}

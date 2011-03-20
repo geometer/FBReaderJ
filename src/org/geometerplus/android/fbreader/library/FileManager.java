@@ -81,9 +81,10 @@ public final class FileManager extends BaseActivity {
 	}
 
 	private void startUpdate() {
-		new Thread(
-			new SmartFilter(ZLFile.createFileByPath(myPath))
-		).start();
+		final ZLFile file = ZLFile.createFileByPath(myPath);
+		if (file != null) {
+			new Thread(new SmartFilter(file)).start();
+		}
 	}
 
 	@Override

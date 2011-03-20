@@ -63,7 +63,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 16;
+		final int currentVersion = 17;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -104,6 +104,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables14();
 					case 15:
 						updateTables15();
+					case 16:
+						updateTables16();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -246,7 +248,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			if (book != null) {
 				String series = seriesById.get(cursor.getLong(1));
 				if (series != null) {
-					setSeriesInfo(book, series, cursor.getLong(2));
+					setSeriesInfo(book, series, cursor.getFloat(2));
 				}
 			}
 		}
@@ -467,7 +469,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 			myInsertBookSeriesStatement.bindLong(1, bookId);
 			myInsertBookSeriesStatement.bindLong(2, seriesId);
-			myInsertBookSeriesStatement.bindLong(3, seriesInfo.Index);
+			myInsertBookSeriesStatement.bindDouble(3, seriesInfo.Index);
 			myInsertBookSeriesStatement.execute();
 		}
 	}
@@ -476,7 +478,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { "" + bookId });
 		SeriesInfo info = null;
 		if (cursor.moveToNext()) {
-			info = new SeriesInfo(cursor.getString(0), cursor.getLong(1));
+			info = new SeriesInfo(cursor.getString(0), cursor.getFloat(1));
 		}
 		cursor.close();	
 		return info;
@@ -1269,6 +1271,17 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private void updateTables14() {
+		myDatabase.execSQL("ALTER TABLE BookSeries RENAME TO BookSeries_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE BookSeries(" +
+				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
+				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"book_index REAL)");
+		myDatabase.execSQL("INSERT INTO BookSeries (series_id,book_id,book_index) SELECT series_id,book_id,book_index FROM BookSeries_Obsolete");
+		myDatabase.execSQL("DROP TABLE BookSeries_Obsolete");
+	}
+
+	private void updateTables15() {
 		myDatabase.execSQL(
 			"CREATE TABLE VisitedLinks(" +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
@@ -1277,7 +1290,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				"CONSTRAINT VisitedLinks_Unique UNIQUE (book_id, link_id))");
 	}
 
-	private void updateTables15() {
+	private void updateTables16() {
 		myDatabase.execSQL(
 			"CREATE TABLE LinkHistory(" +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +

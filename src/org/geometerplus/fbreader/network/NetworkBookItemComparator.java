@@ -68,9 +68,9 @@ public final class NetworkBookItemComparator implements Comparator<NetworkItem> 
 			if (comp != 0) {
 				return comp;
 			} else {
-				final int diff = book0.IndexInSeries - book1.IndexInSeries;
+				final float diff = book0.IndexInSeries - book1.IndexInSeries;
 				if (diff != 0) {
-					return diff;
+					return diff > 0 ? 1 : -1;
 				}
 			}
 			return book0.Title.compareTo(book1.Title);

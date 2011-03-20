@@ -24,6 +24,7 @@ import java.io.InputStream;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.SliceInputStream;
 
 public class PluckerFileImage extends ZLSingleImage {
 	private final ZLFile myFile;
@@ -37,24 +38,18 @@ public class PluckerFileImage extends ZLSingleImage {
 		mySize = size;
 	}
 
+	@Override
 	public String getURI() {
 		// TODO: implement
 		return null;
 	}
 
-	public byte[] byteData() {
+	@Override
+	public InputStream inputStream() {
 		try {
-			final InputStream stream = myFile.getInputStream();
-			if (stream == null) {
-				return new byte[0];
-			}
-
-			stream.skip(myOffset);
-			byte [] buffer = new byte[mySize];
-			stream.read(buffer, 0, mySize);
-			return buffer;
-		} catch (IOException e) {}
-		
-		return new byte[0];
+			return new SliceInputStream(myFile.getInputStream(), myOffset, mySize);
+		} catch (IOException e) {
+			return null;
+		}
 	}
 }

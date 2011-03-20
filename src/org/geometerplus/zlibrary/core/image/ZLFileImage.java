@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.image;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.SliceInputStream;
 
 public class ZLFileImage extends ZLSingleImage {
 	public static final String SCHEME = "imagefile";
@@ -46,34 +47,11 @@ public class ZLFileImage extends ZLSingleImage {
 	}
 
 	@Override
-	public byte[] byteData() {
-		InputStream stream = null;
+	public InputStream inputStream() {
 		try {
-			stream = myFile.getInputStream();
-			int toSkip = myOffset - (int)stream.skip(myOffset);
-			while (--toSkip >= 0) {
-				stream.read();
-			}
-
-			byte[] buffer = new byte[myLength];
-			int len = 0;
-			while (len < myLength) {
-				final int part = stream.read(buffer);
-				if (part <= 0) {
-					return new byte[0];
-				}
-				len += part;
-			}
-			return buffer;
+			return new SliceInputStream(myFile.getInputStream(), myOffset, myLength);
 		} catch (IOException e) {
-			return new byte[0];
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-				}
-			}
+			return null;
 		}
 	}
 }
