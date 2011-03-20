@@ -21,9 +21,9 @@ package org.geometerplus.fbreader.library;
 
 public final class SeriesInfo {
 	public final String Name;
-	public final long Index;
+	public final float Index;
 
-	public SeriesInfo(String name, long index) {
+	public SeriesInfo(String name, float index) {
 		Name = name;
 		Index = index;
 	}

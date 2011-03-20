@@ -75,7 +75,7 @@ public final class NetworkBookItem extends NetworkItem {
 	public final LinkedList<AuthorData> Authors;
 	public final LinkedList<String> Tags;
 	public final String SeriesTitle;
-	public final int IndexInSeries;
+	public final float IndexInSeries;
 
 	private final LinkedList<BookReference> myReferences;
 
@@ -98,7 +98,7 @@ public final class NetworkBookItem extends NetworkItem {
 	 */
 	public NetworkBookItem(INetworkLink link, String id, int index,
 		String title, String summary, /*String language, String date,*/
-		List<AuthorData> authors, List<String> tags, String seriesTitle, int indexInSeries,
+		List<AuthorData> authors, List<String> tags, String seriesTitle, float indexInSeries,
 		String cover,
 		List<BookReference> references) {
 		super(link, title, summary, cover);
