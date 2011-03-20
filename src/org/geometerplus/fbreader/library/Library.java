@@ -496,6 +496,9 @@ public final class Library {
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
 
 	public static ZLImage getCover(ZLFile file) {
+		if (file == null) {
+			return null;
+		}
 		synchronized(ourCoverMap) {
 			final String path = file.getPath();
 			final WeakReference<ZLImage> ref = ourCoverMap.get(path);
