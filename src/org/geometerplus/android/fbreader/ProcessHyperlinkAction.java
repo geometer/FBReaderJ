@@ -39,6 +39,8 @@ import org.geometerplus.android.fbreader.network.BookDownloaderService;
 import org.geometerplus.android.fbreader.image.ImageViewActivity;
 
 class ProcessHyperlinkAction extends FBAction {
+	private static final String ACTION_LINK_PREFIX = "fbreader-action://";
+
 	private final FBReader myBaseActivity;
 
 	ProcessHyperlinkAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -56,7 +58,11 @@ class ProcessHyperlinkAction extends FBAction {
 			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegion)region).Hyperlink;
 			switch (hyperlink.Type) {
 				case FBHyperlinkType.EXTERNAL:
-					openInBrowser(hyperlink.Id);
+					if (hyperlink.Id.startsWith(ACTION_LINK_PREFIX)) {
+						Reader.doAction(hyperlink.Id.substring(ACTION_LINK_PREFIX.length()));
+					} else {
+						openInBrowser(hyperlink.Id);
+					}
 					break;
 				case FBHyperlinkType.INTERNAL:
 				case FBHyperlinkType.INTERNAL_VISITED:
