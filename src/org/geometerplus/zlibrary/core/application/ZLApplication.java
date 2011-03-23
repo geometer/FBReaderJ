@@ -136,11 +136,16 @@ public abstract class ZLApplication {
 	//may be protected
 	abstract public ZLKeyBindings keyBindings();
 
-	public final boolean doActionByKey(String key) {
-		final String actionId = keyBindings().getBinding(key);
+	public final boolean hasActionForKey(String key, boolean longPress) {
+		final String actionId = keyBindings().getBinding(key, longPress);
+		return actionId != null && !NoAction.equals(actionId);	
+	}
+
+	public final boolean doActionByKey(String key, boolean longPress) {
+		final String actionId = keyBindings().getBinding(key, longPress);
 		if (actionId != null) {
-			final ZLAction action = myIdToActionMap.get(keyBindings().getBinding(key));
-			return (action != null) && action.checkAndRun();
+			final ZLAction action = myIdToActionMap.get(actionId);
+			return action != null && action.checkAndRun();
 		}
 		return false;
 	}

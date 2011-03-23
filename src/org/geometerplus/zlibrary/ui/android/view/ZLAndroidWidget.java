@@ -499,7 +499,10 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			case KeyEvent.KEYCODE_BACK:
 			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
-				return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
+			{
+				final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
+				return ZLApplication.Instance().doActionByKey(keyName, false);
+			}
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 				ZLApplication.Instance().getCurrentView().onTrackballRotated(-1, 0);
 				return true;
