@@ -23,50 +23,46 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 public final class ZLKeyBindings {
 	private static final String BINDINGS_NUMBER = "Number";
-	private static final String BINDED_KEY = "Key";
-	private static final String BINDED_ACTION = "Action";
+	private static final String KEY = "Key";
+	private static final String ACTION = "Action";
+	private static final String LONG_PRESS_ACTION = "LongPressAction";
 
 	private final String myName;
-	private final HashMap<String, String> myBindingsMap = new HashMap<String, String>();
+	private final TreeMap<String,String> myActionMap = new TreeMap<String,String>();
+	private final TreeMap<String,String> myLongPressActionMap = new TreeMap<String,String>();
 	private	boolean myIsChanged;
 
 	public ZLKeyBindings(String name) {
 		myName = name;
-		new ZLKeyBindingsReader(myBindingsMap).readBindings();
+		new ZLKeyBindingsReader(myActionMap).readBindings();
 		loadCustomBindings();
 		myIsChanged = false;
 	}
 
-	public void bindKey(String key, String actionId) {
-		myBindingsMap.put(key, actionId);
+	public void bindKey(String key, String actionId, boolean longPress) {
+		if (ZLMiscUtil.isEmptyString(key) || ZLMiscUtil.isEmptyString(actionId)) {
+			return;
+		}
+		final TreeMap<String,String> map = longPress ? myLongPressActionMap : myActionMap;
+		map.put(key, actionId);
 		myIsChanged = true;
 	}
 
-	public String getBinding(String key) {
-		return (String)myBindingsMap.get(key);
+	public String getBinding(String key, boolean longPress) {
+		final TreeMap<String,String> map = longPress ? myLongPressActionMap : myActionMap;
+		return map.get(key);
 	}
-
-	/*
-	public Set getKeys() {
-		return myBindingsMap.keySet();
-	}
-	*/
 
 	private	void loadCustomBindings() {
-		final int size =
-			new ZLIntegerRangeOption(myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
+		final int size = new ZLIntegerRangeOption(myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
 		for (int i = 0; i < size; ++i) {
-			final String keyValue = new ZLStringOption(myName, BINDED_KEY + i, "").getValue();
-			if (keyValue.length() != 0) {
-				final String actionValue =
-					new ZLStringOption(myName, BINDED_ACTION + i, "").getValue();
-				if (actionValue.length() != 0) {
-					bindKey(keyValue, actionValue);
-				}
-			}
+			final String key = new ZLStringOption(myName, KEY + i, "").getValue();
+			bindKey(key, new ZLStringOption(myName, ACTION + i, "").getValue(), false);
+			bindKey(key, new ZLStringOption(myName, LONG_PRESS_ACTION + i, "").getValue(), true);
 		}
 	}
 
@@ -75,17 +71,23 @@ public final class ZLKeyBindings {
 			return;
 		}
 
-		final HashMap<String, String> keymap = new HashMap<String, String>();
+		final TreeMap<String,String> keymap = new TreeMap<String,String>();
 		new ZLKeyBindingsReader(keymap).readBindings();
 
+		final TreeSet<String> allKeys = new TreeSet(keymap.keySet());
+		allKeys.addAll(myActionMap.keySet());
+		allKeys.addAll(myLongPressActionMap.keySet());
+
 		int counter = 0;
-		for (Iterator<String> it = myBindingsMap.keySet().iterator(); it.hasNext(); ) {
-			final String key = it.next();
-			final String originalValue = keymap.get(key);
-			final String value = myBindingsMap.get(key);
-			if (!value.equals(originalValue)) {
-				new ZLStringOption(myName, BINDED_KEY + counter, "").setValue(key);
-				new ZLStringOption(myName, BINDED_ACTION + counter, "").setValue(value);
+		for (final String key : allKeys) {
+			final String originalAction = keymap.get(key);
+			final String action = myActionMap.get(key);
+			final String longPressAction = myLongPressActionMap.get(key);
+			if (!ZLMiscUtil.equals(originalAction, action) ||
+				!ZLMiscUtil.isEmptyString(longPressAction)) {
+				new ZLStringOption(myName, KEY + counter, "").setValue(key);
+				new ZLStringOption(myName, ACTION + counter, "").setValue(action);
+				new ZLStringOption(myName, LONG_PRESS_ACTION + counter, "").setValue(longPressAction);
 				++counter;
 			}
 		}
