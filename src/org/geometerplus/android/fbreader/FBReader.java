@@ -104,18 +104,17 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
-		setCancelActions();
 	}
 
 	private void setCancelActions() {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLKeyBindings bindings = fbReader.keyBindings();
 		if (fbReader.ShowCancelMenuOnLongPressOption.getValue()) {
-			bindings.bindKey("<Back>", ActionCode.EXIT, false);
-			bindings.bindKey("<Back>", ActionCode.SHOW_CANCEL_MENU, true);
+			bindings.bindKey("<Back>", false, ActionCode.EXIT);
+			bindings.bindKey("<Back>", true, ActionCode.SHOW_CANCEL_MENU);
 		} else {
-			bindings.bindKey("<Back>", ActionCode.SHOW_CANCEL_MENU, false);
-			bindings.bindKey("<Back>", ZLApplication.NoAction, true);
+			bindings.bindKey("<Back>", false, ActionCode.SHOW_CANCEL_MENU);
+			bindings.bindKey("<Back>", true, ZLApplication.NoAction);
 		}
 	}
 
