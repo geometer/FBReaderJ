@@ -39,6 +39,7 @@ public final class ZLKeyBindings {
 	public ZLKeyBindings(String name) {
 		myName = name;
 		new ZLKeyBindingsReader(myActionMap).readBindings();
+		myLongPressActionMap.put("<Back>", "longCancel");
 		loadCustomBindings();
 		myIsChanged = false;
 	}

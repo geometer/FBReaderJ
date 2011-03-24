@@ -24,10 +24,6 @@ import android.graphics.*;
 import android.view.*;
 import android.util.AttributeSet;
 
-import org.geometerplus.android.util.KeyTracker;
-import org.geometerplus.android.util.LongPressBackKeyTracker;
-import org.geometerplus.android.util.KeyTracker.Stage;
-import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
@@ -46,7 +42,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private int myScrollingShift;
 	private float myScrollingSpeed;
 	private int myScrollingBound;
-	private KeyTracker myKeyTracker;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -64,17 +59,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	private void init() {
-		myKeyTracker = new KeyTracker(new LongPressBackKeyTracker() {
-			@Override
-			public void onLongPressBack(int keyCode, KeyEvent event, Stage stage, int duration) {
-				ZLApplication.Instance().doAction(ActionCode.LONG_CANCEL);
-			}
-
-			@Override
-			public void onShortPressBack(int keyCode, KeyEvent event, Stage stage, int duration) {
-				ZLApplication.Instance().doAction(ActionCode.CANCEL);
-			}
-		});
 		// next line prevent ignoring first onKeyDown DPad event
 		// after any dialog was closed
 		setFocusableInTouchMode(true);
@@ -489,10 +473,12 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		return view.onFingerLongPress(myPressedX, myPressedY);
 	}
 
+	private String myKeyUnderTracking;
+	private long myTrackingStartTime;
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (myKeyTracker.doKeyDown(keyCode, event)) {
-			return true;
-		}
+		final ZLApplication application = ZLApplication.Instance();
+
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
@@ -501,19 +487,32 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			case KeyEvent.KEYCODE_DPAD_CENTER:
 			{
 				final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
-				return ZLApplication.Instance().doActionByKey(keyName, false);
+				if (myKeyUnderTracking != null) {
+					if (myKeyUnderTracking.equals(keyName)) {
+						return true;
+					} else {
+						myKeyUnderTracking = null;
+					}
+				}
+				if (application.hasActionForKey(keyName, true)) {
+					myKeyUnderTracking = keyName;
+					myTrackingStartTime = System.currentTimeMillis();
+					return true;
+				} else {
+					return application.doActionByKey(keyName, false);
+				}
 			}
 			case KeyEvent.KEYCODE_DPAD_LEFT:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(-1, 0);
+				application.getCurrentView().onTrackballRotated(-1, 0);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_RIGHT:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(1, 0);
+				application.getCurrentView().onTrackballRotated(1, 0);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_DOWN:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, 1);
+				application.getCurrentView().onTrackballRotated(0, 1);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_UP:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, -1);
+				application.getCurrentView().onTrackballRotated(0, -1);
 				return true;
 			default:
 				return false;
@@ -521,15 +520,21 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		if (myKeyTracker.doKeyUp(keyCode, event)) {
-			return true;
-		}
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
 			case KeyEvent.KEYCODE_BACK:
 			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
+				if (myKeyUnderTracking != null) {
+					final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
+					if (myKeyUnderTracking.equals(keyName)) {
+						final boolean longPress = System.currentTimeMillis() >
+							myTrackingStartTime + ViewConfiguration.getLongPressTimeout();
+						ZLApplication.Instance().doActionByKey(keyName, longPress);
+					}
+					myKeyUnderTracking = null;
+				}
 				return true;
 			default:
 				return false;
