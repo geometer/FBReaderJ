@@ -21,77 +21,84 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public final class ZLKeyBindings {
-	private static final String BINDINGS_NUMBER = "Number";
-	private static final String KEY = "Key";
 	private static final String ACTION = "Action";
 	private static final String LONG_PRESS_ACTION = "LongPressAction";
 
 	private final String myName;
-	private final TreeMap<String,String> myActionMap = new TreeMap<String,String>();
-	private final TreeMap<String,String> myLongPressActionMap = new TreeMap<String,String>();
-	private	boolean myIsChanged;
+	private final ZLStringListOption myKeysOption;
+	private final TreeMap<String,ZLStringOption> myActionMap = new TreeMap<String,ZLStringOption>();
+	private final TreeMap<String,ZLStringOption> myLongPressActionMap = new TreeMap<String,ZLStringOption>();
 
 	public ZLKeyBindings(String name) {
 		myName = name;
-		new ZLKeyBindingsReader(myActionMap).readBindings();
-		myLongPressActionMap.put("<Back>", "longCancel");
-		loadCustomBindings();
-		myIsChanged = false;
+		final List<String> keys = new LinkedList<String>();
+		new Reader(keys).readBindings();
+ 		myKeysOption = new ZLStringListOption(name, "KeyList", keys);
 	}
 
-	public void bindKey(String key, String actionId, boolean longPress) {
-		if (ZLMiscUtil.isEmptyString(key) || ZLMiscUtil.isEmptyString(actionId)) {
-			return;
+	private ZLStringOption createOption(String key, boolean longPress, String defaultValue) {
+		final String group = myName + ":" + (longPress ? LONG_PRESS_ACTION : ACTION);
+		return new ZLStringOption(group, key, defaultValue);
+	}
+
+	private ZLStringOption getOption(String key, boolean longPress) {
+		final TreeMap<String,ZLStringOption> map = longPress ? myLongPressActionMap : myActionMap;
+		ZLStringOption option = map.get(key);
+		if (option == null) {
+			option = createOption(key, longPress, ZLApplication.NoAction);
+			map.put(key, option);
 		}
-		final TreeMap<String,String> map = longPress ? myLongPressActionMap : myActionMap;
-		map.put(key, actionId);
-		myIsChanged = true;
+		return option;
+	}
+
+	public void bindKey(String key, boolean longPress, String actionId) {
+		List<String> keys = myKeysOption.getValue();
+		if (!keys.contains(key)) {
+			keys = new ArrayList<String>(keys);
+			keys.add(key);
+			myKeysOption.setValue(keys);
+		}
+		getOption(key, longPress).setValue(actionId);
 	}
 
 	public String getBinding(String key, boolean longPress) {
-		final TreeMap<String,String> map = longPress ? myLongPressActionMap : myActionMap;
-		return map.get(key);
+		return getOption(key, longPress).getValue();
 	}
 
-	private	void loadCustomBindings() {
-		final int size = new ZLIntegerRangeOption(myName, BINDINGS_NUMBER, 0, 256, 0).getValue();
-		for (int i = 0; i < size; ++i) {
-			final String key = new ZLStringOption(myName, KEY + i, "").getValue();
-			bindKey(key, new ZLStringOption(myName, ACTION + i, "").getValue(), false);
-			bindKey(key, new ZLStringOption(myName, LONG_PRESS_ACTION + i, "").getValue(), true);
-		}
-	}
+	private class Reader extends ZLXMLReaderAdapter {
+		private final List<String> myKeyList;
 
-	public void saveCustomBindings() {
-		if (!myIsChanged) {
-			return;
+		Reader(List<String> keyList) {
+			myKeyList = keyList;
 		}
 
-		final TreeMap<String,String> keymap = new TreeMap<String,String>();
-		new ZLKeyBindingsReader(keymap).readBindings();
+		@Override
+		public boolean dontCacheAttributeValues() {
+			return true;
+		}
 
-		final TreeSet<String> allKeys = new TreeSet(keymap.keySet());
-		allKeys.addAll(myActionMap.keySet());
-		allKeys.addAll(myLongPressActionMap.keySet());
-
-		int counter = 0;
-		for (final String key : allKeys) {
-			final String originalAction = keymap.get(key);
-			final String action = myActionMap.get(key);
-			final String longPressAction = myLongPressActionMap.get(key);
-			if (!ZLMiscUtil.equals(originalAction, action) ||
-				!ZLMiscUtil.isEmptyString(longPressAction)) {
-				new ZLStringOption(myName, KEY + counter, "").setValue(key);
-				new ZLStringOption(myName, ACTION + counter, "").setValue(action);
-				new ZLStringOption(myName, LONG_PRESS_ACTION + counter, "").setValue(longPressAction);
-				++counter;
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			if ("binding".equals(tag)) {
+				final String key = attributes.getValue("key");
+				final String actionId = attributes.getValue("action");
+				if (key != null && actionId != null) {
+					myKeyList.add(key);
+					myActionMap.put(key, createOption(key, false, actionId));
+				}
 			}
+			return false;
 		}
-		new ZLIntegerRangeOption(myName, BINDINGS_NUMBER, 0, 256, 0).setValue(counter);
+
+		public void readBindings() {
+			read(ZLResourceFile.createResourceFile("default/keymap.xml"));
+		}
 	}
 }
