@@ -1283,7 +1283,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables15() {
 		myDatabase.execSQL(
-			"CREATE TABLE VisitedLinks(" +
+			"CREATE TABLE IF NOT EXISTS VisitedLinks(" +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"link_id INTEGER NOT NULL," +
 				"link TEXT NOT NULL," +
@@ -1292,7 +1292,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables16() {
 		myDatabase.execSQL(
-			"CREATE TABLE LinkHistory(" +
+			"CREATE TABLE IF NOT EXISTS LinkHistory(" +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"history_id INTEGER NOT NULL," +
 				"paragraph INTEGER NOT NULL," +
@@ -1300,7 +1300,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				"char INTEGER NOT NULL," +
 				"CONSTRAINT LinkHistory_Unique UNIQUE (book_id, history_id))");
 		myDatabase.execSQL(
-			"CREATE TABLE LinkHistoryIndex(" +
+			"CREATE TABLE IF NOT EXISTS LinkHistoryIndex(" +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"position INTEGER NOT NULL)");
 	}
