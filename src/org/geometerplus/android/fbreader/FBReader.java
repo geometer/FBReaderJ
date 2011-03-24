@@ -56,7 +56,6 @@ public final class FBReader extends ZLAndroidActivity {
 	final static int CANCEL_CODE = 2;
 
 	private int myFullScreenFlag;
-	private Boolean myLongCancelMenu = null;
 
 	private static TextSearchButtonPanel ourTextSearchPanel;
 	private static NavigationButtonPanel ourNavigatePanel;
@@ -105,21 +104,18 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader, false));
-		setCancelActions(application);
+		setCancelActions();
 	}
 
-	private void setCancelActions(ZLAndroidApplication application) {
-		final boolean longCancelMenu = application.LongCancelMenu.getValue();
-		if (myLongCancelMenu == null || myLongCancelMenu.booleanValue() != longCancelMenu) {
-			final ZLKeyBindings bindings = ZLApplication.Instance().keyBindings();
-			myLongCancelMenu = longCancelMenu;
-			if (myLongCancelMenu) {
-				bindings.bindKey("<Back>", ActionCode.EXIT, false);
-				bindings.bindKey("<Back>", ActionCode.SHOW_CANCEL_MENU, true);
-			} else {
-				bindings.bindKey("<Back>", ActionCode.SHOW_CANCEL_MENU, false);
-				bindings.bindKey("<Back>", ZLApplication.NoAction, true);
-			}
+	private void setCancelActions() {
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final ZLKeyBindings bindings = fbReader.keyBindings();
+		if (fbReader.ShowCancelMenuOnLongPressOption.getValue()) {
+			bindings.bindKey("<Back>", ActionCode.EXIT, false);
+			bindings.bindKey("<Back>", ActionCode.SHOW_CANCEL_MENU, true);
+		} else {
+			bindings.bindKey("<Back>", ActionCode.SHOW_CANCEL_MENU, false);
+			bindings.bindKey("<Back>", ZLApplication.NoAction, true);
 		}
 	}
 
@@ -260,7 +256,7 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 				fbreader.clearTextCaches();
 				fbreader.repaintView();
-				setCancelActions(ZLAndroidApplication.Instance());
+				setCancelActions();
 				break;
 			}
 			case CANCEL_CODE:

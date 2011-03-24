@@ -95,6 +95,8 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("CancelMenu", "previousBook", false);
 	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "positions", true);
+	public final ZLBooleanOption ShowCancelMenuOnLongPressOption =
+		new ZLBooleanOption("CancelMenu", "onLongPress", false);
 
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 

@@ -72,7 +72,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			)
 		);
 		statusBarPreferences.setEnabled(!androidApp.ShowStatusBarOption.getValue());
-		appearanceScreen.addOption(androidApp.LongCancelMenu, "longCancelMenu");
+		appearanceScreen.addOption(fbReader.ShowCancelMenuOnLongPressOption, "longCancelMenu");
 
 		final Screen textScreen = createPreferenceScreen("text");
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
