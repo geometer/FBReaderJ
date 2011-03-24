@@ -27,11 +27,11 @@ import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-class CancelAction extends FBAction {
+class ShowCancelMenuAction extends FBAction {
 	private final FBReader myBaseActivity;
 	private final boolean myForceMenu;
 
-	CancelAction(FBReader baseActivity, FBReaderApp fbreader, boolean forceMenu) {
+	ShowCancelMenuAction(FBReader baseActivity, FBReaderApp fbreader, boolean forceMenu) {
 		super(fbreader);
 		myBaseActivity = baseActivity;
 		myForceMenu = forceMenu;
