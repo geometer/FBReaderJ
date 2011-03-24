@@ -31,6 +31,8 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
@@ -109,14 +111,14 @@ public final class FBReader extends ZLAndroidActivity {
 	private void setCancelActions(ZLAndroidApplication application) {
 		final boolean longCancelMenu = application.LongCancelMenu.getValue();
 		if (myLongCancelMenu == null || myLongCancelMenu.booleanValue() != longCancelMenu) {
-			final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-			myLongCancelMenu = new Boolean(longCancelMenu);
+			final ZLKeyBindings bindings = ZLApplication.Instance().keyBindings();
+			myLongCancelMenu = longCancelMenu;
 			if (myLongCancelMenu) {
-				fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader, false));
-				fbReader.addAction(ActionCode.LONG_CANCEL, new CancelAction(this, fbReader, true));
+				bindings.bindKey("<Back>", ActionCode.EXIT, false);
+				bindings.bindKey("<Back>", ActionCode.SHOW_CANCEL_MENU, true);
 			} else {
-				fbReader.addAction(ActionCode.CANCEL, new CancelAction(this, fbReader, true));
-				fbReader.removeAction(ActionCode.LONG_CANCEL);
+				bindings.bindKey("<Back>", ActionCode.SHOW_CANCEL_MENU, false);
+				bindings.bindKey("<Back>", ZLApplication.NoAction, true);
 			}
 		}
 	}
