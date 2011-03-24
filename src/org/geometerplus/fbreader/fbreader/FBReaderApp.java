@@ -132,6 +132,7 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
 
+		addAction(ActionCode.GO_BACK, new GoBackAction(this));
 		addAction(ActionCode.EXIT, new ExitAction(this));
 
 		BookTextView = new FBView(this);

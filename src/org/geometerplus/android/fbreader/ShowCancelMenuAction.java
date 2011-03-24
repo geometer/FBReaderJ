@@ -29,46 +29,33 @@ import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 class ShowCancelMenuAction extends FBAction {
 	private final FBReader myBaseActivity;
-	private final boolean myForceMenu;
 
-	ShowCancelMenuAction(FBReader baseActivity, FBReaderApp fbreader, boolean forceMenu) {
+	ShowCancelMenuAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(fbreader);
 		myBaseActivity = baseActivity;
-		myForceMenu = forceMenu;
 	}
 
 	public void run() {
 		if (Reader.getCurrentView() != Reader.BookTextView) {
 			Reader.showBookTextView();
 		} else {
-			if (!myForceMenu && Reader.HyperlinkHistory.hasBackHistory()) {
-				backActivity();
+			final List<FBReaderApp.CancelActionDescription> descriptionList =
+				Reader.getCancelActionsList();
+			if (descriptionList.size() == 1) {
+				Reader.closeWindow();
 			} else {
-				final List<FBReaderApp.CancelActionDescription> descriptionList =
-					Reader.getCancelActionsList();
-				if (descriptionList.size() == 1) {
-					Reader.closeWindow();
-				} else {
-					final Intent intent = new Intent();
-					intent.setClass(myBaseActivity, CancelActivity.class);
-					intent.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
-					int index = 0;
-					for (FBReaderApp.CancelActionDescription description : descriptionList) {
-						intent.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
-						intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
-						intent.putExtra(CancelActivity.ITEM_ENABLED + index, description.Enabled);
-						++index;
-					}
-					myBaseActivity.startActivityForResult(intent, FBReader.CANCEL_CODE);
+				final Intent intent = new Intent();
+				intent.setClass(myBaseActivity, CancelActivity.class);
+				intent.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
+				int index = 0;
+				for (FBReaderApp.CancelActionDescription description : descriptionList) {
+					intent.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
+					intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
+					intent.putExtra(CancelActivity.ITEM_ENABLED + index, description.Enabled);
+					++index;
 				}
+				myBaseActivity.startActivityForResult(intent, FBReader.CANCEL_CODE);
 			}
 		}
-	}
-
-	private void backActivity() {
-		ZLTextPosition position = Reader.getTextView().getStartCursor();
-		position = Reader.HyperlinkHistory.back(position);
-		Reader.BookTextView.gotoPosition(position);
-		Reader.showBookTextView();
 	}
 }
