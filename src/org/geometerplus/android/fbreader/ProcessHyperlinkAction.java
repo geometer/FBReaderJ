@@ -64,12 +64,10 @@ class ProcessHyperlinkAction extends FBAction {
 					}
 					break;
 				case FBHyperlinkType.INTERNAL:
-				case FBHyperlinkType.INTERNAL_VISITED:
 					ZLTextPosition position = Reader.getPosition();
 					ZLHyperlinkHistoryManager.Instance().visit(position);
 					Reader.Model.Book.markHyperlinkAsVisited(hyperlink.Id);
 					Reader.tryOpenFootnote(hyperlink.Id);
-					hyperlink.Type = FBHyperlinkType.INTERNAL_VISITED;
 					break;
 			}
 			return;

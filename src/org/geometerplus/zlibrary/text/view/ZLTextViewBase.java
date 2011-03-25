@@ -51,7 +51,7 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLFile getWallpaperFile();
 	public abstract ZLColor getBackgroundColor();
 	public abstract ZLColor getSelectedBackgroundColor();
-	public abstract ZLColor getTextColor(byte hyperlinkType);
+	public abstract ZLColor getTextColor(ZLTextHyperlink hyperlink);
 	public abstract ZLColor getHighlightingColor();
 
 	int getTextAreaHeight() {
@@ -185,7 +185,7 @@ abstract class ZLTextViewBase extends ZLView {
 
 	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign) {
 		final ZLPaintContext context = myContext;
-		context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
+		context.setTextColor(getTextColor(myTextStyle.Hyperlink));
 		if ((start == 0) && (length == -1)) {
 			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
 		} else {

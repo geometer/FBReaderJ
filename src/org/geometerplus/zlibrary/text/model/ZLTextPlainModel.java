@@ -160,12 +160,6 @@ public class ZLTextPlainModel implements ZLTextModel {
 						short labelLength = (short)data[dataOffset++];
 						myHyperlinkId = new String(data, dataOffset, labelLength);
 						dataOffset += labelLength;
-						/*
-						if (myHyperlinkType == FBHyperlinkType.INTERNAL
-								&& ZLVisitedLinkManager.Instance().isLinkVisited(myHyperlinkId)) {
-							myHyperlinkType = FBHyperlinkType.INTERNAL_VISITED;
-						}
-						*/
 					}
 					break;
 				}
