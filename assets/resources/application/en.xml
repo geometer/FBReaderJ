@@ -547,10 +547,6 @@
 			</node>
 			<node name="cancelMenu" value="Cancel menu">
 				<node name="summary" value="Back button action list"/>
-				<node name="longCancelMenu" value="Short cancel press goes back in history, long cancel press opens menu">
-					<node name="summaryOn" value="Short cancel press goes back in history, long cancel press opens menu"/>
-					<node name="summaryOff" value="Cancel press opens menu"/>
-				</node>
 				<node name="previousBook" value="Previous book">
 					<node name="summaryOn" value="Show 'return to previous book' item"/>
 					<node name="summaryOff" value="Don't show 'return to previous book' item"/>
