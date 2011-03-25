@@ -25,7 +25,7 @@ import java.util.TreeSet;
 public abstract class ZLVisitedLinkManager {
 	private static ZLVisitedLinkManager ourInstance;
 	private static Set<String> visitedLinks;
-	
+
 	public static ZLVisitedLinkManager Instance() {
 		return ourInstance;
 	}
