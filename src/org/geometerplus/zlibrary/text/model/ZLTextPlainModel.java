@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.util.*;
 
-import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
