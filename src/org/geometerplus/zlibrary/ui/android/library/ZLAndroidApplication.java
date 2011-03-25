@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.core.util.ZLHyperlinkHistoryManager;
-import org.geometerplus.zlibrary.core.util.ZLVisitedLinkManager;
 
 public class ZLAndroidApplication extends Application {
 	private static ZLAndroidApplication ourApplication;
@@ -65,7 +64,6 @@ public class ZLAndroidApplication extends Application {
 		super.onCreate();
 		new ZLSQLiteConfig(this);
 		new ZLAndroidImageManager();
-		new ZLVisitedLinkManager();
 		new ZLHyperlinkHistoryManager();
 		new ZLAndroidDialogManager();
 		new ZLAndroidLibrary(this);

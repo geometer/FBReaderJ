@@ -25,7 +25,6 @@ import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
-import org.geometerplus.zlibrary.core.util.ZLVisitedLinkManager;
 
 public class ZLTextPlainModel implements ZLTextModel {
 	protected final String myId;
@@ -161,10 +160,12 @@ public class ZLTextPlainModel implements ZLTextModel {
 						short labelLength = (short)data[dataOffset++];
 						myHyperlinkId = new String(data, dataOffset, labelLength);
 						dataOffset += labelLength;
+						/*
 						if (myHyperlinkType == FBHyperlinkType.INTERNAL
 								&& ZLVisitedLinkManager.Instance().isLinkVisited(myHyperlinkId)) {
 							myHyperlinkType = FBHyperlinkType.INTERNAL_VISITED;
 						}
+						*/
 					}
 					break;
 				}

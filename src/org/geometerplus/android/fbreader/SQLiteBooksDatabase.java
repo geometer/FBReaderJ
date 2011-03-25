@@ -31,7 +31,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.util.ZLHyperlinkHistoryManager;
-import org.geometerplus.zlibrary.core.util.ZLVisitedLinkManager;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
@@ -844,7 +843,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		}
 		myDeleteFromBookListStatement.bindLong(1, bookId);
 		myDeleteFromBookListStatement.execute();
-		deleteVisitedLinks(bookId);
+		deleteVisitedHyperlinks(bookId);
 		deleteLinkHistory(bookId);
 		return true;
 	}
@@ -861,52 +860,39 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 
-	private SQLiteStatement myDeleteVisitedLinksStatement;
-	private void deleteVisitedLinks(long bookId) {
-		if (myDeleteVisitedLinksStatement == null) {
-			myDeleteVisitedLinksStatement = myDatabase.compileStatement(
-				"DELETE FROM VisitedLinks WHERE book_id = ?"
+	private SQLiteStatement myDeleteVisitedHyperlinksStatement;
+	private void deleteVisitedHyperlinks(long bookId) {
+		if (myDeleteVisitedHyperlinksStatement == null) {
+			myDeleteVisitedHyperlinksStatement = myDatabase.compileStatement(
+				"DELETE FROM VisitedHyperlinks WHERE book_id = ?"
 			);
 		}
 
-		myDeleteVisitedLinksStatement.bindLong(1, bookId);
-		myDeleteVisitedLinksStatement.execute();
+		myDeleteVisitedHyperlinksStatement.bindLong(1, bookId);
+		myDeleteVisitedHyperlinksStatement.execute();
 	}
 
-	private SQLiteStatement myStoreVisitedLinksStatement;
-	protected void storeVisitedLinks(long bookId) {
-		if (myStoreVisitedLinksStatement == null) {
-			myStoreVisitedLinksStatement = myDatabase.compileStatement(
-				"INSERT OR REPLACE INTO VisitedLinks(book_id, link_id, link) VALUES (?,?,?)"
+	private SQLiteStatement myStoreVisitedHyperlinksStatement;
+	protected void addVisitedHyperlink(long bookId, String hyperlinkId) {
+		if (myStoreVisitedHyperlinksStatement == null) {
+			myStoreVisitedHyperlinksStatement = myDatabase.compileStatement(
+				"INSERT OR IGNORE INTO VisitedHyperlinks(book_id,hyperlink_id) VALUES (?,?)"
 			);
 		}
 
-		deleteVisitedLinks(bookId);
-		int linkId = 0;
-		Iterator<String> it = ZLVisitedLinkManager.Instance().getVisitedLinks().iterator();
-		while( it.hasNext()) {
-			String link = it.next();
-			myStoreVisitedLinksStatement.bindLong(1, bookId);
-			myStoreVisitedLinksStatement.bindLong(2, linkId);
-			myStoreVisitedLinksStatement.bindString(3, link);
-			myStoreVisitedLinksStatement.execute();
-			linkId = linkId + 1;
-		}
+		myStoreVisitedHyperlinksStatement.bindLong(1, bookId);
+		myStoreVisitedHyperlinksStatement.bindString(2, hyperlinkId);
+		myStoreVisitedHyperlinksStatement.execute();
 	}
 
-	protected void loadVisitedLinks(long bookId) {
-		ZLVisitedLinkManager linkManager = ZLVisitedLinkManager.Instance();
-		linkManager.reset();
-		final Cursor cursor = myDatabase.rawQuery("SELECT link FROM VisitedLinks WHERE book_id = ?", new String[] { "" + bookId });
-		if (!cursor.moveToNext()) {
-			cursor.close();
-			return;
+	protected Collection<String> loadVisitedHyperlinks(long bookId) {
+		final TreeSet<String> links = new TreeSet<String>();
+		final Cursor cursor = myDatabase.rawQuery("SELECT hyperlink_id FROM VisitedHyperlinks WHERE book_id = ?", new String[] { "" + bookId });
+		while (cursor.moveToNext()) {
+			links.add(cursor.getString(0));
 		}
-		do {
-			String link = cursor.getString(0);
-			linkManager.markLinkVisited(link);
-		} while (cursor.moveToNext());
 		cursor.close();
+		return links;
 	}
 
 	private SQLiteStatement myDeleteLinkHistoryStatement;
@@ -1283,11 +1269,10 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void updateTables15() {
 		myDatabase.execSQL(
-			"CREATE TABLE IF NOT EXISTS VisitedLinks(" +
+			"CREATE TABLE IF NOT EXISTS VisitedHyperlinks(" +
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
-				"link_id INTEGER NOT NULL," +
-				"link TEXT NOT NULL," +
-				"CONSTRAINT VisitedLinks_Unique UNIQUE (book_id, link_id))");
+				"hyperlink_id TEXT NOT NULL," +
+				"CONSTRAINT VisitedHyperlinks_Unique UNIQUE (book_id, hyperlink_id))");
 	}
 
 	private void updateTables16() {

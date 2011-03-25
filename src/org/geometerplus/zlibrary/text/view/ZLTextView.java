@@ -22,7 +22,6 @@ package org.geometerplus.zlibrary.text.view;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.util.ZLVisitedLinkManager;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
@@ -675,7 +674,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			if (paragraphCursor != null && paragraphCursor.isStartOfSection()) {
 				ZLTextParagraph.EntryIterator iter = paragraphCursor.getParagraph().iterator();
 				iter.next();
-				ZLVisitedLinkManager.Instance().markLinkVisited(iter.getPageLink());
+				//ZLVisitedLinkManager.Instance().markLinkVisited(iter.getPageLink());
 				page.myInvalidCache = true;
 			}
 			final int wordIndex = result.getElementIndex();

@@ -226,7 +226,6 @@ public final class FBReaderApp extends ZLApplication {
 
 			if (Model != null) {
 				Model.Book.storePosition(BookTextView.getStartCursor());
-				Model.Book.storeVisitedLinks();
 				Model.Book.storeLinkHistory();
 			}
 			BookTextView.setModel(null);
@@ -240,7 +239,6 @@ public final class FBReaderApp extends ZLApplication {
 			if (Model != null) {
 				ZLTextHyphenator.Instance().load(book.getLanguage());
 				book.loadLinkHistory();
-				book.loadVisitedLinks();
 				BookTextView.setModel(Model.BookTextModel);
 				BookTextView.gotoPosition(book.getStoredPosition());
 				if (bookmark == null) {
@@ -313,7 +311,6 @@ public final class FBReaderApp extends ZLApplication {
 	public void onWindowClosing() {
 		if (Model != null && BookTextView != null) {
 			Model.Book.storePosition(BookTextView.getStartCursor());
-			Model.Book.storeVisitedLinks();
 			Model.Book.storeLinkHistory();
 		}
 	}
