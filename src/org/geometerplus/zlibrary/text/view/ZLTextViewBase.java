@@ -209,7 +209,6 @@ abstract class ZLTextViewBase extends ZLView {
 
 	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
 		final ZLPaintContext context = myContext;
-		context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 		if (mark == null) {
 			context.drawString(x, y, str, offset, length);
 		} else {
@@ -240,7 +239,6 @@ abstract class ZLTextViewBase extends ZLView {
 					context.fillRectangle(x, y - context.getStringHeight(), endX - 1, y + context.getDescent());
 					context.drawString(x, y, str, offset + markStart, endPos - markStart);
 					x = endX;
-					context.setTextColor(getTextColor(myTextStyle.Hyperlink.Type));
 				}
 				pos = markStart + markLen;
 			}
