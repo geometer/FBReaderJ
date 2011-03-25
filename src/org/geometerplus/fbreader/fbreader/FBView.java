@@ -394,11 +394,11 @@ public final class FBView extends ZLTextView {
 			default:
 			case FBHyperlinkType.NONE:
 				return profile.RegularTextOption.getValue();
-			case FBHyperlinkType.INTERNAL_VISITED:
-				return profile.HyperlinkVisitedTextOption.getValue();
 			case FBHyperlinkType.INTERNAL:
 			case FBHyperlinkType.EXTERNAL:
 				return profile.HyperlinkTextOption.getValue();
+			case FBHyperlinkType.INTERNAL_VISITED:
+				return profile.VisitedHyperlinkTextOption.getValue();
 		}
 	}
 
