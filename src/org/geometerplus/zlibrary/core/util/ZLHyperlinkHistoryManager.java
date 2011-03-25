@@ -32,11 +32,13 @@ public class ZLHyperlinkHistoryManager {
 	private static int index;
 
 	public static ZLHyperlinkHistoryManager Instance() {
+		if (ourInstance == null) {
+			ourInstance = new ZLHyperlinkHistoryManager();
+		}
 		return ourInstance;
 	}
 
-	public ZLHyperlinkHistoryManager() {
-		ourInstance = this;
+	private ZLHyperlinkHistoryManager() {
 		reset();
 	}
 
