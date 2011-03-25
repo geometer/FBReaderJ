@@ -163,7 +163,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			return;
 		}
 		myTagCacheIsInitialized = true;
-        
+
 		Cursor cursor = myDatabase.rawQuery("SELECT tag_id,parent_id,name FROM Tags ORDER BY tag_id", null);
 		while (cursor.moveToNext()) {
 			long id = cursor.getLong(0);
@@ -859,7 +859,6 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return myCheckBookListStatement.simpleQueryForLong() > 0;
 	}
 
-
 	private SQLiteStatement myDeleteVisitedHyperlinksStatement;
 	private void deleteVisitedHyperlinks(long bookId) {
 		if (myDeleteVisitedHyperlinksStatement == null) {
@@ -894,6 +893,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		cursor.close();
 		return links;
 	}
+
 
 	private SQLiteStatement myDeleteLinkHistoryStatement;
 	private SQLiteStatement myDeleteLinkHistoryIndexStatement;
