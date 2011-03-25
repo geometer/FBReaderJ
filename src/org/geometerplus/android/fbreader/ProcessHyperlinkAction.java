@@ -63,6 +63,7 @@ class ProcessHyperlinkAction extends FBAction {
 					}
 					break;
 				case FBHyperlinkType.INTERNAL:
+					Reader.Model.Book.markHyperlinkAsVisited(hyperlink.Id);
 					Reader.tryOpenFootnote(hyperlink.Id);
 					break;
 			}

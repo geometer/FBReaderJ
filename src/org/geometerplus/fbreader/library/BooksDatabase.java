@@ -104,4 +104,7 @@ public abstract class BooksDatabase {
 	protected abstract boolean insertIntoBookList(long bookId);
 	protected abstract boolean deleteFromBookList(long bookId);
 	protected abstract boolean checkBookList(long bookId);
+
+	protected abstract Collection<String> loadVisitedHyperlinks(long bookId);
+	protected abstract void addVisitedHyperlink(long bookId, String hyperlinkId);
 }
