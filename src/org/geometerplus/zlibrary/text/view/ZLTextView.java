@@ -204,7 +204,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return;
 		}
 
-		checkInvalidCache();
 		setScrollingActive(true);
 		ZLApplication.Instance().startViewAutoScrolling(viewPage);
 	}
@@ -250,14 +249,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 			}
-		}
-	}
-
-	@Override
-	public synchronized void checkInvalidCache() {
-		if (myCurrentPage.myInvalidCache) {
-			clearCaches();
-			myCurrentPage.myInvalidCache = false;
 		}
 	}
 
@@ -675,7 +666,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				ZLTextParagraph.EntryIterator iter = paragraphCursor.getParagraph().iterator();
 				iter.next();
 				//ZLVisitedLinkManager.Instance().markLinkVisited(iter.getPageLink());
-				page.myInvalidCache = true;
 			}
 			final int wordIndex = result.getElementIndex();
 			applyControls(paragraphCursor, 0, wordIndex);
@@ -977,7 +967,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return;
 		}
 
-		checkInvalidCache();
 		preparePaintInfo(myCurrentPage);
 		myPreviousPage.reset();
 		myNextPage.reset();

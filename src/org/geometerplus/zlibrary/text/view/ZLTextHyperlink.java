@@ -20,7 +20,7 @@
 package org.geometerplus.zlibrary.text.view;
 
 public class ZLTextHyperlink {
-	public byte Type;
+	public final byte Type;
 	public final String Id;
 
 	public static final ZLTextHyperlink NO_LINK = new ZLTextHyperlink((byte)0, null);
