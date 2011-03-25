@@ -48,7 +48,7 @@ public final class ZLKeyBindings {
 		return new ZLStringOption(group, key, defaultValue);
 	}
 
-	private ZLStringOption getOption(String key, boolean longPress) {
+	public ZLStringOption getOption(String key, boolean longPress) {
 		final TreeMap<String,ZLStringOption> map = longPress ? myLongPressActionMap : myActionMap;
 		ZLStringOption option = map.get(key);
 		if (option == null) {

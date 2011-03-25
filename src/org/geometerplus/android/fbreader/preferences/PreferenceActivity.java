@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Intent;
 
+import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
@@ -386,5 +387,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
 		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");
 		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");
+		final ZLKeyBindings bindings = fbReader.keyBindings();
+		final String[] backKeyActions =
+			{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU };
+		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
+			this, cancelMenuScreen.Resource, "backKeyAction",
+			bindings.getOption("<Back>", false), backKeyActions
+		));
+		final String[] backKeyLongPressActions =
+			{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
+		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
+			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
+			bindings.getOption("<Back>", true), backKeyLongPressActions
+		));
 	}
 }
