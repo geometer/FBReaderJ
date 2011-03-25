@@ -26,7 +26,7 @@ import java.util.List;
 import org.geometerplus.zlibrary.text.view.ZLTextFixedPosition;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
-public abstract class ZLHyperlinkHistoryManager {
+public class ZLHyperlinkHistoryManager {
 	private static ZLHyperlinkHistoryManager ourInstance;
 	private static List<ZLTextPosition> positionList;
 	private static int index;
@@ -35,7 +35,7 @@ public abstract class ZLHyperlinkHistoryManager {
 		return ourInstance;
 	}
 
-	protected ZLHyperlinkHistoryManager() {
+	public ZLHyperlinkHistoryManager() {
 		ourInstance = this;
 		reset();
 	}

@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.util.ZLAndroidHyperlinkHistoryManager;
+import org.geometerplus.zlibrary.core.util.ZLHyperlinkHistoryManager;
 import org.geometerplus.zlibrary.core.util.ZLVisitedLinkManager;
 
 public class ZLAndroidApplication extends Application {
@@ -66,7 +66,7 @@ public class ZLAndroidApplication extends Application {
 		new ZLSQLiteConfig(this);
 		new ZLAndroidImageManager();
 		new ZLVisitedLinkManager();
-		new ZLAndroidHyperlinkHistoryManager();
+		new ZLHyperlinkHistoryManager();
 		new ZLAndroidDialogManager();
 		new ZLAndroidLibrary(this);
 	}
