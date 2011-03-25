@@ -22,7 +22,6 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -38,9 +37,6 @@ public abstract class ZLApplication {
 	//private static final String MouseScrollUpKey = "<MouseScrollDown>";
 	//private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
-
-	public final ZLIntegerRangeOption KeyDelayOption =
-		new ZLIntegerRangeOption("Options", "KeyDelay", 0, 5000, 250);
 
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
@@ -135,11 +131,16 @@ public abstract class ZLApplication {
 	//may be protected
 	abstract public ZLKeyBindings keyBindings();
 
-	public final boolean doActionByKey(String key) {
-		final String actionId = keyBindings().getBinding(key);
+	public final boolean hasActionForKey(String key, boolean longPress) {
+		final String actionId = keyBindings().getBinding(key, longPress);
+		return actionId != null && !NoAction.equals(actionId);	
+	}
+
+	public final boolean doActionByKey(String key, boolean longPress) {
+		final String actionId = keyBindings().getBinding(key, longPress);
 		if (actionId != null) {
-			final ZLAction action = myIdToActionMap.get(keyBindings().getBinding(key));
-			return (action != null) && action.checkAndRun();
+			final ZLAction action = myIdToActionMap.get(actionId);
+			return action != null && action.checkAndRun();
 		}
 		return false;
 	}
@@ -186,10 +187,6 @@ public abstract class ZLApplication {
 				return true;
 			}
 			return false;
-		}
-
-		public boolean useKeyDelay() {
-			return true;
 		}
 
 		abstract protected void run();

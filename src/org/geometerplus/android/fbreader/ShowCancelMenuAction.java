@@ -26,10 +26,10 @@ import android.content.Intent;
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-class CancelAction extends FBAction {
+class ShowCancelMenuAction extends FBAction {
 	private final FBReader myBaseActivity;
 
-	CancelAction(FBReader baseActivity, FBReaderApp fbreader) {
+	ShowCancelMenuAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(fbreader);
 		myBaseActivity = baseActivity;
 	}
