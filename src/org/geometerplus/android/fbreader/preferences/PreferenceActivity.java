@@ -390,15 +390,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");
 		final ZLKeyBindings bindings = fbReader.keyBindings();
 		final String[] backKeyActions =
-			//{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU };
-			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
+			{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource, "backKeyAction",
 			bindings.getOption("<Back>", false), backKeyActions
 		));
 		final String[] backKeyLongPressActions =
-			//{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
-			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
+			{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
 			bindings.getOption("<Back>", true), backKeyLongPressActions
