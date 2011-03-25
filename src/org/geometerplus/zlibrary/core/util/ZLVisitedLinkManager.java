@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.core.util;
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class ZLVisitedLinkManager {
+public class ZLVisitedLinkManager {
 	private static ZLVisitedLinkManager ourInstance;
 	private static Set<String> visitedLinks;
 
@@ -30,7 +30,7 @@ public abstract class ZLVisitedLinkManager {
 		return ourInstance;
 	}
 
-	protected ZLVisitedLinkManager() {
+	public ZLVisitedLinkManager() {
 		ourInstance = this;
 		reset();
 	}
