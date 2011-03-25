@@ -22,7 +22,6 @@ package org.geometerplus.zlibrary.text.model;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.*;
-
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public class ZLTextPlainModel implements ZLTextModel {
