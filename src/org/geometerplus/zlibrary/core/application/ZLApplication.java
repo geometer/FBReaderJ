@@ -22,7 +22,6 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;

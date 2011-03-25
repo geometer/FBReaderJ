@@ -1,5 +1,6 @@
 ===== 1.0 (Mar ??, 2011) =====
-* A support for SlovoEd dictionaries has been fixed
+* Differnt (and configurable) actions for short and long Back button press
+* SlovoEd dictionaries support has been fixed
 * Czech translation has been updated (by Marek Pavelka)
 * No OutOfMemoryErrors in image loading
 * Float series index parsing has been fixed
