@@ -180,6 +180,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book"/>
 		<node name="returnTo" value="Return to ..."/>
+		<node name="back" value="Back"/>
+		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="menu">
@@ -427,6 +429,7 @@
 				<node name="selectionBackground" value="Selection background"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text"/>
 				<node name="highlighting" value="Search results background"/>
 				<node name="footer" value="Footer" />
 			</node>

@@ -176,6 +176,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Открыть предыдущую книгу"/>
 		<node name="returnTo" value="Вернуться к ..."/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
 	<node name="menu">
@@ -423,6 +425,7 @@
 				<node name="selectionBackground" value="Фон пометки"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Фон результатов поиска"/>
 				<node name="footer" value="Подвал"/>
 			</node>

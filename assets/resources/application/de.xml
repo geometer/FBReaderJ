@@ -178,6 +178,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
 		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
@@ -425,6 +427,7 @@
 				<node name="selectionBackground" value="Hintergrund von ausgewählten Text"/>
 				<node name="text" value="Normalen Text"/>
 				<node name="hyperlink" value="Hyperlinks"/>
+				<node name="hyperlinkVisited" value="Besuchte Hyperlinks"/>
 				<node name="highlighting" value="Hintergrund der Suchergebnisse"/>
 				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>

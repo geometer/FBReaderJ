@@ -181,6 +181,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Otevřít předchozí knihu"/>
 		<node name="returnTo" value="Vrátit se na..."/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
 	<node name="menu">
@@ -428,6 +430,7 @@
 				<node name="selectionBackground" value="Pozadí výběru"/>
 				<node name="text" value="Běžný text"/>
 				<node name="hyperlink" value="Hypertextový odkaz"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Pozadí výsledků vyhledávání"/>
 				<node name="footer" value="Patička"/>
 			</node>

@@ -177,6 +177,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="เปิดหนังสือเล่มก่อนหน้า"/>
 		<node name="returnTo" value="กลับไป ..."/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="ปิด FBReader"/>
 	</node>
 	<node name="menu">
@@ -424,6 +426,7 @@
 				<node name="selectionBackground" value="พื้นหลังที่เลือก"/>
 				<node name="text" value="ข้อความ"/>
 				<node name="hyperlink" value="ลิ้งค์ข้อความ"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="สีไฮไลท์ผลการค้นหาคำ"/>
 				<node name="footer" value="ข้อความท้ายหน้า"/>
 			</node>
