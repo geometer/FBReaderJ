@@ -1,4 +1,15 @@
-===== 0.99.18 (Mar ??, 2011) =====
+===== 1.0 (Mar ??, 2011) =====
+* Differnt (and configurable) actions for short and long Back button press (original code by Steffen Siebert)
+* SlovoEd dictionaries support has been fixed
+* Czech translation has been updated (by Marek Pavelka)
+* No OutOfMemoryErrors in image loading
+* Float series index parsing has been fixed
+* Separate color for visited hyperlinks (original code by Steffen Siebert)
+* Removed menubar.xml: menu list is moved into the code
+* Proguard obfuscation has been added; package size decreased
+
+===== 0.99.18 (Mar 15, 2011) =====
+* Web-free icon
 * Epub TOC/cover processing has been fixed
 
 ===== 0.99.17 (Mar 13, 2011) =====

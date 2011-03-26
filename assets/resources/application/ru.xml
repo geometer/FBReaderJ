@@ -75,11 +75,13 @@
 		<node name="stopSearching" value="Остановить поиск" />
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
-		<node name="refillAccount" value="Пополнить счёт (текущий счёт: %s)" />
-		<node name="refillTitle" value="Пополнить счёт"/>
-		<node name="refillViaSms" value="Варианты SMS"/>
-		<node name="refillViaBrowser" value="Окно браузера"/>
-		<node name="refillSummary" value="Текущий счёт: %s"/>
+		<node name="topup" value="Пополнить счёт (текущий счёт: %s)" />
+		<node name="topupTitle" value="Пополнить счёт"/>
+		<node name="topupViaCreditCard" value="Кредитной картой"/>
+		<node name="topupViaSelfServiceKiosk" value="В платежном терминале"/>
+		<node name="topupViaSms" value="Платной SMS"/>
+		<node name="topupViaBrowser" value="В окне браузера"/>
+		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
@@ -107,7 +109,7 @@
 			<node name="signIn" value="Войти"/>
 			<node name="signOut" value="Выйти (%s)"/>
 			<node name="signUp" value="Регистрация"/>
-			<node name="refillAccount" value="Пополнить счёт"/>
+			<node name="topup" value="Пополнить счёт"/>
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
 			<node name="languages" value="Фильтр по языку"/>
@@ -174,6 +176,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Открыть предыдущую книгу"/>
 		<node name="returnTo" value="Вернуться к ..."/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
 	<node name="menu">
@@ -220,7 +224,7 @@
 			<node name="openBook" value="Читать" />
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
-			<node name="refillAccount" value="Пополнить счёт"/>
+			<node name="topup" value="Пополнить счёт"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
@@ -421,6 +425,7 @@
 				<node name="selectionBackground" value="Фон пометки"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Фон результатов поиска"/>
 				<node name="footer" value="Подвал"/>
 			</node>
@@ -535,6 +540,17 @@
 				<node name="positions" value="Возврат по ссылкам">
 					<node name="summaryOn" value="Показывать пункты меню для последних 3 позиций в книге"/>
 					<node name="summaryOff" value="Не нужна возможность возврата по ссылкам"/>
+				</node>
+				<node name="backKeyAction" value="Действие по кнопке 'Назад'">
+					<node name="exit" value="Закрыть FBReader"/>
+					<node name="goBack" value="Вернуться по ссылке"/>
+					<node name="cancelMenu" value="Показать список действий"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Действие по долгому нажатию">
+					<node name="exit" value="Закрыть FBReader"/>
+					<node name="goBack" value="Вернуться по ссылке"/>
+					<node name="cancelMenu" value="Показать список действий"/>
+					<node name="none" value="Ничего не делать"/>
 				</node>
 			</node>
 		</node>

@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.formats.plucker;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
@@ -40,16 +39,18 @@ public class ZCompressedFileImage extends ZLSingleImage {
 		myCompressedSize = compressedSize;
 	}
 
+	@Override
 	public String getURI() {
 		// TODO: implement
 		return null;
 	}
 
-	public byte[] byteData() {
+	@Override
+	public InputStream inputStream() {
 		try {
 			final InputStream stream = myFile.getInputStream();
 			if (stream == null) {
-				return new byte[0];
+				return null;
 			}
 			
 			final ArrayList<byte[]> data = new ArrayList<byte[]>();
@@ -73,10 +74,11 @@ public class ZCompressedFileImage extends ZLSingleImage {
 				System.arraycopy(data.get(i), 0, buffer, i * 4096, 4096);
 			}
 			System.arraycopy(data.get(dataSizeMinus1), 0, buffer, dataSizeMinus1 * 4096, sizeOfBufferData);
-			return buffer;
+			return new ByteArrayInputStream(buffer);
 		} catch (IOException e) {
+			return null;
 		} catch (DataFormatException e) {
+			return null;
 		}
-		return new byte[0];
 	}
 }

@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="Deter a busca" />
 		<node name="signIn" value="Acceder"/>
 		<node name="signOut" value="Saír (%s)"/>
-		<node name="refillAccount" value="Actualizar a conta (actualmente: %s)"/>
-		<node name="refillTitle" value="Actualizar a conta"/>
-		<node name="refillViaSms" value="Mensaxes de texto"/>
-		<node name="refillViaBrowser" value="Abrir a páxina no navegador"/>
-		<node name="refillSummary" value="Actualmente: %s"/>
+		<node name="topup" value="Actualizar a conta (actualmente: %s)"/>
+		<node name="topupTitle" value="Actualizar a conta"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="Mensaxes de texto"/>
+		<node name="topupViaBrowser" value="Abrir a páxina no navegador"/>
+		<node name="topupSummary" value="Actualmente: %s"/>
 		<node name="alreadyDownloading" value="O libro está a ser descargado" />
 		<node name="alreadyDownloadingDemo" value="A mostra está a ser descargada" />
 		<node name="stoppingCatalogLoading" value="Detendo a carga" />
@@ -108,7 +110,7 @@
 			<node name="signIn" value="Acceder"/>
 			<node name="signUp" value="Rexistrarse"/>
 			<node name="signOut" value="Saír (%s)"/>
-			<node name="refillAccount" value="Recargar a conta"/>
+			<node name="topup" value="Recargar a conta"/>
 			<node name="addCustomCatalog" value="Engadir catálogo"/>
 			<node name="refreshCatalogsList" value="Actualizar catálogos"/>
 			<node name="languages" value="Filtro de idioma"/>
@@ -175,6 +177,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book"/>
 		<node name="returnTo" value="Return to ..."/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="menu">
@@ -221,7 +225,7 @@
 			<node name="openBook" value="Ler" />
 			<node name="editInfo" value="Editar" />
 			<node name="reloadInfo" value="Recargar" />
-			<node name="refillAccount" value="Comletar"/>
+			<node name="topup" value="Comletar"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar complemento"/>
@@ -422,6 +426,7 @@
 				<node name="selectionBackground" value="Selección de fondo"/>
 				<node name="text" value="Texto normal"/>
 				<node name="hyperlink" value="Texto de ligazón"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Resultado da busca de fondos"/>
 				<node name="footer" value="Rodapé" />
 			</node>
@@ -536,6 +541,17 @@
 				<node name="positions" value="Last 3 positions" toBeTranslated="true">
 					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyAction" value="Back key action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+					<node name="none" value="No action" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

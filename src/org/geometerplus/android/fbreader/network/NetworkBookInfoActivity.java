@@ -126,12 +126,12 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		NetworkView.Instance().getTopUpActions().buildContextMenu(this, menu, myBook.Link);
+		NetworkView.Instance().getTopupActions().buildContextMenu(this, menu, myBook.Link);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		RefillAccountActions.runAction(this, myBook.Link, item.getItemId());
+		TopupActions.runAction(this, myBook.Link, item.getItemId());
 		return true;
 	}
 
@@ -185,8 +185,15 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		if (myBook.SeriesTitle != null) {
 			findViewById(R.id.network_book_series_title).setVisibility(View.VISIBLE);
 			setPairValueText(R.id.network_book_series_title, myBook.SeriesTitle);
-			if (myBook.IndexInSeries > 0) {
-				setPairValueText(R.id.network_book_series_index, String.valueOf(myBook.IndexInSeries));
+			final float indexInSeries = myBook.IndexInSeries;
+			if (indexInSeries > 0) {
+				final String seriesIndexString;
+				if (Math.abs(indexInSeries - Math.round(indexInSeries)) < 0.01) {
+					seriesIndexString = String.valueOf(Math.round(indexInSeries));
+				} else {
+					seriesIndexString = String.format("%.1f", indexInSeries);
+				}
+				setPairValueText(R.id.network_book_series_index, seriesIndexString);
 				findViewById(R.id.network_book_series_index).setVisibility(View.VISIBLE);
 			} else {
 				findViewById(R.id.network_book_series_index).setVisibility(View.GONE);

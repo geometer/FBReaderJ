@@ -59,6 +59,7 @@ public class ColorProfile {
 	public final ZLColorOption HighlightingOption;
 	public final ZLColorOption RegularTextOption;
 	public final ZLColorOption HyperlinkTextOption;
+	public final ZLColorOption VisitedHyperlinkTextOption;
 	public final ZLColorOption FooterFillOption;
 
 	private ColorProfile(String name, ColorProfile base) {
@@ -68,6 +69,7 @@ public class ColorProfile {
 		HighlightingOption.setValue(base.HighlightingOption.getValue());
 		RegularTextOption.setValue(base.RegularTextOption.getValue());
 		HyperlinkTextOption.setValue(base.HyperlinkTextOption.getValue());
+		VisitedHyperlinkTextOption.setValue(base.VisitedHyperlinkTextOption.getValue());
 		FooterFillOption.setValue(base.FooterFillOption.getValue());
 	}
 
@@ -89,6 +91,8 @@ public class ColorProfile {
 				createOption(name, "Text", 192, 192, 192);
 			HyperlinkTextOption =
 				createOption(name, "Hyperlink", 60, 142, 224);
+			VisitedHyperlinkTextOption =
+				createOption(name, "VisitedHyperlink", 200, 139, 255);
 			FooterFillOption =
 				createOption(name, "FooterFillOption", 85, 85, 85);
 		} else {
@@ -104,6 +108,8 @@ public class ColorProfile {
 				createOption(name, "Text", 0, 0, 0);
 			HyperlinkTextOption =
 				createOption(name, "Hyperlink", 60, 139, 255);
+			VisitedHyperlinkTextOption =
+				createOption(name, "VisitedHyperlink", 200, 139, 255);
 			FooterFillOption =
 				createOption(name, "FooterFillOption", 170, 170, 170);
 		}

@@ -19,10 +19,7 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 	private boolean myIsDecoded;
@@ -129,18 +126,10 @@ public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 	}
 
 	@Override
-	public final byte[] byteData() {
+	public final InputStream inputStream() {
 		try {
 			decode();
-			final File file = new File(decodedFileName());
-			final byte[] data = new byte[(int)file.length()];
-			final FileInputStream stream = new FileInputStream(file);
-			try {
-				stream.read(data);
-			} finally {
-				stream.close();
-			}
-			return data;
+			return new FileInputStream(new File(decodedFileName()));
 		} catch (IOException e) {
 			return null;
 		}

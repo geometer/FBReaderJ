@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="Dừng tìm kiếm" />
 		<node name="signIn" value="Đăng nhập"/>
 		<node name="signOut" value="Đăng xuất (%s)"/>
-		<node name="refillAccount" value="Làm đầy lại tài khoản (hiện tại: %s)"/>
-		<node name="refillTitle" value="Làm đầy lại tài khoản"/>
-		<node name="refillViaSms" value="Tin nhắn"/>
-		<node name="refillViaBrowser" value="Mở trang trong trình duyệt"/>
-		<node name="refillSummary" value="Hiện tại: %s"/>
+		<node name="topup" value="Làm đầy lại tài khoản (hiện tại: %s)"/>
+		<node name="topupTitle" value="Làm đầy lại tài khoản"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="Tin nhắn"/>
+		<node name="topupViaBrowser" value="Mở trang trong trình duyệt"/>
+		<node name="topupSummary" value="Hiện tại: %s"/>
 		<node name="alreadyDownloading" value="Sách đang được tải về" />
 		<node name="alreadyDownloadingDemo" value="Bản thử đang được tải về" />
 		<node name="stoppingCatalogLoading" value="Dừng tải" />
@@ -108,7 +110,7 @@
 			<node name="signIn" value="Đăng nhập"/>
 			<node name="signOut" value="Đăng xuất (%s)"/>
 			<node name="signUp" value="Đăng ký" />
-			<node name="refillAccount" value="Tái đầy tài khoản "/>
+			<node name="topup" value="Tái đầy tài khoản "/>
 			<node name="addCustomCatalog" value="Thêm catalo"/>
 			<node name="refreshCatalogsList" value="Tải lại các catalo"/>
 			<node name="languages" value="Bộ lọc ngôn ngữ"/>
@@ -175,6 +177,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
 		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
@@ -221,7 +225,7 @@
 			<node name="openBook" value="Đọc" />
 			<node name="editInfo" value="Sửa" />
 			<node name="reloadInfo" value="Tải lại" />
-			<node name="refillAccount" value="Tái đầy tài khoản "/>
+			<node name="topup" value="Tái đầy tài khoản "/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Cài phần bổ trợ" />
@@ -422,6 +426,7 @@
 				<node name="selectionBackground" value="Nền Phần chọn"/>
 				<node name="text" value="Văn bản Thường"/>
 				<node name="hyperlink" value="Siêu liên kết"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Kết quả Tìm kiếm"/>
 				<node name="footer" value="Footer"/>
 			</node>
@@ -536,6 +541,17 @@
 				<node name="positions" value="Last 3 positions" toBeTranslated="true">
 					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyAction" value="Back key action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+					<node name="none" value="No action" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

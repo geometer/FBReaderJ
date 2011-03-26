@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="Припинити пошук" />
 		<node name="signIn" value="Увійти"/>
 		<node name="signOut" value="Вийти (%s)"/>
-		<node name="refillAccount" value="Поповнити рахунок (поточний рахунок: %s)" />
-		<node name="refillTitle" value="Поповнити рахунок"/>
-		<node name="refillViaSms" value="Text messages" toBeTranslated="true"/>
-		<node name="refillViaBrowser" value="Open page in browser" toBeTranslated="true"/>
-		<node name="refillSummary" value="Поточний рахунок: %s"/>
+		<node name="topup" value="Поповнити рахунок (поточний рахунок: %s)" />
+		<node name="topupTitle" value="Поповнити рахунок"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="Text messages" toBeTranslated="true"/>
+		<node name="topupViaBrowser" value="Open page in browser" toBeTranslated="true"/>
+		<node name="topupSummary" value="Поточний рахунок: %s"/>
 		<node name="alreadyDownloading" value="Книжка завантажується" />
 		<node name="alreadyDownloadingDemo" value="Уривок завантажається" />
 		<node name="stoppingCatalogLoading" value="Зупинка завантаження" />
@@ -108,7 +110,7 @@
 			<node name="signIn" value="Увійти"/>
 			<node name="signOut" value="Вийти (%s)"/>
 			<node name="signUp" value="Зареєструватися" />
-			<node name="refillAccount" value="Поповнити рахунок"/>
+			<node name="topup" value="Поповнити рахунок"/>
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
 			<node name="languages" toBeTranslated="true" value="Language filter"/>
@@ -175,6 +177,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
 		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
@@ -221,7 +225,7 @@
 			<node name="openBook" value="Read" toBeTranslated="true" />
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
-			<node name="refillAccount" value="Поповнити рахунок"/>
+			<node name="topup" value="Поповнити рахунок"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin" toBeTranslated="true" />
@@ -422,6 +426,7 @@
 				<node name="selectionBackground" value="Фон позначки"/>
 				<node name="text" value="Звичайний текст"/>
 				<node name="hyperlink" value="Посилання"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Фон результатів пошуку"/>
 				<node name="footer" value="Footer" toBeTranslated="true"/>
 			</node>
@@ -536,6 +541,17 @@
 				<node name="positions" value="Last 3 positions" toBeTranslated="true">
 					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyAction" value="Back key action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+					<node name="none" value="No action" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

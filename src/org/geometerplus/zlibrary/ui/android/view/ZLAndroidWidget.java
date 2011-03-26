@@ -472,25 +472,46 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		return view.onFingerLongPress(myPressedX, myPressedY);
 	}
 
+	private String myKeyUnderTracking;
+	private long myTrackingStartTime;
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		final ZLApplication application = ZLApplication.Instance();
+
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
 			case KeyEvent.KEYCODE_VOLUME_UP:
 			case KeyEvent.KEYCODE_BACK:
 			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
-				return ZLApplication.Instance().doActionByKey(ZLAndroidKeyUtil.getKeyNameByCode(keyCode));
+			{
+				final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
+				if (myKeyUnderTracking != null) {
+					if (myKeyUnderTracking.equals(keyName)) {
+						return true;
+					} else {
+						myKeyUnderTracking = null;
+					}
+				}
+				if (application.hasActionForKey(keyName, true)) {
+					myKeyUnderTracking = keyName;
+					myTrackingStartTime = System.currentTimeMillis();
+					return true;
+				} else {
+					return application.doActionByKey(keyName, false);
+				}
+			}
 			case KeyEvent.KEYCODE_DPAD_LEFT:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(-1, 0);
+				application.getCurrentView().onTrackballRotated(-1, 0);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_RIGHT:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(1, 0);
+				application.getCurrentView().onTrackballRotated(1, 0);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_DOWN:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, 1);
+				application.getCurrentView().onTrackballRotated(0, 1);
 				return true;
 			case KeyEvent.KEYCODE_DPAD_UP:
-				ZLApplication.Instance().getCurrentView().onTrackballRotated(0, -1);
+				application.getCurrentView().onTrackballRotated(0, -1);
 				return true;
 			default:
 				return false;
@@ -504,6 +525,15 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			case KeyEvent.KEYCODE_BACK:
 			case KeyEvent.KEYCODE_ENTER:
 			case KeyEvent.KEYCODE_DPAD_CENTER:
+				if (myKeyUnderTracking != null) {
+					final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
+					if (myKeyUnderTracking.equals(keyName)) {
+						final boolean longPress = System.currentTimeMillis() >
+							myTrackingStartTime + ViewConfiguration.getLongPressTimeout();
+						ZLApplication.Instance().doActionByKey(keyName, longPress);
+					}
+					myKeyUnderTracking = null;
+				}
 				return true;
 			default:
 				return false;

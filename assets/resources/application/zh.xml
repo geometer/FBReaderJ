@@ -76,11 +76,13 @@
 		<node name="stopSearching" value="停止搜索" />
 		<node name="signIn" value="登录"/>
 		<node name="signOut" value="退出 (%s)"/>
-		<node name="refillAccount" value="重新输入账号(目前: %s)" />
-		<node name="refillTitle" value="重新输入账号"/>
-		<node name="refillViaSms" value="短消息"/>
-		<node name="refillViaBrowser" value="在浏览器中打开页面"/>
-		<node name="refillSummary" value="当前: %s"/>
+		<node name="topup" value="重新输入账号(目前: %s)" />
+		<node name="topupTitle" value="重新输入账号"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="短消息"/>
+		<node name="topupViaBrowser" value="在浏览器中打开页面"/>
+		<node name="topupSummary" value="当前: %s"/>
 		<node name="alreadyDownloading" value="正在下载" />
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
 		<node name="stoppingCatalogLoading" value="停止加载" />
@@ -108,7 +110,7 @@
 			<node name="signIn" value="登录"/>
 			<node name="signOut" value="退出 (%s)"/>
 			<node name="signUp" value="注册" />
-			<node name="refillAccount" value="重新输入账号"/>
+			<node name="topup" value="重新输入账号"/>
 			<node name="addCustomCatalog" value="添加书库目录"/>
 			<node name="refreshCatalogsList" value="刷新书库目录"/>
 			<node name="languages" value="语言过滤"/>
@@ -175,6 +177,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
 		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
 	<node name="menu">
@@ -221,7 +225,7 @@
 			<node name="openBook" value="阅读" />
 			<node name="editInfo" value="编辑" />
 			<node name="reloadInfo" value="重新加载" />
-			<node name="refillAccount" value="重新输入账号"/>
+			<node name="topup" value="重新输入账号"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件" />
@@ -422,6 +426,7 @@
 				<node name="selectionBackground" value="选择背景色" />
 				<node name="text" value="普通文本" />
 				<node name="hyperlink" value="超链接文本" />
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="搜索结果背景" />
 				<node name="footer" value="页脚"/>
 			</node>
@@ -536,6 +541,17 @@
 				<node name="positions" value="Last 3 positions" toBeTranslated="true">
 					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyAction" value="Back key action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+					<node name="none" value="No action" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>

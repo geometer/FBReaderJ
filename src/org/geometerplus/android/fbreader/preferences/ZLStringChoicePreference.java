@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.image;
+package org.geometerplus.android.fbreader.preferences;
 
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
+import android.content.Context;
 
-public abstract class ZLSingleImage implements ZLImage {
-	private final String myMimeType;
-	
-	public ZLSingleImage(final String mimeType) {
-		myMimeType = mimeType;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+class ZLStringChoicePreference extends ZLStringListPreference {
+	private final ZLStringOption myOption;
+
+	ZLStringChoicePreference(Context context, ZLResource rootResource, String resourceKey, ZLStringOption option, String[] values) {
+		super(context, rootResource, resourceKey);
+		setList(values);
+		setInitialValue(option.getValue());
+		myOption = option;
 	}
 
-	public abstract InputStream inputStream();
-
-	public final String mimeType() {
-		return myMimeType;
+	public void onAccept() {
+		myOption.setValue(getValue());
 	}
 }

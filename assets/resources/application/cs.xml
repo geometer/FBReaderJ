@@ -53,11 +53,11 @@
 		<node name="byTitle" value="Podle názvu">
 			<node name="summary" value="Knihy seřazeny podle názvu"/>
 		</node>
-		<node name="byDate" value="By date" toBeTranslated="true">
-			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		<node name="byDate" value="Podle data">
+			<node name="summary" value="Knihy seřazeny podle data zakoupení"/>
 		</node>
-		<node name="bySeries" value="By series" toBeTranslated="true">
-			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		<node name="bySeries" value="Podle série">
+			<node name="summary" value="Knihy seřazeny podle série"/>
 		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>
 		<node name="showResults" value="Zobrazit výsledky"/>
@@ -69,18 +69,22 @@
 		<node name="deleteDemo" value="Odstranit ukázku"/>
 		<node name="downloadDemo" value="Stáhnout ukázku"/>
 		<node name="buy" value="Zakoupit (%s)"/>
-		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
-		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="addToBasket" value="Přidat do košíku"/>
+		<node name="removeFromBasket" value="Odebrat z košíku"/>
 		<node name="openInBrowser" value="Otevřít v prohlížeči" />
 		<node name="stopLoading" value="Zastavit načítání" />
 		<node name="stopSearching" value="Zastavit vyhledávání" />
 		<node name="signIn" value="Přihlásit"/>
 		<node name="signOut" value="Odhlásit (%s)"/>
-		<node name="refillAccount" value="Doplnit účet (aktuálně: %s)"/>
-		<node name="refillTitle" value="Doplnit účet"/>
-		<node name="refillViaSms" value="Textová zpráva"/>
-		<node name="refillViaBrowser" value="Otevřít stránku v prohlížeči"/>
-		<node name="refillSummary" value="Aktuálně: %s"/>
+		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
+		<node name="topupTitle" value="Doplnit účet"/>
+		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
+		<node name="topupViaSms" value="Textová zpráva"/>
+		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
+		<node name="topupSummary" value="Aktuálně: %s"/>
+		<node name="basket" value="Košík"/>
+		<node name="basketSummary" value="Knihy, které chci zakoupit"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje" />
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje" />
 		<node name="stoppingCatalogLoading" value="Zastavování načítání" />
@@ -106,12 +110,14 @@
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
 			<node name="signIn" value="Přihlásit"/>
-			<node name="signOut" value="Odhlásit (%s)"/>
 			<node name="signUp" value="Přihlásit" />
-			<node name="refillAccount" value="Doplnit účet"/>
+			<node name="signOut" value="Odhlásit (%s)"/>
+			<node name="topup" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
 			<node name="refreshCatalogsList" value="Aktualizovat katalogy"/>
 			<node name="languages" value="Filtr jazyků"/>
+			<node name="clearBasket" value="Vymazat košík"/>
+			<node name="buyAllBooks" value="Zakoupit všechny knihy"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -123,7 +129,7 @@
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Díl v sérii:" />
 		<node name="tags" value="Štítky:" />
-		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="catalog" value="Katalog:"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informace o knize" />
@@ -175,6 +181,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Otevřít předchozí knihu"/>
 		<node name="returnTo" value="Vrátit se na..."/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
 	<node name="menu">
@@ -221,7 +229,7 @@
 			<node name="openBook" value="Číst" />
 			<node name="editInfo" value="Upravit" />
 			<node name="reloadInfo" value="Znovu načíst" />
-			<node name="refillAccount" value="Doplnit účet"/>
+			<node name="topup" value="Doplnit účet"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk" />
@@ -422,6 +430,7 @@
 				<node name="selectionBackground" value="Pozadí výběru"/>
 				<node name="text" value="Běžný text"/>
 				<node name="hyperlink" value="Hypertextový odkaz"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Pozadí výsledků vyhledávání"/>
 				<node name="footer" value="Patička"/>
 			</node>
@@ -514,6 +523,16 @@
 					<node name="summaryOff" value="Posouvat stránky svisle"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Oblasti dotyku">
+				<node name="summary" value="Akce pro dotyk prstem"/>
+				<node name="tapZonesScheme" value="Schéma oblastí dotyku">
+					<node name="left_to_right" value="Posouvání stránky zleva doprava"/>
+					<node name="right_to_left" value="Posouvání stránky zprava doleva"/>
+					<node name="up" value="Posouvání stránky zdola nahoru"/>
+					<node name="down" value="Posouvání stránky zhora dolů"/>
+					<node name="custom" value="Vlastní..."/>
+				</node>
+			</node>
 			<node name="dictionary" value="Slovník">
 				<node name="summary" value="Nastavení slovníku"/>
 				<node name="dictionary" value="Slovník"/>
@@ -527,15 +546,26 @@
 					<node name="summaryOff" value="Navigace klávesami prochází pouze hypertextové odkazy"/>
 				</node>
 			</node>
-			<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
-				<node name="summary" value="Back button action list" toBeTranslated="true"/>
-				<node name="previousBook" value="Previous book" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'return to previous book' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'return to previous book' item" toBeTranslated="true"/>
+			<node name="cancelMenu" value="Nabídka Zrušit">
+				<node name="summary" value="Seznam akcí tlačítka Zpět"/>
+				<node name="previousBook" value="Předchozí kniha">
+					<node name="summaryOn" value="Zobrazit položku 'návrat na předchozí knihu'"/>
+					<node name="summaryOff" value="Nezobrazovat položku 'návrat na předchozí knihu'"/>
 				</node>
-				<node name="positions" value="Last 3 positions" toBeTranslated="true">
-					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+				<node name="positions" value="Poslední 3 pozice">
+					<node name="summaryOn" value="Zobrazit položky pro poslední 3 pozice v knize"/>
+					<node name="summaryOff" value="Nezobrazovat položky pro poslední 3 pozice v knize"/>
+				</node>
+				<node name="backKeyAction" value="Back key action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
+					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+					<node name="none" value="No action" toBeTranslated="true"/>
 				</node>
 			</node>
 		</node>
@@ -598,7 +628,7 @@
 			<node name="register" value="Přihlásit" />
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
+			<node name="title" value="FBReader: přidat vlastní katalog" />
 			<node name="catalogTitle" value="Název" />
 			<node name="catalogUrl" value="URL" />
 			<node name="catalogSummary" value="Stručný obsah" />
@@ -632,8 +662,8 @@
 		<node name="dictionaryIsNotInstalled" value="Slovník není bohužel nainstalován"/>
 		<node name="permissionDenied" value="Oprávnění bylo bohužel odmítnuto"/>
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
-		<node name="emptyCatalog" value="Katalog je prázdný"/>
-		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyCatalog" value="Katalog je bohužel prázdný" />
+		<node name="emptyBasket" value="Váš košík je bohužel prázdný" />
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>
@@ -642,6 +672,6 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Neznámá chyba"/>
 		<node name="unsupportedCompressionMethod" value="Nepodporovaná metoda komprese"/>
-		<node name="encriptedFile" value="Sobor chráněný DRM"/>
+		<node name="encriptedFile" value="Soubor chráněný DRM"/>
 	</node>
 </resources>

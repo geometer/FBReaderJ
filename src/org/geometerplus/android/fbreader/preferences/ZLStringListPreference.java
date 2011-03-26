@@ -38,7 +38,7 @@ abstract class ZLStringListPreference extends ListPreference implements ZLPrefer
 		String[] texts = new String[values.length];
 		for (int i = 0; i < values.length; ++i) {
 			final ZLResource resource = myResource.getResource(values[i]);
-			texts[i] = (resource.hasValue()) ? resource.getValue() : values[i];
+			texts[i] = resource.hasValue() ? resource.getValue() : values[i];
 		}
 		setLists(values, texts);
 	}
@@ -50,6 +50,9 @@ abstract class ZLStringListPreference extends ListPreference implements ZLPrefer
 	}
 
 	protected final boolean setInitialValue(String value) {
+		if (value == null || "".equals(value)) {
+			return false;
+		}
 		final int index = findIndexOfValue(value);
 		if (index >= 0) {
 			setValueIndex(index);

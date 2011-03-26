@@ -133,8 +133,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 					infos.put(INetworkLink.URL_SIGN_OUT, new UrlInfo(href));
 				} else if (rel == REL_LINK_SIGN_UP) {
 					infos.put(INetworkLink.URL_SIGN_UP, new UrlInfo(href));
-				} else if (rel == REL_LINK_REFILL_ACCOUNT) {
-					infos.put(INetworkLink.URL_REFILL_ACCOUNT, new UrlInfo(href));
+				} else if (rel == REL_LINK_TOPUP) {
+					infos.put(INetworkLink.URL_TOPUP, new UrlInfo(href));
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
 					infos.put(INetworkLink.URL_RECOVER_PASSWORD, new UrlInfo(href));
 				} else if (rel == REL_CONDITION_NEVER) {
