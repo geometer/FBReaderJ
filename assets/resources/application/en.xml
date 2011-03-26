@@ -209,6 +209,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book"/>
 		<node name="returnTo" value="Return to ..."/>
+		<node name="back" value="Back"/>
+		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="menu">
@@ -456,6 +458,7 @@
 				<node name="selectionBackground" value="Selection background"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text"/>
 				<node name="highlighting" value="Search results background"/>
 				<node name="footer" value="Footer" />
 			</node>
@@ -580,6 +583,17 @@
 				<node name="positions" value="Last 3 positions">
 					<node name="summaryOn" value="Show items for last 3 positions in the book"/>
 					<node name="summaryOff" value="Don't show items for last 3 positions in the book"/>
+				</node>
+				<node name="backKeyAction" value="Back key action">
+					<node name="exit" value="Close FBReader"/>
+					<node name="goBack" value="Navigate back"/>
+					<node name="cancelMenu" value="Show cancel menu"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Back key long press action">
+					<node name="exit" value="Close FBReader"/>
+					<node name="goBack" value="Navigate back"/>
+					<node name="cancelMenu" value="Show cancel menu"/>
+					<node name="none" value="No action"/>
 				</node>
 			</node>
 		</node>

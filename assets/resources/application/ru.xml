@@ -205,6 +205,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Открыть предыдущую книгу"/>
 		<node name="returnTo" value="Вернуться к ..."/>
+		<node name="back" value="Back" toBeTranslated="true"/>
+		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
 	<node name="menu">
@@ -452,6 +454,7 @@
 				<node name="selectionBackground" value="Фон пометки"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
 				<node name="highlighting" value="Фон результатов поиска"/>
 				<node name="footer" value="Подвал"/>
 			</node>
@@ -566,6 +569,17 @@
 				<node name="positions" value="Возврат по ссылкам">
 					<node name="summaryOn" value="Показывать пункты меню для последних 3 позиций в книге"/>
 					<node name="summaryOff" value="Не нужна возможность возврата по ссылкам"/>
+				</node>
+				<node name="backKeyAction" value="Действие по кнопке 'Назад'">
+					<node name="exit" value="Закрыть FBReader"/>
+					<node name="goBack" value="Вернуться по ссылке"/>
+					<node name="cancelMenu" value="Показать список действий"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Действие по долгому нажатию">
+					<node name="exit" value="Закрыть FBReader"/>
+					<node name="goBack" value="Вернуться по ссылке"/>
+					<node name="cancelMenu" value="Показать список действий"/>
+					<node name="none" value="Ничего не делать"/>
 				</node>
 			</node>
 		</node>

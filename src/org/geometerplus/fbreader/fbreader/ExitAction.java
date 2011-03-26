@@ -17,30 +17,18 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.application;
+package org.geometerplus.fbreader.fbreader;
 
-abstract public class ZLApplicationWindow {
-	private ZLApplication myApplication;
-
-	protected ZLApplicationWindow(ZLApplication application) {
-		myApplication = application;
-		myApplication.setWindow(this);
+class ExitAction extends FBAction {
+	ExitAction(FBReaderApp fbreader) {
+		super(fbreader);
 	}
 
-	public ZLApplication getApplication() {
-		return myApplication;
+	public void run() {
+		if (Reader.getCurrentView() != Reader.BookTextView) {
+			Reader.showBookTextView();
+		} else {
+			Reader.closeWindow();
+		}
 	}
-
-	abstract protected void refreshMenu();
-	
-	abstract protected void repaintView();
-	abstract protected void scrollViewTo(int viewPage, int shift);
-	abstract protected void startViewAutoScrolling(int viewPage);
-
-	abstract protected void rotate();
-	abstract protected boolean canRotate();
-
-	abstract protected void close();
-
-	abstract protected int getBatteryLevel();
 }

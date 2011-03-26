@@ -386,13 +386,16 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLColor getTextColor(byte hyperlinkType) {
+	public ZLColor getTextColor(ZLTextHyperlink hyperlink) {
 		final ColorProfile profile = myReader.getColorProfile();
-		switch (hyperlinkType) {
+		switch (hyperlink.Type) {
 			default:
 			case FBHyperlinkType.NONE:
 				return profile.RegularTextOption.getValue();
 			case FBHyperlinkType.INTERNAL:
+				return myReader.Model.Book.isHyperlinkVisited(hyperlink.Id)
+					? profile.VisitedHyperlinkTextOption.getValue()
+					: profile.HyperlinkTextOption.getValue();
 			case FBHyperlinkType.EXTERNAL:
 				return profile.HyperlinkTextOption.getValue();
 		}
@@ -461,7 +464,7 @@ public final class FBView extends ZLTextView {
 
 			final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
-			final ZLColor fgColor = getTextColor(FBHyperlinkType.NONE);
+			final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
 			final ZLColor fillColor = reader.getColorProfile().FooterFillOption.getValue();
 
 			final int left = getLeftMargin();

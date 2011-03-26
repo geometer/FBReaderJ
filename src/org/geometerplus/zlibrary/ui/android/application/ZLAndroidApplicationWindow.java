@@ -26,6 +26,7 @@ import android.view.MenuItem;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
@@ -34,39 +35,12 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
-	private final HashMap<MenuItem,ZLApplication.Menubar.PlainItem> myMenuItemMap =
-		new HashMap<MenuItem,ZLApplication.Menubar.PlainItem>();
-
-	private class MenuBuilder extends ZLApplication.MenuVisitor {
-		private int myItemCount = Menu.FIRST;
-		private final Stack<Menu> myMenuStack = new Stack<Menu>();
-
-		private MenuBuilder(Menu menu) {
-			myMenuStack.push(menu);
-		}
-		protected void processSubmenuBeforeItems(ZLApplication.Menubar.Submenu submenu) {
-			myMenuStack.push(myMenuStack.peek().addSubMenu(0, myItemCount++, Menu.NONE, submenu.getMenuName()));	
-		}
-		protected void processSubmenuAfterItems(ZLApplication.Menubar.Submenu submenu) {
-			myMenuStack.pop();
-		}
-		protected void processItem(ZLApplication.Menubar.PlainItem item) {
-			MenuItem menuItem = myMenuStack.peek().add(0, myItemCount++, Menu.NONE, item.getTitle());
-			try {
-				final String fieldName = "ic_menu_" + item.getActionId().toLowerCase();
-				menuItem.setIcon(R.drawable.class.getField(fieldName).getInt(null));
-			} catch (NoSuchFieldException e) {
-			} catch (IllegalAccessException e) {
-			}
-			menuItem.setOnMenuItemClickListener(myMenuListener);
-			myMenuItemMap.put(menuItem, item);
-		}
-	}
+	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
 
 	private final MenuItem.OnMenuItemClickListener myMenuListener =
 		new MenuItem.OnMenuItemClickListener() {
 			public boolean onMenuItemClick(MenuItem item) {
-				getApplication().doAction(myMenuItemMap.get(item).getActionId());
+				getApplication().doAction(myMenuItemMap.get(item));
 				return true;
 			}
 		};
@@ -75,22 +49,23 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		super(application);
 	}
 
-	public void buildMenu(Menu menu) {
-		new MenuBuilder(menu).processMenu(getApplication());
-		refreshMenu();
+	public void addMenuItem(Menu menu, String actionId, Integer iconId) {
+		final ZLResource resource = ZLResource.resource("menu");
+		final MenuItem menuItem = menu.add(resource.getResource(actionId).getValue());
+		if (iconId != null) {
+			menuItem.setIcon(iconId);
+		}
+		menuItem.setOnMenuItemClickListener(myMenuListener);
+		myMenuItemMap.put(menuItem, actionId);
 	}
 
 	@Override
 	protected void refreshMenu() {
-		for (Map.Entry<MenuItem,ZLApplication.Menubar.PlainItem> entry : myMenuItemMap.entrySet()) {
-			final String actionId = entry.getValue().getActionId();
+		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
+			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
 			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
 		}
-	}
-
-	public void initMenu() {
-		// TODO: implement
 	}
 
 	protected void repaintView() {

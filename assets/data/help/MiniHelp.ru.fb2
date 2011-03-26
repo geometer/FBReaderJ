@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>О программе FBReaderJ</book-title> <lang>ru</lang></title-info></description>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>О программе FBReader</book-title> <lang>ru</lang></title-info></description>
 <body>
-<title><p>О программе FBReaderJ &FBReaderVersion;</p></title>
-<p>FBReaderJ &#8211; программа для чтения электронных книг, работающая на платформе <a l:href="http://www.android.com/">Android</a>. Она представляет из себя клон программы <a l:href="http://www.fbreader.org/">FBReader</a>, написанный на Java теми же авторами. FBReaderJ позволяет читать книги в разных форматах: <code>oeb</code>, <code>epub</code>, <code>fb2</code>. В новых версиях будут добавлены остальные форматы, поддерживаемые оригинальным FBReader. Файлы можно читать напрямую из архивов <code>zip</code>, <code>tar</code> и <code>gzip</code>.</p>
-<p>Вы можете настроить FBReaderJ, чтобы читать так, как удобнее именно вам. Цвета, шрифты, настройки клавиш и многое другое можно поменять в <code>диалоге настроек</code>.</p>
-<p>FBReaderJ распространяется свободно, включая исходные тексты, под лицензией <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
-<empty-line/>
-<subtitle><p>С чего начать</p></subtitle>
-<p>Есть 2 способа добавить книгу в библиотеку FBReaderJ.</p>
-<p>Вы можете положить файл книги в каталог <code>/sdcard/Books</code> на устройстве (или любой его подкаталог). Книга появится в списке при следующем открытии библиотеки.</p>
-<p>Если книга доступна на каком-нибудь Интернет-сайте, достаточно просто открыть соответствующую ссылку в браузере прямо на телефоне. Книжка будет скачана и сразу открыта в FBReaderJ. Если вы снова нажмете на ту же ссылку, второй раз книжка скачиваться не будет, откроется сохраненный при первом скачивании файл.</p>
+<title><p>О программе FBReader &FBReaderVersion;</p></title>
+<p>Эта программа предназначена для чтения электронных книг в форматах ePub и fb2. Если у вас уже есть подходящие книги, положите их на карту памяти в каталог Books. После этого вы найдете свои книги в <a l:href="fbreader-action://library">библиотеке</a>. В FBReader встроена <a l:href="fbreader-action://networkLibrary">сетевaя библиотека</a>, из которой можно бесплатно скачивать и покупать книги.</p>
+<p>Для перелистывания страницы коснитесь правой части экрана (или левой, если хотите вернуться на предыдущую страницу). Другие варианты перелистывания &#8211; провести по экрану пальцем справа налево, или воспользоваться кнопками регулировки громкости.</p>
+<p>Вы можете настроить FBReader, чтобы читать так, как удобно именно вам. Цвета, шрифты, каталоги, способы листания, и многое другое можно поменять в <a l:href="fbreader-action://preferences">диалоге настроек</a>.</p>
+<p>Обычно управление программой происходит с помощью меню. Если на вашем устройстве нет кнопки Menu, просто нажмите на экран в середине его нижней части.</p>
+<p>Приятного чтения!</p>
 <empty-line/>
 <subtitle><p>Ссылки</p></subtitle>
-<p>Информацию о программах FBReader и FBReaderJ и их свежие версии можно найти на <a l:href="http://www.fbreader.org">сайте FBReader'а</a>.</p>
-<p>Если вы хотите получать сообщения о новых версиях, подпишитесь на <a l:href="http://freshmeat.net/projects/fbreaderj">проект FBReaderJ на freshmeat</a>.</p>
-<p>Чтобы связаться с авторами программы, воспользуйтесь <a l:href="http://groups.google.com/group/fbreader">группой FBReader на googlegroups</a>.</p>
+<p>Узнать подробнее о программе FBReader, скачать версии для разных устройств и исходные тексты можно на <a l:href="http://www.fbreader.org/FBReaderJ">нашем сайте</a>.</p>
+<p>Сообщения о вышедших версиях и другие новости публикуются в <a l:href="http://twitter.com/fbreader">twitter'е</a>.</p>
+<p>Если вы хотите связаться с авторами, <a l:href="mailto:contact@geometerplus.com">напишите</a> нам электронное письмо.</p>
 </body>
 </FictionBook>
