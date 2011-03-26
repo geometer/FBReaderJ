@@ -56,7 +56,7 @@ public class ZLAndroidApplication extends Application {
 			"PD_Novel".equals(Build.MODEL);
 	}
 
-	ZLAndroidApplicationWindow myMainWindow;
+	public ZLAndroidApplicationWindow myMainWindow;
 
 	@Override
 	public void onCreate() {
