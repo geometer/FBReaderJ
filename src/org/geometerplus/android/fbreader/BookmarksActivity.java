@@ -334,7 +334,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		List<Bookmark> bookmarks = getBookmarks(currentView);
 		
 		String text = "";
-		for (Bookmark b: bookmarks) {
+		for (int i = bookmarks.size() - 1; i >= 0; i--) {
+//		for (Bookmark b: bookmarks) {
+			Bookmark b = bookmarks.get(i);
 			if (b.IsVisible)
 				if (bookmarks != myThisBookBookmarks)
 					text += b.getBookTitle() + "\n";
