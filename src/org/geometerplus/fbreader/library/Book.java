@@ -335,6 +335,7 @@ public class Book {
 					database.updateBookInfo(myId, fileInfos.getId(File), myEncoding, myLanguage, myTitle);
 				} else {
 					myId = database.insertBookInfo(File, myEncoding, myLanguage, myTitle);
+					storeAllVisitedHyperinks();
 				}
 
 				long index = 0;
@@ -361,6 +362,39 @@ public class Book {
 	public void storePosition(ZLTextPosition position) {
 		if (myId != -1) {
 			BooksDatabase.Instance().storePosition(myId, position);
+		}
+	}
+
+	private Set<String> myVisitedHyperlinks;
+	private void initHyperlinkSet() {
+		if (myVisitedHyperlinks == null) {
+			myVisitedHyperlinks = new TreeSet<String>();
+			if (myId != -1) {
+				myVisitedHyperlinks.addAll(BooksDatabase.Instance().loadVisitedHyperlinks(myId));
+			}
+		}
+	}
+
+	public boolean isHyperlinkVisited(String linkId) {
+		initHyperlinkSet();
+		return myVisitedHyperlinks.contains(linkId);
+	}
+
+	public void markHyperlinkAsVisited(String linkId) {
+		initHyperlinkSet();
+		if (!myVisitedHyperlinks.contains(linkId)) {
+			myVisitedHyperlinks.add(linkId);
+			if (myId != -1) {
+				BooksDatabase.Instance().addVisitedHyperlink(myId, linkId);
+			}
+		}
+	}
+
+	private void storeAllVisitedHyperinks() {
+		if (myId != -1 && myVisitedHyperlinks != null) {
+			for (String linkId : myVisitedHyperlinks) {
+				BooksDatabase.Instance().addVisitedHyperlink(myId, linkId);
+			}
 		}
 	}
 
