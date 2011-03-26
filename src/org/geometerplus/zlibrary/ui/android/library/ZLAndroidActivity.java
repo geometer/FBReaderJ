@@ -220,13 +220,6 @@ public abstract class ZLAndroidActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(final Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		((ZLAndroidApplication)getApplication()).myMainWindow.buildMenu(menu);
-		return true;
-	}
-
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		View view = findViewById(R.id.main_view);
 		return ((view != null) && view.onKeyDown(keyCode, event)) || super.onKeyDown(keyCode, event);

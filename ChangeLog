@@ -5,6 +5,8 @@
 * No OutOfMemoryErrors in image loading
 * Float series index parsing has been fixed
 * Separate color for visited hyperlinks (original code by Steffen Siebert)
+* Removed menubar.xml: menu list is moved into the code
+* Proguard obfuscation has been added; package size decreased
 
 ===== 0.99.18 (Mar 15, 2011) =====
 * Web-free icon
