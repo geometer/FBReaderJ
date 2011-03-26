@@ -23,7 +23,7 @@ public interface ActionCode {
 	String SHOW_LIBRARY = "library";
 	String SHOW_PREFERENCES = "preferences";
 	String SHOW_BOOK_INFO = "bookInfo";
-	String SHOW_CONTENTS = "toc";
+	String SHOW_TOC = "toc";
 	String SHOW_BOOKMARKS = "bookmarks";
 	String SHOW_NETWORK_LIBRARY = "networkLibrary";
 

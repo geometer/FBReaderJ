@@ -31,11 +31,6 @@ abstract public class ZLApplicationWindow {
 		return myApplication;
 	}
 
-	protected void init() {
-		initMenu();
-	}
-
-	abstract protected void initMenu();
 	abstract protected void refreshMenu();
 	
 	abstract protected void repaintView();
