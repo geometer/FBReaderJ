@@ -47,7 +47,7 @@ class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespac
 			if (href != null) {
 				myImage = new ZLFileImage(
 					MIME_IMAGE_AUTO,
-					ZLFile.createFileByPath(myXHTMLPathPrefix + href)
+					ZLFile.createFileByPath(myXHTMLPathPrefix + MiscUtil.decodeHtmlReference(href))
 				);
 				return true;
 			}

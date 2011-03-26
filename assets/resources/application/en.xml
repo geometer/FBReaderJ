@@ -75,11 +75,13 @@
 		<node name="stopSearching" value="Stop searching" />
 		<node name="signIn" value="Sign in"/>
 		<node name="signOut" value="Sign out (%s)"/>
-		<node name="refillAccount" value="Top up account (currently: %s)"/>
-		<node name="refillTitle" value="Top up account"/>
-		<node name="refillViaSms" value="Text messages"/>
-		<node name="refillViaBrowser" value="Open page in browser"/>
-		<node name="refillSummary" value="Currently: %s"/>
+		<node name="topup" value="Top up account (currently: %s)"/>
+		<node name="topupTitle" value="Top up account"/>
+		<node name="topupViaCreditCard" value="Credit card"/>
+		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk"/>
+		<node name="topupViaSms" value="Text messages"/>
+		<node name="topupViaBrowser" value="Open page in browser"/>
+		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummary" value="Books I want to buy"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
@@ -109,7 +111,7 @@
 			<node name="signIn" value="Sign in"/>
 			<node name="signUp" value="Sign up"/>
 			<node name="signOut" value="Sign out (%s)"/>
-			<node name="refillAccount" value="Top up account"/>
+			<node name="topup" value="Top up account"/>
 			<node name="addCustomCatalog" value="Add catalog"/>
 			<node name="refreshCatalogsList" value="Refresh catalogs"/>
 			<node name="languages" value="Language filter"/>
@@ -178,6 +180,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Open previous book"/>
 		<node name="returnTo" value="Return to ..."/>
+		<node name="back" value="Back"/>
+		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
 	<node name="menu">
@@ -224,7 +228,7 @@
 			<node name="openBook" value="Read" />
 			<node name="editInfo" value="Edit" />
 			<node name="reloadInfo" value="Reload" />
-			<node name="refillAccount" value="Top up"/>
+			<node name="topup" value="Top up"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>
@@ -425,6 +429,7 @@
 				<node name="selectionBackground" value="Selection background"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
+				<node name="hyperlinkVisited" value="Visited hyperlink text"/>
 				<node name="highlighting" value="Search results background"/>
 				<node name="footer" value="Footer" />
 			</node>
@@ -518,6 +523,16 @@
 					<node name="summaryOff" value="Scroll pages vertically"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones">
+				<node name="summary" value="Actions on finger tap"/>
+				<node name="tapZonesScheme" value="Tap zones scheme">
+					<node name="left_to_right" value="Left to right page scrolling"/>
+					<node name="right_to_left" value="Right to left page scrolling"/>
+					<node name="up" value="Down to up page scrolling"/>
+					<node name="down" value="Up to down page scrolling"/>
+					<node name="custom" value="Custom..."/>
+				</node>
+			</node>
 			<node name="dictionary" value="Dictionary">
 				<node name="summary" value="Dictionary settings"/>
 				<node name="dictionary" value="Dictionary"/>
@@ -529,6 +544,28 @@
 				<node name="navigateOverAllWords" value="Navigate over all words">
 					<node name="summaryOn" value="Key navigation visits all words"/>
 					<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
+				</node>
+			</node>
+			<node name="cancelMenu" value="Cancel menu">
+				<node name="summary" value="Back button action list"/>
+				<node name="previousBook" value="Previous book">
+					<node name="summaryOn" value="Show 'return to previous book' item"/>
+					<node name="summaryOff" value="Don't show 'return to previous book' item"/>
+				</node>
+				<node name="positions" value="Last 3 positions">
+					<node name="summaryOn" value="Show items for last 3 positions in the book"/>
+					<node name="summaryOff" value="Don't show items for last 3 positions in the book"/>
+				</node>
+				<node name="backKeyAction" value="Back key action">
+					<node name="exit" value="Close FBReader"/>
+					<node name="goBack" value="Navigate back"/>
+					<node name="cancelMenu" value="Show cancel menu"/>
+				</node>
+				<node name="backKeyLongPressAction" value="Back key long press action">
+					<node name="exit" value="Close FBReader"/>
+					<node name="goBack" value="Navigate back"/>
+					<node name="cancelMenu" value="Show cancel menu"/>
+					<node name="none" value="No action"/>
 				</node>
 			</node>
 		</node>

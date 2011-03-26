@@ -47,7 +47,7 @@ class NetworkView {
 
 	private volatile boolean myInitialized;
 	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
-	private RefillAccountActions myTopUpActions;
+	private TopupActions myTopupActions;
 
 	private NetworkView() {
 	}
@@ -66,8 +66,8 @@ class NetworkView {
 		myActions.add(new NetworkBookActions());
 		myActions.add(new NetworkCatalogActions());
 		myActions.add(new SearchItemActions());
-		myTopUpActions = new RefillAccountActions();
-		myActions.add(myTopUpActions);
+		myTopupActions = new TopupActions();
+		myActions.add(myTopupActions);
 		myActions.add(new AddCustomCatalogItemActions());
 		myActions.trimToSize();
 
@@ -91,12 +91,12 @@ class NetworkView {
 	 * NetworkItem's actions
 	 */
 
-	public RefillAccountActions getTopUpActions() {
-		return myTopUpActions;
+	public TopupActions getTopupActions() {
+		return myTopupActions;
 	}
 
 	public NetworkTreeActions getActions(NetworkTree tree) {
-		for (NetworkTreeActions actions: myActions) {
+		for (NetworkTreeActions actions : myActions) {
 			if (actions.canHandleTree(tree)) {
 				return actions;
 			}
@@ -109,9 +109,6 @@ class NetworkView {
 	 */
 
 	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
-		if (!isInitialized()) {
-			return false;
-		}
 		final NetworkTreeActions actions = getActions(tree);
 		if (actions != null) {
 			return actions.createOptionsMenu(menu, tree);
@@ -120,9 +117,6 @@ class NetworkView {
 	}
 
 	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
-		if (!isInitialized()) {
-			return false;
-		}
 		final NetworkTreeActions actions = getActions(tree);
 		if (actions != null) {
 			return actions.prepareOptionsMenu(activity, menu, tree);
@@ -131,9 +125,6 @@ class NetworkView {
 	}
 
 	public boolean runOptionsMenu(NetworkBaseActivity activity, MenuItem item, NetworkTree tree) {
-		if (!isInitialized()) {
-			return false;
-		}
 		final NetworkTreeActions actions = getActions(tree);
 		if (actions != null) {
 			return actions.runAction(activity, tree, item.getItemId());
@@ -186,7 +177,7 @@ class NetworkView {
 	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
 		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(tree.getUniqueKey());
 		if (runnable != null && runnable.tryResumeLoading()) {
-			openTree(activity, tree);
+			Util.openTree(activity, tree);
 			return;
 		}
 		if (runnable == null) {
@@ -249,36 +240,11 @@ class NetworkView {
 
 
 	/*
-	 * Starting BookInfo activity
-	 */
-
-	private NetworkBookItem myBookInfoItem;
-
-	public void showBookInfoActivity(Context context, NetworkBookItem book) {
-		myBookInfoItem = book;
-		context.startActivity(
-			new Intent(context.getApplicationContext(), NetworkBookInfoActivity.class)
-		);
-	}
-
-	NetworkBookItem getBookInfoItem() {
-		return myBookInfoItem;
-	}
-
-
-	/*
 	 * Opening Catalogs & managing opened catalogs stack
 	 */
 
 	private final HashMap<NetworkTree.Key,NetworkCatalogActivity> myOpenedActivities =
 		new HashMap<NetworkTree.Key,NetworkCatalogActivity>();
-
-	public void openTree(Context context, NetworkTree tree) {
-		context.startActivity(
-			new Intent(context.getApplicationContext(), NetworkCatalogActivity.class)
-				.putExtra(NetworkCatalogActivity.CATALOG_KEY_KEY, tree.getUniqueKey())
-		);
-	}
 
 	void setOpenedActivity(NetworkTree.Key key, NetworkCatalogActivity activity) {
 		if (activity == null) {

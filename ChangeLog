@@ -1,4 +1,26 @@
-===== 0.99.14 (Mar ??, 2011) =====
+===== 1.0 (Mar ??, 2011) =====
+* Differnt (and configurable) actions for short and long Back button press (original code by Steffen Siebert)
+* SlovoEd dictionaries support has been fixed
+* Czech translation has been updated (by Marek Pavelka)
+* No OutOfMemoryErrors in image loading
+* Float series index parsing has been fixed
+* Separate color for visited hyperlinks (original code by Steffen Siebert)
+* Removed menubar.xml: menu list is moved into the code
+* Proguard obfuscation has been added; package size decreased
+
+===== 0.99.18 (Mar 15, 2011) =====
+* Web-free icon
+* Epub TOC/cover processing has been fixed
+
+===== 0.99.17 (Mar 13, 2011) =====
+* Fixed vertical tap scrolling
+
+===== 0.99.16 (Mar 12, 2011) =====
+* Menu/navigation dialog will not shown by single tap if double tap is enabled
+* NPE fixes
+
+===== 0.99.14 (Mar 11, 2011) =====
+* New application icon
 * Thai localization (by Samphan Pojanasophanakul)
 * Fixed TTF font style detection
 * opds:// URLs support has been implemented
@@ -6,6 +28,10 @@
 * Ignore case comparison for zip entry names
 * Fixed custom OPDS link search
 * Periodical update of custom links information has been added
+* Epub rendering issues (like unexpected paragraph ends) were fixed
+* Multi-body fb2 file processing has been fixed
+* 'Cancel menu' preferences section
+* LitRes: several views for purchased books
 
 ===== 0.99.13 (Feb 13, 2011) =====
 * Fixed book/position forgetting bug

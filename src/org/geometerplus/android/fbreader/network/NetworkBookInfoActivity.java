@@ -43,7 +43,9 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
-import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
 	private NetworkBookItem myBook;
@@ -56,33 +58,46 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (!NetworkView.Instance().isInitialized()) {
-			finish();
-			return;
-		}
-
-		myBook = NetworkView.Instance().getBookInfoItem();
-		if (myBook == null) {
-			finish();
-			return;
-		}
-
-		myConnection = new BookDownloaderServiceConnection();
-		bindService(
-			new Intent(getApplicationContext(), BookDownloaderService.class),
-			myConnection,
-			BIND_AUTO_CREATE
-		);
-
-		setTitle(myBook.Title);
 		myMainView = getLayoutInflater().inflate(R.layout.network_book, null, false);
 		setContentView(myMainView);
 		myMainView.setOnCreateContextMenuListener(this);
+	}
 
-		setupDescription();
-		setupInfo();
-		setupCover();
-		setupButtons();
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (!NetworkView.Instance().isInitialized()) {
+			if (NetworkInitializer.Instance == null) {
+				new NetworkInitializer(null);
+				NetworkInitializer.Instance.start();
+			} else {
+				NetworkInitializer.Instance.setActivity(null);
+			}
+		}
+
+		if (myBook == null) {
+			final NetworkTree tree = Util.getTreeFromIntent(getIntent());
+			if (!(tree instanceof NetworkBookTree)) {
+				finish();
+				return;
+			}
+			myBook = ((NetworkBookTree)tree).Book;
+        
+			myConnection = new BookDownloaderServiceConnection();
+			bindService(
+				new Intent(getApplicationContext(), BookDownloaderService.class),
+				myConnection,
+				BIND_AUTO_CREATE
+			);
+        
+			setTitle(myBook.Title);
+        
+			setupDescription();
+			setupInfo();
+			setupCover();
+			setupButtons();
+		}
 	}
 
 	View getMainView() {
@@ -99,6 +114,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onDestroy() {
+		if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
+			NetworkInitializer.Instance.setActivity(null);
+		}
 		if (myConnection != null) {
 			unbindService(myConnection);
 			myConnection = null;
@@ -108,22 +126,20 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		new RefillAccountActions().buildContextMenu(this, menu, myBook.Link);
+		NetworkView.Instance().getTopupActions().buildContextMenu(this, menu, myBook.Link);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		new RefillAccountActions().runAction(this, myBook.Link, item.getItemId());
+		TopupActions.runAction(this, myBook.Link, item.getItemId());
 		return true;
 	}
 
 	private final void setupDescription() {
 		setTextFromResource(R.id.network_book_description_title, "description");
 
-		final String description;
-		if (myBook.Summary != null) {
-			description = myBook.Summary;
-		} else {
+		String description = myBook.Summary;
+		if (description == null) {
 			description = myResource.getResource("noDescription").getValue();
 		}
 		setTextById(R.id.network_book_description, description);
@@ -155,7 +171,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		if (myBook.Authors.size() > 0) {
 			findViewById(R.id.network_book_authors).setVisibility(View.VISIBLE);
 			final StringBuilder authorsText = new StringBuilder();
-			for (NetworkBookItem.AuthorData author: myBook.Authors) {
+			for (NetworkBookItem.AuthorData author : myBook.Authors) {
 				if (authorsText.length() > 0) {
 					authorsText.append(", ");
 				}
@@ -169,8 +185,15 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		if (myBook.SeriesTitle != null) {
 			findViewById(R.id.network_book_series_title).setVisibility(View.VISIBLE);
 			setPairValueText(R.id.network_book_series_title, myBook.SeriesTitle);
-			if (myBook.IndexInSeries > 0) {
-				setPairValueText(R.id.network_book_series_index, String.valueOf(myBook.IndexInSeries));
+			final float indexInSeries = myBook.IndexInSeries;
+			if (indexInSeries > 0) {
+				final String seriesIndexString;
+				if (Math.abs(indexInSeries - Math.round(indexInSeries)) < 0.01) {
+					seriesIndexString = String.valueOf(Math.round(indexInSeries));
+				} else {
+					seriesIndexString = String.format("%.1f", indexInSeries);
+				}
+				setPairValueText(R.id.network_book_series_index, seriesIndexString);
 				findViewById(R.id.network_book_series_index).setVisibility(View.VISIBLE);
 			} else {
 				findViewById(R.id.network_book_series_index).setVisibility(View.GONE);
@@ -183,7 +206,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		if (myBook.Tags.size() > 0) {
 			findViewById(R.id.network_book_tags).setVisibility(View.VISIBLE);
 			final StringBuilder tagsText = new StringBuilder();
-			for (String tag: myBook.Tags) {
+			for (String tag : myBook.Tags) {
 				if (tagsText.length() > 0) {
 					tagsText.append(", ");
 				}
@@ -278,7 +301,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			button.setVisibility(View.VISIBLE);
 			button.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					NetworkBookActions.runAction(NetworkBookInfoActivity.this, myBook, a.Id);
+					NetworkBookActions.runActionStatic(NetworkBookInfoActivity.this, myBook, a.Id);
 					NetworkBookInfoActivity.this.updateView();
 				}
 			});

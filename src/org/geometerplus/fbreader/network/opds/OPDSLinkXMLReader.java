@@ -133,8 +133,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 					infos.put(INetworkLink.URL_SIGN_OUT, new UrlInfo(href));
 				} else if (rel == REL_LINK_SIGN_UP) {
 					infos.put(INetworkLink.URL_SIGN_UP, new UrlInfo(href));
-				} else if (rel == REL_LINK_REFILL_ACCOUNT) {
-					infos.put(INetworkLink.URL_REFILL_ACCOUNT, new UrlInfo(href));
+				} else if (rel == REL_LINK_TOPUP) {
+					infos.put(INetworkLink.URL_TOPUP, new UrlInfo(href));
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
 					infos.put(INetworkLink.URL_RECOVER_PASSWORD, new UrlInfo(href));
 				} else if (rel == REL_CONDITION_NEVER) {
@@ -290,28 +290,10 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 					}
 					return false;
 				} else if (tag == FBREADER_REWRITING_RULE) {
-					final String type = attributes.getValue("type");
-					final String apply = attributes.getValue("apply");
-					final String name = attributes.getValue("name");
-					final String value = attributes.getValue("value");
-					final int typeValue;
-					if (type == "addUrlParameter") {
-						typeValue = URLRewritingRule.ADD_URL_PARAMETER;
-					} else {
-						return false;
-					}
-					final int applyValue;
-					if (apply == "external") {
-						applyValue = URLRewritingRule.APPLY_EXTERNAL;
-					} else if (apply == "internal") {
-						applyValue = URLRewritingRule.APPLY_INTERNAL;
-					} else {
-						applyValue = URLRewritingRule.APPLY_ALWAYS;
-					}
-					((LinkReader) myFeedReader).addUrlRewritingRule(new URLRewritingRule(typeValue, applyValue, name, value));
+					((LinkReader)myFeedReader).addUrlRewritingRule(new URLRewritingRule(attributes));
 					return false;
 				} else if (tag == FBREADER_STABLE_IDENTIFIERS) {
-					((LinkReader) myFeedReader).setHasStableIdentifiers(true);
+					((LinkReader)myFeedReader).setHasStableIdentifiers(true);
 					return false;
 				} else if (tag == FBREADER_EXTRA) {
 					final String name = attributes.getValue("name");

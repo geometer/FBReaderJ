@@ -24,7 +24,6 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.fbreader.network.*;
 
 public class NetworkTreeFactory {
-
 	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkItem item) {
 		return createNetworkTree(parent, item, -1);
 	}
@@ -50,36 +49,75 @@ public class NetworkTreeFactory {
 				throw new RuntimeException("Unable to insert NetworkBookItem to the middle of the catalog");
 			}
 
-			final NetworkCatalogItem.CatalogType catalogType = parent.Item.getCatalogType();
-			final boolean showAuthors = catalogType != NetworkCatalogItem.CatalogType.BY_AUTHOR;
+			final NetworkBookItem book = (NetworkBookItem)item;
+			final int flags = parent.Item.Flags;
+			final boolean showAuthors = (flags & NetworkCatalogItem.FLAG_SHOW_AUTHOR) != 0;
 
-			NetworkBookItem book = (NetworkBookItem) item;
-			String seriesTitle = book.SeriesTitle;
-			if (seriesTitle == null || catalogType == NetworkCatalogItem.CatalogType.BY_SERIES) {
-				return new NetworkBookTree(parent, (NetworkBookItem) item, position, showAuthors);
-			}
-
-			if (position > 0) {
-				final NetworkTree previous = (NetworkTree) parent.subTrees().get(position - 1);
-				if (previous instanceof NetworkSeriesTree) {
-					final NetworkSeriesTree seriesTree = (NetworkSeriesTree) previous;
-					if (seriesTitle.equals(seriesTree.SeriesTitle)) {
-						seriesTree.invalidateChildren(); // call to update secondString
+			switch (flags & NetworkCatalogItem.FLAGS_GROUP) {
+				default:
+					return new NetworkBookTree(parent, book, position, showAuthors);
+				case NetworkCatalogItem.FLAG_GROUP_BY_SERIES:
+					if (book.SeriesTitle == null) {
+						return new NetworkBookTree(parent, book, position, showAuthors);
+					} else {
+						final NetworkTree previous = position > 0
+							? (NetworkTree)parent.subTrees().get(position - 1) : null;
+						NetworkSeriesTree seriesTree = null;
+						if (previous instanceof NetworkSeriesTree) {
+							seriesTree = (NetworkSeriesTree)previous;
+							if (!book.SeriesTitle.equals(seriesTree.SeriesTitle)) {
+								seriesTree = null;
+							}
+						}
+						if (seriesTree == null) {
+							seriesTree = new NetworkSeriesTree(
+								parent, book.SeriesTitle, position, showAuthors
+							);
+						}
 						return new NetworkBookTree(seriesTree, book, showAuthors);
 					}
-				} else if (previous instanceof NetworkBookTree) {
-					final NetworkBookTree bookTree = (NetworkBookTree) previous;
-					final NetworkBookItem previousBook = bookTree.Book;
-					if (seriesTitle.equals(previousBook.SeriesTitle)) {
-						bookTree.removeSelf();
-						final NetworkSeriesTree seriesTree = new NetworkSeriesTree(parent, seriesTitle, --position, showAuthors);
-						new NetworkBookTree(seriesTree, previousBook, showAuthors);
-						return new NetworkBookTree(seriesTree, book, showAuthors);
+				case NetworkCatalogItem.FLAG_GROUP_MORE_THAN_1_BOOK_BY_SERIES:
+					if (position > 0 && book.SeriesTitle != null) {
+						final NetworkTree previous =
+							(NetworkTree)parent.subTrees().get(position - 1);
+						if (previous instanceof NetworkSeriesTree) {
+							final NetworkSeriesTree seriesTree = (NetworkSeriesTree)previous;
+							if (book.SeriesTitle.equals(seriesTree.SeriesTitle)) {
+								return new NetworkBookTree(seriesTree, book, showAuthors);
+							}
+						} else /* if (previous instanceof NetworkBookTree) */ {
+							final NetworkBookItem previousBook = ((NetworkBookTree)previous).Book;
+							if (book.SeriesTitle.equals(previousBook.SeriesTitle)) {
+								previous.removeSelf();
+								final NetworkSeriesTree seriesTree = new NetworkSeriesTree(
+									parent, book.SeriesTitle, position - 1, showAuthors
+								);
+								new NetworkBookTree(seriesTree, previousBook, showAuthors);
+								return new NetworkBookTree(seriesTree, book, showAuthors);
+							}
+						}
 					}
-				}
+					return new NetworkBookTree(parent, book, position, showAuthors);
+				case NetworkCatalogItem.FLAG_GROUP_BY_AUTHOR:
+					if (book.Authors.isEmpty()) {
+						return new NetworkBookTree(parent, book, position, showAuthors);
+					} else {
+						final NetworkBookItem.AuthorData author = book.Authors.get(0);
+						final NetworkTree previous = position > 0
+							? (NetworkTree)parent.subTrees().get(position - 1) : null;
+						NetworkAuthorTree authorTree = null;
+						if (previous instanceof NetworkAuthorTree) {
+							authorTree = (NetworkAuthorTree)previous;
+							if (!author.equals(authorTree.Author)) {
+								authorTree = null;
+							}
+						}
+						if (authorTree == null) {
+							authorTree = new NetworkAuthorTree(parent, author);
+						}
+						return new NetworkBookTree(authorTree, book, showAuthors);
+					}
 			}
-
-			return new NetworkBookTree(parent, book, position, showAuthors);
 		} else if (item instanceof TopUpItem) {
 			return new TopUpTree(parent, (TopUpItem)item);
 		}

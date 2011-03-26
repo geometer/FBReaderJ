@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.image;
 
+import java.io.InputStream;
+
 import org.geometerplus.zlibrary.core.constants.MimeTypes;
 
 public abstract class ZLImageProxy extends ZLLoadableImage {
@@ -39,8 +41,8 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 	}
 
 	@Override
-	public final byte[] byteData() {
-		return myImage != null ? myImage.byteData() : null;
+	public final InputStream inputStream() {
+		return myImage != null ? myImage.inputStream() : null;
 	}
 
 	@Override

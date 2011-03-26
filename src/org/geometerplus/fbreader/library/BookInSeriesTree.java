@@ -29,10 +29,10 @@ public final class BookInSeriesTree extends BookTree {
 	@Override
 	public int compareTo(FBTree tree) {
 		if (tree instanceof BookInSeriesTree) {
-			final long difference =
+			final float difference =
 				Book.getSeriesInfo().Index - ((BookTree)tree).Book.getSeriesInfo().Index;
 			if (difference != 0) {
-				return (int)difference;
+				return difference > 0 ? 1 : -1;
 			}
 		}
 		return super.compareTo(tree);

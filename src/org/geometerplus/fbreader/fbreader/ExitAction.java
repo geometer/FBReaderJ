@@ -17,19 +17,18 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.image;
+package org.geometerplus.fbreader.fbreader;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-final class ZLAndroidArrayBasedImageData extends ZLAndroidImageData {
-	private final byte[] myArray;
-
-	ZLAndroidArrayBasedImageData(byte[] array) {
-		myArray = array;
+class ExitAction extends FBAction {
+	ExitAction(FBReaderApp fbreader) {
+		super(fbreader);
 	}
 
-	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
-		return BitmapFactory.decodeByteArray(myArray, 0, myArray.length, options);
+	public void run() {
+		if (Reader.getCurrentView() != Reader.BookTextView) {
+			Reader.showBookTextView();
+		} else {
+			Reader.closeWindow();
+		}
 	}
 }

@@ -89,6 +89,11 @@ public final class FBReaderApp extends ZLApplication {
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
+	public final ZLBooleanOption ShowPreviousBookInCancelMenuOption =
+		new ZLBooleanOption("CancelMenu", "previousBook", false);
+	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
+		new ZLBooleanOption("CancelMenu", "positions", true);
+
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
 	public final FBView BookTextView;
@@ -121,6 +126,8 @@ public final class FBReaderApp extends ZLApplication {
 
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));
+
+		addAction(ActionCode.EXIT, new ExitAction(this));
 
 		BookTextView = new FBView(this);
 		FootnoteView = new FBView(this);
@@ -324,15 +331,19 @@ public final class FBReaderApp extends ZLApplication {
 
 	public List<CancelActionDescription> getCancelActionsList() {
 		myCancelActionsList.clear();
-		final Book previousBook = Library.getPreviousBook();
-		if (previousBook != null) {
-			myCancelActionsList.add(new CancelActionDescription(
-				CancelActionType.previousBook, previousBook.getTitle()
-			));
+		if (ShowPreviousBookInCancelMenuOption.getValue()) {
+			final Book previousBook = Library.getPreviousBook();
+			if (previousBook != null) {
+				myCancelActionsList.add(new CancelActionDescription(
+					CancelActionType.previousBook, previousBook.getTitle()
+				));
+			}
 		}
-		if (Model != null && Model.Book != null) {
-			for (Bookmark bookmark : Bookmark.invisibleBookmarks(Model.Book)) {
-				myCancelActionsList.add(new BookmarkDescription(bookmark));
+		if (ShowPositionsInCancelMenuOption.getValue()) {
+			if (Model != null && Model.Book != null) {
+				for (Bookmark bookmark : Bookmark.invisibleBookmarks(Model.Book)) {
+					myCancelActionsList.add(new BookmarkDescription(bookmark));
+				}
 			}
 		}
 		myCancelActionsList.add(new CancelActionDescription(

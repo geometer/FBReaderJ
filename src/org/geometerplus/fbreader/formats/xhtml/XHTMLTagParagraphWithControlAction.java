@@ -32,9 +32,15 @@ class XHTMLTagParagraphWithControlAction extends XHTMLTagAction {
 
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
 		final BookReader modelReader = reader.getModelReader();
-		if ((myControl == FBTextKind.TITLE) &&
-				(modelReader.Model.BookTextModel.getParagraphsNumber() > 1)) {
-			modelReader.insertEndOfSectionParagraph();
+		switch (myControl) {
+			case FBTextKind.TITLE:
+			case FBTextKind.H1:
+			case FBTextKind.H2:
+				if (modelReader.Model.BookTextModel.getParagraphsNumber() > 1) {
+					modelReader.insertEndOfSectionParagraph();
+				}
+				modelReader.enterTitle();
+				break;
 		}
 		modelReader.pushKind(myControl);
 		modelReader.beginParagraph();
@@ -44,6 +50,13 @@ class XHTMLTagParagraphWithControlAction extends XHTMLTagAction {
 		final BookReader modelReader = reader.getModelReader();
 		modelReader.endParagraph();
 		modelReader.popKind();
+		switch (myControl) {
+			case FBTextKind.TITLE:
+			case FBTextKind.H1:
+			case FBTextKind.H2:
+				modelReader.exitTitle();
+				break;
+		}
 	}
 }
 /*

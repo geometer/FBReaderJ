@@ -60,107 +60,20 @@ public final class FBView extends ZLTextView {
 	private boolean myIsBrightnessAdjustmentInProgress;
 	private int myStartBrightness;
 
-	private static class TapZone {
-		int HIndex;
-		int VIndex;
-		
-		TapZone(int h, int v) {
-			HIndex = h;
-			VIndex = v;
-		}
+	private String myZoneMapId;
+	private TapZoneMap myZoneMap;
 
-		void mirror45() {
-			final int swap = HIndex;
-			HIndex = VIndex;
-			VIndex = swap;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (o == this) {
-				return true;
-			}
-
-			if (!(o instanceof TapZone)) {
-				return false;
-			}
-
-			final TapZone tz = (TapZone)o;
-			return HIndex == tz.HIndex && VIndex == tz.VIndex;
-		}
-
-		@Override
-		public int hashCode() {
-			return (HIndex << 3) + VIndex;
-		}
-	}
-
-	private enum ZoneMap {
-		HORIZONTAL_RIGHT_TO_LEFT,
-		HORIZONTAL_LEFT_TO_RIGHT,
-		VERTICAL_UP,
-		VERTICAL_DOWN
-	}
-	private ZoneMap myZoneMapId;
-	private final HashMap<TapZone,String> myZoneMap = new HashMap<TapZone,String>();
-
-	private Map<TapZone,String> getZoneMap() {
-		final ZoneMap id = ScrollingPreferences.Instance().HorizontalOption.getValue()
-			? ZoneMap.HORIZONTAL_RIGHT_TO_LEFT : ZoneMap.VERTICAL_UP;
-		if (id != myZoneMapId) {
+	private TapZoneMap getZoneMap() {
+		//final String id =
+		//	ScrollingPreferences.Instance().TapZonesSchemeOption.getValue().toString();
+		final String id =
+			ScrollingPreferences.Instance().HorizontalOption.getValue()
+				? "right_to_left" : "up";
+		if (!id.equals(myZoneMapId)) {
+			myZoneMap = new TapZoneMap(id);
 			myZoneMapId = id;
-			myZoneMap.clear();
-			switch (id) {
-				case HORIZONTAL_RIGHT_TO_LEFT:
-					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
-					myZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
-					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
-					break;
-				case HORIZONTAL_LEFT_TO_RIGHT:
-					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(0, 1), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(1, 0), ActionCode.SHOW_NAVIGATION);
-					myZoneMap.put(new TapZone(1, 2), ActionCode.SHOW_MENU);
-					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(2, 1), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_BACK);
-					break;
-				case VERTICAL_UP:
-					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
-					myZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
-					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_FORWARD);
-					break;
-				case VERTICAL_DOWN:
-					myZoneMap.put(new TapZone(0, 0), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(1, 0), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(2, 0), ActionCode.TURN_PAGE_FORWARD);
-					myZoneMap.put(new TapZone(0, 1), ActionCode.SHOW_NAVIGATION);
-					myZoneMap.put(new TapZone(2, 1), ActionCode.SHOW_MENU);
-					myZoneMap.put(new TapZone(0, 2), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(1, 2), ActionCode.TURN_PAGE_BACK);
-					myZoneMap.put(new TapZone(2, 2), ActionCode.TURN_PAGE_BACK);
-					break;
-			}
 		}
 		return myZoneMap;
-	}
-
-	private TapZone getZoneByCoordinates(int x, int y, int grid) {
-		return new TapZone(
-			x * grid / myContext.getWidth(),
-			y * grid / myContext.getHeight()
-		);
 	}
 
 	public boolean onFingerSingleTap(int x, int y) {
@@ -189,7 +102,10 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		myReader.doAction(getZoneMap().get(getZoneByCoordinates(x, y, 3)));
+		myReader.doAction(getZoneMap().getActionByCoordinates(
+			x, y, myContext.getWidth(), myContext.getHeight(),
+			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
+		));
 
 		return true;
 	}
@@ -204,11 +120,9 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
-		if (y <= myContext.getHeight() / 2) {
-			myReader.doAction(ActionCode.SHOW_NAVIGATION);
-		} else {
-			myReader.doAction(ActionCode.SHOW_MENU);
-		}
+		myReader.doAction(getZoneMap().getActionByCoordinates(
+			x, y, myContext.getWidth(), myContext.getHeight(), TapZoneMap.Tap.doubleTap
+		));
 		return true;
 	}
 
@@ -472,13 +386,16 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	public ZLColor getTextColor(byte hyperlinkType) {
+	public ZLColor getTextColor(ZLTextHyperlink hyperlink) {
 		final ColorProfile profile = myReader.getColorProfile();
-		switch (hyperlinkType) {
+		switch (hyperlink.Type) {
 			default:
 			case FBHyperlinkType.NONE:
 				return profile.RegularTextOption.getValue();
 			case FBHyperlinkType.INTERNAL:
+				return myReader.Model.Book.isHyperlinkVisited(hyperlink.Id)
+					? profile.VisitedHyperlinkTextOption.getValue()
+					: profile.HyperlinkTextOption.getValue();
 			case FBHyperlinkType.EXTERNAL:
 				return profile.HyperlinkTextOption.getValue();
 		}
@@ -547,7 +464,7 @@ public final class FBView extends ZLTextView {
 
 			final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
-			final ZLColor fgColor = getTextColor(FBHyperlinkType.NONE);
+			final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
 			final ZLColor fillColor = reader.getColorProfile().FooterFillOption.getValue();
 
 			final int left = getLeftMargin();

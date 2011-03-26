@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>About FBReaderJ</book-title> <lang>en</lang></title-info></description>
 <body>
-<title><p>About FBReaderJ &FBReaderVersion;</p></title>
-<p>FBReaderJ is an e-book reader for the <a l:href="http://www.android.com/">Android platform</a>. It is a clone of the <a l:href="http://www.fbreader.org/">FBReader book reader</a> written in Java by the same authors. FBReaderJ supports several e-book formats: <code>oeb</code>, <code>epub</code>, <code>fb2</code>.  In future releases the list will be extended to support the same formats as the original FBReader. Direct reading from <code>zip</code>, <code>tar</code> and <code>gzip</code> archives is supported.</p>
-<p>You can configure FBReaderJ to read books with a pleasure. Colors, fonts, key bindings and many other properties can be changed in the <code>Preferences Dialog</code>.</p>
-<p>FBReaderJ is distributed under the terms of the <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a>.</p>
-<empty-line/>
-<subtitle><p>How To Start</p></subtitle>
-<p>There are 2 ways to add book into FBReaderJ library.</p>
-<p>The first one is to copy book file to your device into the directory <code>/sdcard/Books</code> (or any its subdirectory). FBReader will add this book automatically.</p>
-<p>The second way is to click a book link (i.e. on a link to a file with extension <code>.epub</code>, <code>.oeb</code>, <code>.fb2</code> or <code>.fb2.zip</code>) in the standard Android browser. A book will be downloaded to the device and opened in FBReaderJ. If you'll click the same link again, a book will not be downloaded again, local copy will be used for reading.</p>
+<title><p>About FBReader &FBReaderVersion;</p></title>
+<p>FBReader is an e-book reader. FBReader supports <code>ePub</code> and <code>fb2</code> file formats. FBReader cannot read DRM-protected files, sorry. If you have any books in supported formats, just put your files into <code>Books</code> catalog on the memory card. The books will be available in <a l:href="fbreader-action://library">the library</a>. <a l:href="fbreader-action://networkLibrary">Network library</a> contains a large set of e-books you can download or buy.</p>
+<p>To turn pages swipe screen horizonatally or use hardware volume keys.</p>
+<p>FBReader is highly customizable. You can configure colors, fonts, directories, page turning options, etc. in the <a l:href="fbreader-action://preferences">preferences dialog</a>.</p>
+<p>If your device has no hardware <code>Menu</code> button, touch bottom-center part of the screen to run menu.</p>
+<p>Enjoy!</p>
 <empty-line/>
 <subtitle><p>Related sites</p></subtitle>
-<p>More information about FBReader and FBReaderJ can be found at <a l:href="http://www.fbreader.org">FBReader site</a>.</p>
-<p>If you want to be notified about new releases, please subscribe to <a l:href="http://freshmeat.net/projects/fbreaderj">FBReaderJ project at freshmeat</a>.</p>
+<p>More information about FBReader can be found at <a l:href="http://www.fbreader.org/FBReaderJ">our site</a>.</p>
+<p>Releases announcements and other news are available on <a l:href="http://twitter.com/fbreader">twitter</a>.</p>
 <p>If you have any questions or suggestions, please use <a l:href="http://groups.google.com/group/fbreader">FBReader group at googlegroups</a>.</p>
+<p>If you like the program and would like to support its development, please visit <a l:href="http://www.fbreader.org/donation/make.php">make donation</a> page.</p>
+<p>To contact authors, <a l:href="mailto:contact@geometerplus.com">use an e-mail</a>.</p> 
 </body>
 </FictionBook>

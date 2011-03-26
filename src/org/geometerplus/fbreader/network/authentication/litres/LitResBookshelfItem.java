@@ -29,8 +29,8 @@ import org.geometerplus.fbreader.network.*;
 abstract class SortedCatalogItem extends NetworkCatalogItem {
 	private final List<NetworkItem> myChildren = new LinkedList<NetworkItem>();
 
-	private SortedCatalogItem(NetworkCatalogItem parent, ZLResource resource, List<NetworkItem> children) {
-		super(parent.Link, resource.getValue(), resource.getResource("summary").getValue(), "", parent.URLByType);
+	private SortedCatalogItem(NetworkCatalogItem parent, ZLResource resource, List<NetworkItem> children, int flags) {
+		super(parent.Link, resource.getValue(), resource.getResource("summary").getValue(), "", Accessibility.ALWAYS, flags);
 		for (NetworkItem child : children) {
 			if (accepts(child)) {
 				myChildren.add(child);
@@ -51,8 +51,8 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 		return item instanceof NetworkBookItem;
 	}
 
-	public SortedCatalogItem(NetworkCatalogItem parent, String resourceKey, List<NetworkItem> children) {
-		this(parent, ZLResource.resource("networkView").getResource(resourceKey), children);
+	public SortedCatalogItem(NetworkCatalogItem parent, String resourceKey, List<NetworkItem> children, int flags) {
+		this(parent, ZLResource.resource("networkView").getResource(resourceKey), children, flags);
 	}
 
 	@Override
@@ -70,18 +70,23 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 
 class ByAuthorCatalogItem extends SortedCatalogItem {
 	ByAuthorCatalogItem(NetworkCatalogItem parent, List<NetworkItem> children) {
-		super(parent, "byAuthor", children);
+		super(parent, "byAuthor", children, FLAG_GROUP_BY_AUTHOR);
 	}
 
 	@Override
 	protected Comparator<NetworkItem> getComparator() {
 		return new NetworkBookItemComparator();
 	}
+
+	@Override
+	public String getStringId() {
+		return "@ByAuthor";
+	}
 }
 
 class ByTitleCatalogItem extends SortedCatalogItem {
 	ByTitleCatalogItem(NetworkCatalogItem parent, List<NetworkItem> children) {
-		super(parent, "byTitle", children);
+		super(parent, "byTitle", children, FLAG_SHOW_AUTHOR);
 	}
 
 	@Override
@@ -92,11 +97,16 @@ class ByTitleCatalogItem extends SortedCatalogItem {
 			}
 		};
 	}
+
+	@Override
+	public String getStringId() {
+		return "@ByTitle";
+	}
 }
 
 class ByDateCatalogItem extends SortedCatalogItem {
 	ByDateCatalogItem(NetworkCatalogItem parent, List<NetworkItem> children) {
-		super(parent, "byDate", children);
+		super(parent, "byDate", children, FLAG_SHOW_AUTHOR);
 	}
 
 	@Override
@@ -107,11 +117,16 @@ class ByDateCatalogItem extends SortedCatalogItem {
 			}
 		};
 	}
+
+	@Override
+	public String getStringId() {
+		return "@ByDate";
+	}
 }
 
 class BySeriesCatalogItem extends SortedCatalogItem {
 	BySeriesCatalogItem(NetworkCatalogItem parent, List<NetworkItem> children) {
-		super(parent, "bySeries", children);
+		super(parent, "bySeries", children, FLAG_SHOW_AUTHOR | FLAG_GROUP_BY_SERIES);
 	}
 
 	@Override
@@ -120,11 +135,15 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 			public int compare(NetworkItem item0, NetworkItem item1) {
 				final NetworkBookItem book0 = (NetworkBookItem)item0;
 				final NetworkBookItem book1 = (NetworkBookItem)item1;
-				int diff = book0.SeriesTitle.compareTo(book1.SeriesTitle);
-				if (diff == 0) {
-					diff = book0.IndexInSeries - book1.IndexInSeries;
+				final int diff = book0.SeriesTitle.compareTo(book1.SeriesTitle);
+				if (diff != 0) {
+					return diff;
 				}
-				return diff != 0 ? diff : book0.Title.compareTo(book1.Title);
+				final float fdiff = book0.IndexInSeries - book1.IndexInSeries;
+				if (fdiff != 0) {
+					return fdiff > 0 ? 1 : -1;
+				}
+				return book0.Title.compareTo(book1.Title);
 			}
 		};
 	}
@@ -135,13 +154,18 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 			item instanceof NetworkBookItem &&
 			((NetworkBookItem)item).SeriesTitle != null;
 	}
+
+	@Override
+	public String getStringId() {
+		return "@BySeries";
+	}
 }
 
-public class LitResBookshelfItem extends NetworkCatalogItem {
+public class LitResBookshelfItem extends NetworkURLCatalogItem {
 	private boolean myForceReload;
 
 	public LitResBookshelfItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility) {
-		super(link, title, summary, cover, urlByType, accessibility, CatalogType.OTHER);
+		super(link, title, summary, cover, urlByType, accessibility, FLAGS_DEFAULT);
 	}
 
 	@Override
@@ -174,7 +198,7 @@ public class LitResBookshelfItem extends NetworkCatalogItem {
 					listener.onNewItem(Link, item);
 				}
 			} else {
-				listener.onNewItem(Link, new ByDateCatalogItem(this, children));
+				//listener.onNewItem(Link, new ByDateCatalogItem(this, children));
 				listener.onNewItem(Link, new ByAuthorCatalogItem(this, children));
 				listener.onNewItem(Link, new ByTitleCatalogItem(this, children));
 				final BySeriesCatalogItem bySeries = new BySeriesCatalogItem(this, children);

@@ -33,8 +33,6 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
-	public static final String CATALOG_KEY_KEY = "org.geometerplus.android.fbreader.network.CatalogKey";
-
 	private NetworkTree myTree;
 	private volatile boolean myInProgress;
 
@@ -50,17 +48,14 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 			return;
 		}
 
-		final Intent intent = getIntent();
-
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(CATALOG_KEY_KEY);
-		myTree = library.getTreeByKey(key);
+		myTree = Util.getTreeFromIntent(getIntent());
 
 		if (myTree == null) {
-			throw new RuntimeException("Tree not found for key " + key);
+			finish();
+			return;
 		}
 
-		networkView.setOpenedActivity(key, this);
+		networkView.setOpenedActivity(myTree.getUniqueKey(), this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
@@ -71,8 +66,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		if (menuInfo == null && myTree instanceof NetworkCatalogTree) {
 			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
-			if (Util.isAccountRefillingSupported(this, link)) {
-				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
+			if (Util.isTopupSupported(this, link)) {
+				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null) {
 					actions.buildContextMenu(this, menu, link);
 					return;
@@ -86,8 +81,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public boolean onContextItemSelected(MenuItem item) {
 		if ((item == null || item.getMenuInfo() == null) && myTree instanceof NetworkCatalogTree) {
 			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
-			if (Util.isAccountRefillingSupported(this, link)) {
-				final RefillAccountActions actions = NetworkView.Instance().getTopUpActions();
+			if (Util.isTopupSupported(this, link)) {
+				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null && actions.runAction(this, link, item.getItemId())) {
 					return true;
 				}
