@@ -42,8 +42,8 @@ abstract public class ZLView {
 	}
 	public abstract Animation getAnimationType();
 
-	abstract public void paint(ZLPaintContext context, PageIndex viewPage);
-	abstract public void onScrollingFinished(PageIndex viewPage);
+	abstract public void paint(ZLPaintContext context, PageIndex pageIndex);
+	abstract public void onScrollingFinished(PageIndex pageIndex);
 
 	public boolean onFingerPress(int x, int y) {
 		return false;
@@ -87,6 +87,6 @@ abstract public class ZLView {
 
 	public abstract boolean isScrollbarShown();
 	public abstract int getScrollbarFullSize();
-	public abstract int getScrollbarThumbPosition(PageIndex viewPage);
-	public abstract int getScrollbarThumbLength(PageIndex viewPage);
+	public abstract int getScrollbarThumbPosition(PageIndex pageIndex);
+	public abstract int getScrollbarThumbLength(PageIndex pageIndex);
 }

@@ -38,7 +38,7 @@ abstract public class ZLApplicationWindow {
 	abstract protected void repaintView();
 	abstract protected void scrollViewManually(int startX, int startY, int endX, int endY, boolean horizontally);
 	abstract protected void scrollViewToCenter();
-	abstract protected void startViewAutoScrolling(ZLView.PageIndex viewPage, boolean horizontally);
+	abstract protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, boolean horizontally);
 
 	abstract protected void rotate();
 	abstract protected boolean canRotate();

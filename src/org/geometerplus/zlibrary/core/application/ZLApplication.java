@@ -82,9 +82,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void startViewAutoScrolling(ZLView.PageIndex viewPage, boolean horizontally) {
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, boolean horizontally) {
 		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(viewPage, horizontally);
+			myWindow.startViewAutoScrolling(pageIndex, horizontally);
 		}
 	}
 

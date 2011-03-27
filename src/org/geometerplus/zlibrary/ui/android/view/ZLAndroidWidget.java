@@ -237,7 +237,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				myMainBitmap = mySecondaryBitmap;
 				mySecondaryBitmap = swap;
 				mySecondaryBitmapIsUpToDate = false;
-				view.onScrollingFinished(myViewPageToScrollTo);
+				view.onScrollingFinished(myPageToScrollTo);
 				ZLApplication.Instance().onRepaintFinished();
 			} else {
 				view.onScrollingFinished(ZLView.PageIndex.current);
@@ -254,11 +254,11 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		drawFooter(canvas);
 	}
 
-	private ZLView.PageIndex myViewPageToScrollTo = ZLView.PageIndex.current;
+	private ZLView.PageIndex myPageToScrollTo = ZLView.PageIndex.current;
 	private boolean myScrollHorizontally;
-	private void setPageToScrollTo(ZLView.PageIndex viewPage) {
-		if (myViewPageToScrollTo != viewPage) {
-			myViewPageToScrollTo = viewPage;
+	private void setPageToScrollTo(ZLView.PageIndex pageIndex) {
+		if (myPageToScrollTo != pageIndex) {
+			myPageToScrollTo = pageIndex;
 			mySecondaryBitmapIsUpToDate = false;
 		}
 	}
@@ -290,15 +290,15 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		postInvalidate();
 	}
 
-	public void startAutoScrolling(ZLView.PageIndex viewPage, boolean horizontally) {
+	public void startAutoScrolling(ZLView.PageIndex pageIndex, boolean horizontally) {
 		if (myMainBitmap == null) {
 			return;
 		}
 		myScrollingInProgress = true;
 		myScrollHorizontally = horizontally;
-		switch (viewPage) {
+		switch (pageIndex) {
 			case current:
-				switch (myViewPageToScrollTo) {
+				switch (myPageToScrollTo) {
 					case current:
 						myScrollingSpeed = 0;
 						break;
@@ -314,12 +314,12 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			case previous:
 				myScrollingSpeed = 3;
 				myScrollingBound = horizontally ? getWidth() : getMainAreaHeight();
-				setPageToScrollTo(viewPage);
+				setPageToScrollTo(pageIndex);
 				break;
 			case next:
 				myScrollingSpeed = -3;
 				myScrollingBound = horizontally ? -getWidth() : -getMainAreaHeight();
-				setPageToScrollTo(viewPage);
+				setPageToScrollTo(pageIndex);
 				break;
 		}
 		drawOnBitmap(mySecondaryBitmap);
@@ -348,7 +348,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		);
 		view.paint(
 			context,
-			bitmap == myMainBitmap ? ZLView.PageIndex.current : myViewPageToScrollTo
+			bitmap == myMainBitmap ? ZLView.PageIndex.current : myPageToScrollTo
 		);
 	}
 
@@ -589,7 +589,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
 			final int from = view.getScrollbarThumbLength(ZLView.PageIndex.current);
-			final int to = view.getScrollbarThumbLength(myViewPageToScrollTo);
+			final int to = view.getScrollbarThumbLength(myPageToScrollTo);
 			final int size = myScrollHorizontally ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
@@ -605,7 +605,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
 			final int from = view.getScrollbarThumbPosition(ZLView.PageIndex.current);
-			final int to = view.getScrollbarThumbPosition(myViewPageToScrollTo);
+			final int to = view.getScrollbarThumbPosition(myPageToScrollTo);
 			final int size = myScrollHorizontally ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
