@@ -311,9 +311,9 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final int direction = (diffY != 0) ?
-			(diffY > 0 ? Direction.DOWN : Direction.UP) :
-			(diffX > 0 ? Direction.RIGHT : Direction.LEFT);
+		final Direction direction = (diffY != 0) ?
+			(diffY > 0 ? Direction.down : Direction.up) :
+			(diffX > 0 ? Direction.leftToRight : Direction.rightToLeft);
 
 		ZLTextElementRegion region = currentRegion();
 		final ZLTextElementRegion.Filter filter =
@@ -323,9 +323,9 @@ public final class FBView extends ZLTextView {
 		if (region != null) {
 			selectRegion(region);
 		} else {
-			if (direction == Direction.DOWN) {
+			if (direction == Direction.down) {
 				scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
-			} else if (direction == Direction.UP) {
+			} else if (direction == Direction.up) {
 				scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			}
 		}

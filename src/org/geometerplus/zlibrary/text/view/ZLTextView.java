@@ -1335,13 +1335,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		mySelectedRegion = null;
 	}
 
-	protected interface Direction {
-		int LEFT = 0;
-		int RIGHT = 1;
-		int UP = 2;
-		int DOWN = 3;
-	}
-
 	protected ZLTextElementRegion currentRegion() {
 		if (mySelectedRegion == null) {
 			return null;
@@ -1355,7 +1348,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return index >= 0 ? elementRegions.get(index) : null;
 	}
 
-	protected ZLTextElementRegion nextRegion(int direction, ZLTextElementRegion.Filter filter) {
+	protected ZLTextElementRegion nextRegion(Direction direction, ZLTextElementRegion.Filter filter) {
 		final ArrayList<ZLTextElementRegion> elementRegions =
 			myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
@@ -1366,8 +1359,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		mySelectedRegion = index >= 0 ? elementRegions.get(index) : null;
 
 		switch (direction) {
-			case Direction.LEFT:
-			case Direction.UP:
+			case rightToLeft:
+			case up:
 				if (index == -1) {
 					index = elementRegions.size() - 1;
 				} else if (index == 0) {
@@ -1376,8 +1369,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					--index;
 				}
 				break;
-			case Direction.RIGHT:
-			case Direction.DOWN:
+			case leftToRight:
+			case down:
 				if (index == elementRegions.size() - 1) {
 					return null;
 				} else {
@@ -1387,7 +1380,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		switch (direction) {
-			case Direction.LEFT:
+			case rightToLeft:
 				for (; index >= 0; --index) {
 					final ZLTextElementRegion candidate = elementRegions.get(index);
 					if (filter.accepts(candidate) && candidate.isAtLeftOf(mySelectedRegion)) {
@@ -1395,7 +1388,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					}
 				}
 				break;
-			case Direction.RIGHT:
+			case leftToRight:
 				for (; index < elementRegions.size(); ++index) {
 					final ZLTextElementRegion candidate = elementRegions.get(index);
 					if (filter.accepts(candidate) && candidate.isAtRightOf(mySelectedRegion)) {
@@ -1403,7 +1396,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					}
 				}
 				break;
-			case Direction.DOWN:
+			case down:
 			{
 				ZLTextElementRegion firstCandidate = null;
 				for (; index < elementRegions.size(); ++index) {
@@ -1423,7 +1416,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 			}
-			case Direction.UP:
+			case up:
 				ZLTextElementRegion firstCandidate = null;
 				for (; index >= 0; --index) {
 					final ZLTextElementRegion candidate = elementRegions.get(index);

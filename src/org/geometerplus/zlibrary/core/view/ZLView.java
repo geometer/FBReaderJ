@@ -36,10 +36,13 @@ abstract public class ZLView {
 	public enum PageIndex {
 		current, previous, next
 	};
-
+	public enum Direction {
+		leftToRight, rightToLeft, up, down
+	};
 	public enum Animation {
 		none, curl, slide, shift
 	}
+
 	public abstract Animation getAnimationType();
 
 	abstract public void paint(ZLPaintContext context, PageIndex pageIndex);
