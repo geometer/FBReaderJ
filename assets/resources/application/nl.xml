@@ -507,6 +507,7 @@
 				</node>
 				<node name="animation" value="Animatie">
 					<node name="none" value="Omslaan zonder animatie"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Slide-animatie"/>
 					<node name="shift" value="Shift-animatie"/>
 				</node>
