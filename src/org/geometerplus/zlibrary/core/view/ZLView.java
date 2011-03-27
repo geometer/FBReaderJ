@@ -33,19 +33,17 @@ abstract public class ZLView {
 
 	abstract public FooterArea getFooterArea();
 
-	public static final int PAGE_CENTRAL = 0;
-	public static final int PAGE_LEFT = 1;
-	public static final int PAGE_RIGHT = 2;
-	public static final int PAGE_TOP = 3;
-	public static final int PAGE_BOTTOM = 4;
+	public enum PageIndex {
+		current, previous, next
+	};
 
 	public enum Animation {
 		none, curl, slide, shift
 	}
 	public abstract Animation getAnimationType();
 
-	abstract public void paint(ZLPaintContext context, int viewPage);
-	abstract public void onScrollingFinished(int viewPage);
+	abstract public void paint(ZLPaintContext context, PageIndex viewPage);
+	abstract public void onScrollingFinished(PageIndex viewPage);
 
 	public boolean onFingerPress(int x, int y) {
 		return false;
@@ -89,6 +87,6 @@ abstract public class ZLView {
 
 	public abstract boolean isScrollbarShown();
 	public abstract int getScrollbarFullSize();
-	public abstract int getScrollbarThumbPosition(int viewPage);
-	public abstract int getScrollbarThumbLength(int viewPage);
+	public abstract int getScrollbarThumbPosition(PageIndex viewPage);
+	public abstract int getScrollbarThumbLength(PageIndex viewPage);
 }

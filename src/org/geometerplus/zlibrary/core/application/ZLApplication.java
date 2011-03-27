@@ -33,15 +33,12 @@ public abstract class ZLApplication {
 
 	private static ZLApplication ourInstance;
 
-	//private static final String MouseScrollUpKey = "<MouseScrollDown>";
-	//private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
 
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
 
 	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
-	//private ZLTime myLastKeyActionTime;
 
 	protected ZLApplication() {
 		ourInstance = this;
@@ -85,9 +82,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void startViewAutoScrolling(int viewPage) {
+	public final void startViewAutoScrolling(ZLView.PageIndex viewPage, boolean horizontally) {
 		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(viewPage);
+			myWindow.startViewAutoScrolling(viewPage, horizontally);
 		}
 	}
 

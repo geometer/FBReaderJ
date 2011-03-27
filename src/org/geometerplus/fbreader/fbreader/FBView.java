@@ -50,10 +50,6 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	public void onScrollingFinished(int viewPage) {
-		super.onScrollingFinished(viewPage);
-	}
-
 	private int myStartX;
 	private int myStartY;
 	private boolean myIsManualScrollingActive;
@@ -242,14 +238,12 @@ public final class FBView extends ZLTextView {
 					final int minDiff = horizontal ?
 						(w > h ? w / 4 : w / 3) :
 						(h > w ? h / 4 : h / 3);
-					int viewPage = PAGE_CENTRAL;
-					if (Math.abs(diff) > minDiff) {
-						viewPage = horizontal ?
-							(diff < 0 ? PAGE_RIGHT : PAGE_LEFT) :
-							(diff < 0 ? PAGE_BOTTOM : PAGE_TOP);
-					}
+					final PageIndex viewPage =
+						Math.abs(diff) < minDiff
+							? PageIndex.current
+							: (diff < 0 ? PageIndex.next : PageIndex.previous);
 					if (getAnimationType() != Animation.none) {
-						startAutoScrolling(viewPage);
+						startAutoScrolling(viewPage, horizontal);
 					} else {
 						myReader.scrollViewToCenter();
 						onScrollingFinished(viewPage);

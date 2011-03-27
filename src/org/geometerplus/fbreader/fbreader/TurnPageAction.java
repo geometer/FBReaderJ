@@ -58,12 +58,10 @@ class TurnPageAction extends FBAction {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		final FBView view = Reader.getTextView();
 		if (view.getAnimationType() != FBView.Animation.none) {
-			final boolean horizontal = preferences.HorizontalOption.getValue();
-			if (myForward) {
-				view.startAutoScrolling(horizontal ? FBView.PAGE_RIGHT : FBView.PAGE_BOTTOM);
-			} else {
-				view.startAutoScrolling(horizontal ? FBView.PAGE_LEFT : FBView.PAGE_TOP);
-			}
+			view.startAutoScrolling(
+				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+				preferences.HorizontalOption.getValue()
+			);
 		} else {
 			view.scrollPage(myForward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
 			Reader.repaintView();

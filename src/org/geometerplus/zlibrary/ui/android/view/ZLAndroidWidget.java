@@ -74,8 +74,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			myScrollingInProgress = false;
 			myScrollingShift = 0;
 			myScreenIsTouched = false;
-			view.onScrollingFinished(ZLView.PAGE_CENTRAL);
-			setPageToScrollTo(ZLView.PAGE_CENTRAL);
+			view.onScrollingFinished(ZLView.PageIndex.current);
+			setPageToScrollTo(ZLView.PageIndex.current);
 		}
 	}
 
@@ -240,9 +240,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				view.onScrollingFinished(myViewPageToScrollTo);
 				ZLApplication.Instance().onRepaintFinished();
 			} else {
-				view.onScrollingFinished(ZLView.PAGE_CENTRAL);
+				view.onScrollingFinished(ZLView.PageIndex.current);
 			}
-			setPageToScrollTo(ZLView.PAGE_CENTRAL);
+			setPageToScrollTo(ZLView.PageIndex.current);
 			myScrollingInProgress = false;
 			myScrollingShift = 0;
 		} else {
@@ -254,9 +254,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		drawFooter(canvas);
 	}
 
-	private int myViewPageToScrollTo = ZLView.PAGE_CENTRAL;
+	private ZLView.PageIndex myViewPageToScrollTo = ZLView.PageIndex.current;
 	private boolean myScrollHorizontally;
-	private void setPageToScrollTo(int viewPage) {
+	private void setPageToScrollTo(ZLView.PageIndex viewPage) {
 		if (myViewPageToScrollTo != viewPage) {
 			myViewPageToScrollTo = viewPage;
 			mySecondaryBitmapIsUpToDate = false;
@@ -266,9 +266,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	public void scrollManually(int startX, int startY, int endX, int endY, boolean horizontally) {
 		myScrollHorizontally = horizontally;
 		final int shift = horizontally ? endX - startX : endY - startY;
-		final int viewPage = horizontally
-			? (shift < 0 ? ZLView.PAGE_RIGHT : ZLView.PAGE_LEFT)
-			: (shift < 0 ? ZLView.PAGE_BOTTOM : ZLView.PAGE_TOP);
 
 		if (myMainBitmap == null) {
 			return;
@@ -278,7 +275,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			mySecondaryBitmapIsUpToDate = false;
 		}
 		myScrollingShift = shift;
-		setPageToScrollTo(viewPage);
+		setPageToScrollTo(shift < 0 ? ZLView.PageIndex.next : ZLView.PageIndex.previous);
 		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();
 	}
@@ -288,56 +285,42 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			return;
 		}
 		myScrollingShift = 0;
-		setPageToScrollTo(ZLView.PAGE_CENTRAL);
+		setPageToScrollTo(ZLView.PageIndex.current);
 		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();
 	}
 
-	public void startAutoScrolling(int viewPage) {
+	public void startAutoScrolling(ZLView.PageIndex viewPage, boolean horizontally) {
 		if (myMainBitmap == null) {
 			return;
 		}
 		myScrollingInProgress = true;
+		myScrollHorizontally = horizontally;
 		switch (viewPage) {
-			case ZLView.PAGE_CENTRAL:
+			case current:
 				switch (myViewPageToScrollTo) {
-					case ZLView.PAGE_CENTRAL:
+					case current:
 						myScrollingSpeed = 0;
 						break;
-					case ZLView.PAGE_LEFT:
-					case ZLView.PAGE_TOP:
+					case previous:
 						myScrollingSpeed = -3;
 						break;
-					case ZLView.PAGE_RIGHT:
-					case ZLView.PAGE_BOTTOM:
+					case next:
 						myScrollingSpeed = 3;
 						break;
 				}
 				myScrollingBound = 0;
 				break;
-			case ZLView.PAGE_LEFT:
+			case previous:
 				myScrollingSpeed = 3;
-				myScrollingBound = getWidth();
-				myScrollHorizontally = true;
+				myScrollingBound = horizontally ? getWidth() : getMainAreaHeight();
+				setPageToScrollTo(viewPage);
 				break;
-			case ZLView.PAGE_RIGHT:
+			case next:
 				myScrollingSpeed = -3;
-				myScrollingBound = -getWidth();
-				myScrollHorizontally = true;
+				myScrollingBound = horizontally ? -getWidth() : -getMainAreaHeight();
+				setPageToScrollTo(viewPage);
 				break;
-			case ZLView.PAGE_TOP:
-				myScrollingSpeed = 3;
-				myScrollingBound = getMainAreaHeight();
-				myScrollHorizontally = false;
-				break;
-			case ZLView.PAGE_BOTTOM:
-				myScrollingSpeed = -3;
-				myScrollingBound = -getMainAreaHeight();
-				myScrollHorizontally = false;
-				break;
-		}
-		if (viewPage != ZLView.PAGE_CENTRAL) {
-			setPageToScrollTo(viewPage);
 		}
 		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();
@@ -363,7 +346,10 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			getMainAreaHeight(),
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
-		view.paint(context, (bitmap == myMainBitmap) ? ZLView.PAGE_CENTRAL : myViewPageToScrollTo);
+		view.paint(
+			context,
+			bitmap == myMainBitmap ? ZLView.PageIndex.current : myViewPageToScrollTo
+		);
 	}
 
 	private void drawFooter(Canvas canvas) {
@@ -602,13 +588,13 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
-			final int from = view.getScrollbarThumbLength(ZLView.PAGE_CENTRAL);
+			final int from = view.getScrollbarThumbLength(ZLView.PageIndex.current);
 			final int to = view.getScrollbarThumbLength(myViewPageToScrollTo);
 			final int size = myScrollHorizontally ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
 		} else {
-			return view.getScrollbarThumbLength(ZLView.PAGE_CENTRAL);
+			return view.getScrollbarThumbLength(ZLView.PageIndex.current);
 		}
 	}
 
@@ -618,13 +604,13 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			return 0;
 		}
 		if (myScrollingInProgress || (myScrollingShift != 0)) {
-			final int from = view.getScrollbarThumbPosition(ZLView.PAGE_CENTRAL);
+			final int from = view.getScrollbarThumbPosition(ZLView.PageIndex.current);
 			final int to = view.getScrollbarThumbPosition(myViewPageToScrollTo);
 			final int size = myScrollHorizontally ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
 		} else {
-			return view.getScrollbarThumbPosition(ZLView.PAGE_CENTRAL);
+			return view.getScrollbarThumbPosition(ZLView.PageIndex.current);
 		}
 	}
 

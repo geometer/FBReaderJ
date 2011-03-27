@@ -199,24 +199,24 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myScrollingIsActive = active;
 	}
 
-	public final synchronized void startAutoScrolling(int viewPage) {
+	public final synchronized void startAutoScrolling(PageIndex viewPage, boolean horizontally) {
 		if (isScrollingActive()) {
 			return;
 		}
 
 		setScrollingActive(true);
-		ZLApplication.Instance().startViewAutoScrolling(viewPage);
+		ZLApplication.Instance().startViewAutoScrolling(viewPage, horizontally);
 	}
 
-	public synchronized void onScrollingFinished(int viewPage) {
+	@Override
+	public synchronized void onScrollingFinished(PageIndex viewPage) {
 		setScrollingActive(false);
 		switch (viewPage) {
-			case PAGE_CENTRAL:
+			case current:
 				break;
-			case PAGE_LEFT:
-			case PAGE_TOP:
+			case previous:
 			{
-				ZLTextPage swap = myNextPage;
+				final ZLTextPage swap = myNextPage;
 				myNextPage = myCurrentPage;
 				myCurrentPage = myPreviousPage;
 				myPreviousPage = swap;
@@ -234,10 +234,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 			}
-			case PAGE_RIGHT:
-			case PAGE_BOTTOM:
+			case next:
 			{
-				ZLTextPage swap = myPreviousPage;
+				final ZLTextPage swap = myPreviousPage;
 				myPreviousPage = myCurrentPage;
 				myCurrentPage = myNextPage;
 				myNextPage = swap;
@@ -253,7 +252,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	@Override
-	public synchronized void paint(ZLPaintContext context, int viewPage) {
+	public synchronized void paint(ZLPaintContext context, PageIndex viewPage) {
 		myContext = context;
 		final ZLFile wallpaper = getWallpaperFile();
 		if (wallpaper != null) {
@@ -269,11 +268,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		ZLTextPage page;
 		switch (viewPage) {
 			default:
-			case PAGE_CENTRAL:
+			case current:
 				page = myCurrentPage;
 				break;
-			case PAGE_TOP:
-			case PAGE_LEFT:
+			case previous:
 				page = myPreviousPage;
 				if (myPreviousPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
 					preparePaintInfo(myCurrentPage);
@@ -281,8 +279,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					myPreviousPage.PaintState = PaintStateEnum.END_IS_KNOWN;
 				}
 				break;
-			case PAGE_BOTTOM:
-			case PAGE_RIGHT:
+			case next:
 				page = myNextPage;
 				if (myNextPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
 					preparePaintInfo(myCurrentPage);
@@ -327,16 +324,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private ZLTextPage getPage(int viewPage) {
+	private ZLTextPage getPage(PageIndex viewPage) {
 		switch (viewPage) {
 			default:
-			case PAGE_CENTRAL:
+			case current:
 				return myCurrentPage;
-			case PAGE_TOP:
-			case PAGE_LEFT:
+			case previous:
 				return myPreviousPage;
-			case PAGE_BOTTOM:
-			case PAGE_RIGHT:
+			case next:
 				return myNextPage;
 		}
 	}
@@ -356,14 +351,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected final synchronized int sizeOfFullText() {
-		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 1;
 		}
 		return myModel.getTextLength(myModel.getParagraphsNumber() - 1);
 	}
 
-	private final synchronized int getCurrentCharNumber(int viewPage, boolean startNotEndOfPage) {
-		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+	private final synchronized int getCurrentCharNumber(PageIndex viewPage, boolean startNotEndOfPage) {
+		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 0;
 		}
 		ZLTextPage page = getPage(viewPage);
@@ -379,16 +374,20 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	@Override
 	public final synchronized int getScrollbarFullSize() {
 		return sizeOfFullText();
 	}
 
-	public final synchronized int getScrollbarThumbPosition(int viewPage) {
+	@Override
+	public final synchronized int getScrollbarThumbPosition(PageIndex viewPage) {
 		return scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(viewPage, true);
 	}
 
-	public final synchronized int getScrollbarThumbLength(int viewPage) {
-		int start = scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(viewPage, true);
+	@Override
+	public final synchronized int getScrollbarThumbLength(PageIndex viewPage) {
+		int start = scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS
+			? 0 : getCurrentCharNumber(viewPage, true);
 		int end = getCurrentCharNumber(viewPage, false);
 		return Math.max(1, end - start);
 	}
@@ -497,7 +496,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public final synchronized int computeCurrentPage() {
-		return computeTextPageNumber(getCurrentCharNumber(PAGE_CENTRAL, false));
+		return computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
 	}
 
 	public final synchronized void gotoPage(int page) {
