@@ -510,9 +510,9 @@
 				</node>
 				<node name="animation" value="Animation">
 					<node name="none" value="Scroll with no animation"/>
+					<node name="curl" value="Curl animation"/>
 					<node name="slide" value="Slide animation"/>
 					<node name="shift" value="Shift animation"/>
-					<node name="curl" value="Curl animation"/>
 				</node>
 				<node name="horizontal" value="Horizontal scrolling">
 					<node name="summaryOn" value="Scroll pages horizontally"/>
