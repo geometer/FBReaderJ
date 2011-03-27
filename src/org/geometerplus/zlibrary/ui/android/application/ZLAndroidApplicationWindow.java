@@ -76,10 +76,17 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void scrollViewTo(int viewPage, int shift) {
+	protected void scrollViewManually(int viewPage, int startX, int startY, int endX, int endY) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToPage(viewPage, shift);
+		widget.scrollManually(viewPage, startX, startY, endX, endY);
+	}
+
+	@Override
+	protected void scrollViewToCenter() {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.scrollToCenter();
 	}
 
 	@Override

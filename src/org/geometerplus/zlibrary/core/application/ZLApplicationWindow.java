@@ -34,7 +34,8 @@ abstract public class ZLApplicationWindow {
 	abstract protected void refreshMenu();
 	
 	abstract protected void repaintView();
-	abstract protected void scrollViewTo(int viewPage, int shift);
+	abstract protected void scrollViewManually(int viewPage, int startX, int startY, int endX, int endY);
+	abstract protected void scrollViewToCenter();
 	abstract protected void startViewAutoScrolling(int viewPage);
 
 	abstract protected void rotate();

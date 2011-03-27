@@ -192,7 +192,7 @@ public final class FBView extends ZLTextView {
 						return false;
 					}
 					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
-						myReader.scrollViewTo(horizontal ? PAGE_LEFT : PAGE_TOP, diff);
+						myReader.scrollViewManually(horizontal ? PAGE_LEFT : PAGE_TOP, myStartX, myStartY, x, y);
 					}
 				} else if (diff < 0) {
 					ZLTextWordCursor cursor = getEndCursor();
@@ -200,10 +200,10 @@ public final class FBView extends ZLTextView {
 						return false;
 					}
 					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
-						myReader.scrollViewTo(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, -diff);
+						myReader.scrollViewManually(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, myStartX, myStartY, x, y);
 					}
 				} else {
-					myReader.scrollViewTo(PAGE_CENTRAL, 0);
+					myReader.scrollViewToCenter();
 				}
 				return true;
 			}
@@ -240,18 +240,18 @@ public final class FBView extends ZLTextView {
 					final int h = myContext.getHeight();
 					final int w = myContext.getWidth();
 					final int minDiff = horizontal ?
-						((w > h) ? w / 4 : w / 3) :
-						((h > w) ? h / 4 : h / 3);
+						(w > h ? w / 4 : w / 3) :
+						(h > w ? h / 4 : h / 3);
 					int viewPage = PAGE_CENTRAL;
 					if (Math.abs(diff) > minDiff) {
 						viewPage = horizontal ?
-							((diff < 0) ? PAGE_RIGHT : PAGE_LEFT) :
-							((diff < 0) ? PAGE_BOTTOM : PAGE_TOP);
+							(diff < 0 ? PAGE_RIGHT : PAGE_LEFT) :
+							(diff < 0 ? PAGE_BOTTOM : PAGE_TOP);
 					}
 					if (getAnimationType() != Animation.none) {
 						startAutoScrolling(viewPage);
 					} else {
-						myReader.scrollViewTo(PAGE_CENTRAL, 0);
+						myReader.scrollViewToCenter();
 						onScrollingFinished(viewPage);
 						myReader.repaintView();
 						setScrollingActive(false);

@@ -73,9 +73,15 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void scrollViewTo(int viewPage, int shift) {
+	public final void scrollViewManually(int viewPage, int startX, int startY, int endX, int endY) {
 		if (myWindow != null) {
-			myWindow.scrollViewTo(viewPage, shift);
+			myWindow.scrollViewManually(viewPage, startX, startY, endX, endY);
+		}
+	}
+
+	public final void scrollViewToCenter() {
+		if (myWindow != null) {
+			myWindow.scrollViewToCenter();
 		}
 	}
 
