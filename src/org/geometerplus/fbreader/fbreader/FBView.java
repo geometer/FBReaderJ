@@ -187,7 +187,7 @@ public final class FBView extends ZLTextView {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
 				if (diff > 0) {
-					ZLTextWordCursor cursor = getStartCursor();
+					final ZLTextWordCursor cursor = getStartCursor();
 					if (cursor == null || cursor.isNull()) {
 						return false;
 					}
@@ -195,7 +195,7 @@ public final class FBView extends ZLTextView {
 						myReader.scrollViewManually(horizontal ? PAGE_LEFT : PAGE_TOP, myStartX, myStartY, x, y);
 					}
 				} else if (diff < 0) {
-					ZLTextWordCursor cursor = getEndCursor();
+					final ZLTextWordCursor cursor = getEndCursor();
 					if (cursor == null || cursor.isNull()) {
 						return false;
 					}

@@ -138,8 +138,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			myScrollingSpeed *= 1.5;
 		}
 		final boolean horizontal =
-			(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
-			(myViewPageToScroll == ZLView.PAGE_LEFT);
+			myViewPageToScroll == ZLView.PAGE_RIGHT ||
+			myViewPageToScroll == ZLView.PAGE_LEFT;
 		final int size = horizontal ? w : h;
 		int shift = myScrollingShift < 0 ? myScrollingShift + size : myScrollingShift - size;
 		switch (view.getAnimationType()) {
@@ -267,8 +267,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 
 	public void scrollManually(int viewPage, int startX, int startY, int endX, int endY) {
 		final boolean horizontal =
-			(viewPage == ZLView.PAGE_RIGHT) ||
-			(viewPage == ZLView.PAGE_LEFT);
+			viewPage == ZLView.PAGE_RIGHT ||
+			viewPage == ZLView.PAGE_LEFT;
 		final int shift = horizontal ? endX - startX : endY - startY;
 
 		if (myMainBitmap == null) {
@@ -602,8 +602,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			final int from = view.getScrollbarThumbLength(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbLength(myViewPageToScroll);
 			final boolean horizontal =
-				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
-				(myViewPageToScroll == ZLView.PAGE_LEFT);
+				myViewPageToScroll == ZLView.PAGE_RIGHT ||
+				myViewPageToScroll == ZLView.PAGE_LEFT;
 			final int size = horizontal ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
@@ -621,8 +621,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			final int from = view.getScrollbarThumbPosition(ZLView.PAGE_CENTRAL);
 			final int to = view.getScrollbarThumbPosition(myViewPageToScroll);
 			final boolean horizontal =
-				(myViewPageToScroll == ZLView.PAGE_RIGHT) ||
-				(myViewPageToScroll == ZLView.PAGE_LEFT);
+				myViewPageToScroll == ZLView.PAGE_RIGHT ||
+				myViewPageToScroll == ZLView.PAGE_LEFT;
 			final int size = horizontal ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(myScrollingShift);
 			return (from * (size - shift) + to * shift) / size;
