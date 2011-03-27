@@ -143,6 +143,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final int size = horizontal ? w : h;
 		int shift = myScrollingShift < 0 ? myScrollingShift + size : myScrollingShift - size;
 		switch (view.getAnimationType()) {
+			case none:
+				break;
 			case shift:
 				canvas.drawBitmap(
 					mySecondaryBitmap,
@@ -152,13 +154,12 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				);
 				break;
 			case slide:
+			case curl:
 				canvas.drawBitmap(
 					mySecondaryBitmap,
 					0, 0,
 					myPaint
 				);
-				break;
-			case curl:
 				break;
 		}
 		switch (view.getAnimationType()) {
@@ -191,32 +192,15 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				}
 				break;
 			case curl:
-			if (shift <= 0) {
-				canvas.drawBitmap(
-					mySecondaryBitmap,
-					0, 0,
-					myPaint
-				);
-			} else {
-				myEdgePaint.setColor(ZLAndroidPaintContext.getFillColor());
-				myEdgePaint.setAntiAlias(true);
-				myEdgePaint.setStyle(Paint.Style.FILL);
-				myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
-
-				final int x = w - shift;
-				final int y = x * h / w;
-
-				final Path bgPath = new Path();
-				bgPath.moveTo(Math.max(0, w - x * 4 / 3), h);
-				bgPath.lineTo(w, h);
-				bgPath.lineTo(w, Math.max(0, h - y * 4 / 3));
-				canvas.clipPath(bgPath);
-				canvas.drawBitmap(
-					mySecondaryBitmap,
-					0, 0,
-					myPaint
-				);
-				canvas.restore();
+			{
+				final int x, y;
+				if (horizontal) {
+					x = - myScrollingShift;
+					y = x * h / w;
+				} else {
+					y = - myScrollingShift;
+					x = y * w / h;
+				}
 
 				final Path fgPath = new Path();
 				fgPath.moveTo(Math.max(0, w - x * 4 / 3), h);
@@ -233,11 +217,18 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				);
 				canvas.restore();
 
-				final Path path = new Path();
-				path.moveTo(Math.max(0, w - x * 4 / 3), h);
-				path.lineTo(w - x, h - y);
-				path.lineTo(w, Math.max(0, h - y * 4 / 3));
-				canvas.drawPath(path, myEdgePaint);
+				if (shift > 0 && shift < size) {
+					myEdgePaint.setColor(ZLAndroidPaintContext.getFillColor());
+					myEdgePaint.setAntiAlias(true);
+					myEdgePaint.setStyle(Paint.Style.FILL);
+					myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
+
+					final Path path = new Path();
+					path.moveTo(Math.max(0, w - x * 4 / 3), h);
+					path.lineTo(w - x, h - y);
+					path.lineTo(w, Math.max(0, h - y * 4 / 3));
+					canvas.drawPath(path, myEdgePaint);
+				}
 
 				break;
 			}
