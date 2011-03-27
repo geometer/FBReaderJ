@@ -451,10 +451,6 @@
 					<node name="summaryOn" value="Mutassa a tartalomjegyzék elemeit a láblécen"/>
 					<node name="summaryOff" value="Ne mutassa a tartalomjegyzék elemeit a láblécen"/>
 				</node>
-				<node name="footerLongTap" value="Lábléc hosszú érintése">
-					<node name="longTapRevert" value="Pozíció visszaállítása"/>
-					<node name="longTapNavigate" value="Ugrás pozícióra"/>
-				</node>
 				<node name="showProgress" value="Oldalszám">
 					<node name="summaryOn" value="Mutassa az oldalszámot a láblécben"/>
 					<node name="summaryOff" value="Ne mutassa az oldalszámot a láblécben"/>

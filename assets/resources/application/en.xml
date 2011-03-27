@@ -454,10 +454,6 @@
 					<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>
 				</node>
-				<node name="footerLongTap" value="Footer long tap">
-					<node name="longTapRevert" value="Revert position"/>
-					<node name="longTapNavigate" value="Go to position"/>
-				</node>
 				<node name="showProgress" value="Show page number">
 					<node name="summaryOn" value="Show page number in footer"/>
 					<node name="summaryOff" value="Don't show page number in footer"/>
