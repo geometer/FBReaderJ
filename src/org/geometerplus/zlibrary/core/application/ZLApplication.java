@@ -73,9 +73,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void scrollViewManually(int viewPage, int startX, int startY, int endX, int endY) {
+	public final void scrollViewManually(int startX, int startY, int endX, int endY, boolean horizontally) {
 		if (myWindow != null) {
-			myWindow.scrollViewManually(viewPage, startX, startY, endX, endY);
+			myWindow.scrollViewManually(startX, startY, endX, endY, horizontally);
 		}
 	}
 

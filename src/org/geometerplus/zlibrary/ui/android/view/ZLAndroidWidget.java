@@ -265,11 +265,11 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 	}
 
-	public void scrollManually(int viewPage, int startX, int startY, int endX, int endY) {
-		final boolean horizontal =
-			viewPage == ZLView.PAGE_RIGHT ||
-			viewPage == ZLView.PAGE_LEFT;
-		final int shift = horizontal ? endX - startX : endY - startY;
+	public void scrollManually(int startX, int startY, int endX, int endY, boolean horizontally) {
+		final int shift = horizontally ? endX - startX : endY - startY;
+		final int viewPage = horizontally
+			? (shift < 0 ? ZLView.PAGE_RIGHT : ZLView.PAGE_LEFT)
+			: (shift < 0 ? ZLView.PAGE_BOTTOM : ZLView.PAGE_TOP);
 
 		if (myMainBitmap == null) {
 			return;

@@ -192,7 +192,7 @@ public final class FBView extends ZLTextView {
 						return false;
 					}
 					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
-						myReader.scrollViewManually(horizontal ? PAGE_LEFT : PAGE_TOP, myStartX, myStartY, x, y);
+						myReader.scrollViewManually(myStartX, myStartY, x, y, horizontal);
 					}
 				} else if (diff < 0) {
 					final ZLTextWordCursor cursor = getEndCursor();
@@ -200,7 +200,7 @@ public final class FBView extends ZLTextView {
 						return false;
 					}
 					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
-						myReader.scrollViewManually(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, myStartX, myStartY, x, y);
+						myReader.scrollViewManually(myStartX, myStartY, x, y, horizontal);
 					}
 				} else {
 					myReader.scrollViewToCenter();
