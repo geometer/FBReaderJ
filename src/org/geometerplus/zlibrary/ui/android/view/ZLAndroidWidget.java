@@ -190,6 +190,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				break;
 			case curl:
 			{
+				if (stopScrolling && myScrollingBound != 0) {
+					break;
+				}
 				final int x, y;
 				if (myScrollHorizontally) {
 					x = - myScrollingShift;
@@ -199,10 +202,12 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 					x = y * w / h;
 				}
 
+				final int x1 = x > 0 ? w - (y * y / x + x) / 2 : w;
+				final int y1 = y > 0 ? h - (x * x / y + y) / 2 : h;
 				final Path fgPath = new Path();
-				fgPath.moveTo(Math.max(0, w - x * 4 / 3), h);
+				fgPath.moveTo(x1, h);
 				fgPath.lineTo(w - x, h - y);
-				fgPath.lineTo(w, Math.max(0, h - y * 4 / 3));
+				fgPath.lineTo(w, y1);
 				fgPath.lineTo(w, 0);
 				fgPath.lineTo(0, 0);
 				fgPath.lineTo(0, h);
@@ -213,17 +218,17 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 					myPaint
 				);
 				canvas.restore();
-
+                
 				if (shift > 0 && shift < size) {
 					myEdgePaint.setColor(ZLAndroidPaintContext.getFillColor());
 					myEdgePaint.setAntiAlias(true);
 					myEdgePaint.setStyle(Paint.Style.FILL);
 					myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
-
+                
 					final Path path = new Path();
-					path.moveTo(Math.max(0, w - x * 4 / 3), h);
+					path.moveTo(x1, h);
 					path.lineTo(w - x, h - y);
-					path.lineTo(w, Math.max(0, h - y * 4 / 3));
+					path.lineTo(w, y1);
 					canvas.drawPath(path, myEdgePaint);
 				}
 
