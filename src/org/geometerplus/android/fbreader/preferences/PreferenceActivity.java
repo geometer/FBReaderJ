@@ -284,14 +284,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		footerPreferences.add(statusLineScreen.addOption(profile.FooterFillOption, "footerColor"));
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowTOCMarksOption, "tocMarks"));
 
-		/*
-		String[] footerLongTaps = {"longTapRevert", "longTapNavigate"};
-		footerPreferences.add(statusLineScreen.addPreference(new ZLChoicePreference(
-			this, statusLineScreen.Resource, "footerLongTap",
-			fbReader.FooterLongTapOption, footerLongTaps
-		)));
-		*/
-
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowClockOption, "showClock"));
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowBatteryOption, "showBattery"));
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowProgressOption, "showProgress"));

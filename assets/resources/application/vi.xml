@@ -451,10 +451,6 @@
 					<node name="summaryOn" value="Hiện đánh dấu mục lục ở thanh cuối trang"/>
 					<node name="summaryOff" value="Không Hiện đánh dấu mục lục ở thanh cuối trang"/>
 				</node>
-				<node name="footerLongTap" value="Footer long tap">
-					<node name="longTapRevert" value="Quay lại vị trí"/>
-					<node name="longTapNavigate" value="Đến vị trí"/>
-				</node>
 				<node name="showProgress" value="Hiện số trang">
 					<node name="summaryOn" value="Hiện số trang ở dòng cuối"/>
 					<node name="summaryOff" value="Đừng hiện số trang ở dòng cuối"/>

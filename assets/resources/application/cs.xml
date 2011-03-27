@@ -455,10 +455,6 @@
 					<node name="summaryOn" value="Zobrazit značky obsahu v patičce"/>
 					<node name="summaryOff" value="Nezobrazovat značky obsahu v patičce"/>
 				</node>
-				<node name="footerLongTap" value="Dlouhé klepnutí na patičku">
-					<node name="longTapRevert" value="Vrátit pozici"/>
-					<node name="longTapNavigate" value="Jít na pozici"/>
-				</node>
 				<node name="showProgress" value="Zobrazit číslo stránky">
 					<node name="summaryOn" value="Zobrazit číslo stránky v patičce"/>
 					<node name="summaryOff" value="Nezobrazovat číslo stránky v patičce"/>
