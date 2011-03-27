@@ -40,7 +40,7 @@ abstract public class ZLView {
 	public static final int PAGE_BOTTOM = 4;
 
 	public enum Animation {
-		none, slide, shift, paper3d
+		none, slide, shift, curl
 	}
 	public abstract Animation getAnimationType();
 

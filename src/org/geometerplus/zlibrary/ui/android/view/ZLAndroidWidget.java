@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
+	private final Paint myEdgePaint = new Paint();
 	private Bitmap myMainBitmap;
 	private Bitmap mySecondaryBitmap;
 	private boolean mySecondaryBitmapIsUpToDate;
@@ -151,7 +152,13 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				);
 				break;
 			case slide:
-			case paper3d:
+				canvas.drawBitmap(
+					mySecondaryBitmap,
+					0, 0,
+					myPaint
+				);
+				break;
+			case curl:
 				canvas.drawBitmap(
 					mySecondaryBitmap,
 					0, 0,
@@ -188,13 +195,19 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 					}
 				}
 				break;
-			case paper3d:
+			case curl:
 			{
-				myPaint.setColor(Color.rgb(127, 127, 127));
-				final int x = 100;
-				final int y = 100;
-				canvas.drawLine(0, h, w - x, h - y, myPaint);
-				canvas.drawLine(w, 0, w - x, h - y, myPaint);
+				myEdgePaint.setColor(ZLAndroidPaintContext.getFillColor());
+				myEdgePaint.setAntiAlias(true);
+				myEdgePaint.setStyle(Paint.Style.FILL);
+				myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
+				final int x = w - shift;
+				final int y = 250;
+				final Path path = new Path();
+				path.moveTo(w - x * 4 / 3, h);
+				path.lineTo(w - x, h - y);
+				path.lineTo(w, h - y * 4 / 3);
+				canvas.drawPath(path, myEdgePaint);
 				break;
 			}
 		}
