@@ -159,11 +159,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				);
 				break;
 			case curl:
-				canvas.drawBitmap(
-					mySecondaryBitmap,
-					0, 0,
-					myPaint
-				);
 				break;
 		}
 		switch (view.getAnimationType()) {
@@ -196,18 +191,54 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				}
 				break;
 			case curl:
-			{
+			if (shift <= 0) {
+				canvas.drawBitmap(
+					mySecondaryBitmap,
+					0, 0,
+					myPaint
+				);
+			} else {
 				myEdgePaint.setColor(ZLAndroidPaintContext.getFillColor());
 				myEdgePaint.setAntiAlias(true);
 				myEdgePaint.setStyle(Paint.Style.FILL);
 				myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
+
 				final int x = w - shift;
-				final int y = 250;
+				final int y = x * h / w;
+
+				final Path bgPath = new Path();
+				bgPath.moveTo(Math.max(0, w - x * 4 / 3), h);
+				bgPath.lineTo(w, h);
+				bgPath.lineTo(w, Math.max(0, h - y * 4 / 3));
+				canvas.clipPath(bgPath);
+				canvas.drawBitmap(
+					mySecondaryBitmap,
+					0, 0,
+					myPaint
+				);
+				canvas.restore();
+
+				final Path fgPath = new Path();
+				fgPath.moveTo(Math.max(0, w - x * 4 / 3), h);
+				fgPath.lineTo(w - x, h - y);
+				fgPath.lineTo(w, Math.max(0, h - y * 4 / 3));
+				fgPath.lineTo(w, 0);
+				fgPath.lineTo(0, 0);
+				fgPath.lineTo(0, h);
+				canvas.clipPath(fgPath);
+				canvas.drawBitmap(
+					myMainBitmap,
+					0, 0,
+					myPaint
+				);
+				canvas.restore();
+
 				final Path path = new Path();
-				path.moveTo(w - x * 4 / 3, h);
+				path.moveTo(Math.max(0, w - x * 4 / 3), h);
 				path.lineTo(w - x, h - y);
-				path.lineTo(w, h - y * 4 / 3);
+				path.lineTo(w, Math.max(0, h - y * 4 / 3));
 				canvas.drawPath(path, myEdgePaint);
+
 				break;
 			}
 		}
