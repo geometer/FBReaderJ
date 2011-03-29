@@ -115,6 +115,80 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 	}
 
+	static abstract class AnimationProvider {
+		protected final Paint myPaint;
+
+		protected AnimationProvider(Paint paint) {
+			myPaint = paint;
+		}
+
+		public abstract void draw(Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal);
+	}
+
+	static class NoneAnimationProvider extends AnimationProvider {
+		NoneAnimationProvider(Paint paint) {
+			super(paint);
+		}
+
+		@Override
+		public void draw(Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal) {
+		}
+	}
+
+	static class ShiftAnimationProvider extends AnimationProvider {
+		ShiftAnimationProvider(Paint paint) {
+			super(paint);
+		}
+
+		@Override
+		public void draw(Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal) {
+		}
+	}
+
+	static class SlideAnimationProvider extends AnimationProvider {
+		SlideAnimationProvider(Paint paint) {
+			super(paint);
+		}
+
+		@Override
+		public void draw(Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal) {
+		}
+	}
+
+	static class CurlAnimationProvider extends AnimationProvider {
+		CurlAnimationProvider(Paint paint) {
+			super(paint);
+		}
+
+		@Override
+		public void draw(Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal) {
+		}
+	}
+
+	private AnimationProvider myAnimationProvider;
+	private ZLView.Animation myAnimationType;
+	private AnimationProvider getAnimationProvider() {
+		final ZLView.Animation type = ZLApplication.Instance().getCurrentView().getAnimationType();
+		if (myAnimationProvider == null || myAnimationType != type) {
+			myAnimationType = type;
+			switch (type) {
+				case none:
+					myAnimationProvider = new NoneAnimationProvider(myPaint);
+					break;
+				case curl:
+					myAnimationProvider = new CurlAnimationProvider(myPaint);
+					break;
+				case slide:
+					myAnimationProvider = new SlideAnimationProvider(myPaint);
+					break;
+				case shift:
+					myAnimationProvider = new ShiftAnimationProvider(myPaint);
+					break;
+			}
+		}
+		return myAnimationProvider;
+	}
+
 	private void onDrawInScrolling(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 
