@@ -33,13 +33,13 @@ abstract public class ZLView {
 
 	abstract public FooterArea getFooterArea();
 
-	public enum PageIndex {
+	public static enum PageIndex {
 		current, previous, next
 	};
-	public enum Direction {
+	public static enum Direction {
 		leftToRight, rightToLeft, up, down
 	};
-	public enum Animation {
+	public static enum Animation {
 		none, curl, slide, shift
 	}
 
