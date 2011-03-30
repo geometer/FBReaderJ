@@ -28,8 +28,6 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
-
 public class ControlPanel extends LinearLayout {
 	public ControlPanel(Context context, RelativeLayout root, boolean fillWidth) {
 		super(context);

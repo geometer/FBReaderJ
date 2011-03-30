@@ -20,9 +20,8 @@
 package org.geometerplus.fbreader.library;
 
 import java.io.File;
-import java.io.PrintWriter;
-import java.util.*;
 import java.lang.ref.WeakReference;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;

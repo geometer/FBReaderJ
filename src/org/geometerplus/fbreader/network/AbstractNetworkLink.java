@@ -67,7 +67,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	}
 
 	public final HashMap<String,UrlInfo> urlInfoMap() {
-		return new HashMap(myInfos);
+		return new HashMap<String,UrlInfo>(myInfos);
 	}
 
 	public final UrlInfo getUrlInfo(String urlKey) {
@@ -94,7 +94,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 		if (book.Id != null && !"".equals(book.Id)) {
 			List<String> ids = myBooksInBasketOption.getValue();
 			if (!ids.contains(book.Id)) {
-				ids = new ArrayList(ids);
+				ids = new ArrayList<String>(ids);
 				ids.add(book.Id);
 				myBooksInBasketOption.setValue(ids);
 			}
@@ -106,7 +106,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 		if (book.Id != null && !"".equals(book.Id)) {
 			List<String> ids = myBooksInBasketOption.getValue();
 			if (ids.contains(book.Id)) {
-				ids = new ArrayList(ids);
+				ids = new ArrayList<String>(ids);
 				ids.remove(book.Id);
 				myBooksInBasketOption.setValue(ids);
 			}
