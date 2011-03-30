@@ -23,10 +23,23 @@ import android.graphics.*;
 
 abstract class AnimationProvider {
 	protected final Paint myPaint;
+	protected int myStartX;
+	protected int myStartY;
+	protected int myEndX;
+	protected int myEndY;
+	protected boolean myHorizontal;
 
 	protected AnimationProvider(Paint paint) {
 		myPaint = paint;
 	}
 
-	public abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal);
+	public void setup(int startX, int startY, int endX, int endY, boolean horizontal) {
+		myStartX = startX;
+		myStartX = startY;
+		myEndX = endX;
+		myEndY = endY;
+		myHorizontal = horizontal;
+	}
+
+	public abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
 }

@@ -27,13 +27,13 @@ class SlideAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal) {
+	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
 		final int w = fgBitmap.getWidth();
 		final int h = fgBitmap.getHeight();
 		myPaint.setColor(Color.rgb(127, 127, 127));
-		if (horizontal) {
-			final int dX = endX - startX;
+		if (myHorizontal) {
+			final int dX = myEndX - myStartX;
 			canvas.drawBitmap(fgBitmap, dX, 0, myPaint);
 			if (dX > 0 && dX < w) {
 				canvas.drawLine(dX, 0, dX, h + 1, myPaint);
@@ -41,7 +41,7 @@ class SlideAnimationProvider extends AnimationProvider {
 				canvas.drawLine(dX + w, 0, dX + w, h + 1, myPaint);
 			}
 		} else {
-			final int dY = endY - startY;
+			final int dY = myEndY - myStartY;
 			canvas.drawBitmap(fgBitmap, 0, dY, myPaint);
 			if (dY > 0 && dY < h) {
 				canvas.drawLine(0, dY, w + 1, dY, myPaint);

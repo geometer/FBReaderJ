@@ -143,7 +143,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 
 		@Override
-		public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal) {
+		public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 			canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
 		}
 	}
@@ -208,12 +208,14 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			myScrollingSpeed *= 1.5;
 		}
 
-		getAnimationProvider().draw(
-			canvas,
-			mySecondaryBitmap, myMainBitmap,
+		getAnimationProvider().setup(
 			myStartX, myStartY,
 			myEndX, myEndY,
 			myScrollHorizontally
+		);
+		getAnimationProvider().draw(
+			canvas,
+			mySecondaryBitmap, myMainBitmap
 		);
 
 		switch (view.getAnimationType()) {

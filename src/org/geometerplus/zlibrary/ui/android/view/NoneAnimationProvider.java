@@ -27,7 +27,7 @@ class NoneAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap, int startX, int startY, int endX, int endY, boolean horizontal) {
+	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 	}
 }
