@@ -207,8 +207,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			}
 			myScrollingSpeed *= 1.5;
 		}
-		final int size = myScrollHorizontally ? w : h;
-		int shift = getScrollingShift() < 0 ? getScrollingShift() + size : getScrollingShift() - size;
 
 		getAnimationProvider().draw(
 			canvas,
@@ -219,33 +217,48 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		);
 
 		switch (view.getAnimationType()) {
-			case none:
-			case slide:
-			case shift:
-				break;
 			case curl:
 			{
 				if (doStopScrolling && myScrollingBound != 0) {
 					break;
 				}
+				final int cornerX = myStartX > w / 2 ? w : 0;
+				final int cornerY = myStartY > h / 2 ? h : 0;
+				final int oppositeX = Math.abs(w - cornerX);
+				final int oppositeY = Math.abs(h - cornerY);
 				final int x, y;
 				if (myScrollHorizontally) {
-					x = - getScrollingShift();
-					y = x * h / w;
+					x = Math.max(1, Math.min(w - 1, myEndX));
+					if (cornerY == 0) {
+						y = Math.max(1, Math.min(h / 2, myEndY));
+					} else {
+						y = Math.max(h / 2, Math.min(h - 1, myEndY));
+					}
 				} else {
-					y = - getScrollingShift();
-					x = y * w / h;
+					y = Math.max(1, Math.min(h - 1, myEndY));
+					if (cornerX == 0) {
+						x = Math.max(1, Math.min(w / 2, myEndX));
+					} else {
+						x = Math.max(w / 2, Math.min(w - 1, myEndX));
+					}
 				}
+				final int dX = Math.abs(x - cornerX);
+				final int dY = Math.abs(y - cornerY);
 
-				final int x1 = x > 0 ? w - (y * y / x + x) / 2 : w;
-				final int y1 = y > 0 ? h - (x * x / y + y) / 2 : h;
+				final int x1 = cornerX == 0
+					? (dY * dY / dX + dX) / 2
+					: cornerX - (dY * dY / dX + dX) / 2;
+				final int y1 = cornerY == 0
+					? (dX * dX / dY + dY) / 2
+					: cornerY - (dX * dX / dY + dY) / 2;
+
 				final Path fgPath = new Path();
-				fgPath.moveTo(x1, h);
-				fgPath.lineTo(w - x, h - y);
-				fgPath.lineTo(w, y1);
-				fgPath.lineTo(w, 0);
-				fgPath.lineTo(0, 0);
-				fgPath.lineTo(0, h);
+				fgPath.moveTo(x1, cornerY);
+				fgPath.lineTo(x, y);
+				fgPath.lineTo(cornerX, y1);
+				fgPath.lineTo(cornerX, oppositeY);
+				fgPath.lineTo(oppositeX, oppositeY);
+				fgPath.lineTo(oppositeX, cornerY);
 				canvas.clipPath(fgPath);
 				canvas.drawBitmap(
 					myMainBitmap,
@@ -254,18 +267,20 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				);
 				canvas.restore();
                 
-				if (shift > 0 && shift < size) {
+				final int size = myScrollHorizontally ? w : h;
+				int shift = getScrollingShift() < 0 ? getScrollingShift() + size : getScrollingShift() - size;
+				//if (shift > 0 && shift < size) {
 					myEdgePaint.setColor(ZLAndroidPaintContext.getFillColor());
 					myEdgePaint.setAntiAlias(true);
 					myEdgePaint.setStyle(Paint.Style.FILL);
 					myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
                 
 					final Path path = new Path();
-					path.moveTo(x1, h);
-					path.lineTo(w - x, h - y);
-					path.lineTo(w, y1);
+					path.moveTo(x1, cornerY);
+					path.lineTo(x, y);
+					path.lineTo(cornerX, y1);
 					canvas.drawPath(path, myEdgePaint);
-				}
+				//}
 
 				break;
 			}
