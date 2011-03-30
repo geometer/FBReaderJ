@@ -314,11 +314,12 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			(shift < 0 && getScrollingShift() >= 0)) {
 			mySecondaryBitmapIsUpToDate = false;
 		}
-		if (myScrollHorizontally) {
-			myEndX = myStartX + shift;
-		} else {
-			myEndY = myStartY + shift;
-		}
+
+		myStartX = startX;
+		myStartY = startY;
+		myEndX = endX;
+		myEndY = endY;
+
 		setPageToScrollTo(shift < 0 ? ZLView.PageIndex.next : ZLView.PageIndex.previous);
 		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();
