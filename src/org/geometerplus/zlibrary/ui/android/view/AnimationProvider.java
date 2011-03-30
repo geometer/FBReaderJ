@@ -35,7 +35,7 @@ abstract class AnimationProvider {
 
 	public void setup(int startX, int startY, int endX, int endY, boolean horizontal) {
 		myStartX = startX;
-		myStartX = startY;
+		myStartY = startY;
 		myEndX = endX;
 		myEndY = endY;
 		myHorizontal = horizontal;
