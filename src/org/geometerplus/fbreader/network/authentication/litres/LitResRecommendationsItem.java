@@ -27,7 +27,6 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.Basket;
 import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
-import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 
 public class LitResRecommendationsItem extends OPDSCatalogItem {
 	public LitResRecommendationsItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType, Accessibility accessibility) {

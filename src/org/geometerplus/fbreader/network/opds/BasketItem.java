@@ -23,8 +23,6 @@ import java.util.Map;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
 

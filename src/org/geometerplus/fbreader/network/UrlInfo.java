@@ -25,6 +25,8 @@ import java.io.Serializable;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 public final class UrlInfo implements Serializable {
+	private static final long serialVersionUID = -893514485257787222L;
+
 	public static final UrlInfo NULL = new UrlInfo(null, null);
 
 	public final String URL;
