@@ -330,12 +330,10 @@ public final class FBView extends ZLTextView {
 		if (myHasSelectionExpanded) {
 			onSelectingEnded();
 			return true;
-		}
-		else {
+		} else {
 			deactivateSelectionMode();
 			if (myReader.DictionaryTappingActionOption.getValue() ==
 				FBReaderApp.DictionaryTappingAction.openDictionary) {
-				final ZLTextElementRegion region = currentRegion();
 				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 				selectRegion(null);
 				return true;
@@ -498,7 +496,7 @@ public final class FBView extends ZLTextView {
 				return;
 			}
 
-			final ZLColor bgColor = getBackgroundColor();
+			//final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
 			final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
 			final ZLColor fillColor = reader.getColorProfile().FooterFillOption.getValue();
