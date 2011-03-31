@@ -28,26 +28,24 @@ class ShiftAnimationProvider extends SimpleAnimationProvider {
 
 	@Override
 	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
-		final int w = fgBitmap.getWidth();
-		final int h = fgBitmap.getHeight();
 		myPaint.setColor(Color.rgb(127, 127, 127));
 		if (myHorizontal) {
 			final int dX = myEndX - myStartX;
-			canvas.drawBitmap(bgBitmap, dX > 0 ? dX - w : dX + w, 0, myPaint);
+			canvas.drawBitmap(bgBitmap, dX > 0 ? dX - myWidth : dX + myWidth, 0, myPaint);
 			canvas.drawBitmap(fgBitmap, dX, 0, myPaint);
-			if (dX > 0 && dX < w) {
-				canvas.drawLine(dX, 0, dX, h + 1, myPaint);
-			} else if (dX < 0 && dX > -w) {
-				canvas.drawLine(dX + w, 0, dX + w, h + 1, myPaint);
+			if (dX > 0 && dX < myWidth) {
+				canvas.drawLine(dX, 0, dX, myHeight + 1, myPaint);
+			} else if (dX < 0 && dX > -myWidth) {
+				canvas.drawLine(dX + myWidth, 0, dX + myWidth, myHeight + 1, myPaint);
 			}
 		} else {
 			final int dY = myEndY - myStartY;
-			canvas.drawBitmap(bgBitmap, 0, dY > 0 ? dY - h : dY + h, myPaint);
+			canvas.drawBitmap(bgBitmap, 0, dY > 0 ? dY - myHeight : dY + myHeight, myPaint);
 			canvas.drawBitmap(fgBitmap, 0, dY, myPaint);
-			if (dY > 0 && dY < h) {
-				canvas.drawLine(0, dY, w + 1, dY, myPaint);
-			} else if (dY < 0 && dY > -h) {
-				canvas.drawLine(0, dY + h, w + 1, dY + h, myPaint);
+			if (dY > 0 && dY < myHeight) {
+				canvas.drawLine(0, dY, myWidth + 1, dY, myPaint);
+			} else if (dY < 0 && dY > -myHeight) {
+				canvas.drawLine(0, dY + myHeight, myWidth + 1, dY + myHeight, myPaint);
 			}
 		}
 	}

@@ -21,8 +21,16 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.Paint;
 
+import org.geometerplus.zlibrary.core.view.ZLView;
+
 abstract class SimpleAnimationProvider extends AnimationProvider {
 	SimpleAnimationProvider(Paint paint) {
 		super(paint);
+	}
+
+	ZLView.PageIndex getPageToScrollTo() {
+		return myHorizontal
+			? (myStartX < myEndX ? ZLView.PageIndex.previous : ZLView.PageIndex.next)
+			: (myStartY < myEndY ? ZLView.PageIndex.previous : ZLView.PageIndex.next);
 	}
 }

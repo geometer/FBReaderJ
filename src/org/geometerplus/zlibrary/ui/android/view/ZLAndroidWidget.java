@@ -207,7 +207,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		getAnimationProvider().setup(
 			myStartX, myStartY,
 			myEndX, myEndY,
-			myScrollHorizontally
+			myScrollHorizontally,
+			getWidth(), getMainAreaHeight()
 		);
 		getAnimationProvider().draw(
 			canvas,
@@ -230,25 +231,24 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	public void scrollManually(int startX, int startY, int endX, int endY, boolean horizontally) {
-		myScrollingState = ScrollingState.ManualScrolling;
-
-		myScrollHorizontally = horizontally;
-		final int shift = horizontally ? endX - startX : endY - startY;
-
 		if (myMainBitmap == null) {
 			return;
 		}
-		if ((shift > 0 && getAnimationProvider().getScrollingShift() <= 0) ||
-			(shift < 0 && getAnimationProvider().getScrollingShift() >= 0)) {
-			mySecondaryBitmapIsUpToDate = false;
-		}
 
+		myScrollingState = ScrollingState.ManualScrolling;
+		myScrollHorizontally = horizontally;
 		myStartX = startX;
 		myStartY = startY;
 		myEndX = endX;
 		myEndY = endY;
 
-		setPageToScrollTo(shift < 0 ? ZLView.PageIndex.next : ZLView.PageIndex.previous);
+		getAnimationProvider().setup(
+			startX, startY,
+			endX, endY,
+			horizontally,
+			getHeight(), getMainAreaHeight()
+		);
+		setPageToScrollTo(getAnimationProvider().getPageToScrollTo());
 		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();
 	}

@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
 
+import org.geometerplus.zlibrary.core.view.ZLView;
+
 abstract class AnimationProvider {
 	protected final Paint myPaint;
 	protected int myStartX;
@@ -28,6 +30,9 @@ abstract class AnimationProvider {
 	protected int myEndX;
 	protected int myEndY;
 	protected boolean myHorizontal;
+
+	protected int myWidth;
+	protected int myHeight;
 
 	protected AnimationProvider(Paint paint) {
 		myPaint = paint;
@@ -37,13 +42,17 @@ abstract class AnimationProvider {
 		return myHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
-	void setup(int startX, int startY, int endX, int endY, boolean horizontal) {
+	void setup(int startX, int startY, int endX, int endY, boolean horizontal, int width, int height) {
 		myStartX = startX;
 		myStartY = startY;
 		myEndX = endX;
 		myEndY = endY;
 		myHorizontal = horizontal;
+		myWidth = width;
+		myHeight = height;
 	}
 
 	abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
+
+	abstract ZLView.PageIndex getPageToScrollTo();
 }

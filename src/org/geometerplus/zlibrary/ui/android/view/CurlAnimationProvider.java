@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
 
+import org.geometerplus.zlibrary.core.view.ZLView;
+
 class CurlAnimationProvider extends AnimationProvider {
 	private final Paint myEdgePaint = new Paint();
 
@@ -32,27 +34,24 @@ class CurlAnimationProvider extends AnimationProvider {
 	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
 
-		final int w = fgBitmap.getWidth();
-		final int h = fgBitmap.getHeight();
-
-		final int cornerX = myStartX > w / 2 ? w : 0;
-		final int cornerY = myStartY > h / 2 ? h : 0;
-		final int oppositeX = Math.abs(w - cornerX);
-		final int oppositeY = Math.abs(h - cornerY);
+		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
+		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;
+		final int oppositeX = Math.abs(myWidth - cornerX);
+		final int oppositeY = Math.abs(myHeight - cornerY);
 		final int x, y;
 		if (myHorizontal) {
-			x = Math.max(1, Math.min(w - 1, myEndX));
+			x = Math.max(1, Math.min(myWidth - 1, myEndX));
 			if (cornerY == 0) {
-				y = Math.max(1, Math.min(h / 2, myEndY));
+				y = Math.max(1, Math.min(myHeight / 2, myEndY));
 			} else {
-				y = Math.max(h / 2, Math.min(h - 1, myEndY));
+				y = Math.max(myHeight / 2, Math.min(myHeight - 1, myEndY));
 			}
 		} else {
-			y = Math.max(1, Math.min(h - 1, myEndY));
+			y = Math.max(1, Math.min(myHeight - 1, myEndY));
 			if (cornerX == 0) {
-				x = Math.max(1, Math.min(w / 2, myEndX));
+				x = Math.max(1, Math.min(myWidth / 2, myEndX));
 			} else {
-				x = Math.max(w / 2, Math.min(w - 1, myEndX));
+				x = Math.max(myWidth / 2, Math.min(myWidth - 1, myEndX));
 			}
 		}
 		final int dX = Math.abs(x - cornerX);
@@ -86,5 +85,11 @@ class CurlAnimationProvider extends AnimationProvider {
 		path.lineTo(x, y);
 		path.lineTo(cornerX, y1);
 		canvas.drawPath(path, myEdgePaint);
+	}
+
+	ZLView.PageIndex getPageToScrollTo() {
+		return myHorizontal
+			? (myStartX < myWidth / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next)
+			: (myStartY < myHeight / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next);
 	}
 }
