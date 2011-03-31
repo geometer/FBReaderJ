@@ -523,6 +523,7 @@
 				</node>
 				<node name="animation" value="Animation">
 					<node name="none" value="Scroll with no animation"/>
+					<node name="curl" value="Curl animation"/>
 					<node name="slide" value="Slide animation"/>
 					<node name="shift" value="Shift animation"/>
 				</node>

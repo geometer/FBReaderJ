@@ -517,6 +517,7 @@
 				</node>
 				<node name="animation" value="Анимация">
 					<node name="none" value="Выключить анимацию"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Сдвиг с перекрытием"/>
 					<node name="shift" value="Сдвиг"/>
 				</node>
