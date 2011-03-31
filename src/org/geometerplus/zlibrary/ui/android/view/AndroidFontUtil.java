@@ -122,7 +122,7 @@ public final class AndroidFontUtil {
 	}
 
 	public static void fillFamiliesList(ArrayList<String> families, boolean forceReload) {
-		final TreeSet<String> familySet = new TreeSet(getFontMap(forceReload).keySet());
+		final TreeSet<String> familySet = new TreeSet<String>(getFontMap(forceReload).keySet());
 		familySet.add("Droid Sans");
 		familySet.add("Droid Serif");
 		familySet.add("Droid Mono");

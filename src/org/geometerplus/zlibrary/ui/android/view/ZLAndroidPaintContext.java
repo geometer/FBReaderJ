@@ -73,7 +73,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			ourWallpaper = null;
 			try {
 				final Bitmap fileBitmap =
-					new BitmapFactory().decodeStream(wallpaperFile.getInputStream());
+					BitmapFactory.decodeStream(wallpaperFile.getInputStream());
 				final int w = fileBitmap.getWidth();
 				final int h = fileBitmap.getHeight();
 				if (doMirror) {

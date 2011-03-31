@@ -24,8 +24,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.net.URLConnection;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
