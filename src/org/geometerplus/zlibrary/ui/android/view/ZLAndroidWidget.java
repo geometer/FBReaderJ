@@ -192,7 +192,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				Bitmap swap = myMainBitmap;
 				myMainBitmap = mySecondaryBitmap;
 				mySecondaryBitmap = swap;
-				mySecondaryBitmapIsUpToDate = false;
 				view.onScrollingFinished(myPageToScrollTo);
 				ZLApplication.Instance().onRepaintFinished();
 			} else {
@@ -246,7 +245,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			startX, startY,
 			endX, endY,
 			horizontally,
-			getHeight(), getMainAreaHeight()
+			getWidth(), getMainAreaHeight()
 		);
 		setPageToScrollTo(getAnimationProvider().getPageToScrollTo());
 		drawOnBitmap(mySecondaryBitmap);
