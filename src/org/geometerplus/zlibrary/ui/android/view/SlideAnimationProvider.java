@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
 
-class SlideAnimationProvider extends AnimationProvider {
+class SlideAnimationProvider extends SimpleAnimationProvider {
 	SlideAnimationProvider(Paint paint) {
 		super(paint);
 	}

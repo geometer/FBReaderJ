@@ -19,15 +19,10 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import android.graphics.*;
+import android.graphics.Paint;
 
-class NoneAnimationProvider extends SimpleAnimationProvider {
-	NoneAnimationProvider(Paint paint) {
+abstract class SimpleAnimationProvider extends AnimationProvider {
+	SimpleAnimationProvider(Paint paint) {
 		super(paint);
-	}
-
-	@Override
-	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
-		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 	}
 }

@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
 
-class ShiftAnimationProvider extends AnimationProvider {
+class ShiftAnimationProvider extends SimpleAnimationProvider {
 	ShiftAnimationProvider(Paint paint) {
 		super(paint);
 	}
