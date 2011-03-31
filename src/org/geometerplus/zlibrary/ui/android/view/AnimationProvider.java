@@ -33,7 +33,11 @@ abstract class AnimationProvider {
 		myPaint = paint;
 	}
 
-	public void setup(int startX, int startY, int endX, int endY, boolean horizontal) {
+	int getScrollingShift() {
+		return myHorizontal ? myEndX - myStartX : myEndY - myStartY;
+	}
+
+	void setup(int startX, int startY, int endX, int endY, boolean horizontal) {
 		myStartX = startX;
 		myStartY = startY;
 		myEndX = endX;
@@ -41,5 +45,5 @@ abstract class AnimationProvider {
 		myHorizontal = horizontal;
 	}
 
-	public abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
+	abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
 }
