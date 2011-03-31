@@ -32,7 +32,6 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
-	private final Paint myEdgePaint = new Paint();
 	private Bitmap myMainBitmap;
 	private Bitmap mySecondaryBitmap;
 	private boolean mySecondaryBitmapIsUpToDate;
@@ -128,17 +127,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 	}
 
-	static class CurlAnimationProvider extends AnimationProvider {
-		CurlAnimationProvider(Paint paint) {
-			super(paint);
-		}
-
-		@Override
-		public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
-			canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
-		}
-	}
-
 	private AnimationProvider myAnimationProvider;
 	private ZLView.Animation myAnimationType;
 	private AnimationProvider getAnimationProvider() {
@@ -199,86 +187,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			myScrollingSpeed *= 1.5;
 		}
 
-		getAnimationProvider().setup(
-			myStartX, myStartY,
-			myEndX, myEndY,
-			myScrollHorizontally
-		);
-		getAnimationProvider().draw(
-			canvas,
-			mySecondaryBitmap, myMainBitmap
-		);
-
-		switch (view.getAnimationType()) {
-			case curl:
-			{
-				if (doStopScrolling && myScrollingBound != 0) {
-					break;
-				}
-				final int cornerX = myStartX > w / 2 ? w : 0;
-				final int cornerY = myStartY > h / 2 ? h : 0;
-				final int oppositeX = Math.abs(w - cornerX);
-				final int oppositeY = Math.abs(h - cornerY);
-				final int x, y;
-				if (myScrollHorizontally) {
-					x = Math.max(1, Math.min(w - 1, myEndX));
-					if (cornerY == 0) {
-						y = Math.max(1, Math.min(h / 2, myEndY));
-					} else {
-						y = Math.max(h / 2, Math.min(h - 1, myEndY));
-					}
-				} else {
-					y = Math.max(1, Math.min(h - 1, myEndY));
-					if (cornerX == 0) {
-						x = Math.max(1, Math.min(w / 2, myEndX));
-					} else {
-						x = Math.max(w / 2, Math.min(w - 1, myEndX));
-					}
-				}
-				final int dX = Math.abs(x - cornerX);
-				final int dY = Math.abs(y - cornerY);
-
-				final int x1 = cornerX == 0
-					? (dY * dY / dX + dX) / 2
-					: cornerX - (dY * dY / dX + dX) / 2;
-				final int y1 = cornerY == 0
-					? (dX * dX / dY + dY) / 2
-					: cornerY - (dX * dX / dY + dY) / 2;
-
-				final Path fgPath = new Path();
-				fgPath.moveTo(x1, cornerY);
-				fgPath.lineTo(x, y);
-				fgPath.lineTo(cornerX, y1);
-				fgPath.lineTo(cornerX, oppositeY);
-				fgPath.lineTo(oppositeX, oppositeY);
-				fgPath.lineTo(oppositeX, cornerY);
-				canvas.clipPath(fgPath);
-				canvas.drawBitmap(
-					myMainBitmap,
-					0, 0,
-					myPaint
-				);
-				canvas.restore();
-                
-				final int size = myScrollHorizontally ? w : h;
-				int shift = getAnimationProvider().getScrollingShift() < 0 ? getAnimationProvider().getScrollingShift() + size : getAnimationProvider().getScrollingShift() - size;
-				//if (shift > 0 && shift < size) {
-					myEdgePaint.setColor(ZLAndroidPaintContext.getFillColor());
-					myEdgePaint.setAntiAlias(true);
-					myEdgePaint.setStyle(Paint.Style.FILL);
-					myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
-                
-					final Path path = new Path();
-					path.moveTo(x1, cornerY);
-					path.lineTo(x, y);
-					path.lineTo(cornerX, y1);
-					canvas.drawPath(path, myEdgePaint);
-				//}
-
-				break;
-			}
-		}
-
 		if (doStopScrolling) {
 			if (myScrollingBound != 0) {
 				Bitmap swap = myMainBitmap;
@@ -292,11 +200,23 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			}
 			setPageToScrollTo(ZLView.PageIndex.current);
 			myScrollingState = ScrollingState.NoScrolling;
-		} else {
-			if (myScrollingState == ScrollingState.AutoScrollingForward ||
-				myScrollingState == ScrollingState.AutoScrollingBackward) {
-				postInvalidate();
-			}
+			onDrawStatic(canvas);
+			return;
+		}
+
+		getAnimationProvider().setup(
+			myStartX, myStartY,
+			myEndX, myEndY,
+			myScrollHorizontally
+		);
+		getAnimationProvider().draw(
+			canvas,
+			mySecondaryBitmap, myMainBitmap
+		);
+
+		if (myScrollingState == ScrollingState.AutoScrollingForward ||
+			myScrollingState == ScrollingState.AutoScrollingBackward) {
+			postInvalidate();
 		}
 
 		drawFooter(canvas);
