@@ -21,12 +21,9 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
-
-import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	// URL type values:

@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.view.*;
 import android.widget.BaseAdapter;
@@ -83,7 +81,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
 			if (Util.isTopupSupported(this, link)) {
 				final TopupActions actions = NetworkView.Instance().getTopupActions();
-				if (actions != null && actions.runAction(this, link, item.getItemId())) {
+				if (actions != null && TopupActions.runAction(this, link, item.getItemId())) {
 					return true;
 				}
 			}

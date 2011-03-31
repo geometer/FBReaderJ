@@ -31,6 +31,8 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
 	public static class Key implements Serializable {
+		private static final long serialVersionUID = -6500763093522202052L;
+
 		final Key Parent;
 		final String Id;
 

@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.core.image;
 
 import java.io.InputStream;
-import java.io.ByteArrayInputStream;
 
 public abstract class ZLSingleImage implements ZLImage {
 	private final String myMimeType;

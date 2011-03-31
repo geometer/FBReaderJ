@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
