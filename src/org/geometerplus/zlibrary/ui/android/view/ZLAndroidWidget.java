@@ -199,6 +199,16 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			}
 			setPageToScrollTo(ZLView.PageIndex.current);
 			myScrollingState = ScrollingState.NoScrolling;
+			myStartX = 0;
+			myStartY = 0;
+			myEndX = 0;
+			myEndY = 0;
+			getAnimationProvider().setup(
+				myStartX, myStartY,
+				myEndX, myEndY,
+				myScrollHorizontally,
+				getWidth(), getMainAreaHeight()
+			);
 			onDrawStatic(canvas);
 			return;
 		}
