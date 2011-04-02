@@ -54,7 +54,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private boolean myScrollHorizontally;
 
 	private float myScrollingSpeed;
-	private int myScrollingBound;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -165,21 +164,27 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			} else {
 				myEndY += (int)myScrollingSpeed;
 			}
+			final int bound;
+			if (myScrollingState == ScrollingState.AutoScrollingForward) {
+				bound = myScrollHorizontally ? getWidth() : getMainAreaHeight();
+			} else {
+				bound = 0;
+			}
 			if (myScrollingSpeed > 0) {
-				if (getAnimationProvider().getScrollingShift() >= myScrollingBound) {
+				if (getAnimationProvider().getScrollingShift() >= bound) {
 					if (myScrollHorizontally) {
-						myEndX = myStartX + myScrollingBound;
+						myEndX = myStartX + bound;
 					} else {
-						myEndY = myStartY + myScrollingBound;
+						myEndY = myStartY + bound;
 					}
 					doStopScrolling = true;
 				}
 			} else {
-				if (getAnimationProvider().getScrollingShift() <= myScrollingBound) {
+				if (getAnimationProvider().getScrollingShift() <= -bound) {
 					if (myScrollHorizontally) {
-						myEndX = myStartX + myScrollingBound;
+						myEndX = myStartX - bound;
 					} else {
-						myEndY = myStartY + myScrollingBound;
+						myEndY = myStartY - bound;
 					}
 					doStopScrolling = true;
 				}
@@ -188,7 +193,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 
 		if (doStopScrolling) {
-			if (myScrollingBound != 0) {
+			if (myScrollingState != ScrollingState.AutoScrollingBackward) {
 				Bitmap swap = myMainBitmap;
 				myMainBitmap = mySecondaryBitmap;
 				mySecondaryBitmap = swap;
@@ -284,18 +289,15 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 						myScrollingSpeed = 3;
 						break;
 				}
-				myScrollingBound = 0;
 				break;
 			case previous:
 				myScrollingState = ScrollingState.AutoScrollingForward;
 				myScrollingSpeed = 3;
-				myScrollingBound = horizontally ? getWidth() : getMainAreaHeight();
 				setPageToScrollTo(pageIndex);
 				break;
 			case next:
 				myScrollingState = ScrollingState.AutoScrollingForward;
 				myScrollingSpeed = -3;
-				myScrollingBound = horizontally ? -getWidth() : -getMainAreaHeight();
 				setPageToScrollTo(pageIndex);
 				break;
 		}
