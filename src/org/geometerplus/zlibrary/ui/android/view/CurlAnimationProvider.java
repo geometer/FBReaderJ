@@ -40,22 +40,24 @@ class CurlAnimationProvider extends AnimationProvider {
 		final int oppositeY = Math.abs(myHeight - cornerY);
 		final int x, y;
 		if (myDirection.IsHorizontal) {
-			x = Math.max(1, Math.min(myWidth - 1, myEndX));
+			x = myEndX;
+			//x = Math.max(1, Math.min(myWidth - 1, myEndX));
 			if (cornerY == 0) {
 				y = Math.max(1, Math.min(myHeight / 2, myEndY));
 			} else {
 				y = Math.max(myHeight / 2, Math.min(myHeight - 1, myEndY));
 			}
 		} else {
-			y = Math.max(1, Math.min(myHeight - 1, myEndY));
+			y = myEndY;
+			//y = Math.max(1, Math.min(myHeight - 1, myEndY));
 			if (cornerX == 0) {
 				x = Math.max(1, Math.min(myWidth / 2, myEndX));
 			} else {
 				x = Math.max(myWidth / 2, Math.min(myWidth - 1, myEndX));
 			}
 		}
-		final int dX = Math.abs(x - cornerX);
-		final int dY = Math.abs(y - cornerY);
+		final int dX = Math.max(1, Math.abs(x - cornerX));
+		final int dY = Math.max(1, Math.abs(y - cornerY));
 
 		final int x1 = cornerX == 0
 			? (dY * dY / dX + dX) / 2
@@ -87,17 +89,88 @@ class CurlAnimationProvider extends AnimationProvider {
 		canvas.drawPath(path, myEdgePaint);
 	}
 
+	@Override
 	ZLView.PageIndex getPageToScrollTo() {
 		switch (myDirection) {
 			case leftToRight:
-				return myStartX < myWidth / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
-			case rightToLeft:
 				return myStartX < myWidth / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+			case rightToLeft:
+				return myStartX < myWidth / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
 			case up:
 				return myStartY < myHeight / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
 			case down:
 				return myStartY < myHeight / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
 		}
 		return ZLView.PageIndex.current;
+	}
+
+	@Override
+	void doStep() {
+		if (!getMode().Auto) {
+			return;
+		}
+
+		switch (myDirection) {
+			case leftToRight:
+				myEndX -= (int)mySpeed;
+				if (myStartY < myHeight / 2) {
+					myEndY += (int)Math.abs(mySpeed / 2);
+				} else {
+					myEndY -= (int)Math.abs(mySpeed / 2);
+				}
+				break;
+			case rightToLeft:
+				myEndX += (int)mySpeed;
+				if (myStartY < myHeight / 2) {
+					myEndY += (int)Math.abs(mySpeed / 2);
+				} else {
+					myEndY -= (int)Math.abs(mySpeed / 2);
+				}
+				break;
+			case up:
+				myEndY += (int)mySpeed;
+				if (myStartX < myWidth / 2) {
+					myEndX += (int)Math.abs(mySpeed / 2);
+				} else {
+					myEndX -= (int)Math.abs(mySpeed / 2);
+				}
+				break;
+			case down:
+				myEndY -= (int)mySpeed;
+				if (myStartX < myWidth / 2) {
+					myEndX += (int)Math.abs(mySpeed / 2);
+				} else {
+					myEndX -= (int)Math.abs(mySpeed / 2);
+				}
+				break;
+		}
+		final int bound;
+		if (getMode() == Mode.AutoScrollingForward) {
+			bound = myDirection.IsHorizontal ? myWidth : myHeight;
+		} else {
+			bound = 0;
+		}
+		if (mySpeed > 0) {
+			if (getScrollingShift() >= 2 * bound) {
+				if (myDirection.IsHorizontal) {
+					myEndX = myStartX + 2 * bound;
+				} else {
+					myEndY = myStartY + 2 * bound;
+				}
+				terminate();
+				return;
+			}
+		} else {
+			if (getScrollingShift() <= -2 * bound) {
+				if (myDirection.IsHorizontal) {
+					myEndX = myStartX - 2 * bound;
+				} else {
+					myEndY = myStartY - 2 * bound;
+				}
+				terminate();
+				return;
+			}
+		}
+		mySpeed *= 1.5;
 	}
 }

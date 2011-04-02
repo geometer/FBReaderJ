@@ -28,6 +28,7 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 		super(paint);
 	}
 
+	@Override
 	ZLView.PageIndex getPageToScrollTo() {
 		switch (myDirection) {
 			case rightToLeft:
@@ -40,5 +41,55 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 				return myStartY < myEndY ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
 		}
 		return ZLView.PageIndex.current;
+	}
+
+	@Override
+	void doStep() {
+		if (!getMode().Auto) {
+			return;
+		}
+
+		switch (myDirection) {
+			case leftToRight:
+				myEndX -= (int)mySpeed;
+				break;
+			case rightToLeft:
+				myEndX += (int)mySpeed;
+				break;
+			case up:
+				myEndY += (int)mySpeed;
+				break;
+			case down:
+				myEndY -= (int)mySpeed;
+				break;
+		}
+		final int bound;
+		if (getMode() == Mode.AutoScrollingForward) {
+			bound = myDirection.IsHorizontal ? myWidth : myHeight;
+		} else {
+			bound = 0;
+		}
+		if (mySpeed > 0) {
+			if (getScrollingShift() >= bound) {
+				if (myDirection.IsHorizontal) {
+					myEndX = myStartX + bound;
+				} else {
+					myEndY = myStartY + bound;
+				}
+				terminate();
+				return;
+			}
+		} else {
+			if (getScrollingShift() <= -bound) {
+				if (myDirection.IsHorizontal) {
+					myEndX = myStartX - bound;
+				} else {
+					myEndY = myStartY - bound;
+				}
+				terminate();
+				return;
+			}
+		}
+		mySpeed *= 1.5;
 	}
 }

@@ -44,11 +44,10 @@ abstract class AnimationProvider {
 	protected int myEndX;
 	protected int myEndY;
 	protected ZLView.Direction myDirection;
+	protected float mySpeed;
 
 	protected int myWidth;
 	protected int myHeight;
-
-	private float mySpeed;
 
 	protected AnimationProvider(Paint paint) {
 		myPaint = paint;
@@ -91,7 +90,7 @@ abstract class AnimationProvider {
 		return myMode != Mode.NoScrolling;
 	}
 
-	private int getScrollingShift() {
+	protected int getScrollingShift() {
 		return myDirection.IsHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
@@ -105,54 +104,7 @@ abstract class AnimationProvider {
 		myHeight = height;
 	}
 
-	void doStep() {
-		if (!myMode.Auto) {
-			return;
-		}
-
-		switch (myDirection) {
-			case leftToRight:
-				myEndX -= (int)mySpeed;
-				break;
-			case rightToLeft:
-				myEndX += (int)mySpeed;
-				break;
-			case up:
-				myEndY += (int)mySpeed;
-				break;
-			case down:
-				myEndY -= (int)mySpeed;
-				break;
-		}
-		final int bound;
-		if (myMode == Mode.AutoScrollingForward) {
-			bound = myDirection.IsHorizontal ? myWidth : myHeight;
-		} else {
-			bound = 0;
-		}
-		if (mySpeed > 0) {
-			if (getScrollingShift() >= bound) {
-				if (myDirection.IsHorizontal) {
-					myEndX = myStartX + bound;
-				} else {
-					myEndY = myStartY + bound;
-				}
-				terminate();
-				return;
-			}
-		} else {
-			if (getScrollingShift() <= -bound) {
-				if (myDirection.IsHorizontal) {
-					myEndX = myStartX - bound;
-				} else {
-					myEndY = myStartY - bound;
-				}
-				terminate();
-				return;
-			}
-		}
-		mySpeed *= 1.5;
-	}
+	abstract void doStep();
 
 	int getScrolledPercent() {
 		final int full = myDirection.IsHorizontal ? myWidth : myHeight;
