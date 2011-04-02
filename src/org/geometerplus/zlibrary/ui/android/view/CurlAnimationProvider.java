@@ -151,24 +151,32 @@ class CurlAnimationProvider extends AnimationProvider {
 			bound = 0;
 		}
 		if (mySpeed > 0) {
-			if (getScrollingShift() >= 2 * bound) {
-				if (myDirection.IsHorizontal) {
-					myEndX = myStartX + 2 * bound;
-				} else {
-					myEndY = myStartY + 2 * bound;
+			if (myDirection.IsHorizontal) {
+				if (myEndX >= 2 * bound) {
+					myEndX = 2 * bound;
+					terminate();
+					return;
 				}
-				terminate();
-				return;
+			} else {
+				if (myEndY >= 2 * bound) {
+					myEndY = 2 * bound;
+					terminate();
+					return;
+				}
 			}
 		} else {
-			if (getScrollingShift() <= -2 * bound) {
-				if (myDirection.IsHorizontal) {
-					myEndX = myStartX - 2 * bound;
-				} else {
-					myEndY = myStartY - 2 * bound;
+			if (myDirection.IsHorizontal) {
+				if (myEndX <= -2 * bound) {
+					myEndX = -2 * bound;
+					terminate();
+					return;
 				}
-				terminate();
-				return;
+			} else {
+				if (myEndY <= -2 * bound) {
+					myEndY = -2 * bound;
+					terminate();
+					return;
+				}
 			}
 		}
 		mySpeed *= 1.5;
