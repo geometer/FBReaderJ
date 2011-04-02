@@ -75,10 +75,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void scrollViewManually(int startX, int startY, int endX, int endY, boolean horizontally) {
+	protected void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollManually(startX, startY, endX, endY, horizontally);
+		widget.scrollManually(startX, startY, endX, endY, direction);
 	}
 
 	@Override
@@ -89,10 +89,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, boolean horizontally) {
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, horizontally);
+		widget.startAutoScrolling(pageIndex, direction);
 	}
 
 	public void rotate() {

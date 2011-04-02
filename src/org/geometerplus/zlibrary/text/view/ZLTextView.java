@@ -199,13 +199,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myScrollingIsActive = active;
 	}
 
-	public final synchronized void startAutoScrolling(PageIndex pageIndex, boolean horizontally) {
+	public final synchronized void startAutoScrolling(PageIndex pageIndex, Direction direction) {
 		if (isScrollingActive()) {
 			return;
 		}
 
 		setScrollingActive(true);
-		ZLApplication.Instance().startViewAutoScrolling(pageIndex, horizontally);
+		ZLApplication.Instance().startViewAutoScrolling(pageIndex, direction);
 	}
 
 	@Override

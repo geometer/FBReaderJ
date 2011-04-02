@@ -29,8 +29,16 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 	}
 
 	ZLView.PageIndex getPageToScrollTo() {
-		return myHorizontal
-			? (myStartX < myEndX ? ZLView.PageIndex.previous : ZLView.PageIndex.next)
-			: (myStartY < myEndY ? ZLView.PageIndex.previous : ZLView.PageIndex.next);
+		switch (myDirection) {
+			case rightToLeft:
+				return myStartX < myEndX ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+			case leftToRight:
+				return myStartX < myEndX ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+			case up:
+				return myStartY < myEndY ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+			case down:
+				return myStartY < myEndY ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+		}
+		return ZLView.PageIndex.current;
 	}
 }

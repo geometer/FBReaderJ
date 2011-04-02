@@ -29,7 +29,7 @@ class ShiftAnimationProvider extends SimpleAnimationProvider {
 	@Override
 	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		myPaint.setColor(Color.rgb(127, 127, 127));
-		if (myHorizontal) {
+		if (myDirection.isHorizontal()) {
 			final int dX = myEndX - myStartX;
 			canvas.drawBitmap(bgBitmap, dX > 0 ? dX - myWidth : dX + myWidth, 0, myPaint);
 			canvas.drawBitmap(fgBitmap, dX, 0, myPaint);

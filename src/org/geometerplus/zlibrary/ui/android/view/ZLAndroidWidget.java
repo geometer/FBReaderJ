@@ -51,7 +51,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private int myEndY;
 
 	private ZLView.PageIndex myPageToScrollTo = ZLView.PageIndex.current;
-	private boolean myScrollHorizontally;
+	private ZLView.Direction myScrollingDirection;
 
 	private float myScrollingSpeed;
 
@@ -159,20 +159,29 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		boolean doStopScrolling = false;
 		if (myScrollingState == ScrollingState.AutoScrollingForward ||
 			myScrollingState == ScrollingState.AutoScrollingBackward) {
-			if (myScrollHorizontally) {
-				myEndX += (int)myScrollingSpeed;
-			} else {
-				myEndY += (int)myScrollingSpeed;
+			switch (myScrollingDirection) {
+				case leftToRight:
+					myEndX -= (int)myScrollingSpeed;
+					break;
+				case rightToLeft:
+					myEndX += (int)myScrollingSpeed;
+					break;
+				case up:
+					myEndY += (int)myScrollingSpeed;
+					break;
+				case down:
+					myEndY -= (int)myScrollingSpeed;
+					break;
 			}
 			final int bound;
 			if (myScrollingState == ScrollingState.AutoScrollingForward) {
-				bound = myScrollHorizontally ? getWidth() : getMainAreaHeight();
+				bound = myScrollingDirection.isHorizontal() ? getWidth() : getMainAreaHeight();
 			} else {
 				bound = 0;
 			}
 			if (myScrollingSpeed > 0) {
 				if (getAnimationProvider().getScrollingShift() >= bound) {
-					if (myScrollHorizontally) {
+					if (myScrollingDirection.isHorizontal()) {
 						myEndX = myStartX + bound;
 					} else {
 						myEndY = myStartY + bound;
@@ -181,7 +190,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				}
 			} else {
 				if (getAnimationProvider().getScrollingShift() <= -bound) {
-					if (myScrollHorizontally) {
+					if (myScrollingDirection.isHorizontal()) {
 						myEndX = myStartX - bound;
 					} else {
 						myEndY = myStartY - bound;
@@ -211,7 +220,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		getAnimationProvider().setup(
 			myStartX, myStartY,
 			myEndX, myEndY,
-			myScrollHorizontally,
+			myScrollingDirection,
 			getWidth(), getMainAreaHeight()
 		);
 		getAnimationProvider().draw(
@@ -234,13 +243,13 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 	}
 
-	public void scrollManually(int startX, int startY, int endX, int endY, boolean horizontally) {
+	public void scrollManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		if (myMainBitmap == null) {
 			return;
 		}
 
 		myScrollingState = ScrollingState.ManualScrolling;
-		myScrollHorizontally = horizontally;
+		myScrollingDirection = direction;
 		myStartX = startX;
 		myStartY = startY;
 		myEndX = endX;
@@ -249,7 +258,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		getAnimationProvider().setup(
 			startX, startY,
 			endX, endY,
-			horizontally,
+			direction,
 			getWidth(), getMainAreaHeight()
 		);
 		setPageToScrollTo(getAnimationProvider().getPageToScrollTo());
@@ -267,11 +276,11 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		postInvalidate();
 	}
 
-	public void startAutoScrolling(ZLView.PageIndex pageIndex, boolean horizontally) {
+	public void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
 		if (myMainBitmap == null) {
 			return;
 		}
-		myScrollHorizontally = horizontally;
+		myScrollingDirection = direction;
 		boolean doSetup = myScrollingState == ScrollingState.NoScrolling;
 		switch (pageIndex) {
 			case current:
@@ -301,13 +310,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				setPageToScrollTo(pageIndex);
 				break;
 		}
-		System.err.println(doSetup + ":" + myScrollingState);
 		if (doSetup && myScrollingState != ScrollingState.NoScrolling) {
-			//getAnimationProvider().setup(
-			//	myScrollHorizontally,
-			//	getWidth(), getMainAreaHeight()
-			//);
-			if (myScrollHorizontally) {
+			if (myScrollingDirection.isHorizontal()) {
 				myStartX = myScrollingSpeed < 0 ? getWidth() : 0;
 				myStartY = 0;
 			} else {
@@ -319,7 +323,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			getAnimationProvider().setup(
 				myStartX, myStartY,
 				myEndX, myEndY,
-				myScrollHorizontally,
+				myScrollingDirection,
 				getWidth(), getMainAreaHeight()
 			);
 		}
@@ -593,7 +597,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		} else {
 			final int from = view.getScrollbarThumbLength(ZLView.PageIndex.current);
 			final int to = view.getScrollbarThumbLength(myPageToScrollTo);
-			final int size = myScrollHorizontally ? getWidth() : getMainAreaHeight();
+			final int size = myScrollingDirection.isHorizontal() ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(getAnimationProvider().getScrollingShift());
 			return (from * (size - shift) + to * shift) / size;
 		}
@@ -609,7 +613,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		} else {
 			final int from = view.getScrollbarThumbPosition(ZLView.PageIndex.current);
 			final int to = view.getScrollbarThumbPosition(myPageToScrollTo);
-			final int size = myScrollHorizontally ? getWidth() : getMainAreaHeight();
+			final int size = myScrollingDirection.isHorizontal() ? getWidth() : getMainAreaHeight();
 			final int shift = Math.abs(getAnimationProvider().getScrollingShift());
 			return (from * (size - shift) + to * shift) / size;
 		}

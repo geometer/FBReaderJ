@@ -39,7 +39,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		final int oppositeX = Math.abs(myWidth - cornerX);
 		final int oppositeY = Math.abs(myHeight - cornerY);
 		final int x, y;
-		if (myHorizontal) {
+		if (myDirection.isHorizontal()) {
 			x = Math.max(1, Math.min(myWidth - 1, myEndX));
 			if (cornerY == 0) {
 				y = Math.max(1, Math.min(myHeight / 2, myEndY));
@@ -88,8 +88,16 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	ZLView.PageIndex getPageToScrollTo() {
-		return myHorizontal
-			? (myStartX < myWidth / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next)
-			: (myStartY < myHeight / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next);
+		switch (myDirection) {
+			case leftToRight:
+				return myStartX < myWidth / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+			case rightToLeft:
+				return myStartX < myWidth / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+			case up:
+				return myStartY < myHeight / 2 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+			case down:
+				return myStartY < myHeight / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+		}
+		return ZLView.PageIndex.current;
 	}
 }

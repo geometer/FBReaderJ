@@ -68,9 +68,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void scrollViewManually(int startX, int startY, int endX, int endY, boolean horizontally) {
+	public final void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		if (myWindow != null) {
-			myWindow.scrollViewManually(startX, startY, endX, endY, horizontally);
+			myWindow.scrollViewManually(startX, startY, endX, endY, direction);
 		}
 	}
 
@@ -80,9 +80,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, boolean horizontally) {
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
 		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(pageIndex, horizontally);
+			myWindow.startViewAutoScrolling(pageIndex, direction);
 		}
 	}
 

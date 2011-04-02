@@ -29,7 +29,7 @@ abstract class AnimationProvider {
 	protected int myStartY;
 	protected int myEndX;
 	protected int myEndY;
-	protected boolean myHorizontal;
+	protected ZLView.Direction myDirection;
 
 	protected int myWidth;
 	protected int myHeight;
@@ -39,15 +39,15 @@ abstract class AnimationProvider {
 	}
 
 	int getScrollingShift() {
-		return myHorizontal ? myEndX - myStartX : myEndY - myStartY;
+		return myDirection.isHorizontal() ? myEndX - myStartX : myEndY - myStartY;
 	}
 
-	void setup(int startX, int startY, int endX, int endY, boolean horizontal, int width, int height) {
+	void setup(int startX, int startY, int endX, int endY, ZLView.Direction direction, int width, int height) {
 		myStartX = startX;
 		myStartY = startY;
 		myEndX = endX;
 		myEndY = endY;
-		myHorizontal = horizontal;
+		myDirection = direction;
 		myWidth = width;
 		myHeight = height;
 	}

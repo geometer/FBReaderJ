@@ -61,6 +61,7 @@ class TurnPageAction extends FBAction {
 			view.startAutoScrolling(
 				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 				preferences.HorizontalOption.getValue()
+					? FBView.Direction.rightToLeft : FBView.Direction.up
 			);
 		} else {
 			view.scrollPage(myForward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
