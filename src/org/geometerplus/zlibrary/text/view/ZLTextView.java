@@ -1310,7 +1310,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private boolean myHighlightSelectedRegion = true;
 
 	public void hideSelectedRegionBorder() {
-		System.err.println("set to false");
 		myHighlightSelectedRegion = false;
 	}
 
@@ -1344,7 +1343,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	protected void selectRegion(ZLTextElementRegion region) {
 		if (region == null || !region.equals(mySelectedRegion)) {
-			System.err.println("set to true 1");
 			myHighlightSelectedRegion = true;
 		}
 		mySelectedRegion = region;
@@ -1352,7 +1350,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public void resetRegionPointer() {
 		mySelectedRegion = null;
-		System.err.println("set to true 2");
 		myHighlightSelectedRegion = true;
 	}
 

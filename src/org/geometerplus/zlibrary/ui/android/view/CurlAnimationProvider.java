@@ -131,21 +131,7 @@ class CurlAnimationProvider extends AnimationProvider {
 
 	@Override
 	void startAutoScrolling(boolean forward, float speed, ZLView.Direction direction, int w, int h, Integer x, Integer y) {
-		if (x != null) {
-			if (x < w / 2) {
-				x = Math.min(x, w / 5);
-			} else {
-				x = Math.max(x, 4 * w / 5);
-			}
-		}
-		if (y != null) {
-			if (y < h / 2) {
-				y = Math.min(y, h / 5);
-			} else {
-				y = Math.max(y, 4 * h / 5);
-			}
-		}
-		if (x == null && y == null) {
+		if (x == null || y == null) {
 			if (direction.IsHorizontal) {
 				x = speed < 0 ? w - 3 : 3;
 				y = 1;
@@ -153,6 +139,18 @@ class CurlAnimationProvider extends AnimationProvider {
 				x = 1;
 				y = speed < 0 ? h  - 3 : 3;
 			}
+		} else {
+			final int cornerX = x > myWidth / 2 ? myWidth : 0;
+			final int cornerY = y > myHeight / 2 ? myHeight : 0;
+			int deltaX = Math.min(Math.abs(x - cornerX), w / 5);
+			int deltaY = Math.min(Math.abs(y - cornerY), h / 5);
+			if (direction.IsHorizontal) {
+				deltaY = Math.min(deltaY, deltaX / 3);
+			} else {
+				deltaX = Math.min(deltaX, deltaY / 3);
+			}
+			x = Math.abs(cornerX - deltaX);
+			y = Math.abs(cornerY - deltaY);
 		}
 		super.startAutoScrolling(forward, speed, direction, w, h, x, y);
 	}
