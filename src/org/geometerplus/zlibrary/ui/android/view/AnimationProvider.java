@@ -24,7 +24,7 @@ import android.graphics.*;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 abstract class AnimationProvider {
-	static enum ScrollingMode {
+	static enum Mode {
 		NoScrolling(false),
 		ManualScrolling(false),
 		AutoScrollingForward(true),
@@ -32,11 +32,11 @@ abstract class AnimationProvider {
 
 		final boolean Auto;
 
-		ScrollingMode(boolean auto) {
+		Mode(boolean auto) {
 			Auto = auto;
 		}
 	}
-	private ScrollingMode myMode = ScrollingMode.NoScrolling;
+	private Mode myMode = Mode.NoScrolling;
 	
 	protected final Paint myPaint;
 	protected int myStartX;
@@ -54,17 +54,18 @@ abstract class AnimationProvider {
 		myPaint = paint;
 	}
 
-	ScrollingMode getScrollingMode() {
+	Mode getMode() {
 		return myMode;
 	}
 
-	void setScrollingMode(ScrollingMode state) {
-		myMode = state;
+	void terminate() {
+		myMode = Mode.NoScrolling;
+		mySpeed = 0;
 	}
 
-	void terminate() {
-		myMode = ScrollingMode.NoScrolling;
-		mySpeed = 0;
+	void startManualScrolling(int startX, int startY, int endX, int endY, ZLView.Direction direction, int w, int h) {
+		myMode = Mode.ManualScrolling;
+		setup(startX, startY, endX, endY, direction, w, h);
 	}
 
 	void startAutoScrolling(boolean forward, float speed, ZLView.Direction direction, int w, int h) {
@@ -81,20 +82,20 @@ abstract class AnimationProvider {
 		}
 
 		myMode = forward
-			? ScrollingMode.AutoScrollingForward
-			: ScrollingMode.AutoScrollingBackward;
+			? Mode.AutoScrollingForward
+			: Mode.AutoScrollingBackward;
 		mySpeed = speed;
 	}
 
 	boolean inProgress() {
-		return myMode != ScrollingMode.NoScrolling;
+		return myMode != Mode.NoScrolling;
 	}
 
 	private int getScrollingShift() {
 		return myDirection.IsHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
-	void setup(int startX, int startY, int endX, int endY, ZLView.Direction direction, int width, int height) {
+	private void setup(int startX, int startY, int endX, int endY, ZLView.Direction direction, int width, int height) {
 		myStartX = startX;
 		myStartY = startY;
 		myEndX = endX;
@@ -124,7 +125,7 @@ abstract class AnimationProvider {
 				break;
 		}
 		final int bound;
-		if (myMode == ScrollingMode.AutoScrollingForward) {
+		if (myMode == Mode.AutoScrollingForward) {
 			bound = myDirection.IsHorizontal ? myWidth : myHeight;
 		} else {
 			bound = 0;

@@ -141,11 +141,11 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final int h = getMainAreaHeight();
 
 		final AnimationProvider animator = getAnimationProvider();
-		final AnimationProvider.ScrollingMode oldMode = animator.getScrollingMode();
+		final AnimationProvider.Mode oldMode = animator.getMode();
 		animator.doStep();
 		if (animator.inProgress()) {
 			animator.draw(canvas, mySecondaryBitmap, myMainBitmap);
-			if (animator.getScrollingMode().Auto) {
+			if (animator.getMode().Auto) {
 				postInvalidate();
 			}
 			drawFooter(canvas);
@@ -181,9 +181,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			return;
 		}
 
-		getAnimationProvider().setScrollingMode(AnimationProvider.ScrollingMode.ManualScrolling);
-
-		getAnimationProvider().setup(
+		getAnimationProvider().startManualScrolling(
 			startX, startY,
 			endX, endY,
 			direction,
