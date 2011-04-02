@@ -24,6 +24,20 @@ import android.graphics.*;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 abstract class AnimationProvider {
+	static enum ScrollingMode {
+		NoScrolling(false),
+		ManualScrolling(false),
+		AutoScrollingForward(true),
+		AutoScrollingBackward(true);
+
+		final boolean Auto;
+
+		ScrollingMode(boolean auto) {
+			Auto = auto;
+		}
+	}
+	private ScrollingMode myScrollingMode = ScrollingMode.NoScrolling;
+	
 	protected final Paint myPaint;
 	protected int myStartX;
 	protected int myStartY;
@@ -38,8 +52,24 @@ abstract class AnimationProvider {
 		myPaint = paint;
 	}
 
+	ScrollingMode getScrollingMode() {
+		return myScrollingMode;
+	}
+
+	void setScrollingMode(ScrollingMode state) {
+		myScrollingMode = state;
+	}
+
+	void terminate() {
+		myScrollingMode = ScrollingMode.NoScrolling;
+	}
+
+	boolean inProgress() {
+		return myScrollingMode != ScrollingMode.NoScrolling;
+	}
+
 	int getScrollingShift() {
-		return myDirection.isHorizontal() ? myEndX - myStartX : myEndY - myStartY;
+		return myDirection.IsHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
 	void setup(int startX, int startY, int endX, int endY, ZLView.Direction direction, int width, int height) {

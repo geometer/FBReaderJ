@@ -39,14 +39,10 @@ abstract public class ZLView {
 	public static enum Direction {
 		leftToRight(true), rightToLeft(true), up(false), down(false);
 
-		private final boolean myIsHorizontal;
+		public final boolean IsHorizontal;
 
 		Direction(boolean isHorizontal) {
-			myIsHorizontal = isHorizontal;
-		}
-
-		public boolean isHorizontal() {
-			return myIsHorizontal;
+			IsHorizontal = isHorizontal;
 		}
 	};
 	public static enum Animation {

@@ -30,7 +30,7 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
 		myPaint.setColor(Color.rgb(127, 127, 127));
-		if (myDirection.isHorizontal()) {
+		if (myDirection.IsHorizontal) {
 			final int dX = myEndX - myStartX;
 			canvas.drawBitmap(fgBitmap, dX, 0, myPaint);
 			if (dX > 0 && dX < myWidth) {

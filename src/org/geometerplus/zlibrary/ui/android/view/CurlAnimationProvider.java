@@ -39,7 +39,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		final int oppositeX = Math.abs(myWidth - cornerX);
 		final int oppositeY = Math.abs(myHeight - cornerY);
 		final int x, y;
-		if (myDirection.isHorizontal()) {
+		if (myDirection.IsHorizontal) {
 			x = Math.max(1, Math.min(myWidth - 1, myEndX));
 			if (cornerY == 0) {
 				y = Math.max(1, Math.min(myHeight / 2, myEndY));
