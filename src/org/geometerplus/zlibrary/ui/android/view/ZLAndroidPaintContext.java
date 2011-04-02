@@ -74,9 +74,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			try {
 				final Bitmap fileBitmap =
 					BitmapFactory.decodeStream(wallpaperFile.getInputStream());
-				final int w = fileBitmap.getWidth();
-				final int h = fileBitmap.getHeight();
 				if (doMirror) {
+					final int w = fileBitmap.getWidth();
+					final int h = fileBitmap.getHeight();
 					final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
 					for (int i = 0; i < w; ++i) {
 						for (int j = 0; j < h; ++j) {
@@ -91,21 +91,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 				} else {
 					ourWallpaper = fileBitmap;
 				}
-				long r = 0, g = 0, b = 0;
-				for (int i = 0; i < w; ++i) {
-					for (int j = 0; j < h; ++j) {
-						int color = fileBitmap.getPixel(i, j);
-						r += color & 0xFF0000;
-						g += color & 0xFF00;
-						b += color & 0xFF;
-					}
-				}
-				r /= w * h;
-				g /= w * h;
-				b /= w * h;
-				r >>= 16;
-				g >>= 8;
-				ourFillColor = Color.rgb((int)r, (int)g, (int)b);
 			} catch (Throwable t) {
 				t.printStackTrace();
 			}
@@ -126,7 +111,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	@Override
 	public void clear(ZLColor color) {
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
-		ourFillColor = myFillPaint.getColor();
 		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
 	}
 
@@ -220,11 +204,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public void setFillColor(ZLColor color, int style) {
 		// TODO: use style
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
-	}
-
-	private static int ourFillColor;
-	static int getFillColor() {
-		return ourFillColor;
 	}
 
 	public int getWidth() {

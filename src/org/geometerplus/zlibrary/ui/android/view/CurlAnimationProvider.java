@@ -28,6 +28,10 @@ class CurlAnimationProvider extends AnimationProvider {
 
 	CurlAnimationProvider(Paint paint) {
 		super(paint);
+
+		myEdgePaint.setAntiAlias(true);
+		myEdgePaint.setStyle(Paint.Style.FILL);
+		myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
 	}
 
 	@Override
@@ -77,10 +81,25 @@ class CurlAnimationProvider extends AnimationProvider {
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 		canvas.restore();
         
-		myEdgePaint.setColor(ZLAndroidPaintContext.getFillColor());
-		myEdgePaint.setAntiAlias(true);
-		myEdgePaint.setStyle(Paint.Style.FILL);
-		myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
+		{
+			final int w = Math.min(fgBitmap.getWidth(), 10);
+			final int h = Math.min(fgBitmap.getHeight(), 10);
+			long r = 0, g = 0, b = 0;
+			for (int i = 0; i < w; ++i) {
+				for (int j = 0; j < h; ++j) {
+					int color = fgBitmap.getPixel(i, j);
+					r += color & 0xFF0000;
+					g += color & 0xFF00;
+					b += color & 0xFF;
+				}
+			}
+			r /= w * h;
+			g /= w * h;
+			b /= w * h;
+			r >>= 16;
+			g >>= 8;
+			myEdgePaint.setColor(Color.rgb((int)r, (int)g, (int)b));
+		}
         
 		final Path path = new Path();
 		path.moveTo(x1, cornerY);
