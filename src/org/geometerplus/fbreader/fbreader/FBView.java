@@ -182,13 +182,14 @@ public final class FBView extends ZLTextView {
 			if (isScrollingActive() && myIsManualScrollingActive) {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
+				final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
 				if (diff > 0) {
 					final ZLTextWordCursor cursor = getStartCursor();
 					if (cursor == null || cursor.isNull()) {
 						return false;
 					}
 					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
-						myReader.scrollViewManually(myStartX, myStartY, x, y, Direction.rightToLeft);
+						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 					}
 				} else if (diff < 0) {
 					final ZLTextWordCursor cursor = getEndCursor();
@@ -196,7 +197,7 @@ public final class FBView extends ZLTextView {
 						return false;
 					}
 					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
-						myReader.scrollViewManually(myStartX, myStartY, x, y, Direction.up);
+						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 					}
 				} else {
 					myReader.scrollViewToCenter();
