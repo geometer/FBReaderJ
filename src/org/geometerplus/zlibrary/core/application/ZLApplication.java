@@ -86,6 +86,12 @@ public abstract class ZLApplication {
 		}
 	}
 
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y) {
+		if (myWindow != null) {
+			myWindow.startViewAutoScrolling(pageIndex, direction, x, y);
+		}
+	}
+
 	public final void onRepaintFinished() {
 		if (myWindow != null) {
 			myWindow.refreshMenu();
@@ -117,6 +123,13 @@ public abstract class ZLApplication {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
 			action.checkAndRun();
+		}
+	}
+
+	public final void doActionWithCoordinates(String actionId, int x, int y) {
+		final ZLAction action = myIdToActionMap.get(actionId);
+		if (action != null && action.isEnabled()) {
+			action.runWithCoordinates(x, y);
 		}
 	}
 
@@ -182,6 +195,10 @@ public abstract class ZLApplication {
 		}
 
 		abstract protected void run();
+
+		protected void runWithCoordinates(int x, int y) {
+			run();
+		}
 	}
 
 	static public interface ButtonPanel {

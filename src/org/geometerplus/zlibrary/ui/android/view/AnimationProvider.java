@@ -67,15 +67,16 @@ abstract class AnimationProvider {
 		setup(startX, startY, endX, endY, direction, w, h);
 	}
 
-	void startAutoScrolling(boolean forward, float speed, ZLView.Direction direction, int w, int h) {
+	void startAutoScrolling(boolean forward, float speed, ZLView.Direction direction, int w, int h, Integer x, Integer y) {
 		if (!inProgress()) {
-			final int x, y;
-			if (direction.IsHorizontal) {
-				x = speed < 0 ? w : 0;
-				y = 0;
-			} else {
-				x = 0;
-				y = speed < 0 ? h : 0;
+			if (x == null || y == null) {
+				if (direction.IsHorizontal) {
+					x = speed < 0 ? w : 0;
+					y = 0;
+				} else {
+					x = 0;
+					y = speed < 0 ? h : 0;
+				}
 			}
 			setup(x, y, x, y, direction, w, h);
 		}

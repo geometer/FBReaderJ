@@ -98,10 +98,10 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		myReader.doAction(getZoneMap().getActionByCoordinates(
+		myReader.doActionWithCoordinates(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
-		));
+		), x, y);
 
 		return true;
 	}
@@ -116,9 +116,9 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
-		myReader.doAction(getZoneMap().getActionByCoordinates(
+		myReader.doActionWithCoordinates(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(), TapZoneMap.Tap.doubleTap
-		));
+		), x, y);
 		return true;
 	}
 
