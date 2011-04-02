@@ -90,7 +90,7 @@ abstract class AnimationProvider {
 		return myMode != ScrollingMode.NoScrolling;
 	}
 
-	int getScrollingShift() {
+	private int getScrollingShift() {
 		return myDirection.IsHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
@@ -151,6 +151,12 @@ abstract class AnimationProvider {
 			}
 		}
 		mySpeed *= 1.5;
+	}
+
+	int getScrolledPercent() {
+		final int full = myDirection.IsHorizontal ? myWidth : myHeight;
+		final int shift = Math.abs(getScrollingShift());
+		return 100 * shift / full;
 	}
 
 	abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
