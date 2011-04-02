@@ -37,15 +37,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private boolean mySecondaryBitmapIsUpToDate;
 	private Bitmap myFooterBitmap;
 
-	private int myStartX;
-	private int myStartY;
-	private int myEndX;
-	private int myEndY;
-
 	private ZLView.PageIndex myPageToScrollTo = ZLView.PageIndex.current;
 	private ZLView.Direction myScrollingDirection;
-
-	private float myScrollingSpeed;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -142,51 +135,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		return myAnimationProvider;
 	}
 
-	private void doStep() {
-		switch (myScrollingDirection) {
-			case leftToRight:
-				myEndX -= (int)myScrollingSpeed;
-				break;
-			case rightToLeft:
-				myEndX += (int)myScrollingSpeed;
-				break;
-			case up:
-				myEndY += (int)myScrollingSpeed;
-				break;
-			case down:
-				myEndY -= (int)myScrollingSpeed;
-				break;
-		}
-		final int bound;
-		if (getAnimationProvider().getScrollingMode() == AnimationProvider.ScrollingMode.AutoScrollingForward) {
-			bound = myScrollingDirection.IsHorizontal ? getWidth() : getMainAreaHeight();
-		} else {
-			bound = 0;
-		}
-		if (myScrollingSpeed > 0) {
-			if (getAnimationProvider().getScrollingShift() >= bound) {
-				if (myScrollingDirection.IsHorizontal) {
-					myEndX = myStartX + bound;
-				} else {
-					myEndY = myStartY + bound;
-				}
-				getAnimationProvider().terminate();
-				return;
-			}
-		} else {
-			if (getAnimationProvider().getScrollingShift() <= -bound) {
-				if (myScrollingDirection.IsHorizontal) {
-					myEndX = myStartX - bound;
-				} else {
-					myEndY = myStartY - bound;
-				}
-				getAnimationProvider().terminate();
-				return;
-			}
-		}
-		myScrollingSpeed *= 1.5;
-	}
-
 	private void onDrawInScrolling(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 
@@ -194,30 +142,28 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final int h = getMainAreaHeight();
 
 		final AnimationProvider animator = getAnimationProvider();
-		final AnimationProvider.ScrollingMode mode = animator.getScrollingMode();
-		if (mode.Auto) {
-			doStep();
-		}
+		final AnimationProvider.ScrollingMode oldMode = animator.getScrollingMode();
+		animator.doStep();
 		if (animator.inProgress()) {
-			animator.setup(
-				myStartX, myStartY, myEndX, myEndY,
-				myScrollingDirection,
-				getWidth(), getMainAreaHeight()
-			);
 			animator.draw(canvas, mySecondaryBitmap, myMainBitmap);
 			if (animator.getScrollingMode().Auto) {
 				postInvalidate();
 			}
 			drawFooter(canvas);
 		} else {
-			if (mode == AnimationProvider.ScrollingMode.AutoScrollingForward) {
-				Bitmap swap = myMainBitmap;
-				myMainBitmap = mySecondaryBitmap;
-				mySecondaryBitmap = swap;
-				view.onScrollingFinished(myPageToScrollTo);
-				ZLApplication.Instance().onRepaintFinished();
-			} else {
-				view.onScrollingFinished(ZLView.PageIndex.current);
+			switch (oldMode) {
+				case AutoScrollingForward:
+				{
+					final Bitmap swap = myMainBitmap;
+					myMainBitmap = mySecondaryBitmap;
+					mySecondaryBitmap = swap;
+					view.onScrollingFinished(myPageToScrollTo);
+					ZLApplication.Instance().onRepaintFinished();
+					break;
+				}
+				case AutoScrollingBackward:
+					view.onScrollingFinished(ZLView.PageIndex.current);
+					break;
 			}
 			setPageToScrollTo(ZLView.PageIndex.current);
 			onDrawStatic(canvas);
@@ -238,10 +184,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 
 		getAnimationProvider().setScrollingMode(AnimationProvider.ScrollingMode.ManualScrolling);
 		myScrollingDirection = direction;
-		myStartX = startX;
-		myStartY = startY;
-		myEndX = endX;
-		myEndY = endY;
 
 		getAnimationProvider().setup(
 			startX, startY,
@@ -276,45 +218,23 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				switch (myPageToScrollTo) {
 					case current:
 						animator.terminate();
-						myScrollingSpeed = 0;
 						break;
 					case previous:
-						animator.setScrollingMode(AnimationProvider.ScrollingMode.AutoScrollingBackward);
-						myScrollingSpeed = -3;
+						animator.startAutoScrolling(false, -3, direction, getWidth(), getMainAreaHeight());
 						break;
 					case next:
-						animator.setScrollingMode(AnimationProvider.ScrollingMode.AutoScrollingBackward);
-						myScrollingSpeed = 3;
+						animator.startAutoScrolling(false, 3, direction, getWidth(), getMainAreaHeight());
 						break;
 				}
 				break;
 			case previous:
-				animator.setScrollingMode(AnimationProvider.ScrollingMode.AutoScrollingForward);
-				myScrollingSpeed = 3;
+				animator.startAutoScrolling(true, 3, direction, getWidth(), getMainAreaHeight());
 				setPageToScrollTo(pageIndex);
 				break;
 			case next:
-				animator.setScrollingMode(AnimationProvider.ScrollingMode.AutoScrollingForward);
-				myScrollingSpeed = -3;
+				animator.startAutoScrolling(true, -3, direction, getWidth(), getMainAreaHeight());
 				setPageToScrollTo(pageIndex);
 				break;
-		}
-		if (doSetup && animator.inProgress()) {
-			if (myScrollingDirection.IsHorizontal) {
-				myStartX = myScrollingSpeed < 0 ? getWidth() : 0;
-				myStartY = 0;
-			} else {
-				myStartX = 0;
-				myStartY = myScrollingSpeed < 0 ? getMainAreaHeight() : 0;
-			}
-			myEndX = myStartX;
-			myEndY = myStartY;
-			getAnimationProvider().setup(
-				myStartX, myStartY,
-				myEndX, myEndY,
-				myScrollingDirection,
-				getWidth(), getMainAreaHeight()
-			);
 		}
 		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();

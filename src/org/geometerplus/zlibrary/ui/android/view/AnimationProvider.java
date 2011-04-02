@@ -36,7 +36,7 @@ abstract class AnimationProvider {
 			Auto = auto;
 		}
 	}
-	private ScrollingMode myScrollingMode = ScrollingMode.NoScrolling;
+	private ScrollingMode myMode = ScrollingMode.NoScrolling;
 	
 	protected final Paint myPaint;
 	protected int myStartX;
@@ -48,24 +48,46 @@ abstract class AnimationProvider {
 	protected int myWidth;
 	protected int myHeight;
 
+	private float mySpeed;
+
 	protected AnimationProvider(Paint paint) {
 		myPaint = paint;
 	}
 
 	ScrollingMode getScrollingMode() {
-		return myScrollingMode;
+		return myMode;
 	}
 
 	void setScrollingMode(ScrollingMode state) {
-		myScrollingMode = state;
+		myMode = state;
 	}
 
 	void terminate() {
-		myScrollingMode = ScrollingMode.NoScrolling;
+		myMode = ScrollingMode.NoScrolling;
+		mySpeed = 0;
+	}
+
+	void startAutoScrolling(boolean forward, float speed, ZLView.Direction direction, int w, int h) {
+		if (!inProgress()) {
+			final int x, y;
+			if (direction.IsHorizontal) {
+				x = speed < 0 ? w : 0;
+				y = 0;
+			} else {
+				x = 0;
+				y = speed < 0 ? h : 0;
+			}
+			setup(x, y, x, y, direction, w, h);
+		}
+
+		myMode = forward
+			? ScrollingMode.AutoScrollingForward
+			: ScrollingMode.AutoScrollingBackward;
+		mySpeed = speed;
 	}
 
 	boolean inProgress() {
-		return myScrollingMode != ScrollingMode.NoScrolling;
+		return myMode != ScrollingMode.NoScrolling;
 	}
 
 	int getScrollingShift() {
@@ -80,6 +102,55 @@ abstract class AnimationProvider {
 		myDirection = direction;
 		myWidth = width;
 		myHeight = height;
+	}
+
+	void doStep() {
+		if (!myMode.Auto) {
+			return;
+		}
+
+		switch (myDirection) {
+			case leftToRight:
+				myEndX -= (int)mySpeed;
+				break;
+			case rightToLeft:
+				myEndX += (int)mySpeed;
+				break;
+			case up:
+				myEndY += (int)mySpeed;
+				break;
+			case down:
+				myEndY -= (int)mySpeed;
+				break;
+		}
+		final int bound;
+		if (myMode == ScrollingMode.AutoScrollingForward) {
+			bound = myDirection.IsHorizontal ? myWidth : myHeight;
+		} else {
+			bound = 0;
+		}
+		if (mySpeed > 0) {
+			if (getScrollingShift() >= bound) {
+				if (myDirection.IsHorizontal) {
+					myEndX = myStartX + bound;
+				} else {
+					myEndY = myStartY + bound;
+				}
+				terminate();
+				return;
+			}
+		} else {
+			if (getScrollingShift() <= -bound) {
+				if (myDirection.IsHorizontal) {
+					myEndX = myStartX - bound;
+				} else {
+					myEndY = myStartY - bound;
+				}
+				terminate();
+				return;
+			}
+		}
+		mySpeed *= 1.5;
 	}
 
 	abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
