@@ -145,7 +145,16 @@ class CurlAnimationProvider extends AnimationProvider {
 				y = Math.max(y, 4 * h / 5);
 			}
 		}
-		super.startAutoScrolling(forward, Math.abs(speed), direction, w, h, x, y);
+		if (x == null && y == null) {
+			if (direction.IsHorizontal) {
+				x = speed < 0 ? w - 3 : 3;
+				y = 1;
+			} else {
+				x = 1;
+				y = speed < 0 ? h  - 3 : 3;
+			}
+		}
+		super.startAutoScrolling(forward, speed, direction, w, h, x, y);
 	}
 
 	@Override
@@ -154,56 +163,66 @@ class CurlAnimationProvider extends AnimationProvider {
 			return;
 		}
 
-		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
-		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;
-		final int speed = (int)mySpeed;
+		final int speed = (int)Math.abs(mySpeed);
 		mySpeed *= 1.5;
 
+		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
+		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;
+
 		final int boundX, boundY;
-		final boolean xOver, yOver;
 		if (getMode() == Mode.AutoScrollingForward) {
-			if (cornerX == 0) {
-				myEndX += speed;
-				boundX = 2 * myWidth;
-				xOver = myEndX >= boundX;
-			} else {
-				myEndX -= speed;
-				boundX = - myWidth;
-				xOver = myEndX <= boundX;
-			}
-			if (cornerY == 0) {
-				myEndY += speed;
-				boundY = 2 * myHeight;
-				yOver = myEndY >= boundY;
-			} else {
-				myEndY -= speed;
-				boundY = - myHeight;
-				yOver = myEndY <= boundY;
-			}
+			boundX = cornerX == 0 ? 2 * myWidth : -myWidth;
+			boundY = cornerY == 0 ? 2 * myHeight : -myHeight;
 		} else {
 			boundX = cornerX;
 			boundY = cornerY;
-			if (cornerX == 0) {
-				myEndX -= speed;
-				xOver = myEndX <= boundX;
-			} else {
-				myEndX += speed;
-				xOver = myEndX >= boundX;
+		}
+
+		final int deltaX = Math.abs(myEndX - cornerX);
+		final int deltaY = Math.abs(myEndY - cornerY);
+		final int speedX, speedY;
+		if (deltaX == 0 || deltaY == 0) {
+			speedX = speed;
+			speedY = speed;
+		} else if (deltaX < deltaY) {
+			speedX = speed;
+			speedY = speed * deltaY / deltaX;
+		} else {
+			speedX = speed * deltaX / deltaY;
+			speedY = speed;
+		}
+
+		final boolean xSpeedIsPositive, ySpeedIsPositive;
+		if (getMode() == Mode.AutoScrollingForward) {
+			xSpeedIsPositive = cornerX == 0;
+			ySpeedIsPositive = cornerY == 0;
+		} else {
+			xSpeedIsPositive = cornerX != 0;
+			ySpeedIsPositive = cornerY != 0;
+		}
+
+		if (xSpeedIsPositive) {
+			myEndX += speedX;
+			if (myEndX >= boundX) {
+				terminate();
 			}
-			if (cornerY == 0) {
-				myEndY -= speed;
-				yOver = myEndY <= boundY;
-			} else {
-				myEndY += speed;
-				yOver = myEndY >= boundY;
+		} else {
+			myEndX -= speedX;
+			if (myEndX <= boundX) {
+				terminate();
 			}
 		}
-		if (xOver && yOver) {
-			terminate();
-		} else if (xOver) {
-			myEndX = boundX;
-		} else if (yOver) {
-			myEndY = boundY;
+
+		if (ySpeedIsPositive) {
+			myEndY += speedY;
+			if (myEndY >= boundY) {
+				terminate();
+			}
+		} else {
+			myEndY -= speedY;
+			if (myEndY <= boundY) {
+				terminate();
+			}
 		}
 	}
 }

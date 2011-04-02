@@ -328,7 +328,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		final ZLTextElementRegion selectedElementRegion = getCurrentElementRegion(page);
-		if (selectedElementRegion != null) {
+		if (selectedElementRegion != null && myHighlightSelectedRegion) {
 			selectedElementRegion.draw(context);
 		}
 	}
@@ -1307,6 +1307,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private ZLTextElementRegion mySelectedRegion;
+	private boolean myHighlightSelectedRegion = true;
+
+	public void hideSelectedRegionBorder() {
+		System.err.println("set to false");
+		myHighlightSelectedRegion = false;
+	}
 
 	private ZLTextElementRegion getCurrentElementRegion(ZLTextPage page) {
 		final ArrayList<ZLTextElementRegion> elementRegions = page.TextElementMap.ElementRegions;
@@ -1337,11 +1343,17 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected void selectRegion(ZLTextElementRegion region) {
+		if (region == null || !region.equals(mySelectedRegion)) {
+			System.err.println("set to true 1");
+			myHighlightSelectedRegion = true;
+		}
 		mySelectedRegion = region;
 	}
 
 	public void resetRegionPointer() {
 		mySelectedRegion = null;
+		System.err.println("set to true 2");
+		myHighlightSelectedRegion = true;
 	}
 
 	protected ZLTextElementRegion currentRegion() {
