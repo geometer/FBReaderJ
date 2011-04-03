@@ -451,10 +451,6 @@
 					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
 				</node>
-				<node name="footerLongTap" value="Footer long tap" toBeTranslated="true">
-					<node name="longTapRevert" value="Revert position" toBeTranslated="true"/>
-					<node name="longTapNavigate" value="Go to position" toBeTranslated="true"/>
-				</node>
 				<node name="showProgress" value="Show page number" toBeTranslated="true">
 					<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
@@ -511,6 +507,7 @@
 				</node>
 				<node name="animation" value="Animation" toBeTranslated="true">
 					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>

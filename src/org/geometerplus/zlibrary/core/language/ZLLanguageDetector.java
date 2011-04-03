@@ -86,7 +86,7 @@ public class ZLLanguageDetector {
 		//myChineseMatchers.add(new ZLChineseGBKMatcher());
 	}
 
-	enum EncodingType { ASCII, UTF8, OTHER 
+	static enum EncodingType { ASCII, UTF8, OTHER 
 	};
 	
 	public LanguageInfo findInfo(byte[] buffer, int length, int matchingCriterion) {

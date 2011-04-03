@@ -454,10 +454,6 @@
 					<node name="summaryOn" value="Afficher les repères dans la barre du pied de page"/>
 					<node name="summaryOff" value="Ne pas afficher les repères dans la barre du pied de page"/>
 				</node>
-				<node name="footerLongTap" value="Appui long sur pied de page">
-					<node name="longTapRevert" value="Annuler position"/>
-					<node name="longTapNavigate" value="Aller à la position"/>
-				</node>
 				<node name="showProgress" value="Afficher le numéro de page">
 					<node name="summaryOn" value="Affiche le numéro de la page dans le pied de page"/>
 					<node name="summaryOff" value="N'affiche page le numéro de page"/>
@@ -514,6 +510,7 @@
 				</node>
 				<node name="animation" value="Animation" toBeTranslated="true">
 					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>

@@ -451,10 +451,6 @@
 					<node name="summaryOn" value="Hiện đánh dấu mục lục ở thanh cuối trang"/>
 					<node name="summaryOff" value="Không Hiện đánh dấu mục lục ở thanh cuối trang"/>
 				</node>
-				<node name="footerLongTap" value="Footer long tap">
-					<node name="longTapRevert" value="Quay lại vị trí"/>
-					<node name="longTapNavigate" value="Đến vị trí"/>
-				</node>
 				<node name="showProgress" value="Hiện số trang">
 					<node name="summaryOn" value="Hiện số trang ở dòng cuối"/>
 					<node name="summaryOff" value="Đừng hiện số trang ở dòng cuối"/>
@@ -511,6 +507,7 @@
 				</node>
 				<node name="animation" value="Animation" toBeTranslated="true">
 					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>

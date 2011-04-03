@@ -37,7 +37,6 @@ public class DocCompressedFileImage extends ZLSingleImage {
 		myCompressedSize = compressedSize;
 	}
 
-	@Override
 	public String getURI() {
 		// TODO: implement
 		return null;

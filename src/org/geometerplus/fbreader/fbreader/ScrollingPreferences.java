@@ -30,7 +30,7 @@ public class ScrollingPreferences {
 		return (ourInstance != null) ? ourInstance : new ScrollingPreferences();
 	}
 
-	public enum FingerScrolling {
+	public static enum FingerScrolling {
 		byTap, byFlick, byTapAndFlick
 	}
 	public final ZLEnumOption<FingerScrolling> FingerScrollingOption =
@@ -46,7 +46,7 @@ public class ScrollingPreferences {
 
 	public final ZLBooleanOption HorizontalOption =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public enum TapZonesScheme {
+	public static enum TapZonesScheme {
 		left_to_right, right_to_left, up, down, custom
 	}
 	public final ZLEnumOption<TapZonesScheme> TapZonesSchemeOption =

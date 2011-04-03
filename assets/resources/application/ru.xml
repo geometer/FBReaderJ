@@ -450,10 +450,6 @@
 					<node name="summaryOn" value="Рисовать пометку на подвале в начале главы"/>
 					<node name="summaryOff" value="Подвал без пометок"/>
 				</node>
-				<node name="footerLongTap" value="Придержать подвал">
-					<node name="longTapRevert" value="Откатить переход"/>
-					<node name="longTapNavigate" value="Сделать переход"/>
-				</node>
 				<node name="showProgress" value="Показывать число страниц">
 					<node name="summaryOn" value="Показывать число страниц в подвале"/>
 					<node name="summaryOff" value="Не показывать число страниц в подвале"/>
@@ -510,6 +506,7 @@
 				</node>
 				<node name="animation" value="Анимация">
 					<node name="none" value="Выключить анимацию"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Сдвиг с перекрытием"/>
 					<node name="shift" value="Сдвиг"/>
 				</node>

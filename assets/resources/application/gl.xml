@@ -451,10 +451,6 @@
 					<node name="summaryOn" value="Mostrar as marcas do índice na barra do rodapé"/>
 					<node name="summaryOff" value="Non mostrar as marcas do índice na barra do rodapé"/>
 				</node>
-				<node name="footerLongTap" value="Pulsación longa no rodapé">
-					<node name="longTapRevert" value="Reverter á posición"/>
-					<node name="longTapNavigate" value="Ira á posición"/>
-				</node>
 				<node name="showProgress" value="Mostrar número de páxina">
 					<node name="summaryOn" value="Mostrar número de páxina no rodapé"/>
 					<node name="summaryOff" value="Non mostrar número de páxina no rodapé"/>
@@ -511,6 +507,7 @@
 				</node>
 				<node name="animation" value="Animación">
 					<node name="none" value="Desprazamento sen animación"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Deslizar"/>
 					<node name="shift" value="Pasar"/>
 				</node>

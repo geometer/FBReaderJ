@@ -452,10 +452,6 @@
 					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
 				</node>
-				<node name="footerLongTap" value="Aktion bei langem antippen der Fußleiste">
-					<node name="longTapRevert" value="Zur Position zurückkehren"/> <!-- not found in v 0.7.17. Context has to been checked -->
-					<node name="longTapNavigate" value="Gehe zur Position"/>       <!-- not found in v 0.7.17. Context has to been checked -->
-				</node>
 				<node name="showProgress" value="Seitennummer anzeigen">
 					<node name="summaryOn" value="Seitennummer in der Fußleiste anzeigen."/>
 					<node name="summaryOff" value="Keine Seitennummer in der Fußzeile anzeigen."/>
@@ -512,6 +508,7 @@
 				</node>
 				<node name="animation" value="Animation" toBeTranslated="true">
 					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>

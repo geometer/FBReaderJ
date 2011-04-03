@@ -73,7 +73,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			ourWallpaper = null;
 			try {
 				final Bitmap fileBitmap =
-					new BitmapFactory().decodeStream(wallpaperFile.getInputStream());
+					BitmapFactory.decodeStream(wallpaperFile.getInputStream());
 				if (doMirror) {
 					final int w = fileBitmap.getWidth();
 					final int h = fileBitmap.getHeight();
@@ -185,18 +185,22 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myTextPaint.setUnderlineText(underline);
 	}
 
+	@Override
 	public void setTextColor(ZLColor color) {
 		myTextPaint.setColor(ZLAndroidColorUtil.rgb(color));
 	}
 
+	@Override
 	public void setLineColor(ZLColor color, int style) {
 		// TODO: use style
 		myLinePaint.setColor(ZLAndroidColorUtil.rgb(color));
 	}
+	@Override
 	public void setLineWidth(int width) {
 		myLinePaint.setStrokeWidth(width);
 	}
 
+	@Override
 	public void setFillColor(ZLColor color, int style) {
 		// TODO: use style
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));

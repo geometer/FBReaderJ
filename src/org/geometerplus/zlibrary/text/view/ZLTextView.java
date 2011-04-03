@@ -199,24 +199,33 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myScrollingIsActive = active;
 	}
 
-	public final synchronized void startAutoScrolling(int viewPage) {
+	public final synchronized void startAutoScrolling(PageIndex pageIndex, Direction direction) {
 		if (isScrollingActive()) {
 			return;
 		}
 
 		setScrollingActive(true);
-		ZLApplication.Instance().startViewAutoScrolling(viewPage);
+		ZLApplication.Instance().startViewAutoScrolling(pageIndex, direction);
 	}
 
-	public synchronized void onScrollingFinished(int viewPage) {
+	public final synchronized void startAutoScrolling(PageIndex pageIndex, Direction direction, int x, int y) {
+		if (isScrollingActive()) {
+			return;
+		}
+
+		setScrollingActive(true);
+		ZLApplication.Instance().startViewAutoScrolling(pageIndex, direction, x, y);
+	}
+
+	@Override
+	public synchronized void onScrollingFinished(PageIndex pageIndex) {
 		setScrollingActive(false);
-		switch (viewPage) {
-			case PAGE_CENTRAL:
+		switch (pageIndex) {
+			case current:
 				break;
-			case PAGE_LEFT:
-			case PAGE_TOP:
+			case previous:
 			{
-				ZLTextPage swap = myNextPage;
+				final ZLTextPage swap = myNextPage;
 				myNextPage = myCurrentPage;
 				myCurrentPage = myPreviousPage;
 				myPreviousPage = swap;
@@ -234,10 +243,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 			}
-			case PAGE_RIGHT:
-			case PAGE_BOTTOM:
+			case next:
 			{
-				ZLTextPage swap = myPreviousPage;
+				final ZLTextPage swap = myPreviousPage;
 				myPreviousPage = myCurrentPage;
 				myCurrentPage = myNextPage;
 				myNextPage = swap;
@@ -253,7 +261,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	@Override
-	public synchronized void paint(ZLPaintContext context, int viewPage) {
+	public synchronized void paint(ZLPaintContext context, PageIndex pageIndex) {
 		myContext = context;
 		final ZLFile wallpaper = getWallpaperFile();
 		if (wallpaper != null) {
@@ -267,13 +275,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		ZLTextPage page;
-		switch (viewPage) {
+		switch (pageIndex) {
 			default:
-			case PAGE_CENTRAL:
+			case current:
 				page = myCurrentPage;
 				break;
-			case PAGE_TOP:
-			case PAGE_LEFT:
+			case previous:
 				page = myPreviousPage;
 				if (myPreviousPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
 					preparePaintInfo(myCurrentPage);
@@ -281,8 +288,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					myPreviousPage.PaintState = PaintStateEnum.END_IS_KNOWN;
 				}
 				break;
-			case PAGE_BOTTOM:
-			case PAGE_RIGHT:
+			case next:
 				page = myNextPage;
 				if (myNextPage.PaintState == PaintStateEnum.NOTHING_TO_PAINT) {
 					preparePaintInfo(myCurrentPage);
@@ -322,21 +328,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		final ZLTextElementRegion selectedElementRegion = getCurrentElementRegion(page);
-		if (selectedElementRegion != null) {
+		if (selectedElementRegion != null && myHighlightSelectedRegion) {
 			selectedElementRegion.draw(context);
 		}
 	}
 
-	private ZLTextPage getPage(int viewPage) {
-		switch (viewPage) {
+	private ZLTextPage getPage(PageIndex pageIndex) {
+		switch (pageIndex) {
 			default:
-			case PAGE_CENTRAL:
+			case current:
 				return myCurrentPage;
-			case PAGE_TOP:
-			case PAGE_LEFT:
+			case previous:
 				return myPreviousPage;
-			case PAGE_BOTTOM:
-			case PAGE_RIGHT:
+			case next:
 				return myNextPage;
 		}
 	}
@@ -356,17 +360,17 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected final synchronized int sizeOfFullText() {
-		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 1;
 		}
 		return myModel.getTextLength(myModel.getParagraphsNumber() - 1);
 	}
 
-	private final synchronized int getCurrentCharNumber(int viewPage, boolean startNotEndOfPage) {
-		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+	private final synchronized int getCurrentCharNumber(PageIndex pageIndex, boolean startNotEndOfPage) {
+		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 0;
 		}
-		ZLTextPage page = getPage(viewPage);
+		ZLTextPage page = getPage(pageIndex);
 		preparePaintInfo(page);
 		if (startNotEndOfPage) {
 			return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
@@ -379,17 +383,21 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	@Override
 	public final synchronized int getScrollbarFullSize() {
 		return sizeOfFullText();
 	}
 
-	public final synchronized int getScrollbarThumbPosition(int viewPage) {
-		return scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(viewPage, true);
+	@Override
+	public final synchronized int getScrollbarThumbPosition(PageIndex pageIndex) {
+		return scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(pageIndex, true);
 	}
 
-	public final synchronized int getScrollbarThumbLength(int viewPage) {
-		int start = scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS ? 0 : getCurrentCharNumber(viewPage, true);
-		int end = getCurrentCharNumber(viewPage, false);
+	@Override
+	public final synchronized int getScrollbarThumbLength(PageIndex pageIndex) {
+		int start = scrollbarType() == SCROLLBAR_SHOW_AS_PROGRESS
+			? 0 : getCurrentCharNumber(pageIndex, true);
+		int end = getCurrentCharNumber(pageIndex, false);
 		return Math.max(1, end - start);
 	}
 
@@ -497,7 +505,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public final synchronized int computeCurrentPage() {
-		return computeTextPageNumber(getCurrentCharNumber(PAGE_CENTRAL, false));
+		return computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
 	}
 
 	public final synchronized void gotoPage(int page) {
@@ -1299,6 +1307,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private ZLTextElementRegion mySelectedRegion;
+	private boolean myHighlightSelectedRegion = true;
+
+	public void hideSelectedRegionBorder() {
+		myHighlightSelectedRegion = false;
+	}
 
 	private ZLTextElementRegion getCurrentElementRegion(ZLTextPage page) {
 		final ArrayList<ZLTextElementRegion> elementRegions = page.TextElementMap.ElementRegions;
@@ -1329,18 +1342,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected void selectRegion(ZLTextElementRegion region) {
+		if (region == null || !region.equals(mySelectedRegion)) {
+			myHighlightSelectedRegion = true;
+		}
 		mySelectedRegion = region;
 	}
 
 	public void resetRegionPointer() {
 		mySelectedRegion = null;
-	}
-
-	protected interface Direction {
-		int LEFT = 0;
-		int RIGHT = 1;
-		int UP = 2;
-		int DOWN = 3;
+		myHighlightSelectedRegion = true;
 	}
 
 	protected ZLTextElementRegion currentRegion() {
@@ -1356,7 +1366,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return index >= 0 ? elementRegions.get(index) : null;
 	}
 
-	protected ZLTextElementRegion nextRegion(int direction, ZLTextElementRegion.Filter filter) {
+	protected ZLTextElementRegion nextRegion(Direction direction, ZLTextElementRegion.Filter filter) {
 		final ArrayList<ZLTextElementRegion> elementRegions =
 			myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
@@ -1367,8 +1377,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		mySelectedRegion = index >= 0 ? elementRegions.get(index) : null;
 
 		switch (direction) {
-			case Direction.LEFT:
-			case Direction.UP:
+			case rightToLeft:
+			case up:
 				if (index == -1) {
 					index = elementRegions.size() - 1;
 				} else if (index == 0) {
@@ -1377,8 +1387,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					--index;
 				}
 				break;
-			case Direction.RIGHT:
-			case Direction.DOWN:
+			case leftToRight:
+			case down:
 				if (index == elementRegions.size() - 1) {
 					return null;
 				} else {
@@ -1388,7 +1398,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		switch (direction) {
-			case Direction.LEFT:
+			case rightToLeft:
 				for (; index >= 0; --index) {
 					final ZLTextElementRegion candidate = elementRegions.get(index);
 					if (filter.accepts(candidate) && candidate.isAtLeftOf(mySelectedRegion)) {
@@ -1396,7 +1406,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					}
 				}
 				break;
-			case Direction.RIGHT:
+			case leftToRight:
 				for (; index < elementRegions.size(); ++index) {
 					final ZLTextElementRegion candidate = elementRegions.get(index);
 					if (filter.accepts(candidate) && candidate.isAtRightOf(mySelectedRegion)) {
@@ -1404,7 +1414,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					}
 				}
 				break;
-			case Direction.DOWN:
+			case down:
 			{
 				ZLTextElementRegion firstCandidate = null;
 				for (; index < elementRegions.size(); ++index) {
@@ -1424,7 +1434,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				}
 				break;
 			}
-			case Direction.UP:
+			case up:
 				ZLTextElementRegion firstCandidate = null;
 				for (; index >= 0; --index) {
 					final ZLTextElementRegion candidate = elementRegions.get(index);

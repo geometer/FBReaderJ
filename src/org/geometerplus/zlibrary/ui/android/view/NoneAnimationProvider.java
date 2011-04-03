@@ -17,20 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.image;
+package org.geometerplus.zlibrary.ui.android.view;
 
-import java.io.InputStream;
+import android.graphics.*;
 
-public abstract class ZLSingleImage implements ZLImage {
-	private final String myMimeType;
-	
-	public ZLSingleImage(final String mimeType) {
-		myMimeType = mimeType;
+class NoneAnimationProvider extends SimpleAnimationProvider {
+	NoneAnimationProvider(Paint paint) {
+		super(paint);
 	}
 
-	public abstract InputStream inputStream();
-
-	public final String mimeType() {
-		return myMimeType;
+	@Override
+	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
+		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 	}
 }

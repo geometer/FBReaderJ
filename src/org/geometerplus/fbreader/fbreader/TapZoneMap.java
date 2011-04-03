@@ -77,11 +77,11 @@ public class TapZoneMap {
 			VIndex = v;
 		}
 
-		void mirror45() {
+		/*void mirror45() {
 			final int swap = HIndex;
 			HIndex = VIndex;
 			VIndex = swap;
-		}
+		}*/
 
 		@Override
 		public boolean equals(Object o) {

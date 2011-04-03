@@ -451,10 +451,6 @@
 					<node name="summaryOn" value="在页脚栏显示内容目录标识"/>
 					<node name="summaryOff" value="不在页脚栏显示内容目录标识"/>
 				</node>
-				<node name="footerLongTap" value="长触压页脚">
-					<node name="longTapRevert" value="返回之前位置"/>
-					<node name="longTapNavigate" value="跳转到指定位置"/>
-				</node>
 				<node name="showProgress" value="显示页码">
 					<node name="summaryOn" value="在页脚显示页码"/>
 					<node name="summaryOff" value="不要在页脚显示页码"/>
@@ -511,6 +507,7 @@
 				</node>
 				<node name="animation" value="Animation" toBeTranslated="true">
 					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
