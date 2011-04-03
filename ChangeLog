@@ -4,9 +4,11 @@
 * Czech translation has been updated (by Marek Pavelka)
 * No OutOfMemoryErrors in image loading
 * Float series index parsing has been fixed
-* Separate color for visited hyperlinks (original code by Steffen Siebert)
+* Different color for visited hyperlinks (original code by Steffen Siebert)
 * Removed menubar.xml: menu list is moved into the code
 * Proguard obfuscation has been added; package size decreased
+* Hyphenation patterns for Dutch, Hungarian and Lithuanian (taken from FBReader C++)
+* Hyphenation patterns for Polish (by Tomasz Długosz)
 
 ===== 0.99.18 (Mar 15, 2011) =====
 * Web-free icon
