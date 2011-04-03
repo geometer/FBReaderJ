@@ -142,7 +142,6 @@ class CurlAnimationProvider extends AnimationProvider {
         
 		myEdgePath.rewind();
 		myEdgePath.moveTo(x, y);
-
 		myEdgePath.lineTo(
 			(x + cornerX) / 2,
 			(y + y1) / 2
@@ -163,8 +162,6 @@ class CurlAnimationProvider extends AnimationProvider {
 			(x + x1) / 2,
 			(y + cornerY) / 2
 		);
-		//myEdgePath.lineTo(x1 - sX, cornerY);
-		//myEdgePath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2);
 
 		canvas.drawPath(myEdgePath, myEdgePaint);
 		canvas.clipPath(myEdgePath);
