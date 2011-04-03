@@ -20,22 +20,26 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
+import android.util.FloatMath;
 
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 class CurlAnimationProvider extends AnimationProvider {
-	private final Paint myEdgePaint = new Paint();
 	private final Paint myBackPaint = new Paint();
+	private final Paint myEdgePaint = new Paint();
+
+	final Path myFgPath = new Path();
+	final Path myEdgePath = new Path();
 
 	CurlAnimationProvider(Paint paint) {
 		super(paint);
 
-		myEdgePaint.setAntiAlias(true);
-		myEdgePaint.setStyle(Paint.Style.FILL);
-		myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
-
 		myBackPaint.setAntiAlias(true);
 		myBackPaint.setAlpha(0x40);
+
+		myEdgePaint.setAntiAlias(true);
+		myEdgePaint.setStyle(Paint.Style.FILL);
+		myEdgePaint.setShadowLayer(35, 0, 0, 0xC0000000);
 	}
 
 	@Override
@@ -80,20 +84,45 @@ class CurlAnimationProvider extends AnimationProvider {
 			? (dX * dX / dY + dY) / 2
 			: cornerY - (dX * dX / dY + dY) / 2;
 
-		final Path fgPath = new Path();
-		fgPath.moveTo(x1, cornerY);
-		fgPath.lineTo(x, y);
-		fgPath.lineTo(cornerX, y1);
-		fgPath.lineTo(cornerX, oppositeY);
-		fgPath.lineTo(oppositeX, oppositeY);
-		fgPath.lineTo(oppositeX, cornerY);
-		canvas.clipPath(fgPath);
+		float sX, sY;
+		{
+			float d1 = x - x1;
+			float d2 = y - cornerY;
+			sX = FloatMath.sqrt(d1 * d1 + d2 * d2) / 2;
+			if (cornerX == 0) {
+				sX = -sX;
+			}
+		}
+		{
+			float d1 = x - cornerX;
+			float d2 = y - y1;
+			sY = FloatMath.sqrt(d1 * d1 + d2 * d2) / 2;
+			if (cornerY == 0) {
+				sY = -sY;
+			}
+		}
+
+		myFgPath.rewind();
+		myFgPath.moveTo(x, y);
+		myFgPath.lineTo((x + cornerX) / 2, (y + y1) / 2);
+		myFgPath.quadTo(cornerX, y1, cornerX, y1 - sY);
+		if (Math.abs(y1 - sY - cornerY) < myHeight) {
+			myFgPath.lineTo(cornerX, oppositeY);
+		}
+		myFgPath.lineTo(oppositeX, oppositeY);
+		if (Math.abs(x1 - sX - cornerX) < myWidth) {
+			myFgPath.lineTo(oppositeX, cornerY);
+		}
+		myFgPath.lineTo(x1 - sX, cornerY);
+		myFgPath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2);
+		canvas.drawPath(myFgPath, myEdgePaint);
+		canvas.clipPath(myFgPath);
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 		canvas.restore();
         
 		{
-			final int w = Math.min(fgBitmap.getWidth(), 10);
-			final int h = Math.min(fgBitmap.getHeight(), 10);
+			final int w = Math.min(fgBitmap.getWidth(), 7);
+			final int h = Math.min(fgBitmap.getHeight(), 7);
 			long r = 0, g = 0, b = 0;
 			for (int i = 0; i < w; ++i) {
 				for (int j = 0; j < h; ++j) {
@@ -108,16 +137,37 @@ class CurlAnimationProvider extends AnimationProvider {
 			b /= w * h;
 			r >>= 16;
 			g >>= 8;
-			//myEdgePaint.setColor(Color.argb(0xBB, (int)(r & 0xFF), (int)(g & 0xFF), (int)(b & 0xFF)));
 			myEdgePaint.setColor(Color.rgb((int)(r & 0xFF), (int)(g & 0xFF), (int)(b & 0xFF)));
 		}
         
-		final Path path = new Path();
-		path.moveTo(x1, cornerY);
-		path.lineTo(x, y);
-		path.lineTo(cornerX, y1);
-		canvas.drawPath(path, myEdgePaint);
-		canvas.clipPath(path);
+		myEdgePath.rewind();
+		myEdgePath.moveTo(x, y);
+
+		myEdgePath.lineTo(
+			(x + cornerX) / 2,
+			(y + y1) / 2
+		);
+		myEdgePath.quadTo(
+			(x + 3 * cornerX) / 4,
+			(y + 3 * y1) / 4,
+			(x + 7 * cornerX) / 8,
+			(y + 7 * y1 - 2 * sY) / 8
+		);
+		myEdgePath.lineTo(
+			(x + 7 * x1 - 2 * sX) / 8,
+			(y + 7 * cornerY) / 8
+		);
+		myEdgePath.quadTo(
+			(x + 3 * x1) / 4,
+			(y + 3 * cornerY) / 4,
+			(x + x1) / 2,
+			(y + cornerY) / 2
+		);
+		//myEdgePath.lineTo(x1 - sX, cornerY);
+		//myEdgePath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2);
+
+		canvas.drawPath(myEdgePath, myEdgePaint);
+		canvas.clipPath(myEdgePath);
 		final Matrix m = new Matrix();
 		m.postScale(1, -1);
 		m.postTranslate(x - cornerX, y + cornerY);
@@ -127,7 +177,6 @@ class CurlAnimationProvider extends AnimationProvider {
 		} else {
 			angle = 180 - Math.toDegrees(Math.atan2(x - cornerX, y - y1));
 		}
-		System.err.println("angle = " + angle);
 		m.postRotate((float)angle, x, y);
 		canvas.drawBitmap(fgBitmap, m, myBackPaint);
 		canvas.restore();
@@ -181,7 +230,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		}
 
 		final int speed = (int)Math.abs(mySpeed);
-		mySpeed *= 1.5;
+		mySpeed *= 2;
 
 		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
 		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;
