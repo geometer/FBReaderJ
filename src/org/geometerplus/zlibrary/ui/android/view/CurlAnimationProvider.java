@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 
 class CurlAnimationProvider extends AnimationProvider {
 	private final Paint myEdgePaint = new Paint();
+	private final Paint myBackPaint = new Paint();
 
 	CurlAnimationProvider(Paint paint) {
 		super(paint);
@@ -32,6 +33,9 @@ class CurlAnimationProvider extends AnimationProvider {
 		myEdgePaint.setAntiAlias(true);
 		myEdgePaint.setStyle(Paint.Style.FILL);
 		myEdgePaint.setShadowLayer(25, 5, 5, 0x99000000);
+
+		myBackPaint.setAntiAlias(true);
+		myBackPaint.setAlpha(0x40);
 	}
 
 	@Override
@@ -104,7 +108,8 @@ class CurlAnimationProvider extends AnimationProvider {
 			b /= w * h;
 			r >>= 16;
 			g >>= 8;
-			myEdgePaint.setColor(Color.rgb((int)r, (int)g, (int)b));
+			//myEdgePaint.setColor(Color.argb(0xBB, (int)(r & 0xFF), (int)(g & 0xFF), (int)(b & 0xFF)));
+			myEdgePaint.setColor(Color.rgb((int)(r & 0xFF), (int)(g & 0xFF), (int)(b & 0xFF)));
 		}
         
 		final Path path = new Path();
@@ -112,6 +117,20 @@ class CurlAnimationProvider extends AnimationProvider {
 		path.lineTo(x, y);
 		path.lineTo(cornerX, y1);
 		canvas.drawPath(path, myEdgePaint);
+		canvas.clipPath(path);
+		final Matrix m = new Matrix();
+		m.postScale(1, -1);
+		m.postTranslate(x - cornerX, y + cornerY);
+		final double angle;
+		if (cornerY == 0) {
+			angle = - Math.toDegrees(Math.atan2(x - cornerX, y - y1));
+		} else {
+			angle = 180 - Math.toDegrees(Math.atan2(x - cornerX, y - y1));
+		}
+		System.err.println("angle = " + angle);
+		m.postRotate((float)angle, x, y);
+		canvas.drawBitmap(fgBitmap, m, myBackPaint);
+		canvas.restore();
 	}
 
 	@Override
