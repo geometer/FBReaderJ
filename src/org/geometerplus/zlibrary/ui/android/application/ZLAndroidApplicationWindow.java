@@ -27,12 +27,11 @@ import android.view.MenuItem;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.view.ZLView;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
-
-import org.geometerplus.zlibrary.ui.android.R;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
@@ -76,17 +75,31 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void scrollViewTo(int viewPage, int shift) {
+	protected void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToPage(viewPage, shift);
+		widget.scrollManually(startX, startY, endX, endY, direction);
 	}
 
 	@Override
-	protected void startViewAutoScrolling(int viewPage) {
+	protected void scrollViewToCenter() {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(viewPage);
+		widget.scrollToCenter();
+	}
+
+	@Override
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.startAutoScrolling(pageIndex, direction, null, null);
+	}
+
+	@Override
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y) {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.startAutoScrolling(pageIndex, direction, x, y);
 	}
 
 	public void rotate() {

@@ -3,12 +3,12 @@ All the pattern files in this archive were created from TeX hyphenation patterns
 This file contains a list of licences for original files.
 
 GNU General Public License:
-	cs, id
+	cs, id, hu
 GNU Lesser General Public License:
 	it
 LaTeX Project Public License:
-	de, de-traditional, el, eo, es, pt, ru, sv, uk
+	de, de-traditional, el, eo, es, pl, pt, ru, sv, uk, nl
 Public Domain (with some restrictions, see corresponding pattern file for details):
 	en, fr, fi, no
 Unknown:
-	tr
+	lt, tr

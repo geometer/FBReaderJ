@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
-import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.UrlInfo;
 

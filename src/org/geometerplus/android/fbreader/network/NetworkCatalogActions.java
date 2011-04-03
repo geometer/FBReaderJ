@@ -22,9 +22,7 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Message;
 import android.os.Handler;
 import android.view.Menu;
@@ -347,7 +345,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			if (activity == null) {
 				return;
 			}
-			String msg = null;
 			if (errorMessage != null) {
 				UIUtil.showErrorMessageText(activity, errorMessage);
 			} else if (childrenEmpty) {

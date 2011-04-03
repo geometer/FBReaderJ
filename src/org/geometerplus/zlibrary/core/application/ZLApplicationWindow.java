@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.application;
 
+import org.geometerplus.zlibrary.core.view.ZLView;
+
 abstract public class ZLApplicationWindow {
 	private ZLApplication myApplication;
 
@@ -34,8 +36,10 @@ abstract public class ZLApplicationWindow {
 	abstract protected void refreshMenu();
 	
 	abstract protected void repaintView();
-	abstract protected void scrollViewTo(int viewPage, int shift);
-	abstract protected void startViewAutoScrolling(int viewPage);
+	abstract protected void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction);
+	abstract protected void scrollViewToCenter();
+	abstract protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction);
+	abstract protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y);
 
 	abstract protected void rotate();
 	abstract protected boolean canRotate();

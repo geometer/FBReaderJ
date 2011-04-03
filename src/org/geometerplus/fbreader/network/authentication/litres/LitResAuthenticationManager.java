@@ -39,7 +39,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	private String myInitializedDataSid;
 	private String myAccount;
-	private final HashMap<String, NetworkItem> myPurchasedBooks = new HashMap<String, NetworkItem>();
+	private final HashMap<String, NetworkBookItem> myPurchasedBooks = new HashMap<String, NetworkBookItem>();
 
 	public LitResAuthenticationManager(INetworkLink link, String sslCertificate) {
 		super(link, sslCertificate);
@@ -288,7 +288,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public synchronized List<NetworkBookItem> purchasedBooks() {
-		return new ArrayList(myPurchasedBooks.values());
+		return new ArrayList<NetworkBookItem>(myPurchasedBooks.values());
 	}
 
 	@Override

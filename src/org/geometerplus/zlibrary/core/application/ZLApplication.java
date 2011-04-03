@@ -21,10 +21,8 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
 public abstract class ZLApplication {
 	public static ZLApplication Instance() {
@@ -33,15 +31,12 @@ public abstract class ZLApplication {
 
 	private static ZLApplication ourInstance;
 
-	//private static final String MouseScrollUpKey = "<MouseScrollDown>";
-	//private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
 
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
 
 	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
-	//private ZLTime myLastKeyActionTime;
 
 	protected ZLApplication() {
 		ourInstance = this;
@@ -73,15 +68,27 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void scrollViewTo(int viewPage, int shift) {
+	public final void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		if (myWindow != null) {
-			myWindow.scrollViewTo(viewPage, shift);
+			myWindow.scrollViewManually(startX, startY, endX, endY, direction);
 		}
 	}
 
-	public final void startViewAutoScrolling(int viewPage) {
+	public final void scrollViewToCenter() {
 		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(viewPage);
+			myWindow.scrollViewToCenter();
+		}
+	}
+
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
+		if (myWindow != null) {
+			myWindow.startViewAutoScrolling(pageIndex, direction);
+		}
+	}
+
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y) {
+		if (myWindow != null) {
+			myWindow.startViewAutoScrolling(pageIndex, direction, x, y);
 		}
 	}
 
@@ -116,6 +123,13 @@ public abstract class ZLApplication {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
 			action.checkAndRun();
+		}
+	}
+
+	public final void doActionWithCoordinates(String actionId, int x, int y) {
+		final ZLAction action = myIdToActionMap.get(actionId);
+		if (action != null && action.isEnabled()) {
+			action.runWithCoordinates(x, y);
 		}
 	}
 
@@ -181,6 +195,10 @@ public abstract class ZLApplication {
 		}
 
 		abstract protected void run();
+
+		protected void runWithCoordinates(int x, int y) {
+			run();
+		}
 	}
 
 	static public interface ButtonPanel {
