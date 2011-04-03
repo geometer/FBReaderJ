@@ -52,7 +52,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption NavigateAllWordsOption =
 		new ZLBooleanOption("Options", "NavigateAllWords", false);
 
-	public enum DictionaryTappingAction {
+	public static enum DictionaryTappingAction {
 		doNothing, selectWord, openDictionary
 	}
 	public final ZLEnumOption<DictionaryTappingAction> DictionaryTappingActionOption =

@@ -53,6 +53,8 @@ class ProcessHyperlinkAction extends FBAction {
 	public void run() {
 		final ZLTextElementRegion region = Reader.getTextView().getSelectedRegion();
 		if (region instanceof ZLTextHyperlinkRegion) {
+			Reader.getTextView().hideSelectedRegionBorder();
+			Reader.repaintView();
 			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegion)region).Hyperlink;
 			switch (hyperlink.Type) {
 				case FBHyperlinkType.EXTERNAL:
@@ -67,8 +69,9 @@ class ProcessHyperlinkAction extends FBAction {
 					Reader.tryOpenFootnote(hyperlink.Id);
 					break;
 			}
-			return;
 		} else if (region instanceof ZLTextImageRegion) {
+			Reader.getTextView().hideSelectedRegionBorder();
+			Reader.repaintView();
 			final String uriString = ((ZLTextImageRegion)region).ImageElement.URI;
 			if (uriString != null) {
 				try {
