@@ -10,6 +10,7 @@
 * Proguard obfuscation has been added; package size decreased
 * Hyphenation patterns for Dutch, Hungarian and Lithuanian (taken from FBReader C++)
 * Hyphenation patterns for Polish (by Tomasz Długosz)
+* Added Accept-Language field to all network requests
 
 ===== 0.99.18 (Mar 15, 2011) =====
 * Web-free icon
