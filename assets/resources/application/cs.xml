@@ -511,7 +511,7 @@
 				</node>
 				<node name="animation" value="Animace">
 					<node name="none" value="Posouvat bez animace"/>
-					<node name="curl" value="Curl animation" toBeTranslated="true"/>
+					<node name="curl" value="Animace otočení"/>
 					<node name="slide" value="Animace vysunutí"/>
 					<node name="shift" value="Animace posunutí"/>
 				</node>
