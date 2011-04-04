@@ -1,3 +1,8 @@
+===== 1.0.1 (Apr 05, 2011) =====
+* Fixed first scrolling direction
+* Animation speed option has been added
+* Russian translation has been updated
+
 ===== 1.0 (Apr 04, 2011) =====
 * Different (and configurable) actions for short and long Back button press (original code by Steffen Siebert)
 * SlovoEd dictionaries support has been fixed
