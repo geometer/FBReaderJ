@@ -511,6 +511,10 @@
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
+				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
+					<node name="fast" value="fast" toBeTranslated="true"/>
+					<node name="slow" value="slow" toBeTranslated="true"/>
+				</node>
 				<node name="horizontal" value="横向翻阅">
 					<node name="summaryOn" value="横向翻阅" />
 					<node name="summaryOff" value="纵向翻阅" />

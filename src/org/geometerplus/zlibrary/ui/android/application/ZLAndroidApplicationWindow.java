@@ -89,17 +89,17 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, direction, null, null);
+		widget.startAutoScrolling(pageIndex, direction, null, null, speed);
 	}
 
 	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y) {
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y, int speed) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, direction, x, y);
+		widget.startAutoScrolling(pageIndex, direction, x, y, speed);
 	}
 
 	public void rotate() {

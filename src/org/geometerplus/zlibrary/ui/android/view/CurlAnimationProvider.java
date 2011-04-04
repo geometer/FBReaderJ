@@ -31,6 +31,8 @@ class CurlAnimationProvider extends AnimationProvider {
 	final Path myFgPath = new Path();
 	final Path myEdgePath = new Path();
 
+	private float mySpeedFactor;
+
 	CurlAnimationProvider(Paint paint) {
 		super(paint);
 
@@ -195,18 +197,18 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	void startAutoScrolling(boolean forward, float speed, ZLView.Direction direction, int w, int h, Integer x, Integer y) {
+	void startAutoScrolling(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
 		if (x == null || y == null) {
 			if (direction.IsHorizontal) {
-				x = speed < 0 ? w - 3 : 3;
+				x = startSpeed < 0 ? w - 3 : 3;
 				y = 1;
 			} else {
 				x = 1;
-				y = speed < 0 ? h  - 3 : 3;
+				y = startSpeed < 0 ? h  - 3 : 3;
 			}
 		} else {
-			final int cornerX = x > myWidth / 2 ? myWidth : 0;
-			final int cornerY = y > myHeight / 2 ? myHeight : 0;
+			final int cornerX = x > w / 2 ? w : 0;
+			final int cornerY = y > h / 2 ? h : 0;
 			int deltaX = Math.min(Math.abs(x - cornerX), w / 5);
 			int deltaY = Math.min(Math.abs(y - cornerY), h / 5);
 			if (direction.IsHorizontal) {
@@ -217,7 +219,8 @@ class CurlAnimationProvider extends AnimationProvider {
 			x = Math.abs(cornerX - deltaX);
 			y = Math.abs(cornerY - deltaY);
 		}
-		super.startAutoScrolling(forward, speed, direction, w, h, x, y);
+		super.startAutoScrolling(forward, startSpeed, direction, w, h, x, y, speed);
+		mySpeedFactor = (float)Math.pow(2.0, 0.25 * speed);
 	}
 
 	@Override
@@ -227,7 +230,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		}
 
 		final int speed = (int)Math.abs(mySpeed);
-		mySpeed *= 2;
+		mySpeed *= mySpeedFactor;
 
 		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
 		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;

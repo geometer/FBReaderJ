@@ -59,7 +59,8 @@ class VolumeKeyTurnPageAction extends FBAction {
 			view.startAutoScrolling(
 				forward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 				preferences.HorizontalOption.getValue()
-					? FBView.Direction.rightToLeft : FBView.Direction.up
+					? FBView.Direction.rightToLeft : FBView.Direction.up,
+				preferences.AnimationSpeedOption.getValue()
 			);
 		} else {
 			view.scrollPage(forward, FBView.ScrollingMode.NO_OVERLAPPING, 0);

@@ -511,6 +511,10 @@
 					<node name="slide" value="เลื่อนหน้าแบบสไลด์"/>
 					<node name="shift" value="เลื่อนหน้าแบบสลับ"/>
 				</node>
+				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
+					<node name="fast" value="fast" toBeTranslated="true"/>
+					<node name="slow" value="slow" toBeTranslated="true"/>
+				</node>
 				<node name="horizontal" value="เลื่อนหน้าในแนวนอน">
 					<node name="summaryOn" value="เลื่อนหน้าตามแนวนอน"/>
 					<node name="summaryOff" value="เลื่อนหน้าตามแนวตั้ง"/>

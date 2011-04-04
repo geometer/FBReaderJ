@@ -80,15 +80,15 @@ public abstract class ZLApplication {
 		}
 	}
 
-	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
 		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(pageIndex, direction);
+			myWindow.startViewAutoScrolling(pageIndex, direction, speed);
 		}
 	}
 
-	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y) {
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y, int speed) {
 		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(pageIndex, direction, x, y);
+			myWindow.startViewAutoScrolling(pageIndex, direction, x, y, speed);
 		}
 	}
 

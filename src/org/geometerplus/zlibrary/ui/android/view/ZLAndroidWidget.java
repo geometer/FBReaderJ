@@ -202,7 +202,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		postInvalidate();
 	}
 
-	public void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, Integer x, Integer y) {
+	public void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, Integer x, Integer y, int speed) {
 		if (myMainBitmap == null) {
 			return;
 		}
@@ -216,19 +216,19 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 						animator.terminate();
 						break;
 					case previous:
-						animator.startAutoScrolling(false, -3, direction, w, h, x, y);
+						animator.startAutoScrolling(false, -3, direction, w, h, x, y, speed);
 						break;
 					case next:
-						animator.startAutoScrolling(false, 3, direction, w, h, x, y);
+						animator.startAutoScrolling(false, 3, direction, w, h, x, y, speed);
 						break;
 				}
 				break;
 			case previous:
-				animator.startAutoScrolling(true, 3, direction, w, h, x, y);
+				animator.startAutoScrolling(true, 3, direction, w, h, x, y, speed);
 				setPageToScrollTo(pageIndex);
 				break;
 			case next:
-				animator.startAutoScrolling(true, -3, direction, w, h, x, y);
+				animator.startAutoScrolling(true, -3, direction, w, h, x, y, speed);
 				setPageToScrollTo(pageIndex);
 				break;
 		}

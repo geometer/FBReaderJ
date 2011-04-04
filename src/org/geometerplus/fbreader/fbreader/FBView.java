@@ -244,7 +244,7 @@ public final class FBView extends ZLTextView {
 							? PageIndex.current
 							: (diff < 0 ? PageIndex.next : PageIndex.previous);
 					if (getAnimationType() != Animation.none) {
-						startAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up);
+						startAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
 					} else {
 						myReader.scrollViewToCenter();
 						onScrollingFinished(pageIndex);

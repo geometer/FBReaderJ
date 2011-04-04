@@ -511,6 +511,10 @@
 					<node name="slide" value="Slide-animatie"/>
 					<node name="shift" value="Shift-animatie"/>
 				</node>
+				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
+					<node name="fast" value="fast" toBeTranslated="true"/>
+					<node name="slow" value="slow" toBeTranslated="true"/>
+				</node>
 				<node name="horizontal" value="Horizontaal omslaan">
 					<node name="summaryOn" value="Pagina's horizontaal omslaan"/>
 					<node name="summaryOff" value="Pagina's verticaal omslaan"/>

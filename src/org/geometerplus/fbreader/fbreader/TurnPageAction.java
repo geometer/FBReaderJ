@@ -61,7 +61,8 @@ class TurnPageAction extends FBAction {
 			view.startAutoScrolling(
 				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 				preferences.HorizontalOption.getValue()
-					? FBView.Direction.rightToLeft : FBView.Direction.up
+					? FBView.Direction.rightToLeft : FBView.Direction.up,
+				preferences.AnimationSpeedOption.getValue()
 			);
 		} else {
 			view.scrollPage(myForward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
@@ -77,7 +78,8 @@ class TurnPageAction extends FBAction {
 				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 				preferences.HorizontalOption.getValue()
 					? FBView.Direction.rightToLeft : FBView.Direction.up,
-				x, y
+				x, y,
+				preferences.AnimationSpeedOption.getValue()
 			);
 		} else {
 			view.scrollPage(myForward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
