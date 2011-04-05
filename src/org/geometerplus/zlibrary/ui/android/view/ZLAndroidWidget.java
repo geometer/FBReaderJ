@@ -265,26 +265,28 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private void drawFooter(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		final ZLView.FooterArea footer = view.getFooterArea();
-		if (footer != null) {
-			if (myFooterBitmap != null &&
-				(myFooterBitmap.getWidth() != getWidth() ||
-				 myFooterBitmap.getHeight() != footer.getHeight())) {
-				myFooterBitmap = null;
-			}
-			if (myFooterBitmap == null) {
-				myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
-			}
-			final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-				new Canvas(myFooterBitmap),
-				getWidth(),
-				footer.getHeight(),
-				view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
-			);
-			footer.paint(context);
-			canvas.drawBitmap(myFooterBitmap, 0, getMainAreaHeight(), myPaint);
-		} else {
+
+		if (footer == null) {
+			myFooterBitmap = null;
+			return;
+		}
+
+		if (myFooterBitmap != null &&
+			(myFooterBitmap.getWidth() != getWidth() ||
+			 myFooterBitmap.getHeight() != footer.getHeight())) {
 			myFooterBitmap = null;
 		}
+		if (myFooterBitmap == null) {
+			myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
+		}
+		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+			new Canvas(myFooterBitmap),
+			getWidth(),
+			footer.getHeight(),
+			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+		);
+		footer.paint(context);
+		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - footer.getHeight(), myPaint);
 	}
 
 	private void onDrawStatic(Canvas canvas) {

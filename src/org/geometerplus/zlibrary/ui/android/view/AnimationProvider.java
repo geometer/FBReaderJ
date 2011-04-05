@@ -68,7 +68,6 @@ abstract class AnimationProvider {
 	}
 
 	void startAutoScrolling(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
-		System.err.println("starting: " + forward + " " + startSpeed + " " + direction + " " + w + " " + h + " " + x + " " + y + " " + speed);
 		if (!inProgress()) {
 			if (x == null || y == null) {
 				if (direction.IsHorizontal) {

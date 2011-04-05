@@ -118,6 +118,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		myFgPath.lineTo(x1 - sX, cornerY);
 		myFgPath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2);
 		canvas.drawPath(myFgPath, myEdgePaint);
+		canvas.save();
 		canvas.clipPath(myFgPath);
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 		canvas.restore();
@@ -166,6 +167,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		);
 
 		canvas.drawPath(myEdgePath, myEdgePaint);
+		canvas.save();
 		canvas.clipPath(myEdgePath);
 		final Matrix m = new Matrix();
 		m.postScale(1, -1);

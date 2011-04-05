@@ -77,7 +77,6 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 		} else {
 			bound = 0;
 		}
-		System.err.println("before check: " + mySpeed + " " + getScrollingShift() + " " + bound);
 		if (mySpeed > 0) {
 			if (getScrollingShift() >= bound) {
 				if (myDirection.IsHorizontal) {
