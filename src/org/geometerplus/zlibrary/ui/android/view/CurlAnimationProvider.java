@@ -223,6 +223,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		}
 		super.startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
 		mySpeedFactor = (float)Math.pow(2.0, 0.25 * speed);
+		mySpeed *= 1.5;
 	}
 
 	@Override

@@ -19,7 +19,10 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.*;
+
 import android.graphics.*;
+import android.util.FloatMath;
 
 import org.geometerplus.zlibrary.core.view.ZLView;
 
@@ -60,6 +63,7 @@ abstract class AnimationProvider {
 	void terminate() {
 		myMode = Mode.NoScrolling;
 		mySpeed = 0;
+		myDrawInfos.clear();
 	}
 
 	void startManualScrolling(int x, int y, ZLView.Direction direction, int w, int h) {
@@ -75,6 +79,32 @@ abstract class AnimationProvider {
 	}
 
 	final void startAutoScrolling(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
+		if (myDrawInfos.size() <= 1) {
+			startSpeed *= 5;
+		} else {
+			int duration = 0;
+			for (DrawInfo info : myDrawInfos) {
+				duration += info.Duration;
+				System.err.println(info.X + ":" + info.Y + " :: " + info.Start + " " + info.Duration);
+			}
+			duration /= myDrawInfos.size();
+			final long time = System.currentTimeMillis();
+			myDrawInfos.add(new DrawInfo(myEndX, myEndY, time, time + duration));
+			float velocity = 0;
+			for (int i = 1; i < myDrawInfos.size(); ++i) {
+				final DrawInfo info0 = myDrawInfos.get(i - 1);
+				final DrawInfo info1 = myDrawInfos.get(i);
+				final float dX = info0.X - info1.X;
+				final float dY = info0.Y - info1.Y;
+				velocity += FloatMath.sqrt(dX * dX + dY * dY) / Math.max(1, info1.Start - info0.Start);
+			}
+			velocity /= myDrawInfos.size() - 1;
+			velocity *= duration;
+			velocity = Math.min(100, Math.max(15, velocity));
+			startSpeed = startSpeed > 0 ? velocity : -velocity;
+		}
+		System.err.println("startSpeed = " + startSpeed);
+		myDrawInfos.clear();
 		startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
 	}
 
@@ -124,8 +154,27 @@ abstract class AnimationProvider {
 		return 100 * shift / full;
 	}
 
+	static class DrawInfo {
+		final int X, Y;
+		final long Start;
+		final int Duration;
+
+		DrawInfo(int x, int y, long start, long finish) {
+			X = x;
+			Y = y;
+			Start = start;
+			Duration = (int)(finish - start);
+		}
+	}
+	final private List<DrawInfo> myDrawInfos = new LinkedList<DrawInfo>();
+
 	final void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
+		final long start = System.currentTimeMillis();
 		drawInternal(canvas, bgBitmap, fgBitmap);
+		myDrawInfos.add(new DrawInfo(myEndX, myEndY, start, System.currentTimeMillis()));
+		if (myDrawInfos.size() > 3) {
+			myDrawInfos.remove(0);
+		}
 	}
 
 	protected abstract void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
