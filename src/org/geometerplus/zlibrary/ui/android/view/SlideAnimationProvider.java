@@ -27,7 +27,7 @@ class SlideAnimationProvider extends SimpleAnimationProvider {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
+	protected void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
 		myPaint.setColor(Color.rgb(127, 127, 127));
 		if (myDirection.IsHorizontal) {

@@ -62,12 +62,23 @@ abstract class AnimationProvider {
 		mySpeed = 0;
 	}
 
-	void startManualScrolling(int startX, int startY, int endX, int endY, ZLView.Direction direction, int w, int h) {
+	void startManualScrolling(int x, int y, ZLView.Direction direction, int w, int h) {
 		myMode = Mode.ManualScrolling;
-		setup(startX, startY, endX, endY, direction, w, h);
+		setup(x, y, direction, w, h);
 	}
 
-	void startAutoScrolling(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
+	void scrollTo(int x, int y) {
+		if (myMode == Mode.ManualScrolling) {
+			myEndX = x;
+			myEndY = y;
+		}
+	}
+
+	final void startAutoScrolling(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
+		startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
+	}
+
+	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
 		if (!inProgress()) {
 			if (x == null || y == null) {
 				if (direction.IsHorizontal) {
@@ -78,7 +89,7 @@ abstract class AnimationProvider {
 					y = speed < 0 ? h : 0;
 				}
 			}
-			setup(x, y, x, y, direction, w, h);
+			setup(x, y, direction, w, h);
 		}
 
 		myMode = forward
@@ -95,11 +106,11 @@ abstract class AnimationProvider {
 		return myDirection.IsHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
-	private void setup(int startX, int startY, int endX, int endY, ZLView.Direction direction, int width, int height) {
-		myStartX = startX;
-		myStartY = startY;
-		myEndX = endX;
-		myEndY = endY;
+	private void setup(int x, int y, ZLView.Direction direction, int width, int height) {
+		myStartX = x;
+		myStartY = y;
+		myEndX = x;
+		myEndY = y;
 		myDirection = direction;
 		myWidth = width;
 		myHeight = height;
@@ -113,7 +124,11 @@ abstract class AnimationProvider {
 		return 100 * shift / full;
 	}
 
-	abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
+	final void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
+		drawInternal(canvas, bgBitmap, fgBitmap);
+	}
+
+	protected abstract void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
 
 	abstract ZLView.PageIndex getPageToScrollTo();
 }

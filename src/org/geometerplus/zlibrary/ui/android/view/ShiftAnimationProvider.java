@@ -27,7 +27,7 @@ class ShiftAnimationProvider extends SimpleAnimationProvider {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
+	protected void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		myPaint.setColor(Color.rgb(127, 127, 127));
 		if (myDirection.IsHorizontal) {
 			final int dX = myEndX - myStartX;

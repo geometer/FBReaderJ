@@ -45,7 +45,7 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
+	protected void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
 
 		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
@@ -199,7 +199,7 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	void startAutoScrolling(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
+	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
 		if (x == null || y == null) {
 			if (direction.IsHorizontal) {
 				x = startSpeed < 0 ? w - 3 : 3;
@@ -221,7 +221,7 @@ class CurlAnimationProvider extends AnimationProvider {
 			x = Math.abs(cornerX - deltaX);
 			y = Math.abs(cornerY - deltaY);
 		}
-		super.startAutoScrolling(forward, startSpeed, direction, w, h, x, y, speed);
+		super.startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
 		mySpeedFactor = (float)Math.pow(2.0, 0.25 * speed);
 	}
 

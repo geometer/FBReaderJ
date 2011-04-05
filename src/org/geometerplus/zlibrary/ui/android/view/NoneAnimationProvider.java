@@ -27,7 +27,7 @@ class NoneAnimationProvider extends SimpleAnimationProvider {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
+	protected void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 	}
 }

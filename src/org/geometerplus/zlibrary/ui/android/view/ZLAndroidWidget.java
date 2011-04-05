@@ -181,12 +181,15 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			return;
 		}
 
-		getAnimationProvider().startManualScrolling(
-			startX, startY,
-			endX, endY,
-			direction,
-			getWidth(), getMainAreaHeight()
-		);
+		final AnimationProvider animator = getAnimationProvider();
+		if (!animator.inProgress()) {
+			getAnimationProvider().startManualScrolling(
+				startX, startY,
+				direction,
+				getWidth(), getMainAreaHeight()
+			);
+		}
+		getAnimationProvider().scrollTo(endX, endY);
 		setPageToScrollTo(getAnimationProvider().getPageToScrollTo());
 		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();
