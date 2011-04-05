@@ -21,8 +21,7 @@ package org.geometerplus.zlibrary.ui.android.image;
 
 import java.io.InputStream;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.*;
 
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 
@@ -35,6 +34,6 @@ final class InputStreamImageData extends ZLAndroidImageData {
 
 	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
 		final InputStream stream = myImage.inputStream();
-		return stream != null ? BitmapFactory.decodeStream(stream) : null;
+		return stream != null ? BitmapFactory.decodeStream(stream, new Rect(), options) : null;
 	}
 }
