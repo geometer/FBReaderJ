@@ -279,6 +279,9 @@ public final class FBReader extends ZLAndroidActivity {
 		addMenuItem(menu, ActionCode.DECREASE_FONT);
 		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);
 
+		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+		application.myMainWindow.refreshMenu();
+
 		return true;
 	}
 }
