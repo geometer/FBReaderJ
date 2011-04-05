@@ -170,13 +170,13 @@ class CurlAnimationProvider extends AnimationProvider {
 		final Matrix m = new Matrix();
 		m.postScale(1, -1);
 		m.postTranslate(x - cornerX, y + cornerY);
-		final double angle;
+		final float angle;
 		if (cornerY == 0) {
-			angle = - Math.toDegrees(Math.atan2(x - cornerX, y - y1));
+			angle = -180 / 3.1416f * (float)Math.atan2(x - cornerX, y - y1);
 		} else {
-			angle = 180 - Math.toDegrees(Math.atan2(x - cornerX, y - y1));
+			angle = 180 - 180 / 3.1416f * (float)Math.atan2(x - cornerX, y - y1);
 		}
-		m.postRotate((float)angle, x, y);
+		m.postRotate(angle, x, y);
 		canvas.drawBitmap(fgBitmap, m, myBackPaint);
 		canvas.restore();
 	}
