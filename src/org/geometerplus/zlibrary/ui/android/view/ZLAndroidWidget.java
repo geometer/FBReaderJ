@@ -208,7 +208,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		}
 		final AnimationProvider animator = getAnimationProvider();
 		final int w = getWidth();
-		final int h = getHeight();
+		final int h = getMainAreaHeight();
 		switch (pageIndex) {
 			case current:
 				switch (myPageToScrollTo) {
