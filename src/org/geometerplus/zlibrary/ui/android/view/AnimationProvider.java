@@ -85,7 +85,6 @@ abstract class AnimationProvider {
 			int duration = 0;
 			for (DrawInfo info : myDrawInfos) {
 				duration += info.Duration;
-				System.err.println(info.X + ":" + info.Y + " :: " + info.Start + " " + info.Duration);
 			}
 			duration /= myDrawInfos.size();
 			final long time = System.currentTimeMillis();
@@ -103,7 +102,6 @@ abstract class AnimationProvider {
 			velocity = Math.min(100, Math.max(15, velocity));
 			startSpeed = startSpeed > 0 ? velocity : -velocity;
 		}
-		System.err.println("startSpeed = " + startSpeed);
 		myDrawInfos.clear();
 		startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
 	}

@@ -121,7 +121,6 @@ public class ZLNetworkManager {
 				}
 				response = httpConnection.getResponseCode();
 			}
-			System.err.println("RESPONSE: " + response);
 			if (response == HttpURLConnection.HTTP_OK) {
 				InputStream stream = httpConnection.getInputStream();
 				try {

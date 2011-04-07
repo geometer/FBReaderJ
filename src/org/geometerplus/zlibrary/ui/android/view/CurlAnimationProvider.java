@@ -31,6 +31,7 @@ class CurlAnimationProvider extends AnimationProvider {
 
 	final Path myFgPath = new Path();
 	final Path myEdgePath = new Path();
+	final Path myQuadPath = new Path();
 
 	private float mySpeedFactor;
 
@@ -119,7 +120,16 @@ class CurlAnimationProvider extends AnimationProvider {
 		}
 		myFgPath.lineTo(x1 - sX, cornerY);
 		myFgPath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2);
-		canvas.drawPath(myFgPath, myEdgePaint);
+
+		myQuadPath.moveTo(x1 - sX, cornerY);
+		myQuadPath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2);
+		canvas.drawPath(myQuadPath, myEdgePaint);
+		myQuadPath.rewind();
+		myQuadPath.moveTo((x + cornerX) / 2, (y + y1) / 2);
+		myQuadPath.quadTo(cornerX, y1, cornerX, y1 - sY);
+		canvas.drawPath(myQuadPath, myEdgePaint);
+		myQuadPath.rewind();
+
 		canvas.save();
 		canvas.clipPath(myFgPath);
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
