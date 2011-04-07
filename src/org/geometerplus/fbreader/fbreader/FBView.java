@@ -518,7 +518,7 @@ public final class FBView extends ZLTextView {
 				left + lineWidth + (int)(1.0 * myGaugeWidth * pagesProgress / bookLength);
 
 			context.setFillColor(fillColor);
-			context.fillRectangle(left + lineWidth, height - 2 * lineWidth, gaugeInternalRight, 2 * lineWidth);
+			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
 			if (reader.FooterShowTOCMarksOption.getValue()) {
 				if (myTOCMarks == null) {
