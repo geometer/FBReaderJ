@@ -19,15 +19,13 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import android.graphics.Paint;
-
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 abstract class SimpleAnimationProvider extends AnimationProvider {
 	private float mySpeedFactor;
 
-	SimpleAnimationProvider(Paint paint) {
-		super(paint);
+	SimpleAnimationProvider(BitmapManager bitmapManager) {
+		super(bitmapManager);
 	}
 
 	@Override

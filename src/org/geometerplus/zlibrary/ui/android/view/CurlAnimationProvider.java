@@ -25,6 +25,7 @@ import android.util.FloatMath;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 class CurlAnimationProvider extends AnimationProvider {
+	private final Paint myPaint = new Paint();
 	private final Paint myBackPaint = new Paint();
 	private final Paint myEdgePaint = new Paint();
 
@@ -33,8 +34,8 @@ class CurlAnimationProvider extends AnimationProvider {
 
 	private float mySpeedFactor;
 
-	CurlAnimationProvider(Paint paint) {
-		super(paint);
+	CurlAnimationProvider(BitmapManager bitmapManager) {
+		super(bitmapManager);
 
 		myBackPaint.setAntiAlias(true);
 		myBackPaint.setAlpha(0x40);
@@ -45,8 +46,9 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	protected void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
-		canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
+	protected void drawInternal(Canvas canvas) {
+		canvas.drawBitmap(getBitmapTo(), 0, 0, myPaint);
+		final Bitmap fgBitmap = getBitmapFrom();
 
 		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
 		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;

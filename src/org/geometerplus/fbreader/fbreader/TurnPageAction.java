@@ -56,34 +56,22 @@ class TurnPageAction extends FBAction {
 
 	public void run() {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		final FBView view = Reader.getTextView();
-		if (view.getAnimationType() != FBView.Animation.none) {
-			view.startAutoScrolling(
-				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
-				preferences.HorizontalOption.getValue()
-					? FBView.Direction.rightToLeft : FBView.Direction.up,
-				preferences.AnimationSpeedOption.getValue()
-			);
-		} else {
-			view.scrollPage(myForward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
-			Reader.repaintView();
-		}
+		Reader.getTextView().startAutoScrolling(
+			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+			preferences.HorizontalOption.getValue()
+				? FBView.Direction.rightToLeft : FBView.Direction.up,
+			preferences.AnimationSpeedOption.getValue()
+		);
 	}
 
 	public void runWithCoordinates(int x, int y) {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		final FBView view = Reader.getTextView();
-		if (view.getAnimationType() != FBView.Animation.none) {
-			view.startAutoScrolling(
-				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
-				preferences.HorizontalOption.getValue()
-					? FBView.Direction.rightToLeft : FBView.Direction.up,
-				x, y,
-				preferences.AnimationSpeedOption.getValue()
-			);
-		} else {
-			view.scrollPage(myForward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
-			Reader.repaintView();
-		}
+		Reader.getTextView().startAutoScrolling(
+			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+			preferences.HorizontalOption.getValue()
+				? FBView.Direction.rightToLeft : FBView.Direction.up,
+			x, y,
+			preferences.AnimationSpeedOption.getValue()
+		);
 	}
 }

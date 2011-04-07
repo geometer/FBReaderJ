@@ -41,7 +41,7 @@ abstract class AnimationProvider {
 	}
 	private Mode myMode = Mode.NoScrolling;
 	
-	protected final Paint myPaint;
+	private final BitmapManager myBitmapManager;
 	protected int myStartX;
 	protected int myStartY;
 	protected int myEndX;
@@ -52,8 +52,8 @@ abstract class AnimationProvider {
 	protected int myWidth;
 	protected int myHeight;
 
-	protected AnimationProvider(Paint paint) {
-		myPaint = paint;
+	protected AnimationProvider(BitmapManager bitmapManager) {
+		myBitmapManager = bitmapManager;
 	}
 
 	Mode getMode() {
@@ -168,16 +168,24 @@ abstract class AnimationProvider {
 	}
 	final private List<DrawInfo> myDrawInfos = new LinkedList<DrawInfo>();
 
-	final void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
+	final void draw(Canvas canvas) {
 		final long start = System.currentTimeMillis();
-		drawInternal(canvas, bgBitmap, fgBitmap);
+		drawInternal(canvas);
 		myDrawInfos.add(new DrawInfo(myEndX, myEndY, start, System.currentTimeMillis()));
 		if (myDrawInfos.size() > 3) {
 			myDrawInfos.remove(0);
 		}
 	}
 
-	protected abstract void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
+	protected abstract void drawInternal(Canvas canvas);
 
 	abstract ZLView.PageIndex getPageToScrollTo();
+
+	protected Bitmap getBitmapFrom() {
+		return myBitmapManager.getBitmap(ZLView.PageIndex.current);
+	}
+
+	protected Bitmap getBitmapTo() {
+		return myBitmapManager.getBitmap(getPageToScrollTo());
+	}
 }

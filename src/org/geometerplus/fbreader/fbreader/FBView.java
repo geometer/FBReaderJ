@@ -93,6 +93,7 @@ public final class FBView extends ZLTextView {
 		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
+			myReader.resetView();
 			myReader.repaintView();
 			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
@@ -183,7 +184,7 @@ public final class FBView extends ZLTextView {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
 				final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
-				if (diff > 0) {
+				if (diff >= 0) {
 					final ZLTextWordCursor cursor = getStartCursor();
 					if (cursor == null || cursor.isNull()) {
 						return false;
@@ -191,7 +192,7 @@ public final class FBView extends ZLTextView {
 					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
 						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 					}
-				} else if (diff < 0) {
+				} else {
 					final ZLTextWordCursor cursor = getEndCursor();
 					if (cursor == null || cursor.isNull()) {
 						return false;
@@ -199,8 +200,6 @@ public final class FBView extends ZLTextView {
 					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
 						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 					}
-				} else {
-					myReader.scrollViewToCenter();
 				}
 				return true;
 			}
@@ -243,14 +242,7 @@ public final class FBView extends ZLTextView {
 						Math.abs(diff) < minDiff
 							? PageIndex.current
 							: (diff < 0 ? PageIndex.next : PageIndex.previous);
-					if (getAnimationType() != Animation.none) {
-						startAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
-					} else {
-						myReader.scrollViewToCenter();
-						onScrollingFinished(pageIndex);
-						myReader.repaintView();
-						setScrollingActive(false);
-					}
+					startAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
 				}
 				return true;
 			}
@@ -268,6 +260,7 @@ public final class FBView extends ZLTextView {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
+				myReader.resetView();
 				myReader.repaintView();
 				return true;
 			}
@@ -286,6 +279,7 @@ public final class FBView extends ZLTextView {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
+				myReader.resetView();
 				myReader.repaintView();
 			}
 		}
@@ -330,6 +324,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
+		myReader.resetView();
 		myReader.repaintView();
 
 		return true;
@@ -562,6 +557,7 @@ public final class FBView extends ZLTextView {
 			} else {
 				gotoPage(page);
 			}
+			myReader.resetView();
 			myReader.repaintView();
 		}
 	}

@@ -67,6 +67,13 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		}
 	}
 
+	protected void resetView() {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
+		widget.resetBitmaps();
+	}
+
 	protected void repaintView() {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
@@ -79,13 +86,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 		widget.scrollManually(startX, startY, endX, endY, direction);
-	}
-
-	@Override
-	protected void scrollViewToCenter() {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToCenter();
 	}
 
 	@Override

@@ -45,6 +45,7 @@ public abstract class ZLApplication {
 	protected final void setView(ZLView view) {
 		if (view != null) {
 			myView = view;
+			resetView();
 			repaintView();
 			onViewChanged();
 		}
@@ -62,6 +63,12 @@ public abstract class ZLApplication {
 		setView(myView);
 	}
 
+	public final void resetView() {
+		if (myWindow != null) {
+			myWindow.resetView();
+		}
+	}
+
 	public final void repaintView() {
 		if (myWindow != null) {
 			myWindow.repaintView();
@@ -71,12 +78,6 @@ public abstract class ZLApplication {
 	public final void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		if (myWindow != null) {
 			myWindow.scrollViewManually(startX, startY, endX, endY, direction);
-		}
-	}
-
-	public final void scrollViewToCenter() {
-		if (myWindow != null) {
-			myWindow.scrollViewToCenter();
 		}
 	}
 

@@ -74,6 +74,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
 			}
 		}
+		ZLApplication.Instance().resetView();
 	}
 
 	public ZLTextModel getModel() {
@@ -126,6 +127,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			if (myCurrentPage.StartCursor.isNull()) {
 				preparePaintInfo(myCurrentPage);
 			}
+			ZLApplication.Instance().resetView();
 			ZLApplication.Instance().repaintView();
 		}
 	}
@@ -150,6 +152,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
 					(backward ? myModel.getPreviousMark(mark) : myModel.getNextMark(mark)));
 			}
+			ZLApplication.Instance().resetView();
 			ZLApplication.Instance().repaintView();
 		}
 		return count;
@@ -183,6 +186,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (!findResultsAreEmpty()) {
 			myModel.removeAllMarks();
 			rebuildPaintInfo();
+			ZLApplication.Instance().resetView();
 			ZLApplication.Instance().repaintView();
 		}
 	}
@@ -1285,6 +1289,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	@Override
 	public boolean onFingerMove(int x, int y) {
 		if (mySelectionModel.extendTo(x, y)) {
+			ZLApplication.Instance().resetView();
 			ZLApplication.Instance().repaintView();
 			return true;
 		}
@@ -1299,12 +1304,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	protected abstract boolean isSelectionEnabled();
 
+	/*
 	protected void activateSelection(int x, int y) {
 		if (isSelectionEnabled()) {
 			mySelectionModel.activate(x, y);
+			ZLApplication.Instance().resetView();
 			ZLApplication.Instance().repaintView();
 		}
 	}
+	*/
 
 	private ZLTextElementRegion mySelectedRegion;
 	private boolean myHighlightSelectedRegion = true;

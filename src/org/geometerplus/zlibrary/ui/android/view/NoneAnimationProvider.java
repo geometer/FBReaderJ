@@ -22,12 +22,21 @@ package org.geometerplus.zlibrary.ui.android.view;
 import android.graphics.*;
 
 class NoneAnimationProvider extends SimpleAnimationProvider {
-	NoneAnimationProvider(Paint paint) {
-		super(paint);
+	private final Paint myPaint = new Paint();
+
+	NoneAnimationProvider(BitmapManager bitmapManager) {
+		super(bitmapManager);
 	}
 
 	@Override
-	protected void drawInternal(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
-		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
+	protected void drawInternal(Canvas canvas) {
+		canvas.drawBitmap(getBitmapFrom(), 0, 0, myPaint);
+	}
+
+	@Override
+	void doStep() {
+		if (getMode().Auto) {
+			terminate();
+		}
 	}
 }
