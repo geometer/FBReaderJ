@@ -43,7 +43,7 @@ class CurlAnimationProvider extends AnimationProvider {
 
 		myEdgePaint.setAntiAlias(true);
 		myEdgePaint.setStyle(Paint.Style.FILL);
-		myEdgePaint.setShadowLayer(35, 0, 0, 0xC0000000);
+		myEdgePaint.setShadowLayer(15, 0, 0, 0xC0000000);
 	}
 
 	@Override

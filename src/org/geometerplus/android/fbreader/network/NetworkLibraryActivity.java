@@ -66,19 +66,12 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			return null;
 		}
 
-		final HashMap<String,UrlInfo> urls =
-			(HashMap<String,UrlInfo>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY);
-		final UrlInfo info = urls.get(INetworkLink.URL_MAIN);
-		final String textUrl = uri.toString();
-		if (info == null || info.URL == null || !info.URL.equals(textUrl)) {
-			urls.put(INetworkLink.URL_MAIN, new UrlInfo(textUrl));
-		}
 		return new OPDSCustomLink(
 			intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID),
 			uri.getHost(),
 			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
 			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
-			urls
+			(HashMap<String,UrlInfo>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
 		);
 	}
 
