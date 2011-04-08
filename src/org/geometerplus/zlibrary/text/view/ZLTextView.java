@@ -1157,6 +1157,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public void clearCaches() {
 		rebuildPaintInfo();
+		ZLApplication.Instance().resetView();
 	}
 
 	protected void rebuildPaintInfo() {
