@@ -79,8 +79,6 @@ extern "C"
 JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_collectNativePlugins(JNIEnv* env, jobject thiz, jobject plugins) {
 	PluginCollectionHelper helper(env);
 
-	AndroidLog log(env);
-
 	if (!helper.init(plugins)) {
 		return;
 	}
