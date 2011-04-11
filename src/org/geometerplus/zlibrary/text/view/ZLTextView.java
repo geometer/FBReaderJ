@@ -968,6 +968,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public final synchronized void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
 		if (myModel != null && myModel.getParagraphsNumber() > 0) {
+			ZLApplication.Instance().resetView();
 			myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
 			myPreviousPage.reset();
 			myNextPage.reset();
@@ -1296,6 +1297,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public void hideSelectedRegionBorder() {
 		myHighlightSelectedRegion = false;
+		ZLApplication.Instance().resetView();
 	}
 
 	private ZLTextElementRegion getCurrentElementRegion(ZLTextPage page) {

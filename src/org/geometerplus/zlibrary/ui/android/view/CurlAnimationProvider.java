@@ -197,6 +197,10 @@ class CurlAnimationProvider extends AnimationProvider {
 
 	@Override
 	ZLView.PageIndex getPageToScrollTo() {
+		if (myDirection == null) {
+			return ZLView.PageIndex.current;
+		}
+
 		switch (myDirection) {
 			case leftToRight:
 				return myStartX < myWidth / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;

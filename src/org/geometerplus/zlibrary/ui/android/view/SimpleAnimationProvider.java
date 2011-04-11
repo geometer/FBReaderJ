@@ -30,6 +30,10 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 
 	@Override
 	ZLView.PageIndex getPageToScrollTo() {
+		if (myDirection == null) {
+			return ZLView.PageIndex.current;
+		}
+
 		switch (myDirection) {
 			case rightToLeft:
 				return myStartX < myEndX ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
