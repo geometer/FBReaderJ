@@ -190,6 +190,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				animator.startAutoScrolling(true, -3, direction, w, h, x, y, speed);
 				break;
 		}
+		animator.doStep();
 		postInvalidate();
 	}
 
