@@ -21,7 +21,9 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
 
-class NoneAnimationProvider extends SimpleAnimationProvider {
+import org.geometerplus.zlibrary.core.view.ZLView;
+
+class NoneAnimationProvider extends AnimationProvider {
 	private final Paint myPaint = new Paint();
 
 	NoneAnimationProvider(BitmapManager bitmapManager) {
@@ -38,5 +40,29 @@ class NoneAnimationProvider extends SimpleAnimationProvider {
 		if (getMode().Auto) {
 			terminate();
 		}
+	}
+
+	private ZLView.PageIndex myPageToScrollTo = ZLView.PageIndex.current;
+
+	@Override
+	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
+		super.startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
+		switch (direction) {
+			case rightToLeft:
+			case up:
+				myPageToScrollTo =
+					startSpeed > 0 ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				break;
+			case leftToRight:
+			case down:
+				myPageToScrollTo =
+					startSpeed > 0 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				break;
+		}
+	}
+
+	@Override
+	ZLView.PageIndex getPageToScrollTo() {
+		return myPageToScrollTo;
 	}
 }

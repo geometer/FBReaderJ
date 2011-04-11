@@ -47,6 +47,7 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
 		super.startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
 		mySpeedFactor = (float)Math.pow(1.5, 0.25 * speed);
+		doStep();
 	}
 
 	@Override
