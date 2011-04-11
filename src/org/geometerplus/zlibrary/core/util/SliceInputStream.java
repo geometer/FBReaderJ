@@ -22,51 +22,25 @@ package org.geometerplus.zlibrary.core.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class SliceInputStream extends InputStream {
-	private final ZLInputStreamWithOffset myBase;
+public class SliceInputStream extends ZLInputStreamWithOffset {
 	private final int myStart;
 	private final int myLength;
 	
 	public SliceInputStream(InputStream base, int start, int length) throws IOException {
-		myBase = new ZLInputStreamWithOffset(base);
-		myBase.skip(start);
+		super(base);
+		super.skip(start);
 		myStart = start;
 		myLength = length;
 	}
 	
 	@Override
 	public int available() throws IOException {
-		return Math.min(myBase.available(), Math.max(myStart + myLength - myBase.offset(), 0));
-	}
-
-	@Override
-	public long skip(long n) throws IOException {
-		return myBase.skip(n);
-	}
-
-	@Override
-	public int read() throws IOException {
-		return myBase.read();
-	}
-
-	@Override
-	public void close() throws IOException {
-		myBase.close();
-	}
-
-	@Override
-	public int read(byte[] b, int off, int len) throws IOException {
-		return myBase.read(b, off, len);
-	}
-
-	@Override
-	public int read(byte[] b) throws IOException {
-		return myBase.read(b);
+		return Math.min(super.available(), Math.max(myStart + myLength - super.offset(), 0));
 	}
 
 	@Override
 	public void reset() throws IOException {
-		myBase.reset();
-		myBase.skip(myStart);
+		super.reset();
+		super.skip(myStart);
 	}
 }
