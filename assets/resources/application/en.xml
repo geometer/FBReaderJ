@@ -514,6 +514,10 @@
 					<node name="slide" value="Slide animation"/>
 					<node name="shift" value="Shift animation"/>
 				</node>
+				<node name="animationSpeed" value="Animation speed">
+					<node name="fast" value="fast"/>
+					<node name="slow" value="slow"/>
+				</node>
 				<node name="horizontal" value="Horizontal scrolling">
 					<node name="summaryOn" value="Scroll pages horizontally"/>
 					<node name="summaryOff" value="Scroll pages vertically"/>

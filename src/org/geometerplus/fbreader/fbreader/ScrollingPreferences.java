@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLEnumOption;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 public class ScrollingPreferences {
@@ -30,7 +31,7 @@ public class ScrollingPreferences {
 		return (ourInstance != null) ? ourInstance : new ScrollingPreferences();
 	}
 
-	public enum FingerScrolling {
+	public static enum FingerScrolling {
 		byTap, byFlick, byTapAndFlick
 	}
 	public final ZLEnumOption<FingerScrolling> FingerScrollingOption =
@@ -43,10 +44,12 @@ public class ScrollingPreferences {
 
 	public final ZLEnumOption<ZLView.Animation> AnimationOption =
 		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
+	public final ZLIntegerRangeOption AnimationSpeedOption =
+		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, 4);
 
 	public final ZLBooleanOption HorizontalOption =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public enum TapZonesScheme {
+	public static enum TapZonesScheme {
 		left_to_right, right_to_left, up, down, custom
 	}
 	public final ZLEnumOption<TapZonesScheme> TapZonesSchemeOption =

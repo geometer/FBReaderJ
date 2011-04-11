@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.view.ZLView;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
@@ -58,12 +59,19 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void refreshMenu() {
+	public void refreshMenu() {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
 			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
 		}
+	}
+
+	protected void resetView() {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
+		widget.resetBitmaps();
 	}
 
 	protected void repaintView() {
@@ -74,17 +82,24 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void scrollViewTo(int viewPage, int shift) {
+	protected void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToPage(viewPage, shift);
+		widget.scrollManually(startX, startY, endX, endY, direction);
 	}
 
 	@Override
-	protected void startViewAutoScrolling(int viewPage) {
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(viewPage);
+		widget.startAutoScrolling(pageIndex, direction, null, null, speed);
+	}
+
+	@Override
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y, int speed) {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		widget.startAutoScrolling(pageIndex, direction, x, y, speed);
 	}
 
 	public void rotate() {

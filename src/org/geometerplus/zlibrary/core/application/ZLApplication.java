@@ -31,15 +31,12 @@ public abstract class ZLApplication {
 
 	private static ZLApplication ourInstance;
 
-	//private static final String MouseScrollUpKey = "<MouseScrollDown>";
-	//private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
 
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
 
 	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
-	//private ZLTime myLastKeyActionTime;
 
 	protected ZLApplication() {
 		ourInstance = this;
@@ -48,6 +45,7 @@ public abstract class ZLApplication {
 	protected final void setView(ZLView view) {
 		if (view != null) {
 			myView = view;
+			resetView();
 			repaintView();
 			onViewChanged();
 		}
@@ -65,21 +63,33 @@ public abstract class ZLApplication {
 		setView(myView);
 	}
 
+	public final void resetView() {
+		if (myWindow != null) {
+			myWindow.resetView();
+		}
+	}
+
 	public final void repaintView() {
 		if (myWindow != null) {
 			myWindow.repaintView();
 		}
 	}
 
-	public final void scrollViewTo(int viewPage, int shift) {
+	public final void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		if (myWindow != null) {
-			myWindow.scrollViewTo(viewPage, shift);
+			myWindow.scrollViewManually(startX, startY, endX, endY, direction);
 		}
 	}
 
-	public final void startViewAutoScrolling(int viewPage) {
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
 		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(viewPage);
+			myWindow.startViewAutoScrolling(pageIndex, direction, speed);
+		}
+	}
+
+	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y, int speed) {
+		if (myWindow != null) {
+			myWindow.startViewAutoScrolling(pageIndex, direction, x, y, speed);
 		}
 	}
 
@@ -114,6 +124,13 @@ public abstract class ZLApplication {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
 			action.checkAndRun();
+		}
+	}
+
+	public final void doActionWithCoordinates(String actionId, int x, int y) {
+		final ZLAction action = myIdToActionMap.get(actionId);
+		if (action != null && action.isEnabled()) {
+			action.runWithCoordinates(x, y);
 		}
 	}
 
@@ -179,6 +196,10 @@ public abstract class ZLApplication {
 		}
 
 		abstract protected void run();
+
+		protected void runWithCoordinates(int x, int y) {
+			run();
+		}
 	}
 
 	static public interface ButtonPanel {

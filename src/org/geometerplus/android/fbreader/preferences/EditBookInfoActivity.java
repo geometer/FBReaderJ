@@ -28,6 +28,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
+
 import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.android.fbreader.BookInfoActivity;
@@ -54,7 +56,7 @@ class LanguagePreference extends ZLStringListPreference {
 		super(context, rootResource, resourceKey);
 		myBook = book;
 		final TreeSet<String> set = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
-		set.addAll(ZLLanguageUtil.languageCodes());
+		set.addAll(ZLTextHyphenator.Instance().languageCodes());
 		set.add(ZLLanguageUtil.OTHER_LANGUAGE_CODE);
 
 		final int size = set.size();

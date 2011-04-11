@@ -17,23 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.image;
-
-import java.io.InputStream;
+package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
 
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+class NoneAnimationProvider extends SimpleAnimationProvider {
+	private final Paint myPaint = new Paint();
 
-final class InputStreamImageData extends ZLAndroidImageData {
-	private final ZLSingleImage myImage;
-
-	InputStreamImageData(ZLSingleImage image) {
-		myImage = image;
+	NoneAnimationProvider(BitmapManager bitmapManager) {
+		super(bitmapManager);
 	}
 
-	protected Bitmap decodeWithOptions(BitmapFactory.Options options) {
-		final InputStream stream = myImage.inputStream();
-		return stream != null ? BitmapFactory.decodeStream(stream, new Rect(), options) : null;
+	@Override
+	protected void drawInternal(Canvas canvas) {
+		canvas.drawBitmap(getBitmapFrom(), 0, 0, myPaint);
+	}
+
+	@Override
+	void doStep() {
+		if (getMode().Auto) {
+			terminate();
+		}
 	}
 }

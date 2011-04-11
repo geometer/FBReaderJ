@@ -50,10 +50,6 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	public void onScrollingFinished(int viewPage) {
-		super.onScrollingFinished(viewPage);
-	}
-
 	private int myStartX;
 	private int myStartY;
 	private boolean myIsManualScrollingActive;
@@ -97,15 +93,16 @@ public final class FBView extends ZLTextView {
 		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
+			myReader.resetView();
 			myReader.repaintView();
 			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
 
-		myReader.doAction(getZoneMap().getActionByCoordinates(
+		myReader.doActionWithCoordinates(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
-		));
+		), x, y);
 
 		return true;
 	}
@@ -120,9 +117,9 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
-		myReader.doAction(getZoneMap().getActionByCoordinates(
+		myReader.doActionWithCoordinates(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(), TapZoneMap.Tap.doubleTap
-		));
+		), x, y);
 		return true;
 	}
 
@@ -186,24 +183,23 @@ public final class FBView extends ZLTextView {
 			if (isScrollingActive() && myIsManualScrollingActive) {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final int diff = horizontal ? x - myStartX : y - myStartY;
-				if (diff > 0) {
-					ZLTextWordCursor cursor = getStartCursor();
+				final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
+				if (diff >= 0) {
+					final ZLTextWordCursor cursor = getStartCursor();
 					if (cursor == null || cursor.isNull()) {
 						return false;
 					}
 					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
-						myReader.scrollViewTo(horizontal ? PAGE_LEFT : PAGE_TOP, diff);
+						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 					}
-				} else if (diff < 0) {
-					ZLTextWordCursor cursor = getEndCursor();
+				} else {
+					final ZLTextWordCursor cursor = getEndCursor();
 					if (cursor == null || cursor.isNull()) {
 						return false;
 					}
 					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
-						myReader.scrollViewTo(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, -diff);
+						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 					}
-				} else {
-					myReader.scrollViewTo(PAGE_CENTRAL, 0);
 				}
 				return true;
 			}
@@ -240,22 +236,13 @@ public final class FBView extends ZLTextView {
 					final int h = myContext.getHeight();
 					final int w = myContext.getWidth();
 					final int minDiff = horizontal ?
-						((w > h) ? w / 4 : w / 3) :
-						((h > w) ? h / 4 : h / 3);
-					int viewPage = PAGE_CENTRAL;
-					if (Math.abs(diff) > minDiff) {
-						viewPage = horizontal ?
-							((diff < 0) ? PAGE_RIGHT : PAGE_LEFT) :
-							((diff < 0) ? PAGE_BOTTOM : PAGE_TOP);
-					}
-					if (getAnimationType() != Animation.none) {
-						startAutoScrolling(viewPage);
-					} else {
-						myReader.scrollViewTo(PAGE_CENTRAL, 0);
-						onScrollingFinished(viewPage);
-						myReader.repaintView();
-						setScrollingActive(false);
-					}
+						(w > h ? w / 4 : w / 3) :
+						(h > w ? h / 4 : h / 3);
+					final PageIndex pageIndex =
+						Math.abs(diff) < minDiff
+							? PageIndex.current
+							: (diff < 0 ? PageIndex.next : PageIndex.previous);
+					startAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
 				}
 				return true;
 			}
@@ -273,6 +260,7 @@ public final class FBView extends ZLTextView {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
+				myReader.resetView();
 				myReader.repaintView();
 				return true;
 			}
@@ -291,6 +279,7 @@ public final class FBView extends ZLTextView {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
+				myReader.resetView();
 				myReader.repaintView();
 			}
 		}
@@ -316,9 +305,9 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final int direction = (diffY != 0) ?
-			(diffY > 0 ? Direction.DOWN : Direction.UP) :
-			(diffX > 0 ? Direction.RIGHT : Direction.LEFT);
+		final Direction direction = (diffY != 0) ?
+			(diffY > 0 ? Direction.down : Direction.up) :
+			(diffX > 0 ? Direction.leftToRight : Direction.rightToLeft);
 
 		ZLTextElementRegion region = currentRegion();
 		final ZLTextElementRegion.Filter filter =
@@ -328,13 +317,14 @@ public final class FBView extends ZLTextView {
 		if (region != null) {
 			selectRegion(region);
 		} else {
-			if (direction == Direction.DOWN) {
+			if (direction == Direction.down) {
 				scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
-			} else if (direction == Direction.UP) {
+			} else if (direction == Direction.up) {
 				scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			}
 		}
 
+		myReader.resetView();
 		myReader.repaintView();
 
 		return true;
@@ -528,7 +518,7 @@ public final class FBView extends ZLTextView {
 				left + lineWidth + (int)(1.0 * myGaugeWidth * pagesProgress / bookLength);
 
 			context.setFillColor(fillColor);
-			context.fillRectangle(left + lineWidth, height - 2 * lineWidth, gaugeInternalRight, 2 * lineWidth);
+			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
 			if (reader.FooterShowTOCMarksOption.getValue()) {
 				if (myTOCMarks == null) {
@@ -567,6 +557,7 @@ public final class FBView extends ZLTextView {
 			} else {
 				gotoPage(page);
 			}
+			myReader.resetView();
 			myReader.repaintView();
 		}
 	}
