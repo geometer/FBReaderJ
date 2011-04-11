@@ -29,13 +29,17 @@ import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
 
 public class PluginCollection {
+	static {
+		System.loadLibrary("NativeFormats");
+	}
+
 	private static PluginCollection ourInstance;
 
 	private final ArrayList<FormatPlugin> myPlugins = new ArrayList<FormatPlugin>();
 	public ZLStringOption DefaultLanguageOption;
 	public ZLStringOption DefaultEncodingOption;
 	public ZLBooleanOption LanguageAutoDetectOption;
-	
+
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
@@ -52,10 +56,12 @@ public class PluginCollection {
 			ourInstance.myPlugins.add(new OEBPlugin());
 			//ourInstance.myPlugins.add(new RtfPlugin());
 			//ourInstance.myPlugins.add(new OpenReaderPlugin());
+
+			ourInstance.collectNativePlugins(ourInstance.myPlugins);
 		}
 		return ourInstance;
 	}
-	
+
 	public static void deleteInstance() {
 		if (ourInstance != null) {
 			ourInstance = null;
@@ -67,7 +73,7 @@ public class PluginCollection {
 		DefaultLanguageOption = new ZLStringOption("Format", "DefaultLanguage", "en"); 
 		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
 	}
-		
+
 	public FormatPlugin getPlugin(ZLFile file) {
 		for (FormatPlugin plugin : myPlugins) {
 			if (plugin.acceptsFile(file)) {
@@ -76,4 +82,6 @@ public class PluginCollection {
 		}
 		return null;
 	}
+
+	private native void collectNativePlugins(ArrayList<FormatPlugin> plugins);
 }
