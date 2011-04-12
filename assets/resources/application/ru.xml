@@ -183,8 +183,8 @@
 	<node name="cancelMenu">
 		<node name="previousBook" value="Открыть предыдущую книгу"/>
 		<node name="returnTo" value="Вернуться к ..."/>
-		<node name="back" value="Back" toBeTranslated="true"/>
-		<node name="forward" value="Forward" toBeTranslated="true"/>
+		<node name="back" value="Назад"/>
+		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
 	<node name="menu">
@@ -436,7 +436,7 @@
 				<node name="selectionForeground" value="Цвет помеченного текста"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
-				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
+				<node name="hyperlinkVisited" value="Посещенная ссылка"/>
 				<node name="highlighting" value="Фон результатов поиска"/>
 				<node name="footer" value="Подвал"/>
 			</node>
@@ -517,9 +517,13 @@
 				</node>
 				<node name="animation" value="Анимация">
 					<node name="none" value="Выключить анимацию"/>
-					<node name="curl" value="Curl animation" toBeTranslated="true"/>
+					<node name="curl" value="Трехмерная анимация"/>
 					<node name="slide" value="Сдвиг с перекрытием"/>
 					<node name="shift" value="Сдвиг"/>
+				</node>
+				<node name="animationSpeed" value="Скорость анимации">
+					<node name="fast" value="быстро"/>
+					<node name="slow" value="медленно"/>
 				</node>
 				<node name="horizontal" value="Горизонтальное перелистывание">
 					<node name="summaryOn" value="При листании страница движется по горизонтали"/>

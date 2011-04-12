@@ -20,19 +20,37 @@
 package org.geometerplus.zlibrary.text.hyphenation;
 
 import java.util.*;
+
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
-public final class ZLTextTeXHyphenator extends ZLTextHyphenator {
+final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 	private final HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern> myPatternTable = 
 		new HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern>();
 	private String myLanguage;
 
-	public ZLTextTeXHyphenator() {
-	}
-
 	void addPattern(ZLTextTeXHyphenationPattern pattern) {
 		myPatternTable.put(pattern, pattern);
+	}
+
+	private List<String> myLanguageCodes;
+	public List<String> languageCodes() {
+		if (myLanguageCodes == null) {
+			final TreeSet<String> codes = new TreeSet<String>();
+			final ZLFile patternsFile = ZLResourceFile.createResourceFile("hyphenationPatterns");
+			for (ZLFile file : patternsFile.children()) {
+				final String name = file.getShortName();
+				if (name.endsWith(".pattern")) {
+				    codes.add(name.substring(0, name.length() - ".pattern".length()));
+				}
+			}
+
+			codes.add("zh");
+			myLanguageCodes = new ArrayList<String>(codes);
+		}
+
+		return Collections.unmodifiableList(myLanguageCodes);
 	}
 
 	public void load(final String language) {

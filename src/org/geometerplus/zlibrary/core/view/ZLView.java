@@ -34,7 +34,29 @@ abstract public class ZLView {
 	abstract public FooterArea getFooterArea();
 
 	public static enum PageIndex {
-		current, previous, next
+		previous, current, next;
+
+		public PageIndex getNext() {
+			switch (this) {
+				case previous:
+					return current;
+				case current:
+					return next;
+				default:
+					return null;
+			}
+		}
+
+		public PageIndex getPrevious() {
+			switch (this) {
+				case next:
+					return current;
+				case current:
+					return previous;
+				default:
+					return null;
+			}
+		}
 	};
 	public static enum Direction {
 		leftToRight(true), rightToLeft(true), up(false), down(false);

@@ -19,17 +19,21 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import android.graphics.Paint;
-
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 abstract class SimpleAnimationProvider extends AnimationProvider {
-	SimpleAnimationProvider(Paint paint) {
-		super(paint);
+	private float mySpeedFactor;
+
+	SimpleAnimationProvider(BitmapManager bitmapManager) {
+		super(bitmapManager);
 	}
 
 	@Override
 	ZLView.PageIndex getPageToScrollTo() {
+		if (myDirection == null) {
+			return ZLView.PageIndex.current;
+		}
+
 		switch (myDirection) {
 			case rightToLeft:
 				return myStartX < myEndX ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
@@ -41,6 +45,13 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 				return myStartY < myEndY ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
 		}
 		return ZLView.PageIndex.current;
+	}
+
+	@Override
+	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
+		super.startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
+		mySpeedFactor = (float)Math.pow(1.5, 0.25 * speed);
+		doStep();
 	}
 
 	@Override
@@ -90,6 +101,6 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 				return;
 			}
 		}
-		mySpeed *= 1.5;
+		mySpeed *= mySpeedFactor;
 	}
 }

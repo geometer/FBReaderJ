@@ -33,6 +33,7 @@ class SwitchProfileAction extends FBAction {
 
 	public void run() {
 		Reader.setColorProfileName(myProfileName);
+		Reader.resetView();
 		Reader.repaintView();
 	}
 }
