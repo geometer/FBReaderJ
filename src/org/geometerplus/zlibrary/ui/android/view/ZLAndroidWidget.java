@@ -49,9 +49,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private float myScrollingSpeed;
 	private int myScrollingBound;
 
-	private final int FOOTER_LONG_TAP_REVERT = 0;
-	private final int FOOTER_LONG_TAP_NAVIGATE = 1;
-
 	public ZLTapZones myTapZones = new ZLTapZones();
 	public static final int MODE_READ = 0;
 	public static final int MODE_TAP_ZONES_EDIT = 1;
@@ -442,12 +439,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 								//if (y > getHeight() - myFooter.getTapHeight()) {
 								if (y > getHeight() - 40) {
 									FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
-									if (reader.FooterLongTapOption.getValue() == FOOTER_LONG_TAP_REVERT) {
-										if (view instanceof ZLTextView) {
-											((ZLTextView) view).savePosition();
-										}
-										//myFooter.setProgress(view, myPressedX);
-									}
 								} else {
 									if (!view.onFingerPress(myPressedX, myPressedY)) {
 										myTapZones.doTap(myPressedX, myPressedY);
@@ -670,17 +661,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		//if (myPressedY > getHeight() - myFooter.getTapHeight()) {
 		if (myPressedY > getHeight() - 40) {
 			FBReaderApp reader = (FBReaderApp)FBReaderApp.Instance();
-			if (reader.FooterLongTapOption.getValue() == FOOTER_LONG_TAP_REVERT) {
-				final ZLView view = ZLApplication.Instance().getCurrentView();
-				if (view instanceof ZLTextView) {
-					return ((ZLTextView) view).revertPosition();
-				}
-			}
-			if (reader.FooterLongTapOption.getValue() == FOOTER_LONG_TAP_NAVIGATE) {
-				final ZLView view = ZLApplication.Instance().getCurrentView();
-				//myFooter.setProgress(view, myPressedX);
-				return true;
-			}
 		}
 		return false;
 	}
