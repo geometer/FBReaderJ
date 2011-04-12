@@ -141,11 +141,16 @@ public final class FBView extends ZLTextView {
 		return true;
 	}
 
-	private void startManualScrolling(int x, int y) {
+	private boolean isFlickScrollingEnabled() {
 		final ScrollingPreferences.FingerScrolling fingerScrolling =
 			ScrollingPreferences.Instance().FingerScrollingOption.getValue();
-		if (fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick) {
+		return
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
+	}
+
+	private void startManualScrolling(int x, int y) {
+		if (isFlickScrollingEnabled()) {
 			myStartX = x;
 			myStartY = y;
 		}
@@ -168,64 +173,73 @@ public final class FBView extends ZLTextView {
 				}
 			}
 
-			final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
-			final int diff = horizontal ? x - myStartX : y - myStartY;
-			final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
-			if (diff >= 0) {
-				final ZLTextWordCursor cursor = getStartCursor();
-				if (cursor == null || cursor.isNull()) {
-					return false;
-				}
-				if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
-					myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
-				}
-			} else {
-				final ZLTextWordCursor cursor = getEndCursor();
-				if (cursor == null || cursor.isNull()) {
-					return false;
-				}
-				if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
-					myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
+			if (isFlickScrollingEnabled()) {
+				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
+				final int diff = horizontal ? x - myStartX : y - myStartY;
+				final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
+				if (diff >= 0) {
+					final ZLTextWordCursor cursor = getStartCursor();
+					if (cursor == null || cursor.isNull()) {
+						return false;
+					}
+					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
+						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
+					}
+				} else {
+					final ZLTextWordCursor cursor = getEndCursor();
+					if (cursor == null || cursor.isNull()) {
+						return false;
+					}
+					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
+						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
+					}
 				}
 			}
 		}
 		return true;
 	}
 
+	private synchronized void runAutoScrolling(int x, int y) {
+		final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
+		final int diff = horizontal ? x - myStartX : y - myStartY;
+		boolean doScroll = false;
+		if (diff > 0) {
+			ZLTextWordCursor cursor = getStartCursor();
+			if (cursor != null && !cursor.isNull()) {
+				doScroll = !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst();
+			}
+		} else if (diff < 0) {
+			ZLTextWordCursor cursor = getEndCursor();
+			if (cursor != null && !cursor.isNull()) {
+				doScroll = !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast();
+			}
+		}
+		if (doScroll) {
+			final int h = myContext.getHeight();
+			final int w = myContext.getWidth();
+			final int minDiff = horizontal ?
+				(w > h ? w / 4 : w / 3) :
+				(h > w ? h / 4 : h / 3);
+			final PageIndex pageIndex =
+				Math.abs(diff) < minDiff
+					? PageIndex.current
+					: (diff < 0 ? PageIndex.next : PageIndex.previous);
+			myReader.startViewAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
+		}
+	}
+
 	public boolean onFingerRelease(int x, int y) {
+		myIsBrightnessAdjustmentInProgress = false;
+
 		if (super.onFingerRelease(x, y)) {
 			return true;
 		}
 
-		synchronized (this) {
-			myIsBrightnessAdjustmentInProgress = false;
-			final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
-			final int diff = horizontal ? x - myStartX : y - myStartY;
-			boolean doScroll = false;
-			if (diff > 0) {
-				ZLTextWordCursor cursor = getStartCursor();
-				if (cursor != null && !cursor.isNull()) {
-					doScroll = !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst();
-				}
-			} else if (diff < 0) {
-				ZLTextWordCursor cursor = getEndCursor();
-				if (cursor != null && !cursor.isNull()) {
-					doScroll = !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast();
-				}
-			}
-			if (doScroll) {
-				final int h = myContext.getHeight();
-				final int w = myContext.getWidth();
-				final int minDiff = horizontal ?
-					(w > h ? w / 4 : w / 3) :
-					(h > w ? h / 4 : h / 3);
-				final PageIndex pageIndex =
-					Math.abs(diff) < minDiff
-						? PageIndex.current
-						: (diff < 0 ? PageIndex.next : PageIndex.previous);
-				myReader.startViewAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
-			}
+		if (isFlickScrollingEnabled()) {
+			runAutoScrolling(x, y);
+			return true;
 		}
+
 		return true;
 	}
 
