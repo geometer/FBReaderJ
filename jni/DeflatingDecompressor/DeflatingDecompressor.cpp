@@ -51,7 +51,7 @@ jlong Java_org_amse_ys_zip_DeflatingDecompressor_inflate(JNIEnv *env, jobject th
 		}
 	}
 	if (stream == 0) {
-		return 0;
+		return -1;
 	}
 
 	jbyte* inStart = env->GetByteArrayElements(in, 0);
@@ -71,5 +71,5 @@ jlong Java_org_amse_ys_zip_DeflatingDecompressor_inflate(JNIEnv *env, jobject th
 		}
 		return result;
 	}
-	return 0;
+	return -2;
 }

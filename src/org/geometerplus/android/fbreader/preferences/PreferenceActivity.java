@@ -361,6 +361,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		volumeKeysPreferences.setEnabled(scrollingPreferences.VolumeKeysOption.getValue());
 
 		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
+		scrollingScreen.addPreference(new AnimationSpeedPreference(
+			this,
+			scrollingScreen.Resource,
+			"animationSpeed",
+			scrollingPreferences.AnimationSpeedOption
+		));
 		scrollingScreen.addOption(scrollingPreferences.HorizontalOption, "horizontal");
 
 		final Screen dictionaryScreen = createPreferenceScreen("dictionary");

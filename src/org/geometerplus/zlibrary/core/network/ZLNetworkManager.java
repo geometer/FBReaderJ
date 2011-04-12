@@ -46,6 +46,7 @@ public class ZLNetworkManager {
 		httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
 		//httpConnection.setRequestProperty("Connection", "Close");
 		httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
+		httpConnection.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
 		httpConnection.setAllowUserInteraction(false);
 		if (httpConnection instanceof HttpsURLConnection) {
 			HttpsURLConnection httpsConnection = (HttpsURLConnection) httpConnection;
@@ -120,7 +121,6 @@ public class ZLNetworkManager {
 				}
 				response = httpConnection.getResponseCode();
 			}
-			System.err.println("RESPONSE: " + response);
 			if (response == HttpURLConnection.HTTP_OK) {
 				InputStream stream = httpConnection.getInputStream();
 				try {

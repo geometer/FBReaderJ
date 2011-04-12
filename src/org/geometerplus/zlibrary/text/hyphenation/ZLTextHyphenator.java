@@ -19,12 +19,13 @@
 
 package org.geometerplus.zlibrary.text.hyphenation;
 
+import java.util.List;
 import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.zlibrary.text.view.ZLTextWord; 
 
 public abstract class ZLTextHyphenator {
-	protected static ZLTextHyphenator ourInstance;
+	private static ZLTextHyphenator ourInstance;
 	
 	public static ZLTextHyphenator Instance() {
 		if (ourInstance == null) {
@@ -43,7 +44,8 @@ public abstract class ZLTextHyphenator {
 	protected ZLTextHyphenator() {
 	}
 
-	public abstract void load(final String language);
+	public abstract List<String> languageCodes();
+	public abstract void load(final String languageCode);
 	public abstract void unload();
 
 	public ZLTextHyphenationInfo getInfo(final ZLTextWord word) {

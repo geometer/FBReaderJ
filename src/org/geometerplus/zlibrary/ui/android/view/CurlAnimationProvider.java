@@ -25,26 +25,31 @@ import android.util.FloatMath;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 class CurlAnimationProvider extends AnimationProvider {
+	private final Paint myPaint = new Paint();
 	private final Paint myBackPaint = new Paint();
 	private final Paint myEdgePaint = new Paint();
 
 	final Path myFgPath = new Path();
 	final Path myEdgePath = new Path();
+	final Path myQuadPath = new Path();
 
-	CurlAnimationProvider(Paint paint) {
-		super(paint);
+	private float mySpeedFactor;
+
+	CurlAnimationProvider(BitmapManager bitmapManager) {
+		super(bitmapManager);
 
 		myBackPaint.setAntiAlias(true);
 		myBackPaint.setAlpha(0x40);
 
 		myEdgePaint.setAntiAlias(true);
 		myEdgePaint.setStyle(Paint.Style.FILL);
-		myEdgePaint.setShadowLayer(35, 0, 0, 0xC0000000);
+		myEdgePaint.setShadowLayer(15, 0, 0, 0xC0000000);
 	}
 
 	@Override
-	public void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap) {
-		canvas.drawBitmap(bgBitmap, 0, 0, myPaint);
+	protected void drawInternal(Canvas canvas) {
+		canvas.drawBitmap(getBitmapTo(), 0, 0, myPaint);
+		final Bitmap fgBitmap = getBitmapFrom();
 
 		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
 		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;
@@ -115,7 +120,17 @@ class CurlAnimationProvider extends AnimationProvider {
 		}
 		myFgPath.lineTo(x1 - sX, cornerY);
 		myFgPath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2);
-		canvas.drawPath(myFgPath, myEdgePaint);
+
+		myQuadPath.moveTo(x1 - sX, cornerY);
+		myQuadPath.quadTo(x1, cornerY, (x + x1) / 2, (y + cornerY) / 2);
+		canvas.drawPath(myQuadPath, myEdgePaint);
+		myQuadPath.rewind();
+		myQuadPath.moveTo((x + cornerX) / 2, (y + y1) / 2);
+		myQuadPath.quadTo(cornerX, y1, cornerX, y1 - sY);
+		canvas.drawPath(myQuadPath, myEdgePaint);
+		myQuadPath.rewind();
+
+		canvas.save();
 		canvas.clipPath(myFgPath);
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 		canvas.restore();
@@ -164,23 +179,28 @@ class CurlAnimationProvider extends AnimationProvider {
 		);
 
 		canvas.drawPath(myEdgePath, myEdgePaint);
+		canvas.save();
 		canvas.clipPath(myEdgePath);
 		final Matrix m = new Matrix();
 		m.postScale(1, -1);
 		m.postTranslate(x - cornerX, y + cornerY);
-		final double angle;
+		final float angle;
 		if (cornerY == 0) {
-			angle = - Math.toDegrees(Math.atan2(x - cornerX, y - y1));
+			angle = -180 / 3.1416f * (float)Math.atan2(x - cornerX, y - y1);
 		} else {
-			angle = 180 - Math.toDegrees(Math.atan2(x - cornerX, y - y1));
+			angle = 180 - 180 / 3.1416f * (float)Math.atan2(x - cornerX, y - y1);
 		}
-		m.postRotate((float)angle, x, y);
+		m.postRotate(angle, x, y);
 		canvas.drawBitmap(fgBitmap, m, myBackPaint);
 		canvas.restore();
 	}
 
 	@Override
 	ZLView.PageIndex getPageToScrollTo() {
+		if (myDirection == null) {
+			return ZLView.PageIndex.current;
+		}
+
 		switch (myDirection) {
 			case leftToRight:
 				return myStartX < myWidth / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
@@ -195,18 +215,18 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	void startAutoScrolling(boolean forward, float speed, ZLView.Direction direction, int w, int h, Integer x, Integer y) {
+	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
 		if (x == null || y == null) {
 			if (direction.IsHorizontal) {
-				x = speed < 0 ? w - 3 : 3;
+				x = startSpeed < 0 ? w - 3 : 3;
 				y = 1;
 			} else {
 				x = 1;
-				y = speed < 0 ? h  - 3 : 3;
+				y = startSpeed < 0 ? h  - 3 : 3;
 			}
 		} else {
-			final int cornerX = x > myWidth / 2 ? myWidth : 0;
-			final int cornerY = y > myHeight / 2 ? myHeight : 0;
+			final int cornerX = x > w / 2 ? w : 0;
+			final int cornerY = y > h / 2 ? h : 0;
 			int deltaX = Math.min(Math.abs(x - cornerX), w / 5);
 			int deltaY = Math.min(Math.abs(y - cornerY), h / 5);
 			if (direction.IsHorizontal) {
@@ -217,7 +237,10 @@ class CurlAnimationProvider extends AnimationProvider {
 			x = Math.abs(cornerX - deltaX);
 			y = Math.abs(cornerY - deltaY);
 		}
-		super.startAutoScrolling(forward, speed, direction, w, h, x, y);
+		super.startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
+		mySpeedFactor = (float)Math.pow(2.0, 0.25 * speed);
+		mySpeed *= 1.5;
+		doStep();
 	}
 
 	@Override
@@ -227,7 +250,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		}
 
 		final int speed = (int)Math.abs(mySpeed);
-		mySpeed *= 2;
+		mySpeed *= mySpeedFactor;
 
 		final int cornerX = myStartX > myWidth / 2 ? myWidth : 0;
 		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;

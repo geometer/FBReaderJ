@@ -511,6 +511,10 @@
 					<node name="slide" value="Slide animation" toBeTranslated="true"/>
 					<node name="shift" value="Shift animation" toBeTranslated="true"/>
 				</node>
+				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
+					<node name="fast" value="fast" toBeTranslated="true"/>
+					<node name="slow" value="slow" toBeTranslated="true"/>
+				</node>
 				<node name="horizontal" value="Vízszintes lapozás">
 					<node name="summaryOn" value="Oldalak görgetése vízszintesen"/>
 					<node name="summaryOff" value="Oldalak görgetése függőlegesen"/>

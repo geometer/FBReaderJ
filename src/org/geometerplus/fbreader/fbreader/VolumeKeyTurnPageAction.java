@@ -54,16 +54,11 @@ class VolumeKeyTurnPageAction extends FBAction {
 				return;
 			}
 		}
-		final FBView view = Reader.getTextView();
-		if (view.getAnimationType() != FBView.Animation.none) {
-			view.startAutoScrolling(
-				forward ? FBView.PageIndex.next : FBView.PageIndex.previous,
-				preferences.HorizontalOption.getValue()
-					? FBView.Direction.rightToLeft : FBView.Direction.up
-			);
-		} else {
-			view.scrollPage(forward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
-			Reader.repaintView();
-		}
+		Reader.getTextView().startAutoScrolling(
+			forward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+			preferences.HorizontalOption.getValue()
+				? FBView.Direction.rightToLeft : FBView.Direction.up,
+			preferences.AnimationSpeedOption.getValue()
+		);
 	}
 }
