@@ -223,7 +223,7 @@ public final class FBView extends ZLTextView {
 					Math.abs(diff) < minDiff
 						? PageIndex.current
 						: (diff < 0 ? PageIndex.next : PageIndex.previous);
-				startAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
+				myReader.startViewAutoScrolling(pageIndex, horizontal ? Direction.rightToLeft : Direction.up, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
 			}
 		}
 		return true;
