@@ -57,7 +57,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	public static final int MODE_TAP_ZONES_EDIT = 1;
 	public int myMode = MODE_READ;
 
-	public Activity myMainActivity;
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
