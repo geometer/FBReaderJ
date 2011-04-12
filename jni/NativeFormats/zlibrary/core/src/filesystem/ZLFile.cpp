@@ -24,10 +24,10 @@
 
 #include "ZLFile.h"
 #include "ZLFSDir.h"
-#include "ZLOutputStream.h"
+//#include "ZLOutputStream.h"
 #include "zip/ZLZip.h"
-#include "tar/ZLTar.h"
-#include "bzip2/ZLBzip2InputStream.h"
+//#include "tar/ZLTar.h"
+//#include "bzip2/ZLBzip2InputStream.h"
 #include "ZLFSManager.h"
 
 const ZLFile ZLFile::NO_FILE;
@@ -62,20 +62,20 @@ ZLFile::ZLFile(const std::string &path, const std::string &mimeType) : myPath(pa
 			lowerCaseName = lowerCaseName.substr(0, lowerCaseName.length() - 3);
 			myArchiveType = (ArchiveType)(myArchiveType | GZIP);
 		}
-		if (ZLStringUtil::stringEndsWith(lowerCaseName, ".bz2")) {
+		/*if (ZLStringUtil::stringEndsWith(lowerCaseName, ".bz2")) {
 			myNameWithoutExtension = myNameWithoutExtension.substr(0, myNameWithoutExtension.length() - 4);
 			lowerCaseName = lowerCaseName.substr(0, lowerCaseName.length() - 4);
 			myArchiveType = (ArchiveType)(myArchiveType | BZIP2);
-		}
+		}*/
 		if (ZLStringUtil::stringEndsWith(lowerCaseName, ".zip")) {
 			myArchiveType = (ArchiveType)(myArchiveType | ZIP);
-		} else if (ZLStringUtil::stringEndsWith(lowerCaseName, ".tar")) {
+		} /*else if (ZLStringUtil::stringEndsWith(lowerCaseName, ".tar")) {
 			myArchiveType = (ArchiveType)(myArchiveType | TAR);
 		} else if (ZLStringUtil::stringEndsWith(lowerCaseName, ".tgz") ||
 							 ZLStringUtil::stringEndsWith(lowerCaseName, ".ipk")) {
 			//myNameWithoutExtension = myNameWithoutExtension.substr(0, myNameWithoutExtension.length() - 3) + "tar";
 			myArchiveType = (ArchiveType)(myArchiveType | TAR | GZIP);
-		}
+		}*/
 	}
 
 	int index = myNameWithoutExtension.rfind('.');
@@ -90,9 +90,9 @@ shared_ptr<ZLInputStream> ZLFile::envelopeCompressedStream(shared_ptr<ZLInputStr
 		if (myArchiveType & GZIP) {
 			return new ZLGzipInputStream(base);
 		}
-		if (myArchiveType & BZIP2) {
+		/*if (myArchiveType & BZIP2) {
 			return new ZLBzip2InputStream(base);
-		}
+		}*/
 	}
 	return base;
 }
@@ -117,9 +117,9 @@ shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 		if (!base.isNull()) {
 			if (baseFile.myArchiveType & ZIP) {
 				stream = new ZLZipInputStream(base, myPath.substr(index + 1));
-			} else if (baseFile.myArchiveType & TAR) {
+			} /*else if (baseFile.myArchiveType & TAR) {
 				stream = new ZLTarInputStream(base, myPath.substr(index + 1));
-			}
+			}*/
 		}
 		stream = envelopeCompressedStream(stream);
 	}
@@ -127,7 +127,7 @@ shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 	return stream;
 }
 
-shared_ptr<ZLOutputStream> ZLFile::outputStream(bool writeThrough) const {
+/*shared_ptr<ZLOutputStream> ZLFile::outputStream(bool writeThrough) const {
 	if (!writeThrough && isCompressed()) {
 		return 0;
 	}
@@ -135,7 +135,7 @@ shared_ptr<ZLOutputStream> ZLFile::outputStream(bool writeThrough) const {
 		return 0;
 	}
 	return ZLFSManager::Instance().createOutputStream(myPath);
-}
+}*/
 
 shared_ptr<ZLDir> ZLFile::directory(bool createUnexisting) const {
 	if (exists()) {
@@ -143,9 +143,9 @@ shared_ptr<ZLDir> ZLFile::directory(bool createUnexisting) const {
 			return ZLFSManager::Instance().createPlainDirectory(myPath);
 		} else if (myArchiveType & ZIP) {
 			return new ZLZipDir(myPath);
-		} else if (myArchiveType & TAR) {
+		} /*else if (myArchiveType & TAR) {
 			return new ZLTarDir(myPath);
-		}
+		}*/
 	} else if (createUnexisting) {
 		myInfoIsFilled = false;
 		return ZLFSManager::Instance().createNewDirectory(myPath);

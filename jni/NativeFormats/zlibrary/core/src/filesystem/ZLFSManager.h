@@ -29,7 +29,7 @@
 class ZLDir;
 class ZLFSDir;
 class ZLInputStream;
-class ZLOutputStream;
+//class ZLOutputStream;
 
 class ZLFSManager {
 
@@ -51,7 +51,7 @@ public:
 protected:
 	virtual void normalizeRealPath(std::string &path) const = 0;
 	virtual ZLInputStream *createPlainInputStream(const std::string &path) const = 0;
-	virtual ZLOutputStream *createOutputStream(const std::string &path) const = 0;
+	//virtual ZLOutputStream *createOutputStream(const std::string &path) const = 0;
 	virtual ZLFSDir *createPlainDirectory(const std::string &path) const = 0;
 	virtual ZLFSDir *createNewDirectory(const std::string &path) const = 0;
 	virtual ZLFileInfo fileInfo(const std::string &path) const = 0;

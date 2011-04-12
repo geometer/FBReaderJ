@@ -28,7 +28,7 @@
 
 class ZLDir;
 class ZLInputStream;
-class ZLOutputStream;
+//class ZLOutputStream;
 
 class ZLFile {
 
@@ -46,10 +46,10 @@ public:
 	enum ArchiveType {
 		NONE = 0,
 		GZIP = 0x0001,
-		BZIP2 = 0x0002,
+		//BZIP2 = 0x0002,
 		COMPRESSED = 0x00ff,
 		ZIP = 0x0100,
-		TAR = 0x0200,
+		//TAR = 0x0200,
 		ARCHIVE = 0xff00,
 	};
 	
@@ -82,7 +82,7 @@ public:
 	std::string resolvedPath() const;
 
 	shared_ptr<ZLInputStream> inputStream() const;
-	shared_ptr<ZLOutputStream> outputStream(bool writeThrough = false) const;
+	//shared_ptr<ZLOutputStream> outputStream(bool writeThrough = false) const;
 	shared_ptr<ZLDir> directory(bool createUnexisting = false) const;
 
 	bool operator == (const ZLFile &other) const;
