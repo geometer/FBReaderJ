@@ -1,4 +1,27 @@
-===== 1.0 (Apr ??, 2011) =====
+===== 1.0.4 (Apr 11, 2011) =====
+* Fixed no-animation scrolling
+* Fixed zip input stream handler leak
+* Fixed day/night switching
+
+===== 1.0.3 (Apr 11, 2011) =====
+* Corrected language list in book info editing activity
+* Fixed custom catalog URL editing
+* Curl scrolling speed optimization
+* Czech translation has been updated (by Marek Pavelka)
+* Fixed sporadic program freeze issue
+
+===== 1.0.2 (Apr 06, 2011) =====
+* Animation fixes
+* Animation speed-up
+* Fixed initial menu item set
+* Fixed image scaling
+
+===== 1.0.1 (Apr 05, 2011) =====
+* Fixed first scrolling direction
+* Animation speed option has been added
+* Russian translation has been updated
+
+===== 1.0 (Apr 04, 2011) =====
 * Different (and configurable) actions for short and long Back button press (original code by Steffen Siebert)
 * SlovoEd dictionaries support has been fixed
 * Czech translation has been updated (by Marek Pavelka)
@@ -10,6 +33,7 @@
 * Proguard obfuscation has been added; package size decreased
 * Hyphenation patterns for Dutch, Hungarian and Lithuanian (taken from FBReader C++)
 * Hyphenation patterns for Polish (by Tomasz Długosz)
+* Added Accept-Language field to all http requests
 
 ===== 0.99.18 (Mar 15, 2011) =====
 * Web-free icon

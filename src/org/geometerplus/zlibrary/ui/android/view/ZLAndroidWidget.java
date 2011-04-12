@@ -32,12 +32,8 @@ import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
-	private Bitmap myMainBitmap;
-	private Bitmap mySecondaryBitmap;
-	private boolean mySecondaryBitmapIsUpToDate;
+	private final BitmapManager myBitmapManager = new BitmapManager(this);
 	private Bitmap myFooterBitmap;
-
-	private ZLView.PageIndex myPageToScrollTo = ZLView.PageIndex.current;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -70,8 +66,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			getAnimationProvider().terminate();
 			myScreenIsTouched = false;
 			view.onScrollingFinished(ZLView.PageIndex.current);
-			setPageToScrollTo(ZLView.PageIndex.current);
 		}
+		myBitmapManager.setSize(w, h);
 	}
 
 	@Override
@@ -86,21 +82,6 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 
 		final int w = getWidth();
 		final int h = getMainAreaHeight();
-
-		if (myMainBitmap != null &&
-			(myMainBitmap.getWidth() != w || myMainBitmap.getHeight() != h)) {
-			myMainBitmap = null;
-			mySecondaryBitmap = null;
-			System.gc();
-			System.gc();
-			System.gc();
-		}
-		if (myMainBitmap == null) {
-			myMainBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
-			mySecondaryBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
-			mySecondaryBitmapIsUpToDate = false;
-			drawOnBitmap(myMainBitmap);
-		}
 
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
@@ -118,16 +99,16 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			myAnimationType = type;
 			switch (type) {
 				case none:
-					myAnimationProvider = new NoneAnimationProvider(myPaint);
+					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
 					break;
 				case curl:
-					myAnimationProvider = new CurlAnimationProvider(myPaint);
+					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
 					break;
 				case slide:
-					myAnimationProvider = new SlideAnimationProvider(myPaint);
+					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
 					break;
 				case shift:
-					myAnimationProvider = new ShiftAnimationProvider(myPaint);
+					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
 					break;
 			}
 		}
@@ -144,7 +125,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final AnimationProvider.Mode oldMode = animator.getMode();
 		animator.doStep();
 		if (animator.inProgress()) {
-			animator.draw(canvas, mySecondaryBitmap, myMainBitmap);
+			animator.draw(canvas);
 			if (animator.getMode().Auto) {
 				postInvalidate();
 			}
@@ -153,10 +134,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			switch (oldMode) {
 				case AutoScrollingForward:
 				{
-					final Bitmap swap = myMainBitmap;
-					myMainBitmap = mySecondaryBitmap;
-					mySecondaryBitmap = swap;
-					view.onScrollingFinished(myPageToScrollTo);
+					final ZLView.PageIndex index = animator.getPageToScrollTo();
+					myBitmapManager.shift(index == ZLView.PageIndex.next);
+					view.onScrollingFinished(index);
 					ZLApplication.Instance().onRepaintFinished();
 					break;
 				}
@@ -164,90 +144,59 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 					view.onScrollingFinished(ZLView.PageIndex.current);
 					break;
 			}
-			setPageToScrollTo(ZLView.PageIndex.current);
 			onDrawStatic(canvas);
 		}
 	}
 
-	private void setPageToScrollTo(ZLView.PageIndex pageIndex) {
-		if (myPageToScrollTo != pageIndex) {
-			myPageToScrollTo = pageIndex;
-			mySecondaryBitmapIsUpToDate = false;
-		}
+	public void resetBitmaps() {
+		myBitmapManager.reset();
 	}
 
 	public void scrollManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
-		if (myMainBitmap == null) {
-			return;
+		final AnimationProvider animator = getAnimationProvider();
+		if (!animator.inProgress()) {
+			animator.startManualScrolling(
+				startX, startY,
+				direction,
+				getWidth(), getMainAreaHeight()
+			);
 		}
-
-		getAnimationProvider().startManualScrolling(
-			startX, startY,
-			endX, endY,
-			direction,
-			getWidth(), getMainAreaHeight()
-		);
-		setPageToScrollTo(getAnimationProvider().getPageToScrollTo());
-		drawOnBitmap(mySecondaryBitmap);
+		animator.scrollTo(endX, endY);
 		postInvalidate();
 	}
 
-	public void scrollToCenter() {
-		getAnimationProvider().terminate();
-		if (myMainBitmap == null) {
-			return;
-		}
-		setPageToScrollTo(ZLView.PageIndex.current);
-		drawOnBitmap(mySecondaryBitmap);
-		postInvalidate();
-	}
-
-	public void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, Integer x, Integer y) {
-		if (myMainBitmap == null) {
-			return;
-		}
+	public void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, Integer x, Integer y, int speed) {
 		final AnimationProvider animator = getAnimationProvider();
 		final int w = getWidth();
-		final int h = getHeight();
+		final int h = getMainAreaHeight();
 		switch (pageIndex) {
 			case current:
-				switch (myPageToScrollTo) {
+				switch (animator.getPageToScrollTo()) {
 					case current:
 						animator.terminate();
 						break;
 					case previous:
-						animator.startAutoScrolling(false, -3, direction, w, h, x, y);
+						animator.startAutoScrolling(false, -3, direction, w, h, x, y, speed);
 						break;
 					case next:
-						animator.startAutoScrolling(false, 3, direction, w, h, x, y);
+						animator.startAutoScrolling(false, 3, direction, w, h, x, y, speed);
 						break;
 				}
 				break;
 			case previous:
-				animator.startAutoScrolling(true, 3, direction, w, h, x, y);
-				setPageToScrollTo(pageIndex);
+				animator.startAutoScrolling(true, 3, direction, w, h, x, y, speed);
 				break;
 			case next:
-				animator.startAutoScrolling(true, -3, direction, w, h, x, y);
-				setPageToScrollTo(pageIndex);
+				animator.startAutoScrolling(true, -3, direction, w, h, x, y, speed);
 				break;
 		}
-		drawOnBitmap(mySecondaryBitmap);
 		postInvalidate();
 	}
 
-	private void drawOnBitmap(Bitmap bitmap) {
+	void drawOnBitmap(Bitmap bitmap, ZLView.PageIndex index) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		if (view == null) {
 			return;
-		}
-
-		if (bitmap == myMainBitmap) {
-			mySecondaryBitmapIsUpToDate = false;
-		} else if (mySecondaryBitmapIsUpToDate) {
-			return;
-		} else {
-			mySecondaryBitmapIsUpToDate = true;
 		}
 
 		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
@@ -256,40 +205,38 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 			getMainAreaHeight(),
 			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
 		);
-		view.paint(
-			context,
-			bitmap == myMainBitmap ? ZLView.PageIndex.current : myPageToScrollTo
-		);
+		view.paint(context, index);
 	}
 
 	private void drawFooter(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		final ZLView.FooterArea footer = view.getFooterArea();
-		if (footer != null) {
-			if (myFooterBitmap != null &&
-				(myFooterBitmap.getWidth() != getWidth() ||
-				 myFooterBitmap.getHeight() != footer.getHeight())) {
-				myFooterBitmap = null;
-			}
-			if (myFooterBitmap == null) {
-				myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
-			}
-			final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-				new Canvas(myFooterBitmap),
-				getWidth(),
-				footer.getHeight(),
-				view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
-			);
-			footer.paint(context);
-			canvas.drawBitmap(myFooterBitmap, 0, getMainAreaHeight(), myPaint);
-		} else {
+
+		if (footer == null) {
+			myFooterBitmap = null;
+			return;
+		}
+
+		if (myFooterBitmap != null &&
+			(myFooterBitmap.getWidth() != getWidth() ||
+			 myFooterBitmap.getHeight() != footer.getHeight())) {
 			myFooterBitmap = null;
 		}
+		if (myFooterBitmap == null) {
+			myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
+		}
+		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+			new Canvas(myFooterBitmap),
+			getWidth(),
+			footer.getHeight(),
+			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+		);
+		footer.paint(context);
+		canvas.drawBitmap(myFooterBitmap, 0, getHeight() - footer.getHeight(), myPaint);
 	}
 
 	private void onDrawStatic(Canvas canvas) {
-		drawOnBitmap(myMainBitmap);
-		canvas.drawBitmap(myMainBitmap, 0, 0, myPaint);
+		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 		drawFooter(canvas);
 	}
 
@@ -500,7 +447,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final AnimationProvider animator = getAnimationProvider();
 		if (animator.inProgress()) {
 			final int from = view.getScrollbarThumbLength(ZLView.PageIndex.current);
-			final int to = view.getScrollbarThumbLength(myPageToScrollTo);
+			final int to = view.getScrollbarThumbLength(animator.getPageToScrollTo());
 			final int percent = animator.getScrolledPercent();
 			return (from * (100 - percent) + to * percent) / 100;
 		} else {
@@ -516,7 +463,7 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final AnimationProvider animator = getAnimationProvider();
 		if (animator.inProgress()) {
 			final int from = view.getScrollbarThumbPosition(ZLView.PageIndex.current);
-			final int to = view.getScrollbarThumbPosition(myPageToScrollTo);
+			final int to = view.getScrollbarThumbPosition(animator.getPageToScrollTo());
 			final int percent = animator.getScrolledPercent();
 			return (from * (100 - percent) + to * percent) / 100;
 		} else {

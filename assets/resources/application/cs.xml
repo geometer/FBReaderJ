@@ -511,9 +511,13 @@
 				</node>
 				<node name="animation" value="Animace">
 					<node name="none" value="Posouvat bez animace"/>
-					<node name="curl" value="Curl animation" toBeTranslated="true"/>
+					<node name="curl" value="Animace otočení"/>
 					<node name="slide" value="Animace vysunutí"/>
 					<node name="shift" value="Animace posunutí"/>
+				</node>
+				<node name="animationSpeed" value="Rychlost animace">
+					<node name="fast" value="rychle"/>
+					<node name="slow" value="pomalu"/>
 				</node>
 				<node name="horizontal" value="Vodorovné posouvání">
 					<node name="summaryOn" value="Posouvat stránky vodorovně"/>

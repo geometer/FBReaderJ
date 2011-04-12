@@ -59,12 +59,19 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void refreshMenu() {
+	public void refreshMenu() {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
 			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
 		}
+	}
+
+	protected void resetView() {
+		final ZLAndroidWidget widget = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
+		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
+		widget.resetBitmaps();
 	}
 
 	protected void repaintView() {
@@ -82,24 +89,17 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void scrollViewToCenter() {
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToCenter();
+		widget.startAutoScrolling(pageIndex, direction, null, null, speed);
 	}
 
 	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
+	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y, int speed) {
 		final ZLAndroidWidget widget = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, direction, null, null);
-	}
-
-	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, direction, x, y);
+		widget.startAutoScrolling(pageIndex, direction, x, y, speed);
 	}
 
 	public void rotate() {
