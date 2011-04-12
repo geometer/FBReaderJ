@@ -1,5 +1,6 @@
-===== 1.0.6 (Apr 11, 2011) =====
+===== 1.0.6 (Apr 12, 2011) =====
 * Fixed tap-only scrolling mode
+* ePub 3.0: META-INF/container.xml parsing has been added (fixed a problem with ePubs containing multiple opf files)
 
 ===== 1.0.5 (Apr 11, 2011) =====
 * Fixed NPE in animation scrolling
