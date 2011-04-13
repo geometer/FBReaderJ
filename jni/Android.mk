@@ -31,6 +31,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := NativeFormats
 LOCAL_LDLIBS := -lz
+LOCAL_CFLAGS := -Wall
 
 LOCAL_SRC_FILES := \
 	NativeFormats/JavaNativeFormatPlugin.cpp \

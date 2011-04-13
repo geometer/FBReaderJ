@@ -31,8 +31,8 @@ public:
 	~AndroidLog();
 
 private:
-	bool extractLogClass();
-	bool extractSystemErr();
+	void extractLogClass();
+	void extractSystemErr();
 	void prepareBuffer();
 
 public:
@@ -74,13 +74,13 @@ inline AndroidLog::~AndroidLog() {
 	}
 }
 
-inline bool AndroidLog::extractLogClass() {
+inline void AndroidLog::extractLogClass() {
 	if (myLogClass == 0) {
 		myLogClass = myEnv->FindClass("android/util/Log");
 	}
 }
 
-inline bool AndroidLog::extractSystemErr() {
+inline void AndroidLog::extractSystemErr() {
 	if (mySystemErr == 0) {
 		jclass systemClass = myEnv->FindClass("java/lang/System");
 		jfieldID systemErr = myEnv->GetStaticFieldID(systemClass, "err", "Ljava/io/PrintStream;");
