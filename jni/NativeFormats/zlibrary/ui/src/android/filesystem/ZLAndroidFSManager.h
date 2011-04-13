@@ -17,26 +17,22 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ZLIBRARYIMPLEMENTATION_H__
-#define __ZLIBRARYIMPLEMENTATION_H__
+#ifndef __ZLANDROIDFSMANAGER_H__
+#define __ZLANDROIDFSMANAGER_H__
 
-/*class ZLibraryImplementation {
+#include "../../../../core/src/unix/filesystem/ZLUnixFSManager.h"
+
+class ZLAndroidFSManager : public ZLUnixFSManager {
 
 public:
-	static ZLibraryImplementation *Instance;
-
+	static void createInstance() { ourInstance = new ZLAndroidFSManager(); }
+	
+private:
+	ZLAndroidFSManager() {}
+	
 protected:
-	ZLibraryImplementation();
-	virtual ~ZLibraryImplementation();
-
-public:
-	virtual void init(int &argc, char **&argv) = 0;
-	virtual ZLPaintContext *createContext() = 0;
-	virtual void run(ZLApplication *application) = 0;
+	std::string convertFilenameToUtf8(const std::string &name) const;
+	std::string mimeType(const std::string &path) const;
 };
 
-extern "C" {
-	void initLibrary();
-}*/
-
-#endif /* __ZLIBRARYIMPLEMENTATION_H__ */
+#endif /* __ZLANDROIDFSMANAGER_H__ */

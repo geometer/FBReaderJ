@@ -19,13 +19,13 @@
 
 //#include <ZLTimeManager.h>
 //#include <ZLDialogManager.h>
-//#include <ZLImageManager.h>
+#include <ZLImageManager.h>
 //#include <ZLMessage.h>
-//#include <ZLUnicodeUtil.h>
-//#include <ZLLogger.h>
+#include <ZLUnicodeUtil.h>
+#include <ZLLogger.h>
 
 #include "ZLibrary.h"
-//#include "../filesystem/ZLFSManager.h"
+#include "../filesystem/ZLFSManager.h"
 //#include "../options/ZLConfig.h"
 //#include "../network/ZLNetworkManager.h"
 
@@ -43,12 +43,12 @@
 
 //const std::string ZLibrary::BaseDirectory = std::string(BASEDIR);
 
-/*void ZLibrary::parseArguments(int &argc, char **&argv) {
+void ZLibrary::parseArguments(int &argc, char **&argv) {
 	static const std::string LANGUAGE_OPTION = "-lang";
 	static const std::string LOGGER_OPTION = "-log";
 	while ((argc > 2) && (argv[1] != 0) && (argv[2] != 0)) {
 		const std::string argument = argv[1];
-		if (LANGUAGE_OPTION == argument) {
+		/*if (LANGUAGE_OPTION == argument) {
 			ourLocaleIsInitialized = true;
 			std::string locale = argv[2];
 			int index = locale.find('_');
@@ -58,7 +58,7 @@
 			} else {
 				ourLanguage = locale;
 			}
-		} else if (LOGGER_OPTION == argument) {
+		} else*/ if (LOGGER_OPTION == argument) {
 			std::string loggerClasses = argv[2];
 			while (size_t index = loggerClasses.find(':') != std::string::npos) {
 				ZLLogger::Instance().registerClass(loggerClasses.substr(0, index));
@@ -71,18 +71,18 @@
 		argc -= 2;
 		argv += 2;
 	}
-	ourZLibraryDirectory = BaseDirectory + FileNameDelimiter + "zlibrary";
-}*/
+	//ourZLibraryDirectory = BaseDirectory + FileNameDelimiter + "zlibrary";
+}
 
-/*void ZLibrary::shutdown() {
-	ZLNetworkManager::deleteInstance();
+void ZLibrary::shutdown() {
+//	ZLNetworkManager::deleteInstance();
 	ZLImageManager::deleteInstance();
-	ZLCommunicationManager::deleteInstance();
-	ZLDialogManager::deleteInstance();
+//	ZLCommunicationManager::deleteInstance();
+//	ZLDialogManager::deleteInstance();
 	ZLFSManager::deleteInstance();
-	ZLTimeManager::deleteInstance();
-	ZLConfigManager::deleteInstance();
-}*/
+//	ZLTimeManager::deleteInstance();
+//	ZLConfigManager::deleteInstance();
+}
 
 /*std::string ZLibrary::replaceRegExps(const std::string &pattern) {
 	static const std::string NAME_PATTERN = "%APPLICATION_NAME%";

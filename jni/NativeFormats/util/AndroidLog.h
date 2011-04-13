@@ -17,6 +17,9 @@
  * 02110-1301, USA.
  */
 
+#ifndef __ANDROIDLOG_H__
+#define __ANDROIDLOG_H__
+
 #include <jni.h>
 
 #include <cstdarg>
@@ -24,10 +27,12 @@
 
 #include <string>
 
+#include <AndroidUtil.h>
+
 
 class AndroidLog {
 public:
-	AndroidLog(JNIEnv *env);
+	AndroidLog();
 	~AndroidLog();
 
 private:
@@ -61,7 +66,8 @@ private:
 	char *myBuffer;
 };
 
-inline AndroidLog::AndroidLog(JNIEnv *env) : myEnv(env) {
+inline AndroidLog::AndroidLog() {
+	myEnv = AndroidUtil::getEnv();
 	myLogClass = 0;
 	mySystemErr = 0;
 	myPrintStreamClass = 0;
@@ -176,3 +182,5 @@ inline void AndroidLog::errf(const std::string &format, ...) {
 	va_end(args);
 	err(myBuffer);
 }
+
+#endif /* __ANDROIDLOG_H__ */

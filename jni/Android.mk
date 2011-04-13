@@ -34,20 +34,21 @@ LOCAL_LDLIBS := -lz
 LOCAL_CFLAGS := -Wall
 
 LOCAL_SRC_FILES := \
+	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
-	NativeFormats/zlibrary/core/src/android/library/ZLibrary.cpp \
-	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
+	NativeFormats/main.cpp \
+	NativeFormats/util/AndroidUtil.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLGzipInputStream.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZDecompressor.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipDir.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipEntryCache.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipHeader.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipInputStream.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLImageManager.cpp \
 	NativeFormats/zlibrary/core/src/library/ZLibrary.cpp \
@@ -55,10 +56,16 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/runnable/ZLExecutionData.cpp \
 	NativeFormats/zlibrary/core/src/runnable/ZLRunnable.cpp \
 	NativeFormats/zlibrary/core/src/typeId/ZLTypeId.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSDir.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSManager.cpp \
+	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLFileUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLStringUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUserData.cpp \
+	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
+	NativeFormats/zlibrary/ui/src/android/library/ZLAndroidLibraryImplementation.cpp \
 
 
 LOCAL_C_INCLUDES := \

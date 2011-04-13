@@ -41,7 +41,7 @@ ZLZipEntryCache::ZLZipEntryCache(ZLInputStream &baseStream) {
 	ZLZipHeader header;
 	while (header.readFrom(baseStream)) {
 		Info *infoPtr = 0;
-		if (header.Signature == ZLZipHeader::SignatureLocalFile) {
+		if (header.Signature == (unsigned long)ZLZipHeader::SignatureLocalFile) {
 			std::string entryName(header.NameLength, '\0');
 			if ((unsigned int)baseStream.read((char*)entryName.data(), header.NameLength) == header.NameLength) {
 				Info &info = myInfoMap[entryName];

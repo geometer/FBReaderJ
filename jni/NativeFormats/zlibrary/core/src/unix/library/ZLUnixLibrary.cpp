@@ -55,14 +55,14 @@ const std::string ZLibrary::EndOfLine("\n");
 	}
 }*/
 
-/*ZLibraryImplementation *ZLibraryImplementation::Instance = 0;
+ZLibraryImplementation *ZLibraryImplementation::Instance = 0;
 
 ZLibraryImplementation::ZLibraryImplementation() {
 	Instance = this;
 }
 
 ZLibraryImplementation::~ZLibraryImplementation() {
-}*/
+}
 
 /*static void *loadPlugin(const std::string &path) {
 	ZLLogger::Instance().println(ZLLogger::DEFAULT_CLASS, "loading " + path);
@@ -73,7 +73,7 @@ ZLibraryImplementation::~ZLibraryImplementation() {
 	return handle;
 }*/
 
-/*bool ZLibrary::init(int &argc, char **&argv) {
+bool ZLibrary::init(int &argc, char **&argv) {
 #ifdef ZLSHARED
 	const std::string pluginPath = std::string(LIBDIR) + "/zlibrary/ui";
 
@@ -132,7 +132,7 @@ ZLibraryImplementation::~ZLibraryImplementation() {
 		ZLLogger::Instance().println(ZLLogger::DEFAULT_CLASS, error);
 		return false;
 	}
-#endif  ZLSHARED
+#endif /* ZLSHARED */
 	initLibrary();
 
 	if (ZLibraryImplementation::Instance == 0) {
@@ -141,7 +141,7 @@ ZLibraryImplementation::~ZLibraryImplementation() {
 
 	ZLibraryImplementation::Instance->init(argc, argv);
 	return true;
-}*/
+}
 
 /*ZLPaintContext *ZLibrary::createContext() {
 	return ZLibraryImplementation::Instance->createContext();
