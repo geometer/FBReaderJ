@@ -27,5 +27,5 @@ public interface ZLViewWidget {
 	void scrollManuallyTo(int x, int y);
 	void startAutoScrolling(ZLView.PageIndex pageIndex, int x, int y, ZLView.Direction direction, int speed);
 	void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed);
-	void startAutoScrolling(int x, int y, boolean forward, int speed);
+	void startAutoScrolling(int x, int y, int speed);
 }

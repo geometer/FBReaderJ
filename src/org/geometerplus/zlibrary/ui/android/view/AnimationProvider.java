@@ -81,7 +81,7 @@ abstract class AnimationProvider {
 		}
 	}
 
-	void startAutoScrolling(int x, int y, boolean forward, int speed) {
+	void startAutoScrolling(int x, int y, int speed) {
 		if (myMode != Mode.ManualScrolling) {
 			return;
 		}
@@ -89,6 +89,12 @@ abstract class AnimationProvider {
 		if (getPageToScrollTo(x, y) == ZLView.PageIndex.current) {
 			return;
 		}
+
+		final int diff = myDirection.IsHorizontal ? x - myStartX : y - myStartY;
+		final int minDiff = myDirection.IsHorizontal ?
+			(myWidth > myHeight ? myWidth / 4 : myWidth / 3) :
+			(myHeight > myWidth ? myHeight / 4 : myHeight / 3);
+		boolean forward = Math.abs(diff) > minDiff;
 
 		myMode = forward ? Mode.AutoScrollingForward : Mode.AutoScrollingBackward;
 

@@ -198,54 +198,18 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 	}
 
-	public void startAutoScrolling(int x, int y, boolean forward, int speed) {
+	public void startAutoScrolling(int x, int y, int speed) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		final AnimationProvider animator = getAnimationProvider();
 		if (!view.canScroll(animator.getPageToScrollTo(x, y))) {
 			animator.terminate();
 			return;
 		}
-		animator.startAutoScrolling(x, y, forward, speed);
+		animator.startAutoScrolling(x, y, speed);
 		if (animator.getMode().Auto) {
 			postInvalidate();
 		}
 	}
-
-	/*
-	public void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, Integer x, Integer y, int speed) {
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-		final AnimationProvider animator = getAnimationProvider();
-		final int w = getWidth();
-		final int h = getMainAreaHeight();
-
-		if (animator.getMode().Auto || !view.canScroll(pageIndex)) {
-			return;
-		}
-
-		switch (pageIndex) {
-			case current:
-				switch (animator.getPageToScrollTo()) {
-					case current:
-						animator.terminate();
-						break;
-					case previous:
-						animator.startAutoScrolling(false, -3, direction, w, h, x, y, speed);
-						break;
-					case next:
-						animator.startAutoScrolling(false, 3, direction, w, h, x, y, speed);
-						break;
-				}
-				break;
-			case previous:
-				animator.startAutoScrolling(true, 3, direction, w, h, x, y, speed);
-				break;
-			case next:
-				animator.startAutoScrolling(true, -3, direction, w, h, x, y, speed);
-				break;
-		}
-		postInvalidate();
-	}
-	*/
 
 	void drawOnBitmap(Bitmap bitmap, ZLView.PageIndex index) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
