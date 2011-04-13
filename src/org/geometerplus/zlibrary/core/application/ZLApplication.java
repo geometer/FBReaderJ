@@ -49,8 +49,8 @@ public abstract class ZLApplication {
 			final ZLViewWidget widget = getViewWidget();
 			if (widget != null) {
 				widget.reset();
+				widget.repaint();
 			}
-			repaintView();
 			onViewChanged();
 		}
 	}
@@ -69,30 +69,6 @@ public abstract class ZLApplication {
 
 	public final ZLViewWidget getViewWidget() {
 		return myWindow != null ? myWindow.getViewWidget() : null;
-	}
-
-	public final void repaintView() {
-		if (myWindow != null) {
-			myWindow.repaintView();
-		}
-	}
-
-	public final void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
-		if (myWindow != null) {
-			myWindow.scrollViewManually(startX, startY, endX, endY, direction);
-		}
-	}
-
-	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
-		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(pageIndex, direction, speed);
-		}
-	}
-
-	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y, int speed) {
-		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(pageIndex, direction, x, y, speed);
-		}
 	}
 
 	public final void onRepaintFinished() {

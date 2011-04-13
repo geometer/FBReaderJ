@@ -89,7 +89,7 @@ public final class FBView extends ZLTextView {
 		if (region != null) {
 			selectRegion(region);
 			myReader.getViewWidget().reset();
-			myReader.repaintView();
+			myReader.getViewWidget().repaint();
 			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
@@ -177,7 +177,7 @@ public final class FBView extends ZLTextView {
 			if (isFlickScrollingEnabled()) {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 				final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
-				myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
+				myReader.getViewWidget().scrollManually(myStartX, myStartY, x, y, direction);
 			}
 		}
 		return true;
@@ -197,7 +197,7 @@ public final class FBView extends ZLTextView {
 			Math.abs(diff) < minDiff
 				? PageIndex.current
 				: (diff < 0 ? PageIndex.next : PageIndex.previous);
-		myReader.startViewAutoScrolling(pageIndex, direction, x, y, animationSpeed);
+		myReader.getViewWidget().startAutoScrolling(pageIndex, direction, x, y, animationSpeed);
 	}
 
 	public boolean onFingerRelease(int x, int y) {
@@ -229,7 +229,7 @@ public final class FBView extends ZLTextView {
 			if (region != null) {
 				selectRegion(region);
 				myReader.getViewWidget().reset();
-				myReader.repaintView();
+				myReader.getViewWidget().repaint();
 				return true;
 			}
 		}
@@ -248,7 +248,7 @@ public final class FBView extends ZLTextView {
 			if (region != null) {
 				selectRegion(region);
 				myReader.getViewWidget().reset();
-				myReader.repaintView();
+				myReader.getViewWidget().repaint();
 			}
 		}
 		return true;
@@ -293,7 +293,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		myReader.getViewWidget().reset();
-		myReader.repaintView();
+		myReader.getViewWidget().repaint();
 
 		return true;
 	}
@@ -366,7 +366,7 @@ public final class FBView extends ZLTextView {
 	private class Footer implements FooterArea {
 		private Runnable UpdateTask = new Runnable() {
 			public void run() {
-				myReader.repaintView();
+				myReader.getViewWidget().repaint();
 			}
 		};
 
@@ -526,7 +526,7 @@ public final class FBView extends ZLTextView {
 				gotoPage(page);
 			}
 			myReader.getViewWidget().reset();
-			myReader.repaintView();
+			myReader.getViewWidget().repaint();
 		}
 	}
 

@@ -21,4 +21,8 @@ package org.geometerplus.zlibrary.core.view;
 
 public interface ZLViewWidget {
 	void reset();
+	void repaint();
+
+	void scrollManually(int startX, int startY, int endX, int endY, ZLView.Direction direction);
+	void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, Integer x, Integer y, int speed);
 }

@@ -128,7 +128,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				preparePaintInfo(myCurrentPage);
 			}
 			Application.getViewWidget().reset();
-			Application.repaintView();
+			Application.getViewWidget().repaint();
 		}
 	}
 
@@ -153,7 +153,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					(backward ? myModel.getPreviousMark(mark) : myModel.getNextMark(mark)));
 			}
 			Application.getViewWidget().reset();
-			Application.repaintView();
+			Application.getViewWidget().repaint();
 		}
 		return count;
 	}
@@ -187,7 +187,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			myModel.removeAllMarks();
 			rebuildPaintInfo();
 			Application.getViewWidget().reset();
-			Application.repaintView();
+			Application.getViewWidget().repaint();
 		}
 	}
 
@@ -1261,7 +1261,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public boolean onFingerMove(int x, int y) {
 		if (mySelectionModel.extendTo(x, y)) {
 			Application.getViewWidget().reset();
-			Application.repaintView();
+			Application.getViewWidget().repaint();
 			return true;
 		}
 		return false;
@@ -1280,7 +1280,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (isSelectionEnabled()) {
 			mySelectionModel.activate(x, y);
 			Application.getViewWidget().reset();
-			Application.repaintView();
+			Application.getViewWidget().repaint();
 		}
 	}
 	*/

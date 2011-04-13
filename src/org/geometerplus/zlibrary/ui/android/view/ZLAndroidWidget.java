@@ -153,6 +153,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		myBitmapManager.reset();
 	}
 
+	public void repaint() {
+		postInvalidate();
+	}
+
 	public void scrollManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		final int diff = direction.IsHorizontal ? endX - startX : endY - startY;

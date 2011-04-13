@@ -72,33 +72,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 	}
 
-	protected void repaintView() {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.postInvalidate();
-	}
-
 	@Override
-	protected void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollManually(startX, startY, endX, endY, direction);
-	}
-
-	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, direction, null, null, speed);
-	}
-
-	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y, int speed) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, direction, x, y, speed);
-	}
-
 	public void rotate() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).rotateScreen();
 	}
