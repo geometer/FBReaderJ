@@ -120,4 +120,7 @@ abstract public class ZLView {
 	public abstract int getScrollbarFullSize();
 	public abstract int getScrollbarThumbPosition(PageIndex pageIndex);
 	public abstract int getScrollbarThumbLength(PageIndex pageIndex);
+
+	public abstract boolean canScrollForward();
+	public abstract boolean canScrollBackward();
 }

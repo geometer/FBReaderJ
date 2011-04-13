@@ -178,19 +178,11 @@ public final class FBView extends ZLTextView {
 				final int diff = horizontal ? x - myStartX : y - myStartY;
 				final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
 				if (diff >= 0) {
-					final ZLTextWordCursor cursor = getStartCursor();
-					if (cursor == null || cursor.isNull()) {
-						return false;
-					}
-					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
+					if (canScrollBackward()) {
 						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 					}
 				} else {
-					final ZLTextWordCursor cursor = getEndCursor();
-					if (cursor == null || cursor.isNull()) {
-						return false;
-					}
-					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
+					if (canScrollForward()) {
 						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 					}
 				}
@@ -204,15 +196,9 @@ public final class FBView extends ZLTextView {
 		final int diff = horizontal ? x - myStartX : y - myStartY;
 		boolean doScroll = false;
 		if (diff > 0) {
-			ZLTextWordCursor cursor = getStartCursor();
-			if (cursor != null && !cursor.isNull()) {
-				doScroll = !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst();
-			}
+			doScroll = canScrollBackward();
 		} else if (diff < 0) {
-			ZLTextWordCursor cursor = getEndCursor();
-			if (cursor != null && !cursor.isNull()) {
-				doScroll = !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast();
-			}
+			doScroll = canScrollForward();
 		}
 		if (doScroll) {
 			final int h = myContext.getHeight();

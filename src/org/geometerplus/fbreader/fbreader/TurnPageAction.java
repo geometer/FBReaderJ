@@ -39,19 +39,9 @@ class TurnPageAction extends FBAction {
 			return false;
 		}
 
-		if (myForward) {
-			ZLTextWordCursor cursor = Reader.getTextView().getEndCursor();
-			return
-				cursor != null &&
-				!cursor.isNull() &&
-				(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
-		} else {
-			ZLTextWordCursor cursor = Reader.getTextView().getStartCursor();
-			return
-				cursor != null &&
-				!cursor.isNull() &&
-				(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
-		}
+		return myForward
+			? Reader.getTextView().canScrollForward()
+			: Reader.getTextView().canScrollBackward();
 	}
 
 	public void run() {

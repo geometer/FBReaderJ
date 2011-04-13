@@ -42,15 +42,11 @@ class VolumeKeyTurnPageAction extends FBAction {
 		}
 
 		if (forward) {
-			ZLTextWordCursor cursor = Reader.getTextView().getEndCursor();
-			if (cursor == null || cursor.isNull() ||
-				(cursor.isEndOfParagraph() && cursor.getParagraphCursor().isLast())) {
+			if (!Reader.getTextView().canScrollForward()) {
 				return;
 			}
 		} else {
-			ZLTextWordCursor cursor = Reader.getTextView().getStartCursor();
-			if (cursor == null || cursor.isNull() ||
-				(cursor.isStartOfParagraph() && cursor.getParagraphCursor().isFirst())) {
+			if (!Reader.getTextView().canScrollBackward()) {
 				return;
 			}
 		}
