@@ -229,7 +229,10 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerRelease(int x, int y) {
-		myIsBrightnessAdjustmentInProgress = false;
+		if (myIsBrightnessAdjustmentInProgress) {
+			myIsBrightnessAdjustmentInProgress = false;
+			return true;
+		}
 
 		if (super.onFingerRelease(x, y)) {
 			return true;
