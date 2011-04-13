@@ -23,6 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 public abstract class ZLApplication {
 	public static ZLApplication Instance() {
@@ -45,7 +46,10 @@ public abstract class ZLApplication {
 	protected final void setView(ZLView view) {
 		if (view != null) {
 			myView = view;
-			resetView();
+			final ZLViewWidget widget = getViewWidget();
+			if (widget != null) {
+				widget.reset();
+			}
 			repaintView();
 			onViewChanged();
 		}
@@ -63,10 +67,8 @@ public abstract class ZLApplication {
 		setView(myView);
 	}
 
-	public final void resetView() {
-		if (myWindow != null) {
-			myWindow.resetView();
-		}
+	public final ZLViewWidget getViewWidget() {
+		return myWindow != null ? myWindow.getViewWidget() : null;
 	}
 
 	public final void repaintView() {

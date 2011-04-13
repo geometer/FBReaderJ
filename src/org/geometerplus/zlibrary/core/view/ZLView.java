@@ -19,8 +19,15 @@
 
 package org.geometerplus.zlibrary.core.view;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+
 abstract public class ZLView {
+	public final ZLApplication Application;
 	protected ZLPaintContext myContext = new DummyPaintContext();
+
+	protected ZLView(ZLApplication application) {
+		Application = application;
+	}
 
 	public final ZLPaintContext getContext() {
 		return myContext;

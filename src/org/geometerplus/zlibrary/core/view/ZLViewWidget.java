@@ -17,23 +17,8 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.zlibrary.core.view;
 
-class SwitchProfileAction extends FBAction {
-	private String myProfileName;
-
-	SwitchProfileAction(FBReaderApp fbreader, String profileName) {
-		super(fbreader);
-		myProfileName = profileName;
-	}
-
-	public boolean isVisible() {
-		return !myProfileName.equals(Reader.getColorProfileName());
-	}
-
-	public void run() {
-		Reader.setColorProfileName(myProfileName);
-		Reader.getViewWidget().reset();
-		Reader.repaintView();
-	}
+public interface ZLViewWidget {
+	void reset();
 }

@@ -81,7 +81,7 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 				} else {
 					view.gotoPage(page);
 				}
-				Reader.resetView();
+				Reader.getViewWidget().reset();
 				Reader.repaintView();
 			}
 

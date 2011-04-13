@@ -39,6 +39,7 @@ public final class FBView extends ZLTextView {
 	private FBReaderApp myReader;
 
 	FBView(FBReaderApp reader) {
+		super(reader);
 		myReader = reader;
 	}
 
@@ -87,7 +88,7 @@ public final class FBView extends ZLTextView {
 		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
-			myReader.resetView();
+			myReader.getViewWidget().reset();
 			myReader.repaintView();
 			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
@@ -227,7 +228,7 @@ public final class FBView extends ZLTextView {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
-				myReader.resetView();
+				myReader.getViewWidget().reset();
 				myReader.repaintView();
 				return true;
 			}
@@ -246,7 +247,7 @@ public final class FBView extends ZLTextView {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
-				myReader.resetView();
+				myReader.getViewWidget().reset();
 				myReader.repaintView();
 			}
 		}
@@ -291,7 +292,7 @@ public final class FBView extends ZLTextView {
 			}
 		}
 
-		myReader.resetView();
+		myReader.getViewWidget().reset();
 		myReader.repaintView();
 
 		return true;
@@ -365,7 +366,7 @@ public final class FBView extends ZLTextView {
 	private class Footer implements FooterArea {
 		private Runnable UpdateTask = new Runnable() {
 			public void run() {
-				ZLApplication.Instance().repaintView();
+				myReader.repaintView();
 			}
 		};
 
@@ -524,7 +525,7 @@ public final class FBView extends ZLTextView {
 			} else {
 				gotoPage(page);
 			}
-			myReader.resetView();
+			myReader.getViewWidget().reset();
 			myReader.repaintView();
 		}
 	}
@@ -536,11 +537,11 @@ public final class FBView extends ZLTextView {
 		if (myReader.ScrollbarTypeOption.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
 			if (myFooter == null) {
 				myFooter = new Footer();
-				ZLApplication.Instance().addTimerTask(myFooter.UpdateTask, 15000);
+				myReader.addTimerTask(myFooter.UpdateTask, 15000);
 			}
 		} else {
 			if (myFooter != null) {
-				ZLApplication.Instance().removeTimerTask(myFooter.UpdateTask);
+				myReader.removeTimerTask(myFooter.UpdateTask);
 				myFooter = null;
 			}
 		}
