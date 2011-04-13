@@ -19,16 +19,21 @@
 
 #include <jni.h>
 
+#include <cstdarg>
+#include <cstdio>
+
 #include <string>
 
 
 class AndroidLog {
 public:
 	AndroidLog(JNIEnv *env);
+	~AndroidLog();
 
 private:
 	bool extractLogClass();
 	bool extractSystemErr();
+	void prepareBuffer();
 
 public:
 	void w(const std::string &tag, const std::string &message);
@@ -41,6 +46,10 @@ public:
 	void err(jobject object);
 	void err(int value);
 
+	void wf(const std::string &tag, const std::string &format, ...);
+	void errlnf(const std::string &format, ...);
+	void errf(const std::string &format, ...);
+
 private:
 	JNIEnv *myEnv;
 
@@ -48,12 +57,21 @@ private:
 
 	jobject mySystemErr;
 	jclass myPrintStreamClass;
+
+	char *myBuffer;
 };
 
 inline AndroidLog::AndroidLog(JNIEnv *env) : myEnv(env) {
 	myLogClass = 0;
 	mySystemErr = 0;
 	myPrintStreamClass = 0;
+	myBuffer = 0;
+}
+
+inline AndroidLog::~AndroidLog() {
+	if (myBuffer != 0) {
+		delete[] myBuffer;
+	}
 }
 
 inline bool AndroidLog::extractLogClass() {
@@ -123,4 +141,38 @@ inline void AndroidLog::err(int value) {
 	extractSystemErr();
 	jmethodID println = myEnv->GetMethodID(myPrintStreamClass, "print", "(I)V");
 	myEnv->CallVoidMethod(mySystemErr, println, (jint)value);
+}
+
+inline void AndroidLog::prepareBuffer()	{
+	if (myBuffer == 0) {
+		myBuffer = new char[8192];
+	}
+	myBuffer[0] = '\0';
+}
+
+inline void AndroidLog::wf(const std::string &tag, const std::string &format, ...) {
+	prepareBuffer();
+	va_list args;
+	va_start(args, format);
+	vsprintf(myBuffer, format.c_str(), args);
+	va_end(args);
+	w(tag, myBuffer);
+}
+
+inline void AndroidLog::errlnf(const std::string &format, ...) {
+	prepareBuffer();
+	va_list args;
+	va_start(args, format);
+	vsprintf(myBuffer, format.c_str(), args);
+	va_end(args);
+	errln(myBuffer);
+}
+
+inline void AndroidLog::errf(const std::string &format, ...) {
+	prepareBuffer();
+	va_list args;
+	va_start(args, format);
+	vsprintf(myBuffer, format.c_str(), args);
+	va_end(args);
+	err(myBuffer);
 }
