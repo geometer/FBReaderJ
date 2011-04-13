@@ -155,14 +155,8 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	public void scrollManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		final int diff = direction.IsHorizontal ? endX - startX : endY - startY;
-		if (diff >= 0) {
-			if (!view.canScrollBackward()) {
-				return;
-			}
-		} else {
-			if (!view.canScrollForward()) {
-				return;
-			}
+		if (!view.canScroll(diff >= 0 ? ZLView.PageIndex.previous : ZLView.PageIndex.next)) {
+			return;
 		}
 
 		final AnimationProvider animator = getAnimationProvider();
@@ -182,6 +176,11 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 		final AnimationProvider animator = getAnimationProvider();
 		final int w = getWidth();
 		final int h = getMainAreaHeight();
+
+		if (!view.canScroll(pageIndex)) {
+			return;
+		}
+
 		switch (pageIndex) {
 			case current:
 				switch (animator.getPageToScrollTo()) {
@@ -197,15 +196,9 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 				}
 				break;
 			case previous:
-				if (!view.canScrollBackward()) {
-					return;
-				}
 				animator.startAutoScrolling(true, 3, direction, w, h, x, y, speed);
 				break;
 			case next:
-				if (!view.canScrollForward()) {
-					return;
-				}
 				animator.startAutoScrolling(true, -3, direction, w, h, x, y, speed);
 				break;
 		}

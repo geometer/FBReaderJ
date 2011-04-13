@@ -1436,20 +1436,26 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	@Override
-	public boolean canScrollForward() {
-		final ZLTextWordCursor cursor = getEndCursor();
-		return
-			cursor != null &&
-			!cursor.isNull() &&
-			(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
-	}
-
-	@Override
-	public boolean canScrollBackward() {
-		final ZLTextWordCursor cursor = getStartCursor();
-		return
-			cursor != null &&
-			!cursor.isNull() &&
-			(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
+	public boolean canScroll(PageIndex index) {
+		switch (index) {
+			default:
+				return true;
+			case next:
+			{
+				final ZLTextWordCursor cursor = getEndCursor();
+				return
+					cursor != null &&
+					!cursor.isNull() &&
+					(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
+			}
+			case previous:
+			{
+				final ZLTextWordCursor cursor = getStartCursor();
+				return
+					cursor != null &&
+					!cursor.isNull() &&
+					(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
+			}
+		}
 	}
 }
