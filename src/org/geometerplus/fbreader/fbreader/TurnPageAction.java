@@ -34,14 +34,9 @@ class TurnPageAction extends FBAction {
 
 		final ScrollingPreferences.FingerScrolling fingerScrolling =
 			preferences.FingerScrollingOption.getValue();
-		if (fingerScrolling != ScrollingPreferences.FingerScrolling.byTap &&
-			fingerScrolling != ScrollingPreferences.FingerScrolling.byTapAndFlick) {
-			return false;
-		}
-
-		return myForward
-			? Reader.getTextView().canScrollForward()
-			: Reader.getTextView().canScrollBackward();
+		return
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTap ||
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
 	}
 
 	public void run() {

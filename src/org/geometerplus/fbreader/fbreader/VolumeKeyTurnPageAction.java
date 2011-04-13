@@ -41,15 +41,6 @@ class VolumeKeyTurnPageAction extends FBAction {
 			forward = !forward;
 		}
 
-		if (forward) {
-			if (!Reader.getTextView().canScrollForward()) {
-				return;
-			}
-		} else {
-			if (!Reader.getTextView().canScrollBackward()) {
-				return;
-			}
-		}
 		Reader.startViewAutoScrolling(
 			forward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 			preferences.HorizontalOption.getValue()
