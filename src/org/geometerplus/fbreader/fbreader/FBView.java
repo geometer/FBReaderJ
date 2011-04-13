@@ -185,6 +185,7 @@ public final class FBView extends ZLTextView {
 	private synchronized void runAutoScrolling(int x, int y) {
 		final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
 		final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
+		final int animationSpeed = ScrollingPreferences.Instance().AnimationSpeedOption.getValue();
 		final int diff = horizontal ? x - myStartX : y - myStartY;
 		final int h = myContext.getHeight();
 		final int w = myContext.getWidth();
@@ -195,7 +196,7 @@ public final class FBView extends ZLTextView {
 			Math.abs(diff) < minDiff
 				? PageIndex.current
 				: (diff < 0 ? PageIndex.next : PageIndex.previous);
-		myReader.startViewAutoScrolling(pageIndex, direction, x, y, ScrollingPreferences.Instance().AnimationSpeedOption.getValue());
+		myReader.startViewAutoScrolling(pageIndex, direction, x, y, animationSpeed);
 	}
 
 	public boolean onFingerRelease(int x, int y) {
