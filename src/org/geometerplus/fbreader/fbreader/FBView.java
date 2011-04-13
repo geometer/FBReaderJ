@@ -175,17 +175,8 @@ public final class FBView extends ZLTextView {
 
 			if (isFlickScrollingEnabled()) {
 				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
-				final int diff = horizontal ? x - myStartX : y - myStartY;
 				final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
-				if (diff >= 0) {
-					if (canScrollBackward()) {
-						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
-					}
-				} else {
-					if (canScrollForward()) {
-						myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
-					}
-				}
+				myReader.scrollViewManually(myStartX, myStartY, x, y, direction);
 			}
 		}
 		return true;

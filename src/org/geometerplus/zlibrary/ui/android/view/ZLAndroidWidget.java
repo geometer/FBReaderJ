@@ -153,6 +153,18 @@ public class ZLAndroidWidget extends View implements View.OnLongClickListener {
 	}
 
 	public void scrollManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		final int diff = direction.IsHorizontal ? endX - startX : endY - startY;
+		if (diff >= 0) {
+			if (!view.canScrollBackward()) {
+				return;
+			}
+		} else {
+			if (!view.canScrollForward()) {
+				return;
+			}
+		}
+
 		final AnimationProvider animator = getAnimationProvider();
 		if (!animator.inProgress()) {
 			animator.startManualScrolling(
