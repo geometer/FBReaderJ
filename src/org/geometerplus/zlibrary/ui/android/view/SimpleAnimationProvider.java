@@ -29,24 +29,43 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	ZLView.PageIndex getPageToScrollTo() {
+	ZLView.PageIndex getPageToScrollTo(int x, int y) {
+		if (myDirection == null) {
+			return ZLView.PageIndex.current;
+		}
+
 		switch (myDirection) {
 			case rightToLeft:
-				return myStartX < myEndX ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartX < x ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
 			case leftToRight:
-				return myStartX < myEndX ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartX < x ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
 			case up:
-				return myStartY < myEndY ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartY < y ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
 			case down:
-				return myStartY < myEndY ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartY < y ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
 		}
 		return ZLView.PageIndex.current;
 	}
 
 	@Override
-	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
-		super.startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
+	protected void setupAutoScrollingStart(Integer x, Integer y) {
+		if (x == null || y == null) {
+			if (myDirection.IsHorizontal) {
+				x = mySpeed < 0 ? myWidth : 0;
+				y = 0;
+			} else {
+				x = 0;
+				y = mySpeed < 0 ? myHeight : 0;
+			}
+		}
+		myEndX = myStartX = x;
+		myEndY = myStartY = y;
+	}
+
+	@Override
+	protected void startAutoScrollingInternal(int speed) {
 		mySpeedFactor = (float)Math.pow(1.5, 0.25 * speed);
+		doStep();
 	}
 
 	@Override

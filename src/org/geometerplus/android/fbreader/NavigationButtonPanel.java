@@ -81,7 +81,8 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 				} else {
 					view.gotoPage(page);
 				}
-				Reader.repaintView();
+				Reader.getViewWidget().reset();
+				Reader.getViewWidget().repaint();
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {

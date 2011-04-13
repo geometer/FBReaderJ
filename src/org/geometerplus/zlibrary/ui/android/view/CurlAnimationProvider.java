@@ -33,7 +33,7 @@ class CurlAnimationProvider extends AnimationProvider {
 	final Path myEdgePath = new Path();
 	final Path myQuadPath = new Path();
 
-	private float mySpeedFactor;
+	private float mySpeedFactor = 1;
 
 	CurlAnimationProvider(BitmapManager bitmapManager) {
 		super(bitmapManager);
@@ -196,7 +196,11 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	ZLView.PageIndex getPageToScrollTo() {
+	ZLView.PageIndex getPageToScrollTo(int x, int y) {
+		if (myDirection == null) {
+			return ZLView.PageIndex.current;
+		}
+
 		switch (myDirection) {
 			case leftToRight:
 				return myStartX < myWidth / 2 ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
@@ -211,21 +215,28 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
+	protected void startAutoScrollingInternal(int speed) {
+		mySpeedFactor = (float)Math.pow(2.0, 0.25 * speed);
+		mySpeed *= 1.5;
+		doStep();
+	}
+
+	@Override
+	protected void setupAutoScrollingStart(Integer x, Integer y) {
 		if (x == null || y == null) {
-			if (direction.IsHorizontal) {
-				x = startSpeed < 0 ? w - 3 : 3;
+			if (myDirection.IsHorizontal) {
+				x = mySpeed < 0 ? myWidth - 3 : 3;
 				y = 1;
 			} else {
 				x = 1;
-				y = startSpeed < 0 ? h  - 3 : 3;
+				y = mySpeed < 0 ? myHeight  - 3 : 3;
 			}
 		} else {
-			final int cornerX = x > w / 2 ? w : 0;
-			final int cornerY = y > h / 2 ? h : 0;
-			int deltaX = Math.min(Math.abs(x - cornerX), w / 5);
-			int deltaY = Math.min(Math.abs(y - cornerY), h / 5);
-			if (direction.IsHorizontal) {
+			final int cornerX = x > myWidth / 2 ? myWidth : 0;
+			final int cornerY = y > myHeight / 2 ? myHeight : 0;
+			int deltaX = Math.min(Math.abs(x - cornerX), myWidth / 5);
+			int deltaY = Math.min(Math.abs(y - cornerY), myHeight / 5);
+			if (myDirection.IsHorizontal) {
 				deltaY = Math.min(deltaY, deltaX / 3);
 			} else {
 				deltaX = Math.min(deltaX, deltaY / 3);
@@ -233,9 +244,8 @@ class CurlAnimationProvider extends AnimationProvider {
 			x = Math.abs(cornerX - deltaX);
 			y = Math.abs(cornerY - deltaY);
 		}
-		super.startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
-		mySpeedFactor = (float)Math.pow(2.0, 0.25 * speed);
-		mySpeed *= 1.5;
+		myEndX = myStartX = x;
+		myEndY = myStartY = y;
 	}
 
 	@Override

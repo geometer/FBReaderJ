@@ -60,15 +60,18 @@ abstract class AnimationProvider {
 		return myMode;
 	}
 
-	void terminate() {
+	final void terminate() {
 		myMode = Mode.NoScrolling;
 		mySpeed = 0;
 		myDrawInfos.clear();
 	}
 
-	void startManualScrolling(int x, int y, ZLView.Direction direction, int w, int h) {
-		myMode = Mode.ManualScrolling;
-		setup(x, y, direction, w, h);
+	final void startManualScrolling(int x, int y) {
+		if (!myMode.Auto) {
+			myMode = Mode.ManualScrolling;
+			myEndX = myStartX = x;
+			myEndY = myStartY = y;
+		}
 	}
 
 	void scrollTo(int x, int y) {
@@ -78,18 +81,33 @@ abstract class AnimationProvider {
 		}
 	}
 
-	final void startAutoScrolling(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
-		if (myDrawInfos.size() <= 1) {
-			startSpeed *= 5;
-		} else {
+	void startAutoScrolling(int x, int y, int speed) {
+		if (myMode != Mode.ManualScrolling) {
+			return;
+		}
+
+		if (getPageToScrollTo(x, y) == ZLView.PageIndex.current) {
+			return;
+		}
+
+		final int diff = myDirection.IsHorizontal ? x - myStartX : y - myStartY;
+		final int minDiff = myDirection.IsHorizontal ?
+			(myWidth > myHeight ? myWidth / 4 : myWidth / 3) :
+			(myHeight > myWidth ? myHeight / 4 : myHeight / 3);
+		boolean forward = Math.abs(diff) > minDiff;
+
+		myMode = forward ? Mode.AutoScrollingForward : Mode.AutoScrollingBackward;
+
+		float velocity = 15;
+		if (myDrawInfos.size() > 1) {
 			int duration = 0;
 			for (DrawInfo info : myDrawInfos) {
 				duration += info.Duration;
 			}
 			duration /= myDrawInfos.size();
 			final long time = System.currentTimeMillis();
-			myDrawInfos.add(new DrawInfo(myEndX, myEndY, time, time + duration));
-			float velocity = 0;
+			myDrawInfos.add(new DrawInfo(x, y, time, time + duration));
+			velocity = 0;
 			for (int i = 1; i < myDrawInfos.size(); ++i) {
 				final DrawInfo info0 = myDrawInfos.get(i - 1);
 				final DrawInfo info1 = myDrawInfos.get(i);
@@ -100,31 +118,47 @@ abstract class AnimationProvider {
 			velocity /= myDrawInfos.size() - 1;
 			velocity *= duration;
 			velocity = Math.min(100, Math.max(15, velocity));
-			startSpeed = startSpeed > 0 ? velocity : -velocity;
 		}
 		myDrawInfos.clear();
-		startAutoScrollingInternal(forward, startSpeed, direction, w, h, x, y, speed);
-	}
 
-	protected void startAutoScrollingInternal(boolean forward, float startSpeed, ZLView.Direction direction, int w, int h, Integer x, Integer y, int speed) {
-		if (!inProgress()) {
-			if (x == null || y == null) {
-				if (direction.IsHorizontal) {
-					x = speed < 0 ? w : 0;
-					y = 0;
-				} else {
-					x = 0;
-					y = speed < 0 ? h : 0;
-				}
-			}
-			setup(x, y, direction, w, h);
+		if (getPageToScrollTo() == ZLView.PageIndex.previous) {
+			forward = !forward;
 		}
 
-		myMode = forward
-			? Mode.AutoScrollingForward
-			: Mode.AutoScrollingBackward;
-		mySpeed = startSpeed;
+		switch (myDirection) {
+			case up:
+			case rightToLeft:
+				mySpeed = forward ? -velocity : velocity;
+				break;
+			case leftToRight:
+			case down:
+				mySpeed = forward ? velocity : -velocity;
+				break;
+		}
+
+		startAutoScrollingInternal(speed);
 	}
+
+	public void startAutoScrolling(ZLView.PageIndex pageIndex, Integer x, Integer y, int speed) {
+		terminate();
+		myMode = Mode.AutoScrollingForward;
+
+		switch (myDirection) {
+			case up:
+			case rightToLeft:
+				mySpeed = pageIndex == ZLView.PageIndex.next ? -15 : 15;
+				break;
+			case leftToRight:
+			case down:
+				mySpeed = pageIndex == ZLView.PageIndex.next ? 15 : -15;
+				break;
+		}
+		setupAutoScrollingStart(x, y);
+		startAutoScrollingInternal(speed);
+	}
+
+	protected abstract void startAutoScrollingInternal(int speed);
+	protected abstract void setupAutoScrollingStart(Integer x, Integer y);
 
 	boolean inProgress() {
 		return myMode != Mode.NoScrolling;
@@ -134,11 +168,7 @@ abstract class AnimationProvider {
 		return myDirection.IsHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
-	private void setup(int x, int y, ZLView.Direction direction, int width, int height) {
-		myStartX = x;
-		myStartY = y;
-		myEndX = x;
-		myEndY = y;
+	final void setup(ZLView.Direction direction, int width, int height) {
 		myDirection = direction;
 		myWidth = width;
 		myHeight = height;
@@ -177,7 +207,11 @@ abstract class AnimationProvider {
 
 	protected abstract void drawInternal(Canvas canvas);
 
-	abstract ZLView.PageIndex getPageToScrollTo();
+	abstract ZLView.PageIndex getPageToScrollTo(int x, int y);
+
+	final ZLView.PageIndex getPageToScrollTo() {
+		return getPageToScrollTo(myEndX, myEndY);
+	}
 
 	protected Bitmap getBitmapFrom() {
 		return myBitmapManager.getBitmap(ZLView.PageIndex.current);

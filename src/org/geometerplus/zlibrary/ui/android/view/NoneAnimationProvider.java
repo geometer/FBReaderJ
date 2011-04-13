@@ -21,7 +21,9 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
 
-class NoneAnimationProvider extends SimpleAnimationProvider {
+import org.geometerplus.zlibrary.core.view.ZLView;
+
+class NoneAnimationProvider extends AnimationProvider {
 	private final Paint myPaint = new Paint();
 
 	NoneAnimationProvider(BitmapManager bitmapManager) {
@@ -38,5 +40,41 @@ class NoneAnimationProvider extends SimpleAnimationProvider {
 		if (getMode().Auto) {
 			terminate();
 		}
+	}
+
+	@Override
+	protected void setupAutoScrollingStart(Integer x, Integer y) {
+		if (myDirection.IsHorizontal) {
+			myStartX = mySpeed < 0 ? myWidth : 0;
+			myEndX = myWidth - myStartX;
+			myEndY = myStartY = 0;
+		} else {
+			myEndX = myStartX = 0;
+			myStartY = mySpeed < 0 ? myHeight : 0;
+			myEndY = myHeight - myStartY;
+		}
+	}
+
+	@Override
+	protected void startAutoScrollingInternal(int speed) {
+	}
+
+	@Override
+	ZLView.PageIndex getPageToScrollTo(int x, int y) {
+		if (myDirection == null) {
+			return ZLView.PageIndex.current;
+		}
+
+		switch (myDirection) {
+			case rightToLeft:
+				return myStartX < x ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+			case leftToRight:
+				return myStartX < x ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+			case up:
+				return myStartY < y ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+			case down:
+				return myStartY < y ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+		}
+		return ZLView.PageIndex.current;
 	}
 }
