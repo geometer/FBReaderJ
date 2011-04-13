@@ -17,30 +17,25 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.util;
+package org.geometerplus.fbreader.formats.oeb;
 
-import java.io.IOException;
-import java.io.InputStream;
+import org.geometerplus.zlibrary.core.xml.*;
 
-public class SliceInputStream extends ZLInputStreamWithOffset {
-	private final int myStart;
-	private final int myLength;
-	
-	public SliceInputStream(InputStream base, int start, int length) throws IOException {
-		super(base);
-		super.skip(start);
-		myStart = start;
-		myLength = length;
-	}
-	
-	@Override
-	public int available() throws IOException {
-		return Math.min(super.available(), Math.max(myStart + myLength - super.offset(), 0));
+class ContainerFileReader extends ZLXMLReaderAdapter {
+	private String myRootPath;
+
+	public String getRootPath() {
+		return myRootPath;
 	}
 
 	@Override
-	public void reset() throws IOException {
-		super.reset();
-		super.skip(myStart);
+	public boolean startElementHandler(String tag, ZLStringMap xmlattributes) {
+		if ("rootfile".equalsIgnoreCase(tag)) {
+			myRootPath = xmlattributes.getValue("full-path");
+			if (myRootPath != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

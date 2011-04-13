@@ -37,7 +37,8 @@ public abstract class ZLImageProxy extends ZLLoadableImage {
 	public abstract ZLSingleImage getRealImage();
 
 	public String getURI() {
-		return getRealImage().getURI();
+		final ZLImage image = getRealImage();
+		return image != null ? image.getURI() : "image proxy";
 	}
 
 	@Override
