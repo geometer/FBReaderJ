@@ -62,9 +62,9 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
+		getAnimationProvider().terminate();
 		if (myScreenIsTouched) {
 			final ZLView view = ZLApplication.Instance().getCurrentView();
-			getAnimationProvider().terminate();
 			myScreenIsTouched = false;
 			view.onScrollingFinished(ZLView.PageIndex.current);
 		}
@@ -157,32 +157,68 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		postInvalidate();
 	}
 
-	public void scrollManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
-		final ZLView view = ZLApplication.Instance().getCurrentView();
-		final int diff = direction.IsHorizontal ? endX - startX : endY - startY;
-		if (!view.canScroll(diff >= 0 ? ZLView.PageIndex.previous : ZLView.PageIndex.next)) {
-			return;
-		}
-
+	public void startManualScrolling(int x, int y, ZLView.Direction direction) {
 		final AnimationProvider animator = getAnimationProvider();
-		if (!animator.inProgress()) {
-			animator.startManualScrolling(
-				startX, startY,
-				direction,
-				getWidth(), getMainAreaHeight()
-			);
-		}
-		animator.scrollTo(endX, endY);
-		postInvalidate();
+		animator.setup(direction, getWidth(), getMainAreaHeight());
+		animator.startManualScrolling(x, y);
 	}
 
+	public void scrollManuallyTo(int x, int y) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		final AnimationProvider animator = getAnimationProvider();
+		if (view.canScroll(animator.getPageToScrollTo(x, y))) {
+			animator.scrollTo(x, y);
+			postInvalidate();
+		}
+	}
+
+	public void startAutoScrolling(ZLView.PageIndex pageIndex, int x, int y, ZLView.Direction direction, int speed) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		if (pageIndex == ZLView.PageIndex.current || !view.canScroll(pageIndex)) {
+			return;
+		}
+		final AnimationProvider animator = getAnimationProvider();
+		animator.setup(direction, getWidth(), getMainAreaHeight());
+		animator.startAutoScrolling(pageIndex, x, y, speed);
+		if (animator.getMode().Auto) {
+			postInvalidate();
+		}
+	}
+
+	public void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		if (pageIndex == ZLView.PageIndex.current || !view.canScroll(pageIndex)) {
+			return;
+		}
+		final AnimationProvider animator = getAnimationProvider();
+		animator.setup(direction, getWidth(), getMainAreaHeight());
+		animator.startAutoScrolling(pageIndex, null, null, speed);
+		if (animator.getMode().Auto) {
+			postInvalidate();
+		}
+	}
+
+	public void startAutoScrolling(int x, int y, boolean forward, int speed) {
+		final ZLView view = ZLApplication.Instance().getCurrentView();
+		final AnimationProvider animator = getAnimationProvider();
+		if (!view.canScroll(animator.getPageToScrollTo(x, y))) {
+			animator.terminate();
+			return;
+		}
+		animator.startAutoScrolling(x, y, forward, speed);
+		if (animator.getMode().Auto) {
+			postInvalidate();
+		}
+	}
+
+	/*
 	public void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, Integer x, Integer y, int speed) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 		final AnimationProvider animator = getAnimationProvider();
 		final int w = getWidth();
 		final int h = getMainAreaHeight();
 
-		if (!view.canScroll(pageIndex)) {
+		if (animator.getMode().Auto || !view.canScroll(pageIndex)) {
 			return;
 		}
 
@@ -209,6 +245,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		postInvalidate();
 	}
+	*/
 
 	void drawOnBitmap(Bitmap bitmap, ZLView.PageIndex index) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();

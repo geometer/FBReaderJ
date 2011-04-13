@@ -151,10 +151,15 @@ public final class FBView extends ZLTextView {
 	}
 
 	private void startManualScrolling(int x, int y) {
-		if (isFlickScrollingEnabled()) {
-			myStartX = x;
-			myStartY = y;
+		if (!isFlickScrollingEnabled()) {
+			return;
 		}
+
+		myStartX = x;
+		myStartY = y;
+		final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
+		final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
+		myReader.getViewWidget().startManualScrolling(x, y, direction);
 	}
 
 	public boolean onFingerMove(int x, int y) {
@@ -175,9 +180,7 @@ public final class FBView extends ZLTextView {
 			}
 
 			if (isFlickScrollingEnabled()) {
-				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
-				final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
-				myReader.getViewWidget().scrollManually(myStartX, myStartY, x, y, direction);
+				myReader.getViewWidget().scrollManuallyTo(x, y);
 			}
 		}
 		return true;
@@ -193,11 +196,7 @@ public final class FBView extends ZLTextView {
 		final int minDiff = horizontal ?
 			(w > h ? w / 4 : w / 3) :
 			(h > w ? h / 4 : h / 3);
-		final PageIndex pageIndex =
-			Math.abs(diff) < minDiff
-				? PageIndex.current
-				: (diff < 0 ? PageIndex.next : PageIndex.previous);
-		myReader.getViewWidget().startAutoScrolling(pageIndex, direction, x, y, animationSpeed);
+		myReader.getViewWidget().startAutoScrolling(x, y, Math.abs(diff) > minDiff, animationSpeed);
 	}
 
 	public boolean onFingerRelease(int x, int y) {

@@ -45,7 +45,6 @@ class TurnPageAction extends FBAction {
 			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 			preferences.HorizontalOption.getValue()
 				? FBView.Direction.rightToLeft : FBView.Direction.up,
-			null, null,
 			preferences.AnimationSpeedOption.getValue()
 		);
 	}
@@ -54,9 +53,9 @@ class TurnPageAction extends FBAction {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		Reader.getViewWidget().startAutoScrolling(
 			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+			x, y,
 			preferences.HorizontalOption.getValue()
 				? FBView.Direction.rightToLeft : FBView.Direction.up,
-			x, y,
 			preferences.AnimationSpeedOption.getValue()
 		);
 	}
