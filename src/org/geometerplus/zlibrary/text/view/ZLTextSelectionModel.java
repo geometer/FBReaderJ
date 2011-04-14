@@ -273,7 +273,7 @@ final class ZLTextSelectionModel {
 			public void run() {
 				myView.scrollPage(forward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myDoUpdate = true;
-				ZLApplication.Instance().repaintView();
+				ZLApplication.Instance().getViewWidget().repaint();
 			}
 		};
 		myTimer.schedule(myScrollingTask, 200, 400);

@@ -203,7 +203,7 @@ public final class FBReaderApp extends ZLApplication {
 					setView(FootnoteView);
 					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
 				}
-				repaintView();
+				getViewWidget().repaint();
 			}
 		}
 	}
@@ -240,7 +240,7 @@ public final class FBReaderApp extends ZLApplication {
 				Library.addBookToRecentList(book);
 			}
 		}
-		repaintView();
+		getViewWidget().repaint();
 	}
 
 	public void gotoBookmark(Bookmark bookmark) {
@@ -254,7 +254,7 @@ public final class FBReaderApp extends ZLApplication {
 			FootnoteView.gotoPosition(bookmark);
 			setView(FootnoteView);
 		}
-		repaintView();
+		getViewWidget().repaint();
 	}
 
 	public void showBookTextView() {

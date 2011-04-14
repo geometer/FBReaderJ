@@ -1,3 +1,6 @@
+===== 1.0.7 (Apr ??, 2011) =====
+* Fixed unexpected scrolling after brightness adjustment
+
 ===== 1.0.6 (Apr 12, 2011) =====
 * Fixed tap-only scrolling mode
 * ePub 3.0: META-INF/container.xml parsing has been added (fixed a problem with ePubs containing multiple opf files)
