@@ -17,31 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.application;
+package org.geometerplus.zlibrary.core.view;
 
-import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.core.view.ZLViewWidget;
+public interface ZLViewWidget {
+	void reset();
+	void repaint();
 
-abstract public class ZLApplicationWindow {
-	private ZLApplication myApplication;
-
-	protected ZLApplicationWindow(ZLApplication application) {
-		myApplication = application;
-		myApplication.setWindow(this);
-	}
-
-	public ZLApplication getApplication() {
-		return myApplication;
-	}
-
-	abstract protected void refreshMenu();
-	
-	abstract protected ZLViewWidget getViewWidget();
-
-	abstract protected void rotate();
-	abstract protected boolean canRotate();
-
-	abstract protected void close();
-
-	abstract protected int getBatteryLevel();
+	void startManualScrolling(int x, int y, ZLView.Direction direction);
+	void scrollManuallyTo(int x, int y);
+	void startAutoScrolling(ZLView.PageIndex pageIndex, int x, int y, ZLView.Direction direction, int speed);
+	void startAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed);
+	void startAutoScrolling(int x, int y, int speed);
 }

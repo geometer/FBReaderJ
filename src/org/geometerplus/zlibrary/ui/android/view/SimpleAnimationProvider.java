@@ -19,28 +19,53 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import android.graphics.Paint;
-
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 abstract class SimpleAnimationProvider extends AnimationProvider {
-	SimpleAnimationProvider(Paint paint) {
-		super(paint);
+	private float mySpeedFactor;
+
+	SimpleAnimationProvider(BitmapManager bitmapManager) {
+		super(bitmapManager);
 	}
 
 	@Override
-	ZLView.PageIndex getPageToScrollTo() {
+	ZLView.PageIndex getPageToScrollTo(int x, int y) {
+		if (myDirection == null) {
+			return ZLView.PageIndex.current;
+		}
+
 		switch (myDirection) {
 			case rightToLeft:
-				return myStartX < myEndX ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartX < x ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
 			case leftToRight:
-				return myStartX < myEndX ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartX < x ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
 			case up:
-				return myStartY < myEndY ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
+				return myStartY < y ? ZLView.PageIndex.previous : ZLView.PageIndex.next;
 			case down:
-				return myStartY < myEndY ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
+				return myStartY < y ? ZLView.PageIndex.next : ZLView.PageIndex.previous;
 		}
 		return ZLView.PageIndex.current;
+	}
+
+	@Override
+	protected void setupAutoScrollingStart(Integer x, Integer y) {
+		if (x == null || y == null) {
+			if (myDirection.IsHorizontal) {
+				x = mySpeed < 0 ? myWidth : 0;
+				y = 0;
+			} else {
+				x = 0;
+				y = mySpeed < 0 ? myHeight : 0;
+			}
+		}
+		myEndX = myStartX = x;
+		myEndY = myStartY = y;
+	}
+
+	@Override
+	protected void startAutoScrollingInternal(int speed) {
+		mySpeedFactor = (float)Math.pow(1.5, 0.25 * speed);
+		doStep();
 	}
 
 	@Override
@@ -90,6 +115,6 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 				return;
 			}
 		}
-		mySpeed *= 1.5;
+		mySpeed *= mySpeedFactor;
 	}
 }

@@ -240,7 +240,7 @@ public final class FBReader extends ZLAndroidActivity {
 					}
 				}
 				fbreader.clearTextCaches();
-				fbreader.repaintView();
+				fbreader.getViewWidget().repaint();
 				break;
 			}
 			case CANCEL_CODE:
@@ -280,6 +280,9 @@ public final class FBReader extends ZLAndroidActivity {
 		addMenuItem(menu, ActionCode.DECREASE_FONT);
 		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);
 		addMenuItem(menu, ActionCode.SPEAK);
+
+		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+		application.myMainWindow.refreshMenu();
 
 		return true;
 	}

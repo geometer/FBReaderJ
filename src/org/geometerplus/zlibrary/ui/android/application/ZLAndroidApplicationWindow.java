@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
@@ -59,7 +60,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void refreshMenu() {
+	public void refreshMenu() {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
@@ -67,41 +68,11 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		}
 	}
 
-	protected void repaintView() {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
-		widget.postInvalidate();
+	protected ZLViewWidget getViewWidget() {
+		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 	}
 
 	@Override
-	protected void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollManually(startX, startY, endX, endY, direction);
-	}
-
-	@Override
-	protected void scrollViewToCenter() {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToCenter();
-	}
-
-	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, direction, null, null);
-	}
-
-	@Override
-	protected void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(pageIndex, direction, x, y);
-	}
-
 	public void rotate() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).rotateScreen();
 	}

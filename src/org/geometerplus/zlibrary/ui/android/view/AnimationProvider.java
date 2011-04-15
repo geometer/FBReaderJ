@@ -19,7 +19,10 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import java.util.*;
+
 import android.graphics.*;
+import android.util.FloatMath;
 
 import org.geometerplus.zlibrary.core.view.ZLView;
 
@@ -38,7 +41,7 @@ abstract class AnimationProvider {
 	}
 	private Mode myMode = Mode.NoScrolling;
 	
-	protected final Paint myPaint;
+	private final BitmapManager myBitmapManager;
 	protected int myStartX;
 	protected int myStartY;
 	protected int myEndX;
@@ -49,43 +52,117 @@ abstract class AnimationProvider {
 	protected int myWidth;
 	protected int myHeight;
 
-	protected AnimationProvider(Paint paint) {
-		myPaint = paint;
+	protected AnimationProvider(BitmapManager bitmapManager) {
+		myBitmapManager = bitmapManager;
 	}
 
 	Mode getMode() {
 		return myMode;
 	}
 
-	void terminate() {
+	final void terminate() {
 		myMode = Mode.NoScrolling;
 		mySpeed = 0;
+		myDrawInfos.clear();
 	}
 
-	void startManualScrolling(int startX, int startY, int endX, int endY, ZLView.Direction direction, int w, int h) {
-		myMode = Mode.ManualScrolling;
-		setup(startX, startY, endX, endY, direction, w, h);
+	final void startManualScrolling(int x, int y) {
+		if (!myMode.Auto) {
+			myMode = Mode.ManualScrolling;
+			myEndX = myStartX = x;
+			myEndY = myStartY = y;
+		}
 	}
 
-	void startAutoScrolling(boolean forward, float speed, ZLView.Direction direction, int w, int h, Integer x, Integer y) {
-		if (!inProgress()) {
-			if (x == null || y == null) {
-				if (direction.IsHorizontal) {
-					x = speed < 0 ? w : 0;
-					y = 0;
-				} else {
-					x = 0;
-					y = speed < 0 ? h : 0;
-				}
-			}
-			setup(x, y, x, y, direction, w, h);
+	void scrollTo(int x, int y) {
+		if (myMode == Mode.ManualScrolling) {
+			myEndX = x;
+			myEndY = y;
+		}
+	}
+
+	void startAutoScrolling(int x, int y, int speed) {
+		if (myMode != Mode.ManualScrolling) {
+			return;
 		}
 
-		myMode = forward
-			? Mode.AutoScrollingForward
-			: Mode.AutoScrollingBackward;
-		mySpeed = speed;
+		if (getPageToScrollTo(x, y) == ZLView.PageIndex.current) {
+			return;
+		}
+
+		final int diff = myDirection.IsHorizontal ? x - myStartX : y - myStartY;
+		final int minDiff = myDirection.IsHorizontal ?
+			(myWidth > myHeight ? myWidth / 4 : myWidth / 3) :
+			(myHeight > myWidth ? myHeight / 4 : myHeight / 3);
+		boolean forward = Math.abs(diff) > minDiff;
+
+		myMode = forward ? Mode.AutoScrollingForward : Mode.AutoScrollingBackward;
+
+		float velocity = 15;
+		if (myDrawInfos.size() > 1) {
+			int duration = 0;
+			for (DrawInfo info : myDrawInfos) {
+				duration += info.Duration;
+			}
+			duration /= myDrawInfos.size();
+			final long time = System.currentTimeMillis();
+			myDrawInfos.add(new DrawInfo(x, y, time, time + duration));
+			velocity = 0;
+			for (int i = 1; i < myDrawInfos.size(); ++i) {
+				final DrawInfo info0 = myDrawInfos.get(i - 1);
+				final DrawInfo info1 = myDrawInfos.get(i);
+				final float dX = info0.X - info1.X;
+				final float dY = info0.Y - info1.Y;
+				velocity += FloatMath.sqrt(dX * dX + dY * dY) / Math.max(1, info1.Start - info0.Start);
+			}
+			velocity /= myDrawInfos.size() - 1;
+			velocity *= duration;
+			velocity = Math.min(100, Math.max(15, velocity));
+		}
+		myDrawInfos.clear();
+
+		if (getPageToScrollTo() == ZLView.PageIndex.previous) {
+			forward = !forward;
+		}
+
+		switch (myDirection) {
+			case up:
+			case rightToLeft:
+				mySpeed = forward ? -velocity : velocity;
+				break;
+			case leftToRight:
+			case down:
+				mySpeed = forward ? velocity : -velocity;
+				break;
+		}
+
+		startAutoScrollingInternal(speed);
 	}
+
+	public void startAutoScrolling(ZLView.PageIndex pageIndex, Integer x, Integer y, int speed) {
+		if (myMode.Auto) {
+			return;
+		}
+
+		terminate();
+		myMode = Mode.AutoScrollingForward;
+
+		switch (myDirection) {
+			case up:
+			case rightToLeft:
+				mySpeed = pageIndex == ZLView.PageIndex.next ? -15 : 15;
+				break;
+			case leftToRight:
+			case down:
+				mySpeed = pageIndex == ZLView.PageIndex.next ? 15 : -15;
+				break;
+		}
+		setupAutoScrollingStart(x, y);
+		startAutoScrollingInternal(speed);
+	}
+
+	protected abstract void startAutoScrollingInternal(int speed);
+	protected abstract void setupAutoScrollingStart(Integer x, Integer y);
 
 	boolean inProgress() {
 		return myMode != Mode.NoScrolling;
@@ -95,11 +172,7 @@ abstract class AnimationProvider {
 		return myDirection.IsHorizontal ? myEndX - myStartX : myEndY - myStartY;
 	}
 
-	private void setup(int startX, int startY, int endX, int endY, ZLView.Direction direction, int width, int height) {
-		myStartX = startX;
-		myStartY = startY;
-		myEndX = endX;
-		myEndY = endY;
+	final void setup(ZLView.Direction direction, int width, int height) {
 		myDirection = direction;
 		myWidth = width;
 		myHeight = height;
@@ -113,7 +186,42 @@ abstract class AnimationProvider {
 		return 100 * shift / full;
 	}
 
-	abstract void draw(Canvas canvas, Bitmap bgBitmap, Bitmap fgBitmap);
+	static class DrawInfo {
+		final int X, Y;
+		final long Start;
+		final int Duration;
 
-	abstract ZLView.PageIndex getPageToScrollTo();
+		DrawInfo(int x, int y, long start, long finish) {
+			X = x;
+			Y = y;
+			Start = start;
+			Duration = (int)(finish - start);
+		}
+	}
+	final private List<DrawInfo> myDrawInfos = new LinkedList<DrawInfo>();
+
+	final void draw(Canvas canvas) {
+		final long start = System.currentTimeMillis();
+		drawInternal(canvas);
+		myDrawInfos.add(new DrawInfo(myEndX, myEndY, start, System.currentTimeMillis()));
+		if (myDrawInfos.size() > 3) {
+			myDrawInfos.remove(0);
+		}
+	}
+
+	protected abstract void drawInternal(Canvas canvas);
+
+	abstract ZLView.PageIndex getPageToScrollTo(int x, int y);
+
+	final ZLView.PageIndex getPageToScrollTo() {
+		return getPageToScrollTo(myEndX, myEndY);
+	}
+
+	protected Bitmap getBitmapFrom() {
+		return myBitmapManager.getBitmap(ZLView.PageIndex.current);
+	}
+
+	protected Bitmap getBitmapTo() {
+		return myBitmapManager.getBitmap(getPageToScrollTo());
+	}
 }
