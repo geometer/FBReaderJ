@@ -30,7 +30,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkDatabase;
-import org.geometerplus.fbreader.network.UrlInfo;
+import org.geometerplus.fbreader.network.UrlInfoWithDate;
 
 import org.geometerplus.android.util.SQLiteUtil;
 
@@ -77,7 +77,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	@Override
 	protected void loadCustomLinks(ICustomLinksHandler handler) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary FROM Links", null);
-		final HashMap<String,UrlInfo> linksMap = new HashMap<String,UrlInfo>();
+		final HashMap<String,UrlInfoWithDate> linksMap = new HashMap<String,UrlInfoWithDate>();
 		while (cursor.moveToNext()) {
 			final int id = cursor.getInt(0);
 			final String title = cursor.getString(1);
@@ -89,7 +89,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			while (linksCursor.moveToNext()) {
 				linksMap.put(
 					linksCursor.getString(0),
-					new UrlInfo(
+					new UrlInfoWithDate(
 						linksCursor.getString(1),
 						SQLiteUtil.getDate(linksCursor, 2)
 					)
@@ -134,7 +134,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				SQLiteUtil.bindString(statement, 3, link.getSummary());
 
 				final long id;
-				final HashMap<String,UrlInfo> linksMap = new HashMap<String,UrlInfo>();
+				final HashMap<String,UrlInfoWithDate> linksMap = new HashMap<String,UrlInfoWithDate>();
 
 				if (statement == myInsertCustomLinkStatement) {
 					id = statement.executeInsert();
@@ -148,7 +148,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					while (linksCursor.moveToNext()) {
 						linksMap.put(
 							linksCursor.getString(0),
-							new UrlInfo(
+							new UrlInfoWithDate(
 								linksCursor.getString(1),
 								SQLiteUtil.getDate(linksCursor, 2)
 							)
@@ -158,8 +158,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				}
 
 				for (String key : link.getUrlKeys()) {
-					final UrlInfo info = link.getUrlInfo(key);
-					final UrlInfo dbInfo = linksMap.remove(key);
+					final UrlInfoWithDate info = link.getUrlInfo(key);
+					final UrlInfoWithDate dbInfo = linksMap.remove(key);
 					final SQLiteStatement urlStatement;
 					if (dbInfo == null) {
 						if (myInsertCustomLinkUrlStatement == null) {

@@ -33,7 +33,7 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void setTitle(String title);
 	void setSummary(String summary);
 
-	HashMap<String,UrlInfo> urlInfoMap();
+	HashMap<String,UrlInfoWithDate> urlInfoMap();
 	void setUrl(String urlKey, String url);
 	void removeUrl(String urlKey);
 

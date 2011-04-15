@@ -40,7 +40,7 @@ public interface INetworkLink {
 	String getTitle();
 	String getSummary();
 
-	UrlInfo getUrlInfo(String urlKey);
+	UrlInfoWithDate getUrlInfo(String urlKey);
 	Set<String> getUrlKeys();
 
 	/**

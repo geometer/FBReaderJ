@@ -179,7 +179,7 @@ public class NetworkLibrary {
 			db.loadCustomLinks(
 				new NetworkDatabase.ICustomLinksHandler() {
 					public void handleCustomLinkData(int id, String siteName,
-							String title, String summary, Map<String,UrlInfo> infos) {
+							String title, String summary, Map<String,UrlInfoWithDate> infos) {
 						if (title != null &&
 							siteName != null &&
 							infos.get(INetworkLink.URL_MAIN) != null) {

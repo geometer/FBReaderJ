@@ -239,8 +239,8 @@ public class AddCustomCatalogActivity extends Activity {
 			setErrorByKey("invalidUrl");
 			return;
 		}
-		final HashMap<String,UrlInfo> infos = new HashMap<String,UrlInfo>();
-		infos.put(INetworkLink.URL_MAIN, new UrlInfo(textUrl));
+		final HashMap<String,UrlInfoWithDate> infos = new HashMap<String,UrlInfoWithDate>();
+		infos.put(INetworkLink.URL_MAIN, new UrlInfoWithDate(textUrl));
 		myLink = new OPDSCustomLink(
 			ICustomNetworkLink.INVALID_ID, siteName, null, null, infos
 		);

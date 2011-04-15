@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
-import org.geometerplus.fbreader.network.UrlInfo;
+import org.geometerplus.fbreader.network.UrlInfoWithDate;
 
 public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private int myId;
@@ -45,7 +45,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 		return siteName;
 	}
 
-	public OPDSCustomLink(int id, String siteName, String title, String summary, Map<String,UrlInfo> infos) {
+	public OPDSCustomLink(int id, String siteName, String title, String summary, Map<String,UrlInfoWithDate> infos) {
 		super(removeWWWPrefix(siteName), title, summary, null, infos, false);
 		myId = id;
 	}
@@ -82,12 +82,12 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 	}
 
 	public final void setUrl(String urlKey, String url) {
-		myInfos.put(urlKey, new UrlInfo(url, new Date()));
+		myInfos.put(urlKey, new UrlInfoWithDate(url, new Date()));
 		myHasChanges = true;
 	}
 
 	public final void removeUrl(String urlKey) {
-		final UrlInfo oldUrl = myInfos.remove(urlKey);
+		final UrlInfoWithDate oldUrl = myInfos.remove(urlKey);
 		myHasChanges = myHasChanges || oldUrl != null;
 	}
 

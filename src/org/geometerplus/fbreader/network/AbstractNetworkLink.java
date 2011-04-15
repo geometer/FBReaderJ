@@ -29,7 +29,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	protected String myTitle;
 	protected String mySummary;
 	protected final String myLanguage;
-	protected final TreeMap<String,UrlInfo> myInfos;
+	protected final TreeMap<String,UrlInfoWithDate> myInfos;
 
 	private ZLStringListOption myBooksInBasketOption;
 
@@ -42,12 +42,12 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
 	 * @param infos      map contains URL infos with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
 	 */
-	public AbstractNetworkLink(String siteName, String title, String summary, String language, Map<String,UrlInfo> infos) {
+	public AbstractNetworkLink(String siteName, String title, String summary, String language, Map<String,UrlInfoWithDate> infos) {
 		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
 		myLanguage = language != null ? language : "multi";
-		myInfos = new TreeMap<String,UrlInfo>(infos);
+		myInfos = new TreeMap<String,UrlInfoWithDate>(infos);
 	}
 
 	public final String getSiteName() {
@@ -66,13 +66,13 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 		return myLanguage;
 	}
 
-	public final HashMap<String,UrlInfo> urlInfoMap() {
-		return new HashMap<String,UrlInfo>(myInfos);
+	public final HashMap<String,UrlInfoWithDate> urlInfoMap() {
+		return new HashMap<String,UrlInfoWithDate>(myInfos);
 	}
 
-	public final UrlInfo getUrlInfo(String urlKey) {
-		final UrlInfo info = myInfos.get(urlKey);
-		return info != null ? info : UrlInfo.NULL;
+	public final UrlInfoWithDate getUrlInfo(String urlKey) {
+		final UrlInfoWithDate info = myInfos.get(urlKey);
+		return info != null ? info : UrlInfoWithDate.NULL;
 	}
 
 	public final Set<String> getUrlKeys() {

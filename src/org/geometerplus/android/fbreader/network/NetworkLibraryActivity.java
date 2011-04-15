@@ -71,7 +71,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			uri.getHost(),
 			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
 			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
-			(HashMap<String,UrlInfo>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
+			(HashMap<String,UrlInfoWithDate>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
 		);
 	}
 
