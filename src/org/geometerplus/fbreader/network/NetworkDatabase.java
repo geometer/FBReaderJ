@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network;
 
 import java.util.Map;
 
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 public abstract class NetworkDatabase {
@@ -37,7 +38,7 @@ public abstract class NetworkDatabase {
 	protected abstract void executeAsATransaction(Runnable actions);
 
 	public interface ICustomLinksHandler {
-		void handleCustomLinkData(int id, String siteName, String title, String summary, Map<String,UrlInfoWithDate> infos);
+		void handleCustomLinkData(int id, String siteName, String title, String summary, Map<UrlInfo.Type,UrlInfoWithDate> infos);
 	}
 
 	protected abstract void loadCustomLinks(ICustomLinksHandler handler);

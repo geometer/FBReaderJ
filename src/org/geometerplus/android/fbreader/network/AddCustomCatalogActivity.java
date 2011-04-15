@@ -39,6 +39,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 import org.geometerplus.android.util.UIUtil;
@@ -89,7 +90,7 @@ public class AddCustomCatalogActivity extends Activity {
 		final Uri uri = intent.getData();
 
 		if (myLink != null) {
-			setTextById(R.id.add_custom_catalog_url, myLink.getUrlInfo(INetworkLink.URL_MAIN).URL);
+			setTextById(R.id.add_custom_catalog_url, myLink.getUrlInfo(UrlInfo.Type.Catalog).URL);
 			setTextById(R.id.add_custom_catalog_title, myLink.getTitle());
 			setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
 			setExtraFieldsVisibility(true);
@@ -130,7 +131,7 @@ public class AddCustomCatalogActivity extends Activity {
 		} else {
 			myLink.setTitle(title);
 			myLink.setSummary(summary);
-			myLink.setUrl(INetworkLink.URL_MAIN, uri.toString());
+			myLink.setUrl(UrlInfo.Type.Catalog, uri.toString());
 
 			Intent intent = new Intent(
 				NetworkLibraryActivity.ADD_CATALOG,
@@ -240,8 +241,8 @@ public class AddCustomCatalogActivity extends Activity {
 			setErrorByKey("invalidUrl");
 			return;
 		}
-		final HashMap<String,UrlInfoWithDate> infos = new HashMap<String,UrlInfoWithDate>();
-		infos.put(INetworkLink.URL_MAIN, new UrlInfoWithDate(textUrl));
+		final HashMap<UrlInfo.Type,UrlInfoWithDate> infos = new HashMap<UrlInfo.Type,UrlInfoWithDate>();
+		infos.put(UrlInfo.Type.Catalog, new UrlInfoWithDate(textUrl));
 		myLink = new OPDSCustomLink(
 			ICustomNetworkLink.INVALID_ID, siteName, null, null, infos
 		);

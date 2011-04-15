@@ -25,16 +25,45 @@ public class UrlInfo implements Serializable {
 	private static final long serialVersionUID = -893514485257788222L;
 
 	public static enum Type {
-		Catalog,
+		Catalog("main"),
 		HtmlPage,
-		Image,
+		Image("icon"),
 		Thumbnail,
+		Search("search"),
+		SignIn,
+		SignOut,
+		SignUp,
+		TopUp,
+		RecoverPassword,
 		Book,
 		BookConditional,
 		BookDemo,
 		BookFullOrDemo,
 		BookBuy,
-		BookBuyInBrowser
+		BookBuyInBrowser;
+
+		public static Type fromFixedName(String fixedName) {
+			for (Type t : values()) {
+				if (t.getFixedName().equals(fixedName)) {
+					return t;
+				}
+			}
+			return null;
+		}
+
+		private final String myFixedName;
+
+		Type(String fixedName) {
+			myFixedName = fixedName;
+		}
+
+		Type() {
+			myFixedName = null;
+		}
+
+		public String getFixedName() {
+			return myFixedName != null ? myFixedName : toString();
+		}
 	}
 
 	public final Type InfoType;

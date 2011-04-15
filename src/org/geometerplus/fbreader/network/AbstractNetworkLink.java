@@ -24,6 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 public abstract class AbstractNetworkLink implements INetworkLink, Basket {
@@ -31,7 +32,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	protected String myTitle;
 	protected String mySummary;
 	protected final String myLanguage;
-	protected final TreeMap<String,UrlInfoWithDate> myInfos;
+	protected final TreeMap<UrlInfo.Type,UrlInfoWithDate> myInfos;
 
 	private ZLStringListOption myBooksInBasketOption;
 
@@ -42,14 +43,14 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	 * @param title      title of the corresponding library item. Must be not <code>null</code>.
 	 * @param summary    description of the corresponding library item. Can be <code>null</code>.
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
-	 * @param infos      map contains URL infos with their identifiers; must always contain one URL with <code>URL_MAIN</code> identifier
+	 * @param infos      collection of URL infos; must always contain one URL with <code>UrlInfo.Type.Catalog</code> identifier
 	 */
-	public AbstractNetworkLink(String siteName, String title, String summary, String language, Map<String,UrlInfoWithDate> infos) {
+	public AbstractNetworkLink(String siteName, String title, String summary, String language, Map<UrlInfo.Type,UrlInfoWithDate> infos) {
 		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
 		myLanguage = language != null ? language : "multi";
-		myInfos = new TreeMap<String,UrlInfoWithDate>(infos);
+		myInfos = new TreeMap<UrlInfo.Type,UrlInfoWithDate>(infos);
 	}
 
 	public final String getSiteName() {
@@ -68,16 +69,16 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 		return myLanguage;
 	}
 
-	public final HashMap<String,UrlInfoWithDate> urlInfoMap() {
-		return new HashMap<String,UrlInfoWithDate>(myInfos);
+	public final HashMap<UrlInfo.Type,UrlInfoWithDate> urlInfoMap() {
+		return new HashMap<UrlInfo.Type,UrlInfoWithDate>(myInfos);
 	}
 
-	public final UrlInfoWithDate getUrlInfo(String urlKey) {
-		final UrlInfoWithDate info = myInfos.get(urlKey);
+	public final UrlInfoWithDate getUrlInfo(UrlInfo.Type type) {
+		final UrlInfoWithDate info = myInfos.get(type);
 		return info != null ? info : UrlInfoWithDate.NULL;
 	}
 
-	public final Set<String> getUrlKeys() {
+	public final Set<UrlInfo.Type> getUrlKeys() {
 		return myInfos.keySet();
 	}
 
@@ -136,7 +137,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 
 	@Override
 	public String toString() {
-		String icon = getUrlInfo(URL_ICON).URL;
+		String icon = getUrlInfo(UrlInfo.Type.Catalog).URL;
 		if (icon != null) {
 			if (icon.length() > 64) {
 				icon = icon.substring(0, 61) + "...";

@@ -20,8 +20,11 @@
 package org.geometerplus.fbreader.network.urlInfo;
 
 import java.util.*;
+import java.io.Serializable;
 
-public class UrlInfoCollection<T extends UrlInfo> {
+public class UrlInfoCollection<T extends UrlInfo> implements Serializable {
+	private static final long serialVersionUID = -834589080548958222L;
+
 	private final LinkedList<T> myInfos = new LinkedList<T>();
 
 	public UrlInfoCollection() {
