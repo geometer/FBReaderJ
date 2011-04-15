@@ -19,17 +19,13 @@
 
 package org.geometerplus.fbreader.network.authentication.litres;
 
-import java.util.Map;
-
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.Basket;
-import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
 
 public class LitResRecommendationsItem extends OPDSCatalogItem {
-	public LitResRecommendationsItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility) {
+	public LitResRecommendationsItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {
 		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
 	}
 
@@ -59,6 +55,6 @@ public class LitResRecommendationsItem extends OPDSCatalogItem {
 			}
 		}
 
-		return ZLNetworkUtil.appendParameter(getUrl(UrlType.Catalog), "ids", builder.toString());
+		return ZLNetworkUtil.appendParameter(getUrl(UrlInfo.Type.Catalog), "ids", builder.toString());
 	}
 }

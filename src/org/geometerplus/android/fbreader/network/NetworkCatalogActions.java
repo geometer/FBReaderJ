@@ -80,7 +80,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		boolean hasItems = false;
 
 		final String catalogUrl =
-			urlItem != null ? urlItem.getUrl(NetworkItem.UrlType.Catalog) : null;
+			urlItem != null ? urlItem.getUrl(UrlInfo.Type.Catalog) : null;
 		if (catalogUrl != null &&
 			(!(item instanceof BasketItem) || item.Link.basket().bookIds().size() > 0)) {
 			addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
@@ -113,7 +113,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				addMenuItem(menu, CUSTOM_CATALOG_REMOVE, "removeCustomCatalog");
 			}
 		} else {
-			if (urlItem != null && urlItem.getUrl(NetworkItem.UrlType.HtmlPage) != null) {
+			if (urlItem != null && urlItem.getUrl(UrlInfo.Type.HtmlPage) != null) {
 				addMenuItem(menu, OPEN_IN_BROWSER_ITEM_ID, "openInBrowser");
 				hasItems = true;
 			}
@@ -132,10 +132,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			return OPEN_CATALOG_ITEM_ID;
 		}
 		final NetworkURLCatalogItem urlItem = (NetworkURLCatalogItem)item;
-		if (urlItem.getUrl(NetworkItem.UrlType.Catalog) != null) {
+		if (urlItem.getUrl(UrlInfo.Type.Catalog) != null) {
 			return OPEN_CATALOG_ITEM_ID;
 		}
-		if (urlItem.getUrl(NetworkItem.UrlType.HtmlPage) != null) {
+		if (urlItem.getUrl(UrlInfo.Type.HtmlPage) != null) {
 			return OPEN_IN_BROWSER_ITEM_ID;
 		}
 		if (urlItem.getVisibility() == ZLBoolean3.B3_UNDEFINED &&
@@ -175,7 +175,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		prepareOptionsItem(menu, RELOAD_ITEM_ID,
 				urlItem != null &&
-				urlItem.getUrl(NetworkItem.UrlType.Catalog) != null &&
+				urlItem.getUrl(UrlInfo.Type.Catalog) != null &&
 				!NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey())
 		);
 
@@ -250,7 +250,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				if (item instanceof NetworkURLCatalogItem) {
 					Util.openInBrowser(
 						activity,
-						item.getUrl(NetworkItem.UrlType.HtmlPage)
+						item.getUrl(UrlInfo.Type.HtmlPage)
 					);
 				}
 				return true;

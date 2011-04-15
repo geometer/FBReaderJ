@@ -164,7 +164,7 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 public class LitResBookshelfItem extends NetworkURLCatalogItem {
 	private boolean myForceReload;
 
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility) {
+	public LitResBookshelfItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {
 		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT);
 	}
 

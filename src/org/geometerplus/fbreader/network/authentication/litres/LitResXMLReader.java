@@ -29,7 +29,6 @@ import org.geometerplus.fbreader.network.opds.HtmlToString;
 
 
 class LitResXMLReader extends LitResAuthenticationXMLReader {
-
 	public final INetworkLink Link;
 	public final List<NetworkItem> Books;
 
@@ -44,8 +43,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private String mySummary;
 
-	private final Map<NetworkItem.UrlType,String> myUrls =
-		new HashMap<NetworkItem.UrlType,String>();
+	private final UrlInfoCollection myUrls = new UrlInfoCollection();
 
 	private String myAuthorFirstName;
 	private String myAuthorMiddleName;
@@ -120,7 +118,9 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 		case CATALOG:
 			if (TAG_BOOK == tag) {
 				myBookId = attributes.getValue("hub_id");
-				myUrls.put(NetworkItem.UrlType.Image, attributes.getValue("cover_preview"));
+				myUrls.addInfo(new UrlInfo(
+					UrlInfo.Type.Image, attributes.getValue("cover_preview")
+				));
 
 				myReferences.add(new BookReference(
 					"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,

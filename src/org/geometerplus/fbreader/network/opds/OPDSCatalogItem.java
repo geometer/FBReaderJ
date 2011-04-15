@@ -38,12 +38,12 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	private State myLoadingState;
 	private final Map<String,String> myExtraData;
 
-	OPDSCatalogItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Map<String,String> extraData) {
+	OPDSCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Map<String,String> extraData) {
 		super(link, title, summary, urls);
 		myExtraData = extraData;
 	}
 
-	public OPDSCatalogItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility, int flags) {
+	public OPDSCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls, accessibility, flags);
 		myExtraData = null;
 	}
@@ -63,7 +63,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	}
 
 	protected String getCatalogUrl() {
-		return getUrl(UrlType.Catalog);
+		return getUrl(UrlInfo.Type.Catalog);
 	}
 
 	@Override

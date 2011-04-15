@@ -238,7 +238,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			}
 		}
 
-		final Map<NetworkItem.UrlType,String> urls = new HashMap<NetworkItem.UrlType,String>();
+		final UrlInfoCollection urls = new UrlInfoCollection();
 		LinkedList<BookReference> references = new LinkedList<BookReference>();
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
@@ -247,11 +247,11 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			final BookReference.Type referenceType = typeByRelation(rel);
 			if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
 				if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
-					urls.put(NetworkItem.UrlType.Thumbnail, href);
+					urls.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href));
 				}
 			} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || REL_COVER.equals(rel)) {
 				if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
-					urls.put(NetworkItem.UrlType.Image, href);
+					urls.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
 			} else if (BookReference.Type.BookBuy == referenceType) {
 				final OPDSLink opdsLink = (OPDSLink)link; 
@@ -369,7 +369,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 
 	private NetworkItem readCatalogItem(OPDSEntry entry) {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
-		final Map<NetworkItem.UrlType,String> urlMap = new HashMap<NetworkItem.UrlType,String>();
+		final UrlInfoCollection urlMap = new UrlInfoCollection();
 
 		boolean urlIsAlternate = false;
 		String litresRel = null;
@@ -380,22 +380,22 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			final String rel = opdsLink.relation(link.getRel(), type);
 			if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
 				if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
-					urlMap.put(NetworkItem.UrlType.Thumbnail, href);
+					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href));
 				}
 			} else if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
 				if (REL_COVER.equals(rel) || (rel != null && rel.startsWith(REL_IMAGE_PREFIX))) {
-					urlMap.put(NetworkItem.UrlType.Image, href);
+					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
 			} else if (MIME_APP_ATOM.equals(type)) {
 				final boolean hasCatalogUrl =
-					urlMap.get(NetworkItem.UrlType.Catalog) != null;
+					urlMap.getInfo(UrlInfo.Type.Catalog) != null;
 				if (REL_ALTERNATE.equals(rel)) {
 					if (!hasCatalogUrl) {
-						urlMap.put(NetworkItem.UrlType.Catalog, href);
+						urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
 						urlIsAlternate = true;
 					}
 				} else if (!hasCatalogUrl || rel == null || REL_SUBSECTION.equals(rel)) {
-					urlMap.put(NetworkItem.UrlType.Catalog, href);
+					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
 					urlIsAlternate = false;
 					if (REL_CATALOG_AUTHOR.equals(rel)) {
 						catalogType &= ~NetworkCatalogItem.FLAG_SHOW_AUTHOR;
@@ -408,21 +408,21 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					REL_ACQUISITION_OPEN.equals(rel) ||
 					REL_ALTERNATE.equals(rel) ||
 					rel == null) {
-					urlMap.put(NetworkItem.UrlType.HtmlPage, href);
+					urlMap.addInfo(new UrlInfo(UrlInfo.Type.HtmlPage, href));
 				}
 			} else if (MIME_APP_LITRES.equals(type)) {
-				urlMap.put(NetworkItem.UrlType.Catalog, href);
+				urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
 				litresRel = rel;
 			}
 		}
 
-		if (urlMap.get(NetworkItem.UrlType.Catalog) == null &&
-			urlMap.get(NetworkItem.UrlType.HtmlPage) == null) {
+		if (urlMap.getInfo(UrlInfo.Type.Catalog) == null &&
+			urlMap.getInfo(UrlInfo.Type.HtmlPage) == null) {
 			return null;
 		}
 
-		if (urlMap.get(NetworkItem.UrlType.Catalog) != null && !urlIsAlternate) {
-			urlMap.remove(NetworkItem.UrlType.HtmlPage);
+		if (urlMap.getInfo(UrlInfo.Type.Catalog) != null && !urlIsAlternate) {
+			urlMap.removeAllInfos(UrlInfo.Type.HtmlPage);
 		}
 
 		final String annotation;

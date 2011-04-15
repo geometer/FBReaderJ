@@ -133,10 +133,9 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public NetworkCatalogItem libraryItem() {
-		final Map<NetworkItem.UrlType,String> urlMap =
-			new HashMap<NetworkItem.UrlType,String>();
-		urlMap.put(NetworkItem.UrlType.Catalog, getUrlInfo(URL_MAIN).URL);
-		urlMap.put(NetworkItem.UrlType.Image, getUrlInfo(URL_ICON).URL);
+		final UrlInfoCollection urlMap = new UrlInfoCollection();
+		urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, getUrlInfo(URL_MAIN).URL));
+		urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, getUrlInfo(URL_ICON).URL));
 		return new OPDSCatalogItem(this, getTitle(), getSummary(), urlMap, myExtraData);
 	}
 

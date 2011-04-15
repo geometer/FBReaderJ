@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.*;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -34,7 +32,7 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	 * @param summary    description of this library item. Can be <code>null</code>.
 	 * @param urls       collection of item-related URLs. Can be <code>null</code>.
 	 */
-	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls) {
+	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls) {
 		this(link, title, summary, urls, Accessibility.ALWAYS, FLAGS_DEFAULT);
 	}
 
@@ -49,7 +47,7 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	 *                      in the network library view. 
 	 * @param flags         value defines how to show book items in this catalog.
 	 */
-	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility, int flags) {
+	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls, accessibility, flags);
 	}
 
@@ -75,9 +73,9 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 
 	@Override
 	public String getStringId() {
-		String id = getUrl(UrlType.Catalog);
+		String id = getUrl(UrlInfo.Type.Catalog);
 		if (id == null) {
-			id = getUrl(UrlType.HtmlPage);
+			id = getUrl(UrlInfo.Type.HtmlPage);
 		}
 		return id != null ? id : String.valueOf(hashCode());
 	}

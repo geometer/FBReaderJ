@@ -58,12 +58,12 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	 * @param link          corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title         title of this library item. Must be not <code>null</code>.
 	 * @param summary       description of this library item. Can be <code>null</code>.
-	 * @param urls       collection of item-related URLs. Can be <code>null</code>.
+	 * @param urls          collection of item-related URLs. Can be <code>null</code>.
 	 * @param accessibility value defines when this library item will be accessible
 	 *                      in the network library view. 
 	 * @param flags         describes how to show book items inside this catalog
 	 */
-	public NetworkCatalogItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility, int flags) {
+	public NetworkCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls);
 		myAccessibility = accessibility;
 		Flags = flags;

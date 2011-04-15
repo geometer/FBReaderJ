@@ -19,17 +19,23 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.Map;
+import java.io.Serializable;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
+public class UrlInfo implements Serializable {
+	private static final long serialVersionUID = -893514485257788222L;
 
-public class TopUpItem extends NetworkItem {
-	public TopUpItem(INetworkLink link, UrlInfoCollection urls) {
-		super(
-			link,
-			ZLResource.resource("networkView").getResource("topupTitle").getValue(),
-			ZLResource.resource("networkView").getResource("topupSummary").getValue(),
-			urls
-		);
+	public static enum Type {
+		Catalog,
+		HtmlPage,
+		Image,
+		Thumbnail
+	}
+
+	public final Type InfoType;
+	public final String Url;
+
+	public UrlInfo(Type type, String url) {
+		InfoType = type;
+		Url = url;
 	}
 }

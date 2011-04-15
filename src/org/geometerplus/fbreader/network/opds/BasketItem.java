@@ -19,15 +19,13 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.Map;
-
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
-import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
+import org.geometerplus.fbreader.network.UrlInfo;
+import org.geometerplus.fbreader.network.UrlInfoCollection;
 
 public class BasketItem extends OPDSCatalogItem {
-	BasketItem(OPDSNetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility) {
+	BasketItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {
 		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
 		link.setSupportsBasket();
 	}
@@ -45,6 +43,6 @@ public class BasketItem extends OPDSCatalogItem {
 			builder.append(bookId);
 		}
 
-		return ZLNetworkUtil.appendParameter(getUrl(UrlType.Catalog), "ids", builder.toString());
+		return ZLNetworkUtil.appendParameter(getUrl(UrlInfo.Type.Catalog), "ids", builder.toString());
 	}
 }
