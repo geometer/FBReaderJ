@@ -115,7 +115,13 @@ public class BookDownloaderService extends Service {
 
 		final String url = uri.toString();
 		final int bookFormat = intent.getIntExtra(BOOK_FORMAT_KEY, BookReference.Format.NONE);
-		final int referenceType = intent.getIntExtra(REFERENCE_TYPE_KEY, BookReference.Type.UNKNOWN);
+		final BookReference.Type referenceType =
+			(BookReference.Type)intent.getSerializableExtra(REFERENCE_TYPE_KEY);
+		if (referenceType == null) {
+			doStop();
+			return;
+		}
+
 		String cleanURL = intent.getStringExtra(CLEAN_URL_KEY);
 		if (cleanURL == null) {
 			cleanURL = url;

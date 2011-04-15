@@ -113,7 +113,7 @@ public final class NetworkBookItem extends NetworkItem {
 		myReferences = new LinkedList<BookReference>(references);
 	}
 
-	public BookReference reference(int type) {
+	public BookReference reference(BookReference.Type type) {
 		BookReference reference = null;
 		for (BookReference ref: myReferences) {
 			if (ref.ReferenceType == type &&
@@ -122,8 +122,8 @@ public final class NetworkBookItem extends NetworkItem {
 			}
 		}
 
-		if (reference == null && type == BookReference.Type.DOWNLOAD_FULL) {
-			reference = this.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL);
+		if (reference == null && type == BookReference.Type.Book) {
+			reference = this.reference(BookReference.Type.BookConditional);
 			if (reference != null) {
 				NetworkAuthenticationManager authManager = Link.authenticationManager();
 				if (authManager == null || authManager.needPurchase(this)) {
@@ -134,17 +134,17 @@ public final class NetworkBookItem extends NetworkItem {
 		}
 
 		if (reference == null &&
-				type == BookReference.Type.DOWNLOAD_FULL &&
-				this.reference(BookReference.Type.BUY) == null &&
-				this.reference(BookReference.Type.BUY_IN_BROWSER) == null) {
-			reference = this.reference(BookReference.Type.DOWNLOAD_FULL_OR_DEMO);
+				type == BookReference.Type.Book &&
+				this.reference(BookReference.Type.BookBuy) == null &&
+				this.reference(BookReference.Type.BookBuyInBrowser) == null) {
+			reference = this.reference(BookReference.Type.BookFullOrDemo);
 		}
 
 		if (reference == null &&
-				type == BookReference.Type.DOWNLOAD_DEMO &&
-				(this.reference(BookReference.Type.BUY) != null ||
-				 this.reference(BookReference.Type.BUY_IN_BROWSER) != null)) {
-			reference = this.reference(BookReference.Type.DOWNLOAD_FULL_OR_DEMO);
+				type == BookReference.Type.BookDemo &&
+				(this.reference(BookReference.Type.BookBuy) != null ||
+				 this.reference(BookReference.Type.BookBuyInBrowser) != null)) {
+			reference = this.reference(BookReference.Type.BookFullOrDemo);
 		}
 
 		return reference;
@@ -152,17 +152,17 @@ public final class NetworkBookItem extends NetworkItem {
 
 	public String localCopyFileName() {
 		final boolean hasBuyReference =
-			this.reference(BookReference.Type.BUY) != null ||
-			this.reference(BookReference.Type.BUY_IN_BROWSER) != null;
+			this.reference(BookReference.Type.BookBuy) != null ||
+			this.reference(BookReference.Type.BookBuyInBrowser) != null;
 		BookReference reference = null;
 		String fileName = null;
 		for (BookReference ref: myReferences) {
-			final int type = ref.ReferenceType;
-			if ((type == BookReference.Type.DOWNLOAD_FULL ||
-					type == BookReference.Type.DOWNLOAD_FULL_CONDITIONAL ||
-					(!hasBuyReference && type == BookReference.Type.DOWNLOAD_FULL_OR_DEMO)) &&
+			final BookReference.Type type = ref.ReferenceType;
+			if ((type == BookReference.Type.Book ||
+					type == BookReference.Type.BookConditional ||
+					(!hasBuyReference && type == BookReference.Type.BookFullOrDemo)) &&
 					(reference == null || ref.BookFormat > reference.BookFormat)) {
-				String name = ref.localCopyFileName(BookReference.Type.DOWNLOAD_FULL);
+				String name = ref.localCopyFileName(BookReference.Type.Book);
 				if (name != null) {
 					reference = ref;
 					fileName = name;
@@ -174,14 +174,14 @@ public final class NetworkBookItem extends NetworkItem {
 
 	public void removeLocalFiles() {
 		final boolean hasBuyReference =
-			this.reference(BookReference.Type.BUY) != null ||
-			this.reference(BookReference.Type.BUY_IN_BROWSER) != null;
+			this.reference(BookReference.Type.BookBuy) != null ||
+			this.reference(BookReference.Type.BookBuyInBrowser) != null;
 		for (BookReference ref: myReferences) {
-			final int type = ref.ReferenceType;
-			if (type == BookReference.Type.DOWNLOAD_FULL ||
-					type == BookReference.Type.DOWNLOAD_FULL_CONDITIONAL ||
-					(!hasBuyReference && type == BookReference.Type.DOWNLOAD_FULL_OR_DEMO)) {
-				String fileName = ref.localCopyFileName(BookReference.Type.DOWNLOAD_FULL);
+			final BookReference.Type type = ref.ReferenceType;
+			if (type == BookReference.Type.Book ||
+					type == BookReference.Type.BookConditional ||
+					(!hasBuyReference && type == BookReference.Type.BookFullOrDemo)) {
+				String fileName = ref.localCopyFileName(BookReference.Type.Book);
 				if (fileName != null) {
 					// TODO: remove a book from the library
 					// TODO: remove a record from the database

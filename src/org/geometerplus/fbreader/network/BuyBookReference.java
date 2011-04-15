@@ -20,10 +20,9 @@
 package org.geometerplus.fbreader.network;
 
 public class BuyBookReference extends BookReference {
-
 	public final String Price;
 
-	public BuyBookReference(String url, int format, int type, String price) {
+	public BuyBookReference(String url, int format, Type type, String price) {
 		super(url, format, type);
 		Price = price;
 	}
@@ -44,5 +43,4 @@ public class BuyBookReference extends BookReference {
 		}
 		return currency + " " + price;
 	}
-
 }

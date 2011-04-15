@@ -125,7 +125,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				myReferences.add(new BookReference(
 					"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
 					BookReference.Format.FB2_ZIP,
-					BookReference.Type.DOWNLOAD_FULL_CONDITIONAL
+					BookReference.Type.BookConditional
 				));
 				myState = BOOK;
 			}

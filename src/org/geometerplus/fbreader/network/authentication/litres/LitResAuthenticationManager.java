@@ -158,7 +158,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL);
+		BookReference reference = book.reference(BookReference.Type.BookConditional);
 		if (reference == null) {
 			return null;
 		}
@@ -196,7 +196,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 		}
 
-		BookReference reference = book.reference(BookReference.Type.BUY);
+		BookReference reference = book.reference(BookReference.Type.BookBuy);
 		if (reference == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_BOOK_NOT_PURCHASED); // TODO: more correct error message???
 		}

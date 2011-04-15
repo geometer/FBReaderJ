@@ -110,19 +110,19 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 	}
 
 	// returns BookReference.Type value for specified String. String MUST BE interned.
-	private static int typeByRelation(String rel) {
+	private static BookReference.Type typeByRelation(String rel) {
 		if (rel == null || REL_ACQUISITION.equals(rel) || REL_ACQUISITION_OPEN.equals(rel)) {
-			return BookReference.Type.DOWNLOAD_FULL;
+			return BookReference.Type.Book;
 		} else if (REL_ACQUISITION_SAMPLE.equals(rel)) {
-			return BookReference.Type.DOWNLOAD_DEMO;
+			return BookReference.Type.BookDemo;
 		} else if (REL_ACQUISITION_CONDITIONAL.equals(rel)) {
-			return BookReference.Type.DOWNLOAD_FULL_CONDITIONAL;
+			return BookReference.Type.BookConditional;
 		} else if (REL_ACQUISITION_SAMPLE_OR_FULL.equals(rel)) {
-			return BookReference.Type.DOWNLOAD_FULL_OR_DEMO;
+			return BookReference.Type.BookFullOrDemo;
 		} else if (REL_ACQUISITION_BUY.equals(rel)) {
-			return BookReference.Type.BUY;
+			return BookReference.Type.BookBuy;
 		} else {
-			return BookReference.Type.UNKNOWN;
+			return null;
 		}
 	}
 
@@ -244,7 +244,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
 			final String rel = opdsNetworkLink.relation(link.getRel(), type);
-			final int referenceType = typeByRelation(rel);
+			final BookReference.Type referenceType = typeByRelation(rel);
 			if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
 				if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
 					urls.put(NetworkItem.UrlType.Thumbnail, href);
@@ -253,7 +253,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
 					urls.put(NetworkItem.UrlType.Image, href);
 				}
-			} else if (BookReference.Type.BUY == referenceType) {
+			} else if (BookReference.Type.BookBuy == referenceType) {
 				final OPDSLink opdsLink = (OPDSLink)link; 
 				String price = null;
 				final OPDSPrice opdsPrice = opdsLink.selectBestPrice();
@@ -269,12 +269,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				}
 				if (MIME_TEXT_HTML.equals(type)) {
 					collectReferences(references, opdsLink, href,
-							BookReference.Type.BUY_IN_BROWSER, price, true);
+							BookReference.Type.BookBuyInBrowser, price, true);
 				} else {
 					collectReferences(references, opdsLink, href,
-							BookReference.Type.BUY, price, false);
+							BookReference.Type.BookBuy, price, false);
 				}
-			} else if (referenceType != BookReference.Type.UNKNOWN) {
+			} else if (referenceType != null) {
 				final int format = formatByMimeType(type);
 				if (format != BookReference.Format.NONE) {
 					references.add(new BookReference(href, format, referenceType));
@@ -349,7 +349,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 	}
 
 	private void collectReferences(LinkedList<BookReference> references,
-			OPDSLink opdsLink, String href, int type, String price, boolean addWithoutFormat) {
+			OPDSLink opdsLink, String href, BookReference.Type type, String price, boolean addWithoutFormat) {
 		boolean added = false;
 		for (String mime: opdsLink.Formats) {
 			final int format = formatByMimeType(mime);

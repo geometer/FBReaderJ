@@ -25,15 +25,13 @@ import java.net.URI;
 import org.geometerplus.fbreader.Paths;
 
 public class BookReference {
-
-	public interface Type {
-		int UNKNOWN = 0; // Unknown reference type
-		int DOWNLOAD_FULL = 1; // reference for download full version of the book
-		int DOWNLOAD_FULL_CONDITIONAL = 2; // reference for download full version of the book, useful only when book is bought
-		int DOWNLOAD_DEMO = 3; // reference for downloading demo version of the book
-		int DOWNLOAD_FULL_OR_DEMO = 4; // reference for downloading unknown version of the book
-		int BUY = 5; // reference for buying the book (useful only when authentication is supported)
-		int BUY_IN_BROWSER = 6; // reference to the site page, when it is possible to buy the book
+	public static enum Type {
+		Book,
+		BookConditional,
+		BookDemo,
+		BookFullOrDemo,
+		BookBuy,
+		BookBuyInBrowser
 	}
 	// resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
@@ -46,9 +44,9 @@ public class BookReference {
 
 	public final String URL;
 	public final int BookFormat;
-	public final int ReferenceType;
+	public final Type ReferenceType;
 
-	public BookReference(String url, int format, int type) {
+	public BookReference(String url, int format, Type type) {
 		URL = url;
 		BookFormat = format;
 		ReferenceType = type;
@@ -61,7 +59,7 @@ public class BookReference {
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeBookFileName(String url, int format, int resolvedReferenceType) {
+	public static String makeBookFileName(String url, int format, Type resolvedReferenceType) {
 		URI uri;
 		try {
 			uri = new URI(url);
@@ -76,7 +74,7 @@ public class BookReference {
 			path.delete(0, 4);
 		}
 		path.insert(0, File.separator);
-		if (resolvedReferenceType == Type.DOWNLOAD_DEMO) {
+		if (resolvedReferenceType == Type.BookDemo) {
 			path.insert(0, "Demos");
 			path.insert(0, File.separator);
 		}
@@ -154,11 +152,11 @@ public class BookReference {
 		return path.append(ext).toString();
 	}
 
-	public final String makeBookFileName(int resolvedReferenceType) {
+	public final String makeBookFileName(Type resolvedReferenceType) {
 		return makeBookFileName(cleanURL(), BookFormat, resolvedReferenceType);
 	}
 
-	public final String localCopyFileName(int resolvedReferenceType) {
+	public final String localCopyFileName(Type resolvedReferenceType) {
 		String fileName = makeBookFileName(resolvedReferenceType);
 		if (fileName != null && new File(fileName).exists()) {
 			return fileName;
