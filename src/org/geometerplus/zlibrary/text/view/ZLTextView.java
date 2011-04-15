@@ -55,8 +55,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	private final HashMap<ZLTextLineInfo,ZLTextLineInfo> myLineInfoCache = new HashMap<ZLTextLineInfo,ZLTextLineInfo>();
 
-	public ZLTextView() {
-		mySelectionModel = new ZLTextSelectionModel(this);
+	public ZLTextView(ZLApplication application) {
+		super(application);
+ 		mySelectionModel = new ZLTextSelectionModel(this);
 		mySelection = new ZLTextSelection(this);
 	}
 
@@ -74,7 +75,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				myCurrentPage.moveStartCursor(ZLTextParagraphCursor.cursor(myModel, 0));
 			}
 		}
-		ZLApplication.Instance().resetView();
+		Application.getViewWidget().reset();
 	}
 
 	public ZLTextModel getModel() {
@@ -127,8 +128,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			if (myCurrentPage.StartCursor.isNull()) {
 				preparePaintInfo(myCurrentPage);
 			}
-			ZLApplication.Instance().resetView();
-			ZLApplication.Instance().repaintView();
+			Application.getViewWidget().reset();
+			Application.getViewWidget().repaint();
 		}
 	}
 
@@ -152,8 +153,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					(backward ? myModel.getLastMark() : myModel.getFirstMark()) :
 					(backward ? myModel.getPreviousMark(mark) : myModel.getNextMark(mark)));
 			}
-			ZLApplication.Instance().resetView();
-			ZLApplication.Instance().repaintView();
+			Application.getViewWidget().reset();
+			Application.getViewWidget().repaint();
 		}
 		return count;
 	}
@@ -186,8 +187,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (!findResultsAreEmpty()) {
 			myModel.removeAllMarks();
 			rebuildPaintInfo();
-			ZLApplication.Instance().resetView();
-			ZLApplication.Instance().repaintView();
+			Application.getViewWidget().reset();
+			Application.getViewWidget().repaint();
 		}
 	}
 
@@ -986,7 +987,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public final synchronized void gotoPosition(int paragraphIndex, int wordIndex, int charIndex) {
 		if (myModel != null && myModel.getParagraphsNumber() > 0) {
-			ZLApplication.Instance().resetView();
+			Application.getViewWidget().reset();
 			myCurrentPage.moveStartCursor(paragraphIndex, wordIndex, charIndex);
 			myPreviousPage.reset();
 			myNextPage.reset();
@@ -1152,7 +1153,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public void clearCaches() {
 		rebuildPaintInfo();
-		ZLApplication.Instance().resetView();
+		Application.getViewWidget().reset();
 	}
 
 	protected void rebuildPaintInfo() {
@@ -1290,8 +1291,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		if (!mySelectionModel.isEmpty()){
 			mySelectionModel.clear();
-			ZLApplication.Instance().resetView();
-			ZLApplication.Instance().repaintView();
+			Application.getViewWidget().reset();
+			Application.getViewWidget().repaint();
 			return true;
 		}
 		return false;
@@ -1305,7 +1306,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		 //                (ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
 		 //            clipboard.setText(text);
 		 //            mySelectionModel.clear();
-		 //            ZLApplication.Instance().repaintView();
+		//				Application.getViewWidget().repaint();
 		 //            return true;
 		 //        }
 		 //        if (!mySelection.isEmpty()) {
@@ -1314,7 +1315,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		 //                (ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
 		 //            clipboard.setText(text);
 		 //            mySelection.clear();
-		 //            ZLApplication.Instance().repaintView();
+		//				Application.getViewWidget().repaint();
 		 //            return true;
 		 //        }
 		return false; 
@@ -1340,7 +1341,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		 //        }
 		 //		}
 		 //        if (mySelectionModel.extendTo(x, y)) {
-		 //            ZLApplication.Instance().repaintView();
+		//				Application.getViewWidget().repaint();
 		 //            return true;
 		 //        }
 		return false;
@@ -1366,8 +1367,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	protected void activateSelection(int x, int y) {
 		if (isSelectionEnabled()) {
 			mySelectionModel.activate(x, y);
-			ZLApplication.Instance().resetView();
-			ZLApplication.Instance().repaintView();
+			Application.getViewWidget().reset();
+			Application.getViewWidget().repaint();
 		}
 	}
 	*/
@@ -1378,7 +1379,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public void hideSelectedRegionBorder() {
 		myHighlightSelectedRegion = false;
-		ZLApplication.Instance().resetView();
+		Application.getViewWidget().reset();
 	}
 
 	private ZLTextElementRegion getCurrentElementRegion(ZLTextPage page) {
@@ -1427,21 +1428,27 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected boolean startSelection(int x, int y) {
-		if (!mySelection.start(x, y))
+		if (!mySelection.start(x, y)) {
 			return false;
-		ZLApplication.Instance().repaintView();
+		}
+		Application.getViewWidget().reset();
+		Application.getViewWidget().repaint();
 		onSelectingStarted();
 		return true;
 	}
 	protected boolean expandSelectionTo(int x, int y) {
-		if (!mySelection.expandTo(x, y))
+		if (!mySelection.expandTo(x, y)) {
 			return false;
-		ZLApplication.Instance().repaintView();
+		}
+		Application.getViewWidget().reset();
+		Application.getViewWidget().repaint();
 		return true;
 	}
 	protected void clearSelection() {
-		if (mySelection.clear())
-			ZLApplication.Instance().repaintView();
+		if (mySelection.clear()) {
+			Application.getViewWidget().reset();
+			Application.getViewWidget().repaint();
+		}
 	}
 	public String getSelectedText() {
 		return mySelection.getText();
@@ -1570,5 +1577,29 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				break;
 		}
 		return null;
+	}
+
+	@Override
+	public boolean canScroll(PageIndex index) {
+		switch (index) {
+			default:
+				return true;
+			case next:
+			{
+				final ZLTextWordCursor cursor = getEndCursor();
+				return
+					cursor != null &&
+					!cursor.isNull() &&
+					(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
+			}
+			case previous:
+			{
+				final ZLTextWordCursor cursor = getStartCursor();
+				return
+					cursor != null &&
+					!cursor.isNull() &&
+					(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
+			}
+		}
 	}
 }

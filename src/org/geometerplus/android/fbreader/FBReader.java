@@ -266,7 +266,7 @@ public final class FBReader extends ZLAndroidActivity {
 					}
 				}
 				fbreader.clearTextCaches();
-				fbreader.repaintView();
+				fbreader.getViewWidget().repaint();
 				break;
 			}
 			case CANCEL_CODE:
