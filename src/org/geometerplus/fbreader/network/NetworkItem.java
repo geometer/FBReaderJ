@@ -19,13 +19,21 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.*;
+
 public abstract class NetworkItem {
+	public static enum UrlType {
+		Catalog,
+		HtmlPage,
+		Image,
+		Thumbnail
+	}
+
 	public final INetworkLink Link;
 	public final String Title;
 	public final String Summary;
-	public final String Cover;
 
-	//public org.geometerplus.fbreader.network.atom.ATOMEntry dbgEntry;
+	private final Map<UrlType,String> myURLs;
 
 	/**
 	 * Creates new NetworkItem instance.
@@ -33,12 +41,31 @@ public abstract class NetworkItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param cover      cover url. Can be <code>null</code>.
+	 * @param urls       collection of item-related urls (like icon link, opds catalog link, etc. Can be <code>null</code>.
 	 */
-	protected NetworkItem(INetworkLink link, String title, String summary, String cover) {
+	protected NetworkItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls) {
 		Link = link;
 		Title = title;
 		Summary = summary;
-		Cover = cover;
+		if (urls != null && !urls.isEmpty()) {
+ 			myURLs = new HashMap<UrlType,String>(urls);
+		} else {
+			myURLs = null;
+		}
+	}
+
+	public String getUrl(UrlType type) {
+		if (myURLs == null) {
+			return null;
+		}
+		return myURLs.get(type);
+	}
+
+	public String getImageUrl() {
+		if (myURLs == null) {
+			return null;
+		}
+		final String cover = myURLs.get(UrlType.Image);
+		return cover != null ? cover : myURLs.get(UrlType.Thumbnail);
 	}
 }

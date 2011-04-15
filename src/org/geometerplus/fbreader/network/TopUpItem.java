@@ -19,15 +19,17 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.Map;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class TopUpItem extends NetworkItem {
-	public TopUpItem(INetworkLink link, String cover) {
+	public TopUpItem(INetworkLink link, Map<UrlType,String> urls) {
 		super(
 			link,
 			ZLResource.resource("networkView").getResource("topupTitle").getValue(),
 			ZLResource.resource("networkView").getResource("topupSummary").getValue(),
-			cover
+			urls
 		);
 	}
 }

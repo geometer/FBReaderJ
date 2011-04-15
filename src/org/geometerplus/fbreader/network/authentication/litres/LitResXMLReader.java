@@ -44,7 +44,8 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private String mySummary;
 
-	private String myCover;
+	private final Map<NetworkItem.UrlType,String> myUrls =
+		new HashMap<NetworkItem.UrlType,String>();
 
 	private String myAuthorFirstName;
 	private String myAuthorMiddleName;
@@ -119,7 +120,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 		case CATALOG:
 			if (TAG_BOOK == tag) {
 				myBookId = attributes.getValue("hub_id");
-				myCover = attributes.getValue("cover_preview");
+				myUrls.put(NetworkItem.UrlType.Image, attributes.getValue("cover_preview"));
 
 				myReferences.add(new BookReference(
 					"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
@@ -224,15 +225,16 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 					myTags,
 					mySeriesTitle,
 					myIndexInSeries,
-					myCover,
+					myUrls,
 					myReferences
 				));
 
-				myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = mySummary = myCover = null;
+				myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = mySummary = null;
 				myIndexInSeries = 0;
 				myAuthors.clear();
 				myTags.clear();
 				myReferences.clear();
+				myUrls.clear();
 				myState = CATALOG;
 			}
 			break;

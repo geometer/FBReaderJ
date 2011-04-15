@@ -27,13 +27,13 @@ import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
 
 public class BasketItem extends OPDSCatalogItem {
-	BasketItem(OPDSNetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType, Accessibility accessibility) {
-		super(link, title, summary, cover, urlByType, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
+	BasketItem(OPDSNetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility) {
+		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
 		link.setSupportsBasket();
 	}
 
 	@Override
-	protected String getUrl() {
+	protected String getCatalogUrl() {
 		final StringBuilder builder = new StringBuilder();
 		boolean flag = false;
 		for (String bookId : Link.basket().bookIds()) {
@@ -45,6 +45,6 @@ public class BasketItem extends OPDSCatalogItem {
 			builder.append(bookId);
 		}
 
-		return ZLNetworkUtil.appendParameter(URLByType.get(URL_CATALOG), "ids", builder.toString());
+		return ZLNetworkUtil.appendParameter(getUrl(UrlType.Catalog), "ids", builder.toString());
 	}
 }

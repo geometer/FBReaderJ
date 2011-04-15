@@ -29,12 +29,12 @@ import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
 
 public class LitResRecommendationsItem extends OPDSCatalogItem {
-	public LitResRecommendationsItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType, Accessibility accessibility) {
-		super(link, title, summary, cover, urlByType, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
+	public LitResRecommendationsItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility) {
+		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
 	}
 
 	@Override
-	protected String getUrl() {
+	protected String getCatalogUrl() {
 		final LitResAuthenticationManager mgr =
 			(LitResAuthenticationManager)Link.authenticationManager();
 		final StringBuilder builder = new StringBuilder();
@@ -59,6 +59,6 @@ public class LitResRecommendationsItem extends OPDSCatalogItem {
 			}
 		}
 
-		return ZLNetworkUtil.appendParameter(URLByType.get(URL_CATALOG), "ids", builder.toString());
+		return ZLNetworkUtil.appendParameter(getUrl(UrlType.Catalog), "ids", builder.toString());
 	}
 }

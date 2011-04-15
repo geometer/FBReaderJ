@@ -38,13 +38,13 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	private State myLoadingState;
 	private final Map<String,String> myExtraData;
 
-	OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Map<String,String> extraData) {
-		super(link, title, summary, cover, urlByType);
+	OPDSCatalogItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Map<String,String> extraData) {
+		super(link, title, summary, urls);
 		myExtraData = extraData;
 	}
 
-	public OPDSCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, int flags) {
-		super(link, title, summary, cover, urlByType, accessibility, flags);
+	public OPDSCatalogItem(INetworkLink link, String title, String summary, Map<UrlType,String> urls, Accessibility accessibility, int flags) {
+		super(link, title, summary, urls, accessibility, flags);
 		myExtraData = null;
 	}
 
@@ -62,8 +62,8 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		return myExtraData;
 	}
 
-	protected String getUrl() {
-		return URLByType.get(URL_CATALOG);
+	protected String getCatalogUrl() {
+		return getUrl(UrlType.Catalog);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		myLoadingState = opdsLink.createOperationData(listener);
 
 		ZLNetworkRequest networkRequest =
-			opdsLink.createNetworkData(getUrl(), myLoadingState);
+			opdsLink.createNetworkData(getCatalogUrl(), myLoadingState);
 
 		doLoadChildren(networkRequest);
 	}
