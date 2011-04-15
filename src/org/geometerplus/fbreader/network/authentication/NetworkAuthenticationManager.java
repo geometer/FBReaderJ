@@ -25,9 +25,8 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
-
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
-
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 public abstract class NetworkAuthenticationManager {
 	private static final HashMap<String, NetworkAuthenticationManager> ourManagers = new HashMap<String, NetworkAuthenticationManager>();

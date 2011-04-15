@@ -28,6 +28,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
 import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes {
 	private final String myBaseURL;

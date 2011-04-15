@@ -21,6 +21,9 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+
 public abstract class NetworkItem {
 	public final INetworkLink Link;
 	public final String Title;

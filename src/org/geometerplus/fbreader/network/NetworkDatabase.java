@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network;
 
 import java.util.Map;
 
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+
 public abstract class NetworkDatabase {
 	private static NetworkDatabase ourInstance;
 

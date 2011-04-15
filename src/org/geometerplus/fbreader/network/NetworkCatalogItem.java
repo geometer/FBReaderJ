@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public abstract class NetworkCatalogItem extends NetworkItem {
 	// bit mask for flags parameter

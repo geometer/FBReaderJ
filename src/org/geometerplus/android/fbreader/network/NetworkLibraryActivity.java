@@ -41,6 +41,7 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
 	static final String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";

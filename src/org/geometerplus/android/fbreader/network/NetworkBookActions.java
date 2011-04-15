@@ -42,6 +42,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
 import org.geometerplus.fbreader.network.tree.NetworkSeriesTree;

@@ -33,6 +33,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;

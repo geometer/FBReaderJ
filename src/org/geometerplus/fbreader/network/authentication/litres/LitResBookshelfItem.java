@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 abstract class SortedCatalogItem extends NetworkCatalogItem {
 	private final List<NetworkItem> myChildren = new LinkedList<NetworkItem>();

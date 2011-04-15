@@ -35,12 +35,12 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.authentication.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.opds.BasketItem;
-import org.geometerplus.fbreader.network.authentication.*;
-
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int OPEN_CATALOG_ITEM_ID = 0;

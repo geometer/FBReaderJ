@@ -21,8 +21,8 @@ package org.geometerplus.fbreader.network.opds;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.network.UrlInfo;
-import org.geometerplus.fbreader.network.UrlInfoCollection;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class BasketItem extends OPDSCatalogItem {
 	BasketItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {

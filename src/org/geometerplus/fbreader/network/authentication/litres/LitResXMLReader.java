@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.HtmlToString;
-
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 class LitResXMLReader extends LitResAuthenticationXMLReader {
 	public final INetworkLink Link;

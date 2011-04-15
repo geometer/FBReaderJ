@@ -24,6 +24,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+
 public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	protected String mySiteName;
 	protected String myTitle;

@@ -27,14 +27,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeTypes {
 	private static class LinkReader implements OPDSFeedReader {

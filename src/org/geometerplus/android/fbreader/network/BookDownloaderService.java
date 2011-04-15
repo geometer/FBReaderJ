@@ -40,8 +40,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.*;
 
-import org.geometerplus.fbreader.network.UrlInfo;
-import org.geometerplus.fbreader.network.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 import org.geometerplus.android.fbreader.FBReader;
 

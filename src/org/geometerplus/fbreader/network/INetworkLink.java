@@ -24,7 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 public interface INetworkLink {
 	String URL_MAIN = "main";

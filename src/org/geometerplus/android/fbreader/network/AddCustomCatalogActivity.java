@@ -39,6 +39,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 import org.geometerplus.android.util.UIUtil;
 

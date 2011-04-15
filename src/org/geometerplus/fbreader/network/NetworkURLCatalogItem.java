@@ -23,6 +23,9 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+
 public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	/**
 	 * Creates new NetworkURLCatalogItem instance with <code>Accessibility.ALWAYS</code> accessibility and <code>FLAGS_DEFAULT</code> flags.

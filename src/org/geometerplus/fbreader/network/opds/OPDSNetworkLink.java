@@ -32,9 +32,10 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSNetworkLink extends AbstractNetworkLink {
-	private TreeMap<RelationAlias, String> myRelationAliases;
+	private TreeMap<RelationAlias,String> myRelationAliases;
 
 	private TreeMap<String,NetworkCatalogItem.Accessibility> myUrlConditions;
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();

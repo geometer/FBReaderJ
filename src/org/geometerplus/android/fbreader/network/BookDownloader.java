@@ -26,8 +26,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.content.Intent;
 
-import org.geometerplus.fbreader.network.BookUrlInfo;
-
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 public class BookDownloader extends Activity {
 

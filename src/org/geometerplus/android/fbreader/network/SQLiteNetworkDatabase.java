@@ -30,7 +30,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkDatabase;
-import org.geometerplus.fbreader.network.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 import org.geometerplus.android.util.SQLiteUtil;
 

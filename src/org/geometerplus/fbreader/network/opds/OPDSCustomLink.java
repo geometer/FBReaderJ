@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
-import org.geometerplus.fbreader.network.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private int myId;

@@ -19,9 +19,9 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.Map;
-
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class TopUpItem extends NetworkItem {
 	public TopUpItem(INetworkLink link, UrlInfoCollection urls) {
