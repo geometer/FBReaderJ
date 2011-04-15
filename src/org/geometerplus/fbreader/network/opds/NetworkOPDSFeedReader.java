@@ -239,7 +239,6 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 		}
 
 		final UrlInfoCollection urls = new UrlInfoCollection();
-		LinkedList<BookUrlInfo> references = new LinkedList<BookUrlInfo>();
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final String type = ZLNetworkUtil.filterMimeType(link.getType());
@@ -268,16 +267,16 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 					price = "";
 				}
 				if (MIME_TEXT_HTML.equals(type)) {
-					collectReferences(references, opdsLink, href,
+					collectReferences(urls, opdsLink, href,
 							UrlInfo.Type.BookBuyInBrowser, price, true);
 				} else {
-					collectReferences(references, opdsLink, href,
+					collectReferences(urls, opdsLink, href,
 							UrlInfo.Type.BookBuy, price, false);
 				}
 			} else if (referenceType != null) {
 				final int format = formatByMimeType(type);
 				if (format != BookUrlInfo.Format.NONE) {
-					references.add(new BookUrlInfo(referenceType, format, href));
+					urls.addInfo(new BookUrlInfo(referenceType, format, href));
 				}
 			}
 		}
@@ -343,27 +342,28 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			tags,
 			entry.SeriesTitle,
 			entry.SeriesIndex,
-			urls,
-			references
+			urls
 		);
 	}
 
-	private void collectReferences(LinkedList<BookUrlInfo> references,
-			OPDSLink opdsLink, String href, UrlInfo.Type type, String price, boolean addWithoutFormat) {
+	private void collectReferences(
+		UrlInfoCollection urls,
+		OPDSLink opdsLink,
+		String href,
+		UrlInfo.Type type,
+		String price,
+		boolean addWithoutFormat
+	) {
 		boolean added = false;
 		for (String mime: opdsLink.Formats) {
 			final int format = formatByMimeType(mime);
 			if (format != BookUrlInfo.Format.NONE) {
-				references.add(new BookBuyUrlInfo(
-					type, format, href, price
-				));
+				urls.addInfo(new BookBuyUrlInfo(type, format, href, price));
 				added = true;
 			}
 		}
 		if (!added && addWithoutFormat) {
-			references.add(new BookBuyUrlInfo(
-				type, BookUrlInfo.Format.NONE, href, price
-			));
+			urls.addInfo(new BookBuyUrlInfo(type, BookUrlInfo.Format.NONE, href, price));
 		}
 	}
 

@@ -24,9 +24,7 @@ import java.io.File;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-
 public final class NetworkBookItem extends NetworkItem {
-
 	public static class AuthorData implements Comparable<AuthorData> {
 		public final String DisplayName;
 		public final String SortKey;
@@ -77,8 +75,6 @@ public final class NetworkBookItem extends NetworkItem {
 	public final String SeriesTitle;
 	public final float IndexInSeries;
 
-	private final LinkedList<BookUrlInfo> myReferences;
-
 	/**
 	 * Creates new NetworkItem instance.
 	 *
@@ -99,8 +95,7 @@ public final class NetworkBookItem extends NetworkItem {
 	public NetworkBookItem(INetworkLink link, String id, int index,
 		String title, String summary, /*String language, String date,*/
 		List<AuthorData> authors, List<String> tags, String seriesTitle, float indexInSeries,
-		UrlInfoCollection urls,
-		List<BookUrlInfo> references) {
+		UrlInfoCollection urls) {
 		super(link, title, summary, urls);
 		Index = index;
 		Id = id;
@@ -110,15 +105,17 @@ public final class NetworkBookItem extends NetworkItem {
 		Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
-		myReferences = new LinkedList<BookUrlInfo>(references);
 	}
 
 	public BookUrlInfo reference(UrlInfo.Type type) {
 		BookUrlInfo reference = null;
-		for (BookUrlInfo ref: myReferences) {
-			if (ref.InfoType == type &&
-					(reference == null || ref.BookFormat > reference.BookFormat)) {
-				reference = ref;
+		for (UrlInfo r : getAllInfos(type)) {
+			if (!(r instanceof BookUrlInfo)) {
+				continue;
+			}
+			final BookUrlInfo br = (BookUrlInfo)r;
+			if (reference == null || br.BookFormat > reference.BookFormat) {
+				reference = br;
 			}
 		}
 
@@ -156,15 +153,19 @@ public final class NetworkBookItem extends NetworkItem {
 			this.reference(UrlInfo.Type.BookBuyInBrowser) != null;
 		BookUrlInfo reference = null;
 		String fileName = null;
-		for (BookUrlInfo ref: myReferences) {
-			final UrlInfo.Type type = ref.InfoType;
+		for (UrlInfo r : getAllInfos()) {
+			if (!(r instanceof BookUrlInfo)) {
+				continue;
+			}
+			final BookUrlInfo br = (BookUrlInfo)r;
+			final UrlInfo.Type type = br.InfoType;
 			if ((type == UrlInfo.Type.Book ||
-					type == UrlInfo.Type.BookConditional ||
-					(!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) &&
-					(reference == null || ref.BookFormat > reference.BookFormat)) {
-				String name = ref.localCopyFileName(UrlInfo.Type.Book);
+				 type == UrlInfo.Type.BookConditional ||
+				 (!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) &&
+				(reference == null || br.BookFormat > reference.BookFormat)) {
+				String name = br.localCopyFileName(UrlInfo.Type.Book);
 				if (name != null) {
-					reference = ref;
+					reference = br;
 					fileName = name;
 				}
 			}
@@ -176,12 +177,16 @@ public final class NetworkBookItem extends NetworkItem {
 		final boolean hasBuyReference =
 			this.reference(UrlInfo.Type.BookBuy) != null ||
 			this.reference(UrlInfo.Type.BookBuyInBrowser) != null;
-		for (BookUrlInfo ref: myReferences) {
-			final UrlInfo.Type type = ref.InfoType;
+		for (UrlInfo r : getAllInfos()) {
+			if (!(r instanceof BookUrlInfo)) {
+				continue;
+			}
+			final BookUrlInfo br = (BookUrlInfo)r;
+			final UrlInfo.Type type = br.InfoType;
 			if (type == UrlInfo.Type.Book ||
-					type == UrlInfo.Type.BookConditional ||
-					(!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) {
-				String fileName = ref.localCopyFileName(UrlInfo.Type.Book);
+				type == UrlInfo.Type.BookConditional ||
+				(!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) {
+				String fileName = br.localCopyFileName(UrlInfo.Type.Book);
 				if (fileName != null) {
 					// TODO: remove a book from the library
 					// TODO: remove a record from the database
@@ -190,5 +195,4 @@ public final class NetworkBookItem extends NetworkItem {
 			}
 		}
 	}
-
 }

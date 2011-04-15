@@ -47,6 +47,20 @@ public abstract class NetworkItem {
 		}
 	}
 
+	public List<UrlInfo> getAllInfos() {
+		if (myURLs == null) {
+			return Collections.emptyList();
+		}
+		return myURLs.getAllInfos();
+	}
+
+	public List<UrlInfo> getAllInfos(UrlInfo.Type type) {
+		if (myURLs == null) {
+			return Collections.emptyList();
+		}
+		return myURLs.getAllInfos(type);
+	}
+
 	public String getUrl(UrlInfo.Type type) {
 		if (myURLs == null) {
 			return null;

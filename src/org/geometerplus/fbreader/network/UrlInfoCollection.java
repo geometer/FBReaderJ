@@ -46,6 +46,10 @@ public class UrlInfoCollection<T extends UrlInfo> {
 		return null;
 	}
 
+	public List<T> getAllInfos() {
+		return Collections.unmodifiableList(myInfos);
+	}
+
 	public List<T> getAllInfos(UrlInfo.Type type) {
 		List<T> list = null;
 		for (T info : myInfos) {
