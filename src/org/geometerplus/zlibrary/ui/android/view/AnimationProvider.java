@@ -140,6 +140,10 @@ abstract class AnimationProvider {
 	}
 
 	public void startAutoScrolling(ZLView.PageIndex pageIndex, Integer x, Integer y, int speed) {
+		if (myMode.Auto) {
+			return;
+		}
+
 		terminate();
 		myMode = Mode.AutoScrollingForward;
 
