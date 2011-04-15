@@ -24,16 +24,10 @@ import java.net.URI;
 
 import org.geometerplus.fbreader.Paths;
 
-public class BookReference {
-	public static enum Type {
-		Book,
-		BookConditional,
-		BookDemo,
-		BookFullOrDemo,
-		BookBuy,
-		BookBuyInBrowser
-	}
-	// resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
+// resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
+
+public class BookUrlInfo extends UrlInfo {
+	private static final long serialVersionUID = -893514485257788221L;
 
 	public interface Format {
 		int NONE = 0;
@@ -42,19 +36,11 @@ public class BookReference {
 		int EPUB = 3;
 	}
 
-	public final String URL;
 	public final int BookFormat;
-	public final Type ReferenceType;
 
-	public BookReference(String url, int format, Type type) {
-		URL = url;
+	public BookUrlInfo(Type type, int format, String url) {
+		super(type, url);
 		BookFormat = format;
-		ReferenceType = type;
-	}
-
-	// returns clean URL without any account/user-specific parts
-	public String cleanURL() {
-		return URL;
 	}
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
@@ -152,8 +138,13 @@ public class BookReference {
 		return path.append(ext).toString();
 	}
 
+	// Url with no user-dependent info; is overridden in DecoratedBookUrlInfo
+	public String cleanUrl() {
+		return Url;
+	}
+
 	public final String makeBookFileName(Type resolvedReferenceType) {
-		return makeBookFileName(cleanURL(), BookFormat, resolvedReferenceType);
+		return makeBookFileName(cleanUrl(), BookFormat, resolvedReferenceType);
 	}
 
 	public final String localCopyFileName(Type resolvedReferenceType) {
@@ -165,6 +156,6 @@ public class BookReference {
 	}
 
 	public String toString() {
-		return "BookReference[type=" + ReferenceType + ";format=" + BookFormat + ";URL=" + URL + "]";
+		return "BookReference[type=" + InfoType + ";format=" + BookFormat + ";URL=" + Url + "]";
 	}
 }

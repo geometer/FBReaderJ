@@ -28,7 +28,13 @@ public class UrlInfo implements Serializable {
 		Catalog,
 		HtmlPage,
 		Image,
-		Thumbnail
+		Thumbnail,
+		Book,
+		BookConditional,
+		BookDemo,
+		BookFullOrDemo,
+		BookBuy,
+		BookBuyInBrowser
 	}
 
 	public final Type InfoType;

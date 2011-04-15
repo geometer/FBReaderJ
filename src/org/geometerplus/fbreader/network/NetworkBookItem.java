@@ -77,7 +77,7 @@ public final class NetworkBookItem extends NetworkItem {
 	public final String SeriesTitle;
 	public final float IndexInSeries;
 
-	private final LinkedList<BookReference> myReferences;
+	private final LinkedList<BookUrlInfo> myReferences;
 
 	/**
 	 * Creates new NetworkItem instance.
@@ -100,7 +100,7 @@ public final class NetworkBookItem extends NetworkItem {
 		String title, String summary, /*String language, String date,*/
 		List<AuthorData> authors, List<String> tags, String seriesTitle, float indexInSeries,
 		UrlInfoCollection urls,
-		List<BookReference> references) {
+		List<BookUrlInfo> references) {
 		super(link, title, summary, urls);
 		Index = index;
 		Id = id;
@@ -110,20 +110,20 @@ public final class NetworkBookItem extends NetworkItem {
 		Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
-		myReferences = new LinkedList<BookReference>(references);
+		myReferences = new LinkedList<BookUrlInfo>(references);
 	}
 
-	public BookReference reference(BookReference.Type type) {
-		BookReference reference = null;
-		for (BookReference ref: myReferences) {
-			if (ref.ReferenceType == type &&
+	public BookUrlInfo reference(UrlInfo.Type type) {
+		BookUrlInfo reference = null;
+		for (BookUrlInfo ref: myReferences) {
+			if (ref.InfoType == type &&
 					(reference == null || ref.BookFormat > reference.BookFormat)) {
 				reference = ref;
 			}
 		}
 
-		if (reference == null && type == BookReference.Type.Book) {
-			reference = this.reference(BookReference.Type.BookConditional);
+		if (reference == null && type == UrlInfo.Type.Book) {
+			reference = this.reference(UrlInfo.Type.BookConditional);
 			if (reference != null) {
 				NetworkAuthenticationManager authManager = Link.authenticationManager();
 				if (authManager == null || authManager.needPurchase(this)) {
@@ -134,17 +134,17 @@ public final class NetworkBookItem extends NetworkItem {
 		}
 
 		if (reference == null &&
-				type == BookReference.Type.Book &&
-				this.reference(BookReference.Type.BookBuy) == null &&
-				this.reference(BookReference.Type.BookBuyInBrowser) == null) {
-			reference = this.reference(BookReference.Type.BookFullOrDemo);
+				type == UrlInfo.Type.Book &&
+				this.reference(UrlInfo.Type.BookBuy) == null &&
+				this.reference(UrlInfo.Type.BookBuyInBrowser) == null) {
+			reference = this.reference(UrlInfo.Type.BookFullOrDemo);
 		}
 
 		if (reference == null &&
-				type == BookReference.Type.BookDemo &&
-				(this.reference(BookReference.Type.BookBuy) != null ||
-				 this.reference(BookReference.Type.BookBuyInBrowser) != null)) {
-			reference = this.reference(BookReference.Type.BookFullOrDemo);
+				type == UrlInfo.Type.BookDemo &&
+				(this.reference(UrlInfo.Type.BookBuy) != null ||
+				 this.reference(UrlInfo.Type.BookBuyInBrowser) != null)) {
+			reference = this.reference(UrlInfo.Type.BookFullOrDemo);
 		}
 
 		return reference;
@@ -152,17 +152,17 @@ public final class NetworkBookItem extends NetworkItem {
 
 	public String localCopyFileName() {
 		final boolean hasBuyReference =
-			this.reference(BookReference.Type.BookBuy) != null ||
-			this.reference(BookReference.Type.BookBuyInBrowser) != null;
-		BookReference reference = null;
+			this.reference(UrlInfo.Type.BookBuy) != null ||
+			this.reference(UrlInfo.Type.BookBuyInBrowser) != null;
+		BookUrlInfo reference = null;
 		String fileName = null;
-		for (BookReference ref: myReferences) {
-			final BookReference.Type type = ref.ReferenceType;
-			if ((type == BookReference.Type.Book ||
-					type == BookReference.Type.BookConditional ||
-					(!hasBuyReference && type == BookReference.Type.BookFullOrDemo)) &&
+		for (BookUrlInfo ref: myReferences) {
+			final UrlInfo.Type type = ref.InfoType;
+			if ((type == UrlInfo.Type.Book ||
+					type == UrlInfo.Type.BookConditional ||
+					(!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) &&
 					(reference == null || ref.BookFormat > reference.BookFormat)) {
-				String name = ref.localCopyFileName(BookReference.Type.Book);
+				String name = ref.localCopyFileName(UrlInfo.Type.Book);
 				if (name != null) {
 					reference = ref;
 					fileName = name;
@@ -174,14 +174,14 @@ public final class NetworkBookItem extends NetworkItem {
 
 	public void removeLocalFiles() {
 		final boolean hasBuyReference =
-			this.reference(BookReference.Type.BookBuy) != null ||
-			this.reference(BookReference.Type.BookBuyInBrowser) != null;
-		for (BookReference ref: myReferences) {
-			final BookReference.Type type = ref.ReferenceType;
-			if (type == BookReference.Type.Book ||
-					type == BookReference.Type.BookConditional ||
-					(!hasBuyReference && type == BookReference.Type.BookFullOrDemo)) {
-				String fileName = ref.localCopyFileName(BookReference.Type.Book);
+			this.reference(UrlInfo.Type.BookBuy) != null ||
+			this.reference(UrlInfo.Type.BookBuyInBrowser) != null;
+		for (BookUrlInfo ref: myReferences) {
+			final UrlInfo.Type type = ref.InfoType;
+			if (type == UrlInfo.Type.Book ||
+					type == UrlInfo.Type.BookConditional ||
+					(!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) {
+				String fileName = ref.localCopyFileName(UrlInfo.Type.Book);
 				if (fileName != null) {
 					// TODO: remove a book from the library
 					// TODO: remove a record from the database

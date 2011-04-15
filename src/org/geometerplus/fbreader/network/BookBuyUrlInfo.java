@@ -19,17 +19,28 @@
 
 package org.geometerplus.fbreader.network;
 
+public class BookBuyUrlInfo extends BookUrlInfo {
+	public final String Price;
 
-public class DecoratedBookReference extends BookReference {
-
-	private final String myCleanURL;
-
-	public DecoratedBookReference(BookReference base, String url) {
-		super(url, base.BookFormat, base.ReferenceType);
-		myCleanURL = base.cleanURL();
+	public BookBuyUrlInfo(Type type, int format, String url, String price) {
+		super(type, format, url);
+		Price = price;
 	}
 
-	public String cleanURL() {
-		return myCleanURL;
+	public static String price(String price, String currency) {
+		if (price == null || currency == null) {
+			return price;
+		} else if (currency.equals("RUB")) {
+			return price + " \u0440.";
+		} else if (currency.equals("USD")) {
+			return "$" + price;
+		} else if (currency.equals("GBP")) {
+			return "\u00A3" + price;
+		} else if (currency.equals("EUR")) {
+			return "\u20AC" + price;
+		} else if (currency.equals("JPY")) {
+			return "\u00A5" + price;
+		}
+		return currency + " " + price;
 	}
 }

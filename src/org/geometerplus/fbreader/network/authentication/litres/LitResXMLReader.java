@@ -51,7 +51,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private LinkedList<NetworkBookItem.AuthorData> myAuthors = new LinkedList<NetworkBookItem.AuthorData>();
 
 	private LinkedList<String> myTags = new LinkedList<String>();
-	private LinkedList<BookReference> myReferences = new LinkedList<BookReference>();
+	private LinkedList<BookUrlInfo> myReferences = new LinkedList<BookUrlInfo>();
 
 	public LitResXMLReader(INetworkLink link, List<NetworkItem> books) {
 		super(link.getSiteName());
@@ -122,10 +122,10 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 					UrlInfo.Type.Image, attributes.getValue("cover_preview")
 				));
 
-				myReferences.add(new BookReference(
-					"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
-					BookReference.Format.FB2_ZIP,
-					BookReference.Type.BookConditional
+				myReferences.add(new BookUrlInfo(
+					UrlInfo.Type.BookConditional,
+					BookUrlInfo.Format.FB2_ZIP,
+					"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId
 				));
 				myState = BOOK;
 			}

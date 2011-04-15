@@ -62,7 +62,7 @@ public abstract class NetworkAuthenticationManager {
 	public abstract boolean isAuthorised(boolean useNetwork /* = true */) throws ZLNetworkException;
 	public abstract void authorise(String password) throws ZLNetworkException;
 	public abstract void logOut();
-	public abstract BookReference downloadReference(NetworkBookItem book);
+	public abstract BookUrlInfo downloadReference(NetworkBookItem book);
 
 	public final boolean mayBeAuthorised(boolean useNetwork) {
 		try {
