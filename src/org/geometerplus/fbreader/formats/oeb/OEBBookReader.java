@@ -177,7 +177,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap xmlattributes) {
 		tag = tag.toLowerCase();
-		if ((myOPFSchemePrefix != null) && tag.startsWith(myOPFSchemePrefix)) {
+		if (myOPFSchemePrefix != null && tag.startsWith(myOPFSchemePrefix)) {
 			tag = tag.substring(myOPFSchemePrefix.length());
 		}
 		tag = tag.intern();
@@ -190,14 +190,14 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 			myState = READ_GUIDE;
 		} else if (TOUR == tag) {
 			myState = READ_TOUR;
-		} else if ((myState == READ_MANIFEST) && (ITEM == tag)) {
+		} else if (myState == READ_MANIFEST && ITEM == tag) {
 			final String id = xmlattributes.getValue("id");
 			String href = xmlattributes.getValue("href");
 			if ((id != null) && (href != null)) {
 				href = MiscUtil.decodeHtmlReference(href);
 				myIdToHref.put(id, href);
 			}
-		} else if ((myState == READ_SPINE) && (ITEMREF == tag)) {
+		} else if (myState == READ_SPINE && ITEMREF == tag) {
 			final String id = xmlattributes.getValue("idref");
 			if (id != null) {
 				final String fileName = myIdToHref.get(id);
@@ -205,7 +205,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 					myHtmlFileNames.add(fileName);
 				}
 			}
-		} else if ((myState == READ_GUIDE) && (REFERENCE == tag)) {
+		} else if (myState == READ_GUIDE && REFERENCE == tag) {
 			final String type = xmlattributes.getValue("type");
 			final String title = xmlattributes.getValue("title");
 			String href = xmlattributes.getValue("href");
@@ -214,7 +214,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 				if (title != null) {
 					myGuideTOC.add(new Reference(title, href));
 				}
-				if ((type != null) && (COVER_IMAGE.equals(type))) {
+				if (type != null && COVER_IMAGE.equals(type)) {
 					myModelReader.setMainTextModel();
 					final ZLFile imageFile = ZLFile.createFileByPath(myFilePrefix + href);
 					final String imageName = imageFile.getLongName();
@@ -222,7 +222,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 					myModelReader.addImage(imageName, new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, imageFile));
 				}
 			}
-		} else if ((myState == READ_TOUR) && (SITE == tag)) {
+		} else if (myState == READ_TOUR && SITE == tag) {
 			final String title = xmlattributes.getValue("title");
 			String href = xmlattributes.getValue("href");
 			if ((title != null) && (href != null)) {
@@ -236,11 +236,11 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	@Override
 	public boolean endElementHandler(String tag) {
 		tag = tag.toLowerCase();
-		if ((myOPFSchemePrefix != null) && tag.startsWith(myOPFSchemePrefix)) {
+		if (myOPFSchemePrefix != null && tag.startsWith(myOPFSchemePrefix)) {
 			tag = tag.substring(myOPFSchemePrefix.length());
 		}
 		tag = tag.intern();
-		if ((MANIFEST == tag) || (SPINE == tag) || (GUIDE == tag) || (TOUR == tag)) {
+		if (MANIFEST == tag || SPINE == tag || GUIDE == tag || TOUR == tag) {
 			myState = READ_NONE;
 		}
 		return false;

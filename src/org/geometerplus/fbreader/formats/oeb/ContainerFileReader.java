@@ -17,31 +17,25 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.application;
+package org.geometerplus.fbreader.formats.oeb;
 
-import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.core.view.ZLViewWidget;
+import org.geometerplus.zlibrary.core.xml.*;
 
-abstract public class ZLApplicationWindow {
-	private ZLApplication myApplication;
+class ContainerFileReader extends ZLXMLReaderAdapter {
+	private String myRootPath;
 
-	protected ZLApplicationWindow(ZLApplication application) {
-		myApplication = application;
-		myApplication.setWindow(this);
+	public String getRootPath() {
+		return myRootPath;
 	}
 
-	public ZLApplication getApplication() {
-		return myApplication;
+	@Override
+	public boolean startElementHandler(String tag, ZLStringMap xmlattributes) {
+		if ("rootfile".equalsIgnoreCase(tag)) {
+			myRootPath = xmlattributes.getValue("full-path");
+			if (myRootPath != null) {
+				return true;
+			}
+		}
+		return false;
 	}
-
-	abstract protected void refreshMenu();
-	
-	abstract protected ZLViewWidget getViewWidget();
-
-	abstract protected void rotate();
-	abstract protected boolean canRotate();
-
-	abstract protected void close();
-
-	abstract protected int getBatteryLevel();
 }

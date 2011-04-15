@@ -34,29 +34,14 @@ class TurnPageAction extends FBAction {
 
 		final ScrollingPreferences.FingerScrolling fingerScrolling =
 			preferences.FingerScrollingOption.getValue();
-		if (fingerScrolling != ScrollingPreferences.FingerScrolling.byTap &&
-			fingerScrolling != ScrollingPreferences.FingerScrolling.byTapAndFlick) {
-			return false;
-		}
-
-		if (myForward) {
-			ZLTextWordCursor cursor = Reader.getTextView().getEndCursor();
-			return
-				cursor != null &&
-				!cursor.isNull() &&
-				(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
-		} else {
-			ZLTextWordCursor cursor = Reader.getTextView().getStartCursor();
-			return
-				cursor != null &&
-				!cursor.isNull() &&
-				(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
-		}
+		return
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTap ||
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
 	}
 
 	public void run() {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		Reader.getTextView().startAutoScrolling(
+		Reader.getViewWidget().startAutoScrolling(
 			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 			preferences.HorizontalOption.getValue()
 				? FBView.Direction.rightToLeft : FBView.Direction.up,
@@ -66,11 +51,11 @@ class TurnPageAction extends FBAction {
 
 	public void runWithCoordinates(int x, int y) {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		Reader.getTextView().startAutoScrolling(
+		Reader.getViewWidget().startAutoScrolling(
 			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+			x, y,
 			preferences.HorizontalOption.getValue()
 				? FBView.Direction.rightToLeft : FBView.Direction.up,
-			x, y,
 			preferences.AnimationSpeedOption.getValue()
 		);
 	}

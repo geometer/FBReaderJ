@@ -41,7 +41,6 @@ final class InputStreamImageData extends ZLAndroidImageData {
 
 		final Bitmap bmp = BitmapFactory.decodeStream(stream, new Rect(), options);
 		try {
-			System.err.println(stream);
 			stream.close();
 		} catch (IOException e) {
 		}
