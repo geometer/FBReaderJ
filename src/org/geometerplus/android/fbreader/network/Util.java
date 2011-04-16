@@ -54,7 +54,7 @@ abstract class Util implements UserRegistrationConstants {
 		return testService(
 			activity,
 			REGISTRATION_ACTION,
-			link.getUrlInfo(UrlInfo.Type.SignUp).URL
+			link.getUrl(UrlInfo.Type.SignUp)
 		);
 	}
 
@@ -62,12 +62,12 @@ abstract class Util implements UserRegistrationConstants {
 		try {
 			final Intent intent = new Intent(
 				REGISTRATION_ACTION,
-				Uri.parse(link.getUrlInfo(UrlInfo.Type.SignUp).URL)
+				Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
 			);
 			if (PackageUtil.canBeStarted(activity, intent, true)) {
 				activity.startActivityForResult(new Intent(
 					REGISTRATION_ACTION,
-					Uri.parse(link.getUrlInfo(UrlInfo.Type.SignUp).URL)
+					Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
 				), USER_REGISTRATION_REQUEST_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
@@ -100,7 +100,7 @@ abstract class Util implements UserRegistrationConstants {
 		return testService(
 			activity,
 			action,
-			link.getUrlInfo(UrlInfo.Type.Catalog).URL
+			link.getUrl(UrlInfo.Type.Catalog)
 		);
 	}
 
@@ -108,7 +108,7 @@ abstract class Util implements UserRegistrationConstants {
 		try {
 			final Intent intent = new Intent(
 				action,
-				Uri.parse(link.getUrlInfo(UrlInfo.Type.Catalog).URL)
+				Uri.parse(link.getUrl(UrlInfo.Type.Catalog))
 			);
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			if (mgr != null) {
@@ -124,7 +124,7 @@ abstract class Util implements UserRegistrationConstants {
 	}
 
 	static boolean isBrowserTopupSupported(Activity activity, INetworkLink link) {
-		return link.getUrlInfo(UrlInfo.Type.TopUp).URL != null;
+		return link.getUrl(UrlInfo.Type.TopUp) != null;
 	}
 
 	static void openInBrowser(Context context, String url) {

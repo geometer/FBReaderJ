@@ -90,7 +90,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			sid = mySidOption.getValue();
 		}
 
-		String url = Link.getUrlInfo(UrlInfo.Type.SignIn).URL;
+		String url = Link.getUrl(UrlInfo.Type.SignIn);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -120,7 +120,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void authorise(String password) throws ZLNetworkException {
-		String url = Link.getUrlInfo(UrlInfo.Type.SignIn).URL;
+		String url = Link.getUrl(UrlInfo.Type.SignIn);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -240,7 +240,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		final String url = Link.getUrlInfo(UrlInfo.Type.TopUp).URL;
+		final String url = Link.getUrl(UrlInfo.Type.TopUp);
 		if (url == null) {
 			return null;
 		}
@@ -400,7 +400,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void recoverPassword(String email) throws ZLNetworkException {
-		String url = Link.getUrlInfo(UrlInfo.Type.RecoverPassword).URL;
+		String url = Link.getUrl(UrlInfo.Type.RecoverPassword);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}

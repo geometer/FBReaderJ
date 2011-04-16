@@ -32,6 +32,7 @@ public interface INetworkLink {
 	String getTitle();
 	String getSummary();
 
+	String getUrl(UrlInfo.Type type);
 	UrlInfoWithDate getUrlInfo(UrlInfo.Type type);
 	Set<UrlInfo.Type> getUrlKeys();
 

@@ -45,7 +45,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	private final boolean myHasStableIdentifiers;
 
 	OPDSNetworkLink(String siteName, String title, String summary, String language,
-			Map<UrlInfo.Type,UrlInfoWithDate> infos, boolean hasStableIdentifiers) {
+			UrlInfoCollection<UrlInfoWithDate> infos, boolean hasStableIdentifiers) {
 		super(siteName, title, summary, language, infos);
 		myHasStableIdentifiers = hasStableIdentifiers;
 	}
@@ -118,7 +118,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
-		final String url = getUrlInfo(UrlInfo.Type.Search).URL;
+		final String url = getUrl(UrlInfo.Type.Search);
 		if (url == null) {
 			return null;
 		}
@@ -135,8 +135,9 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 
 	public NetworkCatalogItem libraryItem() {
 		final UrlInfoCollection urlMap = new UrlInfoCollection();
-		urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, getUrlInfo(UrlInfo.Type.Catalog).URL));
-		urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, getUrlInfo(UrlInfo.Type.Image).URL));
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Thumbnail));
 		return new OPDSCatalogItem(this, getTitle(), getSummary(), urlMap, myExtraData);
 	}
 
@@ -192,27 +193,5 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 			+ "; urlConditions=" + myUrlConditions
 			+ "; rewritingRules=" + myUrlRewritingRules
 			+ "}";
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof OPDSNetworkLink)) {
-			return false;
-		}
-		if (!super.equals(o)) {
-			return false;
-		}
-		final OPDSNetworkLink lnk = (OPDSNetworkLink) o;
-		if (myHasStableIdentifiers != lnk.myHasStableIdentifiers
-				|| !ZLMiscUtil.mapsEquals(myRelationAliases, lnk.myRelationAliases)
-				|| !ZLMiscUtil.mapsEquals(myUrlConditions, lnk.myUrlConditions)
-				|| !ZLMiscUtil.listsEquals(myUrlRewritingRules, lnk.myUrlRewritingRules)
-				|| myAuthenticationManager != lnk.myAuthenticationManager) {
-			return false;
-		}
-		return true;
 	}
 }

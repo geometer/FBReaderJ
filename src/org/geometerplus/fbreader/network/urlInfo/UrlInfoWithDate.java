@@ -24,21 +24,20 @@ import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
-public final class UrlInfoWithDate implements Serializable {
-	private static final long serialVersionUID = -893514485257787222L;
+public final class UrlInfoWithDate extends UrlInfo {
+	private static final long serialVersionUID = -896768978957787222L;
 
 	public static final UrlInfoWithDate NULL = new UrlInfoWithDate(null, null);
 
-	public final String URL;
 	public final Date Updated;
 
-	public UrlInfoWithDate(String url, Date updated) {
-		URL = url;
+	public UrlInfoWithDate(Type type, String url, Date updated) {
+		super(type, url);
 		Updated = updated;
 	}
 
-	public UrlInfoWithDate(String url) {
-		this(url, new Date());
+	public UrlInfoWithDate(Type type, String url) {
+		this(type, url, new Date());
 	}
 
 	@Override
@@ -51,11 +50,14 @@ public final class UrlInfoWithDate implements Serializable {
 		}
 
 		final UrlInfoWithDate info = (UrlInfoWithDate)o;
-		return ZLMiscUtil.equals(URL, info.URL) && ZLMiscUtil.equals(Updated, info.Updated);
+		return
+			InfoType == info.InfoType &&
+			ZLMiscUtil.equals(Url, info.Url) &&
+			ZLMiscUtil.equals(Updated, info.Updated);
 	}
 
 	@Override
 	public int hashCode() {
-		return ZLMiscUtil.hashCode(URL) + ZLMiscUtil.hashCode(Updated);
+		return InfoType.hashCode() + ZLMiscUtil.hashCode(Url) + ZLMiscUtil.hashCode(Updated);
 	}
 }

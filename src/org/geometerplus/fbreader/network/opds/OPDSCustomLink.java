@@ -31,8 +31,7 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private int myId;
@@ -46,7 +45,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 		return siteName;
 	}
 
-	public OPDSCustomLink(int id, String siteName, String title, String summary, Map<UrlInfo.Type,UrlInfoWithDate> infos) {
+	public OPDSCustomLink(int id, String siteName, String title, String summary, UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(removeWWWPrefix(siteName), title, summary, null, infos, false);
 		myId = id;
 	}
@@ -83,13 +82,13 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 	}
 
 	public final void setUrl(UrlInfo.Type type, String url) {
-		myInfos.put(type, new UrlInfoWithDate(url, new Date()));
+		myInfos.addInfo(new UrlInfoWithDate(type, url));
 		myHasChanges = true;
 	}
 
 	public final void removeUrl(UrlInfo.Type type) {
-		final UrlInfoWithDate oldUrl = myInfos.remove(type);
-		myHasChanges = myHasChanges || oldUrl != null;
+		myHasChanges = myHasChanges || myInfos.getInfo(type) != null;
+		myInfos.removeAllInfos(type);
 	}
 
 	public boolean isObsolete(long milliSeconds) {
@@ -114,7 +113,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 
 		ZLNetworkException error = null;
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrlInfo(UrlInfo.Type.Catalog).URL) {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog)) {
 				@Override
 				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 					final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);

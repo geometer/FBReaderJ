@@ -32,8 +32,7 @@ import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeTypes {
 	private static class LinkReader implements OPDSFeedReader {
@@ -98,7 +97,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			final String summary = entry.Content;
 			final String language = entry.DCLanguage;
 
-			final HashMap<UrlInfo.Type,UrlInfoWithDate> infos = new HashMap<UrlInfo.Type,UrlInfoWithDate>();
+			final UrlInfoCollection<UrlInfoWithDate> infos =
+				new UrlInfoCollection<UrlInfoWithDate>();
 			final HashMap<String,NetworkCatalogItem.Accessibility> urlConditions =
 				new HashMap<String,NetworkCatalogItem.Accessibility>();
 			for (ATOMLink link: entry.Links) {
@@ -107,34 +107,34 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				final String rel = link.getRel();
 				if (rel == REL_IMAGE_THUMBNAIL || rel == REL_THUMBNAIL) {
 					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
-						infos.put(UrlInfo.Type.Thumbnail, new UrlInfoWithDate(href));
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Thumbnail, href));
 					}
 				} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || rel == REL_COVER) {
 					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
-						infos.put(UrlInfo.Type.Image, new UrlInfoWithDate(href));
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Image, href));
 					}
 				} else if (rel == null) {
 					if (type == MIME_APP_ATOM) {
-						infos.put(UrlInfo.Type.Catalog, new UrlInfoWithDate(href));
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href));
 					}
 				} else if (rel == "search") {
 					if (type == MIME_APP_ATOM) {
 						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href);
 						if (descr.isValid()) {
 							// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
-							infos.put(UrlInfo.Type.Search, new UrlInfoWithDate(descr.makeQuery("%s")));
+							infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Search, descr.makeQuery("%s")));
 						}
 					}
 				} else if (rel == REL_LINK_SIGN_IN) {
-					infos.put(UrlInfo.Type.SignIn, new UrlInfoWithDate(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignIn, href));
 				} else if (rel == REL_LINK_SIGN_OUT) {
-					infos.put(UrlInfo.Type.SignOut, new UrlInfoWithDate(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignOut, href));
 				} else if (rel == REL_LINK_SIGN_UP) {
-					infos.put(UrlInfo.Type.SignUp, new UrlInfoWithDate(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignUp, href));
 				} else if (rel == REL_LINK_TOPUP) {
-					infos.put(UrlInfo.Type.TopUp, new UrlInfoWithDate(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.TopUp, href));
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
-					infos.put(UrlInfo.Type.RecoverPassword, new UrlInfoWithDate(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.RecoverPassword, href));
 				} else if (rel == REL_CONDITION_NEVER) {
 					urlConditions.put(href, NetworkCatalogItem.Accessibility.NEVER);
 				} else if (rel == REL_CONDITION_SIGNED_IN) {
@@ -164,11 +164,11 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			String title,
 			String summary,
 			String language,
-			Map<UrlInfo.Type,UrlInfoWithDate> infos,
+			UrlInfoCollection<UrlInfoWithDate> infos,
 			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
 			String sslCertificate
 		) {
-			if (siteName == null || title == null || infos.get(UrlInfo.Type.Catalog) == null) {
+			if (siteName == null || title == null || infos.getInfo(UrlInfo.Type.Catalog) == null) {
 				return null;
 			}
 

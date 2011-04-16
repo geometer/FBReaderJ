@@ -33,8 +33,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;
@@ -181,10 +180,10 @@ public class NetworkLibrary {
 			db.loadCustomLinks(
 				new NetworkDatabase.ICustomLinksHandler() {
 					public void handleCustomLinkData(int id, String siteName,
-							String title, String summary, Map<UrlInfo.Type,UrlInfoWithDate> infos) {
+							String title, String summary, UrlInfoCollection<UrlInfoWithDate> infos) {
 						if (title != null &&
 							siteName != null &&
-							infos.get(UrlInfo.Type.Catalog) != null) {
+							infos.getInfo(UrlInfo.Type.Catalog) != null) {
 							final ICustomNetworkLink link = new OPDSCustomLink(
 								id, siteName, title, summary, infos
 							);

@@ -30,8 +30,7 @@ import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkDatabase;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.android.util.SQLiteUtil;
 
@@ -78,7 +77,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	@Override
 	protected void loadCustomLinks(ICustomLinksHandler handler) {
 		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary FROM Links", null);
-		final HashMap<UrlInfo.Type,UrlInfoWithDate> linksMap = new HashMap<UrlInfo.Type,UrlInfoWithDate>();
+		final UrlInfoCollection<UrlInfoWithDate> linksMap = new UrlInfoCollection<UrlInfoWithDate>();
 		while (cursor.moveToNext()) {
 			final int id = cursor.getInt(0);
 			final String title = cursor.getString(1);
@@ -88,9 +87,9 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			linksMap.clear();
 			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE link_id = " + id, null);
 			while (linksCursor.moveToNext()) {
-				linksMap.put(
-					UrlInfo.Type.fromFixedName(linksCursor.getString(0)),
+				linksMap.addInfo(
 					new UrlInfoWithDate(
+						UrlInfo.Type.fromFixedName(linksCursor.getString(0)),
 						linksCursor.getString(1),
 						SQLiteUtil.getDate(linksCursor, 2)
 					)
@@ -135,7 +134,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				SQLiteUtil.bindString(statement, 3, link.getSummary());
 
 				final long id;
-				final HashMap<UrlInfo.Type,UrlInfoWithDate> linksMap = new HashMap<UrlInfo.Type,UrlInfoWithDate>();
+				final UrlInfoCollection<UrlInfoWithDate> linksMap =
+					new UrlInfoCollection<UrlInfoWithDate>();
 
 				if (statement == myInsertCustomLinkStatement) {
 					id = statement.executeInsert();
@@ -147,9 +147,9 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					
 					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE link_id = " + link.getId(), null);
 					while (linksCursor.moveToNext()) {
-						linksMap.put(
-							UrlInfo.Type.fromFixedName(linksCursor.getString(0)),
+						linksMap.addInfo(
 							new UrlInfoWithDate(
+								UrlInfo.Type.fromFixedName(linksCursor.getString(0)),
 								linksCursor.getString(1),
 								SQLiteUtil.getDate(linksCursor, 2)
 							)
@@ -160,7 +160,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 				for (UrlInfo.Type key : link.getUrlKeys()) {
 					final UrlInfoWithDate info = link.getUrlInfo(key);
-					final UrlInfoWithDate dbInfo = linksMap.remove(key);
+					final UrlInfoWithDate dbInfo = linksMap.getInfo(key);
+					linksMap.removeAllInfos(key);
 					final SQLiteStatement urlStatement;
 					if (dbInfo == null) {
 						if (myInsertCustomLinkUrlStatement == null) {
@@ -177,19 +178,19 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					} else {
 						continue;
 					}
-					SQLiteUtil.bindString(urlStatement, 1, info.URL);
+					SQLiteUtil.bindString(urlStatement, 1, info.Url);
 					SQLiteUtil.bindDate(urlStatement, 2, info.Updated);
 					urlStatement.bindLong(3, id);
 					urlStatement.bindString(4, key.getFixedName());
 					urlStatement.execute();
 				}
-				for (UrlInfo.Type key: linksMap.keySet()) {
+				for (UrlInfo info : linksMap.getAllInfos()) {
 					if (myDeleteCustomLinkUrlStatement == null) {
 						myDeleteCustomLinkUrlStatement = myDatabase.compileStatement(
 								"DELETE FROM LinkUrls WHERE link_id = ? AND key = ?");
 					}
 					myDeleteCustomLinkUrlStatement.bindLong(1, id);
-					myDeleteCustomLinkUrlStatement.bindString(2, key.getFixedName());
+					myDeleteCustomLinkUrlStatement.bindString(2, info.InfoType.getFixedName());
 					myDeleteCustomLinkUrlStatement.execute();
 				}
 			}
