@@ -25,11 +25,14 @@ public class UrlInfo implements Serializable {
 	private static final long serialVersionUID = -893514485257788222L;
 
 	public static enum Type {
-		Catalog("main"),
+		// Never rename elements of this enum; these names are used in network database
+		Catalog,
 		HtmlPage,
-		Image("icon"),
+		SingleEntry,
+		Related,
+		Image,
 		Thumbnail,
-		Search("search"),
+		Search,
 		SignIn,
 		SignOut,
 		SignUp,
@@ -40,30 +43,7 @@ public class UrlInfo implements Serializable {
 		BookDemo,
 		BookFullOrDemo,
 		BookBuy,
-		BookBuyInBrowser;
-
-		public static Type fromFixedName(String fixedName) {
-			for (Type t : values()) {
-				if (t.getFixedName().equals(fixedName)) {
-					return t;
-				}
-			}
-			return null;
-		}
-
-		private final String myFixedName;
-
-		Type(String fixedName) {
-			myFixedName = fixedName;
-		}
-
-		Type() {
-			myFixedName = null;
-		}
-
-		public String getFixedName() {
-			return myFixedName != null ? myFixedName : toString();
-		}
+		BookBuyInBrowser
 	}
 
 	public final Type InfoType;

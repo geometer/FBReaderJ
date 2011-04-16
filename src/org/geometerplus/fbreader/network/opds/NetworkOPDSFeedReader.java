@@ -253,6 +253,8 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
 					urls.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
+			} else if (MIME_APP_ATOM_ENTRY.equals(type)) {
+				urls.addInfo(new UrlInfo(UrlInfo.Type.SingleEntry, href));
 			} else if (UrlInfo.Type.BookBuy == referenceType) {
 				final OPDSLink opdsLink = (OPDSLink)link; 
 				String price = null;
@@ -382,9 +384,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
 				if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href));
-				}
-			} else if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
-				if (REL_COVER.equals(rel) || (rel != null && rel.startsWith(REL_IMAGE_PREFIX))) {
+				} else if (REL_COVER.equals(rel) || (rel != null && rel.startsWith(REL_IMAGE_PREFIX))) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
 			} else if (MIME_APP_ATOM.equals(type)) {

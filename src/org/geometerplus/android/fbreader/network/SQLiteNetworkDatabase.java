@@ -44,7 +44,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentCodeVersion = 3;
+		final int currentCodeVersion = 4;
 		if (version >= currentCodeVersion) {
 			return;
 		}
@@ -56,6 +56,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				updateTables1();
 			case 2:
 				updateTables2();
+			case 3:
+				updateTables3();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();
@@ -87,13 +89,16 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			linksMap.clear();
 			final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE link_id = " + id, null);
 			while (linksCursor.moveToNext()) {
-				linksMap.addInfo(
-					new UrlInfoWithDate(
-						UrlInfo.Type.fromFixedName(linksCursor.getString(0)),
-						linksCursor.getString(1),
-						SQLiteUtil.getDate(linksCursor, 2)
-					)
-				);
+				try {
+					linksMap.addInfo(
+						new UrlInfoWithDate(
+							UrlInfo.Type.valueOf(linksCursor.getString(0)),
+							linksCursor.getString(1),
+							SQLiteUtil.getDate(linksCursor, 2)
+						)
+					);
+				} catch (IllegalArgumentException e) {
+				}
 			}
 			linksCursor.close();
 
@@ -147,13 +152,16 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					
 					final Cursor linksCursor = myDatabase.rawQuery("SELECT key,url,update_time FROM LinkUrls WHERE link_id = " + link.getId(), null);
 					while (linksCursor.moveToNext()) {
-						linksMap.addInfo(
-							new UrlInfoWithDate(
-								UrlInfo.Type.fromFixedName(linksCursor.getString(0)),
-								linksCursor.getString(1),
-								SQLiteUtil.getDate(linksCursor, 2)
-							)
-						);
+						try {
+							linksMap.addInfo(
+								new UrlInfoWithDate(
+									UrlInfo.Type.valueOf(linksCursor.getString(0)),
+									linksCursor.getString(1),
+									SQLiteUtil.getDate(linksCursor, 2)
+								)
+							);
+						} catch (IllegalArgumentException e) {
+						}
 					}
 					linksCursor.close();
 				}
@@ -181,7 +189,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					SQLiteUtil.bindString(urlStatement, 1, info.Url);
 					SQLiteUtil.bindDate(urlStatement, 2, info.Updated);
 					urlStatement.bindLong(3, id);
-					urlStatement.bindString(4, key.getFixedName());
+					urlStatement.bindString(4, key.toString());
 					urlStatement.execute();
 				}
 				for (UrlInfo info : linksMap.getAllInfos()) {
@@ -190,7 +198,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 								"DELETE FROM LinkUrls WHERE link_id = ? AND key = ?");
 					}
 					myDeleteCustomLinkUrlStatement.bindLong(1, id);
-					myDeleteCustomLinkUrlStatement.bindString(2, info.InfoType.getFixedName());
+					myDeleteCustomLinkUrlStatement.bindString(2, info.InfoType.toString());
 					myDeleteCustomLinkUrlStatement.execute();
 				}
 			}
@@ -283,5 +291,11 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		}
 		cursor.close();
 		myDatabase.execSQL("DROP TABLE CustomLinks");
+	}
+
+	private void updateTables3() {
+		myDatabase.execSQL("UPDATE LinkUrls SET key='Catalog' WHERE key='main'");
+		myDatabase.execSQL("UPDATE LinkUrls SET key='Search' WHERE key='search'");
+		myDatabase.execSQL("UPDATE LinkUrls SET key='Image' WHERE key='icon'");
 	}
 }
