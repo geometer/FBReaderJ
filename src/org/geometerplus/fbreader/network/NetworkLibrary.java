@@ -89,8 +89,10 @@ public class NetworkLibrary {
 
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
-		for (INetworkLink link : myLinks) {
-			languageSet.add(link.getLanguage());
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				languageSet.add(link.getLanguage());
+			}
 		}
 		return new ArrayList<String>(languageSet);
 	}
@@ -245,7 +247,11 @@ public class NetworkLibrary {
 					}
 				}
 			}
-			for (INetworkLink link : myLinks) {
+			final List<INetworkLink> linksCopy;
+			synchronized (myLinks) {
+				linksCopy = new ArrayList<INetworkLink>(myLinks);
+			}
+			for (INetworkLink link : linksCopy) {
 				if (link instanceof ICustomNetworkLink) {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
@@ -483,12 +489,14 @@ public class NetworkLibrary {
 		if (id == ICustomNetworkLink.INVALID_ID) {
 			addLinkInternal(link);
 		} else {
-			for (int i = myLinks.size() - 1; i >= 0; --i) {
-				final INetworkLink l = myLinks.get(i);
-				if (l instanceof ICustomNetworkLink &&
-					((ICustomNetworkLink)l).getId() == id) {
-					myLinks.set(i, link);
-					break;
+			synchronized (myLinks) {
+				for (int i = myLinks.size() - 1; i >= 0; --i) {
+					final INetworkLink l = myLinks.get(i);
+					if (l instanceof ICustomNetworkLink &&
+						((ICustomNetworkLink)l).getId() == id) {
+						myLinks.set(i, link);
+						break;
+					}
 				}
 			}
 		}
