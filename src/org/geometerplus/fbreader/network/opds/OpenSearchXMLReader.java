@@ -113,7 +113,7 @@ class OpenSearchXMLReader extends ZLXMLReaderAdapter {
 					final OpenSearchDescription descr =
 						new OpenSearchDescription(template, indexOffset, pageOffset);
 					if (descr.isValid()) {
-						myDescriptions.add(descr);
+						myDescriptions.add(0, descr);
 					}
 				}
 			}
