@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.network;
 import java.io.*;
 import javax.net.ssl.*;
 import java.security.GeneralSecurityException;
+import java.security.PublicKey;
 import java.security.cert.*;
 
 
@@ -40,20 +41,26 @@ class ZLX509TrustManager implements X509TrustManager {
 	}
 
 	public X509Certificate[] getAcceptedIssuers() {
-	    return null;
+		return null;
 	}
 
 	public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {
 	}
 
 	public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
-		for (X509Certificate certificate : certs) {
-			certificate.checkValidity();
-			try {
-				certificate.verify(myCertificate.getPublicKey());
-			} catch (GeneralSecurityException e) {
-				throw new CertificateException(e);
-			}
+		final int lastCertificate = certs.length - 1;
+		for (int i = 0; i < lastCertificate; ++i) {
+			checkCertificate(certs[i], certs[i + 1].getPublicKey());
+		}
+		checkCertificate(certs[lastCertificate], myCertificate.getPublicKey());
+	}
+
+	private void checkCertificate(X509Certificate certificate, PublicKey publicKey) throws CertificateException {
+		certificate.checkValidity();
+		try {
+			certificate.verify(publicKey);
+		} catch (GeneralSecurityException e) {
+			throw new CertificateException(e);
 		}
 	}
 }
