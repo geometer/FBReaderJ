@@ -82,6 +82,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 	}
 
 	public final void setUrl(UrlInfo.Type type, String url) {
+		myInfos.removeAllInfos(type);
 		myInfos.addInfo(new UrlInfoWithDate(type, url));
 		myHasChanges = true;
 	}
