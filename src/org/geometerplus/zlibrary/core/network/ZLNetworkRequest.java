@@ -28,8 +28,6 @@ public abstract class ZLNetworkRequest {
 	public final String SSLCertificate;
 	public final String PostData;
 
-	public boolean FollowRedirects = true;
-
 	protected ZLNetworkRequest(String url) {
 		this(url, null, null);
 	}
