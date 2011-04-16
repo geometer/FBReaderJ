@@ -141,7 +141,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 		}
 
 		// TODO: Use ALL available descriptions and not only Direct
-		if (descriptions.isEmpty() && !opensearchDescriptionURLs.isEmpty()) {
+		if (!opensearchDescriptionURLs.isEmpty()) {
 			LinkedList<ZLNetworkRequest> requests = new LinkedList<ZLNetworkRequest>();
 			for (String url: opensearchDescriptionURLs) {
 				requests.add(new ZLNetworkRequest(url) {
