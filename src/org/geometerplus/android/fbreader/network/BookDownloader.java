@@ -26,8 +26,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.content.Intent;
 
-import org.geometerplus.fbreader.network.BookReference;
-
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 public class BookDownloader extends Activity {
 
@@ -70,7 +69,7 @@ public class BookDownloader extends Activity {
 		if ("epub".equals(uri.getScheme())) {
 			uri = uri.buildUpon().scheme("http").build();
 			intent.putExtra(BookDownloaderService.BOOK_FORMAT_KEY,
-					BookReference.Format.EPUB);
+					BookUrlInfo.Format.EPUB);
 		}
 
 		startService(

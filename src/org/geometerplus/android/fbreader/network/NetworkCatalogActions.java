@@ -35,12 +35,12 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.authentication.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.opds.BasketItem;
-import org.geometerplus.fbreader.network.authentication.*;
-
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 class NetworkCatalogActions extends NetworkTreeActions {
 	public static final int OPEN_CATALOG_ITEM_ID = 0;
@@ -80,7 +80,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		boolean hasItems = false;
 
 		final String catalogUrl =
-			urlItem != null ? urlItem.URLByType.get(NetworkURLCatalogItem.URL_CATALOG) : null;
+			urlItem != null ? urlItem.getUrl(UrlInfo.Type.Catalog) : null;
 		if (catalogUrl != null &&
 			(!(item instanceof BasketItem) || item.Link.basket().bookIds().size() > 0)) {
 			addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
@@ -113,7 +113,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				addMenuItem(menu, CUSTOM_CATALOG_REMOVE, "removeCustomCatalog");
 			}
 		} else {
-			if (urlItem != null && urlItem.URLByType.get(NetworkURLCatalogItem.URL_HTML_PAGE) != null) {
+			if (urlItem != null && urlItem.getUrl(UrlInfo.Type.HtmlPage) != null) {
 				addMenuItem(menu, OPEN_IN_BROWSER_ITEM_ID, "openInBrowser");
 				hasItems = true;
 			}
@@ -132,10 +132,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			return OPEN_CATALOG_ITEM_ID;
 		}
 		final NetworkURLCatalogItem urlItem = (NetworkURLCatalogItem)item;
-		if (urlItem.URLByType.get(NetworkURLCatalogItem.URL_CATALOG) != null) {
+		if (urlItem.getUrl(UrlInfo.Type.Catalog) != null) {
 			return OPEN_CATALOG_ITEM_ID;
 		}
-		if (urlItem.URLByType.get(NetworkURLCatalogItem.URL_HTML_PAGE) != null) {
+		if (urlItem.getUrl(UrlInfo.Type.HtmlPage) != null) {
 			return OPEN_IN_BROWSER_ITEM_ID;
 		}
 		if (urlItem.getVisibility() == ZLBoolean3.B3_UNDEFINED &&
@@ -175,8 +175,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		prepareOptionsItem(menu, RELOAD_ITEM_ID,
 				urlItem != null &&
-				urlItem.URLByType.get(NetworkURLCatalogItem.URL_CATALOG) != null &&
-				!NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey()));
+				urlItem.getUrl(UrlInfo.Type.Catalog) != null &&
+				!NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey())
+		);
 
 		boolean signIn = false;
 		boolean signOut = false;
@@ -249,7 +250,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				if (item instanceof NetworkURLCatalogItem) {
 					Util.openInBrowser(
 						activity,
-						((NetworkURLCatalogItem)item).URLByType.get(NetworkURLCatalogItem.URL_HTML_PAGE)
+						item.getUrl(UrlInfo.Type.HtmlPage)
 					);
 				}
 				return true;

@@ -80,10 +80,11 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 	public static ZLImage createCover(NetworkItem item) {
-		if (item.Cover == null) {
+		final String imageUrl = item.getImageUrl();
+		if (imageUrl == null) {
 			return null;
 		}
-		return createCover(item.Cover, null);
+		return createCover(imageUrl, null);
 	}
 
 	private static final String DATA_PREFIX = "data:";
