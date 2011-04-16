@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
-import org.geometerplus.fbreader.network.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private int myId;
@@ -45,7 +45,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 		return siteName;
 	}
 
-	public OPDSCustomLink(int id, String siteName, String title, String summary, Map<String,UrlInfo> infos) {
+	public OPDSCustomLink(int id, String siteName, String title, String summary, UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(removeWWWPrefix(siteName), title, summary, null, infos, false);
 		myId = id;
 	}
@@ -81,26 +81,26 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 		myTitle = title;
 	}
 
-	public final void setUrl(String urlKey, String url) {
-		myInfos.put(urlKey, new UrlInfo(url, new Date()));
+	public final void setUrl(UrlInfo.Type type, String url) {
+		myInfos.addInfo(new UrlInfoWithDate(type, url));
 		myHasChanges = true;
 	}
 
-	public final void removeUrl(String urlKey) {
-		final UrlInfo oldUrl = myInfos.remove(urlKey);
-		myHasChanges = myHasChanges || oldUrl != null;
+	public final void removeUrl(UrlInfo.Type type) {
+		myHasChanges = myHasChanges || myInfos.getInfo(type) != null;
+		myInfos.removeAllInfos(type);
 	}
 
 	public boolean isObsolete(long milliSeconds) {
 		final long old = System.currentTimeMillis() - milliSeconds;
 		
-		final Date searchUpdateDate = getUrlInfo(URL_SEARCH).Updated;
-		if (searchUpdateDate == null || searchUpdateDate.getTime() < old) {
+		Date updateDate = getUrlInfo(UrlInfo.Type.Search).Updated;
+		if (updateDate == null || updateDate.getTime() < old) {
 			return true;
 		}
 
-		final Date iconUpdateDate = getUrlInfo(URL_ICON).Updated;
-		if (iconUpdateDate == null || iconUpdateDate.getTime() < old) {
+		updateDate = getUrlInfo(UrlInfo.Type.Image).Updated;
+		if (updateDate == null || updateDate.getTime() < old) {
 			return true;
 		}
 
@@ -113,7 +113,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 
 		ZLNetworkException error = null;
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrlInfo(URL_MAIN).URL) {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog)) {
 				@Override
 				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
 					final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);
@@ -125,7 +125,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 					if (info.Title == null) {
 						throw new ZLNetworkException(NetworkException.ERROR_NO_REQUIRED_INFORMATION);
 					}
-					setUrl(URL_ICON, info.Icon);
+					setUrl(UrlInfo.Type.Image, info.Icon);
 					if (info.DirectOpenSearchDescription != null) {
 						descriptions.add(info.DirectOpenSearchDescription);
 					}
@@ -161,9 +161,9 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 
 		if (!descriptions.isEmpty()) {
 			// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
-			setUrl(URL_SEARCH, descriptions.get(0).makeQuery("%s"));
+			setUrl(UrlInfo.Type.Search, descriptions.get(0).makeQuery("%s"));
 		} else {
-			setUrl(URL_SEARCH, null);
+			setUrl(UrlInfo.Type.Search, null);
 		}
 		if (error != null) {
 			throw error;

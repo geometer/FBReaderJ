@@ -40,7 +40,8 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.*;
 
-import org.geometerplus.fbreader.network.BookReference;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 import org.geometerplus.android.fbreader.FBReader;
 
@@ -114,8 +115,14 @@ public class BookDownloaderService extends Service {
 		final int notifications = intent.getIntExtra(SHOW_NOTIFICATIONS_KEY, 0);
 
 		final String url = uri.toString();
-		final int bookFormat = intent.getIntExtra(BOOK_FORMAT_KEY, BookReference.Format.NONE);
-		final int referenceType = intent.getIntExtra(REFERENCE_TYPE_KEY, BookReference.Type.UNKNOWN);
+		final int bookFormat = intent.getIntExtra(BOOK_FORMAT_KEY, BookUrlInfo.Format.NONE);
+		final UrlInfo.Type referenceType =
+			(UrlInfo.Type)intent.getSerializableExtra(REFERENCE_TYPE_KEY);
+		if (referenceType == null) {
+			doStop();
+			return;
+		}
+
 		String cleanURL = intent.getStringExtra(CLEAN_URL_KEY);
 		if (cleanURL == null) {
 			cleanURL = url;
@@ -129,7 +136,7 @@ public class BookDownloaderService extends Service {
 			return;
 		}
 
-		String fileName = BookReference.makeBookFileName(cleanURL, bookFormat, referenceType);
+		String fileName = BookUrlInfo.makeBookFileName(cleanURL, bookFormat, referenceType);
 		if (fileName == null) {
 			doStop();
 			return;

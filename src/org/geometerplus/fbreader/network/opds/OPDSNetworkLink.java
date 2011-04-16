@@ -32,9 +32,10 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSNetworkLink extends AbstractNetworkLink {
-	private TreeMap<RelationAlias, String> myRelationAliases;
+	private TreeMap<RelationAlias,String> myRelationAliases;
 
 	private TreeMap<String,NetworkCatalogItem.Accessibility> myUrlConditions;
 	private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
@@ -44,7 +45,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	private final boolean myHasStableIdentifiers;
 
 	OPDSNetworkLink(String siteName, String title, String summary, String language,
-			Map<String,UrlInfo> infos, boolean hasStableIdentifiers) {
+			UrlInfoCollection<UrlInfoWithDate> infos, boolean hasStableIdentifiers) {
 		super(siteName, title, summary, language, infos);
 		myHasStableIdentifiers = hasStableIdentifiers;
 	}
@@ -117,7 +118,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
-		final String url = getUrlInfo(URL_SEARCH).URL;
+		final String url = getUrl(UrlInfo.Type.Search);
 		if (url == null) {
 			return null;
 		}
@@ -133,9 +134,11 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public NetworkCatalogItem libraryItem() {
-		TreeMap<Integer,String> urlMap = new TreeMap<Integer,String>();
-		urlMap.put(NetworkURLCatalogItem.URL_CATALOG, getUrlInfo(URL_MAIN).URL);
-		return new OPDSCatalogItem(this, getTitle(), getSummary(), getUrlInfo(URL_ICON).URL, urlMap, myExtraData);
+		final UrlInfoCollection urlMap = new UrlInfoCollection();
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));
+		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Thumbnail));
+		return new OPDSCatalogItem(this, getTitle(), getSummary(), urlMap, myExtraData);
 	}
 
 	public NetworkAuthenticationManager authenticationManager() {
@@ -190,27 +193,5 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 			+ "; urlConditions=" + myUrlConditions
 			+ "; rewritingRules=" + myUrlRewritingRules
 			+ "}";
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof OPDSNetworkLink)) {
-			return false;
-		}
-		if (!super.equals(o)) {
-			return false;
-		}
-		final OPDSNetworkLink lnk = (OPDSNetworkLink) o;
-		if (myHasStableIdentifiers != lnk.myHasStableIdentifiers
-				|| !ZLMiscUtil.mapsEquals(myRelationAliases, lnk.myRelationAliases)
-				|| !ZLMiscUtil.mapsEquals(myUrlConditions, lnk.myUrlConditions)
-				|| !ZLMiscUtil.listsEquals(myUrlRewritingRules, lnk.myUrlRewritingRules)
-				|| myAuthenticationManager != lnk.myAuthenticationManager) {
-			return false;
-		}
-		return true;
 	}
 }
