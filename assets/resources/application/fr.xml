@@ -611,6 +611,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentification"/>
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Identifiant"/>
 			<node name="password" value="Mot de passe"/>
 			<node name="skipIP" value="Ne pas associer à l'adresse IP"/>

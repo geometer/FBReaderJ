@@ -748,20 +748,21 @@ mainSwitchLabel:
 	}
 
 	private static boolean processStartTag(ZLXMLReader xmlReader, String tagName, ZLStringMap attributes, HashMap<String,String> currentNamespaceMap) {
-		if (xmlReader.startElementHandler(tagName, attributes)) {
-			return true;
-		}
 		if (currentNamespaceMap != null) {
 			xmlReader.namespaceMapChangedHandler(currentNamespaceMap);
+		}
+		if (xmlReader.startElementHandler(tagName, attributes)) {
+			return true;
 		}
 		attributes.clear();
 		return false;
 	}
 
 	private static boolean processEndTag(ZLXMLReader xmlReader, String tagName, HashMap<String,String> currentNamespaceMap) {
+		final boolean result = xmlReader.endElementHandler(tagName);
 		if (currentNamespaceMap != null) {
 			xmlReader.namespaceMapChangedHandler(currentNamespaceMap);
 		}
-		return xmlReader.endElementHandler(tagName);
+		return result;
 	}
 }

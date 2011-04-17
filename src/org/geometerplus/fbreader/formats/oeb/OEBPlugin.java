@@ -27,12 +27,15 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class OEBPlugin extends FormatPlugin {
 	public boolean acceptsFile(ZLFile file) {
-		final String extension = file.getExtension().intern();
-		return extension == "oebzip" || extension == "epub";
+		final String extension = file.getExtension();
+		return
+			"oebzip".equals(extension) ||
+			"epub".equals(extension) ||
+			"opf".equals(extension);
 	}
 
 	private ZLFile getOpfFile(ZLFile oebFile) {
-		if (oebFile.getExtension().equals("opf")) {
+		if ("opf".equals(oebFile.getExtension())) {
 			return oebFile;
 		}
 
