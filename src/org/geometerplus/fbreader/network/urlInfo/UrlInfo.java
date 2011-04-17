@@ -17,19 +17,40 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.urlInfo;
 
+import java.io.Serializable;
 
-public class DecoratedBookReference extends BookReference {
+public class UrlInfo implements Serializable {
+	private static final long serialVersionUID = -893514485257788222L;
 
-	private final String myCleanURL;
-
-	public DecoratedBookReference(BookReference base, String url) {
-		super(url, base.BookFormat, base.ReferenceType);
-		myCleanURL = base.cleanURL();
+	public static enum Type {
+		// Never rename elements of this enum; these names are used in network database
+		Catalog,
+		HtmlPage,
+		SingleEntry,
+		Related,
+		Image,
+		Thumbnail,
+		Search,
+		SignIn,
+		SignOut,
+		SignUp,
+		TopUp,
+		RecoverPassword,
+		Book,
+		BookConditional,
+		BookDemo,
+		BookFullOrDemo,
+		BookBuy,
+		BookBuyInBrowser
 	}
 
-	public String cleanURL() {
-		return myCleanURL;
+	public final Type InfoType;
+	public final String Url;
+
+	public UrlInfo(Type type, String url) {
+		InfoType = type;
+		Url = url;
 	}
 }

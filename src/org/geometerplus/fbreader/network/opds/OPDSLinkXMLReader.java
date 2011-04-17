@@ -27,14 +27,12 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.UrlInfo;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeTypes {
 	private static class LinkReader implements OPDSFeedReader {
@@ -99,7 +97,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			final String summary = entry.Content;
 			final String language = entry.DCLanguage;
 
-			final HashMap<String,UrlInfo> infos = new HashMap<String,UrlInfo>();
+			final UrlInfoCollection<UrlInfoWithDate> infos =
+				new UrlInfoCollection<UrlInfoWithDate>();
 			final HashMap<String,NetworkCatalogItem.Accessibility> urlConditions =
 				new HashMap<String,NetworkCatalogItem.Accessibility>();
 			for (ATOMLink link: entry.Links) {
@@ -108,35 +107,34 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				final String rel = link.getRel();
 				if (rel == REL_IMAGE_THUMBNAIL || rel == REL_THUMBNAIL) {
 					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
-						infos.put(INetworkLink.URL_ICON, new UrlInfo(href));
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Thumbnail, href));
 					}
 				} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || rel == REL_COVER) {
-					if (infos.get(INetworkLink.URL_ICON) == null &&
-						(type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG)) {
-						infos.put(INetworkLink.URL_ICON, new UrlInfo(href));
+					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Image, href));
 					}
 				} else if (rel == null) {
 					if (type == MIME_APP_ATOM) {
-						infos.put(INetworkLink.URL_MAIN, new UrlInfo(href));
+						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href));
 					}
 				} else if (rel == "search") {
 					if (type == MIME_APP_ATOM) {
 						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href);
 						if (descr.isValid()) {
 							// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
-							infos.put(INetworkLink.URL_SEARCH, new UrlInfo(descr.makeQuery("%s")));
+							infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Search, descr.makeQuery("%s")));
 						}
 					}
 				} else if (rel == REL_LINK_SIGN_IN) {
-					infos.put(INetworkLink.URL_SIGN_IN, new UrlInfo(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignIn, href));
 				} else if (rel == REL_LINK_SIGN_OUT) {
-					infos.put(INetworkLink.URL_SIGN_OUT, new UrlInfo(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignOut, href));
 				} else if (rel == REL_LINK_SIGN_UP) {
-					infos.put(INetworkLink.URL_SIGN_UP, new UrlInfo(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignUp, href));
 				} else if (rel == REL_LINK_TOPUP) {
-					infos.put(INetworkLink.URL_TOPUP, new UrlInfo(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.TopUp, href));
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
-					infos.put(INetworkLink.URL_RECOVER_PASSWORD, new UrlInfo(href));
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.RecoverPassword, href));
 				} else if (rel == REL_CONDITION_NEVER) {
 					urlConditions.put(href, NetworkCatalogItem.Accessibility.NEVER);
 				} else if (rel == REL_CONDITION_SIGNED_IN) {
@@ -166,11 +164,11 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 			String title,
 			String summary,
 			String language,
-			Map<String,UrlInfo> infos,
+			UrlInfoCollection<UrlInfoWithDate> infos,
 			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
 			String sslCertificate
 		) {
-			if (siteName == null || title == null || infos.get(INetworkLink.URL_MAIN) == null) {
+			if (siteName == null || title == null || infos.getInfo(UrlInfo.Type.Catalog) == null) {
 				return null;
 			}
 

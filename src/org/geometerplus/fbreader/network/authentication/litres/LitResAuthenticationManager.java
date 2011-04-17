@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.*;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private boolean mySidChecked;
@@ -89,7 +90,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			sid = mySidOption.getValue();
 		}
 
-		String url = Link.getUrlInfo(INetworkLink.URL_SIGN_IN).URL;
+		String url = Link.getUrl(UrlInfo.Type.SignIn);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -119,7 +120,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void authorise(String password) throws ZLNetworkException {
-		String url = Link.getUrlInfo(INetworkLink.URL_SIGN_IN).URL;
+		String url = Link.getUrl(UrlInfo.Type.SignIn);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -150,7 +151,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public BookReference downloadReference(NetworkBookItem book) {
+	public BookUrlInfo downloadReference(NetworkBookItem book) {
 		final String sid;
 		synchronized (this) {
 			sid = mySidOption.getValue();
@@ -158,13 +159,12 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL);
+		BookUrlInfo reference = book.reference(UrlInfo.Type.BookConditional);
 		if (reference == null) {
 			return null;
 		}
-		String url = reference.URL;
-		url = ZLNetworkUtil.appendParameter(url, "sid", sid);
-		return new DecoratedBookReference(reference, url);
+		final String url = ZLNetworkUtil.appendParameter(reference.Url, "sid", sid);
+		return new DecoratedBookUrlInfo(reference, url);
 	}
 
 
@@ -196,12 +196,11 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 		}
 
-		BookReference reference = book.reference(BookReference.Type.BUY);
+		BookUrlInfo reference = book.reference(UrlInfo.Type.BookBuy);
 		if (reference == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_BOOK_NOT_PURCHASED); // TODO: more correct error message???
 		}
-		String query = reference.URL;
-		query = ZLNetworkUtil.appendParameter(query, "sid", sid);
+		final String query = ZLNetworkUtil.appendParameter(reference.Url, "sid", sid);
 
 		final LitResPurchaseXMLReader xmlReader = new LitResPurchaseXMLReader(Link.getSiteName());
 
@@ -214,7 +213,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		synchronized (this) {
 			if (xmlReader.Account != null) {
-				myAccount = BuyBookReference.price(xmlReader.Account, "RUB");
+				myAccount = BookBuyUrlInfo.price(xmlReader.Account, "RUB");
 			}
 			if (exception != null) {
 				final String code = exception.getCode();
@@ -241,7 +240,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		final String url = Link.getUrlInfo(INetworkLink.URL_TOPUP).URL;
+		final String url = Link.getUrl(UrlInfo.Type.TopUp);
 		if (url == null) {
 			return null;
 		}
@@ -391,7 +390,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	private void loadAccountOnSuccess(LitResNetworkRequest accountRequest) {
 		LitResPurchaseXMLReader reader = (LitResPurchaseXMLReader)accountRequest.Reader;
-		myAccount = BuyBookReference.price(reader.Account, "RUB");
+		myAccount = BookBuyUrlInfo.price(reader.Account, "RUB");
 	}
 
 	@Override
@@ -401,7 +400,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void recoverPassword(String email) throws ZLNetworkException {
-		String url = Link.getUrlInfo(INetworkLink.URL_RECOVER_PASSWORD).URL;
+		String url = Link.getUrl(UrlInfo.Type.RecoverPassword);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}

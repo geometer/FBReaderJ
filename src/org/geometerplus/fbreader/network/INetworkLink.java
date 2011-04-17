@@ -24,24 +24,17 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 public interface INetworkLink {
-	String URL_MAIN = "main";
-	String URL_SEARCH = "search";
-	String URL_ICON = "icon";
-	String URL_SIGN_IN = "signIn";
-	String URL_SIGN_OUT = "signOut";
-	String URL_SIGN_UP = "signUp";
-	String URL_TOPUP = "topup";
-	String URL_RECOVER_PASSWORD = "recoverPassword";
-
 	String getSiteName();
 	String getTitle();
 	String getSummary();
 
-	UrlInfo getUrlInfo(String urlKey);
-	Set<String> getUrlKeys();
+	String getUrl(UrlInfo.Type type);
+	UrlInfoWithDate getUrlInfo(UrlInfo.Type type);
+	Set<UrlInfo.Type> getUrlKeys();
 
 	/**
 	 * @return 2-letters language code or special token "multi"

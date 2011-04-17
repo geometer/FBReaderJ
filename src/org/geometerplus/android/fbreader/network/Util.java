@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.util.PackageUtil;
 
@@ -53,7 +54,7 @@ abstract class Util implements UserRegistrationConstants {
 		return testService(
 			activity,
 			REGISTRATION_ACTION,
-			link.getUrlInfo(INetworkLink.URL_SIGN_UP).URL
+			link.getUrl(UrlInfo.Type.SignUp)
 		);
 	}
 
@@ -61,12 +62,12 @@ abstract class Util implements UserRegistrationConstants {
 		try {
 			final Intent intent = new Intent(
 				REGISTRATION_ACTION,
-				Uri.parse(link.getUrlInfo(INetworkLink.URL_SIGN_UP).URL)
+				Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
 			);
 			if (PackageUtil.canBeStarted(activity, intent, true)) {
 				activity.startActivityForResult(new Intent(
 					REGISTRATION_ACTION,
-					Uri.parse(link.getUrlInfo(INetworkLink.URL_SIGN_UP).URL)
+					Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
 				), USER_REGISTRATION_REQUEST_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
@@ -99,7 +100,7 @@ abstract class Util implements UserRegistrationConstants {
 		return testService(
 			activity,
 			action,
-			link.getUrlInfo(INetworkLink.URL_MAIN).URL
+			link.getUrl(UrlInfo.Type.Catalog)
 		);
 	}
 
@@ -107,7 +108,7 @@ abstract class Util implements UserRegistrationConstants {
 		try {
 			final Intent intent = new Intent(
 				action,
-				Uri.parse(link.getUrlInfo(INetworkLink.URL_MAIN).URL)
+				Uri.parse(link.getUrl(UrlInfo.Type.Catalog))
 			);
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			if (mgr != null) {
@@ -123,7 +124,7 @@ abstract class Util implements UserRegistrationConstants {
 	}
 
 	static boolean isBrowserTopupSupported(Activity activity, INetworkLink link) {
-		return link.getUrlInfo(INetworkLink.URL_TOPUP).URL != null;
+		return link.getUrl(UrlInfo.Type.TopUp) != null;
 	}
 
 	static void openInBrowser(Context context, String url) {

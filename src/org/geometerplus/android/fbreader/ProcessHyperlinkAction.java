@@ -54,7 +54,7 @@ class ProcessHyperlinkAction extends FBAction {
 		final ZLTextElementRegion region = Reader.getTextView().getSelectedRegion();
 		if (region instanceof ZLTextHyperlinkRegion) {
 			Reader.getTextView().hideSelectedRegionBorder();
-			Reader.repaintView();
+			Reader.getViewWidget().repaint();
 			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegion)region).Hyperlink;
 			switch (hyperlink.Type) {
 				case FBHyperlinkType.EXTERNAL:
@@ -71,7 +71,7 @@ class ProcessHyperlinkAction extends FBAction {
 			}
 		} else if (region instanceof ZLTextImageRegion) {
 			Reader.getTextView().hideSelectedRegionBorder();
-			Reader.repaintView();
+			Reader.getViewWidget().repaint();
 			final String uriString = ((ZLTextImageRegion)region).ImageElement.URI;
 			if (uriString != null) {
 				try {

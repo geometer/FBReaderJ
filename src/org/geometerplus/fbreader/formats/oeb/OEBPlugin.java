@@ -27,13 +27,26 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class OEBPlugin extends FormatPlugin {
 	public boolean acceptsFile(ZLFile file) {
-		final String extension = file.getExtension().intern();
-		return (extension == "opf") || (extension == "oebzip") || (extension == "epub");
+		final String extension = file.getExtension();
+		return
+			"oebzip".equals(extension) ||
+			"epub".equals(extension) ||
+			"opf".equals(extension);
 	}
 
 	private ZLFile getOpfFile(ZLFile oebFile) {
-		if (oebFile.getExtension().equals("opf")) {
+		if ("opf".equals(oebFile.getExtension())) {
 			return oebFile;
+		}
+
+		final ZLFile containerInfoFile = ZLFile.createFile(oebFile, "META-INF/container.xml");
+		if (containerInfoFile.exists()) {
+			final ContainerFileReader reader = new ContainerFileReader();
+			reader.read(containerInfoFile);
+			final String opfPath = reader.getRootPath();
+			if (opfPath != null) {
+				return ZLFile.createFile(oebFile, opfPath);
+			}
 		}
 
 		for (ZLFile child : oebFile.children()) {

@@ -23,6 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 public abstract class ZLApplication {
 	public static ZLApplication Instance() {
@@ -45,8 +46,11 @@ public abstract class ZLApplication {
 	protected final void setView(ZLView view) {
 		if (view != null) {
 			myView = view;
-			resetView();
-			repaintView();
+			final ZLViewWidget widget = getViewWidget();
+			if (widget != null) {
+				widget.reset();
+				widget.repaint();
+			}
 			onViewChanged();
 		}
 	}
@@ -63,34 +67,8 @@ public abstract class ZLApplication {
 		setView(myView);
 	}
 
-	public final void resetView() {
-		if (myWindow != null) {
-			myWindow.resetView();
-		}
-	}
-
-	public final void repaintView() {
-		if (myWindow != null) {
-			myWindow.repaintView();
-		}
-	}
-
-	public final void scrollViewManually(int startX, int startY, int endX, int endY, ZLView.Direction direction) {
-		if (myWindow != null) {
-			myWindow.scrollViewManually(startX, startY, endX, endY, direction);
-		}
-	}
-
-	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed) {
-		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(pageIndex, direction, speed);
-		}
-	}
-
-	public final void startViewAutoScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int x, int y, int speed) {
-		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(pageIndex, direction, x, y, speed);
-		}
+	public final ZLViewWidget getViewWidget() {
+		return myWindow != null ? myWindow.getViewWidget() : null;
 	}
 
 	public final void onRepaintFinished() {

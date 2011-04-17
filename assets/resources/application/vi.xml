@@ -608,6 +608,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Xác thực" />
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Người dùng" />
 			<node name="password" value="Mật khẩu" />
 			<node name="skipIP" value="Đừng giới hạn địa chỉ ip" />

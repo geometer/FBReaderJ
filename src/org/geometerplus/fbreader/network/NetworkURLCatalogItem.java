@@ -19,31 +19,24 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.*;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+
 public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
-	// URL type values:
-	public static final int URL_NONE = 0;
-	public static final int URL_CATALOG = 1;
-	public static final int URL_HTML_PAGE = 2;
-
-	public final TreeMap<Integer,String> URLByType;
-
 	/**
 	 * Creates new NetworkURLCatalogItem instance with <code>Accessibility.ALWAYS</code> accessibility and <code>FLAGS_DEFAULT</code> flags.
 	 *
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param cover      cover url. Can be <code>null</code>.
-	 * @param urlByType  map contains URLs and their types. Must be not <code>null</code>.
+	 * @param urls       collection of item-related URLs. Can be <code>null</code>.
 	 */
-	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType) {
-		this(link, title, summary, cover, urlByType, Accessibility.ALWAYS, FLAGS_DEFAULT);
+	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls) {
+		this(link, title, summary, urls, Accessibility.ALWAYS, FLAGS_DEFAULT);
 	}
 
 	/**
@@ -52,15 +45,13 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	 * @param link          corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title         title of this library item. Must be not <code>null</code>.
 	 * @param summary       description of this library item. Can be <code>null</code>.
-	 * @param cover         cover url. Can be <code>null</code>.
-	 * @param urlByType     map contains URLs and their types. Must be not <code>null</code>.
+	 * @param urls          collection of item-related URLs. Can be <code>null</code>.
 	 * @param accessibility value defines when this library item will be accessible
 	 *                      in the network library view. 
 	 * @param flags         value defines how to show book items in this catalog.
 	 */
-	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, String cover, Map<Integer, String> urlByType, Accessibility accessibility, int flags) {
-		super(link, title, summary, cover, accessibility, flags);
-		URLByType = new TreeMap<Integer,String>(urlByType);
+	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
+		super(link, title, summary, urls, accessibility, flags);
 	}
 
 	/**
@@ -83,23 +74,11 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 		}
 	}
 
-	/**
-	 * Override this method if result of the request depends not only from URL 
-	 * (e.g. result of the POST request depends from the URL and the body of the request).
-	 * 
-	 * @return unique String for corresponding network request, for which:
-	 * {@code item1.getFullRequestString().equals(item2.getFullRequestString())}
-	 * iff network requests for items {@code item1} and {@code item2} are the same. 
-	 */
-	//public String getFullRequestString() {
-	//	return URLByType.get(URL_CATALOG);
-	//}
-
 	@Override
 	public String getStringId() {
-		String id = URLByType.get(URL_CATALOG);
+		String id = getUrl(UrlInfo.Type.Catalog);
 		if (id == null) {
-			id = URLByType.get(URL_HTML_PAGE);
+			id = getUrl(UrlInfo.Type.HtmlPage);
 		}
 		return id != null ? id : String.valueOf(hashCode());
 	}

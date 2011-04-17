@@ -26,6 +26,7 @@ public interface MimeTypes {
 	String MIME_APP_MOBI = "application/x-mobipocket-ebook";
 	String MIME_APP_PDF = "application/pdf";
 	String MIME_APP_ATOM = "application/atom+xml";
+	String MIME_APP_ATOM_ENTRY = "application/atom+xml;type=entry";
 
 	// MIME type for Opensearch Description XML document
 	String MIME_APP_OPENSEARCHDESCRIPTION = "application/opensearchdescription+xml";

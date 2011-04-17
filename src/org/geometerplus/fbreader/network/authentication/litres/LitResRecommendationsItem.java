@@ -19,22 +19,19 @@
 
 package org.geometerplus.fbreader.network.authentication.litres;
 
-import java.util.Map;
-
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.Basket;
-import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResRecommendationsItem extends OPDSCatalogItem {
-	public LitResRecommendationsItem(INetworkLink link, String title, String summary, String cover, Map<Integer,String> urlByType, Accessibility accessibility) {
-		super(link, title, summary, cover, urlByType, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
+	public LitResRecommendationsItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {
+		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
 	}
 
 	@Override
-	protected String getUrl() {
+	protected String getCatalogUrl() {
 		final LitResAuthenticationManager mgr =
 			(LitResAuthenticationManager)Link.authenticationManager();
 		final StringBuilder builder = new StringBuilder();
@@ -59,6 +56,6 @@ public class LitResRecommendationsItem extends OPDSCatalogItem {
 			}
 		}
 
-		return ZLNetworkUtil.appendParameter(URLByType.get(URL_CATALOG), "ids", builder.toString());
+		return ZLNetworkUtil.appendParameter(getUrl(UrlInfo.Type.Catalog), "ids", builder.toString());
 	}
 }
