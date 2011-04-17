@@ -130,9 +130,7 @@ public class ZLNetworkManager {
 				if (response == 302) {
 					request.URL = httpConnection.getHeaderField("Location");
 				}
-				System.err.println("RESPONSE: " + response);
 			}
-			System.err.println("RRRESPONSE: " + response);
 
 			InputStream stream = null;
 			if (response == HttpURLConnection.HTTP_OK) {
