@@ -24,8 +24,8 @@ import java.util.zip.GZIPInputStream;
 import java.io.*;
 import java.net.*;
 import javax.net.ssl.*;
-import java.security.*;
 import java.security.cert.*;
+import java.security.GeneralSecurityException;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
@@ -40,31 +40,18 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
-	private static void collectStandardTrustManagers(List<TrustManager> collection) {
-		try {
-			final TrustManagerFactory factory = TrustManagerFactory.getInstance("X509");
-			factory.init((KeyStore)null);
-			final TrustManager[] managers = factory.getTrustManagers();
-			if (managers != null) {
-				for (TrustManager tm: managers) {
-					collection.add(tm);
-				}
+	private static TrustManager[] getTrustManagers(String certificate) throws ZLNetworkException {
+		InputStream stream = null;
+		if (certificate != null) {
+			try {
+				final ZLResourceFile file = ZLResourceFile.createResourceFile(certificate);
+				stream = file.getInputStream();
+			} catch (IOException ex) {
+				throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_BAD_FILE, certificate, ex);
 			}
-		} catch (NoSuchAlgorithmException e) {
-		} catch (KeyStoreException e) {
-		}
-	}
-
-	private static TrustManager createZLTrustManager(String certificate) throws ZLNetworkException {
-		final InputStream stream;
-		try {
-			final ZLResourceFile file = ZLResourceFile.createResourceFile(certificate);
-			stream = file.getInputStream();
-		} catch (IOException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_BAD_FILE, certificate, ex);
 		}
 		try {
-			return new ZLX509TrustManager(stream);
+			return new TrustManager[] { new ZLX509TrustManager(stream) };
 		} catch (CertificateExpiredException ex) {
 			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_EXPIRED, certificate, ex);
 		} catch (CertificateNotYetValidException ex) {
@@ -72,9 +59,11 @@ public class ZLNetworkManager {
 		} catch (CertificateException ex) {
 			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_BAD_FILE, certificate, ex);
 		} finally {
-			try {
-				stream.close();
-			} catch (IOException ex) {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException ex) {
+				}
 			}
 		}
 	}
@@ -88,17 +77,10 @@ public class ZLNetworkManager {
 		httpConnection.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
 		httpConnection.setAllowUserInteraction(true);
 		if (httpConnection instanceof HttpsURLConnection) {
-			HttpsURLConnection httpsConnection = (HttpsURLConnection)httpConnection;
-
-			final ArrayList<TrustManager> managers = new ArrayList<TrustManager>();
-			if (request.SSLCertificate != null) {
-				managers.add(createZLTrustManager(request.SSLCertificate));
-			}
-			collectStandardTrustManagers(managers);
-
+			final HttpsURLConnection httpsConnection = (HttpsURLConnection)httpConnection;
 			try {
 				SSLContext context = SSLContext.getInstance("TLS");
-				context.init(null, managers.toArray(new TrustManager[]{}), null);
+				context.init(null, getTrustManagers(request.SSLCertificate), null);
 				httpsConnection.setSSLSocketFactory(context.getSocketFactory());
 			} catch (GeneralSecurityException ex) {
 				throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_SUBSYSTEM, ex);
@@ -112,7 +94,7 @@ public class ZLNetworkManager {
 			request.doBefore();
 			HttpURLConnection httpConnection = null;
 			int response = -1;
-			final int retryLimit = 3;
+			final int retryLimit = 6;
 			for (int retryCounter = 0; retryCounter < retryLimit && (response == -1 || response == 302); ++retryCounter) {
 				final URLConnection connection = new URL(request.URL).openConnection();
 				if (!(connection instanceof HttpURLConnection)) {
@@ -148,7 +130,9 @@ public class ZLNetworkManager {
 				if (response == 302) {
 					request.URL = httpConnection.getHeaderField("Location");
 				}
+				System.err.println("RESPONSE: " + response);
 			}
+			System.err.println("RRRESPONSE: " + response);
 
 			InputStream stream = null;
 			if (response == HttpURLConnection.HTTP_OK) {

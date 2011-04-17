@@ -24,20 +24,38 @@ import javax.net.ssl.*;
 import java.security.GeneralSecurityException;
 import java.security.PublicKey;
 import java.security.cert.*;
-
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 
 class ZLX509TrustManager implements X509TrustManager {
-
 	private final X509Certificate myCertificate;
+	private X509TrustManager myBase;
 
 	public ZLX509TrustManager(InputStream stream) throws CertificateException {
-		final CertificateFactory factory = CertificateFactory.getInstance("X509");
-		Certificate cert = factory.generateCertificate(stream);
-		if (!(cert instanceof X509Certificate)) {
-			throw new CertificateException("That's impossible!!! Certificate with invalid type has been returned by X.509 certificate factory.");
+		if (stream != null) {
+			final CertificateFactory factory = CertificateFactory.getInstance("X509");
+			Certificate cert = factory.generateCertificate(stream);
+			if (!(cert instanceof X509Certificate)) {
+				throw new CertificateException("That's impossible!!! Certificate with invalid type has been returned by X.509 certificate factory.");
+			}
+			myCertificate = (X509Certificate)cert;
+			myCertificate.checkValidity();
+		} else {
+			myCertificate = null;
 		}
-		myCertificate = (X509Certificate) cert;
-		myCertificate.checkValidity();
+
+		myBase = null;
+		try {
+			final TrustManagerFactory factory = TrustManagerFactory.getInstance("X509");
+			factory.init((KeyStore)null);
+			final TrustManager[] managers = factory.getTrustManagers();
+			if (managers != null && managers.length > 0) {
+				myBase = (X509TrustManager)managers[0];
+			}
+		} catch (NoSuchAlgorithmException e) {
+		} catch (KeyStoreException e) {
+		}
 	}
 
 	public X509Certificate[] getAcceptedIssuers() {
@@ -48,11 +66,23 @@ class ZLX509TrustManager implements X509TrustManager {
 	}
 
 	public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
-		final int lastCertificate = certs.length - 1;
-		for (int i = 0; i < lastCertificate; ++i) {
-			checkCertificate(certs[i], certs[i + 1].getPublicKey());
+		try {
+			if (myCertificate != null) {
+				final int lastCertificate = certs.length - 1;
+				for (int i = 0; i < lastCertificate; ++i) {
+					checkCertificate(certs[i], certs[i + 1].getPublicKey());
+				}
+				checkCertificate(certs[lastCertificate], myCertificate.getPublicKey());
+			} else {
+				throw new CertificateException("No certificate found");
+			}
+		} catch (CertificateException e) {
+			if (myBase != null) {
+				myBase.checkServerTrusted(certs, authType);
+			} else {
+				throw e;
+			}
 		}
-		checkCertificate(certs[lastCertificate], myCertificate.getPublicKey());
 	}
 
 	private void checkCertificate(X509Certificate certificate, PublicKey publicKey) throws CertificateException {

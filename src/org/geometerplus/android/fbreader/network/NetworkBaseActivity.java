@@ -99,7 +99,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 				} catch (InterruptedException e) {
 				}
 			}
-			System.err.println("auth thread: " + Thread.currentThread());
 			PasswordAuthentication result = null;
 			if (myUsername != null && myPassword != null) {
 				option.setValue(myUsername);
@@ -119,7 +118,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		getListView().setOnCreateContextMenuListener(this);
 		onModelChanged(); // do the same update actions as upon onModelChanged
 
-		System.err.println("UI thread: " + Thread.currentThread());
 		Authenticator.setDefault(myAuthenticator);
 	}
 
