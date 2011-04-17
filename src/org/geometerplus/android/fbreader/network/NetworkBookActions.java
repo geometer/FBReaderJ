@@ -42,6 +42,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
 import org.geometerplus.fbreader.network.tree.NetworkSeriesTree;
@@ -65,19 +66,19 @@ class NetworkBookActions extends NetworkTreeActions {
 	public static final int REMOVE_CATALOG_FROM_FAVORITES = 13;
 
 	private static boolean useFullReferences(NetworkBookItem book) {
-		return book.reference(BookReference.Type.DOWNLOAD_FULL) != null ||
-			book.reference(BookReference.Type.DOWNLOAD_FULL_CONDITIONAL) != null;
+		return book.reference(UrlInfo.Type.Book) != null ||
+			book.reference(UrlInfo.Type.BookConditional) != null;
 	}
 
 	private static boolean useDemoReferences(NetworkBookItem book) {
-		return book.reference(BookReference.Type.DOWNLOAD_DEMO) != null &&
+		return book.reference(UrlInfo.Type.BookDemo) != null &&
 			book.localCopyFileName() == null &&
-			book.reference(BookReference.Type.DOWNLOAD_FULL) == null;
+			book.reference(UrlInfo.Type.Book) == null;
 	}
 
 	private static boolean useBuyReferences(NetworkBookItem book) {
 		return book.localCopyFileName() == null &&
-			book.reference(BookReference.Type.DOWNLOAD_FULL) == null;
+			book.reference(UrlInfo.Type.Book) == null;
 	}
 
 	@Override
@@ -128,9 +129,9 @@ class NetworkBookActions extends NetworkTreeActions {
 
 	static int getBookStatus(NetworkBookItem book, BookDownloaderServiceConnection connection) {
 		if (useFullReferences(book)) {
-			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
+			final BookUrlInfo reference = book.reference(UrlInfo.Type.Book);
 			if (reference != null
-					&& connection != null && connection.isBeingDownloaded(reference.URL)) {
+					&& connection != null && connection.isBeingDownloaded(reference.Url)) {
 				return R.drawable.ic_list_download;
 			} else if (book.localCopyFileName() != null) {
 				return R.drawable.ic_list_flag;
@@ -139,8 +140,8 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		}
 		if (useBuyReferences(book)
-				&& book.reference(BookReference.Type.BUY) != null
-				|| book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
+				&& book.reference(UrlInfo.Type.BookBuy) != null
+				|| book.reference(UrlInfo.Type.BookBuyInBrowser) != null) {
 			return R.drawable.ic_list_buy;
 		}
 		return 0;
@@ -149,9 +150,9 @@ class NetworkBookActions extends NetworkTreeActions {
 	static Set<Action> getContextMenuActions(NetworkBookItem book, BookDownloaderServiceConnection connection) {
 		LinkedHashSet<Action> actions = new LinkedHashSet<Action>();
 		if (useFullReferences(book)) {
-			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_FULL);
+			final BookUrlInfo reference = book.reference(UrlInfo.Type.Book);
 			if (reference != null
-					&& connection != null && connection.isBeingDownloaded(reference.URL)) {
+					&& connection != null && connection.isBeingDownloaded(reference.Url)) {
 				actions.add(new Action(TREE_NO_ACTION, "alreadyDownloading"));
 			} else if (book.localCopyFileName() != null) {
 				actions.add(new Action(READ_BOOK_ITEM_ID, "read"));
@@ -161,10 +162,10 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		}
 		if (useDemoReferences(book)) {
-			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
-			if (connection != null && connection.isBeingDownloaded(reference.URL)) {
+			final BookUrlInfo reference = book.reference(UrlInfo.Type.BookDemo);
+			if (connection != null && connection.isBeingDownloaded(reference.Url)) {
 				actions.add(new Action(TREE_NO_ACTION, "alreadyDownloadingDemo"));
-			} else if (reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO) != null) {
+			} else if (reference.localCopyFileName(UrlInfo.Type.BookDemo) != null) {
 				actions.add(new Action(READ_DEMO_ITEM_ID, "readDemo"));
 				actions.add(new Action(DELETE_DEMO_ITEM_ID, "deleteDemo"));
 			} else {
@@ -173,16 +174,16 @@ class NetworkBookActions extends NetworkTreeActions {
 		}
 		if (useBuyReferences(book)) {
 			int id = TREE_NO_ACTION;
-			BookReference reference = null;
-			if (book.reference(BookReference.Type.BUY) != null) {
-				reference = book.reference(BookReference.Type.BUY);
+			BookUrlInfo reference = null;
+			if (book.reference(UrlInfo.Type.BookBuy) != null) {
+				reference = book.reference(UrlInfo.Type.BookBuy);
 				id = BUY_DIRECTLY_ITEM_ID;
-			} else if (book.reference(BookReference.Type.BUY_IN_BROWSER) != null) {
-				reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
+			} else if (book.reference(UrlInfo.Type.BookBuyInBrowser) != null) {
+				reference = book.reference(UrlInfo.Type.BookBuyInBrowser);
 				id = BUY_IN_BROWSER_ITEM_ID;
 			}
 			if (reference != null) {
-				final String price = ((BuyBookReference) reference).Price;
+				final String price = ((BookBuyUrlInfo)reference).Price;
 				actions.add(new Action(id, "buy", price));
 			}
 			final Basket basket = book.Link.basket();
@@ -283,8 +284,9 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	private static void doDownloadBook(Activity activity, final NetworkBookItem book, boolean demo) {
-		int resolvedType = demo ? BookReference.Type.DOWNLOAD_DEMO : BookReference.Type.DOWNLOAD_FULL;
-		BookReference ref = book.reference(resolvedType);
+		final UrlInfo.Type resolvedType =
+			demo ? UrlInfo.Type.BookDemo : UrlInfo.Type.Book;
+		final BookUrlInfo ref = book.reference(resolvedType);
 		if (ref != null) {
 			final String sslCertificate;
 			if (book.Link.authenticationManager() != null) {
@@ -293,11 +295,11 @@ class NetworkBookActions extends NetworkTreeActions {
 				sslCertificate = null;
 			}
 			activity.startService(
-				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.URL), 
+				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url), 
 						activity.getApplicationContext(), BookDownloaderService.class)
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
-					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanURL())
+					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanUrl())
 					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
 					.putExtra(BookDownloaderService.SSL_CERTIFICATE_KEY, sslCertificate)
 			);
@@ -309,9 +311,9 @@ class NetworkBookActions extends NetworkTreeActions {
 		if (!demo) {
 			local = book.localCopyFileName();
 		} else {
-			BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
+			final BookUrlInfo reference = book.reference(UrlInfo.Type.BookDemo);
 			if (reference != null) {
-				local = reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO);
+				local = reference.localCopyFileName(UrlInfo.Type.BookDemo);
 			}
 		}
 		if (local != null) {
@@ -339,9 +341,9 @@ class NetworkBookActions extends NetworkTreeActions {
 					if (!demo) {
 						book.removeLocalFiles();
 					} else {
-						final BookReference reference = book.reference(BookReference.Type.DOWNLOAD_DEMO);
+						final BookUrlInfo reference = book.reference(UrlInfo.Type.BookDemo);
 						if (reference != null) {
-							final String fileName = reference.localCopyFileName(BookReference.Type.DOWNLOAD_DEMO);
+							final String fileName = reference.localCopyFileName(UrlInfo.Type.BookDemo);
 							if (fileName != null) {
 								new File(fileName).delete();
 							}
@@ -466,9 +468,9 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {
-		BookReference reference = book.reference(BookReference.Type.BUY_IN_BROWSER);
+		BookUrlInfo reference = book.reference(UrlInfo.Type.BookBuyInBrowser);
 		if (reference != null) {
-			Util.openInBrowser(activity, reference.URL);
+			Util.openInBrowser(activity, reference.Url);
 		}
 	}
 

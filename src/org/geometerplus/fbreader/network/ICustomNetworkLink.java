@@ -19,9 +19,11 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.HashMap;
+
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import java.util.HashMap;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public interface ICustomNetworkLink extends INetworkLink {
 	public static final int INVALID_ID = -1;
@@ -33,9 +35,9 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void setTitle(String title);
 	void setSummary(String summary);
 
-	HashMap<String,UrlInfo> urlInfoMap();
-	void setUrl(String urlKey, String url);
-	void removeUrl(String urlKey);
+	UrlInfoCollection<UrlInfoWithDate> urlInfoMap();
+	void setUrl(UrlInfo.Type type, String url);
+	void removeUrl(UrlInfo.Type type);
 
 	boolean isObsolete(long milliSeconds);
 	void reloadInfo(boolean urlsOnly) throws ZLNetworkException;

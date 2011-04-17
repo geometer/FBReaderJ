@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.net.*;
+
 import android.app.*;
 import android.os.Bundle;
 import android.view.*;
@@ -44,6 +46,8 @@ import org.geometerplus.fbreader.network.tree.SearchItemTree;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
+	protected static final int AUTHENTICATION_CODE = 1;
+
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
 	public BookDownloaderServiceConnection Connection;
@@ -62,15 +66,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	}
 
 	@Override
-	public void onDestroy() {
-		if (Connection != null) {
-			unbindService(Connection);
-			Connection = null;
-		}
-		super.onDestroy();
-	}
-
-	@Override
 	protected void onStart() {
 		super.onStart();
 
@@ -81,6 +76,47 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		NetworkView.Instance().addEventListener(this);
 	}
 
+	private final class MyAuthenticator extends Authenticator {
+		private volatile String myUsername;
+		private volatile String myPassword;
+
+		@Override
+		protected PasswordAuthentication getPasswordAuthentication() {
+			final Intent intent = new Intent();
+			intent.setClass(NetworkBaseActivity.this, AuthenticationActivity.class);
+			intent.putExtra(AuthenticationActivity.AREA_KEY, getRequestingPrompt());
+			intent.putExtra(AuthenticationActivity.HOST_KEY, getRequestingSite().getHostName());
+			intent.putExtra(AuthenticationActivity.SCHEME_KEY, getRequestingProtocol());
+			startActivityForResult(intent, AUTHENTICATION_CODE);
+			synchronized (this) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+				}
+			}
+			System.err.println("auth thread: " + Thread.currentThread());
+			PasswordAuthentication result = null;
+			if (myUsername != null && myPassword != null) {
+				result = new PasswordAuthentication(myUsername, myPassword.toCharArray());
+			}
+			myUsername = null;
+			myPassword = null;
+			return result;
+		}
+	}
+
+	private final MyAuthenticator myAuthenticator = new MyAuthenticator();
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		getListView().setOnCreateContextMenuListener(this);
+		onModelChanged(); // do the same update actions as upon onModelChanged
+
+		System.err.println("UI thread: " + Thread.currentThread());
+		Authenticator.setDefault(myAuthenticator);
+	}
+
 	@Override
 	protected void onStop() {
 		NetworkView.Instance().removeEventListener(this);
@@ -88,12 +124,26 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		getListView().setOnCreateContextMenuListener(this);
-		onModelChanged(); // do the same update actions as upon onModelChanged
+	public void onDestroy() {
+		if (Connection != null) {
+			unbindService(Connection);
+			Connection = null;
+		}
+		super.onDestroy();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == AUTHENTICATION_CODE) {
+			synchronized (myAuthenticator) {
+				if (data != null) {
+					myAuthenticator.myUsername = data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
+					myAuthenticator.myPassword = data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
+				}
+				myAuthenticator.notify();
+			}
+		}
+	}
 
 	// method from NetworkView.EventListener
 	public void onModelChanged() {

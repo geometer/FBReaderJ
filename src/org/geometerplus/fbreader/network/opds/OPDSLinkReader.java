@@ -35,7 +35,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 
 public class OPDSLinkReader {
-	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.3.xml";
+	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.4.xml";
 
 	public static final int CACHE_LOAD = 0;
 	public static final int CACHE_UPDATE = 1;

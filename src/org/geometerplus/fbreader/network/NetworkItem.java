@@ -19,13 +19,17 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.*;
+
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+
 public abstract class NetworkItem {
 	public final INetworkLink Link;
 	public final String Title;
 	public final String Summary;
-	public final String Cover;
 
-	//public org.geometerplus.fbreader.network.atom.ATOMEntry dbgEntry;
+	private final UrlInfoCollection myURLs;
 
 	/**
 	 * Creates new NetworkItem instance.
@@ -33,12 +37,45 @@ public abstract class NetworkItem {
 	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param title      title of this library item. Must be not <code>null</code>.
 	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param cover      cover url. Can be <code>null</code>.
+	 * @param urls       collection of item-related urls (like icon link, opds catalog link, etc. Can be <code>null</code>.
 	 */
-	protected NetworkItem(INetworkLink link, String title, String summary, String cover) {
+	protected NetworkItem(INetworkLink link, String title, String summary, UrlInfoCollection urls) {
 		Link = link;
 		Title = title;
 		Summary = summary;
-		Cover = cover;
+		if (urls != null && !urls.isEmpty()) {
+ 			myURLs = new UrlInfoCollection(urls);
+		} else {
+			myURLs = null;
+		}
+	}
+
+	public List<UrlInfo> getAllInfos() {
+		if (myURLs == null) {
+			return Collections.emptyList();
+		}
+		return myURLs.getAllInfos();
+	}
+
+	public List<UrlInfo> getAllInfos(UrlInfo.Type type) {
+		if (myURLs == null) {
+			return Collections.emptyList();
+		}
+		return myURLs.getAllInfos(type);
+	}
+
+	public String getUrl(UrlInfo.Type type) {
+		if (myURLs == null) {
+			return null;
+		}
+		return myURLs.getUrl(type);
+	}
+
+	public String getImageUrl() {
+		if (myURLs == null) {
+			return null;
+		}
+		final String cover = myURLs.getUrl(UrlInfo.Type.Image);
+		return cover != null ? cover : myURLs.getUrl(UrlInfo.Type.Thumbnail);
 	}
 }

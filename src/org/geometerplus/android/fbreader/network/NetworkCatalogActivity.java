@@ -92,6 +92,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
+			default:
+				super.onActivityResult(requestCode, resultCode, data);
+				break;
 			case USER_REGISTRATION_REQUEST_CODE:
 				if (myTree instanceof NetworkCatalogTree &&
 					resultCode == RESULT_OK &&

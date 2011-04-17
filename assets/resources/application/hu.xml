@@ -608,6 +608,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Bejelentkezés" />
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Felhasználónév" />
 			<node name="password" value="Jelszó" />
 			<node name="skipIP" value="IP-címhez kötés nem lehetséges" />

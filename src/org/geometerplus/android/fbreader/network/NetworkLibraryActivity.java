@@ -41,6 +41,7 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
 	static final String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
@@ -51,7 +52,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	private static final String ADD_CATALOG_URLS_MAP_KEY = "urls";
 
 	static void addLinkToIntent(Intent intent, ICustomNetworkLink link) {
-		final String textUrl = link.getUrlInfo(INetworkLink.URL_MAIN).URL;
+		final String textUrl = link.getUrl(UrlInfo.Type.Catalog);
 		intent.setData(Uri.parse(textUrl));
 		intent
 			.putExtra(ADD_CATALOG_TITLE_KEY, link.getTitle())
@@ -71,7 +72,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			uri.getHost(),
 			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
 			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
-			(HashMap<String,UrlInfo>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
+			(UrlInfoCollection<UrlInfoWithDate>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
 		);
 	}
 

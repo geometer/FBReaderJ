@@ -24,14 +24,16 @@ import java.io.IOException;
 import java.net.URLConnection;
 
 public abstract class ZLNetworkRequest {
-	public final String URL;
+	String URL;
 	public final String SSLCertificate;
 	public final String PostData;
 
-	public boolean FollowRedirects = true;
-
 	protected ZLNetworkRequest(String url) {
 		this(url, null, null);
+	}
+
+	public String getURL() {
+		return URL;
 	}
 
 	protected ZLNetworkRequest(String url, String sslCertificate, String postData) {

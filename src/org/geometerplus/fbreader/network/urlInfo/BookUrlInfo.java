@@ -17,25 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.urlInfo;
 
 import java.io.File;
 import java.net.URI;
 
 import org.geometerplus.fbreader.Paths;
 
-public class BookReference {
+// resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
-	public interface Type {
-		int UNKNOWN = 0; // Unknown reference type
-		int DOWNLOAD_FULL = 1; // reference for download full version of the book
-		int DOWNLOAD_FULL_CONDITIONAL = 2; // reference for download full version of the book, useful only when book is bought
-		int DOWNLOAD_DEMO = 3; // reference for downloading demo version of the book
-		int DOWNLOAD_FULL_OR_DEMO = 4; // reference for downloading unknown version of the book
-		int BUY = 5; // reference for buying the book (useful only when authentication is supported)
-		int BUY_IN_BROWSER = 6; // reference to the site page, when it is possible to buy the book
-	}
-	// resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
+public class BookUrlInfo extends UrlInfo {
+	private static final long serialVersionUID = -893514485257788221L;
 
 	public interface Format {
 		int NONE = 0;
@@ -44,24 +36,16 @@ public class BookReference {
 		int EPUB = 3;
 	}
 
-	public final String URL;
 	public final int BookFormat;
-	public final int ReferenceType;
 
-	public BookReference(String url, int format, int type) {
-		URL = url;
+	public BookUrlInfo(Type type, int format, String url) {
+		super(type, url);
 		BookFormat = format;
-		ReferenceType = type;
-	}
-
-	// returns clean URL without any account/user-specific parts
-	public String cleanURL() {
-		return URL;
 	}
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeBookFileName(String url, int format, int resolvedReferenceType) {
+	public static String makeBookFileName(String url, int format, Type resolvedReferenceType) {
 		URI uri;
 		try {
 			uri = new URI(url);
@@ -76,7 +60,7 @@ public class BookReference {
 			path.delete(0, 4);
 		}
 		path.insert(0, File.separator);
-		if (resolvedReferenceType == Type.DOWNLOAD_DEMO) {
+		if (resolvedReferenceType == Type.BookDemo) {
 			path.insert(0, "Demos");
 			path.insert(0, File.separator);
 		}
@@ -154,11 +138,16 @@ public class BookReference {
 		return path.append(ext).toString();
 	}
 
-	public final String makeBookFileName(int resolvedReferenceType) {
-		return makeBookFileName(cleanURL(), BookFormat, resolvedReferenceType);
+	// Url with no user-dependent info; is overridden in DecoratedBookUrlInfo
+	public String cleanUrl() {
+		return Url;
 	}
 
-	public final String localCopyFileName(int resolvedReferenceType) {
+	public final String makeBookFileName(Type resolvedReferenceType) {
+		return makeBookFileName(cleanUrl(), BookFormat, resolvedReferenceType);
+	}
+
+	public final String localCopyFileName(Type resolvedReferenceType) {
 		String fileName = makeBookFileName(resolvedReferenceType);
 		if (fileName != null && new File(fileName).exists()) {
 			return fileName;
@@ -167,6 +156,6 @@ public class BookReference {
 	}
 
 	public String toString() {
-		return "BookReference[type=" + ReferenceType + ";format=" + BookFormat + ";URL=" + URL + "]";
+		return "BookReference[type=" + InfoType + ";format=" + BookFormat + ";URL=" + Url + "]";
 	}
 }

@@ -622,6 +622,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Ověřování"/>
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Uživatelské jméno"/>
 			<node name="password" value="Heslo"/>
 			<node name="skipIP" value="Nevázat na IP adresu"/>
