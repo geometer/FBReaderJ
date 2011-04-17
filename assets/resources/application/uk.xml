@@ -608,6 +608,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Авторизація" />
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Ім’я користувача" />
 			<node name="password" value="Пароль" />
 			<node name="skipIP" value="Не прив’язуватись до ip-адреси" />

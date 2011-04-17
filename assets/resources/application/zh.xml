@@ -608,6 +608,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="鉴定" />
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="登录" />
 			<node name="password" value="密码" />
 			<node name="skipIP" value="不绑定到IP地址" />

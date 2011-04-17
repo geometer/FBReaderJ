@@ -608,6 +608,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="การตรวจสอบสิทธิ์"/>
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="ชื่อผู้ใช้"/>
 			<node name="password" value="รหัสผ่าน"/>
 			<node name="skipIP" value="ไม่ผูกกับไอพีนี้"/>
