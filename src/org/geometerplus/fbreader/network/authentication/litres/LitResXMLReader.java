@@ -26,10 +26,9 @@ import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.HtmlToString;
-
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 class LitResXMLReader extends LitResAuthenticationXMLReader {
-
 	public final INetworkLink Link;
 	public final List<NetworkItem> Books;
 
@@ -44,7 +43,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private String mySummary;
 
-	private String myCover;
+	private final UrlInfoCollection myUrls = new UrlInfoCollection();
 
 	private String myAuthorFirstName;
 	private String myAuthorMiddleName;
@@ -52,7 +51,6 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private LinkedList<NetworkBookItem.AuthorData> myAuthors = new LinkedList<NetworkBookItem.AuthorData>();
 
 	private LinkedList<String> myTags = new LinkedList<String>();
-	private LinkedList<BookReference> myReferences = new LinkedList<BookReference>();
 
 	public LitResXMLReader(INetworkLink link, List<NetworkItem> books) {
 		super(link.getSiteName());
@@ -119,12 +117,14 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 		case CATALOG:
 			if (TAG_BOOK == tag) {
 				myBookId = attributes.getValue("hub_id");
-				myCover = attributes.getValue("cover_preview");
+				myUrls.addInfo(new UrlInfo(
+					UrlInfo.Type.Image, attributes.getValue("cover_preview")
+				));
 
-				myReferences.add(new BookReference(
-					"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId,
-					BookReference.Format.FB2_ZIP,
-					BookReference.Type.DOWNLOAD_FULL_CONDITIONAL
+				myUrls.addInfo(new BookUrlInfo(
+					UrlInfo.Type.BookConditional,
+					BookUrlInfo.Format.FB2_ZIP,
+					"https://robot.litres.ru/pages/catalit_download_book/?art=" + myBookId
 				));
 				myState = BOOK;
 			}
@@ -224,15 +224,14 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 					myTags,
 					mySeriesTitle,
 					myIndexInSeries,
-					myCover,
-					myReferences
+					myUrls
 				));
 
-				myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = mySummary = myCover = null;
+				myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = mySummary = null;
 				myIndexInSeries = 0;
 				myAuthors.clear();
 				myTags.clear();
-				myReferences.clear();
+				myUrls.clear();
 				myState = CATALOG;
 			}
 			break;

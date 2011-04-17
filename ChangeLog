@@ -1,5 +1,9 @@
 ===== 1.0.7 (Apr ??, 2011) =====
+* Basic authentication (for OPDS catalogs) has been implemented
 * Fixed unexpected scrolling after brightness adjustment
+* Fixed custom OPDS catalogs search
+* Fixed freezes in library view
+* Fixed namespace processing order in XMLs
 
 ===== 1.0.6 (Apr 12, 2011) =====
 * Fixed tap-only scrolling mode

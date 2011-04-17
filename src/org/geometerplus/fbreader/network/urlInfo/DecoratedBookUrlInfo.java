@@ -17,32 +17,18 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.urlInfo;
 
-public class BuyBookReference extends BookReference {
+public class DecoratedBookUrlInfo extends BookUrlInfo {
+	private final String myCleanUrl;
 
-	public final String Price;
-
-	public BuyBookReference(String url, int format, int type, String price) {
-		super(url, format, type);
-		Price = price;
+	public DecoratedBookUrlInfo(BookUrlInfo base, String url) {
+		super(base.InfoType, base.BookFormat, url);
+		myCleanUrl = base.cleanUrl();
 	}
 
-	public static String price(String price, String currency) {
-		if (price == null || currency == null) {
-			return price;
-		} else if (currency.equals("RUB")) {
-			return price + " \u0440.";
-		} else if (currency.equals("USD")) {
-			return "$" + price;
-		} else if (currency.equals("GBP")) {
-			return "\u00A3" + price;
-		} else if (currency.equals("EUR")) {
-			return "\u20AC" + price;
-		} else if (currency.equals("JPY")) {
-			return "\u00A5" + price;
-		}
-		return currency + " " + price;
+	@Override
+	public String cleanUrl() {
+		return myCleanUrl;
 	}
-
 }

@@ -607,6 +607,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Авторизация" />
+			<node name="unencryptedWarning" value="Пароль пересылается незашифрованным"/>
 			<node name="login" value="Имя пользователя" />
 			<node name="password" value="Пароль" />
 			<node name="skipIP" value="Не привязываться к ip-адресу" />

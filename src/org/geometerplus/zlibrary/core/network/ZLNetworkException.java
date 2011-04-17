@@ -72,13 +72,27 @@ public class ZLNetworkException extends Exception {
 
 	final private String myCode;
 
+	public ZLNetworkException(boolean useAsMessage, String str, Throwable cause) {
+		super(useAsMessage ? str : errorMessage(str), cause);
+		myCode = useAsMessage ? null : str;
+	}
+
 	public ZLNetworkException(boolean useAsMessage, String str) {
 		super(useAsMessage ? str : errorMessage(str));
 		myCode = useAsMessage ? null : str;
 	}
 
+	public ZLNetworkException(String code, Throwable cause) {
+		this(false, code, cause);
+	}
+
 	public ZLNetworkException(String code) {
 		this(false, code);
+	}
+
+	public ZLNetworkException(String code, String arg, Throwable cause) {
+		super(errorMessage(code, arg), cause);
+		myCode = code;
 	}
 
 	public ZLNetworkException(String code, String arg) {
