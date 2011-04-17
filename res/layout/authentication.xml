@@ -58,6 +58,36 @@
 			android:layout_marginTop="5dp"
 			android:layout_marginBottom="5dp"
 		/>
+		<TextView
+			android:id="@+id/authentication_error"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			android:textColor="#ff0000"
+			android:layout_marginTop="5dp"
+			android:layout_marginBottom="5dp"
+		/>
+		<LinearLayout
+			android:id="@+id/authentication_signup_box"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			android:orientation="horizontal"
+			android:paddingTop="5dp"
+			android:paddingBottom="5dp"
+		>
+			<TextView
+				android:id="@+id/authentication_signup"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:textColor="#0000ff"
+				android:textStyle="bold"
+				android:clickable="true"
+				android:focusable="true"
+				android:background="@drawable/link"
+			/>
+		</LinearLayout>
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
