@@ -608,6 +608,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authenticatie" />
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Gebruikersnaam" />
 			<node name="password" value="Wachtwoord" />
 			<node name="skipIP" value="Don't bound to ip-address" toBeTranslated="true" />

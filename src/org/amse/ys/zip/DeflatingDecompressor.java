@@ -88,7 +88,11 @@ class DeflatingDecompressor extends Decompressor {
 			toFill -= ready;
 			myOutBufferLength -= ready;
 		}
-		myAvailable -= len;
+		if (len > 0) {
+			myAvailable -= len;
+		} else {
+			myAvailable = 0;
+		}
 		return len;
     }
 
