@@ -86,15 +86,15 @@ public class ZLNetworkManager {
 		//httpConnection.setRequestProperty("Connection", "Close");
 		httpConnection.setRequestProperty("User-Agent", ZLNetworkUtil.getUserAgent());
 		httpConnection.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
-		httpConnection.setAllowUserInteraction(false);
+		httpConnection.setAllowUserInteraction(true);
 		if (httpConnection instanceof HttpsURLConnection) {
 			HttpsURLConnection httpsConnection = (HttpsURLConnection)httpConnection;
 
 			final ArrayList<TrustManager> managers = new ArrayList<TrustManager>();
-			collectStandardTrustManagers(managers);
 			if (request.SSLCertificate != null) {
 				managers.add(createZLTrustManager(request.SSLCertificate));
 			}
+			collectStandardTrustManagers(managers);
 
 			try {
 				SSLContext context = SSLContext.getInstance("TLS");
@@ -113,7 +113,7 @@ public class ZLNetworkManager {
 			HttpURLConnection httpConnection = null;
 			int response = -1;
 			final int retryLimit = 3;
-			for (int retryCounter = 0; retryCounter < retryLimit && response == -1; ++retryCounter) {
+			for (int retryCounter = 0; retryCounter < retryLimit && (response == -1 || response == 302); ++retryCounter) {
 				final URLConnection connection = new URL(request.URL).openConnection();
 				if (!(connection instanceof HttpURLConnection)) {
 					throw new ZLNetworkException(ZLNetworkException.ERROR_UNSUPPORTED_PROTOCOL);
@@ -145,6 +145,9 @@ public class ZLNetworkManager {
 					httpConnection.connect();
 				}
 				response = httpConnection.getResponseCode();
+				if (response == 302) {
+					request.URL = httpConnection.getHeaderField("Location");
+				}
 			}
 
 			InputStream stream = null;
@@ -167,7 +170,7 @@ public class ZLNetworkManager {
 			} else {
 				if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
 					throw new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED);
-				} else if (response != HttpURLConnection.HTTP_OK) {
+				} else if (response >= 400) {
 					throw new ZLNetworkException(true, httpConnection.getResponseMessage());
 				} else {
 					throw new ZLNetworkException(ZLNetworkException.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL));

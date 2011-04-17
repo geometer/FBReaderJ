@@ -93,7 +93,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 				}
 
 				new OPDSXMLReader(
-					new NetworkOPDSFeedReader(URL, result)
+					new NetworkOPDSFeedReader(getURL(), result)
 				).read(inputStream);
 
 				if (result.Listener.confirmInterrupt()) {

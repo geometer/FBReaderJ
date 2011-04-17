@@ -117,7 +117,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog)) {
 				@Override
 				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
-					final CatalogInfoReader info = new CatalogInfoReader(URL, OPDSCustomLink.this, opensearchDescriptionURLs);
+					final CatalogInfoReader info = new CatalogInfoReader(getURL(), OPDSCustomLink.this, opensearchDescriptionURLs);
 					new OPDSXMLReader(info).read(inputStream);
         
 					if (!info.FeedStarted) {
@@ -146,7 +146,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 				requests.add(new ZLNetworkRequest(url) {
 					@Override
 					public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
-						new OpenSearchXMLReader(URL, descriptions).read(inputStream);
+						new OpenSearchXMLReader(getURL(), descriptions).read(inputStream);
 					}
 				});
 			}

@@ -19,9 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.ArrayList;
+import java.util.*;
+import java.net.*;
 
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +40,18 @@ class NetworkView {
 	public static NetworkView Instance() {
 		if (ourInstance == null) {
 			ourInstance = new NetworkView();
+			Authenticator.setDefault(new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					System.err.println("getPasswordAuthentication");
+					System.err.println(getRequestingSite().getHostName());
+					System.err.println(getRequestingPrompt());
+					System.err.println(getRequestingProtocol());
+					final String username = "geometer";
+					final String password = "XXXXXXXX";
+					return new PasswordAuthentication(username, password.toCharArray());
+				}
+			});
 		}
 		return ourInstance;
 	}
