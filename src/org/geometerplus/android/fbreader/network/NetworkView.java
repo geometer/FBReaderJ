@@ -19,9 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.ArrayList;
+import java.util.*;
 
 import android.content.Context;
 import android.content.Intent;

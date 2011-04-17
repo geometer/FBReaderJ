@@ -17,26 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.urlInfo;
 
 import java.util.Date;
 import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
-public final class UrlInfo implements Serializable {
-	public static final UrlInfo NULL = new UrlInfo(null, null);
+public final class UrlInfoWithDate extends UrlInfo {
+	private static final long serialVersionUID = -896768978957787222L;
 
-	public final String URL;
+	public static final UrlInfoWithDate NULL = new UrlInfoWithDate(null, null);
+
 	public final Date Updated;
 
-	public UrlInfo(String url, Date updated) {
-		URL = url;
+	public UrlInfoWithDate(Type type, String url, Date updated) {
+		super(type, url);
 		Updated = updated;
 	}
 
-	public UrlInfo(String url) {
-		this(url, new Date());
+	public UrlInfoWithDate(Type type, String url) {
+		this(type, url, new Date());
 	}
 
 	@Override
@@ -44,16 +45,19 @@ public final class UrlInfo implements Serializable {
 		if (o == this) {
 			return true;
 		}
-		if (!(o instanceof UrlInfo)) {
+		if (!(o instanceof UrlInfoWithDate)) {
 			return false;
 		}
 
-		final UrlInfo info = (UrlInfo)o;
-		return ZLMiscUtil.equals(URL, info.URL) && ZLMiscUtil.equals(Updated, info.Updated);
+		final UrlInfoWithDate info = (UrlInfoWithDate)o;
+		return
+			InfoType == info.InfoType &&
+			ZLMiscUtil.equals(Url, info.Url) &&
+			ZLMiscUtil.equals(Updated, info.Updated);
 	}
 
 	@Override
 	public int hashCode() {
-		return ZLMiscUtil.hashCode(URL) + ZLMiscUtil.hashCode(Updated);
+		return InfoType.hashCode() + ZLMiscUtil.hashCode(Url) + ZLMiscUtil.hashCode(Updated);
 	}
 }

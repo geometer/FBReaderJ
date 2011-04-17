@@ -41,30 +41,11 @@ class VolumeKeyTurnPageAction extends FBAction {
 			forward = !forward;
 		}
 
-		if (forward) {
-			ZLTextWordCursor cursor = Reader.getTextView().getEndCursor();
-			if (cursor == null || cursor.isNull() ||
-				(cursor.isEndOfParagraph() && cursor.getParagraphCursor().isLast())) {
-				return;
-			}
-		} else {
-			ZLTextWordCursor cursor = Reader.getTextView().getStartCursor();
-			if (cursor == null || cursor.isNull() ||
-				(cursor.isStartOfParagraph() && cursor.getParagraphCursor().isFirst())) {
-				return;
-			}
-		}
-		final FBView view = Reader.getTextView();
-		if (view.getAnimationType() != FBView.Animation.none) {
-			final boolean horizontal = preferences.HorizontalOption.getValue();
-			if (forward) {
-				view.startAutoScrolling(horizontal ? FBView.PAGE_RIGHT : FBView.PAGE_BOTTOM);
-			} else {
-				view.startAutoScrolling(horizontal ? FBView.PAGE_LEFT : FBView.PAGE_TOP);
-			}
-		} else {
-			view.scrollPage(forward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
-			Reader.repaintView();
-		}
+		Reader.getViewWidget().startAutoScrolling(
+			forward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+			preferences.HorizontalOption.getValue()
+				? FBView.Direction.rightToLeft : FBView.Direction.up,
+			preferences.AnimationSpeedOption.getValue()
+		);
 	}
 }

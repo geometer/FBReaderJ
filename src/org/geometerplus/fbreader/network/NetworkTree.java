@@ -31,6 +31,8 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
 	public static class Key implements Serializable {
+		private static final long serialVersionUID = -6500763093522202052L;
+
 		final Key Parent;
 		final String Id;
 
@@ -78,10 +80,11 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 	public static ZLImage createCover(NetworkItem item) {
-		if (item.Cover == null) {
+		final String imageUrl = item.getImageUrl();
+		if (imageUrl == null) {
 			return null;
 		}
-		return createCover(item.Cover, null);
+		return createCover(imageUrl, null);
 	}
 
 	private static final String DATA_PREFIX = "data:";

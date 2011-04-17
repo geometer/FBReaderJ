@@ -38,7 +38,6 @@ public class PluckerFileImage extends ZLSingleImage {
 		mySize = size;
 	}
 
-	@Override
 	public String getURI() {
 		// TODO: implement
 		return null;

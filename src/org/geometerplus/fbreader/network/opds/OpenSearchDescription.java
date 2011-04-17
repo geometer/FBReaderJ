@@ -46,7 +46,7 @@ class OpenSearchDescription {
 	// searchTerms -- an HTML-encoded string
 	public String makeQuery(String searchTerms) {
 		final StringBuffer query = new StringBuffer();
-		final Matcher m = Pattern.compile("\\{(.*)\\}").matcher(Template);
+		final Matcher m = Pattern.compile("\\{([^}]*)\\}").matcher(Template);
 		while (m.find()) {
 			String name = m.group(1);
 			if (name == null || name.length() == 0 || name.contains(":")) {

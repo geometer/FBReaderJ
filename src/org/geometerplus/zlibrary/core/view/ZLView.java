@@ -19,8 +19,15 @@
 
 package org.geometerplus.zlibrary.core.view;
 
+import org.geometerplus.zlibrary.core.application.ZLApplication;
+
 abstract public class ZLView {
+	public final ZLApplication Application;
 	protected ZLPaintContext myContext = new DummyPaintContext();
+
+	protected ZLView(ZLApplication application) {
+		Application = application;
+	}
 
 	public final ZLPaintContext getContext() {
 		return myContext;
@@ -33,19 +40,48 @@ abstract public class ZLView {
 
 	abstract public FooterArea getFooterArea();
 
-	public static final int PAGE_CENTRAL = 0;
-	public static final int PAGE_LEFT = 1;
-	public static final int PAGE_RIGHT = 2;
-	public static final int PAGE_TOP = 3;
-	public static final int PAGE_BOTTOM = 4;
+	public static enum PageIndex {
+		previous, current, next;
 
-	public enum Animation {
-		none, slide, shift
+		public PageIndex getNext() {
+			switch (this) {
+				case previous:
+					return current;
+				case current:
+					return next;
+				default:
+					return null;
+			}
+		}
+
+		public PageIndex getPrevious() {
+			switch (this) {
+				case next:
+					return current;
+				case current:
+					return previous;
+				default:
+					return null;
+			}
+		}
+	};
+	public static enum Direction {
+		leftToRight(true), rightToLeft(true), up(false), down(false);
+
+		public final boolean IsHorizontal;
+
+		Direction(boolean isHorizontal) {
+			IsHorizontal = isHorizontal;
+		}
+	};
+	public static enum Animation {
+		none, curl, slide, shift
 	}
+
 	public abstract Animation getAnimationType();
 
-	abstract public void paint(ZLPaintContext context, int viewPage);
-	abstract public void onScrollingFinished(int viewPage);
+	abstract public void paint(ZLPaintContext context, PageIndex pageIndex);
+	abstract public void onScrollingFinished(PageIndex pageIndex);
 
 	public boolean onFingerPress(int x, int y) {
 		return false;
@@ -89,6 +125,8 @@ abstract public class ZLView {
 
 	public abstract boolean isScrollbarShown();
 	public abstract int getScrollbarFullSize();
-	public abstract int getScrollbarThumbPosition(int viewPage);
-	public abstract int getScrollbarThumbLength(int viewPage);
+	public abstract int getScrollbarThumbPosition(PageIndex pageIndex);
+	public abstract int getScrollbarThumbLength(PageIndex pageIndex);
+
+	public abstract boolean canScroll(PageIndex index);
 }

@@ -27,12 +27,12 @@ import android.view.MenuItem;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.view.ZLView;
+import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
-
-import org.geometerplus.zlibrary.ui.android.R;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
@@ -60,7 +60,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	protected void refreshMenu() {
+	public void refreshMenu() {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
@@ -68,27 +68,11 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		}
 	}
 
-	protected void repaintView() {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		// I'm not sure about threads, so postInvalidate() is used instead of invalidate()
-		widget.postInvalidate();
+	protected ZLViewWidget getViewWidget() {
+		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 	}
 
 	@Override
-	protected void scrollViewTo(int viewPage, int shift) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.scrollToPage(viewPage, shift);
-	}
-
-	@Override
-	protected void startViewAutoScrolling(int viewPage) {
-		final ZLAndroidWidget widget = 
-			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-		widget.startAutoScrolling(viewPage);
-	}
-
 	public void rotate() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).rotateScreen();
 	}

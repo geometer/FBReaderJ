@@ -451,10 +451,6 @@
 					<node name="summaryOn" value="Mostrar as marcas do índice na barra do rodapé"/>
 					<node name="summaryOff" value="Non mostrar as marcas do índice na barra do rodapé"/>
 				</node>
-				<node name="footerLongTap" value="Pulsación longa no rodapé">
-					<node name="longTapRevert" value="Reverter á posición"/>
-					<node name="longTapNavigate" value="Ira á posición"/>
-				</node>
 				<node name="showProgress" value="Mostrar número de páxina">
 					<node name="summaryOn" value="Mostrar número de páxina no rodapé"/>
 					<node name="summaryOff" value="Non mostrar número de páxina no rodapé"/>
@@ -511,8 +507,13 @@
 				</node>
 				<node name="animation" value="Animación">
 					<node name="none" value="Desprazamento sen animación"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="Deslizar"/>
 					<node name="shift" value="Pasar"/>
+				</node>
+				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
+					<node name="fast" value="fast" toBeTranslated="true"/>
+					<node name="slow" value="slow" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="Desprazamento horizontal">
 					<node name="summaryOn" value="Desprazar as páxinas en horizontal"/>
@@ -607,6 +608,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Autenticación" />
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Nome de usuario" />
 			<node name="password" value="Contrasinal" />
 			<node name="skipIP" value="Non ligar o enderezo IP" />

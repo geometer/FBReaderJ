@@ -451,10 +451,6 @@
 					<node name="summaryOn" value="แสดงสารบัญท้ายหน้า"/>
 					<node name="summaryOff" value="ไม่แสดงสัญลักษณ์สารบัญท้ายหน้า"/>
 				</node>
-				<node name="footerLongTap" value="เมื่อกดค้างที่ท้ายหน้า">
-					<node name="longTapRevert" value="กลับตำแหน่งเดิม"/>
-					<node name="longTapNavigate" value="ไปที่ตำแหน่ง"/>
-				</node>
 				<node name="showProgress" value="แสดงเลขหน้า">
 					<node name="summaryOn" value="แสดงเลขหน้าที่ท้ายหน้า"/>
 					<node name="summaryOff" value="ไม่แสดงเลขหน้าที่ท้ายหน้า"/>
@@ -511,8 +507,13 @@
 				</node>
 				<node name="animation" value="แอนิเมชั่น">
 					<node name="none" value="ไม่มีแอนิเมชั่นในการเลื่อนหน้า"/>
+					<node name="curl" value="Curl animation" toBeTranslated="true"/>
 					<node name="slide" value="เลื่อนหน้าแบบสไลด์"/>
 					<node name="shift" value="เลื่อนหน้าแบบสลับ"/>
+				</node>
+				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
+					<node name="fast" value="fast" toBeTranslated="true"/>
+					<node name="slow" value="slow" toBeTranslated="true"/>
 				</node>
 				<node name="horizontal" value="เลื่อนหน้าในแนวนอน">
 					<node name="summaryOn" value="เลื่อนหน้าตามแนวนอน"/>
@@ -607,6 +608,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="การตรวจสอบสิทธิ์"/>
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="ชื่อผู้ใช้"/>
 			<node name="password" value="รหัสผ่าน"/>
 			<node name="skipIP" value="ไม่ผูกกับไอพีนี้"/>

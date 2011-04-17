@@ -34,39 +34,29 @@ class TurnPageAction extends FBAction {
 
 		final ScrollingPreferences.FingerScrolling fingerScrolling =
 			preferences.FingerScrollingOption.getValue();
-		if (fingerScrolling != ScrollingPreferences.FingerScrolling.byTap &&
-			fingerScrolling != ScrollingPreferences.FingerScrolling.byTapAndFlick) {
-			return false;
-		}
-
-		if (myForward) {
-			ZLTextWordCursor cursor = Reader.getTextView().getEndCursor();
-			return
-				cursor != null &&
-				!cursor.isNull() &&
-				(!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast());
-		} else {
-			ZLTextWordCursor cursor = Reader.getTextView().getStartCursor();
-			return
-				cursor != null &&
-				!cursor.isNull() &&
-				(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst());
-		}
+		return
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTap ||
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
 	}
 
 	public void run() {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		final FBView view = Reader.getTextView();
-		if (view.getAnimationType() != FBView.Animation.none) {
-			final boolean horizontal = preferences.HorizontalOption.getValue();
-			if (myForward) {
-				view.startAutoScrolling(horizontal ? FBView.PAGE_RIGHT : FBView.PAGE_BOTTOM);
-			} else {
-				view.startAutoScrolling(horizontal ? FBView.PAGE_LEFT : FBView.PAGE_TOP);
-			}
-		} else {
-			view.scrollPage(myForward, FBView.ScrollingMode.NO_OVERLAPPING, 0);
-			Reader.repaintView();
-		}
+		Reader.getViewWidget().startAutoScrolling(
+			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+			preferences.HorizontalOption.getValue()
+				? FBView.Direction.rightToLeft : FBView.Direction.up,
+			preferences.AnimationSpeedOption.getValue()
+		);
+	}
+
+	public void runWithCoordinates(int x, int y) {
+		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
+		Reader.getViewWidget().startAutoScrolling(
+			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+			x, y,
+			preferences.HorizontalOption.getValue()
+				? FBView.Direction.rightToLeft : FBView.Direction.up,
+			preferences.AnimationSpeedOption.getValue()
+		);
 	}
 }

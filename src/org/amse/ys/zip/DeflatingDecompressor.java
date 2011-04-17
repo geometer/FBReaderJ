@@ -2,7 +2,7 @@ package org.amse.ys.zip;
 
 import java.io.*;
 
-public class DeflatingDecompressor extends Decompressor {
+class DeflatingDecompressor extends Decompressor {
 	static {
 		System.loadLibrary("DeflatingDecompressor");
 	}
@@ -88,7 +88,11 @@ public class DeflatingDecompressor extends Decompressor {
 			toFill -= ready;
 			myOutBufferLength -= ready;
 		}
-		myAvailable -= len;
+		if (len > 0) {
+			myAvailable -= len;
+		} else {
+			myAvailable = 0;
+		}
 		return len;
     }
 
@@ -133,8 +137,8 @@ public class DeflatingDecompressor extends Decompressor {
 				break;
 			}
 			final long result = inflate(myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
-			if (result == 0) {
-				throw new IOException("cannot read from base stream");
+			if (result <= 0) {
+				throw new IOException("Cannot inflate zip-compressed block, code = " + result);
 			}
 			final int in = (int)(result >> 16) & 0xFFFF;
 			final int out = (int)result & 0xFFFF;

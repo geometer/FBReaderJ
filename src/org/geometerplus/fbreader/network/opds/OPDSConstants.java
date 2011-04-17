@@ -19,8 +19,9 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import org.geometerplus.fbreader.network.atom.ATOMConstants;
 
-interface OPDSConstants {
+interface OPDSConstants extends ATOMConstants {
 	// Feed level
 	String REL_BOOKSHELF = "http://data.fbreader.org/rel/bookshelf";
 	String REL_RECOMMENDATIONS = "http://data.fbreader.org/rel/recommendations";

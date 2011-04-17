@@ -21,10 +21,9 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.view.ZLView;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
+import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 public abstract class ZLApplication {
 	public static ZLApplication Instance() {
@@ -33,15 +32,12 @@ public abstract class ZLApplication {
 
 	private static ZLApplication ourInstance;
 
-	//private static final String MouseScrollUpKey = "<MouseScrollDown>";
-	//private static final String MouseScrollDownKey = "<MouseScrollUp>";
 	public static final String NoAction = "none";
 
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
 
 	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
-	//private ZLTime myLastKeyActionTime;
 
 	protected ZLApplication() {
 		ourInstance = this;
@@ -50,7 +46,11 @@ public abstract class ZLApplication {
 	protected final void setView(ZLView view) {
 		if (view != null) {
 			myView = view;
-			repaintView();
+			final ZLViewWidget widget = getViewWidget();
+			if (widget != null) {
+				widget.reset();
+				widget.repaint();
+			}
 			onViewChanged();
 		}
 	}
@@ -67,22 +67,8 @@ public abstract class ZLApplication {
 		setView(myView);
 	}
 
-	public final void repaintView() {
-		if (myWindow != null) {
-			myWindow.repaintView();
-		}
-	}
-
-	public final void scrollViewTo(int viewPage, int shift) {
-		if (myWindow != null) {
-			myWindow.scrollViewTo(viewPage, shift);
-		}
-	}
-
-	public final void startViewAutoScrolling(int viewPage) {
-		if (myWindow != null) {
-			myWindow.startViewAutoScrolling(viewPage);
-		}
+	public final ZLViewWidget getViewWidget() {
+		return myWindow != null ? myWindow.getViewWidget() : null;
 	}
 
 	public final void onRepaintFinished() {
@@ -116,6 +102,13 @@ public abstract class ZLApplication {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
 			action.checkAndRun();
+		}
+	}
+
+	public final void doActionWithCoordinates(String actionId, int x, int y) {
+		final ZLAction action = myIdToActionMap.get(actionId);
+		if (action != null && action.isEnabled()) {
+			action.runWithCoordinates(x, y);
 		}
 	}
 
@@ -181,6 +174,10 @@ public abstract class ZLApplication {
 		}
 
 		abstract protected void run();
+
+		protected void runWithCoordinates(int x, int y) {
+			run();
+		}
 	}
 
 	static public interface ButtonPanel {

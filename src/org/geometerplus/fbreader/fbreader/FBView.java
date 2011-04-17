@@ -39,24 +39,18 @@ public final class FBView extends ZLTextView {
 	private FBReaderApp myReader;
 
 	FBView(FBReaderApp reader) {
+		super(reader);
 		myReader = reader;
 	}
 
 	public void setModel(ZLTextModel model) {
-		myIsManualScrollingActive = false;
 		super.setModel(model);
 		if (myFooter != null) {
 			myFooter.resetTOCMarks();
 		}
 	}
 
-	public void onScrollingFinished(int viewPage) {
-		super.onScrollingFinished(viewPage);
-	}
-
-	private int myStartX;
 	private int myStartY;
-	private boolean myIsManualScrollingActive;
 	private boolean myIsBrightnessAdjustmentInProgress;
 	private int myStartBrightness;
 
@@ -81,10 +75,6 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (isScrollingActive()) {
-			return false;
-		}
-
 		if (myReader.FooterIsSensitiveOption.getValue()) {
 			Footer footer = getFooterArea();
 			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
@@ -97,15 +87,16 @@ public final class FBView extends ZLTextView {
 		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
-			myReader.repaintView();
+			myReader.getViewWidget().reset();
+			myReader.getViewWidget().repaint();
 			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
 
-		myReader.doAction(getZoneMap().getActionByCoordinates(
+		myReader.doActionWithCoordinates(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
-		));
+		), x, y);
 
 		return true;
 	}
@@ -120,19 +111,15 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
-		myReader.doAction(getZoneMap().getActionByCoordinates(
+		myReader.doActionWithCoordinates(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(), TapZoneMap.Tap.doubleTap
-		));
+		), x, y);
 		return true;
 	}
 
 	public boolean onFingerPress(int x, int y) {
 		if (super.onFingerPress(x, y)) {
 			return true;
-		}
-
-		if (isScrollingActive()) {
-			return false;
 		}
 
 		if (myReader.FooterIsSensitiveOption.getValue()) {
@@ -154,16 +141,22 @@ public final class FBView extends ZLTextView {
 		return true;
 	}
 
-	private void startManualScrolling(int x, int y) {
+	private boolean isFlickScrollingEnabled() {
 		final ScrollingPreferences.FingerScrolling fingerScrolling =
 			ScrollingPreferences.Instance().FingerScrollingOption.getValue();
-		if (fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
-			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick) {
-			myStartX = x;
-			myStartY = y;
-			setScrollingActive(true);
-			myIsManualScrollingActive = true;
+		return
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byFlick ||
+			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
+	}
+
+	private void startManualScrolling(int x, int y) {
+		if (!isFlickScrollingEnabled()) {
+			return;
 		}
+
+		final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
+		final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
+		myReader.getViewWidget().startManualScrolling(x, y, direction);
 	}
 
 	public boolean onFingerMove(int x, int y) {
@@ -183,84 +176,31 @@ public final class FBView extends ZLTextView {
 				}
 			}
 
-			if (isScrollingActive() && myIsManualScrollingActive) {
-				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
-				final int diff = horizontal ? x - myStartX : y - myStartY;
-				if (diff > 0) {
-					ZLTextWordCursor cursor = getStartCursor();
-					if (cursor == null || cursor.isNull()) {
-						return false;
-					}
-					if (!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst()) {
-						myReader.scrollViewTo(horizontal ? PAGE_LEFT : PAGE_TOP, diff);
-					}
-				} else if (diff < 0) {
-					ZLTextWordCursor cursor = getEndCursor();
-					if (cursor == null || cursor.isNull()) {
-						return false;
-					}
-					if (!cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast()) {
-						myReader.scrollViewTo(horizontal ? PAGE_RIGHT : PAGE_BOTTOM, -diff);
-					}
-				} else {
-					myReader.scrollViewTo(PAGE_CENTRAL, 0);
-				}
-				return true;
+			if (isFlickScrollingEnabled()) {
+				myReader.getViewWidget().scrollManuallyTo(x, y);
 			}
 		}
-
-		return false;
+		return true;
 	}
 
 	public boolean onFingerRelease(int x, int y) {
+		if (myIsBrightnessAdjustmentInProgress) {
+			myIsBrightnessAdjustmentInProgress = false;
+			return true;
+		}
+
 		if (super.onFingerRelease(x, y)) {
 			return true;
 		}
 
-		synchronized (this) {
-			myIsBrightnessAdjustmentInProgress = false;
-			if (isScrollingActive() && myIsManualScrollingActive) {
-				setScrollingActive(false);
-				myIsManualScrollingActive = false;
-				final boolean horizontal = ScrollingPreferences.Instance().HorizontalOption.getValue();
-				final int diff = horizontal ? x - myStartX : y - myStartY;
-				boolean doScroll = false;
-				if (diff > 0) {
-					ZLTextWordCursor cursor = getStartCursor();
-					if (cursor != null && !cursor.isNull()) {
-						doScroll = !cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst();
-					}
-				} else if (diff < 0) {
-					ZLTextWordCursor cursor = getEndCursor();
-					if (cursor != null && !cursor.isNull()) {
-						doScroll = !cursor.isEndOfParagraph() || !cursor.getParagraphCursor().isLast();
-					}
-				}
-				if (doScroll) {
-					final int h = myContext.getHeight();
-					final int w = myContext.getWidth();
-					final int minDiff = horizontal ?
-						((w > h) ? w / 4 : w / 3) :
-						((h > w) ? h / 4 : h / 3);
-					int viewPage = PAGE_CENTRAL;
-					if (Math.abs(diff) > minDiff) {
-						viewPage = horizontal ?
-							((diff < 0) ? PAGE_RIGHT : PAGE_LEFT) :
-							((diff < 0) ? PAGE_BOTTOM : PAGE_TOP);
-					}
-					if (getAnimationType() != Animation.none) {
-						startAutoScrolling(viewPage);
-					} else {
-						myReader.scrollViewTo(PAGE_CENTRAL, 0);
-						onScrollingFinished(viewPage);
-						myReader.repaintView();
-						setScrollingActive(false);
-					}
-				}
-				return true;
-			}
+		if (isFlickScrollingEnabled()) {
+			myReader.getViewWidget().startAutoScrolling(
+				x, y, ScrollingPreferences.Instance().AnimationSpeedOption.getValue()
+			);
+			return true;
 		}
-		return false;
+
+		return true;
 	}
 
 	public boolean onFingerLongPress(int x, int y) {
@@ -273,7 +213,8 @@ public final class FBView extends ZLTextView {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
-				myReader.repaintView();
+				myReader.getViewWidget().reset();
+				myReader.getViewWidget().repaint();
 				return true;
 			}
 		}
@@ -291,7 +232,8 @@ public final class FBView extends ZLTextView {
 			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
 			if (region != null) {
 				selectRegion(region);
-				myReader.repaintView();
+				myReader.getViewWidget().reset();
+				myReader.getViewWidget().repaint();
 			}
 		}
 		return true;
@@ -303,8 +245,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		if (myReader.DictionaryTappingActionOption.getValue() ==
-			FBReaderApp.DictionaryTappingAction.openDictionary) {
-			final ZLTextElementRegion region = currentRegion();
+				FBReaderApp.DictionaryTappingAction.openDictionary) {
 			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
@@ -317,9 +258,9 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final int direction = (diffY != 0) ?
-			(diffY > 0 ? Direction.DOWN : Direction.UP) :
-			(diffX > 0 ? Direction.RIGHT : Direction.LEFT);
+		final Direction direction = (diffY != 0) ?
+			(diffY > 0 ? Direction.down : Direction.up) :
+			(diffX > 0 ? Direction.leftToRight : Direction.rightToLeft);
 
 		ZLTextElementRegion region = currentRegion();
 		final ZLTextElementRegion.Filter filter =
@@ -329,14 +270,15 @@ public final class FBView extends ZLTextView {
 		if (region != null) {
 			selectRegion(region);
 		} else {
-			if (direction == Direction.DOWN) {
+			if (direction == Direction.down) {
 				scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
-			} else if (direction == Direction.UP) {
+			} else if (direction == Direction.up) {
 				scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			}
 		}
 
-		myReader.repaintView();
+		myReader.getViewWidget().reset();
+		myReader.getViewWidget().repaint();
 
 		return true;
 	}
@@ -409,7 +351,7 @@ public final class FBView extends ZLTextView {
 	private class Footer implements FooterArea {
 		private Runnable UpdateTask = new Runnable() {
 			public void run() {
-				ZLApplication.Instance().repaintView();
+				myReader.getViewWidget().repaint();
 			}
 		};
 
@@ -462,7 +404,7 @@ public final class FBView extends ZLTextView {
 				return;
 			}
 
-			final ZLColor bgColor = getBackgroundColor();
+			//final ZLColor bgColor = getBackgroundColor();
 			// TODO: separate color option for footer color
 			final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
 			final ZLColor fillColor = reader.getColorProfile().FooterFillOption.getValue();
@@ -529,7 +471,7 @@ public final class FBView extends ZLTextView {
 				left + lineWidth + (int)(1.0 * myGaugeWidth * pagesProgress / bookLength);
 
 			context.setFillColor(fillColor);
-			context.fillRectangle(left + lineWidth, height - 2 * lineWidth, gaugeInternalRight, 2 * lineWidth);
+			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);
 
 			if (reader.FooterShowTOCMarksOption.getValue()) {
 				if (myTOCMarks == null) {
@@ -568,7 +510,8 @@ public final class FBView extends ZLTextView {
 			} else {
 				gotoPage(page);
 			}
-			myReader.repaintView();
+			myReader.getViewWidget().reset();
+			myReader.getViewWidget().repaint();
 		}
 	}
 
@@ -579,11 +522,11 @@ public final class FBView extends ZLTextView {
 		if (myReader.ScrollbarTypeOption.getValue() == SCROLLBAR_SHOW_AS_FOOTER) {
 			if (myFooter == null) {
 				myFooter = new Footer();
-				ZLApplication.Instance().addTimerTask(myFooter.UpdateTask, 15000);
+				myReader.addTimerTask(myFooter.UpdateTask, 15000);
 			}
 		} else {
 			if (myFooter != null) {
-				ZLApplication.Instance().removeTimerTask(myFooter.UpdateTask);
+				myReader.removeTimerTask(myFooter.UpdateTask);
 				myFooter = null;
 			}
 		}

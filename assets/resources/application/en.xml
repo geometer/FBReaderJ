@@ -483,10 +483,6 @@
 					<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>
 				</node>
-				<node name="footerLongTap" value="Footer long tap">
-					<node name="longTapRevert" value="Revert position"/>
-					<node name="longTapNavigate" value="Go to position"/>
-				</node>
 				<node name="showProgress" value="Show page number">
 					<node name="summaryOn" value="Show page number in footer"/>
 					<node name="summaryOff" value="Don't show page number in footer"/>
@@ -543,8 +539,13 @@
 				</node>
 				<node name="animation" value="Animation">
 					<node name="none" value="Scroll with no animation"/>
+					<node name="curl" value="Curl animation"/>
 					<node name="slide" value="Slide animation"/>
 					<node name="shift" value="Shift animation"/>
+				</node>
+				<node name="animationSpeed" value="Animation speed">
+					<node name="fast" value="fast"/>
+					<node name="slow" value="slow"/>
 				</node>
 				<node name="horizontal" value="Horizontal scrolling">
 					<node name="summaryOn" value="Scroll pages horizontally"/>
@@ -655,6 +656,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentication" />
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" />
 			<node name="login" value="Username" />
 			<node name="password" value="Password" />
 			<node name="skipIP" value="Don't bound to ip-address" />
