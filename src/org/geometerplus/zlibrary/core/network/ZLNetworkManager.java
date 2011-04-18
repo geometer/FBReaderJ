@@ -36,6 +36,7 @@ public class ZLNetworkManager {
 	public static ZLNetworkManager Instance() {
 		if (ourManager == null) {
 			ourManager = new ZLNetworkManager();
+			CookieHandler.setDefault(new ZLCookieManager());
 		}
 		return ourManager;
 	}
@@ -112,7 +113,7 @@ public class ZLNetworkManager {
 						"Content-Type", 
 						"application/x-www-form-urlencoded"
 					);
-					httpConnection.setUseCaches (false);
+					httpConnection.setUseCaches(false);
 					httpConnection.setDoInput(true);
 					httpConnection.setDoOutput(true);
 					final OutputStreamWriter writer =
