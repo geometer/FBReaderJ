@@ -24,15 +24,14 @@
 #include <ZLFile.h>
 #include <ZLInputStream.h>
 #include <ZLUnicodeUtil.h>
-#include <ZLEncodingConverter.h>
 
-#include <ZLAsynchronousInputStream.h>
+//#include <ZLAsynchronousInputStream.h>
 
 #include "ZLXMLReader.h"
 
 #include "expat/ZLXMLReaderInternal.h"
 
-class ZLXMLReaderHandler : public ZLAsynchronousInputStream::Handler {
+/*class ZLXMLReaderHandler : public ZLAsynchronousInputStream::Handler {
 
 public:
 	ZLXMLReaderHandler(ZLXMLReader &reader);
@@ -58,7 +57,7 @@ void ZLXMLReaderHandler::shutdown() {
 
 bool ZLXMLReaderHandler::handleBuffer(const char *data, size_t len) {
 	return myReader.readFromBuffer(data, len);
-}
+}*/
 
 
 
@@ -205,10 +204,10 @@ const char *ZLXMLReader::attributeValue(const char **xmlattributes, const Attrib
 	return 0;
 }
 
-bool ZLXMLReader::readDocument(shared_ptr<ZLAsynchronousInputStream> stream) {
+/*bool ZLXMLReader::readDocument(shared_ptr<ZLAsynchronousInputStream> stream) {
 	ZLXMLReaderHandler handler(*this);
 	return stream->processInput(handler);
-}
+}*/
 
 const std::string &ZLXMLReader::errorMessage() const {
 	return myErrorMessage;

@@ -16,15 +16,17 @@ LOCAL_SRC_FILES               := LineBreak/LineBreaker.cpp LineBreak/liblinebrea
 include $(BUILD_SHARED_LIBRARY)
 
 
-#include $(CLEAR_VARS)
-#
-#LOCAL_MODULE                  := expat
-#LOCAL_SRC_FILES               := expat-2.0.1/lib/xmlparse.c expat-2.0.1/lib/xmlrole.c expat-2.0.1/lib/xmltok.c
-#LOCAL_C_INCLUDES              := $(LOCAL_PATH)/expat-2.0.1
-#LOCAL_CFLAGS                  := -DHAVE_EXPAT_CONFIG_H
-#LOCAL_EXPORT_C_INCLUDES       := $(LOCAL_PATH)/expat-2.0.1/lib
-#
-#include $(BUILD_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
+EXPAT_DIR := expat-2.0.1
+
+LOCAL_MODULE                  := expat
+LOCAL_SRC_FILES               := $(EXPAT_DIR)/lib/xmlparse.c $(EXPAT_DIR)/lib/xmlrole.c $(EXPAT_DIR)/lib/xmltok.c
+LOCAL_CFLAGS                  := -DHAVE_EXPAT_CONFIG_H
+LOCAL_C_INCLUDES              := $(LOCAL_PATH)/$(EXPAT_DIR)
+LOCAL_EXPORT_C_INCLUDES       := $(LOCAL_PATH)/$(EXPAT_DIR)/lib
+
+include $(BUILD_STATIC_LIBRARY)
 
 
 include $(CLEAR_VARS)
@@ -32,6 +34,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := NativeFormats
 LOCAL_LDLIBS := -lz
 LOCAL_CFLAGS := -Wall
+LOCAL_STATIC_LIBRARIES := expat
 
 LOCAL_SRC_FILES := \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
@@ -64,6 +67,8 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/util/ZLStringUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUserData.cpp \
+	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
+	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
 	NativeFormats/zlibrary/ui/src/android/library/ZLAndroidLibraryImplementation.cpp \
 
