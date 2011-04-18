@@ -55,7 +55,7 @@ public class Cookie {
 		boolean discard = false;
 		String path = "/";
 		Date dateOfExpiration = null;
-		List<Integer> ports = null;
+		Set<Integer> ports = null;
 
 		for (int i = 1; i < parts.length; ++i) {
 			final String p = parts[i].trim();
@@ -72,20 +72,21 @@ public class Cookie {
 				continue;
 			}
 			final String pName = p.substring(0, index).trim();
-			final String pValue = p.substring(index + 1).trim();
-			System.err.println("NAME " + pName);
+			String pValue = p.substring(index + 1).trim();
+			if (pValue.length() > 1 &&
+				pValue.charAt(0) == '"' &&
+				pValue.charAt(pValue.length() - 1) == '"') {
+				pValue = pValue.substring(1, pValue.length() - 2);
+			}
 			if ("expires".equalsIgnoreCase(pName)) {
 				try {
-					System.err.println("VALUE " + pValue);
 					dateOfExpiration = ourDateFormat.parse(pValue);
-					System.err.println("DATE = " + dateOfExpiration);
 				} catch (ParseException e) {
 				}
 			} else if ("max-age".equalsIgnoreCase(pName)) {
 				try {
 					final int seconds = Integer.parseInt(pValue);
 					dateOfExpiration = new Date(System.currentTimeMillis() + seconds * 1000);
-					System.err.println("DATE = " + dateOfExpiration);
 				} catch (NumberFormatException e) {
 				}
 			} else if ("domain".equalsIgnoreCase(pName)) {
@@ -95,7 +96,13 @@ public class Cookie {
 			} else if ("path".equalsIgnoreCase(pName)) {
 				path = pValue;
 			} else if ("port".equalsIgnoreCase(pName)) {
-				// TODO: implement
+				ports = new HashSet<Integer>();
+				for (String s : pValue.split(" ")) {
+					try {
+						ports.add(Integer.parseInt(s));
+					} catch (NumberFormatException e) {
+					}
+				}
 			}
 		}
 
@@ -107,12 +114,12 @@ public class Cookie {
 
 	final String Host;
 	final String Path;
-	final List<Integer> Ports;
+	final Set<Integer> Ports;
 	final Date DateOfExpiration;
 	final boolean Secure;
 	final boolean Discard;
 
-	public Cookie(String name, String value, String host, String path, List<Integer> ports, Date dateOfExpiration, boolean secure, boolean discard) {
+	public Cookie(String name, String value, String host, String path, Set<Integer> ports, Date dateOfExpiration, boolean secure, boolean discard) {
 		Name = name;
 		Value = value;
 		Host = host;
@@ -148,6 +155,9 @@ public class Cookie {
 		if (path == null || !path.startsWith(Path)) {
 			return false;
 		}
+		if (DateOfExpiration != null && DateOfExpiration.before(new Date())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -160,13 +170,17 @@ public class Cookie {
 			return false;
 		}
 		final Cookie c = (Cookie)o;
-		// TODO: implement
-		return Host.equals(c.Host) && Path.equals(c.Path) && Name.equals(c.Name);
+		return
+			Host.equals(c.Host) &&
+			Path.equals(c.Path) &&
+			Name.equals(c.Name) &&
+			((Ports == null && c.Ports == null) || Ports.equals(c.Ports)) &&
+			Secure == c.Secure &&
+			Discard == c.Discard;
 	}
 
 	@Override
 	public int hashCode() {
-		// TODO: implement
 		return Host.hashCode() + Path.hashCode() + Name.hashCode();
 	}
 }

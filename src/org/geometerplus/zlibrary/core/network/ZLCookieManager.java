@@ -25,39 +25,38 @@ import java.net.URI;
 import java.io.IOException;
 
 public class ZLCookieManager extends CookieHandler {
-	/*
-	private static void printHeaders(String name, Map<String,List<String>> headers) {
-		System.err.println(name);
-		for (String key : headers.keySet()) {
-			System.err.println("key = " + key);
-			for (String value : headers.get(key)) {
-				System.err.println("value = " + value);
-			}
-		}
-	}
-	*/
-
 	private final Set<Cookie> myAllCookies = new HashSet<Cookie>();
 
 	@Override
 	public Map<String,List<String>> get(URI uri, Map<String,List<String>> requestHeaders) throws IOException {
 		final StringBuilder builder = new StringBuilder();
 		// TODO: compare cookies with the same name, select best matching
-		for (Cookie c : myAllCookies) {
-			if (c.isApplicable(uri)) {
-				if (builder.length() > 0) {
-					builder.append("; ");
-				}
-				builder.append(c.Name);
-				builder.append("=");
-				builder.append(c.Value);
+		for (Cookie c : getCookies(uri)) {
+			if (builder.length() > 0) {
+				builder.append("; ");
 			}
+			builder.append(c.Name);
+			builder.append("=");
+			builder.append(c.Value);
 		}
 		if (builder.length() == 0) {
 			return Collections.emptyMap();
 		}
 		System.err.println("Cookie = " + builder.toString());
 		return Collections.singletonMap("Cookie", Collections.singletonList(builder.toString()));
+	}
+
+	private List<Cookie> getCookies(URI uri) {
+		List<Cookie> list = null;
+		for (Cookie c : myAllCookies) {
+			if (c.isApplicable(uri)) {
+				if (list == null) {
+					list = new LinkedList<Cookie>();
+				}
+				list.add(c);
+			}
+		}
+		return list != null ? list : Collections.<Cookie>emptyList();
 	}
 
 	@Override
