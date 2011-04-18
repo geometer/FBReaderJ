@@ -37,6 +37,7 @@ LOCAL_CFLAGS := -Wall
 LOCAL_STATIC_LIBRARIES := expat
 
 LOCAL_SRC_FILES := \
+	NativeFormats/extensions.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \

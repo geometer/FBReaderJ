@@ -19,11 +19,6 @@
 
 #include <jni.h>
 
-#include <AndroidLog.h>
-
-#include <ZLFile.h>
-#include <ZLInputStream.h>
-
 
 class PluginCollectionHelper {
 
@@ -79,7 +74,8 @@ bool PluginCollectionHelper::addToArrayList(T *impl) {
 
 
 
-void extension1(JNIEnv *env);
+void extension1();
+void extension2();
 
 extern "C"
 JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_collectNativePlugins(JNIEnv* env, jobject thiz, jobject plugins) {
@@ -93,63 +89,6 @@ JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_c
 		return;
 	}*/
 
-	extension1(env);
-}
-
-
-
-void extension1(JNIEnv *env) {
-	AndroidLog log;
-
-	log.w("FBREADER", "extension 1 start");
-
-	if (true) {
-		ZLFile nonexistent("/mnt/sdcard/Books/b.txt");
-		log.w("FBREADER", "nonexistent created");
-		bool flag = nonexistent.exists();
-		log.wf("FBREADER", "Does nonexistent file exist?: \"%s\"", flag ? "true" : "false");
-	}
-
-	ZLFile file("/mnt/sdcard/Books/a.txt");
-
-	log.wf("FBREADER", "file: %s", file.path().c_str());
-	log.wf("FBREADER", "exists: \"%s\"", file.exists() ? "true" : "false");
-	log.wf("FBREADER", "size: %d", file.size());
-
-	shared_ptr<ZLInputStream> input = file.inputStream();
-	if (input.isNull() || !input->open()) {
-		log.w("FBREADER", "unable to open file");
-	} else {
-		log.w("FBREADER", "contents:");
-		std::string line;
-
-		const size_t size = 256;
-		char *buffer = new char[size];
-		size_t length;
-
-		do {
-			length = input->read(buffer, size);
-			if (length > 0) {
-				size_t index = line.length();
-				line.append(buffer, length);
-				index = line.find('\n', index);
-				if (index != std::string::npos) {
-					log.w("FBREADER", line.substr(0, index));
-					line.erase(0, index + 1);
-				}
-			}
-		} while (length == size);
-
-		if (line.length() > 0) {
-			log.w("FBREADER", line);
-			log.w("FBREADER", "/*no end of line*/");
-		}
-
-		log.w("FBREADER", "contents: EOF");
-
-		delete[] buffer;
-		input->close();
-	}
-
-	log.w("FBREADER", "extension 1 end");
+	extension1();
+	extension2();
 }
