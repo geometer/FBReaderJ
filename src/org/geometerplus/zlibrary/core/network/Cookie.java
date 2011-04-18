@@ -19,14 +19,20 @@
 
 package org.geometerplus.zlibrary.core.network;
 
-import java.util.List;
-import java.util.Date;
+import java.util.*;
+import java.text.*;
 
 import java.net.URI;
 
 public class Cookie {
+	private static DateFormat ourDateFormat = new SimpleDateFormat("EEE, dd-MMM-yyyy hh:mm:ss z");
+
 	public static Cookie create(URI uri, String cookieString) {
-		if (uri == null || uri.getHost() == null || cookieString == null) {
+		if (uri == null || cookieString == null) {
+			return null;
+		}
+		final String host = uri.getHost();
+		if (host == null) {
 			return null;
 		}
 		final String[] parts = cookieString.split(";");
@@ -48,6 +54,9 @@ public class Cookie {
 		boolean secure = false;
 		boolean discard = false;
 		String path = "/";
+		Date dateOfExpiration = null;
+		List<Integer> ports = null;
+
 		for (int i = 1; i < parts.length; ++i) {
 			final String p = parts[i].trim();
 			if ("secure".equalsIgnoreCase(p)) {
@@ -64,12 +73,25 @@ public class Cookie {
 			}
 			final String pName = p.substring(0, index).trim();
 			final String pValue = p.substring(index + 1).trim();
+			System.err.println("NAME " + pName);
 			if ("expires".equalsIgnoreCase(pName)) {
-				// TODO: implement
+				try {
+					System.err.println("VALUE " + pValue);
+					dateOfExpiration = ourDateFormat.parse(pValue);
+					System.err.println("DATE = " + dateOfExpiration);
+				} catch (ParseException e) {
+				}
 			} else if ("max-age".equalsIgnoreCase(pName)) {
-				// TODO: implement
+				try {
+					final int seconds = Integer.parseInt(pValue);
+					dateOfExpiration = new Date(System.currentTimeMillis() + seconds * 1000);
+					System.err.println("DATE = " + dateOfExpiration);
+				} catch (NumberFormatException e) {
+				}
 			} else if ("domain".equalsIgnoreCase(pName)) {
-				// TODO: implement
+				if (!pValue.startsWith(".") || !host.endsWith(pValue)) {
+					return null;
+				}
 			} else if ("path".equalsIgnoreCase(pName)) {
 				path = pValue;
 			} else if ("port".equalsIgnoreCase(pName)) {
@@ -77,7 +99,7 @@ public class Cookie {
 			}
 		}
 
-		return new Cookie(name, value, uri.getHost(), path, null, null, secure, discard);
+		return new Cookie(name, value, host, path, ports, dateOfExpiration, secure, discard);
 	}
 
 	public final String Name;
@@ -139,12 +161,12 @@ public class Cookie {
 		}
 		final Cookie c = (Cookie)o;
 		// TODO: implement
-		return Host.equals(c.Host) && Name.equals(c.Name);
+		return Host.equals(c.Host) && Path.equals(c.Path) && Name.equals(c.Name);
 	}
 
 	@Override
 	public int hashCode() {
 		// TODO: implement
-		return Host.hashCode() + Name.hashCode();
+		return Host.hashCode() + Path.hashCode() + Name.hashCode();
 	}
 }
