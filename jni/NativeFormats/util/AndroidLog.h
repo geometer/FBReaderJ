@@ -78,6 +78,9 @@ inline AndroidLog::~AndroidLog() {
 	if (myBuffer != 0) {
 		delete[] myBuffer;
 	}
+	myEnv->DeleteLocalRef(myLogClass);
+	myEnv->DeleteLocalRef(mySystemErr);
+	myEnv->DeleteLocalRef(myPrintStreamClass);
 }
 
 inline void AndroidLog::extractLogClass() {
@@ -91,6 +94,7 @@ inline void AndroidLog::extractSystemErr() {
 		jclass systemClass = myEnv->FindClass("java/lang/System");
 		jfieldID systemErr = myEnv->GetStaticFieldID(systemClass, "err", "Ljava/io/PrintStream;");
 		mySystemErr = myEnv->GetStaticObjectField(systemClass, systemErr);
+		myEnv->DeleteLocalRef(systemClass);
 	}
 	if (myPrintStreamClass == 0) {
 		myPrintStreamClass = myEnv->FindClass("java/io/PrintStream");
@@ -105,6 +109,8 @@ inline void AndroidLog::w(const std::string &tag, const std::string &message) {
 	jstring javaTag = myEnv->NewStringUTF(tag.c_str());
 	jstring javaMessage = myEnv->NewStringUTF(message.c_str());
 	myEnv->CallStaticIntMethod(myLogClass, logW, javaTag, javaMessage);
+	myEnv->DeleteLocalRef(javaTag);
+	myEnv->DeleteLocalRef(javaMessage);
 }
 
 
@@ -114,6 +120,7 @@ inline void AndroidLog::errln(const std::string &message) {
 	jmethodID println = myEnv->GetMethodID(myPrintStreamClass, "println", "(Ljava/lang/String;)V");
 	jstring javaMessage = myEnv->NewStringUTF(message.c_str());
 	myEnv->CallVoidMethod(mySystemErr, println, javaMessage);
+	myEnv->DeleteLocalRef(javaMessage);
 }
 
 inline void AndroidLog::errln(jobject object) {
@@ -135,6 +142,7 @@ inline void AndroidLog::err(const std::string &message) {
 	jmethodID println = myEnv->GetMethodID(myPrintStreamClass, "print", "(Ljava/lang/String;)V");
 	jstring javaMessage = myEnv->NewStringUTF(message.c_str());
 	myEnv->CallVoidMethod(mySystemErr, println, javaMessage);
+	myEnv->DeleteLocalRef(javaMessage);
 }
 
 inline void AndroidLog::err(jobject object) {
