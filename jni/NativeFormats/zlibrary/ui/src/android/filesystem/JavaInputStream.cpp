@@ -37,12 +37,8 @@ JavaInputStream::~JavaInputStream() {
 	if (myJavaInputStream != 0) {
 		closeStream(env);
 	}
-	if (myJavaFile != 0) {
-		env->DeleteGlobalRef(myJavaFile);
-	}
-	if (myJavaBuffer != 0) {
-		env->DeleteGlobalRef(myJavaBuffer);
-	}
+	env->DeleteGlobalRef(myJavaFile);
+	env->DeleteGlobalRef(myJavaBuffer);
 }
 
 
@@ -51,10 +47,15 @@ void JavaInputStream::initStream(JNIEnv *env) {
 		jobject javaFile = AndroidUtil::createZLFile(env, myName);
 		myJavaFile = env->NewGlobalRef(javaFile);
 		env->DeleteLocalRef(javaFile);
+		if (myJavaFile == 0) {
+			return;
+		}
 	}
 
 	jobject stream = env->CallObjectMethod(myJavaFile, AndroidUtil::MID_ZLFile_getInputStream);
-	if (stream != 0) {
+	if (env->ExceptionCheck()) {
+		env->ExceptionClear();
+	} else {
 		myJavaInputStream = env->NewGlobalRef(stream);
 		myOffset = 0;
 	}
@@ -63,6 +64,9 @@ void JavaInputStream::initStream(JNIEnv *env) {
 
 void JavaInputStream::closeStream(JNIEnv *env) {
 	env->CallVoidMethod(myJavaInputStream, AndroidUtil::MID_java_io_InputStream_close);
+	if (env->ExceptionCheck()) {
+		env->ExceptionClear();
+	}
 	env->DeleteGlobalRef(myJavaInputStream);
 	myJavaInputStream = 0;
 	myOffset = 0;
@@ -77,16 +81,14 @@ void JavaInputStream::rewind(JNIEnv *env) {
 
 
 void JavaInputStream::ensureBufferCapacity(JNIEnv *env, size_t maxSize) {
-	if (myJavaBuffer != 0 && myJavaBufferSize < maxSize) {
-		env->DeleteGlobalRef(myJavaBuffer);
-		myJavaBuffer = 0;
+	if (myJavaBuffer != 0 && myJavaBufferSize >= maxSize) {
+		return;
 	}
-	if (myJavaBuffer == 0) {
-		jbyteArray array = env->NewByteArray(maxSize);
-		myJavaBuffer = (jbyteArray)env->NewGlobalRef(array);
-		env->DeleteLocalRef(array);
-		myJavaBufferSize = maxSize;
-	}
+	env->DeleteGlobalRef(myJavaBuffer);
+	jbyteArray array = env->NewByteArray(maxSize);
+	myJavaBuffer = (jbyteArray)env->NewGlobalRef(array);
+	env->DeleteLocalRef(array);
+	myJavaBufferSize = maxSize;
 }
 
 size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, size_t maxSize) {
@@ -94,6 +96,10 @@ size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, size_t maxSize) 
 
 	jint result = env->CallIntMethod(myJavaInputStream,
 			AndroidUtil::MID_java_io_InputStream_read, myJavaBuffer, (jint)0, (jint)maxSize);
+	if (env->ExceptionCheck()) {
+		env->ExceptionClear();
+		return 0;
+	}
 	if (result > 0) {
 		size_t bytesRead = (size_t)result;
 		myOffset += bytesRead;
@@ -110,6 +116,10 @@ size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, size_t maxSize) 
 size_t JavaInputStream::skip(JNIEnv *env, size_t offset) {
 	size_t result = (size_t) env->CallLongMethod(myJavaInputStream,
 			AndroidUtil::MID_java_io_InputStream_skip, (jlong)offset);
+	if (env->ExceptionCheck()) {
+		env->ExceptionClear();
+		return 0;
+	}
 	myOffset += result;
 	return result;
 }
@@ -142,11 +152,9 @@ void JavaInputStream::close() {
 }
 
 size_t JavaInputStream::sizeOfOpened() {
-	if (myJavaInputStream == 0
-			|| myJavaFile == 0) {
+	if (myJavaInputStream == 0 || myJavaFile == 0) {
 		return 0;
 	}
-
 	JNIEnv *env = AndroidUtil::getEnv();
 	return (size_t) env->CallLongMethod(myJavaFile, AndroidUtil::MID_ZLFile_size);
 }
