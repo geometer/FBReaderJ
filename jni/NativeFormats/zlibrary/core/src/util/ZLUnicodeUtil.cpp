@@ -20,9 +20,9 @@
 #include <cstdlib>
 #include <map>
 
-//#include <ZLibrary.h>
-//#include <ZLFile.h>
-//#include <ZLXMLReader.h>
+#include <ZLibrary.h>
+#include <ZLFile.h>
+#include <ZLXMLReader.h>
 
 #include "ZLUnicodeUtil.h"
 
@@ -46,7 +46,7 @@ ZLUnicodeData::ZLUnicodeData(const SymbolType type, ZLUnicodeUtil::Ucs4Char lowe
 
 static std::map<ZLUnicodeUtil::Ucs4Char,ZLUnicodeData> UNICODE_TABLE;
 
-/*class ZLUnicodeTableReader : public ZLXMLReader {
+class ZLUnicodeTableReader : public ZLXMLReader {
 
 private:
 	void startElementHandler(const char *tag, const char **attributes);
@@ -75,14 +75,14 @@ void ZLUnicodeTableReader::startElementHandler(const char *tag, const char **att
 		const ZLUnicodeUtil::Ucs4Char upper = (upperS != 0) ? strtol(upperS, 0, 16) : code;
 		UNICODE_TABLE.insert(std::make_pair(code, ZLUnicodeData(type, lower, upper)));
 	}
-}*/
+}
 
 static void initUnicodeTable() {
 	static bool inProgress = false;
 	if (!inProgress && UNICODE_TABLE.empty()) {
 		inProgress = true;
-//		ZLUnicodeTableReader reader;
-//		reader.readDocument(ZLFile(ZLibrary::ZLibraryDirectory() + ZLibrary::FileNameDelimiter + "unicode.xml.gz"));
+		ZLUnicodeTableReader reader;
+		reader.readDocument(ZLFile(ZLibrary::ZLibraryDirectory() + ZLibrary::FileNameDelimiter + "unicode.xml"));
 		inProgress = false;
 	}
 }

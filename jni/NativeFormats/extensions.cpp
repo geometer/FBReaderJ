@@ -22,23 +22,13 @@
 #include <ZLFile.h>
 #include <ZLInputStream.h>
 
-#include <ZLXMLReader.h>
-
 
 void extension1() {
 	AndroidLog log;
 
 	log.w("FBREADER", "extension 1 start");
 
-	if (true) {
-		ZLFile nonexistent("/mnt/sdcard/Books/b.txt");
-		log.w("FBREADER", "nonexistent created");
-		bool flag = nonexistent.exists();
-		log.wf("FBREADER", "Does nonexistent file exist?: \"%s\"", flag ? "true" : "false");
-	}
-
-	//ZLFile file("/mnt/sdcard/Books/a.txt");
-	ZLFile file("data/b.xml");
+	ZLFile file("/mnt/sdcard/Books/a.txt");
 
 	log.wf("FBREADER", "file: %s", file.path().c_str());
 	log.wf("FBREADER", "exists: \"%s\"", file.exists() ? "true" : "false");
@@ -89,77 +79,5 @@ void extension1() {
 }
 
 
-
-class Ext2XMLReader : public ZLXMLReader {
-public:
-	Ext2XMLReader();
-	void startElementHandler(const char *tag, const char **attributes);
-	void endElementHandler(const char *tag);
-	void characterDataHandler(const char *text, size_t len);
-
-private:
-	void printLine();
-
-private:
-	std::string myBuffer;
-
-	enum {
-		READ_NOTHING,
-		READ_ROOT,
-		READ_LINE,
-	} myState;
-};
-
-Ext2XMLReader::Ext2XMLReader() {
-	myState = READ_NOTHING;
-}
-
-static const std::string ROOT = "root";
-static const std::string LINE = "line";
-
-void Ext2XMLReader::startElementHandler(const char *tag, const char **attributes) {
-	if (ROOT == tag && myState == READ_NOTHING) {
-		myState = READ_ROOT;
-	} else if (LINE == tag && myState == READ_ROOT) {
-		myBuffer.erase();
-		const char *name = attributeValue(attributes, "name");
-		myBuffer.append("<line");
-		if (name != 0) {
-			myBuffer.append(" name=\"");
-			myBuffer.append(name);
-			myBuffer.append("\"");
-		}
-		myBuffer.append(">");
-		myState = READ_LINE;
-	}
-}
-
-void Ext2XMLReader::endElementHandler(const char *tag) {
-	if (ROOT == tag && myState == READ_ROOT) {
-		myState = READ_NOTHING;
-	} else if (LINE == tag && myState == READ_LINE) {
-		myBuffer.append("</line>");
-		myState = READ_ROOT;
-		printLine();
-	}
-}
-
-void Ext2XMLReader::characterDataHandler(const char *text, size_t len) {
-	if (myState == READ_LINE) {
-		myBuffer.append(text, len);
-	}
-}
-
-void Ext2XMLReader::printLine() {
-	AndroidLog log;
-	log.w("FBREADER", myBuffer);
-	myBuffer.erase();
-}
-
-
 void extension2() {
-	Ext2XMLReader reader;
-	//ZLFile file("/mnt/sdcard/Books/a.xml");
-	ZLFile file("data/b.xml");
-	reader.readDocument(file);
 }
