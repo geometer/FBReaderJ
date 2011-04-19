@@ -40,7 +40,12 @@ LOCAL_STATIC_LIBRARIES := expat
 
 LOCAL_SRC_FILES := \
 	NativeFormats/extensions.cpp \
+	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
+	NativeFormats/fbreader/src/library/Author.cpp \
+	NativeFormats/fbreader/src/library/Book.cpp \
+	NativeFormats/fbreader/src/library/Comparators.cpp \
+	NativeFormats/fbreader/src/library/Tag.cpp \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/main.cpp \
@@ -63,6 +68,7 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLImageManager.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
 	NativeFormats/zlibrary/core/src/library/ZLibrary.cpp \
 	NativeFormats/zlibrary/core/src/logger/ZLLogger.cpp \
 	NativeFormats/zlibrary/core/src/runnable/ZLExecutionData.cpp \

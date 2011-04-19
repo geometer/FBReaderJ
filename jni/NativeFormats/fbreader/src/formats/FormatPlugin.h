@@ -24,6 +24,7 @@
 #include <vector>
 
 #include <shared_ptr.h>
+//#include <ZLOptions.h>
 
 class Book;
 class BookModel;
@@ -46,7 +47,7 @@ class FormatPlugin {
 
 protected:
 	FormatPlugin();
-	
+
 public:
 	virtual ~FormatPlugin();
 
@@ -63,6 +64,30 @@ protected:
 	static void detectEncodingAndLanguage(Book &book, ZLInputStream &stream);
 	static void detectLanguage(Book &book, ZLInputStream &stream);
 };
+
+/*class PluginCollection {
+
+public:
+	ZLBooleanOption LanguageAutoDetectOption;
+	ZLStringOption DefaultLanguageOption;
+	ZLStringOption DefaultEncodingOption;
+
+public:
+	static PluginCollection &Instance();
+	static void deleteInstance();
+
+private:
+	PluginCollection();
+
+public:
+	shared_ptr<FormatPlugin> plugin(const ZLFile &file, bool strong);
+	shared_ptr<FormatPlugin> plugin(const Book &book);
+
+private:
+	static PluginCollection *ourInstance;
+
+	std::vector<shared_ptr<FormatPlugin> > myPlugins;
+};*/
 
 inline FormatInfoPage::FormatInfoPage() {}
 inline FormatInfoPage::~FormatInfoPage() {}

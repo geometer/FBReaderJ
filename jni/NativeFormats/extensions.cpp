@@ -23,10 +23,11 @@
 #include <ZLInputStream.h>
 #include <ZLXMLReader.h>
 
+#include <ZLLanguageList.h>
+
 
 void extension1() {
 	AndroidLog log;
-
 	log.w("FBREADER", "extension 1 start");
 
 	ZLFile file("/");
@@ -106,6 +107,9 @@ void EnRuXMLReader::startElementHandler(const char *tag, const char **attributes
 
 
 void extension2() {
+	AndroidLog log;
+	log.w("FBREADER", "extension 2 start");
+
 	/*ZLFile utf8File("/mnt/sdcard/Books/a-utf8.xml");
 	ZLFile win1251File("/mnt/sdcard/Books/a-win1251.xml");
 
@@ -115,8 +119,6 @@ void extension2() {
 	bool utf8res = utf8Reader.readDocument(utf8File);
 	bool win1251res = win1251Reader.readDocument(win1251File);
 
-	AndroidLog log;
-
 	log.wf("FBREADER", "utf8res: %s", utf8res ? "true" : "false");
 	log.wf("FBREADER", "win1251res: %s", win1251res ? "true" : "false");
 	log.wf("FBREADER", "utf8   :EN = %s", utf8Reader.EnText.c_str());
@@ -125,4 +127,12 @@ void extension2() {
 	log.wf("FBREADER", "win1251:RU = %s", win1251Reader.RuText.c_str());
 	log.wf("FBREADER", "EN == EN: %s", (utf8Reader.EnText == win1251Reader.EnText) ? "true" : "false");
 	log.wf("FBREADER", "RU == RU: %s", (utf8Reader.RuText == win1251Reader.RuText) ? "true" : "false");*/
+
+	const std::vector<std::string> &codes = ZLLanguageList::languageCodes();
+	log.wf("FBREADER", "languageCodes.size = %d", (int)codes.size());
+	for (size_t i = 0; i < codes.size(); ++i) {
+		log.wf("FBREADER", "languageCodes[%2d] = %s", (int)i, codes[i].c_str());
+	}
+
+	log.w("FBREADER", "extension 2 end");
 }

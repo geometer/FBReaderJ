@@ -23,7 +23,7 @@
 
 #include "FormatPlugin.h"
 
-//#include "../library/Book.h"
+#include "../library/Book.h"
 
 void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) {
 	/*std::string language = book.language();
