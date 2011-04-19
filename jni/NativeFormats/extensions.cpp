@@ -37,7 +37,8 @@ void extension1() {
 		log.wf("FBREADER", "Does nonexistent file exist?: \"%s\"", flag ? "true" : "false");
 	}
 
-	ZLFile file("/mnt/sdcard/Books/a.txt");
+	//ZLFile file("/mnt/sdcard/Books/a.txt");
+	ZLFile file("data/b.xml");
 
 	log.wf("FBREADER", "file: %s", file.path().c_str());
 	log.wf("FBREADER", "exists: \"%s\"", file.exists() ? "true" : "false");
@@ -47,6 +48,7 @@ void extension1() {
 	if (input.isNull() || !input->open()) {
 		log.w("FBREADER", "unable to open file");
 	} else {
+		log.wf("FBREADER", "size of opened: %lu", input->sizeOfOpened());
 		log.w("FBREADER", "contents:");
 		std::string line;
 
@@ -157,6 +159,7 @@ void Ext2XMLReader::printLine() {
 
 void extension2() {
 	Ext2XMLReader reader;
-	ZLFile file("/mnt/sdcard/Books/a.xml");
+	//ZLFile file("/mnt/sdcard/Books/a.xml");
+	ZLFile file("data/b.xml");
 	reader.readDocument(file);
 }

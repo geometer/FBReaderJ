@@ -220,14 +220,35 @@ public final class ZLAndroidLibrary extends ZLibrary {
 				// TODO: for some files (archives, crt) descriptor cannot be opened
 				AssetFileDescriptor descriptor = myApplication.getAssets().openFd(getPath());
 				if (descriptor == null) {
-					return 0;
+					return sizeSlow();
 				}
 				long length = descriptor.getLength();
 				descriptor.close();
 				return length;
 			} catch (IOException e) {
-				return 0;
+				return sizeSlow();
 			} 
+		}
+
+		private long sizeSlow() {
+			try {
+				final InputStream stream = getInputStream();
+				if (stream == null) {
+					return 0;
+				}
+				long size = 0;
+				final long step = 1024 * 1024;
+				while (true) {
+					long offset = stream.skip(step);
+					size += offset;
+					if (offset < step) {
+						break;
+					}
+				}
+				return size;
+			} catch (IOException e) {
+				return 0;
+			}
 		}
 
 		@Override

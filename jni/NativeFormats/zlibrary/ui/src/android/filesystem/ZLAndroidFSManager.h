@@ -25,14 +25,38 @@
 class ZLAndroidFSManager : public ZLUnixFSManager {
 
 public:
-	static void createInstance() { ourInstance = new ZLAndroidFSManager(); }
-	
+	static void createInstance();
+
 private:
-	ZLAndroidFSManager() {}
-	
+	ZLAndroidFSManager();
+
 protected:
 	std::string convertFilenameToUtf8(const std::string &name) const;
 	std::string mimeType(const std::string &path) const;
+
+private:
+	static bool useNativeImplementation(const std::string &path);
+
+protected: // Overridden methods
+	void normalizeRealPath(std::string &path) const;
+
+	std::string resolveSymlink(const std::string &path) const;
+	ZLFSDir *createNewDirectory(const std::string &path) const;
+	ZLFSDir *createPlainDirectory(const std::string &path) const;
+	ZLInputStream *createPlainInputStream(const std::string &path) const;
+	//ZLOutputStream *createOutputStream(const std::string &path) const;
+	bool removeFile(const std::string &path) const;
+
+	ZLFileInfo fileInfo(const std::string &path) const;
+
+	bool canRemoveFile(const std::string &path) const;
 };
+
+inline ZLAndroidFSManager::ZLAndroidFSManager() {}
+inline void ZLAndroidFSManager::createInstance() { ourInstance = new ZLAndroidFSManager(); }
+
+inline bool ZLAndroidFSManager::useNativeImplementation(const std::string &path) {
+	return path.length() > 0 && path[0] == '/';
+}
 
 #endif /* __ZLANDROIDFSMANAGER_H__ */

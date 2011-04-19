@@ -27,7 +27,7 @@ class ZLUnixFSManager : public ZLFSManager {
 protected:
 	void normalizeRealPath(std::string &path) const;
 
-private:
+protected:
 	std::string resolveSymlink(const std::string &path) const;
 	ZLFSDir *createNewDirectory(const std::string &path) const;
 	ZLFSDir *createPlainDirectory(const std::string &path) const;

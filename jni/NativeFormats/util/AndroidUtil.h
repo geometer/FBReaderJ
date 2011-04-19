@@ -22,6 +22,8 @@
 
 #include <jni.h>
 
+#include <string>
+
 
 class AndroidUtil {
 
@@ -29,10 +31,29 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
+	static const char * const Class_ZLFile;
+
+	static jmethodID SMID_ZLFile_createFileByPath;
+
+	static jmethodID MID_ZLFile_size;
+	static jmethodID MID_ZLFile_exists;
+	static jmethodID MID_ZLFile_isDirectory;
+	static jmethodID MID_ZLFile_getInputStream;
+
+
+	static const char * const Class_java_io_InputStream;
+
+	static jmethodID MID_java_io_InputStream_close;
+	static jmethodID MID_java_io_InputStream_read;
+	static jmethodID MID_java_io_InputStream_skip;
+
+public:
 	static void init(JavaVM* jvm);
 
 public:
 	static JNIEnv *getEnv();
+
+	static jobject createZLFile(JNIEnv *env, const std::string &path);
 };
 
 #endif /* __ANDROIDUTIL_H__ */
