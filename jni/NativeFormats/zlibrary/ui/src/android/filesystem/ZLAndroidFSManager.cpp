@@ -85,7 +85,7 @@ ZLFileInfo ZLAndroidFSManager::fileInfo(const std::string &path) const {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jobject javaFile = AndroidUtil::createZLFile(env, path);
 	if (javaFile == 0) {
-		return;
+		return info;
 	}
 
 	info.IsDirectory = env->CallBooleanMethod(javaFile, AndroidUtil::MID_ZLFile_isDirectory);
