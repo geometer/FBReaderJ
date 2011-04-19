@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-	<line name="first line">File from resources...</line>
-	<line name="second line">Read via new AndroidInputStream...</line>
-	<line name="third line">This is last line!</line>
-</root>
-  

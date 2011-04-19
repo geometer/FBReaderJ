@@ -106,7 +106,7 @@ void EnRuXMLReader::startElementHandler(const char *tag, const char **attributes
 
 
 void extension2() {
-	ZLFile utf8File("/mnt/sdcard/Books/a-utf8.xml");
+	/*ZLFile utf8File("/mnt/sdcard/Books/a-utf8.xml");
 	ZLFile win1251File("/mnt/sdcard/Books/a-win1251.xml");
 
 	EnRuXMLReader utf8Reader;
@@ -124,5 +124,5 @@ void extension2() {
 	log.wf("FBREADER", "utf8   :RU = %s", utf8Reader.RuText.c_str());
 	log.wf("FBREADER", "win1251:RU = %s", win1251Reader.RuText.c_str());
 	log.wf("FBREADER", "EN == EN: %s", (utf8Reader.EnText == win1251Reader.EnText) ? "true" : "false");
-	log.wf("FBREADER", "RU == RU: %s", (utf8Reader.RuText == win1251Reader.RuText) ? "true" : "false");
+	log.wf("FBREADER", "RU == RU: %s", (utf8Reader.RuText == win1251Reader.RuText) ? "true" : "false");*/
 }
