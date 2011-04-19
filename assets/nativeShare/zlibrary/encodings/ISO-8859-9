@@ -1,0 +1,9 @@
+<encoding>
+	<char code ="0xd0" ucs2="0x011E"/>
+	<char code ="0xdd" ucs2="0x0130"/>
+	<char code ="0xde" ucs2="0x015E"/>
+	<char code ="0xdf" ucs2="0x00DF"/>
+	<char code ="0xf0" ucs2="0x011F"/>
+	<char code ="0xfd" ucs2="0x0131"/>
+	<char code ="0xfe" ucs2="0x015F"/>
+</encoding>

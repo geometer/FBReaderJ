@@ -25,6 +25,7 @@
 #include "ZLAndroidFSManager.h"
 
 #include "JavaInputStream.h"
+#include "JavaFSDir.h"
 
 
 std::string ZLAndroidFSManager::convertFilenameToUtf8(const std::string &name) const {
@@ -117,7 +118,7 @@ ZLFSDir *ZLAndroidFSManager::createPlainDirectory(const std::string &path) const
 	if (useNativeImplementation(path)) {
 		return ZLUnixFSManager::createPlainDirectory(path);
 	}
-	return 0;
+	return new JavaFSDir(path);
 }
 
 ZLInputStream *ZLAndroidFSManager::createPlainInputStream(const std::string &path) const {

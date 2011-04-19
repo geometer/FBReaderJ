@@ -45,6 +45,12 @@ LOCAL_SRC_FILES := \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/main.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
+	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/EncodingCollectionReader.cpp \
+	NativeFormats/zlibrary/core/src/encoding/MyEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
+	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/ZLEncodingSet.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLGzipInputStream.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZDecompressor.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipDir.cpp \
@@ -72,6 +78,7 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/util/ZLUserData.cpp \
 	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
+	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaInputStream.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
 	NativeFormats/zlibrary/ui/src/android/library/ZLAndroidLibraryImplementation.cpp \

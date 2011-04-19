@@ -25,17 +25,22 @@ JavaVM *AndroidUtil::ourJavaVM = 0;
 
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
+const char * const AndroidUtil::Class_java_util_List = "java/util/List";
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
-
 jmethodID AndroidUtil::MID_ZLFile_size;
 jmethodID AndroidUtil::MID_ZLFile_exists;
 jmethodID AndroidUtil::MID_ZLFile_isDirectory;
 jmethodID AndroidUtil::MID_ZLFile_getInputStream;
+jmethodID AndroidUtil::MID_ZLFile_children;
+jmethodID AndroidUtil::MID_ZLFile_getPath;
 
 jmethodID AndroidUtil::MID_java_io_InputStream_close;
 jmethodID AndroidUtil::MID_java_io_InputStream_read;
 jmethodID AndroidUtil::MID_java_io_InputStream_skip;
+
+jmethodID AndroidUtil::MID_java_util_List_toArray;
+
 
 void AndroidUtil::init(JavaVM* jvm) {
 	ourJavaVM = jvm;
@@ -48,11 +53,16 @@ void AndroidUtil::init(JavaVM* jvm) {
 	MID_ZLFile_exists = env->GetMethodID(cls, "exists", "()Z");
 	MID_ZLFile_isDirectory = env->GetMethodID(cls, "isDirectory", "()Z");
 	MID_ZLFile_getInputStream = env->GetMethodID(cls, "getInputStream", "()Ljava/io/InputStream;");
+	MID_ZLFile_children = env->GetMethodID(cls, "children", "()Ljava/util/List;");
+	MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;");
 
 	cls = env->FindClass(Class_java_io_InputStream);
 	MID_java_io_InputStream_close = env->GetMethodID(cls, "close", "()V");
 	MID_java_io_InputStream_read = env->GetMethodID(cls, "read", "([BII)I");
 	MID_java_io_InputStream_skip = env->GetMethodID(cls, "skip", "(J)J");
+
+	cls = env->FindClass(Class_java_util_List);
+	MID_java_util_List_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;");
 }
 
 

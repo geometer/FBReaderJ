@@ -1,0 +1,10 @@
+<encoding>
+	<char code ="0xa4" ucs2="0x20AC"/>
+	<char code ="0xa6" ucs2="0x0160"/>
+	<char code ="0xa8" ucs2="0x0161"/>
+	<char code ="0xb4" ucs2="0x017D"/>
+	<char code ="0xb8" ucs2="0x017E"/>
+	<char code ="0xbc" ucs2="0x0152"/>
+	<char code ="0xbd" ucs2="0x0153"/>
+	<char code ="0xbe" ucs2="0x0178"/>
+</encoding>

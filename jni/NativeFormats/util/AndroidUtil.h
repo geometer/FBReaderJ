@@ -32,20 +32,22 @@ private:
 
 public:
 	static const char * const Class_ZLFile;
+	static const char * const Class_java_io_InputStream;
+	static const char * const Class_java_util_List;
 
 	static jmethodID SMID_ZLFile_createFileByPath;
-
 	static jmethodID MID_ZLFile_size;
 	static jmethodID MID_ZLFile_exists;
 	static jmethodID MID_ZLFile_isDirectory;
 	static jmethodID MID_ZLFile_getInputStream;
-
-
-	static const char * const Class_java_io_InputStream;
+	static jmethodID MID_ZLFile_children;
+	static jmethodID MID_ZLFile_getPath;
 
 	static jmethodID MID_java_io_InputStream_close;
 	static jmethodID MID_java_io_InputStream_read;
 	static jmethodID MID_java_io_InputStream_skip;
+
+	static jmethodID MID_java_util_List_toArray;
 
 public:
 	static void init(JavaVM* jvm);
