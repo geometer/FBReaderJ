@@ -25,7 +25,7 @@ import java.net.URI;
 import java.io.IOException;
 
 public class ZLCookieManager extends CookieHandler {
-	private final Set<Cookie> myAllCookies = new HashSet<Cookie>();
+	private final Map<String,Set<Cookie>> myCookiesByHost = new HashMap<String,Set<Cookie>>();
 
 	@Override
 	public Map<String,List<String>> get(URI uri, Map<String,List<String>> requestHeaders) throws IOException {
@@ -42,21 +42,23 @@ public class ZLCookieManager extends CookieHandler {
 		if (builder.length() == 0) {
 			return Collections.emptyMap();
 		}
-		System.err.println("Cookie = " + builder.toString());
 		return Collections.singletonMap("Cookie", Collections.singletonList(builder.toString()));
 	}
 
 	private List<Cookie> getCookies(URI uri) {
-		List<Cookie> list = null;
-		for (Cookie c : myAllCookies) {
+		final Set<Cookie> allCookiesForHost = myCookiesByHost.get(uri.getHost());
+		if (allCookiesForHost == null) {
+			return Collections.emptyList();
+		}
+
+		final List<Cookie> filteredCookies = new LinkedList<Cookie>();
+		for (Cookie c : allCookiesForHost) {
 			if (c.isApplicable(uri)) {
-				if (list == null) {
-					list = new LinkedList<Cookie>();
-				}
-				list.add(c);
+				filteredCookies.add(c);
 			}
 		}
-		return list != null ? list : Collections.<Cookie>emptyList();
+		// TODO: filter cookies with same name and host
+		return filteredCookies;
 	}
 
 	@Override
@@ -66,12 +68,20 @@ public class ZLCookieManager extends CookieHandler {
 	}
 
 	private void addCookies(URI uri, List<String> setCookiesList) {
-		if (setCookiesList != null) {
-			for (String s : setCookiesList) {
-				final Cookie c = Cookie.create(uri, s);
-				if (c != null) {
-					myAllCookies.add(c);
-				}
+		if (setCookiesList == null) {
+			return;
+		}
+
+		final String host = uri.getHost();
+		Set<Cookie> allCookiesForHost = myCookiesByHost.get(host);
+		if (allCookiesForHost == null) {
+			allCookiesForHost = new HashSet<Cookie>();
+			myCookiesByHost.put(host, allCookiesForHost);
+		}
+		for (String s : setCookiesList) {
+			final Cookie c = Cookie.create(uri, s);
+			if (c != null) {
+				allCookiesForHost.add(c);
 			}
 		}
 	}

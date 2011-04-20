@@ -112,12 +112,12 @@ public class Cookie {
 	public final String Name;
 	public final String Value;
 
-	final String Host;
-	final String Path;
-	final Set<Integer> Ports;
-	final Date DateOfExpiration;
-	final boolean Secure;
-	final boolean Discard;
+	public final String Host;
+	public final String Path;
+	public final Set<Integer> Ports;
+	public final Date DateOfExpiration;
+	public final boolean Secure;
+	public final boolean Discard;
 
 	public Cookie(String name, String value, String host, String path, Set<Integer> ports, Date dateOfExpiration, boolean secure, boolean discard) {
 		Name = name;
