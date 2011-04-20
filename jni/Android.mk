@@ -43,6 +43,12 @@ LOCAL_SRC_FILES := \
 	NativeFormats/fbreader/src/bookmodel/BookModel.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2BookReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2CoverReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2MetaInfoReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2Plugin.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
 	NativeFormats/fbreader/src/formats/util/EntityFilesCollector.cpp \
@@ -58,6 +64,8 @@ LOCAL_SRC_FILES := \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/main.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
+	NativeFormats/zlibrary/core/src/constants/ZLMimeType.cpp \
+	NativeFormats/zlibrary/core/src/constants/ZLXMLNamespace.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/EncodingCollectionReader.cpp \
 	NativeFormats/zlibrary/core/src/encoding/MyEncodingConverter.cpp \
@@ -74,6 +82,7 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
+	NativeFormats/zlibrary/core/src/image/ZLBase64EncodedImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLImageManager.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
