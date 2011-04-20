@@ -28,7 +28,7 @@
 
 class ZLFile;
 class ZLInputStream;
-//class ZLAsynchronousInputStream;
+class ZLAsynchronousInputStream;
 class ZLXMLReaderInternal;
 
 class ZLXMLReader {
@@ -70,7 +70,7 @@ public:
 
 	bool readDocument(const ZLFile &file);
 	bool readDocument(shared_ptr<ZLInputStream> stream);
-	//bool readDocument(shared_ptr<ZLAsynchronousInputStream> stream);
+	bool readDocument(shared_ptr<ZLAsynchronousInputStream> stream);
 
 	const std::string &errorMessage() const;
 

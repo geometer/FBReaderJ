@@ -40,9 +40,16 @@ LOCAL_STATIC_LIBRARIES := expat
 
 LOCAL_SRC_FILES := \
 	NativeFormats/extensions.cpp \
+	NativeFormats/fbreader/src/bookmodel/BookModel.cpp \
+	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
+	NativeFormats/fbreader/src/formats/util/EntityFilesCollector.cpp \
+	NativeFormats/fbreader/src/formats/util/MergedStream.cpp \
+	NativeFormats/fbreader/src/formats/util/MiscUtil.cpp \
+	NativeFormats/fbreader/src/formats/util/TextFormatDetector.cpp \
+	NativeFormats/fbreader/src/formats/util/XMLTextStream.cpp \
 	NativeFormats/fbreader/src/library/Author.cpp \
 	NativeFormats/fbreader/src/library/Book.cpp \
 	NativeFormats/fbreader/src/library/Comparators.cpp \
@@ -87,11 +94,18 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSManager.cpp \
 	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLFileUtil.cpp \
+	NativeFormats/zlibrary/core/src/util/ZLLanguageUtil.cpp \
+	NativeFormats/zlibrary/core/src/util/ZLSearchUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLStringUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUserData.cpp \
 	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
+	NativeFormats/zlibrary/core/src/xml/ZLAsynchronousInputStream.cpp \
+	NativeFormats/zlibrary/core/src/xml/ZLPlainAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLTextParagraph.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLTextRowMemoryAllocator.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaInputStream.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
@@ -122,6 +136,13 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/view \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml \
+	\
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/model \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/area \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/view \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/style \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/styleOptions \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/hyphenation \
 
 
 include $(BUILD_SHARED_LIBRARY)

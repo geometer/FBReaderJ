@@ -29,20 +29,20 @@
 
 class Book;
 class BookModel;
-class ZLOptionsDialog;
-class ZLOptionsDialogTab;
+//class ZLOptionsDialog;
+//class ZLOptionsDialogTab;
 class ZLFile;
 class ZLInputStream;
 class ZLImage;
 
-class FormatInfoPage {
+/*class FormatInfoPage {
 
 protected:
 	FormatInfoPage();
 
 public:
 	virtual ~FormatInfoPage();
-};
+};*/
 
 class FormatPlugin {
 
@@ -54,7 +54,7 @@ public:
 
 	virtual bool providesMetaInfo() const = 0;
 	virtual bool acceptsFile(const ZLFile &file) const = 0;
-	virtual FormatInfoPage *createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file);
+	//virtual FormatInfoPage *createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file);
 
 	virtual const std::string &tryOpen(const ZLFile &file) const;
 	virtual bool readMetaInfo(Book &book) const = 0;
@@ -94,10 +94,10 @@ private:
 	std::vector<shared_ptr<FormatPlugin> > myPlugins;
 };
 
-inline FormatInfoPage::FormatInfoPage() {}
-inline FormatInfoPage::~FormatInfoPage() {}
+//inline FormatInfoPage::FormatInfoPage() {}
+//inline FormatInfoPage::~FormatInfoPage() {}
 inline FormatPlugin::FormatPlugin() {}
 inline FormatPlugin::~FormatPlugin() {}
-inline FormatInfoPage *FormatPlugin::createInfoPage(ZLOptionsDialog&, const ZLFile&) { return 0; }
+//inline FormatInfoPage *FormatPlugin::createInfoPage(ZLOptionsDialog&, const ZLFile&) { return 0; }
 
 #endif /* __FORMATPLUGIN_H__ */

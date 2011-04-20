@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,29 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
+#ifndef __ZLTEXTROWMEMORYALLOCATOR_H__
+#define __ZLTEXTROWMEMORYALLOCATOR_H__
 
-#include <AndroidUtil.h>
+#include <vector>
 
-#include <ZLibrary.h>
+class ZLTextRowMemoryAllocator {
 
+public:
+	ZLTextRowMemoryAllocator(const size_t rowSize);
+	~ZLTextRowMemoryAllocator();
 
-JavaVM *ourGlobalJavaVM;
+	char *allocate(size_t size);
+	char *reallocateLast(char *ptr, size_t newSize);
 
-extern "C"
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
-	AndroidUtil::init(jvm);
+private:
+	const size_t myRowSize;
+	size_t myCurrentRowSize;
+	std::vector<char*> myPool;
+	size_t myOffset;
 
-	int argc = 0;
-	char **argv;
-	ZLibrary::init(argc, argv);
-	ZLibrary::initApplication("FBReader");
+private: // disable copying
+	ZLTextRowMemoryAllocator(const ZLTextRowMemoryAllocator&);
+	const ZLTextRowMemoryAllocator &operator = (const ZLTextRowMemoryAllocator&);
+};
 
-	return JNI_VERSION_1_2;
-}
+#endif /* __ZLTEXTROWMEMORYALLOCATOR_H__ */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,29 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
+#ifndef __MERGEDSTREAM_H__
+#define __MERGEDSTREAM_H__
 
-#include <AndroidUtil.h>
+#include <shared_ptr.h>
+#include <ZLInputStream.h>
 
-#include <ZLibrary.h>
+class MergedStream : public ZLInputStream {
 
+protected:
+	virtual shared_ptr<ZLInputStream> nextStream() = 0;
+	virtual void resetToStart() = 0;
 
-JavaVM *ourGlobalJavaVM;
+private:
+	bool open();
+	size_t read(char *buffer, size_t maxSize);
+	void close();
+	void seek(int offset, bool absoluteOffset);
+	size_t offset() const;
+	size_t sizeOfOpened();
 
-extern "C"
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
-	AndroidUtil::init(jvm);
+private:
+	shared_ptr<ZLInputStream> myCurrentStream;
+	size_t myOffset;
+};
 
-	int argc = 0;
-	char **argv;
-	ZLibrary::init(argc, argv);
-	ZLibrary::initApplication("FBReader");
-
-	return JNI_VERSION_1_2;
-}
+#endif /* __MERGEDSTREAM_H__ */

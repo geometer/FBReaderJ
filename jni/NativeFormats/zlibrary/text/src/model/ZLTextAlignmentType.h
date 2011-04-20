@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,16 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
+#ifndef __ZLTEXTALIGNMENTTYPE_H__
+#define __ZLTEXTALIGNMENTTYPE_H__
 
-#include <AndroidUtil.h>
+enum ZLTextAlignmentType {
+	ALIGN_UNDEFINED = 0,
+	ALIGN_LEFT = 1,
+	ALIGN_RIGHT = 2,
+	ALIGN_CENTER = 3,
+	ALIGN_JUSTIFY = 4,
+	ALIGN_LINESTART = 5 // left for LTR languages and right for RTL
+};
 
-#include <ZLibrary.h>
-
-
-JavaVM *ourGlobalJavaVM;
-
-extern "C"
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
-	AndroidUtil::init(jvm);
-
-	int argc = 0;
-	char **argv;
-	ZLibrary::init(argc, argv);
-	ZLibrary::initApplication("FBReader");
-
-	return JNI_VERSION_1_2;
-}
+#endif /* __ZLTEXTALIGNMENTTYPE_H__ */

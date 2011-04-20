@@ -25,6 +25,7 @@ JavaVM *AndroidUtil::ourJavaVM = 0;
 
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
 const char * const AndroidUtil::Class_java_util_List = "java/util/List";
+const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
@@ -42,6 +43,9 @@ jmethodID AndroidUtil::MID_java_io_InputStream_read;
 jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 
 jmethodID AndroidUtil::MID_java_util_List_toArray;
+
+jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
+jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
 
 jfieldID AndroidUtil::FID_NativeFormatPlugin_NativePointer;
 jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
@@ -73,6 +77,10 @@ void AndroidUtil::init(JavaVM* jvm) {
 
 	cls = env->FindClass(Class_java_util_List);
 	MID_java_util_List_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;");
+
+	cls = env->FindClass(Class_java_util_Locale);
+	SMID_java_util_Locale_getDefault = env->GetStaticMethodID(cls, "getDefault", "()Ljava/util/Locale;");
+	MID_java_util_Locale_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;");
 
 	cls = env->FindClass(Class_NativeFormatPlugin);
 	FID_NativeFormatPlugin_NativePointer = env->GetFieldID(cls, "myNativePointer", "J");

@@ -34,10 +34,10 @@
 //std::string ZLibrary::ourCountry;
 std::string ZLibrary::ourZLibraryDirectory;
 
-//std::string ZLibrary::ourApplicationName;
+std::string ZLibrary::ourApplicationName;
 //std::string ZLibrary::ourImageDirectory;
 //std::string ZLibrary::ourApplicationImageDirectory;
-//std::string ZLibrary::ourApplicationDirectory;
+std::string ZLibrary::ourApplicationDirectory;
 //std::string ZLibrary::ourApplicationWritableDirectory;
 //std::string ZLibrary::ourDefaultFilesPathPrefix;
 
@@ -100,19 +100,19 @@ void ZLibrary::shutdown() {
 	return str;
 }*/
 
-/*void ZLibrary::initApplication(const std::string &name) {
+void ZLibrary::initApplication(const std::string &name) {
 	ourApplicationName = name;
-	ourImageDirectory = replaceRegExps(IMAGEDIR);
-	ourApplicationImageDirectory = replaceRegExps(APPIMAGEDIR);
+//	ourImageDirectory = replaceRegExps(IMAGEDIR);
+//	ourApplicationImageDirectory = replaceRegExps(APPIMAGEDIR);
 	ourApplicationDirectory = BaseDirectory + FileNameDelimiter + ourApplicationName;
-	ourApplicationWritableDirectory =
-#ifdef XMLCONFIGHOMEDIR
-		XMLCONFIGHOMEDIR + FileNameDelimiter + "." + name;
-#else
-		"~" + FileNameDelimiter + "." + name;
-#endif
-	ourDefaultFilesPathPrefix = ourApplicationDirectory + FileNameDelimiter + "default" + FileNameDelimiter;
-}*/
+//	ourApplicationWritableDirectory =
+//#ifdef XMLCONFIGHOMEDIR
+//		XMLCONFIGHOMEDIR + FileNameDelimiter + "." + name;
+//#else
+//		"~" + FileNameDelimiter + "." + name;
+//#endif
+//	ourDefaultFilesPathPrefix = ourApplicationDirectory + FileNameDelimiter + "default" + FileNameDelimiter;
+}
 
 /*std::string ZLibrary::Language() {
 	if (ourLanguage.empty()) {

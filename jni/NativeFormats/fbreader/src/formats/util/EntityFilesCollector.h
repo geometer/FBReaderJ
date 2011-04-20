@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,26 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
+#ifndef __ENTITYFILESCOLLECTOR_H__
+#define __ENTITYFILESCOLLECTOR_H__
 
-#include <AndroidUtil.h>
+#include <map>
+#include <vector>
+#include <string>
 
-#include <ZLibrary.h>
+class EntityFilesCollector {
 
+public:
+	static EntityFilesCollector &Instance();
 
-JavaVM *ourGlobalJavaVM;
+	const std::vector<std::string> &externalDTDs(const std::string &format);
 
-extern "C"
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
-	AndroidUtil::init(jvm);
+private:
+	EntityFilesCollector();
 
-	int argc = 0;
-	char **argv;
-	ZLibrary::init(argc, argv);
-	ZLibrary::initApplication("FBReader");
+private:
+	static EntityFilesCollector *ourInstance;
+	std::map<std::string,std::vector<std::string> > myCollections;
+};
 
-	return JNI_VERSION_1_2;
-}
+#endif /* __ENTITYFILESCOLLECTOR_H__ */

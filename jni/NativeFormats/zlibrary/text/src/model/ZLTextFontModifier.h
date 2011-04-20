@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,14 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
+#ifndef __ZLTEXTFONTMODIFIER_H__
+#define __ZLTEXTFONTMODIFIER_H__
 
-#include <AndroidUtil.h>
+enum ZLTextFontModifier {
+	FONT_MODIFIER_DEFAULT = 0,
+	FONT_MODIFIER_BOLD = 1 << 0,
+	FONT_MODIFIER_ITALIC = 1 << 1,
+	FONT_MODIFIER_SMALLCAPS = 1 << 2,
+};
 
-#include <ZLibrary.h>
-
-
-JavaVM *ourGlobalJavaVM;
-
-extern "C"
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
-	AndroidUtil::init(jvm);
-
-	int argc = 0;
-	char **argv;
-	ZLibrary::init(argc, argv);
-	ZLibrary::initApplication("FBReader");
-
-	return JNI_VERSION_1_2;
-}
+#endif /* __ZLTEXTFONTMODIFIER_H__ */

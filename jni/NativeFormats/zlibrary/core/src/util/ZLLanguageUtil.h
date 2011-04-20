@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,22 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
+#ifndef __ZLLANGUAGEUTIL_H__
+#define __ZLLANGUAGEUTIL_H__
 
-#include <AndroidUtil.h>
+#include <string>
 
-#include <ZLibrary.h>
+class ZLLanguageUtil {
 
+public:
+	static const std::string OtherLanguageCode;
 
-JavaVM *ourGlobalJavaVM;
+public:
+	static std::string languageByCode(unsigned char languageCode, unsigned char subLanguageCode);
+	static bool isRTLLanguage(const std::string &languageCode);
 
-extern "C"
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
-	AndroidUtil::init(jvm);
+private:
+	ZLLanguageUtil();
+};
 
-	int argc = 0;
-	char **argv;
-	ZLibrary::init(argc, argv);
-	ZLibrary::initApplication("FBReader");
-
-	return JNI_VERSION_1_2;
-}
+#endif /* __ZLLANGUAGEUTIL_H__ */

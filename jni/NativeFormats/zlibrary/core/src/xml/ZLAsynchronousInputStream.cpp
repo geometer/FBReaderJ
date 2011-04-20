@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,27 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
-
-#include <AndroidUtil.h>
-
-#include <ZLibrary.h>
+#include "ZLAsynchronousInputStream.h"
 
 
-JavaVM *ourGlobalJavaVM;
-
-extern "C"
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
-	AndroidUtil::init(jvm);
-
-	int argc = 0;
-	char **argv;
-	ZLibrary::init(argc, argv);
-	ZLibrary::initApplication("FBReader");
-
-	return JNI_VERSION_1_2;
+ZLAsynchronousInputStream::Handler::~Handler() {
 }
+
+
+ZLAsynchronousInputStream::ZLAsynchronousInputStream(const char *encoding) : myData(0), myDataLen(0), myInitialized(false), myEof(false) {
+	if (encoding != 0) {
+		myEncoding.assign(encoding);
+	}
+}
+
+ZLAsynchronousInputStream::~ZLAsynchronousInputStream() {
+}
+
+bool ZLAsynchronousInputStream::processInput(Handler &handler) {
+	if (!myInitialized) {
+		handler.initialize(myEncoding.empty() ? 0 : myEncoding.c_str());
+		myInitialized = true;
+	}
+	return processInputInternal(handler);
+}
+
