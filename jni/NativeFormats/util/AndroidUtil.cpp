@@ -23,9 +23,11 @@
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
 
-const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
 const char * const AndroidUtil::Class_java_util_List = "java/util/List";
+const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
+const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
+const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
 jmethodID AndroidUtil::MID_ZLFile_size;
@@ -40,6 +42,14 @@ jmethodID AndroidUtil::MID_java_io_InputStream_read;
 jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 
 jmethodID AndroidUtil::MID_java_util_List_toArray;
+
+jfieldID AndroidUtil::FID_NativeFormatPlugin_NativePointer;
+jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
+
+jmethodID AndroidUtil::SMID_PluginCollection_Instance;
+jmethodID AndroidUtil::MID_PluginCollection_getDefaultLanguage;
+jmethodID AndroidUtil::MID_PluginCollection_getDefaultEncoding;
+jmethodID AndroidUtil::MID_PluginCollection_isLanguageAutoDetectEnabled;
 
 
 void AndroidUtil::init(JavaVM* jvm) {
@@ -63,6 +73,16 @@ void AndroidUtil::init(JavaVM* jvm) {
 
 	cls = env->FindClass(Class_java_util_List);
 	MID_java_util_List_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;");
+
+	cls = env->FindClass(Class_NativeFormatPlugin);
+	FID_NativeFormatPlugin_NativePointer = env->GetFieldID(cls, "myNativePointer", "J");
+	MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(J)V");
+
+	cls = env->FindClass(Class_PluginCollection);
+	SMID_PluginCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/PluginCollection;");
+	MID_PluginCollection_getDefaultLanguage = env->GetMethodID(cls, "getDefaultLanguage", "()Ljava/lang/String;");
+	MID_PluginCollection_getDefaultEncoding = env->GetMethodID(cls, "getDefaultEncoding", "()Ljava/lang/String;");
+	MID_PluginCollection_isLanguageAutoDetectEnabled = env->GetMethodID(cls, "isLanguageAutoDetectEnabled", "()Z");
 }
 
 

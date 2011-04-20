@@ -31,9 +31,11 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
-	static const char * const Class_ZLFile;
 	static const char * const Class_java_io_InputStream;
 	static const char * const Class_java_util_List;
+	static const char * const Class_ZLFile;
+	static const char * const Class_NativeFormatPlugin;
+	static const char * const Class_PluginCollection;
 
 	static jmethodID SMID_ZLFile_createFileByPath;
 	static jmethodID MID_ZLFile_size;
@@ -48,6 +50,14 @@ public:
 	static jmethodID MID_java_io_InputStream_skip;
 
 	static jmethodID MID_java_util_List_toArray;
+
+	static jfieldID FID_NativeFormatPlugin_NativePointer;
+	static jmethodID MID_NativeFormatPlugin_init;
+
+	static jmethodID SMID_PluginCollection_Instance;
+	static jmethodID MID_PluginCollection_getDefaultLanguage;
+	static jmethodID MID_PluginCollection_getDefaultEncoding;
+	static jmethodID MID_PluginCollection_isLanguageAutoDetectEnabled;
 
 public:
 	static void init(JavaVM* jvm);

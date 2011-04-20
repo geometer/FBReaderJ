@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,28 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+#ifndef __STATISTICSXMLWRITER_H__
+#define __STATISTICSXMLWRITER_H__
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+#include <string>
 
-public abstract class FormatPlugin {
-	public abstract boolean acceptsFile(ZLFile file);
-	public abstract	boolean readMetaInfo(Book book);
-	public abstract boolean readModel(BookModel model);
-	public abstract ZLImage readCover(ZLFile file);
-	public abstract String readAnnotation(ZLFile file);
-}
+#include <ZLOutputStream.h>
+#include <ZLXMLWriter.h>
+
+class ZLMapBasedStatistics;
+
+class ZLStatisticsXMLWriter: public ZLXMLWriter {
+
+public:
+	ZLStatisticsXMLWriter(ZLOutputStream &stream) : ZLXMLWriter(stream) {}
+
+	void writeStatistics(const ZLMapBasedStatistics &statistics);
+
+private:
+	void writeSequence(const std::string &key, size_t frequency);
+
+private:
+	static void appendLongNumber(std::string &str, unsigned long long n); 
+};
+
+#endif /*__STATISTICSXMLWRITER_H__*/

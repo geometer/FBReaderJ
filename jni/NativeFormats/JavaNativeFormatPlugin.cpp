@@ -19,20 +19,20 @@
 
 #include <jni.h>
 
-#include <string>
+// This code is temporary: it makes eclipse not complain
+#ifndef _JNI_H
+#define JNIIMPORT
+#define JNIEXPORT
+#define JNICALL
+#endif /* _JNI_H */
+
+
+#include <AndroidUtil.h>
 
 
 template <class T>
 static T *extractPointer(JNIEnv *env, jobject base) {
-	jclass cls = env->GetObjectClass(base);
-	jmethodID getNativePointer = env->GetMethodID(cls, "getNativePointer", "()J");
-	if (getNativePointer == 0) {
-		return 0;
-	}
-	jlong ptr = env->CallLongMethod(base, getNativePointer);
-	if (env->ExceptionCheck() == JNI_TRUE) {
-		return 0;
-	}
+	jlong ptr = env->GetLongField(base, AndroidUtil::FID_NativeFormatPlugin_NativePointer);
 	return (T*)ptr;
 }
 

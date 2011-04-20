@@ -57,7 +57,7 @@ public class PluginCollection {
 			//ourInstance.myPlugins.add(new RtfPlugin());
 			//ourInstance.myPlugins.add(new OpenReaderPlugin());
 
-			ourInstance.collectNativePlugins(ourInstance.myPlugins);
+			ourInstance.runTests();
 		}
 		return ourInstance;
 	}
@@ -80,8 +80,38 @@ public class PluginCollection {
 				return plugin;
 			}
 		}
-		return null;
+
+		final FormatPlugin plugin = getNativePlugin(file.getPath());
+		if (plugin != null) {
+			myPlugins.add(plugin);
+		}
+		return plugin;
 	}
 
-	private native void collectNativePlugins(ArrayList<FormatPlugin> plugins);
+	private native FormatPlugin getNativePlugin(String path);
+	private native void release();
+
+	// called from native code
+	public String getDefaultLanguage() {
+		return DefaultLanguageOption.getValue();
+	}
+
+	// called from native code
+	public String getDefaultEncoding() {
+		return DefaultEncodingOption.getValue();
+	}
+
+	// called from native code
+	public boolean isLanguageAutoDetectEnabled() {
+		return LanguageAutoDetectOption.getValue();
+	}
+
+	protected void finalize() throws Throwable {
+		deleteInstance();
+		myPlugins.clear();
+		release();
+		super.finalize();
+	};
+
+	private native void runTests();
 }

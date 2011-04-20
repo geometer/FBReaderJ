@@ -26,14 +26,11 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class NativeFormatPlugin extends FormatPlugin {
 
-	private final long myNativePointer;
+	// Stores native C++ pointer value
+	protected final long myNativePointer;
 
 	public NativeFormatPlugin(long ptr) {
 		myNativePointer = ptr;
-	}
-
-	public final long getNativePointer() {
-		return myNativePointer;
 	}
 
 	@Override

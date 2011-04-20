@@ -20,11 +20,12 @@
 #ifndef __FORMATPLUGIN_H__
 #define __FORMATPLUGIN_H__
 
+#include <jni.h>
+
 #include <string>
 #include <vector>
 
 #include <shared_ptr.h>
-//#include <ZLOptions.h>
 
 class Book;
 class BookModel;
@@ -65,12 +66,7 @@ protected:
 	static void detectLanguage(Book &book, ZLInputStream &stream);
 };
 
-/*class PluginCollection {
-
-public:
-	ZLBooleanOption LanguageAutoDetectOption;
-	ZLStringOption DefaultLanguageOption;
-	ZLStringOption DefaultEncodingOption;
+class PluginCollection {
 
 public:
 	static PluginCollection &Instance();
@@ -80,14 +76,23 @@ private:
 	PluginCollection();
 
 public:
+	~PluginCollection();
+
+public:
 	shared_ptr<FormatPlugin> plugin(const ZLFile &file, bool strong);
 	shared_ptr<FormatPlugin> plugin(const Book &book);
+
+	bool isLanguageAutoDetectEnabled();
+	std::string defaultLanguage();
+	std::string defaultEncoding();
 
 private:
 	static PluginCollection *ourInstance;
 
+	jobject myJavaInstance;
+
 	std::vector<shared_ptr<FormatPlugin> > myPlugins;
-};*/
+};
 
 inline FormatInfoPage::FormatInfoPage() {}
 inline FormatInfoPage::~FormatInfoPage() {}

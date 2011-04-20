@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+#ifndef __ZLSTATISTICSGENERATOR_H__
+#define __ZLSTATISTICSGENERATOR_H__
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+#include <string>
 
-public abstract class FormatPlugin {
-	public abstract boolean acceptsFile(ZLFile file);
-	public abstract	boolean readMetaInfo(Book book);
-	public abstract boolean readModel(BookModel model);
-	public abstract ZLImage readCover(ZLFile file);
-	public abstract String readAnnotation(ZLFile file);
-}
+class ZLMapBasedStatistics;
+
+class ZLStatisticsGenerator {
+
+public:
+	ZLStatisticsGenerator(const std::string &breakSymbols);
+	~ZLStatisticsGenerator();
+
+	void generate(const std::string &inputFileName, size_t charSequenceSizpe, ZLMapBasedStatistics &statistics);
+	void generate(const char* buffer, size_t length, size_t charSequenceSize, ZLMapBasedStatistics &statistics);
+
+private:
+	int read(const std::string &inputFileName);
+
+private:
+	char *myBreakSymbolsTable;
+
+	char *myStart;
+	char *myEnd;
+
+	static size_t ourBufferSize;
+};
+
+#endif //__ZLSTATISTICSGENERATOR_H__

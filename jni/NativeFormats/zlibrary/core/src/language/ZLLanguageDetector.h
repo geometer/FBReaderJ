@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,34 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+#ifndef __ZLLANGUAGEDETECTOR_H__
+#define __ZLLANGUAGEDETECTOR_H__
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+#include <vector>
+#include <string>
 
-public abstract class FormatPlugin {
-	public abstract boolean acceptsFile(ZLFile file);
-	public abstract	boolean readMetaInfo(Book book);
-	public abstract boolean readModel(BookModel model);
-	public abstract ZLImage readCover(ZLFile file);
-	public abstract String readAnnotation(ZLFile file);
-}
+//#include <shared_ptr.h>
+
+class ZLStatisticsBasedMatcher;
+
+class ZLLanguageDetector {
+
+public:
+	struct LanguageInfo {
+		LanguageInfo(const std::string &language, const std::string &encoding);
+		const std::string Language;
+		const std::string Encoding;
+	};
+
+public:
+	ZLLanguageDetector();
+	~ZLLanguageDetector();
+
+	shared_ptr<LanguageInfo> findInfo(const char *buffer, size_t length, int matchingCriterion = 0);
+
+private:
+	typedef std::vector<shared_ptr<ZLStatisticsBasedMatcher> > SBVector;
+	SBVector myMatchers;
+};
+
+#endif /* __ZLLANGUAGEDETECTOR_H__ */

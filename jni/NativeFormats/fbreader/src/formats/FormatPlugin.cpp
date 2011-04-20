@@ -17,8 +17,10 @@
  * 02110-1301, USA.
  */
 
+#include <jni.h>
+
 #include <ZLInputStream.h>
-//#include <ZLLanguageDetector.h>
+#include <ZLLanguageDetector.h>
 #include <ZLImage.h>
 
 #include "FormatPlugin.h"
@@ -26,7 +28,7 @@
 #include "../library/Book.h"
 
 void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) {
-	/*std::string language = book.language();
+	std::string language = book.language();
 	std::string encoding = book.encoding();
 	if (!encoding.empty() && !language.empty()) {
 		return;
@@ -34,12 +36,12 @@ void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) 
 
 	PluginCollection &collection = PluginCollection::Instance();
 	if (language.empty()) {
-		language = collection.DefaultLanguageOption.value();
+		language = collection.defaultLanguage();
 	}
 	if (encoding.empty()) {
-		encoding = collection.DefaultEncodingOption.value();
+		encoding = collection.defaultEncoding();
 	}
-	if (collection.LanguageAutoDetectOption.value() && stream.open()) {
+	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
 		const size_t size = stream.read(buffer, BUFSIZE);
@@ -58,20 +60,20 @@ void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) 
 		}
 	}
 	book.setEncoding(encoding);
-	book.setLanguage(language);*/
+	book.setLanguage(language);
 }
 
 void FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream) {
-	/*std::string language = book.language();
+	std::string language = book.language();
 	if (!language.empty()) {
 		return;
 	}
 
 	PluginCollection &collection = PluginCollection::Instance();
 	if (language.empty()) {
-		language = collection.DefaultLanguageOption.value();
+		language = collection.defaultLanguage();
 	}
-	if (collection.LanguageAutoDetectOption.value() && stream.open()) {
+	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
 		const size_t size = stream.read(buffer, BUFSIZE);
@@ -85,7 +87,7 @@ void FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream) {
 			}
 		}
 	}
-	book.setLanguage(language);*/
+	book.setLanguage(language);
 }
 
 const std::string &FormatPlugin::tryOpen(const ZLFile&) const {

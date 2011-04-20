@@ -19,76 +19,49 @@
 
 #include <jni.h>
 
+// This code is temporary: it makes eclipse not complain
+#ifndef _JNI_H
+#define JNIIMPORT
+#define JNIEXPORT
+#define JNICALL
+#endif /* _JNI_H */
 
-class PluginCollectionHelper {
 
-public:
-	PluginCollectionHelper(JNIEnv* env);
-	bool init(jobject arrayList);
+#include <AndroidUtil.h>
 
-	template <class T>
-	bool addToArrayList(T *impl);
+#include <ZLFile.h>
 
-private:
-	JNIEnv *myEnv;
+#include "fbreader/src/formats/FormatPlugin.h"
 
-	jobject myArrayList;
-	jmethodID myAddToArrayList;
 
-	jclass myClassNative;
-	jmethodID myInitNative;
-};
+extern "C"
+JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_getNativePlugin(JNIEnv* env, jobject thiz, jstring javaPath) {
+	const char *pathData = env->GetStringUTFChars(javaPath, 0);
+	std::string path(pathData);
+	env->ReleaseStringUTFChars(javaPath, pathData);
 
-PluginCollectionHelper::PluginCollectionHelper(JNIEnv* env) : myEnv(env) {
+	ZLFile file(path);
+	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(file, false);
+	if (plugin.isNull()) {
+		return 0;
+	}
+
+	FormatPlugin *ptr = &*plugin;
+	jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPlugin);
+	return env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, (jlong)ptr);
 }
 
-bool PluginCollectionHelper::init(jobject arrayList) {
-	myArrayList = arrayList;
-
-	jclass cls = myEnv->GetObjectClass(myArrayList);
-	myAddToArrayList = myEnv->GetMethodID(cls, "add", "(Ljava/lang/Object;)Z");
-	if (myAddToArrayList == 0) {
-		return false;
-	}
-
-	myClassNative = myEnv->FindClass("org/geometerplus/fbreader/formats/NativeFormatPlugin");
-	if (myClassNative == 0) {
-		return false;
-	}
-	myInitNative = myEnv->GetMethodID(myClassNative, "<init>", "(J)V");
-	if (myInitNative == 0) {
-		return false;
-	}
-	return true;
+extern "C"
+JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_release(JNIEnv* env, jobject thiz) {
+	PluginCollection::deleteInstance();
 }
-
-template <class T>
-bool PluginCollectionHelper::addToArrayList(T *impl) {
-	const jobject base = myEnv->NewObject(myClassNative, myInitNative, (jlong)impl);
-	if (base == 0) {
-		return false;
-	}
-	myEnv->CallBooleanMethod(myArrayList, myAddToArrayList, base);
-	return myEnv->ExceptionCheck() == JNI_FALSE;
-}
-
 
 
 void extension1();
 void extension2();
 
 extern "C"
-JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_collectNativePlugins(JNIEnv* env, jobject thiz, jobject plugins) {
-	PluginCollectionHelper helper(env);
-
-	if (!helper.init(plugins)) {
-		return;
-	}
-
-	/*if (!helper.addToArrayList(new FormatPlugin(...))) {
-		return;
-	}*/
-
+JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_runTests(JNIEnv* env, jobject thiz) {
 	extension1();
 	extension2();
 }
