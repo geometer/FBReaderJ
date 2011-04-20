@@ -17,13 +17,31 @@
  * 02110-1301, USA.
  */
 
+#include <jni.h>
+
+// This code is temporary: it makes eclipse not complain
+#ifndef _JNI_H
+#define JNIIMPORT
+#define JNIEXPORT
+#define JNICALL
+#endif /* _JNI_H */
+
+
 #include <AndroidLog.h>
 
 #include <ZLFile.h>
 #include <ZLInputStream.h>
 #include <ZLXMLReader.h>
 
-#include <ZLLanguageList.h>
+
+void extension1();
+void extension2();
+
+extern "C"
+JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_runTests(JNIEnv* env, jobject thiz) {
+	//extension1();
+	//extension2();
+}
 
 
 void extension1() {
@@ -82,57 +100,18 @@ void extension1() {
 }
 
 
-class EnRuXMLReader : public ZLXMLReader {
+class TestXMLReader : public ZLXMLReader {
 public:
 	void startElementHandler(const char *tag, const char **attributes);
-
-	std::string EnText;
-	std::string RuText;
 };
 
-static const std::string ROOT = "root";
-
-void EnRuXMLReader::startElementHandler(const char *tag, const char **attributes) {
-	if (ROOT == tag) {
-		const char *en = attributeValue(attributes, "en");
-		const char *ru = attributeValue(attributes, "ru");
-		if (en != 0) {
-			EnText = en;
-		}
-		if (ru != 0) {
-			RuText = ru;
-		}
-	}
+void TestXMLReader::startElementHandler(const char *tag, const char **attributes) {
 }
 
 
 void extension2() {
 	AndroidLog log;
 	log.w("FBREADER", "extension 2 start");
-
-	/*ZLFile utf8File("/mnt/sdcard/Books/a-utf8.xml");
-	ZLFile win1251File("/mnt/sdcard/Books/a-win1251.xml");
-
-	EnRuXMLReader utf8Reader;
-	EnRuXMLReader win1251Reader;
-
-	bool utf8res = utf8Reader.readDocument(utf8File);
-	bool win1251res = win1251Reader.readDocument(win1251File);
-
-	log.wf("FBREADER", "utf8res: %s", utf8res ? "true" : "false");
-	log.wf("FBREADER", "win1251res: %s", win1251res ? "true" : "false");
-	log.wf("FBREADER", "utf8   :EN = %s", utf8Reader.EnText.c_str());
-	log.wf("FBREADER", "win1251:EN = %s", win1251Reader.EnText.c_str());
-	log.wf("FBREADER", "utf8   :RU = %s", utf8Reader.RuText.c_str());
-	log.wf("FBREADER", "win1251:RU = %s", win1251Reader.RuText.c_str());
-	log.wf("FBREADER", "EN == EN: %s", (utf8Reader.EnText == win1251Reader.EnText) ? "true" : "false");
-	log.wf("FBREADER", "RU == RU: %s", (utf8Reader.RuText == win1251Reader.RuText) ? "true" : "false");*/
-
-	const std::vector<std::string> &codes = ZLLanguageList::languageCodes();
-	log.wf("FBREADER", "languageCodes.size = %d", (int)codes.size());
-	for (size_t i = 0; i < codes.size(); ++i) {
-		log.wf("FBREADER", "languageCodes[%2d] = %s", (int)i, codes[i].c_str());
-	}
 
 	log.w("FBREADER", "extension 2 end");
 }

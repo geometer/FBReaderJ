@@ -55,13 +55,3 @@ extern "C"
 JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_release(JNIEnv* env, jobject thiz) {
 	PluginCollection::deleteInstance();
 }
-
-
-void extension1();
-void extension2();
-
-extern "C"
-JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_runTests(JNIEnv* env, jobject thiz) {
-	extension1();
-	extension2();
-}
