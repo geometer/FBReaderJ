@@ -463,10 +463,6 @@
 					<node name="summaryOn" value="Mostrar reloxo no rodapé"/>
 					<node name="summaryOff" value="Non mostrar reloxo no rodapé"/>
 				</node>
-				<node name="isSensitive" value="Navegar cun toque no rodapé">
-					<node name="summaryOn" value="Navegación activada"/>
-					<node name="summaryOff" value="Navegación desactivada"/>
-				</node>
 				<node name="font" value="Tipo de letra"/>
 			</node>
 			<node name="display" value="Pantalla">
