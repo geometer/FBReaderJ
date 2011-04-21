@@ -1,5 +1,6 @@
 ===== 1.0.7 (Apr ??, 2011) =====
-* Basic authentication (for OPDS catalogs) has been implemented
+* Basic authentication (for OPDS catalogs)
+* Cookies support
 * Fixed unexpected scrolling after brightness adjustment
 * Fixed custom OPDS catalogs search
 * Fixed freezes in library view

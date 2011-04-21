@@ -73,6 +73,15 @@ public class SQLiteCookieDatabase extends CookieDatabase {
 		myDeletePortsStatement = myDatabase.compileStatement(
 			"DELETE FROM CookiePort WHERE cookie_id = ?"
 		);
+
+		final long time = new Date().getTime();
+		myDatabase.execSQL(
+			"DELETE FROM CookiePort WHERE cookie_id IN " +
+			"(SELECT cookie_id FROM Cookie WHERE date_of_expiration <= " + time + ")"
+		);
+		myDatabase.execSQL(
+			"DELETE FROM Cookie WHERE date_of_expiration <= " + time
+		);
 	}
 
 	@Override
