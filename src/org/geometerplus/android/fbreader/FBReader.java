@@ -56,7 +56,10 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private static TextSearchButtonPanel ourTextSearchPanel;
 	private static NavigationButtonPanel ourNavigatePanel;
-
+	//aagrenmod
+	private static DropBoxCredentialsPanel ourDropBoxCredentialsPanel;
+	//aagrenmod
+	
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
 		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
@@ -86,6 +89,11 @@ public final class FBReader extends ZLAndroidActivity {
 		if (ourNavigatePanel == null) {
 			ourNavigatePanel = new NavigationButtonPanel(fbReader);
 		}
+		//aagrenmod
+		if (ourDropBoxCredentialsPanel == null) {
+			ourDropBoxCredentialsPanel = new DropBoxCredentialsPanel(fbReader);
+		}
+		//aagrenmod
 
 		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, fbReader));
@@ -95,6 +103,9 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this, fbReader));
 		
 		fbReader.addAction(ActionCode.SHOW_MENU, new ShowMenuAction(this, fbReader));
+		//aagrenmod
+		fbReader.addAction(ActionCode.DROPBOXSYNC, new DropBoxSyncAction(this, fbReader));
+		//aagrenmod
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
@@ -176,6 +187,11 @@ public final class FBReader extends ZLAndroidActivity {
 		if (!ourNavigatePanel.hasControlPanel()) {
 			ourNavigatePanel.createControlPanel(this, root);
 		}
+		//aagrenmod
+		if (!ourDropBoxCredentialsPanel.hasControlPanel()) {
+			ourDropBoxCredentialsPanel.createControlPanel(this, root);
+		}
+		//aagrenmod
 	}
 
 	@Override
@@ -251,6 +267,12 @@ public final class FBReader extends ZLAndroidActivity {
 	public void navigate() {
 		ourNavigatePanel.runNavigation();
 	}
+	
+	//aagrenmod
+	public void getDropBoxCredentials() {
+		ourDropBoxCredentialsPanel.runDropBoxCrendentials();
+	}
+	//aagrenmod
 
 	private void addMenuItem(Menu menu, String actionId, int iconId) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
@@ -277,6 +299,9 @@ public final class FBReader extends ZLAndroidActivity {
 		addMenuItem(menu, ActionCode.ROTATE);
 		addMenuItem(menu, ActionCode.INCREASE_FONT);
 		addMenuItem(menu, ActionCode.DECREASE_FONT);
+		//aagrenmod
+		addMenuItem(menu, ActionCode.DROPBOXSYNC);
+		//aagrenmod
 		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);
 
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();

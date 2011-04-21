@@ -42,8 +42,15 @@ import org.geometerplus.android.util.SQLiteUtil;
 public final class SQLiteBooksDatabase extends BooksDatabase {
 	private final String myInstanceId;
 	private final SQLiteDatabase myDatabase;
+	//aagrenmod
+	private DropBoxSyncer dbsyncer;
+	//aagrenmod
 
 	public SQLiteBooksDatabase(Context context, String instanceId) {
+		//aagrenmod
+		dbsyncer = DropBoxSyncer.getDropBoxSyncer();
+		dbsyncer.init(context);
+		//aagrenmod
 		myInstanceId = instanceId;
 		myDatabase = context.openOrCreateDatabase("books.db", Context.MODE_PRIVATE, null);
 		migrate(context);
@@ -817,6 +824,10 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myStorePositionStatement.bindLong(3, position.getElementIndex());
 		myStorePositionStatement.bindLong(4, position.getCharIndex());
 		myStorePositionStatement.execute();
+		
+		//aagrenmod
+		dbsyncer.run(bookId);
+		//aagrenmod
 	}
 
 	private SQLiteStatement myInsertIntoBookListStatement;
