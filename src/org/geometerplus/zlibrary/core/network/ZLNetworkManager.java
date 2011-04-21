@@ -96,7 +96,7 @@ public class ZLNetworkManager {
 			HttpURLConnection httpConnection = null;
 			int response = -1;
 			final int retryLimit = 6;
-			for (int retryCounter = 0; retryCounter < retryLimit && (response == -1 || response == 302); ++retryCounter) {
+			for (int retryCounter = 0; retryCounter < retryLimit && (response == -1 || response == 301 || response == 302); ++retryCounter) {
 				final URLConnection connection = new URL(request.URL).openConnection();
 				if (!(connection instanceof HttpURLConnection)) {
 					throw new ZLNetworkException(ZLNetworkException.ERROR_UNSUPPORTED_PROTOCOL);
@@ -128,7 +128,7 @@ public class ZLNetworkManager {
 					httpConnection.connect();
 				}
 				response = httpConnection.getResponseCode();
-				if (response == 302) {
+				if (response == 301 || response == 302) {
 					request.URL = httpConnection.getHeaderField("Location");
 				}
 			}
@@ -151,6 +151,8 @@ public class ZLNetworkManager {
 				}
 				success = true;
 			} else {
+				System.err.println(request.URL);
+				System.err.println("RESPONSE: " + response);
 				if (response == HttpURLConnection.HTTP_UNAUTHORIZED) {
 					throw new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED);
 				} else if (response >= 400) {
