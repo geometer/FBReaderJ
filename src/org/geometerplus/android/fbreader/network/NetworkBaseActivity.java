@@ -31,12 +31,14 @@ import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -56,6 +58,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+		SQLiteCookieDatabase.init(this);
 
 		Connection = new BookDownloaderServiceConnection();
 		bindService(
@@ -83,10 +86,14 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		@Override
 		protected PasswordAuthentication getPasswordAuthentication() {
 			final Intent intent = new Intent();
+			final String host = getRequestingSite().getHostName();
+			final String area = getRequestingPrompt();
+			final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
 			intent.setClass(NetworkBaseActivity.this, AuthenticationActivity.class);
-			intent.putExtra(AuthenticationActivity.AREA_KEY, getRequestingPrompt());
-			intent.putExtra(AuthenticationActivity.HOST_KEY, getRequestingSite().getHostName());
+			intent.putExtra(AuthenticationActivity.HOST_KEY, host);
+			intent.putExtra(AuthenticationActivity.AREA_KEY, area);
 			intent.putExtra(AuthenticationActivity.SCHEME_KEY, getRequestingProtocol());
+			intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
 			startActivityForResult(intent, AUTHENTICATION_CODE);
 			synchronized (this) {
 				try {
@@ -94,9 +101,9 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 				} catch (InterruptedException e) {
 				}
 			}
-			System.err.println("auth thread: " + Thread.currentThread());
 			PasswordAuthentication result = null;
 			if (myUsername != null && myPassword != null) {
+				option.setValue(myUsername);
 				result = new PasswordAuthentication(myUsername, myPassword.toCharArray());
 			}
 			myUsername = null;
@@ -113,7 +120,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		getListView().setOnCreateContextMenuListener(this);
 		onModelChanged(); // do the same update actions as upon onModelChanged
 
-		System.err.println("UI thread: " + Thread.currentThread());
 		Authenticator.setDefault(myAuthenticator);
 	}
 

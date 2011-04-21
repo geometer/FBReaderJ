@@ -1,3 +1,9 @@
+* 'sign out' feature for basic-auth
+DONE persistent cookie storage
+DONE use expiration cookie info
+* select best match cookie if several with the same name matches
+* common auth dialog for basic auth & litres
+
 DONE show 'empty basket' message without opening of catalog
 * update basket view if basket content is changed
 * basket summary
