@@ -1,5 +1,5 @@
 * 'sign out' feature for basic-auth
-* persistent cookie storage
+DONE persistent cookie storage
 * use expiration cookie info
 * select best match cookie if several with the same name matches
 * common auth dialog for basic auth & litres

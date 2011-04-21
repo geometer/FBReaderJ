@@ -22,12 +22,16 @@ package org.geometerplus.zlibrary.core.network;
 import java.util.Collection;
 
 public abstract class CookieDatabase {
-	static CookieDatabase Instance;
+	private static CookieDatabase ourInstance;
 
-	protected CookieDatabase() {
-		Instance = this;
+	public static CookieDatabase getInstance() {
+		return ourInstance;
 	}
 
-	abstract void saveCookies(Collection<Cookie> cookies);
-	abstract Collection<Cookie> getCookiesForHost(String hostName);
+	protected CookieDatabase() {
+		ourInstance = this;
+	}
+
+	protected abstract void saveCookies(Collection<Cookie> cookies);
+	protected abstract Collection<Cookie> getCookiesForHost(String hostName);
 }

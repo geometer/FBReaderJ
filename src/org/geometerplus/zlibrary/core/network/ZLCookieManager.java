@@ -46,8 +46,17 @@ public class ZLCookieManager extends CookieHandler {
 	}
 
 	private List<Cookie> getCookies(URI uri) {
-		final Set<Cookie> allCookiesForHost = myCookiesByHost.get(uri.getHost());
+		final String host = uri.getHost();
+		Set<Cookie> allCookiesForHost = myCookiesByHost.get(host);
 		if (allCookiesForHost == null) {
+			allCookiesForHost = new HashSet<Cookie>();
+			myCookiesByHost.put(host, allCookiesForHost);
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				allCookiesForHost.addAll(db.getCookiesForHost(host));
+			}
+		}
+		if (allCookiesForHost.isEmpty()) {
 			return Collections.emptyList();
 		}
 
@@ -63,8 +72,16 @@ public class ZLCookieManager extends CookieHandler {
 
 	@Override
 	public void put(URI uri, Map<String,List<String>> responseHeaders) throws IOException {
+		final String host = uri.getHost();
 		addCookies(uri, responseHeaders.get("Set-Cookie"));
 		addCookies(uri, responseHeaders.get("Set-Cookie2"));
+		final Set<Cookie> allCookiesForHost = myCookiesByHost.get(host);
+		if (allCookiesForHost != null && !allCookiesForHost.isEmpty()) {
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.saveCookies(allCookiesForHost);
+			}
+		}
 	}
 
 	private void addCookies(URI uri, List<String> setCookiesList) {

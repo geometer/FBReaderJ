@@ -38,6 +38,7 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -57,6 +58,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+		SQLiteCookieDatabase.init(this);
 
 		Connection = new BookDownloaderServiceConnection();
 		bindService(
