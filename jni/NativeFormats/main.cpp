@@ -33,6 +33,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
 	int argc = 0;
 	char **argv;
 	ZLibrary::init(argc, argv);
+	ZLibrary::initApplication("FBReader");
 
 	return JNI_VERSION_1_2;
 }

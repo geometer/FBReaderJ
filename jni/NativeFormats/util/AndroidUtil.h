@@ -33,6 +33,7 @@ private:
 public:
 	static const char * const Class_java_io_InputStream;
 	static const char * const Class_java_util_List;
+	static const char * const Class_java_util_Locale;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
@@ -50,6 +51,9 @@ public:
 	static jmethodID MID_java_io_InputStream_skip;
 
 	static jmethodID MID_java_util_List_toArray;
+
+	static jmethodID SMID_java_util_Locale_getDefault;
+	static jmethodID MID_java_util_Locale_getLanguage;
 
 	static jfieldID FID_NativeFormatPlugin_NativePointer;
 	static jmethodID MID_NativeFormatPlugin_init;

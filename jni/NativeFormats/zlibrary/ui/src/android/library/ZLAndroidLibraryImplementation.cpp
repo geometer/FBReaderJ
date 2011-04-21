@@ -17,6 +17,9 @@
  * 02110-1301, USA.
  */
 
+#include <jni.h>
+#include <AndroidUtil.h>
+
 //#include <ZLApplication.h>
 #include <ZLibrary.h>
 //#include <ZLLanguageUtil.h>
@@ -72,3 +75,18 @@ void ZLAndroidLibraryImplementation::init(int &argc, char **&argv) {
 	gtk_main();
 	delete application;
 }*/
+
+
+std::string ZLibrary::Language() {
+	JNIEnv *env = AndroidUtil::getEnv();
+	jclass cls = env->FindClass(AndroidUtil::Class_java_util_Locale);
+	jobject locale = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_java_util_Locale_getDefault);
+	jstring javaLang = (jstring)env->CallObjectMethod(locale, AndroidUtil::MID_java_util_Locale_getLanguage);
+	const char *langData = env->GetStringUTFChars(javaLang, 0);
+	std::string lang(langData);
+	env->ReleaseStringUTFChars(javaLang, langData);
+	env->DeleteLocalRef(javaLang);
+	env->DeleteLocalRef(locale);
+	env->DeleteLocalRef(cls);
+	return lang;
+}
