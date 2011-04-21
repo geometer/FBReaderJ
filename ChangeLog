@@ -1,4 +1,5 @@
-===== 1.0.7 (Apr ??, 2011) =====
+===== 1.0.7 (Apr 21, 2011) =====
+* Fixed litres support
 * Basic authentication (for OPDS catalogs)
 * Cookies support
 * Fixed unexpected scrolling after brightness adjustment
