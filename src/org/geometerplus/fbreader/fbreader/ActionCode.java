@@ -53,7 +53,10 @@ public interface ActionCode {
 	String ROTATE = "rotate";
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
-
+	//aagrenmod
+	String DROPBOXSYNC = "dropboxsync";
+	//aagrenmod
+	
 	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
 	String CLEAR_SELECTION = "clearSelection";
 

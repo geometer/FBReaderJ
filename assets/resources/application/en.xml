@@ -212,6 +212,7 @@
 		<node name="rotate" value="Rotate screen"/>
 		<node name="increaseFont" value="Zoom in" />
 		<node name="decreaseFont" value="Zoom out" />
+		<node name="dropboxsync" value="Sync Book" />
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
 	</node>
@@ -621,7 +622,6 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentication" />
-			<node name="unencryptedWarning" value="Your password will be sent unencrypted" />
 			<node name="login" value="Username" />
 			<node name="password" value="Password" />
 			<node name="skipIP" value="Don't bound to ip-address" />

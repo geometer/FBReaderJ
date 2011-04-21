@@ -91,7 +91,7 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("CancelMenu", "previousBook", false);
 	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "positions", true);
-
+	
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
 	public final FBView BookTextView;
@@ -106,6 +106,7 @@ public final class FBReaderApp extends ZLApplication {
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
+		//addAction(ActionCode.DROPBOXSYNC, new DropBoxSyncAction(this, -2));
 		addAction(ActionCode.ROTATE, new RotateAction(this));
 
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));

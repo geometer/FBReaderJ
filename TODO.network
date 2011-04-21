@@ -1,3 +1,4 @@
+* 'Refresh catalogs' button
 * 'sign out' feature for basic-auth
 DONE persistent cookie storage
 DONE use expiration cookie info
