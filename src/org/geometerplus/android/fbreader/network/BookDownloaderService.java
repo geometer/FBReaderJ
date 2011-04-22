@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 import java.io.*;
-import java.net.URLConnection;
 
 import android.os.IBinder;
 import android.os.Handler;
@@ -292,13 +291,12 @@ public class BookDownloaderService extends Service {
 		};
 
 		final ZLNetworkRequest request = new ZLNetworkRequest(urlString, sslCertificate, null) {
-			public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				final int updateIntervalMillis = 1000; // FIXME: remove hardcoded time constant
 
-				final int fileLength = connection.getContentLength();
 				int downloadedPart = 0;
 				long progressTime = System.currentTimeMillis() + updateIntervalMillis;
-				if (fileLength <= 0) {
+				if (length <= 0) {
 					progressHandler.sendEmptyMessage(-1);
 				}
 				OutputStream outStream;
@@ -315,13 +313,13 @@ public class BookDownloaderService extends Service {
 							break;
 						}
 						downloadedPart += size;
-						if (fileLength > 0) {
+						if (length > 0) {
 							final long currentTime = System.currentTimeMillis();
 							if (currentTime > progressTime) {
 								progressTime = currentTime + updateIntervalMillis;
-								progressHandler.sendEmptyMessage(downloadedPart * 100 / fileLength);
+								progressHandler.sendEmptyMessage(downloadedPart * 100 / length);
 							}
-							/*if (downloadedPart * 100 / fileLength > 95) {
+							/*if (downloadedPart * 100 / length > 95) {
 								throw new IOException("debug exception");
 							}*/
 						}

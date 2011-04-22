@@ -145,7 +145,7 @@ public class ZLNetworkManager {
 					if ("gzip".equalsIgnoreCase(httpConnection.getContentEncoding())) {
 						stream = new GZIPInputStream(stream);
 					}
-					request.handleStream(httpConnection, stream);
+					request.handleStream(stream, httpConnection.getContentLength());
 				} finally {
 					stream.close();
 				}
@@ -228,7 +228,7 @@ public class ZLNetworkManager {
 
 	public final void downloadToFile(String url, String sslCertificate, final File outFile, final int bufferSize) throws ZLNetworkException {
 		perform(new ZLNetworkRequest(url, sslCertificate, null) {
-			public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				OutputStream outStream = new FileOutputStream(outFile);
 				try {
 					final byte[] buffer = new byte[bufferSize];
