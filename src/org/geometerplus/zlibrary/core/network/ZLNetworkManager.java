@@ -26,12 +26,17 @@ import java.net.*;
 import javax.net.ssl.*;
 
 import org.apache.http.*;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.*;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.protocol.BasicHttpContext;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
@@ -42,12 +47,68 @@ public class ZLNetworkManager {
 	public static ZLNetworkManager Instance() {
 		if (ourManager == null) {
 			ourManager = new ZLNetworkManager();
-			CookieHandler.setDefault(new ZLCookieManager());
 		}
 		return ourManager;
 	}
 
-	private CredentialsProvider myCredentialsProvider = new BasicCredentialsProvider();
+	private volatile CredentialsProvider myCredentialsProvider = new BasicCredentialsProvider();
+	private final CredentialsProvider myCredentialsProviderDecorator = new CredentialsProvider() {
+		public void clear() {
+			myCredentialsProvider.clear();
+		}
+
+		public Credentials getCredentials(AuthScope authscope) {
+			return myCredentialsProvider.getCredentials(authscope);
+		}
+
+		public void setCredentials(AuthScope authscope, Credentials credentials) {
+			myCredentialsProvider.setCredentials(authscope, credentials);
+		}
+	};
+
+	private final HttpContext myHttpContext = new BasicHttpContext();
+	private final CookieStore myCookieStore = new BasicCookieStore() {
+		private volatile boolean myIsInitialized;
+
+		@Override
+		public synchronized void addCookie(Cookie cookie) {
+			super.addCookie(cookie);
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.saveCookies(Collections.singletonList(cookie));
+			}
+		}
+
+		@Override
+		public synchronized void addCookies(Cookie[] cookies) {
+			super.addCookies(cookies);
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.saveCookies(Arrays.asList(cookies));
+			}
+		}
+
+		@Override
+		public synchronized void clear() {
+			super.clear();
+			// TODO: clear database
+		}
+
+		@Override
+		public synchronized List<Cookie> getCookies() {
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (!myIsInitialized && db != null) {
+				myIsInitialized = true;
+				final Collection<Cookie> fromDb = db.loadCookies();
+				super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
+			}
+			return super.getCookies();
+		}
+	};
+
+	{
+		myHttpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
+	}
 
 	private void setCommonHTTPOptions(HttpMessage request) throws ZLNetworkException {
 		//httpConnection.setInstanceFollowRedirects(true);
@@ -69,7 +130,7 @@ public class ZLNetworkManager {
 		try {
 			request.doBefore();
 			httpClient = new DefaultHttpClient();
-			httpClient.setCredentialsProvider(myCredentialsProvider);
+			httpClient.setCredentialsProvider(myCredentialsProviderDecorator);
 			final HttpGet getRequest = new HttpGet(request.URL);
 			setCommonHTTPOptions(getRequest);
 			/*
@@ -98,7 +159,7 @@ public class ZLNetworkManager {
 			*/
 			HttpResponse response = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
-				response = httpClient.execute(getRequest);
+				response = httpClient.execute(getRequest, myHttpContext);
 				entity = response.getEntity();
 			}
 			final int responseCode = response.getStatusLine().getStatusCode();
@@ -108,8 +169,6 @@ public class ZLNetworkManager {
 				stream = entity.getContent();
 			}
 
-			System.err.println(request.URL);
-			System.err.println("RESPONSE: " + response.getStatusLine());
 			if (stream != null) {
 				try {
 					final Header encoding = entity.getContentEncoding();

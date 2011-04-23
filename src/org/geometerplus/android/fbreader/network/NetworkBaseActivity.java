@@ -64,6 +64,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
 		SQLiteCookieDatabase.init(this);
 
 		Connection = new BookDownloaderServiceConnection();
@@ -93,7 +94,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		public Credentials getCredentials(AuthScope scope) {
 			Credentials creds = super.getCredentials(scope);
 			if (creds == null) {
-				new Exception().printStackTrace();
 				final Intent intent = new Intent();
 				final String host = scope.getHost();
 				final String area = scope.getRealm();
@@ -106,12 +106,10 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 				startActivityForResult(intent, AUTHENTICATION_CODE);
 				synchronized (this) {
 					try {
-						System.err.println("waiting in " + Thread.currentThread());
 						wait();
 					} catch (InterruptedException e) {
 					}
 				}
-				System.err.println("OK");
 				if (myUsername != null && myPassword != null) {
 					option.setValue(myUsername);
 					creds = new UsernamePasswordCredentials(myUsername, myPassword);
@@ -151,7 +149,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.err.println("onActivityResult " + requestCode + " " + resultCode);
 		if (requestCode == AUTHENTICATION_CODE) {
 			synchronized (myCredentialsProvider) {
 				if (data != null) {
@@ -159,7 +156,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 					myCredentialsProvider.myPassword = data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
 				}
 				myCredentialsProvider.notify();
-				System.err.println("notify");
 			}
 		}
 	}

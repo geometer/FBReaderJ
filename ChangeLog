@@ -1,3 +1,6 @@
+===== 1.0.9 (Apr 23, 2011) =====
+* HttpConnection => HttpClient
+
 ===== 1.0.8 (Apr 22, 2011) =====
 * 'Footer is sensitive' option has gone
 * GoDaddy root certificate has been added to the program

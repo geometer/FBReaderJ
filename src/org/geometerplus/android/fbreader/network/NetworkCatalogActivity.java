@@ -91,7 +91,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.err.println("onActivityResult " + requestCode + " " + resultCode);
 		switch (requestCode) {
 			default:
 				super.onActivityResult(requestCode, resultCode, data);
