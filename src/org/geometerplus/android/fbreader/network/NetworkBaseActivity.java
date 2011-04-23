@@ -21,6 +21,11 @@ package org.geometerplus.android.fbreader.network;
 
 import java.net.*;
 
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+
 import android.app.*;
 import android.os.Bundle;
 import android.view.*;
@@ -35,6 +40,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -79,40 +85,45 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		NetworkView.Instance().addEventListener(this);
 	}
 
-	private final class MyAuthenticator extends Authenticator {
+	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private volatile String myUsername;
 		private volatile String myPassword;
 
 		@Override
-		protected PasswordAuthentication getPasswordAuthentication() {
-			final Intent intent = new Intent();
-			final String host = getRequestingSite().getHostName();
-			final String area = getRequestingPrompt();
-			final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
-			intent.setClass(NetworkBaseActivity.this, AuthenticationActivity.class);
-			intent.putExtra(AuthenticationActivity.HOST_KEY, host);
-			intent.putExtra(AuthenticationActivity.AREA_KEY, area);
-			intent.putExtra(AuthenticationActivity.SCHEME_KEY, getRequestingProtocol());
-			intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
-			startActivityForResult(intent, AUTHENTICATION_CODE);
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
+		public Credentials getCredentials(AuthScope scope) {
+			Credentials creds = super.getCredentials(scope);
+			if (creds == null) {
+				new Exception().printStackTrace();
+				final Intent intent = new Intent();
+				final String host = scope.getHost();
+				final String area = scope.getRealm();
+				final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
+				intent.setClass(NetworkBaseActivity.this, AuthenticationActivity.class);
+				intent.putExtra(AuthenticationActivity.HOST_KEY, host);
+				intent.putExtra(AuthenticationActivity.AREA_KEY, area);
+				intent.putExtra(AuthenticationActivity.SCHEME_KEY, scope.getScheme());
+				intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
+				startActivityForResult(intent, AUTHENTICATION_CODE);
+				synchronized (this) {
+					try {
+						System.err.println("waiting in " + Thread.currentThread());
+						wait();
+					} catch (InterruptedException e) {
+					}
 				}
+				System.err.println("OK");
+				if (myUsername != null && myPassword != null) {
+					option.setValue(myUsername);
+					creds = new UsernamePasswordCredentials(myUsername, myPassword);
+				}
+				myUsername = null;
+				myPassword = null;
 			}
-			PasswordAuthentication result = null;
-			if (myUsername != null && myPassword != null) {
-				option.setValue(myUsername);
-				result = new PasswordAuthentication(myUsername, myPassword.toCharArray());
-			}
-			myUsername = null;
-			myPassword = null;
-			return result;
+			return creds;
 		}
 	}
 
-	private final MyAuthenticator myAuthenticator = new MyAuthenticator();
+	private final MyCredentialsProvider myCredentialsProvider = new MyCredentialsProvider();
 
 	@Override
 	public void onResume() {
@@ -120,7 +131,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		getListView().setOnCreateContextMenuListener(this);
 		onModelChanged(); // do the same update actions as upon onModelChanged
 
-		Authenticator.setDefault(myAuthenticator);
+		ZLNetworkManager.Instance().setCredentialsProvider(myCredentialsProvider);
 	}
 
 	@Override
@@ -140,13 +151,15 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		System.err.println("onActivityResult " + requestCode + " " + resultCode);
 		if (requestCode == AUTHENTICATION_CODE) {
-			synchronized (myAuthenticator) {
+			synchronized (myCredentialsProvider) {
 				if (data != null) {
-					myAuthenticator.myUsername = data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
-					myAuthenticator.myPassword = data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
+					myCredentialsProvider.myUsername = data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
+					myCredentialsProvider.myPassword = data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
 				}
-				myAuthenticator.notify();
+				myCredentialsProvider.notify();
+				System.err.println("notify");
 			}
 		}
 	}

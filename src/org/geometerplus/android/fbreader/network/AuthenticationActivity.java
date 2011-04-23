@@ -64,11 +64,11 @@ public class AuthenticationActivity extends Activity {
 			findTextView(R.id.authentication_subtitle).setVisibility(View.GONE);
 		}
 		final TextView warningView = findTextView(R.id.authentication_unencrypted_warning);
-		if ("https".equalsIgnoreCase(intent.getStringExtra(SCHEME_KEY))) {
+		//if ("https".equalsIgnoreCase(intent.getStringExtra(SCHEME_KEY))) {
 			warningView.setVisibility(View.GONE);
-		} else {
-			warningView.setText(myResource.getResource("unencryptedWarning").getValue());
-		}
+		//} else {
+		//	warningView.setText(myResource.getResource("unencryptedWarning").getValue());
+		//}
 		findTextView(R.id.authentication_username_label).setText(
 			myResource.getResource("login").getValue()
 		);
