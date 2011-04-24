@@ -68,6 +68,7 @@ public abstract class PackageUtil {
 	}
 
 	public static boolean canBeStarted(Context context, Intent intent, boolean checkSignature) {
+		System.err.println("canBeStarted " + intent.getData());
 		final PackageManager manager = context.getApplicationContext().getPackageManager();
 		final ResolveInfo info =
 			manager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);

@@ -37,7 +37,7 @@ public class AuthenticationActivity extends Activity {
 	final static String USERNAME_KEY = "username";
 	final static String PASSWORD_KEY = "password";
 	final static String ERROR_KEY = "error";
-	final static String SIGNUP_URL_KEY = "signupUrl";
+	final static String SHOW_SIGNUP_LINK_KEY = "showSignupLink";
 
 	private ZLResource myResource;
 
@@ -52,13 +52,13 @@ public class AuthenticationActivity extends Activity {
 		final String area = intent.getStringExtra(AREA_KEY);
 		final String username = intent.getStringExtra(USERNAME_KEY);
 		final String error = intent.getStringExtra(ERROR_KEY);
-		final String signupUrl = intent.getStringExtra(SIGNUP_URL_KEY);
-
-		setTitle(host);
+		final boolean showSignupLink = intent.getBooleanExtra(SHOW_SIGNUP_LINK_KEY, false);
 
 		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
 
-		if (area != null || !"".equals(area)) {
+		setTitle(host != null ? host : myResource.getResource("title").getValue());
+
+		if (area != null && !"".equals(area)) {
 			findTextView(R.id.authentication_subtitle).setText(area);
 		} else {
 			findTextView(R.id.authentication_subtitle).setVisibility(View.GONE);
@@ -87,8 +87,17 @@ public class AuthenticationActivity extends Activity {
 			errorView.setVisibility(View.GONE);
 		}
 
-		if (signupUrl != null) {
-			// TODO
+		if (showSignupLink) {
+			findViewById(R.id.authentication_signup_box).setVisibility(View.VISIBLE);
+			final TextView signupView = (TextView)findViewById(R.id.authentication_signup);
+			signupView.setText(myResource.getResource("register").getValue());
+			signupView.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					// TODO
+					//setResult();
+					finish();
+				}
+			});
 		} else {
 			findViewById(R.id.authentication_signup_box).setVisibility(View.GONE);
 		}

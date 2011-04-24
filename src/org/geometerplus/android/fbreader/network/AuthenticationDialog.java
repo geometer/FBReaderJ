@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -82,7 +83,15 @@ class AuthenticationDialog {
 	private final DialogHandler myHandler = new DialogHandler();
 
 	public static void show(Activity activity, INetworkLink link, Runnable onSuccessRunnable) {
-		getDialog().showInternal(activity, link, onSuccessRunnable);
+		final NetworkAuthenticationManager mgr = link.authenticationManager();
+
+		final Intent intent = new Intent(activity, AuthenticationActivity.class);
+		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.UserNameOption.getValue());
+		if (Util.isRegistrationSupported(activity, link)) {
+			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
+		}
+		//getDialog().showInternal(activity, link, onSuccessRunnable);
+		activity.startActivity(intent);
 	}
 
 	private void showInternal(Activity activity, INetworkLink link, Runnable onSuccessRunnable) {
