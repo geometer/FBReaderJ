@@ -91,7 +91,7 @@ class AuthenticationDialog {
 			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
 		}
 		//getDialog().showInternal(activity, link, onSuccessRunnable);
-		activity.startActivity(intent);
+		activity.startActivityForResult(intent, NetworkBaseActivity.CUSTOM_AUTHENTICATION_CODE);
 	}
 
 	private void showInternal(Activity activity, INetworkLink link, Runnable onSuccessRunnable) {

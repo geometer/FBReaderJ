@@ -68,7 +68,7 @@ abstract class Util implements UserRegistrationConstants {
 				activity.startActivityForResult(new Intent(
 					REGISTRATION_ACTION,
 					Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
-				), USER_REGISTRATION_REQUEST_CODE);
+				), NetworkBaseActivity.SIGNUP_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
