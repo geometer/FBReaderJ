@@ -466,10 +466,6 @@
 					<node name="summaryOn" value="Affiche l'horloge dans le pied de page"/>
 					<node name="summaryOff" value="N'affiche pas l'horloge dans le pied de page"/>
 				</node>
-				<node name="isSensitive" value="Navigation par appui sur le pied de page">
-					<node name="summaryOn" value="Navigation activée"/>
-					<node name="summaryOff" value="Navigation désactivée"/>
-				</node>
 				<node name="font" value="Famille de police"/>
 			</node>
 			<node name="display" value="Affichage">

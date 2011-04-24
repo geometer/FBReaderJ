@@ -112,11 +112,7 @@ class ByDateCatalogItem extends SortedCatalogItem {
 
 	@Override
 	protected Comparator<NetworkItem> getComparator() {
-		return new Comparator<NetworkItem>() {
-			public int compare(NetworkItem item0, NetworkItem item1) {
-				return 0;
-			}
-		};
+		return null;
 	}
 
 	@Override

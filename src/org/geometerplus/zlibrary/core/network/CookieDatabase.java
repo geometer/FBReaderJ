@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.core.network;
 
 import java.util.Collection;
 
+import org.apache.http.cookie.Cookie;
+
 public abstract class CookieDatabase {
 	private static CookieDatabase ourInstance;
 
@@ -33,5 +35,5 @@ public abstract class CookieDatabase {
 	}
 
 	protected abstract void saveCookies(Collection<Cookie> cookies);
-	protected abstract Collection<Cookie> getCookiesForHost(String hostName);
+	protected abstract Collection<Cookie> loadCookies();
 }

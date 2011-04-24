@@ -462,10 +462,6 @@
 					<node name="summaryOn" value="Показывать часы в подвале"/>
 					<node name="summaryOff" value="Не показывать часы в подвале"/>
 				</node>
-				<node name="isSensitive" value="Перемещаться по тексту при прикосновении к подвалу">
-					<node name="summaryOn" value="Перемещение включено"/>
-					<node name="summaryOff" value="Перемещение выключено"/>
-				</node>
 				<node name="font" value="Шрифт"/>
 			</node>
 			<node name="display" value="Экран">

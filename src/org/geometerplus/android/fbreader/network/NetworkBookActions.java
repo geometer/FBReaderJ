@@ -456,6 +456,11 @@ class NetworkBookActions extends NetworkTreeActions {
 					.create().show();
 			}
 		};
+		final Runnable buyOnUiRunnable = new Runnable() {
+			public void run() {
+				activity.runOnUiThread(buyRunnable);
+			}
+		};
 
 		try {
 			if (mgr.isAuthorised(true)) {
@@ -464,7 +469,7 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		} catch (ZLNetworkException e) {
 		}
-		AuthenticationDialog.show(activity, book.Link, buyRunnable);
+		Util.runAuthenticationDialog(activity, book.Link, null, buyOnUiRunnable);
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {
