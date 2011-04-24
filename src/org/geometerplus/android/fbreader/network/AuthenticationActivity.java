@@ -39,9 +39,7 @@ public class AuthenticationActivity extends Activity {
 	final static String ERROR_KEY = "error";
 	final static String SHOW_SIGNUP_LINK_KEY = "showSignupLink";
 
-	final static int CANCEL_RESULT_CODE = 0;
-	final static int OK_RESULT_CODE = 1;
-	final static int SIGNUP_RESULT_CODE = 2;
+	final static int RESULT_SIGNUP = RESULT_FIRST_USER;
 
 	private ZLResource myResource;
 
@@ -49,7 +47,7 @@ public class AuthenticationActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		setResult(CANCEL_RESULT_CODE);
+		setResult(RESULT_CANCELED);
 		setContentView(R.layout.authentication);
 
 		final Intent intent = getIntent();
@@ -98,7 +96,7 @@ public class AuthenticationActivity extends Activity {
 			signupView.setText(myResource.getResource("register").getValue());
 			signupView.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
-					setResult(SIGNUP_RESULT_CODE);
+					setResult(RESULT_SIGNUP);
 					finish();
 				}
 			});
@@ -121,7 +119,7 @@ public class AuthenticationActivity extends Activity {
 					PASSWORD_KEY,
 					findTextView(R.id.authentication_password).getText().toString()
 				);
-				setResult(OK_RESULT_CODE, data);
+				setResult(RESULT_OK, data);
 				finish();
 			}
 		});

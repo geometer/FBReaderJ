@@ -159,10 +159,10 @@ class TopupActions extends NetworkTreeActions {
 		if (mgr.mayBeAuthorised(false)) {
 			action.run();
 		} else {
-			AuthenticationDialog.show(activity, link, new Runnable() {
+			Util.runAuthenticationDialog(activity, link, null, new Runnable() {
 				public void run() {
 					if (mgr.mayBeAuthorised(false)) {
-						action.run();
+						activity.runOnUiThread(action);
 					}
 				}
 			});
