@@ -51,18 +51,23 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
-	private volatile CredentialsProvider myCredentialsProvider = new BasicCredentialsProvider();
-	private final CredentialsProvider myCredentialsProviderDecorator = new CredentialsProvider() {
-		public void clear() {
-			myCredentialsProvider.clear();
-		}
+	public static interface CredentialsCreator {
+		Credentials createCredentials(AuthScope scope);
+	}
 
+	private volatile CredentialsCreator myCredentialsCreator;
+	private final CredentialsProvider myCredentialsProvider = new BasicCredentialsProvider() {
+		@Override
 		public Credentials getCredentials(AuthScope authscope) {
-			return myCredentialsProvider.getCredentials(authscope);
-		}
-
-		public void setCredentials(AuthScope authscope, Credentials credentials) {
-			myCredentialsProvider.setCredentials(authscope, credentials);
+			System.err.println("getCredentials");
+			final Credentials c = super.getCredentials(authscope);
+			if (c != null) {
+				return c;
+			}
+			if (myCredentialsCreator != null) {
+				return myCredentialsCreator.createCredentials(authscope);
+			}
+			return null;
 		}
 	};
 
@@ -100,7 +105,7 @@ public class ZLNetworkManager {
 			if (!myIsInitialized && db != null) {
 				myIsInitialized = true;
 				final Collection<Cookie> fromDb = db.loadCookies();
-				super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
+				//super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
 			}
 			return super.getCookies();
 		}
@@ -119,8 +124,8 @@ public class ZLNetworkManager {
 		//httpConnection.setAllowUserInteraction(true);
 	}
 
-	public void setCredentialsProvider(CredentialsProvider provider) {
-		myCredentialsProvider = provider;
+	public void setCredentialsCreator(CredentialsCreator creator) {
+		myCredentialsCreator = creator;
 	}
 
 	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
@@ -130,7 +135,7 @@ public class ZLNetworkManager {
 		try {
 			request.doBefore();
 			httpClient = new DefaultHttpClient();
-			httpClient.setCredentialsProvider(myCredentialsProviderDecorator);
+			httpClient.setCredentialsProvider(myCredentialsProvider);
 			final HttpGet getRequest = new HttpGet(request.URL);
 			setCommonHTTPOptions(getRequest);
 			/*

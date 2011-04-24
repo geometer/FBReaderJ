@@ -24,7 +24,6 @@ import java.net.*;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 
 import android.app.*;
 import android.os.Bundle;
@@ -86,42 +85,44 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		NetworkView.Instance().addEventListener(this);
 	}
 
-	private class MyCredentialsProvider extends BasicCredentialsProvider {
+	private final MyCredentialsCreator myCredentialsCreator = new MyCredentialsCreator();
+
+	private class MyCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
 		private volatile String myUsername;
 		private volatile String myPassword;
-
-		@Override
-		public Credentials getCredentials(AuthScope scope) {
-			Credentials creds = super.getCredentials(scope);
-			if (creds == null) {
-				final Intent intent = new Intent();
-				final String host = scope.getHost();
-				final String area = scope.getRealm();
-				final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
-				intent.setClass(NetworkBaseActivity.this, AuthenticationActivity.class);
-				intent.putExtra(AuthenticationActivity.HOST_KEY, host);
-				intent.putExtra(AuthenticationActivity.AREA_KEY, area);
-				intent.putExtra(AuthenticationActivity.SCHEME_KEY, scope.getScheme());
-				intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
-				startActivityForResult(intent, AUTHENTICATION_CODE);
-				synchronized (this) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-					}
-				}
-				if (myUsername != null && myPassword != null) {
-					option.setValue(myUsername);
-					creds = new UsernamePasswordCredentials(myUsername, myPassword);
-				}
-				myUsername = null;
-				myPassword = null;
+        
+		public Credentials createCredentials(AuthScope scope) {
+			if (!"basic".equalsIgnoreCase(scope.getScheme())) {
+				return null;
 			}
+
+			final Intent intent = new Intent();
+			final String host = scope.getHost();
+			final String area = scope.getRealm();
+			final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
+			intent.setClass(NetworkBaseActivity.this, AuthenticationActivity.class);
+			intent.putExtra(AuthenticationActivity.HOST_KEY, host);
+			intent.putExtra(AuthenticationActivity.AREA_KEY, area);
+			intent.putExtra(AuthenticationActivity.SCHEME_KEY, scope.getScheme());
+			intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
+			startActivityForResult(intent, AUTHENTICATION_CODE);
+			synchronized (this) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+				}
+			}
+        
+			Credentials creds = null;
+			if (myUsername != null && myPassword != null) {
+				option.setValue(myUsername);
+				creds = new UsernamePasswordCredentials(myUsername, myPassword);
+			}
+			myUsername = null;
+			myPassword = null;
 			return creds;
 		}
 	}
-
-	private final MyCredentialsProvider myCredentialsProvider = new MyCredentialsProvider();
 
 	@Override
 	public void onResume() {
@@ -129,7 +130,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		getListView().setOnCreateContextMenuListener(this);
 		onModelChanged(); // do the same update actions as upon onModelChanged
 
-		ZLNetworkManager.Instance().setCredentialsProvider(myCredentialsProvider);
+		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 
 	@Override
@@ -150,12 +151,12 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == AUTHENTICATION_CODE) {
-			synchronized (myCredentialsProvider) {
+			synchronized (myCredentialsCreator) {
 				if (data != null) {
-					myCredentialsProvider.myUsername = data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
-					myCredentialsProvider.myPassword = data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
+					myCredentialsCreator.myUsername = data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
+					myCredentialsCreator.myPassword = data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
 				}
-				myCredentialsProvider.notify();
+				myCredentialsCreator.notify();
 			}
 		}
 	}
