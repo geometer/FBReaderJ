@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import java.io.InputStream;
 import java.io.IOException;
-import java.net.URLConnection;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -35,7 +34,7 @@ public class LitResNetworkRequest extends ZLNetworkRequest {
 	}
 
 	@Override
-	public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+	public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 		Reader.read(inputStream);
 		ZLNetworkException e = Reader.getException();
 		if (e != null) {

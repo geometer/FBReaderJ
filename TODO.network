@@ -1,3 +1,11 @@
+* 'sign out' feature for basic-auth
+DONE persistent cookie storage
+DONE use expiration cookie info
+* common auth dialog for basic auth & litres
+* unencrypted protocol warning
+* POST processing
+* SSLCertificate processing
+
 DONE show 'empty basket' message without opening of catalog
 * update basket view if basket content is changed
 * basket summary

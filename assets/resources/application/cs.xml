@@ -467,10 +467,6 @@
 					<node name="summaryOn" value="Zobrazit hodiny v patičce"/>
 					<node name="summaryOff" value="Nezobrazovat hodiny v patičce"/>
 				</node>
-				<node name="isSensitive" value="Navigace klepnutím na patičku">
-					<node name="summaryOn" value="Navigace je povolena"/>
-					<node name="summaryOff" value="Navigace je zakázána"/>
-				</node>
 				<node name="font" value="Rodina písem"/>
 			</node>
 			<node name="display" value="Displej">
