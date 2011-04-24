@@ -30,8 +30,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.*;
@@ -52,20 +51,26 @@ public class ZLNetworkManager {
 	}
 
 	public static interface CredentialsCreator {
-		Credentials createCredentials(AuthScope scope);
+		Credentials createCredentials(String scheme, AuthScope scope);
 	}
 
-	private volatile CredentialsCreator myCredentialsCreator;
-	private final CredentialsProvider myCredentialsProvider = new BasicCredentialsProvider() {
+	private CredentialsCreator myCredentialsCreator;
+
+	private class MyCredentialsProvider extends BasicCredentialsProvider {
+		private final HttpUriRequest myRequest;
+
+		MyCredentialsProvider(HttpUriRequest request) {
+			myRequest = request;
+		}
+
 		@Override
 		public Credentials getCredentials(AuthScope authscope) {
-			System.err.println("getCredentials");
 			final Credentials c = super.getCredentials(authscope);
 			if (c != null) {
 				return c;
 			}
 			if (myCredentialsCreator != null) {
-				return myCredentialsCreator.createCredentials(authscope);
+				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope);
 			}
 			return null;
 		}
@@ -135,9 +140,9 @@ public class ZLNetworkManager {
 		try {
 			request.doBefore();
 			httpClient = new DefaultHttpClient();
-			httpClient.setCredentialsProvider(myCredentialsProvider);
 			final HttpGet getRequest = new HttpGet(request.URL);
 			setCommonHTTPOptions(getRequest);
+			httpClient.setCredentialsProvider(new MyCredentialsProvider(getRequest));
 			/*
 				if (request.PostData != null) {
 					httpConnection.setRequestMethod("POST");

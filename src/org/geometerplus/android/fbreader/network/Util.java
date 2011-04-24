@@ -87,6 +87,7 @@ abstract class Util implements UserRegistrationConstants {
 		if (isRegistrationSupported(activity, link)) {
 			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
 		}
+		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
 		intent.putExtra(AuthenticationActivity.ERROR_KEY, error);
 		if (onSuccess != null) {
 			myAfterRegisrationMap.put(activity, onSuccess);
