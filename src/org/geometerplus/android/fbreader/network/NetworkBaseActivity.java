@@ -21,11 +21,6 @@ package org.geometerplus.android.fbreader.network;
 
 import java.net.*;
 
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-
 import android.app.*;
 import android.os.Bundle;
 import android.view.*;
@@ -36,11 +31,9 @@ import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -54,7 +47,9 @@ import org.geometerplus.fbreader.network.tree.SearchItemTree;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
-	protected static final int AUTHENTICATION_CODE = 1;
+	protected static final int BASIC_AUTHENTICATION_CODE = 1;
+	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
+	protected static final int SIGNUP_CODE = 3;
 
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
@@ -86,50 +81,11 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		NetworkView.Instance().addEventListener(this);
 	}
 
-	private class MyCredentialsProvider extends BasicCredentialsProvider {
-		private volatile String myUsername;
-		private volatile String myPassword;
-
-		@Override
-		public Credentials getCredentials(AuthScope scope) {
-			Credentials creds = super.getCredentials(scope);
-			if (creds == null) {
-				final Intent intent = new Intent();
-				final String host = scope.getHost();
-				final String area = scope.getRealm();
-				final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
-				intent.setClass(NetworkBaseActivity.this, AuthenticationActivity.class);
-				intent.putExtra(AuthenticationActivity.HOST_KEY, host);
-				intent.putExtra(AuthenticationActivity.AREA_KEY, area);
-				intent.putExtra(AuthenticationActivity.SCHEME_KEY, scope.getScheme());
-				intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
-				startActivityForResult(intent, AUTHENTICATION_CODE);
-				synchronized (this) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-					}
-				}
-				if (myUsername != null && myPassword != null) {
-					option.setValue(myUsername);
-					creds = new UsernamePasswordCredentials(myUsername, myPassword);
-				}
-				myUsername = null;
-				myPassword = null;
-			}
-			return creds;
-		}
-	}
-
-	private final MyCredentialsProvider myCredentialsProvider = new MyCredentialsProvider();
-
 	@Override
 	public void onResume() {
 		super.onResume();
 		getListView().setOnCreateContextMenuListener(this);
 		onModelChanged(); // do the same update actions as upon onModelChanged
-
-		ZLNetworkManager.Instance().setCredentialsProvider(myCredentialsProvider);
 	}
 
 	@Override
@@ -145,19 +101,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			Connection = null;
 		}
 		super.onDestroy();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == AUTHENTICATION_CODE) {
-			synchronized (myCredentialsProvider) {
-				if (data != null) {
-					myCredentialsProvider.myUsername = data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
-					myCredentialsProvider.myPassword = data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
-				}
-				myCredentialsProvider.notify();
-			}
-		}
 	}
 
 	// method from NetworkView.EventListener
@@ -314,28 +257,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 				.create().show();
 		} else {
 			actions.runAction(this, networkTree, actionCode);
-		}
-	}
-
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		if (!NetworkView.Instance().isInitialized()) {
-			return null;
-		}
-		final AuthenticationDialog dlg = AuthenticationDialog.getDialog();
-		if (dlg != null) {
-			return dlg.createDialog(this);
-		}
-		return null;
-	}
-
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		super.onPrepareDialog(id, dialog);
-
-		final AuthenticationDialog dlg = AuthenticationDialog.getDialog();
-		if (dlg != null) {
-			dlg.prepareDialog(this, dialog);
 		}
 	}
 

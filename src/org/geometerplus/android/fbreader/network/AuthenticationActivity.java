@@ -37,7 +37,9 @@ public class AuthenticationActivity extends Activity {
 	final static String USERNAME_KEY = "username";
 	final static String PASSWORD_KEY = "password";
 	final static String ERROR_KEY = "error";
-	final static String SIGNUP_URL_KEY = "signupUrl";
+	final static String SHOW_SIGNUP_LINK_KEY = "showSignupLink";
+
+	final static int RESULT_SIGNUP = RESULT_FIRST_USER;
 
 	private ZLResource myResource;
 
@@ -45,6 +47,7 @@ public class AuthenticationActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+		setResult(RESULT_CANCELED);
 		setContentView(R.layout.authentication);
 
 		final Intent intent = getIntent();
@@ -52,13 +55,13 @@ public class AuthenticationActivity extends Activity {
 		final String area = intent.getStringExtra(AREA_KEY);
 		final String username = intent.getStringExtra(USERNAME_KEY);
 		final String error = intent.getStringExtra(ERROR_KEY);
-		final String signupUrl = intent.getStringExtra(SIGNUP_URL_KEY);
-
-		setTitle(host);
+		final boolean showSignupLink = intent.getBooleanExtra(SHOW_SIGNUP_LINK_KEY, false);
 
 		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
 
-		if (area != null || !"".equals(area)) {
+		setTitle(host != null ? host : myResource.getResource("title").getValue());
+
+		if (area != null && !"".equals(area)) {
 			findTextView(R.id.authentication_subtitle).setText(area);
 		} else {
 			findTextView(R.id.authentication_subtitle).setVisibility(View.GONE);
@@ -87,8 +90,16 @@ public class AuthenticationActivity extends Activity {
 			errorView.setVisibility(View.GONE);
 		}
 
-		if (signupUrl != null) {
-			// TODO
+		if (showSignupLink) {
+			findViewById(R.id.authentication_signup_box).setVisibility(View.VISIBLE);
+			final TextView signupView = (TextView)findViewById(R.id.authentication_signup);
+			signupView.setText(myResource.getResource("register").getValue());
+			signupView.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					setResult(RESULT_SIGNUP);
+					finish();
+				}
+			});
 		} else {
 			findViewById(R.id.authentication_signup_box).setVisibility(View.GONE);
 		}
@@ -108,7 +119,7 @@ public class AuthenticationActivity extends Activity {
 					PASSWORD_KEY,
 					findTextView(R.id.authentication_password).getText().toString()
 				);
-				setResult(0, data);
+				setResult(RESULT_OK, data);
 				finish();
 			}
 		});
