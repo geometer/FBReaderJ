@@ -463,10 +463,6 @@
 					<node name="summaryOn" value="Hiện đồng hồ ở dòng cuối"/>
 					<node name="summaryOff" value="Đừng hiện đồng hồ ở dòng cuối"/>
 				</node>
-				<node name="isSensitive" value="Điều hướng bằng chạm vào cuối trang">
-					<node name="summaryOn" value="Bật điều hướng"/>
-					<node name="summaryOff" value="Tắt điều hướng"/>
-				</node>
 				<node name="font" value="Họ phông"/>
 			</node>
 			<node name="display" value="Hiển thị">

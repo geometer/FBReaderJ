@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLConnection;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
@@ -116,7 +115,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 		try {
 			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog)) {
 				@Override
-				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					final CatalogInfoReader info = new CatalogInfoReader(getURL(), OPDSCustomLink.this, opensearchDescriptionURLs);
 					new OPDSXMLReader(info).read(inputStream);
         
@@ -145,7 +144,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 			for (String url: opensearchDescriptionURLs) {
 				requests.add(new ZLNetworkRequest(url) {
 					@Override
-					public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+					public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 						new OpenSearchXMLReader(getURL(), descriptions).read(inputStream);
 					}
 				});
