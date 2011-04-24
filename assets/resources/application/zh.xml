@@ -463,10 +463,6 @@
 					<node name="summaryOn" value="页脚处显示时间"/>
 					<node name="summaryOff" value="不要再页脚处显示时间"/>
 				</node>
-				<node name="isSensitive" value="通过页脚处的触压来导航">
-					<node name="summaryOn" value="允许导航"/>
-					<node name="summaryOff" value="禁止导航"/>
-				</node>
 				<node name="font" value="字体"/>
 			</node>
 			<node name="display" value="显示">

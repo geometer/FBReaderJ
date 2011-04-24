@@ -206,9 +206,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			return;
 		}
 		animator.startAutoScrolling(x, y, speed);
-		if (animator.getMode().Auto) {
-			postInvalidate();
-		}
+		postInvalidate();
 	}
 
 	void drawOnBitmap(Bitmap bitmap, ZLView.PageIndex index) {

@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.io.InputStream;
 import java.io.IOException;
@@ -87,7 +86,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 		url = rewriteUrl(url, false);
 		return new ZLNetworkRequest(url) {
 			@Override
-			public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 				if (result.Listener.confirmInterrupt()) {
 					return;
 				}
