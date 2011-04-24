@@ -463,10 +463,6 @@
 					<node name="summaryOn" value="Mutassa a pontos időt a láblécben"/>
 					<node name="summaryOff" value="Ne mutassa a pontos időt a láblécben"/>
 				</node>
-				<node name="isSensitive" value="Navigáció a lábléc érintésével">
-					<node name="summaryOn" value="Navigáció engedélyezve"/>
-					<node name="summaryOff" value="Navigáció letiltva"/>
-				</node>
 				<node name="font" value="Lábléc betűtípusa"/>
 			</node>
 			<node name="display" value="Kijelző">

@@ -440,7 +440,7 @@
 				<node name="top" value="Top margin"/>
 				<node name="bottom" value="Bottom margin"/>
 			</node>
-			<node name="scrollBar" value="Scrollbar">
+			<node name="scrollBar" value="Progress indicator">
 				<node name="summary" value="Scrollbar &amp; footer settings"/>
 				<node name="scrollbarType" value="Scrollbar type">
 					<node name="hide" value="Hide"/>
@@ -465,10 +465,6 @@
 				<node name="showClock" value="Show clock">
 					<node name="summaryOn" value="Show clock in footer"/>
 					<node name="summaryOff" value="Don't show clock in footer"/>
-				</node>
-				<node name="isSensitive" value="Navigation by tap on footer">
-					<node name="summaryOn" value="Navigation is enabled"/>
-					<node name="summaryOff" value="Navigation is disabled"/>
 				</node>
 				<node name="font" value="Font family"/>
 			</node>

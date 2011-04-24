@@ -463,10 +463,6 @@
 					<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
 				</node>
-				<node name="isSensitive" value="Navigation by tap on footer" toBeTranslated="true">
-					<node name="summaryOn" value="Navigation is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Navigation is disabled" toBeTranslated="true"/>
-				</node>
 				<node name="font" value="Font family" toBeTranslated="true"/>
 			</node>
 			<node name="display" value="Display" toBeTranslated="true">

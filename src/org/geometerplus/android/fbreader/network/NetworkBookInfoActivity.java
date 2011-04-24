@@ -42,6 +42,7 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkBookItem;
@@ -57,6 +58,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		SQLiteCookieDatabase.init(this);
 
 		myMainView = getLayoutInflater().inflate(R.layout.network_book, null, false);
 		setContentView(myMainView);
@@ -343,28 +347,22 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	}
 
 	public void onModelChanged() {
-		updateView();
+		runOnUiThread(new Runnable() {
+			public void run() {
+				updateView();
+			}
+		});
 	}
 
 	@Override
-	protected Dialog onCreateDialog(int id) {
-		if (!NetworkView.Instance().isInitialized()) {
-			return null;
-		}
-		final AuthenticationDialog dlg = AuthenticationDialog.getDialog();
-		if (dlg != null) {
-			return dlg.createDialog(this);
-		}
-		return null;
-	}
-
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		super.onPrepareDialog(id, dialog);
-
-		final AuthenticationDialog dlg = AuthenticationDialog.getDialog();
-		if (dlg != null) {
-			dlg.prepareDialog(this, dialog);
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case NetworkBaseActivity.CUSTOM_AUTHENTICATION_CODE:
+				Util.processCustomAuthentication(this, myBook.Link, resultCode, data);
+				break;
+			case NetworkBaseActivity.SIGNUP_CODE:
+				Util.processSignup(myBook.Link, resultCode, data);
+				break;
 		}
 	}
 }

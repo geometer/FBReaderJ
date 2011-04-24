@@ -213,7 +213,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case B3_TRUE:
 				return false;
 			case B3_UNDEFINED:
-				AuthenticationDialog.show(activity, item.Link, new Runnable() {
+				Util.runAuthenticationDialog(activity, item.Link, null, new Runnable() {
 					public void run() {
 						if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
 							return;
@@ -258,7 +258,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doReloadCatalog(activity, catalogTree);
 				return true;
 			case SIGNIN_ITEM_ID:
-				AuthenticationDialog.show(activity, item.Link, null);
+				Util.runAuthenticationDialog(activity, item.Link, null, null);
 				return true;
 			case SIGNUP_ITEM_ID:
 				Util.runRegistrationDialog(activity, item.Link);
