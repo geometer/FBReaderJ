@@ -24,7 +24,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLConnection;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -46,7 +45,7 @@ public class OPDSLinkReader {
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
 			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(CATALOGS_URL) {
 				@Override
-				public void handleStream(URLConnection connection, InputStream inputStream) throws IOException, ZLNetworkException {
+				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					new OPDSLinkXMLReader(listener, null).read(inputStream);
 				}
 			});

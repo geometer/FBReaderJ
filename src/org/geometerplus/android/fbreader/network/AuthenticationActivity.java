@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -37,6 +36,10 @@ public class AuthenticationActivity extends Activity {
 	final static String SCHEME_KEY = "scheme";
 	final static String USERNAME_KEY = "username";
 	final static String PASSWORD_KEY = "password";
+	final static String ERROR_KEY = "error";
+	final static String SHOW_SIGNUP_LINK_KEY = "showSignupLink";
+
+	final static int RESULT_SIGNUP = RESULT_FIRST_USER;
 
 	private ZLResource myResource;
 
@@ -44,24 +47,31 @@ public class AuthenticationActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+		setResult(RESULT_CANCELED);
 		setContentView(R.layout.authentication);
 
 		final Intent intent = getIntent();
 		final String host = intent.getStringExtra(HOST_KEY);
 		final String area = intent.getStringExtra(AREA_KEY);
-
-		setTitle(area);
+		final String username = intent.getStringExtra(USERNAME_KEY);
+		final String error = intent.getStringExtra(ERROR_KEY);
+		final boolean showSignupLink = intent.getBooleanExtra(SHOW_SIGNUP_LINK_KEY, false);
 
 		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
-		final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
 
-		findTextView(R.id.authentication_subtitle).setText(host);
-		final TextView warningView = findTextView(R.id.authentication_unencrypted_warning);
-		if ("https".equalsIgnoreCase(intent.getStringExtra(SCHEME_KEY))) {
-			warningView.setVisibility(View.GONE);
+		setTitle(host != null ? host : myResource.getResource("title").getValue());
+
+		if (area != null && !"".equals(area)) {
+			findTextView(R.id.authentication_subtitle).setText(area);
 		} else {
-			warningView.setText(myResource.getResource("unencryptedWarning").getValue());
+			findTextView(R.id.authentication_subtitle).setVisibility(View.GONE);
 		}
+		final TextView warningView = findTextView(R.id.authentication_unencrypted_warning);
+		//if ("https".equalsIgnoreCase(intent.getStringExtra(SCHEME_KEY))) {
+			warningView.setVisibility(View.GONE);
+		//} else {
+		//	warningView.setText(myResource.getResource("unencryptedWarning").getValue());
+		//}
 		findTextView(R.id.authentication_username_label).setText(
 			myResource.getResource("login").getValue()
 		);
@@ -69,8 +79,30 @@ public class AuthenticationActivity extends Activity {
 			myResource.getResource("password").getValue()
 		);
 
-		final TextView username = findTextView(R.id.authentication_username);
-		username.setText(option.getValue());
+		final TextView usernameView = findTextView(R.id.authentication_username);
+		usernameView.setText(username);
+
+		final TextView errorView = findTextView(R.id.authentication_error);
+		if (error != null && !"".equals(error)) {
+			errorView.setVisibility(View.VISIBLE);
+			errorView.setText(error);
+		} else {
+			errorView.setVisibility(View.GONE);
+		}
+
+		if (showSignupLink) {
+			findViewById(R.id.authentication_signup_box).setVisibility(View.VISIBLE);
+			final TextView signupView = (TextView)findViewById(R.id.authentication_signup);
+			signupView.setText(myResource.getResource("register").getValue());
+			signupView.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					setResult(RESULT_SIGNUP);
+					finish();
+				}
+			});
+		} else {
+			findViewById(R.id.authentication_signup_box).setVisibility(View.GONE);
+		}
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
@@ -79,17 +111,15 @@ public class AuthenticationActivity extends Activity {
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				final Intent data = new Intent();
-				final String usernameString = username.getText().toString();
-				option.setValue(usernameString);
 				data.putExtra(
 					USERNAME_KEY,
-					usernameString
+					usernameView.getText().toString()
 				);
 				data.putExtra(
 					PASSWORD_KEY,
 					findTextView(R.id.authentication_password).getText().toString()
 				);
-				setResult(0, data);
+				setResult(RESULT_OK, data);
 				finish();
 			}
 		});

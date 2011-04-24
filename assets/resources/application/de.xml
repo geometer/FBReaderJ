@@ -464,10 +464,6 @@
 					<node name="summaryOn" value="Uhr in der Fußleiste anzeigen."/>
 					<node name="summaryOff" value="Keine Uhr in der Fußleiste anzeigen."/>
 				</node>
-				<node name="isSensitive" value="Navigation beim Antippen der Fußleiste">
-					<node name="summaryOn" value="Navigation ist aktiviert."/>
-					<node name="summaryOff" value="Navigation ist nicht aktiviert."/>
-				</node>
 				<node name="font" value="Schriftart"/>
 			</node>
 			<node name="display" value="Bildschirm">

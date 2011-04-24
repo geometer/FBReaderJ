@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
@@ -46,7 +47,9 @@ import org.geometerplus.fbreader.network.tree.SearchItemTree;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
-	protected static final int AUTHENTICATION_CODE = 1;
+	protected static final int BASIC_AUTHENTICATION_CODE = 1;
+	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
+	protected static final int SIGNUP_CODE = 3;
 
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
@@ -56,6 +59,8 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		SQLiteCookieDatabase.init(this);
 
 		Connection = new BookDownloaderServiceConnection();
 		bindService(
@@ -76,45 +81,11 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		NetworkView.Instance().addEventListener(this);
 	}
 
-	private final class MyAuthenticator extends Authenticator {
-		private volatile String myUsername;
-		private volatile String myPassword;
-
-		@Override
-		protected PasswordAuthentication getPasswordAuthentication() {
-			final Intent intent = new Intent();
-			intent.setClass(NetworkBaseActivity.this, AuthenticationActivity.class);
-			intent.putExtra(AuthenticationActivity.AREA_KEY, getRequestingPrompt());
-			intent.putExtra(AuthenticationActivity.HOST_KEY, getRequestingSite().getHostName());
-			intent.putExtra(AuthenticationActivity.SCHEME_KEY, getRequestingProtocol());
-			startActivityForResult(intent, AUTHENTICATION_CODE);
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-				}
-			}
-			System.err.println("auth thread: " + Thread.currentThread());
-			PasswordAuthentication result = null;
-			if (myUsername != null && myPassword != null) {
-				result = new PasswordAuthentication(myUsername, myPassword.toCharArray());
-			}
-			myUsername = null;
-			myPassword = null;
-			return result;
-		}
-	}
-
-	private final MyAuthenticator myAuthenticator = new MyAuthenticator();
-
 	@Override
 	public void onResume() {
 		super.onResume();
 		getListView().setOnCreateContextMenuListener(this);
 		onModelChanged(); // do the same update actions as upon onModelChanged
-
-		System.err.println("UI thread: " + Thread.currentThread());
-		Authenticator.setDefault(myAuthenticator);
 	}
 
 	@Override
@@ -130,19 +101,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			Connection = null;
 		}
 		super.onDestroy();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == AUTHENTICATION_CODE) {
-			synchronized (myAuthenticator) {
-				if (data != null) {
-					myAuthenticator.myUsername = data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
-					myAuthenticator.myPassword = data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
-				}
-				myAuthenticator.notify();
-			}
-		}
 	}
 
 	// method from NetworkView.EventListener
@@ -299,28 +257,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 				.create().show();
 		} else {
 			actions.runAction(this, networkTree, actionCode);
-		}
-	}
-
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		if (!NetworkView.Instance().isInitialized()) {
-			return null;
-		}
-		final AuthenticationDialog dlg = AuthenticationDialog.getDialog();
-		if (dlg != null) {
-			return dlg.createDialog(this);
-		}
-		return null;
-	}
-
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		super.onPrepareDialog(id, dialog);
-
-		final AuthenticationDialog dlg = AuthenticationDialog.getDialog();
-		if (dlg != null) {
-			dlg.prepareDialog(this, dialog);
 		}
 	}
 

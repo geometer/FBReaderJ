@@ -19,14 +19,22 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.BaseAdapter;
 import android.content.Intent;
 
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -89,25 +97,66 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		return super.onContextItemSelected(item);
 	}
 
+	private final MyCredentialsCreator myCredentialsCreator = new MyCredentialsCreator();
+
+	private class MyCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
+		private volatile String myUsername;
+		private volatile String myPassword;
+        
+		public Credentials createCredentials(AuthScope scope) {
+			if (!"basic".equalsIgnoreCase(scope.getScheme())) {
+				return null;
+			}
+
+			final Intent intent = new Intent();
+			final String host = scope.getHost();
+			final String area = scope.getRealm();
+			final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
+			intent.setClass(NetworkCatalogActivity.this, AuthenticationActivity.class);
+			intent.putExtra(AuthenticationActivity.HOST_KEY, host);
+			intent.putExtra(AuthenticationActivity.AREA_KEY, area);
+			intent.putExtra(AuthenticationActivity.SCHEME_KEY, scope.getScheme());
+			intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
+			startActivityForResult(intent, BASIC_AUTHENTICATION_CODE);
+			synchronized (this) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+				}
+			}
+        
+			Credentials creds = null;
+			if (myUsername != null && myPassword != null) {
+				option.setValue(myUsername);
+				creds = new UsernamePasswordCredentials(myUsername, myPassword);
+			}
+			myUsername = null;
+			myPassword = null;
+			return creds;
+		}
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-			default:
-				super.onActivityResult(requestCode, resultCode, data);
-				break;
-			case USER_REGISTRATION_REQUEST_CODE:
-				if (myTree instanceof NetworkCatalogTree &&
-					resultCode == RESULT_OK &&
-					data != null) {
-					try {
-						Util.runAfterRegistration(
-							((NetworkCatalogTree)myTree).Item.Link.authenticationManager(),
-							data
-						);
-					} catch (ZLNetworkException e) {
-						// TODO: show an error message
+			case BASIC_AUTHENTICATION_CODE:
+				synchronized (myCredentialsCreator) {
+					if (resultCode == AuthenticationActivity.RESULT_OK && data != null) {
+						myCredentialsCreator.myUsername =
+							data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
+						myCredentialsCreator.myPassword =
+							data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
 					}
+					myCredentialsCreator.notify();
 				}
+				break;
+			case CUSTOM_AUTHENTICATION_CODE:
+				Util.processCustomAuthentication(
+					this, ((NetworkCatalogTree)myTree).Item.Link, resultCode, data
+				);
+				break;
+			case SIGNUP_CODE:
+				Util.processSignup(((NetworkCatalogTree)myTree).Item.Link, resultCode, data);
 				break;
 		}
 	}
@@ -139,6 +188,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	@Override
 	public void onResume() {
 		super.onResume();
+		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 
 	private final class CatalogAdapter extends BaseAdapter {
@@ -182,20 +232,24 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public void onModelChanged() {
-		final NetworkView networkView = NetworkView.Instance();
-		final NetworkTree.Key key = getLoadableNetworkTreeKey(myTree);
-		myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
-		getListView().invalidateViews();
-
-		/*
-		 * getListAdapter() always returns CatalogAdapter because onModelChanged() 
-		 * can be called only after Activity's onStart() method (where NetworkView's 
-		 * addEventListener() is called). Therefore CatalogAdapter will be set as 
-		 * adapter in onCreate() method before any calls to onModelChanged().
-		 */
-		((CatalogAdapter) getListAdapter()).onModelChanged();
-
-		setupTitle();
+		runOnUiThread(new Runnable() {
+			public void run() {
+				final NetworkView networkView = NetworkView.Instance();
+				final NetworkTree.Key key = getLoadableNetworkTreeKey(myTree);
+				myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
+				getListView().invalidateViews();
+            
+				/*
+				 * getListAdapter() always returns CatalogAdapter because onModelChanged() 
+				 * can be called only after Activity's onStart() method (where NetworkView's 
+				 * addEventListener() is called). Therefore CatalogAdapter will be set as 
+				 * adapter in onCreate() method before any calls to onModelChanged().
+				 */
+				((CatalogAdapter)getListAdapter()).onModelChanged();
+            
+				setupTitle();
+			}
+		});
 	}
 
 	@Override

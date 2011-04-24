@@ -17,11 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.zlibrary.core.network;
 
-public interface UserRegistrationConstants {
-	String USER_REGISTRATION_USERNAME = "userName";
-	String USER_REGISTRATION_PASSWORD = "password";
-	String USER_REGISTRATION_EMAIL = "eMail";
-	String USER_REGISTRATION_LITRES_SID = "litres:sid";
+import java.util.Collection;
+
+import org.apache.http.cookie.Cookie;
+
+public abstract class CookieDatabase {
+	private static CookieDatabase ourInstance;
+
+	public static CookieDatabase getInstance() {
+		return ourInstance;
+	}
+
+	protected CookieDatabase() {
+		ourInstance = this;
+	}
+
+	protected abstract void saveCookies(Collection<Cookie> cookies);
+	protected abstract Collection<Cookie> loadCookies();
 }

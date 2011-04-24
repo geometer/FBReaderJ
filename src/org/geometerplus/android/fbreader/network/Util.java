@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.Map;
+import java.util.*;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -28,12 +28,14 @@ import android.content.Context;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 abstract class Util implements UserRegistrationConstants {
@@ -68,22 +70,115 @@ abstract class Util implements UserRegistrationConstants {
 				activity.startActivityForResult(new Intent(
 					REGISTRATION_ACTION,
 					Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
-				), USER_REGISTRATION_REQUEST_CODE);
+				), NetworkBaseActivity.SIGNUP_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
 	}
 
-	static void runAfterRegistration(NetworkAuthenticationManager mgr, Intent data) throws ZLNetworkException {
-		final String userName = data.getStringExtra(USER_REGISTRATION_USERNAME);
-		final String litresSid = data.getStringExtra(USER_REGISTRATION_LITRES_SID);
-		mgr.initUser(userName, litresSid);
-		if (userName.length() > 0 && litresSid.length() > 0) {
+	private static final Map<Activity,Runnable> myAfterRegisrationMap =
+		new HashMap<Activity,Runnable>();
+
+	static void runAuthenticationDialog(Activity activity, INetworkLink link, String error, Runnable onSuccess) {
+		final NetworkAuthenticationManager mgr = link.authenticationManager();
+
+		final Intent intent = new Intent(activity, AuthenticationActivity.class);
+		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.UserNameOption.getValue());
+		if (isRegistrationSupported(activity, link)) {
+			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
+		}
+		intent.putExtra(AuthenticationActivity.ERROR_KEY, error);
+		if (onSuccess != null) {
+			myAfterRegisrationMap.put(activity, onSuccess);
+		}
+		activity.startActivityForResult(intent, NetworkBaseActivity.CUSTOM_AUTHENTICATION_CODE);
+	}
+
+	static void processCustomAuthentication(final Activity activity, final INetworkLink link, int resultCode, Intent data) {
+		final Runnable onSuccess = myAfterRegisrationMap.get(activity);
+		myAfterRegisrationMap.remove(activity);
+		switch (resultCode) {
+			case AuthenticationActivity.RESULT_CANCELED:
+				UIUtil.wait(
+					"signOut",
+					new Runnable() {
+						public void run() {
+							final NetworkAuthenticationManager mgr =
+								 link.authenticationManager();
+							if (mgr.mayBeAuthorised(false)) {
+								mgr.logOut();
+							}
+							final NetworkLibrary library = NetworkLibrary.Instance();
+							library.invalidateVisibility();
+							library.synchronize();
+							NetworkView.Instance().fireModelChanged();
+						}
+					},
+					activity
+				);
+				break;
+			case AuthenticationActivity.RESULT_OK:
+			{
+				final ZLResource resource =
+					ZLResource.resource("dialog").getResource("AuthenticationDialog");
+				final String username =
+					data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
+				final String password =
+					data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
+				if (username.length() == 0) {
+					runAuthenticationDialog(
+						activity, link,
+						resource.getResource("loginIsEmpty").getValue(),
+						onSuccess
+					);
+				}
+				final NetworkAuthenticationManager mgr = link.authenticationManager();
+				mgr.UserNameOption.setValue(username);
+				final Runnable runnable = new Runnable() {
+					public void run() {
+						try {
+							mgr.authorise(password);
+							if (mgr.needsInitialization()) {
+								mgr.initialize();
+							}
+							onSuccess.run();
+						} catch (ZLNetworkException e) {
+							mgr.logOut();
+							runAuthenticationDialog(activity, link, e.getMessage(), onSuccess);
+							return;
+						}
+						final NetworkLibrary library = NetworkLibrary.Instance();
+						library.invalidateVisibility();
+						library.synchronize();
+						NetworkView.Instance().fireModelChanged();
+					}
+				};
+				UIUtil.wait("authentication", runnable, activity);
+				break;
+			}
+			case AuthenticationActivity.RESULT_SIGNUP:
+				Util.runRegistrationDialog(activity, link);
+				break;
+		}
+	}
+
+	static void processSignup(INetworkLink link, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK && data != null) {
 			try {
-				mgr.initialize();
+				final NetworkAuthenticationManager mgr = link.authenticationManager();
+				final String userName = data.getStringExtra(USER_REGISTRATION_USERNAME);
+				final String litresSid = data.getStringExtra(USER_REGISTRATION_LITRES_SID);
+				mgr.initUser(userName, litresSid);
+				if (userName.length() > 0 && litresSid.length() > 0) {
+					try {
+						mgr.initialize();
+					} catch (ZLNetworkException e) {
+						mgr.logOut();
+						throw e;
+					}
+				}
 			} catch (ZLNetworkException e) {
-				mgr.logOut();
-				throw e;
+				// TODO: show an error message
 			}
 		}
 	}
