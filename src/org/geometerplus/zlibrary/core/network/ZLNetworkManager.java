@@ -105,7 +105,7 @@ public class ZLNetworkManager {
 			if (!myIsInitialized && db != null) {
 				myIsInitialized = true;
 				final Collection<Cookie> fromDb = db.loadCookies();
-				//super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
+				super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
 			}
 			return super.getCookies();
 		}
