@@ -20,7 +20,8 @@
 package org.geometerplus.fbreader.network;
 
 import java.io.*;
-import java.net.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -46,7 +47,7 @@ public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
 		URI uri;
 		try {
 			uri = new URI(url);
-		} catch (java.net.URISyntaxException ex) {
+		} catch (URISyntaxException ex) {
 			return null;
 		}
 

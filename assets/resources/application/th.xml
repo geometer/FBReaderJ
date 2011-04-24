@@ -463,10 +463,6 @@
 					<node name="summaryOn" value="แสดงนาฬิกาที่ท้ายหน้า"/>
 					<node name="summaryOff" value="ไม่แสดงนาฬิกาที่ท้ายหน้า"/>
 				</node>
-				<node name="isSensitive" value="นำทางโดยแตะที่ท้ายหน้า">
-					<node name="summaryOn" value="เปิดการใช้งานตัวนำทาง"/>
-					<node name="summaryOff" value="ปิดการใช้งานตัวนำทาง"/>
-				</node>
 				<node name="font" value="รูปแบบอักษร"/>
 			</node>
 			<node name="display" value="การแสดงผล">

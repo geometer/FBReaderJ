@@ -80,15 +80,6 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myReader.FooterIsSensitiveOption.getValue()) {
-			Footer footer = getFooterArea();
-			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
-				myReader.addInvisibleBookmark();
-				footer.setProgress(x);
-				return true;
-			}
-		}
-
 		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
@@ -130,14 +121,6 @@ public final class FBView extends ZLTextView {
 		if (myHasSelectionExpanded) {
 			onSelectingStarted();
 			return true;
-		}
-
-		if (myReader.FooterIsSensitiveOption.getValue()) {
-			Footer footer = getFooterArea();
-			if (footer != null && y > myContext.getHeight() - footer.getTapHeight()) {
-				footer.setProgress(x);
-				return true;
-			}
 		}
 
 		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
@@ -532,10 +515,6 @@ public final class FBView extends ZLTextView {
 		int myGaugeWidth = 1;
 		public int getGaugeWidth() {
 			return myGaugeWidth;
-		}
-
-		public int getTapHeight() {
-			return 30;
 		}
 
 		public void setProgress(int x) {

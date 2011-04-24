@@ -289,7 +289,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowClockOption, "showClock"));
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowBatteryOption, "showBattery"));
 		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterShowProgressOption, "showProgress"));
-		footerPreferences.add(statusLineScreen.addOption(fbReader.FooterIsSensitiveOption, "isSensitive"));
 		footerPreferences.add(statusLineScreen.addPreference(new FontOption(
 			this, statusLineScreen.Resource, "font",
 			fbReader.FooterFontOption, false
