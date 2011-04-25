@@ -3,9 +3,6 @@ package org.geometerplus.fbreader.network.atom;
 import java.util.Map;
 
 import org.geometerplus.fbreader.network.opds.HtmlToString;
-import org.geometerplus.fbreader.network.opds.OPDSEntry;
-import org.geometerplus.fbreader.network.opds.OPDSFeedMetadata;
-import org.geometerplus.fbreader.network.opds.OPDSFeedReader;
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
@@ -14,7 +11,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	
 	protected final ATOMFeedReader myFeedReader;
 
-	private OPDSFeedMetadata myFeed;
+	private ATOMFeedMetadata myFeed;
 	private ATOMEntry myEntry;
 
 	private ATOMAuthor myAuthor;
@@ -200,7 +197,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case START:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
 					myFeedReader.processFeedStart();
-					myFeed = new OPDSFeedMetadata();
+					myFeed = new ATOMFeedMetadata();
 					myFeed.readAttributes(attributes);
 					myState = FEED;
 					myFeedMetadataProcessed = false;
@@ -243,7 +240,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myUpdated.readAttributes(attributes);
 						myState = F_UPDATED;
 					} else if (tag == TAG_ENTRY) {
-						myEntry = new OPDSEntry();
+						myEntry = new ATOMEntry();
 						myEntry.readAttributes(attributes);
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
@@ -632,42 +629,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 					myDCIssued = null;
 					myState = F_ENTRY;
-				}
-				break;
-			case OPENSEARCH_TOTALRESULTS:
-				if (tagPrefix == myOpenSearchNamespaceId &&
-						tag == OPENSEARCH_TAG_TOTALRESULTS) {
-					if (myFeed != null && bufferContent != null) {
-						try {
-							myFeed.OpensearchTotalResults = Integer.parseInt(bufferContent);
-						} catch (NumberFormatException ex) {
-						}
-					}
-					myState = FEED;
-				}
-				break;
-			case OPENSEARCH_ITEMSPERPAGE:
-				if (tagPrefix == myOpenSearchNamespaceId &&
-						tag == OPENSEARCH_TAG_ITEMSPERPAGE) {
-					if (myFeed != null && bufferContent != null) {
-						try {
-							myFeed.OpensearchItemsPerPage = Integer.parseInt(bufferContent);
-						} catch (NumberFormatException ex) {
-						}
-					}
-					myState = FEED;
-				}
-				break;
-			case OPENSEARCH_STARTINDEX:
-				if (tagPrefix == myOpenSearchNamespaceId &&
-						tag == OPENSEARCH_TAG_STARTINDEX) {
-					if (myFeed != null && bufferContent != null) {
-						try {
-							myFeed.OpensearchStartIndex = Integer.parseInt(bufferContent);
-						} catch (NumberFormatException ex) {
-						}
-					}
-					myState = FEED;
 				}
 				break;
 		}
