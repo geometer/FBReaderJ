@@ -34,6 +34,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
@@ -145,7 +146,7 @@ public class ZLNetworkManager {
 			final HttpRequestBase httpRequest;
 			if (request.PostData !=  null) {
 				httpRequest = new HttpPost(request.URL);
-				// TODO: implement
+				((HttpPost)httpRequest).setEntity(new StringEntity(request.PostData, "utf-8"));
 			} else if (!request.PostParameters.isEmpty()) {
 				httpRequest = new HttpPost(request.URL);
 				final List<BasicNameValuePair> list =
