@@ -36,7 +36,7 @@
 		list="always"
 	/>
 	<dictionary
-		id="SlovoEd Deluxe German->English"
+		id="SlovoEd Deluxe German-&gt;English"
 		package="com.slovoed.noreg.english_german.deluxe"
 		class=".Start"
 		action="android.intent.action.VIEW"
@@ -44,7 +44,7 @@
 		list="installed"
 	/>
 	<dictionary
-		id="SlovoEd Deluxe English->German"
+		id="SlovoEd Deluxe English-&gt;German"
 		package="com.slovoed.noreg.english_german.deluxe"
 		class=".Start"
 		action="android.intent.action.VIEW"
@@ -52,7 +52,7 @@
 		list="installed"
 	/>
 	<dictionary
-		id="Langenscheidt Professional German->English"
+		id="Langenscheidt Professional German-&gt;English"
 		package="com.slovoed.noreg.langenscheidt.professional.german_english"
 		class=".Start"
 		action="android.intent.action.VIEW"
@@ -60,7 +60,7 @@
 		list="installed"
 	/>
 	<dictionary
-		id="Langenscheidt Professional English->German"
+		id="Langenscheidt Professional English-&gt;German"
 		package="com.slovoed.noreg.langenscheidt.professional.german_english"
 		class=".Start"
 		action="android.intent.action.VIEW"
@@ -84,7 +84,7 @@
 		list="installed"
 	/>
 	<dictionary
-		id="SlovoEd Deluxe French->Russian"
+		id="SlovoEd Deluxe French-&gt;Russian"
 		package="com.slovoed.french_russian.deluxe"
 		class=".Start"
 		action="android.intent.action.VIEW"
@@ -92,7 +92,7 @@
 		list="installed"
 	/>
 	<dictionary
-		id="SlovoEd Deluxe Russian->French"
+		id="SlovoEd Deluxe Russian-&gt;French"
 		package="com.slovoed.french_russian.deluxe"
 		class=".Start"
 		action="android.intent.action.VIEW"
