@@ -30,10 +30,12 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.*;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
@@ -140,9 +142,20 @@ public class ZLNetworkManager {
 		try {
 			request.doBefore();
 			httpClient = new DefaultHttpClient();
-			final HttpGet getRequest = new HttpGet(request.URL);
-			setCommonHTTPOptions(getRequest);
-			httpClient.setCredentialsProvider(new MyCredentialsProvider(getRequest));
+			final HttpRequestBase httpRequest;
+			if (request.PostData !=  null) {
+				httpRequest = new HttpPost(request.URL);
+				// TODO: implement
+			} else if (!request.PostParameters.isEmpty()) {
+				httpRequest = new HttpPost(request.URL);
+				final List<BasicNameValuePair> list =
+					new ArrayList<BasicNameValuePair>(request.PostParameters.size());
+				((HttpPost)httpRequest).setEntity(new UrlEncodedFormEntity(list, "utf-8"));
+			} else {
+				httpRequest = new HttpGet(request.URL);
+			}
+			setCommonHTTPOptions(httpRequest);
+			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest));
 			/*
 				if (request.PostData != null) {
 					httpConnection.setRequestMethod("POST");
@@ -169,7 +182,7 @@ public class ZLNetworkManager {
 			*/
 			HttpResponse response = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
-				response = httpClient.execute(getRequest, myHttpContext);
+				response = httpClient.execute(httpRequest, myHttpContext);
 				entity = response.getEntity();
 			}
 			final int responseCode = response.getStatusLine().getStatusCode();
