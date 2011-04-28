@@ -1,13 +1,13 @@
 package org.geometerplus.fbreader.network.atom;
 
-public interface ATOMFeedReader {
+public interface ATOMFeedReader <T1 extends ATOMFeedMetadata, T2 extends ATOMEntry> {
 	void processFeedStart();
-
+	
 	// return true to interrupt reading; return false to continue reading
-	boolean processFeedMetadata(ATOMFeedMetadata feed, boolean beforeEntries);
-
+	boolean processFeedMetadata(T1 feed, boolean beforeEntries);
+	
 	// return true to interrupt reading; return false to continue reading
-	boolean processFeedEntry(ATOMEntry entry);
-
+	boolean processFeedEntry(T2 entry);
+	
 	void processFeedEnd();
 }

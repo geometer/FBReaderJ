@@ -32,10 +32,8 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	public static final String OPDS_LOG = "opds.log";
 	public static final String KEY_PRICE = "price";
 
-	protected final OPDSFeedReader myFeedReader;
-
+//	protected final OPDSFeedReader myFeedReader;
 	private DCDate myDCIssued;
-
 	private String myPriceCurrency;
 
 	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
@@ -43,34 +41,8 @@ public class OPDSXMLReader extends ATOMXMLReader {
 
 
 	public OPDSXMLReader(OPDSFeedReader feedReader) {
-		super(new ATOMFeedReader() {
-			
-			@Override
-			public void processFeedStart() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public boolean processFeedMetadata(ATOMFeedMetadata feed,
-					boolean beforeEntries) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean processFeedEntry(ATOMEntry entry) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public void processFeedEnd() {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		myFeedReader = feedReader;
+		super(feedReader);
+//		myFeedReader = feedReader;
 	}
 
 	protected String myDublinCoreNamespaceId;

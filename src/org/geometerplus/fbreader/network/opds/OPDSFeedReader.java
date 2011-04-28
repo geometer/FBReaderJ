@@ -19,14 +19,7 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-interface OPDSFeedReader {
-	void processFeedStart();
+import org.geometerplus.fbreader.network.atom.ATOMFeedReader;
 
-	// return true to interrupt reading; return false to continue reading
-	boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries);
-
-	// return true to interrupt reading; return false to continue reading
-	boolean processFeedEntry(OPDSEntry entry);
-
-	void processFeedEnd();
+public interface OPDSFeedReader extends ATOMFeedReader<OPDSFeedMetadata,OPDSEntry> {
 }
