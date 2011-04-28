@@ -11,16 +11,15 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	
 	protected final ATOMFeedReader myFeedReader;
 
-	private ATOMFeedMetadata myFeed;
-	private ATOMEntry myEntry;
-
-	private ATOMAuthor myAuthor;
-	private ATOMId myId;
-	private ATOMLink myLink;
-	private ATOMCategory myCategory;
-	private ATOMUpdated myUpdated;
-	private ATOMPublished myPublished;
-	private ATOMIcon myIcon;
+	protected ATOMFeedMetadata myFeed;
+	protected ATOMEntry myEntry;
+	protected ATOMAuthor myAuthor;
+	protected ATOMId myId;
+	protected ATOMLink myLink;
+	protected ATOMCategory myCategory;
+	protected ATOMUpdated myUpdated;
+	protected ATOMPublished myPublished;
+	protected ATOMIcon myIcon;
 	
 	public ATOMXMLReader(ATOMFeedReader feedReader) {
 		myFeedReader = feedReader;
@@ -104,7 +103,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	private boolean myFeedMetadataProcessed;
 
-	protected final int getState() {
+	protected int getState() {
 		return myState;
 	}
 

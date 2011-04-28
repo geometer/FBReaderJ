@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.network.opds;
 
 interface OPDSFeedReader {
-
 	void processFeedStart();
 
 	// return true to interrupt reading; return false to continue reading

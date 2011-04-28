@@ -26,23 +26,15 @@ import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.atom.*;
 
-class OPDSXMLReader extends ZLXMLReaderAdapter {
-	public static final String KEY_PRICE = "price";
+import android.util.Log;
 
+public class OPDSXMLReader extends ATOMXMLReader {
+	public static final String OPDS_LOG = "opds.log";
+	public static final String KEY_PRICE = "price";
 
 	protected final OPDSFeedReader myFeedReader;
 
-	private OPDSFeedMetadata myFeed;
-	private OPDSEntry myEntry;
-
-	private ATOMAuthor myAuthor;
-	private ATOMId myId;
-	private OPDSLink myLink;
-	private ATOMCategory myCategory;
-	private ATOMUpdated myUpdated;
-	private ATOMPublished myPublished;
 	private DCDate myDCIssued;
-	private ATOMIcon myIcon;
 
 	private String myPriceCurrency;
 
@@ -51,26 +43,40 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 
 	public OPDSXMLReader(OPDSFeedReader feedReader) {
+		super(new ATOMFeedReader() {
+			
+			@Override
+			public void processFeedStart() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public boolean processFeedMetadata(ATOMFeedMetadata feed,
+					boolean beforeEntries) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public boolean processFeedEntry(ATOMEntry entry) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public void processFeedEnd() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		myFeedReader = feedReader;
 	}
 
 	protected String myDublinCoreNamespaceId;
-	protected String myAtomNamespaceId;
 	protected String myOpenSearchNamespaceId;
 	protected String myCalibreNamespaceId;
 	protected String myOpdsNamespaceId;
-
-	@Override
-	public final boolean processNamespaces() {
-		return true;
-	}
-
-	public static String intern(String str) {
-		if (str == null || str.length() == 0) {
-			return null;
-		}
-		return str.intern();
-	}
 
 	@Override
 	public void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
@@ -97,27 +103,6 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	}
 
 
-	protected static final int START = 0;
-	protected static final int FEED = 1;
-	protected static final int F_ENTRY = 2;
-	protected static final int F_ID = 3;
-	protected static final int F_LINK = 4;
-	protected static final int F_CATEGORY = 5;
-	protected static final int F_TITLE = 6;
-	protected static final int F_UPDATED = 7;
-	protected static final int F_AUTHOR = 8;
-	protected static final int FA_NAME = 9;
-	protected static final int FA_URI = 10;
-	protected static final int FA_EMAIL = 11;
-	protected static final int FE_AUTHOR = 12;
-	protected static final int FE_ID = 13;
-	protected static final int FE_CATEGORY = 14;
-	protected static final int FE_LINK = 15;
-	protected static final int FE_PUBLISHED = 16;
-	protected static final int FE_SUMMARY = 17;
-	protected static final int FE_CONTENT = 18;
-	protected static final int FE_TITLE = 19;
-	protected static final int FE_UPDATED = 20;
 	protected static final int FE_DC_LANGUAGE = 21;
 	protected static final int FE_DC_ISSUED = 22;
 	protected static final int FE_DC_PUBLISHER = 23;
@@ -125,35 +110,12 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 	protected static final int FE_CALIBRE_SERIES_INDEX = 25;
 	protected static final int FEL_PRICE = 26;
 	protected static final int FEL_FORMAT = 27;
-	protected static final int FEA_NAME = 28;
-	protected static final int FEA_URI = 29;
-	protected static final int FEA_EMAIL = 30;
 	protected static final int OPENSEARCH_TOTALRESULTS = 31;
 	protected static final int OPENSEARCH_ITEMSPERPAGE = 32;
 	protected static final int OPENSEARCH_STARTINDEX = 33;
 	protected static final int FEC_HACK_SPAN = 34;
-	protected static final int F_SUBTITLE = 35;
-	protected static final int F_ICON = 36;
 
-
-	protected static final String TAG_FEED = "feed";
-	protected static final String TAG_ENTRY = "entry";
-	protected static final String TAG_AUTHOR = "author";
-	protected static final String TAG_NAME = "name";
-	protected static final String TAG_URI = "uri";
-	protected static final String TAG_EMAIL = "email";
-	protected static final String TAG_ID = "id";
-	protected static final String TAG_CATEGORY = "category";
-	protected static final String TAG_LINK = "link";
-	protected static final String TAG_PUBLISHED = "published";
-	protected static final String TAG_SUMMARY = "summary";
-	protected static final String TAG_CONTENT = "content";
-	protected static final String TAG_TITLE = "title";
-	protected static final String TAG_UPDATED = "updated";
 	protected static final String TAG_PRICE = "price";
-	protected static final String TAG_SUBTITLE = "subtitle";
-	protected static final String TAG_ICON = "icon";
-
 	protected static final String TAG_HACK_SPAN = "span";
 
 	protected static final String DC_TAG_LANGUAGE = "language";
@@ -170,55 +132,17 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 
 
 	private int myState = START;
-
-	private final StringBuilder myBuffer = new StringBuilder();
 	private HtmlToString myHtmlToString = new HtmlToString();
-
 	private boolean myFeedMetadataProcessed;
 
 	protected final int getState() {
 		return myState;
 	}
 
-	@Override
-	public final boolean startElementHandler(String tag, ZLStringMap attributes) {
-		final int index = tag.indexOf(':');
-		final String tagPrefix;
-		if (index != -1) {
-			tagPrefix = tag.substring(0, index).intern();
-			tag = tag.substring(index + 1).intern();
-		} else {
-			tagPrefix = null;
-			tag = tag.intern();
-		}
-		return startElementHandler(tagPrefix, tag, attributes, extractBufferContent());
-	}
-
-	@Override
-	public final boolean endElementHandler(String tag) {
-		final int index = tag.indexOf(':');
-		final String tagPrefix;
-		if (index != -1) {
-			tagPrefix = tag.substring(0, index).intern();
-			tag = tag.substring(index + 1).intern();
-		} else {
-			tagPrefix = null;
-			tag = tag.intern();
-		}
-		return endElementHandler(tagPrefix, tag, extractBufferContent());
-	}
-
-	private final String extractBufferContent() {
-		final char[] bufferContentArray = myBuffer.toString().trim().toCharArray();
-		myBuffer.delete(0, myBuffer.length());
-		if (bufferContentArray.length == 0) {
-			return null;
-		}
-		return new String(bufferContentArray);
-	}
-
 	public boolean startElementHandler(final String tagPrefix, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
+		super.startElementHandler(tagPrefix, tag, attributes, bufferContent);
+		
 		boolean interruptReading = false;
 		switch (myState) {
 			case START:
@@ -272,8 +196,13 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
 						if (myFeed != null && !myFeedMetadataProcessed) {
-							interruptReading = myFeedReader.processFeedMetadata(myFeed, true);
-							myFeedMetadataProcessed = true;
+							if (myFeed instanceof OPDSFeedMetadata){
+								OPDSFeedMetadata feed = (OPDSFeedMetadata) myFeed;
+								interruptReading = myFeedReader.processFeedMetadata(feed, true);
+								myFeedMetadataProcessed = true;
+							} else {
+								Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
+							}
 						}
 					} 
 				} else if (tagPrefix == myOpenSearchNamespaceId) {
@@ -405,7 +334,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FEED:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
 					if (myFeed != null) {
-						interruptReading = myFeedReader.processFeedMetadata(myFeed, false);
+						if (myFeed instanceof OPDSFeedMetadata){
+							interruptReading = myFeedReader.processFeedMetadata((OPDSFeedMetadata)myFeed, false);
+						} else {
+							Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
+						}
 					}
 					myFeed = null;
 					myFeedReader.processFeedEnd();
@@ -415,7 +348,12 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case F_ENTRY:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
 					if (myEntry != null) {
-						interruptReading = myFeedReader.processFeedEntry(myEntry);
+						if (myEntry instanceof OPDSEntry){
+							OPDSEntry entry = (OPDSEntry) myEntry;
+							interruptReading = myFeedReader.processFeedEntry(entry);
+						} else {
+							Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
+						}
 					}
 					myEntry = null;
 					myState = FEED;
@@ -543,8 +481,12 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FEL_PRICE:
 				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
 					if (bufferContent != null && myPriceCurrency != null) {
-						myLink.Prices.add(new OPDSPrice(bufferContent.intern(), myPriceCurrency));
-						myPriceCurrency = null;
+						if (myLink instanceof OPDSLink){
+							((OPDSLink)myLink).Prices.add(new OPDSPrice(bufferContent.intern(), myPriceCurrency));
+							myPriceCurrency = null;
+						} else {
+							Log.v(OPDS_LOG, "! (myLink instanceof OPDSLink)");
+						}
 					}
 					myState = FE_LINK;
 				}
@@ -552,7 +494,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FEL_FORMAT:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_FORMAT) {
 					if (bufferContent != null) {
-						myLink.Formats.add(bufferContent.intern());
+						if (myLink instanceof OPDSLink){
+							((OPDSLink)myLink).Formats.add(bufferContent.intern());
+						} else {
+							Log.v(OPDS_LOG, "! (myLink instanceof OPDSLink)");
+						}
 					}
 					myState = FE_LINK;
 				}
@@ -649,16 +595,24 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FE_DC_LANGUAGE:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_LANGUAGE) {
 					// FIXME:language can be lost:buffer will be truncated, if there are extension tags inside the <dc:language> tag
-					myEntry.DCLanguage = bufferContent;
-					myState = F_ENTRY;
+					if (myEntry instanceof OPDSEntry){
+						((OPDSEntry)myEntry).DCLanguage = bufferContent;
+						myState = F_ENTRY;
+					} else {
+						Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
+					}
 				}
 				break;
 			case FE_DC_ISSUED:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_ISSUED) {
 					// FIXME:issued can be lost:buffer will be truncated, if there are extension tags inside the <dc:issued> tag
 					if (ATOMDateConstruct.parse(bufferContent, myDCIssued)) {
-						myEntry.DCIssued = myDCIssued;
-					}
+						if (myEntry instanceof OPDSEntry){
+							((OPDSEntry)myEntry).DCIssued = myDCIssued;
+						} else {
+							Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
+						}
+					} 
 					myDCIssued = null;
 					myState = F_ENTRY;
 				}
@@ -666,21 +620,33 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 			case FE_DC_PUBLISHER:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_PUBLISHER) {
 					// FIXME:publisher can be lost:buffer will be truncated, if there are extension tags inside the <dc:publisher> tag
-					myEntry.DCPublisher = bufferContent;
-					myState = F_ENTRY;
+					if (myEntry instanceof OPDSEntry){
+						((OPDSEntry)myEntry).DCPublisher = bufferContent;
+						myState = F_ENTRY;
+					} else {
+						Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
+					}
 				}
 				break;
 			case FE_CALIBRE_SERIES:
 				if (tagPrefix == myCalibreNamespaceId && tag == CALIBRE_TAG_SERIES) {
-					myEntry.SeriesTitle = bufferContent;
-					myState = F_ENTRY;
+					if (myEntry instanceof OPDSEntry){
+						((OPDSEntry)myEntry).SeriesTitle = bufferContent;
+						myState = F_ENTRY;
+					} else {
+						Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
+					}
 				}
 				break;
 			case FE_CALIBRE_SERIES_INDEX:
 				if (tagPrefix == myCalibreNamespaceId && tag == CALIBRE_TAG_SERIES_INDEX) {
 					if (bufferContent != null) {
 						try {
-							myEntry.SeriesIndex = Float.parseFloat(bufferContent);
+							if (myEntry instanceof OPDSEntry){
+								((OPDSEntry)myEntry).SeriesIndex = Float.parseFloat(bufferContent);
+							} else {
+								Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
+							}
 						} catch (NumberFormatException ex) {
 						}
 					}
@@ -692,7 +658,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						tag == OPENSEARCH_TAG_TOTALRESULTS) {
 					if (myFeed != null && bufferContent != null) {
 						try {
-							myFeed.OpensearchTotalResults = Integer.parseInt(bufferContent);
+							if (myFeed instanceof OPDSFeedMetadata){
+								((OPDSFeedMetadata)myFeed).OpensearchTotalResults = Integer.parseInt(bufferContent);
+							} else {
+								Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
+							}
 						} catch (NumberFormatException ex) {
 						}
 					}
@@ -704,7 +674,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						tag == OPENSEARCH_TAG_ITEMSPERPAGE) {
 					if (myFeed != null && bufferContent != null) {
 						try {
-							myFeed.OpensearchItemsPerPage = Integer.parseInt(bufferContent);
+							if (myFeed instanceof OPDSFeedMetadata){
+								((OPDSFeedMetadata)myFeed).OpensearchItemsPerPage = Integer.parseInt(bufferContent);
+							} else {
+								Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
+							}
 						} catch (NumberFormatException ex) {
 						}
 					}
@@ -716,7 +690,11 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 						tag == OPENSEARCH_TAG_STARTINDEX) {
 					if (myFeed != null && bufferContent != null) {
 						try {
-							myFeed.OpensearchStartIndex = Integer.parseInt(bufferContent);
+							if (myFeed instanceof OPDSFeedMetadata){
+								((OPDSFeedMetadata)myFeed).OpensearchStartIndex = Integer.parseInt(bufferContent);
+							} else {
+								Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
+							}
 						} catch (NumberFormatException ex) {
 						}
 					}
@@ -728,17 +706,4 @@ class OPDSXMLReader extends ZLXMLReaderAdapter {
 		return interruptReading;
 	}
 
-	@Override
-	public final void characterDataHandler(char[] data, int start, int length) {
-		final int startIndex = myBuffer.length();
-		myBuffer.append(data, start, length);
-		int index = startIndex;
-		while ((index = myBuffer.indexOf("\r\n", index)) != -1) {
-			myBuffer.replace(index, index + 2, "\n");
-		}
-		index = startIndex;
-		while ((index = myBuffer.indexOf("\r", index)) != -1) {
-			myBuffer.setCharAt(index, '\n');
-		}
-	}
 }
