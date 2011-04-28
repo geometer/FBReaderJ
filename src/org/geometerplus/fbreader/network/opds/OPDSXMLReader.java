@@ -101,8 +101,9 @@ public class OPDSXMLReader extends ATOMXMLReader {
 
 	public boolean startElementHandler(final String tagPrefix, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
-		boolean interruptReading = false;
-		switch (myState) {
+		int state = myState;
+		boolean interruptReading = super.startElementHandler(tagPrefix, tag, attributes, bufferContent);
+		switch (state) {
 			case START:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
 					myFeedReader.processFeedStart();
@@ -114,53 +115,18 @@ public class OPDSXMLReader extends ATOMXMLReader {
 				break;
 			case FEED:
 				if (tagPrefix == myAtomNamespaceId) {
-					if (tag == TAG_AUTHOR) {
-						myAuthor = new ATOMAuthor();
-						myAuthor.readAttributes(attributes);
-						myState = F_AUTHOR;
-					} else if (tag == TAG_ID) {
-						myId = new ATOMId();
-						myId.readAttributes(attributes);
-						myState = F_ID;
-					} else if (tag == TAG_ICON) {
-						myIcon = new ATOMIcon();
-						myIcon.readAttributes(attributes);
-						myState = F_ICON;
-					} else if (tag == TAG_LINK) {
+					if (tag == TAG_LINK) {
 						myLink = new OPDSLink();
 						myLink.readAttributes(attributes);
 						myState = F_LINK;
-					} else if (tag == TAG_CATEGORY) {
-						myCategory = new ATOMCategory();
-						myCategory.readAttributes(attributes);
-						myState = F_CATEGORY;
-					} else if (tag == TAG_TITLE) {
-						//myTitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMTitle
-						//myTitle.readAttributes(attributes);
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
-						myState = F_TITLE;
-					} else if (tag == TAG_SUBTITLE) {
-						//mySubtitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMSubtitle
-						//mySubtitle.readAttributes(attributes);
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
-						myState = F_SUBTITLE;
-					} else if (tag == TAG_UPDATED) {
-						myUpdated = new ATOMUpdated();
-						myUpdated.readAttributes(attributes);
-						myState = F_UPDATED;
 					} else if (tag == TAG_ENTRY) {
 						myEntry = new OPDSEntry();
 						myEntry.readAttributes(attributes);
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
 						if (myFeed != null && !myFeedMetadataProcessed) {
-							if (myFeed instanceof OPDSFeedMetadata){
-								OPDSFeedMetadata feed = (OPDSFeedMetadata) myFeed;
-								interruptReading = myFeedReader.processFeedMetadata(feed, true);
-								myFeedMetadataProcessed = true;
-							} else {
-								Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
-							}
+							interruptReading = myFeedReader.processFeedMetadata(myFeed, true);
+							myFeedMetadataProcessed = true;
 						}
 					} 
 				} else if (tagPrefix == myOpenSearchNamespaceId) {
@@ -175,45 +141,10 @@ public class OPDSXMLReader extends ATOMXMLReader {
 				break;
 			case F_ENTRY:
 				if (tagPrefix == myAtomNamespaceId) {
-					if (tag == TAG_AUTHOR) {
-						myAuthor = new ATOMAuthor();
-						myAuthor.readAttributes(attributes);
-						myState = FE_AUTHOR;
-					} else if (tag == TAG_ID) {
-						myId = new ATOMId();
-						myId.readAttributes(attributes);
-						myState = FE_ID;
-					} else if (tag == TAG_CATEGORY) {
-						myCategory = new ATOMCategory();
-						myCategory.readAttributes(attributes);
-						myState = FE_CATEGORY;
-					} else if (tag == TAG_LINK) {
+					if (tag == TAG_LINK) {
 						myLink = new OPDSLink();
 						myLink.readAttributes(attributes);
 						myState = FE_LINK;
-					} else if (tag == TAG_PUBLISHED) {
-						myPublished = new ATOMPublished();
-						myPublished.readAttributes(attributes);
-						myState = FE_PUBLISHED;
-					} else if (tag == TAG_SUMMARY) {
-						//mySummary = new ATOMSummary(); // TODO:implement ATOMTextConstruct & ATOMSummary
-						//mySummary.readAttributes(attributes);
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
-						myState = FE_SUMMARY;
-					} else if (tag == TAG_CONTENT) {
-						//myConent = new ATOMContent(); // TODO:implement ATOMContent
-						//myConent.readAttributes(attributes);
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
-						myState = FE_CONTENT;
-					} else if (tag == TAG_TITLE) {
-						//myTitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMTitle
-						//myTitle.readAttributes(attributes);
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
-						myState = FE_TITLE;
-					} else if (tag == TAG_UPDATED) {
-						myUpdated = new ATOMUpdated();
-						myUpdated.readAttributes(attributes);
-						myState = FE_UPDATED;
 					}
 				} else if (tagPrefix == myDublinCoreNamespaceId) {
 					if (tag == DC_TAG_LANGUAGE) {
@@ -233,28 +164,6 @@ public class OPDSXMLReader extends ATOMXMLReader {
 					}
 				}
 				break;
-			case F_AUTHOR:
-				if (tagPrefix == myAtomNamespaceId) {
-					if (tag == TAG_NAME) {
-						myState = FA_NAME;
-					} else if (tag == TAG_URI) {
-						myState = FA_URI;
-					} else if (tag == TAG_EMAIL) {
-						myState = FA_EMAIL;
-					} 
-				} 
-				break;
-			case FE_AUTHOR:
-				if (tagPrefix == myAtomNamespaceId) {
-					if (tag == TAG_NAME) {
-						myState = FEA_NAME;
-					} else if (tag == TAG_URI) {
-						myState = FEA_URI;
-					} else if (tag == TAG_EMAIL) {
-						myState = FEA_EMAIL;
-					} 
-				}
-				break;
 			case FE_LINK:
 				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
 					myPriceCurrency = attributes.getValue("currencycode");
@@ -270,12 +179,6 @@ public class OPDSXMLReader extends ATOMXMLReader {
 					myState = FEC_HACK_SPAN;
 				}
 				break;
-			case FE_SUMMARY:
-			case FE_TITLE:
-			case F_TITLE:
-			case F_SUBTITLE:
-				myHtmlToString.processTextContent(false, tag, attributes, bufferContent);
-				break;
 			default:
 				break;
 		}
@@ -283,6 +186,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 		return interruptReading;
 	}
 
+	
 	public boolean endElementHandler(final String tagPrefix, final String tag,
 			final String bufferContent) {
 		boolean interruptReading = super.endElementHandler(tagPrefix, tag, bufferContent);
