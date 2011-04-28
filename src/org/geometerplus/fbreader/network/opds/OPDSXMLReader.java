@@ -102,7 +102,6 @@ public class OPDSXMLReader extends ATOMXMLReader {
 		}
 	}
 
-
 	protected static final int FE_DC_LANGUAGE = 21;
 	protected static final int FE_DC_ISSUED = 22;
 	protected static final int FE_DC_PUBLISHER = 23;
@@ -130,19 +129,8 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	protected static final String OPENSEARCH_TAG_ITEMSPERPAGE = "itemsPerPage";
 	protected static final String OPENSEARCH_TAG_STARTINDEX = "startIndex";
 
-
-	private int myState = START;
-	private HtmlToString myHtmlToString = new HtmlToString();
-	private boolean myFeedMetadataProcessed;
-
-	protected final int getState() {
-		return myState;
-	}
-
 	public boolean startElementHandler(final String tagPrefix, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
-		super.startElementHandler(tagPrefix, tag, attributes, bufferContent);
-		
 		boolean interruptReading = false;
 		switch (myState) {
 			case START:

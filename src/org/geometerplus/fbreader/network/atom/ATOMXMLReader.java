@@ -97,11 +97,10 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	protected static final String TAG_ICON = "icon";
 
 	
-	private int myState = START;
-	private final StringBuilder myBuffer = new StringBuilder();
-	private HtmlToString myHtmlToString = new HtmlToString();
-
-	private boolean myFeedMetadataProcessed;
+	protected int myState = START;
+	protected final StringBuilder myBuffer = new StringBuilder();
+	protected HtmlToString myHtmlToString = new HtmlToString();
+	protected boolean myFeedMetadataProcessed;
 
 	protected int getState() {
 		return myState;
