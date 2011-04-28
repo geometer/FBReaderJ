@@ -32,7 +32,6 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	public static final String OPDS_LOG = "opds.log";
 	public static final String KEY_PRICE = "price";
 
-//	protected final OPDSFeedReader myFeedReader;
 	private DCDate myDCIssued;
 	private String myPriceCurrency;
 
@@ -42,7 +41,6 @@ public class OPDSXMLReader extends ATOMXMLReader {
 
 	public OPDSXMLReader(OPDSFeedReader feedReader) {
 		super(feedReader);
-//		myFeedReader = feedReader;
 	}
 
 	protected String myDublinCoreNamespaceId;
@@ -294,11 +292,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			case FEED:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
 					if (myFeed != null) {
-						if (myFeed instanceof OPDSFeedMetadata){
-							interruptReading = myFeedReader.processFeedMetadata((OPDSFeedMetadata)myFeed, false);
-						} else {
-							Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
-						}
+						interruptReading = myFeedReader.processFeedMetadata(myFeed, false);
 					}
 					myFeed = null;
 					myFeedReader.processFeedEnd();
@@ -308,12 +302,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			case F_ENTRY:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
 					if (myEntry != null) {
-						if (myEntry instanceof OPDSEntry){
-							OPDSEntry entry = (OPDSEntry) myEntry;
-							interruptReading = myFeedReader.processFeedEntry(entry);
-						} else {
-							Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
-						}
+						interruptReading = myFeedReader.processFeedEntry(myEntry);
 					}
 					myEntry = null;
 					myState = FEED;
