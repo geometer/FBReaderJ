@@ -1,6 +1,7 @@
 ===== 1.0.10 (??? ??, 2011) =====
 * Fixed book downloading service (book-by-link-downloading works again)
 * Old authentication dialog has gone
+* 'Unencripted protocol' warning message has been restored
 
 ===== 1.0.9 (Apr 23, 2011) =====
 * HttpConnection => HttpClient (that fixes a bug in SSL connection)

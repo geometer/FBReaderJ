@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.network.atom;
 
 public interface ATOMConstants {
-
 	String TYPE_TEXT = "text";
 	String TYPE_HTML = "html";
 	String TYPE_XHTML = "xhtml";
