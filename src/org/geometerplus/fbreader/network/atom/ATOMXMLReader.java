@@ -20,18 +20,13 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	private ATOMCategory myCategory;
 	private ATOMUpdated myUpdated;
 	private ATOMPublished myPublished;
-	private ATOMDateConstruct myDCIssued;
 	private ATOMIcon myIcon;
 	
 	public ATOMXMLReader(ATOMFeedReader feedReader) {
 		myFeedReader = feedReader;
 	}
 
-	protected String myDublinCoreNamespaceId;
 	protected String myAtomNamespaceId;
-	protected String myOpenSearchNamespaceId;
-	protected String myCalibreNamespaceId;
-	protected String myOpdsNamespaceId;
 
 	@Override
 	public final boolean processNamespaces() {
@@ -47,28 +42,15 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
-		myDublinCoreNamespaceId = null;
 		myAtomNamespaceId = null;
-		myOpenSearchNamespaceId = null;
-		myCalibreNamespaceId = null;
-		myOpdsNamespaceId = null;
 
 		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
 			final String value = entry.getValue();
-			if (value == XMLNamespaces.DublinCoreTerms) {
-				myDublinCoreNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespaces.Atom) {
+			if (value == XMLNamespaces.Atom) {
 				myAtomNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespaces.OpenSearch) {
-				myOpenSearchNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespaces.CalibreMetadata) {
-				myCalibreNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespaces.Opds) {
-				myOpdsNamespaceId = intern(entry.getKey());
-			}
+			} 
 		}
 	}
-
 
 	protected static final int START = 0;
 	protected static final int FEED = 1;
@@ -91,20 +73,9 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	protected static final int FE_CONTENT = 18;
 	protected static final int FE_TITLE = 19;
 	protected static final int FE_UPDATED = 20;
-	protected static final int FE_DC_LANGUAGE = 21;
-	protected static final int FE_DC_ISSUED = 22;
-	protected static final int FE_DC_PUBLISHER = 23;
-	protected static final int FE_CALIBRE_SERIES = 24;
-	protected static final int FE_CALIBRE_SERIES_INDEX = 25;
-	protected static final int FEL_PRICE = 26;
-	protected static final int FEL_FORMAT = 27;
 	protected static final int FEA_NAME = 28;
 	protected static final int FEA_URI = 29;
 	protected static final int FEA_EMAIL = 30;
-	protected static final int OPENSEARCH_TOTALRESULTS = 31;
-	protected static final int OPENSEARCH_ITEMSPERPAGE = 32;
-	protected static final int OPENSEARCH_STARTINDEX = 33;
-	protected static final int FEC_HACK_SPAN = 34;
 	protected static final int F_SUBTITLE = 35;
 	protected static final int F_ICON = 36;
 
@@ -123,27 +94,11 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	protected static final String TAG_CONTENT = "content";
 	protected static final String TAG_TITLE = "title";
 	protected static final String TAG_UPDATED = "updated";
-	protected static final String TAG_PRICE = "price";
 	protected static final String TAG_SUBTITLE = "subtitle";
 	protected static final String TAG_ICON = "icon";
 
-	protected static final String TAG_HACK_SPAN = "span";
-
-	protected static final String DC_TAG_LANGUAGE = "language";
-	protected static final String DC_TAG_ISSUED = "issued";
-	protected static final String DC_TAG_PUBLISHER = "publisher";
-	protected static final String DC_TAG_FORMAT = "format";
-
-	protected static final String CALIBRE_TAG_SERIES = "series";
-	protected static final String CALIBRE_TAG_SERIES_INDEX = "series_index";
-
-	protected static final String OPENSEARCH_TAG_TOTALRESULTS = "totalResults";
-	protected static final String OPENSEARCH_TAG_ITEMSPERPAGE = "itemsPerPage";
-	protected static final String OPENSEARCH_TAG_STARTINDEX = "startIndex";
-
-
+	
 	private int myState = START;
-
 	private final StringBuilder myBuffer = new StringBuilder();
 	private HtmlToString myHtmlToString = new HtmlToString();
 
@@ -249,14 +204,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 							myFeedMetadataProcessed = true;
 						}
 					} 
-				} else if (tagPrefix == myOpenSearchNamespaceId) {
-					if (tag == OPENSEARCH_TAG_TOTALRESULTS) {
-						myState = OPENSEARCH_TOTALRESULTS;
-					} else if (tag == OPENSEARCH_TAG_ITEMSPERPAGE) {
-						myState = OPENSEARCH_ITEMSPERPAGE;
-					} else if (tag == OPENSEARCH_TAG_STARTINDEX) {
-						myState = OPENSEARCH_STARTINDEX;
-					} 
 				} 
 				break;
 			case F_ENTRY:
@@ -274,7 +221,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myCategory.readAttributes(attributes);
 						myState = FE_CATEGORY;
 					} else if (tag == TAG_LINK) {
-						// myLink = new OPDSLink();				// TODO
+						myLink = new ATOMLink();				// TODO
 						myLink.readAttributes(attributes);
 						myState = FE_LINK;
 					} else if (tag == TAG_PUBLISHED) {
@@ -301,22 +248,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myUpdated.readAttributes(attributes);
 						myState = FE_UPDATED;
 					}
-				} else if (tagPrefix == myDublinCoreNamespaceId) {
-					if (tag == DC_TAG_LANGUAGE) {
-						myState = FE_DC_LANGUAGE;
-					} else if (tag == DC_TAG_ISSUED) {
-//						myDCIssued = new DCDate();				// TODO
-						myDCIssued.readAttributes(attributes);
-						myState = FE_DC_ISSUED;
-					} else if (tag == DC_TAG_PUBLISHER) {
-						myState = FE_DC_PUBLISHER;
-					} 
-				} else if (tagPrefix == myCalibreNamespaceId) {
-					if (tag == CALIBRE_TAG_SERIES) {
-						myState = FE_CALIBRE_SERIES;
-					} else if (tag == CALIBRE_TAG_SERIES_INDEX) {
-						myState = FE_CALIBRE_SERIES_INDEX;
-					}
 				}
 				break;
 			case F_AUTHOR:
@@ -339,21 +270,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					} else if (tag == TAG_EMAIL) {
 						myState = FEA_EMAIL;
 					} 
-				}
-				break;
-			case FE_LINK:
-				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
-//					myPriceCurrency = attributes.getValue("currencycode");			// TODO
-					myState = FEL_PRICE;
-				} if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_FORMAT) {
-					myState = FEL_FORMAT;
-				}
-				break;
-			case FE_CONTENT:
-				myHtmlToString.processTextContent(false, tag, attributes, bufferContent);
-				// FIXME: HACK: html handling must be implemeted neatly
-				if (tag == TAG_HACK_SPAN || attributes.getValue("class") == "price") {
-					myState = FEC_HACK_SPAN;
 				}
 				break;
 			case FE_SUMMARY:
@@ -513,25 +429,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					myState = FE_AUTHOR;
 				}
 				break;
-			case FEL_PRICE:
-				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
-					
-					// TODO
-//					if (bufferContent != null && myPriceCurrency != null) {
-//						myLink.Prices.add(new OPDSPrice(bufferContent.intern(), myPriceCurrency));
-//						myPriceCurrency = null;
-//					}
-//					myState = FE_LINK;
-				}
-				break;
-			case FEL_FORMAT:
-				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_FORMAT) {
-					if (bufferContent != null) {
-//						myLink.Formats.add(bufferContent.intern()); 		// TODO
-					}
-					myState = FE_LINK;
-				}
-				break;
 			case FE_AUTHOR:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_AUTHOR) {
 					if (myAuthor.Name != null) {
@@ -610,24 +507,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myEntry.Updated = myUpdated;
 					}
 					myUpdated = null;
-					myState = F_ENTRY;
-				}
-				break;
-			case FEC_HACK_SPAN:
-				// FIXME: HACK
-				myHtmlToString.processTextContent(true, tag, null, bufferContent);
-				if (bufferContent != null) {
-//					myEntry.addAttribute(KEY_PRICE, bufferContent.intern());  // TODO
-				}
-				myState = FE_CONTENT;
-				break;
-			case FE_DC_ISSUED:
-				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_ISSUED) {
-					// FIXME:issued can be lost:buffer will be truncated, if there are extension tags inside the <dc:issued> tag
-					if (ATOMDateConstruct.parse(bufferContent, myDCIssued)) {
-//						myEntry.DCIssued = myDCIssued;   // TODO
-					}
-					myDCIssued = null;
 					myState = F_ENTRY;
 				}
 				break;
