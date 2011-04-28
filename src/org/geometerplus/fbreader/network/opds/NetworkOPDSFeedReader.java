@@ -288,7 +288,7 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			}
 		}
 
-		LinkedList<NetworkBookItem.AuthorData> authors = new LinkedList<NetworkBookItem.AuthorData>();
+		final LinkedList<OPDSBookItem.AuthorData> authors = new LinkedList<OPDSBookItem.AuthorData>();
 		for (ATOMAuthor author: entry.Authors) {
 			String name = author.Name;
 			final String lowerCased = name.toLowerCase();
@@ -302,15 +302,15 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 				}
 			}
 			index = name.indexOf(',');
-			NetworkBookItem.AuthorData authorData;
+			final OPDSBookItem.AuthorData authorData;
 			if (index != -1) {
 				final String before = name.substring(0, index).trim();
 				final String after = name.substring(index + 1).trim();
-				authorData = new NetworkBookItem.AuthorData(after + ' ' + before, before);
+				authorData = new OPDSBookItem.AuthorData(after + ' ' + before, before);
 			} else {
 				name = name.trim();
 				index = name.lastIndexOf(' ');
-				authorData = new NetworkBookItem.AuthorData(name, name.substring(index + 1));
+				authorData = new OPDSBookItem.AuthorData(name, name.substring(index + 1));
 			}
 			authors.add(authorData);
 		}
@@ -337,14 +337,12 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			annotation = null;
 		}
 
-		return new NetworkBookItem(
+		return new OPDSBookItem(
 			opdsNetworkLink,
 			entry.Id.Uri,
 			myIndex++,
 			entry.Title,
 			annotation,
-			//entry.DCLanguage,
-			//date,
 			authors,
 			tags,
 			entry.SeriesTitle,

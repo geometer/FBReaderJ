@@ -25,7 +25,7 @@ import java.io.File;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-public final class NetworkBookItem extends NetworkItem {
+public class NetworkBookItem extends NetworkItem {
 	public static class AuthorData implements Comparable<AuthorData> {
 		public final String DisplayName;
 		public final String SortKey;
@@ -77,7 +77,7 @@ public final class NetworkBookItem extends NetworkItem {
 	public final float IndexInSeries;
 
 	/**
-	 * Creates new NetworkItem instance.
+	 * Creates new NetworkBookItem instance.
 	 *
 	 * @param link          corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param id            string that uniquely identifies this book item. Must be not <code>null</code>.
