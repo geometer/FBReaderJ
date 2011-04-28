@@ -90,8 +90,7 @@ public final class NetworkBookItem extends NetworkItem {
 	 * @param tags          list of book tags. Must be not <code>null</code> (can be empty).
 	 * @param seriesTitle   title of this book's series. Can be <code>null</code>.
 	 * @param indexInSeries	sequence number of this book within book's series. Ignored if seriesTitle is <code>null</code>.
-	 * @param cover         cover url. Can be <code>null</code>.
-	 * @param references    list of references related to this book. Must be not <code>null</code>.
+	 * @param urls          list of urls related to this book. Can be <code>null</code>.
 	 */
 	public NetworkBookItem(INetworkLink link, String id, int index,
 		String title, String summary, /*String language, String date,*/

@@ -122,6 +122,10 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 			return UrlInfo.Type.BookFullOrDemo;
 		} else if (REL_ACQUISITION_BUY.equals(rel)) {
 			return UrlInfo.Type.BookBuy;
+		} else if (REL_RELATED.equals(rel)) {
+			return UrlInfo.Type.Related;
+		} else if (REL_CONTENTS.equals(rel)) {
+			return UrlInfo.Type.TOC;
 		} else {
 			return null;
 		}
