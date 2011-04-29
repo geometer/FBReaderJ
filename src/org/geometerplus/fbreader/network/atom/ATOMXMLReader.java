@@ -46,7 +46,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	private ATOMUpdated myUpdated;
 	private ATOMPublished myPublished;
 	private ATOMIcon myIcon;
-	
+
 	private Map<String,String> myNamespaceMap;
 
 	public ATOMXMLReader(ATOMFeedReader feedReader) {
@@ -116,7 +116,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	protected static final String TAG_UPDATED = "updated";
 	protected static final String TAG_SUBTITLE = "subtitle";
 	protected static final String TAG_ICON = "icon";
-	
+
 	protected int myState = START;
 	private final StringBuilder myBuffer = new StringBuilder();
 	protected HtmlToString myHtmlToString = new HtmlToString();
@@ -243,8 +243,8 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 							interruptReading = myFeedReader.processFeedMetadata(myFeed, true);
 							myFeedMetadataProcessed = true;
 						}
-					} 
-				} 
+					}
+				}
 				break;
 			case F_ENTRY:
 				if (ns == XMLNamespaces.Atom) {
@@ -298,8 +298,8 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = FA_URI;
 					} else if (tag == TAG_EMAIL) {
 						myState = FA_EMAIL;
-					} 
-				} 
+					}
+				}
 				break;
 			case FE_AUTHOR:
 				if (ns == XMLNamespaces.Atom) {
@@ -309,7 +309,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = FEA_URI;
 					} else if (tag == TAG_EMAIL) {
 						myState = FEA_EMAIL;
-					} 
+					}
 				}
 				break;
 			case FE_SUMMARY:
@@ -339,7 +339,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					myFeed = null;
 					myFeedReader.processFeedEnd();
 					myState = START;
-				} 
+				}
 				break;
 			case F_ENTRY:
 				if (ns == XMLNamespaces.Atom && tag == TAG_ENTRY) {
@@ -359,7 +359,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 					myId = null;
 					myState = FEED;
-				} 
+				}
 				break;
 			case F_ICON:
 				if (ns == XMLNamespaces.Atom && tag == TAG_ICON) {
@@ -370,7 +370,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 					myIcon = null;
 					myState = FEED;
-				} 
+				}
 				break;
 			case F_LINK:
 				if (ns == XMLNamespaces.Atom && tag == TAG_LINK) {
@@ -379,7 +379,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 					myLink = null;
 					myState = FEED;
-				} 
+				}
 				break;
 			case F_CATEGORY:
 				if (ns == XMLNamespaces.Atom && tag == TAG_CATEGORY) {
@@ -388,7 +388,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 					myCategory = null;
 					myState = FEED;
-				} 
+				}
 				break;
 			case F_TITLE:
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
@@ -400,7 +400,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					myState = FEED;
 				} else {
 					myHtmlToString.processTextContent(true, tag, null, bufferContent);
-				} 
+				}
 				break;
 			case F_SUBTITLE:
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUBTITLE) {
@@ -412,7 +412,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					myState = FEED;
 				} else {
 					myHtmlToString.processTextContent(true, tag, null, bufferContent);
-				} 
+				}
 				break;
 			case F_UPDATED:
 				if (ns == XMLNamespaces.Atom && tag == TAG_UPDATED) {
@@ -422,7 +422,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 					myUpdated = null;
 					myState = FEED;
-				} 
+				}
 				break;
 			case F_AUTHOR:
 				if (ns == XMLNamespaces.Atom && tag == TAG_AUTHOR) {
@@ -431,7 +431,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 					myAuthor = null;
 					myState = FEED;
-				} 
+				}
 				break;
 			case FA_NAME:
 				if (ns == XMLNamespaces.Atom && tag == TAG_NAME) {
@@ -476,7 +476,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 					myAuthor = null;
 					myState = F_ENTRY;
-				} 
+				}
 				break;
 			case FE_ID:
 				if (ns == XMLNamespaces.Atom && tag == TAG_ID) {
