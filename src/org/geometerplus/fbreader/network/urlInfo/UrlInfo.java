@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network.urlInfo;
 
 import java.io.Serializable;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+
 public class UrlInfo implements Serializable {
 	private static final long serialVersionUID = -893514485257788222L;
 
@@ -53,5 +55,22 @@ public class UrlInfo implements Serializable {
 	public UrlInfo(Type type, String url) {
 		InfoType = type;
 		Url = url;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof UrlInfo)) {
+			return false;
+		}
+		final UrlInfo info = (UrlInfo)o;
+		return InfoType == info.InfoType && ZLMiscUtil.equals(Url, info.Url);
+	}
+
+	@Override
+	public int hashCode() {
+		return InfoType.hashCode() + ZLMiscUtil.hashCode(Url);
 	}
 }
