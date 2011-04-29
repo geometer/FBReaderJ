@@ -26,8 +26,6 @@ import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.atom.*;
 
-import android.util.Log;
-
 public class OPDSXMLReader extends ATOMXMLReader {
 	public static final String OPDS_LOG = "opds.log";
 	public static final String KEY_PRICE = "price";
@@ -38,20 +36,32 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
 	//private ATOMSummary mySummary;  // TODO: implement ATOMTextConstruct & ATOMSummary
 
+	private String myDublinCoreNamespaceId;
+	private String myOpenSearchNamespaceId;
+	private String myCalibreNamespaceId;
+	private String myOpdsNamespaceId;
 
 	public OPDSXMLReader(OPDSFeedReader feedReader) {
 		super(feedReader);
 	}
 
-	protected String myDublinCoreNamespaceId;
-	protected String myOpenSearchNamespaceId;
-	protected String myCalibreNamespaceId;
-	protected String myOpdsNamespaceId;
+	protected final OPDSFeedMetadata getOPDSFeed() {
+		return (OPDSFeedMetadata)getATOMFeed();
+	}
+
+	protected final OPDSEntry getOPDSEntry() {
+		return (OPDSEntry)getATOMEntry();
+	}
+
+	protected final OPDSLink getOPDSLink() {
+		return (OPDSLink)getATOMLink();
+	}
 
 	@Override
 	public void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
+		super.namespaceMapChangedHandler(namespaceMap);
+
 		myDublinCoreNamespaceId = null;
-		myAtomNamespaceId = null;
 		myOpenSearchNamespaceId = null;
 		myCalibreNamespaceId = null;
 		myOpdsNamespaceId = null;
@@ -60,8 +70,6 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			final String value = entry.getValue();
 			if (value == XMLNamespaces.DublinCoreTerms) {
 				myDublinCoreNamespaceId = intern(entry.getKey());
-			} else if (value == XMLNamespaces.Atom) {
-				myAtomNamespaceId = intern(entry.getKey());
 			} else if (value == XMLNamespaces.OpenSearch) {
 				myOpenSearchNamespaceId = intern(entry.getKey());
 			} else if (value == XMLNamespaces.CalibreMetadata) {
@@ -72,64 +80,56 @@ public class OPDSXMLReader extends ATOMXMLReader {
 		}
 	}
 
-	protected static final int FE_DC_LANGUAGE = 21;
-	protected static final int FE_DC_ISSUED = 22;
-	protected static final int FE_DC_PUBLISHER = 23;
-	protected static final int FE_CALIBRE_SERIES = 24;
-	protected static final int FE_CALIBRE_SERIES_INDEX = 25;
-	protected static final int FEL_PRICE = 26;
-	protected static final int FEL_FORMAT = 27;
-	protected static final int OPENSEARCH_TOTALRESULTS = 31;
-	protected static final int OPENSEARCH_ITEMSPERPAGE = 32;
-	protected static final int OPENSEARCH_STARTINDEX = 33;
-	protected static final int FEC_HACK_SPAN = 34;
+	private static final int FE_DC_LANGUAGE = ATOM_STATE_FIRST_UNUSED;
+	private static final int FE_DC_ISSUED = ATOM_STATE_FIRST_UNUSED + 1;
+	private static final int FE_DC_PUBLISHER = ATOM_STATE_FIRST_UNUSED + 2;
+	private static final int FE_CALIBRE_SERIES = ATOM_STATE_FIRST_UNUSED + 3;
+	private static final int FE_CALIBRE_SERIES_INDEX = ATOM_STATE_FIRST_UNUSED + 4;
+	private static final int FEL_PRICE = ATOM_STATE_FIRST_UNUSED + 5;
+	private static final int FEL_FORMAT = ATOM_STATE_FIRST_UNUSED + 6;
+	private static final int OPENSEARCH_TOTALRESULTS = ATOM_STATE_FIRST_UNUSED + 7;
+	private static final int OPENSEARCH_ITEMSPERPAGE = ATOM_STATE_FIRST_UNUSED + 8;
+	private static final int OPENSEARCH_STARTINDEX = ATOM_STATE_FIRST_UNUSED + 9;
+	private static final int FEC_HACK_SPAN = ATOM_STATE_FIRST_UNUSED + 10;
 
-	protected static final String TAG_PRICE = "price";
-	protected static final String TAG_HACK_SPAN = "span";
+	private static final String TAG_PRICE = "price";
+	private static final String TAG_HACK_SPAN = "span";
 
-	protected static final String DC_TAG_LANGUAGE = "language";
-	protected static final String DC_TAG_ISSUED = "issued";
-	protected static final String DC_TAG_PUBLISHER = "publisher";
-	protected static final String DC_TAG_FORMAT = "format";
+	private static final String DC_TAG_LANGUAGE = "language";
+	private static final String DC_TAG_ISSUED = "issued";
+	private static final String DC_TAG_PUBLISHER = "publisher";
+	private static final String DC_TAG_FORMAT = "format";
 
-	protected static final String CALIBRE_TAG_SERIES = "series";
-	protected static final String CALIBRE_TAG_SERIES_INDEX = "series_index";
+	private static final String CALIBRE_TAG_SERIES = "series";
+	private static final String CALIBRE_TAG_SERIES_INDEX = "series_index";
 
-	protected static final String OPENSEARCH_TAG_TOTALRESULTS = "totalResults";
-	protected static final String OPENSEARCH_TAG_ITEMSPERPAGE = "itemsPerPage";
-	protected static final String OPENSEARCH_TAG_STARTINDEX = "startIndex";
+	private static final String OPENSEARCH_TAG_TOTALRESULTS = "totalResults";
+	private static final String OPENSEARCH_TAG_ITEMSPERPAGE = "itemsPerPage";
+	private static final String OPENSEARCH_TAG_STARTINDEX = "startIndex";
 
+	@Override
+	protected OPDSFeedMetadata createFeed() {
+		return new OPDSFeedMetadata();
+	}
+
+	@Override
+	protected OPDSLink createLink() {
+		return new OPDSLink();
+	}
+
+	@Override
+	protected OPDSEntry createEntry() {
+		return new OPDSEntry();
+	}
+
+	@Override
 	public boolean startElementHandler(final String tagPrefix, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
 		int state = myState;
 		boolean interruptReading = super.startElementHandler(tagPrefix, tag, attributes, bufferContent);
 		switch (state) {
-			case START:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
-					myFeedReader.processFeedStart();
-					myFeed = new OPDSFeedMetadata();
-					myFeed.readAttributes(attributes);
-					myState = FEED;
-					myFeedMetadataProcessed = false;
-				}
-				break;
 			case FEED:
-				if (tagPrefix == myAtomNamespaceId) {
-					if (tag == TAG_LINK) {
-						myLink = new OPDSLink();
-						myLink.readAttributes(attributes);
-						myState = F_LINK;
-					} else if (tag == TAG_ENTRY) {
-						myEntry = new OPDSEntry();
-						myEntry.readAttributes(attributes);
-						myState = F_ENTRY;
-						// Process feed metadata just before first feed entry
-						if (myFeed != null && !myFeedMetadataProcessed) {
-							interruptReading = myFeedReader.processFeedMetadata(myFeed, true);
-							myFeedMetadataProcessed = true;
-						}
-					} 
-				} else if (tagPrefix == myOpenSearchNamespaceId) {
+				if (tagPrefix == myOpenSearchNamespaceId) {
 					if (tag == OPENSEARCH_TAG_TOTALRESULTS) {
 						myState = OPENSEARCH_TOTALRESULTS;
 					} else if (tag == OPENSEARCH_TAG_ITEMSPERPAGE) {
@@ -140,13 +140,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 				} 
 				break;
 			case F_ENTRY:
-				if (tagPrefix == myAtomNamespaceId) {
-					if (tag == TAG_LINK) {
-						myLink = new OPDSLink();
-						myLink.readAttributes(attributes);
-						myState = FE_LINK;
-					}
-				} else if (tagPrefix == myDublinCoreNamespaceId) {
+				if (tagPrefix == myDublinCoreNamespaceId) {
 					if (tag == DC_TAG_LANGUAGE) {
 						myState = FE_DC_LANGUAGE;
 					} else if (tag == DC_TAG_ISSUED) {
@@ -194,12 +188,8 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			case FEL_PRICE:
 				if (tagPrefix == myOpdsNamespaceId && tag == TAG_PRICE) {
 					if (bufferContent != null && myPriceCurrency != null) {
-						if (myLink instanceof OPDSLink){
-							((OPDSLink)myLink).Prices.add(new OPDSPrice(bufferContent.intern(), myPriceCurrency));
-							myPriceCurrency = null;
-						} else {
-							Log.v(OPDS_LOG, "! (myLink instanceof OPDSLink)");
-						}
+						getOPDSLink().Prices.add(new OPDSPrice(bufferContent.intern(), myPriceCurrency));
+						myPriceCurrency = null;
 					}
 					myState = FE_LINK;
 				}
@@ -207,11 +197,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			case FEL_FORMAT:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_FORMAT) {
 					if (bufferContent != null) {
-						if (myLink instanceof OPDSLink){
-							((OPDSLink)myLink).Formats.add(bufferContent.intern());
-						} else {
-							Log.v(OPDS_LOG, "! (myLink instanceof OPDSLink)");
-						}
+						getOPDSLink().Formats.add(bufferContent.intern());
 					}
 					myState = FE_LINK;
 				}
@@ -220,30 +206,22 @@ public class OPDSXMLReader extends ATOMXMLReader {
 				// FIXME: HACK
 				myHtmlToString.processTextContent(true, tag, null, bufferContent);
 				if (bufferContent != null) {
-					myEntry.addAttribute(KEY_PRICE, bufferContent.intern());
+					getOPDSEntry().addAttribute(KEY_PRICE, bufferContent.intern());
 				}
 				myState = FE_CONTENT;
 				break;
 			case FE_DC_LANGUAGE:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_LANGUAGE) {
 					// FIXME:language can be lost:buffer will be truncated, if there are extension tags inside the <dc:language> tag
-					if (myEntry instanceof OPDSEntry){
-						((OPDSEntry)myEntry).DCLanguage = bufferContent;
-						myState = F_ENTRY;
-					} else {
-						Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
-					}
+					getOPDSEntry().DCLanguage = bufferContent;
+					myState = F_ENTRY;
 				}
 				break;
 			case FE_DC_ISSUED:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_ISSUED) {
 					// FIXME:issued can be lost:buffer will be truncated, if there are extension tags inside the <dc:issued> tag
 					if (ATOMDateConstruct.parse(bufferContent, myDCIssued)) {
-						if (myEntry instanceof OPDSEntry){
-							((OPDSEntry)myEntry).DCIssued = myDCIssued;
-						} else {
-							Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
-						}
+						getOPDSEntry().DCIssued = myDCIssued;
 					} 
 					myDCIssued = null;
 					myState = F_ENTRY;
@@ -252,33 +230,21 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			case FE_DC_PUBLISHER:
 				if (tagPrefix == myDublinCoreNamespaceId && tag == DC_TAG_PUBLISHER) {
 					// FIXME:publisher can be lost:buffer will be truncated, if there are extension tags inside the <dc:publisher> tag
-					if (myEntry instanceof OPDSEntry){
-						((OPDSEntry)myEntry).DCPublisher = bufferContent;
-						myState = F_ENTRY;
-					} else {
-						Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
-					}
+					getOPDSEntry().DCPublisher = bufferContent;
+					myState = F_ENTRY;
 				}
 				break;
 			case FE_CALIBRE_SERIES:
 				if (tagPrefix == myCalibreNamespaceId && tag == CALIBRE_TAG_SERIES) {
-					if (myEntry instanceof OPDSEntry){
-						((OPDSEntry)myEntry).SeriesTitle = bufferContent;
-						myState = F_ENTRY;
-					} else {
-						Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
-					}
+					getOPDSEntry().SeriesTitle = bufferContent;
+					myState = F_ENTRY;
 				}
 				break;
 			case FE_CALIBRE_SERIES_INDEX:
 				if (tagPrefix == myCalibreNamespaceId && tag == CALIBRE_TAG_SERIES_INDEX) {
 					if (bufferContent != null) {
 						try {
-							if (myEntry instanceof OPDSEntry){
-								((OPDSEntry)myEntry).SeriesIndex = Float.parseFloat(bufferContent);
-							} else {
-								Log.v(OPDS_LOG, "! (myEntry instanceof OPDSEntry)");
-							}
+							getOPDSEntry().SeriesIndex = Float.parseFloat(bufferContent);
 						} catch (NumberFormatException ex) {
 						}
 					}
@@ -288,13 +254,9 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			case OPENSEARCH_TOTALRESULTS:
 				if (tagPrefix == myOpenSearchNamespaceId &&
 						tag == OPENSEARCH_TAG_TOTALRESULTS) {
-					if (myFeed != null && bufferContent != null) {
+					if (getOPDSFeed() != null && bufferContent != null) {
 						try {
-							if (myFeed instanceof OPDSFeedMetadata){
-								((OPDSFeedMetadata)myFeed).OpensearchTotalResults = Integer.parseInt(bufferContent);
-							} else {
-								Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
-							}
+							getOPDSFeed().OpensearchTotalResults = Integer.parseInt(bufferContent);
 						} catch (NumberFormatException ex) {
 						}
 					}
@@ -304,13 +266,9 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			case OPENSEARCH_ITEMSPERPAGE:
 				if (tagPrefix == myOpenSearchNamespaceId &&
 						tag == OPENSEARCH_TAG_ITEMSPERPAGE) {
-					if (myFeed != null && bufferContent != null) {
+					if (getOPDSFeed() != null && bufferContent != null) {
 						try {
-							if (myFeed instanceof OPDSFeedMetadata){
-								((OPDSFeedMetadata)myFeed).OpensearchItemsPerPage = Integer.parseInt(bufferContent);
-							} else {
-								Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
-							}
+							getOPDSFeed().OpensearchItemsPerPage = Integer.parseInt(bufferContent);
 						} catch (NumberFormatException ex) {
 						}
 					}
@@ -320,13 +278,9 @@ public class OPDSXMLReader extends ATOMXMLReader {
 			case OPENSEARCH_STARTINDEX:
 				if (tagPrefix == myOpenSearchNamespaceId &&
 						tag == OPENSEARCH_TAG_STARTINDEX) {
-					if (myFeed != null && bufferContent != null) {
+					if (getOPDSFeed() != null && bufferContent != null) {
 						try {
-							if (myFeed instanceof OPDSFeedMetadata){
-								((OPDSFeedMetadata)myFeed).OpensearchStartIndex = Integer.parseInt(bufferContent);
-							} else {
-								Log.v(OPDS_LOG, "! (myFeed instanceof OPDSFeedMetadata)");
-							}
+							getOPDSFeed().OpensearchStartIndex = Integer.parseInt(bufferContent);
 						} catch (NumberFormatException ex) {
 						}
 					}

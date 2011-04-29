@@ -1,31 +1,50 @@
+/*
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
 package org.geometerplus.fbreader.network.atom;
 
 import java.util.Map;
 
-import org.geometerplus.fbreader.network.opds.HtmlToString;
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
+import org.geometerplus.fbreader.network.opds.HtmlToString;
+
 public class ATOMXMLReader extends ZLXMLReaderAdapter {
-	
 	protected final ATOMFeedReader myFeedReader;
 
-	protected ATOMFeedMetadata myFeed;
-	protected ATOMEntry myEntry;
-	protected ATOMAuthor myAuthor;
-	protected ATOMId myId;
-	protected ATOMLink myLink;
-	protected ATOMCategory myCategory;
-	protected ATOMUpdated myUpdated;
-	protected ATOMPublished myPublished;
-	protected ATOMIcon myIcon;
+	private ATOMFeedMetadata myFeed;
+	private ATOMEntry myEntry;
+	private ATOMAuthor myAuthor;
+	private ATOMId myId;
+	private ATOMLink myLink;
+	private ATOMCategory myCategory;
+	private ATOMUpdated myUpdated;
+	private ATOMPublished myPublished;
+	private ATOMIcon myIcon;
 	
+	protected String myAtomNamespaceId;
+
 	public ATOMXMLReader(ATOMFeedReader feedReader) {
 		myFeedReader = feedReader;
 	}
-
-	protected String myAtomNamespaceId;
 
 	@Override
 	public final boolean processNamespaces() {
@@ -72,12 +91,13 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	protected static final int FE_CONTENT = 18;
 	protected static final int FE_TITLE = 19;
 	protected static final int FE_UPDATED = 20;
-	protected static final int FEA_NAME = 28;
-	protected static final int FEA_URI = 29;
-	protected static final int FEA_EMAIL = 30;
-	protected static final int F_SUBTITLE = 35;
-	protected static final int F_ICON = 36;
+	protected static final int FEA_NAME = 21;
+	protected static final int FEA_URI = 22;
+	protected static final int FEA_EMAIL = 23;
+	protected static final int F_SUBTITLE = 24;
+	protected static final int F_ICON = 25;
 
+	protected static final int ATOM_STATE_FIRST_UNUSED = 26;
 
 	protected static final String TAG_FEED = "feed";
 	protected static final String TAG_ENTRY = "entry";
@@ -95,16 +115,11 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	protected static final String TAG_UPDATED = "updated";
 	protected static final String TAG_SUBTITLE = "subtitle";
 	protected static final String TAG_ICON = "icon";
-
 	
 	protected int myState = START;
-	protected final StringBuilder myBuffer = new StringBuilder();
+	private final StringBuilder myBuffer = new StringBuilder();
 	protected HtmlToString myHtmlToString = new HtmlToString();
 	protected boolean myFeedMetadataProcessed;
-
-	protected int getState() {
-		return myState;
-	}
 
 	@Override
 	public final boolean startElementHandler(String tag, ZLStringMap attributes) {
@@ -143,6 +158,30 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return new String(bufferContentArray);
 	}
 
+	protected final ATOMFeedMetadata getATOMFeed() {
+		return myFeed;
+	}
+
+	protected final ATOMEntry getATOMEntry() {
+		return myEntry;
+	}
+
+	protected final ATOMLink getATOMLink() {
+		return myLink;
+	}
+
+	protected ATOMFeedMetadata createFeed() {
+		return new ATOMFeedMetadata();
+	}
+
+	protected ATOMLink createLink() {
+		return new ATOMLink();
+	}
+
+	protected ATOMEntry createEntry() {
+		return new ATOMEntry();
+	}
+
 	public boolean startElementHandler(final String tagPrefix, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
 		boolean interruptReading = false;
@@ -150,7 +189,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case START:
 				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
 					myFeedReader.processFeedStart();
-					myFeed = new ATOMFeedMetadata();
+					myFeed = createFeed();
 					myFeed.readAttributes(attributes);
 					myState = FEED;
 					myFeedMetadataProcessed = false;
@@ -171,7 +210,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myIcon.readAttributes(attributes);
 						myState = F_ICON;
 					} else if (tag == TAG_LINK) {
-						myLink = new ATOMLink();			// TODO
+						myLink = createLink();			// TODO
 						myLink.readAttributes(attributes);
 						myState = F_LINK;
 					} else if (tag == TAG_CATEGORY) {
@@ -193,7 +232,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myUpdated.readAttributes(attributes);
 						myState = F_UPDATED;
 					} else if (tag == TAG_ENTRY) {
-						myEntry = new ATOMEntry();
+						myEntry = createEntry();
 						myEntry.readAttributes(attributes);
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
@@ -219,7 +258,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myCategory.readAttributes(attributes);
 						myState = FE_CATEGORY;
 					} else if (tag == TAG_LINK) {
-						myLink = new ATOMLink();				// TODO
+						myLink = createLink();				// TODO
 						myLink.readAttributes(attributes);
 						myState = FE_LINK;
 					} else if (tag == TAG_PUBLISHED) {

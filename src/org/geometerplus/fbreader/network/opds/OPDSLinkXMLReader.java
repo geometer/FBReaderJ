@@ -251,7 +251,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 		}
 	}
 
-
 	private static final String FBREADER_ADVANCED_SEARCH = "advancedSearch";
 	private static final String FBREADER_AUTHENTICATION = "authentication";
 	private static final String FBREADER_STABLE_IDENTIFIERS = "hasStableIdentifiers";
@@ -262,46 +261,46 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 	@Override
 	public boolean startElementHandler(final String tagPrefix, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
-		switch (getState()) {
-		case FEED:
-			if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
-				((LinkReader) myFeedReader).clear();
-			}
-			break;
-		case F_ENTRY:
-			if (tagPrefix == myFBReaderNamespaceId) {
-				if (tag == FBREADER_ADVANCED_SEARCH) {
-					return false;
-				} else if (tag == FBREADER_AUTHENTICATION) {
-					final String type = attributes.getValue("type");
-					((LinkReader) myFeedReader).setAuthenticationType(type);
-					return false;
-				} else if (tag == FBREADER_RELATION_ALIAS) {
-					final String name = attributes.getValue("name");
-					final String type = attributes.getValue("type");
-					String alias = attributes.getValue("alias");
-					if (alias != null && name != null) {
-						if (alias.length() == 0) {
-							alias = null;
+		switch (myState) {
+			case FEED:
+				if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
+					((LinkReader)myFeedReader).clear();
+				}
+				break;
+			case F_ENTRY:
+				if (tagPrefix == myFBReaderNamespaceId) {
+					if (tag == FBREADER_ADVANCED_SEARCH) {
+						return false;
+					} else if (tag == FBREADER_AUTHENTICATION) {
+						final String type = attributes.getValue("type");
+						((LinkReader)myFeedReader).setAuthenticationType(type);
+						return false;
+					} else if (tag == FBREADER_RELATION_ALIAS) {
+						final String name = attributes.getValue("name");
+						final String type = attributes.getValue("type");
+						String alias = attributes.getValue("alias");
+						if (alias != null && name != null) {
+							if (alias.length() == 0) {
+								alias = null;
+							}
+							((LinkReader)myFeedReader).addRelationAlias(new RelationAlias(alias, type), name);
 						}
-						((LinkReader) myFeedReader).addRelationAlias(new RelationAlias(alias, type), name);
-					}
-					return false;
-				} else if (tag == FBREADER_REWRITING_RULE) {
-					((LinkReader)myFeedReader).addUrlRewritingRule(new URLRewritingRule(attributes));
-					return false;
-				} else if (tag == FBREADER_STABLE_IDENTIFIERS) {
-					((LinkReader)myFeedReader).setHasStableIdentifiers(true);
-					return false;
-				} else if (tag == FBREADER_EXTRA) {
-					final String name = attributes.getValue("name");
-					final String value = attributes.getValue("value");
-					if (name != null && value != null) {
-						((LinkReader) myFeedReader).putExtraData(name, value);
+						return false;
+					} else if (tag == FBREADER_REWRITING_RULE) {
+						((LinkReader)myFeedReader).addUrlRewritingRule(new URLRewritingRule(attributes));
+						return false;
+					} else if (tag == FBREADER_STABLE_IDENTIFIERS) {
+						((LinkReader)myFeedReader).setHasStableIdentifiers(true);
+						return false;
+					} else if (tag == FBREADER_EXTRA) {
+						final String name = attributes.getValue("name");
+						final String value = attributes.getValue("value");
+						if (name != null && value != null) {
+							((LinkReader)myFeedReader).putExtraData(name, value);
+						}
 					}
 				}
-			}
-			break;
+				break;
 		}
 		return super.startElementHandler(tagPrefix, tag, attributes, bufferContent);
 	}
