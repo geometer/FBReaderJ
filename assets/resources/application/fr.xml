@@ -13,8 +13,8 @@
 		<node name="byAuthor" value="Par auteur">
 			<node name="summary" value="Livres triés par auteur"/>
 		</node>
-		<node name="byTitle" value="By title" toBeTranslated="true">
-			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		<node name="byTitle" value="Par titre">
+			<node name="summary" value="Livres triés par titre"/>
 		</node>
 		<node name="byTag" value="Par libellé">
 			<node name="summary" value="Livres triés par libellé"/>
@@ -53,14 +53,14 @@
 		<node name="byAuthor" value="Par auteur">
 			<node name="summary" value="Livres triés par auteur"/>
 		</node>
-		<node name="byTitle" value="By title" toBeTranslated="true">
-			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		<node name="byTitle" value="Par titre">
+			<node name="summary" value="Livres triés par titre"/>
 		</node>
-		<node name="byDate" value="By date" toBeTranslated="true">
-			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		<node name="byDate" value="Par date">
+			<node name="summary" value="Livres triés par date d'achat"/>
 		</node>
-		<node name="bySeries" value="By series" toBeTranslated="true">
-			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		<node name="bySeries" value="Par série">
+			<node name="summary" value="Livres triés par série"/>
 		</node>
 		<node name="openCatalog" value="Ouvrir le catalogue"/>
 		<node name="showResults" value="Afficher les résultats"/>
@@ -72,8 +72,8 @@
 		<node name="deleteDemo" value="Supprimer l'extrait"/>
 		<node name="downloadDemo" value="Télécharger l'extrait"/>
 		<node name="buy" value="Acheter (%s)"/>
-		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
-		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="addToBasket" value="Ajouter au panier"/>
+		<node name="removeFromBasket" value="Supprimer du panier"/>
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
 		<node name="stopLoading" value="Arrêt du chargement" />
 		<node name="stopSearching" value="Arrêt de la recherche" />
@@ -81,7 +81,7 @@
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="topup" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="topupTitle" value="Recréditer le compte"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
+		<node name="topupViaCreditCard" value="Carte de crédit"/>
 		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
 		<node name="topupViaSms" value="Messages texte"/>
 		<node name="topupViaBrowser" value="Ouvrir la page dans le navigateur"/>
@@ -128,7 +128,7 @@
 		<node name="series" value="Série:" />
 		<node name="indexInSeries" value="Index dans les séries:" />
 		<node name="tags" value="Tags:" />
-		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="catalog" value="Catalogue:"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informations sur le livre" />
@@ -157,8 +157,8 @@
 		<node name="contentError" value="Téléchargement échoué" />
 		<node name="downloadingStarted" value="Le téléchargement du livre a été démarré" />
 		<node name="alreadyDownloading" value="Le livre est déjà en cours de téléchargement" />
-		<node name="cannotCreateDirectory" value="Unable to create directory %s" toBeTranslated="true"/>
-		<node name="cannotCreateFile" value="Unable to create file %s" toBeTranslated="true"/>
+		<node name="cannotCreateDirectory" value="Impossible de créer le répertoire %s"/>
+		<node name="cannotCreateFile" value="Impossible de créer le fichier %s"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Ouvrir l'arbre"/>
@@ -178,11 +178,11 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
-		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
-		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
-		<node name="back" value="Back" toBeTranslated="true"/>
-		<node name="forward" value="Forward" toBeTranslated="true"/>
-		<node name="close" value="Close FBReader" toBeTranslated="true"/>
+		<node name="previousBook" value="Ouvrir le livre précédent"/>
+		<node name="returnTo" value="Retourner à..."/>
+		<node name="back" value="Retour"/>
+		<node name="forward" value="Suivant"/>
+		<node name="close" value="Fermer FBReader"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Paramètres"/>
@@ -250,7 +250,7 @@
 				<node name="summary" value="Emplacements des livres et des polices"/>
 				<node name="books" value="Répertoire des livres"/>
 				<node name="fonts" value="Répertoire des polices"/>
-				<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
+				<node name="wallpapers" value="Répertoire des fonds d'écran"/>
 			</node>
 			<node name="appearance" value="Apparence">
 				<node name="summary" value="Rotation, barre de statut"/>
@@ -262,9 +262,9 @@
 					<node name="summaryOn" value="Afficher la barre de statut en mode lecture"/>
 					<node name="summaryOff" value="Cacher la barre de statut en mode lecture"/>
 				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
-					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+				<node name="showStatusBarWhenMenuIsActive" value="Afficher la barre de statut lorsque le menu est actif">
+					<node name="summaryOn" value="Afficher la barre  de statut lorsque le menu devient actif"/>
+					<node name="summaryOff" value="Cacher la barre de statut lorsque le menu devient actif"/>
 				</node>
 			</node>
 			<node name="text" value="Texte">
@@ -417,19 +417,19 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
+			<node name="colors" value="Couleurs &amp; fonds d'écran">
 				<node name="summary" value="Paramètres des couleurs"/>
 				<node name="background" value="Arrière-plan">
-					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
-					<node name="leather" value="Leather" toBeTranslated="true"/>
-					<node name="sepia" value="Sepia" toBeTranslated="true"/>
-					<node name="wood" value="Wood" toBeTranslated="true"/>
+					<node name="solidColor" value="Couleur pleine"/>
+					<node name="leather" value="Cuir"/>
+					<node name="sepia" value="Sépia"/>
+					<node name="wood" value="Bois"/>
 				</node>
-				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
+				<node name="backgroundColor" value="Couleur de fond"/>
 				<node name="selectionBackground" value="Arrière-plan de sélection"/>
 				<node name="text" value="Texte normal"/>
 				<node name="hyperlink" value="Text d'hyperlien"/>
-				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
+				<node name="hyperlinkVisited" value="Lien hypertexte visité"/>
 				<node name="highlighting" value="Arrière-plan des résultats de recherche"/>
 				<node name="footer" value="Pied de page"/>
 			</node>
@@ -492,9 +492,9 @@
 					<node name="byFlick" value="Changer de page par petit coup du doigt"/>
 					<node name="byTapAndFlick" value="Changer de page lors d'un appui ou petit coup"/>
 				</node>
-				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
-					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
-					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
+				<node name="enableDoubleTapDetection" value="Détection appui double">
+					<node name="summaryOn" value="Appui double pour afficher le menu de navigation"/>
+					<node name="summaryOff" value="Ignorer les appuis doubles"/>
 				</node>
 				<node name="volumeKeys" value="Touches du volume">
 					<node name="summaryOn" value="Les touches du volume permettent de changer de page"/>
@@ -504,15 +504,15 @@
 					<node name="summaryOn" value="Volume + affiche la page suivante"/>
 					<node name="summaryOff" value="Volume + affiche la page précédente"/>
 				</node>
-				<node name="animation" value="Animation" toBeTranslated="true">
-					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
-					<node name="curl" value="Curl animation" toBeTranslated="true"/>
-					<node name="slide" value="Slide animation" toBeTranslated="true"/>
-					<node name="shift" value="Shift animation" toBeTranslated="true"/>
+				<node name="animation" value="Animation">
+					<node name="none" value="Pas d'animation"/>
+					<node name="curl" value="Effet curl"/>
+					<node name="slide" value="Effet slide"/>
+					<node name="shift" value="Effet shift"/>
 				</node>
-				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
-					<node name="fast" value="fast" toBeTranslated="true"/>
-					<node name="slow" value="slow" toBeTranslated="true"/>
+				<node name="animationSpeed" value="Vitesse d'animation">
+					<node name="fast" value="rapide"/>
+					<node name="slow" value="lente"/>
 				</node>
 				<node name="horizontal" value="Défilement horizontal">
 					<node name="summaryOn" value="Défilement des pages horizontalement"/>
@@ -532,26 +532,26 @@
 					<node name="summaryOff" value="La navigation par touches visite les liens hypertexts uniquement"/>
 				</node>
 			</node>
-			<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
-				<node name="summary" value="Back button action list" toBeTranslated="true"/>
-				<node name="previousBook" value="Previous book" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'return to previous book' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'return to previous book' item" toBeTranslated="true"/>
+			<node name="cancelMenu" value="Bouton retour">
+				<node name="summary" value="Liste des actions du bouton retour"/>
+				<node name="previousBook" value="Livre précédent">
+					<node name="summaryOn" value="Permet de revenir au livre précédent"/>
+					<node name="summaryOff" value="Ne permet pas de retourner au livre précédent"/>
 				</node>
-				<node name="positions" value="Last 3 positions" toBeTranslated="true">
-					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+				<node name="positions" value="3 dernières positions">
+					<node name="summaryOn" value="Afficher les 3 dernières positions dans le livre"/>
+					<node name="summaryOff" value="Ne pas afficher les 3 dernières positions dans le livre"/>
 				</node>
-				<node name="backKeyAction" value="Back key action" toBeTranslated="true">
-					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
-					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
-					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+				<node name="backKeyAction" value="Action de la touche retour">
+					<node name="exit" value="Fermer FBReader"/>
+					<node name="goBack" value="Retour en arrière"/>
+					<node name="cancelMenu" value="Afficher le menu annulation"/>
 				</node>
-				<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
-					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
-					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
-					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
-					<node name="none" value="No action" toBeTranslated="true"/>
+				<node name="backKeyLongPressAction" value="Action appui long touche retour">
+					<node name="exit" value="Fermer FBReader"/>
+					<node name="goBack" value="Retour en arrière"/>
+					<node name="cancelMenu" value="Afficher le menu annulation"/>
+					<node name="none" value="Sans effet"/>
 				</node>
 			</node>
 		</node>
@@ -607,7 +607,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentification"/>
-			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
+			<node name="unencryptedWarning" value="Votre mot de passe va être envoyé en clair"/>
 			<node name="login" value="Identifiant"/>
 			<node name="password" value="Mot de passe"/>
 			<node name="skipIP" value="Ne pas associer à l'adresse IP"/>
@@ -615,7 +615,7 @@
 			<node name="register" value="Inscription"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
+			<node name="title" value="FBReader: ajouter un catalogue personnalisé"/>
 			<node name="catalogTitle" value="Titre" />
 			<node name="catalogUrl" value="Adresse du catalogue sur le réseau" />
 			<node name="catalogSummary" value="Description" />
@@ -650,7 +650,7 @@
 		<node name="permissionDenied" value="Désolé, accès refusé"/>
 		<node name="noFavorites" value="Votre liste de favoris est vide"/>
 		<node name="emptyCatalog" value="Le catalogue est vide"/>
-		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyBasket" value="Votre panier est vide, désolé"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navigateur"/>
