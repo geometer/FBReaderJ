@@ -107,8 +107,8 @@ public class OPDSXMLReader extends ATOMXMLReader {
 						myState = OPENSEARCH_ITEMSPERPAGE;
 					} else if (tag == OPENSEARCH_TAG_STARTINDEX) {
 						myState = OPENSEARCH_STARTINDEX;
-					} 
-				} 
+					}
+				}
 				break;
 			case F_ENTRY:
 				if (ns == XMLNamespaces.DublinCoreTerms) {
@@ -120,7 +120,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 						myState = FE_DC_ISSUED;
 					} else if (tag == DC_TAG_PUBLISHER) {
 						myState = FE_DC_PUBLISHER;
-					} 
+					}
 				} else if (ns == XMLNamespaces.CalibreMetadata) {
 					if (tag == CALIBRE_TAG_SERIES) {
 						myState = FE_CALIBRE_SERIES;
@@ -151,7 +151,6 @@ public class OPDSXMLReader extends ATOMXMLReader {
 		return interruptReading;
 	}
 
-	
 	public boolean endElementHandler(final String ns, final String tag,
 			final String bufferContent) {
 		final boolean interruptReading = super.endElementHandler(ns, tag, bufferContent);
@@ -193,7 +192,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 					// FIXME:issued can be lost:buffer will be truncated, if there are extension tags inside the <dc:issued> tag
 					if (ATOMDateConstruct.parse(bufferContent, myDCIssued)) {
 						getOPDSEntry().DCIssued = myDCIssued;
-					} 
+					}
 					myDCIssued = null;
 					myState = F_ENTRY;
 				}
@@ -255,7 +254,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 					myState = FEED;
 				}
 				break;
-		
+
 		}
 		return interruptReading;
 	}
