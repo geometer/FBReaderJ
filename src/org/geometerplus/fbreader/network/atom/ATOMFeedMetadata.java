@@ -21,9 +21,7 @@ package org.geometerplus.fbreader.network.atom;
 
 import java.util.*;
 
-
 public class ATOMFeedMetadata extends ATOMCommonAttributes {
-
 	public ATOMId Id;
 
 	public LinkedList<ATOMAuthor> Authors = new LinkedList<ATOMAuthor>();
