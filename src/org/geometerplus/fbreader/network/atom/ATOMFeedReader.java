@@ -19,20 +19,14 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.*;
+public interface ATOMFeedReader<T1 extends ATOMFeedMetadata,T2 extends ATOMEntry> {
+	void processFeedStart();
 
-public class ATOMFeedMetadata extends ATOMCommonAttributes {
-	public ATOMId Id;
+	// returns true iff reading process should be interrupted
+	boolean processFeedMetadata(T1 feed, boolean beforeEntries);
 
-	public LinkedList<ATOMAuthor> Authors = new LinkedList<ATOMAuthor>();
-	public LinkedList<ATOMCategory> Categories = new LinkedList<ATOMCategory>();
-	//public LinkedList<ATOMContributor> Contributors = new LinkedList<ATOMContributor>();
-	//public ATOMGenerator Generator;
-	public ATOMIcon Icon;
-	public LinkedList<ATOMLink> Links = new LinkedList<ATOMLink>();
-	//public ATOMLogo Logo;
-	//public String Rights;   // TODO: implement ATOMTextConstruct
-	public String Subtitle; // TODO: implement ATOMTextConstruct
-	public String Title;    // TODO: implement ATOMTextConstruct
-	public ATOMUpdated Updated;
+	// returns true iff reading process should be interrupted
+	boolean processFeedEntry(T2 entry);
+
+	void processFeedEnd();
 }
