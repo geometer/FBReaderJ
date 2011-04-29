@@ -103,7 +103,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		private volatile String myUsername;
 		private volatile String myPassword;
         
-		public Credentials createCredentials(AuthScope scope) {
+		public Credentials createCredentials(String scheme, AuthScope scope) {
 			if (!"basic".equalsIgnoreCase(scope.getScheme())) {
 				return null;
 			}
@@ -115,7 +115,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 			intent.setClass(NetworkCatalogActivity.this, AuthenticationActivity.class);
 			intent.putExtra(AuthenticationActivity.HOST_KEY, host);
 			intent.putExtra(AuthenticationActivity.AREA_KEY, area);
-			intent.putExtra(AuthenticationActivity.SCHEME_KEY, scope.getScheme());
+			intent.putExtra(AuthenticationActivity.SCHEME_KEY, scheme);
 			intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
 			startActivityForResult(intent, BASIC_AUTHENTICATION_CODE);
 			synchronized (this) {
