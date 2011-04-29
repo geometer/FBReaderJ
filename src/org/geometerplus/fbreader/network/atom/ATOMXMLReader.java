@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network.atom;
 
 import java.util.Map;
+import java.util.HashMap;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -28,6 +29,13 @@ import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.fbreader.network.opds.HtmlToString;
 
 public class ATOMXMLReader extends ZLXMLReaderAdapter {
+	public static String intern(String str) {
+		if (str == null || str.length() == 0) {
+			return null;
+		}
+		return str.intern();
+	}
+
 	protected final ATOMFeedReader myFeedReader;
 
 	private ATOMFeedMetadata myFeed;
@@ -40,7 +48,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	private ATOMPublished myPublished;
 	private ATOMIcon myIcon;
 	
-	protected String myAtomNamespaceId;
+	private Map<String,String> myNamespaceMap;
 
 	public ATOMXMLReader(ATOMFeedReader feedReader) {
 		myFeedReader = feedReader;
@@ -51,23 +59,17 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return true;
 	}
 
-	public static String intern(String str) {
-		if (str == null || str.length() == 0) {
-			return null;
-		}
-		return str.intern();
+	@Override
+	public final void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
+		myNamespaceMap = new HashMap<String,String>(namespaceMap);
 	}
 
-	@Override
-	public void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
-		myAtomNamespaceId = null;
-
-		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
-			final String value = entry.getValue();
-			if (value == XMLNamespaces.Atom) {
-				myAtomNamespaceId = intern(entry.getKey());
-			} 
+	protected final String getNamespace(String prefix) {
+		if (myNamespaceMap == null) {
+			return null;
 		}
+		final String ns = myNamespaceMap.get(prefix);
+		return ns != null ? ns.intern() : null;
 	}
 
 	protected static final int START = 0;
@@ -129,10 +131,10 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			tagPrefix = tag.substring(0, index).intern();
 			tag = tag.substring(index + 1).intern();
 		} else {
-			tagPrefix = null;
+			tagPrefix = "";
 			tag = tag.intern();
 		}
-		return startElementHandler(tagPrefix, tag, attributes, extractBufferContent());
+		return startElementHandler(getNamespace(tagPrefix), tag, attributes, extractBufferContent());
 	}
 
 	@Override
@@ -143,10 +145,10 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			tagPrefix = tag.substring(0, index).intern();
 			tag = tag.substring(index + 1).intern();
 		} else {
-			tagPrefix = null;
+			tagPrefix = "";
 			tag = tag.intern();
 		}
-		return endElementHandler(tagPrefix, tag, extractBufferContent());
+		return endElementHandler(getNamespace(tagPrefix), tag, extractBufferContent());
 	}
 
 	private final String extractBufferContent() {
@@ -182,12 +184,14 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return new ATOMEntry();
 	}
 
-	public boolean startElementHandler(final String tagPrefix, final String tag,
-			final ZLStringMap attributes, final String bufferContent) {
+	public boolean startElementHandler(
+		final String ns, final String tag,
+		final ZLStringMap attributes, final String bufferContent
+	) {
 		boolean interruptReading = false;
 		switch (myState) {
 			case START:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_FEED) {
 					myFeedReader.processFeedStart();
 					myFeed = createFeed();
 					myFeed.readAttributes(attributes);
@@ -196,7 +200,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FEED:
-				if (tagPrefix == myAtomNamespaceId) {
+				if (ns == XMLNamespaces.Atom) {
 					if (tag == TAG_AUTHOR) {
 						myAuthor = new ATOMAuthor();
 						myAuthor.readAttributes(attributes);
@@ -244,7 +248,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_ENTRY:
-				if (tagPrefix == myAtomNamespaceId) {
+				if (ns == XMLNamespaces.Atom) {
 					if (tag == TAG_AUTHOR) {
 						myAuthor = new ATOMAuthor();
 						myAuthor.readAttributes(attributes);
@@ -288,7 +292,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case F_AUTHOR:
-				if (tagPrefix == myAtomNamespaceId) {
+				if (ns == XMLNamespaces.Atom) {
 					if (tag == TAG_NAME) {
 						myState = FA_NAME;
 					} else if (tag == TAG_URI) {
@@ -299,7 +303,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case FE_AUTHOR:
-				if (tagPrefix == myAtomNamespaceId) {
+				if (ns == XMLNamespaces.Atom) {
 					if (tag == TAG_NAME) {
 						myState = FEA_NAME;
 					} else if (tag == TAG_URI) {
@@ -322,14 +326,14 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return interruptReading;
 	}
 
-	public boolean endElementHandler(final String tagPrefix, final String tag,
+	public boolean endElementHandler(final String ns, final String tag,
 			final String bufferContent) {
 		boolean interruptReading = false;
 		switch (myState) {
 			case START:
 				break;
 			case FEED:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_FEED) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_FEED) {
 					if (myFeed != null) {
 						interruptReading = myFeedReader.processFeedMetadata(myFeed, false);
 					}
@@ -339,7 +343,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_ENTRY:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_ENTRY) {
 					if (myEntry != null) {
 						interruptReading = myFeedReader.processFeedEntry(myEntry);
 					}
@@ -348,7 +352,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case F_ID:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_ID) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_ID) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
 					if (bufferContent != null && myFeed != null) {
 						myId.Uri = bufferContent;
@@ -359,7 +363,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_ICON:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_ICON) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_ICON) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
 					if (bufferContent != null && myFeed != null) {
 						myIcon.Uri = bufferContent;
@@ -370,7 +374,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_LINK:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_LINK) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_LINK) {
 					if (myFeed != null) {
 						myFeed.Links.add(myLink);
 					}
@@ -379,7 +383,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_CATEGORY:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_CATEGORY) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_CATEGORY) {
 					if (myFeed != null) {
 						myFeed.Categories.add(myCategory);
 					}
@@ -388,7 +392,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_TITLE:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_TITLE) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
 					final String title = myHtmlToString.finishTextContent(bufferContent);
 					if (myFeed != null) {
@@ -400,7 +404,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_SUBTITLE:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_SUBTITLE) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_SUBTITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMSubtitle
 					final String subtitle = myHtmlToString.finishTextContent(bufferContent);
 					if (myFeed != null) {
@@ -412,7 +416,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_UPDATED:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_UPDATED) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_UPDATED) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
 					if (ATOMDateConstruct.parse(bufferContent, myUpdated) && myFeed != null) {
 						myFeed.Updated = myUpdated;
@@ -422,7 +426,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case F_AUTHOR:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_AUTHOR) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_AUTHOR) {
 					if (myFeed != null && myAuthor.Name != null) {
 						myFeed.Authors.add(myAuthor);
 					}
@@ -431,43 +435,43 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case FA_NAME:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_NAME) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_NAME) {
 					myAuthor.Name = bufferContent;
 					myState = F_AUTHOR;
 				}
 				break;
 			case FEA_NAME:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_NAME) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_NAME) {
 					myAuthor.Name = bufferContent;
 					myState = FE_AUTHOR;
 				}
 				break;
 			case FA_URI:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_URI) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_URI) {
 					myAuthor.Uri = bufferContent;
 					myState = F_AUTHOR;
 				}
 				break;
 			case FEA_URI:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_URI) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_URI) {
 					myAuthor.Uri = bufferContent;
 					myState = FE_AUTHOR;
 				}
 				break;
 			case FA_EMAIL:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_EMAIL) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_EMAIL) {
 					myAuthor.Email = bufferContent;
 					myState = F_AUTHOR;
 				}
 				break;
 			case FEA_EMAIL:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_EMAIL) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_EMAIL) {
 					myAuthor.Email = bufferContent;
 					myState = FE_AUTHOR;
 				}
 				break;
 			case FE_AUTHOR:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_AUTHOR) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_AUTHOR) {
 					if (myAuthor.Name != null) {
 						myEntry.Authors.add(myAuthor);
 					}
@@ -476,7 +480,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				} 
 				break;
 			case FE_ID:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_ID) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_ID) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
 					if (bufferContent != null) {
 						myId.Uri = bufferContent;
@@ -487,21 +491,21 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_CATEGORY:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_CATEGORY) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_CATEGORY) {
 					myEntry.Categories.add(myCategory);
 					myCategory = null;
 					myState = F_ENTRY;
 				}
 				break;
 			case FE_LINK:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_LINK) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_LINK) {
 					myEntry.Links.add(myLink);
 					myLink = null;
 					myState = F_ENTRY;
 				}
 				break;
 			case FE_PUBLISHED:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_PUBLISHED) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_PUBLISHED) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
 					if (ATOMDateConstruct.parse(bufferContent, myPublished)) {
 						myEntry.Published = myPublished;
@@ -511,7 +515,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_SUMMARY:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_SUMMARY) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_SUMMARY) {
 					// TODO:implement ATOMTextConstruct & ATOMSummary
 					myEntry.Summary = myHtmlToString.finishTextContent(bufferContent);
 					myState = F_ENTRY;
@@ -520,7 +524,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_CONTENT:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_CONTENT) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_CONTENT) {
 					// TODO:implement ATOMContent
 					myEntry.Content = myHtmlToString.finishTextContent(bufferContent);
 					myState = F_ENTRY;
@@ -529,7 +533,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_TITLE:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_TITLE) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
 					myEntry.Title = myHtmlToString.finishTextContent(bufferContent);
 					myState = F_ENTRY;
@@ -538,7 +542,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_UPDATED:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_UPDATED) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_UPDATED) {
 					// FIXME:uri can be lost:buffer will be truncated, if there are extension tags inside the <id> tag
 					if (ATOMDateConstruct.parse(bufferContent, myUpdated)) {
 						myEntry.Updated = myUpdated;

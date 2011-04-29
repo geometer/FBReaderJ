@@ -235,22 +235,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 		return ((LinkReader) myFeedReader).getUpdatedTime();
 	}
 
-	private String myFBReaderNamespaceId;
-
-	@Override
-	public void namespaceMapChangedHandler(Map<String, String> namespaceMap) {
-		super.namespaceMapChangedHandler(namespaceMap);
-
-		myFBReaderNamespaceId = null;
-
-		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
-			final String value = entry.getValue();
-			if (value == XMLNamespaces.FBReaderCatalogMetadata) {
-				myFBReaderNamespaceId = intern(entry.getKey());
-			}
-		}
-	}
-
 	private static final String FBREADER_ADVANCED_SEARCH = "advancedSearch";
 	private static final String FBREADER_AUTHENTICATION = "authentication";
 	private static final String FBREADER_STABLE_IDENTIFIERS = "hasStableIdentifiers";
@@ -259,16 +243,16 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 	private static final String FBREADER_EXTRA = "extra";
 
 	@Override
-	public boolean startElementHandler(final String tagPrefix, final String tag,
+	public boolean startElementHandler(final String ns, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
 		switch (myState) {
 			case FEED:
-				if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
+				if (ns == XMLNamespaces.Atom && tag == TAG_ENTRY) {
 					((LinkReader)myFeedReader).clear();
 				}
 				break;
 			case F_ENTRY:
-				if (tagPrefix == myFBReaderNamespaceId) {
+				if (ns == XMLNamespaces.FBReaderCatalogMetadata) {
 					if (tag == FBREADER_ADVANCED_SEARCH) {
 						return false;
 					} else if (tag == FBREADER_AUTHENTICATION) {
@@ -302,6 +286,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				}
 				break;
 		}
-		return super.startElementHandler(tagPrefix, tag, attributes, bufferContent);
+		return super.startElementHandler(ns, tag, attributes, bufferContent);
 	}
 }
