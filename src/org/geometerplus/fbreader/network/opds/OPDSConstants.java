@@ -53,6 +53,7 @@ interface OPDSConstants extends ATOMConstants {
 	// FIXME: This relations have been removed from OPDS-1.0 standard. Use RelationAlias instead???
 	String REL_COVER = "http://opds-spec.org/cover";
 	String REL_THUMBNAIL = "http://opds-spec.org/thumbnail";
+	String REL_CONTENTS = "contents"; // Book TOC
 
 	// Entry level / OPDS Link Relations
 	String REL_LINK_SIGN_IN = "http://data.fbreader.org/catalog/sign-in";
