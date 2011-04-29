@@ -20,7 +20,6 @@
 package org.geometerplus.fbreader.network.atom;
 
 import java.util.Map;
-import java.util.HashMap;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -61,7 +60,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public final void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
-		myNamespaceMap = new HashMap<String,String>(namespaceMap);
+		myNamespaceMap = namespaceMap;
 	}
 
 	protected final String getNamespace(String prefix) {
@@ -555,8 +554,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 		return interruptReading;
 	}
-	
-	
 
 	@Override
 	public final void characterDataHandler(char[] data, int start, int length) {

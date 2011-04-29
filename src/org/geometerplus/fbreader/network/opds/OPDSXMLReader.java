@@ -27,7 +27,6 @@ import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.fbreader.network.atom.*;
 
 public class OPDSXMLReader extends ATOMXMLReader {
-	public static final String OPDS_LOG = "opds.log";
 	public static final String KEY_PRICE = "price";
 
 	private DCDate myDCIssued;
@@ -98,7 +97,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	public boolean startElementHandler(final String ns, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
 		final int state = myState;
-		boolean interruptReading = super.startElementHandler(ns, tag, attributes, bufferContent);
+		final boolean interruptReading = super.startElementHandler(ns, tag, attributes, bufferContent);
 		switch (state) {
 			case FEED:
 				if (ns == XMLNamespaces.OpenSearch) {
@@ -155,7 +154,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	
 	public boolean endElementHandler(final String ns, final String tag,
 			final String bufferContent) {
-		boolean interruptReading = super.endElementHandler(ns, tag, bufferContent);
+		final boolean interruptReading = super.endElementHandler(ns, tag, bufferContent);
 		switch (myState) {
 			case FEL_PRICE:
 				if (ns == XMLNamespaces.Opds && tag == TAG_PRICE) {
