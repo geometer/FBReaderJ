@@ -25,8 +25,9 @@ import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.atom.ATOMLink;
+import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 
-class CatalogInfoReader implements OPDSFeedReader {
+class OPDSCatalogInfoHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
 	public boolean FeedStarted;
 	public String Icon;
 	public String Title;
@@ -38,7 +39,7 @@ class CatalogInfoReader implements OPDSFeedReader {
 	private final String myBaseURL;
 	private final OPDSNetworkLink myLink;
 
-	public CatalogInfoReader(String baseUrl, OPDSNetworkLink link, List<String> opensearchDescriptionURLs) {
+	public OPDSCatalogInfoHandler(String baseUrl, OPDSNetworkLink link, List<String> opensearchDescriptionURLs) {
 		myBaseURL = baseUrl;
 		myLink = link;
 		myOpensearchDescriptionURLs = opensearchDescriptionURLs;

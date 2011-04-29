@@ -43,7 +43,8 @@ public class UrlInfo implements Serializable {
 		BookDemo,
 		BookFullOrDemo,
 		BookBuy,
-		BookBuyInBrowser
+		BookBuyInBrowser,
+		TOC
 	}
 
 	public final Type InfoType;

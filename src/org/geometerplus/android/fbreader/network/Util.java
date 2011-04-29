@@ -87,6 +87,7 @@ abstract class Util implements UserRegistrationConstants {
 		if (isRegistrationSupported(activity, link)) {
 			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
 		}
+		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
 		intent.putExtra(AuthenticationActivity.ERROR_KEY, error);
 		if (onSuccess != null) {
 			myAfterRegisrationMap.put(activity, onSuccess);
@@ -141,7 +142,9 @@ abstract class Util implements UserRegistrationConstants {
 							if (mgr.needsInitialization()) {
 								mgr.initialize();
 							}
-							onSuccess.run();
+							if (onSuccess != null) {
+								onSuccess.run();
+							}
 						} catch (ZLNetworkException e) {
 							mgr.logOut();
 							runAuthenticationDialog(activity, link, e.getMessage(), onSuccess);
