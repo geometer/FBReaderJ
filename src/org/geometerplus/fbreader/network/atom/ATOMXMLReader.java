@@ -49,44 +49,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	private Map<String,String> myNamespaceMap;
 
-	public ATOMXMLReader(ATOMFeedHandler handler) {
-		myFeedHandler = handler;
-	}
-
-	protected final ATOMFeedHandler getATOMFeedHandler() {
-		return myFeedHandler;
-	}
-
-	protected final ATOMFeedMetadata getATOMFeed() {
-		return myFeed;
-	}
-
-	protected final ATOMEntry getATOMEntry() {
-		return myEntry;
-	}
-
-	protected final ATOMLink getATOMLink() {
-		return myLink;
-	}
-
-	@Override
-	public final boolean processNamespaces() {
-		return true;
-	}
-
-	@Override
-	public final void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
-		myNamespaceMap = namespaceMap;
-	}
-
-	protected final String getNamespace(String prefix) {
-		if (myNamespaceMap == null) {
-			return null;
-		}
-		final String ns = myNamespaceMap.get(prefix);
-		return ns != null ? ns.intern() : null;
-	}
-
 	protected static final int START = 0;
 	protected static final int FEED = 1;
 	protected static final int F_ENTRY = 2;
@@ -133,10 +95,49 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	protected static final String TAG_SUBTITLE = "subtitle";
 	protected static final String TAG_ICON = "icon";
 
-	protected int myState = START;
+	protected int myState;
 	private final StringBuilder myBuffer = new StringBuilder();
 	protected HtmlToString myHtmlToString = new HtmlToString();
 	protected boolean myFeedMetadataProcessed;
+
+	public ATOMXMLReader(ATOMFeedHandler handler, boolean readEntryNotFeed) {
+		myFeedHandler = handler;
+		myState = readEntryNotFeed ? FEED : START;
+	}
+
+	protected final ATOMFeedHandler getATOMFeedHandler() {
+		return myFeedHandler;
+	}
+
+	protected final ATOMFeedMetadata getATOMFeed() {
+		return myFeed;
+	}
+
+	protected final ATOMEntry getATOMEntry() {
+		return myEntry;
+	}
+
+	protected final ATOMLink getATOMLink() {
+		return myLink;
+	}
+
+	@Override
+	public final boolean processNamespaces() {
+		return true;
+	}
+
+	@Override
+	public final void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
+		myNamespaceMap = namespaceMap;
+	}
+
+	protected final String getNamespace(String prefix) {
+		if (myNamespaceMap == null) {
+			return null;
+		}
+		final String ns = myNamespaceMap.get(prefix);
+		return ns != null ? ns.intern() : null;
+	}
 
 	@Override
 	public final boolean startElementHandler(String tag, ZLStringMap attributes) {

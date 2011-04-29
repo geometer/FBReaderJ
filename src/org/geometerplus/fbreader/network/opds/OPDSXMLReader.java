@@ -35,8 +35,8 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
 	//private ATOMSummary mySummary;  // TODO: implement ATOMTextConstruct & ATOMSummary
 
-	public OPDSXMLReader(ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> handler) {
-		super(handler);
+	public OPDSXMLReader(ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> handler, boolean readEntryNotFeed) {
+		super(handler, readEntryNotFeed);
 	}
 
 	protected final OPDSFeedMetadata getOPDSFeed() {
