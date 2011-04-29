@@ -1,8 +1,8 @@
 * 'sign out' feature for basic-auth
 DONE persistent cookie storage
 DONE use expiration cookie info
-* common auth dialog for basic auth & litres
-* unencrypted protocol warning
+DONE common auth dialog for basic auth & litres
+DONE unencrypted protocol warning
 * POST processing
 * SSLCertificate processing
 

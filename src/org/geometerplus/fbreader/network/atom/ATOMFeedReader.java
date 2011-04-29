@@ -17,41 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.urlInfo;
+package org.geometerplus.fbreader.network.atom;
 
-import java.io.Serializable;
+public interface ATOMFeedReader<T1 extends ATOMFeedMetadata,T2 extends ATOMEntry> {
+	void processFeedStart();
 
-public class UrlInfo implements Serializable {
-	private static final long serialVersionUID = -893514485257788222L;
+	// returns true iff reading process should be interrupted
+	boolean processFeedMetadata(T1 feed, boolean beforeEntries);
 
-	public static enum Type {
-		// Never rename elements of this enum; these names are used in network database
-		Catalog,
-		HtmlPage,
-		SingleEntry,
-		Related,
-		Image,
-		Thumbnail,
-		Search,
-		SignIn,
-		SignOut,
-		SignUp,
-		TopUp,
-		RecoverPassword,
-		Book,
-		BookConditional,
-		BookDemo,
-		BookFullOrDemo,
-		BookBuy,
-		BookBuyInBrowser,
-		TOC
-	}
+	// returns true iff reading process should be interrupted
+	boolean processFeedEntry(T2 entry);
 
-	public final Type InfoType;
-	public final String Url;
-
-	public UrlInfo(Type type, String url) {
-		InfoType = type;
-		Url = url;
-	}
+	void processFeedEnd();
 }

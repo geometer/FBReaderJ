@@ -543,7 +543,13 @@ mainSwitchLabel:
 									break mainSwitchLabel;
 							}
 							final String aName = convertToString(strings, attributeName);
-							if (processNamespaces && aName.startsWith("xmlns:")) {
+							if (processNamespaces && aName.equals("xmlns")) {
+								if (currentNamespaceMap == null) {
+									currentNamespaceMap = new HashMap<String,String>(oldNamespaceMap);
+								}
+								currentNamespaceMap.put("", attributeValue.toString());
+								attributeValue.clear();
+							} else if (processNamespaces && aName.startsWith("xmlns:")) {
 								if (currentNamespaceMap == null) {
 									currentNamespaceMap = new HashMap<String,String>(oldNamespaceMap);
 								}

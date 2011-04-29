@@ -30,11 +30,14 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
@@ -52,20 +55,26 @@ public class ZLNetworkManager {
 	}
 
 	public static interface CredentialsCreator {
-		Credentials createCredentials(AuthScope scope);
+		Credentials createCredentials(String scheme, AuthScope scope);
 	}
 
-	private volatile CredentialsCreator myCredentialsCreator;
-	private final CredentialsProvider myCredentialsProvider = new BasicCredentialsProvider() {
+	private CredentialsCreator myCredentialsCreator;
+
+	private class MyCredentialsProvider extends BasicCredentialsProvider {
+		private final HttpUriRequest myRequest;
+
+		MyCredentialsProvider(HttpUriRequest request) {
+			myRequest = request;
+		}
+
 		@Override
 		public Credentials getCredentials(AuthScope authscope) {
-			System.err.println("getCredentials");
 			final Credentials c = super.getCredentials(authscope);
 			if (c != null) {
 				return c;
 			}
 			if (myCredentialsCreator != null) {
-				return myCredentialsCreator.createCredentials(authscope);
+				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope);
 			}
 			return null;
 		}
@@ -105,7 +114,7 @@ public class ZLNetworkManager {
 			if (!myIsInitialized && db != null) {
 				myIsInitialized = true;
 				final Collection<Cookie> fromDb = db.loadCookies();
-				//super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
+				super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
 			}
 			return super.getCookies();
 		}
@@ -117,10 +126,6 @@ public class ZLNetworkManager {
 
 	private void setCommonHTTPOptions(HttpMessage request) throws ZLNetworkException {
 		//httpConnection.setInstanceFollowRedirects(true);
-		//httpConnection.setConnectTimeout(15000); // FIXME: hardcoded timeout value!!!
-		//httpConnection.setReadTimeout(30000); // FIXME: hardcoded timeout value!!!
-		request.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
-		request.setHeader("Accept-Language", Locale.getDefault().getLanguage());
 		//httpConnection.setAllowUserInteraction(true);
 	}
 
@@ -134,13 +139,15 @@ public class ZLNetworkManager {
 		HttpEntity entity = null;
 		try {
 			request.doBefore();
-			httpClient = new DefaultHttpClient();
-			httpClient.setCredentialsProvider(myCredentialsProvider);
-			final HttpGet getRequest = new HttpGet(request.URL);
-			setCommonHTTPOptions(getRequest);
-			/*
-				if (request.PostData != null) {
-					httpConnection.setRequestMethod("POST");
+			final HttpParams params = new BasicHttpParams();
+			HttpConnectionParams.setSoTimeout(params, 30000);
+			HttpConnectionParams.setConnectionTimeout(params, 15000);
+			httpClient = new DefaultHttpClient(params);
+			final HttpRequestBase httpRequest;
+			if (request.PostData !=  null) {
+				httpRequest = new HttpPost(request.URL);
+				((HttpPost)httpRequest).setEntity(new StringEntity(request.PostData, "utf-8"));
+				/*
 					httpConnection.setRequestProperty(
 						"Content-Length",
 						Integer.toString(request.PostData.getBytes().length)
@@ -149,22 +156,24 @@ public class ZLNetworkManager {
 						"Content-Type", 
 						"application/x-www-form-urlencoded"
 					);
-					httpConnection.setUseCaches(false);
-					httpConnection.setDoInput(true);
-					httpConnection.setDoOutput(true);
-					final OutputStreamWriter writer =
-						new OutputStreamWriter(httpConnection.getOutputStream());
-					try {
-						writer.write(request.PostData);
-						writer.flush();
-					} finally {
-						writer.close();
-					}
+				*/
+			} else if (!request.PostParameters.isEmpty()) {
+				httpRequest = new HttpPost(request.URL);
+				final List<BasicNameValuePair> list =
+					new ArrayList<BasicNameValuePair>(request.PostParameters.size());
+				for (Map.Entry<String,String> entry : request.PostParameters.entrySet()) {
+					list.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
 				}
-			*/
+				((HttpPost)httpRequest).setEntity(new UrlEncodedFormEntity(list, "utf-8"));
+			} else {
+				httpRequest = new HttpGet(request.URL);
+			}
+			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
+			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
+			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest));
 			HttpResponse response = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
-				response = httpClient.execute(getRequest, myHttpContext);
+				response = httpClient.execute(httpRequest, myHttpContext);
 				entity = response.getEntity();
 			}
 			final int responseCode = response.getStatusLine().getStatusCode();
@@ -192,27 +201,14 @@ public class ZLNetworkManager {
 					throw new ZLNetworkException(true, response.getStatusLine().toString());
 				}
 			}
-		} catch (SSLHandshakeException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_CONNECT, ZLNetworkUtil.hostFromUrl(request.URL), ex);
-		} catch (SSLKeyException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_BAD_KEY, ZLNetworkUtil.hostFromUrl(request.URL), ex);
-		} catch (SSLPeerUnverifiedException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_PEER_UNVERIFIED, ZLNetworkUtil.hostFromUrl(request.URL), ex);
-		} catch (SSLProtocolException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_PROTOCOL_ERROR, ex);
-		} catch (SSLException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_SSL_SUBSYSTEM, ex);
-		} catch (ConnectException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_CONNECTION_REFUSED, ZLNetworkUtil.hostFromUrl(request.URL), ex);
-		} catch (NoRouteToHostException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_HOST_CANNOT_BE_REACHED, ZLNetworkUtil.hostFromUrl(request.URL), ex);
-		} catch (UnknownHostException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_RESOLVE_HOST, ZLNetworkUtil.hostFromUrl(request.URL), ex);
-		} catch (SocketTimeoutException ex) {
-			throw new ZLNetworkException(ZLNetworkException.ERROR_TIMEOUT, ex);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			throw new ZLNetworkException(ZLNetworkException.ERROR_SOMETHING_WRONG, ZLNetworkUtil.hostFromUrl(request.URL), ex);
+		} catch (IOException e) {
+			e.printStackTrace();
+			final String[] eName = e.getClass().getName().split("\\.");
+			if (eName.length > 0) {
+				throw new ZLNetworkException(true, eName[eName.length - 1] + ": " + e.getMessage(), e);
+			} else {
+				throw new ZLNetworkException(true, e.getMessage(), e);
+			}
 		} finally {
 			request.doAfter(success);
 			if (httpClient != null) {

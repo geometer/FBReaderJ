@@ -52,7 +52,7 @@ public class PluckerBookReader extends BookReader {
 	private	ArrayList/*<Integer, Integer>*/ myParagraphVector = new ArrayList();
 	private	boolean myParagraphStored;
 	
-	public PluckerBookReader(ZLFile file, BookModel model, String encoding){
+	public PluckerBookReader(ZLFile file, BookModel model, String encoding) {
 		super(model);
 		//myConverter = new EncodedTextReader(encoding).getConverter(); 
 		myFile = file; 

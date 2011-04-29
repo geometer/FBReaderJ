@@ -173,7 +173,7 @@ public abstract class DictionaryUtil {
 				intent.putExtra(ColorDict3.FULLSCREEN, !application.ShowStatusBarOption.getValue());
 			}
 			activity.startActivity(intent);
-		} catch(ActivityNotFoundException e){
+		} catch (ActivityNotFoundException e) {
 			DictionaryUtil.installDictionaryIfNotInstalled(activity);
 		}
 
