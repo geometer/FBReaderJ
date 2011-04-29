@@ -17,9 +17,16 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.opds;
+package org.geometerplus.fbreader.network.atom;
 
-import org.geometerplus.fbreader.network.atom.ATOMFeedReader;
+public interface ATOMFeedReader<T1 extends ATOMFeedMetadata,T2 extends ATOMEntry> {
+	void processFeedStart();
 
-public interface OPDSFeedReader extends ATOMFeedReader<OPDSFeedMetadata,OPDSEntry> {
+	// returns true iff reading process should be interrupted
+	boolean processFeedMetadata(T1 feed, boolean beforeEntries);
+
+	// returns true iff reading process should be interrupted
+	boolean processFeedEntry(T2 entry);
+
+	void processFeedEnd();
 }

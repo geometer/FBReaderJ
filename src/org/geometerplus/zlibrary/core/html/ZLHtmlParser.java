@@ -222,13 +222,13 @@ mainSwitchLabel:
 											{
 												ZLByteBuffer stringTagName = unique(strings, tagName);
 												processEndTag(htmlReader, stringTagName);
-												if (scriptOpened){
+												if (scriptOpened) {
 												}
 												if (stringTagName.equalsToLCString("script")) {
 													scriptOpened = false;
 												}
 											}
-										if (scriptOpened){
+										if (scriptOpened) {
 											state = SCRIPT;
 										} else {
 											state = TEXT;
@@ -280,7 +280,7 @@ mainSwitchLabel:
 											scriptOpened = false;
 										}
 									}
-									if (scriptOpened){
+									if (scriptOpened) {
 										state = SCRIPT;
 									} else {
 										state = TEXT;
