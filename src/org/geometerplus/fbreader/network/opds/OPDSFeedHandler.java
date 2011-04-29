@@ -30,7 +30,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfIt
 import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes {
+class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants, MimeTypes {
 	private final String myBaseURL;
 	private final OPDSCatalogItem.State myData;
 
@@ -43,13 +43,13 @@ class NetworkOPDSFeedReader implements OPDSFeedReader, OPDSConstants, MimeTypes 
 	private int myItemsToLoad = -1;
 
 	/**
-	 * Creates new OPDSFeedReader instance that can be used to get NetworkItem objects from OPDS feeds.
+	 * Creates new OPDSFeedHandler instance that can be used to get NetworkItem objects from OPDS feeds.
 	 *
 	 * @param baseURL    string that contains URL of the OPDS feed, that will be read using this instance of the reader
 	 * @param result     network results buffer. Must be created using OPDSNetworkLink corresponding to the OPDS feed, 
 	 *                   that will be read using this instance of the reader.
 	 */
-	NetworkOPDSFeedReader(String baseURL, OPDSCatalogItem.State result) {
+	OPDSFeedHandler(String baseURL, OPDSCatalogItem.State result) {
 		myBaseURL = baseURL;
 		myData = result;
 		mySkipUntilId = myData.LastLoadedId;

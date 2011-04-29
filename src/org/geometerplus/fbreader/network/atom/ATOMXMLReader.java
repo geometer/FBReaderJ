@@ -35,7 +35,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return str.intern();
 	}
 
-	protected final ATOMFeedReader myFeedReader;
+	private final ATOMFeedHandler myFeedHandler;
 
 	private ATOMFeedMetadata myFeed;
 	private ATOMEntry myEntry;
@@ -49,8 +49,24 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	private Map<String,String> myNamespaceMap;
 
-	public ATOMXMLReader(ATOMFeedReader feedReader) {
-		myFeedReader = feedReader;
+	public ATOMXMLReader(ATOMFeedHandler handler) {
+		myFeedHandler = handler;
+	}
+
+	protected final ATOMFeedHandler getATOMFeedHandler() {
+		return myFeedHandler;
+	}
+
+	protected final ATOMFeedMetadata getATOMFeed() {
+		return myFeed;
+	}
+
+	protected final ATOMEntry getATOMEntry() {
+		return myEntry;
+	}
+
+	protected final ATOMLink getATOMLink() {
+		return myLink;
 	}
 
 	@Override
@@ -159,18 +175,6 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return new String(bufferContentArray);
 	}
 
-	protected final ATOMFeedMetadata getATOMFeed() {
-		return myFeed;
-	}
-
-	protected final ATOMEntry getATOMEntry() {
-		return myEntry;
-	}
-
-	protected final ATOMLink getATOMLink() {
-		return myLink;
-	}
-
 	protected ATOMFeedMetadata createFeed() {
 		return new ATOMFeedMetadata();
 	}
@@ -191,7 +195,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		switch (myState) {
 			case START:
 				if (ns == XMLNamespaces.Atom && tag == TAG_FEED) {
-					myFeedReader.processFeedStart();
+					myFeedHandler.processFeedStart();
 					myFeed = createFeed();
 					myFeed.readAttributes(attributes);
 					myState = FEED;
@@ -240,7 +244,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
 						if (myFeed != null && !myFeedMetadataProcessed) {
-							interruptReading = myFeedReader.processFeedMetadata(myFeed, true);
+							interruptReading = myFeedHandler.processFeedMetadata(myFeed, true);
 							myFeedMetadataProcessed = true;
 						}
 					}
@@ -334,17 +338,17 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case FEED:
 				if (ns == XMLNamespaces.Atom && tag == TAG_FEED) {
 					if (myFeed != null) {
-						interruptReading = myFeedReader.processFeedMetadata(myFeed, false);
+						interruptReading = myFeedHandler.processFeedMetadata(myFeed, false);
 					}
 					myFeed = null;
-					myFeedReader.processFeedEnd();
+					myFeedHandler.processFeedEnd();
 					myState = START;
 				}
 				break;
 			case F_ENTRY:
 				if (ns == XMLNamespaces.Atom && tag == TAG_ENTRY) {
 					if (myEntry != null) {
-						interruptReading = myFeedReader.processFeedEntry(myEntry);
+						interruptReading = myFeedHandler.processFeedEntry(myEntry);
 					}
 					myEntry = null;
 					myState = FEED;
