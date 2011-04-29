@@ -21,12 +21,12 @@ package org.geometerplus.fbreader.network.atom;
 
 public interface ATOMFeedReader<T1 extends ATOMFeedMetadata,T2 extends ATOMEntry> {
 	void processFeedStart();
-	
+
 	// returns true iff reading process should be interrupted
 	boolean processFeedMetadata(T1 feed, boolean beforeEntries);
-	
+
 	// returns true iff reading process should be interrupted
 	boolean processFeedEntry(T2 entry);
-	
+
 	void processFeedEnd();
 }
