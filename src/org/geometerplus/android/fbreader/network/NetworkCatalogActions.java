@@ -174,9 +174,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			item instanceof NetworkURLCatalogItem ? (NetworkURLCatalogItem)item : null;
 
 		prepareOptionsItem(menu, RELOAD_ITEM_ID,
-				urlItem != null &&
-				urlItem.getUrl(UrlInfo.Type.Catalog) != null &&
-				!NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey())
+			urlItem != null &&
+			urlItem.getUrl(UrlInfo.Type.Catalog) != null &&
+			ItemsLoadingService.getRunnable(tree) == null
 		);
 
 		boolean signIn = false;
@@ -438,9 +438,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				 * 3) Remove unused messages (say, by timeout)
 				 */
 				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, key);
-				NetworkView.Instance().startItemsLoading(
+				ItemsLoadingService.start(
 					activity,
-					key,
+					tree,
 					new ExpandCatalogRunnable(handler, tree, true, resumeNotLoad)
 				);
 				processExtraData(activity, tree.Item.extraData(), new Runnable() {
@@ -453,17 +453,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		final NetworkTree.Key key = tree.getUniqueKey();
-		if (NetworkView.Instance().containsItemsLoadingRunnable(key)) {
+		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
 		tree.ChildrenItems.clear();
 		tree.clear();
 		NetworkView.Instance().fireModelChangedAsync();
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, key);
-		NetworkView.Instance().startItemsLoading(
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, tree.getUniqueKey());
+		ItemsLoadingService.start(
 			activity,
-			key,
+			tree,
 			new ExpandCatalogRunnable(handler, tree, false, false)
 		);
 	}

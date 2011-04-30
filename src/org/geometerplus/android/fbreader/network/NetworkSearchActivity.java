@@ -156,7 +156,7 @@ public class NetworkSearchActivity extends Activity {
 
 		final SearchItemTree tree = library.getSearchItemTree();
 		if (tree == null ||
-			NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey())) {
+			ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
 
@@ -167,10 +167,8 @@ public class NetworkSearchActivity extends Activity {
 		NetworkView.Instance().fireModelChangedAsync();
 
 		final SearchHandler handler = new SearchHandler(tree);
-		NetworkView.Instance().startItemsLoading(
-			this,
-			tree.getUniqueKey(),
-			new SearchRunnable(handler, pattern)
+		ItemsLoadingService.start(
+			this, tree, new SearchRunnable(handler, pattern)
 		);
 		Util.openTree(this, tree);
 	}

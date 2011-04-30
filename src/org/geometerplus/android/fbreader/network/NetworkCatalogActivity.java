@@ -222,21 +222,25 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		}
 	}
 
-	private static NetworkTree.Key getLoadableNetworkTreeKey(NetworkTree tree) {
-		if ((tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree)
-				&& tree.Parent instanceof NetworkTree) {
-			return getLoadableNetworkTreeKey((NetworkTree)tree.Parent);
+	private static NetworkTree getLoadableNetworkTree(NetworkTree tree) {
+		while (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
+			if (tree.Parent instanceof NetworkTree) {
+				tree = (NetworkTree)tree.Parent;
+			} else {
+				return null;
+			}
 		}
-		return tree.getUniqueKey();
+		return tree;
 	}
 
 	@Override
 	public void onModelChanged() {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				final NetworkView networkView = NetworkView.Instance();
-				final NetworkTree.Key key = getLoadableNetworkTreeKey(myTree);
-				myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
+				final NetworkTree tree = getLoadableNetworkTree(myTree);
+				myInProgress =
+					tree != null &&
+					ItemsLoadingService.getRunnable(tree) != null;
 				getListView().invalidateViews();
             
 				/*
@@ -261,12 +265,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private void doStopLoading() {
-		if (NetworkView.Instance().isInitialized()) {
-			final ItemsLoadingRunnable runnable =
-				NetworkView.Instance().getItemsLoadingRunnable(myTree.getUniqueKey());
-			if (runnable != null) {
-				runnable.interruptLoading();
-			}
+		final ItemsLoadingRunnable runnable = ItemsLoadingService.getRunnable(myTree);
+		if (runnable != null) {
+			runnable.interruptLoading();
 		}
 	}
 

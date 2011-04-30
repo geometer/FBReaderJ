@@ -134,46 +134,8 @@ class NetworkView {
 	 * Code for loading network items (running items-loading service and managing items-loading runnables).
 	 */
 
-	private final HashMap<NetworkTree.Key,ItemsLoadingRunnable> myItemsLoadingRunnables =
-		new HashMap<NetworkTree.Key,ItemsLoadingRunnable>();
-
-	public void startItemsLoading(Context context, NetworkTree.Key key, ItemsLoadingRunnable runnable) {
-		boolean doDownload = false;
-		synchronized (myItemsLoadingRunnables) {
-			if (!myItemsLoadingRunnables.containsKey(key)) {
-				myItemsLoadingRunnables.put(key, runnable);
-				doDownload = true;
-			}
-		}
-		if (doDownload) {
-			context.startService(
-				new Intent(context.getApplicationContext(), ItemsLoadingService.class)
-					.putExtra(ItemsLoadingService.ITEMS_LOADING_RUNNABLE_KEY, key)
-			);
-		}
-	}
-
-	ItemsLoadingRunnable getItemsLoadingRunnable(NetworkTree.Key key) {
-		synchronized (myItemsLoadingRunnables) {
-			return myItemsLoadingRunnables.get(key);
-		}
-	}
-
-	void removeItemsLoadingRunnable(NetworkTree.Key key) {
-		synchronized (myItemsLoadingRunnables) {
-			ItemsLoadingRunnable runnable = myItemsLoadingRunnables.remove(key);
-			if (runnable != null) {
-				runnable.runFinishHandler();
-			}
-		}
-	}
-
-	public final boolean containsItemsLoadingRunnable(NetworkTree.Key key) {
-		return getItemsLoadingRunnable(key) != null;
-	}
-
 	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
-		final ItemsLoadingRunnable runnable = getItemsLoadingRunnable(tree.getUniqueKey());
+		final ItemsLoadingRunnable runnable = ItemsLoadingService.getRunnable(tree);
 		if (runnable != null && runnable.tryResumeLoading()) {
 			Util.openTree(activity, tree);
 			return;

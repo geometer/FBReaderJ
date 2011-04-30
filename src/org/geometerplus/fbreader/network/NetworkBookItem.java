@@ -109,6 +109,10 @@ public class NetworkBookItem extends NetworkItem {
 		IndexInSeries = indexInSeries;
 	}
 
+	public boolean isFullyLoaded() {
+		return true;
+	}
+
 	public void loadFullInformation() throws ZLNetworkException {
 	}
 

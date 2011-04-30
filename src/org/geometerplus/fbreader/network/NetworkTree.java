@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -66,6 +65,9 @@ public abstract class NetworkTree extends FBTree {
 			return Parent == null ? Id : Parent.toString() + " :: " + Id;
 		}
 	}
+
+	private Key myKey;
+	private Map<String,Object> myUserData;
 
 	protected NetworkTree() {
 		super();
@@ -123,10 +125,8 @@ public abstract class NetworkTree extends FBTree {
 		return null;
 	}
 
-
 	public abstract NetworkItem getHoldedItem();
 
-	private Key myKey;
 	/**
 	 * Returns unique identifier which can be used in NetworkView methods
 	 * @return unique Key instance
@@ -139,6 +139,21 @@ public abstract class NetworkTree extends FBTree {
 			myKey = new Key(parentKey, getStringId());
 		}
 		return myKey;
+	}
+
+	public final synchronized void setUserData(String key, Object data) {
+		if (myUserData == null) {
+			myUserData = new HashMap<String,Object>();
+		}
+		if (data != null) {
+			myUserData.put(key, data);
+		} else {
+			myUserData.remove(key);
+		}
+	}
+
+	public final synchronized Object getUserData(String key) {
+		return myUserData != null ? myUserData.get(key) : null;
 	}
 
 	/**

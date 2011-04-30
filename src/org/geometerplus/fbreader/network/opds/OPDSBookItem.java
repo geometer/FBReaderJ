@@ -209,6 +209,11 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	private volatile boolean myInformationIsFull;
 
 	@Override
+	public synchronized boolean isFullyLoaded() {
+		return myInformationIsFull || getUrl(UrlInfo.Type.SingleEntry) == null;
+	}
+
+	@Override
 	public synchronized void loadFullInformation() throws ZLNetworkException {
 		if (myInformationIsFull) {
 			return;
