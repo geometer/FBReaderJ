@@ -21,16 +21,18 @@ package org.geometerplus.fbreader.formats.plucker;
 
 import java.io.*;
 
-import org.geometerplus.fbreader.formats.pdb.DocDecompressor;
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
+
+import org.geometerplus.fbreader.formats.pdb.DocDecompressor;
 
 public class DocCompressedFileImage extends ZLSingleImage {
 	private final ZLFile myFile;
 	private final int myOffset;
 	private final int myCompressedSize;
 	
-	public DocCompressedFileImage(String mimeType, final ZLFile file, final int offset, final int compressedSize) {
+	public DocCompressedFileImage(MimeType mimeType, final ZLFile file, final int offset, final int compressedSize) {
 		super(mimeType);
 		myFile = file;
 		myOffset = offset;

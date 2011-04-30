@@ -21,10 +21,11 @@ package org.geometerplus.fbreader.formats.fb2;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.xml.*;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.*;
+import org.geometerplus.zlibrary.core.xml.*;
+
 import org.geometerplus.zlibrary.text.model.ZLTextParagraph;
 
 import org.geometerplus.fbreader.bookmodel.*;
@@ -387,8 +388,8 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 			case FB2Tag.BINARY:			
 				final String contentType = attributes.getValue("content-type");
 				final String imgId = attributes.getValue("id");
-				if ((contentType != null) && (id != null)) {
-					myCurrentImage = new Base64EncodedImage(contentType);
+				if (contentType != null && id != null) {
+					myCurrentImage = new Base64EncodedImage(MimeType.get(contentType));
 					myBookReader.addImage(imgId, myCurrentImage);
 				}
 				break;	

@@ -27,6 +27,7 @@ import android.view.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -57,7 +58,7 @@ public class ImageViewActivity extends Activity {
 			try {
 				final String[] data = uri.getPath().split("\000");
 				final ZLFileImage image = new ZLFileImage(
-					"image/auto",
+					MimeType.IMAGE_AUTO,
 					ZLFile.createFileByPath(data[0]),
 					Integer.parseInt(data[1]),
 					Integer.parseInt(data[2])

@@ -17,9 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.opds;
+package org.geometerplus.fbreader.network.urlInfo;
 
-import org.geometerplus.fbreader.network.atom.ATOMFeedReader;
+public class TitledUrlInfo extends UrlInfo {
+	private static final long serialVersionUID = -893514485257788098L;
 
-public interface OPDSFeedReader extends ATOMFeedReader<OPDSFeedMetadata,OPDSEntry> {
+	public final String Title;
+
+	public TitledUrlInfo(Type type, String title, String url) {
+		super(type, url);
+		Title = title;
+	}
 }

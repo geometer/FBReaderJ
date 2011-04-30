@@ -54,6 +54,7 @@ interface OPDSConstants extends ATOMConstants {
 	String REL_COVER = "http://opds-spec.org/cover";
 	String REL_THUMBNAIL = "http://opds-spec.org/thumbnail";
 	String REL_CONTENTS = "contents"; // Book TOC
+	String REL_REPLIES = "replies";
 
 	// Entry level / OPDS Link Relations
 	String REL_LINK_SIGN_IN = "http://data.fbreader.org/catalog/sign-in";
