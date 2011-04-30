@@ -240,6 +240,11 @@ class NetworkBookActions extends NetworkTreeActions {
 	static boolean runActionStatic(Activity activity, NetworkBookTree tree, int actionCode) {
 		switch (actionCode) {
 			case SHOW_BOOK_ACTIVITY_ITEM_ID:
+				try {
+					tree.Book.loadFullInformation();
+				} catch (ZLNetworkException e) {
+					e.printStackTrace();
+				}
 				Util.openTree(activity, tree);
 				return true;
 			default:

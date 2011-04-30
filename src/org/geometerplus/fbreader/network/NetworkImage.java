@@ -23,19 +23,19 @@ import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
 
-public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
+public final class NetworkImage extends ZLLoadableImage {
 	public final String Url;
 
-	public NetworkImage(String url, String mimeType) {
+	public NetworkImage(String url, MimeType mimeType) {
 		super(mimeType);
 		Url = url;
 		new File(Paths.networkCacheDirectory()).mkdirs();
@@ -43,7 +43,7 @@ public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeImageFilePath(String url, String mimeType) {
+	public static String makeImageFilePath(String url, MimeType mimeType) {
 		URI uri;
 		try {
 			uri = new URI(url);
@@ -82,9 +82,9 @@ public final class NetworkImage extends ZLLoadableImage implements MimeTypes {
 		}
 
 		String ext = null;
-		if (MIME_IMAGE_PNG.equals(mimeType)) {
+		if (MimeType.IMAGE_PNG.equals(mimeType)) {
 			ext = ".png";
-		} else if (MIME_IMAGE_JPEG.equals(mimeType)) {
+		} else if (MimeType.IMAGE_JPEG.equals(mimeType)) {
 			if (path.length() > 5 && path.substring(path.length() - 5).equals(".jpeg")) {
 				ext = ".jpeg";
 			} else {

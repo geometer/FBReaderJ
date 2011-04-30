@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 import java.io.File;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -105,6 +107,9 @@ public class NetworkBookItem extends NetworkItem {
 		Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
+	}
+
+	public void loadFullInformation() throws ZLNetworkException {
 	}
 
 	public BookUrlInfo reference(UrlInfo.Type type) {

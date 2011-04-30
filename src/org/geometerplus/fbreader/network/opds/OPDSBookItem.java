@@ -20,15 +20,17 @@
 package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
+import java.io.*;
 
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
+import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-public class OPDSBookItem extends NetworkBookItem implements OPDSConstants, MimeTypes {
+public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	private static String getAnnotation(OPDSEntry entry) {
 		if (entry.Summary != null) {
 			return entry.Summary;
@@ -90,18 +92,19 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants, Mime
 		final UrlInfoCollection urls = new UrlInfoCollection();
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(baseUrl, link.getHref());
-			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final MimeType type = MimeType.get(link.getType());
 			final String rel = networkLink.relation(link.getRel(), type);
 			final UrlInfo.Type referenceType = typeByRelation(rel);
 			if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
-				if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
+				if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 					urls.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href));
 				}
 			} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || REL_COVER.equals(rel)) {
-				if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
+				if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 					urls.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
-			} else if (MIME_APP_ATOM_ENTRY.equals(type)) {
+			} else if (MimeType.APP_ATOM.Name.equals(type.Name) &&
+					   "entry".equals(type.getParameter("type"))) {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.SingleEntry, href));
 			} else if (UrlInfo.Type.BookBuy == referenceType) {
 				final OPDSLink opdsLink = (OPDSLink)link; 
@@ -117,7 +120,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants, Mime
 				if (price == null) {
 					price = "";
 				}
-				if (MIME_TEXT_HTML.equals(type)) {
+				if (MimeType.TEXT_HTML.equals(type)) {
 					collectReferences(urls, opdsLink, href,
 							UrlInfo.Type.BookBuyInBrowser, price, true);
 				} else {
@@ -163,8 +166,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants, Mime
 		boolean addWithoutFormat
 	) {
 		boolean added = false;
-		for (String mime: opdsLink.Formats) {
-			final int format = formatByMimeType(mime);
+		for (String mime : opdsLink.Formats) {
+			final int format = formatByMimeType(MimeType.get(mime));
 			if (format != BookUrlInfo.Format.NONE) {
 				urls.addInfo(new BookBuyUrlInfo(type, format, href, price));
 				added = true;
@@ -175,12 +178,12 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants, Mime
 		}
 	}
 
-	static int formatByMimeType(String mimeType) {
-		if (MIME_APP_FB2ZIP.equals(mimeType)) {
+	static int formatByMimeType(MimeType type) {
+		if (MimeType.APP_FB2ZIP.equals(type)) {
 			return BookUrlInfo.Format.FB2_ZIP;
-		} else if (MIME_APP_EPUB.equals(mimeType)) {
+		} else if (MimeType.APP_EPUB.equals(type)) {
 			return BookUrlInfo.Format.EPUB;
-		} else if (MIME_APP_MOBI.equals(mimeType)) {
+		} else if (MimeType.APP_MOBI.equals(type)) {
 			return BookUrlInfo.Format.MOBIPOCKET;
 		}
 		return BookUrlInfo.Format.NONE;
@@ -193,5 +196,50 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants, Mime
 			entry.SeriesTitle, entry.SeriesIndex,
 			getUrls(networkLink, entry, baseUrl)
 		);
+	}
+
+	private volatile boolean myInformationIsFull;
+
+	@Override
+	public synchronized void loadFullInformation() throws ZLNetworkException {
+		if (myInformationIsFull) {
+			return;
+		}
+
+		final String url = getUrl(UrlInfo.Type.SingleEntry);
+		if (url == null) {
+			myInformationIsFull = true;
+			return;
+		}
+
+		ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
+			@Override
+			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
+				new OPDSXMLReader(
+					new SingleEntryFeedHandler(url), true
+				).read(inputStream);
+				myInformationIsFull = true;
+			}
+		});
+	}
+
+	private class SingleEntryFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
+		SingleEntryFeedHandler(String url) {
+		}
+
+		public void processFeedStart() {
+		}
+
+		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
+			return false;
+		}
+
+		public boolean processFeedEntry(OPDSEntry entry) {
+			System.err.println("ENTRY:" + entry.Title);
+			return false;
+		}
+
+		public void processFeedEnd() {
+		}
 	}
 }
