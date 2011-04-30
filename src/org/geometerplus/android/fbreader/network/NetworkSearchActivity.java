@@ -107,17 +107,12 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			if (!NetworkView.Instance().isInitialized()) {
-				return;
-			}
-
 			final SearchItemTree tree = NetworkLibrary.Instance().getSearchItemTree();
 			if (tree == null) {
 				return;
 			}
 
-			final NetworkCatalogActivity activity =
-				NetworkView.Instance().getOpenedActivity(tree.getUniqueKey());
+			final NetworkCatalogActivity activity = NetworkCatalogActivity.getByTree(tree);
 			if (activity != null) {
 				final ZLResource buttonResource = dialogResource.getResource("button");
 				new AlertDialog.Builder(activity)

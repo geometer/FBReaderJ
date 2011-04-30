@@ -293,12 +293,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 
 	private static class ExpandCatalogHandler extends ItemsLoadingHandler {
-		private final NetworkTree.Key myKey;
 		private final NetworkCatalogTree myTree;
 
-		ExpandCatalogHandler(NetworkCatalogTree tree, NetworkTree.Key key) {
+		ExpandCatalogHandler(NetworkCatalogTree tree) {
 			myTree = tree;
-			myKey = key;
 		}
 
 		@Override
@@ -342,7 +340,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			if (!NetworkView.Instance().isInitialized()) {
 				return;
 			}
-			final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(myKey);
+			final NetworkCatalogActivity activity = NetworkCatalogActivity.getByTree(myTree);
 			if (activity == null) {
 				return;
 			}
@@ -408,7 +406,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	private void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		final NetworkTree.Key key = tree.getUniqueKey();
 		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
@@ -437,7 +434,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				 * 2) If there is no activity, then save message, and show when activity is created
 				 * 3) Remove unused messages (say, by timeout)
 				 */
-				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, key);
+				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 				ItemsLoadingService.start(
 					activity,
 					tree,
@@ -459,7 +456,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		tree.ChildrenItems.clear();
 		tree.clear();
 		NetworkView.Instance().fireModelChangedAsync();
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, tree.getUniqueKey());
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
 		ItemsLoadingService.start(
 			activity,
 			tree,

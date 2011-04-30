@@ -197,24 +197,4 @@ class NetworkView {
 			listener.onModelChanged();
 		}
 	}
-
-
-	/*
-	 * Opening Catalogs & managing opened catalogs stack
-	 */
-
-	private final HashMap<NetworkTree.Key,NetworkCatalogActivity> myOpenedActivities =
-		new HashMap<NetworkTree.Key,NetworkCatalogActivity>();
-
-	void setOpenedActivity(NetworkTree.Key key, NetworkCatalogActivity activity) {
-		if (activity == null) {
-			myOpenedActivities.remove(key);
-		} else {
-			myOpenedActivities.put(key, activity);
-		}
-	}
-
-	public NetworkCatalogActivity getOpenedActivity(NetworkTree.Key key) {
-		return myOpenedActivities.get(key);
-	}
 }

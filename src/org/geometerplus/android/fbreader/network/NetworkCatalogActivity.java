@@ -39,6 +39,18 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
+	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
+
+	static void setForTree(NetworkTree tree, NetworkCatalogActivity activity) {
+		if (tree != null) {
+			tree.setUserData(ACTIVITY_BY_TREE_KEY, activity);
+		}
+	}
+
+	static NetworkCatalogActivity getByTree(NetworkTree tree) {
+		return (NetworkCatalogActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
+	}
+
 	private NetworkTree myTree;
 	private volatile boolean myInProgress;
 
@@ -48,12 +60,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		final NetworkView networkView = NetworkView.Instance();
-		if (!networkView.isInitialized()) {
-			finish();
-			return;
-		}
-
 		myTree = Util.getTreeFromIntent(getIntent());
 
 		if (myTree == null) {
@@ -61,7 +67,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 			return;
 		}
 
-		networkView.setOpenedActivity(myTree.getUniqueKey(), this);
+		setForTree(myTree, this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
@@ -179,9 +185,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public void onDestroy() {
-		if (myTree != null && NetworkView.Instance().isInitialized()) {
-			NetworkView.Instance().setOpenedActivity(myTree.getUniqueKey(), null);
-		}
+		setForTree(myTree, null);
 		super.onDestroy();
 	}
 
