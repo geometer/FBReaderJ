@@ -22,8 +22,9 @@ package org.geometerplus.fbreader.formats.plucker;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
 
 public class PluckerFileImage extends ZLSingleImage {
@@ -31,7 +32,7 @@ public class PluckerFileImage extends ZLSingleImage {
 	private final int myOffset;
 	private final int mySize;
 
-	public PluckerFileImage(String mimeType, final ZLFile file, final int offset, final int size) {
+	public PluckerFileImage(MimeType mimeType, final ZLFile file, final int offset, final int size) {
 		super(mimeType);
 		myFile = file;
 		myOffset = offset;

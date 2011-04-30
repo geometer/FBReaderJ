@@ -588,6 +588,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte..."/>
+			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
 			<node name="loadingBook" value="Otevírání knihy. Čekejte..."/>
 			<node name="loadingBookList" value="Otevírání knihovny. Čekejte..."/>
 			<node name="creatingBooksDatabase" value="Vytváření databáze knih. Čekejte..."/>

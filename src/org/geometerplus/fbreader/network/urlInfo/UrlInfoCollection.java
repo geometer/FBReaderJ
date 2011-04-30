@@ -34,6 +34,11 @@ public class UrlInfoCollection<T extends UrlInfo> implements Serializable {
 		myInfos.addAll(other.myInfos);
 	}
 
+	public void upgrade(UrlInfoCollection other) {
+		myInfos.removeAll(other.myInfos);
+		myInfos.addAll(other.myInfos);
+	}
+
 	public void addInfo(T info) {
 		if (info != null && info.InfoType != null) {
 			myInfos.add(info);

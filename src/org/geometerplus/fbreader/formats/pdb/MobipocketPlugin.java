@@ -21,12 +21,12 @@ package org.geometerplus.fbreader.formats.pdb;
 
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.encoding.ZLEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
-import org.geometerplus.zlibrary.core.encoding.ZLEncodingCollection;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -209,7 +209,7 @@ public class MobipocketPlugin extends PdbPlugin {
 			if (start >= 0) {
 				int len = myMobipocketStream.getImageLength(coverIndex);
 				if (len > 0) {
-					return new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, file, start, len);
+					return new ZLFileImage(MimeType.IMAGE_AUTO, file, start, len);
 				}
 			}
 			return null; 
