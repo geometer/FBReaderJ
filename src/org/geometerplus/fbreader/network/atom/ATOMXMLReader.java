@@ -176,16 +176,16 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return new String(bufferContentArray);
 	}
 
-	protected ATOMFeedMetadata createFeed() {
-		return new ATOMFeedMetadata();
+	protected ATOMFeedMetadata createFeed(ZLStringMap attributes) {
+		return new ATOMFeedMetadata(attributes);
 	}
 
-	protected ATOMLink createLink() {
-		return new ATOMLink();
+	protected ATOMLink createLink(ZLStringMap attributes) {
+		return new ATOMLink(attributes);
 	}
 
-	protected ATOMEntry createEntry() {
-		return new ATOMEntry();
+	protected ATOMEntry createEntry(ZLStringMap attributes) {
+		return new ATOMEntry(attributes);
 	}
 
 	public boolean startElementHandler(
@@ -197,8 +197,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case START:
 				if (ns == XMLNamespaces.Atom && tag == TAG_FEED) {
 					myFeedHandler.processFeedStart();
-					myFeed = createFeed();
-					myFeed.readAttributes(attributes);
+					myFeed = createFeed(attributes);
 					myState = FEED;
 					myFeedMetadataProcessed = false;
 				}
@@ -206,42 +205,33 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case FEED:
 				if (ns == XMLNamespaces.Atom) {
 					if (tag == TAG_AUTHOR) {
-						myAuthor = new ATOMAuthor();
-						myAuthor.readAttributes(attributes);
+						myAuthor = new ATOMAuthor(attributes);
 						myState = F_AUTHOR;
 					} else if (tag == TAG_ID) {
-						myId = new ATOMId();
-						myId.readAttributes(attributes);
+						myId = new ATOMId(attributes);
 						myState = F_ID;
 					} else if (tag == TAG_ICON) {
-						myIcon = new ATOMIcon();
-						myIcon.readAttributes(attributes);
+						myIcon = new ATOMIcon(attributes);
 						myState = F_ICON;
 					} else if (tag == TAG_LINK) {
-						myLink = createLink();			// TODO
-						myLink.readAttributes(attributes);
+						myLink = createLink(attributes);			// TODO
 						myState = F_LINK;
 					} else if (tag == TAG_CATEGORY) {
-						myCategory = new ATOMCategory();
-						myCategory.readAttributes(attributes);
+						myCategory = new ATOMCategory(attributes);
 						myState = F_CATEGORY;
 					} else if (tag == TAG_TITLE) {
-						//myTitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMTitle
-						//myTitle.readAttributes(attributes);
+						//myTitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMTitle
 						myHtmlToString.setupTextContent(attributes.getValue("type"));
 						myState = F_TITLE;
 					} else if (tag == TAG_SUBTITLE) {
-						//mySubtitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMSubtitle
-						//mySubtitle.readAttributes(attributes);
+						//mySubtitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMSubtitle
 						myHtmlToString.setupTextContent(attributes.getValue("type"));
 						myState = F_SUBTITLE;
 					} else if (tag == TAG_UPDATED) {
-						myUpdated = new ATOMUpdated();
-						myUpdated.readAttributes(attributes);
+						myUpdated = new ATOMUpdated(attributes);
 						myState = F_UPDATED;
 					} else if (tag == TAG_ENTRY) {
-						myEntry = createEntry();
-						myEntry.readAttributes(attributes);
+						myEntry = createEntry(attributes);
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
 						if (myFeed != null && !myFeedMetadataProcessed) {
@@ -254,43 +244,34 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case F_ENTRY:
 				if (ns == XMLNamespaces.Atom) {
 					if (tag == TAG_AUTHOR) {
-						myAuthor = new ATOMAuthor();
-						myAuthor.readAttributes(attributes);
+						myAuthor = new ATOMAuthor(attributes);
 						myState = FE_AUTHOR;
 					} else if (tag == TAG_ID) {
-						myId = new ATOMId();
-						myId.readAttributes(attributes);
+						myId = new ATOMId(attributes);
 						myState = FE_ID;
 					} else if (tag == TAG_CATEGORY) {
-						myCategory = new ATOMCategory();
-						myCategory.readAttributes(attributes);
+						myCategory = new ATOMCategory(attributes);
 						myState = FE_CATEGORY;
 					} else if (tag == TAG_LINK) {
-						myLink = createLink();				// TODO
-						myLink.readAttributes(attributes);
+						myLink = createLink(attributes);				// TODO
 						myState = FE_LINK;
 					} else if (tag == TAG_PUBLISHED) {
-						myPublished = new ATOMPublished();
-						myPublished.readAttributes(attributes);
+						myPublished = new ATOMPublished(attributes);
 						myState = FE_PUBLISHED;
 					} else if (tag == TAG_SUMMARY) {
-						//mySummary = new ATOMSummary(); // TODO:implement ATOMTextConstruct & ATOMSummary
-						//mySummary.readAttributes(attributes);
+						//mySummary = new ATOMSummary(attributes); // TODO:implement ATOMTextConstruct & ATOMSummary
 						myHtmlToString.setupTextContent(attributes.getValue("type"));
 						myState = FE_SUMMARY;
 					} else if (tag == TAG_CONTENT) {
-						//myConent = new ATOMContent(); // TODO:implement ATOMContent
-						//myConent.readAttributes(attributes);
+						//myConent = new ATOMContent(attributes); // TODO:implement ATOMContent
 						myHtmlToString.setupTextContent(attributes.getValue("type"));
 						myState = FE_CONTENT;
 					} else if (tag == TAG_TITLE) {
-						//myTitle = new ATOMTitle(); // TODO:implement ATOMTextConstruct & ATOMTitle
-						//myTitle.readAttributes(attributes);
+						//myTitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMTitle
 						myHtmlToString.setupTextContent(attributes.getValue("type"));
 						myState = FE_TITLE;
 					} else if (tag == TAG_UPDATED) {
-						myUpdated = new ATOMUpdated();
-						myUpdated.readAttributes(attributes);
+						myUpdated = new ATOMUpdated(attributes);
 						myState = FE_UPDATED;
 					}
 				}

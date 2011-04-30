@@ -21,17 +21,14 @@ package org.geometerplus.fbreader.network.atom;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-
 public class ATOMGenerator extends ATOMCommonAttributes {
-
 	public static final String URI = "uri";
 	public static final String VERSION = "version";
 
 	public String Text;
 
-	@Override
-	public void readAttributes(ZLStringMap source) {
-		super.readAttributes(source);
+	protected ATOMGenerator(ZLStringMap source) {
+		super(source);
 		readAttribute(URI, source);
 		readAttribute(VERSION, source);
 	}
