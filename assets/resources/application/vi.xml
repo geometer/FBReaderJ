@@ -574,6 +574,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Đang tải sách về %s"/>
 			<node name="search" value="Đang tìm. Xin chờ..."/>
+			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
 			<node name="loadingBook" value="Đang mở sách. Xin chờ..."/>
 			<node name="loadingBookList" value="Đang mở thư viện. Xin chờ..."/>
 			<node name="creatingBooksDatabase" value="Đang tạo kho sách. Xin chờ..."/>

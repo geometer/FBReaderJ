@@ -19,5 +19,10 @@
 
 package org.geometerplus.fbreader.network.atom;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
 public class ATOMAuthor extends ATOMPersonConstruct {
+	protected ATOMAuthor(ZLStringMap attributes) {
+		super(attributes);
+	}
 }

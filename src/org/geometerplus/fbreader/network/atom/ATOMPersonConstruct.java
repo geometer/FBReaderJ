@@ -19,11 +19,16 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-abstract class ATOMPersonConstruct extends ATOMCommonAttributes {
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+abstract class ATOMPersonConstruct extends ATOMCommonAttributes {
 	public String Name;
 	public String Uri;
 	public String Email;
+
+	protected ATOMPersonConstruct(ZLStringMap attributes) {
+		super(attributes);
+	}
 
 	@Override
 	public String toString() {
