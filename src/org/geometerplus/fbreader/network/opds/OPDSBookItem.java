@@ -223,11 +223,9 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				FLAG = true;
 				new OPDSXMLReader(
 					new SingleEntryFeedHandler(url), true
 				).read(inputStream);
-				FLAG = false;
 				myInformationIsFull = true;
 			}
 		});
