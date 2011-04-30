@@ -174,9 +174,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			item instanceof NetworkURLCatalogItem ? (NetworkURLCatalogItem)item : null;
 
 		prepareOptionsItem(menu, RELOAD_ITEM_ID,
-				urlItem != null &&
-				urlItem.getUrl(UrlInfo.Type.Catalog) != null &&
-				!NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey())
+			urlItem != null &&
+			urlItem.getUrl(UrlInfo.Type.Catalog) != null &&
+			ItemsLoadingService.getRunnable(tree) == null
 		);
 
 		boolean signIn = false;
@@ -293,12 +293,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 
 	private static class ExpandCatalogHandler extends ItemsLoadingHandler {
-		private final NetworkTree.Key myKey;
 		private final NetworkCatalogTree myTree;
 
-		ExpandCatalogHandler(NetworkCatalogTree tree, NetworkTree.Key key) {
+		ExpandCatalogHandler(NetworkCatalogTree tree) {
 			myTree = tree;
-			myKey = key;
 		}
 
 		@Override
@@ -342,7 +340,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			if (!NetworkView.Instance().isInitialized()) {
 				return;
 			}
-			final NetworkCatalogActivity activity = NetworkView.Instance().getOpenedActivity(myKey);
+			final NetworkCatalogActivity activity = NetworkCatalogActivity.getByTree(myTree);
 			if (activity == null) {
 				return;
 			}
@@ -408,7 +406,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	private void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		final NetworkTree.Key key = tree.getUniqueKey();
 		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
@@ -437,10 +434,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				 * 2) If there is no activity, then save message, and show when activity is created
 				 * 3) Remove unused messages (say, by timeout)
 				 */
-				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, key);
-				NetworkView.Instance().startItemsLoading(
+				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
+				ItemsLoadingService.start(
 					activity,
-					key,
+					tree,
 					new ExpandCatalogRunnable(handler, tree, true, resumeNotLoad)
 				);
 				processExtraData(activity, tree.Item.extraData(), new Runnable() {
@@ -453,17 +450,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
-		final NetworkTree.Key key = tree.getUniqueKey();
-		if (NetworkView.Instance().containsItemsLoadingRunnable(key)) {
+		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
 		tree.ChildrenItems.clear();
 		tree.clear();
 		NetworkView.Instance().fireModelChangedAsync();
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree, key);
-		NetworkView.Instance().startItemsLoading(
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
+		ItemsLoadingService.start(
 			activity,
-			key,
+			tree,
 			new ExpandCatalogRunnable(handler, tree, false, false)
 		);
 	}

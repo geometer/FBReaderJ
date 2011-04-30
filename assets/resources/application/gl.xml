@@ -574,6 +574,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Descargando o libro %s"/>
 			<node name="search" value="Buscando. Agarde..."/>
+			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
 			<node name="loadingBook" value="Abrindo o libro. Agarde..."/>
 			<node name="loadingBookList" value="Abrindo a biblioteca. Agarde..."/>
 			<node name="creatingBooksDatabase" value="Creando a base de datos de libros. Agarde..."/>

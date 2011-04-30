@@ -17,27 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.atom;
+package org.geometerplus.fbreader.network.urlInfo;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+public class TitledUrlInfo extends UrlInfo {
+	private static final long serialVersionUID = -893514485257788098L;
 
-abstract class ATOMPersonConstruct extends ATOMCommonAttributes {
-	public String Name;
-	public String Uri;
-	public String Email;
+	public final String Title;
 
-	protected ATOMPersonConstruct(ZLStringMap attributes) {
-		super(attributes);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder buf = new StringBuilder("[");
-		buf.append(super.toString());
-		buf.append(",\nName=").append(Name);
-		buf.append(",\nUri=").append(Uri);
-		buf.append(",\nEmail=").append(Email);
-		buf.append("]");
-		return buf.toString();
+	public TitledUrlInfo(Type type, String title, String url) {
+		super(type, url);
+		Title = title;
 	}
 }

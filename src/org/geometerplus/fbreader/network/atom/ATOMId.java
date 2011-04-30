@@ -19,9 +19,18 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-public class ATOMId extends ATOMCommonAttributes {
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+public class ATOMId extends ATOMCommonAttributes {
 	public String Uri;
+
+	public ATOMId() {
+		this(new ZLStringMap());
+	}
+
+	protected ATOMId(ZLStringMap attributes) {
+		super(attributes);
+	}
 
 	@Override
 	public boolean equals(Object o) {

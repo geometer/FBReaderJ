@@ -35,8 +35,8 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
 	//private ATOMSummary mySummary;  // TODO: implement ATOMTextConstruct & ATOMSummary
 
-	public OPDSXMLReader(ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> handler) {
-		super(handler);
+	public OPDSXMLReader(ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> handler, boolean readEntryNotFeed) {
+		super(handler, readEntryNotFeed);
 	}
 
 	protected final OPDSFeedMetadata getOPDSFeed() {
@@ -79,18 +79,18 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	private static final String OPENSEARCH_TAG_STARTINDEX = "startIndex";
 
 	@Override
-	protected OPDSFeedMetadata createFeed() {
-		return new OPDSFeedMetadata();
+	protected OPDSFeedMetadata createFeed(ZLStringMap attributes) {
+		return new OPDSFeedMetadata(attributes);
 	}
 
 	@Override
-	protected OPDSLink createLink() {
-		return new OPDSLink();
+	protected OPDSLink createLink(ZLStringMap attributes) {
+		return new OPDSLink(attributes);
 	}
 
 	@Override
-	protected OPDSEntry createEntry() {
-		return new OPDSEntry();
+	protected OPDSEntry createEntry(ZLStringMap attributes) {
+		return new OPDSEntry(attributes);
 	}
 
 	@Override
@@ -115,8 +115,7 @@ public class OPDSXMLReader extends ATOMXMLReader {
 					if (tag == DC_TAG_LANGUAGE) {
 						myState = FE_DC_LANGUAGE;
 					} else if (tag == DC_TAG_ISSUED) {
-						myDCIssued = new DCDate();
-						myDCIssued.readAttributes(attributes);
+						myDCIssued = new DCDate(attributes);
 						myState = FE_DC_ISSUED;
 					} else if (tag == DC_TAG_PUBLISHER) {
 						myState = FE_DC_PUBLISHER;

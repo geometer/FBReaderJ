@@ -237,10 +237,23 @@ class NetworkBookActions extends NetworkTreeActions {
 		}
 	}
 
-	static boolean runActionStatic(Activity activity, NetworkBookTree tree, int actionCode) {
+	static boolean runActionStatic(Activity activity, final NetworkBookTree tree, int actionCode) {
 		switch (actionCode) {
 			case SHOW_BOOK_ACTIVITY_ITEM_ID:
-				Util.openTree(activity, tree);
+				if (tree.Book.isFullyLoaded()) {
+					Util.openTree(activity, tree);
+				} else {
+					UIUtil.wait("loadInfo", new Runnable() {
+						public void run() {
+							try {
+								tree.Book.loadFullInformation();
+							} catch (ZLNetworkException e) {
+								e.printStackTrace();
+							}
+						}
+					}, activity);
+					Util.openTree(activity, tree);
+				}
 				return true;
 			default:
 				return runActionStatic(activity, tree.Book, actionCode);

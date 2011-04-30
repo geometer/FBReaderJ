@@ -23,11 +23,11 @@ import java.util.Currency;
 import java.util.LinkedList;
 import java.util.Locale;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
 import org.geometerplus.fbreader.network.atom.ATOMLink;
 
-
 class OPDSPrice {
-
 	public final String Price;
 	public final String Currency;
 
@@ -41,9 +41,12 @@ class OPDSPrice {
 }
 
 class OPDSLink extends ATOMLink {
-
 	public final LinkedList<OPDSPrice> Prices = new LinkedList<OPDSPrice>();
 	public final LinkedList<String> Formats = new LinkedList<String>();
+
+	protected OPDSLink(ZLStringMap attributes) {
+		super(attributes);
+	}
 
 	private OPDSPrice getPrice(String currency) {
 		for (OPDSPrice p: Prices) {

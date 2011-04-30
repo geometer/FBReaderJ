@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.atom.ATOMLink;
@@ -51,12 +51,12 @@ class OPDSCatalogInfoHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEnt
 		Summary = feed.Subtitle;
 
 		for (ATOMLink link: feed.Links) {
-			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final MimeType type = MimeType.get(link.getType());
 			final String rel = myLink.relation(link.getRel(), type);
 			if (rel == "search") {
-				if (type == MimeTypes.MIME_APP_OPENSEARCHDESCRIPTION) {
+				if (MimeType.APP_OPENSEARCHDESCRIPTION.equals(type)) {
 					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
-				} else if (type == MimeTypes.MIME_APP_ATOM) {
+				} else if (MimeType.APP_ATOM.equals(type)) {
 					final String template = ZLNetworkUtil.url(myBaseURL, link.getHref());
 					final OpenSearchDescription descr = OpenSearchDescription.createDefault(template);
 					if (descr.isValid()) {

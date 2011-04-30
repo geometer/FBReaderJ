@@ -21,16 +21,18 @@ package org.geometerplus.zlibrary.core.image;
 
 import java.io.InputStream;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
+
 public abstract class ZLSingleImage implements ZLImage {
-	private final String myMimeType;
+	private final MimeType myMimeType;
 	
-	public ZLSingleImage(final String mimeType) {
+	public ZLSingleImage(final MimeType mimeType) {
 		myMimeType = mimeType;
 	}
 
 	public abstract InputStream inputStream();
 
-	public final String mimeType() {
+	public final MimeType mimeType() {
 		return myMimeType;
 	}
 }
