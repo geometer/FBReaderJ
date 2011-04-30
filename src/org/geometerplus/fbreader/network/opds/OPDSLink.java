@@ -41,7 +41,6 @@ class OPDSPrice {
 }
 
 class OPDSLink extends ATOMLink {
-
 	public final LinkedList<OPDSPrice> Prices = new LinkedList<OPDSPrice>();
 	public final LinkedList<String> Formats = new LinkedList<String>();
 

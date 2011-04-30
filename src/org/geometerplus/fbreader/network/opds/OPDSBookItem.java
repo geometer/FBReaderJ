@@ -127,6 +127,12 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 					collectReferences(urls, opdsLink, href,
 							UrlInfo.Type.BookBuy, price, false);
 				}
+			} else if (referenceType == UrlInfo.Type.Related) {
+				urls.addInfo(new TitledUrlInfo(referenceType, link.getTitle(), href));
+			} else if (referenceType == UrlInfo.Type.Comments) {
+				urls.addInfo(new TitledUrlInfo(referenceType, link.getTitle(), href));
+			} else if (referenceType == UrlInfo.Type.TOC) {
+				urls.addInfo(new UrlInfo(referenceType, href));
 			} else if (referenceType != null) {
 				final int format = formatByMimeType(type);
 				if (format != BookUrlInfo.Format.NONE) {
@@ -152,6 +158,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			return UrlInfo.Type.Related;
 		} else if (REL_CONTENTS.equals(rel)) {
 			return UrlInfo.Type.TOC;
+		} else if (REL_REPLIES.equals(rel)) {
+			return UrlInfo.Type.Comments;
 		} else {
 			return null;
 		}
@@ -215,16 +223,21 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
+				FLAG = true;
 				new OPDSXMLReader(
 					new SingleEntryFeedHandler(url), true
 				).read(inputStream);
+				FLAG = false;
 				myInformationIsFull = true;
 			}
 		});
 	}
 
 	private class SingleEntryFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
+		private final String myUrl;
+
 		SingleEntryFeedHandler(String url) {
+			myUrl = url;
 		}
 
 		public void processFeedStart() {
@@ -235,7 +248,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		}
 
 		public boolean processFeedEntry(OPDSEntry entry) {
-			System.err.println("ENTRY:" + entry.Title);
+			addUrls(getUrls((OPDSNetworkLink)Link, entry, myUrl));
 			return false;
 		}
 
