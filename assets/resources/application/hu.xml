@@ -574,6 +574,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Könyv letöltése %s"/>
 			<node name="search" value="Keresés. Egy kis türelmet..."/>
+			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
 			<node name="loadingBook" value="Könyv megnyitása. Egy kis türelmet..."/>
 			<node name="loadingBookList" value="Könyvtár megnyitása. Egy kis türelmet..."/>
 			<node name="creatingBooksDatabase" value="Adatbázis létrehozása. Egy kis türelmet..."/>

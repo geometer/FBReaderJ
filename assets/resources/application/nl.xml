@@ -574,6 +574,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Boek %s wordt gedownload" />
 			<node name="search" value="Bezig met zoeken. Een ogenblik..." />
+			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
 			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik..." />
 			<node name="loadingBookList" value="Bibliotheek wordt geladen. Een ogenblik..." />
 			<node name="creatingBooksDatabase" value="Boekendatabase wordt gemaakt. Een ogenblik..." />
