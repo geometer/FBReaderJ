@@ -21,8 +21,8 @@ package org.geometerplus.fbreader.network;
 
 import java.io.*;
 
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLBase64EncodedImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
 
@@ -31,8 +31,7 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 
 	private String myDecodedFileName;
 
-	// mimeType string MUST be interned
-	public Base64EncodedImage(String mimeType) {
+	public Base64EncodedImage(MimeType mimeType) {
 		super(mimeType);
 		new File(makeImagesDir()).mkdirs();
 	}
@@ -43,10 +42,10 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 
 	public void setData(String data) {
 		myDecodedFileName = makeImagesDir() + File.separator + Integer.toHexString(data.hashCode());
-		String type = mimeType();
-		if (type == MimeTypes.MIME_IMAGE_PNG) {
+		final MimeType type = mimeType();
+		if (MimeType.IMAGE_PNG.equals(type)) {
 			myDecodedFileName += ".png";
-		} else if (type == MimeTypes.MIME_IMAGE_JPEG) {
+		} else if (MimeType.IMAGE_JPEG.equals(type)) {
 			myDecodedFileName += ".jpg";
 		}
 

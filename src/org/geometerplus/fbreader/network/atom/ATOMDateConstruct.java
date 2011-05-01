@@ -19,8 +19,9 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-public abstract class ATOMDateConstruct extends ATOMCommonAttributes implements Comparable<ATOMDateConstruct> {
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
+public abstract class ATOMDateConstruct extends ATOMCommonAttributes implements Comparable<ATOMDateConstruct> {
 	public int Year;
 	public int Month;
 	public int Day;
@@ -31,9 +32,11 @@ public abstract class ATOMDateConstruct extends ATOMCommonAttributes implements 
 	public int TZHour;
 	public int TZMinutes;
 
-	public ATOMDateConstruct() {
+	public ATOMDateConstruct(ZLStringMap attributes) {
+		super(attributes);
 	}
 
+	/*
 	public ATOMDateConstruct(int year) {
 		Year = year;
 	}
@@ -74,6 +77,7 @@ public abstract class ATOMDateConstruct extends ATOMCommonAttributes implements 
 		TZMinutes = tzminutes;
 		SecondFraction = sfract;
 	}
+	*/
 
 	public static boolean parse(String str, ATOMDateConstruct dateTime) {
 		dateTime.Year = 0;

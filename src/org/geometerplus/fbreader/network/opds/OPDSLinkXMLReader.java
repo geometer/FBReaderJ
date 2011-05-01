@@ -22,8 +22,8 @@ package org.geometerplus.fbreader.network.opds;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeTypes {
+class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 	private static class FeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
 		private NetworkLibrary.OnNewLinkListener myListener;
 
@@ -102,22 +102,22 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				new HashMap<String,NetworkCatalogItem.Accessibility>();
 			for (ATOMLink link: entry.Links) {
 				final String href = link.getHref();
-				final String type = ZLNetworkUtil.filterMimeType(link.getType());
+				final MimeType type = MimeType.get(link.getType());
 				final String rel = link.getRel();
 				if (rel == REL_IMAGE_THUMBNAIL || rel == REL_THUMBNAIL) {
-					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
+					if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Thumbnail, href));
 					}
 				} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || rel == REL_COVER) {
-					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
+					if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Image, href));
 					}
 				} else if (rel == null) {
-					if (type == MIME_APP_ATOM) {
+					if (MimeType.APP_ATOM.equals(type)) {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href));
 					}
 				} else if (rel == "search") {
-					if (type == MIME_APP_ATOM) {
+					if (MimeType.APP_ATOM.equals(type)) {
 						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href);
 						if (descr.isValid()) {
 							// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
@@ -223,11 +223,11 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 	}
 
 	public OPDSLinkXMLReader() {
-		super(new FeedHandler(null, null));
+		super(new FeedHandler(null, null), false);
 	}
 
 	public OPDSLinkXMLReader(NetworkLibrary.OnNewLinkListener listener, ATOMUpdated readAfter) {
-		super(new FeedHandler(listener, readAfter));
+		super(new FeedHandler(listener, readAfter), false);
 	}
 
 	private FeedHandler getFeedHandler() {

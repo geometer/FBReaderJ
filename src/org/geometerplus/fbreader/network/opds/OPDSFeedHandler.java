@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.*;
@@ -30,7 +30,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfIt
 import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants, MimeTypes {
+class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
 	private final String myBaseURL;
 	private final OPDSCatalogItem.State myData;
 
@@ -77,9 +77,9 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 		}
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link: feed.Links) {
-			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final MimeType type = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
-			if (MIME_APP_ATOM.equals(type) && "next".equals(rel)) {
+			if (MimeType.APP_ATOM.equals(type) && "next".equals(rel)) {
 				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 		}
@@ -113,10 +113,10 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		for (ATOMLink link: entry.Links) {
-			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final MimeType type = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 
-			if (rel == null && MIME_APP_ATOM.equals(type)) {
+			if (rel == null && MimeType.APP_ATOM.equals(type)) {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 			int relType = BookUrlInfo.Format.NONE;
@@ -163,7 +163,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
 		boolean hasBookLink = false;
 		for (ATOMLink link: entry.Links) {
-			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final MimeType type = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 			if (rel == null
 					? (OPDSBookItem.formatByMimeType(type) != BookUrlInfo.Format.NONE)
@@ -195,15 +195,15 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 		int catalogType = NetworkCatalogItem.FLAGS_DEFAULT;
 		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
-			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final MimeType type = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
-			if (MIME_IMAGE_PNG.equals(type) || MIME_IMAGE_JPEG.equals(type)) {
+			if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 				if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href));
 				} else if (REL_COVER.equals(rel) || (rel != null && rel.startsWith(REL_IMAGE_PREFIX))) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
-			} else if (MIME_APP_ATOM.equals(type)) {
+			} else if (MimeType.APP_ATOM.equals(type)) {
 				final boolean hasCatalogUrl =
 					urlMap.getInfo(UrlInfo.Type.Catalog) != null;
 				if (REL_ALTERNATE.equals(rel)) {
@@ -220,14 +220,14 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 						catalogType &= ~NetworkCatalogItem.FLAGS_GROUP;
 					}
 				}
-			} else if (MIME_TEXT_HTML.equals(type)) {
+			} else if (MimeType.TEXT_HTML.equals(type)) {
 				if (REL_ACQUISITION.equals(rel) ||
 					REL_ACQUISITION_OPEN.equals(rel) ||
 					REL_ALTERNATE.equals(rel) ||
 					rel == null) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.HtmlPage, href));
 				}
-			} else if (MIME_APP_LITRES.equals(type)) {
+			} else if (MimeType.APP_LITRES.equals(type)) {
 				urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
 				litresRel = rel;
 			}
