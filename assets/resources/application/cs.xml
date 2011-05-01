@@ -130,6 +130,7 @@
 		<node name="indexInSeries" value="Díl v sérii:"/>
 		<node name="tags" value="Štítky:"/>
 		<node name="catalog" value="Katalog:"/>
+		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informace o knize"/>

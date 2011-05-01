@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+>
+	<TextView
+		android:id="@+id/extra_link_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:minHeight="?android:attr/listPreferredItemHeight"
+		android:gravity="center_vertical|left"
+		android:paddingLeft="5dip"
+		android:paddingRight="8dp"
+		android:singleLine="true"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+	/>
+  <View
+		android:id="@+id/extra_link_divider"
+		android:layout_width="fill_parent"
+    android:layout_height="1dip"
+    android:background="?android:attr/listDivider"
+  />
+</LinearLayout>

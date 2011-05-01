@@ -19,13 +19,17 @@
 
 package org.geometerplus.fbreader.network.urlInfo;
 
-public class TitledUrlInfo extends UrlInfo {
+import org.geometerplus.zlibrary.core.util.MimeType;
+
+public class RelatedUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788098L;
 
 	public final String Title;
+	public final MimeType Mime;
 
-	public TitledUrlInfo(Type type, String title, String url) {
+	public RelatedUrlInfo(Type type, String title, MimeType mime, String url) {
 		super(type, url);
 		Title = title;
+		Mime = mime;
 	}
 }
