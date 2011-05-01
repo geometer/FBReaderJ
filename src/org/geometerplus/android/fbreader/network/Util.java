@@ -232,7 +232,7 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	private static final String TREE_KEY_KEY = "org.geometerplus.android.fbreader.network.TreeKey";
+	static final String TREE_KEY_KEY = "org.geometerplus.android.fbreader.network.TreeKey";
 
 	static void openTree(Context context, NetworkTree tree) {
 		final Class<?> clz = tree instanceof NetworkBookTree

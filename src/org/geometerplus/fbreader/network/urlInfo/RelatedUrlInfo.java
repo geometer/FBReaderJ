@@ -17,27 +17,19 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.atom;
+package org.geometerplus.fbreader.network.urlInfo;
 
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
-abstract class ATOMPersonConstruct extends ATOMCommonAttributes {
-	public String Name;
-	public String Uri;
-	public String Email;
+public class RelatedUrlInfo extends UrlInfo {
+	private static final long serialVersionUID = -893514485257788098L;
 
-	protected ATOMPersonConstruct(ZLStringMap attributes) {
-		super(attributes);
-	}
+	public final String Title;
+	public final MimeType Mime;
 
-	@Override
-	public String toString() {
-		StringBuilder buf = new StringBuilder("[");
-		buf.append(super.toString());
-		buf.append(",\nName=").append(Name);
-		buf.append(",\nUri=").append(Uri);
-		buf.append(",\nEmail=").append(Email);
-		buf.append("]");
-		return buf.toString();
+	public RelatedUrlInfo(Type type, String title, MimeType mime, String url) {
+		super(type, url);
+		Title = title;
+		Mime = mime;
 	}
 }

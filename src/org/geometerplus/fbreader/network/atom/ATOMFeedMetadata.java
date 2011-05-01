@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network.atom;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
 public class ATOMFeedMetadata extends ATOMCommonAttributes {
 	public ATOMId Id;
 
@@ -35,4 +37,8 @@ public class ATOMFeedMetadata extends ATOMCommonAttributes {
 	public String Subtitle; // TODO: implement ATOMTextConstruct
 	public String Title;    // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
+
+	protected ATOMFeedMetadata(ZLStringMap source) {
+		super(source);
+	}
 }

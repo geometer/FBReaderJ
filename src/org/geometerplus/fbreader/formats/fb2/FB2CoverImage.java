@@ -20,10 +20,10 @@
 package org.geometerplus.fbreader.formats.fb2;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.*;
 
 class FB2CoverImage extends ZLImageProxy {
@@ -85,7 +85,7 @@ class FB2CoverImage extends ZLImageProxy {
 					final String contentType = attributes.getValue("content-type");
 					if (id != null && contentType != null && myImageReference.equals(id)) {
 						// FIXME: make different Base64EncodedImage constructor to use another cache for covers
-						myImage = new Base64EncodedImage((contentType != null) ? contentType : MimeTypes.MIME_IMAGE_AUTO);
+						myImage = new Base64EncodedImage(contentType != null ? MimeType.get(contentType) : MimeType.IMAGE_AUTO);
 					}
 				}
 				break;

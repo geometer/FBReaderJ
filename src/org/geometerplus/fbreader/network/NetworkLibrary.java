@@ -151,7 +151,8 @@ public class NetworkLibrary {
 		return filteredList;
 	}
 
-	private final RootTree myRootTree = new RootTree();
+	private final RootTree myRootTree = new RootTree("@Root");
+	private final RootTree myFakeRootTree = new RootTree("@FakeRoot");
 	private SearchItemTree mySearchItemTree;
 
 	private boolean myChildrenAreInvalid = true;
@@ -404,12 +405,29 @@ public class NetworkLibrary {
 		return mySearchItemTree;
 	}
 
+	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {
+		final String id = item.getStringId();
+		for (FBTree tree : myFakeRootTree.subTrees()) {
+			final NetworkCatalogTree ncTree = (NetworkCatalogTree)tree;
+			if (id.equals(ncTree.getUniqueKey().Id)) {
+				return ncTree;
+			}
+		}
+		return new NetworkCatalogTree(myFakeRootTree, item, 0);
+	}
+
 	public NetworkTree getTreeByKey(NetworkTree.Key key) {
 		if (key == null) {
 			return null;
 		}
 		if (key.Parent == null) {
-			return key.equals(myRootTree.getUniqueKey()) ? myRootTree : null;
+			if (key.equals(myRootTree.getUniqueKey())) {
+				return myRootTree;
+			}
+			if (key.equals(myFakeRootTree.getUniqueKey())) {
+				return myFakeRootTree;
+			}
+			return null;
 		}
 		final NetworkTree parentTree = getTreeByKey(key.Parent);
 		if (parentTree == null) {

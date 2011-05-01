@@ -19,17 +19,47 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
 import android.os.IBinder;
 import android.os.Handler;
 import android.os.Message;
-import android.app.Service;
-import android.content.Intent;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 
 public class ItemsLoadingService extends Service {
+	private static final String KEY = "ItemsLoadingRunnable";
 
-	public static final String ITEMS_LOADING_RUNNABLE_KEY = "org.geometerplus.android.fbreader.network.ItemsLoadingRunnable";
+	static void start(Context context, NetworkTree tree, ItemsLoadingRunnable runnable) {
+		boolean doDownload = false;
+		synchronized (tree) {
+			if (tree.getUserData(KEY) == null) {
+				tree.setUserData(KEY, runnable);
+				doDownload = true;
+			}
+		}
+		if (doDownload) {
+			context.startService(
+				new Intent(context.getApplicationContext(), ItemsLoadingService.class)
+					.putExtra(Util.TREE_KEY_KEY, tree.getUniqueKey())
+			);
+		}
+	}
+
+	static ItemsLoadingRunnable getRunnable(NetworkTree tree) {
+		return (ItemsLoadingRunnable)tree.getUserData(KEY);
+	}
+
+	private static void removeRunnable(NetworkTree tree) {
+		synchronized (tree) {
+			ItemsLoadingRunnable runnable = (ItemsLoadingRunnable)tree.getUserData(KEY);
+			if (runnable != null) {
+				tree.setUserData(KEY, null);
+				runnable.runFinishHandler();
+			}
+		}
+	}
 
 	private volatile int myServiceCounter;
 
@@ -54,18 +84,19 @@ public class ItemsLoadingService extends Service {
 		super.onStart(intent, startId);
 		doStart();
 
-		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(ITEMS_LOADING_RUNNABLE_KEY);
-		if (key == null) {
+		final NetworkTree tree = Util.getTreeFromIntent(intent);
+		if (tree == null) {
 			doStop();
 			return;
 		}
-		intent.removeExtra(ITEMS_LOADING_RUNNABLE_KEY);
+		intent.removeExtra(Util.TREE_KEY_KEY);
 
 		if (!NetworkView.Instance().isInitialized()) {
 			doStop();
 			return;
 		}
-		final ItemsLoadingRunnable runnable = NetworkView.Instance().getItemsLoadingRunnable(key);
+
+		final ItemsLoadingRunnable runnable = getRunnable(tree);
 		if (runnable == null) {
 			doStop();
 			return;
@@ -74,8 +105,8 @@ public class ItemsLoadingService extends Service {
 		final Handler finishHandler = new Handler() {
 			public void handleMessage(Message message) {
 				doStop();
+				removeRunnable(tree);
 				if (NetworkView.Instance().isInitialized()) {
-					NetworkView.Instance().removeItemsLoadingRunnable(key);
 					NetworkView.Instance().fireModelChangedAsync();
 				}
 			}

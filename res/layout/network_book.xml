@@ -119,6 +119,17 @@
 				android:padding="10dp"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 			/>
+			<TextView
+				android:id="@+id/network_book_extra_links_title"
+				style="?android:attr/listSeparatorTextViewStyle"
+			/>
+			<LinearLayout
+				android:id="@+id/network_book_extra_links"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+			>
+			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
 </RelativeLayout>
