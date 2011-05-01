@@ -40,8 +40,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -166,10 +165,16 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 				linkView = inflater.inflate(R.layout.extra_link_item, extraLinkSection, false);
 				linkView.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View view) {
-						if (MimeType.TEXT_HTML.equals(relatedInfo.Mime)) {
+						final NetworkCatalogItem catalogItem =
+							myBook.createRelatedCatalogItem(relatedInfo);
+						if (catalogItem != null) {
+							NetworkCatalogActions.doExpandCatalog(
+								NetworkBookInfoActivity.this,
+								NetworkLibrary.Instance().getFakeCatalogTree(catalogItem)
+							);
+						} else if (MimeType.TEXT_HTML.equals(relatedInfo.Mime)) {
 							Util.openInBrowser(NetworkBookInfoActivity.this, relatedInfo.Url);
 						}
-						System.err.println(relatedInfo.Url);
 					}
 				});
 				((TextView)linkView.findViewById(R.id.extra_link_title)).setText(relatedInfo.Title);

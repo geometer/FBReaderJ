@@ -236,6 +236,13 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		});
 	}
 
+	public OPDSCatalogItem createRelatedCatalogItem(RelatedUrlInfo info) {
+		if (MimeType.APP_ATOM.equals(info.Mime)) {
+			return new OPDSCatalogItem((OPDSNetworkLink)Link, info);
+		}
+		return null;
+	}
+
 	private class SingleEntryFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
 		private final String myUrl;
 

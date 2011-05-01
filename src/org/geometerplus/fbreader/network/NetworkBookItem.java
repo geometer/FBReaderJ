@@ -116,6 +116,10 @@ public class NetworkBookItem extends NetworkItem {
 	public void loadFullInformation() throws ZLNetworkException {
 	}
 
+	public NetworkCatalogItem createRelatedCatalogItem(RelatedUrlInfo info) {
+		return null;
+	}
+
 	public BookUrlInfo reference(UrlInfo.Type type) {
 		BookUrlInfo reference = null;
 		for (UrlInfo r : getAllInfos(type)) {
