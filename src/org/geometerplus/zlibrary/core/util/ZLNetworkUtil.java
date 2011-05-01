@@ -123,15 +123,4 @@ public class ZLNetworkUtil {
 	public static String getUserAgent() {
 		return "FBReader/" + ZLibrary.Instance().getVersionName() + "(java)";
 	}
-
-	public static String filterMimeType(String mime) {
-		if (mime == null) {
-			return null;
-		}
-		final int index = mime.indexOf(';');
-		if (index != -1) {
-			return mime.substring(0, index).intern();
-		}
-		return mime.intern();
-	}
 }

@@ -126,6 +126,7 @@
 		<node name="indexInSeries" value="Índices das series:" />
 		<node name="tags" value="Etiquetas:" />
 		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Información do libro" />
@@ -574,6 +575,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Descargando o libro %s"/>
 			<node name="search" value="Buscando. Agarde..."/>
+			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
 			<node name="loadingBook" value="Abrindo o libro. Agarde..."/>
 			<node name="loadingBookList" value="Abrindo a biblioteca. Agarde..."/>
 			<node name="creatingBooksDatabase" value="Creando a base de datos de libros. Agarde..."/>
