@@ -126,6 +126,7 @@
 		<node name="indexInSeries" value="Chỉ mục trong bộ:" />
 		<node name="tags" value="Từ khóa:" />
 		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Thông tin sách" />

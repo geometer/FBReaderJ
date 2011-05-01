@@ -126,6 +126,7 @@
 		<node name="indexInSeries" value="Nummer in serie:" />
 		<node name="tags" value="Trefwoorden:" />
 		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Boekinformatie" />
