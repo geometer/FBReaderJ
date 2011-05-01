@@ -1,4 +1,5 @@
-===== 1.0.10 (??? ??, 2011) =====
+===== 1.0.10 (May 02, 2011) =====
+* LitRes: sort books by date of purchasing
 * Fixed book downloading service (book-by-link-downloading works again)
 * Old authentication dialog has gone
 * 'Unencrypted protocol' warning message has been restored
