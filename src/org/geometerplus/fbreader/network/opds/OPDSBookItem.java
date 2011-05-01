@@ -128,9 +128,9 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 							UrlInfo.Type.BookBuy, price, false);
 				}
 			} else if (referenceType == UrlInfo.Type.Related) {
-				urls.addInfo(new TitledUrlInfo(referenceType, link.getTitle(), href));
+				urls.addInfo(new RelatedUrlInfo(referenceType, link.getTitle(), type, href));
 			} else if (referenceType == UrlInfo.Type.Comments) {
-				urls.addInfo(new TitledUrlInfo(referenceType, link.getTitle(), href));
+				urls.addInfo(new RelatedUrlInfo(referenceType, link.getTitle(), type, href));
 			} else if (referenceType == UrlInfo.Type.TOC) {
 				urls.addInfo(new UrlInfo(referenceType, href));
 			} else if (referenceType != null) {
@@ -234,6 +234,13 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				myInformationIsFull = true;
 			}
 		});
+	}
+
+	public OPDSCatalogItem createRelatedCatalogItem(RelatedUrlInfo info) {
+		if (MimeType.APP_ATOM.equals(info.Mime)) {
+			return new OPDSCatalogItem((OPDSNetworkLink)Link, info);
+		}
+		return null;
 	}
 
 	private class SingleEntryFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {

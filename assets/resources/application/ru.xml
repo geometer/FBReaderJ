@@ -125,6 +125,7 @@
 		<node name="indexInSeries" value="Номер в серии:" />
 		<node name="tags" value="Категории:" />
 		<node name="catalog" value="Каталог:" />
+		<node name="extraLinks" value="Ссылки" />
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Информация о книге" />

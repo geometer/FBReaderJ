@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
+import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.view.MenuItem;
@@ -132,7 +133,7 @@ class NetworkView {
 	 * Code for loading network items (running items-loading service and managing items-loading runnables).
 	 */
 
-	public void tryResumeLoading(NetworkBaseActivity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
+	public void tryResumeLoading(Activity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
 		final ItemsLoadingRunnable runnable = ItemsLoadingService.getRunnable(tree);
 		if (runnable != null && runnable.tryResumeLoading()) {
 			Util.openTree(activity, tree);

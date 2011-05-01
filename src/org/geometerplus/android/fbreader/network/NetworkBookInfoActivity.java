@@ -19,34 +19,30 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.Set;
+import java.util.*;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.ContextMenu;
-import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
 	private NetworkBookItem myBook;
@@ -98,6 +94,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			setTitle(myBook.Title);
         
 			setupDescription();
+			setupExtraLinks();
 			setupInfo();
 			setupCover();
 			setupButtons();
@@ -147,6 +144,44 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			description = myResource.getResource("noDescription").getValue();
 		}
 		setTextById(R.id.network_book_description, description);
+	}
+
+	private final void setupExtraLinks() {
+		final List<UrlInfo> extraLinks = myBook.getAllInfos(UrlInfo.Type.Related);
+		if (extraLinks.isEmpty()) {
+			findViewById(R.id.network_book_extra_links_title).setVisibility(View.GONE);
+			findViewById(R.id.network_book_extra_links).setVisibility(View.GONE);
+		} else {
+			setTextFromResource(R.id.network_book_extra_links_title, "extraLinks");
+			final LinearLayout extraLinkSection =
+				(LinearLayout)findViewById(R.id.network_book_extra_links);
+			final LayoutInflater inflater = getLayoutInflater();
+			View linkView = null;
+			for (UrlInfo info : extraLinks) {
+				if (!(info instanceof RelatedUrlInfo)) {
+					continue;
+				}
+				final RelatedUrlInfo relatedInfo = (RelatedUrlInfo)info;
+				linkView = inflater.inflate(R.layout.extra_link_item, extraLinkSection, false);
+				linkView.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View view) {
+						final NetworkCatalogItem catalogItem =
+							myBook.createRelatedCatalogItem(relatedInfo);
+						if (catalogItem != null) {
+							NetworkCatalogActions.doExpandCatalog(
+								NetworkBookInfoActivity.this,
+								NetworkLibrary.Instance().getFakeCatalogTree(catalogItem)
+							);
+						} else if (MimeType.TEXT_HTML.equals(relatedInfo.Mime)) {
+							Util.openInBrowser(NetworkBookInfoActivity.this, relatedInfo.Url);
+						}
+					}
+				});
+				((TextView)linkView.findViewById(R.id.extra_link_title)).setText(relatedInfo.Title);
+				extraLinkSection.addView(linkView);
+			}
+			linkView.findViewById(R.id.extra_link_divider).setVisibility(View.GONE);
+		}
 	}
 
 	private void setPairLabelTextFromResource(int id, String resourceKey) {
