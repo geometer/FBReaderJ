@@ -23,10 +23,11 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
+import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResRecommendationsItem extends OPDSCatalogItem {
-	public LitResRecommendationsItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {
+	public LitResRecommendationsItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {
 		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
 	}
 

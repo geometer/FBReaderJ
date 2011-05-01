@@ -397,7 +397,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	private void processExtraData(final NetworkBaseActivity activity, Map<String,String> extraData, final Runnable postRunnable) {
+	private static void processExtraData(final Activity activity, Map<String,String> extraData, final Runnable postRunnable) {
 		if (extraData != null && !extraData.isEmpty()) {
 			PackageUtil.runInstallPluginDialog(activity, extraData, postRunnable);
 		} else {
@@ -405,7 +405,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	private void doExpandCatalog(final NetworkBaseActivity activity, final NetworkCatalogTree tree) {
+	static void doExpandCatalog(final Activity activity, final NetworkCatalogTree tree) {
 		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;

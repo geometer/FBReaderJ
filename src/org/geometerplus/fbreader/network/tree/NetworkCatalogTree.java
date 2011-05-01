@@ -32,7 +32,7 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	private long myLoadedTime = -1;
 
-	NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
+	public NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		Item = item;
 	}
