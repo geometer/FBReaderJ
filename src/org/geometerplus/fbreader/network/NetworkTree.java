@@ -19,12 +19,11 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 import java.io.Serializable;
 
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -67,6 +66,9 @@ public abstract class NetworkTree extends FBTree {
 		}
 	}
 
+	private Key myKey;
+	private Map<String,Object> myUserData;
+
 	protected NetworkTree() {
 		super();
 	}
@@ -89,12 +91,12 @@ public abstract class NetworkTree extends FBTree {
 
 	private static final String DATA_PREFIX = "data:";
 
-	public static ZLImage createCover(String url, String mimeType) {
+	public static ZLImage createCover(String url, MimeType mimeType) {
 		if (url == null) {
 			return null;
 		}
 		if (mimeType == null) {
-			mimeType = MimeTypes.MIME_IMAGE_AUTO;
+			mimeType = MimeType.IMAGE_AUTO;
 		}
 		if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://")) {
 			return new NetworkImage(url, mimeType);
@@ -103,14 +105,14 @@ public abstract class NetworkTree extends FBTree {
 			if (commaIndex == -1) {
 				return null;
 			}
-			if (mimeType == MimeTypes.MIME_IMAGE_AUTO) {
+			if (mimeType == MimeType.IMAGE_AUTO) {
 				int index = url.indexOf(';');
 				if (index == -1 || index > commaIndex) {
 					index = commaIndex;
 				}
 	 			// string starts with "data:image/"
-				if (url.startsWith(MimeTypes.MIME_IMAGE_PREFIX, DATA_PREFIX.length())) {
-					mimeType = url.substring(DATA_PREFIX.length(), index);
+				if (url.startsWith(MimeType.IMAGE_PREFIX, DATA_PREFIX.length())) {
+					mimeType = MimeType.get(url.substring(DATA_PREFIX.length(), index));
 				}
 			}
 			int key = url.indexOf("base64");
@@ -123,10 +125,8 @@ public abstract class NetworkTree extends FBTree {
 		return null;
 	}
 
-
 	public abstract NetworkItem getHoldedItem();
 
-	private Key myKey;
 	/**
 	 * Returns unique identifier which can be used in NetworkView methods
 	 * @return unique Key instance
@@ -139,6 +139,21 @@ public abstract class NetworkTree extends FBTree {
 			myKey = new Key(parentKey, getStringId());
 		}
 		return myKey;
+	}
+
+	public final synchronized void setUserData(String key, Object data) {
+		if (myUserData == null) {
+			myUserData = new HashMap<String,Object>();
+		}
+		if (data != null) {
+			myUserData.put(key, data);
+		} else {
+			myUserData.remove(key);
+		}
+	}
+
+	public final synchronized Object getUserData(String key) {
+		return myUserData != null ? myUserData.get(key) : null;
 	}
 
 	/**

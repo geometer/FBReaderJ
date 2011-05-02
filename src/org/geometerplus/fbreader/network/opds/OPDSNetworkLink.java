@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -92,7 +93,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 				}
 
 				new OPDSXMLReader(
-					new OPDSFeedHandler(getURL(), result)
+					new OPDSFeedHandler(getURL(), result), false
 				).read(inputStream);
 
 				if (result.Listener.confirmInterrupt()) {
@@ -164,11 +165,11 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	// rel and type must be either null or interned String objects.
-	String relation(String rel, String type) {
+	String relation(String rel, MimeType type) {
 		if (myRelationAliases == null) {
 			return rel;
 		}
-		RelationAlias alias = new RelationAlias(rel, type);
+		RelationAlias alias = new RelationAlias(rel, type.Name);
 		String mapped = myRelationAliases.get(alias);
 		if (mapped != null) {
 			return mapped;

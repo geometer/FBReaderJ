@@ -22,10 +22,10 @@ package org.geometerplus.fbreader.formats.oeb;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
-import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
@@ -218,7 +218,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 					final ZLFile imageFile = ZLFile.createFileByPath(myFilePrefix + href);
 					final String imageName = imageFile.getLongName();
 					myModelReader.addImageReference(imageName, (short)0);
-					myModelReader.addImage(imageName, new ZLFileImage(MimeTypes.MIME_IMAGE_AUTO, imageFile));
+					myModelReader.addImage(imageName, new ZLFileImage(MimeType.IMAGE_AUTO, imageFile));
 				}
 			}
 		} else if (myState == READ_TOUR && SITE == tag) {

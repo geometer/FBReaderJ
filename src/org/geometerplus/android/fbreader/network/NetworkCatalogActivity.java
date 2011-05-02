@@ -39,6 +39,18 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
+	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
+
+	static void setForTree(NetworkTree tree, NetworkCatalogActivity activity) {
+		if (tree != null) {
+			tree.setUserData(ACTIVITY_BY_TREE_KEY, activity);
+		}
+	}
+
+	static NetworkCatalogActivity getByTree(NetworkTree tree) {
+		return (NetworkCatalogActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
+	}
+
 	private NetworkTree myTree;
 	private volatile boolean myInProgress;
 
@@ -48,12 +60,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		final NetworkView networkView = NetworkView.Instance();
-		if (!networkView.isInitialized()) {
-			finish();
-			return;
-		}
-
 		myTree = Util.getTreeFromIntent(getIntent());
 
 		if (myTree == null) {
@@ -61,7 +67,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 			return;
 		}
 
-		networkView.setOpenedActivity(myTree.getUniqueKey(), this);
+		setForTree(myTree, this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
@@ -179,9 +185,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public void onDestroy() {
-		if (myTree != null && NetworkView.Instance().isInitialized()) {
-			NetworkView.Instance().setOpenedActivity(myTree.getUniqueKey(), null);
-		}
+		setForTree(myTree, null);
 		super.onDestroy();
 	}
 
@@ -222,21 +226,25 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		}
 	}
 
-	private static NetworkTree.Key getLoadableNetworkTreeKey(NetworkTree tree) {
-		if ((tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree)
-				&& tree.Parent instanceof NetworkTree) {
-			return getLoadableNetworkTreeKey((NetworkTree)tree.Parent);
+	private static NetworkTree getLoadableNetworkTree(NetworkTree tree) {
+		while (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
+			if (tree.Parent instanceof NetworkTree) {
+				tree = (NetworkTree)tree.Parent;
+			} else {
+				return null;
+			}
 		}
-		return tree.getUniqueKey();
+		return tree;
 	}
 
 	@Override
 	public void onModelChanged() {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				final NetworkView networkView = NetworkView.Instance();
-				final NetworkTree.Key key = getLoadableNetworkTreeKey(myTree);
-				myInProgress = key != null && networkView.isInitialized() && networkView.containsItemsLoadingRunnable(key);
+				final NetworkTree tree = getLoadableNetworkTree(myTree);
+				myInProgress =
+					tree != null &&
+					ItemsLoadingService.getRunnable(tree) != null;
 				getListView().invalidateViews();
             
 				/*
@@ -261,12 +269,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private void doStopLoading() {
-		if (NetworkView.Instance().isInitialized()) {
-			final ItemsLoadingRunnable runnable =
-				NetworkView.Instance().getItemsLoadingRunnable(myTree.getUniqueKey());
-			if (runnable != null) {
-				runnable.interruptLoading();
-			}
+		final ItemsLoadingRunnable runnable = ItemsLoadingService.getRunnable(myTree);
+		if (runnable != null) {
+			runnable.interruptLoading();
 		}
 	}
 

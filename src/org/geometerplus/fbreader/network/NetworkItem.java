@@ -50,6 +50,10 @@ public abstract class NetworkItem {
 		}
 	}
 
+	protected void addUrls(UrlInfoCollection urls) {
+		myURLs.upgrade(urls);
+	}
+
 	public List<UrlInfo> getAllInfos() {
 		if (myURLs == null) {
 			return Collections.emptyList();

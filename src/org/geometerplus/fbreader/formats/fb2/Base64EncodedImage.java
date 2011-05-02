@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.formats.fb2;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.image.ZLBase64EncodedImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
 
@@ -36,9 +37,9 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 	private final int myFileNumber;
 	private OutputStreamWriter myStreamWriter;
 	
-	public Base64EncodedImage(String contentType) {
+	public Base64EncodedImage(MimeType mimeType) {
 		// TODO: use contentType
-		super(contentType);
+		super(mimeType);
 		myDirName = Paths.cacheDirectory();
 		new File(myDirName).mkdirs();
 		myFileNumber = ourCounter++;

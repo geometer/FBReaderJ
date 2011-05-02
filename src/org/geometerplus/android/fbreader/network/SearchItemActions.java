@@ -50,7 +50,7 @@ class SearchItemActions extends NetworkTreeActions {
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
 
-		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey());
+		final boolean isLoading = ItemsLoadingService.getRunnable(tree) != null;
 
 		if (!isLoading) {
 			addMenuItem(menu, RUN_SEARCH_ITEM_ID, "search");
@@ -61,7 +61,7 @@ class SearchItemActions extends NetworkTreeActions {
 
 	@Override
 	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
-		final boolean isLoading = NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey());
+		final boolean isLoading = ItemsLoadingService.getRunnable(tree) != null;
 		if (!isLoading) {
 			return RUN_SEARCH_ITEM_ID;
 		}

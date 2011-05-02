@@ -126,6 +126,7 @@
 		<node name="indexInSeries" value="系列序号:" />
 		<node name="tags" value="标签:" />
 		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="书籍信息" />
@@ -574,6 +575,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="已下载 %s" />
 			<node name="search" value="搜索中，请等待..." />
+			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
 			<node name="loadingBook" value="图书加载中，请等待..." />
 			<node name="loadingBookList" value="书库目录加载中，请等待..." />
 			<node name="creatingBooksDatabase" value="正在创建图书数据库，请等待..." />

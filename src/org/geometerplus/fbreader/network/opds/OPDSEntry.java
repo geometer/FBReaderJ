@@ -19,16 +19,21 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
 import org.geometerplus.fbreader.network.atom.*;
 
 class OPDSEntry extends ATOMEntry {
-
 	public String DCLanguage;
 	public String DCPublisher;
 	public DCDate DCIssued;
 
 	public String SeriesTitle;
 	public float SeriesIndex;
+
+	protected OPDSEntry(ZLStringMap attributes) {
+		super(attributes);
+	}
 
 	@Override
 	public String toString() {

@@ -32,20 +32,31 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		public String LastLoadedId;
 		public final HashSet<String> LoadedIds = new HashSet<String>();
 
-		public State(INetworkLink link, OnNewItemListener listener) {
+		public State(OPDSNetworkLink link, OnNewItemListener listener) {
 			super(link, listener);
 		}
 	}
 	private State myLoadingState;
 	private final Map<String,String> myExtraData;
 
-	OPDSCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Map<String,String> extraData) {
+	OPDSCatalogItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection urls, Map<String,String> extraData) {
 		super(link, title, summary, urls);
 		myExtraData = extraData;
 	}
 
-	public OPDSCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
+	protected OPDSCatalogItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls, accessibility, flags);
+		myExtraData = null;
+	}
+
+	private static UrlInfoCollection createSimpleCollection(String url) {
+		final UrlInfoCollection collection = new UrlInfoCollection();
+		collection.addInfo(new UrlInfo(UrlInfo.Type.Catalog, url));
+		return collection;
+	}
+
+	OPDSCatalogItem(OPDSNetworkLink link, RelatedUrlInfo info) {
+		super(link, info.Title, null, createSimpleCollection(info.Url));
 		myExtraData = null;
 	}
 
