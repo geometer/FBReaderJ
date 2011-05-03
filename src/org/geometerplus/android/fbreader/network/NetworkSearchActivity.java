@@ -140,8 +140,11 @@ public class NetworkSearchActivity extends Activity {
 		public void doBefore() {
 		}
 
-		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
-			NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
+		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+			try {
+				NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
+			} catch (ZLNetworkException e) {
+			}
 		}
 	}
 
