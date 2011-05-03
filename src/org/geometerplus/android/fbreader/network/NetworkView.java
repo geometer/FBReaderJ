@@ -192,7 +192,7 @@ class NetworkView {
 	}
 
 	final void fireModelChanged() {
-		for (EventListener listener: myEventListeners) {
+		for (EventListener listener : myEventListeners) {
 			listener.onModelChanged();
 		}
 	}
