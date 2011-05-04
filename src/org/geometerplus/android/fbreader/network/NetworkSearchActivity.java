@@ -58,6 +58,7 @@ public class NetworkSearchActivity extends Activity {
 		private final SearchItemTree myTree;
 
 		public SearchHandler(SearchItemTree tree) {
+			super(NetworkSearchActivity.this);
 			myTree = tree;
 		}
 

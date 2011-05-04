@@ -21,15 +21,18 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
-import android.os.Message;
-import android.os.Handler;
+import android.app.Activity;
+//import android.os.Message;
+//import android.os.Handler;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkItem;
 
-abstract class ItemsLoadingHandler extends Handler {
+abstract class ItemsLoadingHandler /*extends Handler*/ {
 	private static final int WHAT_UPDATE_ITEMS = 0;
 	private static final int WHAT_FINISHED = 1;
+
+	private final Activity myActivity;
 
 	private final LinkedList<NetworkItem> myItems = new LinkedList<NetworkItem>();
 	private final HashMap<INetworkLink, LinkedList<NetworkItem>> myUncommitedItems = new HashMap<INetworkLink, LinkedList<NetworkItem>>();
@@ -37,6 +40,10 @@ abstract class ItemsLoadingHandler extends Handler {
 
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
+
+	ItemsLoadingHandler(Activity activity) {
+		myActivity = activity;
+	}
 
 	public final void addItem(INetworkLink link, NetworkItem item) {
 		synchronized (myItemsMonitor) {
@@ -105,18 +112,29 @@ abstract class ItemsLoadingHandler extends Handler {
 
 	// sending messages methods
 	public final void sendUpdateItems() {
-		sendEmptyMessage(WHAT_UPDATE_ITEMS);
+		//sendEmptyMessage(WHAT_UPDATE_ITEMS);
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				doUpdateItems();
+			}
+		});
 	}
 
-	public final void sendFinish(String errorMessage, boolean interrupted) {
-		int arg1 = interrupted ? 1 : 0;
-		sendMessage(obtainMessage(WHAT_FINISHED, arg1, 0, errorMessage));
+	public final void sendFinish(final String errorMessage, final boolean interrupted) {
+		//int arg1 = interrupted ? 1 : 0;
+		//sendMessage(obtainMessage(WHAT_FINISHED, arg1, 0, errorMessage));
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				doProcessFinish(errorMessage, interrupted);
+			}
+		});
 	}
 
 	// callbacks
 	protected abstract void updateItems(List<NetworkItem> items);
 	protected abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems);
 
+	/*
 	@Override
 	public final void handleMessage(Message message) {
 		switch (message.what) {
@@ -128,4 +146,5 @@ abstract class ItemsLoadingHandler extends Handler {
 				break;
 		}
 	}
+	*/
 }

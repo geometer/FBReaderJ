@@ -295,7 +295,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	private static class ExpandCatalogHandler extends ItemsLoadingHandler {
 		private final NetworkCatalogTree myTree;
 
-		ExpandCatalogHandler(NetworkCatalogTree tree) {
+		ExpandCatalogHandler(Activity activity, NetworkCatalogTree tree) {
+			super(activity);
 			myTree = tree;
 		}
 
@@ -420,7 +421,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				 * 2) If there is no activity, then save message, and show when activity is created
 				 * 3) Remove unused messages (say, by timeout)
 				 */
-				final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
+				final ExpandCatalogHandler handler = new ExpandCatalogHandler(activity, tree);
 				ItemsLoadingService.start(
 					activity,
 					tree,
@@ -442,7 +443,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		tree.ChildrenItems.clear();
 		tree.clear();
 		NetworkView.Instance().fireModelChangedAsync();
-		final ExpandCatalogHandler handler = new ExpandCatalogHandler(tree);
+		final ExpandCatalogHandler handler = new ExpandCatalogHandler(activity, tree);
 		ItemsLoadingService.start(
 			activity,
 			tree,
