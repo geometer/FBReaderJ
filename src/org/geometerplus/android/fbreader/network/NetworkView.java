@@ -134,7 +134,7 @@ class NetworkView {
 	 */
 
 	public void tryResumeLoading(Activity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
-		final ItemsLoadingRunnable runnable = ItemsLoadingService.getRunnable(tree);
+		final ItemsLoader runnable = ItemsLoadingService.getRunnable(tree);
 		if (runnable != null && runnable.tryResumeLoading()) {
 			Util.openTree(activity, tree);
 			return;

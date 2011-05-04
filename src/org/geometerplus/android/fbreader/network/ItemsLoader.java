@@ -22,8 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
-import android.os.Message;
-import android.os.Handler;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -31,7 +29,7 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkItem;
 
-abstract class ItemsLoadingRunnable implements Runnable {
+abstract class ItemsLoader implements Runnable {
 	private final Activity myActivity;
 
 	private final LinkedList<NetworkItem> myItems = new LinkedList<NetworkItem>();
@@ -47,19 +45,18 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	private boolean myInterruptConfirmed;
 	private Object myInterruptLock = new Object();
 
-	private boolean myFinished;
-	private Handler myFinishedHandler;
+	private volatile boolean myFinished;
+	private Runnable myFinishRunnable;
 	private Object myFinishedLock = new Object();
 
-	ItemsLoadingRunnable(Activity activity) {
+	ItemsLoader(Activity activity) {
 		this(activity, 1000);
 	}
 
-	ItemsLoadingRunnable(Activity activity, long updateIntervalMillis) {
+	private ItemsLoader(Activity activity, long updateIntervalMillis) {
 		myActivity = activity;
 		myUpdateInterval = updateIntervalMillis;
 	}
-
 
 	public void interruptLoading() {
 		synchronized (myInterruptLock) {
@@ -91,12 +88,11 @@ abstract class ItemsLoadingRunnable implements Runnable {
 		}
 	}
 
-
 	public final void run() {
 		try {
 			doBefore();
 		} catch (ZLNetworkException e) {
-			sendFinish(e.getMessage(), false);
+			finishOnUiThread(e.getMessage(), false);
 			return;
 		}
 		String error = null;
@@ -117,7 +113,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 					return confirmInterruptLoading();
 				}
 				public void commitItems(INetworkLink link) {
-					commitItems(link);
+					ItemsLoader.this.commitItems(link);
 				}
 			});
 		} catch (ZLNetworkException e) {
@@ -126,14 +122,14 @@ abstract class ItemsLoadingRunnable implements Runnable {
 
 		updateItemsOnUiThread();
 		ensureItemsProcessed();
-		sendFinish(error, isLoadingInterrupted());
+		finishOnUiThread(error, isLoadingInterrupted());
 		ensureFinishProcessed();
 	}
 
 	void runFinishHandler() {
 		synchronized (myFinishedLock) {
-			if (myFinishedHandler != null) {
-				myFinishedHandler.sendEmptyMessage(0);
+			if (myFinishRunnable != null) {
+				myActivity.runOnUiThread(myFinishRunnable);
 			}
 			myFinished = true;
 		}
@@ -141,18 +137,14 @@ abstract class ItemsLoadingRunnable implements Runnable {
 
 
 	public void runOnFinish(final Runnable runnable) {
-		if (myFinishedHandler != null) {
+		if (myFinishRunnable != null) {
 			return;
 		}
 		synchronized (myFinishedLock) {
 			if (myFinished) {
 				runnable.run();
 			} else {
-				myFinishedHandler = new Handler() {
-					public void handleMessage(Message message) {
-						runnable.run();
-					}
-				};
+				myFinishRunnable = runnable;
 			}
 		}
 	}
@@ -231,7 +223,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 		}
 	}
 
-	public final void sendFinish(final String errorMessage, final boolean interrupted) {
+	private final void finishOnUiThread(final String errorMessage, final boolean interrupted) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				doProcessFinish(errorMessage, interrupted);
@@ -246,5 +238,5 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	public abstract void doBefore() throws ZLNetworkException;
 	public abstract void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException;
 
-	public abstract String getResourceKey();
+	//public abstract String getResourceKey();
 }

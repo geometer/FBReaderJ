@@ -54,11 +54,11 @@ public class NetworkSearchActivity extends Activity {
 		finish();
 	}
 
-	private static class SearchRunnable extends ItemsLoadingRunnable {
+	private static class Searcher extends ItemsLoader {
 		private final SearchItemTree myTree;
 		private final String myPattern;
 
-		public SearchRunnable(Activity activity, SearchItemTree tree, String pattern) {
+		public Searcher(Activity activity, SearchItemTree tree, String pattern) {
 			super(activity);
 			myTree = tree;
 			myPattern = pattern;
@@ -153,7 +153,7 @@ public class NetworkSearchActivity extends Activity {
 		NetworkView.Instance().fireModelChangedAsync();
 
 		ItemsLoadingService.start(
-			this, tree, new SearchRunnable(this, tree, pattern)
+			this, tree, new Searcher(this, tree, pattern)
 		);
 		Util.openTree(this, tree);
 	}
