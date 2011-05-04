@@ -300,20 +300,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		@Override
-		public void onUpdateItems(List<NetworkItem> items) {
+		protected void updateItems(List<NetworkItem> items) {
 			for (NetworkItem item: items) {
 				myTree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(myTree, item);
 			}
+			NetworkView.Instance().fireModelChanged();
 		}
 
 		@Override
-		public void afterUpdateItems() {
-			NetworkView.Instance().fireModelChangedAsync();
-		}
-
-		@Override
-		public void onFinish(String errorMessage, boolean interrupted,
+		protected void onFinish(String errorMessage, boolean interrupted,
 				Set<NetworkItem> uncommitedItems) {
 			if (interrupted &&
 					(!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
@@ -323,13 +319,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				myTree.removeItems(uncommitedItems);
 				myTree.updateLoadedTime();
 				if (!interrupted) {
-					afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
+					NetworkView.Instance().fireModelChanged();
 				}
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateVisibility();
 				library.synchronize();
 			}
-			NetworkView.Instance().fireModelChangedAsync();
+			NetworkView.Instance().fireModelChanged();
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
