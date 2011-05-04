@@ -72,7 +72,6 @@ abstract class ItemsLoadingHandler extends Handler {
 
 	private final void doUpdateItems() {
 		synchronized (myItemsMonitor) {
-			System.err.println("doUpdateItems in " + Thread.currentThread());
 			updateItems(myItems);
 			myItems.clear();
 			myItemsMonitor.notifyAll(); // wake up process, that waits for finish condition (see ensureFinish() method)
@@ -121,12 +120,12 @@ abstract class ItemsLoadingHandler extends Handler {
 	@Override
 	public final void handleMessage(Message message) {
 		switch (message.what) {
-		case WHAT_UPDATE_ITEMS:
-			doUpdateItems();
-			break;
-		case WHAT_FINISHED:
-			doProcessFinish((String)message.obj, message.arg1 != 0);
-			break;
+			case WHAT_UPDATE_ITEMS:
+				doUpdateItems();
+				break;
+			case WHAT_FINISHED:
+				doProcessFinish((String)message.obj, message.arg1 != 0);
+				break;
 		}
 	}
 }
