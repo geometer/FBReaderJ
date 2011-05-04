@@ -62,25 +62,19 @@ public class NetworkSearchActivity extends Activity {
 		}
 
 		@Override
-		public void onUpdateItems(List<NetworkItem> items) {
+		protected void updateItems(List<NetworkItem> items) {
 			SearchResult result = myTree.getSearchResult();
 			for (NetworkItem item: items) {
 				if (item instanceof NetworkBookItem) {
 					result.addBook((NetworkBookItem)item);
 				}
 			}
-		}
-
-		@Override
-		public void afterUpdateItems() {
 			myTree.updateSubTrees();
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChanged();
 		}
 
 		@Override
-		public void onFinish(String errorMessage, boolean interrupted,
+		protected void onFinish(String errorMessage, boolean interrupted,
 				Set<NetworkItem> uncommitedItems) {
 			if (interrupted) {
 				myTree.setSearchResult(null);
@@ -88,9 +82,7 @@ public class NetworkSearchActivity extends Activity {
 				myTree.updateSubTrees();
 				afterUpdateCatalog(errorMessage, myTree.getSearchResult().isEmpty());
 			}
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChanged();
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
@@ -140,8 +132,11 @@ public class NetworkSearchActivity extends Activity {
 		public void doBefore() {
 		}
 
-		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
-			NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
+		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+			try {
+				NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
+			} catch (ZLNetworkException e) {
+			}
 		}
 	}
 

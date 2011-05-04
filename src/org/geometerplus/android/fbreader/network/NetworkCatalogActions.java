@@ -300,22 +300,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		@Override
-		public void onUpdateItems(List<NetworkItem> items) {
+		protected void updateItems(List<NetworkItem> items) {
 			for (NetworkItem item: items) {
 				myTree.ChildrenItems.add(item);
 				NetworkTreeFactory.createNetworkTree(myTree, item);
 			}
+			NetworkView.Instance().fireModelChanged();
 		}
 
 		@Override
-		public void afterUpdateItems() {
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
-		}
-
-		@Override
-		public void onFinish(String errorMessage, boolean interrupted,
+		protected void onFinish(String errorMessage, boolean interrupted,
 				Set<NetworkItem> uncommitedItems) {
 			if (interrupted &&
 					(!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
@@ -325,21 +319,16 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				myTree.removeItems(uncommitedItems);
 				myTree.updateLoadedTime();
 				if (!interrupted) {
-					afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
+					NetworkView.Instance().fireModelChanged();
 				}
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateVisibility();
 				library.synchronize();
 			}
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChanged();
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			if (!NetworkView.Instance().isInitialized()) {
-				return;
-			}
 			final NetworkCatalogActivity activity = NetworkCatalogActivity.getByTree(myTree);
 			if (activity == null) {
 				return;
@@ -464,23 +453,20 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		);
 	}
 
-	private void doSignOut(NetworkBaseActivity activity, NetworkCatalogTree tree) {
-		final Handler handler = new Handler() {
-			public void handleMessage(Message message) {
-				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.invalidateVisibility();
-				library.synchronize();
-				if (NetworkView.Instance().isInitialized()) {
-					NetworkView.Instance().fireModelChanged();
-				}
-			}
-		};
+	private void doSignOut(final NetworkBaseActivity activity, NetworkCatalogTree tree) {
 		final NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
 				if (mgr.mayBeAuthorised(false)) {
 					mgr.logOut();
-					handler.sendEmptyMessage(0);
+					activity.runOnUiThread(new Runnable() {
+						public void run() {
+							final NetworkLibrary library = NetworkLibrary.Instance();
+							library.invalidateVisibility();
+							library.synchronize();
+							NetworkView.Instance().fireModelChanged();
+						}
+					});
 				}
 			}
 		};

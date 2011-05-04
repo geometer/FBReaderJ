@@ -19,11 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import android.os.Message;
 import android.os.Handler;
@@ -31,9 +27,7 @@ import android.os.Handler;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkItem;
 
-
 abstract class ItemsLoadingHandler extends Handler {
-
 	private static final int WHAT_UPDATE_ITEMS = 0;
 	private static final int WHAT_FINISHED = 1;
 
@@ -43,7 +37,6 @@ abstract class ItemsLoadingHandler extends Handler {
 
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
-
 
 	public final void addItem(INetworkLink link, NetworkItem item) {
 		synchronized (myItemsMonitor) {
@@ -79,11 +72,11 @@ abstract class ItemsLoadingHandler extends Handler {
 
 	private final void doUpdateItems() {
 		synchronized (myItemsMonitor) {
-			onUpdateItems(myItems);
+			System.err.println("doUpdateItems in " + Thread.currentThread());
+			updateItems(myItems);
 			myItems.clear();
 			myItemsMonitor.notifyAll(); // wake up process, that waits for finish condition (see ensureFinish() method)
 		}
-		afterUpdateItems();
 	}
 
 	public final void ensureFinishProcessed() {
@@ -111,7 +104,6 @@ abstract class ItemsLoadingHandler extends Handler {
 		}
 	}
 
-
 	// sending messages methods
 	public final void sendUpdateItems() {
 		sendEmptyMessage(WHAT_UPDATE_ITEMS);
@@ -122,12 +114,9 @@ abstract class ItemsLoadingHandler extends Handler {
 		sendMessage(obtainMessage(WHAT_FINISHED, arg1, 0, errorMessage));
 	}
 
-
 	// callbacks
-	public abstract void onUpdateItems(List<NetworkItem> items);
-	public abstract void afterUpdateItems();
-	public abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems);
-
+	protected abstract void updateItems(List<NetworkItem> items);
+	protected abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems);
 
 	@Override
 	public final void handleMessage(Message message) {
@@ -136,7 +125,7 @@ abstract class ItemsLoadingHandler extends Handler {
 			doUpdateItems();
 			break;
 		case WHAT_FINISHED:
-			doProcessFinish((String) message.obj, message.arg1 != 0);
+			doProcessFinish((String)message.obj, message.arg1 != 0);
 			break;
 		}
 	}

@@ -88,7 +88,13 @@ public final class MimeType {
 			return false;
 		}
 		final MimeType type = (MimeType)o;
-		return Name.equals(type.Name) && ZLMiscUtil.mapsEquals(myParameters, type.myParameters);
+		return
+			ZLMiscUtil.equals(Name, type.Name) &&
+			ZLMiscUtil.mapsEquals(myParameters, type.myParameters);
+	}
+
+	public boolean weakEquals(MimeType type) {
+		return ZLMiscUtil.equals(Name, type.Name);
 	}
 
 	@Override
