@@ -360,9 +360,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		@Override
 		public void doBefore() throws ZLNetworkException {
-			/*if (!NetworkOperationRunnable::tryConnect()) {
-				return;
-			}*/
 			final INetworkLink link = myTree.Item.Link;
 			if (myCheckAuthentication && link.authenticationManager() != null) {
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
