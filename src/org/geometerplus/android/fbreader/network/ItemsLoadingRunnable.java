@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import android.app.Activity;
 import android.os.Message;
 import android.os.Handler;
 
@@ -29,6 +30,7 @@ import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkItem;
 
 abstract class ItemsLoadingRunnable implements Runnable {
+	private final Activity myActivity;
 	private final ItemsLoadingHandler myHandler;
 
 	private final long myUpdateInterval; // in milliseconds
@@ -40,6 +42,16 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	private boolean myFinished;
 	private Handler myFinishedHandler;
 	private Object myFinishedLock = new Object();
+
+	ItemsLoadingRunnable(Activity activity, ItemsLoadingHandler handler) {
+		this(activity, handler, 1000);
+	}
+
+	ItemsLoadingRunnable(Activity activity, ItemsLoadingHandler handler, long updateIntervalMillis) {
+		myActivity = activity;
+		myHandler = handler;
+		myUpdateInterval = updateIntervalMillis;
+	}
 
 
 	public void interruptLoading() {
@@ -73,15 +85,6 @@ abstract class ItemsLoadingRunnable implements Runnable {
 	}
 
 
-	public ItemsLoadingRunnable(ItemsLoadingHandler handler) {
-		this(handler, 1000);
-	}
-
-	public ItemsLoadingRunnable(ItemsLoadingHandler handler, long updateIntervalMillis) {
-		myHandler = handler;
-		myUpdateInterval = updateIntervalMillis;
-	}
-
 	public abstract void doBefore() throws ZLNetworkException;
 	public abstract void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException;
 
@@ -104,7 +107,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 					++myItemsNumber;
 					final long now = System.currentTimeMillis();
 					if (now > myUpdateTime) {
-						myHandler.sendUpdateItems();
+						updateItemsOnUiThread();
 						myUpdateTime = now + myUpdateInterval;
 					}
 				}
@@ -119,7 +122,7 @@ abstract class ItemsLoadingRunnable implements Runnable {
 			error = e.getMessage();
 		}
 
-		myHandler.sendUpdateItems();
+		updateItemsOnUiThread();
 		myHandler.ensureItemsProcessed();
 		myHandler.sendFinish(error, isLoadingInterrupted());
 		myHandler.ensureFinishProcessed();
@@ -150,5 +153,13 @@ abstract class ItemsLoadingRunnable implements Runnable {
 				};
 			}
 		}
+	}
+
+	private final void updateItemsOnUiThread() {
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				myHandler.doUpdateItems();
+			}
+		});
 	}
 }

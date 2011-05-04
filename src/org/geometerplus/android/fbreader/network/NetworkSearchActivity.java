@@ -121,8 +121,8 @@ public class NetworkSearchActivity extends Activity {
 	private static class SearchRunnable extends ItemsLoadingRunnable {
 		private final String myPattern;
 
-		public SearchRunnable(ItemsLoadingHandler handler, String pattern) {
-			super(handler);
+		public SearchRunnable(Activity activity, ItemsLoadingHandler handler, String pattern) {
+			super(activity, handler);
 			myPattern = pattern;
 		}
 
@@ -159,7 +159,7 @@ public class NetworkSearchActivity extends Activity {
 
 		final SearchHandler handler = new SearchHandler(tree);
 		ItemsLoadingService.start(
-			this, tree, new SearchRunnable(handler, pattern)
+			this, tree, new SearchRunnable(this, handler, pattern)
 		);
 		Util.openTree(this, tree);
 	}

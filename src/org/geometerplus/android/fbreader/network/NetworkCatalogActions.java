@@ -347,9 +347,9 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		private final boolean myCheckAuthentication;
 		private final boolean myResumeNotLoad;
 
-		public ExpandCatalogRunnable(ItemsLoadingHandler handler,
+		public ExpandCatalogRunnable(Activity activity, ItemsLoadingHandler handler,
 				NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
-			super(handler);
+			super(activity, handler);
 			myTree = tree;
 			myCheckAuthentication = checkAuthentication;
 			myResumeNotLoad = resumeNotLoad;
@@ -425,7 +425,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				ItemsLoadingService.start(
 					activity,
 					tree,
-					new ExpandCatalogRunnable(handler, tree, true, resumeNotLoad)
+					new ExpandCatalogRunnable(activity, handler, tree, true, resumeNotLoad)
 				);
 				processExtraData(activity, tree.Item.extraData(), new Runnable() {
 					public void run() {
@@ -447,7 +447,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		ItemsLoadingService.start(
 			activity,
 			tree,
-			new ExpandCatalogRunnable(handler, tree, false, false)
+			new ExpandCatalogRunnable(activity, handler, tree, false, false)
 		);
 	}
 
