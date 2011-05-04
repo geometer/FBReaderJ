@@ -54,12 +54,30 @@ public class NetworkSearchActivity extends Activity {
 		finish();
 	}
 
-	private class SearchHandler extends ItemsLoadingHandler {
+	private static class SearchRunnable extends ItemsLoadingRunnable {
 		private final SearchItemTree myTree;
+		private final String myPattern;
 
-		public SearchHandler(SearchItemTree tree) {
-			super(NetworkSearchActivity.this);
+		public SearchRunnable(Activity activity, SearchItemTree tree, String pattern) {
+			super(activity);
 			myTree = tree;
+			myPattern = pattern;
+		}
+
+		public String getResourceKey() {
+			return "searchingNetwork";
+		}
+
+		@Override
+		public void doBefore() {
+		}
+
+		@Override
+		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+			try {
+				NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
+			} catch (ZLNetworkException e) {
+			}
 		}
 
 		@Override
@@ -118,29 +136,6 @@ public class NetworkSearchActivity extends Activity {
 		}
 	}
 
-	private static class SearchRunnable extends ItemsLoadingRunnable {
-		private final String myPattern;
-
-		public SearchRunnable(Activity activity, ItemsLoadingHandler handler, String pattern) {
-			super(activity, handler);
-			myPattern = pattern;
-		}
-
-		public String getResourceKey() {
-			return "searchingNetwork";
-		}
-
-		public void doBefore() {
-		}
-
-		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
-			try {
-				NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
-			} catch (ZLNetworkException e) {
-			}
-		}
-	}
-
 	protected void runSearch(final String pattern) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
@@ -157,9 +152,8 @@ public class NetworkSearchActivity extends Activity {
 		tree.setSearchResult(result);
 		NetworkView.Instance().fireModelChangedAsync();
 
-		final SearchHandler handler = new SearchHandler(tree);
 		ItemsLoadingService.start(
-			this, tree, new SearchRunnable(this, handler, pattern)
+			this, tree, new SearchRunnable(this, tree, pattern)
 		);
 		Util.openTree(this, tree);
 	}
