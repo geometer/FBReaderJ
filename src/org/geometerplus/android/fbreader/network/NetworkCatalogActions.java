@@ -319,7 +319,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				myTree.removeItems(uncommitedItems);
 				myTree.updateLoadedTime();
 				if (!interrupted) {
-					NetworkView.Instance().fireModelChanged();
+					afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
 				}
 				final NetworkLibrary library = NetworkLibrary.Instance();
 				library.invalidateVisibility();
