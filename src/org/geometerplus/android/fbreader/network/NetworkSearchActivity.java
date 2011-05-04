@@ -74,9 +74,7 @@ public class NetworkSearchActivity extends Activity {
 		@Override
 		public void afterUpdateItems() {
 			myTree.updateSubTrees();
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChangedAsync();
 		}
 
 		@Override
@@ -88,9 +86,7 @@ public class NetworkSearchActivity extends Activity {
 				myTree.updateSubTrees();
 				afterUpdateCatalog(errorMessage, myTree.getSearchResult().isEmpty());
 			}
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChangedAsync();
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {

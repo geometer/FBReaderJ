@@ -309,9 +309,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		@Override
 		public void afterUpdateItems() {
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChangedAsync();
 		}
 
 		@Override
@@ -331,15 +329,10 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				library.invalidateVisibility();
 				library.synchronize();
 			}
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChangedAsync();
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			if (!NetworkView.Instance().isInitialized()) {
-				return;
-			}
 			final NetworkCatalogActivity activity = NetworkCatalogActivity.getByTree(myTree);
 			if (activity == null) {
 				return;
@@ -464,23 +457,20 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		);
 	}
 
-	private void doSignOut(NetworkBaseActivity activity, NetworkCatalogTree tree) {
-		final Handler handler = new Handler() {
-			public void handleMessage(Message message) {
-				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.invalidateVisibility();
-				library.synchronize();
-				if (NetworkView.Instance().isInitialized()) {
-					NetworkView.Instance().fireModelChanged();
-				}
-			}
-		};
+	private void doSignOut(final NetworkBaseActivity activity, NetworkCatalogTree tree) {
 		final NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
 				if (mgr.mayBeAuthorised(false)) {
 					mgr.logOut();
-					handler.sendEmptyMessage(0);
+					activity.runOnUiThread(new Runnable() {
+						public void run() {
+							final NetworkLibrary library = NetworkLibrary.Instance();
+							library.invalidateVisibility();
+							library.synchronize();
+							NetworkView.Instance().fireModelChanged();
+						}
+					});
 				}
 			}
 		};
