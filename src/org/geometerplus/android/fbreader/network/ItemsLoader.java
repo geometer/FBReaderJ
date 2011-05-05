@@ -43,11 +43,11 @@ abstract class ItemsLoader implements Runnable {
 
 	private boolean myInterruptRequested;
 	private boolean myInterruptConfirmed;
-	private Object myInterruptLock = new Object();
+	private final Object myInterruptLock = new Object();
 
 	private volatile boolean myFinished;
-	private Runnable myFinishRunnable;
-	private Object myFinishedLock = new Object();
+	private volatile Runnable myFinishRunnable;
+	private final Object myFinishedLock = new Object();
 
 	ItemsLoader(Activity activity) {
 		this(activity, 1000);
@@ -135,7 +135,6 @@ abstract class ItemsLoader implements Runnable {
 		}
 	}
 
-
 	public void runOnFinish(final Runnable runnable) {
 		if (myFinishRunnable != null) {
 			return;
@@ -152,20 +151,17 @@ abstract class ItemsLoader implements Runnable {
 	private final void updateItemsOnUiThread() {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				doUpdateItems();
+				synchronized (myItemsMonitor) {
+					updateItems(myItems);
+					myItems.clear();
+					// wake up process, that waits for finish condition (see ensureFinish() method)
+					myItemsMonitor.notifyAll();
+				}
 			}
 		});
 	}
 
-	private final void doUpdateItems() {
-		synchronized (myItemsMonitor) {
-			updateItems(myItems);
-			myItems.clear();
-			myItemsMonitor.notifyAll(); // wake up process, that waits for finish condition (see ensureFinish() method)
-		}
-	}
-
-	public final void addItem(INetworkLink link, NetworkItem item) {
+	private final void addItem(INetworkLink link, NetworkItem item) {
 		synchronized (myItemsMonitor) {
 			myItems.add(item);
 			LinkedList<NetworkItem> uncommited = myUncommitedItems.get(link);
@@ -177,7 +173,7 @@ abstract class ItemsLoader implements Runnable {
 		}
 	}
 
-	public final void commitItems(INetworkLink link) {
+	private final void commitItems(INetworkLink link) {
 		synchronized (myItemsMonitor) {
 			LinkedList<NetworkItem> uncommited = myUncommitedItems.get(link);
 			if (uncommited != null) {
@@ -208,25 +204,21 @@ abstract class ItemsLoader implements Runnable {
 		}
 	}
 
-	private final void doProcessFinish(String errorMessage, boolean interrupted) {
-		HashSet<NetworkItem> uncommitedItems = new HashSet<NetworkItem>();
-		synchronized (myUncommitedItems) {
-			for (LinkedList<NetworkItem> items: myUncommitedItems.values()) {
-				uncommitedItems.addAll(items);
-			}
-		}
-		synchronized (myFinishMonitor) {
-			onFinish(errorMessage, interrupted, uncommitedItems);
-			myFinishProcessed = true;
-			// wake up process, that waits for finish condition (see ensureFinish() method)
-			myFinishMonitor.notifyAll();
-		}
-	}
-
 	private final void finishOnUiThread(final String errorMessage, final boolean interrupted) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				doProcessFinish(errorMessage, interrupted);
+				HashSet<NetworkItem> uncommitedItems = new HashSet<NetworkItem>();
+				synchronized (myUncommitedItems) {
+					for (LinkedList<NetworkItem> items: myUncommitedItems.values()) {
+						uncommitedItems.addAll(items);
+					}
+				}
+				synchronized (myFinishMonitor) {
+					onFinish(errorMessage, interrupted, uncommitedItems);
+					myFinishProcessed = true;
+					// wake up process, that waits for finish condition (see ensureFinish() method)
+					myFinishMonitor.notifyAll();
+				}
 			}
 		});
 	}

@@ -201,6 +201,8 @@ public class ZLNetworkManager {
 					throw new ZLNetworkException(true, response.getStatusLine().toString());
 				}
 			}
+		} catch (ZLNetworkException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			final String[] eName = e.getClass().getName().split("\\.");
