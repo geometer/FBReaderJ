@@ -3,6 +3,7 @@
 * Fixed LitRes 'my books' entry loading
 * Better error messages processing during network operations
 * Fixed opds feed mimetype detection
+* Fixed 'black strip' issue
 
 ===== 1.0.10 (May 02, 2011) =====
 * LitRes: sort books by date of purchasing
