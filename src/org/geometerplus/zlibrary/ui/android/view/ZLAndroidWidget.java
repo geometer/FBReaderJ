@@ -68,7 +68,6 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			myScreenIsTouched = false;
 			view.onScrollingFinished(ZLView.PageIndex.current);
 		}
-		myBitmapManager.setSize(w, h);
 	}
 
 	@Override
@@ -252,6 +251,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	}
 
 	private void onDrawStatic(Canvas canvas) {
+		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 		drawFooter(canvas);
 	}
