@@ -27,8 +27,8 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 public abstract class NetworkItem {
 	public final INetworkLink Link;
 	public final String Title;
-	public final String Summary;
 
+	private String mySummary;
 	private final UrlInfoCollection myURLs;
 
 	/**
@@ -42,12 +42,20 @@ public abstract class NetworkItem {
 	protected NetworkItem(INetworkLink link, String title, String summary, UrlInfoCollection urls) {
 		Link = link;
 		Title = title;
-		Summary = summary;
+		setSummary(summary);
 		if (urls != null && !urls.isEmpty()) {
  			myURLs = new UrlInfoCollection(urls);
 		} else {
 			myURLs = null;
 		}
+	}
+
+	protected void setSummary(String summary) {
+		mySummary = summary;
+	}
+
+	public final String getSummary() {
+		return mySummary;
 	}
 
 	protected void addUrls(UrlInfoCollection urls) {

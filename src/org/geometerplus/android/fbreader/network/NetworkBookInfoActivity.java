@@ -139,7 +139,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	private final void setupDescription() {
 		setTextFromResource(R.id.network_book_description_title, "description");
 
-		String description = myBook.Summary;
+		String description = myBook.getSummary();
 		if (description == null) {
 			description = myResource.getResource("noDescription").getValue();
 		}

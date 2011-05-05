@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 public class ItemsLoadingService extends Service {
 	private static final String KEY = "ItemsLoadingRunnable";
 
-	static void start(Context context, NetworkTree tree, ItemsLoadingRunnable runnable) {
+	static void start(Context context, NetworkTree tree, ItemsLoader runnable) {
 		boolean doDownload = false;
 		synchronized (tree) {
 			if (tree.getUserData(KEY) == null) {
@@ -47,13 +47,13 @@ public class ItemsLoadingService extends Service {
 		}
 	}
 
-	static ItemsLoadingRunnable getRunnable(NetworkTree tree) {
-		return (ItemsLoadingRunnable)tree.getUserData(KEY);
+	static ItemsLoader getRunnable(NetworkTree tree) {
+		return (ItemsLoader)tree.getUserData(KEY);
 	}
 
 	private static void removeRunnable(NetworkTree tree) {
 		synchronized (tree) {
-			ItemsLoadingRunnable runnable = (ItemsLoadingRunnable)tree.getUserData(KEY);
+			ItemsLoader runnable = (ItemsLoader)tree.getUserData(KEY);
 			if (runnable != null) {
 				tree.setUserData(KEY, null);
 				runnable.runFinishHandler();
@@ -96,7 +96,7 @@ public class ItemsLoadingService extends Service {
 			return;
 		}
 
-		final ItemsLoadingRunnable runnable = getRunnable(tree);
+		final ItemsLoader runnable = getRunnable(tree);
 		if (runnable == null) {
 			doStop();
 			return;
@@ -106,13 +106,12 @@ public class ItemsLoadingService extends Service {
 			public void handleMessage(Message message) {
 				doStop();
 				removeRunnable(tree);
-				if (NetworkView.Instance().isInitialized()) {
-					NetworkView.Instance().fireModelChangedAsync();
-				}
+				NetworkView.Instance().fireModelChanged();
 			}
 		};
 
-		NetworkView.Instance().fireModelChangedAsync(); // this call is needed to show indeterminate progress bar in title right on downloading start
+		// this call is needed to show indeterminate progress bar in title right on downloading start
+		NetworkView.Instance().fireModelChangedAsync();
 
 		final Thread loader = new Thread(new Runnable() {
 			public void run() {
