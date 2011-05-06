@@ -76,7 +76,7 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	private static final Map<Activity,Runnable> myAfterRegisrationMap =
+	private static final Map<Activity,Runnable> ourAfterRegisrationMap =
 		new HashMap<Activity,Runnable>();
 
 	static void runAuthenticationDialog(Activity activity, INetworkLink link, String error, Runnable onSuccess) {
@@ -90,14 +90,14 @@ abstract class Util implements UserRegistrationConstants {
 		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
 		intent.putExtra(AuthenticationActivity.ERROR_KEY, error);
 		if (onSuccess != null) {
-			myAfterRegisrationMap.put(activity, onSuccess);
+			ourAfterRegisrationMap.put(activity, onSuccess);
 		}
 		activity.startActivityForResult(intent, NetworkBaseActivity.CUSTOM_AUTHENTICATION_CODE);
 	}
 
 	static void processCustomAuthentication(final Activity activity, final INetworkLink link, int resultCode, Intent data) {
-		final Runnable onSuccess = myAfterRegisrationMap.get(activity);
-		myAfterRegisrationMap.remove(activity);
+		final Runnable onSuccess = ourAfterRegisrationMap.get(activity);
+		ourAfterRegisrationMap.remove(activity);
 		switch (resultCode) {
 			case AuthenticationActivity.RESULT_CANCELED:
 				UIUtil.wait(

@@ -76,10 +76,10 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 			return false;
 		}
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
-		for (ATOMLink link: feed.Links) {
+		for (ATOMLink link : feed.Links) {
 			final MimeType type = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
-			if (MimeType.APP_ATOM.equals(type) && "next".equals(rel)) {
+			if (MimeType.APP_ATOM.weakEquals(type) && "next".equals(rel)) {
 				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 		}
@@ -112,11 +112,11 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 		int idType = 0;
 
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
-		for (ATOMLink link: entry.Links) {
+		for (ATOMLink link : entry.Links) {
 			final MimeType type = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 
-			if (rel == null && MimeType.APP_ATOM.equals(type)) {
+			if (rel == null && MimeType.APP_ATOM.weakEquals(type)) {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 			int relType = BookUrlInfo.Format.NONE;
@@ -197,13 +197,13 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final MimeType type = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
-			if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
+			if (MimeType.IMAGE_PNG.weakEquals(type) || MimeType.IMAGE_JPEG.weakEquals(type)) {
 				if (REL_IMAGE_THUMBNAIL.equals(rel) || REL_THUMBNAIL.equals(rel)) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Thumbnail, href));
 				} else if (REL_COVER.equals(rel) || (rel != null && rel.startsWith(REL_IMAGE_PREFIX))) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
-			} else if (MimeType.APP_ATOM.equals(type)) {
+			} else if (MimeType.APP_ATOM.weakEquals(type)) {
 				final boolean hasCatalogUrl =
 					urlMap.getInfo(UrlInfo.Type.Catalog) != null;
 				if (REL_ALTERNATE.equals(rel)) {
@@ -220,14 +220,14 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 						catalogType &= ~NetworkCatalogItem.FLAGS_GROUP;
 					}
 				}
-			} else if (MimeType.TEXT_HTML.equals(type)) {
+			} else if (MimeType.TEXT_HTML.weakEquals(type)) {
 				if (REL_ACQUISITION.equals(rel) ||
 					REL_ACQUISITION_OPEN.equals(rel) ||
 					REL_ALTERNATE.equals(rel) ||
 					rel == null) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.HtmlPage, href));
 				}
-			} else if (MimeType.APP_LITRES.equals(type)) {
+			} else if (MimeType.APP_LITRES.weakEquals(type)) {
 				urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
 				litresRel = rel;
 			}
