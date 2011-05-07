@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
@@ -254,6 +255,7 @@ public class BookInfoActivity extends Activity {
 		} else {
 			titleView.setText(myResource.getResource("annotation").getValue());
 			bodyView.setText(Html.fromHtml(annotation));
+			bodyView.setMovementMethod(new LinkMovementMethod());
 		}
 	}
 
