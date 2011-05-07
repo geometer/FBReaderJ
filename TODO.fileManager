@@ -1,13 +1,2 @@
-VR:
-	DONE По short-tap на книжке -- делать то же, что в LibraryTreeActivity (пока -- открывать книгу)
-	* Bug: Удаление текущей книги, все хорошо -файл удаляется физически, однако книга все равно подгружается при повторном включении программы 
-		NP: при повторном включении? или все-таки при выходе из библиотеки? (fbreader-то продолжает работать, правда?
-	DONE Bug: y *.epub FormatPlugin не выдает катринку. 
-
 NP:
-	DONE Локализовать все сообщения
-	DONE Отдельная иконка для архивов
-	DONE Отдельная иконка для каталогов, к которым нет доступа (?) -- с замочком на папке
-	DONE Архивы в архивах
-	DONE filesystem: return special result (exception?) if directory is not readable
 	* Crashes if /sdcard is removed while we browse files
