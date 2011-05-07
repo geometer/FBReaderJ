@@ -49,10 +49,8 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public String getSummary() {
-		if (Item.Summary == null) {
-			return "";
-		}
-		return Item.Summary;
+		final String summary = Item.getSummary();
+		return summary != null ? summary : "";
 	}
 
 	@Override

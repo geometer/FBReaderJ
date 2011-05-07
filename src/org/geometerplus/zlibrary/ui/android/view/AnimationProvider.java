@@ -201,6 +201,7 @@ abstract class AnimationProvider {
 	final private List<DrawInfo> myDrawInfos = new LinkedList<DrawInfo>();
 
 	final void draw(Canvas canvas) {
+		myBitmapManager.setSize(myWidth, myHeight);
 		final long start = System.currentTimeMillis();
 		drawInternal(canvas);
 		myDrawInfos.add(new DrawInfo(myEndX, myEndY, start, System.currentTimeMillis()));
