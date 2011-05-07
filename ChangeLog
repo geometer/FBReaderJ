@@ -1,4 +1,4 @@
-===== 1.0.11 (May ??, 2011) =====
+===== 1.0.11 (May 07, 2011) =====
 * Book description from OPDS full entry
 * Fixed LitRes 'my books' entry loading
 * Better error messages processing during network operations
