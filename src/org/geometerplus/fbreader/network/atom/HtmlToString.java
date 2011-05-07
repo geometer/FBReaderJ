@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.opds;
+package org.geometerplus.fbreader.network.atom;
 
 import java.util.HashMap;
 import java.io.ByteArrayInputStream;

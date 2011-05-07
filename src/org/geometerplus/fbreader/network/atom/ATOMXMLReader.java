@@ -25,8 +25,6 @@ import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-import org.geometerplus.fbreader.network.opds.HtmlToString;
-
 public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	public static String intern(String str) {
 		if (str == null || str.length() == 0) {
