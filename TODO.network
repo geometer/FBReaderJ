@@ -1,9 +1,4 @@
 * 'sign out' feature for basic-auth
-DONE persistent cookie storage
-DONE use expiration cookie info
-DONE common auth dialog for basic auth & litres
-DONE unencrypted protocol warning
-* POST processing
 * SSLCertificate processing
 
 DONE show 'empty basket' message without opening of catalog
@@ -27,7 +22,7 @@ DONE show library name in network book activity
 
 * litres: credit card top up
 * litres: terminal (?) top up
-* litres: similar books link
+DONE litres: similar books link
 
 ------------------------------
 
@@ -53,9 +48,6 @@ NP: оповещение об изменениях в namespace'ах проис�
 * Убирать notification'ы для тех книжек, файлы которых были удалены
 
 библиотека:
-*	иконки
-*	в отдельный процесс
-*	сделать BookInfoActivity
 * возможность перечитать из файла метаинформацию для отдельной книги
 
 ------------------------------
