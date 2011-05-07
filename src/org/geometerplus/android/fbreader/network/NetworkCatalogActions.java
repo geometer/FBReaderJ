@@ -394,9 +394,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 							return;
 						}
 					} else {
-						tree.ChildrenItems.clear();
-						tree.clear();
-						NetworkView.Instance().fireModelChangedAsync();
+						clearTree(activity, tree);
 					}
 				}
 
@@ -424,13 +422,21 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		});
 	}
 
+	private static void clearTree(Activity activity, final NetworkCatalogTree tree) {
+		activity.runOnUiThread(new Runnable() {
+			public void run() {
+				tree.ChildrenItems.clear();
+				tree.clear();
+				NetworkView.Instance().fireModelChanged();
+			}
+		});
+	}
+
 	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
-		tree.ChildrenItems.clear();
-		tree.clear();
-		NetworkView.Instance().fireModelChangedAsync();
+		clearTree(activity, tree);
 		ItemsLoadingService.start(
 			activity,
 			tree,
