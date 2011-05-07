@@ -99,4 +99,22 @@
 		pattern="%s/808532018"
 		list="installed"
 	/>
+	<dictionary
+		id="Lingo Quiz Lite"
+		package="mnm.lite.lingoquiz"
+		class=".ExchangeActivity"
+		action="lingoquiz.intent.action.ADD_WORD"
+		dataKey="EXTRA_WORD"
+		pattern="%s"
+		list="installed"
+	/>
+	<dictionary
+		id="Lingo Quiz"
+		package="mnm.lingoquiz"
+		class=".ExchangeActivity"
+		action="lingoquiz.intent.action.ADD_WORD"
+		dataKey="EXTRA_WORD"
+		pattern="%s"
+		list="installed"
+	/>
 </dictionaries>

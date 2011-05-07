@@ -269,7 +269,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private void doStopLoading() {
-		final ItemsLoadingRunnable runnable = ItemsLoadingService.getRunnable(myTree);
+		final ItemsLoader runnable = ItemsLoadingService.getRunnable(myTree);
 		if (runnable != null) {
 			runnable.interruptLoading();
 		}

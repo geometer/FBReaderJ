@@ -1,3 +1,11 @@
+===== 1.0.11 (May 07, 2011) =====
+* Book description from OPDS full entry
+* Fixed LitRes 'my books' entry loading
+* Better error messages processing during network operations
+* Fixed opds feed mimetype detection
+* Fixed 'black strip' issue
+* Lingo Quiz integration
+
 ===== 1.0.10 (May 02, 2011) =====
 * LitRes: sort books by date of purchasing
 * Fixed book downloading service (book-by-link-downloading works again)
