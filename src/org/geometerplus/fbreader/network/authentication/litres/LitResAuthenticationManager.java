@@ -32,14 +32,14 @@ import org.geometerplus.fbreader.network.authentication.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResAuthenticationManager extends NetworkAuthenticationManager {
-	private boolean mySidChecked;
+	private volatile boolean mySidChecked;
 
 	private final ZLStringOption mySidUserNameOption;
 	private final ZLStringOption mySidOption;
 	private final ZLStringOption myUserIdOption;
 
-	private String myInitializedDataSid;
-	private String myAccount;
+	private volatile String myInitializedDataSid;
+	private volatile String myAccount;
 	private final Map<String,NetworkBookItem> myPurchasedBookMap =
 		new HashMap<String,NetworkBookItem>();
 	private final List<NetworkBookItem> myPurchasedBookList =
@@ -72,6 +72,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	@Override
 	public synchronized void logOut() {
 		initUser("", "", "");
+		myInitializedDataSid = null;
 		myPurchasedBookMap.clear();
 		myPurchasedBookList.clear();
 	}

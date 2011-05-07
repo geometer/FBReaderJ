@@ -45,8 +45,9 @@ public class TopUpTree extends NetworkTree {
 		try {
 			if (mgr.isAuthorised(false)) {
 				final String account = mgr.currentAccount();
-				if (account != null) {
-					return Item.Summary.replace("%s", account);
+				final String summary = Item.getSummary();
+				if (account != null && summary != null) {
+					return summary.replace("%s", account);
 				}
 			}
 		} catch (ZLNetworkException e) {
