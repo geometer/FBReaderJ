@@ -32,7 +32,6 @@ import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 import org.geometerplus.fbreader.network.atom.ATOMConstants;
 
 public class HtmlToString {
-	private String myLastOpenedTag;
 	private String myTextType;
 	private StringBuilder myTextContent = new StringBuilder();
 
@@ -47,10 +46,13 @@ public class HtmlToString {
 		myTextContent.delete(0, myTextContent.length());
 	}
 
-	public String finishTextContent(String bufferContent) {
-		if (bufferContent != null) {
-			myTextContent.append(bufferContent);
+	public void appendText(String text) {
+		if (text != null) {
+			myTextContent.append(text);
 		}
+	}
+
+	public String finishTextContent() {
 		char[] contentArray = myTextContent.toString().trim().toCharArray();
 		String result;
 		if (contentArray.length == 0) {
@@ -72,22 +74,12 @@ public class HtmlToString {
 		return result;
 	}
 
-	public void processTextContent(boolean closeTag, String tag, ZLStringMap attributes, String bufferContent) {
+	public void processTextContent(boolean closeTag, String tag, ZLStringMap attributes) {
 		if (ATOMConstants.TYPE_XHTML.equals(myTextType) ||
 			MimeType.TEXT_XHTML.Name.equals(myTextType)) {
-			if (bufferContent != null) {
-				myTextContent.append(bufferContent);
-			}
 			if (closeTag) {
-				final int index = myTextContent.length() - 1;
-				if (tag == myLastOpenedTag && bufferContent == null && myTextContent.charAt(index) == '>') {
-					myTextContent.insert(index, '/'); // TODO: Is it necessary in HTML???????
-				} else {
-					myTextContent.append("</").append(tag).append(">");
-				}
-				myLastOpenedTag = null;
+				myTextContent.append("</").append(tag).append(">");
 			} else {
-				myLastOpenedTag = tag;
 				StringBuilder buffer = new StringBuilder("<").append(tag);
 				for (int i = 0; i < attributes.getSize(); ++i) {
 					final String key = attributes.getKey(i);
@@ -100,10 +92,6 @@ public class HtmlToString {
 				}
 				buffer.append(" >");
 				myTextContent.append(buffer.toString());
-			}
-		} else {
-			if (bufferContent != null) {
-				myTextContent.append(bufferContent);
 			}
 		}
 	}

@@ -183,7 +183,8 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			}
 			break;
 		case ANNOTATION:
-			myHtmlToString.processTextContent(false, tag, attributes, bufferContent);
+			myHtmlToString.appendText(bufferContent);
+			myHtmlToString.processTextContent(false, tag, attributes);
 			break;
 		}
 		return false;
@@ -313,11 +314,12 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			}
 			break;
 		case ANNOTATION:
+			myHtmlToString.appendText(bufferContent);
 			if (TAG_ANNOTATION == tag) {
-				mySummary = myHtmlToString.finishTextContent(bufferContent);
+				mySummary = myHtmlToString.finishTextContent();
 				myState = TITLE_INFO;
 			} else {
-				myHtmlToString.processTextContent(true, tag, null, bufferContent);
+				myHtmlToString.processTextContent(true, tag, null);
 			}
 			break;
 		case DATE:
