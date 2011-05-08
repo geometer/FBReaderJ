@@ -137,8 +137,8 @@ public class OPDSXMLReader extends ATOMXMLReader {
 				}
 				break;
 			case FE_CONTENT:
-				myHtmlToString.appendText(bufferContent);
-				myHtmlToString.appendStartTag(tag, attributes);
+				myFormattedBuffer.appendText(bufferContent);
+				myFormattedBuffer.appendStartTag(tag, attributes);
 				// FIXME: HACK: html handling must be implemeted neatly
 				if (tag == TAG_HACK_SPAN || attributes.getValue("class") == "price") {
 					myState = FEC_HACK_SPAN;
@@ -174,8 +174,9 @@ public class OPDSXMLReader extends ATOMXMLReader {
 				break;
 			case FEC_HACK_SPAN:
 				// FIXME: HACK
-				myHtmlToString.appendText(bufferContent);
-				myHtmlToString.appendEndTag(tag);
+				myFormattedBuffer.appendText(bufferContent);
+				myFormattedBuffer.appendEndTag(tag);
+				myFormattedBuffer.appendText("<br/>");
 				if (bufferContent != null) {
 					getOPDSEntry().addAttribute(KEY_PRICE, bufferContent.intern());
 				}

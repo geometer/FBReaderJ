@@ -96,7 +96,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	protected int myState;
 	private final StringBuilder myBuffer = new StringBuilder();
-	protected final FormattedBuffer myHtmlToString = new FormattedBuffer();
+	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
 	protected boolean myFeedMetadataProcessed;
 
 	public ATOMXMLReader(ATOMFeedHandler handler, boolean readEntryNotFeed) {
@@ -301,8 +301,8 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case FE_TITLE:
 			case F_TITLE:
 			case F_SUBTITLE:
-				myHtmlToString.appendText(bufferContent);
-				myHtmlToString.appendStartTag(tag, attributes);
+				myFormattedBuffer.appendText(bufferContent);
+				myFormattedBuffer.appendStartTag(tag, attributes);
 				break;
 			default:
 				break;
@@ -377,29 +377,29 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case F_TITLE:
-				myHtmlToString.appendText(bufferContent);
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					final CharSequence title = myHtmlToString.getText();
+					final CharSequence title = myFormattedBuffer.getText();
 					if (myFeed != null) {
 						myFeed.Title = title;
 					}
 					myState = FEED;
 				} else {
-					myHtmlToString.appendEndTag(tag);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case F_SUBTITLE:
-				myHtmlToString.appendText(bufferContent);
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUBTITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMSubtitle
-					final CharSequence subtitle = myHtmlToString.getText();
+					final CharSequence subtitle = myFormattedBuffer.getText();
 					if (myFeed != null) {
 						myFeed.Subtitle = subtitle;
 					}
 					myState = FEED;
 				} else {
-					myHtmlToString.appendEndTag(tag);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case F_UPDATED:
@@ -502,33 +502,33 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_SUMMARY:
-				myHtmlToString.appendText(bufferContent);
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUMMARY) {
 					// TODO:implement ATOMTextConstruct & ATOMSummary
-					myEntry.Summary = myHtmlToString.getText();
+					myEntry.Summary = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.appendEndTag(tag);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_CONTENT:
-				myHtmlToString.appendText(bufferContent);
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_CONTENT) {
 					// TODO:implement ATOMContent
-					myEntry.Content = myHtmlToString.getText();
+					myEntry.Content = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.appendEndTag(tag);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_TITLE:
-				myHtmlToString.appendText(bufferContent);
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					myEntry.Title = myHtmlToString.getText();
+					myEntry.Title = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.appendEndTag(tag);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_UPDATED:
@@ -553,11 +553,11 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	public void setFormattingType(String type) {
 		if (ATOMConstants.TYPE_HTML.equals(type) || MimeType.TEXT_HTML.Name.equals(type)) {
-			myHtmlToString.reset(FormattedBuffer.Type.Html);
+			myFormattedBuffer.reset(FormattedBuffer.Type.Html);
 		} else if (ATOMConstants.TYPE_XHTML.equals(type) || MimeType.TEXT_XHTML.Name.equals(type)) {
-			myHtmlToString.reset(FormattedBuffer.Type.XHtml);
+			myFormattedBuffer.reset(FormattedBuffer.Type.XHtml);
 		} else {
-			myHtmlToString.reset(FormattedBuffer.Type.Text);
+			myFormattedBuffer.reset(FormattedBuffer.Type.Text);
 		}
 	}
 }
