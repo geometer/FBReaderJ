@@ -242,11 +242,11 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 			urlMap.removeAllInfos(UrlInfo.Type.HtmlPage);
 		}
 
-		final String annotation;
+		final CharSequence annotation;
 		if (entry.Summary != null) {
-			annotation = entry.Summary.replace("\n", "");
+			annotation = entry.Summary;
 		} else if (entry.Content != null) {
-			annotation = entry.Content.replace("\n", "");
+			annotation = entry.Content;
 		} else {
 			annotation = null;
 		}
