@@ -95,7 +95,7 @@ public class NetworkBookItem extends NetworkItem {
 	 * @param urls          list of urls related to this book. Can be <code>null</code>.
 	 */
 	public NetworkBookItem(INetworkLink link, String id, int index,
-		String title, String summary, /*String language, String date,*/
+		CharSequence title, CharSequence summary, /*String language, String date,*/
 		List<AuthorData> authors, List<String> tags, String seriesTitle, float indexInSeries,
 		UrlInfoCollection urls) {
 		super(link, title, summary, urls);

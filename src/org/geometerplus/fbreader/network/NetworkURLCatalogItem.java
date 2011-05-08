@@ -35,7 +35,7 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	 * @param summary    description of this library item. Can be <code>null</code>.
 	 * @param urls       collection of item-related URLs. Can be <code>null</code>.
 	 */
-	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls) {
+	public NetworkURLCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection urls) {
 		this(link, title, summary, urls, Accessibility.ALWAYS, FLAGS_DEFAULT);
 	}
 
@@ -50,7 +50,7 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	 *                      in the network library view. 
 	 * @param flags         value defines how to show book items in this catalog.
 	 */
-	public NetworkURLCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
+	public NetworkURLCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls, accessibility, flags);
 	}
 

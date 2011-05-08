@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
-	private static String getAnnotation(OPDSEntry entry) {
+	private static CharSequence getAnnotation(OPDSEntry entry) {
 		if (entry.Content != null) {
 			return entry.Content;
 		}
@@ -259,7 +259,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 
 		public boolean processFeedEntry(OPDSEntry entry) {
 			addUrls(getUrls((OPDSNetworkLink)Link, entry, myUrl));
-			final String summary = getAnnotation(entry);
+			final CharSequence summary = getAnnotation(entry);
 			if (summary != null) {
 				setSummary(summary);
 			}

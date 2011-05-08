@@ -39,12 +39,12 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	private State myLoadingState;
 	private final Map<String,String> myExtraData;
 
-	OPDSCatalogItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection urls, Map<String,String> extraData) {
+	OPDSCatalogItem(OPDSNetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection urls, Map<String,String> extraData) {
 		super(link, title, summary, urls);
 		myExtraData = extraData;
 	}
 
-	protected OPDSCatalogItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
+	protected OPDSCatalogItem(OPDSNetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls, accessibility, flags);
 		myExtraData = null;
 	}
