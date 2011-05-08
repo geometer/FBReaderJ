@@ -21,14 +21,13 @@ package org.geometerplus.fbreader.network.atom;
 
 import android.text.Html;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 import org.geometerplus.fbreader.network.atom.ATOMConstants;
 
-public class HtmlToString {
-	private static enum Type {
+public class FormattedBuffer {
+	public static enum Type {
 		Text,
 		Html,
 		XHtml
@@ -37,34 +36,22 @@ public class HtmlToString {
 	private Type myType;
 	private StringBuilder myBuffer = new StringBuilder();
 
-	public void setupTextContent(String type) {
-		if (ATOMConstants.TYPE_HTML.equals(type) || MimeType.TEXT_HTML.Name.equals(type)) {
-			myType = Type.Html;
-		} else if (ATOMConstants.TYPE_XHTML.equals(type) || MimeType.TEXT_XHTML.Name.equals(type)) {
-			myType = Type.XHtml;
-		} else {
-			myType = Type.Text;
-		}
-		myBuffer.delete(0, myBuffer.length());
+	public FormattedBuffer(Type type) {
+		myType = type;
 	}
 
-	public void appendText(String text) {
+	public FormattedBuffer() {
+		this(Type.Text);
+	}
+
+	public void appendText(CharSequence text) {
 		if (text != null) {
 			myBuffer.append(text);
 		}
 	}
 
-	public CharSequence getText() {
-		final String text = myBuffer.toString();
-		myBuffer.delete(0, myBuffer.length());
-
-		switch (myType) {
-			case Html:
-			case XHtml:
-				return Html.fromHtml(text);
-			default:
-				return text;
-		}
+	public void appendText(char[] data, int start, int length) {
+		myBuffer.append(data, start, length);
 	}
 
 	public void appendStartTag(String tag, ZLStringMap attributes) {
@@ -83,5 +70,31 @@ public class HtmlToString {
 
 	public void appendEndTag(String tag) {
 		myBuffer.append("</").append(tag).append(">");
+	}
+
+	public void reset(Type type) {
+		myType = type;
+		reset();
+	}
+
+	public void reset() {
+		myBuffer.delete(0, myBuffer.length());
+	}
+
+	public CharSequence getText() {
+		final String text = myBuffer.toString();
+
+		switch (myType) {
+			case Html:
+			case XHtml:
+				return Html.fromHtml(text);
+			default:
+				return text;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return myBuffer.toString();
 	}
 }

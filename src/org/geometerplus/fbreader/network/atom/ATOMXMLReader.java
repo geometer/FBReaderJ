@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network.atom;
 import java.util.Map;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
@@ -95,7 +96,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	protected int myState;
 	private final StringBuilder myBuffer = new StringBuilder();
-	protected HtmlToString myHtmlToString = new HtmlToString();
+	protected final FormattedBuffer myHtmlToString = new FormattedBuffer();
 	protected boolean myFeedMetadataProcessed;
 
 	public ATOMXMLReader(ATOMFeedHandler handler, boolean readEntryNotFeed) {
@@ -219,11 +220,11 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = F_CATEGORY;
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMTitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = F_TITLE;
 					} else if (tag == TAG_SUBTITLE) {
 						//mySubtitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMSubtitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = F_SUBTITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated(attributes);
@@ -258,15 +259,15 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = FE_PUBLISHED;
 					} else if (tag == TAG_SUMMARY) {
 						//mySummary = new ATOMSummary(attributes); // TODO:implement ATOMTextConstruct & ATOMSummary
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_SUMMARY;
 					} else if (tag == TAG_CONTENT) {
 						//myConent = new ATOMContent(attributes); // TODO:implement ATOMContent
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_CONTENT;
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMTitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_TITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated(attributes);
@@ -547,16 +548,16 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public final void characterDataHandler(char[] data, int start, int length) {
-		final int startIndex = myBuffer.length();
 		myBuffer.append(data, start, length);
-		int index = startIndex;
-		while ((index = myBuffer.indexOf("\r\n", index)) != -1) {
-			myBuffer.replace(index, index + 2, "\n");
-		}
-		index = startIndex;
-		while ((index = myBuffer.indexOf("\r", index)) != -1) {
-			myBuffer.setCharAt(index, '\n');
-		}
 	}
 
+	public void setFormattingType(String type) {
+		if (ATOMConstants.TYPE_HTML.equals(type) || MimeType.TEXT_HTML.Name.equals(type)) {
+			myHtmlToString.reset(FormattedBuffer.Type.Html);
+		} else if (ATOMConstants.TYPE_XHTML.equals(type) || MimeType.TEXT_XHTML.Name.equals(type)) {
+			myHtmlToString.reset(FormattedBuffer.Type.XHtml);
+		} else {
+			myHtmlToString.reset(FormattedBuffer.Type.Text);
+		}
+	}
 }

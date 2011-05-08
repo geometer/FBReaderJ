@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.atom.HtmlToString;
+import org.geometerplus.fbreader.network.atom.FormattedBuffer;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 class LitResXMLReader extends LitResAuthenticationXMLReader {
@@ -93,20 +93,11 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private int myState = START;
 	private final StringBuilder myBuffer = new StringBuilder();
-	private HtmlToString myHtmlToString = new HtmlToString();
+	private FormattedBuffer myAnnotationBuffer = new FormattedBuffer(FormattedBuffer.Type.XHtml);
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
 		tag = tag.intern();
-
-		final char[] bufferContentArray = myBuffer.toString().trim().toCharArray();
-		final String bufferContent;
-		if (bufferContentArray.length == 0) {
-			bufferContent = null;
-		} else {
-			bufferContent = new String(bufferContentArray);
-		}
-		myBuffer.delete(0, myBuffer.length());
 
 		switch(myState) {
 		case START:
@@ -152,7 +143,6 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			} else if (TAG_BOOK_TITLE == tag) {
 				myState = BOOK_TITLE;
 			} else if (TAG_ANNOTATION == tag) {
-				myHtmlToString.setupTextContent(MimeType.TEXT_XHTML.Name);
 				myState = ANNOTATION;
 			} else if (TAG_DATE == tag) {
 				myState = DATE;
@@ -183,10 +173,12 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			}
 			break;
 		case ANNOTATION:
-			myHtmlToString.appendText(bufferContent);
-			myHtmlToString.appendStartTag(tag, attributes);
+			myAnnotationBuffer.appendText(myBuffer);
+			myAnnotationBuffer.appendStartTag(tag, attributes);
 			break;
 		}
+
+		myBuffer.delete(0, myBuffer.length());
 		return false;
 	}
 
@@ -194,15 +186,6 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	@Override
 	public boolean endElementHandler(String tag) {
 		tag = tag.intern();
-
-		final char[] bufferContentArray = myBuffer.toString().trim().toCharArray();
-		final String bufferContent;
-		if (bufferContentArray.length == 0) {
-			bufferContent = null;
-		} else {
-			bufferContent = new String(bufferContentArray);
-		}
-		myBuffer.delete(0, myBuffer.length());
 
 		switch (myState) {
 		case CATALOG:
@@ -273,31 +256,31 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			break;
 		case FIRST_NAME:
 			if (TAG_FIRST_NAME == tag) {
-				myAuthorFirstName = bufferContent;
+				myAuthorFirstName = myBuffer.toString();
 				myState = AUTHOR;
 			}
 			break;
 		case MIDDLE_NAME:
 			if (TAG_MIDDLE_NAME == tag) {
-				myAuthorMiddleName = bufferContent;
+				myAuthorMiddleName = myBuffer.toString();
 				myState = AUTHOR;
 			}
 			break;
 		case LAST_NAME:
 			if (TAG_LAST_NAME == tag) {
-				myAuthorLastName = bufferContent;
+				myAuthorLastName = myBuffer.toString();
 				myState = AUTHOR;
 			}
 			break;
 		case GENRE:
 			if (TAG_GENRE == tag) {
-				/*if (bufferContent != null) {
+				/*if (myBuffer.length() != 0) {
 					const std::map<std::string,shared_ptr<LitResGenre> > &genresMap =
 						LitResGenreMap::Instance().genresMap();
 					const std::map<shared_ptr<LitResGenre>,std::string> &genresTitles =
 						LitResGenreMap::Instance().genresTitles();
 
-					std::map<std::string, shared_ptr<LitResGenre> >::const_iterator it = genresMap.find(bufferContent);
+					std::map<std::string, shared_ptr<LitResGenre> >::const_iterator it = genresMap.find(myBuffer);
 					if (it != genresMap.end()) {
 						std::map<shared_ptr<LitResGenre>, std::string>::const_iterator jt = genresTitles.find(it->second);
 						if (jt != genresTitles.end()) {
@@ -310,32 +293,35 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 			break;
 		case BOOK_TITLE:
 			if (TAG_BOOK_TITLE == tag) {
-				myTitle = bufferContent;
+				myTitle = myBuffer.toString();
 				myState = TITLE_INFO;
 			}
 			break;
 		case ANNOTATION:
-			myHtmlToString.appendText(bufferContent);
+			myAnnotationBuffer.appendText(myBuffer);
 			if (TAG_ANNOTATION == tag) {
-				mySummary = myHtmlToString.getText();
+				mySummary = myAnnotationBuffer.getText();
+				myAnnotationBuffer.reset();
 				myState = TITLE_INFO;
 			} else {
-				myHtmlToString.appendEndTag(tag);
+				myAnnotationBuffer.appendEndTag(tag);
 			}
 			break;
 		case DATE:
 			if (TAG_DATE == tag) {
-				//myDate = bufferContent;
+				//myDate = myBuffer.toString();
 				myState = TITLE_INFO;
 			}
 			break;
 		case LANGUAGE:
 			if (TAG_LANGUAGE == tag) {
-				//myLanguage = bufferContent;
+				//myLanguage = myBuffer.toString();
 				myState = TITLE_INFO;
 			}
 			break;
 		}
+
+		myBuffer.delete(0, myBuffer.length());
 		return false;
 	}
 
