@@ -27,7 +27,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -45,6 +44,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
@@ -254,7 +254,7 @@ public class BookInfoActivity extends Activity {
 			bodyView.setVisibility(View.GONE);
 		} else {
 			titleView.setText(myResource.getResource("annotation").getValue());
-			bodyView.setText(Html.fromHtml(annotation));
+			bodyView.setText(HtmlUtil.getHtmlText(annotation));
 			bodyView.setMovementMethod(new LinkMovementMethod());
 		}
 	}

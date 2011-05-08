@@ -19,11 +19,11 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import android.text.Html;
-
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.HtmlUtil;
 import org.geometerplus.fbreader.network.atom.ATOMConstants;
 
 public class FormattedBuffer {
@@ -87,7 +87,7 @@ public class FormattedBuffer {
 		switch (myType) {
 			case Html:
 			case XHtml:
-				return Html.fromHtml(text);
+				return HtmlUtil.getHtmlText(text);
 			default:
 				return text;
 		}
