@@ -19,13 +19,11 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import android.text.*;
-import android.text.style.URLSpan;
-
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.HtmlUtil;
 import org.geometerplus.fbreader.network.atom.ATOMConstants;
 
 public class FormattedBuffer {
@@ -89,27 +87,10 @@ public class FormattedBuffer {
 		switch (myType) {
 			case Html:
 			case XHtml:
-				return getHtmlText(text);
+				return HtmlUtil.getHtmlText(text);
 			default:
 				return text;
 		}
-	}
-
-	private CharSequence getHtmlText(String text) {
-		final Spanned htmlText = Html.fromHtml(text);
-		if (htmlText.getSpans(0, htmlText.length(), URLSpan.class).length == 0) {
-			return htmlText;
-		}
-		final Spannable newHtmlText = Spannable.Factory.getInstance().newSpannable(htmlText);
-		for (URLSpan span : newHtmlText.getSpans(0, newHtmlText.length(), URLSpan.class)) {
-			final int start = newHtmlText.getSpanStart(span);
-			final int end = newHtmlText.getSpanEnd(span);
-			final int flags = newHtmlText.getSpanFlags(span);
-			final String url = NetworkLibrary.Instance().rewriteUrl(span.getURL(), true);
-			newHtmlText.removeSpan(span);
-			newHtmlText.setSpan(new URLSpan(url), start, end, flags);
-		}
-		return newHtmlText;
 	}
 
 	@Override
