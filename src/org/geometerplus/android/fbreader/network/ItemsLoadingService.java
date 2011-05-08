@@ -48,7 +48,7 @@ public class ItemsLoadingService extends Service {
 	}
 
 	static ItemsLoader getRunnable(NetworkTree tree) {
-		return (ItemsLoader)tree.getUserData(KEY);
+		return tree != null ? (ItemsLoader)tree.getUserData(KEY) : null;
 	}
 
 	private static void removeRunnable(NetworkTree tree) {

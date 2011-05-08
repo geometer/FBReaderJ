@@ -22,10 +22,9 @@ package org.geometerplus.fbreader.network.atom;
 import java.util.Map;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-
-import org.geometerplus.fbreader.network.opds.HtmlToString;
 
 public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	public static String intern(String str) {
@@ -97,7 +96,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	protected int myState;
 	private final StringBuilder myBuffer = new StringBuilder();
-	protected HtmlToString myHtmlToString = new HtmlToString();
+	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
 	protected boolean myFeedMetadataProcessed;
 
 	public ATOMXMLReader(ATOMFeedHandler handler, boolean readEntryNotFeed) {
@@ -221,11 +220,11 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = F_CATEGORY;
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMTitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = F_TITLE;
 					} else if (tag == TAG_SUBTITLE) {
 						//mySubtitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMSubtitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = F_SUBTITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated(attributes);
@@ -260,15 +259,15 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = FE_PUBLISHED;
 					} else if (tag == TAG_SUMMARY) {
 						//mySummary = new ATOMSummary(attributes); // TODO:implement ATOMTextConstruct & ATOMSummary
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_SUMMARY;
 					} else if (tag == TAG_CONTENT) {
 						//myConent = new ATOMContent(attributes); // TODO:implement ATOMContent
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_CONTENT;
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMTitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_TITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated(attributes);
@@ -302,7 +301,8 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case FE_TITLE:
 			case F_TITLE:
 			case F_SUBTITLE:
-				myHtmlToString.processTextContent(false, tag, attributes, bufferContent);
+				myFormattedBuffer.appendText(bufferContent);
+				myFormattedBuffer.appendStartTag(tag, attributes);
 				break;
 			default:
 				break;
@@ -377,27 +377,29 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case F_TITLE:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					final String title = myHtmlToString.finishTextContent(bufferContent);
+					final CharSequence title = myFormattedBuffer.getText();
 					if (myFeed != null) {
 						myFeed.Title = title;
 					}
 					myState = FEED;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case F_SUBTITLE:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUBTITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMSubtitle
-					final String subtitle = myHtmlToString.finishTextContent(bufferContent);
+					final CharSequence subtitle = myFormattedBuffer.getText();
 					if (myFeed != null) {
 						myFeed.Subtitle = subtitle;
 					}
 					myState = FEED;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case F_UPDATED:
@@ -500,30 +502,33 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_SUMMARY:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUMMARY) {
 					// TODO:implement ATOMTextConstruct & ATOMSummary
-					myEntry.Summary = myHtmlToString.finishTextContent(bufferContent);
+					myEntry.Summary = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_CONTENT:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_CONTENT) {
 					// TODO:implement ATOMContent
-					myEntry.Content = myHtmlToString.finishTextContent(bufferContent);
+					myEntry.Content = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_TITLE:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					myEntry.Title = myHtmlToString.finishTextContent(bufferContent);
+					myEntry.Title = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_UPDATED:
@@ -543,16 +548,16 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public final void characterDataHandler(char[] data, int start, int length) {
-		final int startIndex = myBuffer.length();
 		myBuffer.append(data, start, length);
-		int index = startIndex;
-		while ((index = myBuffer.indexOf("\r\n", index)) != -1) {
-			myBuffer.replace(index, index + 2, "\n");
-		}
-		index = startIndex;
-		while ((index = myBuffer.indexOf("\r", index)) != -1) {
-			myBuffer.setCharAt(index, '\n');
-		}
 	}
 
+	public void setFormattingType(String type) {
+		if (ATOMConstants.TYPE_HTML.equals(type) || MimeType.TEXT_HTML.Name.equals(type)) {
+			myFormattedBuffer.reset(FormattedBuffer.Type.Html);
+		} else if (ATOMConstants.TYPE_XHTML.equals(type) || MimeType.TEXT_XHTML.Name.equals(type)) {
+			myFormattedBuffer.reset(FormattedBuffer.Type.XHtml);
+		} else {
+			myFormattedBuffer.reset(FormattedBuffer.Type.Text);
+		}
+	}
 }

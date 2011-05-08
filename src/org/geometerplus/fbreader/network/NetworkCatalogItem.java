@@ -64,7 +64,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	 *                      in the network library view. 
 	 * @param flags         describes how to show book items inside this catalog
 	 */
-	public NetworkCatalogItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
+	public NetworkCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls);
 		myAccessibility = accessibility;
 		Flags = flags;
