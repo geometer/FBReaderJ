@@ -41,7 +41,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private String mySeriesTitle;
 	private int myIndexInSeries;
 
-	private String mySummary;
+	private CharSequence mySummary;
 
 	private final UrlInfoCollection myUrls = new UrlInfoCollection();
 
@@ -228,7 +228,8 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 					myUrls
 				));
 
-				myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = mySummary = null;
+				myBookId = myTitle = /*myLanguage = myDate = */mySeriesTitle = null;
+				mySummary = null;
 				myIndexInSeries = 0;
 				myAuthors.clear();
 				myTags.clear();

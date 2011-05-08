@@ -379,7 +379,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				myHtmlToString.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					final String title = myHtmlToString.getText();
+					final CharSequence title = myHtmlToString.getText();
 					if (myFeed != null) {
 						myFeed.Title = title;
 					}
@@ -392,7 +392,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				myHtmlToString.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUBTITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMSubtitle
-					final String subtitle = myHtmlToString.getText();
+					final CharSequence subtitle = myHtmlToString.getText();
 					if (myFeed != null) {
 						myFeed.Subtitle = subtitle;
 					}

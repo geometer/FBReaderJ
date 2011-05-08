@@ -54,14 +54,14 @@ public class HtmlToString {
 		}
 	}
 
-	public String getText() {
+	public CharSequence getText() {
 		final String text = myBuffer.toString();
 		myBuffer.delete(0, myBuffer.length());
 
 		switch (myType) {
 			case Html:
 			case XHtml:
-				return Html.fromHtml(text).toString();
+				return Html.fromHtml(text);
 			default:
 				return text;
 		}

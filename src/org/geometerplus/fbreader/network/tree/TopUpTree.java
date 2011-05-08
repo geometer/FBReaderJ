@@ -36,7 +36,7 @@ public class TopUpTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return Item.Title;
+		return Item.Title.toString();
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class TopUpTree extends NetworkTree {
 		try {
 			if (mgr.isAuthorised(false)) {
 				final String account = mgr.currentAccount();
-				final String summary = Item.getSummary();
+				final CharSequence summary = Item.getSummary();
 				if (account != null && summary != null) {
-					return summary.replace("%s", account);
+					return summary.toString().replace("%s", account);
 				}
 			}
 		} catch (ZLNetworkException e) {
