@@ -44,7 +44,7 @@ public class NetworkBookTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return Book.Title;
+		return Book.Title.toString();
 	}
 
 	@Override

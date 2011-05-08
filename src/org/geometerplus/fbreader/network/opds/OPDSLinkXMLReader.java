@@ -92,8 +92,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				return false;
 			}
 			final String siteName = id.substring(ENTRY_ID_PREFIX.length());
-			final String title = entry.Title;
-			final String summary = entry.Content;
+			final CharSequence title = entry.Title;
+			final CharSequence summary = entry.Content;
 			final String language = entry.DCLanguage;
 
 			final UrlInfoCollection<UrlInfoWithDate> infos =
@@ -160,8 +160,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 		private INetworkLink link(
 			String siteName,
-			String title,
-			String summary,
+			CharSequence title,
+			CharSequence summary,
 			String language,
 			UrlInfoCollection<UrlInfoWithDate> infos,
 			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
@@ -171,10 +171,13 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				return null;
 			}
 
+			final String titleString = title.toString();
+			final String summaryString = summary != null ? summary.toString() : null;
+
 			OPDSNetworkLink opdsLink = new OPDSNetworkLink(
 				siteName,
-				title,
-				summary,
+				titleString,
+				summaryString,
 				language,
 				infos,
 				myHasStableIdentifiers
