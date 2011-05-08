@@ -19,13 +19,9 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-import java.util.HashMap;
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
+import android.text.Html;
 
-import org.geometerplus.zlibrary.core.html.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.xml.ZLXMLProcessor;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
@@ -34,8 +30,6 @@ import org.geometerplus.fbreader.network.atom.ATOMConstants;
 public class HtmlToString {
 	private String myTextType;
 	private StringBuilder myTextContent = new StringBuilder();
-
-	private HtmlToStringReader myHtmlToStringReader = new HtmlToStringReader();
 
 	public void setupTextContent(String type) {
 		if (type == null) {
@@ -52,7 +46,7 @@ public class HtmlToString {
 		}
 	}
 
-	public String finishTextContent() {
+	public String getText() {
 		char[] contentArray = myTextContent.toString().trim().toCharArray();
 		String result;
 		if (contentArray.length == 0) {
@@ -65,8 +59,7 @@ public class HtmlToString {
 				ATOMConstants.TYPE_XHTML.equals(myTextType) ||
 				MimeType.TEXT_HTML.Name.equals(myTextType) ||
 				MimeType.TEXT_XHTML.Name.equals(myTextType)) {
-				myHtmlToStringReader.readFromString(result);
-				result = myHtmlToStringReader.getString();
+				result = Html.fromHtml(new String(contentArray)).toString();
 			}
 		}
 		myTextType = null;
@@ -74,180 +67,21 @@ public class HtmlToString {
 		return result;
 	}
 
-	public void processTextContent(boolean closeTag, String tag, ZLStringMap attributes) {
-		if (ATOMConstants.TYPE_XHTML.equals(myTextType) ||
-			MimeType.TEXT_XHTML.Name.equals(myTextType)) {
-			if (closeTag) {
-				myTextContent.append("</").append(tag).append(">");
-			} else {
-				StringBuilder buffer = new StringBuilder("<").append(tag);
-				for (int i = 0; i < attributes.getSize(); ++i) {
-					final String key = attributes.getKey(i);
-					final String value = attributes.getValue(key);
-					buffer.append(" ").append(key).append("=\"");
-					if (value != null) {
-						buffer.append(value);
-					}
-					buffer.append("\"");
-				}
-				buffer.append(" >");
-				myTextContent.append(buffer.toString());
+	public void appendStartTag(String tag, ZLStringMap attributes) {
+		myTextContent.append("<").append(tag);
+		for (int i = 0; i < attributes.getSize(); ++i) {
+			final String key = attributes.getKey(i);
+			final String value = attributes.getValue(key);
+			myTextContent.append(" ").append(key).append("=\"");
+			if (value != null) {
+				myTextContent.append(value);
 			}
+			myTextContent.append("\"");
 		}
+		myTextContent.append(">");
 	}
 
-	private static class HtmlToStringReader implements ZLHtmlReader {
-
-		private StringBuilder myBuffer = new StringBuilder();
-		private byte[] myByteData;
-		private int myByteDataLength;
-		private HashMap<String,char[]> myEntityMap;
-
-		public void readFromString(String htmlString) {
-			final StringBuilder html = new StringBuilder();
-			html.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">")
-				.append("<html><head>")
-				.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />")
-				.append("<title></title>")
-				.append("</head><body>")
-				.append(htmlString)
-				.append("</body></html>");
-			final byte[] bytes;
-			try {
-				bytes = html.toString().getBytes("UTF-8");
-			} catch (UnsupportedEncodingException ex) {
-				throw new RuntimeException("It's impossible!!! UTF-8 charset is not supported!!!", ex);
-			}
-			ZLHtmlProcessor.read(this, new ByteArrayInputStream(bytes));
-		}
-
-		public String getString() {
-			return new String(myBuffer.toString().trim().toCharArray());
-		}
-
-
-		public void startDocumentHandler() {
-			myBuffer.delete(0, myBuffer.length());
-			myByteDataLength = 0;
-		}
-
-		public void endDocumentHandler() {
-			processByteData();
-		}
-
-		public void startElementHandler(String tag, int offset, ZLHtmlAttributeMap attributes) {
-			processByteData();
-			tag = tag.toLowerCase().intern();
-			if (tag == "br") {
-				if (myBuffer.length() > 0) {
-					myBuffer.append('\n');
-				}
-			} else if (tag == "hr") {
-				if (myBuffer.length() > 0) {
-					if (myBuffer.charAt(myBuffer.length() - 1) != '\n') {
-						myBuffer.append('\n');
-					}
-					myBuffer.append('\n');
-				}
-			}
-		}
-
-		public void endElementHandler(String tag) {
-			processByteData();
-			tag = tag.toLowerCase().intern();
-			if (tag == "p") {
-				if (myBuffer.length() > 0) {
-					myBuffer.append('\n');
-				}
-			}
-		}
-
-		private void processByteData() {
-			if (myByteDataLength == 0) {
-				return;
-			}
-			final String data;
-			try {
-				data = new String(myByteData, 0, myByteDataLength, "UTF-8");
-			} catch (UnsupportedEncodingException ex) {
-				throw new RuntimeException("It's impossible!!! UTF-8 charset is not supported!!!", ex);
-			}
-			myByteDataLength = 0;
-			if (data.length() == 0) {
-				return;
-			}
-			if (myBuffer.length() > 0 && !Character.isWhitespace(myBuffer.charAt(myBuffer.length() - 1))) {
-				myBuffer.append(' ');
-			}
-			int index = 0;
-			while (index < data.length() && Character.isWhitespace(data.charAt(index))) {
-				++index;
-			}
-			boolean lastSpace = false;
-			while (index < data.length()) {
-				final char ch = data.charAt(index++);
-				if (Character.isWhitespace(ch)) {
-					lastSpace = true;
-				} else {
-					if (lastSpace) {
-						myBuffer.append(' ');
-						lastSpace = false;
-					}
-					myBuffer.append(ch);
-				}
-			}
-		}
-
-		public void entityDataHandler(String entity) {
-			processByteData();
-
-			if (entity.length() == 0) {
-				return;
-			}
-
-			if (myEntityMap == null) {
-				myEntityMap = new HashMap<String,char[]>(ZLXMLProcessor.getEntityMap(XHTMLReader.xhtmlDTDs()));
-			}
-			char[] data = myEntityMap.get(entity);
-			if (data == null) {
-				if (entity.charAt(0) == '#') {
-					try {
-						int number;
-						if (entity.charAt(1) == 'x') {
-							number = Integer.parseInt(entity.substring(2), 16);
-						} else {
-							number = Integer.parseInt(entity.substring(1));
-						}
-						data = new char[] { (char)number };
-					} catch (NumberFormatException e) {
-					}
-				}
-				if (data == null) {
-					data = new char[0];
-				}
-				myEntityMap.put(entity, data);
-			}
-//System.err.println("FBREADER -- ENTITY: &" + entity + "; --> " + new String(data));
-			myBuffer.append(data);
-		}
-
-		public void byteDataHandler(byte[] data, int start, int length) {
-			if (length <= 0) {
-				return;
-			}
-			if (myByteData == null) {
-				myByteData = new byte[length];
-				System.arraycopy(data, start, myByteData, 0, length);
-				myByteDataLength = length;
-			} else {
-				if (myByteData.length < myByteDataLength + length) {
-					final byte[] oldData = myByteData;
-					myByteData = new byte[myByteDataLength + length];
-					System.arraycopy(oldData, 0, myByteData, 0, myByteDataLength);
-				}
-				System.arraycopy(data, start, myByteData, myByteDataLength, length);
-				myByteDataLength += length;
-			}
-		}
+	public void appendEndTag(String tag) {
+		myTextContent.append("</").append(tag).append(">");
 	}
 }

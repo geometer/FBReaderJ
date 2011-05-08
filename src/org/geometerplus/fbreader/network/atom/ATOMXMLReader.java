@@ -301,7 +301,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 			case F_TITLE:
 			case F_SUBTITLE:
 				myHtmlToString.appendText(bufferContent);
-				myHtmlToString.processTextContent(false, tag, attributes);
+				myHtmlToString.appendStartTag(tag, attributes);
 				break;
 			default:
 				break;
@@ -379,26 +379,26 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				myHtmlToString.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					final String title = myHtmlToString.finishTextContent();
+					final String title = myHtmlToString.getText();
 					if (myFeed != null) {
 						myFeed.Title = title;
 					}
 					myState = FEED;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null);
+					myHtmlToString.appendEndTag(tag);
 				}
 				break;
 			case F_SUBTITLE:
 				myHtmlToString.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUBTITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMSubtitle
-					final String subtitle = myHtmlToString.finishTextContent();
+					final String subtitle = myHtmlToString.getText();
 					if (myFeed != null) {
 						myFeed.Subtitle = subtitle;
 					}
 					myState = FEED;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null);
+					myHtmlToString.appendEndTag(tag);
 				}
 				break;
 			case F_UPDATED:
@@ -504,30 +504,30 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				myHtmlToString.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUMMARY) {
 					// TODO:implement ATOMTextConstruct & ATOMSummary
-					myEntry.Summary = myHtmlToString.finishTextContent();
+					myEntry.Summary = myHtmlToString.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null);
+					myHtmlToString.appendEndTag(tag);
 				}
 				break;
 			case FE_CONTENT:
 				myHtmlToString.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_CONTENT) {
 					// TODO:implement ATOMContent
-					myEntry.Content = myHtmlToString.finishTextContent();
+					myEntry.Content = myHtmlToString.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null);
+					myHtmlToString.appendEndTag(tag);
 				}
 				break;
 			case FE_TITLE:
 				myHtmlToString.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					myEntry.Title = myHtmlToString.finishTextContent();
+					myEntry.Title = myHtmlToString.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null);
+					myHtmlToString.appendEndTag(tag);
 				}
 				break;
 			case FE_UPDATED:
