@@ -28,60 +28,60 @@ import org.geometerplus.fbreader.formats.xhtml.XHTMLReader;
 import org.geometerplus.fbreader.network.atom.ATOMConstants;
 
 public class HtmlToString {
-	private String myTextType;
-	private StringBuilder myTextContent = new StringBuilder();
+	private static enum Type {
+		Text,
+		Html,
+		XHtml
+	};
+
+	private Type myType;
+	private StringBuilder myBuffer = new StringBuilder();
 
 	public void setupTextContent(String type) {
-		if (type == null) {
-			myTextType = ATOMConstants.TYPE_DEFAULT;
+		if (ATOMConstants.TYPE_HTML.equals(type) || MimeType.TEXT_HTML.Name.equals(type)) {
+			myType = Type.Html;
+		} else if (ATOMConstants.TYPE_XHTML.equals(type) || MimeType.TEXT_XHTML.Name.equals(type)) {
+			myType = Type.XHtml;
 		} else {
-			myTextType = type;
+			myType = Type.Text;
 		}
-		myTextContent.delete(0, myTextContent.length());
+		myBuffer.delete(0, myBuffer.length());
 	}
 
 	public void appendText(String text) {
 		if (text != null) {
-			myTextContent.append(text);
+			myBuffer.append(text);
 		}
 	}
 
 	public String getText() {
-		char[] contentArray = myTextContent.toString().trim().toCharArray();
-		String result;
-		if (contentArray.length == 0) {
-			result = null;
-		} else {
-			result = new String(contentArray);
+		final String text = myBuffer.toString();
+		myBuffer.delete(0, myBuffer.length());
+
+		switch (myType) {
+			case Html:
+			case XHtml:
+				return Html.fromHtml(text).toString();
+			default:
+				return text;
 		}
-		if (result != null) {
-			if (ATOMConstants.TYPE_HTML.equals(myTextType) ||
-				ATOMConstants.TYPE_XHTML.equals(myTextType) ||
-				MimeType.TEXT_HTML.Name.equals(myTextType) ||
-				MimeType.TEXT_XHTML.Name.equals(myTextType)) {
-				result = Html.fromHtml(new String(contentArray)).toString();
-			}
-		}
-		myTextType = null;
-		myTextContent.delete(0, myTextContent.length());
-		return result;
 	}
 
 	public void appendStartTag(String tag, ZLStringMap attributes) {
-		myTextContent.append("<").append(tag);
+		myBuffer.append("<").append(tag);
 		for (int i = 0; i < attributes.getSize(); ++i) {
 			final String key = attributes.getKey(i);
 			final String value = attributes.getValue(key);
-			myTextContent.append(" ").append(key).append("=\"");
+			myBuffer.append(" ").append(key).append("=\"");
 			if (value != null) {
-				myTextContent.append(value);
+				myBuffer.append(value);
 			}
-			myTextContent.append("\"");
+			myBuffer.append("\"");
 		}
-		myTextContent.append(">");
+		myBuffer.append(">");
 	}
 
 	public void appendEndTag(String tag) {
-		myTextContent.append("</").append(tag).append(">");
+		myBuffer.append("</").append(tag).append(">");
 	}
 }
