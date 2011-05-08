@@ -32,9 +32,6 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	private DCDate myDCIssued;
 	private String myPriceCurrency;
 
-	//private ATOMTitle myTitle;      // TODO: implement ATOMTextConstruct & ATOMTitle
-	//private ATOMSummary mySummary;  // TODO: implement ATOMTextConstruct & ATOMSummary
-
 	public OPDSXMLReader(ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> handler, boolean readEntryNotFeed) {
 		super(handler, readEntryNotFeed);
 	}
