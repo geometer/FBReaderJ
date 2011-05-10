@@ -78,6 +78,10 @@ class ProcessHyperlinkAction extends FBAction {
 					final Intent intent = new Intent();
 					intent.setClass(myBaseActivity, ImageViewActivity.class);
 					intent.setData(Uri.parse(uriString));
+					intent.putExtra(
+						ImageViewActivity.BACKGROUND_COLOR_KEY,
+						Reader.ImageViewBackgroundOption.getValue().getIntValue()
+					);
 					myBaseActivity.startActivity(intent);
 				} catch (Exception e) {
 					e.printStackTrace();
