@@ -24,14 +24,6 @@
 			<node name="invalidURL" value="Ongeldige URL" />
 			<node name="hostCantBeReached" value="Host %s is onbereikbaar" />
 			<node name="connectionRefused" value="Verbinding was geweigerd door&#10;%s" />
-			<node name="sslError" value="SSL subsysteem fout" />
-			<node name="sslConnectErrorMessage" value="SSL/TLS handshake probleem opgetreden:&#10;%s" />
-			<node name="sslBadKey" value="Fout SSL certificaat van:&#10;%s" />
-			<node name="sslPeerUnverified" value="Identiteit van %s niet geverifieerd" />
-			<node name="sslProtocolError" value="Fout bij gebruikt van het SSL protocol" />
-			<node name="sslBadCertificateFileMessage" value="Kan het SSL CA certificaat bestand niet lezen:&#10;%s" />
-			<node name="sslCertificateExpired" value="SSL certificaat is verlopen:&#10;%s" />
-			<node name="sslCertificateNotYetValid" value="SSL certificaat is nog niet geldig:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">
