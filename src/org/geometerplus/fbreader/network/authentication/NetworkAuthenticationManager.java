@@ -35,7 +35,7 @@ public abstract class NetworkAuthenticationManager {
 		NetworkAuthenticationManager mgr = ourManagers.get(link.getSiteName());
 		if (mgr == null) {
 			if (managerClass == LitResAuthenticationManager.class) {
-				mgr = new LitResAuthenticationManager(link, sslCertificate);
+				mgr = new LitResAuthenticationManager(link);
 			}
 			if (mgr != null) {
 				ourManagers.put(link.getSiteName(), mgr);

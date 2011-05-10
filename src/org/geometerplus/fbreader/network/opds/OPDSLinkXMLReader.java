@@ -22,20 +22,19 @@ package org.geometerplus.fbreader.network.opds;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.atom.ATOMLink;
-import org.geometerplus.fbreader.network.atom.ATOMUpdated;
+import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeTypes {
-	private static class LinkReader implements OPDSFeedReader {
+class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
+	private static class FeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
 		private NetworkLibrary.OnNewLinkListener myListener;
 
 		private String myAuthenticationType;
@@ -47,7 +46,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 		private ATOMUpdated myUpdatedTime;
 		private ATOMUpdated myReadAfterTime;
 
-		public LinkReader(NetworkLibrary.OnNewLinkListener listener, ATOMUpdated readAfter) {
+		public FeedHandler(NetworkLibrary.OnNewLinkListener listener, ATOMUpdated readAfter) {
 			myListener = listener;
 			myReadAfterTime = readAfter;
 		}
@@ -93,8 +92,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				return false;
 			}
 			final String siteName = id.substring(ENTRY_ID_PREFIX.length());
-			final String title = entry.Title;
-			final String summary = entry.Content;
+			final CharSequence title = entry.Title;
+			final CharSequence summary = entry.Content;
 			final String language = entry.DCLanguage;
 
 			final UrlInfoCollection<UrlInfoWithDate> infos =
@@ -103,22 +102,22 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				new HashMap<String,NetworkCatalogItem.Accessibility>();
 			for (ATOMLink link: entry.Links) {
 				final String href = link.getHref();
-				final String type = ZLNetworkUtil.filterMimeType(link.getType());
+				final MimeType type = MimeType.get(link.getType());
 				final String rel = link.getRel();
 				if (rel == REL_IMAGE_THUMBNAIL || rel == REL_THUMBNAIL) {
-					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
+					if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Thumbnail, href));
 					}
 				} else if ((rel != null && rel.startsWith(REL_IMAGE_PREFIX)) || rel == REL_COVER) {
-					if (type == MIME_IMAGE_PNG || type == MIME_IMAGE_JPEG) {
+					if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Image, href));
 					}
 				} else if (rel == null) {
-					if (type == MIME_APP_ATOM) {
+					if (MimeType.APP_ATOM.equals(type)) {
 						infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, href));
 					}
 				} else if (rel == "search") {
-					if (type == MIME_APP_ATOM) {
+					if (MimeType.APP_ATOM.equals(type)) {
 						final OpenSearchDescription descr = OpenSearchDescription.createDefault(href);
 						if (descr.isValid()) {
 							// TODO: May be do not use '%s'??? Use Description instead??? (this needs to rewrite SEARCH engine logic a little)
@@ -161,8 +160,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 
 		private INetworkLink link(
 			String siteName,
-			String title,
-			String summary,
+			CharSequence title,
+			CharSequence summary,
 			String language,
 			UrlInfoCollection<UrlInfoWithDate> infos,
 			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
@@ -172,10 +171,13 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 				return null;
 			}
 
+			final String titleString = title.toString();
+			final String summaryString = summary != null ? summary.toString() : null;
+
 			OPDSNetworkLink opdsLink = new OPDSNetworkLink(
 				siteName,
-				title,
-				summary,
+				titleString,
+				summaryString,
 				language,
 				infos,
 				myHasStableIdentifiers
@@ -224,33 +226,20 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 	}
 
 	public OPDSLinkXMLReader() {
-		super(new LinkReader(null, null));
+		super(new FeedHandler(null, null), false);
 	}
 
 	public OPDSLinkXMLReader(NetworkLibrary.OnNewLinkListener listener, ATOMUpdated readAfter) {
-		super(new LinkReader(listener, readAfter));
+		super(new FeedHandler(listener, readAfter), false);
+	}
+
+	private FeedHandler getFeedHandler() {
+		return (FeedHandler)getATOMFeedHandler();
 	}
 
 	public ATOMUpdated getUpdatedTime() {
-		return ((LinkReader) myFeedReader).getUpdatedTime();
+		return getFeedHandler().getUpdatedTime();
 	}
-
-	private String myFBReaderNamespaceId;
-
-	@Override
-	public void namespaceMapChangedHandler(Map<String, String> namespaceMap) {
-		super.namespaceMapChangedHandler(namespaceMap);
-
-		myFBReaderNamespaceId = null;
-
-		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
-			final String value = entry.getValue();
-			if (value == XMLNamespaces.FBReaderCatalogMetadata) {
-				myFBReaderNamespaceId = intern(entry.getKey());
-			}
-		}
-	}
-
 
 	private static final String FBREADER_ADVANCED_SEARCH = "advancedSearch";
 	private static final String FBREADER_AUTHENTICATION = "authentication";
@@ -260,49 +249,49 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants, MimeType
 	private static final String FBREADER_EXTRA = "extra";
 
 	@Override
-	public boolean startElementHandler(final String tagPrefix, final String tag,
+	public boolean startElementHandler(final String ns, final String tag,
 			final ZLStringMap attributes, final String bufferContent) {
-		switch (getState()) {
-		case FEED:
-			if (tagPrefix == myAtomNamespaceId && tag == TAG_ENTRY) {
-				((LinkReader) myFeedReader).clear();
-			}
-			break;
-		case F_ENTRY:
-			if (tagPrefix == myFBReaderNamespaceId) {
-				if (tag == FBREADER_ADVANCED_SEARCH) {
-					return false;
-				} else if (tag == FBREADER_AUTHENTICATION) {
-					final String type = attributes.getValue("type");
-					((LinkReader) myFeedReader).setAuthenticationType(type);
-					return false;
-				} else if (tag == FBREADER_RELATION_ALIAS) {
-					final String name = attributes.getValue("name");
-					final String type = attributes.getValue("type");
-					String alias = attributes.getValue("alias");
-					if (alias != null && name != null) {
-						if (alias.length() == 0) {
-							alias = null;
+		switch (myState) {
+			case FEED:
+				if (ns == XMLNamespaces.Atom && tag == TAG_ENTRY) {
+					getFeedHandler().clear();
+				}
+				break;
+			case F_ENTRY:
+				if (ns == XMLNamespaces.FBReaderCatalogMetadata) {
+					if (tag == FBREADER_ADVANCED_SEARCH) {
+						return false;
+					} else if (tag == FBREADER_AUTHENTICATION) {
+						final String type = attributes.getValue("type");
+						getFeedHandler().setAuthenticationType(type);
+						return false;
+					} else if (tag == FBREADER_RELATION_ALIAS) {
+						final String name = attributes.getValue("name");
+						final String type = attributes.getValue("type");
+						String alias = attributes.getValue("alias");
+						if (alias != null && name != null) {
+							if (alias.length() == 0) {
+								alias = null;
+							}
+							getFeedHandler().addRelationAlias(new RelationAlias(alias, type), name);
 						}
-						((LinkReader) myFeedReader).addRelationAlias(new RelationAlias(alias, type), name);
-					}
-					return false;
-				} else if (tag == FBREADER_REWRITING_RULE) {
-					((LinkReader)myFeedReader).addUrlRewritingRule(new URLRewritingRule(attributes));
-					return false;
-				} else if (tag == FBREADER_STABLE_IDENTIFIERS) {
-					((LinkReader)myFeedReader).setHasStableIdentifiers(true);
-					return false;
-				} else if (tag == FBREADER_EXTRA) {
-					final String name = attributes.getValue("name");
-					final String value = attributes.getValue("value");
-					if (name != null && value != null) {
-						((LinkReader) myFeedReader).putExtraData(name, value);
+						return false;
+					} else if (tag == FBREADER_REWRITING_RULE) {
+						getFeedHandler().addUrlRewritingRule(new URLRewritingRule(attributes));
+						return false;
+					} else if (tag == FBREADER_STABLE_IDENTIFIERS) {
+						getFeedHandler().setHasStableIdentifiers(true);
+						return false;
+					} else if (tag == FBREADER_EXTRA) {
+						final String name = attributes.getValue("name");
+						final String value = attributes.getValue("value");
+						if (name != null && value != null) {
+							getFeedHandler().putExtraData(name, value);
+						}
 					}
 				}
-			}
-			break;
+				break;
 		}
-		return super.startElementHandler(tagPrefix, tag, attributes, bufferContent);
+		return super.startElementHandler(ns, tag, attributes, bufferContent);
 	}
 }

@@ -21,16 +21,17 @@ package org.geometerplus.fbreader.network.opds;
 
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.constants.MimeTypes;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.atom.ATOMLink;
+import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 
-class CatalogInfoReader implements OPDSFeedReader {
+class OPDSCatalogInfoHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
 	public boolean FeedStarted;
 	public String Icon;
-	public String Title;
-	public String Summary;
+	public CharSequence Title;
+	public CharSequence Summary;
 
 	public OpenSearchDescription DirectOpenSearchDescription;
 	private final List<String> myOpensearchDescriptionURLs;
@@ -38,7 +39,7 @@ class CatalogInfoReader implements OPDSFeedReader {
 	private final String myBaseURL;
 	private final OPDSNetworkLink myLink;
 
-	public CatalogInfoReader(String baseUrl, OPDSNetworkLink link, List<String> opensearchDescriptionURLs) {
+	public OPDSCatalogInfoHandler(String baseUrl, OPDSNetworkLink link, List<String> opensearchDescriptionURLs) {
 		myBaseURL = baseUrl;
 		myLink = link;
 		myOpensearchDescriptionURLs = opensearchDescriptionURLs;
@@ -50,12 +51,12 @@ class CatalogInfoReader implements OPDSFeedReader {
 		Summary = feed.Subtitle;
 
 		for (ATOMLink link: feed.Links) {
-			final String type = ZLNetworkUtil.filterMimeType(link.getType());
+			final MimeType type = MimeType.get(link.getType());
 			final String rel = myLink.relation(link.getRel(), type);
 			if (rel == "search") {
-				if (type == MimeTypes.MIME_APP_OPENSEARCHDESCRIPTION) {
+				if (MimeType.APP_OPENSEARCHDESCRIPTION.equals(type)) {
 					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
-				} else if (type == MimeTypes.MIME_APP_ATOM) {
+				} else if (MimeType.APP_ATOM.equals(type)) {
 					final String template = ZLNetworkUtil.url(myBaseURL, link.getHref());
 					final OpenSearchDescription descr = OpenSearchDescription.createDefault(template);
 					if (descr.isValid()) {

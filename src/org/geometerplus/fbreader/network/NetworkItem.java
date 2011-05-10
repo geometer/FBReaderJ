@@ -26,9 +26,9 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public abstract class NetworkItem {
 	public final INetworkLink Link;
-	public final String Title;
-	public final String Summary;
+	public final CharSequence Title;
 
+	private CharSequence mySummary;
 	private final UrlInfoCollection myURLs;
 
 	/**
@@ -39,15 +39,27 @@ public abstract class NetworkItem {
 	 * @param summary    description of this library item. Can be <code>null</code>.
 	 * @param urls       collection of item-related urls (like icon link, opds catalog link, etc. Can be <code>null</code>.
 	 */
-	protected NetworkItem(INetworkLink link, String title, String summary, UrlInfoCollection urls) {
+	protected NetworkItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection urls) {
 		Link = link;
-		Title = title;
-		Summary = summary;
+		Title = title != null ? title : "";
+		setSummary(summary);
 		if (urls != null && !urls.isEmpty()) {
  			myURLs = new UrlInfoCollection(urls);
 		} else {
 			myURLs = null;
 		}
+	}
+
+	protected void setSummary(CharSequence summary) {
+		mySummary = summary;
+	}
+
+	public final CharSequence getSummary() {
+		return mySummary;
+	}
+
+	protected void addUrls(UrlInfoCollection urls) {
+		myURLs.upgrade(urls);
 	}
 
 	public List<UrlInfo> getAllInfos() {

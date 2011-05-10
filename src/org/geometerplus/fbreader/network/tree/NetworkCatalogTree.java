@@ -32,7 +32,7 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	private long myLoadedTime = -1;
 
-	NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
+	public NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		Item = item;
 	}
@@ -44,15 +44,13 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return Item.Title;
+		return Item.Title.toString();
 	}
 
 	@Override
 	public String getSummary() {
-		if (Item.Summary == null) {
-			return "";
-		}
-		return Item.Summary;
+		final CharSequence summary = Item.getSummary();
+		return summary != null ? summary.toString() : "";
 	}
 
 	@Override

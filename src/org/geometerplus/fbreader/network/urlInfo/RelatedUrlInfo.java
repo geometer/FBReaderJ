@@ -17,17 +17,19 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.opds;
+package org.geometerplus.fbreader.network.urlInfo;
 
-interface OPDSFeedReader {
+import org.geometerplus.zlibrary.core.util.MimeType;
 
-	void processFeedStart();
+public class RelatedUrlInfo extends UrlInfo {
+	private static final long serialVersionUID = -893514485257788098L;
 
-	// return true to interrupt reading; return false to continue reading
-	boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries);
+	public final String Title;
+	public final MimeType Mime;
 
-	// return true to interrupt reading; return false to continue reading
-	boolean processFeedEntry(OPDSEntry entry);
-
-	void processFeedEnd();
+	public RelatedUrlInfo(Type type, String title, MimeType mime, String url) {
+		super(type, url);
+		Title = title;
+		Mime = mime;
+	}
 }

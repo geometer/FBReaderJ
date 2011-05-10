@@ -24,15 +24,16 @@ import java.util.ArrayList;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 public class ZCompressedFileImage extends ZLSingleImage {
 	private final ZLFile myFile;
 	private final int myOffset;
 	private final int myCompressedSize;
 	
-	public ZCompressedFileImage(String mimeType, final ZLFile file, final int offset, final int compressedSize) {
+	public ZCompressedFileImage(MimeType mimeType, final ZLFile file, final int offset, final int compressedSize) {
 		super(mimeType);
 		myFile = file;
 		myOffset = offset;

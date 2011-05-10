@@ -54,33 +54,46 @@ public class NetworkSearchActivity extends Activity {
 		finish();
 	}
 
-	private class SearchHandler extends ItemsLoadingHandler {
+	private static class Searcher extends ItemsLoader {
 		private final SearchItemTree myTree;
+		private final String myPattern;
 
-		public SearchHandler(SearchItemTree tree) {
+		public Searcher(Activity activity, SearchItemTree tree, String pattern) {
+			super(activity);
 			myTree = tree;
+			myPattern = pattern;
+		}
+
+		public String getResourceKey() {
+			return "searchingNetwork";
 		}
 
 		@Override
-		public void onUpdateItems(List<NetworkItem> items) {
+		public void doBefore() {
+		}
+
+		@Override
+		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+			try {
+				NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
+			} catch (ZLNetworkException e) {
+			}
+		}
+
+		@Override
+		protected void updateItems(List<NetworkItem> items) {
 			SearchResult result = myTree.getSearchResult();
 			for (NetworkItem item: items) {
 				if (item instanceof NetworkBookItem) {
 					result.addBook((NetworkBookItem)item);
 				}
 			}
-		}
-
-		@Override
-		public void afterUpdateItems() {
 			myTree.updateSubTrees();
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChanged();
 		}
 
 		@Override
-		public void onFinish(String errorMessage, boolean interrupted,
+		protected void onFinish(String errorMessage, boolean interrupted,
 				Set<NetworkItem> uncommitedItems) {
 			if (interrupted) {
 				myTree.setSearchResult(null);
@@ -88,9 +101,7 @@ public class NetworkSearchActivity extends Activity {
 				myTree.updateSubTrees();
 				afterUpdateCatalog(errorMessage, myTree.getSearchResult().isEmpty());
 			}
-			if (NetworkView.Instance().isInitialized()) {
-				NetworkView.Instance().fireModelChangedAsync();
-			}
+			NetworkView.Instance().fireModelChanged();
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
@@ -107,17 +118,12 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			if (!NetworkView.Instance().isInitialized()) {
-				return;
-			}
-
 			final SearchItemTree tree = NetworkLibrary.Instance().getSearchItemTree();
 			if (tree == null) {
 				return;
 			}
 
-			final NetworkCatalogActivity activity =
-				NetworkView.Instance().getOpenedActivity(tree.getUniqueKey());
+			final NetworkCatalogActivity activity = NetworkCatalogActivity.getByTree(tree);
 			if (activity != null) {
 				final ZLResource buttonResource = dialogResource.getResource("button");
 				new AlertDialog.Builder(activity)
@@ -130,33 +136,13 @@ public class NetworkSearchActivity extends Activity {
 		}
 	}
 
-	private static class SearchRunnable extends ItemsLoadingRunnable {
-		private final String myPattern;
-
-		public SearchRunnable(ItemsLoadingHandler handler, String pattern) {
-			super(handler);
-			myPattern = pattern;
-		}
-
-		public String getResourceKey() {
-			return "searchingNetwork";
-		}
-
-		public void doBefore() {
-		}
-
-		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
-			NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
-		}
-	}
-
 	protected void runSearch(final String pattern) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
 		final SearchItemTree tree = library.getSearchItemTree();
 		if (tree == null ||
-			NetworkView.Instance().containsItemsLoadingRunnable(tree.getUniqueKey())) {
+			ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
 
@@ -166,11 +152,8 @@ public class NetworkSearchActivity extends Activity {
 		tree.setSearchResult(result);
 		NetworkView.Instance().fireModelChangedAsync();
 
-		final SearchHandler handler = new SearchHandler(tree);
-		NetworkView.Instance().startItemsLoading(
-			this,
-			tree.getUniqueKey(),
-			new SearchRunnable(handler, pattern)
+		ItemsLoadingService.start(
+			this, tree, new Searcher(this, tree, pattern)
 		);
 		Util.openTree(this, tree);
 	}

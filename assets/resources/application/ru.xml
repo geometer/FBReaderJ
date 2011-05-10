@@ -125,6 +125,7 @@
 		<node name="indexInSeries" value="Номер в серии:" />
 		<node name="tags" value="Категории:" />
 		<node name="catalog" value="Каталог:" />
+		<node name="extraLinks" value="Ссылки" />
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Информация о книге" />
@@ -573,6 +574,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Загужается книга %s"/>
 			<node name="search" value="Идет поиск. Подождите, пожалуйста..."/>
+			<node name="loadInfo" value="Загружается информация. Подождите, пожалуйста..."/>
 			<node name="loadingBook" value="Открывается книга. Подождите, пожалуйста..."/>
 			<node name="loadingBookList" value="Открывается библиотека. Подождите, пожалуйста..."/>
 			<node name="creatingBooksDatabase" value="Создается база книг. Подождите, пожалуйста..."/>

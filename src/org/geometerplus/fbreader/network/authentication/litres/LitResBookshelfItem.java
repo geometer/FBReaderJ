@@ -94,7 +94,7 @@ class ByTitleCatalogItem extends SortedCatalogItem {
 	protected Comparator<NetworkItem> getComparator() {
 		return new Comparator<NetworkItem>() {
 			public int compare(NetworkItem item0, NetworkItem item1) {
-				return item0.Title.compareTo(item1.Title);
+				return item0.Title.toString().compareTo(item1.Title.toString());
 			}
 		};
 	}
@@ -140,7 +140,7 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 				if (fdiff != 0) {
 					return fdiff > 0 ? 1 : -1;
 				}
-				return book0.Title.compareTo(book1.Title);
+				return book0.Title.toString().compareTo(book1.Title.toString());
 			}
 		};
 	}
@@ -161,7 +161,7 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 public class LitResBookshelfItem extends NetworkURLCatalogItem {
 	private boolean myForceReload;
 
-	public LitResBookshelfItem(INetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {
+	public LitResBookshelfItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection urls, Accessibility accessibility) {
 		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT);
 	}
 
@@ -195,7 +195,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 					listener.onNewItem(Link, item);
 				}
 			} else {
-				//listener.onNewItem(Link, new ByDateCatalogItem(this, children));
+				listener.onNewItem(Link, new ByDateCatalogItem(this, children));
 				listener.onNewItem(Link, new ByAuthorCatalogItem(this, children));
 				listener.onNewItem(Link, new ByTitleCatalogItem(this, children));
 				final BySeriesCatalogItem bySeries = new BySeriesCatalogItem(this, children);

@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.network;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URLConnection;
@@ -27,19 +29,24 @@ public abstract class ZLNetworkRequest {
 	String URL;
 	public final String SSLCertificate;
 	public final String PostData;
+	public final Map<String,String> PostParameters = new HashMap<String,String>();
 
 	protected ZLNetworkRequest(String url) {
 		this(url, null, null);
-	}
-
-	public String getURL() {
-		return URL;
 	}
 
 	protected ZLNetworkRequest(String url, String sslCertificate, String postData) {
 		URL = url;
 		SSLCertificate = sslCertificate;
 		PostData = postData;
+	}
+
+	public void addPostParameter(String name, String value) {
+		PostParameters.put(name, value);
+	}
+
+	public String getURL() {
+		return URL;
 	}
 
 	public void doBefore() throws ZLNetworkException {

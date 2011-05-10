@@ -19,11 +19,14 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-public class ATOMPublished extends ATOMDateConstruct {
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-	public ATOMPublished() {
+public class ATOMPublished extends ATOMDateConstruct {
+	public ATOMPublished(ZLStringMap attributes) {
+		super(attributes);
 	}
 
+	/*
 	public ATOMPublished(int year) {
 		super(year);
 	}
@@ -43,4 +46,5 @@ public class ATOMPublished extends ATOMDateConstruct {
 	public ATOMPublished(int year, int month, int day, int hour, int minutes, int seconds, float sfract, int tzhour, int tzminutes) {
 		super(year, month, day, hour, minutes, seconds, sfract, tzhour, tzminutes);
 	}
+	*/
 }

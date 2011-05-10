@@ -22,10 +22,12 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 import java.io.File;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-public final class NetworkBookItem extends NetworkItem {
+public class NetworkBookItem extends NetworkItem {
 	public static class AuthorData implements Comparable<AuthorData> {
 		public final String DisplayName;
 		public final String SortKey;
@@ -77,7 +79,7 @@ public final class NetworkBookItem extends NetworkItem {
 	public final float IndexInSeries;
 
 	/**
-	 * Creates new NetworkItem instance.
+	 * Creates new NetworkBookItem instance.
 	 *
 	 * @param link          corresponding NetworkLink object. Must be not <code>null</code>.
 	 * @param id            string that uniquely identifies this book item. Must be not <code>null</code>.
@@ -90,11 +92,10 @@ public final class NetworkBookItem extends NetworkItem {
 	 * @param tags          list of book tags. Must be not <code>null</code> (can be empty).
 	 * @param seriesTitle   title of this book's series. Can be <code>null</code>.
 	 * @param indexInSeries	sequence number of this book within book's series. Ignored if seriesTitle is <code>null</code>.
-	 * @param cover         cover url. Can be <code>null</code>.
-	 * @param references    list of references related to this book. Must be not <code>null</code>.
+	 * @param urls          list of urls related to this book. Can be <code>null</code>.
 	 */
 	public NetworkBookItem(INetworkLink link, String id, int index,
-		String title, String summary, /*String language, String date,*/
+		CharSequence title, CharSequence summary, /*String language, String date,*/
 		List<AuthorData> authors, List<String> tags, String seriesTitle, float indexInSeries,
 		UrlInfoCollection urls) {
 		super(link, title, summary, urls);
@@ -106,6 +107,17 @@ public final class NetworkBookItem extends NetworkItem {
 		Tags = new LinkedList<String>(tags);
 		SeriesTitle = seriesTitle;
 		IndexInSeries = indexInSeries;
+	}
+
+	public boolean isFullyLoaded() {
+		return true;
+	}
+
+	public void loadFullInformation() throws ZLNetworkException {
+	}
+
+	public NetworkCatalogItem createRelatedCatalogItem(RelatedUrlInfo info) {
+		return null;
 	}
 
 	public BookUrlInfo reference(UrlInfo.Type type) {

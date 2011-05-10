@@ -21,9 +21,9 @@ package org.geometerplus.fbreader.network.atom;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class ATOMEntry extends ATOMCommonAttributes {
-
 	public ATOMId Id;
 
 	public LinkedList<ATOMAuthor> Authors = new LinkedList<ATOMAuthor>();
@@ -33,10 +33,14 @@ public class ATOMEntry extends ATOMCommonAttributes {
 	public ATOMPublished Published;
 	//public String Rights;  // TODO: implement ATOMTextConstruct
 	//public final ATOMSource Source; // TODO: implement ATOMSource
-	public String Summary; // TODO: implement ATOMTextConstruct
-	public String Content; // TODO: implement ATOMContent
-	public String Title;   // TODO: implement ATOMTextConstruct
+	public CharSequence Summary; // TODO: implement ATOMTextConstruct
+	public CharSequence Content; // TODO: implement ATOMContent
+	public CharSequence Title;   // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
+
+	protected ATOMEntry(ZLStringMap source) {
+		super(source);
+	}
 
 	@Override
 	public String toString() {
