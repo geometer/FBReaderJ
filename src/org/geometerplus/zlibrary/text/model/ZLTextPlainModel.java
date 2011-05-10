@@ -59,7 +59,6 @@ public class ZLTextPlainModel implements ZLTextModel {
 		private String myHyperlinkId;
 
 		private ZLImageEntry myImageEntry;
-		private ZLTextForcedControlEntry myForcedControlEntry;
 
 		private short myFixedHSpaceLength;
 
@@ -105,10 +104,6 @@ public class ZLTextPlainModel implements ZLTextModel {
 
 		public ZLImageEntry getImageEntry() {
 			return myImageEntry;
-		}
-
-		public ZLTextForcedControlEntry getForcedControlEntry() {
-			return myForcedControlEntry;
 		}
 
 		public short getFixedHSpaceLength() {
@@ -168,24 +163,12 @@ public class ZLTextPlainModel implements ZLTextModel {
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					myFixedHSpaceLength = (short)data[dataOffset++];
 					break;
-				case ZLTextParagraph.Entry.FORCED_CONTROL:
-				{
-					final int mask = (int)data[dataOffset++];
-					final ZLTextForcedControlEntry entry = new ZLTextForcedControlEntry();
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) ==
-								ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) {
-						entry.setLeftIndent((short)data[dataOffset++]);
-					}
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) ==
-								ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) {
-						entry.setRightIndent((short)data[dataOffset++]);
-					}
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) ==
-								ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) {
-						entry.setAlignmentType((byte)data[dataOffset++]);
-					}
-					myForcedControlEntry = entry;
-				}
+				case ZLTextParagraph.Entry.HYPERLINK_CONTROL:
+					break;
+				case ZLTextParagraph.Entry.STYLE:
+					break;
+				case ZLTextParagraph.Entry.RESET_BIDI:
+					break;
 			}
 			++myCounter;
 			myDataOffset = dataOffset;

@@ -83,9 +83,6 @@ public final class ZLTextParagraphCursor {
 							}
 						}
 						break;
-					case ZLTextParagraph.Entry.FORCED_CONTROL:
-						// TODO: implement
-						break;
 					case ZLTextParagraph.Entry.FIXED_HSPACE:
 						elements.add(ZLTextFixedHSpaceElement.getElement(it.getFixedHSpaceLength()));
 						break;

@@ -28,7 +28,7 @@
 #include "Author.h"
 #include "Tag.h"
 
-//#include "../formats/FormatPlugin.h"
+#include "../formats/FormatPlugin.h"
 //#include "../migration/BookInfo.h"
 
 const std::string Book::AutoEncoding = "auto";
@@ -53,7 +53,7 @@ shared_ptr<Book> Book::createBook(
 	return book;
 }
 
-/*shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
+shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(file, false);
 	if (plugin.isNull()) {
 		return 0;
@@ -73,11 +73,11 @@ shared_ptr<Book> Book::createBook(
 	}
 
 	if (book->language().empty()) {
-		book->setLanguage(PluginCollection::Instance().DefaultLanguageOption.value());
+		book->setLanguage(PluginCollection::Instance().defaultLanguage());
 	}
 
 	return book;
-}*/
+}
 
 bool Book::addTag(shared_ptr<Tag> tag) {
 	if (tag.isNull()) {

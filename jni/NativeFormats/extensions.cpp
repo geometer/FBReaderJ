@@ -34,13 +34,20 @@
 #include <ZLXMLReader.h>
 
 
+#include <ZLTextModel.h>
+
+#include "fbreader/src/formats/FormatPlugin.h"
+#include "fbreader/src/library/Book.h"
+#include "fbreader/src/bookmodel/BookModel.h"
+
+
 void extension1();
 void extension2();
 
 extern "C"
 JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_runTests(JNIEnv* env, jobject thiz) {
 	//extension1();
-	//extension2();
+	extension2();
 }
 
 
@@ -112,6 +119,24 @@ void TestXMLReader::startElementHandler(const char *tag, const char **attributes
 void extension2() {
 	AndroidLog log;
 	log.w("FBREADER", "extension 2 start");
+
+	ZLFile file("/mnt/sdcard/Books/David Drake - An_Oblique_Approach.fb2");
+	log.wf("FBREADER", "extension 2: file exists: %s", (file.exists() ? "true" : "false"));
+
+	if (file.exists()) {
+		shared_ptr<Book> book = Book::loadFromFile(file);
+		log.wf("FBREADER", "extension 2: book loaded: %s", (!book.isNull() ? "true" : "false"));
+
+		if (!book.isNull()) {
+			shared_ptr<BookModel> model = new BookModel(book);
+			shared_ptr<ZLTextModel> textModel = model->bookTextModel();
+
+			log.wf("FBREADER", "extension 2: model paragraphs: %d", textModel->paragraphsNumber());
+
+			textModel.reset();
+			model.reset();
+		}
+	}
 
 	log.w("FBREADER", "extension 2 end");
 }

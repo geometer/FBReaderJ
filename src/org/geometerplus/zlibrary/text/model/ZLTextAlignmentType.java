@@ -25,4 +25,5 @@ public interface ZLTextAlignmentType {
 	byte ALIGN_RIGHT = 2;
 	byte ALIGN_CENTER = 3;
 	byte ALIGN_JUSTIFY = 4;
+	byte ALIGN_LINESTART = 5; // left for LTR languages and right for RTL
 }

@@ -45,7 +45,7 @@ public:
 		const std::string &title
 	);
 
-	//static shared_ptr<Book> loadFromFile(const ZLFile &file);
+	static shared_ptr<Book> loadFromFile(const ZLFile &file);
 
 	// this method is used in Migration only
 	//static shared_ptr<Book> loadFromBookInfo(const ZLFile &file);

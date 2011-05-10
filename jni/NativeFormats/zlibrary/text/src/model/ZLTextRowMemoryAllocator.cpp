@@ -23,10 +23,59 @@
 
 #include "ZLTextRowMemoryAllocator.h"
 
+
+#include <sys/types.h>
+#include <dirent.h>
+#include <vector>
+#include <stdio.h>
+#include <ZLStringUtil.h>
+
+
+static const char dir_name[] = "/mnt/sdcard/Books";
+
+static void clean_dumps() {
+	DIR *dir = opendir(dir_name);
+	if (dir == 0) {
+		return;
+	}
+
+	std::vector<std::string> toRemove;
+
+	struct dirent *entry;
+	while ((entry = readdir(dir)) != 0) {
+		std::string name(entry->d_name);
+		if (ZLStringUtil::stringStartsWith(name, "dump-")
+				&& ZLStringUtil::stringEndsWith(name, ".cache")) {
+			toRemove.push_back(std::string(dir_name) + "/" + name);
+		}
+	}
+	closedir(dir);
+
+	for (size_t i = 0; i < toRemove.size(); ++i) {
+		remove(toRemove[i].c_str());
+	}
+}
+
+static void dump2file(int index, const char *data, size_t len) {
+	char fileName[128];
+	sprintf(fileName, "%s/dump-%d-%d.cache", dir_name, index, len);
+	FILE *f = fopen(fileName, "wb");
+	if (f == 0) {
+		return;
+	}
+	fwrite(data, 1, len, f);
+	fclose(f);
+}
+
+
 ZLTextRowMemoryAllocator::ZLTextRowMemoryAllocator(const size_t rowSize) : myRowSize(rowSize), myOffset(0) {
+	clean_dumps();
 }
 
 ZLTextRowMemoryAllocator::~ZLTextRowMemoryAllocator() {
+
+	dump2file(myPool.size(), myPool.back(), myOffset);
+
 	for (std::vector<char*>::const_iterator it = myPool.begin(); it != myPool.end(); ++it) {
 		delete[] *it;
 	}
@@ -41,6 +90,9 @@ char *ZLTextRowMemoryAllocator::allocate(size_t size) {
 		char *row = new char[myCurrentRowSize];
 		*(myPool.back() + myOffset) = 0;
 		memcpy(myPool.back() + myOffset + 1, &row, sizeof(char*));
+
+		dump2file(myPool.size(), myPool.back(), myOffset);
+
 		myPool.push_back(row);
 		myOffset = 0;
 	}
@@ -59,6 +111,9 @@ char *ZLTextRowMemoryAllocator::reallocateLast(char *ptr, size_t newSize) {
 		memcpy(row, ptr, myOffset - (ptr - myPool.back()));
 		*ptr = 0;
 		memcpy(ptr + 1, &row, sizeof(char*));
+
+		dump2file(myPool.size(), myPool.back(), (ptr - myPool.back()));
+
 		myPool.push_back(row);
 		myOffset = newSize;
 		return row;
