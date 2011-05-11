@@ -24,14 +24,6 @@
 			<node name="invalidURL" value="URL invalide" />
 			<node name="hostCantBeReached" value="L'hôte %s&#10;ne peut être joint" />
 			<node name="connectionRefused" value="La connexion a été refusée par&#10;%s" />
-			<node name="sslError" value="Erreur du sous-système SSL" />
-			<node name="sslConnectErrorMessage" value="Problème de connexion SSL/TLS :&#10;%s" />
-			<node name="sslBadKey" value="Mauvais certificat SSL de:&#10;%s" />
-			<node name="sslPeerUnverified" value="Incapable de vérifier l'identité de:&#10;%s" />
-			<node name="sslProtocolError" value="Erreur dans l'opération du protocole SSL" />
-			<node name="sslBadCertificateFileMessage" value="Impossible de lire le fichier des certificats de CA :&#10;%s" />
-			<node name="sslCertificateExpired" value="Le certificat SSL est expiré:&#10;%s" />
-			<node name="sslCertificateNotYetValid" value="Le certificat SSL n'est plus valide:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

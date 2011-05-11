@@ -214,18 +214,27 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		boolean res = activateSelectionMode(x, y);
+		final boolean res = activateSelectionMode(x, y);
 
+		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
+		boolean doSelectRegion = false;
+		if (region instanceof ZLTextWordRegion) {
+			doSelectRegion =
+				myReader.DictionaryTappingActionOption.getValue() !=
+				FBReaderApp.DictionaryTappingAction.doNothing;
+		} else if (region instanceof ZLTextImageRegion) {
+			doSelectRegion =
+				myReader.ImageTappingActionOption.getValue() !=
+				FBReaderApp.ImageTappingAction.doNothing;
+		} else if (region instanceof ZLTextHyperlinkRegion) {
+			doSelectRegion = true;
+		}
 
-		if (myReader.DictionaryTappingActionOption.getValue() !=
-			FBReaderApp.DictionaryTappingAction.doNothing) {
-			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
-			if (region != null) {
-				selectRegion(region);
-				myReader.getViewWidget().reset();
-				myReader.getViewWidget().repaint();
-				return true;
-			}
+		if (doSelectRegion) {
+			selectRegion(region);
+			myReader.getViewWidget().reset();
+			myReader.getViewWidget().repaint();
+			return true;
 		}
 
 		return res;
@@ -237,16 +246,19 @@ public final class FBView extends ZLTextView {
 		}
 
 		expandSelectionTo(x, y); 
-		//        if (myReader.DictionaryTappingActionOption.getValue() !=
-		//            FBReaderApp.DictionaryTappingAction.doNothing) {
-		//
-		//            final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
-		//            if (region != null) {
-		//                selectRegion(region);
-		//				myReader.getViewWidget().reset();
-		//				myReader.getViewWidget().repaint();
-		//            }
-		//        }
+//		final ZLTextElementRegion selectedRegion = getSelectedRegion();
+//		if (selectedRegion instanceof ZLTextHyperlinkRegion ||
+//			selectedRegion instanceof ZLTextWordRegion) {
+//			if (myReader.DictionaryTappingActionOption.getValue() !=
+//				FBReaderApp.DictionaryTappingAction.doNothing) {
+//				final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
+//				if (region instanceof ZLTextHyperlinkRegion || region instanceof ZLTextWordRegion) {
+//					selectRegion(region);
+//					myReader.getViewWidget().reset();
+//					myReader.getViewWidget().repaint();
+//				}
+//			}
+//		}
 		return true;
 	}
 
@@ -258,14 +270,25 @@ public final class FBView extends ZLTextView {
 		if (myHasSelectionExpanded) {
 			onSelectingEnded();
 			return true;
-		} else {
-			deactivateSelectionMode();
-			if (myReader.DictionaryTappingActionOption.getValue() ==
-				FBReaderApp.DictionaryTappingAction.openDictionary) {
-				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
-				selectRegion(null);
-				return true;
-			}
+		}
+
+		deactivateSelectionMode();
+
+		boolean doRunAction = false;
+		final ZLTextElementRegion region = getSelectedRegion();
+		if (region instanceof ZLTextWordRegion) {
+			doRunAction =
+				myReader.DictionaryTappingActionOption.getValue() ==
+				FBReaderApp.DictionaryTappingAction.openDictionary;
+		} else if (region instanceof ZLTextImageRegion) {
+			doRunAction =
+				myReader.ImageTappingActionOption.getValue() ==
+				FBReaderApp.ImageTappingAction.openImageView;
+		}
+
+		if (doRunAction) {
+			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
+			return true;
 		}
 		return false;
 	}

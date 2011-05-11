@@ -384,6 +384,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 		dictionaryScreen.addOption(fbReader.DictionaryTappingActionOption, "tappingAction");
 
+		final Screen imagesScreen = createPreferenceScreen("images");
+		imagesScreen.addOption(fbReader.ImageTappingActionOption, "tappingAction");
+		imagesScreen.addOption(fbReader.ImageViewBackgroundOption, "backgroundColor");
+
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
 		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");
 		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");

@@ -23,14 +23,6 @@
 			<node name="invalidURL" value="URL incorrecto" />
 			<node name="hostCantBeReached" value="O equipo %s&#10;non pode ser acadado" />
 			<node name="connectionRefused" value="A conexión foi rexeitada por&#10;%s" />
-			<node name="sslError" value="Produciuse un erro no subsistema SSL" />
-			<node name="sslConnectErrorMessage" value="Houbo un problema coa negociación SSL/TLS:&#10;%s" />
-			<node name="sslBadKey" value="Certificado SSL incorrecto para:&#10;%s" />
-			<node name="sslPeerUnverified" value="Non é posíbel verificar a identidade de pares para:&#10;%s" />
-			<node name="sslProtocolError" value="Produciuse un erro na operación do protocolo SSL" />
-			<node name="sslBadCertificateFileMessage" value="Non foi posíbel ler ficheiro do certificado SSL da EA:&#10;%s" />
-			<node name="sslCertificateExpired" value="O certificado SSL:&#10;%s&#10;caducou:" />
-			<node name="sslCertificateNotYetValid" value="O certificado SSL:&#10;%s&#10;aínda non é válido" />
 		</node>
 	</node>
 	<node name="color">

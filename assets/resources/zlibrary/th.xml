@@ -24,14 +24,6 @@
 			<node name="invalidURL" value="URL ไมถูกต้องุ"/>
 			<node name="hostCantBeReached" value="โฮสต์ %s&#10;ไม่สามารถเข้าถึงได้"/>
 			<node name="connectionRefused" value="การเชื่อมต่อถูกปฏิเสธโดย&#10;%s"/>
-			<node name="sslError" value="เกิดข้อผิดพลาดเกี่ยวกับ SSL "/>
-			<node name="sslConnectErrorMessage" value="เกิดข้อผิดพลาดในการเชื่อมต่อระหว่าง SSL/TLS:&#10;%s"/>
-			<node name="sslBadKey" value="ใบรับรอง SSL ไม่ถูกต้องจาก:&#10;%s"/>
-			<node name="sslPeerUnverified" value="ไม่สามารถยืนยันตัวตนได้สำหรับ: %s"/>
-			<node name="sslProtocolError" value="พบข้อผิดพลาดในการดำเนินการของ โปรโตคอล SSL"/>
-			<node name="sslBadCertificateFileMessage" value="ไม่สามารถอ่านไฟล์ใบรับรอง  SSL ของ CA:&#10;%s"/>
-			<node name="sslCertificateExpired" value="ใบรับรอง SSL หมดอายุ:&#10;%s"/>
-			<node name="sslCertificateNotYetValid" value="ใบรับรอง SSL ไม่ถูกต้อง:&#10;%s"/>
 		</node>
 	</node>
 	<node name="color">
