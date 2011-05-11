@@ -138,4 +138,7 @@ public abstract class ZLTextRegion {
 	boolean isExactlyOver(ZLTextRegion other) {
 		return other == null || other.isExactlyUnder(this);
 	}
+
+	@Override
+	public abstract boolean equals(Object other);
 }
