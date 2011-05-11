@@ -42,6 +42,8 @@ LOCAL_SRC_FILES := \
 	NativeFormats/extensions.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookModel.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
+	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
+	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2BookReader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2CoverReader.cpp \
@@ -50,12 +52,19 @@ LOCAL_SRC_FILES := \
 	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
+	NativeFormats/fbreader/src/formats/oeb/NCXReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBBookReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBCoverReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBMetaInfoReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBPlugin.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBTextStream.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
 	NativeFormats/fbreader/src/formats/util/EntityFilesCollector.cpp \
 	NativeFormats/fbreader/src/formats/util/MergedStream.cpp \
 	NativeFormats/fbreader/src/formats/util/MiscUtil.cpp \
 	NativeFormats/fbreader/src/formats/util/TextFormatDetector.cpp \
 	NativeFormats/fbreader/src/formats/util/XMLTextStream.cpp \
+	NativeFormats/fbreader/src/formats/xhtml/XHTMLReader.cpp \
 	NativeFormats/fbreader/src/library/Author.cpp \
 	NativeFormats/fbreader/src/library/Book.cpp \
 	NativeFormats/fbreader/src/library/Comparators.cpp \

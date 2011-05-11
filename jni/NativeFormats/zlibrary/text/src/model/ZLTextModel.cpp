@@ -245,33 +245,69 @@ void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
 	myParagraphs.back()->addEntry(myLastEntryStart);
 }
 
-/*void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
+void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 	checkUtf8Text();
-	int len = sizeof(int) + 5 + ZLTextStyleEntry::NUMBER_OF_LENGTHS * (sizeof(short) + 1);
+
+	size_t len = 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
+			(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);
+
+	ZLUnicodeUtil::Ucs2String fontFamily;
+	size_t fontFamilyLen = 0;
 	if (entry.fontFamilySupported()) {
-		len += entry.fontFamily().length() + 1;
+		ZLUnicodeUtil::utf8ToUcs2(fontFamily, entry.fontFamily());
+		fontFamilyLen = fontFamily.size() * 2;
+		len += 2 + fontFamilyLen;
 	}
+
 	myLastEntryStart = myAllocator.allocate(len);
 	char *address = myLastEntryStart;
+
 	*address++ = ZLTextParagraphEntry::STYLE_ENTRY;
-	memcpy(address, &entry.myMask, sizeof(int));
-	address += sizeof(int);
-	for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS; ++i) {
-		*address++ = entry.myLengths[i].Unit;
-		memcpy(address, &entry.myLengths[i].Size, sizeof(short));
-		address += sizeof(short);
+	*address++ = 0;
+
+	*((uint32_t*)address) = entry.myMask;
+	address += 4;
+
+	// Pack myLengths array so:
+	//
+	//  1) for every two elements there is a word with those Units (two Units
+	//     in two bytes) followed by two words with those Sizes;
+	//
+	//  2) if there is one last element (without a pair) => then another one
+	//     word is appended with only one Unit (in the first byte) followed by
+	//     a word containing corresponding Size.
+	//
+	const int lengthMinusOne = ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1;
+	int lengthIndex;
+	for (lengthIndex = 0; lengthIndex < lengthMinusOne; lengthIndex += 2) {
+		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[lengthIndex];
+		const ZLTextStyleEntry::LengthType &l1 = entry.myLengths[lengthIndex + 1];
+		*address++ = l0.Unit;
+		*address++ = l1.Unit;
+		*((int16_t*)address) = l0.Size;
+		address += 2;
+		*((int16_t*)address) = l1.Size;
+		address += 2;
+	}
+	if (ZLTextStyleEntry::NUMBER_OF_LENGTHS % 2) {
+		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[lengthMinusOne];
+		*address++ = l0.Unit;
+		*address++ = 0;
+		*((int16_t*)address) = l0.Size;
+		address += 2;
 	}
 	*address++ = entry.mySupportedFontModifier;
 	*address++ = entry.myFontModifier;
 	*address++ = entry.myAlignmentType;
 	*address++ = entry.myFontSizeMag;
 	if (entry.fontFamilySupported()) {
-		memcpy(address, entry.fontFamily().data(), entry.fontFamily().length());
-		address += entry.fontFamily().length();
-		*address++ = '\0';
+		*((uint16_t*)address) = fontFamily.size();
+		address += 2;
+		memcpy(address, &fontFamily.front(), fontFamilyLen);
+		address += fontFamilyLen;
 	}
 	myParagraphs.back()->addEntry(myLastEntryStart);
-}*/
+}
 
 void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label) {
 	checkUtf8Text();

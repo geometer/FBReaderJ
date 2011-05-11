@@ -42,7 +42,7 @@ public:
 		IMAGE_ENTRY = 2,
 		CONTROL_ENTRY = 3,
 		HYPERLINK_CONTROL_ENTRY = 4,
-		//STYLE_ENTRY = 5,
+		STYLE_ENTRY = 5,
 		FIXED_HSPACE_ENTRY = 6,
 		RESET_BIDI_ENTRY = 7,
 	};
@@ -58,7 +58,7 @@ private: // disable copying
 	const ZLTextParagraphEntry &operator = (const ZLTextParagraphEntry &entry);
 };
 
-/*class ZLTextStyleEntry : public ZLTextParagraphEntry {
+class ZLTextStyleEntry : public ZLTextParagraphEntry {
 
 public:
 	enum SizeUnit {
@@ -119,12 +119,12 @@ public:
 	const std::string &fontFamily() const;
 	void setFontFamily(const std::string &fontFamily);
 
-	static const int SUPPORT_ALIGNMENT_TYPE = 1 << NUMBER_OF_LENGTHS;
-	static const int SUPPORT_FONT_SIZE = 1 << (NUMBER_OF_LENGTHS + 1);
-	static const int SUPPORT_FONT_FAMILY = 1 << (NUMBER_OF_LENGTHS + 2);
+	static const unsigned int SUPPORT_ALIGNMENT_TYPE = 1U << NUMBER_OF_LENGTHS;
+	static const unsigned int SUPPORT_FONT_SIZE = 1U << (NUMBER_OF_LENGTHS + 1);
+	static const unsigned int SUPPORT_FONT_FAMILY = 1U << (NUMBER_OF_LENGTHS + 2);
 
 private:
-	int myMask;
+	unsigned int myMask;
 
 	LengthType myLengths[NUMBER_OF_LENGTHS];
 
@@ -135,7 +135,7 @@ private:
 	std::string myFontFamily;
 
 friend class ZLTextModel;
-};*/
+};
 
 class ZLTextControlEntry : public ZLTextParagraphEntry {
 
@@ -330,18 +330,18 @@ private:
 inline ZLTextParagraphEntry::ZLTextParagraphEntry() {}
 inline ZLTextParagraphEntry::~ZLTextParagraphEntry() {}
 
-/*inline ZLTextStyleEntry::ZLTextStyleEntry() : myMask(0), mySupportedFontModifier(0), myFontModifier(0) {}
+inline ZLTextStyleEntry::ZLTextStyleEntry() : myMask(0), mySupportedFontModifier(0), myFontModifier(0) {}
 inline ZLTextStyleEntry::~ZLTextStyleEntry() {}
 
 inline ZLTextStyleEntry::Metrics::Metrics(int fontSize, int fontXHeight, int fullWidth, int fullHeight) : FontSize(fontSize), FontXHeight(fontXHeight), FullWidth(fullWidth), FullHeight(fullHeight) {}
 
 inline bool ZLTextStyleEntry::isEmpty() const { return myMask == 0; }
 
-inline bool ZLTextStyleEntry::lengthSupported(Length name) const { return (myMask & (1 << name)) != 0; }
+inline bool ZLTextStyleEntry::lengthSupported(Length name) const { return (myMask & (1U << name)) != 0; }
 inline void ZLTextStyleEntry::setLength(Length name, short length, SizeUnit unit) {
 	myLengths[name].Size = length;
 	myLengths[name].Unit = unit;
-	myMask |= 1 << name;
+	myMask |= 1U << name;
 }
 
 inline bool ZLTextStyleEntry::alignmentTypeSupported() const { return (myMask & SUPPORT_ALIGNMENT_TYPE) == SUPPORT_ALIGNMENT_TYPE; }
@@ -365,7 +365,7 @@ inline void ZLTextStyleEntry::setFontSizeMag(signed char fontSizeMag) { myFontSi
 
 inline bool ZLTextStyleEntry::fontFamilySupported() const { return (myMask & SUPPORT_FONT_FAMILY) == SUPPORT_FONT_FAMILY; }
 inline const std::string &ZLTextStyleEntry::fontFamily() const { return myFontFamily; }
-inline void ZLTextStyleEntry::setFontFamily(const std::string &fontFamily) { myFontFamily = fontFamily; myMask |= SUPPORT_FONT_FAMILY; }*/
+inline void ZLTextStyleEntry::setFontFamily(const std::string &fontFamily) { myFontFamily = fontFamily; myMask |= SUPPORT_FONT_FAMILY; }
 
 inline ZLTextControlEntry::ZLTextControlEntry(ZLTextKind kind, bool isStart) : myKind(kind), myStart(isStart) {}
 inline ZLTextControlEntry::~ZLTextControlEntry() {}

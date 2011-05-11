@@ -103,18 +103,18 @@ void BookReader::addControl(FBTextKind kind, bool start) {
 	}
 }
 
+void BookReader::addControl(const ZLTextStyleEntry &entry) {
+	if (myTextParagraphExists) {
+		flushTextBufferToParagraph();
+		myCurrentTextModel->addControl(entry);
+	}
+}
+
 void BookReader::addFixedHSpace(unsigned char length) {
 	if (myTextParagraphExists) {
 		myCurrentTextModel->addFixedHSpace(length);
 	}
 }
-
-/*void BookReader::addControl(const ZLTextStyleEntry &entry) {
-	if (myTextParagraphExists) {
-		flushTextBufferToParagraph();
-		myCurrentTextModel->addControl(entry);
-	}
-}*/
 
 void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) {
 	myHyperlinkKind = kind;
