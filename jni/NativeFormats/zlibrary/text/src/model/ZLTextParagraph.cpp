@@ -26,15 +26,10 @@
 
 #include "ZLTextParagraph.h"
 
+
 const shared_ptr<ZLTextParagraphEntry> ResetBidiEntry::Instance = new ResetBidiEntry();
 
-size_t ZLTextEntry::dataLength() const {
-	size_t len;
-	memcpy(&len, myAddress, sizeof(size_t));
-	return len;
-}
-
-short ZLTextStyleEntry::length(Length name, const Metrics &metrics) const {
+/*short ZLTextStyleEntry::length(Length name, const Metrics &metrics) const {
 	switch (myLengths[name].Unit) {
 		default:
 		case SIZE_UNIT_PIXEL:
@@ -72,37 +67,74 @@ ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
 	if (fontFamilySupported()) {
 		myFontFamily = address;
 	}
+}*/
+
+ZLTextControlEntryPool ZLTextControlEntryPool::Pool;
+
+shared_ptr<ZLTextParagraphEntry> ZLTextControlEntryPool::controlEntry(ZLTextKind kind, bool isStart) {
+	std::map<ZLTextKind, shared_ptr<ZLTextParagraphEntry> > &entries = isStart ? myStartEntries : myEndEntries;
+	std::map<ZLTextKind, shared_ptr<ZLTextParagraphEntry> >::iterator it = entries.find(kind);
+	if (it != entries.end()) {
+		return it->second;
+	}
+	shared_ptr<ZLTextParagraphEntry> entry = new ZLTextControlEntry(kind, isStart);
+	entries[kind] = entry;
+	return entry;
 }
+
+ZLTextHyperlinkControlEntry::ZLTextHyperlinkControlEntry(const char *address) : ZLTextControlEntry((ZLTextKind)*address, true), myHyperlinkType((ZLHyperlinkType)*(address + 1)) {
+	uint16_t len;
+	memcpy(&len, address + 2, 2);
+	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
+	ZLUnicodeUtil::Ucs2String label(ucs2data, ucs2data + len);
+	ZLUnicodeUtil::ucs2ToUtf8(myLabel, label);
+}
+
+ZLTextEntry::ZLTextEntry(const char *address) {
+	uint32_t len;
+	memcpy(&len, address, 4);
+	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
+	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
+	ZLUnicodeUtil::ucs2ToUtf8(myText, ucs2str);
+}
+
+ImageEntry::ImageEntry(const char *address) {
+	int16_t vOffset;
+	memcpy(&vOffset, address, 2);
+	myVOffset = vOffset;
+
+	uint16_t len;
+	memcpy(&len, address + 2, 2);
+	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
+	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
+	ZLUnicodeUtil::ucs2ToUtf8(myId, ucs2str);
+}
+
 
 const shared_ptr<ZLTextParagraphEntry> ZLTextParagraph::Iterator::entry() const {
 	if (myEntry.isNull()) {
 		switch (*myPointer) {
 			case ZLTextParagraphEntry::TEXT_ENTRY:
-				myEntry = new ZLTextEntry(myPointer + 1);
+				myEntry = new ZLTextEntry(myPointer + 2);
 				break;
 			case ZLTextParagraphEntry::CONTROL_ENTRY:
 			{
-				unsigned char token = *(myPointer + 1);
-				myEntry = ZLTextControlEntryPool::Pool.controlEntry((ZLTextKind)(token >> 1), (token & 1) == 1);
+				ZLTextKind kind = (ZLTextKind)*(myPointer + 2);
+				bool isStart = *(myPointer + 3) != 0;
+				myEntry = ZLTextControlEntryPool::Pool.controlEntry(kind, isStart);
 				break;
 			}
 			case ZLTextParagraphEntry::HYPERLINK_CONTROL_ENTRY:
-				myEntry = new ZLTextHyperlinkControlEntry(myPointer + 1);
+				myEntry = new ZLTextHyperlinkControlEntry(myPointer + 2);
 				break;
 			case ZLTextParagraphEntry::IMAGE_ENTRY:
-			{
-				ZLImageMap *imageMap = 0;
-				short vOffset = 0;
-				memcpy(&imageMap, myPointer + 1, sizeof(const ZLImageMap*));
-				memcpy(&vOffset, myPointer + 1 + sizeof(const ZLImageMap*), sizeof(short));
-				myEntry = new ImageEntry(myPointer + sizeof(const ZLImageMap*) + sizeof(short) + 1, imageMap, vOffset);
+				myEntry = new ImageEntry(myPointer + 2);
 				break;
-			}
-			case ZLTextParagraphEntry::STYLE_ENTRY:
+			/*case ZLTextParagraphEntry::STYLE_ENTRY:
 				myEntry = new ZLTextStyleEntry(myPointer + 1);
-				break;
+				break;*/
 			case ZLTextParagraphEntry::FIXED_HSPACE_ENTRY:
-				myEntry = new ZLTextFixedHSpaceEntry((unsigned char)*(myPointer + 1));
+				myEntry = new ZLTextFixedHSpaceEntry((unsigned char)*(myPointer + 2));
 				break;
 			case ZLTextParagraphEntry::RESET_BIDI_ENTRY:
 				myEntry = ResetBidiEntry::Instance;
@@ -119,33 +151,29 @@ void ZLTextParagraph::Iterator::next() {
 		switch (*myPointer) {
 			case ZLTextParagraphEntry::TEXT_ENTRY:
 			{
-				size_t len;
-				memcpy(&len, myPointer + 1, sizeof(size_t));
-				myPointer += len + sizeof(size_t) + 1;
+				uint32_t len;
+				memcpy(&len, myPointer + 2, 4);
+				myPointer += len * 2 + 6;
 				break;
 			}
 			case ZLTextParagraphEntry::CONTROL_ENTRY:
-				myPointer += 2;
+				myPointer += 4;
 				break;
 			case ZLTextParagraphEntry::HYPERLINK_CONTROL_ENTRY:
-				myPointer += 2;
-				while (*myPointer != '\0') {
-					++myPointer;
-				}
-				++myPointer;
-				while (*myPointer != '\0') {
-					++myPointer;
-				}
-				++myPointer;
+			{
+				uint16_t len;
+				memcpy(&len, myPointer + 4, 2);
+				myPointer += len * 2 + 6;
 				break;
+			}
 			case ZLTextParagraphEntry::IMAGE_ENTRY:
-				myPointer += sizeof(const ZLImageMap*) + sizeof(short) + 1;
-				while (*myPointer != '\0') {
-					++myPointer;
-				}
-				++myPointer;
+			{
+				uint16_t len;
+				memcpy(&len, myPointer + 4, 2);
+				myPointer += len * 2 + 6;
 				break;
-			case ZLTextParagraphEntry::STYLE_ENTRY:
+			}
+			/*case ZLTextParagraphEntry::STYLE_ENTRY:
 			{
 				int mask;
 				memcpy(&mask, myPointer + 1, sizeof(int));
@@ -158,12 +186,12 @@ void ZLTextParagraph::Iterator::next() {
 					++myPointer;
 				}
 				break;
-			}
+			}*/
 			case ZLTextParagraphEntry::FIXED_HSPACE_ENTRY:
-				myPointer += 2;
+				myPointer += 4;
 				break;
 			case ZLTextParagraphEntry::RESET_BIDI_ENTRY:
-				++myPointer;
+				myPointer += 2;
 				break;
 		}
 		if (*myPointer == 0) {
@@ -172,19 +200,6 @@ void ZLTextParagraph::Iterator::next() {
 	}
 }
 
-ZLTextControlEntryPool ZLTextControlEntryPool::Pool;
-
-shared_ptr<ZLTextParagraphEntry> ZLTextControlEntryPool::controlEntry(ZLTextKind kind, bool isStart) {
-	std::map<ZLTextKind, shared_ptr<ZLTextParagraphEntry> > &entries = isStart ? myStartEntries : myEndEntries;
-	std::map<ZLTextKind, shared_ptr<ZLTextParagraphEntry> >::iterator it = entries.find(kind);
-	if (it != entries.end()) {
-		return it->second;
-	}
-	shared_ptr<ZLTextParagraphEntry> entry = new ZLTextControlEntry(kind, isStart);
-	entries[kind] = entry;
-	return entry;
-}
-	
 size_t ZLTextParagraph::textDataLength() const {
 	size_t len = 0;
 	for (Iterator it = *this; !it.isEnd(); it.next()) {
@@ -215,10 +230,6 @@ size_t ZLTextParagraph::characterNumber() const {
 	return len;
 }
 
-shared_ptr<const ZLImage> ImageEntry::image() const {
-	ZLImageMap::const_iterator it = myMap->find(myId);
-	return (it != myMap->end()) ? (*it).second : 0;
-}
 
 ZLTextTreeParagraph::ZLTextTreeParagraph(ZLTextTreeParagraph *parent) : myIsOpen(false), myParent(parent) {
 	if (parent != 0) {
@@ -247,7 +258,4 @@ int ZLTextTreeParagraph::fullSize() const {
 		size += (*it)->fullSize();
 	}
 	return size;
-}
-
-ResetBidiEntry::ResetBidiEntry() {
 }

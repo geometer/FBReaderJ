@@ -49,17 +49,22 @@ public class ZLTextPlainModel implements ZLTextModel {
 		int myDataIndex;
 		int myDataOffset;
 
+		// ZLTextEntry parameters
 		private char[] myTextData;
 		private int myTextOffset;
 		private int myTextLength;
 
+		// ZLTextControlEntry
+		// ZLTextHyperlinkControlEntry
 		private byte myControlKind;
 		private boolean myControlIsStart;
 		private byte myHyperlinkType;
 		private String myHyperlinkId;
 
+		// ImageEntry
 		private ZLImageEntry myImageEntry;
 
+		// ZLTextFixedHSpaceEntry
 		private short myFixedHSpaceLength;
 
 		EntryIteratorImpl(int index) {
@@ -132,8 +137,8 @@ public class ZLTextPlainModel implements ZLTextModel {
 			switch (type) {
 				case ZLTextParagraph.Entry.TEXT:
 					myTextLength =
-						((int)data[dataOffset++] << 16) +
-						(int)data[dataOffset++];
+						(int)data[dataOffset++] +
+						((int)data[dataOffset++] << 16);
 					myTextData = data;
 					myTextOffset = dataOffset;
 					dataOffset += myTextLength;
@@ -142,13 +147,19 @@ public class ZLTextPlainModel implements ZLTextModel {
 				{
 					short kind = (short)data[dataOffset++];
 					myControlKind = (byte)kind;
-					myControlIsStart = (kind & 0x0100) == 0x0100;
-					myHyperlinkType = (byte)(kind >> 9);
-					if (myHyperlinkType != 0) {
-						short labelLength = (short)data[dataOffset++];
-						myHyperlinkId = new String(data, dataOffset, labelLength);
-						dataOffset += labelLength;
-					}
+					myControlIsStart = (kind & 0x0100) != 0;
+					myHyperlinkType = 0;
+					break;
+				}
+				case ZLTextParagraph.Entry.HYPERLINK_CONTROL:
+				{
+					short kind = (short)data[dataOffset++];
+					short labelLength = (short)data[dataOffset++];
+					myControlKind = (byte)kind;
+					myControlIsStart = true;
+					myHyperlinkType = (byte)(kind >> 8);
+					myHyperlinkId = new String(data, dataOffset, labelLength);
+					dataOffset += labelLength;
 					break;
 				}
 				case ZLTextParagraph.Entry.IMAGE:
@@ -163,11 +174,10 @@ public class ZLTextPlainModel implements ZLTextModel {
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					myFixedHSpaceLength = (short)data[dataOffset++];
 					break;
-				case ZLTextParagraph.Entry.HYPERLINK_CONTROL:
-					break;
-				case ZLTextParagraph.Entry.STYLE:
-					break;
+				/*case ZLTextParagraph.Entry.STYLE:
+					break;*/
 				case ZLTextParagraph.Entry.RESET_BIDI:
+					// No data => skip
 					break;
 			}
 			++myCounter;

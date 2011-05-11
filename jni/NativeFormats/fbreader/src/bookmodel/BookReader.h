@@ -26,6 +26,7 @@
 
 #include <ZLTextParagraph.h>
 
+#include "FBHyperlinkType.h"
 #include "FBTextKind.h"
 
 class BookModel;
@@ -53,7 +54,7 @@ public:
 	void endParagraph();
 	bool paragraphIsOpen() const;
 	void addControl(FBTextKind kind, bool start);
-	void addControl(const ZLTextStyleEntry &entry);
+	//void addControl(const ZLTextStyleEntry &entry);
 	void addHyperlinkControl(FBTextKind kind, const std::string &label);
 	void addHyperlinkLabel(const std::string &label);
 	void addHyperlinkLabel(const std::string &label, int paragraphNumber);
@@ -99,7 +100,7 @@ private:
 	std::vector<std::string> myContentsBuffer;
 
 	std::string myHyperlinkReference;
-	std::string myHyperlinkType;
+	FBHyperlinkType myHyperlinkType;
 	FBTextKind myHyperlinkKind;
 };
 

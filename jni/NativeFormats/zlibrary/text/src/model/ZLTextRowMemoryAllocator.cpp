@@ -68,7 +68,7 @@ static void dump2file(int index, const char *data, size_t len) {
 }
 
 
-ZLTextRowMemoryAllocator::ZLTextRowMemoryAllocator(const size_t rowSize) : myRowSize(rowSize), myOffset(0) {
+ZLTextRowMemoryAllocator::ZLTextRowMemoryAllocator(const size_t rowSize) : myRowSize(rowSize), myCurrentRowSize(0), myOffset(0) {
 	clean_dumps();
 }
 
