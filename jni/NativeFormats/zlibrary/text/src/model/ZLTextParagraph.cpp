@@ -53,39 +53,36 @@ short ZLTextStyleEntry::length(Length name, const Metrics &metrics) const {
 }
 
 ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
-
-	myMask = *((uint32_t*)address);
+	myMask = *(uint32_t*)address;
 	address += 4;
 
 	const int lengthMinusOne = ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1;
-	int lengthIndex;
-	for (lengthIndex = 0; lengthIndex < lengthMinusOne; lengthIndex += 2) {
-		ZLTextStyleEntry::LengthType &l0 = myLengths[lengthIndex];
-		ZLTextStyleEntry::LengthType &l1 = myLengths[lengthIndex + 1];
+	for (int i = 0; i < lengthMinusOne; i += 2) {
+		ZLTextStyleEntry::LengthType &l0 = myLengths[i];
+		ZLTextStyleEntry::LengthType &l1 = myLengths[i + 1];
 		l0.Unit = (SizeUnit)*address++;
 		l1.Unit = (SizeUnit)*address++;
-		l0.Size = *((int16_t*)address);
+		l0.Size = *(int16_t*)address;
 		address += 2;
-		l1.Size = *((int16_t*)address);
+		l1.Size = *(int16_t*)address;
 		address += 2;
 	}
 	if (ZLTextStyleEntry::NUMBER_OF_LENGTHS % 2) {
 		ZLTextStyleEntry::LengthType &l0 = myLengths[lengthMinusOne];
 		l0.Unit = (SizeUnit)*address;
 		address += 2;
-		l0.Size = *((int16_t*)address);
+		l0.Size = *(int16_t*)address;
 		address += 2;
 	}
-
 	mySupportedFontModifier = *address++;
 	myFontModifier = *address++;
 	myAlignmentType = (ZLTextAlignmentType)*address++;
 	myFontSizeMag = *address++;
 	if (fontFamilySupported()) {
-		const uint16_t len = *((uint16_t*)address);
+		const size_t len = *(uint16_t*)address;
 		ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 2);
-		ZLUnicodeUtil::Ucs2String family(ucs2data, ucs2data + len);
-		ZLUnicodeUtil::ucs2ToUtf8(myFontFamily, family);
+		ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
+		ZLUnicodeUtil::ucs2ToUtf8(myFontFamily, ucs2str);
 	}
 }
 
@@ -103,28 +100,22 @@ shared_ptr<ZLTextParagraphEntry> ZLTextControlEntryPool::controlEntry(ZLTextKind
 }
 
 ZLTextHyperlinkControlEntry::ZLTextHyperlinkControlEntry(const char *address) : ZLTextControlEntry((ZLTextKind)*address, true), myHyperlinkType((ZLHyperlinkType)*(address + 1)) {
-	uint16_t len;
-	memcpy(&len, address + 2, 2);
+	const size_t len = *(uint16_t*)(address + 2);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
-	ZLUnicodeUtil::Ucs2String label(ucs2data, ucs2data + len);
-	ZLUnicodeUtil::ucs2ToUtf8(myLabel, label);
+	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
+	ZLUnicodeUtil::ucs2ToUtf8(myLabel, ucs2str);
 }
 
 ZLTextEntry::ZLTextEntry(const char *address) {
-	uint32_t len;
-	memcpy(&len, address, 4);
+	const size_t len = *(uint32_t*)address;
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myText, ucs2str);
 }
 
 ImageEntry::ImageEntry(const char *address) {
-	int16_t vOffset;
-	memcpy(&vOffset, address, 2);
-	myVOffset = vOffset;
-
-	uint16_t len;
-	memcpy(&len, address + 2, 2);
+	myVOffset = *(int16_t*)address;
+	const size_t len = *(uint16_t*)(address + 2);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myId, ucs2str);
@@ -138,12 +129,9 @@ const shared_ptr<ZLTextParagraphEntry> ZLTextParagraph::Iterator::entry() const 
 				myEntry = new ZLTextEntry(myPointer + 2);
 				break;
 			case ZLTextParagraphEntry::CONTROL_ENTRY:
-			{
-				ZLTextKind kind = (ZLTextKind)*(myPointer + 2);
-				bool isStart = *(myPointer + 3) != 0;
-				myEntry = ZLTextControlEntryPool::Pool.controlEntry(kind, isStart);
+				myEntry = ZLTextControlEntryPool::Pool.controlEntry(
+					(ZLTextKind)*(myPointer + 2), *(myPointer + 3) != 0);
 				break;
-			}
 			case ZLTextParagraphEntry::HYPERLINK_CONTROL_ENTRY:
 				myEntry = new ZLTextHyperlinkControlEntry(myPointer + 2);
 				break;
@@ -154,7 +142,7 @@ const shared_ptr<ZLTextParagraphEntry> ZLTextParagraph::Iterator::entry() const 
 				myEntry = new ZLTextStyleEntry(myPointer + 2);
 				break;
 			case ZLTextParagraphEntry::FIXED_HSPACE_ENTRY:
-				myEntry = new ZLTextFixedHSpaceEntry((unsigned char)*(myPointer + 2));
+				myEntry = new ZLTextFixedHSpaceEntry(*(myPointer + 2));
 				break;
 			case ZLTextParagraphEntry::RESET_BIDI_ENTRY:
 				myEntry = ResetBidiEntry::Instance;
@@ -171,8 +159,7 @@ void ZLTextParagraph::Iterator::next() {
 		switch (*myPointer) {
 			case ZLTextParagraphEntry::TEXT_ENTRY:
 			{
-				uint32_t len;
-				memcpy(&len, myPointer + 2, 4);
+				const size_t len = *(uint32_t*)(myPointer + 2);
 				myPointer += len * 2 + 6;
 				break;
 			}
@@ -181,27 +168,25 @@ void ZLTextParagraph::Iterator::next() {
 				break;
 			case ZLTextParagraphEntry::HYPERLINK_CONTROL_ENTRY:
 			{
-				uint16_t len;
-				memcpy(&len, myPointer + 4, 2);
+				const size_t len = *(uint16_t*)(myPointer + 4);
 				myPointer += len * 2 + 6;
 				break;
 			}
 			case ZLTextParagraphEntry::IMAGE_ENTRY:
 			{
-				uint16_t len;
-				memcpy(&len, myPointer + 4, 2);
+				const size_t len = *(uint16_t*)(myPointer + 4);
 				myPointer += len * 2 + 6;
 				break;
 			}
 			case ZLTextParagraphEntry::STYLE_ENTRY:
 			{
-				unsigned int mask = *((uint32_t*)(myPointer + 2));
+				unsigned int mask = *(uint32_t*)(myPointer + 2);
 				bool withFontFamily = (mask & ZLTextStyleEntry::SUPPORT_FONT_FAMILY) == ZLTextStyleEntry::SUPPORT_FONT_FAMILY;
 
 				myPointer += 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
 						(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);
 				if (withFontFamily) {
-					const uint16_t len = *((uint16_t*)myPointer);
+					const size_t len = *(uint16_t*)myPointer;
 					myPointer += 2 + 2 * len;
 				}
 				break;
