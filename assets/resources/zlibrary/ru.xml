@@ -23,14 +23,6 @@
 			<node name="invalidURL" value="Неправильный URL" />
 			<node name="hostCantBeReached" value="Сайт %s недоступен" />
 			<node name="connectionRefused" value="Соединение закрыто сайтом&#10;%s" />
-			<node name="sslError" value="Ошибка подсистемы SSL" />
-			<node name="sslConnectErrorMessage" value="Проблема установления SSL/TLS соединения:&#10;%s" />
-			<node name="sslBadKey" value="Плохой SSL сертификат получен от:&#10;%s" />
-			<node name="sslPeerUnverified" value="Невозможно проверить подлинность сайта:&#10;%s" />
-			<node name="sslProtocolError" value="Ошибка в работе протокола SSL" />
-			<node name="sslBadCertificateFileMessage" value="Не могу прочитать файл сертификата SSL CA:&#10;%s" />
-			<node name="sslCertificateExpired" value="Истек срок действия сертификата SSL:&#10;%s" />
-			<node name="sslCertificateNotYetValid" value="Срок действия сертификата SSL еще не наступил:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

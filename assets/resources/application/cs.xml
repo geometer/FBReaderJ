@@ -544,6 +544,15 @@
 					<node name="summaryOff" value="Navigace klávesami prochází pouze hypertextové odkazy"/>
 				</node>
 			</node>
+			<node name="images" value="Images" toBeTranslated="true">
+				<node name="summary" value="Image displaying options" toBeTranslated="true"/>
+				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
+					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="cancelMenu" value="Nabídka Zrušit">
 				<node name="summary" value="Seznam akcí tlačítka Zpět"/>
 				<node name="previousBook" value="Předchozí kniha">

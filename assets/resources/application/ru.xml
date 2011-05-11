@@ -529,6 +529,15 @@
 					<node name="summaryOff" value="При перемещении с помощью кнопок помечать только гиперссылки"/>
 				</node>
 			</node>
+			<node name="images" value="Картинки">
+				<node name="summary" value="Настройки отображения картинок"/>
+				<node name="backgroundColor" value="Цвет фона при полноэкранном просмотре"/>
+				<node name="tappingAction" value="Действие при долгом нажатии на экран">
+					<node name="doNothing" value="Не делать ничего"/>
+					<node name="selectImage" value="Выделять картинку"/>
+					<node name="openImageView" value="Запускать полноэкранный просмотр"/>
+				</node>
+			</node>
 			<node name="cancelMenu" value="Меню выхода из программы">
 				<node name="summary" value="Список действий при нажатии на кнопку 'Назад'"/>
 				<node name="previousBook" value="Предыдущая книга">
