@@ -41,7 +41,7 @@ public class ZLTextSelection {
 	}
 	public boolean start(int x, int y) {
 		clear();
-		final ZLTextElementRegion newSelectedRegion = findSelectedRegion(x, y);
+		final ZLTextRegion newSelectedRegion = findSelectedRegion(x, y);
 		if (newSelectedRegion == null) // whitespace.
 			return false;
 
@@ -55,14 +55,14 @@ public class ZLTextSelection {
 	public void update() {
 		myScroller.update();
 	}
-	private boolean expandBy(int boundID, ZLTextElementRegion newSelectedRegion) {
+	private boolean expandBy(int boundID, ZLTextRegion newSelectedRegion) {
 		if (myBounds[boundID].expandBy(newSelectedRegion)) {
 			myCurrentChangingBoundID = boundID;
 			return true;
 		}
 		return false;
 	}
-	private boolean equalsTo(int boundID, ZLTextElementRegion newSelectedRegion) {
+	private boolean equalsTo(int boundID, ZLTextRegion newSelectedRegion) {
 		if (myBounds[boundID].equalsTo(newSelectedRegion)) {
 			myCurrentChangingBoundID = boundID;
 			return true;
@@ -73,7 +73,7 @@ public class ZLTextSelection {
 		if (isEmpty()) {
 			return start(x, y);
 		}
-		final ZLTextElementRegion newSelectedRegion = findSelectedRegion(x, y);
+		final ZLTextRegion newSelectedRegion = findSelectedRegion(x, y);
 
 		myScroller.stop();
 		// possible page rim.
@@ -192,12 +192,12 @@ public class ZLTextSelection {
 		return myView.myCurrentPage.TextElementMap;
 	}
 
-	private ZLTextElementRegion findSelectedRegion(int x, int y) { // TODO fast find
-		return myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextElementRegion.AnyRegionFilter);
+	private ZLTextRegion findSelectedRegion(int x, int y) { // TODO fast find
+		return myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 	}
 
-	private ZLTextElementRegion findNearestRegion(int x, int y) { // TODO fast find
-		return myView.findRegion(x, y, Integer.MAX_VALUE - 1, ZLTextElementRegion.AnyRegionFilter);
+	private ZLTextRegion findNearestRegion(int x, int y) { // TODO fast find
+		return myView.findRegion(x, y, Integer.MAX_VALUE - 1, ZLTextRegion.AnyRegionFilter);
 	}
 
 	private abstract class TextBound {
@@ -275,7 +275,7 @@ public class ZLTextSelection {
 			return myTextBound.myElementID;
 		}
 
-		protected void set(ZLTextElementRegion region) {
+		protected void set(ZLTextRegion region) {
 			myArea = getArea(region);
 			myTextBound.set(getArea(region));
 		}
@@ -287,13 +287,13 @@ public class ZLTextSelection {
 			return myTextBound.isGreaterThan(bound.myTextBound);
 		}
 
-		protected boolean equalsTo(ZLTextElementRegion region) {
+		protected boolean equalsTo(ZLTextRegion region) {
 			return myTextBound.equalsTo(getArea(region));
 		}
-		protected boolean isExpandedBy(ZLTextElementRegion region) {
+		protected boolean isExpandedBy(ZLTextRegion region) {
 			return myTextBound.isExpandedBy(getArea(region));
 		}
-		protected boolean expandBy(ZLTextElementRegion region)
+		protected boolean expandBy(ZLTextRegion region)
 		{
 			if (isExpandedBy(region))
 			{
@@ -303,7 +303,7 @@ public class ZLTextSelection {
 			return false;
 		}
 
-		protected abstract ZLTextElementArea getArea(ZLTextElementRegion region);
+		protected abstract ZLTextElementArea getArea(ZLTextRegion region);
 		protected abstract boolean isYOutOfPage(int y);
 	}
 
@@ -311,7 +311,7 @@ public class ZLTextSelection {
 		private StartBound() {
 			myTextBound = new StartTextBound();
 		}
-		protected ZLTextElementArea getArea(ZLTextElementRegion region) {
+		protected ZLTextElementArea getArea(ZLTextRegion region) {
 			return getTextElementMap().get(region.getFromIndex());
 		}
 		protected boolean isYOutOfPage(int y) {
@@ -324,7 +324,7 @@ public class ZLTextSelection {
 		private EndBound() {
 			myTextBound = new EndTextBound();
 		}
-		protected ZLTextElementArea getArea(ZLTextElementRegion region) {
+		protected ZLTextElementArea getArea(ZLTextRegion region) {
 			return getTextElementMap().get(region.getToIndex() - 1);
 		}
 		protected boolean isYOutOfPage(int y) {
@@ -367,11 +367,11 @@ public class ZLTextSelection {
 			myScollForward = boundID == 1;
 			return true;
 		}
-		private boolean handle(int x, int y, ZLTextElementRegion newSelectedRegion) {
+		private boolean handle(int x, int y, ZLTextRegion newSelectedRegion) {
 			if (!isYOutOfPage(0, y) && !isYOutOfPage(1, y))
 				return false; // the whitespace is within the page.
 			
-			final ZLTextElementRegion nearestRegion = newSelectedRegion == null? findNearestRegion(x, y) : newSelectedRegion;
+			final ZLTextRegion nearestRegion = newSelectedRegion == null? findNearestRegion(x, y) : newSelectedRegion;
 			if (nearestRegion != null)
 				if (expandBy(0, nearestRegion) || expandBy(1, nearestRegion))
 					return true;
