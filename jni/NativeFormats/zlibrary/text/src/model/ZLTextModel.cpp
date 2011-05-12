@@ -241,7 +241,7 @@ void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
 }
 
 void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
-	checkUtf8Text();
+	/*checkUtf8Text();
 
 	size_t len = 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
 			(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);
@@ -261,7 +261,7 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 	*address++ = 0;
 
 	*(uint32_t*)address = entry.myMask;
-	address += 4;
+	address += 4;*/
 
 	// Pack myLengths array so:
 	//
@@ -272,7 +272,7 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 	//     word is appended with only one Unit (in the first byte) followed by
 	//     a word containing corresponding Size.
 	//
-	const int lengthMinusOne = ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1;
+	/*const int lengthMinusOne = ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1;
 	for (int i = 0; i < lengthMinusOne; i += 2) {
 		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[i];
 		const ZLTextStyleEntry::LengthType &l1 = entry.myLengths[i + 1];
@@ -298,7 +298,7 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 		*(uint16_t*)address = fontFamily.size();
 		memcpy(address + 2, &fontFamily.front(), fontFamilyLen);
 	}
-	myParagraphs.back()->addEntry(myLastEntryStart);
+	myParagraphs.back()->addEntry(myLastEntryStart);*/
 }
 
 void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label) {
