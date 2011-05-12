@@ -45,6 +45,8 @@ static const std::string ITEM = "item";
 static const std::string ITEMREF = "itemref";
 static const std::string REFERENCE = "reference";
 
+static const std::string COVER_IMAGE = "other.ms-coverimage-standard";
+
 void OEBBookReader::startElementHandler(const char *tag, const char **xmlattributes) {
 	std::string tagString = ZLUnicodeUtil::toLower(tag);
 	if (!myOPFSchemePrefix.empty() &&
@@ -86,11 +88,12 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 			if (title != 0) {
 				myGuideTOC.push_back(std::make_pair(std::string(title), reference));
 			}
-			static const std::string COVER_IMAGE = "other.ms-coverimage-standard";
 			if ((type != 0) && (COVER_IMAGE == type)) {
 				myModelReader.setMainTextModel();
-				myModelReader.addImageReference(reference);
-				//myModelReader.addImage(reference, new ZLFileImage(ZLFile(myFilePrefix + reference), 0));
+				ZLFile imageFile(myFilePrefix + reference);
+				const std::string imageName = imageFile.name(false);
+				myModelReader.addImageReference(imageName);
+				//myModelReader.addImage(imageName, new ZLFileImage(imageFile, 0));
 			}
 		}
 	} else if ((myState == READ_TOUR) && (SITE == tagString)) {

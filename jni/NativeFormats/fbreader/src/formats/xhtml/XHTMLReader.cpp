@@ -287,7 +287,8 @@ void XHTMLTagImageAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 	}
 
 	const std::string fullfileName = pathPrefix(reader) + MiscUtil::decodeHtmlURL(fileName);
-	if (!ZLFile(fullfileName).exists()) {
+	ZLFile imageFile(fullfileName);
+	if (!imageFile.exists()) {
 		return;
 	}
 
@@ -295,11 +296,12 @@ void XHTMLTagImageAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 	if (flag) {
 		endParagraph(reader);
 	}
-	if ((strlen(fileName) > 2) && strncmp(fileName, "./", 2) == 0) {
+	/*if ((strlen(fileName) > 2) && strncmp(fileName, "./", 2) == 0) {
 		fileName +=2;
-	}
-	bookReader(reader).addImageReference(fullfileName);
-	//bookReader(reader).addImage(fullfileName, new ZLFileImage(ZLFile(fullfileName), 0));
+	}*/
+	const std::string imageName = imageFile.name(false);
+	bookReader(reader).addImageReference(imageName);
+	//bookReader(reader).addImage(imageName, new ZLFileImage(imageFile, 0));
 	if (flag) {
 		beginParagraph(reader);
 	}
