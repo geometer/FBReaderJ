@@ -330,7 +330,7 @@ private:
 inline ZLTextParagraphEntry::ZLTextParagraphEntry() {}
 inline ZLTextParagraphEntry::~ZLTextParagraphEntry() {}
 
-inline ZLTextStyleEntry::ZLTextStyleEntry() : myMask(0), mySupportedFontModifier(0), myFontModifier(0) {}
+inline ZLTextStyleEntry::ZLTextStyleEntry() : myMask(0), myAlignmentType(0), mySupportedFontModifier(0), myFontModifier(0), myFontSizeMag(0) {}
 inline ZLTextStyleEntry::~ZLTextStyleEntry() {}
 
 inline ZLTextStyleEntry::Metrics::Metrics(int fontSize, int fontXHeight, int fullWidth, int fullHeight) : FontSize(fontSize), FontXHeight(fontXHeight), FullWidth(fullWidth), FullHeight(fullHeight) {}
