@@ -24,14 +24,6 @@
 			<node name="invalidURL" value="Érvénytelen URL" />
 			<node name="hostCantBeReached" value="%s&#10;kiszolgáló nem elérhető" />
 			<node name="connectionRefused" value="%s&#10;bontotta a kapcsolatot" />
-			<node name="sslError" value="SSL alrendszer hiba" />
-			<node name="sslConnectErrorMessage" value="SSL/TLS kapcsolódási hiba:&#10;%s" />
-			<node name="sslBadKey" value="Hibás SSL tanúsítvány:&#10;%s" />
-			<node name="sslPeerUnverified" value="Azonosítás sikertelen:&#10;%s" />
-			<node name="sslProtocolError" value="Hiba az SSL protokoll működésében" />
-			<node name="sslBadCertificateFileMessage" value="SSL CA tanúsítvény beolvasása sikertelen:&#10;%s" />
-			<node name="sslCertificateExpired" value="Az SSL tanúsítvány lejárt:&#10;%s" />
-			<node name="sslCertificateNotYetValid" value="Az SSL tanúsítvány még nem érvényes:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

@@ -24,14 +24,6 @@
 			<node name="invalidURL" value="Neplatná URL" />
 			<node name="hostCantBeReached" value="Hostitel %s&#10;nemůže být dosažen" />
 			<node name="connectionRefused" value="Spojení bylo odmítnuto:&#10;%s" />
-			<node name="sslError" value="Chyba SSL subsystému" />
-			<node name="sslConnectErrorMessage" value="Problém s metodou handshake SSL/TLS:&#10;%s" />
-			<node name="sslBadKey" value="Špatný SSL certifikát od:&#10;%s" />
-			<node name="sslPeerUnverified" value="Nelze ověřit identitu partnerského zařízení pro:&#10;%s" />
-			<node name="sslProtocolError" value="Chyba v operaci SSL protokolu" />
-			<node name="sslBadCertificateFileMessage" value="Nelze přečíst soubor SSL CA certifikátu:&#10;%s" />
-			<node name="sslCertificateExpired" value="SSL certifikát vypršel:&#10;%s" />
-			<node name="sslCertificateNotYetValid" value="SSL certifikát již není platný:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

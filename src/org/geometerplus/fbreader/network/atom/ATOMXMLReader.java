@@ -48,32 +48,32 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	private Map<String,String> myNamespaceMap;
 
-	protected static final int START = 0;
+	private static final int START = 0;
 	protected static final int FEED = 1;
 	protected static final int F_ENTRY = 2;
-	protected static final int F_ID = 3;
-	protected static final int F_LINK = 4;
-	protected static final int F_CATEGORY = 5;
-	protected static final int F_TITLE = 6;
-	protected static final int F_UPDATED = 7;
-	protected static final int F_AUTHOR = 8;
-	protected static final int FA_NAME = 9;
-	protected static final int FA_URI = 10;
-	protected static final int FA_EMAIL = 11;
-	protected static final int FE_AUTHOR = 12;
-	protected static final int FE_ID = 13;
-	protected static final int FE_CATEGORY = 14;
-	protected static final int FE_LINK = 15;
-	protected static final int FE_PUBLISHED = 16;
-	protected static final int FE_SUMMARY = 17;
-	protected static final int FE_CONTENT = 18;
-	protected static final int FE_TITLE = 19;
-	protected static final int FE_UPDATED = 20;
-	protected static final int FEA_NAME = 21;
-	protected static final int FEA_URI = 22;
-	protected static final int FEA_EMAIL = 23;
-	protected static final int F_SUBTITLE = 24;
-	protected static final int F_ICON = 25;
+	private static final int F_ID = 3;
+	private static final int F_LINK = 4;
+	private static final int F_CATEGORY = 5;
+	private static final int F_TITLE = 6;
+	private static final int F_UPDATED = 7;
+	private static final int F_AUTHOR = 8;
+	private static final int F_SUBTITLE = 9;
+	private static final int F_ICON = 10;
+	private static final int FA_NAME = 11;
+	private static final int FA_URI = 12;
+	private static final int FA_EMAIL = 13;
+	private static final int FE_AUTHOR = 14;
+	private static final int FE_ID = 15;
+	private static final int FE_CATEGORY = 16;
+	protected static final int FE_LINK = 17;
+	private static final int FE_PUBLISHED = 18;
+	private static final int FE_SUMMARY = 19;
+	protected static final int FE_CONTENT = 20;
+	private static final int FE_TITLE = 21;
+	private static final int FE_UPDATED = 22;
+	private static final int FEA_NAME = 23;
+	private static final int FEA_URI = 24;
+	private static final int FEA_EMAIL = 25;
 
 	protected static final int ATOM_STATE_FIRST_UNUSED = 26;
 
@@ -297,6 +297,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 				}
 				break;
+			case FE_CONTENT:
 			case FE_SUMMARY:
 			case FE_TITLE:
 			case F_TITLE:
@@ -311,8 +312,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return interruptReading;
 	}
 
-	public boolean endElementHandler(final String ns, final String tag,
-			final String bufferContent) {
+	public boolean endElementHandler(String ns, String tag, String bufferContent) {
 		boolean interruptReading = false;
 		switch (myState) {
 			case START:

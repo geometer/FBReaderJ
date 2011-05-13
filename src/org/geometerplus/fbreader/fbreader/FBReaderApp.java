@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
@@ -54,6 +55,14 @@ public final class FBReaderApp extends ZLApplication {
 	}
 	public final ZLEnumOption<DictionaryTappingAction> DictionaryTappingActionOption =
 		new ZLEnumOption<DictionaryTappingAction>("Options", "DictionaryTappingAction", DictionaryTappingAction.selectWord);
+
+	public final ZLColorOption ImageViewBackgroundOption =
+		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(127, 127, 127));
+	public static enum ImageTappingAction {
+		doNothing, selectImage, openImageView
+	}
+	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
+		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 
 	public final ZLIntegerRangeOption LeftMarginOption =
 		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);

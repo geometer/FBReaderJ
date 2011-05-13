@@ -543,6 +543,15 @@
 					<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
 				</node>
 			</node>
+			<node name="images" value="Images">
+				<node name="summary" value="Image displaying options"/>
+				<node name="backgroundColor" value="Background color for image view"/>
+				<node name="tappingAction" value="Long tapping action">
+					<node name="doNothing" value="Long tapping does nothing"/>
+					<node name="selectImage" value="Long tapping selects the image"/>
+					<node name="openImageView" value="Long tapping opens image view"/>
+				</node>
+			</node>
 			<node name="cancelMenu" value="Cancel menu">
 				<node name="summary" value="Back button action list"/>
 				<node name="previousBook" value="Previous book">

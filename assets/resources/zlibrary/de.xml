@@ -25,14 +25,6 @@
 			<node name="invalidURL" value="Die URL ist ungültig." />
 			<node name="hostCantBeReached" value="Der Server %s&#10; kann nicht erreicht werden." />
 			<node name="connectionRefused" value="Die Verbindung zu&#10;%s&#10;wurde verweigert." />
-			<node name="sslError" value="Fehler im SSL Subsystem." />
-			<node name="sslConnectErrorMessage" value="Es ist ein SSL/TLS Handshake-Problem mit&#10;%s&#10;aufgetreten." />
-			<node name="sslBadKey" value="Das SSL Zertifikat von&#10;%s&#10;ist ungültig." />
-			<node name="sslPeerUnverified" value="Die Identität der Gegenstelle&#10;%s&#10; kann nicht überprüft werden." />
-			<node name="sslProtocolError" value="Fehler im SSL Protokoll." />
-			<node name="sslBadCertificateFileMessage" value="Die SSL-CA-Zertifikat-Datei:&#10;%s kann nicht gelesen werden." />
-			<node name="sslCertificateExpired" value="Das SSL-Zertifikat ist abgelaufen:&#10;%s" />
-			<node name="sslCertificateNotYetValid" value="Das SSL-Zertifikat ist noch nicht gültig:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">
