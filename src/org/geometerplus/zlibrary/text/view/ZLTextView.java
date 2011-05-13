@@ -1283,6 +1283,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	*/
 
 	private ZLTextRegion mySelectedRegion;
+	private ZLTextCompoundRegion myFullSelection;
 	private ZLTextSelection mySelection;
 	private boolean myHighlightSelectedRegion = true;
 
@@ -1340,6 +1341,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (!mySelection.start(x, y)) {
 			return false;
 		}
+		myFullSelection = new ZLTextCompoundRegion();
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 		onSelectingStarted();
