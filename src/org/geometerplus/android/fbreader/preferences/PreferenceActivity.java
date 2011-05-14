@@ -73,6 +73,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			)
 		);
 		statusBarPreferences.setEnabled(!androidApp.ShowStatusBarOption.getValue());
+		appearanceScreen.addOption(androidApp.DisableButtonLightsOption, "disableButtonLights");
 
 		final Screen textScreen = createPreferenceScreen("text");
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
