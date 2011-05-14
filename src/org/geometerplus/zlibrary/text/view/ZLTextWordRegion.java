@@ -29,6 +29,7 @@ public class ZLTextWordRegion extends ZLTextRegion {
 		Word = word;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof ZLTextWordRegion)) {
 			return false;

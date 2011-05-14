@@ -29,6 +29,7 @@ public class ZLTextHyperlinkRegion extends ZLTextRegion {
 		Hyperlink = hyperlink;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof ZLTextHyperlinkRegion)) {
 			return false;
