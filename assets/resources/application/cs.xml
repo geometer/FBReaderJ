@@ -433,6 +433,7 @@
 				</node>
 				<node name="backgroundColor" value="Barva pozadí"/>
 				<node name="selectionBackground" value="Pozadí výběru"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Běžný text"/>
 				<node name="hyperlink" value="Hypertextový odkaz"/>
 				<node name="hyperlinkVisited" value="Navštívený hypertextový odkaz"/>

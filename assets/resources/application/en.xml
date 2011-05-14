@@ -444,7 +444,7 @@
 				</node>
 				<node name="backgroundColor" value="Background color"/>
 				<node name="selectionBackground" value="Selection background"/>
-				<node name="selectionForeground" value="Selection foreground"/>
+				<node name="selectionForeground" value="Selected text"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text"/>

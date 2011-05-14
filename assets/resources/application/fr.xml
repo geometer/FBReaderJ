@@ -432,6 +432,7 @@
 				</node>
 				<node name="backgroundColor" value="Couleur de fond"/>
 				<node name="selectionBackground" value="Arrière-plan de sélection"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Texte normal"/>
 				<node name="hyperlink" value="Text d'hyperlien"/>
 				<node name="hyperlinkVisited" value="Lien hypertexte visité"/>

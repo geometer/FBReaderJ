@@ -429,6 +429,7 @@
 				</node>
 				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 				<node name="selectionBackground" value="Kijelölés háttere"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Szöveg"/>
 				<node name="hyperlink" value="Hiperhivatkozás"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
