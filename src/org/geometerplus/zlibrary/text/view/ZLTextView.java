@@ -1274,14 +1274,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return false;
 	}
 
-
-	/*
-	protected void activateSelection(int x, int y) {
-		if (isSelectionEnabled()) {
-		}
-	}
-	*/
-
 	private ZLTextRegion mySelectedRegion;
 	private ZLTextSelection mySelection;
 	private boolean myHighlightSelectedRegion = true;

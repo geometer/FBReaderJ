@@ -23,7 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
-final class ZLTextSelectionModel {
+abstract class ZLTextSelectionModel {
 	final static class BoundElement extends ZLTextPosition {
 		boolean Exists;
 		int ParagraphIndex;
