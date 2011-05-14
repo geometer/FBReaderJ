@@ -29,6 +29,7 @@ public class ZLTextImageRegion extends ZLTextRegion {
 		ImageElement = imageElement;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof ZLTextImageRegion)) {
 			return false;
