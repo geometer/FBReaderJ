@@ -39,7 +39,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	};
 
 	private ZLTextModel myModel;
-	private final ZLTextSelectionModel mySelectionModel;
 
 	private interface SizeUnit {
 		int PIXEL_UNIT = 0;
@@ -57,12 +56,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
- 		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
 	public synchronized void setModel(ZLTextModel model) {
 		ZLTextParagraphCursorCache.clear();
-		mySelectionModel.clear();
 
 		myModel = model;
 		myCurrentPage.reset();
@@ -290,10 +287,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			prepareTextLine(page, info, y);
 			y += info.Height + info.Descent + info.VSpaceAfter;
 			labels[++index] = page.TextElementMap.size();
-		}
-
-		if (page == myCurrentPage) {
-			mySelectionModel.update();
 		}
 
 		y = getTopMargin();
@@ -536,61 +529,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		final ZLPaintContext context = myContext;
-
-		if ((page == myCurrentPage) && !mySelectionModel.isEmpty() && (from != to)) {
-			final int paragraphIndex = paragraph.Index;
-			final ZLTextSelectionModel.Range range = mySelectionModel.getRange();
-			final ZLTextSelectionModel.BoundElement lBound = range.Left;
-			final ZLTextSelectionModel.BoundElement rBound = range.Right;
-
-			int left = getRightLine();
-			if (paragraphIndex > lBound.ParagraphIndex) {
-				left = getLeftMargin();
-			} else if (paragraphIndex == lBound.ParagraphIndex) {
-				final int boundElementIndex = lBound.ElementIndex;
-				if (info.StartElementIndex > boundElementIndex) {
-					left = getLeftMargin();
-				} else if ((info.EndElementIndex > boundElementIndex) ||
-									 ((info.EndElementIndex == boundElementIndex) &&
-										(info.EndCharIndex >= lBound.CharIndex))) {
-					final ZLTextElementArea elementArea = page.findLast(from, to, lBound);
-					left = elementArea.XStart;
-					if (elementArea.Element instanceof ZLTextWord) {
-						left += getAreaLength(paragraph, elementArea, lBound.CharIndex);
-					}
-				}
-			}
-
-			final int top = y + 1;
-			int bottom = y + info.Height + info.Descent;
-			int right = getLeftMargin();
-			if (paragraphIndex < rBound.ParagraphIndex) {
-				right = getRightLine();
-				bottom += info.VSpaceAfter;
-			} else if (paragraphIndex == rBound.ParagraphIndex) {
-				final int boundElementIndex = rBound.ElementIndex;
-				if ((info.EndElementIndex < boundElementIndex) ||
-						((info.EndElementIndex == boundElementIndex) &&
-						 (info.EndCharIndex < rBound.CharIndex))) {
-					right = getRightLine();
-					bottom += info.VSpaceAfter;
-				} else if ((info.StartElementIndex < boundElementIndex) ||
-									 ((info.StartElementIndex == boundElementIndex) &&
-										(info.StartCharIndex <= rBound.CharIndex))) {
-					final ZLTextElementArea elementArea = page.findLast(from, to, rBound);
-					if (elementArea.Element instanceof ZLTextWord) {
-						right = elementArea.XStart + getAreaLength(paragraph, elementArea, rBound.CharIndex) - 1;
-					} else {
-						right = elementArea.XEnd;
-					}
-				}
-			}
-
-			if (left < right) {
-				context.setFillColor(getSelectedBackgroundColor());
-				context.fillRectangle(left, top, right, bottom);
-			}
-		}
 
 		int index = from;
 		final int endElementIndex = info.EndElementIndex;
@@ -1259,31 +1197,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	@Override
 	public boolean onFingerMove(int x, int y) {
-		if (mySelectionModel.extendTo(x, y)) {
-			Application.getViewWidget().reset();
-			Application.getViewWidget().repaint();
-			return true;
-		}
 		return false;
 	}
 
 	@Override
 	public boolean onFingerRelease(int x, int y) {
-		mySelectionModel.deactivate();
 		return false;
 	}
 
 	protected abstract boolean isSelectionEnabled();
-
-	/*
-	protected void activateSelection(int x, int y) {
-		if (isSelectionEnabled()) {
-			mySelectionModel.activate(x, y);
-			Application.getViewWidget().reset();
-			Application.getViewWidget().repaint();
-		}
-	}
-	*/
 
 	private ZLTextRegion mySelectedRegion;
 	private boolean myHighlightSelectedRegion = true;
