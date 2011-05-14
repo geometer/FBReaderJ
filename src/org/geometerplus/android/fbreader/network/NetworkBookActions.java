@@ -366,9 +366,7 @@ class NetworkBookActions extends NetworkTreeActions {
 							}
 						}
 					}
-					if (NetworkView.Instance().isInitialized()) {
-						NetworkView.Instance().fireModelChangedAsync();
-					}
+					NetworkView.Instance().fireModelChangedAsync();
 				}
 			})
 			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
