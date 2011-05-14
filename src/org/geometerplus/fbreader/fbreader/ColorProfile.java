@@ -88,7 +88,7 @@ public class ColorProfile {
 			SelectionBackgroundOption =
 				createOption(name, "SelectionBackground", 82, 131, 194);
 			SelectionForegroundOption =
-				createOption(name, "SelectionForeground", 0, 0, 0);
+				createOption(name, "SelectionForeground", 255, 255, 255);
 			HighlightingOption =
 				createOption(name, "Highlighting", 96, 96, 128);
 			RegularTextOption =
@@ -107,7 +107,7 @@ public class ColorProfile {
 			SelectionBackgroundOption =
 				createOption(name, "SelectionBackground", 82, 131, 194);
 			SelectionForegroundOption =
-				createOption(name, "SelectionForeground", 0, 0, 0);
+				createOption(name, "SelectionForeground", 255, 255, 255);
 			HighlightingOption =
 				createOption(name, "Highlighting", 255, 192, 128);
 			RegularTextOption =
