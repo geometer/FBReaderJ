@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+#ifndef __OEBPLUGIN_H__
+#define __OEBPLUGIN_H__
 
-public interface ZLTextWritableModel extends ZLTextModel {
-	void createParagraph(byte kind);
+#include "../FormatPlugin.h"
 
-	void addControl(byte textKind, boolean isStart);
-	void addText(char[] text);
-	void addText(char[] text, int offset, int length);
+class OEBPlugin : public FormatPlugin {
 
-	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
-	void addImage(String id, short vOffset);
-	void addFixedHSpace(short length);
-	void addBidiReset();
+public:
+	static ZLFile opfFile(const ZLFile &oebFile);
 
-	void stopReading();
-}
+public:
+	~OEBPlugin();
+	bool providesMetaInfo() const;
+	bool acceptsFile(const ZLFile &file) const;
+	bool readMetaInfo(Book &book) const;
+	bool readModel(BookModel &model) const;
+	shared_ptr<ZLImage> coverImage(const ZLFile &file) const;
+};
+
+#endif /* __OEBPLUGIN_H__ */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+#ifndef __FBHYPERLINKTYPE_H__
+#define __FBHYPERLINKTYPE_H__
 
-public interface ZLTextWritableModel extends ZLTextModel {
-	void createParagraph(byte kind);
+enum FBHyperlinkType {
+	HYPERLINK_NONE = 0,
+	HYPERLINK_INTERNAL = 1,
+	HYPERLINK_EXTERNAL = 2,
+	HYPERLINK_BOOK = 3,
+};
 
-	void addControl(byte textKind, boolean isStart);
-	void addText(char[] text);
-	void addText(char[] text, int offset, int length);
-
-	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
-	void addImage(String id, short vOffset);
-	void addFixedHSpace(short length);
-	void addBidiReset();
-
-	void stopReading();
-}
+#endif /* __FBHYPERLINKTYPE_H__ */

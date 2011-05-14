@@ -120,7 +120,10 @@ void extension2() {
 	AndroidLog log;
 	log.w("FBREADER", "extension 2 start");
 
-	ZLFile file("/mnt/sdcard/Books/David Drake - An_Oblique_Approach.fb2");
+	//const char fileName[] = "/mnt/sdcard/Books/David Drake - An_Oblique_Approach.fb2";
+	const char fileName[] = "/mnt/sdcard/Books/data.fbreader.org/catalogs/prochtenie/light/P1.epub";
+
+	ZLFile file(fileName);
 	log.wf("FBREADER", "extension 2: file exists: %s", (file.exists() ? "true" : "false"));
 
 	if (file.exists()) {

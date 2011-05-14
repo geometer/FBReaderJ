@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.model;
+#ifndef __OEBTEXTSTREAM_H__
+#define __OEBTEXTSTREAM_H__
 
-public interface ZLTextWritableModel extends ZLTextModel {
-	void createParagraph(byte kind);
+#include <vector>
+#include <string>
 
-	void addControl(byte textKind, boolean isStart);
-	void addText(char[] text);
-	void addText(char[] text, int offset, int length);
+#include "../util/MergedStream.h"
 
-	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
-	void addImage(String id, short vOffset);
-	void addFixedHSpace(short length);
-	void addBidiReset();
+class OEBTextStream : public MergedStream {
 
-	void stopReading();
-}
+public:
+	OEBTextStream(const ZLFile &opfFile);
+
+private:
+	void resetToStart();
+	shared_ptr<ZLInputStream> nextStream();
+
+private:
+	std::string myFilePrefix;
+	std::vector<std::string> myXHTMLFileNames;
+	size_t myIndex;
+};
+
+#endif /* __OEBTEXTSTREAM_H__ */

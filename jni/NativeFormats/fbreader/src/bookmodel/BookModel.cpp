@@ -27,7 +27,7 @@
 #include "../library/Book.h"
 
 BookModel::BookModel(const shared_ptr<Book> book) : myBook(book) {
-	myBookTextModel = new ZLTextPlainModel(book->language(), 102400);
+	myBookTextModel = new ZLTextPlainModel(book->language(), 65536 * 2);
 	myContentsModel = new ContentsModel(book->language());
 	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(book->file(), false);
 	if (!plugin.isNull()) {

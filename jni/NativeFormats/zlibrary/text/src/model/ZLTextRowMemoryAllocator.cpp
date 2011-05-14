@@ -25,29 +25,27 @@
 
 
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #include <vector>
 #include <stdio.h>
 #include <ZLStringUtil.h>
 
 
-static const char dir_name[] = "/mnt/sdcard/Books";
+static const char dir_name[] = "/mnt/sdcard/Books/dumps";
 
 static void clean_dumps() {
 	DIR *dir = opendir(dir_name);
 	if (dir == 0) {
+		mkdir(dir_name, 0x1FF);
 		return;
 	}
 
 	std::vector<std::string> toRemove;
-
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != 0) {
 		std::string name(entry->d_name);
-		if (ZLStringUtil::stringStartsWith(name, "dump-")
-				&& ZLStringUtil::stringEndsWith(name, ".cache")) {
-			toRemove.push_back(std::string(dir_name) + "/" + name);
-		}
+		toRemove.push_back(std::string(dir_name) + "/" + name);
 	}
 	closedir(dir);
 
@@ -68,7 +66,7 @@ static void dump2file(int index, const char *data, size_t len) {
 }
 
 
-ZLTextRowMemoryAllocator::ZLTextRowMemoryAllocator(const size_t rowSize) : myRowSize(rowSize), myOffset(0) {
+ZLTextRowMemoryAllocator::ZLTextRowMemoryAllocator(const size_t rowSize) : myRowSize(rowSize), myCurrentRowSize(0), myOffset(0) {
 	clean_dumps();
 }
 

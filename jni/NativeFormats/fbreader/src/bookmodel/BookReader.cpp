@@ -80,7 +80,7 @@ void BookReader::beginParagraph(ZLTextParagraph::Kind kind) {
 			myCurrentTextModel->addControl(*it, true);
 		}
 		if (!myHyperlinkReference.empty()) {
-			myCurrentTextModel->addHyperlinkControl(myHyperlinkKind, myHyperlinkReference, myHyperlinkType);
+			myCurrentTextModel->addHyperlinkControl(myHyperlinkKind, myHyperlinkType, myHyperlinkReference);
 		}
 		myTextParagraphExists = true;
 	}
@@ -103,12 +103,6 @@ void BookReader::addControl(FBTextKind kind, bool start) {
 	}
 }
 
-void BookReader::addFixedHSpace(unsigned char length) {
-	if (myTextParagraphExists) {
-		myCurrentTextModel->addFixedHSpace(length);
-	}
-}
-
 void BookReader::addControl(const ZLTextStyleEntry &entry) {
 	if (myTextParagraphExists) {
 		flushTextBufferToParagraph();
@@ -116,30 +110,40 @@ void BookReader::addControl(const ZLTextStyleEntry &entry) {
 	}
 }
 
+void BookReader::addFixedHSpace(unsigned char length) {
+	if (myTextParagraphExists) {
+		myCurrentTextModel->addFixedHSpace(length);
+	}
+}
+
 void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) {
 	myHyperlinkKind = kind;
+	std::string type;
 	switch (myHyperlinkKind) {
 		case INTERNAL_HYPERLINK:
 		case FOOTNOTE:
-			myHyperlinkType = "internal";
+			myHyperlinkType = HYPERLINK_INTERNAL;
+			type = "internal";
 			break;
 		case EXTERNAL_HYPERLINK:
-			myHyperlinkType = "external";
+			myHyperlinkType = HYPERLINK_EXTERNAL;
+			type = "external";
 			break;
 		case BOOK_HYPERLINK:
-			myHyperlinkType = "book";
+			myHyperlinkType = HYPERLINK_BOOK;
+			type = "book";
 			break;
 		default:
-			myHyperlinkType.erase();
+			myHyperlinkType = HYPERLINK_NONE;
 			break;
 	}
 	ZLLogger::Instance().println(
 		"hyperlink",
-		" + control (" + myHyperlinkType + "): " + label
+		" + control (" + type + "): " + label
 	);
 	if (myTextParagraphExists) {
 		flushTextBufferToParagraph();
-		myCurrentTextModel->addHyperlinkControl(kind, label, myHyperlinkType);
+		myCurrentTextModel->addHyperlinkControl(kind, myHyperlinkType, label);
 	}
 	myHyperlinkReference = label;
 }

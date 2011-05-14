@@ -26,6 +26,7 @@
 
 #include <shared_ptr.h>
 
+#include <ZLHyperlinkType.h>
 #include <ZLTextKind.h>
 #include <ZLTextAlignmentType.h>
 #include <ZLTextFontModifier.h>
@@ -118,12 +119,12 @@ public:
 	const std::string &fontFamily() const;
 	void setFontFamily(const std::string &fontFamily);
 
-	static const int SUPPORT_ALIGNMENT_TYPE = 1 << NUMBER_OF_LENGTHS;
-	static const int SUPPORT_FONT_SIZE = 1 << (NUMBER_OF_LENGTHS + 1);
-	static const int SUPPORT_FONT_FAMILY = 1 << (NUMBER_OF_LENGTHS + 2);
+	static const unsigned int SUPPORT_ALIGNMENT_TYPE = 1U << NUMBER_OF_LENGTHS;
+	static const unsigned int SUPPORT_FONT_SIZE = 1U << (NUMBER_OF_LENGTHS + 1);
+	static const unsigned int SUPPORT_FONT_FAMILY = 1U << (NUMBER_OF_LENGTHS + 2);
 
 private:
-	int myMask;
+	unsigned int myMask;
 
 	LengthType myLengths[NUMBER_OF_LENGTHS];
 
@@ -154,21 +155,11 @@ private:
 friend class ZLTextControlEntryPool;
 };
 
-class ZLTextFixedHSpaceEntry : public ZLTextParagraphEntry {
-
-public:
-	ZLTextFixedHSpaceEntry(unsigned char length);
-	unsigned char length() const;
-
-private:
-	const unsigned char myLength;
-};
-
 class ZLTextControlEntryPool {
 
 public:
 	static ZLTextControlEntryPool Pool;
-	
+
 public:
 	ZLTextControlEntryPool();
 	~ZLTextControlEntryPool();
@@ -179,18 +170,28 @@ private:
 	std::map<ZLTextKind, shared_ptr<ZLTextParagraphEntry> > myEndEntries;
 };
 
+class ZLTextFixedHSpaceEntry : public ZLTextParagraphEntry {
+
+public:
+	ZLTextFixedHSpaceEntry(unsigned char length);
+	unsigned char length() const;
+
+private:
+	const unsigned char myLength;
+};
+
 class ZLTextHyperlinkControlEntry : public ZLTextControlEntry {
 
 public:
 	ZLTextHyperlinkControlEntry(const char *address);
 	~ZLTextHyperlinkControlEntry();
 	const std::string &label() const;
-	const std::string &hyperlinkType() const;
+	ZLHyperlinkType hyperlinkType() const;
 	bool isHyperlink() const;
 
 private:
-	const std::string myLabel;
-	const std::string myHyperlinkType;
+	std::string myLabel;
+	ZLHyperlinkType myHyperlinkType;
 };
 
 class ZLTextEntry : public ZLTextParagraphEntry {
@@ -201,24 +202,22 @@ public:
 
 	size_t dataLength() const;
 	const char *data() const;
- 
+
 private:
-	const char *myAddress;
+	std::string myText;
 };
 
 class ImageEntry : public ZLTextParagraphEntry {
 
 public:
-	ImageEntry(const std::string &id, const ZLImageMap *imageMap, short vOffset);
+	ImageEntry(const char *address);
 	~ImageEntry();
 	const std::string &id() const;
-	shared_ptr<const ZLImage> image() const;
 	short vOffset() const;
 
 private:
-	const std::string myId;
-	const ZLImageMap *myMap;
-	const short myVOffset;
+	std::string myId;
+	short myVOffset;
 };
 
 class ResetBidiEntry : public ZLTextParagraphEntry {
@@ -331,18 +330,18 @@ private:
 inline ZLTextParagraphEntry::ZLTextParagraphEntry() {}
 inline ZLTextParagraphEntry::~ZLTextParagraphEntry() {}
 
-inline ZLTextStyleEntry::ZLTextStyleEntry() : myMask(0), mySupportedFontModifier(0), myFontModifier(0) {}
+inline ZLTextStyleEntry::ZLTextStyleEntry() : myMask(0), myAlignmentType(ALIGN_UNDEFINED), mySupportedFontModifier(0), myFontModifier(0), myFontSizeMag(0) {}
 inline ZLTextStyleEntry::~ZLTextStyleEntry() {}
 
 inline ZLTextStyleEntry::Metrics::Metrics(int fontSize, int fontXHeight, int fullWidth, int fullHeight) : FontSize(fontSize), FontXHeight(fontXHeight), FullWidth(fullWidth), FullHeight(fullHeight) {}
 
 inline bool ZLTextStyleEntry::isEmpty() const { return myMask == 0; }
 
-inline bool ZLTextStyleEntry::lengthSupported(Length name) const { return (myMask & (1 << name)) != 0; }
+inline bool ZLTextStyleEntry::lengthSupported(Length name) const { return (myMask & (1U << name)) != 0; }
 inline void ZLTextStyleEntry::setLength(Length name, short length, SizeUnit unit) {
 	myLengths[name].Size = length;
 	myLengths[name].Unit = unit;
-	myMask |= 1 << name;
+	myMask |= 1U << name;
 }
 
 inline bool ZLTextStyleEntry::alignmentTypeSupported() const { return (myMask & SUPPORT_ALIGNMENT_TYPE) == SUPPORT_ALIGNMENT_TYPE; }
@@ -380,20 +379,20 @@ inline unsigned char ZLTextFixedHSpaceEntry::length() const { return myLength; }
 inline ZLTextControlEntryPool::ZLTextControlEntryPool() {}
 inline ZLTextControlEntryPool::~ZLTextControlEntryPool() {}
 
-inline ZLTextHyperlinkControlEntry::ZLTextHyperlinkControlEntry(const char *address) : ZLTextControlEntry((ZLTextKind)*address, true), myLabel(address + 1), myHyperlinkType(address + myLabel.length() + 2) {}
 inline ZLTextHyperlinkControlEntry::~ZLTextHyperlinkControlEntry() {}
 inline const std::string &ZLTextHyperlinkControlEntry::label() const { return myLabel; }
-inline const std::string &ZLTextHyperlinkControlEntry::hyperlinkType() const { return myHyperlinkType; }
+inline ZLHyperlinkType ZLTextHyperlinkControlEntry::hyperlinkType() const { return myHyperlinkType; }
 inline bool ZLTextHyperlinkControlEntry::isHyperlink() const { return true; }
 
-inline ZLTextEntry::ZLTextEntry(const char *address) : myAddress(address) {}
 inline ZLTextEntry::~ZLTextEntry() {}
-inline const char *ZLTextEntry::data() const { return myAddress + sizeof(size_t); }
+inline const char *ZLTextEntry::data() const { return myText.data(); }
+inline size_t ZLTextEntry::dataLength() const { return myText.length(); }
 
-inline ImageEntry::ImageEntry(const std::string &id, const ZLImageMap *imageMap, short vOffset) : myId(id), myMap(imageMap), myVOffset(vOffset) {}
 inline ImageEntry::~ImageEntry() {}
 inline const std::string &ImageEntry::id() const { return myId; }
 inline short ImageEntry::vOffset() const { return myVOffset; }
+
+inline ResetBidiEntry::ResetBidiEntry() {}
 
 inline ZLTextParagraph::ZLTextParagraph() : myEntryNumber(0) {}
 inline ZLTextParagraph::~ZLTextParagraph() {}
