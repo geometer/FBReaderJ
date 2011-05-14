@@ -366,10 +366,6 @@ public final class FBView extends ZLTextView {
 	public ZLColor getSelectedBackgroundColor() {
 		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
 	}
-	@Override
-	public ZLColor getSelectedForegroundColor() {
-		return myReader.getColorProfile().SelectionForegroundOption.getValue();
-	}
 
 	@Override
 	public ZLColor getSelectedForegroundColor() {

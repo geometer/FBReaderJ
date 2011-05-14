@@ -191,13 +191,13 @@ abstract class ZLTextViewBase extends ZLView {
 		final ZLColor color = selected ? getSelectedForegroundColor() : getTextColor(myTextStyle.Hyperlink);
 		context.setTextColor(color);
 		if ((start == 0) && (length == -1)) {
-			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0, selected);
+			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
 		} else {
 			if (length == -1) {
 				length = word.Length - start;
 			}
 			if (!addHyphenationSign) {
-				drawString(x, y, word.Data, word.Offset + start, length, word.getMark(), start, selected);
+				drawString(x, y, word.Data, word.Offset + start, length, word.getMark(), start);
 			} else {
 				char[] part = myWordPartArray;
 				if (length + 1 > part.length) {
@@ -206,12 +206,12 @@ abstract class ZLTextViewBase extends ZLView {
 				}
 				System.arraycopy(word.Data, word.Offset + start, part, 0, length);
 				part[length] = '-';
-				drawString(x, y, part, 0, length + 1, word.getMark(), start, selected);
+				drawString(x, y, part, 0, length + 1, word.getMark(), start);
 			}
 		}
 	}
 
-	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift, boolean selected) {
+	private final void drawString(int x, int y, char[] str, int offset, int length, ZLTextWord.Mark mark, int shift) {
 		final ZLPaintContext context = myContext;
 		if (mark == null) {
 			context.drawString(x, y, str, offset, length);
