@@ -429,6 +429,7 @@
 				</node>
 				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 				<node name="selectionBackground" value="Nền Phần chọn"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Văn bản Thường"/>
 				<node name="hyperlink" value="Siêu liên kết"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>

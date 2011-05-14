@@ -429,6 +429,7 @@
 				</node>
 				<node name="backgroundColor" value="สีพื้นหลัง"/>
 				<node name="selectionBackground" value="พื้นหลังที่เลือก"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="ข้อความ"/>
 				<node name="hyperlink" value="ลิ้งค์ข้อความ"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
