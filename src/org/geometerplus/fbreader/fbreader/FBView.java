@@ -336,6 +336,11 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
+	public ZLColor getSelectedForegroundColor() {
+		return myReader.getColorProfile().SelectionForegroundOption.getValue();
+	}
+
+	@Override
 	public ZLColor getTextColor(ZLTextHyperlink hyperlink) {
 		final ColorProfile profile = myReader.getColorProfile();
 		switch (hyperlink.Type) {
