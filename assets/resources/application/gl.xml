@@ -527,7 +527,7 @@
 				<node name="dictionary" value="Dicionario"/>
 				<node name="tappingAction" value="Acción de pulsación longa">
 					<node name="doNothing" value="Pulsación longa non fai nada"/>
-					<node name="selectWord" value="Pulsación longa selecciona a palabra"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Pulsación longa selecciona a palabra, e a seguir abre o dicionario"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navegar por todas as palabras">
@@ -575,9 +575,6 @@
 					<node name="defaultEncodingSet" value="Conxunto de codificación predeterminado"/>
 					<node name="defaultEncoding" value="Codificación predeterminada"/>
 				</node>
-				<node name="Selection" value="Selección">
-					<node name="enableSelection" value="Activar a selección de texto"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -600,6 +597,9 @@
 			<node name="purchaseBook" value="Comprando libro. Agarde..." />
 			<node name="loadingCatalogInfo" value="Cargando a información do catálogo. Agarde..." />
 			<node name="updatingCatalogsList" value="Actualizando a lista de catálogos. Agarde..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Produciuse un erro interno no servidor" />

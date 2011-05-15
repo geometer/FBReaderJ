@@ -206,8 +206,8 @@
 			<node name="redo" value="Go Forward"/>
 		</node>
 		<node name="selection" value="Selection">
-			<node name="copyToClipboard" value="Copy to Clipboard"/>
-			<node name="openInDictionary" value="Open in Dictionary"/>
+			<node name="copyToClipboard" value="Copy to clipboard"/>
+			<node name="openInDictionary" value="Open in dictionary"/>
 			<node name="clearSelection" value="Clear"/>
 		</node>
 		<node name="search" value="Search"/>
@@ -541,8 +541,8 @@
 				<node name="dictionary" value="Dictionary"/>
 				<node name="tappingAction" value="Long tapping action">
 					<node name="doNothing" value="Long tapping does nothing"/>
-					<node name="selectWord" value="Long tapping selects the word"/>
-					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary"/>
+					<node name="startSelecting" value="Long tapping initiates selecting"/>
+					<node name="openDictionary" value="Long tapping selects single word, release opens dictionary"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navigate over all words">
 					<node name="summaryOn" value="Key navigation visits all words"/>
@@ -589,9 +589,6 @@
 					<node name="defaultEncodingSet" value="Default Encoding Set"/>
 					<node name="defaultEncoding" value="Default Encoding"/>
 				</node>
-				<node name="Selection" value="Selection">
-					<node name="enableSelection" value="Enable Text Selection"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -614,6 +611,9 @@
 			<node name="purchaseBook" value="Purchase book. Please, wait&#8230;" />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" />

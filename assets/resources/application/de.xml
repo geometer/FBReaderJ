@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- German FBReaderJ resources, by Victor Massini -->
-<!-- Updated by Ingolf Kübler 2010/11/17 -->
+<!-- German FBReaderJ resources, by Victor Massini; updated by Ingolf Kübler 2010/11/17 -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Unbekannter Autor"/>
@@ -528,7 +527,7 @@
 				<node name="dictionary" value="Dictionary" toBeTranslated="true"/>
 				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
@@ -576,9 +575,6 @@
 					<node name="defaultEncodingSet" value="Standard-Codierungs-Set"/>
 					<node name="defaultEncoding" value="Standard Codierung"/>
 				</node>
-				<node name="Selection" value="Auswahl">
-					<node name="enableSelection" value="Textauswahl einschalten"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -601,6 +597,9 @@
 			<node name="purchaseBook" value="Buch wird gekauft. Bitte warten..." />
 			<node name="loadingCatalogInfo" value="Kataloginformation wird geladen. Bitte warten..."/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler." />

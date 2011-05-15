@@ -546,7 +546,7 @@
 				<node name="dictionary" value="字典"/>
 				<node name="tappingAction" value="長按動作">
 					<node name="doNothing" value="長按不做任何動作"/>
-					<node name="selectWord" value="長按選字"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="長按選字，放開後查詢詞義"/>
 				</node>
 				<node name="navigateOverAllWords" value="導航鍵訪問語句設定">
@@ -594,9 +594,6 @@
 					<node name="defaultEncodingSet" value="預設編碼集"/>
 					<node name="defaultEncoding" value="預設編碼"/>
 				</node>
-				<node name="Selection" value="選字">
-					<node name="enableSelection" value="允許選取文字"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -619,6 +616,9 @@
 			<node name="purchaseBook" value="正購買書藉，請稍候..." />
 			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候..." />
 			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="伺服器出錯" />
