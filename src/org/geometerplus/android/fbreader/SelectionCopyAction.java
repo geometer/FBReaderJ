@@ -1,12 +1,13 @@
 package org.geometerplus.android.fbreader;
 
+import android.app.Application;
+import android.text.ClipboardManager;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-import android.app.Application;
-import android.text.ClipboardManager;
-import android.widget.Toast;
+import org.geometerplus.android.util.UIUtil;
 
 public class SelectionCopyAction extends SelectionProcessAction {
 
@@ -19,9 +20,10 @@ public class SelectionCopyAction extends SelectionProcessAction {
 		ClipboardManager clipboard =
 			(ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
 		clipboard.setText(text);
-		Toast.makeText(myActivity,
-				ZLResource.resource("selection").getResource("textInBuffer").getValue() + "\n" + clipboard.getText(),
-				Toast.LENGTH_SHORT).show();
+		UIUtil.showMessageText(
+			myActivity,
+			ZLResource.resource("dialog").getResource("selection").getResource("textInBuffer").getValue() + "\n" + clipboard.getText()
+		);
 	}
 }
 
