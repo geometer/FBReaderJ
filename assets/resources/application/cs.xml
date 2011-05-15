@@ -589,9 +589,6 @@
 					<node name="defaultEncodingSet" value="Výchozí sada kódování"/>
 					<node name="defaultEncoding" value="Výchozí kódování"/>
 				</node>
-				<node name="Selection" value="Výběr">
-					<node name="enableSelection" value="Povolit výběr textu"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -614,6 +611,9 @@
 			<node name="purchaseBook" value="Nakupování knihy. Čekejte..."/>
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..."/>
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>

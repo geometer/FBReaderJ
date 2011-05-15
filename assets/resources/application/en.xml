@@ -213,10 +213,8 @@
 			<node name="redo" value="Go Forward"/>
 		</node>
 		<node name="selection" value="Selection">
-			<node name="quickHelp" value="Select some text" />
-			<node name="textInBuffer" value="Text in the buffer:" />
-			<node name="copyToClipboard" value="Copy to Clipboard"/>
-			<node name="openInDictionary" value="Open in Dictionary"/>
+			<node name="copyToClipboard" value="Copy to clipboard"/>
+			<node name="openInDictionary" value="Open in dictionary"/>
 			<node name="clearSelection" value="Clear"/>
 			<node name="quoteFrom" value="Quote from" />
 		</node>
@@ -599,9 +597,6 @@
 					<node name="defaultEncodingSet" value="Default Encoding Set"/>
 					<node name="defaultEncoding" value="Default Encoding"/>
 				</node>
-				<node name="Selection" value="Selection">
-					<node name="enableSelection" value="Enable Text Selection"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -624,6 +619,9 @@
 			<node name="purchaseBook" value="Purchase book. Please, wait&#8230;" />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" />

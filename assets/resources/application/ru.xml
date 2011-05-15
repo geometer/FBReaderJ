@@ -583,9 +583,6 @@
 					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
 				</node>
-				<node name="Selection" value="Пометка">
-					<node name="enableSelection" value="Разрешить помечать текст"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -608,6 +605,9 @@
 			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста..." />
 			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Текст в буфере обмена:" />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
