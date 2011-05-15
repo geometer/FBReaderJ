@@ -365,7 +365,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return;
 			}
 			if (errorMessage != null) {
-				UIUtil.showErrorMessageText(activity, errorMessage);
+				UIUtil.showMessageText(activity, errorMessage);
 			} else if (childrenEmpty) {
 				UIUtil.showErrorMessage(activity, "emptyCatalog");
 			}
