@@ -76,11 +76,13 @@ public class ZLTextSelection {
 
 		myScroller.stop();
 		// possible page rim.
-		if (newSelectedRegion == null || equalsTo(0, newSelectedRegion) || equalsTo(1, newSelectedRegion))
+		if (newSelectedRegion == null || equalsTo(0, newSelectedRegion) || equalsTo(1, newSelectedRegion)) {
 			return myScroller.handle(x, y, newSelectedRegion);
+		}
 		
-		if (!expandBy(0, newSelectedRegion) && !expandBy(1, newSelectedRegion))
+		if (!expandBy(0, newSelectedRegion) && !expandBy(1, newSelectedRegion)) {
 			myBounds[myCurrentChangingBoundID].set(newSelectedRegion); // selection is now being shrinked
+		}
 
 		myIsTextValid = false;
 		return true;
