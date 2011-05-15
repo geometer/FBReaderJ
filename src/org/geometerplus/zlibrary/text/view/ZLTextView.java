@@ -1223,54 +1223,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		return leftIndex;
 	}*/
-	@Override
-	public boolean onFingerSingleTap(int x, int y) {
-		 //        if (!mySelection.isEmpty()){
-		 //        	clearSelection();
-		 //            return true;
-		 //        }
 
-		return false;
-	}
-	@Override
-	public boolean onFingerDoubleTap(int x, int y) {
-
-		 //        if (!mySelection.isEmpty()) {
-		 //            String text = mySelection.getText();
-		 //            ClipboardManager clipboard =
-		 //                (ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
-		 //            clipboard.setText(text);
-		 //            mySelection.clear();
-		//				Application.getViewWidget().repaint();
-		 //            return true;
-		 //        }
-		return false; 
-	}
-	public boolean onFingerPress(int x, int y) {
-		 //        if (isSelectionActive()) {
-		 //            startSelection(x, y);
-		 //            return true;
-		 //        }
-		return false;
-	}
 	@Override
 	public boolean onFingerMove(int x, int y) {
-		 //		public boolean onFingerMoveAfterLongPress(int x, int y) {
-		 //		if (myMode == MODE_SELECT) {
-		 //        if (isSelectionActive()) {
-		 //            expandSelectionTo(x, y);
-		 //            return true;
-		 //        }
-		 //		}
 		return false;
 	}
 
 	@Override
 	public boolean onFingerRelease(int x, int y) {
-		 //        if (isSelectionModeActive()) { // TODO
-		 //            onSelectingEnded();
-		 //        }
-		 //		public boolean onFingerReleaseAfterLongPress(int x, int y) {
 		return false;
 	}
 
