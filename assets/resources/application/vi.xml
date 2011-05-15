@@ -527,7 +527,7 @@
 				<node name="dictionary" value="Từ điển"/>
 				<node name="tappingAction" value="Nhấn giữ">
 					<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
-					<node name="selectWord" value="Chọn từ khi nhấn giữ"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Chọn từ và mở từ điển khi nhấn giữ"/>
 				</node>
 				<node name="navigateOverAllWords" value="Điều hướng mọi từ">

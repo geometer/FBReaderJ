@@ -530,7 +530,7 @@
 				<node name="dictionary" value="Dictionnaire"/>
 				<node name="tappingAction" value="Configuration de l'appui long">
 					<node name="doNothing" value="Un appui long ne fait rien"/>
-					<node name="selectWord" value="Un appui long selectionne le mot"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
 				</node>
 				<node name="navigateOverAllWords" value="Parcourir l'ensemble des mots">

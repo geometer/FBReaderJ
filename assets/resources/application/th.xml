@@ -527,7 +527,7 @@
 				<node name="dictionary" value="พจนานุกรม"/>
 				<node name="tappingAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
 					<node name="doNothing" value="ไม่มีอะไรเกิดขึ้น"/>
-					<node name="selectWord" value="เลือกคำเมื่อกดค้างที่หน้าจอ"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="เลือกคำเมื่อกดค้างที่หน้าจอและไปยังพจนานุกรมเมื่อปล่อย"/>
 				</node>
 				<node name="navigateOverAllWords" value="ตัวเลือกคำสามารถเลือกได้ทุกคำ">
