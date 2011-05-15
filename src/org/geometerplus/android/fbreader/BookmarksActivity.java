@@ -165,8 +165,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 	}
 	@Override 
 	protected Dialog onCreateDialog(int id) {
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setNegativeButton(myResource.getResource("dialog").getResource("no").getValue(), new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(buttonResource.getResource("no").getValue(), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}
@@ -176,7 +177,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		switch(id) {
 			case DIALOG_DELETE_ALL_BOOKMARKS_ID:
 				builder.setMessage(myResource.getResource("dialog").getResource("deleteAllPrompt").getValue())
-				.setPositiveButton(myResource.getResource("dialog").getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+				.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						deleteAllBookmarks((ListView)getTabHost().getCurrentView());
 					}
@@ -184,7 +185,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				break;
 //			case DIALOG_DELETE_BOOKMARK_ID:
 //				builder.setMessage(myResource.getResource("dialog").getResource("deletePrompt").getValue())
-//				.setPositiveButton(myResource.getResource("dialog").getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+//				.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
 //					public void onClick(DialogInterface dialog, int id) {
 //						deleteAllBookmarks((ListView)getTabHost().getCurrentView());d
 //					}

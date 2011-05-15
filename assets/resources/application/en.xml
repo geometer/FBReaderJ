@@ -179,8 +179,6 @@
 		<node name="quotesFrom" value="Quotes from"/>
 		<node name="dialog">
 			<node name="deleteAllPrompt" value="Are you sure want to delete all the bookmarks?"/>
-			<node name="no" value="No"/>
-			<node name="yes" value="Yes"/>
 		</node>
 		<node name="menu">
 			<node name="search" value="Search"/>
