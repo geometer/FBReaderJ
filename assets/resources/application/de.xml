@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- German FBReaderJ resources, by Victor Massini -->
-<!-- Updated by Ingolf Kübler 2010/11/17 -->
+<!-- German FBReaderJ resources, by Victor Massini; updated by Ingolf Kübler 2010/11/17 -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Unbekannter Autor"/>

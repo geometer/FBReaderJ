@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French FBReaderJ resources
-	 Intial work: Sébastien Rodriguez 
-	 Maintainer: Mathias Monnerville <mathias@monnerville.com>
--->
+<!-- French FBReaderJ resources; Initial work: Sébastien Rodriguez Maintainer: Mathias Monnerville <mathias@monnerville.com> -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Auteur inconnu"/>
