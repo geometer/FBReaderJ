@@ -431,17 +431,4 @@ public final class FBReaderApp extends ZLApplication {
 			visible
 		);
 	}
-	public Bookmark addBookmark() {
-		final FBView fbview = getTextView();
-
-		return new Bookmark(
-			Model.Book,
-			fbview.getModel().getId(),
-			fbview.getSelectedText(), 
-			fbview.getSelectionStartParagraphID(), 
-			fbview.getSelectionStartElementID(),
-			0
-		);
-	}
-
 }
