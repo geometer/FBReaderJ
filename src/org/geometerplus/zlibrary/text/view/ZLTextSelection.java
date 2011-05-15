@@ -249,11 +249,9 @@ public class ZLTextSelection {
 				(myParagraphID == area.ParagraphIndex && myElementID > area.ElementIndex);
 		}
 
-		protected boolean equalsTo(ZLTextElementArea area) {
-			return myParagraphID  == area.ParagraphIndex && myElementID == area.ElementIndex;
-		}
 		protected boolean equalsTo(ZLTextRegion region) {
-			return equalsTo(getArea(region));
+			ZLTextElementArea area = getArea(region);
+			return myParagraphID  == area.ParagraphIndex && myElementID == area.ElementIndex;
 		}
 
 		protected boolean isExpandedBy(ZLTextRegion region) {
