@@ -58,33 +58,6 @@ abstract class ZLTextSelectionModel {
 		}
 	};
 
-	private final static class Bound {
-		final BoundElement Before = new BoundElement();
-		final BoundElement After = new BoundElement();
-
-		void copyFrom(Bound original) {
-			Before.copyFrom(original.Before);
-			After.copyFrom(original.After);
-		}
-
-		boolean isLessThan(Bound bound) {
-			if (!Before.Exists) {
-				return true;
-			}	
-			if (!bound.Before.Exists) {
-				return false;
-			}	
-			if (!After.Exists) {
-				return false;
-			}	
-			if (!bound.After.Exists) {
-				return true;
-			}	
-
-			return Before.compareTo(bound.Before) < 0;
-		}
-	};
-
 	final static class Range {
 		final BoundElement Left = new BoundElement();
 		final BoundElement Right = new BoundElement();
