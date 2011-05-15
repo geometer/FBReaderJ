@@ -39,7 +39,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	};
 
 	private ZLTextModel myModel;
-	private final ZLTextSelectionModel mySelectionModel;
 
 	private interface SizeUnit {
 		int PIXEL_UNIT = 0;
@@ -57,12 +56,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
- 		mySelectionModel = new ZLTextSelectionModel(this);
 	}
 
 	public synchronized void setModel(ZLTextModel model) {
 		ZLTextParagraphCursorCache.clear();
-		mySelectionModel.clear();
 
 		myModel = model;
 		myCurrentPage.reset();
@@ -292,10 +289,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			labels[++index] = page.TextElementMap.size();
 		}
 
-		if (page == myCurrentPage) {
-			mySelectionModel.update();
-		}
-
 		y = getTopMargin();
 		index = 0;
 		for (ZLTextLineInfo info : lineInfos) {
@@ -304,7 +297,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			++index;
 		}
 
-		final ZLTextElementRegion selectedElementRegion = getCurrentElementRegion(page);
+		final ZLTextRegion selectedElementRegion = getCurrentElementRegion(page);
 		if (selectedElementRegion != null && myHighlightSelectedRegion) {
 			selectedElementRegion.draw(context);
 		}
@@ -536,61 +529,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		final ZLPaintContext context = myContext;
-
-		if ((page == myCurrentPage) && !mySelectionModel.isEmpty() && (from != to)) {
-			final int paragraphIndex = paragraph.Index;
-			final ZLTextSelectionModel.Range range = mySelectionModel.getRange();
-			final ZLTextSelectionModel.BoundElement lBound = range.Left;
-			final ZLTextSelectionModel.BoundElement rBound = range.Right;
-
-			int left = getRightLine();
-			if (paragraphIndex > lBound.ParagraphIndex) {
-				left = getLeftMargin();
-			} else if (paragraphIndex == lBound.ParagraphIndex) {
-				final int boundElementIndex = lBound.ElementIndex;
-				if (info.StartElementIndex > boundElementIndex) {
-					left = getLeftMargin();
-				} else if ((info.EndElementIndex > boundElementIndex) ||
-									 ((info.EndElementIndex == boundElementIndex) &&
-										(info.EndCharIndex >= lBound.CharIndex))) {
-					final ZLTextElementArea elementArea = page.findLast(from, to, lBound);
-					left = elementArea.XStart;
-					if (elementArea.Element instanceof ZLTextWord) {
-						left += getAreaLength(paragraph, elementArea, lBound.CharIndex);
-					}
-				}
-			}
-
-			final int top = y + 1;
-			int bottom = y + info.Height + info.Descent;
-			int right = getLeftMargin();
-			if (paragraphIndex < rBound.ParagraphIndex) {
-				right = getRightLine();
-				bottom += info.VSpaceAfter;
-			} else if (paragraphIndex == rBound.ParagraphIndex) {
-				final int boundElementIndex = rBound.ElementIndex;
-				if ((info.EndElementIndex < boundElementIndex) ||
-						((info.EndElementIndex == boundElementIndex) &&
-						 (info.EndCharIndex < rBound.CharIndex))) {
-					right = getRightLine();
-					bottom += info.VSpaceAfter;
-				} else if ((info.StartElementIndex < boundElementIndex) ||
-									 ((info.StartElementIndex == boundElementIndex) &&
-										(info.StartCharIndex <= rBound.CharIndex))) {
-					final ZLTextElementArea elementArea = page.findLast(from, to, rBound);
-					if (elementArea.Element instanceof ZLTextWord) {
-						right = elementArea.XStart + getAreaLength(paragraph, elementArea, rBound.CharIndex) - 1;
-					} else {
-						right = elementArea.XEnd;
-					}
-				}
-			}
-
-			if (left < right) {
-				context.setFillColor(getSelectedBackgroundColor());
-				context.fillRectangle(left, top, right, bottom);
-			}
-		}
 
 		int index = from;
 		final int endElementIndex = info.EndElementIndex;
@@ -1230,62 +1168,23 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return start;
 	}
 
-	/*
-	protected List<ZLTextElementArea> allElements() {
-		return myCurrentPage.TextElementMap;
-	}
-	*/
-
 	protected ZLTextElementArea getElementByCoordinates(int x, int y) {
 		return myCurrentPage.TextElementMap.binarySearch(x, y);
 	}
 
-	/*private static int lowerBound(int[] array, int value) {
-		int leftIndex = 0;
-		int rightIndex = array.length - 1;
-		if (array[rightIndex] <= value) {
-			return rightIndex;
-		}
-		while (leftIndex < rightIndex - 1) {
-			int middleIndex = (leftIndex + rightIndex) / 2;
-			if (array[middleIndex] <= value) {
-				leftIndex = middleIndex;
-			} else {
-				rightIndex = middleIndex;
-			}
-		}
-		return leftIndex;
-	}*/
-
 	@Override
 	public boolean onFingerMove(int x, int y) {
-		if (mySelectionModel.extendTo(x, y)) {
-			Application.getViewWidget().reset();
-			Application.getViewWidget().repaint();
-			return true;
-		}
 		return false;
 	}
 
 	@Override
 	public boolean onFingerRelease(int x, int y) {
-		mySelectionModel.deactivate();
 		return false;
 	}
 
 	protected abstract boolean isSelectionEnabled();
 
-	/*
-	protected void activateSelection(int x, int y) {
-		if (isSelectionEnabled()) {
-			mySelectionModel.activate(x, y);
-			Application.getViewWidget().reset();
-			Application.getViewWidget().repaint();
-		}
-	}
-	*/
-
-	private ZLTextElementRegion mySelectedRegion;
+	private ZLTextRegion mySelectedRegion;
 	private boolean myHighlightSelectedRegion = true;
 
 	public void hideSelectedRegionBorder() {
@@ -1293,8 +1192,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		Application.getViewWidget().reset();
 	}
 
-	private ZLTextElementRegion getCurrentElementRegion(ZLTextPage page) {
-		final ArrayList<ZLTextElementRegion> elementRegions = page.TextElementMap.ElementRegions;
+	private ZLTextRegion getCurrentElementRegion(ZLTextPage page) {
+		final ArrayList<ZLTextRegion> elementRegions = page.TextElementMap.ElementRegions;
 		final int index = elementRegions.indexOf(mySelectedRegion);
 		if (index == -1) {
 			return null;
@@ -1302,14 +1201,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return elementRegions.get(index);
 	}
 
-	public ZLTextElementRegion getSelectedRegion() {
+	public ZLTextRegion getSelectedRegion() {
 		return getCurrentElementRegion(myCurrentPage);
 	}
 
-	protected ZLTextElementRegion findRegion(int x, int y, int maxDistance, ZLTextElementRegion.Filter filter) {
-		ZLTextElementRegion bestRegion = null;
+	protected ZLTextRegion findRegion(int x, int y, int maxDistance, ZLTextRegion.Filter filter) {
+		ZLTextRegion bestRegion = null;
 		int distance = maxDistance + 1;
-		for (ZLTextElementRegion region : myCurrentPage.TextElementMap.ElementRegions) {
+		for (ZLTextRegion region : myCurrentPage.TextElementMap.ElementRegions) {
 			if (filter.accepts(region)) {
 				final int d = region.distanceTo(x, y);
 				if (d < distance) {
@@ -1321,7 +1220,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return bestRegion;
 	}
 
-	protected void selectRegion(ZLTextElementRegion region) {
+	protected void selectRegion(ZLTextRegion region) {
 		if (region == null || !region.equals(mySelectedRegion)) {
 			myHighlightSelectedRegion = true;
 		}
@@ -1333,11 +1232,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myHighlightSelectedRegion = true;
 	}
 
-	protected ZLTextElementRegion currentRegion() {
+	protected ZLTextRegion currentRegion() {
 		if (mySelectedRegion == null) {
 			return null;
 		}
-		final ArrayList<ZLTextElementRegion> elementRegions =
+		final ArrayList<ZLTextRegion> elementRegions =
 			myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
 			return null;
@@ -1346,8 +1245,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return index >= 0 ? elementRegions.get(index) : null;
 	}
 
-	protected ZLTextElementRegion nextRegion(Direction direction, ZLTextElementRegion.Filter filter) {
-		final ArrayList<ZLTextElementRegion> elementRegions =
+	protected ZLTextRegion nextRegion(Direction direction, ZLTextRegion.Filter filter) {
+		final ArrayList<ZLTextRegion> elementRegions =
 			myCurrentPage.TextElementMap.ElementRegions;
 		if (elementRegions.isEmpty()) {
 			return null;
@@ -1380,7 +1279,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		switch (direction) {
 			case rightToLeft:
 				for (; index >= 0; --index) {
-					final ZLTextElementRegion candidate = elementRegions.get(index);
+					final ZLTextRegion candidate = elementRegions.get(index);
 					if (filter.accepts(candidate) && candidate.isAtLeftOf(mySelectedRegion)) {
 						return candidate;
 					}
@@ -1388,7 +1287,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				break;
 			case leftToRight:
 				for (; index < elementRegions.size(); ++index) {
-					final ZLTextElementRegion candidate = elementRegions.get(index);
+					final ZLTextRegion candidate = elementRegions.get(index);
 					if (filter.accepts(candidate) && candidate.isAtRightOf(mySelectedRegion)) {
 						return candidate;
 					}
@@ -1396,9 +1295,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				break;
 			case down:
 			{
-				ZLTextElementRegion firstCandidate = null;
+				ZLTextRegion firstCandidate = null;
 				for (; index < elementRegions.size(); ++index) {
-					final ZLTextElementRegion candidate = elementRegions.get(index);
+					final ZLTextRegion candidate = elementRegions.get(index);
 					if (!filter.accepts(candidate)) {
 						continue;
 					}
@@ -1415,9 +1314,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				break;
 			}
 			case up:
-				ZLTextElementRegion firstCandidate = null;
+				ZLTextRegion firstCandidate = null;
 				for (; index >= 0; --index) {
-					final ZLTextElementRegion candidate = elementRegions.get(index);
+					final ZLTextRegion candidate = elementRegions.get(index);
 					if (!filter.accepts(candidate)) {
 						continue;
 					}

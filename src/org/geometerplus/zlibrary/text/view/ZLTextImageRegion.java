@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.List;
 
-public class ZLTextImageRegion extends ZLTextElementRegion {
+public class ZLTextImageRegion extends ZLTextRegion {
 	public final ZLTextImageElement ImageElement;
 
 	ZLTextImageRegion(ZLTextImageElement imageElement, List<ZLTextElementArea> list, int fromIndex) {
@@ -29,6 +29,7 @@ public class ZLTextImageRegion extends ZLTextElementRegion {
 		ImageElement = imageElement;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof ZLTextImageRegion)) {
 			return false;

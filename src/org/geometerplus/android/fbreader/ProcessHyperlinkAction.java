@@ -51,7 +51,7 @@ class ProcessHyperlinkAction extends FBAction {
 	}
 
 	public void run() {
-		final ZLTextElementRegion region = Reader.getTextView().getSelectedRegion();
+		final ZLTextRegion region = Reader.getTextView().getSelectedRegion();
 		if (region instanceof ZLTextHyperlinkRegion) {
 			Reader.getTextView().hideSelectedRegionBorder();
 			Reader.getViewWidget().repaint();

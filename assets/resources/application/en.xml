@@ -267,6 +267,10 @@
 					<node name="summaryOn" value="Show status bar when menu becomes active"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
 				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)"/>
+					<node name="summaryOff" value="Don't try to disable button lights"/>
+				</node>
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Font, hyphenations, etc."/>
@@ -428,6 +432,7 @@
 				</node>
 				<node name="backgroundColor" value="Background color"/>
 				<node name="selectionBackground" value="Selection background"/>
+				<node name="selectionForeground" value="Selected text"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text"/>

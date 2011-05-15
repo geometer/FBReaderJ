@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.text.view;
 
 import java.util.List;
 
-public class ZLTextHyperlinkRegion extends ZLTextElementRegion {
+public class ZLTextHyperlinkRegion extends ZLTextRegion {
 	public final ZLTextHyperlink Hyperlink;
 
 	ZLTextHyperlinkRegion(ZLTextHyperlink hyperlink, List<ZLTextElementArea> list, int fromIndex) {
@@ -29,6 +29,7 @@ public class ZLTextHyperlinkRegion extends ZLTextElementRegion {
 		Hyperlink = hyperlink;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof ZLTextHyperlinkRegion)) {
 			return false;

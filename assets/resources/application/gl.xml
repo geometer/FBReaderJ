@@ -264,6 +264,10 @@
 					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
 				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="text" value="Texto">
 				<node name="summary" value="Tipo de letra, guionizado, etc."/>
@@ -425,6 +429,7 @@
 				</node>
 				<node name="backgroundColor" value="Cor de fondo"/>
 				<node name="selectionBackground" value="Selección de fondo"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Texto normal"/>
 				<node name="hyperlink" value="Texto de ligazón"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>

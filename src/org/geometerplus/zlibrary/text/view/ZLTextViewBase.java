@@ -53,6 +53,7 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLFile getWallpaperFile();
 	public abstract ZLColor getBackgroundColor();
 	public abstract ZLColor getSelectedBackgroundColor();
+	public abstract ZLColor getSelectedForegroundColor();
 	public abstract ZLColor getTextColor(ZLTextHyperlink hyperlink);
 	public abstract ZLColor getHighlightingColor();
 

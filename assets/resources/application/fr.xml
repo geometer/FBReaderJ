@@ -267,6 +267,10 @@
 					<node name="summaryOn" value="Afficher la barre  de statut lorsque le menu devient actif"/>
 					<node name="summaryOff" value="Cacher la barre de statut lorsque le menu devient actif"/>
 				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="text" value="Texte">
 				<node name="summary" value="Polices, césures, etc."/>
@@ -428,6 +432,7 @@
 				</node>
 				<node name="backgroundColor" value="Couleur de fond"/>
 				<node name="selectionBackground" value="Arrière-plan de sélection"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Texte normal"/>
 				<node name="hyperlink" value="Text d'hyperlien"/>
 				<node name="hyperlinkVisited" value="Lien hypertexte visité"/>

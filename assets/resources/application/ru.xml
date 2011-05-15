@@ -263,6 +263,10 @@
 					<node name="summaryOn" value="Показывать строку состояния, когда меню появляется на экране"/>
 					<node name="summaryOff" value="Не показывать строку состояния, когда меню появляется на экране"/>
 				</node>
+				<node name="disableButtonLights" value="Выключать подсветку кнопок во время чтения">
+					<node name="summaryOn" value="Выключать подсветку (работает не на всех устройствах)"/>
+					<node name="summaryOff" value="Не пытаться выключать подсветку"/>
+				</node>
 			</node>
 			<node name="text" value="Текст">
 				<node name="summary" value="Шрифты, переносы, и т.д."/>
@@ -424,6 +428,7 @@
 				</node>
 				<node name="backgroundColor" value="Цвет фона"/>
 				<node name="selectionBackground" value="Фон пометки"/>
+				<node name="selectionForeground" value="Текст пометки"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
 				<node name="hyperlinkVisited" value="Посещенная ссылка"/>

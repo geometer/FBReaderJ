@@ -75,7 +75,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
+		final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.getViewWidget().reset();
@@ -191,7 +191,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
+		final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.AnyRegionFilter);
 		boolean doSelectRegion = false;
 		if (region instanceof ZLTextWordRegion) {
 			doSelectRegion =
@@ -220,12 +220,12 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion selectedRegion = getSelectedRegion();
+		final ZLTextRegion selectedRegion = getSelectedRegion();
 		if (selectedRegion instanceof ZLTextHyperlinkRegion ||
 			selectedRegion instanceof ZLTextWordRegion) {
 			if (myReader.DictionaryTappingActionOption.getValue() !=
 				FBReaderApp.DictionaryTappingAction.doNothing) {
-				final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
+				final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.AnyRegionFilter);
 				if (region instanceof ZLTextHyperlinkRegion || region instanceof ZLTextWordRegion) {
 					selectRegion(region);
 					myReader.getViewWidget().reset();
@@ -242,7 +242,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		boolean doRunAction = false;
-		final ZLTextElementRegion region = getSelectedRegion();
+		final ZLTextRegion region = getSelectedRegion();
 		if (region instanceof ZLTextWordRegion) {
 			doRunAction =
 				myReader.DictionaryTappingActionOption.getValue() ==
@@ -270,10 +270,10 @@ public final class FBView extends ZLTextView {
 			(diffY > 0 ? Direction.down : Direction.up) :
 			(diffX > 0 ? Direction.leftToRight : Direction.rightToLeft);
 
-		ZLTextElementRegion region = currentRegion();
-		final ZLTextElementRegion.Filter filter =
+		ZLTextRegion region = currentRegion();
+		final ZLTextRegion.Filter filter =
 			region instanceof ZLTextWordRegion || myReader.NavigateAllWordsOption.getValue()
-				? ZLTextElementRegion.AnyRegionFilter : ZLTextElementRegion.ImageOrHyperlinkFilter;
+				? ZLTextRegion.AnyRegionFilter : ZLTextRegion.ImageOrHyperlinkFilter;
 		region = nextRegion(direction, filter);
 		if (region != null) {
 			selectRegion(region);
@@ -333,6 +333,11 @@ public final class FBView extends ZLTextView {
 	@Override
 	public ZLColor getSelectedBackgroundColor() {
 		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
+	}
+
+	@Override
+	public ZLColor getSelectedForegroundColor() {
+		return myReader.getColorProfile().SelectionForegroundOption.getValue();
 	}
 
 	@Override

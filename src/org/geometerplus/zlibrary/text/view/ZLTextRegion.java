@@ -23,25 +23,25 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-public abstract class ZLTextElementRegion {
+public abstract class ZLTextRegion {
 	public static interface Filter {
-		boolean accepts(ZLTextElementRegion region);
+		boolean accepts(ZLTextRegion region);
 	}
 
 	public static Filter AnyRegionFilter = new Filter() {
-		public boolean accepts(ZLTextElementRegion region) {
+		public boolean accepts(ZLTextRegion region) {
 			return true;
 		}
 	};
 
 	public static Filter HyperlinkFilter = new Filter() {
-		public boolean accepts(ZLTextElementRegion region) {
+		public boolean accepts(ZLTextRegion region) {
 			return region instanceof ZLTextHyperlinkRegion;
 		}
 	};
 
 	public static Filter ImageOrHyperlinkFilter = new Filter() {
-		public boolean accepts(ZLTextElementRegion region) {
+		public boolean accepts(ZLTextRegion region) {
 			return
 				region instanceof ZLTextImageRegion ||
 				region instanceof ZLTextHyperlinkRegion;
@@ -53,7 +53,7 @@ public abstract class ZLTextElementRegion {
 	private int myToIndex;
 	private ZLTextHorizontalConvexHull myHull;
 
-	ZLTextElementRegion(List<ZLTextElementArea> list, int fromIndex) {
+	ZLTextRegion(List<ZLTextElementArea> list, int fromIndex) {
 		myList = list;
 		myFromIndex = fromIndex;
 		myToIndex = fromIndex + 1;
@@ -90,27 +90,27 @@ public abstract class ZLTextElementRegion {
 		return convexHull().distanceTo(x, y);
 	}
 
-	boolean isAtRightOf(ZLTextElementRegion other) {
+	boolean isAtRightOf(ZLTextRegion other) {
 		return
 			other == null ||
 			myList.get(myFromIndex).XStart >= other.myList.get(other.myToIndex - 1).XEnd;
 	}
 
-	boolean isAtLeftOf(ZLTextElementRegion other) {
+	boolean isAtLeftOf(ZLTextRegion other) {
 		return other == null || other.isAtRightOf(this);
 	}
 
-	boolean isUnder(ZLTextElementRegion other) {
+	boolean isUnder(ZLTextRegion other) {
 		return
 			other == null ||
 			myList.get(myFromIndex).YStart >= other.myList.get(other.myToIndex - 1).YEnd;
 	}
 
-	boolean isOver(ZLTextElementRegion other) {
+	boolean isOver(ZLTextRegion other) {
 		return other == null || other.isUnder(this);
 	}
 
-	boolean isExactlyUnder(ZLTextElementRegion other) {
+	boolean isExactlyUnder(ZLTextRegion other) {
 		if (other == null) {
 			return true;
 		}
@@ -129,7 +129,10 @@ public abstract class ZLTextElementRegion {
 		return false;
 	}
 
-	boolean isExactlyOver(ZLTextElementRegion other) {
+	boolean isExactlyOver(ZLTextRegion other) {
 		return other == null || other.isExactlyUnder(this);
 	}
+
+	@Override
+	public abstract boolean equals(Object other);
 }

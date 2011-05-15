@@ -264,6 +264,10 @@
 					<node name="summaryOn" value="แสดงแถบสถานะเมื่อแสดงเมนู" />
 					<node name="summaryOff" value="ไม่แสดงแถบสถานะเมื่อแสดงเมนู" />
 				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
 			</node>
 			<node name="text" value="ข้อความ">
 				<node name="summary" value="ตัวอักษร, ยัติภังค์, อื่นๆ"/>
@@ -425,6 +429,7 @@
 				</node>
 				<node name="backgroundColor" value="สีพื้นหลัง"/>
 				<node name="selectionBackground" value="พื้นหลังที่เลือก"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="ข้อความ"/>
 				<node name="hyperlink" value="ลิ้งค์ข้อความ"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
