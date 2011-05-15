@@ -20,7 +20,7 @@ public class SelectionCopyAction extends SelectionProcessAction {
 			(ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
 		clipboard.setText(text);
 		Toast.makeText(myActivity,
-				ZLResource.resource("menu").getResource("selection").getResource("textInBuffer").getValue() + "\n" + clipboard.getText(),
+				ZLResource.resource("selection").getResource("textInBuffer").getValue() + "\n" + clipboard.getText(),
 				Toast.LENGTH_SHORT).show();
 	}
 }

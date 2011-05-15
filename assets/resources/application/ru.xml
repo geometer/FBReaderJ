@@ -207,8 +207,6 @@
 			<node name="redo" value="Вперед"/>
 		</node>
 		<node name="selection" value="Пометка">
-			<node name="quickHelp" value="Выделите текст"/>
-			<node name="textInBuffer" value="Текст в буфере:"/>
 			<node name="copyToClipboard" value="Скопировать в буфер"/>
 			<node name="openInDictionary" value="Посмотреть в словаре"/>
 			<node name="clearSelection" value="Убрать пометку"/>
