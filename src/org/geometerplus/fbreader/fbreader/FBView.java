@@ -611,8 +611,9 @@ public final class FBView extends ZLTextView {
 	}
 
 	public void deactivateSelectionMode() {
-		if (!isSelectionModeActive())
+		if (!isSelectionModeActive()) {
 			return;
+		}
 		clearSelection();
 		myIsSelectionModeActive = false;
 		myHasSelectionExpanded = false;

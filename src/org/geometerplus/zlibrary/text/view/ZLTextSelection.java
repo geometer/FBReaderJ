@@ -24,15 +24,14 @@ public class ZLTextSelection {
 	}
 
 	public boolean isEmpty() {
-		return myBounds[0].isGreaterThan(myBounds[1]);
+		return myBounds[0].compareTo(myBounds[1]) > 0;
 	}
 
 	public boolean isEmptyOnPage(ZLTextPage page) {
 		return getStartAreaID(page) == -1;
 	}
 
-	public boolean clear() // returns if it was filled before.
-	{
+	public boolean clear() { // returns if it was filled before.
 		boolean res = !isEmpty();
 		myBounds[0].clear();
 		myBounds[1].clear();
@@ -119,39 +118,35 @@ public class ZLTextSelection {
 	}
 
 	public int getStartParagraphID () {
-		return myBounds[0].getParagraphID();
+		return myBounds[0].getParagraphIndex();
 	}
 
 	public int getEndParagraphID () {
-		return myBounds[1].getParagraphID();
+		return myBounds[1].getParagraphIndex();
 	}
 
 	public int getStartElementID () {
-		return myBounds[0].getElementID();
+		return myBounds[0].getElementIndex();
 	}
 
 	public int getEndElementID () {
-		return myBounds[1].getElementID();
+		return myBounds[1].getElementIndex();
 	}
 
 	private boolean areaWithinSelection(ZLTextElementArea area) {
-		return myBounds[0].myTextBound.isAreaWithin(area)
-		 		&& myBounds[1].myTextBound.isAreaWithin(area);
+		return myBounds[0].isAreaWithin(area) && myBounds[1].isAreaWithin(area);
 	}
 
 	public boolean areaWithinStartBound(ZLTextElementArea area) {
-		return !myBounds[1].myTextBound.isExpandedBy(area) 
-				&& myBounds[0].myTextBound.isAreaWithin(area);
+		return !myBounds[1].isExpandedBy(area) && myBounds[0].isAreaWithin(area);
 	}
 
 	public boolean areaWithinEndBound(ZLTextElementArea area) {
-		return !myBounds[0].myTextBound.isExpandedBy(area) 
-				&& myBounds[1].myTextBound.isAreaWithin(area);
+		return !myBounds[0].isExpandedBy(area) && myBounds[1].isAreaWithin(area);
 	}
 
 	public boolean isAreaSelected(ZLTextElementArea area) {
-		return !myBounds[0].myTextBound.isExpandedBy(area) 
-				&& !myBounds[1].myTextBound.isExpandedBy(area);
+		return !myBounds[0].isExpandedBy(area) && !myBounds[1].isExpandedBy(area);
 	}
 
 	public int getStartAreaID(ZLTextPage page) {
@@ -215,99 +210,52 @@ public class ZLTextSelection {
 		return myView.findRegion(x, y, Integer.MAX_VALUE - 1, ZLTextRegion.AnyRegionFilter);
 	}
 
-	private abstract class TextBound {
-		public int myParagraphID, myElementID;
+	private abstract class Bound extends ZLTextPosition {
+		protected ZLTextElementArea myArea;
+		protected int myParagraphID, myElementID;
 
-		protected void set(ZLTextElementArea area) {
-			myParagraphID = area.ParagraphIndex;
-			myElementID = area.ElementIndex;
+		@Override
+		public int getParagraphIndex() {
+			return myParagraphID;
 		}
-		protected boolean isGreaterThan(int paragraphID, int elementID) {
-			return myParagraphID > paragraphID || (myParagraphID == paragraphID && myElementID > elementID);
+
+		@Override
+		public int getElementIndex() {
+			return myElementID;
 		}
-		protected boolean isGreaterThan(TextBound bound) {
-			return isGreaterThan(bound.myParagraphID, bound.myElementID);
+
+		@Override
+		public int getCharIndex() {
+			return 0;
+		}
+
+		protected void set(ZLTextRegion region) {
+			myArea = getArea(region);
+			myParagraphID = myArea.ParagraphIndex;
+			myElementID = myArea.ElementIndex;
+		}
+
+		protected boolean isLessThan(ZLTextElementArea area) {
+			return
+				myParagraphID < area.ParagraphIndex ||
+				(myParagraphID == area.ParagraphIndex && myElementID < area.ElementIndex);
+		}
+
+		protected boolean isGreaterThan(ZLTextElementArea area) {
+			return
+				myParagraphID > area.ParagraphIndex ||
+				(myParagraphID == area.ParagraphIndex && myElementID > area.ElementIndex);
 		}
 
 		protected boolean equalsTo(ZLTextElementArea area) {
 			return myParagraphID  == area.ParagraphIndex && myElementID == area.ElementIndex;
 		}
-		protected boolean isGreaterThan(ZLTextElementArea area) {
-			return isGreaterThan(area.ParagraphIndex, area.ElementIndex);
-		}
-		protected boolean isLessThan(ZLTextElementArea area) {
-			return myParagraphID < area.ParagraphIndex || (myParagraphID == area.ParagraphIndex && myElementID < area.ElementIndex);
-		}
-
-		protected abstract boolean isExpandedBy(ZLTextElementArea area);
-		
-		protected abstract boolean isAreaWithin(ZLTextElementArea area);
-
-		protected abstract void clear();
-
-	}
-
-	private class StartTextBound extends TextBound {
-		@Override
-		protected void clear() {
-			myParagraphID = Integer.MAX_VALUE;
-		}
-		@Override
-		protected boolean isExpandedBy(ZLTextElementArea area) {
-			return isGreaterThan(area);
-		}
-		@Override
-		protected boolean isAreaWithin(ZLTextElementArea area) {
-			return isLessThan(area);
-		}
-	}
-
-	private class EndTextBound extends TextBound {
-		@Override
-		protected void clear() {
-			myParagraphID = -1;
-		}
-		@Override
-		protected boolean isExpandedBy(ZLTextElementArea area) {
-			return isLessThan(area);
-		}
-		@Override
-		protected boolean isAreaWithin(ZLTextElementArea area) {
-			return isGreaterThan(area);
-		}
-	}
-
-	private abstract class Bound {
-		protected ZLTextElementArea myArea;
-		protected TextBound myTextBound;
-
-		protected int getParagraphID() {
-			return myTextBound.myParagraphID;
-		}
-
-		protected int getElementID() {
-			return myTextBound.myElementID;
-		}
-
-		protected void set(ZLTextRegion region) {
-			myArea = getArea(region);
-			myTextBound.set(getArea(region));
-		}
-
-		protected void clear() {
-			myTextBound.clear();
-		}
-
-		protected boolean isGreaterThan(Bound bound) {
-			return myTextBound.isGreaterThan(bound.myTextBound);
-		}
-
 		protected boolean equalsTo(ZLTextRegion region) {
-			return myTextBound.equalsTo(getArea(region));
+			return equalsTo(getArea(region));
 		}
 
 		protected boolean isExpandedBy(ZLTextRegion region) {
-			return myTextBound.isExpandedBy(getArea(region));
+			return isExpandedBy(getArea(region));
 		}
 
 		protected boolean expandBy(ZLTextRegion region) {
@@ -318,33 +266,66 @@ public class ZLTextSelection {
 			return false;
 		}
 
+		protected abstract void clear();
 		protected abstract ZLTextElementArea getArea(ZLTextRegion region);
 		protected abstract boolean isYOutOfPage(int y);
+		protected abstract boolean isExpandedBy(ZLTextElementArea area);
+		protected abstract boolean isAreaWithin(ZLTextElementArea area);
 	}
 
 	private class StartBound extends Bound {
-		private StartBound() {
-			myTextBound = new StartTextBound();
-		}
+		@Override
 		protected ZLTextElementArea getArea(ZLTextRegion region) {
 			return getTextElementMap().get(region.getFromIndex());
 		}
+
+		@Override
 		protected boolean isYOutOfPage(int y) {
 			final ZLTextElementArea startPageArea = getTextElementMap().get(0);
 			return (startPageArea.YStart + startPageArea.YEnd) / 2 > y;
 		}
+
+		@Override
+		protected boolean isExpandedBy(ZLTextElementArea area) {
+			return isGreaterThan(area);
+		}
+
+		@Override
+		protected boolean isAreaWithin(ZLTextElementArea area) {
+			return isLessThan(area);
+		}
+
+		@Override
+		protected void clear() {
+			myParagraphID = Integer.MAX_VALUE;
+		}
 	}
 
 	private class EndBound extends Bound {
-		private EndBound() {
-			myTextBound = new EndTextBound();
-		}
+		@Override
 		protected ZLTextElementArea getArea(ZLTextRegion region) {
 			return getTextElementMap().get(region.getToIndex() - 1);
 		}
+
+		@Override
 		protected boolean isYOutOfPage(int y) {
 			final ZLTextElementArea endPageArea = getTextElementMap().get(getTextElementMap().size() - 1);
 			return (endPageArea.YStart + endPageArea.YEnd) / 2 < y;
+		}
+
+		@Override
+		protected boolean isExpandedBy(ZLTextElementArea area) {
+			return isLessThan(area);
+		}
+
+		@Override
+		protected boolean isAreaWithin(ZLTextElementArea area) {
+			return isGreaterThan(area);
+		}
+
+		@Override
+		protected void clear() {
+			myParagraphID = -1;
 		}
 	}
 	

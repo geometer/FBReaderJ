@@ -543,17 +543,17 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final ZLTextElementArea endArea = page.TextElementMap.get(endAreaID);
 				final int top = y + 1;
 				int left, right, bottom = y + info.Height + info.Descent;
-				if (mySelection.areaWithinStartBound(startArea))
+				if (mySelection.areaWithinStartBound(startArea)) {
 					left = getLeftMargin();
-				else 
+				} else {
 					left = startArea.XStart;
-				if (mySelection.areaWithinEndBound(endArea))
-				{
+				}
+				if (mySelection.areaWithinEndBound(endArea)) {
 					right = getRightLine();
 					bottom += info.VSpaceAfter;
-				}
-				else
+				} else {
 					right = endArea.XEnd;
+				}
 				context.setFillColor(getSelectedBackgroundColor());
 				context.fillRectangle(left, top, right, bottom);
 			}
