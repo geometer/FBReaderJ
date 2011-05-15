@@ -1168,32 +1168,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return start;
 	}
 
-	/*
-	protected List<ZLTextElementArea> allElements() {
-		return myCurrentPage.TextElementMap;
-	}
-	*/
-
 	protected ZLTextElementArea getElementByCoordinates(int x, int y) {
 		return myCurrentPage.TextElementMap.binarySearch(x, y);
 	}
-
-	/*private static int lowerBound(int[] array, int value) {
-		int leftIndex = 0;
-		int rightIndex = array.length - 1;
-		if (array[rightIndex] <= value) {
-			return rightIndex;
-		}
-		while (leftIndex < rightIndex - 1) {
-			int middleIndex = (leftIndex + rightIndex) / 2;
-			if (array[middleIndex] <= value) {
-				leftIndex = middleIndex;
-			} else {
-				rightIndex = middleIndex;
-			}
-		}
-		return leftIndex;
-	}*/
 
 	@Override
 	public boolean onFingerMove(int x, int y) {
