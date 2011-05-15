@@ -86,8 +86,8 @@ public class ZLTextSelection {
 		myIsTextValid = false;
 		return true;
 	}
-	private void prepareParagraphText(int paragraphID)
-	{
+
+	private void prepareParagraphText(int paragraphID) {
 		final ZLTextParagraphCursor paragraph = ZLTextParagraphCursor.cursor(myView.getModel(), paragraphID);
 		final int startElementID = getStartParagraphID() == paragraphID ? getStartElementID() : 0;
 		final boolean isLastSelectedParagraph = getEndParagraphID() == paragraphID; 
@@ -105,72 +105,87 @@ public class ZLTextSelection {
 		if (!isLastSelectedParagraph)
 			myText.append("\n");
 	}
+
 	public String getText() {
-		if (myIsTextValid)
-			return myText.toString();
+		if (!myIsTextValid) {
+			myText.delete(0, myText.length());
 
-		myText.delete(0, myText.length());
-
-		for (int paragraphID = getStartParagraphID(); paragraphID <= getEndParagraphID(); paragraphID++)
-			prepareParagraphText(paragraphID);
-
-		myIsTextValid = true;
+			for (int i = getStartParagraphID(); i <= getEndParagraphID(); ++i) {
+				prepareParagraphText(i);
+			}
+			myIsTextValid = true;
+		}
 		return myText.toString();
 	}
 
 	public int getStartParagraphID () {
 		return myBounds[0].getParagraphID();
 	}
+
 	public int getEndParagraphID () {
 		return myBounds[1].getParagraphID();
 	}
+
 	public int getStartElementID () {
 		return myBounds[0].getElementID();
 	}
+
 	public int getEndElementID () {
 		return myBounds[1].getElementID();
 	}
+
 	private boolean areaWithinSelection(ZLTextElementArea area) {
 		return myBounds[0].myTextBound.isAreaWithin(area)
 		 		&& myBounds[1].myTextBound.isAreaWithin(area);
 	}
+
 	public boolean areaWithinStartBound(ZLTextElementArea area) {
 		return !myBounds[1].myTextBound.isExpandedBy(area) 
 				&& myBounds[0].myTextBound.isAreaWithin(area);
 	}
+
 	public boolean areaWithinEndBound(ZLTextElementArea area) {
 		return !myBounds[0].myTextBound.isExpandedBy(area) 
 				&& myBounds[1].myTextBound.isAreaWithin(area);
 	}
+
 	public boolean isAreaSelected(ZLTextElementArea area) {
 		return !myBounds[0].myTextBound.isExpandedBy(area) 
 				&& !myBounds[1].myTextBound.isExpandedBy(area);
 	}
+
 	public int getStartAreaID(ZLTextPage page) {
 		final int id = page.TextElementMap.indexOf(myBounds[0].myArea);
 		if (id == -1) {
-			if (areaWithinSelection(page.TextElementMap.get(0)))
+			if (areaWithinSelection(page.TextElementMap.get(0))) {
 				return 0;
+			}
 		}
 		return id;
 	}
+
 	public int getEndAreaID(ZLTextPage page) {
 		final int id = page.TextElementMap.indexOf(myBounds[1].myArea); 
 		if (id == -1) {
 			final int lastID = page.TextElementMap.size() - 1;
-			if (areaWithinSelection(page.TextElementMap.get(lastID)))
+			if (areaWithinSelection(page.TextElementMap.get(lastID))) {
 				return lastID;
+			}
 		}
 		return id;
 	}
+
 	private ZLTextElementArea getArea(int areaID) {
-		if (areaID != -1)
+		if (areaID != -1) {
 			return getTextElementMap().get(areaID);
+		}
 		return null;
 	}
+
 	private ZLTextElementArea getStartArea() {
 		return getArea(getStartAreaID(myView.myCurrentPage));
 	}
+
 	private ZLTextElementArea getEndArea() {
 		return getArea(getEndAreaID(myView.myCurrentPage));
 	}
@@ -266,7 +281,6 @@ public class ZLTextSelection {
 		protected ZLTextElementArea myArea;
 		protected TextBound myTextBound;
 
-
 		protected int getParagraphID() {
 			return myTextBound.myParagraphID;
 		}
@@ -279,6 +293,7 @@ public class ZLTextSelection {
 			myArea = getArea(region);
 			myTextBound.set(getArea(region));
 		}
+
 		protected void clear() {
 			myTextBound.clear();
 		}
@@ -290,13 +305,13 @@ public class ZLTextSelection {
 		protected boolean equalsTo(ZLTextRegion region) {
 			return myTextBound.equalsTo(getArea(region));
 		}
+
 		protected boolean isExpandedBy(ZLTextRegion region) {
 			return myTextBound.isExpandedBy(getArea(region));
 		}
-		protected boolean expandBy(ZLTextRegion region)
-		{
-			if (isExpandedBy(region))
-			{
+
+		protected boolean expandBy(ZLTextRegion region) {
+			if (isExpandedBy(region)) {
 				set(region);
 				return true;
 			}
