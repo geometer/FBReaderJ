@@ -1298,12 +1298,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return mySelection.getEndY();
 	}
 	
-	public int getSelectionStartParagraphID() {
-		return mySelection.getStartParagraphID();
-	}
-	
-	public int getSelectionStartElementID() {
-		return mySelection.getStartElementID();
+	public ZLTextPosition getSelectionStartPosition() {
+		return mySelection.getStartPosition();
 	}
 
 	public boolean isSelectionEmpty() {

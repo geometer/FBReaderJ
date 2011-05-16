@@ -90,7 +90,7 @@ public class ZLTextSelection {
 
 	private void prepareParagraphText(int paragraphID) {
 		final ZLTextParagraphCursor paragraph = ZLTextParagraphCursor.cursor(myView.getModel(), paragraphID);
-		final int startElementID = getStartParagraphID() == paragraphID ? getStartElementID() : 0;
+		final int startElementID = myBounds[0].getParagraphIndex() == paragraphID ? myBounds[0].getElementIndex() : 0;
 		final boolean isLastSelectedParagraph = getEndParagraphID() == paragraphID; 
 		final int endElementID = isLastSelectedParagraph ? getEndElementID() : paragraph.getParagraphLength() - 1;
 
@@ -111,7 +111,7 @@ public class ZLTextSelection {
 		if (!myIsTextValid) {
 			myText.delete(0, myText.length());
 
-			for (int i = getStartParagraphID(); i <= getEndParagraphID(); ++i) {
+			for (int i = myBounds[0].getParagraphIndex(); i <= myBounds[1].getParagraphIndex(); ++i) {
 				prepareParagraphText(i);
 			}
 			myIsTextValid = true;
@@ -119,16 +119,12 @@ public class ZLTextSelection {
 		return myText.toString();
 	}
 
-	public int getStartParagraphID () {
-		return myBounds[0].getParagraphIndex();
-	}
-
-	public int getEndParagraphID () {
+	public int getEndParagraphID() {
 		return myBounds[1].getParagraphIndex();
 	}
 
-	public int getStartElementID () {
-		return myBounds[0].getElementIndex();
+	public ZLTextPosition getStartPosition() {
+		return myBounds[0];
 	}
 
 	public int getEndElementID () {

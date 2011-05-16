@@ -16,10 +16,9 @@ public class SelectionBookmarkAction extends FBAction {
 		new Bookmark(
 			Reader.Model.Book,
 			fbview.getModel().getId(),
+			fbview.getSelectionStartPosition(), 
 			fbview.getSelectedText(), 
-			fbview.getSelectionStartParagraphID(), 
-			fbview.getSelectionStartElementID(),
-			0
+			true
 		).save();
 	}
 }
