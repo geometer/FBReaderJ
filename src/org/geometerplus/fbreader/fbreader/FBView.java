@@ -542,11 +542,6 @@ public final class FBView extends ZLTextView {
 		return myFooter;
 	}
 
-	@Override
-	protected boolean isSelectionEnabled() {
-		return myReader.SelectionEnabledOption.getValue();
-	}
-
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
 
 	@Override

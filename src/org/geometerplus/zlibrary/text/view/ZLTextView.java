@@ -1182,8 +1182,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return false;
 	}
 
-	protected abstract boolean isSelectionEnabled();
-
 	private ZLTextRegion mySelectedRegion;
 	private boolean myHighlightSelectedRegion = true;
 
