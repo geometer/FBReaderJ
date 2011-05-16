@@ -581,16 +581,10 @@ public final class FBView extends ZLTextView {
 		return myFooter;
 	}
 
-	@Override
-	protected boolean isSelectionEnabled() {
-		return myReader.SelectionEnabledOption.getValue();
-	}
-
 	private boolean myIsSelectionModeActive;
 	private boolean myHasSelectionExpanded;
 	private boolean myIsNowSelecting;
 
-	@Override
 	public boolean isSelectionModeActive() {
 		return myIsSelectionModeActive;
 	}

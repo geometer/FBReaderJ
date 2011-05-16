@@ -88,9 +88,6 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLStringOption FooterFontOption =
 		new ZLStringOption("Options", "FooterFont", "Droid Sans");
 
-	final ZLBooleanOption SelectionEnabledOption =
-		new ZLBooleanOption("Options", "IsSelectionEnabled", true);
-
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 

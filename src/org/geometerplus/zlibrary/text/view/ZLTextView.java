@@ -1255,10 +1255,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		mySelectedRegion = region;
 	}
 
-	protected abstract boolean isSelectionEnabled();
-
-	protected abstract boolean isSelectionModeActive();
-
 	protected abstract void onSelectingStarted();
 	
 	protected void onSelectingEnded() {
