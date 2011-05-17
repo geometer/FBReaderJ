@@ -28,7 +28,7 @@
 #include <ZLTextParagraph.h>
 #include <ZLTextKind.h>
 #include <ZLTextMark.h>
-#include <ZLTextRowMemoryAllocator.h>
+#include <ZLCachedMemoryAllocator.h>
 
 class ZLTextParagraph;
 class ZLTextTreeParagraph;
@@ -42,7 +42,8 @@ public:
 	};
 
 protected:
-	ZLTextModel(const std::string &language, const size_t rowSize);
+	ZLTextModel(const std::string &language, const size_t rowSize,
+			const std::string &directoryName, const std::string &fileExtension);
 
 public:
 	virtual ~ZLTextModel();
@@ -74,6 +75,8 @@ public:
 	void addFixedHSpace(unsigned char length);
 	void addBidiReset();
 
+	void flush();
+
 protected:
 	void addParagraphInternal(ZLTextParagraph *paragraph);
 
@@ -83,7 +86,7 @@ private:
 	const std::string myLanguage;
 	std::vector<ZLTextParagraph*> myParagraphs;
 	mutable std::vector<ZLTextMark> myMarks;
-	mutable ZLTextRowMemoryAllocator myAllocator;
+	mutable ZLCachedMemoryAllocator myAllocator;
 
 	char *myLastEntryStart;
 
@@ -95,7 +98,8 @@ private:
 class ZLTextPlainModel : public ZLTextModel {
 
 public:
-	ZLTextPlainModel(const std::string &language, const size_t rowSize);
+	ZLTextPlainModel(const std::string &language, const size_t rowSize,
+			const std::string &directoryName, const std::string &fileExtension);
 	Kind kind() const;
 	void createParagraph(ZLTextParagraph::Kind kind);
 };
@@ -103,7 +107,8 @@ public:
 class ZLTextTreeModel : public ZLTextModel {
 
 public:
-	ZLTextTreeModel(const std::string &language);
+	ZLTextTreeModel(const std::string &language,
+			const std::string &directoryName, const std::string &fileExtension);
 	~ZLTextTreeModel();
 	Kind kind() const;
 

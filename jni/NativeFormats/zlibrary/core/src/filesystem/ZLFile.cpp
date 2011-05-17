@@ -24,7 +24,7 @@
 
 #include "ZLFile.h"
 #include "ZLFSDir.h"
-//#include "ZLOutputStream.h"
+#include "ZLOutputStream.h"
 #include "zip/ZLZip.h"
 //#include "tar/ZLTar.h"
 //#include "bzip2/ZLBzip2InputStream.h"
@@ -127,7 +127,7 @@ shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 	return stream;
 }
 
-/*shared_ptr<ZLOutputStream> ZLFile::outputStream(bool writeThrough) const {
+shared_ptr<ZLOutputStream> ZLFile::outputStream(bool writeThrough) const {
 	if (!writeThrough && isCompressed()) {
 		return 0;
 	}
@@ -135,7 +135,7 @@ shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 		return 0;
 	}
 	return ZLFSManager::Instance().createOutputStream(myPath);
-}*/
+}
 
 shared_ptr<ZLDir> ZLFile::directory(bool createUnexisting) const {
 	if (exists()) {

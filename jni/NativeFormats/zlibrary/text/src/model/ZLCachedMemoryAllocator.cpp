@@ -21,76 +21,73 @@
 
 #include <algorithm>
 
-#include "ZLTextRowMemoryAllocator.h"
-
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <vector>
-#include <stdio.h>
+#include <ZLFile.h>
+#include <ZLDir.h>
+#include <ZLOutputStream.h>
 #include <ZLStringUtil.h>
 
+#include "ZLCachedMemoryAllocator.h"
 
-static const char dir_name[] = "/mnt/sdcard/Books/dumps";
 
-static void clean_dumps() {
-	DIR *dir = opendir(dir_name);
-	if (dir == 0) {
-		mkdir(dir_name, 0x1FF);
-		return;
-	}
 
-	std::vector<std::string> toRemove;
-	struct dirent *entry;
-	while ((entry = readdir(dir)) != 0) {
-		std::string name(entry->d_name);
-		toRemove.push_back(std::string(dir_name) + "/" + name);
-	}
-	closedir(dir);
-
-	for (size_t i = 0; i < toRemove.size(); ++i) {
-		remove(toRemove[i].c_str());
-	}
+ZLCachedMemoryAllocator::ZLCachedMemoryAllocator(const size_t rowSize,
+		const std::string &directoryName, const std::string &fileExtension) :
+	myRowSize(rowSize),
+	myCurrentRowSize(0),
+	myOffset(0),
+	myHasChanges(false),
+	myDirectoryName(directoryName + "/"),
+	myFileExtension("." + fileExtension) {
+	ZLFile(directoryName).directory(true);
 }
 
-static void dump2file(int index, const char *data, size_t len) {
-	char fileName[128];
-	sprintf(fileName, "%s/dump-%d-%d.cache", dir_name, index, len);
-	FILE *f = fopen(fileName, "wb");
-	if (f == 0) {
-		return;
-	}
-	fwrite(data, 1, len, f);
-	fclose(f);
-}
-
-
-ZLTextRowMemoryAllocator::ZLTextRowMemoryAllocator(const size_t rowSize) : myRowSize(rowSize), myCurrentRowSize(0), myOffset(0) {
-	clean_dumps();
-}
-
-ZLTextRowMemoryAllocator::~ZLTextRowMemoryAllocator() {
-
-	dump2file(myPool.size(), myPool.back(), myOffset);
-
+ZLCachedMemoryAllocator::~ZLCachedMemoryAllocator() {
+	flush();
 	for (std::vector<char*>::const_iterator it = myPool.begin(); it != myPool.end(); ++it) {
 		delete[] *it;
 	}
 }
 
-char *ZLTextRowMemoryAllocator::allocate(size_t size) {
+void ZLCachedMemoryAllocator::flush() {
+	if (!myHasChanges) {
+		return;
+	}
+	*(myPool.back() + myOffset) = 0;
+	writeCache(myOffset + 1);
+	myHasChanges = false;
+}
+
+std::string ZLCachedMemoryAllocator::makeFileName(size_t index) {
+	std::string name(myDirectoryName);
+	ZLStringUtil::appendNumber(name, index);
+	name.append(myFileExtension);
+	return name;
+}
+
+void ZLCachedMemoryAllocator::writeCache(size_t blockLength) {
+	if (myPool.size() == 0) {
+		return;
+	}
+	const size_t index = myPool.size() - 1;
+	const std::string fileName = makeFileName(index);
+	ZLFile file(fileName);
+	shared_ptr<ZLOutputStream> stream = file.outputStream();
+	stream->open();
+	stream->write(myPool[index], blockLength);
+	stream->close();
+}
+
+char *ZLCachedMemoryAllocator::allocate(size_t size) {
+	myHasChanges = true;
 	if (myPool.empty()) {
 		myCurrentRowSize = std::max(myRowSize, size + 1 + sizeof(char*));
 		myPool.push_back(new char[myCurrentRowSize]);
 	} else if (myOffset + size + 1 + sizeof(char*) > myRowSize) {
+		*(myPool.back() + myOffset) = 0;
+		writeCache(myOffset + 1);
 		myCurrentRowSize = std::max(myRowSize, size + 1 + sizeof(char*));
 		char *row = new char[myCurrentRowSize];
-		*(myPool.back() + myOffset) = 0;
 		memcpy(myPool.back() + myOffset + 1, &row, sizeof(char*));
-
-		dump2file(myPool.size(), myPool.back(), myOffset);
-
 		myPool.push_back(row);
 		myOffset = 0;
 	}
@@ -99,19 +96,18 @@ char *ZLTextRowMemoryAllocator::allocate(size_t size) {
 	return ptr;
 }
 
-char *ZLTextRowMemoryAllocator::reallocateLast(char *ptr, size_t newSize) {
+char *ZLCachedMemoryAllocator::reallocateLast(char *ptr, size_t newSize) {
+	myHasChanges = true;
 	if (ptr + newSize + 1 + sizeof(char*) <= myPool.back() + myCurrentRowSize) {
 		myOffset = ptr - myPool.back() + newSize;
 		return ptr;
 	} else {
+		*ptr = 0;
+		writeCache((ptr - myPool.back()) + 1);
 		myCurrentRowSize = std::max(myRowSize, newSize + 1 + sizeof(char*));
 		char *row = new char[myCurrentRowSize];
 		memcpy(row, ptr, myOffset - (ptr - myPool.back()));
-		*ptr = 0;
 		memcpy(ptr + 1, &row, sizeof(char*));
-
-		dump2file(myPool.size(), myPool.back(), (ptr - myPool.back()));
-
 		myPool.push_back(row);
 		myOffset = newSize;
 		return row;

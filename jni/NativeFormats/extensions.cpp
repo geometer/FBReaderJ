@@ -120,8 +120,8 @@ void extension2() {
 	AndroidLog log;
 	log.w("FBREADER", "extension 2 start");
 
-	//const char fileName[] = "/mnt/sdcard/Books/David Drake - An_Oblique_Approach.fb2";
-	const char fileName[] = "/mnt/sdcard/Books/data.fbreader.org/catalogs/prochtenie/light/P1.epub";
+	const char fileName[] = "/mnt/sdcard/Books/David Drake - An_Oblique_Approach.fb2";
+	//const char fileName[] = "/mnt/sdcard/Books/data.fbreader.org/catalogs/prochtenie/light/P1.epub";
 
 	ZLFile file(fileName);
 	log.wf("FBREADER", "extension 2: file exists: %s", (file.exists() ? "true" : "false"));
@@ -133,6 +133,7 @@ void extension2() {
 		if (!book.isNull()) {
 			shared_ptr<BookModel> model = new BookModel(book);
 			shared_ptr<ZLTextModel> textModel = model->bookTextModel();
+			textModel->flush();
 
 			log.wf("FBREADER", "extension 2: model paragraphs: %d", textModel->paragraphsNumber());
 

@@ -29,6 +29,7 @@ const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
+const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
 jmethodID AndroidUtil::MID_ZLFile_size;
@@ -54,6 +55,8 @@ jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 jmethodID AndroidUtil::MID_PluginCollection_getDefaultLanguage;
 jmethodID AndroidUtil::MID_PluginCollection_getDefaultEncoding;
 jmethodID AndroidUtil::MID_PluginCollection_isLanguageAutoDetectEnabled;
+
+jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
 
 
 void AndroidUtil::init(JavaVM* jvm) {
@@ -91,6 +94,9 @@ void AndroidUtil::init(JavaVM* jvm) {
 	MID_PluginCollection_getDefaultLanguage = env->GetMethodID(cls, "getDefaultLanguage", "()Ljava/lang/String;");
 	MID_PluginCollection_getDefaultEncoding = env->GetMethodID(cls, "getDefaultEncoding", "()Ljava/lang/String;");
 	MID_PluginCollection_isLanguageAutoDetectEnabled = env->GetMethodID(cls, "isLanguageAutoDetectEnabled", "()Z");
+
+	cls = env->FindClass(Class_Paths);
+	SMID_Paths_cacheDirectory = env->GetStaticMethodID(cls, "cacheDirectory", "()Ljava/lang/String;");
 }
 
 

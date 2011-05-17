@@ -25,10 +25,12 @@
 
 #include "../formats/FormatPlugin.h"
 #include "../library/Book.h"
+#include "../library/Library.h"
 
 BookModel::BookModel(const shared_ptr<Book> book) : myBook(book) {
-	myBookTextModel = new ZLTextPlainModel(book->language(), 65536 * 2);
-	myContentsModel = new ContentsModel(book->language());
+	const std::string cacheDirectory = Library::Instance().cacheDirectory();
+	myBookTextModel = new ZLTextPlainModel(book->language(), 65536 * 2, cacheDirectory, "ncache");
+	myContentsModel = new ContentsModel(book->language(), cacheDirectory, "ncontents");
 	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(book->file(), false);
 	if (!plugin.isNull()) {
 		plugin->readModel(*this);
@@ -51,7 +53,9 @@ BookModel::Label BookModel::label(const std::string &id) const {
 	return (it != myInternalHyperlinks.end()) ? it->second : Label(0, -1);
 }
 
-ContentsModel::ContentsModel(const std::string &language) : ZLTextTreeModel(language) {
+ContentsModel::ContentsModel(const std::string &language,
+		const std::string &directoryName, const std::string &fileExtension) :
+	ZLTextTreeModel(language, directoryName, fileExtension) {
 }
 
 void ContentsModel::setReference(const ZLTextTreeParagraph *paragraph, int reference) {

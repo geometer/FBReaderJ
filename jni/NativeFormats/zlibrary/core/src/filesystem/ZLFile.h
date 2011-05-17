@@ -28,7 +28,7 @@
 
 class ZLDir;
 class ZLInputStream;
-//class ZLOutputStream;
+class ZLOutputStream;
 
 class ZLFile {
 
@@ -82,7 +82,7 @@ public:
 	std::string resolvedPath() const;
 
 	shared_ptr<ZLInputStream> inputStream() const;
-	//shared_ptr<ZLOutputStream> outputStream(bool writeThrough = false) const;
+	shared_ptr<ZLOutputStream> outputStream(bool writeThrough = false) const;
 	shared_ptr<ZLDir> directory(bool createUnexisting = false) const;
 
 	bool operator == (const ZLFile &other) const;

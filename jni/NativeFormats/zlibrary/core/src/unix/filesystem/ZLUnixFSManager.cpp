@@ -156,9 +156,9 @@ ZLInputStream *ZLUnixFSManager::createPlainInputStream(const std::string &path) 
 	return new ZLUnixFileInputStream(path);
 }
 
-/*ZLOutputStream *ZLUnixFSManager::createOutputStream(const std::string &path) const {
+ZLOutputStream *ZLUnixFSManager::createOutputStream(const std::string &path) const {
 	return new ZLUnixFileOutputStream(path);
-}*/
+}
 
 bool ZLUnixFSManager::removeFile(const std::string &path) const {
 	return unlink(path.c_str()) == 0;

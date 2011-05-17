@@ -37,6 +37,7 @@ public:
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
+	static const char * const Class_Paths;
 
 	static jmethodID SMID_ZLFile_createFileByPath;
 	static jmethodID MID_ZLFile_size;
@@ -62,6 +63,8 @@ public:
 	static jmethodID MID_PluginCollection_getDefaultLanguage;
 	static jmethodID MID_PluginCollection_getDefaultEncoding;
 	static jmethodID MID_PluginCollection_isLanguageAutoDetectEnabled;
+
+	static jmethodID SMID_Paths_cacheDirectory;
 
 public:
 	static void init(JavaVM* jvm);

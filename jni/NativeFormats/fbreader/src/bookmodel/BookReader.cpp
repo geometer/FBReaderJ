@@ -24,6 +24,7 @@
 #include "BookModel.h"
 
 #include "../library/Book.h"
+#include "../library/Library.h"
 
 BookReader::BookReader(BookModel &model) : myModel(model) {
 	myCurrentTextModel = 0;
@@ -48,7 +49,8 @@ void BookReader::setFootnoteTextModel(const std::string &id) {
 	if (it != myModel.myFootnotes.end()) {
 		myCurrentTextModel = (*it).second;
 	} else {
-		myCurrentTextModel = new ZLTextPlainModel(myModel.myBookTextModel->language(), 8192);
+		myCurrentTextModel = new ZLTextPlainModel(myModel.myBookTextModel->language(), 8192,
+				Library::Instance().cacheDirectory(), "nfootnote_id=" + id);
 		myModel.myFootnotes.insert(std::make_pair(id, myCurrentTextModel));
 	}
 }

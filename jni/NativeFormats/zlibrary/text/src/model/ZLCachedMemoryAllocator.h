@@ -17,19 +17,25 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ZLTEXTROWMEMORYALLOCATOR_H__
-#define __ZLTEXTROWMEMORYALLOCATOR_H__
+#ifndef __ZLCACHEDMEMORYALLOCATOR_H__
+#define __ZLCACHEDMEMORYALLOCATOR_H__
 
 #include <vector>
 
-class ZLTextRowMemoryAllocator {
+class ZLCachedMemoryAllocator {
 
 public:
-	ZLTextRowMemoryAllocator(const size_t rowSize);
-	~ZLTextRowMemoryAllocator();
+	ZLCachedMemoryAllocator(const size_t rowSize, const std::string &directoryName, const std::string &fileExtension);
+	~ZLCachedMemoryAllocator();
 
 	char *allocate(size_t size);
 	char *reallocateLast(char *ptr, size_t newSize);
+
+	void flush();
+
+private:
+	std::string makeFileName(size_t index);
+	void writeCache(size_t blockLength);
 
 private:
 	const size_t myRowSize;
@@ -37,9 +43,14 @@ private:
 	std::vector<char*> myPool;
 	size_t myOffset;
 
+	bool myHasChanges;
+
+	const std::string myDirectoryName;
+	const std::string myFileExtension;
+
 private: // disable copying
-	ZLTextRowMemoryAllocator(const ZLTextRowMemoryAllocator&);
-	const ZLTextRowMemoryAllocator &operator = (const ZLTextRowMemoryAllocator&);
+	ZLCachedMemoryAllocator(const ZLCachedMemoryAllocator&);
+	const ZLCachedMemoryAllocator &operator = (const ZLCachedMemoryAllocator&);
 };
 
-#endif /* __ZLTEXTROWMEMORYALLOCATOR_H__ */
+#endif /* __ZLCACHEDMEMORYALLOCATOR_H__ */

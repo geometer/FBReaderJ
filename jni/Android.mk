@@ -68,6 +68,7 @@ LOCAL_SRC_FILES := \
 	NativeFormats/fbreader/src/library/Author.cpp \
 	NativeFormats/fbreader/src/library/Book.cpp \
 	NativeFormats/fbreader/src/library/Comparators.cpp \
+	NativeFormats/fbreader/src/library/Library.cpp \
 	NativeFormats/fbreader/src/library/Tag.cpp \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
@@ -108,6 +109,7 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/runnable/ZLRunnable.cpp \
 	NativeFormats/zlibrary/core/src/typeId/ZLTypeId.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSDir.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSManager.cpp \
 	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
@@ -121,9 +123,9 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/xml/ZLAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLPlainAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLCachedMemoryAllocator.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextParagraph.cpp \
-	NativeFormats/zlibrary/text/src/model/ZLTextRowMemoryAllocator.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaInputStream.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
