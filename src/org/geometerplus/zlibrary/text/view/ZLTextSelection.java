@@ -6,25 +6,21 @@ import java.util.TimerTask;
 public class ZLTextSelection {
 	private static final int SELECTION_DISTANCE = 10;  
 
-	private int myCurrentChangingBoundID;
-	private Bound myBounds[];
-	private final StringBuilder myText;
+	private final Bound myLeftBound = new StartBound();
+	private final Bound myRightBound = new EndBound();
+	private Bound myCurrentChangingBound;
+	private final StringBuilder myText = new StringBuilder();
 	private boolean myIsTextValid;
 	private ZLTextView myView;
-	private Scroller myScroller;
+	private final Scroller myScroller = new Scroller();
 
 	ZLTextSelection(ZLTextView view) {
 		myView = view;
-		myText = new StringBuilder();
-		myBounds = new Bound[2];
-		myBounds[0] = new StartBound();
-		myBounds[1] = new EndBound();
-		myScroller = new Scroller();
 		clear();
 	}
 
 	boolean isEmpty() {
-		return myBounds[0].compareTo(myBounds[1]) > 0;
+		return myLeftBound.compareTo(myRightBound) > 0;
 	}
 
 	boolean isEmptyOnPage(ZLTextPage page) {
@@ -33,9 +29,9 @@ public class ZLTextSelection {
 
 	boolean clear() { // returns if it was filled before.
 		boolean res = !isEmpty();
-		myBounds[0].clear();
-		myBounds[1].clear();
-		myCurrentChangingBoundID = -1;
+		myLeftBound.clear();
+		myRightBound.clear();
+		myCurrentChangingBound = null;
 		return res;
 	}
 	boolean start(int x, int y) {
@@ -44,8 +40,8 @@ public class ZLTextSelection {
 		if (newSelectedRegion == null) // whitespace.
 			return false;
 
-		myBounds[0].set(newSelectedRegion);
-		myBounds[1].set(newSelectedRegion);
+		myLeftBound.set(newSelectedRegion);
+		myRightBound.set(newSelectedRegion);
 		return true;
 	}
 	void stop() {
@@ -53,20 +49,6 @@ public class ZLTextSelection {
 	}
 	void update() {
 		myScroller.update();
-	}
-	private boolean expandBy(int boundID, ZLTextRegion newSelectedRegion) {
-		if (myBounds[boundID].expandBy(newSelectedRegion)) {
-			myCurrentChangingBoundID = boundID;
-			return true;
-		}
-		return false;
-	}
-	private boolean equalsTo(int boundID, ZLTextRegion newSelectedRegion) {
-		if (myBounds[boundID].equalsTo(newSelectedRegion)) {
-			myCurrentChangingBoundID = boundID;
-			return true;
-		}
-		return false;
 	}
 	boolean expandTo(int x, int y) { // TODO scroll if out of page.
 		if (isEmpty()) {
@@ -76,12 +58,22 @@ public class ZLTextSelection {
 
 		myScroller.stop();
 		// possible page rim.
-		if (newSelectedRegion == null || equalsTo(0, newSelectedRegion) || equalsTo(1, newSelectedRegion)) {
+		if (newSelectedRegion == null) {
+			return myScroller.handle(x, y, newSelectedRegion);
+		} else if (myLeftBound.equalsTo(newSelectedRegion)) {
+			myCurrentChangingBound = myLeftBound;
+			return myScroller.handle(x, y, newSelectedRegion);
+		} else if (myRightBound.equalsTo(newSelectedRegion)) {
+			myCurrentChangingBound = myRightBound;
 			return myScroller.handle(x, y, newSelectedRegion);
 		}
 		
-		if (!expandBy(0, newSelectedRegion) && !expandBy(1, newSelectedRegion)) {
-			myBounds[myCurrentChangingBoundID].set(newSelectedRegion); // selection is now being shrinked
+		if (myLeftBound.expandBy(newSelectedRegion)) {
+			myCurrentChangingBound = myLeftBound;
+		} else if (myRightBound.expandBy(newSelectedRegion)) {
+			myCurrentChangingBound = myRightBound;
+		} else if (myCurrentChangingBound != null) {
+			myCurrentChangingBound.set(newSelectedRegion); // selection is now being shrinked
 		}
 
 		myIsTextValid = false;
@@ -90,9 +82,9 @@ public class ZLTextSelection {
 
 	private void prepareParagraphText(int paragraphID) {
 		final ZLTextParagraphCursor paragraph = ZLTextParagraphCursor.cursor(myView.getModel(), paragraphID);
-		final int startElementID = myBounds[0].getParagraphIndex() == paragraphID ? myBounds[0].getElementIndex() : 0;
-		final boolean isLastSelectedParagraph = myBounds[1].getParagraphIndex() == paragraphID; 
-		final int endElementID = isLastSelectedParagraph ? myBounds[1].getElementIndex() : paragraph.getParagraphLength() - 1;
+		final int startElementID = myLeftBound.getParagraphIndex() == paragraphID ? myLeftBound.getElementIndex() : 0;
+		final boolean isLastSelectedParagraph = myRightBound.getParagraphIndex() == paragraphID; 
+		final int endElementID = isLastSelectedParagraph ? myRightBound.getElementIndex() : paragraph.getParagraphLength() - 1;
 
 		for (int elementID = startElementID; elementID <= endElementID; elementID++) {
 			final ZLTextElement element = paragraph.getElement(elementID);
@@ -111,7 +103,7 @@ public class ZLTextSelection {
 		if (!myIsTextValid) {
 			myText.delete(0, myText.length());
 
-			for (int i = myBounds[0].getParagraphIndex(); i <= myBounds[1].getParagraphIndex(); ++i) {
+			for (int i = myLeftBound.getParagraphIndex(); i <= myRightBound.getParagraphIndex(); ++i) {
 				prepareParagraphText(i);
 			}
 			myIsTextValid = true;
@@ -120,27 +112,27 @@ public class ZLTextSelection {
 	}
 
 	public ZLTextPosition getStartPosition() {
-		return myBounds[0];
+		return myLeftBound;
 	}
 
 	private boolean areaWithinSelection(ZLTextElementArea area) {
-		return myBounds[0].isAreaWithin(area) && myBounds[1].isAreaWithin(area);
+		return myLeftBound.isAreaWithin(area) && myRightBound.isAreaWithin(area);
 	}
 
 	public boolean areaWithinStartBound(ZLTextElementArea area) {
-		return !myBounds[1].isExpandedBy(area) && myBounds[0].isAreaWithin(area);
+		return !myRightBound.isExpandedBy(area) && myLeftBound.isAreaWithin(area);
 	}
 
 	public boolean areaWithinEndBound(ZLTextElementArea area) {
-		return !myBounds[0].isExpandedBy(area) && myBounds[1].isAreaWithin(area);
+		return !myLeftBound.isExpandedBy(area) && myRightBound.isAreaWithin(area);
 	}
 
 	public boolean isAreaSelected(ZLTextElementArea area) {
-		return !myBounds[0].isExpandedBy(area) && !myBounds[1].isExpandedBy(area);
+		return !myLeftBound.isExpandedBy(area) && !myRightBound.isExpandedBy(area);
 	}
 
 	public int getStartAreaID(ZLTextPage page) {
-		final int id = page.TextElementMap.indexOf(myBounds[0].myArea);
+		final int id = page.TextElementMap.indexOf(myLeftBound.myArea);
 		if (id == -1) {
 			if (areaWithinSelection(page.TextElementMap.get(0))) {
 				return 0;
@@ -150,7 +142,7 @@ public class ZLTextSelection {
 	}
 
 	public int getEndAreaID(ZLTextPage page) {
-		final int id = page.TextElementMap.indexOf(myBounds[1].myArea); 
+		final int id = page.TextElementMap.indexOf(myRightBound.myArea); 
 		if (id == -1) {
 			final int lastID = page.TextElementMap.size() - 1;
 			if (areaWithinSelection(page.TextElementMap.get(lastID))) {
@@ -345,20 +337,26 @@ public class ZLTextSelection {
 			if (myScrollingTask != null)
 				expandTo(myStoredX, myStoredY);
 		}
-		private boolean isYOutOfPage(int boundID, int y) {
-			if (!myBounds[boundID].isYOutOfPage(y))
-				return false;
-			myScollForward = boundID == 1;
-			return true;
-		}
+
 		private boolean handle(int x, int y, ZLTextRegion newSelectedRegion) {
-			if (!isYOutOfPage(0, y) && !isYOutOfPage(1, y))
+			if (myLeftBound.isYOutOfPage(y)) {
+				myScollForward = false;
+			} else if (myRightBound.isYOutOfPage(y)) {
+				myScollForward = true;
+			} else {
 				return false; // the whitespace is within the page.
+			}
 			
 			final ZLTextRegion nearestRegion = newSelectedRegion == null? findNearestRegion(x, y) : newSelectedRegion;
-			if (nearestRegion != null)
-				if (expandBy(0, nearestRegion) || expandBy(1, nearestRegion))
+			if (nearestRegion != null) {
+				if (myLeftBound.expandBy(nearestRegion)) {
+					myCurrentChangingBound = myLeftBound;
 					return true;
+				} else if (myRightBound.expandBy(nearestRegion)) {
+					myCurrentChangingBound = myRightBound;
+					return true;
+				}
+			}
 			
 			start(x, y);
 			return false;
