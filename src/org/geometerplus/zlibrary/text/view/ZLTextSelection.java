@@ -13,7 +13,7 @@ public class ZLTextSelection {
 	private ZLTextView myView;
 	private Scroller myScroller;
 
-	public ZLTextSelection(ZLTextView view) {
+	ZLTextSelection(ZLTextView view) {
 		myView = view;
 		myText = new StringBuilder();
 		myBounds = new Bound[2];
@@ -23,22 +23,22 @@ public class ZLTextSelection {
 		clear();
 	}
 
-	public boolean isEmpty() {
+	boolean isEmpty() {
 		return myBounds[0].compareTo(myBounds[1]) > 0;
 	}
 
-	public boolean isEmptyOnPage(ZLTextPage page) {
+	boolean isEmptyOnPage(ZLTextPage page) {
 		return getStartAreaID(page) == -1;
 	}
 
-	public boolean clear() { // returns if it was filled before.
+	boolean clear() { // returns if it was filled before.
 		boolean res = !isEmpty();
 		myBounds[0].clear();
 		myBounds[1].clear();
 		myCurrentChangingBoundID = -1;
 		return res;
 	}
-	public boolean start(int x, int y) {
+	boolean start(int x, int y) {
 		clear();
 		final ZLTextRegion newSelectedRegion = findSelectedRegion(x, y);
 		if (newSelectedRegion == null) // whitespace.
@@ -48,10 +48,10 @@ public class ZLTextSelection {
 		myBounds[1].set(newSelectedRegion);
 		return true;
 	}
-	public void stop() {
+	void stop() {
 		myScroller.stop();
 	}
-	public void update() {
+	void update() {
 		myScroller.update();
 	}
 	private boolean expandBy(int boundID, ZLTextRegion newSelectedRegion) {
@@ -68,7 +68,7 @@ public class ZLTextSelection {
 		}
 		return false;
 	}
-	public boolean expandTo(int x, int y) { // TODO scroll if out of page.
+	boolean expandTo(int x, int y) { // TODO scroll if out of page.
 		if (isEmpty()) {
 			return start(x, y);
 		}
@@ -91,8 +91,8 @@ public class ZLTextSelection {
 	private void prepareParagraphText(int paragraphID) {
 		final ZLTextParagraphCursor paragraph = ZLTextParagraphCursor.cursor(myView.getModel(), paragraphID);
 		final int startElementID = myBounds[0].getParagraphIndex() == paragraphID ? myBounds[0].getElementIndex() : 0;
-		final boolean isLastSelectedParagraph = getEndParagraphID() == paragraphID; 
-		final int endElementID = isLastSelectedParagraph ? getEndElementID() : paragraph.getParagraphLength() - 1;
+		final boolean isLastSelectedParagraph = myBounds[1].getParagraphIndex() == paragraphID; 
+		final int endElementID = isLastSelectedParagraph ? myBounds[1].getElementIndex() : paragraph.getParagraphLength() - 1;
 
 		for (int elementID = startElementID; elementID <= endElementID; elementID++) {
 			final ZLTextElement element = paragraph.getElement(elementID);
@@ -107,7 +107,7 @@ public class ZLTextSelection {
 			myText.append("\n");
 	}
 
-	public String getText() {
+	String getText() {
 		if (!myIsTextValid) {
 			myText.delete(0, myText.length());
 
@@ -119,16 +119,8 @@ public class ZLTextSelection {
 		return myText.toString();
 	}
 
-	public int getEndParagraphID() {
-		return myBounds[1].getParagraphIndex();
-	}
-
 	public ZLTextPosition getStartPosition() {
 		return myBounds[0];
-	}
-
-	public int getEndElementID () {
-		return myBounds[1].getElementIndex();
 	}
 
 	private boolean areaWithinSelection(ZLTextElementArea area) {
