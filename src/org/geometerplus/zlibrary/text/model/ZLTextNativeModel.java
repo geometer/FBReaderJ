@@ -19,59 +19,14 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import java.util.List;
+public class ZLTextNativeModel extends ZLTextPlainModel {
 
-
-public class ZLTextNativeModel implements ZLTextModel {
-
-	public int findParagraphByTextLength(int length) {
-		return 0;
+	public ZLTextNativeModel(String id, String language, int paragraphsNumber,
+			int[] entryIndices, int[] entryOffsets, int[] paragraphLenghts, int[] textSizes,
+			byte[] paragraphKinds) {
+		super(id, language, entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds,
+				null, null);
+		myParagraphsNumber = paragraphsNumber;
 	}
 
-	public ZLTextMark getFirstMark() {
-		return null;
-	}
-
-	public String getId() {
-		return null;
-	}
-
-	public String getLanguage() {
-		return null;
-	}
-
-	public ZLTextMark getLastMark() {
-		return null;
-	}
-
-	public List<ZLTextMark> getMarks() {
-		return null;
-	}
-
-	public ZLTextMark getNextMark(ZLTextMark position) {
-		return null;
-	}
-
-	public ZLTextParagraph getParagraph(int index) {
-		return null;
-	}
-
-	public int getParagraphsNumber() {
-		return 0;
-	}
-
-	public ZLTextMark getPreviousMark(ZLTextMark position) {
-		return null;
-	}
-
-	public int getTextLength(int index) {
-		return 0;
-	}
-
-	public void removeAllMarks() {
-	}
-
-	public int search(String text, int startIndex, int endIndex, boolean ignoreCase) {
-		return 0;
-	}
 }

@@ -89,7 +89,7 @@ public class PluginCollection {
 	}
 
 	private native FormatPlugin getNativePlugin(String path);
-	private native void release();
+	private native void free();
 
 	// called from native code
 	public String getDefaultLanguage() {
@@ -109,7 +109,7 @@ public class PluginCollection {
 	protected void finalize() throws Throwable {
 		deleteInstance();
 		myPlugins.clear();
-		release();
+		free();
 		super.finalize();
 	};
 

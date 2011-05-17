@@ -24,9 +24,19 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+final class NativeFormatPluginException extends RuntimeException {
+	private static final long serialVersionUID = 8641852378027454752L;
+
+	public NativeFormatPluginException(String message) {
+		super(message);
+	}
+}
+
 public class NativeFormatPlugin extends FormatPlugin {
 
 	// Stores native C++ pointer value
+	// No free method because all plugins' instances are freed by 
+	//   PluginCollection::deleteInstance method (C++)
 	protected final long myNativePointer;
 
 	public NativeFormatPlugin(long ptr) {

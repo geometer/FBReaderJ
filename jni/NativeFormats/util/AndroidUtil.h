@@ -38,6 +38,9 @@ public:
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Paths;
+	static const char * const Class_ZLTextNativeModel;
+	static const char * const Class_Book;
+	static const char * const Class_Tag;
 
 	static jmethodID SMID_ZLFile_createFileByPath;
 	static jmethodID MID_ZLFile_size;
@@ -65,6 +68,18 @@ public:
 	static jmethodID MID_PluginCollection_isLanguageAutoDetectEnabled;
 
 	static jmethodID SMID_Paths_cacheDirectory;
+
+	static jmethodID MID_ZLTextNativeModel_init;
+
+	static jfieldID FID_Book_File;
+	static jmethodID MID_Book_setTitle;
+	static jmethodID MID_Book_setSeriesInfo;
+	static jmethodID MID_Book_setLanguage;
+	static jmethodID MID_Book_setEncoding;
+	static jmethodID MID_Book_addAuthor;
+	static jmethodID MID_Book_addTag;
+
+	static jmethodID SMID_Tag_getTag;
 
 public:
 	static void init(JavaVM* jvm);

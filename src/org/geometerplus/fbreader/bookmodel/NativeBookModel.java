@@ -27,13 +27,12 @@ import org.geometerplus.fbreader.library.Book;
 
 public class NativeBookModel extends BookModel {
 
-	public ZLTextModel myBookTextModel;
+	private ZLTextModel myBookTextModel;
 
 	public NativeBookModel(Book book) {
 		super(book);
-		//myBookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
-		myBookTextModel = null;
 	}
+
 
 	public void setTextModel(ZLTextModel model) {
 		myBookTextModel = model;

@@ -20,6 +20,8 @@
 #include <set>
 #include <algorithm>
 
+#include <AndroidUtil.h>
+
 #include <ZLStringUtil.h>
 
 #include "Tag.h"
@@ -107,7 +109,12 @@ void Tag::collectTagNames(std::vector<std::string> &tags) {
 	tags.insert(tags.end(), tagsSet.begin(), tagsSet.end());
 }
 
-Tag::Tag(const std::string &name, shared_ptr<Tag> parent, int tagId) : myName(name), myParent(parent), myLevel(parent.isNull() ? 0 : parent->level() + 1), myTagId(tagId) {
+Tag::Tag(const std::string &name, shared_ptr<Tag> parent, int tagId) : myName(name), myParent(parent), myLevel(parent.isNull() ? 0 : parent->level() + 1), myTagId(tagId), myJavaTag(0) {
+}
+
+Tag::~Tag() {
+	JNIEnv *env = AndroidUtil::getEnv();
+	env->DeleteGlobalRef(myJavaTag);
 }
 
 const std::string &Tag::fullName() const {
@@ -119,6 +126,26 @@ const std::string &Tag::fullName() const {
 	}
 	return myFullName;
 }
+
+jobject Tag::javaTag(JNIEnv *env) const {
+	if (myJavaTag != 0) {
+		return myJavaTag;
+	}
+	jobject parentTag = 0;
+	if (!myParent.isNull()) {
+		parentTag = myParent->javaTag(env);
+	}
+
+	jobject javaName = env->NewStringUTF(myName.c_str());
+	jclass cls = env->FindClass(AndroidUtil::Class_Tag);
+	jobject tag = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_Tag_getTag, parentTag, javaName);
+	myJavaTag = env->NewGlobalRef(tag);
+	env->DeleteLocalRef(tag);
+	env->DeleteLocalRef(cls);
+	env->DeleteLocalRef(javaName);
+	return myJavaTag;
+}
+
 
 bool Tag::isAncestorOf(shared_ptr<Tag> tag) const {
 	if (tag->level() <= level()) {

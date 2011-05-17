@@ -34,7 +34,7 @@ class ZLTextParagraph;
 class ZLTextTreeParagraph;
 
 class ZLTextModel {
-	
+
 public:
 	enum Kind {
 		PLAIN_TEXT_MODEL,

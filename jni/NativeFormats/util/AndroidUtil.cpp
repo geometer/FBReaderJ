@@ -30,6 +30,9 @@ const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/f
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
 const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
+const char * const AndroidUtil::Class_ZLTextNativeModel = "org/geometerplus/zlibrary/text/model/ZLTextNativeModel";
+const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
+const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
 jmethodID AndroidUtil::MID_ZLFile_size;
@@ -57,6 +60,18 @@ jmethodID AndroidUtil::MID_PluginCollection_getDefaultEncoding;
 jmethodID AndroidUtil::MID_PluginCollection_isLanguageAutoDetectEnabled;
 
 jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
+
+jmethodID AndroidUtil::MID_ZLTextNativeModel_init;
+
+jfieldID AndroidUtil::FID_Book_File;
+jmethodID AndroidUtil::MID_Book_setTitle;
+jmethodID AndroidUtil::MID_Book_setSeriesInfo;
+jmethodID AndroidUtil::MID_Book_setLanguage;
+jmethodID AndroidUtil::MID_Book_setEncoding;
+jmethodID AndroidUtil::MID_Book_addAuthor;
+jmethodID AndroidUtil::MID_Book_addTag;
+
+jmethodID AndroidUtil::SMID_Tag_getTag;
 
 
 void AndroidUtil::init(JavaVM* jvm) {
@@ -97,6 +112,21 @@ void AndroidUtil::init(JavaVM* jvm) {
 
 	cls = env->FindClass(Class_Paths);
 	SMID_Paths_cacheDirectory = env->GetStaticMethodID(cls, "cacheDirectory", "()Ljava/lang/String;");
+
+	cls = env->FindClass(Class_ZLTextNativeModel);
+	MID_ZLTextNativeModel_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[B)V");
+
+	cls = env->FindClass(Class_Book);
+	FID_Book_File = env->GetFieldID(cls, "File", "Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;");
+	MID_Book_setTitle = env->GetMethodID(cls, "setTitle", "(Ljava/lang/String;)V");
+	MID_Book_setSeriesInfo = env->GetMethodID(cls, "setSeriesInfo", "(Ljava/lang/String;F)V");
+	MID_Book_setLanguage = env->GetMethodID(cls, "setLanguage", "(Ljava/lang/String;)V");
+	MID_Book_setEncoding = env->GetMethodID(cls, "setEncoding", "(Ljava/lang/String;)V");
+	MID_Book_addAuthor = env->GetMethodID(cls, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)V");
+	MID_Book_addTag = env->GetMethodID(cls, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)V");
+
+	cls = env->FindClass(Class_Tag);
+	SMID_Tag_getTag = env->GetStaticMethodID(cls, "getTag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)Lorg/geometerplus/fbreader/library/Tag;");
 }
 
 

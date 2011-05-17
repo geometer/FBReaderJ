@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public class ZLTextPlainModel implements ZLTextModel {
-	protected final String myId;
+	private final String myId;
 	private final String myLanguage;
 
 	protected int[] myStartEntryIndices;
@@ -37,9 +37,10 @@ public class ZLTextPlainModel implements ZLTextModel {
 	protected int myParagraphsNumber;
 
 	protected final CharStorage myStorage;
+	protected final ZLImageMap myImageMap;
+
 	private ArrayList<ZLTextMark> myMarks;
 
-	protected final ZLImageMap myImageMap;
 
 	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
 		private int myCounter;
@@ -185,15 +186,17 @@ public class ZLTextPlainModel implements ZLTextModel {
 		}
 	}
 
-	protected ZLTextPlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
+	protected ZLTextPlainModel(String id, String language,
+			int[] entryIndices, int[] entryOffsets, int[] paragraphLenghts, int[] textSizes, byte[] paragraphKinds,
+			CharStorage storage, ZLImageMap imageMap) {
 		myId = id;
 		myLanguage = language;
-		myStartEntryIndices = new int[arraySize];
-		myStartEntryOffsets = new int[arraySize];
-		myParagraphLengths = new int[arraySize];
-		myTextSizes = new int[arraySize];
-		myParagraphKinds = new byte[arraySize];
-		myStorage = new CachedCharStorage(dataBlockSize, directoryName, extension);
+		myStartEntryIndices = entryIndices;
+		myStartEntryOffsets = entryOffsets;
+		myParagraphLengths = paragraphLenghts;
+		myTextSizes = textSizes;
+		myParagraphKinds = paragraphKinds;
+		myStorage = storage;
 		myImageMap = imageMap;
 	}
 

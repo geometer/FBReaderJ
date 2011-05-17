@@ -20,6 +20,8 @@
 #ifndef __TAG_H__
 #define __TAG_H__
 
+#include <jni.h>
+
 #include <string>
 #include <map>
 
@@ -53,10 +55,15 @@ private:
 	Tag(const std::string &name, shared_ptr<Tag> parent, int tagId);
 
 public:
+	~Tag();
+
+public:
 	const std::string &fullName() const;
 	const std::string &name() const;
 
 	shared_ptr<Tag> parent() const;
+
+	jobject javaTag(JNIEnv *env) const;
 
 public:
 	bool isAncestorOf(shared_ptr<Tag> tag) const;
@@ -73,6 +80,8 @@ private:
 	const size_t myLevel;
 	
 	int myTagId;
+
+	mutable jobject myJavaTag;
 
 private: // disable copying
 	Tag(const Tag &);

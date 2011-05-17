@@ -50,7 +50,7 @@ public:
 	// this method is used in Migration only
 	//static shared_ptr<Book> loadFromBookInfo(const ZLFile &file);
 
-private:
+public:
 	Book(const ZLFile &file, int id);
 
 public:
