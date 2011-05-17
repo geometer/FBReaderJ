@@ -313,14 +313,14 @@ public class ZLTextSelection {
 		private final Timer myTimer = new Timer();
 		private TimerTask myScrollingTask;
 		private int myStoredX, myStoredY;
-		private boolean myScollForward;
+		private boolean myScrollForward;
 
 		private void start(int x, int y) {
 			myStoredX = x;
 			myStoredY = y;
 			myScrollingTask = new TimerTask() {
 				public void run() {
-					myView.scrollPage(myScollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+					myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				}
 			};
 			myTimer.schedule(myScrollingTask, 200, 400);
@@ -341,9 +341,9 @@ public class ZLTextSelection {
 
 		private boolean handle(int x, int y, ZLTextRegion newSelectedRegion) {
 			if (myLeftBound.isYOutOfPage(y)) {
-				myScollForward = false;
+				myScrollForward = false;
 			} else if (myRightBound.isYOutOfPage(y)) {
-				myScollForward = true;
+				myScrollForward = true;
 			} else {
 				return false; // the whitespace is within the page.
 			}
