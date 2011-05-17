@@ -11,7 +11,7 @@ public class ZLTextSelection {
 	private Bound myCurrentChangingBound;
 	private final StringBuilder myText = new StringBuilder();
 	private boolean myIsTextValid;
-	private ZLTextView myView;
+	private final ZLTextView myView;
 	private final Scroller myScroller = new Scroller();
 
 	ZLTextSelection(ZLTextView view) {
@@ -334,8 +334,9 @@ public class ZLTextSelection {
 		}
 		
 		private void update() {
-			if (myScrollingTask != null)
+			if (myScrollingTask != null) {
 				expandTo(myStoredX, myStoredY);
+			}
 		}
 
 		private boolean handle(int x, int y, ZLTextRegion newSelectedRegion) {
