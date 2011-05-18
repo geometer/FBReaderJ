@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.text.model;
 
+import org.geometerplus.zlibrary.core.image.ZLImageMap;
+
 public class ZLTextNativeModel extends ZLTextPlainModel {
 
 	public ZLTextNativeModel(String id, String language,
@@ -28,7 +30,7 @@ public class ZLTextNativeModel extends ZLTextPlainModel {
 		super(id, language,
 			entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds,
 			new CachedInputCharStorage(directoryName, fileExtension, blocksNumber),
-			null); // TODO: implement
+			new ZLImageMap());
 		myParagraphsNumber = paragraphsNumber;
 	}
 
