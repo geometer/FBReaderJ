@@ -23,16 +23,7 @@ import java.lang.ref.WeakReference;
 import java.io.*;
 import java.util.*;
 
-final class CachedCharStorageException extends RuntimeException {
-	private static final long serialVersionUID = -6373408730045821053L;
-
-	public CachedCharStorageException(String message) {
-		super(message);
-	}
-}
-
-public final class CachedCharStorage implements CharStorage {
-	private final int myBlockSize;
+public final class CachedInputCharStorage implements CharStorage {
 	private final ArrayList<WeakReference<char[]>> myArray = new ArrayList<WeakReference<char[]>>();
 	private final String myDirectoryName;
 	private final String myFileExtension;
@@ -41,11 +32,10 @@ public final class CachedCharStorage implements CharStorage {
 		return myDirectoryName + index + myFileExtension;
 	}
 
-	public CachedCharStorage(int blockSize, String directoryName, String fileExtension) {
-		myBlockSize = blockSize;
+	public CachedInputCharStorage(String directoryName, String fileExtension, int blocksNumber) {
 		myDirectoryName = directoryName + '/';
 		myFileExtension = '.' + fileExtension;
-		new File(directoryName).mkdirs();
+		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));
 	}
 
 	public int size() {
@@ -82,33 +72,9 @@ public final class CachedCharStorage implements CharStorage {
 	}
 
 	public char[] createNewBlock(int minimumLength) {
-		int blockSize = myBlockSize;
-		if (minimumLength > blockSize) {
-			blockSize = minimumLength;
-		}
-		char[] block = new char[blockSize];
-		myArray.add(new WeakReference<char[]>(block));
-		return block;
+		throw new UnsupportedOperationException("CachedInputCharStorage is immutable storage.");
 	}
 
 	public void freezeLastBlock() {
-		int index = myArray.size() - 1;
-		if (index >= 0) {
-			char[] block = myArray.get(index).get();
-			if (block == null) {
-				throw new CachedCharStorageException("Block reference is null during freeze");
-			}
-			try {
-				final OutputStreamWriter writer =
-					new OutputStreamWriter(
-						new FileOutputStream(fileName(index)),
-						"UTF-16LE"
-					);
-				writer.write(block);
-				writer.close();
-			} catch (IOException e) {
-				throw new CachedCharStorageException("Error during writing " + fileName(index));
-			}
-		}
 	}
 }

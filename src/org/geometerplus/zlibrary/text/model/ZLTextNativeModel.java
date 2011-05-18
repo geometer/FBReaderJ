@@ -21,11 +21,14 @@ package org.geometerplus.zlibrary.text.model;
 
 public class ZLTextNativeModel extends ZLTextPlainModel {
 
-	public ZLTextNativeModel(String id, String language, int paragraphsNumber,
-			int[] entryIndices, int[] entryOffsets, int[] paragraphLenghts, int[] textSizes,
-			byte[] paragraphKinds) {
-		super(id, language, entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds,
-				null, null); // TODO: implement
+	public ZLTextNativeModel(String id, String language,
+			int paragraphsNumber, int[] entryIndices, int[] entryOffsets,
+			int[] paragraphLenghts, int[] textSizes, byte[] paragraphKinds,
+			String directoryName, String fileExtension, int blocksNumber) {
+		super(id, language,
+			entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds,
+			new CachedInputCharStorage(directoryName, fileExtension, blocksNumber),
+			null); // TODO: implement
 		myParagraphsNumber = paragraphsNumber;
 	}
 

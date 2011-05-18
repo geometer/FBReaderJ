@@ -24,5 +24,4 @@ public interface CharStorage {
 	char[] block(int index);
 	char[] createNewBlock(int minimumLength);
 	void freezeLastBlock();
-	void clear();
 }

@@ -17,6 +17,7 @@
  * 02110-1301, USA.
  */
 
+#include <cstdint>
 #include <cstring>
 #include <algorithm>
 
@@ -108,6 +109,16 @@ ZLTextMark ZLTextModel::previousMark(ZLTextMark position) const {
 
 void ZLTextModel::addParagraphInternal(ZLTextParagraph *paragraph) {
 	checkUtf8Text();
+
+	const size_t dataSize = myAllocator.blocksNumber();
+	const size_t bytesOffset = myAllocator.currentBytesOffset();
+
+	myStartEntryIndices.push_back((dataSize == 0) ? 0 : (dataSize - 1));
+	myStartEntryOffsets.push_back(bytesOffset / 2); // offset in words for future use in Java
+	myParagraphLengths.push_back(0);
+	myTextSizes.push_back(myTextSizes.empty() ? 0 : myTextSizes.back());
+	myParagraphKinds.push_back(paragraph->kind());
+
 	myParagraphs.push_back(paragraph);
 	myLastEntryStart = 0;
 }
@@ -171,6 +182,7 @@ void ZLTextModel::checkUtf8Text() {
 	*(myLastEntryStart + 1) = 0;
 	*(uint32_t*)(myLastEntryStart + 2) = ucs2str.size();
 	memcpy(myLastEntryStart + 6, &ucs2str.front(), newLen);
+	myTextSizes.back() += ucs2str.size();
 }
 
 void ZLTextModel::addText(const std::string &text) {
@@ -189,6 +201,7 @@ void ZLTextModel::addText(const std::string &text) {
 		*(uint32_t*)(myLastEntryStart + 2) = len;
 		memcpy(myLastEntryStart + 6, text.data(), len);
 		myParagraphs.back()->addEntry(myLastEntryStart);
+		++myParagraphLengths.back();
 	}
 }
 
@@ -222,6 +235,7 @@ void ZLTextModel::addText(const std::vector<std::string> &text) {
 			offset += it->length();
 		}
 		myParagraphs.back()->addEntry(myLastEntryStart);
+		++myParagraphLengths.back();
 	}
 }
 
@@ -233,6 +247,7 @@ void ZLTextModel::addFixedHSpace(unsigned char length) {
 	*(myLastEntryStart + 2) = length;
 	*(myLastEntryStart + 3) = 0;
 	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();
 }
 
 void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
@@ -243,6 +258,7 @@ void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
 	*(myLastEntryStart + 2) = textKind;
 	*(myLastEntryStart + 3) = isStart ? 1 : 0;
 	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();
 }
 
 void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
@@ -303,7 +319,8 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 		*(uint16_t*)address = fontFamily.size();
 		memcpy(address + 2, &fontFamily.front(), fontFamilyLen);
 	}
-	myParagraphs.back()->addEntry(myLastEntryStart);*/
+	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();*/
 }
 
 void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label) {
@@ -322,6 +339,7 @@ void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyper
 	*(uint16_t*)(myLastEntryStart + 4) = ucs2label.size();
 	memcpy(myLastEntryStart + 6, &ucs2label.front(), len);
 	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();
 }
 
 void ZLTextModel::addImage(const std::string &id, const ZLImageMap &imageMap, short vOffset) {
@@ -339,6 +357,7 @@ void ZLTextModel::addImage(const std::string &id, const ZLImageMap &imageMap, sh
 	*(uint16_t*)(myLastEntryStart + 4) = ucs2id.size();
 	memcpy(myLastEntryStart + 6, &ucs2id.front(), len);
 	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();
 }
 
 void ZLTextModel::addBidiReset() {
@@ -347,6 +366,7 @@ void ZLTextModel::addBidiReset() {
 	*myLastEntryStart = ZLTextParagraphEntry::RESET_BIDI_ENTRY;
 	*(myLastEntryStart + 1) = 0;
 	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();
 }
 
 void ZLTextModel::flush() {

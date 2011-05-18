@@ -33,6 +33,12 @@ public:
 
 	void flush();
 
+public:
+	const std::string &directoryName() const;
+	const std::string &fileExtension() const;
+	size_t blocksNumber() const;
+	size_t currentBytesOffset() const;
+
 private:
 	std::string makeFileName(size_t index);
 	void writeCache(size_t blockLength);
@@ -52,5 +58,10 @@ private: // disable copying
 	ZLCachedMemoryAllocator(const ZLCachedMemoryAllocator&);
 	const ZLCachedMemoryAllocator &operator = (const ZLCachedMemoryAllocator&);
 };
+
+inline const std::string &ZLCachedMemoryAllocator::directoryName() const { return myDirectoryName; }
+inline const std::string &ZLCachedMemoryAllocator::fileExtension() const { return myFileExtension; }
+inline size_t ZLCachedMemoryAllocator::blocksNumber() const { return myPool.size(); }
+inline size_t ZLCachedMemoryAllocator::currentBytesOffset() const { return myOffset; }
 
 #endif /* __ZLCACHEDMEMORYALLOCATOR_H__ */

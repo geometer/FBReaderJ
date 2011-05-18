@@ -63,10 +63,9 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	if (plugin == 0) {
 		return JNI_FALSE;
 	}
+	std::string path;
 	jstring javaPath = (jstring) env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
-	const char *pathData = env->GetStringUTFChars(javaPath, 0);
-	const std::string path(pathData);
-	env->ReleaseStringUTFChars(javaPath, pathData);
+	AndroidUtil::extractJavaString(env, javaPath, path);
 	env->DeleteLocalRef(javaPath);
 	return plugin->acceptsFile(ZLFile(path)) ? JNI_TRUE : JNI_FALSE;
 }
@@ -130,24 +129,38 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 
 
 static jobject createTextModel(JNIEnv *env, ZLTextModel &model) {
+	env->PushLocalFrame(16);
+
 	model.flush();
 
 	jstring id = createJavaString(env, model.id());
 	jstring language = createJavaString(env, model.language());
 	jint paragraphsNumber = model.paragraphsNumber();
 
-	// TODO: implement
-	jintArray entryIndices = env->NewIntArray(0);
-	jintArray entryOffsets = env->NewIntArray(0);
-	jintArray paragraphLenghts = env->NewIntArray(0);
-	jintArray textSizes = env->NewIntArray(0);
-	jbyteArray paragraphKinds = env->NewByteArray(0);
+	const size_t arraysSize = model.startEntryIndices().size();
+	jintArray entryIndices = env->NewIntArray(arraysSize);
+	jintArray entryOffsets = env->NewIntArray(arraysSize);
+	jintArray paragraphLenghts = env->NewIntArray(arraysSize);
+	jintArray textSizes = env->NewIntArray(arraysSize);
+	jbyteArray paragraphKinds = env->NewByteArray(arraysSize);
+	env->SetIntArrayRegion(entryIndices, 0, arraysSize, &model.startEntryIndices().front());
+	env->SetIntArrayRegion(entryOffsets, 0, arraysSize, &model.startEntryOffsets().front());
+	env->SetIntArrayRegion(paragraphLenghts, 0, arraysSize, &model.paragraphLengths().front());
+	env->SetIntArrayRegion(textSizes, 0, arraysSize, &model.textSizes().front());
+	env->SetByteArrayRegion(paragraphKinds, 0, arraysSize, &model.paragraphKinds().front());
+
+	jstring directoryName = env->NewStringUTF(model.allocator().directoryName().c_str());
+	jstring fileExtension = env->NewStringUTF(model.allocator().fileExtension().c_str());
+	jint blocksNumber = (jint) model.allocator().blocksNumber();
 
 	jclass cls = env->FindClass(AndroidUtil::Class_ZLTextNativeModel);
-	return env->NewObject(cls, AndroidUtil::MID_ZLTextNativeModel_init,
-			id, language, paragraphsNumber,
-			entryIndices, entryOffsets, paragraphLenghts, textSizes,
-			paragraphKinds);
+	jobject javaModel = env->NewObject(cls, AndroidUtil::MID_ZLTextNativeModel_init,
+			id, language,
+			paragraphsNumber, entryIndices, entryOffsets,
+			paragraphLenghts, textSizes, paragraphKinds,
+			directoryName, fileExtension, blocksNumber);
+
+	return env->PopLocalFrame(javaModel);
 }
 
 extern "C"

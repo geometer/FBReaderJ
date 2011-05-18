@@ -141,7 +141,7 @@ void AndroidUtil::init(JavaVM* jvm) {
 	FID_BookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;");
 
 	cls = env->FindClass(Class_ZLTextNativeModel);
-	MID_ZLTextNativeModel_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[B)V");
+	MID_ZLTextNativeModel_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)V");
 
 	cls = env->FindClass(Class_NativeBookModel);
 	MID_NativeBookModel_setTextModel = env->GetMethodID(cls, "setTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V");
@@ -161,4 +161,14 @@ jobject AndroidUtil::createZLFile(JNIEnv *env, const std::string &path) {
 	env->DeleteLocalRef(cls);
 	env->DeleteLocalRef(javaPath);
 	return javaFile;
+}
+
+bool AndroidUtil::extractJavaString(JNIEnv *env, jstring from, std::string &to) {
+	if (from == 0) {
+		return false;
+	}
+	const char *data = env->GetStringUTFChars(from, 0);
+	to.assign(data);
+	env->ReleaseStringUTFChars(from, data);
+	return true;
 }

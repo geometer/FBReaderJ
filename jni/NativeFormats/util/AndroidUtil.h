@@ -97,6 +97,7 @@ public:
 	static JNIEnv *getEnv();
 
 	static jobject createZLFile(JNIEnv *env, const std::string &path);
+	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
 };
 
 #endif /* __ANDROIDUTIL_H__ */

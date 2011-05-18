@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-#include <string.h>
-
+#include <cstdint>
+#include <cstring>
 #include <algorithm>
 
 #include <ZLFile.h>
@@ -36,8 +36,8 @@ ZLCachedMemoryAllocator::ZLCachedMemoryAllocator(const size_t rowSize,
 	myCurrentRowSize(0),
 	myOffset(0),
 	myHasChanges(false),
-	myDirectoryName(directoryName + "/"),
-	myFileExtension("." + fileExtension) {
+	myDirectoryName(directoryName),
+	myFileExtension(fileExtension) {
 	ZLFile(directoryName).directory(true);
 }
 
@@ -52,16 +52,16 @@ void ZLCachedMemoryAllocator::flush() {
 	if (!myHasChanges) {
 		return;
 	}
-	*(myPool.back() + myOffset) = 0;
-	writeCache(myOffset + 1);
+	*(uint16_t*)(myPool.back() + myOffset) = 0;
+	writeCache(myOffset + 2);
 	myHasChanges = false;
 }
 
 std::string ZLCachedMemoryAllocator::makeFileName(size_t index) {
 	std::string name(myDirectoryName);
+	name.append("/");
 	ZLStringUtil::appendNumber(name, index);
-	name.append(myFileExtension);
-	return name;
+	return name.append(".").append(myFileExtension);
 }
 
 void ZLCachedMemoryAllocator::writeCache(size_t blockLength) {
@@ -80,14 +80,14 @@ void ZLCachedMemoryAllocator::writeCache(size_t blockLength) {
 char *ZLCachedMemoryAllocator::allocate(size_t size) {
 	myHasChanges = true;
 	if (myPool.empty()) {
-		myCurrentRowSize = std::max(myRowSize, size + 1 + sizeof(char*));
+		myCurrentRowSize = std::max(myRowSize, size + 2 + sizeof(char*));
 		myPool.push_back(new char[myCurrentRowSize]);
-	} else if (myOffset + size + 1 + sizeof(char*) > myRowSize) {
-		*(myPool.back() + myOffset) = 0;
-		writeCache(myOffset + 1);
-		myCurrentRowSize = std::max(myRowSize, size + 1 + sizeof(char*));
+	} else if (myOffset + size + 2 + sizeof(char*) > myRowSize) {
+		*(uint16_t*)(myPool.back() + myOffset) = 0;
+		writeCache(myOffset + 2);
+		myCurrentRowSize = std::max(myRowSize, size + 2 + sizeof(char*));
 		char *row = new char[myCurrentRowSize];
-		memcpy(myPool.back() + myOffset + 1, &row, sizeof(char*));
+		memcpy(myPool.back() + myOffset + 2, &row, sizeof(char*));
 		myPool.push_back(row);
 		myOffset = 0;
 	}
@@ -98,16 +98,16 @@ char *ZLCachedMemoryAllocator::allocate(size_t size) {
 
 char *ZLCachedMemoryAllocator::reallocateLast(char *ptr, size_t newSize) {
 	myHasChanges = true;
-	if (ptr + newSize + 1 + sizeof(char*) <= myPool.back() + myCurrentRowSize) {
+	if (ptr + newSize + 2 + sizeof(char*) <= myPool.back() + myCurrentRowSize) {
 		myOffset = ptr - myPool.back() + newSize;
 		return ptr;
 	} else {
-		*ptr = 0;
-		writeCache((ptr - myPool.back()) + 1);
-		myCurrentRowSize = std::max(myRowSize, newSize + 1 + sizeof(char*));
+		*(uint16_t*)ptr = 0;
+		writeCache((ptr - myPool.back()) + 2);
+		myCurrentRowSize = std::max(myRowSize, newSize + 2 + sizeof(char*));
 		char *row = new char[myCurrentRowSize];
 		memcpy(row, ptr, myOffset - (ptr - myPool.back()));
-		memcpy(ptr + 1, &row, sizeof(char*));
+		memcpy(ptr + 2, &row, sizeof(char*));
 		myPool.push_back(row);
 		myOffset = newSize;
 		return row;
