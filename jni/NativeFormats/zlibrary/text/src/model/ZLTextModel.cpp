@@ -28,8 +28,9 @@
 #include "ZLTextModel.h"
 #include "ZLTextParagraph.h"
 
-ZLTextModel::ZLTextModel(const std::string &language, const size_t rowSize,
+ZLTextModel::ZLTextModel(const std::string &id, const std::string &language, const size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension) :
+	myId(id),
 	myLanguage(language.empty() ? ZLibrary::Language() : language),
 	myAllocator(rowSize, directoryName, fileExtension),
 	myLastEntryStart(0) {
@@ -39,10 +40,6 @@ ZLTextModel::~ZLTextModel() {
 	for (std::vector<ZLTextParagraph*>::const_iterator it = myParagraphs.begin(); it != myParagraphs.end(); ++it) {
 		delete *it;
 	}
-}
-
-const std::string &ZLTextModel::language() const {
-	return myLanguage;
 }
 
 bool ZLTextModel::isRtl() const {
@@ -115,9 +112,9 @@ void ZLTextModel::addParagraphInternal(ZLTextParagraph *paragraph) {
 	myLastEntryStart = 0;
 }
 
-ZLTextTreeModel::ZLTextTreeModel(const std::string &language,
+ZLTextTreeModel::ZLTextTreeModel(const std::string &id, const std::string &language,
 		const std::string &directoryName, const std::string &fileExtension) :
-	ZLTextModel(language, 8192, directoryName, fileExtension) {
+	ZLTextModel(id, language, 8192, directoryName, fileExtension) {
 	myRoot = new ZLTextTreeParagraph();
 	myRoot->open(true);
 }
@@ -149,9 +146,9 @@ void ZLTextTreeModel::selectParagraph(size_t index) const {
 	}
 }
 
-ZLTextPlainModel::ZLTextPlainModel(const std::string &language, const size_t rowSize,
+ZLTextPlainModel::ZLTextPlainModel(const std::string &id, const std::string &language, const size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension) :
-	ZLTextModel(language, rowSize, directoryName, fileExtension) {
+	ZLTextModel(id, language, rowSize, directoryName, fileExtension) {
 }
 
 void ZLTextPlainModel::createParagraph(ZLTextParagraph::Kind kind) {

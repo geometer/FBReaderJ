@@ -38,9 +38,11 @@ public:
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Paths;
-	static const char * const Class_ZLTextNativeModel;
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
+	static const char * const Class_BookModel;
+	static const char * const Class_ZLTextNativeModel;
+	static const char * const Class_NativeBookModel;
 
 	static jmethodID SMID_ZLFile_createFileByPath;
 	static jmethodID MID_ZLFile_size;
@@ -69,9 +71,10 @@ public:
 
 	static jmethodID SMID_Paths_cacheDirectory;
 
-	static jmethodID MID_ZLTextNativeModel_init;
-
 	static jfieldID FID_Book_File;
+	static jmethodID MID_Book_getTitle;
+	static jmethodID MID_Book_getLanguage;
+	static jmethodID MID_Book_getEncoding;
 	static jmethodID MID_Book_setTitle;
 	static jmethodID MID_Book_setSeriesInfo;
 	static jmethodID MID_Book_setLanguage;
@@ -80,6 +83,12 @@ public:
 	static jmethodID MID_Book_addTag;
 
 	static jmethodID SMID_Tag_getTag;
+
+	static jfieldID FID_BookModel_Book;
+
+	static jmethodID MID_ZLTextNativeModel_init;
+
+	static jmethodID MID_NativeBookModel_setTextModel;
 
 public:
 	static void init(JavaVM* jvm);

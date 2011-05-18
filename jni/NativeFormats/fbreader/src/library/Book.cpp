@@ -20,6 +20,8 @@
 #include <algorithm>
 #include <set>
 
+#include <AndroidUtil.h>
+
 #include <ZLStringUtil.h>
 #include <ZLFile.h>
 #include <ZLLanguageList.h>
@@ -78,6 +80,40 @@ shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 
 	return book;
 }
+
+shared_ptr<Book> Book::loadFromJavaBook(JNIEnv *env, jobject javaBook) {
+	jstring javaString;
+	const char *data;
+
+	jobject javaFile = env->GetObjectField(javaBook, AndroidUtil::FID_Book_File);
+	javaString = (jstring) env->CallObjectMethod(javaFile, AndroidUtil::MID_ZLFile_getPath);
+	data = env->GetStringUTFChars(javaString, 0);
+	const std::string path(data);
+	env->ReleaseStringUTFChars(javaString, data);
+	env->DeleteLocalRef(javaString);
+	env->DeleteLocalRef(javaFile);
+
+	javaString = (jstring) env->CallObjectMethod(javaBook, AndroidUtil::MID_Book_getTitle);
+	data = env->GetStringUTFChars(javaString, 0);
+	const std::string title(data);
+	env->ReleaseStringUTFChars(javaString, data);
+	env->DeleteLocalRef(javaString);
+
+	javaString = (jstring) env->CallObjectMethod(javaBook, AndroidUtil::MID_Book_getLanguage);
+	data = env->GetStringUTFChars(javaString, 0);
+	const std::string language(data);
+	env->ReleaseStringUTFChars(javaString, data);
+	env->DeleteLocalRef(javaString);
+
+	javaString = (jstring) env->CallObjectMethod(javaBook, AndroidUtil::MID_Book_getEncoding);
+	data = env->GetStringUTFChars(javaString, 0);
+	const std::string encoding(data);
+	env->ReleaseStringUTFChars(javaString, data);
+	env->DeleteLocalRef(javaString);
+
+	return createBook(ZLFile(path), 0, encoding, language, title);
+}
+
 
 bool Book::addTag(shared_ptr<Tag> tag) {
 	if (tag.isNull()) {

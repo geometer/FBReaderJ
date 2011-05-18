@@ -35,7 +35,7 @@ public class PlainBookModel extends BookModel {
 
 	public final ZLTextModel BookTextModel;
 
-	public PlainBookModel(Book book) {
+	PlainBookModel(Book book) {
 		super(book);
 		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
 	}

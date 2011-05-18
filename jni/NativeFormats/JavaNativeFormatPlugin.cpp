@@ -30,14 +30,16 @@
 #include <AndroidUtil.h>
 
 #include <ZLFile.h>
+#include <ZLTextModel.h>
 
+#include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
 #include "fbreader/src/library/Book.h"
 #include "fbreader/src/library/Author.h"
 #include "fbreader/src/library/Tag.h"
 
 
-static FormatPlugin *extractPointer(JNIEnv *env, jobject base) {
+static inline FormatPlugin *extractPointer(JNIEnv *env, jobject base) {
 	jlong ptr = env->GetLongField(base, AndroidUtil::FID_NativeFormatPlugin_NativePointer);
 	if (ptr == 0) {
 		jclass cls = env->FindClass("org/geometerplus/fbreader/formats/NativeFormatPluginException");
@@ -47,7 +49,7 @@ static FormatPlugin *extractPointer(JNIEnv *env, jobject base) {
 }
 
 
-static jstring createJavaString(JNIEnv* env, const std::string &str) {
+static inline jstring createJavaString(JNIEnv* env, const std::string &str) {
 	if (str.empty()) {
 		return 0;
 	}
@@ -59,7 +61,7 @@ extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_acceptsFile(JNIEnv* env, jobject thiz, jobject file) {
 	FormatPlugin *plugin = extractPointer(env, thiz);
 	if (plugin == 0) {
-		return 0;
+		return JNI_FALSE;
 	}
 	jstring javaPath = (jstring) env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
 	const char *pathData = env->GetStringUTFChars(javaPath, 0);
@@ -114,18 +116,10 @@ extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfo(JNIEnv* env, jobject thiz, jobject javaBook) {
 	FormatPlugin *plugin = extractPointer(env, thiz);
 	if (plugin == 0) {
-		return 0;
+		return JNI_FALSE;
 	}
 
-	jobject javaFile = env->GetObjectField(javaBook, AndroidUtil::FID_Book_File);
-	jstring javaPath = (jstring) env->CallObjectMethod(javaFile, AndroidUtil::MID_ZLFile_getPath);
-	const char *pathData = env->GetStringUTFChars(javaPath, 0);
-	const std::string path(pathData);
-	env->ReleaseStringUTFChars(javaPath, pathData);
-	env->DeleteLocalRef(javaPath);
-	env->DeleteLocalRef(javaFile);
-
-	shared_ptr<Book> book = new Book(ZLFile(path), 0);
+	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
 	if (!plugin->readMetaInfo(*book)) {
 		return JNI_FALSE;
 	}
@@ -134,13 +128,48 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	return JNI_TRUE;
 }
 
+
+static jobject createTextModel(JNIEnv *env, ZLTextModel &model) {
+	model.flush();
+
+	jstring id = createJavaString(env, model.id());
+	jstring language = createJavaString(env, model.language());
+	jint paragraphsNumber = model.paragraphsNumber();
+
+	// TODO: implement
+	jintArray entryIndices = env->NewIntArray(0);
+	jintArray entryOffsets = env->NewIntArray(0);
+	jintArray paragraphLenghts = env->NewIntArray(0);
+	jintArray textSizes = env->NewIntArray(0);
+	jbyteArray paragraphKinds = env->NewByteArray(0);
+
+	jclass cls = env->FindClass(AndroidUtil::Class_ZLTextNativeModel);
+	return env->NewObject(cls, AndroidUtil::MID_ZLTextNativeModel_init,
+			id, language, paragraphsNumber,
+			entryIndices, entryOffsets, paragraphLenghts, textSizes,
+			paragraphKinds);
+}
+
 extern "C"
-JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModel(JNIEnv* env, jobject thiz, jobject model) {
+JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModel(JNIEnv* env, jobject thiz, jobject javaModel) {
 	FormatPlugin *plugin = extractPointer(env, thiz);
 	if (plugin == 0) {
-		return 0;
+		return JNI_FALSE;
 	}
-	return JNI_FALSE;
+
+	jobject javaBook = env->GetObjectField(javaModel, AndroidUtil::FID_BookModel_Book);
+
+	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
+	shared_ptr<BookModel> model = new BookModel(book);
+	if (!plugin->readModel(*model)) {
+		return JNI_FALSE;
+	}
+
+	shared_ptr<ZLTextModel> textModel = model->bookTextModel();
+	jobject javaTextModel = createTextModel(env, *textModel);
+
+	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setTextModel, javaTextModel);
+	return JNI_TRUE;
 }
 
 extern "C"

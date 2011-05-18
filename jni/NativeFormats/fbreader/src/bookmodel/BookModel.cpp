@@ -29,7 +29,7 @@
 
 BookModel::BookModel(const shared_ptr<Book> book) : myBook(book) {
 	const std::string cacheDirectory = Library::Instance().cacheDirectory();
-	myBookTextModel = new ZLTextPlainModel(book->language(), 65536 * 2, cacheDirectory, "ncache");
+	myBookTextModel = new ZLTextPlainModel(std::string(), book->language(), 65536 * 2, cacheDirectory, "ncache");
 	myContentsModel = new ContentsModel(book->language(), cacheDirectory, "ncontents");
 	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(book->file(), false);
 	if (!plugin.isNull()) {
@@ -55,7 +55,7 @@ BookModel::Label BookModel::label(const std::string &id) const {
 
 ContentsModel::ContentsModel(const std::string &language,
 		const std::string &directoryName, const std::string &fileExtension) :
-	ZLTextTreeModel(language, directoryName, fileExtension) {
+	ZLTextTreeModel(std::string(), language, directoryName, fileExtension) {
 }
 
 void ContentsModel::setReference(const ZLTextTreeParagraph *paragraph, int reference) {

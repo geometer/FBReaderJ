@@ -25,7 +25,7 @@ public class ZLTextNativeModel extends ZLTextPlainModel {
 			int[] entryIndices, int[] entryOffsets, int[] paragraphLenghts, int[] textSizes,
 			byte[] paragraphKinds) {
 		super(id, language, entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds,
-				null, null);
+				null, null); // TODO: implement
 		myParagraphsNumber = paragraphsNumber;
 	}
 

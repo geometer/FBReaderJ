@@ -29,7 +29,7 @@ public class NativeBookModel extends BookModel {
 
 	private ZLTextModel myBookTextModel;
 
-	public NativeBookModel(Book book) {
+	NativeBookModel(Book book) {
 		super(book);
 	}
 
@@ -37,6 +37,7 @@ public class NativeBookModel extends BookModel {
 	public void setTextModel(ZLTextModel model) {
 		myBookTextModel = model;
 	}
+
 
 	@Override
 	public ZLTextModel getTextModel() {

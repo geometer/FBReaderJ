@@ -20,6 +20,8 @@
 #ifndef __BOOK_H__
 #define __BOOK_H__
 
+#include <jni.h>
+
 #include <string>
 
 #include <shared_ptr.h>
@@ -49,6 +51,8 @@ public:
 
 	// this method is used in Migration only
 	//static shared_ptr<Book> loadFromBookInfo(const ZLFile &file);
+
+	static shared_ptr<Book> loadFromJavaBook(JNIEnv *env, jobject javaBook);
 
 public:
 	Book(const ZLFile &file, int id);

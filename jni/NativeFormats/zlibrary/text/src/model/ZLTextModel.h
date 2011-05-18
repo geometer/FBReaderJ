@@ -42,13 +42,14 @@ public:
 	};
 
 protected:
-	ZLTextModel(const std::string &language, const size_t rowSize,
+	ZLTextModel(const std::string &id, const std::string &language, const size_t rowSize,
 			const std::string &directoryName, const std::string &fileExtension);
 
 public:
 	virtual ~ZLTextModel();
 	virtual Kind kind() const = 0;
 
+	const std::string &id() const;
 	const std::string &language() const;
 	bool isRtl() const;
 
@@ -83,6 +84,7 @@ protected:
 	void checkUtf8Text();
 
 private:
+	const std::string myId;
 	const std::string myLanguage;
 	std::vector<ZLTextParagraph*> myParagraphs;
 	mutable std::vector<ZLTextMark> myMarks;
@@ -98,7 +100,7 @@ private:
 class ZLTextPlainModel : public ZLTextModel {
 
 public:
-	ZLTextPlainModel(const std::string &language, const size_t rowSize,
+	ZLTextPlainModel(const std::string &id, const std::string &language, const size_t rowSize,
 			const std::string &directoryName, const std::string &fileExtension);
 	Kind kind() const;
 	void createParagraph(ZLTextParagraph::Kind kind);
@@ -107,7 +109,7 @@ public:
 class ZLTextTreeModel : public ZLTextModel {
 
 public:
-	ZLTextTreeModel(const std::string &language,
+	ZLTextTreeModel(const std::string &id, const std::string &language,
 			const std::string &directoryName, const std::string &fileExtension);
 	~ZLTextTreeModel();
 	Kind kind() const;
@@ -121,6 +123,8 @@ private:
 	ZLTextTreeParagraph *myRoot;
 };
 
+inline const std::string &ZLTextModel::id() const { return myId; }
+inline const std::string &ZLTextModel::language() const { return myLanguage; }
 inline size_t ZLTextModel::paragraphsNumber() const { return myParagraphs.size(); }
 inline const std::vector<ZLTextMark> &ZLTextModel::marks() const { return myMarks; }
 inline void ZLTextModel::removeAllMarks() { myMarks.clear(); }
