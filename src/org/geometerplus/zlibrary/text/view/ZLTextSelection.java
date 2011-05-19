@@ -1,8 +1,5 @@
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class ZLTextSelection {
 	private static final int SELECTION_DISTANCE = 10;  
 
@@ -310,25 +307,24 @@ public class ZLTextSelection {
 	}
 	
 	private class Scroller {
-		private final Timer myTimer = new Timer();
-		private TimerTask myScrollingTask;
+		private Runnable myScrollingTask;
 		private int myStoredX, myStoredY;
 		private boolean myScrollForward;
 
 		private void start(int x, int y) {
 			myStoredX = x;
 			myStoredY = y;
-			myScrollingTask = new TimerTask() {
+			myScrollingTask = new Runnable() {
 				public void run() {
 					myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				}
 			};
-			myTimer.schedule(myScrollingTask, 200, 400);
+			myView.Application.addTimerTask(myScrollingTask, 400);
 		}
 
 		private void stop() {
 			if (myScrollingTask != null) {
-				myScrollingTask.cancel();
+				myView.Application.removeTimerTask(myScrollingTask);
 			}
 			myScrollingTask = null;
 		}
