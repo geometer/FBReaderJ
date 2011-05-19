@@ -627,12 +627,12 @@ public final class FBView extends ZLTextView {
 		myIsNowSelecting = true;
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}
+
 	protected void onSelectingEnded() {
 		super.onSelectingEnded();
 		myIsNowSelecting = false;
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}
-
 
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
 
