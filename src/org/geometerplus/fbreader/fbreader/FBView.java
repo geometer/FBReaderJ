@@ -118,7 +118,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myHasSelectionExpanded) {
+		if (isSelectionModeActive()) {
 			onSelectingStarted();
 			return true;
 		}
@@ -193,7 +193,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
-			if (myHasSelectionExpanded) {
+			if (isSelectionModeActive()) {
 				onSelectingEnded();
 				return true;
 			}
@@ -274,7 +274,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myHasSelectionExpanded) {
+		if (isSelectionModeActive()) {
 			onSelectingEnded();
 			return true;
 		}
@@ -582,7 +582,6 @@ public final class FBView extends ZLTextView {
 	}
 
 	private boolean myIsSelectionModeActive;
-	private boolean myHasSelectionExpanded;
 	private boolean myIsNowSelecting;
 
 	public boolean isSelectionModeActive() {
@@ -600,7 +599,6 @@ public final class FBView extends ZLTextView {
 
 		if (startSelection(x, y)) {
 			myIsSelectionModeActive = true;
-			myHasSelectionExpanded = true;
 		}
 	}
 
@@ -610,7 +608,6 @@ public final class FBView extends ZLTextView {
 		}
 		clearSelection();
 		myIsSelectionModeActive = false;
-		myHasSelectionExpanded = false;
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}
 
@@ -618,7 +615,6 @@ public final class FBView extends ZLTextView {
 		if (!super.expandSelectionTo(x, y)) {
 			return false;
 		}
-		myHasSelectionExpanded = true;
 		selectRegion(null); // removing the rendering of initially selected region.
 		return true;
 	}
