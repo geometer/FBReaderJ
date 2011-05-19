@@ -74,18 +74,20 @@ public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 		return myHull;
 	}
 
-	public int getFromIndex() {
-	    return myFromIndex;
+	ZLTextElementArea getFirstArea() {
+		return myList.get(myFromIndex);
 	}
-	public int getToIndex() {
-	    return myToIndex;
+
+	ZLTextElementArea getLastArea() {
+		return myList.get(myToIndex - 1);
 	}
+
 	public int getTop() {
-		return myList.get(myFromIndex).YStart;
+		return getFirstArea().YStart;
 	}
 
 	public int getBottom() {
-		return myList.get(myToIndex - 1).YEnd;
+		return getLastArea().YEnd;
 	}
 
 	void draw(ZLPaintContext context) {
@@ -99,7 +101,7 @@ public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 	boolean isAtRightOf(ZLTextRegion other) {
 		return
 			other == null ||
-			myList.get(myFromIndex).XStart >= other.myList.get(other.myToIndex - 1).XEnd;
+			getFirstArea().XStart >= other.getLastArea().XEnd;
 	}
 
 	boolean isAtLeftOf(ZLTextRegion other) {
@@ -109,7 +111,7 @@ public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 	boolean isUnder(ZLTextRegion other) {
 		return
 			other == null ||
-			myList.get(myFromIndex).YStart >= other.myList.get(other.myToIndex - 1).YEnd;
+			getFirstArea().YStart >= other.getLastArea().YEnd;
 	}
 
 	boolean isOver(ZLTextRegion other) {

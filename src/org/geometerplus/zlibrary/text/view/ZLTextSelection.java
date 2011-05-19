@@ -283,7 +283,7 @@ public class ZLTextSelection {
 	private class StartBound extends Bound {
 		@Override
 		protected ZLTextElementArea getArea(ZLTextRegion region) {
-			return getTextElementMap().get(region.getFromIndex());
+			return region.getFirstArea();
 		}
 
 		@Override
@@ -305,7 +305,7 @@ public class ZLTextSelection {
 	private class EndBound extends Bound {
 		@Override
 		protected ZLTextElementArea getArea(ZLTextRegion region) {
-			return getTextElementMap().get(region.getToIndex() - 1);
+			return region.getLastArea();
 		}
 
 		@Override
