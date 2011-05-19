@@ -545,7 +545,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				final int areaX = area.XStart;
 				final int areaY = area.YEnd - getElementDescent(element) - getTextStyle().getVerticalShift();
 				if (element instanceof ZLTextWord) {
-					drawWord(areaX, areaY, (ZLTextWord)element, charIndex, -1, false);
+					drawWord(
+						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
+						getTextColor(getTextStyle().Hyperlink)
+					);
 				} else if (element instanceof ZLTextImageElement) {
 					context.drawImage(areaX, areaY, ((ZLTextImageElement)element).ImageData);
 				} else if (element == ZLTextElement.HSpace) {
@@ -572,7 +575,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			final ZLTextWord word = (ZLTextWord)paragraph.getElement(info.EndElementIndex);
 			drawWord(
 				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalShift(),
-				word, 0, len, area.AddHyphenationSign
+				word, 0, len, area.AddHyphenationSign,
+				getTextColor(getTextStyle().Hyperlink)	
 			);
 		}
 	}
