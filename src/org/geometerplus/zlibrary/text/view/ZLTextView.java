@@ -290,10 +290,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			labels[++index] = page.TextElementMap.size();
 		}
 
-		if (page == myCurrentPage) {
-			mySelection.update();
-		}
-
 		y = getTopMargin();
 		index = 0;
 		for (ZLTextLineInfo info : lineInfos) {
@@ -966,7 +962,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private synchronized void preparePaintInfo(ZLTextPage page) {
 		int newWidth = getTextAreaWidth();
 		int newHeight = getTextAreaHeight();
-		if ((newWidth != page.OldWidth) || (newHeight != page.OldHeight)) {
+		if (newWidth != page.OldWidth || newHeight != page.OldHeight) {
 			page.OldWidth = newWidth;
 			page.OldHeight = newHeight;
 			if (page.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {

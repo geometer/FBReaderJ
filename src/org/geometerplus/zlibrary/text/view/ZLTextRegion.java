@@ -23,7 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-public abstract class ZLTextRegion {
+public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 	public static interface Filter {
 		boolean accepts(ZLTextRegion region);
 	}
@@ -141,4 +141,14 @@ public abstract class ZLTextRegion {
 
 	@Override
 	public abstract boolean equals(Object other);
+
+	public int compareTo(ZLTextRegion other) {
+		if (myFromIndex != other.myFromIndex) {
+			return myFromIndex < other.myFromIndex ? -1 : 1;
+		}
+		if (myToIndex != other.myToIndex) {
+			return myToIndex < other.myToIndex ? -1 : 1;
+		}
+		return 0;
+	}
 }
