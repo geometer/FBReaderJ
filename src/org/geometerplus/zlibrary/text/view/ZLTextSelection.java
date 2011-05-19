@@ -245,7 +245,6 @@ public class ZLTextSelection {
 
 		protected abstract void clear();
 		protected abstract ZLTextElementArea getArea(ZLTextRegion region);
-		protected abstract boolean isYOutOfPage(int y);
 		protected abstract boolean isExpandedBy(ZLTextElementArea area);
 		protected abstract boolean isAreaWithin(ZLTextElementArea area);
 	}
@@ -254,12 +253,6 @@ public class ZLTextSelection {
 		@Override
 		protected ZLTextElementArea getArea(ZLTextRegion region) {
 			return getTextElementMap().get(region.getFromIndex());
-		}
-
-		@Override
-		protected boolean isYOutOfPage(int y) {
-			final ZLTextElementArea startPageArea = getTextElementMap().get(0);
-			return (startPageArea.YStart + startPageArea.YEnd) / 2 > y;
 		}
 
 		@Override
@@ -282,12 +275,6 @@ public class ZLTextSelection {
 		@Override
 		protected ZLTextElementArea getArea(ZLTextRegion region) {
 			return getTextElementMap().get(region.getToIndex() - 1);
-		}
-
-		@Override
-		protected boolean isYOutOfPage(int y) {
-			final ZLTextElementArea endPageArea = getTextElementMap().get(getTextElementMap().size() - 1);
-			return (endPageArea.YStart + endPageArea.YEnd) / 2 < y;
 		}
 
 		@Override
@@ -317,6 +304,7 @@ public class ZLTextSelection {
 			myScrollingTask = new Runnable() {
 				public void run() {
 					myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+					myView.Application.getViewWidget().reset();
 					myView.Application.getViewWidget().repaint();
 				}
 			};

@@ -611,14 +611,6 @@ public final class FBView extends ZLTextView {
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}
 
-	protected boolean expandSelectionTo(int x, int y) {
-		if (!super.expandSelectionTo(x, y)) {
-			return false;
-		}
-		selectRegion(null); // removing the rendering of initially selected region.
-		return true;
-	}
-
 	protected void onSelectingStarted() {
 		myIsNowSelecting = true;
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
