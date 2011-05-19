@@ -53,7 +53,7 @@ public class ZLTextSelection {
 		}
 		final ZLTextRegion newSelectedRegion = findSelectedRegion(x, y);
 
-		myScroller.stop();
+		//myScroller.stop();
 		// possible page rim.
 		if (newSelectedRegion == null) {
 			return myScroller.handle(x, y, newSelectedRegion);
@@ -317,13 +317,16 @@ public class ZLTextSelection {
 			myScrollingTask = new Runnable() {
 				public void run() {
 					myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+					myView.Application.getViewWidget().repaint();
 				}
 			};
+			System.err.println("adding timer task");
 			myView.Application.addTimerTask(myScrollingTask, 400);
 		}
 
 		private void stop() {
 			if (myScrollingTask != null) {
+				System.err.println("removing timer task");
 				myView.Application.removeTimerTask(myScrollingTask);
 			}
 			myScrollingTask = null;
@@ -336,9 +339,9 @@ public class ZLTextSelection {
 		}
 
 		private boolean handle(int x, int y, ZLTextRegion newSelectedRegion) {
-			if (myLeftBound.isYOutOfPage(y)) {
+			if (y < 10) {
 				myScrollForward = false;
-			} else if (myRightBound.isYOutOfPage(y)) {
+			} else if (y > myView.getTextAreaHeight() - 10) {
 				myScrollForward = true;
 			} else {
 				return false; // the whitespace is within the page.
