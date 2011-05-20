@@ -381,7 +381,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			dictionaryScreen.Resource,
 			"navigateOverAllWords"
 		));
-		dictionaryScreen.addOption(fbReader.DictionaryTappingActionOption, "tappingAction");
+		dictionaryScreen.addOption(fbReader.WordTappingActionOption, "tappingAction");
 
 		final Screen imagesScreen = createPreferenceScreen("images");
 		imagesScreen.addOption(fbReader.ImageTappingActionOption, "tappingAction");
