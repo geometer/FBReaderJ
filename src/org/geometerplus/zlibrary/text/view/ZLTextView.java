@@ -575,7 +575,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				if (element instanceof ZLTextWord) {
 					drawWord(
 						areaX, areaY, (ZLTextWord)element, charIndex, -1, false,
-						getTextColor(getTextStyle().Hyperlink)
+						mySelection.isAreaSelected(area)
+							? getSelectedForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
 					context.drawImage(areaX, areaY, ((ZLTextImageElement)element).ImageData);
@@ -604,7 +605,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			drawWord(
 				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalShift(),
 				word, 0, len, area.AddHyphenationSign,
-				getTextColor(getTextStyle().Hyperlink)	
+				mySelection.isAreaSelected(area)
+					? getSelectedForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 			);
 		}
 	}
