@@ -22,6 +22,8 @@ public final class ZipFile {
 
     private final InputStreamHolder myStreamHolder;
     private final LinkedHashMap<String,LocalFileHeader> myFileHeaders = new LinkedHashMap<String,LocalFileHeader>() {
+		private static final long serialVersionUID = -4412796553514902113L;
+
 		@Override
 		public LocalFileHeader get(Object key) {
 			return super.get(((String)key).toLowerCase());

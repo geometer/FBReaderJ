@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.*;
@@ -43,7 +42,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private CharSequence mySummary;
 
-	private final UrlInfoCollection myUrls = new UrlInfoCollection();
+	private final UrlInfoCollection<UrlInfo> myUrls = new UrlInfoCollection<UrlInfo>();
 
 	private String myAuthorFirstName;
 	private String myAuthorMiddleName;

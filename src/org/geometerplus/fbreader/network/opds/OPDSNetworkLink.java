@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
@@ -134,7 +133,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public NetworkCatalogItem libraryItem() {
-		final UrlInfoCollection urlMap = new UrlInfoCollection();
+		final UrlInfoCollection<UrlInfo> urlMap = new UrlInfoCollection<UrlInfo>();
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Thumbnail));

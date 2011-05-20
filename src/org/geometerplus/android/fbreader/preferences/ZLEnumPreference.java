@@ -32,7 +32,7 @@ class ZLEnumPreference<T extends Enum<T>> extends ZLStringListPreference {
 		myOption = option;
 
 		final T initialValue = option.getValue();
-		final Enum[] allValues = initialValue.getClass().getEnumConstants();
+		final T[] allValues = initialValue.getDeclaringClass().getEnumConstants();
 		final String[] stringValues = new String[allValues.length];
 		for (int i = 0; i < stringValues.length; ++i) {
 			stringValues[i] = allValues[i].toString();
@@ -42,6 +42,6 @@ class ZLEnumPreference<T extends Enum<T>> extends ZLStringListPreference {
 	}
 
 	public void onAccept() {
-		myOption.setValue((T)Enum.valueOf(myOption.getValue().getClass(), getValue()));
+		myOption.setValue(Enum.valueOf(myOption.getValue().getDeclaringClass(), getValue()));
 	}
 }

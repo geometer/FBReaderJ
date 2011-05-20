@@ -20,6 +20,8 @@
 package org.geometerplus.fbreader.network.urlInfo;
 
 public class DecoratedBookUrlInfo extends BookUrlInfo {
+	private static final long serialVersionUID = 8558634525845586904L;
+
 	private final String myCleanUrl;
 
 	public DecoratedBookUrlInfo(BookUrlInfo base, String url) {
