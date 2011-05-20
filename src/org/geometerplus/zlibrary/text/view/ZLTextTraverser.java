@@ -33,9 +33,9 @@ public abstract class ZLTextTraverser {
 	public void traverse(ZLTextPosition from, ZLTextPosition to) {
 		final int fromParagraph = from.getParagraphIndex();
 		final int toParagraph = to.getParagraphIndex();
+		ZLTextParagraphCursor cursor =
+			ZLTextParagraphCursor.cursor(myView.getModel(), fromParagraph);
 		for (int i = fromParagraph; i <= toParagraph; ++i) {
-			final ZLTextParagraphCursor cursor =
-				ZLTextParagraphCursor.cursor(myView.getModel(), i);
 			final int fromElement = i == fromParagraph ? from.getElementIndex() : 0;
 			final int toElement = i == toParagraph ? to.getElementIndex() : cursor.getParagraphLength() - 1;
         
@@ -49,6 +49,7 @@ public abstract class ZLTextTraverser {
 			}
 			if (i < toParagraph) {
 				processEndOfParagraph();
+				cursor = cursor.next();
 			}
 		}
 	}
