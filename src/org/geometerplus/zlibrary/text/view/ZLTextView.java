@@ -1339,6 +1339,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public boolean isSelectionEmpty() {
 		return mySelection.isEmpty();
 	}
+
 	public void resetRegionPointer() {
 		mySelectedRegion = null;
 		myHighlightSelectedRegion = true;
