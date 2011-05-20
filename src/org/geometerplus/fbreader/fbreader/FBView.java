@@ -157,7 +157,6 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
-
 			if (isSelectionModeActive()) {
 				expandSelectionTo(x, y);
 				return true;
