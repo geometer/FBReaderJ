@@ -639,6 +639,6 @@ public final class FBView extends ZLTextView {
 		if (!isSelectionEmpty()) {
 			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
 		}
-		return traverser.toString();
+		return traverser.getText();
 	}
 }

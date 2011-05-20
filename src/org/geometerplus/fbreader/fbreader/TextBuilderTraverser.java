@@ -22,7 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 import org.geometerplus.zlibrary.text.view.*;
 
 class TextBuilderTraverser extends ZLTextTraverser {
-	private final StringBuilder myBuffer = new StringBuilder();
+	protected final StringBuilder myBuffer = new StringBuilder();
 
 	TextBuilderTraverser(ZLTextView view) {
 		super(view);
@@ -48,8 +48,7 @@ class TextBuilderTraverser extends ZLTextTraverser {
 		myBuffer.append("\n");
 	}
 
-	@Override
-	public String toString() {
+	public String getText() {
 		return myBuffer.toString();
 	}
 }
