@@ -19,14 +19,12 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.*;
-
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.atom.*;
 
-public class OPDSXMLReader extends ATOMXMLReader {
+public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 	public static final String KEY_PRICE = "price";
 
 	private DCDate myDCIssued;
@@ -37,11 +35,11 @@ public class OPDSXMLReader extends ATOMXMLReader {
 	}
 
 	protected final OPDSFeedMetadata getOPDSFeed() {
-		return (OPDSFeedMetadata)getATOMFeed();
+		return getATOMFeed();
 	}
 
 	protected final OPDSEntry getOPDSEntry() {
-		return (OPDSEntry)getATOMEntry();
+		return getATOMEntry();
 	}
 
 	protected final OPDSLink getOPDSLink() {

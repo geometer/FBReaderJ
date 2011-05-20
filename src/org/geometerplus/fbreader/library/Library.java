@@ -209,7 +209,7 @@ public final class Library {
 		}
 	}
 
-	private final ArrayList myNullList = new ArrayList(1);
+	private final ArrayList<?> myNullList = new ArrayList<Object>(1);
 	{
 		myNullList.add(null);
 	}

@@ -129,7 +129,7 @@ class AnimationSpeedPreference extends DialogPreference implements ZLPreference 
 			final int max = mySlider.getMax();
 			if (progress >= max / 3) {
 				final String text = myResource.getResource("slow").getValue();
-				final float textWidth = myOutlinePaint.measureText(text);
+				//final float textWidth = myOutlinePaint.measureText(text);
 				final float x = 6;
 				canvas.drawText(text, x, y, myOutlinePaint);
 				canvas.drawText(text, x, y, myPaint);
