@@ -107,7 +107,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myCurrentPage.StartCursor.isNull()) {
 			return;
 		}
-		if ((myCurrentPage.StartCursor.getParagraphIndex() != mark.ParagraphIndex) || (myCurrentPage.StartCursor.getMark().compareTo(mark) > 0)) {
+		if (myCurrentPage.StartCursor.getParagraphIndex() != mark.ParagraphIndex ||
+			myCurrentPage.StartCursor.getMark().compareTo(mark) > 0) {
 			doRepaint = true;
 			gotoPosition(mark.ParagraphIndex, 0, 0);
 			preparePaintInfo(myCurrentPage);
@@ -244,7 +245,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			context.clear(getBackgroundColor());
 		}
 
-		if ((myModel == null) || (myModel.getParagraphsNumber() == 0)) {
+		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return;
 		}
 
@@ -397,7 +398,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		final int num = myModel.getParagraphsNumber();
 		final int totalTextSize = myModel.getTextLength(num - 1);
-		final float charsPerParagraph = ((float) totalTextSize) / num;
+		final float charsPerParagraph = ((float)totalTextSize) / num;
 
 		final float charWidth = computeCharWidth();
 
@@ -421,7 +422,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		final float factor = 1.0f / computeCharsPerPage();
 		final float pages = textSize * factor;
-		return Math.max((int) (pages + 1.0f - 0.5f * factor), 1);
+		return Math.max((int)(pages + 1.0f - 0.5f * factor), 1);
 	}
 
 	private static final char[] ourDefaultLetters = "System developers have used modeling languages for decades to specify, visualize, construct, and document systems. The Unified Modeling Language (UML) is one of those languages. UML makes it possible for team members to collaborate by providing a common language that applies to a multitude of different systems. Essentially, it enables you to communicate solutions in a consistent, tool-supported language.".toCharArray();
@@ -467,7 +468,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private final float computeCharWidth(char[] pattern, int length) {
-		return myContext.getStringWidth(pattern, 0, length) / ((float) length);
+		return myContext.getStringWidth(pattern, 0, length) / ((float)length);
 	}
 
 	public final synchronized int computePageNumber() {
@@ -536,7 +537,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		for (int wordIndex = info.RealStartElementIndex; (wordIndex != endElementIndex) && (index < to); ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			final ZLTextElementArea area = page.TextElementMap.get(index);
-			//if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
 			if (element == area.Element) {
 				index++;
 				if (area.ChangeStyle) {
@@ -596,7 +596,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			while (info.EndElementIndex != endIndex) {
 				info = processTextLine(paragraphCursor, info.EndElementIndex, info.EndCharIndex, endIndex);
 				textAreaHeight -= info.Height + info.Descent;
-				if ((textAreaHeight < 0) && (counter > 0)) {
+				if (textAreaHeight < 0 && counter > 0) {
 					break;
 				}
 				textAreaHeight -= info.VSpaceAfter;
@@ -697,7 +697,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				wordOccurred = true;
 				isVisible = true;
 			}
-			if ((newWidth > maxWidth) && (info.EndElementIndex != startIndex)) {
+			if (newWidth > maxWidth && info.EndElementIndex != startIndex) {
 				break;
 			}
 			ZLTextElement previousElement = element;
@@ -706,7 +706,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			boolean allowBreak = currentElementIndex == endIndex;
 			if (!allowBreak) {
 				element = paragraphCursor.getElement(currentElementIndex);
-				allowBreak = (((!(element instanceof ZLTextWord)) || (previousElement instanceof ZLTextWord)) &&
+				allowBreak = ((!(element instanceof ZLTextWord) || previousElement instanceof ZLTextWord) &&
 						!(element instanceof ZLTextImageElement) &&
 						!(element instanceof ZLTextControlElement));
 			}
@@ -727,15 +727,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 		} while (currentElementIndex != endIndex);
 
-		if ((currentElementIndex != endIndex)
-			&& (ZLTextStyleCollection.Instance().getBaseStyle().AutoHyphenationOption.getValue())
-			&& (getTextStyle().allowHyphenations())) {
+		if (currentElementIndex != endIndex
+			&& ZLTextStyleCollection.Instance().getBaseStyle().AutoHyphenationOption.getValue()
+			&& getTextStyle().allowHyphenations()) {
 			ZLTextElement element = paragraphCursor.getElement(currentElementIndex);
 			if (element instanceof ZLTextWord) {
 				final ZLTextWord word = (ZLTextWord)element;
 				newWidth -= getWordWidth(word, currentCharIndex);
 				int spaceLeft = maxWidth - newWidth;
-				if ((word.Length > 3) && (spaceLeft > 2 * context.getSpaceWidth())) {
+				if (word.Length > 3 && spaceLeft > 2 * context.getSpaceWidth()) {
 					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
@@ -781,7 +781,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			info.VSpaceAfter = getTextStyle().getSpaceAfter();
 		}
 
-		if ((info.EndElementIndex != endIndex) || (endIndex == info.ParagraphCursorLength)) {
+		if (info.EndElementIndex != endIndex || endIndex == info.ParagraphCursorLength) {
 			myLineInfoCache.put(info, info);
 		}
 
@@ -845,7 +845,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					wordOccurred = false;
 					--spaceCounter;
 				}
-			} else if ((element instanceof ZLTextWord) || (element instanceof ZLTextImageElement)) {
+			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement) {
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = (element instanceof ZLTextWord) ? ((ZLTextWord)element).Length : 0;
@@ -935,7 +935,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private synchronized void preparePaintInfo(ZLTextPage page) {
 		int newWidth = getTextAreaWidth();
 		int newHeight = getTextAreaHeight();
-		if ((newWidth != page.OldWidth) || (newHeight != page.OldHeight)) {
+		if (newWidth != page.OldWidth || newHeight != page.OldHeight) {
 			page.OldWidth = newWidth;
 			page.OldHeight = newHeight;
 			if (page.PaintState != PaintStateEnum.NOTHING_TO_PAINT) {
@@ -960,7 +960,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 		}
 
-		if ((page.PaintState == PaintStateEnum.NOTHING_TO_PAINT) || (page.PaintState == PaintStateEnum.READY)) {
+		if (page.PaintState == PaintStateEnum.NOTHING_TO_PAINT || page.PaintState == PaintStateEnum.READY) {
 			return;
 		}
 
@@ -999,7 +999,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					if (!startCursor.isNull()) {
 						final ZLTextWordCursor endCursor = new ZLTextWordCursor();
 						buildInfos(page, startCursor, endCursor);
-						if (!page.isEmptyPage() && ((myScrollingMode != ScrollingMode.KEEP_LINES) || (!endCursor.samePositionAs(page.EndCursor)))) {
+						if (!page.isEmptyPage() && (myScrollingMode != ScrollingMode.KEEP_LINES || !endCursor.samePositionAs(page.EndCursor))) {
 							page.StartCursor.setCursor(startCursor);
 							page.EndCursor.setCursor(endCursor);
 							break;
