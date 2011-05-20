@@ -20,10 +20,12 @@
 package org.geometerplus.zlibrary.text.view;
 
 public class ZLTextSelection {
+	private final ZLTextView myView;
+
 	private ZLTextRegion myInitialRegion;
 	private ZLTextElementArea myLeftBound;
 	private ZLTextElementArea myRightBound;
-	private final ZLTextView myView;
+
 	private Scroller myScroller;
 
 	ZLTextSelection(ZLTextView view) {
