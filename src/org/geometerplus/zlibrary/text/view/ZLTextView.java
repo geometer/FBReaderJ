@@ -58,6 +58,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public ZLTextView(ZLApplication application) {
 		super(application);
+		mySelection = new ZLTextSelection(this);
 	}
 
 	public synchronized void setModel(ZLTextModel model) {
@@ -532,6 +533,31 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private void drawTextLine(ZLTextPage page, ZLTextLineInfo info, int from, int to, int y) {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		final ZLPaintContext context = myContext;
+
+		if (!mySelection.isEmpty() && from != to) {
+			final ZLTextElementArea fromArea = page.TextElementMap.get(from);
+			final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
+			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
+			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
+			if (fromArea.compareTo(selectionEndArea) <= 0
+				&& toArea.compareTo(selectionStartArea) >= 0) {
+				final int top = y + 1;
+				int left, right, bottom = y + info.Height + info.Descent;
+				if (selectionStartArea.compareTo(fromArea) < 0) {
+					left = getLeftMargin();
+				} else {
+					left = selectionStartArea.XStart;
+				}
+				if (selectionEndArea.compareTo(toArea) > 0) {
+					right = getRightLine();
+					bottom += info.VSpaceAfter;
+				} else {
+					right = selectionEndArea.XEnd;
+				}
+				context.setFillColor(getSelectedBackgroundColor());
+				context.fillRectangle(left, top, right, bottom);
+			}
+		}
 
 		int index = from;
 		final int endElementIndex = info.EndElementIndex;
@@ -1189,6 +1215,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private ZLTextRegion mySelectedRegion;
+	private ZLTextSelection mySelection;
 	private boolean myHighlightSelectedRegion = true;
 
 	public void hideSelectedRegionBorder() {
