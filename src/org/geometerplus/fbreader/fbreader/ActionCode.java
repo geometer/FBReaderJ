@@ -54,8 +54,5 @@ public interface ActionCode {
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
 
-	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
-	String CLEAR_SELECTION = "clearSelection";
-
 	String PROCESS_HYPERLINK = "processHyperlink";
 }

@@ -527,7 +527,7 @@
 				<node name="dictionary" value="พจนานุกรม"/>
 				<node name="tappingAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
 					<node name="doNothing" value="ไม่มีอะไรเกิดขึ้น"/>
-					<node name="selectWord" value="เลือกคำเมื่อกดค้างที่หน้าจอ"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="เลือกคำเมื่อกดค้างที่หน้าจอและไปยังพจนานุกรมเมื่อปล่อย"/>
 				</node>
 				<node name="navigateOverAllWords" value="ตัวเลือกคำสามารถเลือกได้ทุกคำ">
@@ -575,9 +575,6 @@
 					<node name="defaultEncodingSet" value="ค่าชุดการเข้ารหัสภาษาเริ่มต้น"/>
 					<node name="defaultEncoding" value="ค่าการเข้ารหัสภาษาเริ่มต้น"/>
 				</node>
-				<node name="Selection" value="การเลือก">
-					<node name="enableSelection" value="เปิดใช้งานการเลือกข้อความ"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -600,6 +597,9 @@
 			<node name="purchaseBook" value="กำลังซื้อหนังสือ, กรุณารอสักครู่..."/>
 			<node name="loadingCatalogInfo" value="กำลังดาวน์โหลข้อมูลของแคตตาล็อก, กรุณารอสักครู่..."/>
 			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..." />
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="เซิร์ฟเวอร์ภายในเกิดขัดข้อง"/>

@@ -302,10 +302,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			myResumeNotLoad = resumeNotLoad;
 		}
 
-		public String getResourceKey() {
-			return "downloadingCatalogs";
-		}
-
 		@Override
 		public void doBefore() throws ZLNetworkException {
 			final INetworkLink link = myTree.Item.Link;
@@ -365,7 +361,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return;
 			}
 			if (errorMessage != null) {
-				UIUtil.showErrorMessageText(activity, errorMessage);
+				UIUtil.showMessageText(activity, errorMessage);
 			} else if (childrenEmpty) {
 				UIUtil.showErrorMessage(activity, "emptyCatalog");
 			}

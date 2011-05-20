@@ -68,8 +68,17 @@ public final class Library {
 	}
 
 	public static ZLResourceFile getHelpFile() {
-		final ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + Locale.getDefault().getLanguage() + ".fb2"
+		final Locale locale = Locale.getDefault();
+
+		ZLResourceFile file = ZLResourceFile.createResourceFile(
+			"data/help/MiniHelp." + locale.getLanguage() + "_" + locale.getCountry() + ".fb2"
+		);
+		if (file.exists()) {
+			return file;
+		}
+
+		file = ZLResourceFile.createResourceFile(
+			"data/help/MiniHelp." + locale.getLanguage() + ".fb2"
 		);
 		if (file.exists()) {
 			return file;
@@ -209,7 +218,7 @@ public final class Library {
 		}
 	}
 
-	private final ArrayList myNullList = new ArrayList(1);
+	private final ArrayList<?> myNullList = new ArrayList<Object>(1);
 	{
 		myNullList.add(null);
 	}

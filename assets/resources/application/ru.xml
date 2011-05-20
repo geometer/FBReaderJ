@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Russian FBReaderJ resources, by Geometer Plus -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Автор не указан"/>
@@ -525,9 +526,9 @@
 				<node name="summary" value="Настройки словаря"/>
 				<node name="dictionary" value="Словарь"/>
 				<node name="tappingAction" value="Действие при долгом нажатии на экран">
-					<node name="doNothing" value="Не делать ничего"/>
-					<node name="selectWord" value="Выделять слово"/>
-					<node name="openDictionary" value="Выделять слово, а при отпускании &#8211; запускать словарь"/>
+					<node name="doNothing" value="Ничего не делать"/>
+					<node name="startSelecting" value="Начинать процесс пометки"/>
+					<node name="openDictionary" value="Выделять одно слово, а при отпускании &#8211; запускать словарь"/>
 				</node>
 				<node name="navigateOverAllWords" value="Перемещаться по всем словам">
 					<node name="summaryOn" value="При перемещении с помощью кнопок помечать все слова"/>
@@ -574,9 +575,6 @@
 					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
 				</node>
-				<node name="Selection" value="Пометка">
-					<node name="enableSelection" value="Разрешить помечать текст"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -599,6 +597,9 @@
 			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста..." />
 			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Текст в буфере обмена:" />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />

@@ -130,7 +130,7 @@
 		<node name="indexInSeries" value="Díl v sérii:"/>
 		<node name="tags" value="Štítky:"/>
 		<node name="catalog" value="Katalog:"/>
-		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
+		<node name="extraLinks" value="Související odkazy"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informace o knize"/>
@@ -268,9 +268,9 @@
 					<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
 					<node name="summaryOff" value="Nezobrazovat stavový řádek, když se menu aktivuje"/>
 				</node>
-				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
-					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
+					<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
+					<node name="summaryOff" value="Nezakazovat tlačítka osvětlení"/>
 				</node>
 			</node>
 			<node name="text" value="Text">
@@ -541,7 +541,7 @@
 				<node name="dictionary" value="Slovník"/>
 				<node name="tappingAction" value="Dlouhé klepnutí">
 					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
-					<node name="selectWord" value="Dlouhé klepnutí vybere slovo"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navigovat přes všechna slova">
@@ -549,13 +549,13 @@
 					<node name="summaryOff" value="Navigace klávesami prochází pouze hypertextové odkazy"/>
 				</node>
 			</node>
-			<node name="images" value="Images" toBeTranslated="true">
-				<node name="summary" value="Image displaying options" toBeTranslated="true"/>
-				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
-				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-					<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
-					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
+			<node name="images" value="Obrázky">
+				<node name="summary" value="Možnosti zobrazení obrázku"/>
+				<node name="backgroundColor" value="Barva pozadí pro zobrazení obrázku"/>
+				<node name="tappingAction" value="Akce dlouhého klepnutí">
+					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
+					<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
+					<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
 				</node>
 			</node>
 			<node name="cancelMenu" value="Nabídka Zrušit">
@@ -589,9 +589,6 @@
 					<node name="defaultEncodingSet" value="Výchozí sada kódování"/>
 					<node name="defaultEncoding" value="Výchozí kódování"/>
 				</node>
-				<node name="Selection" value="Výběr">
-					<node name="enableSelection" value="Povolit výběr textu"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -603,7 +600,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte..."/>
-			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
+			<node name="loadInfo" value="Načítání informací. Čekejte..."/>
 			<node name="loadingBook" value="Otevírání knihy. Čekejte..."/>
 			<node name="loadingBookList" value="Otevírání knihovny. Čekejte..."/>
 			<node name="creatingBooksDatabase" value="Vytváření databáze knih. Čekejte..."/>
@@ -614,6 +611,9 @@
 			<node name="purchaseBook" value="Nakupování knihy. Čekejte..."/>
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..."/>
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
@@ -634,7 +634,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Ověřování"/>
-			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
+			<node name="unencryptedWarning" value="Vaše heslo bude odesláno nešifrovaně"/>
 			<node name="login" value="Uživatelské jméno"/>
 			<node name="password" value="Heslo"/>
 			<node name="skipIP" value="Nevázat na IP adresu"/>

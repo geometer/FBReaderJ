@@ -32,7 +32,6 @@ import android.app.PendingIntent;
 import android.net.Uri;
 import android.content.Intent;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -43,6 +42,8 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 import org.geometerplus.android.fbreader.FBReader;
+
+import org.geometerplus.android.util.UIUtil;
 
 public class BookDownloaderService extends Service {
 	public static final String BOOK_FORMAT_KEY = "org.geometerplus.android.fbreader.network.BookFormat";
@@ -127,7 +128,7 @@ public class BookDownloaderService extends Service {
 
 		if (myDownloadingURLs.contains(url)) {
 			if ((notifications & Notifications.ALREADY_DOWNLOADING) != 0) {
-				showMessage("alreadyDownloading");
+				UIUtil.showErrorMessage(getApplicationContext(), "alreadyDownloading");
 			}
 			doStop();
 			return;
@@ -144,12 +145,12 @@ public class BookDownloaderService extends Service {
 			final String dir = fileName.substring(0, index);
 			final File dirFile = new File(dir);
 			if (!dirFile.exists() && !dirFile.mkdirs()) {
-				showMessage("cannotCreateDirectory", dirFile.getPath());
+				UIUtil.showErrorMessage(getApplicationContext(), "cannotCreateDirectory", dirFile.getPath());
 				doStop();
 				return;
 			}
 			if (!dirFile.exists() || !dirFile.isDirectory()) {
-				showMessage("cannotCreateDirectory", dirFile.getPath());
+				UIUtil.showErrorMessage(getApplicationContext(), "cannotCreateDirectory", dirFile.getPath());
 				doStop();
 				return;
 			}
@@ -158,7 +159,7 @@ public class BookDownloaderService extends Service {
 		final File fileFile = new File(fileName);
 		if (fileFile.exists()) {
 			if (!fileFile.isFile()) {
-				showMessage("cannotCreateFile", fileFile.getPath());
+				UIUtil.showErrorMessage(getApplicationContext(), "cannotCreateFile", fileFile.getPath());
 				doStop();
 				return;
 			}
@@ -172,26 +173,10 @@ public class BookDownloaderService extends Service {
 			title = fileFile.getName();
 		}
 		if ((notifications & Notifications.DOWNLOADING_STARTED) != 0) {
-			showMessage("downloadingStarted");
+			UIUtil.showErrorMessage(getApplicationContext(), "downloadingStarted");
 		}
 		final String sslCertificate = intent.getStringExtra(SSL_CERTIFICATE_KEY);
 		startFileDownload(url, sslCertificate, fileFile, title);
-	}
-
-	private void showMessage(String key) {
-		Toast.makeText(
-			getApplicationContext(),
-			getResource().getResource(key).getValue(),
-			Toast.LENGTH_SHORT
-		).show();
-	}
-
-	private void showMessage(String key, String parameter) {
-		Toast.makeText(
-			getApplicationContext(),
-			getResource().getResource(key).getValue().replace("%s", parameter),
-			Toast.LENGTH_SHORT
-		).show();
 	}
 
 	private Intent getFBReaderIntent(final File file) {

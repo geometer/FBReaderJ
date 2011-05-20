@@ -30,6 +30,7 @@ final class ZLTreeResource extends ZLResource {
 
     private static long ourTimeStamp = 0;
     private static String ourLanguage = null;
+    private static String ourCountry = null;
 
 	private boolean myHasValue;
 	private	String myValue;
@@ -38,11 +39,9 @@ final class ZLTreeResource extends ZLResource {
 	public static void buildTree() {
 		if (ourRoot == null) {
 			ourRoot = new ZLTreeResource("", null);
-			loadData("en");
-			ourLanguage = Locale.getDefault().getLanguage();
-			if (!"en".equals(ourLanguage)) {
-				loadData(ourLanguage);
-			}
+			ourLanguage = "en";
+			ourCountry = "UK";
+			loadData();
 		}
 	}
 
@@ -53,20 +52,27 @@ final class ZLTreeResource extends ZLResource {
                 if (timeStamp > ourTimeStamp + 1000) {
 					ourTimeStamp = timeStamp;
         			final String language = Locale.getDefault().getLanguage();
-					if (language != null && !language.equals(ourLanguage)) {
+        			final String country = Locale.getDefault().getCountry();
+					if ((language != null && !language.equals(ourLanguage)) ||
+						(country != null && !country.equals(ourCountry))) {
 						ourLanguage = language;
-						loadData(ourLanguage);
+						ourCountry = country;
+						loadData();
 					}
 				}
 			}
 		}
     }
 	
-	public static void loadData(String language) {
-		final String fileName = language + ".xml";
-		ResourceTreeReader reader = new ResourceTreeReader();
+	private static void loadData(ResourceTreeReader reader, String fileName) {
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/zlibrary/" + fileName));
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/" + fileName));
+	}
+
+	private static void loadData() {
+		ResourceTreeReader reader = new ResourceTreeReader();
+		loadData(reader, ourLanguage + ".xml");
+		loadData(reader, ourLanguage + "_" + ourCountry + ".xml");
 	}
 
 	private	ZLTreeResource(String name, String value) {

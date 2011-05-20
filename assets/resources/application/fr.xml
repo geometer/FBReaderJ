@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French FBReaderJ resources
-	 Intial work: Sébastien Rodriguez 
-	 Maintainer: Mathias Monnerville <mathias@monnerville.com>
--->
+<!-- French FBReaderJ resources; Initial work: Sébastien Rodriguez Maintainer: Mathias Monnerville <mathias@monnerville.com> -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Auteur inconnu"/>
@@ -530,7 +527,7 @@
 				<node name="dictionary" value="Dictionnaire"/>
 				<node name="tappingAction" value="Configuration de l'appui long">
 					<node name="doNothing" value="Un appui long ne fait rien"/>
-					<node name="selectWord" value="Un appui long selectionne le mot"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
 				</node>
 				<node name="navigateOverAllWords" value="Parcourir l'ensemble des mots">
@@ -578,9 +575,6 @@
 					<node name="defaultEncodingSet" value="Groupe d'encodage par défaut"/>
 					<node name="defaultEncoding" value="Encodage par défaut"/>
 				</node>
-				<node name="Selection" value="Sélection">
-					<node name="enableSelection" value="Activer la sélection de texte"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -603,6 +597,9 @@
 			<node name="purchaseBook" value="Achat du livre. Veuillez patienter..."/>
 			<node name="loadingCatalogInfo" value="Chargement du catalogue, veuillez patienter..." />
 			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>

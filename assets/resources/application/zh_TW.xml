@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Traditional Chinese FBReaderJ resources, by Fung.T -->
+<resources>
+	<node name="library">
+		<node name="unknownAuthor" value="佚名"/>
+		<node name="booksWithNoTags" value="未歸類"/>
+		<node name="demo" value="試讀本"/>
+	</node>
+	<node name="libraryView">
+		<node name="byAuthor" value="作者">
+			<node name="summary" value="按作者排序"/>
+		</node>
+		<node name="byTitle" value="書名">
+			<node name="summary" value="按書名排序"/>
+		</node>
+		<node name="byTag" value="標籤">
+			<node name="summary" value="按標籤排序"/>
+		</node>
+		<node name="recent" value="最近">
+			<node name="summary" value="最近閱讀的書藉"/>
+		</node>
+		<node name="favorites" value="收藏">
+			<node name="summary" value="我的精選書目"/>
+		</node>
+		<node name="searchResults" value="搜尋結果">
+			<node name="summary" value="%s 的搜尋結果"/>
+		</node>
+		<node name="fileTree" value="檔案">
+			<node name="summary" value="瀏覽檔案目錄"/>
+		</node>
+		<node name="fileTreeRoot" value="設備">
+			<node name="summary" value="所有設備上的檔案"/>
+		</node>
+		<node name="fileTreeCard" value="記憶卡">
+			<node name="summary" value="插入裝置內的記憶卡"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader 書目">
+			<node name="summary" value="FBReader 書藉目錄"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="本地搜尋"/>
+		</node>
+		<node name="openBook" value="打開書藉"/>
+		<node name="showBookInfo" value="書藉資訊"/>
+		<node name="deleteBook" value="刪除書藉"/>
+		<node name="addToFavorites" value="收藏"/>
+		<node name="removeFromFavorites" value="從收藏中移除"/>
+	</node>
+	<node name="networkView">
+		<node name="byAuthor" value="作者">
+			<node name="summary" value="以作者排序"/>
+		</node>
+		<node name="byTitle" value="書名">
+			<node name="summary" value="以書名排序"/>
+		</node>
+		<node name="byDate" value="日期">
+			<node name="summary" value="以購書日期排序"/>
+		</node>
+		<node name="bySeries" value="系列">
+			<node name="summary" value="以系列排序"/>
+		</node>
+		<node name="openCatalog" value="打開目錄"/>
+		<node name="showResults" value="顯示結果"/>
+		<node name="showBooks" value="顯示書藉"/>
+		<node name="download" value="下載"/>
+		<node name="read" value="閱讀"/>
+		<node name="delete" value="刪除"/>
+		<node name="readDemo" value="試閱"/>
+		<node name="deleteDemo" value="刪除試讀本"/>
+		<node name="downloadDemo" value="下載試讀本"/>
+		<node name="buy" value="購買 (%s)"/>
+		<node name="addToBasket" value="放到購物籃"/>
+		<node name="removeFromBasket" value="從購物籃中移除"/>
+		<node name="openInBrowser" value="以瀏覽器開啟" />
+		<node name="stopLoading" value="中止載入" />
+		<node name="stopSearching" value="中止搜尋" />
+		<node name="signIn" value="登入"/>
+		<node name="signOut" value="登出 (%s)"/>
+		<node name="topup" value="升級賬戶 (現為: %s)"/>
+		<node name="topupTitle" value="升級賬戶"/>
+		<node name="topupViaCreditCard" value="信用卡"/>
+		<node name="topupViaSelfServiceKiosk" value="自助櫃位"/>
+		<node name="topupViaSms" value="文字短訊"/>
+		<node name="topupViaBrowser" value="以瀏覽器開啟本頁"/>
+		<node name="topupSummary" value="目前為: %s"/>
+		<node name="basket" value="購物籃"/>
+		<node name="basketSummary" value="欲購書藉"/>
+		<node name="alreadyDownloading" value="已下載書藉" />
+		<node name="alreadyDownloadingDemo" value="已下載試讀本之書藉" />
+		<node name="stoppingCatalogLoading" value="下載中止中" />
+		<node name="stoppingNetworkSearch" value="搜尋中止中" />
+		<node name="search" value="搜尋" />
+		<node name="searchSummary" value="搜尋目錄" />
+		<node name="searchResults" value="%s 的搜尋結果" />
+		<node name="editCustomCatalog" value="編輯目錄"/>
+		<node name="removeCustomCatalog" value="刪除目錄"/>
+		<node name="addCustomCatalog" value="新增目錄"/>
+		<node name="addCustomCatalogSummary" value="手動新增 OPDS 目錄"/>
+		<node name="confirmQuestions">
+			<node name="read" value="是否要閱讀書藉的本地存檔嗎?"/>
+			<node name="download" value="是否下載此書?"/>
+			<node name="readDemo" value="是否要試閱?"/>
+			<node name="downloadDemo" value="是否要下載試讀本?"/>
+			<node name="buy" value="是否購買此書? (%s)"/>
+			<node name="openInBrowser" value="是否在瀏覽器中瀏覽此目錄?" />
+		</node>
+		<node name="downloadingCatalogs" value="下載目錄中"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="網絡書藉搜尋中"/> <!-- used as notification title -->
+		<node name="menu">
+			<node name="networkSearch" value="網絡搜尋"/>
+			<node name="reload" value="重新載入"/>
+			<node name="signIn" value="登入"/>
+			<node name="signUp" value="註冊"/>
+			<node name="signOut" value="登出 (%s)"/>
+			<node name="topup" value="升級賬戶"/>
+			<node name="addCustomCatalog" value="新增目錄"/>
+			<node name="refreshCatalogsList" value="重新整理目錄"/>
+			<node name="languages" value="語言篩選"/>
+			<node name="clearBasket" value="清空購物籃"/>
+			<node name="buyAllBooks" value="購買全部書藉"/>
+		</node>
+	</node>
+	<node name="networkBookView">
+		<node name="bookInfo" value="書藉資訊" />
+		<node name="description" value="描述" />
+		<node name="noDescription" value="沒有描述" />
+		<node name="title" value="書名:" />
+		<node name="authors" value="作者:" />
+		<node name="series" value="系列:" />
+		<node name="indexInSeries" value="系列編號:" />
+		<node name="tags" value="標籤:" />
+		<node name="catalog" value="目錄:" />
+		<node name="extraLinks" value="Related links" toBeTranslated="true" />
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="書藉資訊" />
+		<node name="fileInfo" value="檔案資訊" />
+		<node name="annotation" value="註解" />
+		<node name="title" value="書名:" />
+		<node name="authors" value="作者:" />
+		<node name="series" value="系列:" />
+		<node name="indexInSeries" value="系列編號:" />
+		<node name="tags" value="標籤:" />
+		<node name="language" value="語言:"/>
+		<node name="name" value="檔名:" />
+		<node name="type" value="類型:" />
+		<node name="size" value="容量:" />
+		<node name="time" value="最後更新時間:" />
+		<node name="sizeInBytes" value="%s 字節" />
+		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="menu">
+			<node name="edit" value="編輯" />
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="下載成功" />
+		<node name="tickerError" value="下載錯誤" />
+		<node name="contentSuccess" value="下載完成" />
+		<node name="contentError" value="下載失敗" />
+		<node name="downloadingStarted" value="開始下載" />
+		<node name="alreadyDownloading" value="已在下載" />
+		<node name="cannotCreateDirectory" value="新增資料夾 %s 失敗" />
+		<node name="cannotCreateFile" value="新增檔案 %s 失敗" />
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="展開資料夾內容"/>
+		<node name="collapseTree" value="折叠資料夾內容"/>
+		<node name="readText" value="閱讀書藉內容"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="本書"/>
+		<node name="allBooks" value="所有書藉"/>
+		<node name="searchResults" value="搜尋結果"/>
+		<node name="new" value="新增書籤"/>
+		<node name="open" value="開啟書籤"/>
+		<node name="edit" value="編輯書籤"/>
+		<node name="delete" value="刪除書籤"/>
+		<node name="menu">
+			<node name="search" value="搜尋"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="previousBook" value="開啟之前的書藉"/>
+		<node name="returnTo" value="回到 ..."/>
+		<node name="back" value="返回"/>
+		<node name="forward" value="前進"/>
+		<node name="close" value="開閉 FBReader"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="設定"/>
+		<node name="bookInfo" value="書藉資訊"/>
+		<node name="library" value="書庫"/>
+		<node name="toc" value="目錄"/>
+		<node name="day" value="白底黑字"/>
+		<node name="night" value="黑底白字"/>
+		<node name="networkLibrary" value="網絡書庫"/>
+		<node name="navigate" value="導航">
+			<node name="toc" value="目錄"/>
+			<node name="gotoHome" value="往文件開首"/>
+			<node name="gotoPageNumber" value="往第 ... 頁"/>
+			<node name="gotoSectionStart" value="往本章開首"/>
+			<node name="gotoSectionEnd" value="往本章結尾"/>
+			<node name="nextTOCSection" value="往下一章"/>
+			<node name="previousTOCSection" value="往上一章"/>
+			<node name="undo" value="回復"/>
+			<node name="redo" value="重做"/>
+		</node>
+		<node name="selection" value="選擇">
+			<node name="copyToClipboard" value="複製"/>
+			<node name="openInDictionary" value="查詢字典"/>
+			<node name="clearSelection" value="清空"/>
+		</node>
+		<node name="search" value="搜尋"/>
+		<node name="rotate" value="旋轉屏幕"/>
+		<node name="increaseFont" value="放大" />
+		<node name="decreaseFont" value="縮小" />
+		<node name="toggleFullscreen" value="全屏"/>
+		<node name="bookmarks" value="書籤"/>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="安裝" />
+			<node name="update" value="更新" />
+			<node name="skip" value="略過" />
+			<node name="buy" value="購買" />
+			<node name="buyAndDownload" value="購買並下載" />
+			<node name="continue" value="繼續" />
+			<node name="editUrl" value="編輯 URL" />
+			<node name="tryAgain" value="重試" />
+			<node name="openBook" value="閱讀" />
+			<node name="editInfo" value="編輯" />
+			<node name="reloadInfo" value="重新整理" />
+			<node name="topup" value="升級賬戶"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="安裝插件"/>
+			<node name="updateTitle" value="更新插件"/>
+			<node name="dontAskAgain" value="不要再問"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="安裝字典"/>
+			<node name="message" value="是否安裝 %s?"/>
+		</node>
+		<node name="BookInfo">
+			<node name="fileName" value="檔名"/>
+			<node name="title" value="書名"/>
+			<node name="language" value="語言"/>
+			<node name="encoding" value="編碼"/>
+		</node>
+		<node name="Preferences">
+			<node name="directories" value="目錄">
+				<node name="summary" value="文件目錄"/>
+				<node name="books" value="藏書目錄"/>
+				<node name="fonts" value="字型目錄"/>
+				<node name="wallpapers" value="壁紙目錄"/>
+			</node>
+			<node name="appearance" value="外觀">
+				<node name="summary" value="旋轉， 狀態列"/>
+				<node name="autoOrientation" value="自動旋轉">
+					<node name="summaryOn" value="裝置轉動時自動旋轉屏幕"/>
+					<node name="summaryOff" value="裝置轉動時不要自動旋轉屏幕"/>
+				</node>
+				<node name="showStatusBar" value="顯示狀態列">
+					<node name="summaryOn" value="閱讀模式時顯示狀態列"/>
+					<node name="summaryOff" value="閱讀模式時隱藏狀態列"/>
+				</node>
+				<node name="showStatusBarWhenMenuIsActive" value="打開選單時顯示狀態列">
+					<node name="summaryOn" value="打開選單時顯示狀態列"/>
+					<node name="summaryOff" value="打開選單時不要顯示狀態列"/>
+				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="text" value="文字">
+				<node name="summary" value="文字，斷字等等"/>
+				<node name="font" value="字型">
+					<node name="unchanged" value="&lt;不變&gt;"/>
+				</node>
+				<node name="fontSize" value="字體"/>
+				<node name="fontSizeDifference" value="大小差異"/>
+				<node name="fontStyle" value="字體樣式">
+					<node name="regular" value="正常"/>
+					<node name="bold" value="粗體"/>
+					<node name="italic" value="斜體"/>
+					<node name="boldItalic" value="粗斜體"/>
+				</node>
+				<node name="bold" value="粗體">
+					<node name="on" value="粗體"/>
+					<node name="off" value="正常"/>
+					<node name="unchanged" value="&lt;不變&gt;"/>
+				</node>
+				<node name="italic" value="斜體">
+					<node name="on" value="斜體"/>
+					<node name="off" value="正常"/>
+					<node name="unchanged" value="&lt;不變&gt;"/>
+				</node>
+				<node name="lineSpacing" value="行距">
+					<node name="unchanged" value="&lt;不變&gt;"/>
+				</node>
+				<node name="alignment" value="對齊">
+					<node name="left" value="左"/>
+					<node name="right" value="右"/>
+					<node name="center" value="居中"/>
+					<node name="justify" value="對齊"/>
+					<node name="unchanged" value="&lt;不變&gt;"/>
+				</node>
+				<node name="autoHyphenations" value="自動斷字">
+					<node name="summaryOn" value="自動斷字"/>
+					<node name="summaryOff" value="不要自動斷字"/>
+				</node>
+				<node name="allowHyphenations" value="允許斷字">
+					<node name="on" value="斷字"/>
+					<node name="off" value="不要斷字"/>
+					<node name="unchanged" value="&lt;不變&gt;"/>
+				</node>
+				<node name="firstLineIndent" value="首行縮進"/>
+				<node name="spaceBefore" value="段前距"/>
+				<node name="spaceAfter" value="段後距"/>
+				<node name="leftIndent" value="左縮進"/>
+				<node name="rightIndent" value="右縮進"/>
+				<node name="more" value="更多樣式">
+					<node name="summary" value="分別設定標題，段落等"/>
+					<node name="Regular Paragraph" value="正常段落">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Title" value="標題">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Section Title" value="章節標題">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Poem Title" value="詩標題">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subtitle" value="副標題">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Annotation" value="註解">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Epigraph" value="題詞">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Stanza" value="節">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Verse" value="韻文">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Preformatted text" value="格式化文字">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Image" value="圖像">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Cite" value="引用">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Author" value="作者">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Date" value="日期">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Internal Hyperlink" value="內部連結">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Footnote" value="註腳">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Emphasis" value="重點">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Strong" value="強原">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Subscript" value="下標">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Superscript" value="上標">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Code" value="程式碼">
+						<node name="summary" value=""/>
+					</node>
+					<node name="StrikeThrough" value="刪除線">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Italic" value="斜體">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Bold" value="粗體">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition" value="定義">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Definition Description" value="定義描述">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 1" value="標題 1">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 2" value="標題 2">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 3" value="標題 3">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 4" value="標題 4">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 5" value="標題 5">
+						<node name="summary" value=""/>
+					</node>
+					<node name="Header 6" value="標題 6">
+						<node name="summary" value=""/>
+					</node>
+					<node name="External Hyperlink" value="外部超連結">
+						<node name="summary" value=""/>
+					</node>
+				</node>
+			</node>
+			<node name="colors" value="顏色及壁紙">
+				<node name="summary" value="顏色設定"/>
+				<node name="background" value="背景">
+					<node name="solidColor" value="淨色"/>
+					<node name="leather" value="皮革"/>
+					<node name="sepia" value="褐色"/>
+					<node name="wood" value="木材"/>
+				</node>
+				<node name="backgroundColor" value="背景顏色"/>
+				<node name="selectionBackground" value="選字背景色"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
+				<node name="text" value="普通文字"/>
+				<node name="hyperlink" value="超連結文字"/>
+				<node name="hyperlinkVisited" value="已按超連結文字"/>
+				<node name="highlighting" value="搜尋結果背景"/>
+				<node name="footer" value="頁尾" />
+			</node>
+			<node name="margins" value="邊距">
+				<node name="summary" value="文字邊距"/>
+				<node name="left" value="左邊距"/>
+				<node name="right" value="右邊距"/>
+				<node name="top" value="頂邊距"/>
+				<node name="bottom" value="底邊距"/>
+			</node>
+			<node name="scrollBar" value="滾動條">
+				<node name="summary" value="滾動條及頁尾設定"/>
+				<node name="scrollbarType" value="滾動條設定">
+					<node name="hide" value="隱藏"/>
+					<node name="show" value="垂直滾動條"/>
+					<node name="showAsProgress" value="垂直進度條"/>
+					<node name="showAsFooter" value="水平頁尾"/>
+				</node>
+				<node name="footerHeight" value="頁尾高度" />
+				<node name="footerColor" value="頁尾顏色" />
+				<node name="tocMarks" value="顯示目錄標示">
+					<node name="summaryOn" value="在頁尾顯示目錄標示"/>
+					<node name="summaryOff" value="不要在頁尾顯示目錄標示"/>
+				</node>
+				<node name="showProgress" value="顯示頁碼">
+					<node name="summaryOn" value="在頁尾顯示頁碼"/>
+					<node name="summaryOff" value="不要在頁尾顯示頁碼"/>
+				</node>
+				<node name="showBattery" value="顯示電量">
+					<node name="summaryOn" value="在頁尾顯示電量"/>
+					<node name="summaryOff" value="不要在頁尾顯示電量"/>
+				</node>
+				<node name="showClock" value="顯示時間">
+					<node name="summaryOn" value="在頁尾顯示時間"/>
+					<node name="summaryOff" value="不要在頁尾顯示時間"/>
+				</node>
+				<node name="font" value="字體"/>
+			</node>
+			<node name="display" value="顯示">
+				<node name="summary" value="亮度控制，防止關閉屏幕"/>
+				<node name="allowScreenBrightnessAdjustment" value="調整屏幕亮度">
+					<node name="summaryOn" value="通過於屏幕左方上下拉動調整"/>
+					<node name="summaryOff" value="關閉"/>
+				</node>
+				<node name="dontTurnScreenOff" value="防止進入待機狀態">
+					<node name="0" value="必然"/>
+					<!-- Percent sign (%) could not be used in resource strings
+								because there is a bug in Cyanogen Mod firmware that
+								crashes the program with such resources -->
+					<!--<node name="25" value="當電量大於25%"/>
+					<node name="50" value="當電量大於50%"/>-->
+					<node name="25" value="While battery level is greater than 25 percent"/>
+					<node name="50" value="While battery level is greater than 50 percent"/>
+					<node name="100" value="永不"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="充電時防止關閉屏幕">
+					<node name="summaryOn" value="裝置充電時防止關閉屏幕"/>
+					<node name="summaryOff" value="即使裝置充電時亦會關閉屏幕"/>
+				</node>
+			</node>
+			<node name="scrolling" value="翻頁">
+				<node name="summary" value="如何翻頁"/>
+				<node name="fingerScrolling" value="以觸碰屏幕翻頁">
+					<node name="byTap" value="輕觸屏幕翻頁"/>
+					<node name="byFlick" value="以手指滑動翻頁"/>
+					<node name="byTapAndFlick" value="滑動或輕觸翻頁"/>
+				</node>
+				<node name="enableDoubleTapDetection" value="雙按偵測">
+					<node name="summaryOn" value="輕觸屏幕兩次啟動導航/選單"/>
+					<node name="summaryOff" value="無視雙按"/>
+				</node>
+				<node name="volumeKeys" value="以音量鍵翻頁">
+					<node name="summaryOn" value="使用音量鍵翻頁"/>
+					<node name="summaryOff" value="不使用音量鍵翻頁"/>
+				</node>
+				<node name="invertVolumeKeys" value="改變音量鍵翻頁方向">
+					<node name="summaryOn" value="增大音量鍵(上鍵)翻到下一頁"/>
+					<node name="summaryOff" value="降低音量(下鍵)翻到下一頁"/>
+				</node>
+				<node name="animation" value="動畫效果">
+					<node name="none" value="無翻頁動畫"/>
+					<node name="curl" value="捲頁效果"/>
+					<node name="slide" value="滑動效果"/>
+					<node name="shift" value="平移效果"/>
+				</node>
+				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
+					<node name="fast" value="fast" toBeTranslated="true"/>
+					<node name="slow" value="slow" toBeTranslated="true"/>
+				</node>
+				<node name="horizontal" value="橫向翻頁">
+					<node name="summaryOn" value="橫向翻頁"/>
+					<node name="summaryOff" value="縱向翻頁"/>
+				</node>
+			</node>
+			<node name="tapZones" value="觸控範圍">
+				<node name="summary" value="觸碰範圍動作"/>
+				<node name="tapZonesScheme" value="觸控動作設定">
+					<node name="left_to_right" value="左至右翻頁"/>
+					<node name="right_to_left" value="右至左翻頁"/>
+					<node name="up" value="下至上翻頁"/>
+					<node name="down" value="上至下翻頁"/>
+					<node name="custom" value="自訂..."/>
+				</node>
+			</node>
+			<node name="dictionary" value="字典">
+				<node name="summary" value="字典設定"/>
+				<node name="dictionary" value="字典"/>
+				<node name="tappingAction" value="長按動作">
+					<node name="doNothing" value="長按不做任何動作"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+					<node name="openDictionary" value="長按選字，放開後查詢詞義"/>
+				</node>
+				<node name="navigateOverAllWords" value="導航鍵訪問語句設定">
+					<node name="summaryOn" value="導航鍵訪問所有語句"/>
+					<node name="summaryOff" value="導航鍵僅訪問超連結"/>
+				</node>
+			</node>
+			<node name="images" value="Images" toBeTranslated="true">
+				<node name="summary" value="Image displaying options" toBeTranslated="true"/>
+				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
+					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="cancelMenu" value="取消選單">
+				<node name="summary" value="返回鍵動作列表"/>
+				<node name="previousBook" value="上一本書">
+					<node name="summaryOn" value="顯示'返回上一本書'選項"/>
+					<node name="summaryOff" value="不要顯示'返回上一本書'選項"/>
+				</node>
+				<node name="positions" value="前三個位置">
+					<node name="summaryOn" value="顯示前三個位置"/>
+					<node name="summaryOff" value="不要顯示前三個位置"/>
+				</node>
+				<node name="backKeyAction" value="返回鍵動作">
+					<node name="exit" value="關閉 FBReader"/>
+					<node name="goBack" value="返回"/>
+					<node name="cancelMenu" value="顯示取消選單"/>
+				</node>
+				<node name="backKeyLongPressAction" value="長按返回鍵動作">
+					<node name="exit" value="關閉 FBReader"/>
+					<node name="goBack" value="返回"/>
+					<node name="cancelMenu" value="顯示取消選單"/>
+					<node name="none" value="無動作"/>
+				</node>
+			</node>
+		</node>
+		<node name="OptionsDialog">
+			<node name="tab">
+				<node name="Language" value="語言">
+					<node name="autoDetect" value="自動偵測語言及編碼"/>
+					<node name="defaultLanguage" value="預設語言設定"/>
+					<node name="defaultEncodingSet" value="預設編碼集"/>
+					<node name="defaultEncoding" value="預設編碼"/>
+				</node>
+			</node>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="確認刪除此檔案?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="檔案已存在，確認重新下載?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="正下載 %s"/>
+			<node name="search" value="搜尋中，請稍候 ..."/>
+			<node name="loadInfo" value="Loading information. Please, wait&#8230;" toBeTranslated="true"/>
+			<node name="loadingBook" value="打開書藉中，請稍候..."/>
+			<node name="loadingBookList" value="打開書庫中，請稍候..."/>
+			<node name="creatingBooksDatabase" value="正在創建書藉數據庫，請稍候．.."/>
+			<node name="updatingBooksDatabase" value="正在更新書藉數據庫，請稍候..."/>
+			<node name="loadingNetworkLibrary" value="打開網絡書庫中，請稍候..." />
+			<node name="authentication" value="驗證中，請稍候..." />
+			<node name="signOut" value="登出中，請稍候..." />
+			<node name="purchaseBook" value="正購買書藉，請稍候..." />
+			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候..." />
+			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
+		</node>
+		<node name="selection">
+			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="伺服器出錯" />
+			<node name="purchaseNotEnoughMoney" value="餘額不足" />
+			<node name="purchaseMissingBook" value="書藉缺失" />
+			<node name="purchaseAlreadyPurchased" value="已購買的書藉" />
+			<node name="bookNotPurchased" value="未購買的書藉" />
+			<node name="downloadLimitExceeded" value="已超過下載總額" />
+			<node name="noUserEmail" value="電郵地址未有註冊" />
+			<node name="unsupportedOperation" value="非法操作" />
+			<node name="notAnOPDS" value="此非OPDS目錄" />
+			<node name="noRequiredInformation" value="目錄沒有提供必需的資料" />
+			<node name="cacheDirectoryError" value="未能創建暫存檔案目錄" />
+		</node>
+		<node name="emptySearchResults">
+			<node name="title" value="搜尋結果" />
+			<node name="message" value="沒有結果符合" />
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="驗證" />
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
+			<node name="login" value="用戶" />
+			<node name="password" value="密碼" />
+			<node name="skipIP" value="不綁定IP地址" />
+			<node name="loginIsEmpty" value="請填上用戶名稱" />
+			<node name="register" value="註冊" />
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FBReader: 新增自訂目錄" />
+			<node name="catalogTitle" value="名稱" />
+			<node name="catalogUrl" value="網址" />
+			<node name="catalogSummary" value="簡介" />
+			<node name="catalogTitleExample" value="例如: Project Gutenberg catalog" />
+			<node name="catalogUrlExample" value="例如: http://m.gutenberg.org/" />
+			<node name="catalogSummaryExample" value="例如: 公共書藉" />
+			<node name="titleIsEmpty" value="請填上目錄名稱" />
+			<node name="urlIsEmpty" value="請填上目錄網址" />
+			<node name="invalidUrl" value="目錄地址無效" />
+			<node name="titleAlreadyExists" value="目錄名稱已被使用" />
+			<node name="siteAlreadyExists" value="目錄地址已被使用" />
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="語言篩選" />
+		</node>
+		<node name="purchaseConfirmBox">
+			<node name="title" value="購買書藉" />
+			<node name="message" value="是否確定要購買&#10;&#8220;%s&#8221;&#10;?" />
+		</node>
+		<node name="alreadyPurchasedBox">
+			<node name="title" value="購買書藉" />
+			<node name="message" value="此書已經被買過" />
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="無法啟動Android Market，請自行安裝 %s"/>
+		<node name="textNotFound" value="書內沒有找到符合的字詞"/>
+		<node name="bookNotFound" value="書庫內沒有找到符合的書藉"/>
+		<node name="bookmarkNotFound" value="沒有找到符合的書籤"/>
+		<node name="cannotOpenBook" value="現時無法開啟書藉"/>
+		<node name="dictionaryIsNotInstalled" value="你並未有安裝字典"/>
+		<node name="permissionDenied" value="沒有足夠權限"/>
+		<node name="noFavorites" value="你並未有收藏"/>
+		<node name="emptyCatalog" value="空目錄" />
+		<node name="emptyBasket" value="購物籃內沒有物品" />
+	</node>
+	<node name="external">
+		<node name="browser" value="瀏覽"/>
+		<node name="defaultBrowser" value="預設瀏覽器"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="未知錯誤"/>
+		<node name="unsupportedCompressionMethod" value="未支援的壓縮方式"/>
+		<node name="encriptedFile" value="受DRM保護的文件"/>
+	</node>
+</resources>

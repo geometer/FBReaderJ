@@ -23,7 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-public abstract class ZLTextRegion {
+public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 	public static interface Filter {
 		boolean accepts(ZLTextRegion region);
 	}
@@ -74,12 +74,20 @@ public abstract class ZLTextRegion {
 		return myHull;
 	}
 
+	ZLTextElementArea getFirstArea() {
+		return myList.get(myFromIndex);
+	}
+
+	ZLTextElementArea getLastArea() {
+		return myList.get(myToIndex - 1);
+	}
+
 	public int getTop() {
-		return myList.get(myFromIndex).YStart;
+		return getFirstArea().YStart;
 	}
 
 	public int getBottom() {
-		return myList.get(myToIndex - 1).YEnd;
+		return getLastArea().YEnd;
 	}
 
 	void draw(ZLPaintContext context) {
@@ -93,7 +101,7 @@ public abstract class ZLTextRegion {
 	boolean isAtRightOf(ZLTextRegion other) {
 		return
 			other == null ||
-			myList.get(myFromIndex).XStart >= other.myList.get(other.myToIndex - 1).XEnd;
+			getFirstArea().XStart >= other.getLastArea().XEnd;
 	}
 
 	boolean isAtLeftOf(ZLTextRegion other) {
@@ -103,7 +111,7 @@ public abstract class ZLTextRegion {
 	boolean isUnder(ZLTextRegion other) {
 		return
 			other == null ||
-			myList.get(myFromIndex).YStart >= other.myList.get(other.myToIndex - 1).YEnd;
+			getFirstArea().YStart >= other.getLastArea().YEnd;
 	}
 
 	boolean isOver(ZLTextRegion other) {
@@ -135,4 +143,14 @@ public abstract class ZLTextRegion {
 
 	@Override
 	public abstract boolean equals(Object other);
+
+	public int compareTo(ZLTextRegion other) {
+		if (myFromIndex != other.myFromIndex) {
+			return myFromIndex < other.myFromIndex ? -1 : 1;
+		}
+		if (myToIndex != other.myToIndex) {
+			return myToIndex < other.myToIndex ? -1 : 1;
+		}
+		return 0;
+	}
 }

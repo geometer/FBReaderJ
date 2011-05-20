@@ -110,19 +110,19 @@ public abstract class UIUtil {
 		runner.start();
 	}
 
-	public static void showErrorMessageText(Context context, String text) {
+	public static void showMessageText(Context context, String text) {
 		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
 
 	public static void showErrorMessage(Context context, String resourceKey) {
-		showErrorMessageText(
+		showMessageText(
 			context,
 			ZLResource.resource("errorMessage").getResource(resourceKey).getValue()
 		);
 	}
 
 	public static void showErrorMessage(Context context, String resourceKey, String parameter) {
-		showErrorMessageText(
+		showMessageText(
 			context,
 			ZLResource.resource("errorMessage").getResource(resourceKey).getValue().replace("%s", parameter)
 		);

@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -75,7 +74,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.HyperlinkFilter);
+		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.getViewWidget().reset();
@@ -191,12 +190,12 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.AnyRegionFilter);
+		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		boolean doSelectRegion = false;
 		if (region instanceof ZLTextWordRegion) {
 			doSelectRegion =
-				myReader.DictionaryTappingActionOption.getValue() !=
-				FBReaderApp.DictionaryTappingAction.doNothing;
+				myReader.WordTappingActionOption.getValue() !=
+				FBReaderApp.WordTappingAction.doNothing;
 		} else if (region instanceof ZLTextImageRegion) {
 			doSelectRegion =
 				myReader.ImageTappingActionOption.getValue() !=
@@ -223,9 +222,9 @@ public final class FBView extends ZLTextView {
 		final ZLTextRegion selectedRegion = getSelectedRegion();
 		if (selectedRegion instanceof ZLTextHyperlinkRegion ||
 			selectedRegion instanceof ZLTextWordRegion) {
-			if (myReader.DictionaryTappingActionOption.getValue() !=
-				FBReaderApp.DictionaryTappingAction.doNothing) {
-				final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.AnyRegionFilter);
+			if (myReader.WordTappingActionOption.getValue() !=
+				FBReaderApp.WordTappingAction.doNothing) {
+				final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 				if (region instanceof ZLTextHyperlinkRegion || region instanceof ZLTextWordRegion) {
 					selectRegion(region);
 					myReader.getViewWidget().reset();
@@ -245,8 +244,8 @@ public final class FBView extends ZLTextView {
 		final ZLTextRegion region = getSelectedRegion();
 		if (region instanceof ZLTextWordRegion) {
 			doRunAction =
-				myReader.DictionaryTappingActionOption.getValue() ==
-				FBReaderApp.DictionaryTappingAction.openDictionary;
+				myReader.WordTappingActionOption.getValue() ==
+				FBReaderApp.WordTappingAction.openDictionary;
 		} else if (region instanceof ZLTextImageRegion) {
 			doRunAction =
 				myReader.ImageTappingActionOption.getValue() ==
@@ -505,11 +504,11 @@ public final class FBView extends ZLTextView {
 
 		// TODO: remove
 		int myGaugeWidth = 1;
-		public int getGaugeWidth() {
+		/*public int getGaugeWidth() {
 			return myGaugeWidth;
-		}
+		}*/
 
-		public void setProgress(int x) {
+		/*public void setProgress(int x) {
 			// set progress according to tap coordinate
 			int gaugeWidth = getGaugeWidth();
 			float progress = 1.0f * Math.min(x, gaugeWidth) / gaugeWidth;
@@ -521,7 +520,7 @@ public final class FBView extends ZLTextView {
 			}
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
-		}
+		}*/
 	}
 
 	private Footer myFooter;
@@ -540,11 +539,6 @@ public final class FBView extends ZLTextView {
 			}
 		}
 		return myFooter;
-	}
-
-	@Override
-	protected boolean isSelectionEnabled() {
-		return myReader.SelectionEnabledOption.getValue();
 	}
 
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
