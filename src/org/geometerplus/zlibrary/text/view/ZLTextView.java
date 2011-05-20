@@ -1298,7 +1298,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 	
 	public ZLTextPosition getSelectionStartPosition() {
-		return mySelection.getStartPosition();
+		final ZLTextElementArea area = mySelection.getStartArea();
+		return new ZLTextFixedPosition(area.ParagraphIndex, area.ElementIndex, 0);
 	}
 
 	public boolean isSelectionEmpty() {

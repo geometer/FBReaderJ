@@ -108,8 +108,8 @@ public class ZLTextSelection {
 
 	private void prepareParagraphText(int paragraphID) {
 		final ZLTextParagraphCursor paragraph = ZLTextParagraphCursor.cursor(myView.getModel(), paragraphID);
-		final int startElementID = myLeftBound.getParagraphIndex() == paragraphID ? myLeftBound.getElementIndex() : 0;
-		final int endElementID = myRightBound.getParagraphIndex() == paragraphID ? myRightBound.getElementIndex() : paragraph.getParagraphLength() - 1;
+		final int startElementID = myLeftBound.myArea.ParagraphIndex == paragraphID ? myLeftBound.myArea.ElementIndex : 0;
+		final int endElementID = myRightBound.myArea.ParagraphIndex == paragraphID ? myRightBound.myArea.ElementIndex : paragraph.getParagraphLength() - 1;
 
 		for (int elementID = startElementID; elementID <= endElementID; elementID++) {
 			final ZLTextElement element = paragraph.getElement(elementID);
@@ -127,8 +127,8 @@ public class ZLTextSelection {
 			return "";
 		}
 		if (myText.length() == 0) {
-			final int from = myLeftBound.getParagraphIndex();
-			final int to = myRightBound.getParagraphIndex();
+			final int from = myLeftBound.myArea.ParagraphIndex;
+			final int to = myRightBound.myArea.ParagraphIndex;
 			for (int i = from; i < to; ++i) {
 				prepareParagraphText(i);
 				myText.append("\n");
@@ -136,10 +136,6 @@ public class ZLTextSelection {
 			prepareParagraphText(to);
 		}
 		return myText.toString();
-	}
-
-	public ZLTextPosition getStartPosition() {
-		return myLeftBound;
 	}
 
 	public boolean isAreaSelected(ZLTextElementArea area) {
@@ -208,23 +204,8 @@ public class ZLTextSelection {
 		return myView.findRegion(x, y, Integer.MAX_VALUE - 1, ZLTextRegion.AnyRegionFilter);
 	}
 
-	private class Bound extends ZLTextPosition {
+	private class Bound {
 		private ZLTextElementArea myArea;
-
-		@Override
-		public int getParagraphIndex() {
-			return myArea.ParagraphIndex;
-		}
-
-		@Override
-		public int getElementIndex() {
-			return myArea.ElementIndex;
-		}
-
-		@Override
-		public int getCharIndex() {
-			return 0;
-		}
 
 		private boolean set(ZLTextElementArea area) {
 			if (myArea == null || myArea.compareTo(area) != 0) {
