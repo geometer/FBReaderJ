@@ -118,7 +118,8 @@ public final class FBView extends ZLTextView {
 		}
 
 		if (isSelectionModeActive()) {
-			onSelectingStarted();
+			myIsNowSelecting = true;
+			myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 			return true;
 		}
 
@@ -192,7 +193,7 @@ public final class FBView extends ZLTextView {
 
 		synchronized (this) {
 			if (isSelectionModeActive()) {
-				onSelectingEnded();
+				stopSelection();
 				return true;
 			}
 
@@ -273,7 +274,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		if (isSelectionModeActive()) {
-			onSelectingEnded();
+			stopSelection();
 			return true;
 		}
 
@@ -609,13 +610,19 @@ public final class FBView extends ZLTextView {
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}
 
-	protected void onSelectingStarted() {
+	@Override
+	protected boolean startSelection(int x, int y) {
+		if (!super.startSelection(x, y)) {
+			return false;
+		}
 		myIsNowSelecting = true;
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
+		return true;
 	}
 
-	protected void onSelectingEnded() {
-		super.onSelectingEnded();
+	@Override
+	protected void stopSelection() {
+		super.stopSelection();
 		myIsNowSelecting = false;
 		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
 	}

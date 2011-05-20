@@ -1264,21 +1264,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		mySelectedRegion = region;
 	}
 
-	protected abstract void onSelectingStarted();
-	
-	protected void onSelectingEnded() {
-		mySelection.stop();
-	}
-
 	protected boolean startSelection(int x, int y) {
 		if (!mySelection.start(x, y)) {
 			return false;
 		}
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
-		onSelectingStarted();
 		return true;
 	}
+
+	protected void stopSelection() {
+		mySelection.stop();
+	}
+
 	protected boolean expandSelectionTo(int x, int y) {
 		if (!mySelection.expandTo(x, y)) {
 			return false;
@@ -1287,6 +1285,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		Application.getViewWidget().repaint();
 		return true;
 	}
+
 	protected void clearSelection() {
 		if (mySelection.clear()) {
 			Application.getViewWidget().reset();
