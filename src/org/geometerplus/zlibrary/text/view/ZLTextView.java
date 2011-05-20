@@ -1263,18 +1263,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		mySelectedRegion = region;
 	}
-	
-	public ZLTextPosition getSelectionStartPosition() {
-		return mySelection.getStartArea();
-	}
-
-	public ZLTextPosition getSelectionEndPosition() {
-		return mySelection.getEndArea();
-	}
-
-	public boolean isSelectionEmpty() {
-		return mySelection.isEmpty();
-	}
 
 	protected abstract void onSelectingStarted();
 	
