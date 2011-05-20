@@ -27,6 +27,7 @@ public abstract class ZLTextTraverser {
 	}
 
 	protected abstract void processWord(ZLTextWord word);
+	protected abstract void processControlElement(ZLTextControlElement control);
 	protected abstract void processSpace();
 	protected abstract void processEndOfParagraph();
 

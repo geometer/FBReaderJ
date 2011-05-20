@@ -34,6 +34,11 @@ class TextBuilderTraverser extends ZLTextTraverser {
 	}
 
 	@Override
+	protected void processControlElement(ZLTextControlElement control) {
+		// does nothing
+	}
+
+	@Override
 	protected void processSpace() {
 		myBuffer.append(" ");
 	}
