@@ -20,8 +20,6 @@
 package org.geometerplus.zlibrary.text.view;
 
 public class ZLTextSelection {
-	private static final int SELECTION_DISTANCE = 10;
-
 	private ZLTextRegion myInitialRegion;
 	private ZLTextElementArea myLeftBound;
 	private ZLTextElementArea myRightBound;
@@ -50,7 +48,7 @@ public class ZLTextSelection {
 
 	boolean start(int x, int y) {
 		clear();
-		myInitialRegion = myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+		myInitialRegion = myView.findRegion(x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		if (myInitialRegion == null) {
 			return false;
 		}
@@ -101,7 +99,7 @@ public class ZLTextSelection {
 			myScroller.setXY(x, y);
 		}
 
-		ZLTextRegion region = myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+		ZLTextRegion region = myView.findRegion(x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		if (region == null && myScroller != null) {
 			region = myView.findRegion(x, y, ZLTextRegion.AnyRegionFilter);
 		}

@@ -80,7 +80,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.HyperlinkFilter);
+		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.getViewWidget().reset();
@@ -214,7 +214,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.AnyRegionFilter);
+		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		boolean doSelectRegion = false;
 		if (region instanceof ZLTextWordRegion) {
 			switch (myReader.WordTappingActionOption.getValue()) {
@@ -258,7 +258,7 @@ public final class FBView extends ZLTextView {
 			selectedRegion instanceof ZLTextWordRegion) {
 			if (myReader.WordTappingActionOption.getValue() !=
 				FBReaderApp.WordTappingAction.doNothing) {
-				final ZLTextRegion region = findRegion(x, y, 10, ZLTextRegion.AnyRegionFilter);
+				final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 				if (region instanceof ZLTextHyperlinkRegion || region instanceof ZLTextWordRegion) {
 					selectRegion(region);
 					myReader.getViewWidget().reset();

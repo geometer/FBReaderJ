@@ -31,6 +31,8 @@ import org.geometerplus.zlibrary.text.hyphenation.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 public abstract class ZLTextView extends ZLTextViewBase {
+	public static final int MAX_SELECTION_DISTANCE = 10;
+
 	public interface ScrollingMode {
 		int NO_OVERLAPPING = 0;
 		int KEEP_LINES = 1;
