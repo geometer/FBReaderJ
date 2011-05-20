@@ -534,7 +534,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int index = from;
 		final int endElementIndex = info.EndElementIndex;
 		int charIndex = info.RealStartCharIndex;
-		for (int wordIndex = info.RealStartElementIndex; wordIndex != endElementIndex && (index < to); ++wordIndex, charIndex = 0) {
+		for (int wordIndex = info.RealStartElementIndex; wordIndex != endElementIndex && index < to; ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			final ZLTextElementArea area = page.TextElementMap.get(index);
 			if (element == area.Element) {
