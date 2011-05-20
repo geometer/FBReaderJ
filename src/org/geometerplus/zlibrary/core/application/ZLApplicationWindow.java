@@ -19,7 +19,6 @@
 
 package org.geometerplus.zlibrary.core.application;
 
-import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 abstract public class ZLApplicationWindow {

@@ -80,8 +80,8 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		}
 		super.onDraw(canvas);
 
-		final int w = getWidth();
-		final int h = getMainAreaHeight();
+//		final int w = getWidth();
+//		final int h = getMainAreaHeight();
 
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
@@ -118,8 +118,8 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	private void onDrawInScrolling(Canvas canvas) {
 		final ZLView view = ZLApplication.Instance().getCurrentView();
 
-		final int w = getWidth();
-		final int h = getMainAreaHeight();
+//		final int w = getWidth();
+//		final int h = getMainAreaHeight();
 
 		final AnimationProvider animator = getAnimationProvider();
 		final AnimationProvider.Mode oldMode = animator.getMode();

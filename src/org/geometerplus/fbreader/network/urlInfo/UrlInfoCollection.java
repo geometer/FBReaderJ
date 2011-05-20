@@ -30,11 +30,11 @@ public class UrlInfoCollection<T extends UrlInfo> implements Serializable {
 	public UrlInfoCollection() {
 	}
 
-	public UrlInfoCollection(UrlInfoCollection other) {
+	public UrlInfoCollection(UrlInfoCollection<? extends T> other) {
 		myInfos.addAll(other.myInfos);
 	}
 
-	public void upgrade(UrlInfoCollection other) {
+	public void upgrade(UrlInfoCollection<? extends T> other) {
 		myInfos.removeAll(other.myInfos);
 		myInfos.addAll(other.myInfos);
 	}

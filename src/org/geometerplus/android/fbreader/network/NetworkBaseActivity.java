@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.net.*;
-
 import android.app.*;
 import android.os.Bundle;
 import android.view.*;

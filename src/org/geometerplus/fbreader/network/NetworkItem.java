@@ -29,7 +29,7 @@ public abstract class NetworkItem {
 	public final CharSequence Title;
 
 	private CharSequence mySummary;
-	private final UrlInfoCollection myURLs;
+	private final UrlInfoCollection<UrlInfo> myURLs;
 
 	/**
 	 * Creates new NetworkItem instance.
@@ -39,12 +39,12 @@ public abstract class NetworkItem {
 	 * @param summary    description of this library item. Can be <code>null</code>.
 	 * @param urls       collection of item-related urls (like icon link, opds catalog link, etc. Can be <code>null</code>.
 	 */
-	protected NetworkItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection urls) {
+	protected NetworkItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
 		Link = link;
 		Title = title != null ? title : "";
 		setSummary(summary);
 		if (urls != null && !urls.isEmpty()) {
- 			myURLs = new UrlInfoCollection(urls);
+ 			myURLs = new UrlInfoCollection<UrlInfo>(urls);
 		} else {
 			myURLs = null;
 		}
@@ -58,7 +58,7 @@ public abstract class NetworkItem {
 		return mySummary;
 	}
 
-	protected void addUrls(UrlInfoCollection urls) {
+	protected void addUrls(UrlInfoCollection<?> urls) {
 		myURLs.upgrade(urls);
 	}
 

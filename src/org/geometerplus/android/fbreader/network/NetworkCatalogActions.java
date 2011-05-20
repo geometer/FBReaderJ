@@ -302,10 +302,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			myResumeNotLoad = resumeNotLoad;
 		}
 
-		public String getResourceKey() {
-			return "downloadingCatalogs";
-		}
-
 		@Override
 		public void doBefore() throws ZLNetworkException {
 			final INetworkLink link = myTree.Item.Link;
