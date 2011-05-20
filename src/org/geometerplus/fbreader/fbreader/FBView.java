@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -544,11 +543,11 @@ public final class FBView extends ZLTextView {
 
 		// TODO: remove
 		int myGaugeWidth = 1;
-		public int getGaugeWidth() {
+		/*public int getGaugeWidth() {
 			return myGaugeWidth;
-		}
+		}*/
 
-		public void setProgress(int x) {
+		/*public void setProgress(int x) {
 			// set progress according to tap coordinate
 			int gaugeWidth = getGaugeWidth();
 			float progress = 1.0f * Math.min(x, gaugeWidth) / gaugeWidth;
@@ -560,7 +559,7 @@ public final class FBView extends ZLTextView {
 			}
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
-		}
+		}*/
 	}
 
 	private Footer myFooter;

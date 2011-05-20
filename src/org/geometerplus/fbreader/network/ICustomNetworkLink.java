@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.HashMap;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
