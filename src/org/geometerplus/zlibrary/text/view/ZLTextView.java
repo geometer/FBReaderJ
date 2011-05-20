@@ -1236,6 +1236,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return getCurrentElementRegion(myCurrentPage);
 	}
 
+	protected ZLTextRegion findRegion(int x, int y, ZLTextRegion.Filter filter) {
+		return findRegion(x, y, Integer.MAX_VALUE - 1, filter);
+	}
+
 	protected ZLTextRegion findRegion(int x, int y, int maxDistance, ZLTextRegion.Filter filter) {
 		ZLTextRegion bestRegion = null;
 		int distance = maxDistance + 1;

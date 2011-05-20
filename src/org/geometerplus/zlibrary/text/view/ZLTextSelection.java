@@ -30,22 +30,27 @@ public class ZLTextSelection {
 
 	ZLTextSelection(ZLTextView view) {
 		myView = view;
-		clear();
 	}
 
 	boolean isEmpty() {
 		return myInitialRegion == null;
 	}
 
-	boolean clear() { // returns if it was filled before.
-		boolean res = !isEmpty();
+	boolean clear() {
+		if (isEmpty()) {
+			return false;
+		}
+
+		stop();
 		myInitialRegion = null;
-		return res;
+		myLeftBound = null;
+		myRightBound = null;
+		return true;
 	}
 
 	boolean start(int x, int y) {
 		clear();
-		myInitialRegion = findSelectedRegion(x, y);
+		myInitialRegion = myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		if (myInitialRegion == null) {
 			return false;
 		}
@@ -96,9 +101,9 @@ public class ZLTextSelection {
 			myScroller.setXY(x, y);
 		}
 
-		ZLTextRegion region = findSelectedRegion(x, y);
+		ZLTextRegion region = myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		if (region == null && myScroller != null) {
-			region = findNearestRegion(x, y);
+			region = myView.findRegion(x, y, ZLTextRegion.AnyRegionFilter);
 		}
 		if (region == null) {
 			return false;
@@ -140,14 +145,6 @@ public class ZLTextSelection {
 
 	ZLTextElementArea getEndArea() {
 		return myRightBound;
-	}
-
-	private ZLTextRegion findSelectedRegion(int x, int y) {
-		return myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
-	}
-
-	private ZLTextRegion findNearestRegion(int x, int y) {
-		return myView.findRegion(x, y, Integer.MAX_VALUE - 1, ZLTextRegion.AnyRegionFilter);
 	}
 
 	private class Scroller implements Runnable {
