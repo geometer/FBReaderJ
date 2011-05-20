@@ -31,6 +31,8 @@ import org.geometerplus.zlibrary.text.hyphenation.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 public abstract class ZLTextView extends ZLTextViewBase {
+	public static final int MAX_SELECTION_DISTANCE = 10;
+
 	public interface ScrollingMode {
 		int NO_OVERLAPPING = 0;
 		int KEEP_LINES = 1;
@@ -1205,6 +1207,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public ZLTextRegion getSelectedRegion() {
 		return getCurrentElementRegion(myCurrentPage);
+	}
+
+	protected ZLTextRegion findRegion(int x, int y, ZLTextRegion.Filter filter) {
+		return findRegion(x, y, Integer.MAX_VALUE - 1, filter);
 	}
 
 	protected ZLTextRegion findRegion(int x, int y, int maxDistance, ZLTextRegion.Filter filter) {
