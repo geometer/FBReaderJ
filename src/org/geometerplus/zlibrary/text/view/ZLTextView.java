@@ -532,7 +532,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		final ZLPaintContext context = myContext;
 
-		if (!mySelection.isEmpty() && from != to && !mySelection.isEmptyOnPage(page)) {
+		if (!mySelection.isEmpty() && from != to) {
 			final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 			final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
 			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
@@ -1290,11 +1290,39 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public String getSelectedText() {
 		return mySelection.getText();
 	}
+
 	public int getSelectionStartY() {
-		return mySelection.getStartY();
+		final ZLTextElementAreaVector vector = myCurrentPage.TextElementMap;
+		if (vector.isEmpty()) {
+			return 0;
+		}
+		final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
+		final int index = vector.indexOf(selectionStartArea);
+		if (index != -1) {
+			return vector.get(index).YStart;
+		}
+		final ZLTextElementArea endArea = vector.get(vector.size() - 1);
+		if (selectionStartArea.compareTo(endArea) > 0) {
+			return endArea.YEnd;
+		}
+		return vector.get(0).YStart;
 	}
+
 	public int getSelectionEndY() {
-		return mySelection.getEndY();
+		final ZLTextElementAreaVector vector = myCurrentPage.TextElementMap;
+		if (vector.isEmpty()) {
+			return 0;
+		}
+		final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
+		final int index = vector.indexOf(selectionEndArea);
+		if (index != -1) {
+			return vector.get(index).YEnd;
+		}
+		final ZLTextElementArea endArea = vector.get(vector.size() - 1);
+		if (selectionEndArea.compareTo(endArea) > 0) {
+			return endArea.YEnd;
+		}
+		return vector.get(0).YStart;
 	}
 	
 	public ZLTextPosition getSelectionStartPosition() {

@@ -19,10 +19,6 @@ public class ZLTextSelection {
 		return myInitialRegion == null;
 	}
 
-	boolean isEmptyOnPage(ZLTextPage page) {
-		return getStartAreaID(page) == -1;
-	}
-
 	boolean clear() { // returns if it was filled before.
 		boolean res = !isEmpty();
 		myInitialRegion = null;
@@ -149,39 +145,11 @@ public class ZLTextSelection {
 		return myText.toString();
 	}
 
-	public boolean isAreaSelected(ZLTextElementArea area) {
+	boolean isAreaSelected(ZLTextElementArea area) {
 		return
 			!isEmpty()
 			&& myLeftBound.weakCompareTo(area) <= 0
 			&& myRightBound.weakCompareTo(area) >= 0;
-	}
-
-	public int getStartAreaID(ZLTextPage page) {
-		final int id = page.TextElementMap.indexOf(myLeftBound);
-		if (id == -1) {
-			if (isAreaSelected(page.TextElementMap.get(0))) {
-				return 0;
-			}
-		}
-		return id;
-	}
-
-	public int getEndAreaID(ZLTextPage page) {
-		final int id = page.TextElementMap.indexOf(myRightBound);
-		if (id == -1) {
-			final int lastID = page.TextElementMap.size() - 1;
-			if (isAreaSelected(page.TextElementMap.get(lastID))) {
-				return lastID;
-			}
-		}
-		return id;
-	}
-
-	private ZLTextElementArea getArea(int areaID) {
-		if (areaID != -1) {
-			return myView.myCurrentPage.TextElementMap.get(areaID);
-		}
-		return null;
 	}
 
 	ZLTextElementArea getStartArea() {
@@ -190,21 +158,6 @@ public class ZLTextSelection {
 
 	ZLTextElementArea getEndArea() {
 		return myRightBound;
-	}
-
-	public int getStartY() {
-		final ZLTextElementArea startArea = getArea(getStartAreaID(myView.myCurrentPage));
-		if (startArea != null) {
-			return startArea.YStart;
-		}
-		return 0;
-	}
-	public int getEndY() {
-		final ZLTextElementArea endArea = getArea(getEndAreaID(myView.myCurrentPage));
-		if (endArea != null) {
-			return endArea.YEnd;
-		}
-		return 0;
 	}
 
 	private ZLTextRegion findSelectedRegion(int x, int y) {
