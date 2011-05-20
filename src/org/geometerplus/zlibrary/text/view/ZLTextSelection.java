@@ -4,8 +4,8 @@ public class ZLTextSelection {
 	private static final int SELECTION_DISTANCE = 10;
 
 	private ZLTextRegion myInitialRegion;
-	private final Bound myLeftBound = new Bound();
-	private final Bound myRightBound = new Bound();
+	private ZLTextElementArea myLeftBound;
+	private ZLTextElementArea myRightBound;
 	private final StringBuilder myText = new StringBuilder();
 	private final ZLTextView myView;
 	private Scroller myScroller;
@@ -36,8 +36,8 @@ public class ZLTextSelection {
 			return false;
 		}
 
-		myLeftBound.set(myInitialRegion.getFirstArea());
-		myRightBound.set(myInitialRegion.getLastArea());
+		myLeftBound = myInitialRegion.getFirstArea();
+		myRightBound = myInitialRegion.getLastArea();
 		return true;
 	}
 
@@ -92,13 +92,24 @@ public class ZLTextSelection {
 
 		final int cmp = myInitialRegion.compareTo(region);
 		boolean changed = false;
+		final ZLTextElementArea firstArea = region.getFirstArea();
+		final ZLTextElementArea lastArea = region.getLastArea();
 		if (cmp < 0) {
-			changed |= myRightBound.set(region.getLastArea());
+			if (myRightBound.compareTo(lastArea) != 0) {
+				changed = true;
+				myRightBound = lastArea;
+			}
 		} else if (cmp > 0) {
-			changed |= myLeftBound.set(region.getFirstArea());
+			if (myLeftBound.compareTo(firstArea) != 0) {
+				changed = true;
+				myLeftBound = firstArea;
+			}
 		} else {
-			changed |= myRightBound.set(region.getLastArea());
-			changed |= myLeftBound.set(region.getFirstArea());
+			if (myLeftBound.compareTo(firstArea) != 0 || myRightBound.compareTo(lastArea) != 0) {
+				changed = true;
+				myLeftBound = firstArea;
+				myRightBound = lastArea;
+			}
 		}
 		if (changed) {
 			myText.delete(0, myText.length());
@@ -108,8 +119,8 @@ public class ZLTextSelection {
 
 	private void prepareParagraphText(int paragraphID) {
 		final ZLTextParagraphCursor paragraph = ZLTextParagraphCursor.cursor(myView.getModel(), paragraphID);
-		final int startElementID = myLeftBound.myArea.ParagraphIndex == paragraphID ? myLeftBound.myArea.ElementIndex : 0;
-		final int endElementID = myRightBound.myArea.ParagraphIndex == paragraphID ? myRightBound.myArea.ElementIndex : paragraph.getParagraphLength() - 1;
+		final int startElementID = myLeftBound.ParagraphIndex == paragraphID ? myLeftBound.ElementIndex : 0;
+		final int endElementID = myRightBound.ParagraphIndex == paragraphID ? myRightBound.ElementIndex : paragraph.getParagraphLength() - 1;
 
 		for (int elementID = startElementID; elementID <= endElementID; elementID++) {
 			final ZLTextElement element = paragraph.getElement(elementID);
@@ -127,8 +138,8 @@ public class ZLTextSelection {
 			return "";
 		}
 		if (myText.length() == 0) {
-			final int from = myLeftBound.myArea.ParagraphIndex;
-			final int to = myRightBound.myArea.ParagraphIndex;
+			final int from = myLeftBound.ParagraphIndex;
+			final int to = myRightBound.ParagraphIndex;
 			for (int i = from; i < to; ++i) {
 				prepareParagraphText(i);
 				myText.append("\n");
@@ -141,12 +152,12 @@ public class ZLTextSelection {
 	public boolean isAreaSelected(ZLTextElementArea area) {
 		return
 			!isEmpty()
-			&& myLeftBound.myArea.weakCompareTo(area) <= 0
-			&& myRightBound.myArea.weakCompareTo(area) >= 0;
+			&& myLeftBound.weakCompareTo(area) <= 0
+			&& myRightBound.weakCompareTo(area) >= 0;
 	}
 
 	public int getStartAreaID(ZLTextPage page) {
-		final int id = page.TextElementMap.indexOf(myLeftBound.myArea);
+		final int id = page.TextElementMap.indexOf(myLeftBound);
 		if (id == -1) {
 			if (isAreaSelected(page.TextElementMap.get(0))) {
 				return 0;
@@ -156,7 +167,7 @@ public class ZLTextSelection {
 	}
 
 	public int getEndAreaID(ZLTextPage page) {
-		final int id = page.TextElementMap.indexOf(myRightBound.myArea);
+		final int id = page.TextElementMap.indexOf(myRightBound);
 		if (id == -1) {
 			final int lastID = page.TextElementMap.size() - 1;
 			if (isAreaSelected(page.TextElementMap.get(lastID))) {
@@ -174,11 +185,11 @@ public class ZLTextSelection {
 	}
 
 	ZLTextElementArea getStartArea() {
-		return myLeftBound.myArea;
+		return myLeftBound;
 	}
 
 	ZLTextElementArea getEndArea() {
-		return myRightBound.myArea;
+		return myRightBound;
 	}
 
 	public int getStartY() {
@@ -196,24 +207,12 @@ public class ZLTextSelection {
 		return 0;
 	}
 
-	private ZLTextRegion findSelectedRegion(int x, int y) { // TODO fast find
+	private ZLTextRegion findSelectedRegion(int x, int y) {
 		return myView.findRegion(x, y, SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 	}
 
-	private ZLTextRegion findNearestRegion(int x, int y) { // TODO fast find
+	private ZLTextRegion findNearestRegion(int x, int y) {
 		return myView.findRegion(x, y, Integer.MAX_VALUE - 1, ZLTextRegion.AnyRegionFilter);
-	}
-
-	private class Bound {
-		private ZLTextElementArea myArea;
-
-		private boolean set(ZLTextElementArea area) {
-			if (myArea == null || myArea.compareTo(area) != 0) {
-				myArea = area;
-				return true;
-			}
-			return false;
-		}
 	}
 
 	private class Scroller implements Runnable {
