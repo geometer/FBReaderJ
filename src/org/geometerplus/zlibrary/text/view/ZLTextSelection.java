@@ -6,9 +6,7 @@ public class ZLTextSelection {
 	private ZLTextRegion myInitialRegion;
 	private final Bound myLeftBound = new StartBound();
 	private final Bound myRightBound = new EndBound();
-	private Bound myCurrentChangingBound;
 	private final StringBuilder myText = new StringBuilder();
-	private boolean myTextIsInvalid;
 	private final ZLTextView myView;
 	private Scroller myScroller;
 
@@ -18,7 +16,7 @@ public class ZLTextSelection {
 	}
 
 	boolean isEmpty() {
-		return myLeftBound.compareTo(myRightBound) > 0;
+		return myInitialRegion == null;
 	}
 
 	boolean isEmptyOnPage(ZLTextPage page) {
@@ -30,8 +28,6 @@ public class ZLTextSelection {
 		myInitialRegion = null;
 		myLeftBound.clear();
 		myRightBound.clear();
-		myCurrentChangingBound = null;
-		myTextIsInvalid = true;
 		return res;
 	}
 
@@ -107,7 +103,7 @@ public class ZLTextSelection {
 			changed |= myLeftBound.set(region);
 		}
 		if (changed) {
-			myTextIsInvalid = true;
+			myText.delete(0, myText.length());
 		}
 		return changed;
 	}
@@ -120,25 +116,23 @@ public class ZLTextSelection {
 
 		for (int elementID = startElementID; elementID <= endElementID; elementID++) {
 			final ZLTextElement element = paragraph.getElement(elementID);
-			if (element == ZLTextElement.HSpace)
+			if (element == ZLTextElement.HSpace) {
 				myText.append(" ");
-			else if (element instanceof ZLTextWord) {
+			} else if (element instanceof ZLTextWord) {
 				ZLTextWord word = (ZLTextWord)element;
 				myText.append(word.Data, word.Offset, word.Length);
 			}
 		}
-		if (!isLastSelectedParagraph)
+		if (!isLastSelectedParagraph) {
 			myText.append("\n");
+		}
 	}
 
 	String getText() {
-		if (myTextIsInvalid) {
-			myText.delete(0, myText.length());
-
+		if (myText.length() == 0) {
 			for (int i = myLeftBound.getParagraphIndex(); i <= myRightBound.getParagraphIndex(); ++i) {
 				prepareParagraphText(i);
 			}
-			myTextIsInvalid = false;
 		}
 		return myText.toString();
 	}
