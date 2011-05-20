@@ -6,7 +6,6 @@ public class ZLTextSelection {
 	private ZLTextRegion myInitialRegion;
 	private ZLTextElementArea myLeftBound;
 	private ZLTextElementArea myRightBound;
-	private final StringBuilder myText = new StringBuilder();
 	private final ZLTextView myView;
 	private Scroller myScroller;
 
@@ -87,33 +86,29 @@ public class ZLTextSelection {
 		}
 
 		final int cmp = myInitialRegion.compareTo(region);
-		boolean changed = false;
 		final ZLTextElementArea firstArea = region.getFirstArea();
 		final ZLTextElementArea lastArea = region.getLastArea();
 		if (cmp < 0) {
 			if (myRightBound.compareTo(lastArea) != 0) {
-				changed = true;
 				myRightBound = lastArea;
+				return true;
 			}
 		} else if (cmp > 0) {
 			if (myLeftBound.compareTo(firstArea) != 0) {
-				changed = true;
 				myLeftBound = firstArea;
+				return true;
 			}
 		} else {
 			if (myLeftBound.compareTo(firstArea) != 0 || myRightBound.compareTo(lastArea) != 0) {
-				changed = true;
 				myLeftBound = firstArea;
 				myRightBound = lastArea;
+				return true;
 			}
 		}
-		if (changed) {
-			myText.delete(0, myText.length());
-		}
-		return changed;
+		return false;
 	}
 
-	private void prepareParagraphText(int paragraphID) {
+	private void prepareParagraphText(int paragraphID, StringBuilder buffer) {
 		final ZLTextParagraphCursor paragraph = ZLTextParagraphCursor.cursor(myView.getModel(), paragraphID);
 		final int startElementID = myLeftBound.ParagraphIndex == paragraphID ? myLeftBound.ElementIndex : 0;
 		final int endElementID = myRightBound.ParagraphIndex == paragraphID ? myRightBound.ElementIndex : paragraph.getParagraphLength() - 1;
@@ -121,10 +116,10 @@ public class ZLTextSelection {
 		for (int elementID = startElementID; elementID <= endElementID; elementID++) {
 			final ZLTextElement element = paragraph.getElement(elementID);
 			if (element == ZLTextElement.HSpace) {
-				myText.append(" ");
+				buffer.append(" ");
 			} else if (element instanceof ZLTextWord) {
 				ZLTextWord word = (ZLTextWord)element;
-				myText.append(word.Data, word.Offset, word.Length);
+				buffer.append(word.Data, word.Offset, word.Length);
 			}
 		}
 	}
@@ -133,16 +128,16 @@ public class ZLTextSelection {
 		if (isEmpty()) {
 			return "";
 		}
-		if (myText.length() == 0) {
-			final int from = myLeftBound.ParagraphIndex;
-			final int to = myRightBound.ParagraphIndex;
-			for (int i = from; i < to; ++i) {
-				prepareParagraphText(i);
-				myText.append("\n");
-			}
-			prepareParagraphText(to);
+
+		final StringBuilder buffer = new StringBuilder();
+		final int from = myLeftBound.ParagraphIndex;
+		final int to = myRightBound.ParagraphIndex;
+		for (int i = from; i < to; ++i) {
+			prepareParagraphText(i, buffer);
+			buffer.append("\n");
 		}
-		return myText.toString();
+		prepareParagraphText(to, buffer);
+		return buffer.toString();
 	}
 
 	boolean isAreaSelected(ZLTextElementArea area) {
