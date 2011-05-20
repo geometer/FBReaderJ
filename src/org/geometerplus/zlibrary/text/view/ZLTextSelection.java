@@ -4,8 +4,8 @@ public class ZLTextSelection {
 	private static final int SELECTION_DISTANCE = 10;
 
 	private ZLTextRegion myInitialRegion;
-	private final Bound myLeftBound = new StartBound();
-	private final Bound myRightBound = new EndBound();
+	private final Bound myLeftBound = new Bound();
+	private final Bound myRightBound = new Bound();
 	private final StringBuilder myText = new StringBuilder();
 	private final ZLTextView myView;
 	private Scroller myScroller;
@@ -36,8 +36,8 @@ public class ZLTextSelection {
 			return false;
 		}
 
-		myLeftBound.set(myInitialRegion);
-		myRightBound.set(myInitialRegion);
+		myLeftBound.set(myInitialRegion.getFirstArea());
+		myRightBound.set(myInitialRegion.getLastArea());
 		return true;
 	}
 
@@ -93,12 +93,12 @@ public class ZLTextSelection {
 		final int cmp = myInitialRegion.compareTo(region);
 		boolean changed = false;
 		if (cmp < 0) {
-			changed |= myRightBound.set(region);
+			changed |= myRightBound.set(region.getLastArea());
 		} else if (cmp > 0) {
-			changed |= myLeftBound.set(region);
+			changed |= myLeftBound.set(region.getFirstArea());
 		} else {
-			changed |= myRightBound.set(region);
-			changed |= myLeftBound.set(region);
+			changed |= myRightBound.set(region.getLastArea());
+			changed |= myLeftBound.set(region.getFirstArea());
 		}
 		if (changed) {
 			myText.delete(0, myText.length());
@@ -172,36 +172,32 @@ public class ZLTextSelection {
 
 	private ZLTextElementArea getArea(int areaID) {
 		if (areaID != -1) {
-			return getTextElementMap().get(areaID);
+			return myView.myCurrentPage.TextElementMap.get(areaID);
 		}
 		return null;
 	}
 
 	ZLTextElementArea getStartArea() {
-		return getArea(getStartAreaID(myView.myCurrentPage));
+		return myLeftBound.myArea;
 	}
 
 	ZLTextElementArea getEndArea() {
-		return getArea(getEndAreaID(myView.myCurrentPage));
+		return myRightBound.myArea;
 	}
 
 	public int getStartY() {
-		final ZLTextElementArea startArea = getStartArea();
+		final ZLTextElementArea startArea = getArea(getStartAreaID(myView.myCurrentPage));
 		if (startArea != null) {
 			return startArea.YStart;
 		}
 		return 0;
 	}
 	public int getEndY() {
-		final ZLTextElementArea endArea = getEndArea();
+		final ZLTextElementArea endArea = getArea(getEndAreaID(myView.myCurrentPage));
 		if (endArea != null) {
 			return endArea.YEnd;
 		}
 		return 0;
-	}
-
-	private ZLTextElementAreaVector getTextElementMap() {
-		return myView.myCurrentPage.TextElementMap;
 	}
 
 	private ZLTextRegion findSelectedRegion(int x, int y) { // TODO fast find
@@ -212,7 +208,7 @@ public class ZLTextSelection {
 		return myView.findRegion(x, y, Integer.MAX_VALUE - 1, ZLTextRegion.AnyRegionFilter);
 	}
 
-	private abstract class Bound extends ZLTextPosition {
+	private class Bound extends ZLTextPosition {
 		private ZLTextElementArea myArea;
 
 		@Override
@@ -230,31 +226,12 @@ public class ZLTextSelection {
 			return 0;
 		}
 
-		private boolean set(ZLTextRegion region) {
-			final ZLTextElementArea area = getArea(region);
-			if (myArea == null
-				|| area.ParagraphIndex != myArea.ParagraphIndex
-				|| area.ElementIndex != myArea.ElementIndex) { 
+		private boolean set(ZLTextElementArea area) {
+			if (myArea == null || myArea.compareTo(area) != 0) {
 				myArea = area;
 				return true;
 			}
 			return false;
-		}
-
-		protected abstract ZLTextElementArea getArea(ZLTextRegion region);
-	}
-
-	private class StartBound extends Bound {
-		@Override
-		protected ZLTextElementArea getArea(ZLTextRegion region) {
-			return region.getFirstArea();
-		}
-	}
-
-	private class EndBound extends Bound {
-		@Override
-		protected ZLTextElementArea getArea(ZLTextRegion region) {
-			return region.getLastArea();
 		}
 	}
 
