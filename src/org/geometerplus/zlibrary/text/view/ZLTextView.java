@@ -532,24 +532,25 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final ZLTextParagraphCursor paragraph = info.ParagraphCursor;
 		final ZLPaintContext context = myContext;
 
-		if (!mySelection.isEmpty() && (from != to) && !mySelection.isEmptyOnPage(page)) {
-			final int startSelectAreaID = mySelection.getStartAreaID(page), endSelectedAreaID = mySelection.getEndAreaID(page);
-			final int startAreaID = Math.max(from, startSelectAreaID), endAreaID = Math.min(to - 1, endSelectedAreaID);
-			if (startAreaID <= endAreaID) {
-				final ZLTextElementArea startArea = page.TextElementMap.get(startAreaID);
-				final ZLTextElementArea endArea = page.TextElementMap.get(endAreaID);
+		if (!mySelection.isEmpty() && from != to && !mySelection.isEmptyOnPage(page)) {
+			final ZLTextElementArea fromArea = page.TextElementMap.get(from);
+			final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
+			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
+			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
+			if (fromArea.compareTo(selectionEndArea) <= 0
+				&& toArea.compareTo(selectionStartArea) >= 0) {
 				final int top = y + 1;
 				int left, right, bottom = y + info.Height + info.Descent;
-				if (mySelection.areaWithinStartBound(startArea)) {
+				if (selectionStartArea.compareTo(fromArea) < 0) {
 					left = getLeftMargin();
 				} else {
-					left = startArea.XStart;
+					left = selectionStartArea.XStart;
 				}
-				if (mySelection.areaWithinEndBound(endArea)) {
+				if (selectionEndArea.compareTo(toArea) > 0) {
 					right = getRightLine();
 					bottom += info.VSpaceAfter;
 				} else {
-					right = endArea.XEnd;
+					right = selectionEndArea.XEnd;
 				}
 				context.setFillColor(getSelectedBackgroundColor());
 				context.fillRectangle(left, top, right, bottom);
@@ -559,7 +560,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int index = from;
 		final int endElementIndex = info.EndElementIndex;
 		int charIndex = info.RealStartCharIndex;
-		for (int wordIndex = info.RealStartElementIndex; (wordIndex != endElementIndex) && (index < to); ++wordIndex, charIndex = 0) {
+		for (int wordIndex = info.RealStartElementIndex; wordIndex != endElementIndex && index < to; ++wordIndex, charIndex = 0) {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			final ZLTextElementArea area = page.TextElementMap.get(index);
 			if (element == area.Element) {

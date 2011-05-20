@@ -155,7 +155,10 @@ public class ZLTextSelection {
 	}
 
 	public boolean isAreaSelected(ZLTextElementArea area) {
-		return !isEmpty() && !myLeftBound.isExpandedBy(area) && !myRightBound.isExpandedBy(area);
+		return
+			!isEmpty()
+			&& myLeftBound.myArea.weakCompareTo(area) <= 0
+			&& myRightBound.myArea.weakCompareTo(area) >= 0;
 	}
 
 	public int getStartAreaID(ZLTextPage page) {
@@ -186,11 +189,11 @@ public class ZLTextSelection {
 		return null;
 	}
 
-	private ZLTextElementArea getStartArea() {
+	ZLTextElementArea getStartArea() {
 		return getArea(getStartAreaID(myView.myCurrentPage));
 	}
 
-	private ZLTextElementArea getEndArea() {
+	ZLTextElementArea getEndArea() {
 		return getArea(getEndAreaID(myView.myCurrentPage));
 	}
 
@@ -239,7 +242,9 @@ public class ZLTextSelection {
 
 		protected boolean set(ZLTextRegion region) {
 			final ZLTextElementArea area = getArea(region);
-			if (area.ParagraphIndex != myArea.ParagraphIndex || area.ElementIndex != myArea.ElementIndex) { 
+			if (myArea == null
+				|| area.ParagraphIndex != myArea.ParagraphIndex
+				|| area.ElementIndex != myArea.ElementIndex) { 
 				myArea = area;
 				return true;
 			}
@@ -247,26 +252,11 @@ public class ZLTextSelection {
 		}
 
 		protected boolean isLessThan(ZLTextElementArea area) {
-			return
-				myArea.ParagraphIndex < area.ParagraphIndex ||
-				(myArea.ParagraphIndex == area.ParagraphIndex && myArea.ElementIndex < area.ElementIndex);
+			return myArea.weakCompareTo(area) <= 0;
 		}
 
 		protected boolean isGreaterThan(ZLTextElementArea area) {
-			return
-				myArea.ParagraphIndex > area.ParagraphIndex ||
-				(myArea.ElementIndex == area.ParagraphIndex && myArea.ElementIndex > area.ElementIndex);
-		}
-
-		protected boolean equalsTo(ZLTextRegion region) {
-			final ZLTextElementArea area = getArea(region);
-			return
-				myArea.ParagraphIndex  == area.ParagraphIndex &&
-				myArea.ElementIndex == area.ElementIndex;
-		}
-
-		protected boolean isExpandedBy(ZLTextRegion region) {
-			return isExpandedBy(getArea(region));
+			return myArea.weakCompareTo(area) >= 0;
 		}
 
 		protected abstract ZLTextElementArea getArea(ZLTextRegion region);
