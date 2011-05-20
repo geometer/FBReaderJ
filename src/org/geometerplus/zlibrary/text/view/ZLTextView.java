@@ -1287,9 +1287,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			Application.getViewWidget().repaint();
 		}
 	}
-	public String getSelectedText() {
-		return mySelection.getText();
-	}
 
 	public int getSelectionStartY() {
 		final ZLTextElementAreaVector vector = myCurrentPage.TextElementMap;
@@ -1326,8 +1323,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 	
 	public ZLTextPosition getSelectionStartPosition() {
-		final ZLTextElementArea area = mySelection.getStartArea();
-		return new ZLTextFixedPosition(area.ParagraphIndex, area.ElementIndex, 0);
+		return mySelection.getStartArea();
+	}
+
+	public ZLTextPosition getSelectionEndPosition() {
+		return mySelection.getEndArea();
 	}
 
 	public boolean isSelectionEmpty() {

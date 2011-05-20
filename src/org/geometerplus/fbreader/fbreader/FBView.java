@@ -633,4 +633,12 @@ public final class FBView extends ZLTextView {
 	public Animation getAnimationType() {
 		return ScrollingPreferences.Instance().AnimationOption.getValue();
 	}
+
+	public String getSelectedText() {
+		final TextBuilderTraverser traverser = new TextBuilderTraverser(this);
+		if (!isSelectionEmpty()) {
+			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
+		}
+		return traverser.toString();
+	}
 }

@@ -127,38 +127,6 @@ public class ZLTextSelection {
 		return false;
 	}
 
-	private void prepareParagraphText(int paragraphID, StringBuilder buffer) {
-		final ZLTextParagraphCursor paragraph = ZLTextParagraphCursor.cursor(myView.getModel(), paragraphID);
-		final int startElementID = myLeftBound.ParagraphIndex == paragraphID ? myLeftBound.ElementIndex : 0;
-		final int endElementID = myRightBound.ParagraphIndex == paragraphID ? myRightBound.ElementIndex : paragraph.getParagraphLength() - 1;
-
-		for (int elementID = startElementID; elementID <= endElementID; elementID++) {
-			final ZLTextElement element = paragraph.getElement(elementID);
-			if (element == ZLTextElement.HSpace) {
-				buffer.append(" ");
-			} else if (element instanceof ZLTextWord) {
-				ZLTextWord word = (ZLTextWord)element;
-				buffer.append(word.Data, word.Offset, word.Length);
-			}
-		}
-	}
-
-	String getText() {
-		if (isEmpty()) {
-			return "";
-		}
-
-		final StringBuilder buffer = new StringBuilder();
-		final int from = myLeftBound.ParagraphIndex;
-		final int to = myRightBound.ParagraphIndex;
-		for (int i = from; i < to; ++i) {
-			prepareParagraphText(i, buffer);
-			buffer.append("\n");
-		}
-		prepareParagraphText(to, buffer);
-		return buffer.toString();
-	}
-
 	boolean isAreaSelected(ZLTextElementArea area) {
 		return
 			!isEmpty()
