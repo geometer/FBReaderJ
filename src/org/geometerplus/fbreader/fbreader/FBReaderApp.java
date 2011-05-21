@@ -122,7 +122,7 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(this, true));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(this, false));
 
-		addAction(ActionCode.SELECTION_BOOKMARK, new SelectionBookmarkAction(this));
+		addAction(ActionCode.SELECTION_ADD_BOOKMARK, new SelectionBookmarkAction(this));
 
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));

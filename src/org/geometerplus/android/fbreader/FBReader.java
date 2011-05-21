@@ -101,10 +101,12 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_MENU, new ShowMenuAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
-		fbReader.addAction(ActionCode.SELECTION_PANEL_VISIBILITY, new SelectionPanelVisibilityAction(this, fbReader));
-		fbReader.addAction(ActionCode.SELECTION_COPY, new SelectionCopyAction(this, fbReader));
+
+		fbReader.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionPanelVisibilityAction(this, fbReader, true));
+		fbReader.addAction(ActionCode.SELECTION_HIDE_PANEL, new SelectionPanelVisibilityAction(this, fbReader, false));
+		fbReader.addAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD, new SelectionCopyAction(this, fbReader));
 		fbReader.addAction(ActionCode.SELECTION_SHARE, new SelectionShareAction(this, fbReader));
-		fbReader.addAction(ActionCode.SELECTION_DICTIONARY, new SelectionDictionaryAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_OPEN_IN_DICTIONARY, new SelectionDictionaryAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 

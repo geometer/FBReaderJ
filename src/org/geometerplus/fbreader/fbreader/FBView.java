@@ -74,7 +74,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (isSelectionModeActive()) {
+		if (myIsSelectionModeActive) {
 			deactivateSelectionMode();
 			return true;
 		}
@@ -117,9 +117,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (isSelectionModeActive()) {
-			myIsNowSelecting = true;
-			myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
+		if (myIsSelectionModeActive) {
+			myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 			return true;
 		}
 
@@ -158,7 +157,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
-			if (isSelectionModeActive()) {
+			if (myIsSelectionModeActive) {
 				expandSelectionTo(x, y);
 				return true;
 			}
@@ -192,7 +191,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
-			if (isSelectionModeActive()) {
+			if (myIsSelectionModeActive) {
 				stopSelection();
 				return true;
 			}
@@ -247,7 +246,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (isSelectionModeActive()) {
+		if (myIsSelectionModeActive) {
 			expandSelectionTo(x, y);
 			return true;
 		}
@@ -273,7 +272,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (isSelectionModeActive()) {
+		if (myIsSelectionModeActive) {
 			stopSelection();
 			return true;
 		}
@@ -581,18 +580,9 @@ public final class FBView extends ZLTextView {
 	}
 
 	private boolean myIsSelectionModeActive;
-	private boolean myIsNowSelecting;
-
-	public boolean isSelectionModeActive() {
-		return myIsSelectionModeActive;
-	}
-
-	public boolean isNowSelecting() {
-		return myIsNowSelecting;
-	}
 
 	private void activateSelectionMode(int x, int y) {
-		if (isSelectionModeActive()) {
+		if (myIsSelectionModeActive) {
 			deactivateSelectionMode();
 		}
 
@@ -602,12 +592,12 @@ public final class FBView extends ZLTextView {
 	}
 
 	public void deactivateSelectionMode() {
-		if (!isSelectionModeActive()) {
+		if (!myIsSelectionModeActive) {
 			return;
 		}
 		clearSelection();
 		myIsSelectionModeActive = false;
-		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
+		myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 	}
 
 	@Override
@@ -615,16 +605,14 @@ public final class FBView extends ZLTextView {
 		if (!super.startSelection(x, y)) {
 			return false;
 		}
-		myIsNowSelecting = true;
-		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
+		myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 		return true;
 	}
 
 	@Override
 	protected void stopSelection() {
 		super.stopSelection();
-		myIsNowSelecting = false;
-		myReader.doAction(ActionCode.SELECTION_PANEL_VISIBILITY);
+		myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
 	}
 
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;

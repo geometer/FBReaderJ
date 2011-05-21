@@ -35,12 +35,6 @@ public interface ActionCode {
 	String FIND_NEXT = "findNext";
 	String CLEAR_FIND_RESULTS = "clearFindResults";
 
-	String SELECTION_PANEL_VISIBILITY = "selectionTogglePanelVisibility";
-	String SELECTION_COPY = "selectionCopy";
-	String SELECTION_SHARE = "selectionShare";
-	String SELECTION_DICTIONARY = "selectionDictionary";
-	String SELECTION_BOOKMARK = "selectionBookmark";
-
 	String SET_TEXT_VIEW_MODE_VISIT_HYPERLINKS = "hyperlinksOnlyMode";
 	String SET_TEXT_VIEW_MODE_VISIT_ALL_WORDS = "dictionaryMode";
 
@@ -61,4 +55,11 @@ public interface ActionCode {
 	String DECREASE_FONT = "decreaseFont";
 
 	String PROCESS_HYPERLINK = "processHyperlink";
+
+	String SELECTION_SHOW_PANEL = "selectionShowPanel";
+	String SELECTION_HIDE_PANEL = "selectionHidePanel";
+	String SELECTION_COPY_TO_CLIPBOARD = "selectionCopyToClipboard";
+	String SELECTION_SHARE = "selectionShare";
+	String SELECTION_OPEN_IN_DICTIONARY = "selectionOpenInDictionary";
+	String SELECTION_ADD_BOOKMARK = "selectionAddBookmark";
 }
