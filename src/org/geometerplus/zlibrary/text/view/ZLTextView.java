@@ -1326,7 +1326,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		return vector.get(0).YStart;
 	}
-	
+
 	public ZLTextPosition getSelectionStartPosition() {
 		return mySelection.getStartArea();
 	}
