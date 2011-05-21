@@ -36,7 +36,7 @@ public class ControlPanel extends LinearLayout {
 		
 		final LayoutInflater inflater =
 			(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.control_panel, this, true);
+		inflater.inflate(R.layout.control_panel_bottom, this, true);
 
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
 			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
