@@ -17,24 +17,36 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader;
+
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.library.Bookmark;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBView;
 
-public class SelectionBookmarkAction extends FBAction {
-	SelectionBookmarkAction(FBReaderApp fbreader) {
-		super(fbreader);
+import org.geometerplus.android.util.UIUtil;
+
+public class SelectionBookmarkAction extends FBAndroidAction {
+	SelectionBookmarkAction(FBReader baseApplication, FBReaderApp fbreader) {
+		super(baseApplication, fbreader);
 	}
 
 	public void run() {
 		final FBView fbview = Reader.getTextView();
+		final String text = fbview.getSelectedText();
+        fbview.deactivateSelectionMode();
+
 		new Bookmark(
 			Reader.Model.Book,
 			fbview.getModel().getId(),
 			fbview.getSelectionStartPosition(), 
-			fbview.getSelectedText(), 
+			text,
 			true
 		).save();
-        Reader.getTextView().deactivateSelectionMode();
+		UIUtil.showMessageText(
+			BaseActivity,
+			ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
+		);
 	}
 }

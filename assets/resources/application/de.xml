@@ -186,6 +186,8 @@
 		<node name="copyToClipboard" value="In die Zwischenablage kopieren"/>
 		<node name="openInDictionary" value="Im Wörterbuch nachschlagen"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Auswahl aufheben"/>
 	</node>
 	<node name="menu">
@@ -598,9 +600,6 @@
 			<node name="purchaseBook" value="Buch wird gekauft. Bitte warten..." />
 			<node name="loadingCatalogInfo" value="Kataloginformation wird geladen. Bitte warten..."/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler." />

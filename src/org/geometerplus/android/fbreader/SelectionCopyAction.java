@@ -44,8 +44,7 @@ public class SelectionCopyAction extends FBAndroidAction {
 		clipboard.setText(text);
 		UIUtil.showMessageText(
 			BaseActivity,
-			ZLResource.resource("dialog").getResource("selection").getResource("textInBuffer").getValue() + "\n" + clipboard.getText()
+			ZLResource.resource("selection").getResource("textInBuffer").getValue().replace("%s", clipboard.getText())
 		);
 	}
 }
-
