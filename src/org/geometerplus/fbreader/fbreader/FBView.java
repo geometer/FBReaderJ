@@ -220,6 +220,7 @@ public final class FBView extends ZLTextView {
 					myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 					startSelection(x, y);
 					return true;
+				case selectSingleWord:
 				case openDictionary:
 					doSelectRegion = true;
 					break;
