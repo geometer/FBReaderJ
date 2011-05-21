@@ -541,11 +541,6 @@ public final class FBView extends ZLTextView {
 		return myFooter;
 	}
 
-	@Override
-	public void clearSelection() {
-		super.clearSelection();
-	}
-
 	public String getSelectedText() {
 		final TextBuilderTraverser traverser = new TextBuilderTraverser(this);
 		if (!isSelectionEmpty()) {
