@@ -21,26 +21,22 @@ package org.geometerplus.android.fbreader;
 
 import android.content.Intent;
 
-import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 
 import org.geometerplus.android.fbreader.library.LibraryTopLevelActivity;
 
-class ShowLibraryAction extends FBAction {
-	private final FBReader myBaseActivity;
-
+class ShowLibraryAction extends FBAndroidAction {
 	ShowLibraryAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(fbreader);
-		myBaseActivity = baseActivity;
+		super(baseActivity, fbreader);
 	}
 
 	public void run() {
 		final BookModel model = Reader.Model;
-		Intent intent = new Intent(myBaseActivity.getApplicationContext(), LibraryTopLevelActivity.class);
+		Intent intent = new Intent(BaseActivity.getApplicationContext(), LibraryTopLevelActivity.class);
 		if (model != null && model.Book != null) {
 			intent.putExtra(LibraryTopLevelActivity.SELECTED_BOOK_PATH_KEY, model.Book.File.getPath());
 		}
-		myBaseActivity.startActivity(intent);
+		BaseActivity.startActivity(intent);
 	}
 }

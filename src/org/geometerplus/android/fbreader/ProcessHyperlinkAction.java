@@ -27,7 +27,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -36,14 +35,11 @@ import org.geometerplus.android.fbreader.network.BookDownloader;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
 import org.geometerplus.android.fbreader.image.ImageViewActivity;
 
-class ProcessHyperlinkAction extends FBAction {
+class ProcessHyperlinkAction extends FBAndroidAction {
 	private static final String ACTION_LINK_PREFIX = "fbreader-action://";
 
-	private final FBReader myBaseActivity;
-
 	ProcessHyperlinkAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(fbreader);
-		myBaseActivity = baseActivity;
+		super(baseActivity, fbreader);
 	}
 
 	public boolean isEnabled() {
@@ -76,20 +72,20 @@ class ProcessHyperlinkAction extends FBAction {
 			if (uriString != null) {
 				try {
 					final Intent intent = new Intent();
-					intent.setClass(myBaseActivity, ImageViewActivity.class);
+					intent.setClass(BaseActivity, ImageViewActivity.class);
 					intent.setData(Uri.parse(uriString));
 					intent.putExtra(
 						ImageViewActivity.BACKGROUND_COLOR_KEY,
 						Reader.ImageViewBackgroundOption.getValue().getIntValue()
 					);
-					myBaseActivity.startActivity(intent);
+					BaseActivity.startActivity(intent);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		} else if (region instanceof ZLTextWordRegion) {
 			DictionaryUtil.openWordInDictionary(
-				myBaseActivity, (ZLTextWordRegion)region
+				BaseActivity, (ZLTextWordRegion)region
 			);
 		}
 	}
@@ -98,7 +94,7 @@ class ProcessHyperlinkAction extends FBAction {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
 		boolean externalUrl = true;
 		if (BookDownloader.acceptsUri(Uri.parse(urlString))) {
-			intent.setClass(myBaseActivity, BookDownloader.class);
+			intent.setClass(BaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
 		}
@@ -109,7 +105,7 @@ class ProcessHyperlinkAction extends FBAction {
 		}
 		intent.setData(Uri.parse(NetworkLibrary.Instance().rewriteUrl(urlString, externalUrl)));
 		try {
-			myBaseActivity.startActivity(intent);
+			BaseActivity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
 			// TODO: show an error message
 		}
