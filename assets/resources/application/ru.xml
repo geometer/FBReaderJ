@@ -530,6 +530,7 @@
 				<node name="dictionary" value="Словарь"/>
 				<node name="tappingAction" value="Действие при долгом нажатии на экран">
 					<node name="doNothing" value="Ничего не делать"/>
+					<node name="selectSingleWord" value="Выделять одно слово"/>
 					<node name="startSelecting" value="Начинать процесс пометки"/>
 					<node name="openDictionary" value="Выделять одно слово, а при отпускании &#8211; запускать словарь"/>
 				</node>
