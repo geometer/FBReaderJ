@@ -20,14 +20,10 @@
 package org.geometerplus.android.fbreader;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBAction;
 
-class SearchAction extends FBAction {
-	private final FBReader myActivity;
-
-	SearchAction(FBReader activity, FBReaderApp fbreader) {
-		super(fbreader);
-		myActivity = activity;
+class SearchAction extends FBAndroidAction {
+	SearchAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
 	}
 
 	public boolean isVisible() {
@@ -35,6 +31,6 @@ class SearchAction extends FBAction {
 	}
 
 	public void run() {
-		myActivity.onSearchRequested();
+		BaseActivity.onSearchRequested();
 	}
 }
