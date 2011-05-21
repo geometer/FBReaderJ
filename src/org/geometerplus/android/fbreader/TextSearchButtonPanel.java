@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.widget.RelativeLayout;
+
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -34,7 +36,8 @@ final class TextSearchButtonPanel extends SeveralButtonsPanel {
 	}
 
 	@Override
-	protected void onAddButtons() {
+	public void createControlPanel(FBReader activity, RelativeLayout root, ControlPanel.Location location) {
+		super.createControlPanel(activity, root, location);
 		addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
 		addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
 		addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);

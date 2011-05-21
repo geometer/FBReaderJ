@@ -76,6 +76,7 @@ public final class FBView extends ZLTextView {
 
 		if (!isSelectionEmpty()) {
 			clearSelection();
+			myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 			return true;
 		}
 
@@ -278,8 +279,6 @@ public final class FBView extends ZLTextView {
 			stopSelection();
 			return true;
 		}
-
-		clearSelection();
 
 		boolean doRunAction = false;
 		final ZLTextRegion region = getSelectedRegion();
@@ -579,12 +578,6 @@ public final class FBView extends ZLTextView {
 			}
 		}
 		return myFooter;
-	}
-
-	@Override
-	public void clearSelection() {
-		myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
-		super.clearSelection();
 	}
 
 	@Override

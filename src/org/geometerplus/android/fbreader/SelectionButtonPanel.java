@@ -33,11 +33,13 @@ public class SelectionButtonPanel extends SeveralButtonsPanel {
     }
 
     @Override
-    protected void onAddButtons() {
+	public void createControlPanel(FBReader activity, RelativeLayout root, ControlPanel.Location location) {
+		super.createControlPanel(activity, root, location);
         addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
-        addButton(ActionCode.SELECTION_SHARE, false, R.drawable.selection_share);
-        addButton(ActionCode.SELECTION_OPEN_IN_DICTIONARY, false, R.drawable.selection_dictionary);
+        addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
+        addButton(ActionCode.SELECTION_OPEN_IN_DICTIONARY, true, R.drawable.selection_dictionary);
         addButton(ActionCode.SELECTION_ADD_BOOKMARK, true, R.drawable.selection_bookmark);
+        addButton(ActionCode.SELECTION_HIDE_PANEL, true, R.drawable.selection_bookmark);
     }
     
     public void move(int selectionStartY, int selectionEndY) {

@@ -49,10 +49,7 @@ public abstract class SeveralButtonsPanel extends ControlButtonPanel implements 
 	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root, ControlPanel.Location location) {
 		myControlPanel = new ControlPanel(activity, root, location, false);
-		onAddButtons();
 	}
-
-	protected abstract void onAddButtons();
 
 	protected void addButton(String actionId, boolean isCloseButton, int imageId) {
 		final ActionButton button = new ActionButton(myControlPanel.getContext(), actionId, isCloseButton);
