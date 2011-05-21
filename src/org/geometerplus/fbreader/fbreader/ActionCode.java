@@ -55,4 +55,11 @@ public interface ActionCode {
 	String DECREASE_FONT = "decreaseFont";
 
 	String PROCESS_HYPERLINK = "processHyperlink";
+
+	String SELECTION_SHOW_PANEL = "selectionShowPanel";
+	String SELECTION_HIDE_PANEL = "selectionHidePanel";
+	String SELECTION_COPY_TO_CLIPBOARD = "selectionCopyToClipboard";
+	String SELECTION_SHARE = "selectionShare";
+	String SELECTION_OPEN_IN_DICTIONARY = "selectionOpenInDictionary";
+	String SELECTION_ADD_BOOKMARK = "selectionAddBookmark";
 }
