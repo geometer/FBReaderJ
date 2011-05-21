@@ -74,7 +74,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myIsSelectionModeActive) {
+		if (!isSelectionEmpty()) {
 			deactivateSelectionMode();
 			return true;
 		}
@@ -117,7 +117,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myIsSelectionModeActive) {
+		if (!isSelectionEmpty()) {
 			myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 			return true;
 		}
@@ -157,7 +157,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
-			if (myIsSelectionModeActive) {
+			if (!isSelectionEmpty()) {
 				expandSelectionTo(x, y);
 				return true;
 			}
@@ -191,7 +191,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
-			if (myIsSelectionModeActive) {
+			if (!isSelectionEmpty()) {
 				stopSelection();
 				return true;
 			}
@@ -246,7 +246,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myIsSelectionModeActive) {
+		if (!isSelectionEmpty()) {
 			expandSelectionTo(x, y);
 			return true;
 		}
@@ -272,7 +272,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myIsSelectionModeActive) {
+		if (!isSelectionEmpty()) {
 			stopSelection();
 			return true;
 		}
@@ -579,24 +579,13 @@ public final class FBView extends ZLTextView {
 		return myFooter;
 	}
 
-	private boolean myIsSelectionModeActive;
-
 	private void activateSelectionMode(int x, int y) {
-		if (myIsSelectionModeActive) {
-			deactivateSelectionMode();
-		}
-
-		if (startSelection(x, y)) {
-			myIsSelectionModeActive = true;
-		}
+		deactivateSelectionMode();
+		startSelection(x, y);
 	}
 
 	public void deactivateSelectionMode() {
-		if (!myIsSelectionModeActive) {
-			return;
-		}
 		clearSelection();
-		myIsSelectionModeActive = false;
 		myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 	}
 

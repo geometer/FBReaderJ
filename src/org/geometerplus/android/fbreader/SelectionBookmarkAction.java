@@ -35,7 +35,6 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 	public void run() {
 		final FBView fbview = Reader.getTextView();
 		final String text = fbview.getSelectedText();
-        fbview.deactivateSelectionMode();
 
 		new Bookmark(
 			Reader.Model.Book,
@@ -44,6 +43,8 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 			text,
 			true
 		).save();
+        fbview.deactivateSelectionMode();
+
 		UIUtil.showMessageText(
 			BaseActivity,
 			ZLResource.resource("selection").getResource("bookmarkCreated").getValue().replace("%s", text)
