@@ -36,8 +36,10 @@ public class SelectionCopyAction extends FBAndroidAction {
 	}
 
 	public void run() {
-		String text = Reader.getTextView().getSelectedText();
-		ClipboardManager clipboard =
+		final String text = Reader.getTextView().getSelectedText();
+		Reader.getTextView().deactivateSelectionMode();
+
+		final ClipboardManager clipboard =
 			(ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
 		clipboard.setText(text);
 		UIUtil.showMessageText(

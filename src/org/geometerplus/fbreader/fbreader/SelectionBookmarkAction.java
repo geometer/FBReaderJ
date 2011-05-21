@@ -26,10 +26,6 @@ public class SelectionBookmarkAction extends FBAction {
 		super(fbreader);
 	}
 
-	public boolean isVisible() {
-		return !Reader.getTextView().isSelectionEmpty();
-	}
-
 	public void run() {
 		final FBView fbview = Reader.getTextView();
 		new Bookmark(
@@ -39,5 +35,6 @@ public class SelectionBookmarkAction extends FBAction {
 			fbview.getSelectedText(), 
 			true
 		).save();
+        Reader.getTextView().deactivateSelectionMode();
 	}
 }
