@@ -176,7 +176,6 @@ public abstract class DictionaryUtil {
 		} catch (ActivityNotFoundException e) {
 			DictionaryUtil.installDictionaryIfNotInstalled(activity);
 		}
-
 	}
 
 	public static void openWordInDictionary(Activity activity, ZLTextWordRegion region) { 
