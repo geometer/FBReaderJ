@@ -601,6 +601,14 @@ public final class FBView extends ZLTextView {
 		myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
 	}
 
+	public String getSelectedText() {
+		final TextBuilderTraverser traverser = new TextBuilderTraverser(this);
+		if (!isSelectionEmpty()) {
+			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
+		}
+		return traverser.getText();
+	}
+
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
 
 	@Override
@@ -611,13 +619,5 @@ public final class FBView extends ZLTextView {
 	@Override
 	public Animation getAnimationType() {
 		return ScrollingPreferences.Instance().AnimationOption.getValue();
-	}
-
-	public String getSelectedText() {
-		final TextBuilderTraverser traverser = new TextBuilderTraverser(this);
-		if (!isSelectionEmpty()) {
-			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
-		}
-		return traverser.getText();
 	}
 }
