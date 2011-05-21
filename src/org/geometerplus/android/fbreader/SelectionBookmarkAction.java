@@ -43,7 +43,7 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 			text,
 			true
 		).save();
-        fbview.deactivateSelectionMode();
+        fbview.clearSelection();
 
 		UIUtil.showMessageText(
 			BaseActivity,

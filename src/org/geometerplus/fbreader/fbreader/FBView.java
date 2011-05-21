@@ -75,7 +75,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		if (!isSelectionEmpty()) {
-			deactivateSelectionMode();
+			clearSelection();
 			return true;
 		}
 
@@ -217,7 +217,8 @@ public final class FBView extends ZLTextView {
 		if (region instanceof ZLTextWordRegion) {
 			switch (myReader.WordTappingActionOption.getValue()) {
 				case startSelecting:
-					activateSelectionMode(x, y);
+					myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+					startSelection(x, y);
 					return true;
 				case openDictionary:
 					doSelectRegion = true;
@@ -277,7 +278,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		deactivateSelectionMode();
+		clearSelection();
 
 		boolean doRunAction = false;
 		final ZLTextRegion region = getSelectedRegion();
@@ -579,14 +580,10 @@ public final class FBView extends ZLTextView {
 		return myFooter;
 	}
 
-	private void activateSelectionMode(int x, int y) {
-		deactivateSelectionMode();
-		startSelection(x, y);
-	}
-
-	public void deactivateSelectionMode() {
-		clearSelection();
+	@Override
+	public void clearSelection() {
 		myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+		super.clearSelection();
 	}
 
 	@Override

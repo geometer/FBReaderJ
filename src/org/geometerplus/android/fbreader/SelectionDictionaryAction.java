@@ -31,7 +31,7 @@ public class SelectionDictionaryAction extends FBAndroidAction {
         final FBView fbview = Reader.getTextView();
         final int selectionStartY = fbview.getSelectionStartY(), selectionEndY = fbview.getSelectionEndY();
         final String text = fbview.getSelectedText();
-        Reader.getTextView().deactivateSelectionMode();
+        Reader.getTextView().clearSelection();
         DictionaryUtil.openTextInDictionary(BaseActivity, text, selectionStartY, selectionEndY);
     }
 
