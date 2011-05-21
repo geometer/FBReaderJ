@@ -29,14 +29,24 @@ import android.widget.*;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class ControlPanel extends LinearLayout {
-	public ControlPanel(Context context, RelativeLayout root, boolean fillWidth) {
+	public static enum Location {
+		Bottom,
+		Floating
+	}
+
+	public ControlPanel(Context context, RelativeLayout root, Location location, boolean fillWidth) {
 		super(context);
 
 		setFocusable(false);
 		
 		final LayoutInflater inflater =
 			(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.control_panel_bottom, this, true);
+		inflater.inflate(
+			location == Location.Bottom
+				? R.layout.control_panel_bottom : R.layout.control_panel_floating,
+			this,
+			true
+		);
 
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
 			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
