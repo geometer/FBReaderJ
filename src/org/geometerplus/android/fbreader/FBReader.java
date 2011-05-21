@@ -249,9 +249,9 @@ public final class FBReader extends ZLAndroidActivity {
 		if (show) {
 			ourSelectionPanel.move(selectionStartY, selectionEndY);
 			ourSelectionPanel.show(false);
-		}
-		else if (ourSelectionPanel.getVisibility())
+		} else if (ourSelectionPanel.getVisibility()) {
 			ourSelectionPanel.hide();
+		}
 	}
 
 	@Override
@@ -279,6 +279,9 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	public void navigate() {
+		// this is a hack, but otherwise there is no way to cancel the selection: the SelectionPanel when navigating
+		// is activated doesn't go through the normal hiding process, so it can't call this.
+		((FBReaderApp)FBReaderApp.Instance()).getTextView().clearSelection();
 		ourNavigatePanel.runNavigation();
 	}
 

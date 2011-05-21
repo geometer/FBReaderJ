@@ -49,12 +49,13 @@ public class SelectionButtonPanel extends SeveralButtonsPanel {
 
         int verticalPosition; 
         int screenHeight = ((View)myControlPanel.getParent()).getHeight();
-        if (screenHeight - selectionEndY > myControlPanel.getHeight() + 10)
+        if (screenHeight - selectionEndY > myControlPanel.getHeight() + 10) {
             verticalPosition = RelativeLayout.ALIGN_PARENT_BOTTOM;
-        else if (selectionStartY > myControlPanel.getHeight() + 10)
+        } else if (selectionStartY > myControlPanel.getHeight() + 10) {
             verticalPosition = RelativeLayout.ALIGN_PARENT_TOP;
-        else
+        } else {
             verticalPosition = RelativeLayout.CENTER_VERTICAL; 
+		}
 
         layoutParams.addRule(verticalPosition);
         myControlPanel.setLayoutParams(layoutParams);
