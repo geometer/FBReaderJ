@@ -186,6 +186,8 @@
 		<node name="copyToClipboard" value="Vágólapra másol"/>
 		<node name="openInDictionary" value="Megnyitás szótárban"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Kijelölés eltávolítása"/>
 	</node>
 	<node name="menu">
@@ -598,9 +600,6 @@
 			<node name="purchaseBook" value="Könyv vásárlása. Egy kis türelmet..." />
 			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..." />
 			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba" />
