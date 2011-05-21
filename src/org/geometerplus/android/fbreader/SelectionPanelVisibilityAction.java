@@ -1,16 +1,13 @@
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.FBView;
 
-public class SelectionPanelVisibilityAction extends FBAction {
-	private final FBReader myActivity;
+public class SelectionPanelVisibilityAction extends FBAndroidAction {
 	private final boolean myShow;
 
-	SelectionPanelVisibilityAction(FBReader activity, FBReaderApp fbreader, boolean show) {
-		super(fbreader);
-		myActivity = activity;
+	SelectionPanelVisibilityAction(FBReader baseActivity, FBReaderApp fbreader, boolean show) {
+		super(baseActivity, fbreader);
 		myShow = show;
 	}
 
@@ -21,6 +18,6 @@ public class SelectionPanelVisibilityAction extends FBAction {
 			selectionStartY = fbview.getSelectionStartY();
 			selectionEndY = fbview.getSelectionEndY();
 		}
-		myActivity.onShowSelectionPanel(myShow, selectionStartY, selectionEndY);
+		BaseActivity.onShowSelectionPanel(myShow, selectionStartY, selectionEndY);
 	}
 }

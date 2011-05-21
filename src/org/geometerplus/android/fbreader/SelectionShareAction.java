@@ -5,9 +5,9 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import android.content.Intent;
 
-public class SelectionShareAction extends SelectionProcessAction {
-	SelectionShareAction(FBReader activity, FBReaderApp fbreader) {
-		super(activity, fbreader);
+public class SelectionShareAction extends FBAndroidAction {
+	SelectionShareAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
 	}
 
 	public void run() {
@@ -19,7 +19,7 @@ public class SelectionShareAction extends SelectionProcessAction {
 		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, 
 				ZLResource.resource("menu").getResource("selection").getResource("quoteFrom").getValue() + " " + title);
 		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
-		myActivity.startActivity(Intent.createChooser(shareIntent, null));
+		BaseActivity.startActivity(Intent.createChooser(shareIntent, null));
 	}
 
 }
