@@ -109,7 +109,6 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SELECTION_OPEN_IN_DICTIONARY, new SelectionDictionaryAction(this, fbReader));
 		fbReader.addAction(ActionCode.SELECTION_ADD_BOOKMARK, new SelectionBookmarkAction(this, fbReader));
 
-
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
