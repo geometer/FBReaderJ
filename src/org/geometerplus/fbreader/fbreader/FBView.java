@@ -581,15 +581,6 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	protected boolean startSelection(int x, int y) {
-		if (!super.startSelection(x, y)) {
-			return false;
-		}
-		myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
-		return true;
-	}
-
-	@Override
 	protected void stopSelection() {
 		super.stopSelection();
 		myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
