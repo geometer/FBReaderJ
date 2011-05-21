@@ -19,10 +19,11 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import android.content.Intent;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import android.content.Intent;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public class SelectionShareAction extends FBAndroidAction {
 	SelectionShareAction(FBReader baseActivity, FBReaderApp fbreader) {
@@ -30,15 +31,16 @@ public class SelectionShareAction extends FBAndroidAction {
 	}
 
 	public void run() {
-		String text = Reader.getTextView().getSelectedText();
+		final String text = Reader.getTextView().getSelectedText();
+		final String title = Reader.Model.Book.getTitle();
 		Reader.getTextView().deactivateSelectionMode();
-		String title = Reader.Model.Book.getTitle();
-		Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-		shareIntent.setType("text/plain");
-		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, 
-				ZLResource.resource("menu").getResource("selection").getResource("quoteFrom").getValue() + " " + title);
-		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
-		BaseActivity.startActivity(Intent.createChooser(shareIntent, null));
-	}
 
+		final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 
+			ZLResource.resource("selection").getResource("quoteFrom").getValue().replace("%s", title)
+		);
+		intent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+		BaseActivity.startActivity(Intent.createChooser(intent, null));
+	}
 }

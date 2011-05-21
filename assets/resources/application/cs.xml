@@ -186,6 +186,12 @@
 		<node name="forward" value="Vpřed"/>
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
+	<node name="selection" value="Výběr">
+		<node name="copyToClipboard" value="Kopírovat do schránky"/>
+		<node name="openInDictionary" value="Otevřít ve slovníku"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="clearSelection" value="Vymazat"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
@@ -204,11 +210,6 @@
 			<node name="previousTOCSection" value="Přejít na předchozí položku obsahu"/>
 			<node name="undo" value="Přejít zpět"/>
 			<node name="redo" value="Přejít vpřed"/>
-		</node>
-		<node name="selection" value="Výběr">
-			<node name="copyToClipboard" value="Kopírovat do schránky"/>
-			<node name="openInDictionary" value="Otevřít ve slovníku"/>
-			<node name="clearSelection" value="Vymazat"/>
 		</node>
 		<node name="search" value="Hledat"/>
 		<node name="rotate" value="Otočit obrazovku"/>
