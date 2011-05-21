@@ -186,6 +186,12 @@
 		<node name="forward" value="前進"/>
 		<node name="close" value="開閉 FBReader"/>
 	</node>
+	<node name="selection" value="選擇">
+		<node name="copyToClipboard" value="複製"/>
+		<node name="openInDictionary" value="查詢字典"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="clearSelection" value="清空"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="設定"/>
 		<node name="bookInfo" value="書藉資訊"/>
@@ -204,11 +210,6 @@
 			<node name="previousTOCSection" value="往上一章"/>
 			<node name="undo" value="回復"/>
 			<node name="redo" value="重做"/>
-		</node>
-		<node name="selection" value="選擇">
-			<node name="copyToClipboard" value="複製"/>
-			<node name="openInDictionary" value="查詢字典"/>
-			<node name="clearSelection" value="清空"/>
 		</node>
 		<node name="search" value="搜尋"/>
 		<node name="rotate" value="旋轉屏幕"/>

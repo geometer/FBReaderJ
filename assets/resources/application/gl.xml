@@ -182,6 +182,12 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
+	<node name="selection" value="Selección">
+		<node name="copyToClipboard" value="Copiar no portapapeis"/>
+		<node name="openInDictionary" value="Abrir no dicionario"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="clearSelection" value="Limpar"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Preferencias"/>
 		<node name="bookInfo" value="Información do libro"/>
@@ -200,11 +206,6 @@
 			<node name="previousTOCSection" value="Ir ao capítulo anterior"/>
 			<node name="undo" value="Anterior"/>
 			<node name="redo" value="Seguinte"/>
-		</node>
-		<node name="selection" value="Selección">
-			<node name="copyToClipboard" value="Copiar no portapapeis"/>
-			<node name="openInDictionary" value="Abrir no dicionario"/>
-			<node name="clearSelection" value="Limpar"/>
 		</node>
 		<node name="search" value="Buscar"/>
 		<node name="rotate" value="Rotar a pantalla"/>

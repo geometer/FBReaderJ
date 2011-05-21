@@ -186,6 +186,12 @@
 		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
+	<node name="selection" value="Selection">
+		<node name="copyToClipboard" value="Copy to clipboard"/>
+		<node name="openInDictionary" value="Open in dictionary"/>
+		<node name="quoteFrom" value="Quote from %s" />
+		<node name="clearSelection" value="Clear"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
@@ -204,11 +210,6 @@
 			<node name="previousTOCSection" value="Go to Previous TOC Item"/>
 			<node name="undo" value="Go Back"/>
 			<node name="redo" value="Go Forward"/>
-		</node>
-		<node name="selection" value="Selection">
-			<node name="copyToClipboard" value="Copy to clipboard"/>
-			<node name="openInDictionary" value="Open in dictionary"/>
-			<node name="clearSelection" value="Clear"/>
 		</node>
 		<node name="search" value="Search"/>
 		<node name="rotate" value="Rotate screen"/>

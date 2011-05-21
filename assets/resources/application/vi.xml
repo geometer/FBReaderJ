@@ -182,6 +182,12 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
+	<node name="selection" value="Lựa chọn">
+		<node name="copyToClipboard" value="Chép vào Clipboard"/>
+		<node name="openInDictionary" value="Mở trong Từ điển"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="clearSelection" value="Xóa"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Cài đặt"/>
 		<node name="bookInfo" value="Thông tin sách"/>
@@ -200,11 +206,6 @@
 			<node name="previousTOCSection" value="Đến Phần trước của ML"/>
 			<node name="undo" value="Quay Lại"/>
 			<node name="redo" value="Đi Tiếp"/>
-		</node>
-		<node name="selection" value="Lựa chọn">
-			<node name="copyToClipboard" value="Chép vào Clipboard"/>
-			<node name="openInDictionary" value="Mở trong Từ điển"/>
-			<node name="clearSelection" value="Xóa"/>
 		</node>
 		<node name="search" value="Tìm"/>
 		<node name="rotate" value="Quay màn hình"/>
