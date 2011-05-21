@@ -179,7 +179,7 @@ public abstract class DictionaryUtil {
 	}
 
 	public static void openWordInDictionary(Activity activity, ZLTextWordRegion region) { 
-		String text = region.Word.toString();
+		final String text = region.Word.toString();
 		int start = 0;
 		int end = text.length();
 		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
