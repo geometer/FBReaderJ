@@ -182,6 +182,12 @@
 		<node name="forward" value="Suivant"/>
 		<node name="close" value="Fermer FBReader"/>
 	</node>
+	<node name="selection" value="Sélection">
+		<node name="copyToClipboard" value="Copier dans le presse-papiers"/>
+		<node name="openInDictionary" value="Ouvrir dans le dictionnaire"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="clearSelection" value="Effacer"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
@@ -200,11 +206,6 @@
 			<node name="previousTOCSection" value="Aller au précédent élément de la table de s matières"/>
 			<node name="undo" value="Revenir en arrière"/>
 			<node name="redo" value="Refaire l'action"/>
-		</node>
-		<node name="selection" value="Sélection">
-			<node name="copyToClipboard" value="Copier dans le presse-papiers"/>
-			<node name="openInDictionary" value="Ouvrir dans le dictionnaire"/>
-			<node name="clearSelection" value="Effacer"/>
 		</node>
 		<node name="search" value="Rechercher"/>
 		<node name="rotate" value="Orienter l'écran"/>

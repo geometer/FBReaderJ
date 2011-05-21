@@ -182,6 +182,12 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="ปิด FBReader"/>
 	</node>
+	<node name="selection" value="เลือก">
+		<node name="copyToClipboard" value="คัดลอกไปที่คลิปบอร์ด"/>
+		<node name="openInDictionary" value="เปิดในพจนานุกรม"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="clearSelection" value="ล้างข้อมูล"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="การตั้งค่า"/>
 		<node name="bookInfo" value="ข้อมูลหนังสือ"/>
@@ -200,11 +206,6 @@
 			<node name="previousTOCSection" value="ไปที่บทก่อนหน้าในสารบัญ"/>
 			<node name="undo" value="ย้อนกลับ"/>
 			<node name="redo" value="ไปข้างหน้า"/>
-		</node>
-		<node name="selection" value="เลือก">
-			<node name="copyToClipboard" value="คัดลอกไปที่คลิปบอร์ด"/>
-			<node name="openInDictionary" value="เปิดในพจนานุกรม"/>
-			<node name="clearSelection" value="ล้างข้อมูล"/>
 		</node>
 		<node name="search" value="ค้นหา"/>
 		<node name="rotate" value="หมุนหน้าจอ"/>

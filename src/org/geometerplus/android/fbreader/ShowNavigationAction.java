@@ -22,15 +22,11 @@ package org.geometerplus.android.fbreader;
 import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 
-import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-class ShowNavigationAction extends FBAction {
-	private final FBReader myActivity;
-
-	ShowNavigationAction(FBReader activity, FBReaderApp fbreader) {
-		super(fbreader);
-		myActivity = activity;
+class ShowNavigationAction extends FBAndroidAction {
+	ShowNavigationAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
 	}
 
 	@Override
@@ -41,6 +37,6 @@ class ShowNavigationAction extends FBAction {
 	}
 
 	public void run() {
-		myActivity.navigate();
+		BaseActivity.navigate();
 	}
 }

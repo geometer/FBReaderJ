@@ -1263,7 +1263,41 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 		mySelectedRegion = region;
 	}
-	
+
+	public int getSelectionStartY() {
+		final ZLTextElementAreaVector vector = myCurrentPage.TextElementMap;
+		if (vector.isEmpty()) {
+			return 0;
+		}
+		final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
+		final int index = vector.indexOf(selectionStartArea);
+		if (index != -1) {
+			return vector.get(index).YStart;
+		}
+		final ZLTextElementArea endArea = vector.get(vector.size() - 1);
+		if (selectionStartArea.compareTo(endArea) > 0) {
+			return endArea.YEnd;
+		}
+		return vector.get(0).YStart;
+	}
+
+	public int getSelectionEndY() {
+		final ZLTextElementAreaVector vector = myCurrentPage.TextElementMap;
+		if (vector.isEmpty()) {
+			return 0;
+		}
+		final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
+		final int index = vector.indexOf(selectionEndArea);
+		if (index != -1) {
+			return vector.get(index).YEnd;
+		}
+		final ZLTextElementArea endArea = vector.get(vector.size() - 1);
+		if (selectionEndArea.compareTo(endArea) > 0) {
+			return endArea.YEnd;
+		}
+		return vector.get(0).YStart;
+	}
+
 	public ZLTextPosition getSelectionStartPosition() {
 		return mySelection.getStartArea();
 	}

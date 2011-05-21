@@ -182,6 +182,12 @@
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
+	<node name="selection" value="Пометка">
+		<node name="copyToClipboard" value="Скопировать в буфер"/>
+		<node name="openInDictionary" value="Посмотреть в словаре"/>
+		<node name="quoteFrom" value="Цитата из %s"/>
+		<node name="clearSelection" value="Убрать пометку"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
@@ -200,11 +206,6 @@
 			<node name="previousTOCSection" value="К предыдущей главе"/>
 			<node name="undo" value="Назад"/>
 			<node name="redo" value="Вперед"/>
-		</node>
-		<node name="selection" value="Пометка">
-			<node name="copyToClipboard" value="Скопировать в буфер"/>
-			<node name="openInDictionary" value="Посмотреть в словаре"/>
-			<node name="clearSelection" value="Убрать пометку"/>
 		</node>
 		<node name="search" value="Поиск"/>
 		<node name="rotate" value="Повернуть"/>
