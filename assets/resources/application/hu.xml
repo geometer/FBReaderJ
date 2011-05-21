@@ -530,6 +530,7 @@
 				<node name="dictionary" value="Szótár"/>
 				<node name="tappingAction" value="Hosszú érintés">
 					<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
+					<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>
 					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="A hosszú érintés kijelöli a szót, a felengedés megnyitja a szótárt"/>
 				</node>

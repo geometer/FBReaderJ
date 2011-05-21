@@ -51,7 +51,7 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("Options", "NavigateAllWords", false);
 
 	public static enum WordTappingAction {
-		doNothing, startSelecting, openDictionary
+		doNothing, selectSingleWord, startSelecting, openDictionary
 	}
 	public final ZLEnumOption<WordTappingAction> WordTappingActionOption =
 		new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);

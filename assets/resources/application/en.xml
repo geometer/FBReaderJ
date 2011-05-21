@@ -551,6 +551,7 @@
 				<node name="dictionary" value="Dictionary"/>
 				<node name="tappingAction" value="Long tapping action">
 					<node name="doNothing" value="Long tapping does nothing"/>
+					<node name="selectSingleWord" value="Long tapping selects single word"/>
 					<node name="startSelecting" value="Long tapping initiates selecting"/>
 					<node name="openDictionary" value="Long tapping selects single word, release opens dictionary"/>
 				</node>
