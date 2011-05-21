@@ -153,7 +153,7 @@ public abstract class DictionaryUtil {
 		}			
 	}
 
-	public static void openTextInDictionary(Activity activity, String text, int selectionStartY, int selectionEndY) {
+	public static void openTextInDictionary(Activity activity, String text, int selectionTop, int selectionBottom) {
 		final PackageInfo info = getCurrentDictionaryInfo();
 		final Intent intent = getDictionaryIntent(info, text);
 		try {
@@ -161,8 +161,8 @@ public abstract class DictionaryUtil {
 				final DisplayMetrics metrics = new DisplayMetrics();
 				activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 				final int screenHeight = metrics.heightPixels;
-				final int topSpace = selectionStartY;
-				final int bottomSpace = metrics.heightPixels - selectionEndY;
+				final int topSpace = selectionTop;
+				final int bottomSpace = metrics.heightPixels - selectionBottom;
 				final boolean showAtBottom = bottomSpace >= topSpace;
 				final int space = (showAtBottom ? bottomSpace : topSpace) - 20;
 				final int maxHeight = Math.min(400, screenHeight * 2 / 3);
@@ -178,8 +178,9 @@ public abstract class DictionaryUtil {
 		}
 
 	}
+
 	public static void openWordInDictionary(Activity activity, ZLTextWordRegion region) { 
-		String text = region.Word.toString();
+		final String text = region.Word.toString();
 		int start = 0;
 		int end = text.length();
 		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
@@ -187,7 +188,10 @@ public abstract class DictionaryUtil {
 		if (start == end) {
 			return;
 		}
-		openTextInDictionary(activity, text.substring(start, end), region.getTop(), region.getBottom());
+
+		openTextInDictionary(
+			activity, text.substring(start, end), region.getTop(), region.getBottom()
+		);
 	}
 
 	public static void installDictionaryIfNotInstalled(final Activity activity) {
