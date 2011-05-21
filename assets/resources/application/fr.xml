@@ -186,6 +186,8 @@
 		<node name="copyToClipboard" value="Copier dans le presse-papiers"/>
 		<node name="openInDictionary" value="Ouvrir dans le dictionnaire"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Effacer"/>
 	</node>
 	<node name="menu">
@@ -528,6 +530,7 @@
 				<node name="dictionary" value="Dictionnaire"/>
 				<node name="tappingAction" value="Configuration de l'appui long">
 					<node name="doNothing" value="Un appui long ne fait rien"/>
+					<node name="selectSingleWord" value="Un appui long selectionne le mot"/>
 					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
 				</node>
@@ -598,9 +601,6 @@
 			<node name="purchaseBook" value="Achat du livre. Veuillez patienter..."/>
 			<node name="loadingCatalogInfo" value="Chargement du catalogue, veuillez patienter..." />
 			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier..."/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>

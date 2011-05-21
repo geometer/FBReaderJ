@@ -190,6 +190,8 @@
 		<node name="copyToClipboard" value="複製"/>
 		<node name="openInDictionary" value="查詢字典"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="清空"/>
 	</node>
 	<node name="menu">
@@ -547,6 +549,7 @@
 				<node name="dictionary" value="字典"/>
 				<node name="tappingAction" value="長按動作">
 					<node name="doNothing" value="長按不做任何動作"/>
+					<node name="selectSingleWord" value="長按選字"/>
 					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="長按選字，放開後查詢詞義"/>
 				</node>
@@ -617,9 +620,6 @@
 			<node name="purchaseBook" value="正購買書藉，請稍候..." />
 			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候..." />
 			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="伺服器出錯" />

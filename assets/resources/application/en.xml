@@ -190,6 +190,8 @@
 		<node name="copyToClipboard" value="Copy to clipboard"/>
 		<node name="openInDictionary" value="Open in dictionary"/>
 		<node name="quoteFrom" value="Quote from %s" />
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" />
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" />
 		<node name="clearSelection" value="Clear"/>
 	</node>
 	<node name="menu">
@@ -542,6 +544,7 @@
 				<node name="dictionary" value="Dictionary"/>
 				<node name="tappingAction" value="Long tapping action">
 					<node name="doNothing" value="Long tapping does nothing"/>
+					<node name="selectSingleWord" value="Long tapping selects single word"/>
 					<node name="startSelecting" value="Long tapping initiates selecting"/>
 					<node name="openDictionary" value="Long tapping selects single word, release opens dictionary"/>
 				</node>
@@ -612,9 +615,6 @@
 			<node name="purchaseBook" value="Purchase book. Please, wait&#8230;" />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" />
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" />

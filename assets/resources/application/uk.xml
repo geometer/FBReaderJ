@@ -186,6 +186,8 @@
 		<node name="copyToClipboard" value="Скопіювати до буфера"/>
 		<node name="openInDictionary" value="Подивитись в словнику"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Прибрати позначку"/>
 	</node>
 	<node name="menu">
@@ -528,6 +530,7 @@
 				<node name="dictionary" value="Dictionary" toBeTranslated="true"/>
 				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
 					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
 				</node>
@@ -598,9 +601,6 @@
 			<node name="purchaseBook" value="Йде придбання книги. Зачекайте, будь ласка..." />
 			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка..." />
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутрішня помилка сервера" />

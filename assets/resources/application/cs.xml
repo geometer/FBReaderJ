@@ -190,6 +190,8 @@
 		<node name="copyToClipboard" value="Kopírovat do schránky"/>
 		<node name="openInDictionary" value="Otevřít ve slovníku"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Vymazat"/>
 	</node>
 	<node name="menu">
@@ -542,6 +544,7 @@
 				<node name="dictionary" value="Slovník"/>
 				<node name="tappingAction" value="Dlouhé klepnutí">
 					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
+					<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
 					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 				</node>
@@ -612,9 +615,6 @@
 			<node name="purchaseBook" value="Nakupování knihy. Čekejte..."/>
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..."/>
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>

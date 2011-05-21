@@ -186,6 +186,8 @@
 		<node name="copyToClipboard" value="Copia negli Appunti"/>
 		<node name="openInDictionary" value="Apri nel Dizionario"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Cancella"/>
 	</node>
 	<node name="menu">
@@ -528,6 +530,7 @@
 				<node name="dictionary" value="Dictionary" toBeTranslated="true"/>
 				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
 					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
 				</node>
@@ -598,9 +601,6 @@
 			<node name="purchaseBook" value="Acquisto libro. Attendere prego..." />
 			<node name="loadingCatalogInfo" toBeTranslated="true" value="Loading catalog information. Please, wait..." />
 			<node name="updatingCatalogsList" toBeTranslated="true" value="Updating catalogs list. Please, wait..."/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Errore Server Interno" />

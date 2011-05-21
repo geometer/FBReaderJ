@@ -541,6 +541,19 @@ public final class FBView extends ZLTextView {
 		return myFooter;
 	}
 
+	@Override
+	public void clearSelection() {
+		super.clearSelection();
+	}
+
+	public String getSelectedText() {
+		final TextBuilderTraverser traverser = new TextBuilderTraverser(this);
+		if (!isSelectionEmpty()) {
+			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
+		}
+		return traverser.getText();
+	}
+
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
 
 	@Override

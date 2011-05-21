@@ -186,6 +186,8 @@
 		<node name="copyToClipboard" value="Chép vào Clipboard"/>
 		<node name="openInDictionary" value="Mở trong Từ điển"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="Xóa"/>
 	</node>
 	<node name="menu">
@@ -528,6 +530,7 @@
 				<node name="dictionary" value="Từ điển"/>
 				<node name="tappingAction" value="Nhấn giữ">
 					<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
+					<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>
 					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Chọn từ và mở từ điển khi nhấn giữ"/>
 				</node>
@@ -598,9 +601,6 @@
 			<node name="purchaseBook" value="Mua sách. Xin chờ..." />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..." />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..."/>
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Lỗi mạng nội bộ " />

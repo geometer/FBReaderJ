@@ -186,6 +186,8 @@
 		<node name="copyToClipboard" value="คัดลอกไปที่คลิปบอร์ด"/>
 		<node name="openInDictionary" value="เปิดในพจนานุกรม"/>
 		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
 		<node name="clearSelection" value="ล้างข้อมูล"/>
 	</node>
 	<node name="menu">
@@ -528,6 +530,7 @@
 				<node name="dictionary" value="พจนานุกรม"/>
 				<node name="tappingAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
 					<node name="doNothing" value="ไม่มีอะไรเกิดขึ้น"/>
+					<node name="selectSingleWord" value="เลือกคำเมื่อกดค้างที่หน้าจอ"/>
 					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="เลือกคำเมื่อกดค้างที่หน้าจอและไปยังพจนานุกรมเมื่อปล่อย"/>
 				</node>
@@ -598,9 +601,6 @@
 			<node name="purchaseBook" value="กำลังซื้อหนังสือ, กรุณารอสักครู่..."/>
 			<node name="loadingCatalogInfo" value="กำลังดาวน์โหลข้อมูลของแคตตาล็อก, กรุณารอสักครู่..."/>
 			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..." />
-		</node>
-		<node name="selection">
-			<node name="textInBuffer" value="Copied to the clipboard:" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="เซิร์ฟเวอร์ภายในเกิดขัดข้อง"/>
