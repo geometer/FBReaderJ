@@ -65,8 +65,8 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 	}
 
 	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root) {
-		myControlPanel = new ControlPanel(activity, root, true);
+	public void createControlPanel(FBReader activity, RelativeLayout root, ControlPanel.Location location) {
+		myControlPanel = new ControlPanel(activity, root, location, true);
 
 		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myControlPanel, false);
 

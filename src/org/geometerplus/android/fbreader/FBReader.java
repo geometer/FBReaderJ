@@ -190,13 +190,13 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
 		if (!ourTextSearchPanel.hasControlPanel()) {
-			ourTextSearchPanel.createControlPanel(this, root);
+			ourTextSearchPanel.createControlPanel(this, root, ControlPanel.Location.Bottom);
 		}
 		if (!ourNavigatePanel.hasControlPanel()) {
-			ourNavigatePanel.createControlPanel(this, root);
+			ourNavigatePanel.createControlPanel(this, root, ControlPanel.Location.Bottom);
 		}
 		if (!ourSelectionPanel.hasControlPanel()) {
-			ourSelectionPanel.createControlPanel(this, root);
+			ourSelectionPanel.createControlPanel(this, root, ControlPanel.Location.Floating);
 		}
 	}
 

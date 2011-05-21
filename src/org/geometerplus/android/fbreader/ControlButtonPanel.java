@@ -142,7 +142,7 @@ abstract class ControlButtonPanel implements ZLApplication.ButtonPanel {
 		}
 	}
 
-	public abstract void createControlPanel(FBReader activity, RelativeLayout root);
+	public abstract void createControlPanel(FBReader activity, RelativeLayout root, ControlPanel.Location location);
 
 	// callback methods
 	public void onShow() {}
