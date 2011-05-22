@@ -23,8 +23,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -132,26 +130,24 @@ public final class FBReader extends ZLAndroidActivity {
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			final Handler successHandler = new Handler() {
-				public void handleMessage(Message message) {
-					ourTextSearchPanel.show(true);
-				}
-			};
-			final Handler failureHandler = new Handler() {
-				public void handleMessage(Message message) {
-					UIUtil.showErrorMessage(FBReader.this, "textNotFound");
-					ourTextSearchPanel.StartPosition = null;
-				}
-			};
 			final Runnable runnable = new Runnable() {
 				public void run() {
 					ourTextSearchPanel.initPosition();
 					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 					fbReader.TextSearchPatternOption.setValue(pattern);
 					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
-						successHandler.sendEmptyMessage(0);
+						runOnUiThread(new Runnable() {
+							public void run() {
+								ourTextSearchPanel.show(true);
+							}
+						});
 					} else {
-						failureHandler.sendEmptyMessage(0);
+						runOnUiThread(new Runnable() {
+							public void run() {
+								UIUtil.showErrorMessage(FBReader.this, "textNotFound");
+								ourTextSearchPanel.StartPosition = null;
+							}
+						});
 					}
 				}
 			};
