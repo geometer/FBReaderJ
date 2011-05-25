@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,27 +17,14 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ZLNETWORKIMAGE_H__
-#define __ZLNETWORKIMAGE_H__
+package org.geometerplus.zlibrary.core.image;
 
-#include <ZLImage.h>
+import java.util.*;
 
-class ZLFileImage;
+public final class ZLPlainImageMap extends HashMap<String,ZLImage> implements ZLImageMap {
+	private static final long serialVersionUID = 9047424116584588084L;
 
-class ZLNetworkImage : public ZLSingleImage {
-
-public:
-	ZLNetworkImage(const std::string &mimeType, const std::string &url);
-	const shared_ptr<std::string> stringData() const;
-
-private:
-	shared_ptr<ZLExecutionData> synchronizationData() const;
-
-private:
-	const std::string myURL;
-	std::string myFileName;
-	mutable bool myIsSynchronized;
-	mutable shared_ptr<ZLFileImage> myCachedImage;
-};
-
-#endif /* __ZLNETWORKIMAGE_H__ */
+	public ZLImage getImage(String id) {
+		return (ZLImage)super.get(id);
+	}
+}

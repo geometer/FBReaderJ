@@ -20,7 +20,7 @@
 #ifndef __ZLIMAGEMANAGER_H__
 #define __ZLIMAGEMANAGER_H__
 
-#include <string>
+/*#include <string>
 
 #include <shared_ptr.h>
 
@@ -31,7 +31,7 @@ class ZLImageData {
 
 protected:
 	ZLImageData() {}
-	
+
 public:
 	virtual ~ZLImageData() {}
 
@@ -46,9 +46,9 @@ public:
 	void setGrayPixel(unsigned char c);
 
 	virtual void copyFrom(const ZLImageData &source, unsigned int targetX, unsigned int targetY) = 0;
-};
+};*/
 
-class ZLImageManager {
+/*class ZLImageManager {
 
 public:
 	static const ZLImageManager &Instance();
@@ -56,7 +56,7 @@ public:
 
 protected:
 	static ZLImageManager *ourInstance;
-	
+
 public:
 	shared_ptr<ZLImageData> imageData(const ZLImage &image) const;
 
@@ -74,6 +74,6 @@ private:
 
 inline void ZLImageData::setGrayPixel(unsigned char c) { setPixel(c, c, c); }
 
-inline const ZLImageManager &ZLImageManager::Instance() { return *ourInstance; }
+inline const ZLImageManager &ZLImageManager::Instance() { return *ourInstance; }*/
 
 #endif /* __IMAGEMANAGER_H__ */

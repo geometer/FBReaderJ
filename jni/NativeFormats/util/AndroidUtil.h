@@ -23,6 +23,7 @@
 #include <jni.h>
 
 #include <string>
+#include <vector>
 
 
 class AndroidUtil {
@@ -41,7 +42,6 @@ public:
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
 	static const char * const Class_BookModel;
-	static const char * const Class_ZLTextNativeModel;
 	static const char * const Class_NativeBookModel;
 
 	static jmethodID SMID_ZLFile_createFileByPath;
@@ -86,9 +86,9 @@ public:
 
 	static jfieldID FID_BookModel_Book;
 
-	static jmethodID MID_ZLTextNativeModel_init;
-
-	static jmethodID MID_NativeBookModel_setTextModel;
+	static jmethodID MID_NativeBookModel_initBookModel;
+	static jmethodID MID_NativeBookModel_createTextModel;
+	static jmethodID MID_NativeBookModel_setBookTextModel;
 
 public:
 	static void init(JavaVM* jvm);
@@ -98,6 +98,11 @@ public:
 
 	static jobject createZLFile(JNIEnv *env, const std::string &path);
 	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
+	static jstring createJavaString(JNIEnv* env, const std::string &str);
+
+	static jintArray createIntArray(JNIEnv *env, const std::vector<jint> &data);
+	static jbyteArray createByteArray(JNIEnv *env, const std::vector<jbyte> &data);
+	static jobjectArray createStringArray(JNIEnv *env, const std::vector<std::string> &data);
 };
 
 #endif /* __ANDROIDUTIL_H__ */

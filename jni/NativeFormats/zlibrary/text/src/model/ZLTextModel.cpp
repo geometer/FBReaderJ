@@ -342,7 +342,7 @@ void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyper
 	++myParagraphLengths.back();
 }
 
-void ZLTextModel::addImage(const std::string &id, const ZLImageMap &imageMap, short vOffset) {
+void ZLTextModel::addImage(const std::string &id, short vOffset) {
 	checkUtf8Text();
 
 	ZLUnicodeUtil::Ucs2String ucs2id;

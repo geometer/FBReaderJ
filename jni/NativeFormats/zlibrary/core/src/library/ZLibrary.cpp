@@ -76,7 +76,7 @@ void ZLibrary::parseArguments(int &argc, char **&argv) {
 
 void ZLibrary::shutdown() {
 //	ZLNetworkManager::deleteInstance();
-	ZLImageManager::deleteInstance();
+//	ZLImageManager::deleteInstance();
 //	ZLCommunicationManager::deleteInstance();
 //	ZLDialogManager::deleteInstance();
 	ZLFSManager::deleteInstance();

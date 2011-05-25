@@ -93,7 +93,7 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 				ZLFile imageFile(myFilePrefix + reference);
 				const std::string imageName = imageFile.name(false);
 				myModelReader.addImageReference(imageName);
-				//myModelReader.addImage(imageName, new ZLFileImage(imageFile, 0));
+				myModelReader.addImage(imageName, new ZLFileImage(imageFile, 0));
 			}
 		}
 	} else if ((myState == READ_TOUR) && (SITE == tagString)) {

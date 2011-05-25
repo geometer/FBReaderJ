@@ -26,6 +26,7 @@
 #include <ZLTextModel.h>
 #include <ZLTextParagraph.h>
 #include <ZLUserData.h>
+#include <ZLImageMapWriter.h>
 
 class ZLImage;
 class Book;
@@ -67,16 +68,18 @@ public:
 	shared_ptr<ZLTextModel> bookTextModel() const;
 	shared_ptr<ZLTextModel> contentsModel() const;
 
-	const ZLImageMap &imageMap() const;
+	shared_ptr<ZLImageMapWriter> imageMapWriter() const;
 	Label label(const std::string &id) const;
 
 	const shared_ptr<Book> book() const;
+
+	void flush();
 
 private:
 	const shared_ptr<Book> myBook;
 	shared_ptr<ZLTextModel> myBookTextModel;
 	shared_ptr<ZLTextModel> myContentsModel;
-	ZLImageMap myImages;
+	shared_ptr<ZLImageMapWriter> myImagesWriter;
 	std::map<std::string,shared_ptr<ZLTextModel> > myFootnotes;
 	std::map<std::string,Label> myInternalHyperlinks;
 	shared_ptr<HyperlinkMatcher> myHyperlinkMatcher;
@@ -86,6 +89,6 @@ friend class BookReader;
 
 inline shared_ptr<ZLTextModel> BookModel::bookTextModel() const { return myBookTextModel; }
 inline shared_ptr<ZLTextModel> BookModel::contentsModel() const { return myContentsModel; }
-inline const ZLImageMap &BookModel::imageMap() const { return myImages; }
+inline shared_ptr<ZLImageMapWriter> BookModel::imageMapWriter() const { return myImagesWriter; }
 
 #endif /* __BOOKMODEL_H__ */

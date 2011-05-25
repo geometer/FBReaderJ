@@ -47,6 +47,7 @@ private:
 	BookReader myModelReader;
 
 	ZLBase64EncodedImage *myCurrentImage;
+	std::string myCurrentImageId;
 	bool myProcessingImage;
 	std::vector<std::string> myImageBuffer;
 

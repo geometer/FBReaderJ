@@ -29,6 +29,9 @@ class ZLFileImage : public ZLStreamImage {
 public:
 	ZLFileImage(const ZLFile &file, size_t offset, size_t size = 0);
 
+	Kind kind() const;
+	const ZLFile &file() const;
+
 protected:
 	shared_ptr<ZLInputStream> inputStream() const;
 
@@ -37,5 +40,7 @@ private:
 };
 
 inline ZLFileImage::ZLFileImage(const ZLFile &file, size_t offset, size_t size) : ZLStreamImage(file.mimeType(), offset, size), myFile(file) {}
+inline ZLSingleImage::Kind ZLFileImage::kind() const { return FILE_IMAGE; }
+inline const ZLFile &ZLFileImage::file() const { return myFile; }
 
 #endif /* __ZLFILEIMAGE_H__ */

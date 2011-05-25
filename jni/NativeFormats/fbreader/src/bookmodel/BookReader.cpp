@@ -191,7 +191,7 @@ void BookReader::flushTextBufferToParagraph() {
 }
 
 void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image) {
-	myModel.myImages[id] = image;
+	myModel.myImagesWriter->addImage(id, image);
 }
 
 void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {
@@ -217,11 +217,11 @@ void BookReader::addImageReference(const std::string &id, short vOffset) {
 		mySectionContainsRegularContents = true;
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
-			myCurrentTextModel->addImage(id, myModel.imageMap(), vOffset);
+			myCurrentTextModel->addImage(id, vOffset);
 		} else {
 			beginParagraph();
 			myCurrentTextModel->addControl(IMAGE, true);
-			myCurrentTextModel->addImage(id, myModel.imageMap(), vOffset);
+			myCurrentTextModel->addImage(id, vOffset);
 			myCurrentTextModel->addControl(IMAGE, false);
 			endParagraph();
 		}

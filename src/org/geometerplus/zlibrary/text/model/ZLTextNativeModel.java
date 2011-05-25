@@ -26,11 +26,12 @@ public class ZLTextNativeModel extends ZLTextPlainModel {
 	public ZLTextNativeModel(String id, String language,
 			int paragraphsNumber, int[] entryIndices, int[] entryOffsets,
 			int[] paragraphLenghts, int[] textSizes, byte[] paragraphKinds,
-			String directoryName, String fileExtension, int blocksNumber) {
+			String directoryName, String fileExtension, int blocksNumber,
+			ZLImageMap imageMap) {
 		super(id, language,
 			entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds,
 			new CachedInputCharStorage(directoryName, fileExtension, blocksNumber),
-			new ZLImageMap());
+			imageMap);
 		myParagraphsNumber = paragraphsNumber;
 	}
 

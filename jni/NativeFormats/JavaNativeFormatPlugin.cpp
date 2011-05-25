@@ -49,14 +49,6 @@ static inline FormatPlugin *extractPointer(JNIEnv *env, jobject base) {
 }
 
 
-static inline jstring createJavaString(JNIEnv* env, const std::string &str) {
-	if (str.empty()) {
-		return 0;
-	}
-	return env->NewStringUTF(str.c_str());
-}
-
-
 extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_acceptsFile(JNIEnv* env, jobject thiz, jobject file) {
 	FormatPlugin *plugin = extractPointer(env, thiz);
@@ -74,21 +66,21 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	jstring javaString;
 
-	javaString = createJavaString(env, book.title());
+	javaString = AndroidUtil::createJavaString(env, book.title());
 	env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setTitle, javaString);
 	env->DeleteLocalRef(javaString);
 
-	javaString = createJavaString(env, book.language());
+	javaString = AndroidUtil::createJavaString(env, book.language());
 	env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setLanguage, javaString);
 	env->DeleteLocalRef(javaString);
 
-	javaString = createJavaString(env, book.encoding());
+	javaString = AndroidUtil::createJavaString(env, book.encoding());
 	if (javaString != 0) {
 		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setEncoding, javaString);
 		env->DeleteLocalRef(javaString);
 	}
 
-	javaString = createJavaString(env, book.seriesTitle());
+	javaString = AndroidUtil::createJavaString(env, book.seriesTitle());
 	if (javaString != 0) {
 		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setSeriesInfo, javaString, (jfloat)book.indexInSeries());
 		env->DeleteLocalRef(javaString);
@@ -127,14 +119,28 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	return JNI_TRUE;
 }
 
+static void initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
+	shared_ptr<ZLImageMapWriter> imageMapWriter = model.imageMapWriter();
 
-static jobject createTextModel(JNIEnv *env, ZLTextModel &model) {
 	env->PushLocalFrame(16);
 
-	model.flush();
+	jobjectArray ids = AndroidUtil::createStringArray(env, imageMapWriter->identifiers());
+	jintArray indices = AndroidUtil::createIntArray(env, imageMapWriter->indices());
+	jintArray offsets = AndroidUtil::createIntArray(env, imageMapWriter->offsets());
+	jstring imageDirectoryName = env->NewStringUTF(imageMapWriter->allocator().directoryName().c_str());
+	jstring imageFileExtension = env->NewStringUTF(imageMapWriter->allocator().fileExtension().c_str());
+	jint imageBlocksNumber = imageMapWriter->allocator().blocksNumber();
+	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initBookModel,
+			ids, indices, offsets, imageDirectoryName, imageFileExtension, imageBlocksNumber);
 
-	jstring id = createJavaString(env, model.id());
-	jstring language = createJavaString(env, model.language());
+	env->PopLocalFrame(0);
+}
+
+static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &model) {
+	env->PushLocalFrame(16);
+
+	jstring id = AndroidUtil::createJavaString(env, model.id());
+	jstring language = AndroidUtil::createJavaString(env, model.language());
 	jint paragraphsNumber = model.paragraphsNumber();
 
 	const size_t arraysSize = model.startEntryIndices().size();
@@ -153,14 +159,13 @@ static jobject createTextModel(JNIEnv *env, ZLTextModel &model) {
 	jstring fileExtension = env->NewStringUTF(model.allocator().fileExtension().c_str());
 	jint blocksNumber = (jint) model.allocator().blocksNumber();
 
-	jclass cls = env->FindClass(AndroidUtil::Class_ZLTextNativeModel);
-	jobject javaModel = env->NewObject(cls, AndroidUtil::MID_ZLTextNativeModel_init,
+	jobject textModel = env->CallObjectMethod(javaModel, AndroidUtil::MID_NativeBookModel_createTextModel,
 			id, language,
 			paragraphsNumber, entryIndices, entryOffsets,
 			paragraphLenghts, textSizes, paragraphKinds,
 			directoryName, fileExtension, blocksNumber);
 
-	return env->PopLocalFrame(javaModel);
+	return env->PopLocalFrame(textModel);
 }
 
 extern "C"
@@ -177,11 +182,14 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	if (!plugin->readModel(*model)) {
 		return JNI_FALSE;
 	}
+	model->flush();
+
+	initBookModel(env, javaModel, *model);
 
 	shared_ptr<ZLTextModel> textModel = model->bookTextModel();
-	jobject javaTextModel = createTextModel(env, *textModel);
+	jobject javaTextModel = createTextModel(env, javaModel, *textModel);
 
-	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setTextModel, javaTextModel);
+	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setBookTextModel, javaTextModel);
 	return JNI_TRUE;
 }
 

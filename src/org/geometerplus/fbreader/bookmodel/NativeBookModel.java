@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.bookmodel;
 
 
+import org.geometerplus.zlibrary.core.image.ZLImageMap;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
@@ -27,14 +28,31 @@ import org.geometerplus.fbreader.library.Book;
 
 public class NativeBookModel extends BookModel {
 
+	private ZLImageMap myImageMap;
+
 	private ZLTextModel myBookTextModel;
 
 	NativeBookModel(Book book) {
 		super(book);
 	}
 
+	public void initBookModel(String[] imageIds, int[] imageIndices, int[] imageOffsets,
+			String imageDirectoryName, String imageFileExtension, int imageBlocksNumber) {
+		myImageMap = new ZLCachedImageMap(imageIds, imageIndices, imageOffsets, imageDirectoryName, imageFileExtension, imageBlocksNumber);
+	}
 
-	public void setTextModel(ZLTextModel model) {
+	public ZLTextModel createTextModel(String id, String language,
+			int paragraphsNumber, int[] entryIndices, int[] entryOffsets,
+			int[] paragraphLenghts, int[] textSizes, byte[] paragraphKinds,
+			String directoryName, String fileExtension, int blocksNumber) {
+		if (myImageMap == null) {
+			throw new RuntimeException("NativeBookModel hasn't been initialized with initBookModel method");
+		}
+		return new ZLTextNativeModel(id, language, paragraphsNumber, entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds, directoryName, fileExtension, blocksNumber, myImageMap);
+	}
+
+
+	public void setBookTextModel(ZLTextModel model) {
 		myBookTextModel = model;
 	}
 

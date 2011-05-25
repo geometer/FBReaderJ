@@ -93,8 +93,10 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLBase64EncodedImage.cpp \
+	NativeFormats/zlibrary/core/src/image/ZLFileImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLImageManager.cpp \
+	NativeFormats/zlibrary/core/src/image/ZLStreamImage.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
@@ -124,6 +126,7 @@ LOCAL_SRC_FILES := \
 	NativeFormats/zlibrary/core/src/xml/ZLPlainAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLCachedMemoryAllocator.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLImageMapWriter.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextParagraph.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \

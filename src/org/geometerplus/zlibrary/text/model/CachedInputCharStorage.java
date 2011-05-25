@@ -28,14 +28,14 @@ public final class CachedInputCharStorage implements CharStorage {
 	private final String myDirectoryName;
 	private final String myFileExtension;
 
-	private String fileName(int index) {
-		return myDirectoryName + index + myFileExtension;
-	}
-
 	public CachedInputCharStorage(String directoryName, String fileExtension, int blocksNumber) {
 		myDirectoryName = directoryName + '/';
 		myFileExtension = '.' + fileExtension;
 		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));
+	}
+
+	public String fileName(int index) {
+		return myDirectoryName + index + myFileExtension;
 	}
 
 	public int size() {

@@ -23,7 +23,7 @@
 #include "ZLImage.h"
 #include "ZLImageManager.h"
 
-ZLImageManager *ZLImageManager::ourInstance = 0;
+/*ZLImageManager *ZLImageManager::ourInstance = 0;
 
 void ZLImageManager::deleteInstance() {
 	if (ourInstance != 0) {
@@ -40,7 +40,7 @@ struct Color {
 
 struct PalmImageHeader {
 	PalmImageHeader(const std::string &str);
-	
+
 	unsigned short Width;
 	unsigned short Height;
 	unsigned short BytesPerRow;
@@ -50,10 +50,10 @@ struct PalmImageHeader {
 };
 
 static Color PalmImage8bitColormap[256] = {
-	{ 255, 255, 255 }, { 255, 204, 255 }, { 255, 153, 255 }, { 255, 102, 255 }, 
-	{ 255,  51, 255 }, { 255,   0, 255 }, { 255, 255, 204 }, { 255, 204, 204 }, 
-	{ 255, 153, 204 }, { 255, 102, 204 }, { 255,  51, 204 }, { 255,   0, 204 }, 
-	{ 255, 255, 153 }, { 255, 204, 153 }, { 255, 153, 153 }, { 255, 102, 153 }, 
+	{ 255, 255, 255 }, { 255, 204, 255 }, { 255, 153, 255 }, { 255, 102, 255 },
+	{ 255,  51, 255 }, { 255,   0, 255 }, { 255, 255, 204 }, { 255, 204, 204 },
+	{ 255, 153, 204 }, { 255, 102, 204 }, { 255,  51, 204 }, { 255,   0, 204 },
+	{ 255, 255, 153 }, { 255, 204, 153 }, { 255, 153, 153 }, { 255, 102, 153 },
 	{ 255,  51, 153 }, { 255,   0, 153 }, { 204, 255, 255 }, { 204, 204, 255 },
 	{ 204, 153, 255 }, { 204, 102, 255 }, { 204,  51, 255 }, { 204,   0, 255 },
 	{ 204, 255, 204 }, { 204, 204, 204 }, { 204, 153, 204 }, { 204, 102, 204 },
@@ -319,3 +319,4 @@ shared_ptr<ZLImageData> ZLImageManager::imageData(const ZLImage &image) const {
 
 	return data;
 }
+*/

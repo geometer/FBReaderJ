@@ -33,6 +33,8 @@ public:
 	void addData(const std::vector<std::string> &text);
 	const shared_ptr<std::string> stringData() const;
 
+	Kind kind() const;
+
 private:
 	void decode() const;
 
@@ -43,5 +45,6 @@ private:
 
 inline ZLBase64EncodedImage::ZLBase64EncodedImage(const std::string &mimeType) : ZLSingleImage(mimeType) {}
 inline ZLBase64EncodedImage::~ZLBase64EncodedImage() {}
+inline ZLSingleImage::Kind ZLBase64EncodedImage::kind() const { return BASE64_ENCODED_IMAGE; }
 
 #endif /* __ZLBASE64ENCODEDIMAGE_H__ */

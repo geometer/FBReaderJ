@@ -203,7 +203,7 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 			const char *contentType = attributeValue(xmlattributes, "content-type");
 			if ((contentType != 0) && (id != 0) && (STRANGE_MIME_TYPE != contentType)) {
 				myCurrentImage = new ZLBase64EncodedImage(contentType);
-				myModelReader.addImage(id, myCurrentImage);
+				myCurrentImageId.assign(id);
 				myProcessingImage = true;
 			}
 			break;
@@ -302,9 +302,11 @@ void FB2BookReader::endElementHandler(int tag) {
 			myModelReader.addControl(myHyperlinkType, false);
 			break;
 		case _BINARY:
-			if (!myImageBuffer.empty() && (myCurrentImage != 0)) {
+			if (!myImageBuffer.empty() && !myCurrentImageId.empty() && myCurrentImage != 0) {
 				myCurrentImage->addData(myImageBuffer);
+				myModelReader.addImage(myCurrentImageId, myCurrentImage);
 				myImageBuffer.clear();
+				myCurrentImageId.clear();
 				myCurrentImage = 0;
 			}
 			myProcessingImage = false;
