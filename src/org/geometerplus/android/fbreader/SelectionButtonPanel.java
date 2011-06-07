@@ -39,7 +39,7 @@ public class SelectionButtonPanel extends SeveralButtonsPanel {
         addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
         addButton(ActionCode.SELECTION_OPEN_IN_DICTIONARY, true, R.drawable.selection_dictionary);
         addButton(ActionCode.SELECTION_ADD_BOOKMARK, true, R.drawable.selection_bookmark);
-        addButton(ActionCode.SELECTION_HIDE_PANEL, true, R.drawable.selection_bookmark);
+        addButton(ActionCode.SELECTION_HIDE_PANEL, true, R.drawable.selection_close);
     }
     
     public void move(int selectionStartY, int selectionEndY) {
