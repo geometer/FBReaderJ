@@ -24,6 +24,10 @@ import android.graphics.Color;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 public abstract class ZLAndroidColorUtil {
+	public static int rgba(ZLColor color, int alpha) {
+		return Color.argb(alpha, color.Red, color.Green, color.Blue);
+	}
+
 	public static int rgb(ZLColor color) {
 		return Color.rgb(color.Red, color.Green, color.Blue);
 	}

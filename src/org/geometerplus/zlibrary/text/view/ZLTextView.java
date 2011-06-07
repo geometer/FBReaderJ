@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
@@ -238,6 +239,18 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	public void drawSelectionCursor(ZLPaintContext context, int x, int y) {
+		final int ascent = 8;
+		final int width = 16;
+		final int height = 40;
+		int[] xs = { x, x + width / 2, x + width / 2, x - width / 2, x - width / 2 };
+		int[] ys = { y - ascent, y, y + height, y + height, y };
+		context.setFillColor(new ZLColor(255, 255, 255), 127);
+		context.fillPolygon(xs, ys);
+		context.setLineColor(new ZLColor(128, 128, 128));
+		context.drawPolygonalLine(xs, ys);
+	}
+
 	@Override
 	public synchronized void paint(ZLPaintContext context, PageIndex pageIndex) {
 		myContext = context;
@@ -304,6 +317,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final ZLTextRegion selectedElementRegion = getCurrentElementRegion(page);
 		if (selectedElementRegion != null && myHighlightSelectedRegion) {
 			selectedElementRegion.draw(context);
+		}
+
+		if (!mySelection.isEmpty()) {
+			drawSelectionCursor(context, 100, 100);
+			drawSelectionCursor(context, 300, 300);
 		}
 	}
 
