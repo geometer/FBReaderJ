@@ -90,10 +90,13 @@ abstract public class ZLPaintContext {
 	abstract public void setLineColor(ZLColor color, int style);
 	abstract public void setLineWidth(int width);
 
-	final public void setFillColor(ZLColor color) {
-		setFillColor(color, FillStyle.SOLID_FILL);
+	final public void setFillColor(ZLColor color, int alpha) {
+		setFillColor(color, alpha, FillStyle.SOLID_FILL);
 	}
-	abstract public void setFillColor(ZLColor color, int style);
+	final public void setFillColor(ZLColor color) {
+		setFillColor(color, 0xFF, FillStyle.SOLID_FILL);
+	}
+	abstract public void setFillColor(ZLColor color, int alpha, int style);
 
 	abstract public int getWidth();
 	abstract public int getHeight();
@@ -148,6 +151,9 @@ abstract public class ZLPaintContext {
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
 	abstract public void drawFilledCircle(int x, int y, int r);
+
+	abstract public void drawPolygonalLine(int[] xs, int ys[]);
+	abstract public void fillPolygon(int[] xs, int[] ys);
 	abstract public void drawOutline(int[] xs, int ys[]);
 
 	public ArrayList<String> fontFamilies() {
