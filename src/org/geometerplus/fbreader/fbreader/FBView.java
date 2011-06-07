@@ -193,9 +193,16 @@ public final class FBView extends ZLTextView {
 		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		boolean doSelectRegion = false;
 		if (region instanceof ZLTextWordRegion) {
-			doSelectRegion =
-				myReader.WordTappingActionOption.getValue() !=
-				FBReaderApp.WordTappingAction.doNothing;
+			switch (myReader.WordTappingActionOption.getValue()) {
+				case startSelecting:
+				//	myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+					initSelection(x, y);
+					return true;
+				case selectSingleWord:
+				case openDictionary:
+					doSelectRegion = true;
+					break;
+			}
 		} else if (region instanceof ZLTextImageRegion) {
 			doSelectRegion =
 				myReader.ImageTappingActionOption.getValue() !=

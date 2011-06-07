@@ -1296,7 +1296,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		mySelectedRegion = region;
 	}
 
-	protected boolean startSelection(int x, int y) {
+	protected boolean initSelection(int x, int y) {
 		if (!mySelection.start(x, y)) {
 			return false;
 		}
