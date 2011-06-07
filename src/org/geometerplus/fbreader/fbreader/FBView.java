@@ -219,7 +219,7 @@ public final class FBView extends ZLTextView {
 			switch (myReader.WordTappingActionOption.getValue()) {
 				case startSelecting:
 					myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
-					startSelection(x, y);
+					initSelection(x, y);
 					return true;
 				case selectSingleWord:
 				case openDictionary:
