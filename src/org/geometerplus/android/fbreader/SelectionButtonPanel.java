@@ -19,13 +19,12 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.view.View;
+import android.widget.RelativeLayout;
+
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
-
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 public class SelectionButtonPanel extends SeveralButtonsPanel {
     SelectionButtonPanel(FBReaderApp fbReader) {
@@ -43,18 +42,22 @@ public class SelectionButtonPanel extends SeveralButtonsPanel {
     }
     
     public void move(int selectionStartY, int selectionEndY) {
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-              RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+			RelativeLayout.LayoutParams.WRAP_CONTENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+		);
         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        int verticalPosition; 
-        int screenHeight = ((View)myControlPanel.getParent()).getHeight();
-        if (screenHeight - selectionEndY > myControlPanel.getHeight() + 10) {
-            verticalPosition = RelativeLayout.ALIGN_PARENT_BOTTOM;
-        } else if (selectionStartY > myControlPanel.getHeight() + 10) {
-            verticalPosition = RelativeLayout.ALIGN_PARENT_TOP;
-        } else {
-            verticalPosition = RelativeLayout.CENTER_VERTICAL; 
+        final int verticalPosition; 
+        final int screenHeight = ((View)myControlPanel.getParent()).getHeight();
+		final int diffTop = screenHeight - selectionEndY;
+		final int diffBottom = selectionStartY;
+		if (diffTop > diffBottom) {
+			verticalPosition = diffTop > myControlPanel.getHeight() + 10
+				? RelativeLayout.ALIGN_PARENT_BOTTOM : RelativeLayout.CENTER_VERTICAL;
+		} else {
+			verticalPosition = diffBottom > myControlPanel.getHeight() + 10
+				? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.CENTER_VERTICAL;
 		}
 
         layoutParams.addRule(verticalPosition);
