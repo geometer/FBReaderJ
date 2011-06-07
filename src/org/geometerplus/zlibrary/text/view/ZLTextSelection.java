@@ -67,9 +67,10 @@ public class ZLTextSelection {
 		}
 	}
 
-	boolean expandTo(int x, int y) {
-		if (myInitialRegion == null) {
-			return start(x, y);
+	boolean expandTo(int x, int y, boolean moveRightBound) {
+		// TODO: use moveRightBound
+		if (isEmpty()) {
+			return false;
 		}
 
 		if (y < 10) {
@@ -169,7 +170,7 @@ public class ZLTextSelection {
 		public void run() {
 			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
-			expandTo(myX, myY);
+			expandTo(myX, myY, myScrollForward);
 			myView.Application.getViewWidget().reset();
 			myView.Application.getViewWidget().repaint();
 		}

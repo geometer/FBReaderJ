@@ -239,13 +239,130 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	protected void drawSelectionCursor(ZLPaintContext context, int x, int y) {
+	protected static enum SelectionCursor {
+		None,
+		Left,
+		Right
+	};
+
+	private static class Point {
+		int X;
+		int Y;
+
+		Point(int x, int y) {
+			X = x;
+			Y = y;
+		}
+	}
+
+	private SelectionCursor mySelectionCursorInMovement = SelectionCursor.None;
+	private final Point myMovedSelectionCursorPoint = new Point(-1, -1);
+
+	protected void moveSelectionCursorTo(SelectionCursor cursor, int x, int y) {
+		mySelectionCursorInMovement = cursor;
+		myMovedSelectionCursorPoint.X = x;
+		myMovedSelectionCursorPoint.Y = y;
+		expandSelectionTo(x, y, cursor == SelectionCursor.Right);
+	}
+
+	protected void releaseSelectionCursor() {
+		mySelectionCursorInMovement = SelectionCursor.None;
+		Application.getViewWidget().reset();
+		Application.getViewWidget().repaint();
+	}
+
+	protected SelectionCursor getSelectionCursorInMovement() {
+		return mySelectionCursorInMovement;
+	}
+
+	private Point getSelectionCursorPoint(ZLTextPage page, SelectionCursor cursor) {
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (cursor == SelectionCursor.None || mySelection.isEmpty() || vector.isEmpty()) {
+			return null;
+		}
+
+		if (cursor == mySelectionCursorInMovement) {
+			return myMovedSelectionCursorPoint;
+		}
+
+		final ZLTextElementArea firstArea = vector.get(0);
+		final ZLTextElementArea lastArea = vector.get(vector.size() - 1);
+
+		if (cursor == SelectionCursor.Left) {	
+			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
+			if (selectionStartArea.compareTo(firstArea) >= 0
+				&& selectionStartArea.compareTo(lastArea) <= 0) {
+				return new Point(selectionStartArea.XStart, selectionStartArea.YEnd);
+			}
+		} else {
+			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
+			if (selectionEndArea.compareTo(firstArea) >= 0
+				&& selectionEndArea.compareTo(lastArea) <= 0) {
+				return new Point(selectionEndArea.XEnd, selectionEndArea.YEnd);
+			}
+		}
+		return null;
+	}
+
+	private int distance2ToCursor(int x, int y, Point cursorPoint) {
+		final int dpi = ZLibrary.Instance().getDisplayDPI();
+		final int width = dpi / 6;
+		final int height = dpi / 4;
+
+		if (cursorPoint == null) {
+			return Integer.MAX_VALUE;
+		}
+
+		final int dX, dY;
+		if (x < cursorPoint.X - width / 2) {
+			dX = cursorPoint.X - width / 2 - x;
+		} else if (x > cursorPoint.X + width / 2) {
+			dX = x - cursorPoint.X - width / 2;
+		} else {
+			dX = 0;
+		}
+		if (y < cursorPoint.Y) {
+			dY = cursorPoint.Y - y;
+		} else if (y > cursorPoint.Y + height) {
+			dY = y - cursorPoint.Y - height;
+		} else {
+			dY = 0;
+		}
+
+		return dX * dX + dY * dY;
+	}
+
+	protected SelectionCursor findSelectionCursor(int x, int y, int maxDistance) {
+		if (mySelection.isEmpty()) {
+			return SelectionCursor.None;
+		}
+
+		final int leftDistance2 = distance2ToCursor(
+			x, y, getSelectionCursorPoint(myCurrentPage, SelectionCursor.Left)
+		);
+		final int rightDistance2 = distance2ToCursor(
+			x, y, getSelectionCursorPoint(myCurrentPage, SelectionCursor.Right)
+		);
+
+		final int maxDistance2 = maxDistance * maxDistance;
+		if (rightDistance2 < leftDistance2) {
+			return rightDistance2 <= maxDistance2 ? SelectionCursor.Right : SelectionCursor.None;
+		} else {
+			return leftDistance2 <= maxDistance2 ? SelectionCursor.Left : SelectionCursor.None;
+		}
+	}
+
+	private void drawSelectionCursor(ZLPaintContext context, Point pt) {
+		if (pt == null) {
+			return;
+		}
+
 		final int dpi = ZLibrary.Instance().getDisplayDPI();
 		final int accent = dpi / 12;
 		final int width = dpi / 6;
 		final int height = dpi / 4;
-		int[] xs = { x, x + width / 2, x + width / 2, x - width / 2, x - width / 2 };
-		int[] ys = { y - accent, y, y + height, y + height, y };
+		final int[] xs = { pt.X, pt.X + width / 2, pt.X + width / 2, pt.X - width / 2, pt.X - width / 2 };
+		final int[] ys = { pt.Y - accent, pt.Y, pt.Y + height, pt.Y + height, pt.Y };
 		context.setFillColor(context.getBackgroundColor(), 192);
 		context.fillPolygon(xs, ys);
 		context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
@@ -320,23 +437,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			selectedElementRegion.draw(context);
 		}
 
-		final ZLTextElementAreaVector vector = page.TextElementMap;
-		if (!mySelection.isEmpty() && !vector.isEmpty()) {
-			final ZLTextElementArea firstArea = vector.get(0);
-			final ZLTextElementArea lastArea = vector.get(vector.size() - 1);
-			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
-			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
-
-			if (selectionStartArea.compareTo(firstArea) >= 0
-				&& selectionStartArea.compareTo(lastArea) <= 0) {
-				drawSelectionCursor(context, selectionStartArea.XStart, selectionStartArea.YEnd);
-			}
-
-			if (selectionEndArea.compareTo(firstArea) >= 0
-				&& selectionEndArea.compareTo(lastArea) <= 0) {
-				drawSelectionCursor(context, selectionEndArea.XEnd, selectionEndArea.YEnd);
-			}
-		}
+		drawSelectionCursor(context, getSelectionCursorPoint(page, SelectionCursor.Left));
+		drawSelectionCursor(context, getSelectionCursorPoint(page, SelectionCursor.Right));
 	}
 
 	private ZLTextPage getPage(PageIndex pageIndex) {
@@ -1309,8 +1411,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		mySelection.stop();
 	}
 
-	protected boolean expandSelectionTo(int x, int y) {
-		if (!mySelection.expandTo(x, y)) {
+	protected boolean expandSelectionTo(int x, int y, boolean moveRightBound) {
+		if (!mySelection.expandTo(x, y, moveRightBound)) {
 			return false;
 		}
 		Application.getViewWidget().reset();
@@ -1319,6 +1421,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearSelection() {
+		releaseSelectionCursor();
 		if (mySelection.clear()) {
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();
