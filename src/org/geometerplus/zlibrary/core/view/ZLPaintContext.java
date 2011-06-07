@@ -43,6 +43,7 @@ abstract public class ZLPaintContext {
 
 	abstract public void clear(ZLFile wallpaperFile, boolean doMirror);
 	abstract public void clear(ZLColor color);
+	abstract public ZLColor getBackgroundColor();
 
 	private boolean myResetFont = true;
 	private String myFontFamily = "";

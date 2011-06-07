@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
@@ -245,9 +244,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int height = 40;
 		int[] xs = { x, x + width / 2, x + width / 2, x - width / 2, x - width / 2 };
 		int[] ys = { y - ascent, y, y + height, y + height, y };
-		context.setFillColor(new ZLColor(255, 255, 255), 127);
+		context.setFillColor(context.getBackgroundColor(), 127);
 		context.fillPolygon(xs, ys);
-		context.setLineColor(new ZLColor(128, 128, 128));
+		context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
 		context.drawPolygonalLine(xs, ys);
 	}
 
