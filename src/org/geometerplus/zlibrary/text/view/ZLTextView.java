@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.zlibrary.text.hyphenation.*;
@@ -239,12 +240,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void drawSelectionCursor(ZLPaintContext context, int x, int y) {
-		final int ascent = 8;
-		final int width = 16;
-		final int height = 40;
+		final int dpi = ZLibrary.Instance().getDisplayDPI();
+		final int accent = dpi / 10;
+		final int width = dpi / 6;
+		final int height = dpi / 4;
 		int[] xs = { x, x + width / 2, x + width / 2, x - width / 2, x - width / 2 };
-		int[] ys = { y - ascent, y, y + height, y + height, y };
-		context.setFillColor(context.getBackgroundColor(), 127);
+		int[] ys = { y - accent, y, y + height, y + height, y };
+		context.setFillColor(context.getBackgroundColor(), 192);
 		context.fillPolygon(xs, ys);
 		context.setLineColor(getTextColor(ZLTextHyperlink.NO_LINK));
 		context.drawPolygonalLine(xs, ys);
@@ -323,14 +325,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			final ZLTextElementArea lastArea = page.TextElementMap.get(page.TextElementMap.size() - 1);
 			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
 			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
-			if (firstArea.compareTo(selectionEndArea) <= 0
-				&& lastArea.compareTo(selectionStartArea) >= 0) {
-				if (selectionStartArea.compareTo(firstArea) >= 0) {
-					drawSelectionCursor(context, selectionStartArea.XStart, selectionStartArea.YEnd);
-				}
-				if (selectionEndArea.compareTo(lastArea) <= 0) {
-					drawSelectionCursor(context, selectionEndArea.XEnd, selectionEndArea.YEnd);
-				}
+
+			if (selectionStartArea.compareTo(firstArea) >= 0
+				&& selectionStartArea.compareTo(lastArea) <= 0) {
+				drawSelectionCursor(context, selectionStartArea.XStart, selectionStartArea.YEnd);
+			}
+
+			if (selectionEndArea.compareTo(firstArea) >= 0
+				&& selectionEndArea.compareTo(lastArea) <= 0) {
+				drawSelectionCursor(context, selectionEndArea.XEnd, selectionEndArea.YEnd);
 			}
 		}
 	}
