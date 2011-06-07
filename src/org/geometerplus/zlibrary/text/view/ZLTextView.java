@@ -320,9 +320,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			selectedElementRegion.draw(context);
 		}
 
-		if (!mySelection.isEmpty() && !page.TextElementMap.isEmpty()) {
-			final ZLTextElementArea firstArea = page.TextElementMap.get(0);
-			final ZLTextElementArea lastArea = page.TextElementMap.get(page.TextElementMap.size() - 1);
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (!mySelection.isEmpty() && !vector.isEmpty()) {
+			final ZLTextElementArea firstArea = vector.get(0);
+			final ZLTextElementArea lastArea = vector.get(vector.size() - 1);
 			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
 			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
 
@@ -1326,7 +1327,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public int getSelectionStartY() {
 		final ZLTextElementAreaVector vector = myCurrentPage.TextElementMap;
-		if (vector.isEmpty()) {
+		if (mySelection.isEmpty() || vector.isEmpty()) {
 			return 0;
 		}
 		final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
@@ -1343,7 +1344,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	public int getSelectionEndY() {
 		final ZLTextElementAreaVector vector = myCurrentPage.TextElementMap;
-		if (vector.isEmpty()) {
+		if (mySelection.isEmpty() || vector.isEmpty()) {
 			return 0;
 		}
 		final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
