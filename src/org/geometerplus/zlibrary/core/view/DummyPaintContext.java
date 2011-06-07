@@ -35,6 +35,10 @@ final class DummyPaintContext extends ZLPaintContext {
 	public void clear(ZLColor color) {
 	}
 
+	public ZLColor getBackgroundColor() {
+		return new ZLColor(0, 0, 0);
+	}
+
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
 	}
 

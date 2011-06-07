@@ -43,6 +43,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private final int myHeight;
 	private final int myScrollbarWidth;
 
+	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
+
 	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
 	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
@@ -98,6 +100,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			}
 		}
 		if (ourWallpaper != null) {
+			myBackgroundColor = ZLAndroidColorUtil.getAverageColor(ourWallpaper);
 			final int w = ourWallpaper.getWidth();
 			final int h = ourWallpaper.getHeight();
 			for (int cw = 0, iw = 1; cw < myWidth; cw += w, ++iw) {
@@ -112,8 +115,14 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	@Override
 	public void clear(ZLColor color) {
+		myBackgroundColor = color;
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
 		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
+	}
+
+	@Override
+	public ZLColor getBackgroundColor() {
+		return myBackgroundColor;
 	}
 
 	public void fillPolygon(int[] xs, int ys[]) {
