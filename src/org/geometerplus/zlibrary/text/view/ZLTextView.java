@@ -318,9 +318,20 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			selectedElementRegion.draw(context);
 		}
 
-		if (!mySelection.isEmpty()) {
-			drawSelectionCursor(context, 100, 100);
-			drawSelectionCursor(context, 300, 300);
+		if (!mySelection.isEmpty() && !page.TextElementMap.isEmpty()) {
+			final ZLTextElementArea firstArea = page.TextElementMap.get(0);
+			final ZLTextElementArea lastArea = page.TextElementMap.get(page.TextElementMap.size() - 1);
+			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
+			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
+			if (firstArea.compareTo(selectionEndArea) <= 0
+				&& lastArea.compareTo(selectionStartArea) >= 0) {
+				if (selectionStartArea.compareTo(firstArea) >= 0) {
+					drawSelectionCursor(context, selectionStartArea.XStart, selectionStartArea.YEnd);
+				}
+				if (selectionEndArea.compareTo(lastArea) <= 0) {
+					drawSelectionCursor(context, selectionEndArea.XEnd, selectionEndArea.YEnd);
+				}
+			}
 		}
 	}
 
