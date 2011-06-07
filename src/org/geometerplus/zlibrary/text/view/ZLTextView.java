@@ -241,7 +241,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	protected void drawSelectionCursor(ZLPaintContext context, int x, int y) {
 		final int dpi = ZLibrary.Instance().getDisplayDPI();
-		final int accent = dpi / 10;
+		final int accent = dpi / 12;
 		final int width = dpi / 6;
 		final int height = dpi / 4;
 		int[] xs = { x, x + width / 2, x + width / 2, x - width / 2, x - width / 2 };
