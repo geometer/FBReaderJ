@@ -286,8 +286,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 		if (cursor == ZLTextSelectionCursor.Left) {	
 			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
-			System.err.println("start " + selectionStartArea);
-			System.err.println("first " + firstArea);
 			if (selectionStartArea.compareTo(firstArea) >= 0
 				&& selectionStartArea.compareTo(lastArea) <= 0) {
 				return new Point(selectionStartArea.XStart, selectionStartArea.YEnd);

@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -100,8 +101,8 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
-		fbReader.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionPanelVisibilityAction(this, fbReader, true));
-		fbReader.addAction(ActionCode.SELECTION_HIDE_PANEL, new SelectionPanelVisibilityAction(this, fbReader, false));
+		fbReader.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_HIDE_PANEL, new SelectionHidePanelAction(this, fbReader));
 		fbReader.addAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD, new SelectionCopyAction(this, fbReader));
 		fbReader.addAction(ActionCode.SELECTION_SHARE, new SelectionShareAction(this, fbReader));
 		fbReader.addAction(ActionCode.SELECTION_OPEN_IN_DICTIONARY, new SelectionDictionaryAction(this, fbReader));
@@ -239,13 +240,15 @@ public final class FBReader extends ZLAndroidActivity {
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
 	}
-	public void onShowSelectionPanel(boolean show, int selectionStartY, int selectionEndY) {
-		if (show) {
-			ourSelectionPanel.move(selectionStartY, selectionEndY);
-			ourSelectionPanel.show(false);
-		} else if (ourSelectionPanel.getVisibility()) {
-			ourSelectionPanel.hide();
-		}
+
+	public void showSelectionPanel() {
+		final ZLTextView view = ((FBReaderApp)FBReaderApp.Instance()).getTextView();
+		ourSelectionPanel.move(view.getSelectionStartY(), view.getSelectionEndY());
+		ourSelectionPanel.show(true);
+	}
+
+	public void hideSelectionPanel() {
+		ourSelectionPanel.hide();
 	}
 
 	@Override

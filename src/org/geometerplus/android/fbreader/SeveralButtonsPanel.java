@@ -68,12 +68,12 @@ public abstract class SeveralButtonsPanel extends ControlButtonPanel implements 
 
 	public void onClick(View view) {
 		final ActionButton button = (ActionButton)view;
-		Reader.doAction(button.ActionId);
 		if (button.IsCloseButton && myControlPanel != null) {
 			storePosition();
 			StartPosition = null;
 			hide(true);
 			//            myVisible = false; // needed for actions, bringing another activites in front of current.
 		}
+		Reader.doAction(button.ActionId);
 	}
 }
