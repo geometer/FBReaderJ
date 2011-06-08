@@ -114,6 +114,7 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, MAX_SELECTION_DISTANCE);
 		if (cursor != ZLTextSelectionCursor.None) {
+			myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
@@ -213,7 +214,7 @@ public final class FBView extends ZLTextView {
 		if (region instanceof ZLTextWordRegion) {
 			switch (myReader.WordTappingActionOption.getValue()) {
 				case startSelecting:
-				//	myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+					myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 					initSelection(x, y);
 					final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
 					if (cursor != ZLTextSelectionCursor.None) {
@@ -580,6 +581,12 @@ public final class FBView extends ZLTextView {
 			}
 		}
 		return myFooter;
+	}
+
+	@Override
+	protected void releaseSelectionCursor() {
+		super.releaseSelectionCursor();
+		myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
 	}
 
 	public String getSelectedText() {
