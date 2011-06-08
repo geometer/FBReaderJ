@@ -112,8 +112,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final SelectionCursor cursor = findSelectionCursor(x, y, MAX_SELECTION_DISTANCE);
-		if (cursor != SelectionCursor.None) {
+		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, MAX_SELECTION_DISTANCE);
+		if (cursor != ZLTextSelectionCursor.None) {
 			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
@@ -152,8 +152,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final SelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != SelectionCursor.None) {
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
 			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
@@ -178,7 +178,6 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerRelease(int x, int y) {
-		System.err.println("onFingerRelease 0");
 		if (myIsBrightnessAdjustmentInProgress) {
 			myIsBrightnessAdjustmentInProgress = false;
 			return true;
@@ -188,10 +187,8 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		System.err.println("onFingerRelease 1");
-		final SelectionCursor cursor = getSelectionCursorInMovement();
-		if (cursor != SelectionCursor.None) {
-		System.err.println("onFingerRelease 2");
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
 			releaseSelectionCursor();
 			return true;
 		}
