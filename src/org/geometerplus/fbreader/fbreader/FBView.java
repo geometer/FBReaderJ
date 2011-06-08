@@ -157,6 +157,12 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
+			moveSelectionCursorTo(cursor, x, y);
+			return true;
+		}
+
 		synchronized (this) {
 			if (!isSelectionEmpty()) {
 				expandSelectionTo(x, y);

@@ -22,7 +22,6 @@ package org.geometerplus.zlibrary.text.view;
 public class ZLTextSelection {
 	private final ZLTextView myView;
 
-	private ZLTextRegion myInitialRegion;
 	private ZLTextElementArea myLeftBound;
 	private ZLTextElementArea myRightBound;
 
@@ -33,7 +32,7 @@ public class ZLTextSelection {
 	}
 
 	boolean isEmpty() {
-		return myInitialRegion == null;
+		return myLeftBound == null;
 	}
 
 	boolean clear() {
@@ -42,7 +41,6 @@ public class ZLTextSelection {
 		}
 
 		stop();
-		myInitialRegion = null;
 		myLeftBound = null;
 		myRightBound = null;
 		return true;
@@ -50,13 +48,16 @@ public class ZLTextSelection {
 
 	boolean start(int x, int y) {
 		clear();
-		myInitialRegion = myView.findRegion(x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
-		if (myInitialRegion == null) {
+
+		final ZLTextRegion initialRegion = myView.findRegion(
+			x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter
+		);
+		if (initialRegion == null) {
 			return false;
 		}
 
-		myLeftBound = myInitialRegion.getFirstArea();
-		myRightBound = myInitialRegion.getLastArea();
+		myLeftBound = initialRegion.getFirstArea();
+		myRightBound = initialRegion.getLastArea();
 		return true;
 	}
 
@@ -67,11 +68,13 @@ public class ZLTextSelection {
 		}
 	}
 
-	boolean expandTo(int x, int y) {
-		if (myInitialRegion == null) {
-			return start(x, y);
+	boolean expandTo(int x, int y, boolean moveRightBound) {
+		// TODO: use moveRightBound
+		if (isEmpty()) {
+			return false;
 		}
 
+		/*
 		if (y < 10) {
 			if (myScroller != null && myScroller.scrollsForward()) {
 				myScroller.stop();
@@ -100,6 +103,7 @@ public class ZLTextSelection {
 		if (myScroller != null) {
 			myScroller.setXY(x, y);
 		}
+		*/
 
 		ZLTextRegion region = myView.findRegion(x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		if (region == null && myScroller != null) {
@@ -109,23 +113,16 @@ public class ZLTextSelection {
 			return false;
 		}
 
-		final int cmp = myInitialRegion.compareTo(region);
 		final ZLTextElementArea firstArea = region.getFirstArea();
 		final ZLTextElementArea lastArea = region.getLastArea();
-		if (cmp < 0) {
-			if (myRightBound.compareTo(lastArea) != 0) {
+		if (moveRightBound) {
+			if (myRightBound.compareTo(lastArea) != 0 && myLeftBound.compareTo(lastArea) <= 0) {
 				myRightBound = lastArea;
-				return true;
-			}
-		} else if (cmp > 0) {
-			if (myLeftBound.compareTo(firstArea) != 0) {
-				myLeftBound = firstArea;
 				return true;
 			}
 		} else {
-			if (myLeftBound.compareTo(firstArea) != 0 || myRightBound.compareTo(lastArea) != 0) {
+			if (myLeftBound.compareTo(firstArea) != 0 && myRightBound.compareTo(firstArea) >= 0) {
 				myLeftBound = firstArea;
-				myRightBound = lastArea;
 				return true;
 			}
 		}
@@ -169,7 +166,7 @@ public class ZLTextSelection {
 		public void run() {
 			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
-			expandTo(myX, myY);
+			expandTo(myX, myY, myScrollForward);
 			myView.Application.getViewWidget().reset();
 			myView.Application.getViewWidget().repaint();
 		}
