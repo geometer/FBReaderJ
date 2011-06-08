@@ -118,8 +118,10 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (!isSelectionEmpty()) {
+		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, MAX_SELECTION_DISTANCE);
+		if (cursor != ZLTextSelectionCursor.None) {
 			myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
 
@@ -164,11 +166,6 @@ public final class FBView extends ZLTextView {
 		}
 
 		synchronized (this) {
-			if (!isSelectionEmpty()) {
-				expandSelectionTo(x, y);
-				return true;
-			}
-
 			if (myIsBrightnessAdjustmentInProgress) {
 				if (x >= myContext.getWidth() / 5) {
 					myIsBrightnessAdjustmentInProgress = false;
@@ -197,12 +194,13 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		synchronized (this) {
-			if (!isSelectionEmpty()) {
-				stopSelection();
-				return true;
-			}
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
+			releaseSelectionCursor();
+			return true;
+		}
 
+		synchronized (this) {
 			if (isFlickScrollingEnabled()) {
 				myReader.getViewWidget().startAutoScrolling(
 					x, y, ScrollingPreferences.Instance().AnimationSpeedOption.getValue()
@@ -255,11 +253,6 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (!isSelectionEmpty()) {
-			expandSelectionTo(x, y);
-			return true;
-		}
-
 		final ZLTextRegion selectedRegion = getSelectedRegion();
 		if (selectedRegion instanceof ZLTextHyperlinkRegion ||
 			selectedRegion instanceof ZLTextWordRegion) {
@@ -278,11 +271,6 @@ public final class FBView extends ZLTextView {
 
 	public boolean onFingerReleaseAfterLongPress(int x, int y) {
 		if (super.onFingerReleaseAfterLongPress(x, y)) {
-			return true;
-		}
-
-		if (!isSelectionEmpty()) {
-			stopSelection();
 			return true;
 		}
 
