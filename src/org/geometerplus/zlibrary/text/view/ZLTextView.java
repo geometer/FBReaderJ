@@ -262,6 +262,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	protected void releaseSelectionCursor() {
 		mySelectionCursorInMovement = ZLTextSelectionCursor.None;
+		mySelection.stop();
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
@@ -301,7 +302,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return null;
 	}
 
-	private int distance2ToCursor(int x, int y, Point cursorPoint) {
+	private int distanceToCursor(int x, int y, Point cursorPoint) {
 		if (cursorPoint == null) {
 			return Integer.MAX_VALUE;
 		}
@@ -326,7 +327,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			dY = 0;
 		}
 
-		return dX * dX + dY * dY;
+		return Math.max(dX, dY);
+	}
+
+	protected ZLTextSelectionCursor findSelectionCursor(int x, int y) {
+		return findSelectionCursor(x, y, Integer.MAX_VALUE);
 	}
 
 	protected ZLTextSelectionCursor findSelectionCursor(int x, int y, int maxDistance) {
@@ -334,18 +339,17 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return ZLTextSelectionCursor.None;
 		}
 
-		final int leftDistance2 = distance2ToCursor(
+		final int leftDistance = distanceToCursor(
 			x, y, getSelectionCursorPoint(myCurrentPage, ZLTextSelectionCursor.Left)
 		);
-		final int rightDistance2 = distance2ToCursor(
+		final int rightDistance = distanceToCursor(
 			x, y, getSelectionCursorPoint(myCurrentPage, ZLTextSelectionCursor.Right)
 		);
 
-		final int maxDistance2 = maxDistance * maxDistance;
-		if (rightDistance2 < leftDistance2) {
-			return rightDistance2 <= maxDistance2 ? ZLTextSelectionCursor.Right : ZLTextSelectionCursor.None;
+		if (rightDistance < leftDistance) {
+			return rightDistance <= maxDistance ? ZLTextSelectionCursor.Right : ZLTextSelectionCursor.None;
 		} else {
-			return leftDistance2 <= maxDistance2 ? ZLTextSelectionCursor.Left : ZLTextSelectionCursor.None;
+			return leftDistance <= maxDistance ? ZLTextSelectionCursor.Left : ZLTextSelectionCursor.None;
 		}
 	}
 
@@ -1401,10 +1405,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 		return true;
-	}
-
-	protected void stopSelection() {
-		mySelection.stop();
 	}
 
 	public void clearSelection() {
