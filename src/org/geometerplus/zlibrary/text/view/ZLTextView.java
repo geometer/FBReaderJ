@@ -1399,6 +1399,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected boolean initSelection(int x, int y) {
+		y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
 		if (!mySelection.start(x, y)) {
 			return false;
 		}
