@@ -178,11 +178,6 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerRelease(int x, int y) {
-		if (myIsBrightnessAdjustmentInProgress) {
-			myIsBrightnessAdjustmentInProgress = false;
-			return true;
-		}
-
 		if (super.onFingerRelease(x, y)) {
 			return true;
 		}
@@ -190,6 +185,11 @@ public final class FBView extends ZLTextView {
 		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
 		if (cursor != ZLTextSelectionCursor.None) {
 			releaseSelectionCursor();
+			return true;
+		}
+
+		if (myIsBrightnessAdjustmentInProgress) {
+			myIsBrightnessAdjustmentInProgress = false;
 			return true;
 		}
 
@@ -215,6 +215,10 @@ public final class FBView extends ZLTextView {
 				case startSelecting:
 				//	myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
 					initSelection(x, y);
+					final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
+					if (cursor != ZLTextSelectionCursor.None) {
+						moveSelectionCursorTo(cursor, x, y);
+					}
 					return true;
 				case selectSingleWord:
 				case openDictionary:
@@ -244,6 +248,12 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
+			moveSelectionCursorTo(cursor, x, y);
+			return true;
+		}
+
 		final ZLTextRegion selectedRegion = getSelectedRegion();
 		if (selectedRegion instanceof ZLTextHyperlinkRegion ||
 			selectedRegion instanceof ZLTextWordRegion) {
@@ -262,6 +272,12 @@ public final class FBView extends ZLTextView {
 
 	public boolean onFingerReleaseAfterLongPress(int x, int y) {
 		if (super.onFingerReleaseAfterLongPress(x, y)) {
+			return true;
+		}
+
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
+			releaseSelectionCursor();
 			return true;
 		}
 
