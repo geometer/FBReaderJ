@@ -225,6 +225,16 @@ public final class FBReader extends ZLAndroidActivity {
 		return true;
 	}
 
+	public void showSelectionPanel() {
+		final ZLTextView view = ((FBReaderApp)FBReaderApp.Instance()).getTextView();
+		//ourSelectionPanel.move(view.getSelectionStartY(), view.getSelectionEndY());
+		//ourSelectionPanel.show(true);
+	}
+
+	public void hideSelectionPanel() {
+		//ourSelectionPanel.hide();
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
