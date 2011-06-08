@@ -304,6 +304,7 @@ public final class FBView extends ZLTextView {
 			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
+
 		return false;
 	}
 
