@@ -74,12 +74,6 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (!isSelectionEmpty()) {
-			clearSelection();
-			myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
-			return true;
-		}
-
 		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
