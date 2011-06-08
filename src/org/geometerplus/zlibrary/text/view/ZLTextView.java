@@ -253,10 +253,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	protected void moveSelectionCursorTo(ZLTextSelectionCursor cursor, int x, int y) {
 		y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
-		mySelectionCursorInMovement = cursor;
+		mySelectionCursorInMovement = mySelection.expandTo(x, y, cursor);
 		myMovedSelectionCursorPoint.X = x;
 		myMovedSelectionCursorPoint.Y = y;
-		expandSelectionTo(x, y, cursor == ZLTextSelectionCursor.Right);
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
@@ -1406,10 +1405,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 
 	protected void stopSelection() {
 		mySelection.stop();
-	}
-
-	protected boolean expandSelectionTo(int x, int y, boolean moveRightBound) {
-		return mySelection.expandTo(x, y, moveRightBound);
 	}
 
 	public void clearSelection() {
