@@ -592,7 +592,6 @@ public final class FBView extends ZLTextView {
 	@Override
 	protected void releaseSelectionCursor() {
 		super.releaseSelectionCursor();
-		System.err.println("doAction " + ActionCode.SELECTION_HIDE_PANEL);
 		myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
 	}
 
