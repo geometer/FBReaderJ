@@ -1455,11 +1455,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public ZLTextPosition getSelectionStartPosition() {
-		return mySelection.getStartArea();
+		final ZLTextPosition start = mySelection.getStartArea();
+		return new ZLTextFixedPosition(start.getParagraphIndex(), start.getElementIndex(), 0);
 	}
 
 	public ZLTextPosition getSelectionEndPosition() {
-		return mySelection.getEndArea();
+		final ZLTextPosition end = mySelection.getEndArea();
+		return new ZLTextFixedPosition(end.getParagraphIndex(), end.getElementIndex(), Integer.MAX_VALUE);
 	}
 
 	public boolean isSelectionEmpty() {
