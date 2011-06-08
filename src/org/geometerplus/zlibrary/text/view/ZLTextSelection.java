@@ -22,8 +22,8 @@ package org.geometerplus.zlibrary.text.view;
 public class ZLTextSelection {
 	private final ZLTextView myView;
 
-	private ZLTextElementArea myLeftBound;
-	private ZLTextElementArea myRightBound;
+	private ZLTextRegion myLeftMostRegion;
+	private ZLTextRegion myRightMostRegion;
 
 	private Scroller myScroller;
 
@@ -32,7 +32,7 @@ public class ZLTextSelection {
 	}
 
 	boolean isEmpty() {
-		return myLeftBound == null;
+		return myLeftMostRegion == null;
 	}
 
 	boolean clear() {
@@ -41,23 +41,22 @@ public class ZLTextSelection {
 		}
 
 		stop();
-		myLeftBound = null;
-		myRightBound = null;
+		myLeftMostRegion = null;
+		myRightMostRegion = null;
 		return true;
 	}
 
 	boolean start(int x, int y) {
 		clear();
 
-		final ZLTextRegion initialRegion = myView.findRegion(
+		myLeftMostRegion = myView.findRegion(
 			x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter
 		);
-		if (initialRegion == null) {
+		if (myLeftMostRegion == null) {
 			return false;
 		}
 
-		myLeftBound = initialRegion.getFirstArea();
-		myRightBound = initialRegion.getLastArea();
+		myRightMostRegion = myLeftMostRegion;
 		return true;
 	}
 
@@ -68,10 +67,9 @@ public class ZLTextSelection {
 		}
 	}
 
-	boolean expandTo(int x, int y, boolean moveRightBound) {
-		// TODO: use moveRightBound
+	ZLTextSelectionCursor expandTo(int x, int y, ZLTextSelectionCursor cursorToMove) {
 		if (isEmpty()) {
-			return false;
+			return cursorToMove;
 		}
 
 		/*
@@ -110,38 +108,43 @@ public class ZLTextSelection {
 			region = myView.findRegion(x, y, ZLTextRegion.AnyRegionFilter);
 		}
 		if (region == null) {
-			return false;
+			return cursorToMove;
 		}
 
-		final ZLTextElementArea firstArea = region.getFirstArea();
-		final ZLTextElementArea lastArea = region.getLastArea();
-		if (moveRightBound) {
-			if (myRightBound.compareTo(lastArea) != 0 && myLeftBound.compareTo(lastArea) <= 0) {
-				myRightBound = lastArea;
-				return true;
+		if (cursorToMove == ZLTextSelectionCursor.Right) {
+			if (myLeftMostRegion.compareTo(region) <= 0) {
+				myRightMostRegion = region;
+				return cursorToMove;
+			} else {
+				myRightMostRegion = myLeftMostRegion;
+				myLeftMostRegion = region;
+				return ZLTextSelectionCursor.Left;
 			}
 		} else {
-			if (myLeftBound.compareTo(firstArea) != 0 && myRightBound.compareTo(firstArea) >= 0) {
-				myLeftBound = firstArea;
-				return true;
+			if (myRightMostRegion.compareTo(region) >= 0) {
+				myLeftMostRegion = region;
+				return cursorToMove;
+			} else {
+				myLeftMostRegion = myRightMostRegion;
+				myRightMostRegion = region;
+				return ZLTextSelectionCursor.Right;
 			}
 		}
-		return false;
 	}
 
 	boolean isAreaSelected(ZLTextElementArea area) {
 		return
 			!isEmpty()
-			&& myLeftBound.weakCompareTo(area) <= 0
-			&& myRightBound.weakCompareTo(area) >= 0;
+			&& myLeftMostRegion.getFirstArea().weakCompareTo(area) <= 0
+			&& myRightMostRegion.getLastArea().weakCompareTo(area) >= 0;
 	}
 
 	ZLTextElementArea getStartArea() {
-		return myLeftBound;
+		return myLeftMostRegion.getFirstArea();
 	}
 
 	ZLTextElementArea getEndArea() {
-		return myRightBound;
+		return myRightMostRegion.getLastArea();
 	}
 
 	private class Scroller implements Runnable {
@@ -166,7 +169,7 @@ public class ZLTextSelection {
 		public void run() {
 			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
-			expandTo(myX, myY, myScrollForward);
+			//expandTo(myX, myY, myScrollForward);
 			myView.Application.getViewWidget().reset();
 			myView.Application.getViewWidget().repaint();
 		}
