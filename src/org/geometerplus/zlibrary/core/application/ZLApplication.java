@@ -81,7 +81,9 @@ public abstract class ZLApplication {
 	}
 
 	public final void onViewChanged() {
-		hideAllPanels();
+		for (ButtonPanel panel : myPanels) {
+			panel.hide();
+		}
 	}
 
 	public final void addAction(String actionId, ZLAction action) {
@@ -190,14 +192,6 @@ public abstract class ZLApplication {
 	}
 	public final void registerButtonPanel(ButtonPanel panel) {
 		myPanels.add(panel);
-	}
-	public final void unregisterButtonPanel(ButtonPanel panel) {
-		myPanels.remove(panel);
-	}
-	public final void hideAllPanels() {
-		for (ButtonPanel panel : myPanels) {
-			panel.hide();
-		}
 	}
 
 	public int getBatteryLevel() {
