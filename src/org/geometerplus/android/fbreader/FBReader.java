@@ -82,6 +82,9 @@ public final class FBReader extends ZLAndroidActivity {
 		if (fbReader.getPopupById(NavigationPopup.ID) == null) {
 			new NavigationPopup(fbReader);
 		}
+		if (fbReader.getPopupById(SelectionPopup.ID) == null) {
+			new SelectionPopup(fbReader);
+		}
 
 		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_PREFERENCES, new ShowPreferencesAction(this, fbReader));
@@ -175,6 +178,7 @@ public final class FBReader extends ZLAndroidActivity {
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
 		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
 		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
+		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
 	}
 
 	@Override
@@ -220,13 +224,19 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	public void showSelectionPanel() {
-		final ZLTextView view = ((FBReaderApp)FBReaderApp.Instance()).getTextView();
-		//ourSelectionPanel.move(view.getSelectionStartY(), view.getSelectionEndY());
-		//ourSelectionPanel.show(true);
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final ZLTextView view = fbReader.getTextView();
+		((SelectionPopup)fbReader.getPopupById(SelectionPopup.ID))
+			.move(view.getSelectionStartY(), view.getSelectionEndY());
+		fbReader.showPopup(SelectionPopup.ID);
 	}
 
 	public void hideSelectionPanel() {
-		//ourSelectionPanel.hide();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final FBReaderApp.PopupPanel popup = fbReader.getActivePopup();
+		if (popup != null && popup.getId() == SelectionPopup.ID) {
+			FBReaderApp.Instance().hideActivePopup();
+		}
 	}
 
 	@Override
