@@ -142,18 +142,12 @@ public final class FBReader extends ZLAndroidActivity {
 					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
 						runOnUiThread(new Runnable() {
 							public void run() {
-								// this is a hack, but otherwise there is no way to cancel the selection: the SelectionPanel when searching
-								// is activated doesn't go through the normal hiding process, so it can't call this.
-								((FBReaderApp)FBReaderApp.Instance()).getTextView().clearSelection();
 								fbReader.showPopup(popup.getId());
 							}
 						});
 					} else {
 						runOnUiThread(new Runnable() {
 							public void run() {
-								// this is a hack, but otherwise there is no way to cancel the selection: the SelectionPanel when searching
-								// is activated doesn't go through the normal hiding process, so it can't call this.
-								((FBReaderApp)FBReaderApp.Instance()).getTextView().clearSelection();
 								UIUtil.showErrorMessage(FBReader.this, "textNotFound");
 								popup.StartPosition = null;
 							}
@@ -230,13 +224,19 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	public void showSelectionPanel() {
-		final ZLTextView view = ((FBReaderApp)FBReaderApp.Instance()).getTextView();
-		//ourSelectionPanel.move(view.getSelectionStartY(), view.getSelectionEndY());
-		//ourSelectionPanel.show(true);
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final ZLTextView view = fbReader.getTextView();
+		((SelectionPopup)fbReader.getPopupById(SelectionPopup.ID))
+			.move(view.getSelectionStartY(), view.getSelectionEndY());
+		fbReader.showPopup(SelectionPopup.ID);
 	}
 
 	public void hideSelectionPanel() {
-		//ourSelectionPanel.hide();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final FBReaderApp.PopupPanel popup = fbReader.getActivePopup();
+		if (popup != null && popup.getId() == SelectionPopup.ID) {
+			FBReaderApp.Instance().hideActivePopup();
+		}
 	}
 
 	@Override
@@ -264,9 +264,6 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	public void navigate() {
-		// this is a hack, but otherwise there is no way to cancel the selection: the SelectionPanel when navigating
-		// is activated doesn't go through the normal hiding process, so it can't call this.
-		((FBReaderApp)FBReaderApp.Instance()).getTextView().clearSelection();
 		((NavigationPopup)FBReaderApp.Instance().getPopupById(NavigationPopup.ID)).runNavigation();
 	}
 

@@ -44,6 +44,8 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 
 	@Override
 	protected void show_() {
+		System.err.println("show_ " + getClass().getName());
+		new Exception().printStackTrace();
 		if (myWindow != null) {
 			myWindow.show();
 		}
@@ -51,6 +53,7 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 
 	@Override
 	protected void hide_() {
+		System.err.println("hide_ " + getClass().getName());
 		if (myWindow != null) {
 			myWindow.hide();
 		}

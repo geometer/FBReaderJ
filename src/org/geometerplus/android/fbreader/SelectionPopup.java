@@ -26,14 +26,26 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class SelectionButtonPanel extends SeveralButtonsPanel {
-    SelectionButtonPanel(FBReaderApp fbReader) {
-        super(fbReader);
-    }
+class SelectionPopup extends ButtonsPopupPanel {
+	final static String ID = "SelectionPopup";
 
-    @Override
-	public void createControlPanel(FBReader activity, RelativeLayout root, ControlPanel.Location location) {
-		super.createControlPanel(activity, root, location);
+	SelectionPopup(FBReaderApp fbReader) {
+		super(fbReader);
+	}
+
+	@Override
+	public String getId() {
+		return ID;
+	}
+
+	@Override
+	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
+		if (myWindow != null) {
+			return;
+		}
+
+		myWindow = new PopupWindow(activity, root, location, false);
+
         addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
         addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
         addButton(ActionCode.SELECTION_OPEN_IN_DICTIONARY, true, R.drawable.selection_dictionary);
@@ -42,6 +54,10 @@ public class SelectionButtonPanel extends SeveralButtonsPanel {
     }
     
     public void move(int selectionStartY, int selectionEndY) {
+		if (myWindow == null) {
+			return;
+		}
+
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 			RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -49,18 +65,18 @@ public class SelectionButtonPanel extends SeveralButtonsPanel {
         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         final int verticalPosition; 
-        final int screenHeight = ((View)myControlPanel.getParent()).getHeight();
+        final int screenHeight = ((View)myWindow.getParent()).getHeight();
 		final int diffTop = screenHeight - selectionEndY;
 		final int diffBottom = selectionStartY;
 		if (diffTop > diffBottom) {
-			verticalPosition = diffTop > myControlPanel.getHeight() + 10
+			verticalPosition = diffTop > myWindow.getHeight() + 10
 				? RelativeLayout.ALIGN_PARENT_BOTTOM : RelativeLayout.CENTER_VERTICAL;
 		} else {
-			verticalPosition = diffBottom > myControlPanel.getHeight() + 10
+			verticalPosition = diffBottom > myWindow.getHeight() + 10
 				? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.CENTER_VERTICAL;
 		}
 
         layoutParams.addRule(verticalPosition);
-        myControlPanel.setLayoutParams(layoutParams);
+        myWindow.setLayoutParams(layoutParams);
     }
 }

@@ -1407,7 +1407,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearSelection() {
-		releaseSelectionCursor();
+		mySelectionCursorInMovement = ZLTextSelectionCursor.None;
+		mySelection.stop();
 		if (mySelection.clear()) {
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();

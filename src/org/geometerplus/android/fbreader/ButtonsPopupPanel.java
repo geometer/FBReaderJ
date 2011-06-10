@@ -28,7 +28,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ZoomButton;
 
-public abstract class SeveralButtonsPanel extends ControlButtonPanel implements View.OnClickListener {
+abstract class ButtonsPopupPanel extends PopupPanel implements View.OnClickListener {
 	class ActionButton extends ZoomButton {
 		final String ActionId;
 		final boolean IsCloseButton;
@@ -42,38 +42,32 @@ public abstract class SeveralButtonsPanel extends ControlButtonPanel implements 
 
 	private final ArrayList<ActionButton> myButtons = new ArrayList<ActionButton>();
 
-	SeveralButtonsPanel(FBReaderApp fbReader) {
+	ButtonsPopupPanel(FBReaderApp fbReader) {
 		super(fbReader);
 	}
 
-	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root, ControlPanel.Location location) {
-		myControlPanel = new ControlPanel(activity, root, location, false);
-	}
-
 	protected void addButton(String actionId, boolean isCloseButton, int imageId) {
-		final ActionButton button = new ActionButton(myControlPanel.getContext(), actionId, isCloseButton);
+		final ActionButton button = new ActionButton(myWindow.getContext(), actionId, isCloseButton);
 		button.setImageResource(imageId);
-		myControlPanel.addView(button);
+		myWindow.addView(button);
 		button.setOnClickListener(this);
 		myButtons.add(button);
 	}
 
 	@Override
-	public void updateStates() {
+	protected void update() {
 		for (ActionButton button : myButtons) {
-			button.setEnabled(Reader.isActionEnabled(button.ActionId));
+			button.setEnabled(Application.isActionEnabled(button.ActionId));
 		}
 	}
 
 	public void onClick(View view) {
 		final ActionButton button = (ActionButton)view;
-		if (button.IsCloseButton && myControlPanel != null) {
+		Application.doAction(button.ActionId);
+		if (button.IsCloseButton) {
 			storePosition();
 			StartPosition = null;
-			hide(true);
-			//            myVisible = false; // needed for actions, bringing another activites in front of current.
+			Application.hideActivePopup();
 		}
-		Reader.doAction(button.ActionId);
 	}
 }
