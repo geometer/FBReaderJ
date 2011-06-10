@@ -21,31 +21,15 @@ package org.geometerplus.android.fbreader;
 
 import java.util.ArrayList;
 
-import android.content.Context;
-import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.ZoomButton;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-class ActionButton extends ZoomButton {
-	final String ActionId;
-	final boolean IsCloseButton;
-
-	ActionButton(Context context, String actionId, boolean isCloseButton) {
-		super(context);
-		ActionId = actionId;
-		IsCloseButton = isCloseButton;
-	}
-}
-
-final class TextSearchPopup extends PopupPanel implements View.OnClickListener {
+final class TextSearchPopup extends ButtonsPopupPanel {
 	final static String ID = "TextSearchPopup";
-
-	private final ArrayList<ActionButton> myButtons = new ArrayList<ActionButton>();
 
 	TextSearchPopup(FBReaderApp fbReader) {
 		super(fbReader);
@@ -73,30 +57,5 @@ final class TextSearchPopup extends PopupPanel implements View.OnClickListener {
 		addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
 		addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
 		addButton(ActionCode.FIND_NEXT, false, R.drawable.text_search_next);
-	}
-
-	private void addButton(String actionId, boolean isCloseButton, int imageId) {
-		final ActionButton button = new ActionButton(myWindow.getContext(), actionId, isCloseButton);
-		button.setImageResource(imageId);
-		myWindow.addView(button);
-		button.setOnClickListener(this);
-		myButtons.add(button);
-	}
-
-	@Override
-	protected void update() {
-		for (ActionButton button : myButtons) {
-			button.setEnabled(Application.isActionEnabled(button.ActionId));
-		}
-	}
-
-	public void onClick(View view) {
-		final ActionButton button = (ActionButton)view;
-		Application.doAction(button.ActionId);
-		if (button.IsCloseButton) {
-			storePosition();
-			StartPosition = null;
-			Application.hideActivePopup();
-		}
 	}
 }
