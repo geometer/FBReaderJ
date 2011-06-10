@@ -430,7 +430,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			++index;
 		}
 
-		final ZLTextRegion selectedElementRegion = getCurrentElementRegion(page);
+		final ZLTextRegion selectedElementRegion = getSelectedRegion(page);
 		if (selectedElementRegion != null && myHighlightSelectedRegion) {
 			selectedElementRegion.draw(context);
 		}
@@ -1348,7 +1348,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return false;
 	}
 
-	private ZLTextRegion mySelectedRegion;
+	private ZLTextRegion.Soul mySelectedRegionSoul;
 	private ZLTextSelection mySelection;
 	private boolean myHighlightSelectedRegion = true;
 
@@ -1357,17 +1357,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		Application.getViewWidget().reset();
 	}
 
-	private ZLTextRegion getCurrentElementRegion(ZLTextPage page) {
-		final ArrayList<ZLTextRegion> elementRegions = page.TextElementMap.ElementRegions;
-		final int index = elementRegions.indexOf(mySelectedRegion);
-		if (index == -1) {
-			return null;
-		}
-		return elementRegions.get(index);
+	private ZLTextRegion getSelectedRegion(ZLTextPage page) {
+		return page.TextElementMap.getRegion(mySelectedRegionSoul);
 	}
 
 	public ZLTextRegion getSelectedRegion() {
-		return getCurrentElementRegion(myCurrentPage);
+		return getSelectedRegion(myCurrentPage);
 	}
 
 	protected ZLTextRegion findRegion(int x, int y, ZLTextRegion.Filter filter) {
@@ -1377,7 +1372,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	protected ZLTextRegion findRegion(int x, int y, int maxDistance, ZLTextRegion.Filter filter) {
 		ZLTextRegion bestRegion = null;
 		int distance = maxDistance + 1;
-		for (ZLTextRegion region : myCurrentPage.TextElementMap.ElementRegions) {
+		for (ZLTextRegion region : myCurrentPage.TextElementMap.elementRegions()) {
 			if (filter.accepts(region)) {
 				final int d = region.distanceTo(x, y);
 				if (d < distance) {
@@ -1390,10 +1385,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected void selectRegion(ZLTextRegion region) {
-		if (region == null || !region.equals(mySelectedRegion)) {
+		final ZLTextRegion.Soul soul = region != null ? region.getSoul() : null;
+		if (soul == null || !soul.equals(mySelectedRegionSoul)) {
 			myHighlightSelectedRegion = true;
 		}
-		mySelectedRegion = region;
+		mySelectedRegionSoul = soul;
 	}
 
 	protected boolean initSelection(int x, int y) {
@@ -1464,32 +1460,18 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void resetRegionPointer() {
-		mySelectedRegion = null;
+		mySelectedRegionSoul = null;
 		myHighlightSelectedRegion = true;
 	}
 
-	protected ZLTextRegion currentRegion() {
-		if (mySelectedRegion == null) {
-			return null;
-		}
-		final ArrayList<ZLTextRegion> elementRegions =
-			myCurrentPage.TextElementMap.ElementRegions;
-		if (elementRegions.isEmpty()) {
-			return null;
-		}
-		final int index = elementRegions.indexOf(mySelectedRegion);
-		return index >= 0 ? elementRegions.get(index) : null;
-	}
-
 	protected ZLTextRegion nextRegion(Direction direction, ZLTextRegion.Filter filter) {
-		final ArrayList<ZLTextRegion> elementRegions =
-			myCurrentPage.TextElementMap.ElementRegions;
+		final List<ZLTextRegion> elementRegions = myCurrentPage.TextElementMap.elementRegions();
 		if (elementRegions.isEmpty()) {
 			return null;
 		}
 
-		int index = elementRegions.indexOf(mySelectedRegion);
-		mySelectedRegion = index >= 0 ? elementRegions.get(index) : null;
+		final ZLTextRegion selectedRegion = getSelectedRegion();
+		int index = selectedRegion != null ? elementRegions.indexOf(selectedRegion) : -1;
 
 		switch (direction) {
 			case rightToLeft:
@@ -1516,7 +1498,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			case rightToLeft:
 				for (; index >= 0; --index) {
 					final ZLTextRegion candidate = elementRegions.get(index);
-					if (filter.accepts(candidate) && candidate.isAtLeftOf(mySelectedRegion)) {
+					if (filter.accepts(candidate) && candidate.isAtLeftOf(selectedRegion)) {
 						return candidate;
 					}
 				}
@@ -1524,7 +1506,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			case leftToRight:
 				for (; index < elementRegions.size(); ++index) {
 					final ZLTextRegion candidate = elementRegions.get(index);
-					if (filter.accepts(candidate) && candidate.isAtRightOf(mySelectedRegion)) {
+					if (filter.accepts(candidate) && candidate.isAtRightOf(selectedRegion)) {
 						return candidate;
 					}
 				}
@@ -1537,10 +1519,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					if (!filter.accepts(candidate)) {
 						continue;
 					}
-					if (candidate.isExactlyUnder(mySelectedRegion)) {
+					if (candidate.isExactlyUnder(selectedRegion)) {
 						return candidate;
 					}
-					if (firstCandidate == null && candidate.isUnder(mySelectedRegion)) {
+					if (firstCandidate == null && candidate.isUnder(selectedRegion)) {
 						firstCandidate = candidate;
 					}
 				}
@@ -1556,10 +1538,10 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					if (!filter.accepts(candidate)) {
 						continue;
 					}
-					if (candidate.isExactlyOver(mySelectedRegion)) {
+					if (candidate.isExactlyOver(selectedRegion)) {
 						return candidate;
 					}
-					if (firstCandidate == null && candidate.isOver(mySelectedRegion)) {
+					if (firstCandidate == null && candidate.isOver(selectedRegion)) {
 						firstCandidate = candidate;
 					}
 				}

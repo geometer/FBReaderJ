@@ -48,10 +48,15 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 
 	public void run() {
 		final ZLTextRegion region = Reader.getTextView().getSelectedRegion();
-		if (region instanceof ZLTextHyperlinkRegion) {
+		if (region == null) {
+			return;
+		}
+
+		final ZLTextRegion.Soul soul = region.getSoul();
+		if (soul instanceof ZLTextHyperlinkRegionSoul) {
 			Reader.getTextView().hideSelectedRegionBorder();
 			Reader.getViewWidget().repaint();
-			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegion)region).Hyperlink;
+			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegionSoul)soul).Hyperlink;
 			switch (hyperlink.Type) {
 				case FBHyperlinkType.EXTERNAL:
 					if (hyperlink.Id.startsWith(ACTION_LINK_PREFIX)) {
@@ -65,10 +70,10 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					Reader.tryOpenFootnote(hyperlink.Id);
 					break;
 			}
-		} else if (region instanceof ZLTextImageRegion) {
+		} else if (soul instanceof ZLTextImageRegionSoul) {
 			Reader.getTextView().hideSelectedRegionBorder();
 			Reader.getViewWidget().repaint();
-			final String uriString = ((ZLTextImageRegion)region).ImageElement.URI;
+			final String uriString = ((ZLTextImageRegionSoul)soul).ImageElement.URI;
 			if (uriString != null) {
 				try {
 					final Intent intent = new Intent();
@@ -83,9 +88,9 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 					e.printStackTrace();
 				}
 			}
-		} else if (region instanceof ZLTextWordRegion) {
+		} else if (soul instanceof ZLTextWordRegionSoul) {
 			DictionaryUtil.openWordInDictionary(
-				BaseActivity, (ZLTextWordRegion)region
+				BaseActivity, ((ZLTextWordRegionSoul)soul).Word, region
 			);
 		}
 	}

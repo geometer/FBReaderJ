@@ -33,7 +33,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.geometerplus.zlibrary.text.view.ZLTextWordRegion;
+import org.geometerplus.zlibrary.text.view.ZLTextRegion;
+import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
@@ -178,8 +179,8 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	public static void openWordInDictionary(Activity activity, ZLTextWordRegion region) { 
-		final String text = region.Word.toString();
+	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) { 
+		final String text = word.toString();
 		int start = 0;
 		int end = text.length();
 		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);

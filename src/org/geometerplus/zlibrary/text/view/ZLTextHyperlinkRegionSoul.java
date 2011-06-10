@@ -19,21 +19,23 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.List;
+public class ZLTextHyperlinkRegionSoul extends ZLTextRegion.Soul {
+	public final ZLTextHyperlink Hyperlink;
 
-public class ZLTextImageRegion extends ZLTextRegion {
-	public final ZLTextImageElement ImageElement;
+	ZLTextHyperlinkRegionSoul(ZLTextHyperlink hyperlink) {
+		Hyperlink = hyperlink;
+	}
 
-	ZLTextImageRegion(ZLTextImageElement imageElement, List<ZLTextElementArea> list, int fromIndex) {
-		super(list, fromIndex);
-		ImageElement = imageElement;
+	@Override
+	boolean accepts(ZLTextElementArea area) {
+		return Hyperlink == area.Style.Hyperlink;
 	}
 
 	@Override
 	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextImageRegion)) {
+		if (!(other instanceof ZLTextHyperlinkRegionSoul)) {
 			return false;
 		}
-		return ImageElement == ((ZLTextImageRegion)other).ImageElement;
+		return Hyperlink == ((ZLTextHyperlinkRegionSoul)other).Hyperlink;
 	}
 }
