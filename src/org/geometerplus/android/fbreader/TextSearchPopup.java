@@ -42,21 +42,33 @@ class ActionButton extends ZoomButton {
 	}
 }
 
-final class TextSearchButtonPanel extends ControlButtonPanel implements View.OnClickListener {
+final class TextSearchPopup extends PopupPanel implements View.OnClickListener {
+	final static String ID = "TextSearchPopup";
+
 	private final ArrayList<ActionButton> myButtons = new ArrayList<ActionButton>();
 
-	TextSearchButtonPanel(FBReaderApp fbReader) {
+	TextSearchPopup(FBReaderApp fbReader) {
 		super(fbReader);
 	}
 
 	@Override
-	public void onHide() {
-		Reader.getTextView().clearFindResults();
+	public String getId() {
+		return ID;
 	}
 
 	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root, ControlPanel.Location location) {
-		myControlPanel = new ControlPanel(activity, root, location, false);
+	protected void hide_() {
+		getReader().getTextView().clearFindResults();
+		super.hide_();
+	}
+
+	@Override
+	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
+		if (myWindow != null) {
+			return;
+		}
+
+		myWindow = new PopupWindow(activity, root, location, false);
 
 		addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
 		addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);
@@ -64,27 +76,27 @@ final class TextSearchButtonPanel extends ControlButtonPanel implements View.OnC
 	}
 
 	private void addButton(String actionId, boolean isCloseButton, int imageId) {
-		final ActionButton button = new ActionButton(myControlPanel.getContext(), actionId, isCloseButton);
+		final ActionButton button = new ActionButton(myWindow.getContext(), actionId, isCloseButton);
 		button.setImageResource(imageId);
-		myControlPanel.addView(button);
+		myWindow.addView(button);
 		button.setOnClickListener(this);
 		myButtons.add(button);
 	}
 
 	@Override
-	public void updateStates() {
+	protected void update() {
 		for (ActionButton button : myButtons) {
-			button.setEnabled(Reader.isActionEnabled(button.ActionId));
+			button.setEnabled(Application.isActionEnabled(button.ActionId));
 		}
 	}
 
 	public void onClick(View view) {
 		final ActionButton button = (ActionButton)view;
-		Reader.doAction(button.ActionId);
-		if (button.IsCloseButton && myControlPanel != null) {
+		Application.doAction(button.ActionId);
+		if (button.IsCloseButton) {
 			storePosition();
 			StartPosition = null;
-			myControlPanel.hide(true);
+			Application.hideActivePopup();
 		}
 	}
 }
