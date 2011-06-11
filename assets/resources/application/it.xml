@@ -182,6 +182,14 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
 	</node>
+	<node name="selection" value="Selection" toBeTranslated="true">
+		<node name="copyToClipboard" value="Copia negli Appunti"/>
+		<node name="openInDictionary" value="Apri nel Dizionario"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
+		<node name="clearSelection" value="Cancella"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Configurazioni"/>
 		<node name="bookInfo" value="Info libro"/>
@@ -200,11 +208,6 @@
 			<node name="previousTOCSection" value="Vai alla precedente voce TOC"/>
 			<node name="undo" value="Torna indietro"/>
 			<node name="redo" value="Vai avanti"/>
-		</node>
-		<node name="selection" value="Selection">
-			<node name="copyToClipboard" value="Copia negli Appunti"/>
-			<node name="openInDictionary" value="Apri nel Dizionario"/>
-			<node name="clearSelection" value="Cancella"/>
 		</node>
 		<node name="search" value="Cerca"/>
 		<node name="rotate" value="Ruota schermo"/>
@@ -263,6 +266,10 @@
 				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
 					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
@@ -425,6 +432,7 @@
 				</node>
 				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
 				<node name="selectionBackground" value="Seleziona Sfondo"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Testo Regolare"/>
 				<node name="hyperlink" value="Testo Hyperlink"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
@@ -522,12 +530,22 @@
 				<node name="dictionary" value="Dictionary" toBeTranslated="true"/>
 				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-					<node name="selectWord" value="Long tapping selects the word" toBeTranslated="true"/>
+					<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
 					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
 					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="images" value="Images" toBeTranslated="true">
+				<node name="summary" value="Image displaying options" toBeTranslated="true"/>
+				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
+					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
@@ -560,9 +578,6 @@
 					<node name="defaultLanguage" value="Lingua predefinita"/>
 					<node name="defaultEncodingSet" value="Impostazione di codifica predefinita"/>
 					<node name="defaultEncoding" value="Codifica predefinita"/>
-				</node>
-				<node name="Selection" value="Selezione">
-					<node name="enableSelection" value="Abilita selezione testo"/>
 				</node>
 			</node>
 		</node>

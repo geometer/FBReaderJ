@@ -24,14 +24,6 @@
 			<node name="invalidURL" value="Địa chỉ sai" />
 			<node name="hostCantBeReached" value="Máy chủ %s&#10;không thể truy cập" />
 			<node name="connectionRefused" value="Kết nối bị từ chối bởi&#10;%s" />
-			<node name="sslError" value="Lỗi hệ con SSL" />
-			<node name="sslConnectErrorMessage" value="Xuất hiện lỗi SSL/TLS handshake :&#10;%s" />
-			<node name="sslBadKey" value="Chứng chỉ SSL xấu từ:&#10;%s" />
-			<node name="sslPeerUnverified" value="Không thể kiểm tra nhân dạng ngang hàng cho:&#10;%s" />
-			<node name="sslProtocolError" value="Lỗi trong họa động của giao thức SSL" />
-			<node name="sslBadCertificateFileMessage" value="Không thể đọc tập tin chứng chỉ SSL CA:&#10;%s" />
-			<node name="sslCertificateExpired" value="Chứng chỉ SSL đã quá hạn:&#10;%s" />
-			<node name="sslCertificateNotYetValid" value="Chứng chỉ SSL không còn đúng:&#10;%s" />
 		</node>
 	</node>
 	<node name="color">

@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network.authentication.litres;
 
-import java.util.*;
-
 import java.io.InputStream;
 import java.io.IOException;
 

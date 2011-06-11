@@ -56,6 +56,7 @@ public class ColorProfile {
 	public final ZLStringOption WallpaperOption;
 	public final ZLColorOption BackgroundOption;
 	public final ZLColorOption SelectionBackgroundOption;
+	public final ZLColorOption SelectionForegroundOption;
 	public final ZLColorOption HighlightingOption;
 	public final ZLColorOption RegularTextOption;
 	public final ZLColorOption HyperlinkTextOption;
@@ -66,6 +67,7 @@ public class ColorProfile {
 		this(name);
 		BackgroundOption.setValue(base.BackgroundOption.getValue());
 		SelectionBackgroundOption.setValue(base.SelectionBackgroundOption.getValue());
+		SelectionForegroundOption.setValue(base.SelectionForegroundOption.getValue());
 		HighlightingOption.setValue(base.HighlightingOption.getValue());
 		RegularTextOption.setValue(base.RegularTextOption.getValue());
 		HyperlinkTextOption.setValue(base.HyperlinkTextOption.getValue());
@@ -85,6 +87,8 @@ public class ColorProfile {
 				createOption(name, "Background", 0, 0, 0);
 			SelectionBackgroundOption =
 				createOption(name, "SelectionBackground", 82, 131, 194);
+			SelectionForegroundOption =
+				createOption(name, "SelectionForeground", 255, 255, 220);
 			HighlightingOption =
 				createOption(name, "Highlighting", 96, 96, 128);
 			RegularTextOption =
@@ -102,6 +106,8 @@ public class ColorProfile {
 				createOption(name, "Background", 255, 255, 255);
 			SelectionBackgroundOption =
 				createOption(name, "SelectionBackground", 82, 131, 194);
+			SelectionForegroundOption =
+				createOption(name, "SelectionForeground", 255, 255, 220);
 			HighlightingOption =
 				createOption(name, "Highlighting", 255, 192, 128);
 			RegularTextOption =

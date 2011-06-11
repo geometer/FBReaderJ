@@ -19,12 +19,12 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-final class ZLTextElementArea extends ZLTextFixedPosition { 
-	final int XStart;	
-	final int XEnd;	
-	final int YStart;	
-	final int YEnd;	
-	
+final class ZLTextElementArea extends ZLTextFixedPosition {
+	final int XStart;
+	final int XEnd;
+	final int YStart;
+	final int YEnd;
+
 	final int Length;
 	final boolean AddHyphenationSign;
 	final boolean ChangeStyle;
@@ -48,5 +48,14 @@ final class ZLTextElementArea extends ZLTextFixedPosition {
 
 	boolean contains(int x, int y) {
 		return (y >= YStart) && (y <= YEnd) && (x >= XStart) && (x <= XEnd);
+	}
+
+	boolean isFirstInElement() {
+		return CharIndex == 0;
+	}
+
+	boolean isLastInElement() {
+		// TODO: support multi-part (> 2 part) words
+		return !(Element instanceof ZLTextWord) || CharIndex > 0;
 	}
 }

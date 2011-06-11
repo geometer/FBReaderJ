@@ -19,20 +19,11 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.List;
-
-public class ZLTextImageRegion extends ZLTextElementRegion {
+public class ZLTextImageRegionSoul extends ZLTextRegion.Soul {
 	public final ZLTextImageElement ImageElement;
 
-	ZLTextImageRegion(ZLTextImageElement imageElement, List<ZLTextElementArea> list, int fromIndex) {
-		super(list, fromIndex);
+	ZLTextImageRegionSoul(ZLTextPosition position, ZLTextImageElement imageElement) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
 		ImageElement = imageElement;
-	}
-
-	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextImageRegion)) {
-			return false;
-		}
-		return ImageElement == ((ZLTextImageRegion)other).ImageElement;
 	}
 }

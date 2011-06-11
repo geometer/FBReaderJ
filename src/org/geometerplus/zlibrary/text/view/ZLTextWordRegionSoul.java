@@ -19,20 +19,11 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.List;
+public class ZLTextWordRegionSoul extends ZLTextRegion.Soul {
+	public final ZLTextWord Word;
 
-public class ZLTextHyperlinkRegion extends ZLTextElementRegion {
-	public final ZLTextHyperlink Hyperlink;
-
-	ZLTextHyperlinkRegion(ZLTextHyperlink hyperlink, List<ZLTextElementArea> list, int fromIndex) {
-		super(list, fromIndex);
-		Hyperlink = hyperlink;
-	}
-
-	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextHyperlinkRegion)) {
-			return false;
-		}
-		return Hyperlink == ((ZLTextHyperlinkRegion)other).Hyperlink;
+	ZLTextWordRegionSoul(ZLTextPosition position, ZLTextWord word) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
+		Word = word;
 	}
 }

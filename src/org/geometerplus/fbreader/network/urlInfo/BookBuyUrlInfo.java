@@ -20,6 +20,8 @@
 package org.geometerplus.fbreader.network.urlInfo;
 
 public class BookBuyUrlInfo extends BookUrlInfo {
+	private static final long serialVersionUID = 7877935250896069650L;
+
 	public final String Price;
 
 	public BookBuyUrlInfo(Type type, int format, String url, String price) {

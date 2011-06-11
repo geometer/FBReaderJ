@@ -22,12 +22,11 @@ package org.geometerplus.fbreader.network.atom;
 import java.util.Map;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-import org.geometerplus.fbreader.network.opds.HtmlToString;
-
-public class ATOMXMLReader extends ZLXMLReaderAdapter {
+public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOMEntry> extends ZLXMLReaderAdapter {
 	public static String intern(String str) {
 		if (str == null || str.length() == 0) {
 			return null;
@@ -35,10 +34,10 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return str.intern();
 	}
 
-	private final ATOMFeedHandler myFeedHandler;
+	private final ATOMFeedHandler<T1, T2> myFeedHandler;
 
-	private ATOMFeedMetadata myFeed;
-	private ATOMEntry myEntry;
+	private T1 myFeed;
+	private T2 myEntry;
 	private ATOMAuthor myAuthor;
 	private ATOMId myId;
 	private ATOMLink myLink;
@@ -49,32 +48,32 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	private Map<String,String> myNamespaceMap;
 
-	protected static final int START = 0;
+	private static final int START = 0;
 	protected static final int FEED = 1;
 	protected static final int F_ENTRY = 2;
-	protected static final int F_ID = 3;
-	protected static final int F_LINK = 4;
-	protected static final int F_CATEGORY = 5;
-	protected static final int F_TITLE = 6;
-	protected static final int F_UPDATED = 7;
-	protected static final int F_AUTHOR = 8;
-	protected static final int FA_NAME = 9;
-	protected static final int FA_URI = 10;
-	protected static final int FA_EMAIL = 11;
-	protected static final int FE_AUTHOR = 12;
-	protected static final int FE_ID = 13;
-	protected static final int FE_CATEGORY = 14;
-	protected static final int FE_LINK = 15;
-	protected static final int FE_PUBLISHED = 16;
-	protected static final int FE_SUMMARY = 17;
-	protected static final int FE_CONTENT = 18;
-	protected static final int FE_TITLE = 19;
-	protected static final int FE_UPDATED = 20;
-	protected static final int FEA_NAME = 21;
-	protected static final int FEA_URI = 22;
-	protected static final int FEA_EMAIL = 23;
-	protected static final int F_SUBTITLE = 24;
-	protected static final int F_ICON = 25;
+	private static final int F_ID = 3;
+	private static final int F_LINK = 4;
+	private static final int F_CATEGORY = 5;
+	private static final int F_TITLE = 6;
+	private static final int F_UPDATED = 7;
+	private static final int F_AUTHOR = 8;
+	private static final int F_SUBTITLE = 9;
+	private static final int F_ICON = 10;
+	private static final int FA_NAME = 11;
+	private static final int FA_URI = 12;
+	private static final int FA_EMAIL = 13;
+	private static final int FE_AUTHOR = 14;
+	private static final int FE_ID = 15;
+	private static final int FE_CATEGORY = 16;
+	protected static final int FE_LINK = 17;
+	private static final int FE_PUBLISHED = 18;
+	private static final int FE_SUMMARY = 19;
+	protected static final int FE_CONTENT = 20;
+	private static final int FE_TITLE = 21;
+	private static final int FE_UPDATED = 22;
+	private static final int FEA_NAME = 23;
+	private static final int FEA_URI = 24;
+	private static final int FEA_EMAIL = 25;
 
 	protected static final int ATOM_STATE_FIRST_UNUSED = 26;
 
@@ -97,23 +96,23 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	protected int myState;
 	private final StringBuilder myBuffer = new StringBuilder();
-	protected HtmlToString myHtmlToString = new HtmlToString();
+	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
 	protected boolean myFeedMetadataProcessed;
 
-	public ATOMXMLReader(ATOMFeedHandler handler, boolean readEntryNotFeed) {
+	public ATOMXMLReader(ATOMFeedHandler<T1, T2> handler, boolean readEntryNotFeed) {
 		myFeedHandler = handler;
 		myState = readEntryNotFeed ? FEED : START;
 	}
 
-	protected final ATOMFeedHandler getATOMFeedHandler() {
+	protected final ATOMFeedHandler<T1, T2> getATOMFeedHandler() {
 		return myFeedHandler;
 	}
 
-	protected final ATOMFeedMetadata getATOMFeed() {
+	protected final T1 getATOMFeed() {
 		return myFeed;
 	}
 
-	protected final ATOMEntry getATOMEntry() {
+	protected final T2 getATOMEntry() {
 		return myEntry;
 	}
 
@@ -176,17 +175,13 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return new String(bufferContentArray);
 	}
 
-	protected ATOMFeedMetadata createFeed(ZLStringMap attributes) {
-		return new ATOMFeedMetadata(attributes);
-	}
+	protected abstract T1 createFeed(ZLStringMap attributes);
+	protected abstract T2 createEntry(ZLStringMap attributes);
 
 	protected ATOMLink createLink(ZLStringMap attributes) {
 		return new ATOMLink(attributes);
 	}
 
-	protected ATOMEntry createEntry(ZLStringMap attributes) {
-		return new ATOMEntry(attributes);
-	}
 
 	public boolean startElementHandler(
 		final String ns, final String tag,
@@ -221,11 +216,11 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = F_CATEGORY;
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMTitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = F_TITLE;
 					} else if (tag == TAG_SUBTITLE) {
 						//mySubtitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMSubtitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = F_SUBTITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated(attributes);
@@ -260,15 +255,15 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 						myState = FE_PUBLISHED;
 					} else if (tag == TAG_SUMMARY) {
 						//mySummary = new ATOMSummary(attributes); // TODO:implement ATOMTextConstruct & ATOMSummary
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_SUMMARY;
 					} else if (tag == TAG_CONTENT) {
 						//myConent = new ATOMContent(attributes); // TODO:implement ATOMContent
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_CONTENT;
 					} else if (tag == TAG_TITLE) {
 						//myTitle = new ATOMTitle(attributes); // TODO:implement ATOMTextConstruct & ATOMTitle
-						myHtmlToString.setupTextContent(attributes.getValue("type"));
+						setFormattingType(attributes.getValue("type"));
 						myState = FE_TITLE;
 					} else if (tag == TAG_UPDATED) {
 						myUpdated = new ATOMUpdated(attributes);
@@ -298,11 +293,13 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 					}
 				}
 				break;
+			case FE_CONTENT:
 			case FE_SUMMARY:
 			case FE_TITLE:
 			case F_TITLE:
 			case F_SUBTITLE:
-				myHtmlToString.processTextContent(false, tag, attributes, bufferContent);
+				myFormattedBuffer.appendText(bufferContent);
+				myFormattedBuffer.appendStartTag(tag, attributes);
 				break;
 			default:
 				break;
@@ -311,8 +308,7 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return interruptReading;
 	}
 
-	public boolean endElementHandler(final String ns, final String tag,
-			final String bufferContent) {
+	public boolean endElementHandler(String ns, String tag, String bufferContent) {
 		boolean interruptReading = false;
 		switch (myState) {
 			case START:
@@ -377,27 +373,29 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case F_TITLE:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					final String title = myHtmlToString.finishTextContent(bufferContent);
+					final CharSequence title = myFormattedBuffer.getText();
 					if (myFeed != null) {
 						myFeed.Title = title;
 					}
 					myState = FEED;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case F_SUBTITLE:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUBTITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMSubtitle
-					final String subtitle = myHtmlToString.finishTextContent(bufferContent);
+					final CharSequence subtitle = myFormattedBuffer.getText();
 					if (myFeed != null) {
 						myFeed.Subtitle = subtitle;
 					}
 					myState = FEED;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case F_UPDATED:
@@ -500,30 +498,33 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 				}
 				break;
 			case FE_SUMMARY:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_SUMMARY) {
 					// TODO:implement ATOMTextConstruct & ATOMSummary
-					myEntry.Summary = myHtmlToString.finishTextContent(bufferContent);
+					myEntry.Summary = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_CONTENT:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_CONTENT) {
 					// TODO:implement ATOMContent
-					myEntry.Content = myHtmlToString.finishTextContent(bufferContent);
+					myEntry.Content = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_TITLE:
+				myFormattedBuffer.appendText(bufferContent);
 				if (ns == XMLNamespaces.Atom && tag == TAG_TITLE) {
 					// TODO:implement ATOMTextConstruct & ATOMTitle
-					myEntry.Title = myHtmlToString.finishTextContent(bufferContent);
+					myEntry.Title = myFormattedBuffer.getText();
 					myState = F_ENTRY;
 				} else {
-					myHtmlToString.processTextContent(true, tag, null, bufferContent);
+					myFormattedBuffer.appendEndTag(tag);
 				}
 				break;
 			case FE_UPDATED:
@@ -543,16 +544,16 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public final void characterDataHandler(char[] data, int start, int length) {
-		final int startIndex = myBuffer.length();
 		myBuffer.append(data, start, length);
-		int index = startIndex;
-		while ((index = myBuffer.indexOf("\r\n", index)) != -1) {
-			myBuffer.replace(index, index + 2, "\n");
-		}
-		index = startIndex;
-		while ((index = myBuffer.indexOf("\r", index)) != -1) {
-			myBuffer.setCharAt(index, '\n');
-		}
 	}
 
+	public void setFormattingType(String type) {
+		if (ATOMConstants.TYPE_HTML.equals(type) || MimeType.TEXT_HTML.Name.equals(type)) {
+			myFormattedBuffer.reset(FormattedBuffer.Type.Html);
+		} else if (ATOMConstants.TYPE_XHTML.equals(type) || MimeType.TEXT_XHTML.Name.equals(type)) {
+			myFormattedBuffer.reset(FormattedBuffer.Type.XHtml);
+		} else {
+			myFormattedBuffer.reset(FormattedBuffer.Type.Text);
+		}
+	}
 }

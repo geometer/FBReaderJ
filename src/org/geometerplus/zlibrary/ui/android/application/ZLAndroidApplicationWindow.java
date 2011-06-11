@@ -27,10 +27,8 @@ import android.view.MenuItem;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
-import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 

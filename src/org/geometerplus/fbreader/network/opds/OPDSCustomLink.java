@@ -130,8 +130,8 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 						descriptions.add(info.DirectOpenSearchDescription);
 					}
 					if (!urlsOnly) {
-						myTitle = info.Title;
-						mySummary = info.Summary;
+						myTitle = info.Title.toString();
+						mySummary = info.Summary != null ? info.Summary.toString() : null;
 					}
 				}
 			});

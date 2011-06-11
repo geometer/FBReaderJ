@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.Map;
-
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public abstract class NetworkDatabase {

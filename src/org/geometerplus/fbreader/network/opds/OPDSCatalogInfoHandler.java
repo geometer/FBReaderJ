@@ -30,8 +30,8 @@ import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 class OPDSCatalogInfoHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
 	public boolean FeedStarted;
 	public String Icon;
-	public String Title;
-	public String Summary;
+	public CharSequence Title;
+	public CharSequence Summary;
 
 	public OpenSearchDescription DirectOpenSearchDescription;
 	private final List<String> myOpensearchDescriptionURLs;

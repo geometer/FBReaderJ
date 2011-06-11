@@ -44,13 +44,13 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return Item.Title;
+		return Item.Title.toString();
 	}
 
 	@Override
 	public String getSummary() {
-		final String summary = Item.getSummary();
-		return summary != null ? summary : "";
+		final CharSequence summary = Item.getSummary();
+		return summary != null ? summary.toString() : "";
 	}
 
 	@Override

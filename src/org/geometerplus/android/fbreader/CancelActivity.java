@@ -86,7 +86,7 @@ public class CancelActivity extends ListActivity {
 		}
 
 		public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			setResult((int)id);
+			setResult((int)id + 1);
 			finish();
 		}
 	}

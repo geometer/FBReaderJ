@@ -22,12 +22,13 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
-import android.content.Intent;
-import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -139,11 +140,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	private final void setupDescription() {
 		setTextFromResource(R.id.network_book_description_title, "description");
 
-		String description = myBook.getSummary();
+		CharSequence description = myBook.getSummary();
 		if (description == null) {
 			description = myResource.getResource("noDescription").getValue();
 		}
-		setTextById(R.id.network_book_description, description);
+		final TextView descriptionView = (TextView)findViewById(R.id.network_book_description);
+		descriptionView.setText(description);
+		descriptionView.setMovementMethod(new LinkMovementMethod());
 	}
 
 	private final void setupExtraLinks() {

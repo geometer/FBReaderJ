@@ -23,14 +23,13 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -53,9 +52,6 @@ public final class FBReader extends ZLAndroidActivity {
 	final static int CANCEL_CODE = 2;
 
 	private int myFullScreenFlag;
-
-	private static TextSearchButtonPanel ourTextSearchPanel;
-	private static NavigationButtonPanel ourNavigatePanel;
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
@@ -80,11 +76,14 @@ public final class FBReader extends ZLAndroidActivity {
 		);
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		if (ourTextSearchPanel == null) {
-			ourTextSearchPanel = new TextSearchButtonPanel(fbReader);
+		if (fbReader.getPopupById(TextSearchPopup.ID) == null) {
+			new TextSearchPopup(fbReader);
 		}
-		if (ourNavigatePanel == null) {
-			ourNavigatePanel = new NavigationButtonPanel(fbReader);
+		if (fbReader.getPopupById(NavigationPopup.ID) == null) {
+			new NavigationPopup(fbReader);
+		}
+		if (fbReader.getPopupById(SelectionPopup.ID) == null) {
+			new SelectionPopup(fbReader);
 		}
 
 		fbReader.addAction(ActionCode.SHOW_LIBRARY, new ShowLibraryAction(this, fbReader));
@@ -97,6 +96,13 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_MENU, new ShowMenuAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
+
+		fbReader.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_HIDE_PANEL, new SelectionHidePanelAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD, new SelectionCopyAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_SHARE, new SelectionShareAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_OPEN_IN_DICTIONARY, new SelectionDictionaryAction(this, fbReader));
+		fbReader.addAction(ActionCode.SELECTION_ADD_BOOKMARK, new SelectionBookmarkAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
@@ -128,26 +134,25 @@ public final class FBReader extends ZLAndroidActivity {
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			final Handler successHandler = new Handler() {
-				public void handleMessage(Message message) {
-					ourTextSearchPanel.show(true);
-				}
-			};
-			final Handler failureHandler = new Handler() {
-				public void handleMessage(Message message) {
-					UIUtil.showErrorMessage(FBReader.this, "textNotFound");
-					ourTextSearchPanel.StartPosition = null;
-				}
-			};
 			final Runnable runnable = new Runnable() {
 				public void run() {
-					ourTextSearchPanel.initPosition();
 					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+					final TextSearchPopup popup = (TextSearchPopup)fbReader.getPopupById(TextSearchPopup.ID);
+					popup.initPosition();
 					fbReader.TextSearchPatternOption.setValue(pattern);
 					if (fbReader.getTextView().search(pattern, true, false, false, false) != 0) {
-						successHandler.sendEmptyMessage(0);
+						runOnUiThread(new Runnable() {
+							public void run() {
+								fbReader.showPopup(popup.getId());
+							}
+						});
 					} else {
-						failureHandler.sendEmptyMessage(0);
+						runOnUiThread(new Runnable() {
+							public void run() {
+								UIUtil.showErrorMessage(FBReader.this, "textNotFound");
+								popup.StartPosition = null;
+							}
+						});
 					}
 				}
 			};
@@ -170,13 +175,11 @@ public final class FBReader extends ZLAndroidActivity {
 			startActivity(new Intent(this, this.getClass()));
 		}
 
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-		if (!ourTextSearchPanel.hasControlPanel()) {
-			ourTextSearchPanel.createControlPanel(this, root);
-		}
-		if (!ourNavigatePanel.hasControlPanel()) {
-			ourNavigatePanel.createControlPanel(this, root);
-		}
+		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
+		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
+		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
 	}
 
 	@Override
@@ -186,18 +189,12 @@ public final class FBReader extends ZLAndroidActivity {
 			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
 		} catch (Throwable t) {
 		}
-		ControlButtonPanel.restoreVisibilities(FBReaderApp.Instance());
-	}
-
-	@Override
-	public void onPause() {
-		ControlButtonPanel.saveVisibilities(FBReaderApp.Instance());
-		super.onPause();
+		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
 	}
 
 	@Override
 	public void onStop() {
-		ControlButtonPanel.removeControlPanels(FBReaderApp.Instance());
+		PopupPanel.removeAllWindows(FBReaderApp.Instance());
 		super.onStop();
 	}
 
@@ -212,17 +209,35 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public boolean onSearchRequested() {
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		ControlButtonPanel.saveVisibilities(fbreader);
-		ControlButtonPanel.hideAllPendingNotify(fbreader);
+		final FBReaderApp.PopupPanel popup = fbreader.getActivePopup();
+		fbreader.hideActivePopup();
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
 		manager.setOnCancelListener(new SearchManager.OnCancelListener() {
 			public void onCancel() {
-				ControlButtonPanel.restoreVisibilities(fbreader);
+				if (popup != null) {
+					fbreader.showPopup(popup.getId());
+				}
 				manager.setOnCancelListener(null);
 			}
 		});
 		startSearch(fbreader.TextSearchPatternOption.getValue(), true, null, false);
 		return true;
+	}
+
+	public void showSelectionPanel() {
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final ZLTextView view = fbReader.getTextView();
+		((SelectionPopup)fbReader.getPopupById(SelectionPopup.ID))
+			.move(view.getSelectionStartY(), view.getSelectionEndY());
+		fbReader.showPopup(SelectionPopup.ID);
+	}
+
+	public void hideSelectionPanel() {
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final FBReaderApp.PopupPanel popup = fbReader.getActivePopup();
+		if (popup != null && popup.getId() == SelectionPopup.ID) {
+			FBReaderApp.Instance().hideActivePopup();
+		}
 	}
 
 	@Override
@@ -244,13 +259,13 @@ public final class FBReader extends ZLAndroidActivity {
 				break;
 			}
 			case CANCEL_CODE:
-				fbreader.runCancelAction(resultCode);
+				fbreader.runCancelAction(resultCode - 1);
 				break;
 		}
 	}
 
 	public void navigate() {
-		ourNavigatePanel.runNavigation();
+		((NavigationPopup)FBReaderApp.Instance().getPopupById(NavigationPopup.ID)).runNavigation();
 	}
 
 	private void addMenuItem(Menu menu, String actionId, int iconId) {
