@@ -28,7 +28,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -37,14 +36,11 @@ import org.geometerplus.android.fbreader.network.BookDownloader;
 import org.geometerplus.android.fbreader.network.BookDownloaderService;
 import org.geometerplus.android.fbreader.image.ImageViewActivity;
 
-class ProcessHyperlinkAction extends FBAction {
+class ProcessHyperlinkAction extends FBAndroidAction {
 	private static final String ACTION_LINK_PREFIX = "fbreader-action://";
 
-	private final FBReader myBaseActivity;
-
 	ProcessHyperlinkAction(FBReader baseActivity, FBReaderApp fbreader) {
-		super(fbreader);
-		myBaseActivity = baseActivity;
+		super(baseActivity, fbreader);
 	}
 
 	public boolean isEnabled() {
@@ -52,11 +48,16 @@ class ProcessHyperlinkAction extends FBAction {
 	}
 
 	public void run() {
-		final ZLTextElementRegion region = Reader.getTextView().getSelectedRegion();
-		if (region instanceof ZLTextHyperlinkRegion) {
+		final ZLTextRegion region = Reader.getTextView().getSelectedRegion();
+		if (region == null) {
+			return;
+		}
+
+		final ZLTextRegion.Soul soul = region.getSoul();
+		if (soul instanceof ZLTextHyperlinkRegionSoul) {
 			Reader.getTextView().hideSelectedRegionBorder();
 			Reader.getViewWidget().repaint();
-			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegion)region).Hyperlink;
+			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegionSoul)soul).Hyperlink;
 			switch (hyperlink.Type) {
 				case FBHyperlinkType.EXTERNAL:
 					if (hyperlink.Id.startsWith(ACTION_LINK_PREFIX)) {
@@ -72,23 +73,27 @@ class ProcessHyperlinkAction extends FBAction {
 					Reader.tryOpenFootnote(hyperlink.Id);
 					break;
 			}
-		} else if (region instanceof ZLTextImageRegion) {
+		} else if (soul instanceof ZLTextImageRegionSoul) {
 			Reader.getTextView().hideSelectedRegionBorder();
 			Reader.getViewWidget().repaint();
-			final String uriString = ((ZLTextImageRegion)region).ImageElement.URI;
+			final String uriString = ((ZLTextImageRegionSoul)soul).ImageElement.URI;
 			if (uriString != null) {
 				try {
 					final Intent intent = new Intent();
-					intent.setClass(myBaseActivity, ImageViewActivity.class);
+					intent.setClass(BaseActivity, ImageViewActivity.class);
 					intent.setData(Uri.parse(uriString));
-					myBaseActivity.startActivity(intent);
+					intent.putExtra(
+						ImageViewActivity.BACKGROUND_COLOR_KEY,
+						Reader.ImageViewBackgroundOption.getValue().getIntValue()
+					);
+					BaseActivity.startActivity(intent);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		} else if (region instanceof ZLTextWordRegion) {
+		} else if (soul instanceof ZLTextWordRegionSoul) {
 			DictionaryUtil.openWordInDictionary(
-				myBaseActivity, (ZLTextWordRegion)region
+				BaseActivity, ((ZLTextWordRegionSoul)soul).Word, region
 			);
 		}
 	}
@@ -97,7 +102,7 @@ class ProcessHyperlinkAction extends FBAction {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
 		boolean externalUrl = true;
 		if (BookDownloader.acceptsUri(Uri.parse(urlString))) {
-			intent.setClass(myBaseActivity, BookDownloader.class);
+			intent.setClass(BaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
 		}
@@ -108,7 +113,7 @@ class ProcessHyperlinkAction extends FBAction {
 		}
 		intent.setData(Uri.parse(NetworkLibrary.Instance().rewriteUrl(urlString, externalUrl)));
 		try {
-			myBaseActivity.startActivity(intent);
+			BaseActivity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
 			// TODO: show an error message
 		}

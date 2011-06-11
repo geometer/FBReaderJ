@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -75,7 +74,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.HyperlinkFilter);
+		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.HyperlinkFilter);
 		if (region != null) {
 			selectRegion(region);
 			myReader.getViewWidget().reset();
@@ -113,6 +112,13 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, MAX_SELECTION_DISTANCE);
+		if (cursor != ZLTextSelectionCursor.None) {
+			myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+			moveSelectionCursorTo(cursor, x, y);
+			return true;
+		}
+
 		if (myReader.AllowScreenBrightnessAdjustmentOption.getValue() && x < myContext.getWidth() / 10) {
 			myIsBrightnessAdjustmentInProgress = true;
 			myStartY = y;
@@ -147,6 +153,12 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
+			moveSelectionCursorTo(cursor, x, y);
+			return true;
+		}
+
 		synchronized (this) {
 			if (myIsBrightnessAdjustmentInProgress) {
 				if (x >= myContext.getWidth() / 5) {
@@ -167,12 +179,18 @@ public final class FBView extends ZLTextView {
 	}
 
 	public boolean onFingerRelease(int x, int y) {
-		if (myIsBrightnessAdjustmentInProgress) {
-			myIsBrightnessAdjustmentInProgress = false;
+		if (super.onFingerRelease(x, y)) {
 			return true;
 		}
 
-		if (super.onFingerRelease(x, y)) {
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
+			releaseSelectionCursor();
+			return true;
+		}
+
+		if (myIsBrightnessAdjustmentInProgress) {
+			myIsBrightnessAdjustmentInProgress = false;
 			return true;
 		}
 
@@ -191,10 +209,34 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myReader.DictionaryTappingActionOption.getValue() !=
-			FBReaderApp.DictionaryTappingAction.doNothing) {
-			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
-			if (region != null) {
+		final ZLTextRegion region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+		if (region != null) {
+			final ZLTextRegion.Soul soul = region.getSoul();
+			boolean doSelectRegion = false;
+			if (soul instanceof ZLTextWordRegionSoul) {
+				switch (myReader.WordTappingActionOption.getValue()) {
+					case startSelecting:
+						myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+						initSelection(x, y);
+						final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
+						if (cursor != ZLTextSelectionCursor.None) {
+							moveSelectionCursorTo(cursor, x, y);
+						}
+						return true;
+					case selectSingleWord:
+					case openDictionary:
+						doSelectRegion = true;
+						break;
+				}
+			} else if (soul instanceof ZLTextImageRegionSoul) {
+				doSelectRegion =
+					myReader.ImageTappingActionOption.getValue() !=
+					FBReaderApp.ImageTappingAction.doNothing;
+			} else if (soul instanceof ZLTextHyperlinkRegionSoul) {
+				doSelectRegion = true;
+			}
+        
+			if (doSelectRegion) {
 				selectRegion(region);
 				myReader.getViewWidget().reset();
 				myReader.getViewWidget().repaint();
@@ -210,13 +252,30 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myReader.DictionaryTappingActionOption.getValue() !=
-			FBReaderApp.DictionaryTappingAction.doNothing) {
-			final ZLTextElementRegion region = findRegion(x, y, 10, ZLTextElementRegion.AnyRegionFilter);
-			if (region != null) {
-				selectRegion(region);
-				myReader.getViewWidget().reset();
-				myReader.getViewWidget().repaint();
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
+			moveSelectionCursorTo(cursor, x, y);
+			return true;
+		}
+
+		ZLTextRegion region = getSelectedRegion();
+		if (region != null) {
+			ZLTextRegion.Soul soul = region.getSoul();
+			if (soul instanceof ZLTextHyperlinkRegionSoul ||
+				soul instanceof ZLTextWordRegionSoul) {
+				if (myReader.WordTappingActionOption.getValue() !=
+					FBReaderApp.WordTappingAction.doNothing) {
+					region = findRegion(x, y, MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
+					if (region != null) {
+						soul = region.getSoul();
+						if (soul instanceof ZLTextHyperlinkRegionSoul
+							 || soul instanceof ZLTextWordRegionSoul) {
+							selectRegion(region);
+							myReader.getViewWidget().reset();
+							myReader.getViewWidget().repaint();
+						}
+					}
+				}
 			}
 		}
 		return true;
@@ -227,10 +286,31 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		if (myReader.DictionaryTappingActionOption.getValue() ==
-				FBReaderApp.DictionaryTappingAction.openDictionary) {
-			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
+		final ZLTextSelectionCursor cursor = getSelectionCursorInMovement();
+		if (cursor != ZLTextSelectionCursor.None) {
+			releaseSelectionCursor();
 			return true;
+		}
+
+		final ZLTextRegion region = getSelectedRegion();
+		if (region != null) {
+			final ZLTextRegion.Soul soul = region.getSoul();
+
+			boolean doRunAction = false;
+			if (soul instanceof ZLTextWordRegionSoul) {
+				doRunAction =
+					myReader.WordTappingActionOption.getValue() ==
+					FBReaderApp.WordTappingAction.openDictionary;
+			} else if (soul instanceof ZLTextImageRegionSoul) {
+				doRunAction =
+					myReader.ImageTappingActionOption.getValue() ==
+					FBReaderApp.ImageTappingAction.openImageView;
+			}
+
+			if (doRunAction) {
+				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
+				return true;
+			}
 		}
 
 		return false;
@@ -245,10 +325,11 @@ public final class FBView extends ZLTextView {
 			(diffY > 0 ? Direction.down : Direction.up) :
 			(diffX > 0 ? Direction.leftToRight : Direction.rightToLeft);
 
-		ZLTextElementRegion region = currentRegion();
-		final ZLTextElementRegion.Filter filter =
-			region instanceof ZLTextWordRegion || myReader.NavigateAllWordsOption.getValue()
-				? ZLTextElementRegion.AnyRegionFilter : ZLTextElementRegion.ImageOrHyperlinkFilter;
+		ZLTextRegion region = getSelectedRegion();
+		final ZLTextRegion.Filter filter =
+			(region != null && region.getSoul() instanceof ZLTextWordRegionSoul)
+				|| myReader.NavigateAllWordsOption.getValue()
+					? ZLTextRegion.AnyRegionFilter : ZLTextRegion.ImageOrHyperlinkFilter;
 		region = nextRegion(direction, filter);
 		if (region != null) {
 			selectRegion(region);
@@ -308,6 +389,11 @@ public final class FBView extends ZLTextView {
 	@Override
 	public ZLColor getSelectedBackgroundColor() {
 		return myReader.getColorProfile().SelectionBackgroundOption.getValue();
+	}
+
+	@Override
+	public ZLColor getSelectedForegroundColor() {
+		return myReader.getColorProfile().SelectionForegroundOption.getValue();
 	}
 
 	@Override
@@ -475,11 +561,11 @@ public final class FBView extends ZLTextView {
 
 		// TODO: remove
 		int myGaugeWidth = 1;
-		public int getGaugeWidth() {
+		/*public int getGaugeWidth() {
 			return myGaugeWidth;
-		}
+		}*/
 
-		public void setProgress(int x) {
+		/*public void setProgress(int x) {
 			// set progress according to tap coordinate
 			int gaugeWidth = getGaugeWidth();
 			float progress = 1.0f * Math.min(x, gaugeWidth) / gaugeWidth;
@@ -491,7 +577,7 @@ public final class FBView extends ZLTextView {
 			}
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
-		}
+		}*/
 	}
 
 	private Footer myFooter;
@@ -513,8 +599,17 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
-	protected boolean isSelectionEnabled() {
-		return myReader.SelectionEnabledOption.getValue();
+	protected void releaseSelectionCursor() {
+		super.releaseSelectionCursor();
+		myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
+	}
+
+	public String getSelectedText() {
+		final TextBuilderTraverser traverser = new TextBuilderTraverser(this);
+		if (!isSelectionEmpty()) {
+			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
+		}
+		return traverser.getText();
 	}
 
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;

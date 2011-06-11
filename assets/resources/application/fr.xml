@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French FBReaderJ resources
-	 Intial work: Sébastien Rodriguez 
-	 Maintainer: Mathias Monnerville <mathias@monnerville.com>
--->
+<!-- French FBReaderJ resources; Initial work: Sébastien Rodriguez Maintainer: Mathias Monnerville <mathias@monnerville.com> -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Auteur inconnu"/>
@@ -185,6 +182,14 @@
 		<node name="forward" value="Suivant"/>
 		<node name="close" value="Fermer FBReader"/>
 	</node>
+	<node name="selection" value="Sélection">
+		<node name="copyToClipboard" value="Copier dans le presse-papiers"/>
+		<node name="openInDictionary" value="Ouvrir dans le dictionnaire"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
+		<node name="clearSelection" value="Effacer"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
@@ -203,11 +208,6 @@
 			<node name="previousTOCSection" value="Aller au précédent élément de la table de s matières"/>
 			<node name="undo" value="Revenir en arrière"/>
 			<node name="redo" value="Refaire l'action"/>
-		</node>
-		<node name="selection" value="Sélection">
-			<node name="copyToClipboard" value="Copier dans le presse-papiers"/>
-			<node name="openInDictionary" value="Ouvrir dans le dictionnaire"/>
-			<node name="clearSelection" value="Effacer"/>
 		</node>
 		<node name="search" value="Rechercher"/>
 		<node name="rotate" value="Orienter l'écran"/>
@@ -266,6 +266,10 @@
 				<node name="showStatusBarWhenMenuIsActive" value="Afficher la barre de statut lorsque le menu est actif">
 					<node name="summaryOn" value="Afficher la barre  de statut lorsque le menu devient actif"/>
 					<node name="summaryOff" value="Cacher la barre de statut lorsque le menu devient actif"/>
+				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="text" value="Texte">
@@ -428,6 +432,7 @@
 				</node>
 				<node name="backgroundColor" value="Couleur de fond"/>
 				<node name="selectionBackground" value="Arrière-plan de sélection"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Texte normal"/>
 				<node name="hyperlink" value="Text d'hyperlien"/>
 				<node name="hyperlinkVisited" value="Lien hypertexte visité"/>
@@ -525,12 +530,22 @@
 				<node name="dictionary" value="Dictionnaire"/>
 				<node name="tappingAction" value="Configuration de l'appui long">
 					<node name="doNothing" value="Un appui long ne fait rien"/>
-					<node name="selectWord" value="Un appui long selectionne le mot"/>
+					<node name="selectSingleWord" value="Un appui long selectionne le mot"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
 				</node>
 				<node name="navigateOverAllWords" value="Parcourir l'ensemble des mots">
 					<node name="summaryOn" value="La navigation par touches parcourt tous les mots"/>
 					<node name="summaryOff" value="La navigation par touches visite les liens hypertexts uniquement"/>
+				</node>
+			</node>
+			<node name="images" value="Images" toBeTranslated="true">
+				<node name="summary" value="Image displaying options" toBeTranslated="true"/>
+				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
+					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="cancelMenu" value="Bouton retour">
@@ -563,9 +578,6 @@
 					<node name="defaultLanguage" value="Langue par défaut"/>
 					<node name="defaultEncodingSet" value="Groupe d'encodage par défaut"/>
 					<node name="defaultEncoding" value="Encodage par défaut"/>
-				</node>
-				<node name="Selection" value="Sélection">
-					<node name="enableSelection" value="Activer la sélection de texte"/>
 				</node>
 			</node>
 		</node>

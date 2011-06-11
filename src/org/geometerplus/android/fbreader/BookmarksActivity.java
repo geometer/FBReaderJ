@@ -227,11 +227,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				finish();
 				fbreader.openBook(book, bookmark);
 			} else {
-				Toast.makeText(
-					this,
-					ZLResource.resource("errorMessage").getResource("cannotOpenBook").getValue(),
-					Toast.LENGTH_SHORT
-				).show();
+				UIUtil.showErrorMessage(this, "cannotOpenBook");
 			}
 		} else {
 			finish();

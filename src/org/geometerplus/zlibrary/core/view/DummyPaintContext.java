@@ -35,6 +35,10 @@ final class DummyPaintContext extends ZLPaintContext {
 	public void clear(ZLColor color) {
 	}
 
+	public ZLColor getBackgroundColor() {
+		return new ZLColor(0, 0, 0);
+	}
+
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
 	}
 
@@ -46,7 +50,7 @@ final class DummyPaintContext extends ZLPaintContext {
 	public void setLineWidth(int width) {
 	}
 
-	public void setFillColor(ZLColor color, int style) {
+	public void setFillColor(ZLColor color, int alpha, int style) {
 	}
 
 	public int getWidth() {
@@ -89,6 +93,11 @@ final class DummyPaintContext extends ZLPaintContext {
 	public void fillRectangle(int x0, int y0, int x1, int y1) {
 	}
 	public void drawFilledCircle(int x, int y, int r) {
+	}
+
+	public void fillPolygon(int[] xs, int ys[]) {
+	}
+	public void drawPolygonalLine(int[] xs, int ys[]) {
 	}
 	public void drawOutline(int[] xs, int ys[]) {
 	}

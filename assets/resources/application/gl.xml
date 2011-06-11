@@ -182,6 +182,14 @@
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
+	<node name="selection" value="Selección">
+		<node name="copyToClipboard" value="Copiar no portapapeis"/>
+		<node name="openInDictionary" value="Abrir no dicionario"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
+		<node name="clearSelection" value="Limpar"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Preferencias"/>
 		<node name="bookInfo" value="Información do libro"/>
@@ -200,11 +208,6 @@
 			<node name="previousTOCSection" value="Ir ao capítulo anterior"/>
 			<node name="undo" value="Anterior"/>
 			<node name="redo" value="Seguinte"/>
-		</node>
-		<node name="selection" value="Selección">
-			<node name="copyToClipboard" value="Copiar no portapapeis"/>
-			<node name="openInDictionary" value="Abrir no dicionario"/>
-			<node name="clearSelection" value="Limpar"/>
 		</node>
 		<node name="search" value="Buscar"/>
 		<node name="rotate" value="Rotar a pantalla"/>
@@ -263,6 +266,10 @@
 				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
 					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="text" value="Texto">
@@ -425,6 +432,7 @@
 				</node>
 				<node name="backgroundColor" value="Cor de fondo"/>
 				<node name="selectionBackground" value="Selección de fondo"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Texto normal"/>
 				<node name="hyperlink" value="Texto de ligazón"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
@@ -522,12 +530,22 @@
 				<node name="dictionary" value="Dicionario"/>
 				<node name="tappingAction" value="Acción de pulsación longa">
 					<node name="doNothing" value="Pulsación longa non fai nada"/>
-					<node name="selectWord" value="Pulsación longa selecciona a palabra"/>
+					<node name="selectSingleWord" value="Pulsación longa selecciona a palabra"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Pulsación longa selecciona a palabra, e a seguir abre o dicionario"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navegar por todas as palabras">
 					<node name="summaryOn" value="A tecla de navegación percorre todas as palabras"/>
 					<node name="summaryOff" value="A tecla de navegación percorre só as ligazóns"/>
+				</node>
+			</node>
+			<node name="images" value="Images" toBeTranslated="true">
+				<node name="summary" value="Image displaying options" toBeTranslated="true"/>
+				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
+				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+					<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
+					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
@@ -560,9 +578,6 @@
 					<node name="defaultLanguage" value="Idioma predeterminado"/>
 					<node name="defaultEncodingSet" value="Conxunto de codificación predeterminado"/>
 					<node name="defaultEncoding" value="Codificación predeterminada"/>
-				</node>
-				<node name="Selection" value="Selección">
-					<node name="enableSelection" value="Activar a selección de texto"/>
 				</node>
 			</node>
 		</node>
