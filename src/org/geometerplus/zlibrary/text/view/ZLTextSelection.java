@@ -115,22 +115,38 @@ public class ZLTextSelection {
 		if (cursorToMove == ZLTextSelectionCursor.Right) {
 			if (myLeftMostRegionSoul.compareTo(soul) <= 0) {
 				myRightMostRegionSoul = soul;
-				return cursorToMove;
 			} else {
 				myRightMostRegionSoul = myLeftMostRegionSoul;
 				myLeftMostRegionSoul = soul;
-				return ZLTextSelectionCursor.Left;
+				cursorToMove = ZLTextSelectionCursor.Left;
 			}
 		} else {
 			if (myRightMostRegionSoul.compareTo(soul) >= 0) {
 				myLeftMostRegionSoul = soul;
-				return cursorToMove;
 			} else {
 				myLeftMostRegionSoul = myRightMostRegionSoul;
 				myRightMostRegionSoul = soul;
-				return ZLTextSelectionCursor.Right;
+				cursorToMove = ZLTextSelectionCursor.Right;
 			}
 		}
+
+		if (cursorToMove == ZLTextSelectionCursor.Right) {
+			System.err.println("++");
+			if (hasAPartAfterPage(myView.myCurrentPage)) {
+			System.err.println("--");
+				myView.scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+				myView.Application.getViewWidget().reset();
+				myView.preparePaintInfo();
+			}
+		} else {
+			if (hasAPartBeforePage(myView.myCurrentPage)) {
+				myView.scrollPage(false, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
+				myView.Application.getViewWidget().reset();
+				myView.preparePaintInfo();
+			}
+		}
+
+		return cursorToMove;
 	}
 
 	boolean isAreaSelected(ZLTextElementArea area) {
@@ -174,7 +190,7 @@ public class ZLTextSelection {
 		if (region != null) {
 			return region.getFirstArea();
 		}
-		if (myRightMostRegionSoul.compareTo(vector.get(0)) >= 0) {
+		if (myLeftMostRegionSoul.compareTo(vector.get(0)) <= 0) {
 			return vector.get(0);
 		}
 		return null;
@@ -221,6 +237,7 @@ public class ZLTextSelection {
 		}
 		final ZLTextElementArea lastPageArea = vector.get(vector.size() - 1);
 		final int cmp = myRightMostRegionSoul.compareTo(lastPageArea);
+		System.err.println(cmp);
 		return cmp > 0 || (cmp == 0 && !lastPageArea.isLastInElement());
 	}
 

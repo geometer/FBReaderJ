@@ -999,7 +999,11 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					if (getTextStyle().isUnderline()) {
 						spaceElement = new ZLTextElementArea(
 							paragraphIndex, wordIndex, 0,
-							0, false, false, getTextStyle(), element, x, x + spaceLength, y, y
+							0, // length
+							true, // is last in element
+							false, // add hyphenation sign
+							false, // changed style
+							getTextStyle(), element, x, x + spaceLength, y, y
 						);
 					} else {
 						spaceElement = null;
@@ -1017,8 +1021,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					page.TextElementMap.add(spaceElement);
 					spaceElement = null;
 				}
-				page.TextElementMap.add(new ZLTextElementArea(paragraphIndex, wordIndex, charIndex,
-					length - charIndex, false, changeStyle, getTextStyle(), element, x, x + width - 1, y - height + 1, y + descent));
+				page.TextElementMap.add(new ZLTextElementArea(
+					paragraphIndex, wordIndex, charIndex,
+					length - charIndex,
+					true, // is last in element
+					false, // add hyphenation sign
+					changeStyle, getTextStyle(), element,
+					x, x + width - 1, y - height + 1, y + descent
+				));
 				changeStyle = false;
 				wordOccurred = true;
 			} else if (element instanceof ZLTextControlElement) {
@@ -1039,7 +1049,9 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				page.TextElementMap.add(
 					new ZLTextElementArea(
 						paragraphIndex, wordIndex, 0,
-						len, addHyphenationSign,
+						len,
+						false, // is last in element
+						addHyphenationSign,
 						changeStyle, getTextStyle(), word,
 						x, x + width - 1, y - height + 1, y + descent
 					)

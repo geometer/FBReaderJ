@@ -31,7 +31,9 @@ final class ZLTextElementArea extends ZLTextFixedPosition {
 	final ZLTextStyle Style;
 	final ZLTextElement Element;
 
-	ZLTextElementArea(int paragraphIndex, int elementIndex, int charIndex, int length, boolean addHyphenationSign, boolean changeStyle, ZLTextStyle style, ZLTextElement element, int xStart, int xEnd, int yStart, int yEnd) {
+	private final boolean myIsLastInElement;
+
+	ZLTextElementArea(int paragraphIndex, int elementIndex, int charIndex, int length, boolean lastInElement, boolean addHyphenationSign, boolean changeStyle, ZLTextStyle style, ZLTextElement element, int xStart, int xEnd, int yStart, int yEnd) {
 		super(paragraphIndex, elementIndex, charIndex);
 
 		XStart = xStart;
@@ -40,6 +42,8 @@ final class ZLTextElementArea extends ZLTextFixedPosition {
 		YEnd = yEnd;
 
 		Length = length;
+		myIsLastInElement = lastInElement;
+
 		AddHyphenationSign = addHyphenationSign;
 		ChangeStyle = changeStyle;
 		Style = style;
@@ -55,7 +59,6 @@ final class ZLTextElementArea extends ZLTextFixedPosition {
 	}
 
 	boolean isLastInElement() {
-		// TODO: support multi-part (> 2 part) words
-		return !(Element instanceof ZLTextWord) || CharIndex > 0;
+		return myIsLastInElement;
 	}
 }
