@@ -23,7 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
+public final class ZLTextRegion {
 	public static abstract class Soul implements Comparable<Soul> {
 		final int ParagraphIndex;
 		final int StartElementIndex;
@@ -204,16 +204,4 @@ public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
 	boolean isExactlyOver(ZLTextRegion other) {
 		return other == null || other.isExactlyUnder(this);
 	}
-
-	/*
-	public int compareTo(ZLTextRegion other) {
-		if (myFromIndex != other.myFromIndex) {
-			return myFromIndex < other.myFromIndex ? -1 : 1;
-		}
-		if (myToIndex != other.myToIndex) {
-			return myToIndex < other.myToIndex ? -1 : 1;
-		}
-		return 0;
-	}
-	*/
 }
