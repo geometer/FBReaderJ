@@ -25,6 +25,8 @@ public class ZLTextSelection {
 	private ZLTextRegion.Soul myLeftMostRegionSoul;
 	private ZLTextRegion.Soul myRightMostRegionSoul;
 
+	private ZLTextSelectionCursor myCursorInMovement = ZLTextSelectionCursor.None;
+
 	private Scroller myScroller;
 
 	ZLTextSelection(ZLTextView view) {
@@ -43,7 +45,16 @@ public class ZLTextSelection {
 		stop();
 		myLeftMostRegionSoul = null;
 		myRightMostRegionSoul = null;
+		myCursorInMovement = ZLTextSelectionCursor.None;
 		return true;
+	}
+
+	void setCursorInMovement(ZLTextSelectionCursor cursor) {
+		myCursorInMovement = cursor;
+	}
+
+	ZLTextSelectionCursor getCursorInMovement() {
+		return myCursorInMovement;
 	}
 
 	boolean start(int x, int y) {
@@ -67,29 +78,29 @@ public class ZLTextSelection {
 		}
 	}
 
-	ZLTextSelectionCursor expandTo(int x, int y, ZLTextSelectionCursor cursorToMove) {
+	void  expandTo(int x, int y) {
 		if (isEmpty()) {
-			return cursorToMove;
+			return;
 		}
 
-		/*
-		if (y < 10) {
+		final ZLTextElementAreaVector vector = myView.myCurrentPage.TextElementMap;
+		if (!vector.isEmpty() && y < vector.get(0).YStart) {
 			if (myScroller != null && myScroller.scrollsForward()) {
 				myScroller.stop();
 				myScroller = null;
 			}
 			if (myScroller == null) {
 				myScroller = new Scroller(false, x, y);
-				return false;
+				return;
 			}
-		} else if (y > myView.getTextAreaHeight() - 10) {
+		} else if (!vector.isEmpty() && y + ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2 > vector.get(vector.size() - 1).YEnd) {
 			if (myScroller != null && !myScroller.scrollsForward()) {
 				myScroller.stop();
 				myScroller = null;
 			}
 			if (myScroller == null) {
 				myScroller = new Scroller(true, x, y);
-				return false;
+				return;
 			}
 		} else {
 			if (myScroller != null) {
@@ -101,24 +112,23 @@ public class ZLTextSelection {
 		if (myScroller != null) {
 			myScroller.setXY(x, y);
 		}
-		*/
 
 		ZLTextRegion region = myView.findRegion(x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		if (region == null && myScroller != null) {
 			region = myView.findRegion(x, y, ZLTextRegion.AnyRegionFilter);
 		}
 		if (region == null) {
-			return cursorToMove;
+			return;
 		}
 
 		final ZLTextRegion.Soul soul = region.getSoul();
-		if (cursorToMove == ZLTextSelectionCursor.Right) {
+		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
 			if (myLeftMostRegionSoul.compareTo(soul) <= 0) {
 				myRightMostRegionSoul = soul;
 			} else {
 				myRightMostRegionSoul = myLeftMostRegionSoul;
 				myLeftMostRegionSoul = soul;
-				cursorToMove = ZLTextSelectionCursor.Left;
+				myCursorInMovement = ZLTextSelectionCursor.Left;
 			}
 		} else {
 			if (myRightMostRegionSoul.compareTo(soul) >= 0) {
@@ -126,14 +136,12 @@ public class ZLTextSelection {
 			} else {
 				myLeftMostRegionSoul = myRightMostRegionSoul;
 				myRightMostRegionSoul = soul;
-				cursorToMove = ZLTextSelectionCursor.Right;
+				myCursorInMovement = ZLTextSelectionCursor.Right;
 			}
 		}
 
-		if (cursorToMove == ZLTextSelectionCursor.Right) {
-			System.err.println("++");
+		if (myCursorInMovement == ZLTextSelectionCursor.Right) {
 			if (hasAPartAfterPage(myView.myCurrentPage)) {
-			System.err.println("--");
 				myView.scrollPage(true, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 				myView.Application.getViewWidget().reset();
 				myView.preparePaintInfo();
@@ -145,8 +153,6 @@ public class ZLTextSelection {
 				myView.preparePaintInfo();
 			}
 		}
-
-		return cursorToMove;
 	}
 
 	boolean isAreaSelected(ZLTextElementArea area) {
@@ -237,7 +243,6 @@ public class ZLTextSelection {
 		}
 		final ZLTextElementArea lastPageArea = vector.get(vector.size() - 1);
 		final int cmp = myRightMostRegionSoul.compareTo(lastPageArea);
-		System.err.println(cmp);
 		return cmp > 0 || (cmp == 0 && !lastPageArea.isLastInElement());
 	}
 
@@ -263,7 +268,7 @@ public class ZLTextSelection {
 		public void run() {
 			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
-			//expandTo(myX, myY, myScrollForward);
+			expandTo(myX, myY);
 			myView.Application.getViewWidget().reset();
 			myView.Application.getViewWidget().repaint();
 		}

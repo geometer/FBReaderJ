@@ -248,12 +248,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private ZLTextSelectionCursor mySelectionCursorInMovement = ZLTextSelectionCursor.None;
 	private final Point myMovedSelectionCursorPoint = new Point(-1, -1);
 
 	protected void moveSelectionCursorTo(ZLTextSelectionCursor cursor, int x, int y) {
 		y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
-		mySelectionCursorInMovement = mySelection.expandTo(x, y, cursor);
+		mySelection.setCursorInMovement(cursor);
+		mySelection.expandTo(x, y);
 		myMovedSelectionCursorPoint.X = x;
 		myMovedSelectionCursorPoint.Y = y;
 		Application.getViewWidget().reset();
@@ -261,14 +261,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected void releaseSelectionCursor() {
-		mySelectionCursorInMovement = ZLTextSelectionCursor.None;
+		mySelection.setCursorInMovement(ZLTextSelectionCursor.None);
 		mySelection.stop();
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
 
 	protected ZLTextSelectionCursor getSelectionCursorInMovement() {
-		return mySelectionCursorInMovement;
+		return mySelection.getCursorInMovement();
 	}
 
 	private Point getSelectionCursorPoint(ZLTextPage page, ZLTextSelectionCursor cursor) {
@@ -276,7 +276,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return null;
 		}
 
-		if (cursor == mySelectionCursorInMovement) {
+		if (cursor == mySelection.getCursorInMovement()) {
 			return myMovedSelectionCursorPoint;
 		}
 
@@ -1384,18 +1384,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected ZLTextRegion findRegion(int x, int y, int maxDistance, ZLTextRegion.Filter filter) {
-		ZLTextRegion bestRegion = null;
-		int distance = maxDistance + 1;
-		for (ZLTextRegion region : myCurrentPage.TextElementMap.elementRegions()) {
-			if (filter.accepts(region)) {
-				final int d = region.distanceTo(x, y);
-				if (d < distance) {
-					bestRegion = region;
-					distance = d;
-				}
-			}
-		}
-		return bestRegion;
+		return myCurrentPage.TextElementMap.findRegion(x, y, maxDistance, filter);
 	}
 
 	protected void selectRegion(ZLTextRegion region) {
@@ -1417,7 +1406,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearSelection() {
-		mySelectionCursorInMovement = ZLTextSelectionCursor.None;
+		mySelection.setCursorInMovement(ZLTextSelectionCursor.None);
 		mySelection.stop();
 		if (mySelection.clear()) {
 			Application.getViewWidget().reset();
@@ -1475,92 +1464,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	protected ZLTextRegion nextRegion(Direction direction, ZLTextRegion.Filter filter) {
-		final List<ZLTextRegion> elementRegions = myCurrentPage.TextElementMap.elementRegions();
-		if (elementRegions.isEmpty()) {
-			return null;
-		}
-
-		final ZLTextRegion selectedRegion = getSelectedRegion();
-		int index = selectedRegion != null ? elementRegions.indexOf(selectedRegion) : -1;
-
-		switch (direction) {
-			case rightToLeft:
-			case up:
-				if (index == -1) {
-					index = elementRegions.size() - 1;
-				} else if (index == 0) {
-					return null;
-				} else {
-					--index;
-				}
-				break;
-			case leftToRight:
-			case down:
-				if (index == elementRegions.size() - 1) {
-					return null;
-				} else {
-					++index;
-				}
-				break;
-		}
-
-		switch (direction) {
-			case rightToLeft:
-				for (; index >= 0; --index) {
-					final ZLTextRegion candidate = elementRegions.get(index);
-					if (filter.accepts(candidate) && candidate.isAtLeftOf(selectedRegion)) {
-						return candidate;
-					}
-				}
-				break;
-			case leftToRight:
-				for (; index < elementRegions.size(); ++index) {
-					final ZLTextRegion candidate = elementRegions.get(index);
-					if (filter.accepts(candidate) && candidate.isAtRightOf(selectedRegion)) {
-						return candidate;
-					}
-				}
-				break;
-			case down:
-			{
-				ZLTextRegion firstCandidate = null;
-				for (; index < elementRegions.size(); ++index) {
-					final ZLTextRegion candidate = elementRegions.get(index);
-					if (!filter.accepts(candidate)) {
-						continue;
-					}
-					if (candidate.isExactlyUnder(selectedRegion)) {
-						return candidate;
-					}
-					if (firstCandidate == null && candidate.isUnder(selectedRegion)) {
-						firstCandidate = candidate;
-					}
-				}
-				if (firstCandidate != null) {
-					return firstCandidate;
-				}
-				break;
-			}
-			case up:
-				ZLTextRegion firstCandidate = null;
-				for (; index >= 0; --index) {
-					final ZLTextRegion candidate = elementRegions.get(index);
-					if (!filter.accepts(candidate)) {
-						continue;
-					}
-					if (candidate.isExactlyOver(selectedRegion)) {
-						return candidate;
-					}
-					if (firstCandidate == null && candidate.isOver(selectedRegion)) {
-						firstCandidate = candidate;
-					}
-				}
-				if (firstCandidate != null) {
-					return firstCandidate;
-				}
-				break;
-		}
-		return null;
+		return myCurrentPage.TextElementMap.nextRegion(getSelectedRegion(), direction, filter);
 	}
 
 	@Override
