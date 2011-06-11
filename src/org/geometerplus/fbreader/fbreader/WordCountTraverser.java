@@ -21,16 +21,16 @@ package org.geometerplus.fbreader.fbreader;
 
 import org.geometerplus.zlibrary.text.view.*;
 
-class TextBuilderTraverser extends ZLTextTraverser {
-	protected final StringBuilder myBuffer = new StringBuilder();
+class WordCountTraverser extends ZLTextTraverser {
+	protected int myCount;
 
-	TextBuilderTraverser(ZLTextView view) {
+	WordCountTraverser(ZLTextView view) {
 		super(view);
 	}
 
 	@Override
 	protected void processWord(ZLTextWord word) {
-		myBuffer.append(word.Data, word.Offset, word.Length);
+		++myCount;
 	}
 
 	@Override
@@ -40,15 +40,15 @@ class TextBuilderTraverser extends ZLTextTraverser {
 
 	@Override
 	protected void processSpace() {
-		myBuffer.append(" ");
+		// does nothing
 	}
 
 	@Override
 	protected void processEndOfParagraph() {
-		myBuffer.append("\n");
+		// does nothing
 	}
 
-	public String getText() {
-		return myBuffer.toString();
+	public int getCount() {
+		return myCount;
 	}
 }

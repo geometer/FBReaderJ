@@ -165,6 +165,17 @@ public abstract class DictionaryUtil {
 	}
 
 	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
+		if (singleWord) {
+			int start = 0;
+			int end = text.length();
+			for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
+			for (; start < end && !Character.isLetterOrDigit(text.charAt(end - 1)); --end);
+			if (start == end) {
+				return;
+			}
+			text = text.substring(start, end);
+		}
+
 		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
 		final Intent intent = getDictionaryIntent(info, text);
 		try {
@@ -190,17 +201,8 @@ public abstract class DictionaryUtil {
 	}
 
 	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) { 
-		final String text = word.toString();
-		int start = 0;
-		int end = text.length();
-		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
-		for (; start < end && !Character.isLetterOrDigit(text.charAt(end - 1)); --end);
-		if (start == end) {
-			return;
-		}
-
 		openTextInDictionary(
-			activity, text.substring(start, end), true, region.getTop(), region.getBottom()
+			activity, word.toString(), true, region.getTop(), region.getBottom()
 		);
 	}
 

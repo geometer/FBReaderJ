@@ -69,10 +69,10 @@ class SelectionPopup extends ButtonsPopupPanel {
 		final int diffTop = screenHeight - selectionEndY;
 		final int diffBottom = selectionStartY;
 		if (diffTop > diffBottom) {
-			verticalPosition = diffTop > myWindow.getHeight() + 10
+			verticalPosition = diffTop > myWindow.getHeight() + 20
 				? RelativeLayout.ALIGN_PARENT_BOTTOM : RelativeLayout.CENTER_VERTICAL;
 		} else {
-			verticalPosition = diffBottom > myWindow.getHeight() + 10
+			verticalPosition = diffBottom > myWindow.getHeight() + 20
 				? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.CENTER_VERTICAL;
 		}
 

@@ -601,15 +601,25 @@ public final class FBView extends ZLTextView {
 	@Override
 	protected void releaseSelectionCursor() {
 		super.releaseSelectionCursor();
-		myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
+		if (getCountOfSelectedWords() > 0) {
+			myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
+		}
 	}
 
 	public String getSelectedText() {
-		final TextBuilderTraverser traverser = new TextBuilderTraverser(this);
+		final TextBuildTraverser traverser = new TextBuildTraverser(this);
 		if (!isSelectionEmpty()) {
 			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
 		}
 		return traverser.getText();
+	}
+
+	public int getCountOfSelectedWords() {
+		final WordCountTraverser traverser = new WordCountTraverser(this);
+		if (!isSelectionEmpty()) {
+			traverser.traverse(getSelectionStartPosition(), getSelectionEndPosition());
+		}
+		return traverser.getCount();
 	}
 
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;

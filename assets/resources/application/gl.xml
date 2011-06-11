@@ -528,6 +528,7 @@
 			<node name="dictionary" value="Dicionario">
 				<node name="summary" value="Preferencias do dicionario"/>
 				<node name="dictionary" value="Dicionario"/>
+				<node name="translator" value="Translator" toBeTranslated="true"/>
 				<node name="tappingAction" value="Acción de pulsación longa">
 					<node name="doNothing" value="Pulsación longa non fai nada"/>
 					<node name="selectSingleWord" value="Pulsación longa selecciona a palabra"/>
