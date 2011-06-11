@@ -20,14 +20,26 @@
 package org.geometerplus.zlibrary.text.view;
 
 public class ZLTextSelection {
+	static class Point {
+		int X;
+		int Y;
+
+		Point(int x, int y) {
+			X = x;
+			Y = y;
+		}
+	}
+
 	private final ZLTextView myView;
 
 	private ZLTextRegion.Soul myLeftMostRegionSoul;
 	private ZLTextRegion.Soul myRightMostRegionSoul;
 
 	private ZLTextSelectionCursor myCursorInMovement = ZLTextSelectionCursor.None;
+	private final Point myCursorInMovementPoint = new Point(-1, -1);
 
 	private Scroller myScroller;
+
 
 	ZLTextSelection(ZLTextView view) {
 		myView = view;
@@ -49,12 +61,18 @@ public class ZLTextSelection {
 		return true;
 	}
 
-	void setCursorInMovement(ZLTextSelectionCursor cursor) {
+	void setCursorInMovement(ZLTextSelectionCursor cursor, int x, int y) {
 		myCursorInMovement = cursor;
+		myCursorInMovementPoint.X = x;
+		myCursorInMovementPoint.Y = y;
 	}
 
 	ZLTextSelectionCursor getCursorInMovement() {
 		return myCursorInMovement;
+	}
+
+	Point getCursorInMovementPoint() {
+		return myCursorInMovementPoint;
 	}
 
 	boolean start(int x, int y) {
@@ -72,6 +90,7 @@ public class ZLTextSelection {
 	}
 
 	void stop() {
+		myCursorInMovement = ZLTextSelectionCursor.None;
 		if (myScroller != null) {
 			myScroller.stop();
 			myScroller = null;

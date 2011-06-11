@@ -238,30 +238,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private static class Point {
-		int X;
-		int Y;
-
-		Point(int x, int y) {
-			X = x;
-			Y = y;
-		}
-	}
-
-	private final Point myMovedSelectionCursorPoint = new Point(-1, -1);
-
 	protected void moveSelectionCursorTo(ZLTextSelectionCursor cursor, int x, int y) {
 		y -= ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2;
-		mySelection.setCursorInMovement(cursor);
+		mySelection.setCursorInMovement(cursor, x, y);
 		mySelection.expandTo(x, y);
-		myMovedSelectionCursorPoint.X = x;
-		myMovedSelectionCursorPoint.Y = y;
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
 	}
 
 	protected void releaseSelectionCursor() {
-		mySelection.setCursorInMovement(ZLTextSelectionCursor.None);
 		mySelection.stop();
 		Application.getViewWidget().reset();
 		Application.getViewWidget().repaint();
@@ -271,13 +256,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return mySelection.getCursorInMovement();
 	}
 
-	private Point getSelectionCursorPoint(ZLTextPage page, ZLTextSelectionCursor cursor) {
+	private ZLTextSelection.Point getSelectionCursorPoint(ZLTextPage page, ZLTextSelectionCursor cursor) {
 		if (cursor == ZLTextSelectionCursor.None) {
 			return null;
 		}
 
 		if (cursor == mySelection.getCursorInMovement()) {
-			return myMovedSelectionCursorPoint;
+			return mySelection.getCursorInMovementPoint();
 		}
 
 		if (cursor == ZLTextSelectionCursor.Left) {	
@@ -286,7 +271,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 			final ZLTextElementArea selectionStartArea = mySelection.getStartArea(page);
 			if (selectionStartArea != null) {
-				return new Point(selectionStartArea.XStart, selectionStartArea.YEnd);
+				return new ZLTextSelection.Point(selectionStartArea.XStart, selectionStartArea.YEnd);
 			}
 		} else {
 			if (mySelection.hasAPartAfterPage(page)) {
@@ -294,13 +279,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 			final ZLTextElementArea selectionEndArea = mySelection.getEndArea(page);
 			if (selectionEndArea != null) {
-				return new Point(selectionEndArea.XEnd, selectionEndArea.YEnd);
+				return new ZLTextSelection.Point(selectionEndArea.XEnd, selectionEndArea.YEnd);
 			}
 		}
 		return null;
 	}
 
-	private int distanceToCursor(int x, int y, Point cursorPoint) {
+	private int distanceToCursor(int x, int y, ZLTextSelection.Point cursorPoint) {
 		if (cursorPoint == null) {
 			return Integer.MAX_VALUE;
 		}
@@ -351,7 +336,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
-	private void drawSelectionCursor(ZLPaintContext context, Point pt) {
+	private void drawSelectionCursor(ZLPaintContext context, ZLTextSelection.Point pt) {
 		if (pt == null) {
 			return;
 		}
@@ -1406,8 +1391,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearSelection() {
-		mySelection.setCursorInMovement(ZLTextSelectionCursor.None);
-		mySelection.stop();
 		if (mySelection.clear()) {
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();
