@@ -195,7 +195,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		if (isFlickScrollingEnabled()) {
-			myReader.getViewWidget().startAutoScrolling(
+			myReader.getViewWidget().startAnimatedScrolling(
 				x, y, ScrollingPreferences.Instance().AnimationSpeedOption.getValue()
 			);
 			return true;

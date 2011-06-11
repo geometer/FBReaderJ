@@ -48,7 +48,7 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	protected void setupAutoScrollingStart(Integer x, Integer y) {
+	protected void setupAnimatedScrollingStart(Integer x, Integer y) {
 		if (x == null || y == null) {
 			if (myDirection.IsHorizontal) {
 				x = mySpeed < 0 ? myWidth : 0;
@@ -63,7 +63,7 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	protected void startAutoScrollingInternal(int speed) {
+	protected void startAnimatedScrollingInternal(int speed) {
 		mySpeedFactor = (float)Math.pow(1.5, 0.25 * speed);
 		doStep();
 	}
@@ -89,7 +89,7 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 				break;
 		}
 		final int bound;
-		if (getMode() == Mode.AutoScrollingForward) {
+		if (getMode() == Mode.AnimatedScrollingForward) {
 			bound = myDirection.IsHorizontal ? myWidth : myHeight;
 		} else {
 			bound = 0;
