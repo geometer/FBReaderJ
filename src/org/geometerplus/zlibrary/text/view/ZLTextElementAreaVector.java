@@ -19,46 +19,42 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.ArrayList;
+import java.util.*;
 
 final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 	private static final long serialVersionUID = -7880472347947563506L;
 
-	final ArrayList<ZLTextRegion> ElementRegions = new ArrayList<ZLTextRegion>();
+	private final ArrayList<ZLTextRegion> myElementRegions = new ArrayList<ZLTextRegion>();
 	private ZLTextRegion myCurrentElementRegion;
 
 	@Override
 	public void clear() {
-		ElementRegions.clear();
+		myElementRegions.clear();
 		myCurrentElementRegion = null;
 		super.clear();
 	}
 
 	@Override
 	public boolean add(ZLTextElementArea area) {
-		final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
-		if (hyperlink.Id != null) {
-			if (!(myCurrentElementRegion instanceof ZLTextHyperlinkRegion) ||
-				((ZLTextHyperlinkRegion)myCurrentElementRegion).Hyperlink != hyperlink) {
-				myCurrentElementRegion = new ZLTextHyperlinkRegion(hyperlink, this, size());
-				ElementRegions.add(myCurrentElementRegion);
-			} else {
-				myCurrentElementRegion.extend();
-			}
-		} else if (area.Element instanceof ZLTextImageElement) {
-			ElementRegions.add(new ZLTextImageRegion((ZLTextImageElement)area.Element, this, size()));
-			myCurrentElementRegion = null;
-		} else if (area.Element instanceof ZLTextWord && ((ZLTextWord)area.Element).isAWord()) {
-			if (!(myCurrentElementRegion instanceof ZLTextWordRegion) ||
-				((ZLTextWordRegion)myCurrentElementRegion).Word != area.Element) {
-				myCurrentElementRegion =
-					new ZLTextWordRegion((ZLTextWord)area.Element, this, size());
-				ElementRegions.add(myCurrentElementRegion);
-			} else {
-				myCurrentElementRegion.extend();
-			}
+		if (myCurrentElementRegion != null
+			&& myCurrentElementRegion.getSoul().accepts(area)) {
+			myCurrentElementRegion.extend();
 		} else {
-			myCurrentElementRegion = null;
+			ZLTextRegion.Soul soul = null;
+			final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
+			if (hyperlink.Id != null) {
+				soul = new ZLTextHyperlinkRegionSoul(area, hyperlink);
+			} else if (area.Element instanceof ZLTextImageElement) {
+				soul = new ZLTextImageRegionSoul(area, (ZLTextImageElement)area.Element);
+			} else if (area.Element instanceof ZLTextWord && ((ZLTextWord)area.Element).isAWord()) {
+				soul = new ZLTextWordRegionSoul(area, (ZLTextWord)area.Element);
+			}
+			if (soul != null) {
+				myCurrentElementRegion = new ZLTextRegion(soul, this, size());
+				myElementRegions.add(myCurrentElementRegion);
+			} else {
+				myCurrentElementRegion = null;
+			}
 		}
 		return super.add(area);
 	}
@@ -79,6 +75,22 @@ final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 				left = middle + 1;
 			} else {
 				return candidate;
+			}
+		}
+		return null;
+	}
+
+	List<ZLTextRegion> elementRegions() {
+		return Collections.unmodifiableList(myElementRegions);
+	}
+
+	ZLTextRegion getRegion(ZLTextRegion.Soul soul) {
+		if (soul == null) {
+			return null;
+		}
+		for (ZLTextRegion region : myElementRegions) {
+			if (soul.equals(region.getSoul())) {
+				return region;
 			}
 		}
 		return null;

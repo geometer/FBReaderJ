@@ -22,9 +22,8 @@ package org.geometerplus.zlibrary.text.view;
 public class ZLTextSelection {
 	private final ZLTextView myView;
 
-	private ZLTextRegion myInitialRegion;
-	private ZLTextElementArea myLeftBound;
-	private ZLTextElementArea myRightBound;
+	private ZLTextRegion.Soul myLeftMostRegionSoul;
+	private ZLTextRegion.Soul myRightMostRegionSoul;
 
 	private Scroller myScroller;
 
@@ -33,7 +32,7 @@ public class ZLTextSelection {
 	}
 
 	boolean isEmpty() {
-		return myInitialRegion == null;
+		return myLeftMostRegionSoul == null;
 	}
 
 	boolean clear() {
@@ -42,21 +41,22 @@ public class ZLTextSelection {
 		}
 
 		stop();
-		myInitialRegion = null;
-		myLeftBound = null;
-		myRightBound = null;
+		myLeftMostRegionSoul = null;
+		myRightMostRegionSoul = null;
 		return true;
 	}
 
 	boolean start(int x, int y) {
 		clear();
-		myInitialRegion = myView.findRegion(x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
-		if (myInitialRegion == null) {
+
+		final ZLTextRegion region = myView.findRegion(
+			x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter
+		);
+		if (region == null) {
 			return false;
 		}
 
-		myLeftBound = myInitialRegion.getFirstArea();
-		myRightBound = myInitialRegion.getLastArea();
+		myRightMostRegionSoul = myLeftMostRegionSoul = region.getSoul();
 		return true;
 	}
 
@@ -67,11 +67,12 @@ public class ZLTextSelection {
 		}
 	}
 
-	boolean expandTo(int x, int y) {
-		if (myInitialRegion == null) {
-			return start(x, y);
+	ZLTextSelectionCursor expandTo(int x, int y, ZLTextSelectionCursor cursorToMove) {
+		if (isEmpty()) {
+			return cursorToMove;
 		}
 
+		/*
 		if (y < 10) {
 			if (myScroller != null && myScroller.scrollsForward()) {
 				myScroller.stop();
@@ -100,51 +101,127 @@ public class ZLTextSelection {
 		if (myScroller != null) {
 			myScroller.setXY(x, y);
 		}
+		*/
 
 		ZLTextRegion region = myView.findRegion(x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter);
 		if (region == null && myScroller != null) {
 			region = myView.findRegion(x, y, ZLTextRegion.AnyRegionFilter);
 		}
 		if (region == null) {
-			return false;
+			return cursorToMove;
 		}
 
-		final int cmp = myInitialRegion.compareTo(region);
-		final ZLTextElementArea firstArea = region.getFirstArea();
-		final ZLTextElementArea lastArea = region.getLastArea();
-		if (cmp < 0) {
-			if (myRightBound.compareTo(lastArea) != 0) {
-				myRightBound = lastArea;
-				return true;
-			}
-		} else if (cmp > 0) {
-			if (myLeftBound.compareTo(firstArea) != 0) {
-				myLeftBound = firstArea;
-				return true;
+		final ZLTextRegion.Soul soul = region.getSoul();
+		if (cursorToMove == ZLTextSelectionCursor.Right) {
+			if (myLeftMostRegionSoul.compareTo(soul) <= 0) {
+				myRightMostRegionSoul = soul;
+				return cursorToMove;
+			} else {
+				myRightMostRegionSoul = myLeftMostRegionSoul;
+				myLeftMostRegionSoul = soul;
+				return ZLTextSelectionCursor.Left;
 			}
 		} else {
-			if (myLeftBound.compareTo(firstArea) != 0 || myRightBound.compareTo(lastArea) != 0) {
-				myLeftBound = firstArea;
-				myRightBound = lastArea;
-				return true;
+			if (myRightMostRegionSoul.compareTo(soul) >= 0) {
+				myLeftMostRegionSoul = soul;
+				return cursorToMove;
+			} else {
+				myLeftMostRegionSoul = myRightMostRegionSoul;
+				myRightMostRegionSoul = soul;
+				return ZLTextSelectionCursor.Right;
 			}
 		}
-		return false;
 	}
 
 	boolean isAreaSelected(ZLTextElementArea area) {
 		return
 			!isEmpty()
-			&& myLeftBound.weakCompareTo(area) <= 0
-			&& myRightBound.weakCompareTo(area) >= 0;
+			&& myLeftMostRegionSoul.compareTo(area) <= 0
+			&& myRightMostRegionSoul.compareTo(area) >= 0;
 	}
 
-	ZLTextElementArea getStartArea() {
-		return myLeftBound;
+	ZLTextPosition getStartPosition() {
+		if (isEmpty()) {
+			return null;
+		}
+		return new ZLTextFixedPosition(
+			myLeftMostRegionSoul.ParagraphIndex,
+			myLeftMostRegionSoul.StartElementIndex,
+			0
+		);
 	}
 
-	ZLTextElementArea getEndArea() {
-		return myRightBound;
+	ZLTextPosition getEndPosition() {
+		if (isEmpty()) {
+			return null;
+		}
+		return new ZLTextFixedPosition(
+			myRightMostRegionSoul.ParagraphIndex,
+			myRightMostRegionSoul.EndElementIndex,
+			0
+		);
+	}
+
+	ZLTextElementArea getStartArea(ZLTextPage page) {
+		if (isEmpty()) {
+			return null;
+		}
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (vector.isEmpty()) {
+			return null;
+		}
+		final ZLTextRegion region = vector.getRegion(myLeftMostRegionSoul);
+		if (region != null) {
+			return region.getFirstArea();
+		}
+		if (myRightMostRegionSoul.compareTo(vector.get(0)) >= 0) {
+			return vector.get(0);
+		}
+		return null;
+	}
+
+	ZLTextElementArea getEndArea(ZLTextPage page) {
+		if (isEmpty()) {
+			return null;
+		}
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (vector.isEmpty()) {
+			return null;
+		}
+		final ZLTextRegion region = vector.getRegion(myRightMostRegionSoul);
+		if (region != null) {
+			return region.getLastArea();
+		}
+		if (myRightMostRegionSoul.compareTo(vector.get(vector.size() - 1)) >= 0) {
+			return vector.get(vector.size() - 1);
+		}
+		return null;
+	}
+
+	boolean hasAPartBeforePage(ZLTextPage page) {
+		if (isEmpty()) {
+			return false;
+		}
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (vector.isEmpty()) {
+			return false;
+		}
+		final ZLTextElementArea firstPageArea = vector.get(0);
+		final int cmp = myLeftMostRegionSoul.compareTo(firstPageArea);
+		return cmp < 0 || (cmp == 0 && !firstPageArea.isFirstInElement());
+	}
+
+	boolean hasAPartAfterPage(ZLTextPage page) {
+		if (isEmpty()) {
+			return false;
+		}
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (vector.isEmpty()) {
+			return false;
+		}
+		final ZLTextElementArea lastPageArea = vector.get(vector.size() - 1);
+		final int cmp = myRightMostRegionSoul.compareTo(lastPageArea);
+		return cmp > 0 || (cmp == 0 && !lastPageArea.isLastInElement());
 	}
 
 	private class Scroller implements Runnable {
@@ -169,7 +246,7 @@ public class ZLTextSelection {
 		public void run() {
 			myView.scrollPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();
-			expandTo(myX, myY);
+			//expandTo(myX, myY, myScrollForward);
 			myView.Application.getViewWidget().reset();
 			myView.Application.getViewWidget().repaint();
 		}

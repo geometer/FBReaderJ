@@ -19,21 +19,11 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-import java.util.List;
-
-public class ZLTextWordRegion extends ZLTextRegion {
+public class ZLTextWordRegionSoul extends ZLTextRegion.Soul {
 	public final ZLTextWord Word;
 
-	ZLTextWordRegion(ZLTextWord word, List<ZLTextElementArea> list, int fromIndex) {
-		super(list, fromIndex);
+	ZLTextWordRegionSoul(ZLTextPosition position, ZLTextWord word) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
 		Word = word;
-	}
-
-	@Override
-	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextWordRegion)) {
-			return false;
-		}
-		return Word == ((ZLTextWordRegion)other).Word;
 	}
 }

@@ -58,6 +58,7 @@ public interface ActionCode {
 
 	String SELECTION_SHOW_PANEL = "selectionShowPanel";
 	String SELECTION_HIDE_PANEL = "selectionHidePanel";
+	String SELECTION_CLEAR = "selectionClear";
 	String SELECTION_COPY_TO_CLIPBOARD = "selectionCopyToClipboard";
 	String SELECTION_SHARE = "selectionShare";
 	String SELECTION_OPEN_IN_DICTIONARY = "selectionOpenInDictionary";

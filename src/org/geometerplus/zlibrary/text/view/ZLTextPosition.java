@@ -53,23 +53,6 @@ public abstract class ZLTextPosition implements Comparable<ZLTextPosition> {
 		return 0;
 	}
 
-	// ignores character index
-	int weakCompareTo(ZLTextPosition position) {
-		final int p0 = getParagraphIndex();
-		final int p1 = position.getParagraphIndex();
-		if (p0 != p1) {
-			return p0 < p1 ? -1 : 1;
-		}
-
-		final int e0 = getElementIndex();
-		final int e1 = position.getElementIndex();
-		if (e0 != e1) {
-			return e0 < e1 ? -1 : 1;
-		}
-
-		return 0;
-	}
-
 	@Override
 	public int hashCode() {
 		return (getParagraphIndex() << 16) + (getElementIndex() << 8) + getCharIndex();
@@ -88,5 +71,10 @@ public abstract class ZLTextPosition implements Comparable<ZLTextPosition> {
 			getParagraphIndex() == position.getParagraphIndex() &&
 			getElementIndex() == position.getElementIndex() &&
 			getCharIndex() == position.getCharIndex();
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getName() + " " + getParagraphIndex() + " " + getElementIndex() + " " + getCharIndex();
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.fbreader.fbreader;
 
-import java.util.List;
-
-public class ZLTextImageRegion extends ZLTextRegion {
-	public final ZLTextImageElement ImageElement;
-
-	ZLTextImageRegion(ZLTextImageElement imageElement, List<ZLTextElementArea> list, int fromIndex) {
-		super(list, fromIndex);
-		ImageElement = imageElement;
+public class SelectionClearAction extends FBAction {
+	SelectionClearAction(FBReaderApp fbreader) {
+		super(fbreader);
 	}
 
 	@Override
-	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextImageRegion)) {
-			return false;
-		}
-		return ImageElement == ((ZLTextImageRegion)other).ImageElement;
+	protected void run() {
+		Reader.getTextView().clearSelection();
 	}
 }

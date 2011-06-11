@@ -23,7 +23,64 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
+public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
+	public static abstract class Soul implements Comparable<Soul> {
+		final int ParagraphIndex;
+		final int StartElementIndex;
+		final int EndElementIndex;
+
+		protected Soul(int paragraphIndex, int startElementIndex, int endElementIndex) {
+			ParagraphIndex = paragraphIndex;
+			StartElementIndex = startElementIndex;
+			EndElementIndex = endElementIndex;
+		}
+
+		final boolean accepts(ZLTextElementArea area) {
+			return compareTo(area) == 0;
+		}
+	
+		@Override
+		public final boolean equals(Object other) {
+			if (other == this) {
+				return true;
+			}
+			if (!(other instanceof Soul)) {
+				return false;
+			}
+			final Soul soul = (Soul)other;
+			return
+				ParagraphIndex == soul.ParagraphIndex &&
+				StartElementIndex == soul.StartElementIndex &&
+				EndElementIndex == soul.EndElementIndex;
+		}
+
+		public final int compareTo(Soul soul) {
+			if (ParagraphIndex != soul.ParagraphIndex) {
+				return ParagraphIndex < soul.ParagraphIndex ? -1 : 1;
+			}
+			if (EndElementIndex < soul.StartElementIndex) {
+				return -1;
+			}
+			if (StartElementIndex > soul.EndElementIndex) {
+				return 1;
+			}
+			return 0;
+		}
+
+		public final int compareTo(ZLTextElementArea area) {
+			if (ParagraphIndex != area.ParagraphIndex) {
+				return ParagraphIndex < area.ParagraphIndex ? -1 : 1;
+			}
+			if (EndElementIndex < area.ElementIndex) {
+				return -1;
+			}
+			if (StartElementIndex > area.ElementIndex) {
+				return 1;
+			}
+			return 0;
+		}
+	}
+
 	public static interface Filter {
 		boolean accepts(ZLTextRegion region);
 	}
@@ -36,24 +93,27 @@ public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 
 	public static Filter HyperlinkFilter = new Filter() {
 		public boolean accepts(ZLTextRegion region) {
-			return region instanceof ZLTextHyperlinkRegion;
+			return region.getSoul() instanceof ZLTextHyperlinkRegionSoul;
 		}
 	};
 
 	public static Filter ImageOrHyperlinkFilter = new Filter() {
 		public boolean accepts(ZLTextRegion region) {
+			final Soul soul = region.getSoul();
 			return
-				region instanceof ZLTextImageRegion ||
-				region instanceof ZLTextHyperlinkRegion;
+				soul instanceof ZLTextImageRegionSoul ||
+				soul instanceof ZLTextHyperlinkRegionSoul;
 		}
 	};
 
+	private final Soul mySoul;
 	private final List<ZLTextElementArea> myList;
 	private final int myFromIndex;
 	private int myToIndex;
 	private ZLTextHorizontalConvexHull myHull;
 
-	ZLTextRegion(List<ZLTextElementArea> list, int fromIndex) {
+	ZLTextRegion(Soul soul, List<ZLTextElementArea> list, int fromIndex) {
+		mySoul = soul;
 		myList = list;
 		myFromIndex = fromIndex;
 		myToIndex = fromIndex + 1;
@@ -62,6 +122,10 @@ public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 	void extend() {
 		++myToIndex;
 		myHull = null;
+	}
+
+	public Soul getSoul() {
+		return mySoul;
 	}
 
 	private List<ZLTextElementArea> textAreas() {
@@ -141,9 +205,7 @@ public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 		return other == null || other.isExactlyUnder(this);
 	}
 
-	@Override
-	public abstract boolean equals(Object other);
-
+	/*
 	public int compareTo(ZLTextRegion other) {
 		if (myFromIndex != other.myFromIndex) {
 			return myFromIndex < other.myFromIndex ? -1 : 1;
@@ -153,4 +215,5 @@ public abstract class ZLTextRegion implements Comparable<ZLTextRegion> {
 		}
 		return 0;
 	}
+	*/
 }
