@@ -73,6 +73,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			)
 		);
 		statusBarPreferences.setEnabled(!androidApp.ShowStatusBarOption.getValue());
+		appearanceScreen.addOption(androidApp.DisableButtonLightsOption, "disableButtonLights");
 
 		final Screen textScreen = createPreferenceScreen("text");
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
@@ -242,6 +243,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		colorsScreen.addOption(profile.HyperlinkTextOption, "hyperlink");
 		colorsScreen.addOption(profile.VisitedHyperlinkTextOption, "hyperlinkVisited");
 		colorsScreen.addOption(profile.FooterFillOption, "footer");
+		colorsScreen.addOption(profile.SelectionBackgroundOption, "selectionBackground");
+		colorsScreen.addOption(profile.SelectionForegroundOption, "selectionForeground");
 
 		final Screen marginsScreen = createPreferenceScreen("margins");
 		marginsScreen.addPreference(new ZLIntegerRangePreference(
@@ -380,7 +383,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			dictionaryScreen.Resource,
 			"navigateOverAllWords"
 		));
-		dictionaryScreen.addOption(fbReader.DictionaryTappingActionOption, "tappingAction");
+		dictionaryScreen.addOption(fbReader.WordTappingActionOption, "tappingAction");
+
+		final Screen imagesScreen = createPreferenceScreen("images");
+		imagesScreen.addOption(fbReader.ImageTappingActionOption, "tappingAction");
+		imagesScreen.addOption(fbReader.ImageViewBackgroundOption, "backgroundColor");
 
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
 		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");

@@ -88,8 +88,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return tags;
 	}
 
-	private static UrlInfoCollection getUrls(OPDSNetworkLink networkLink, OPDSEntry entry, String baseUrl) {
-		final UrlInfoCollection urls = new UrlInfoCollection();
+	private static UrlInfoCollection<UrlInfo> getUrls(OPDSNetworkLink networkLink, OPDSEntry entry, String baseUrl) {
+		final UrlInfoCollection<UrlInfo> urls = new UrlInfoCollection<UrlInfo>();
 		for (ATOMLink link: entry.Links) {
 			final String href = ZLNetworkUtil.url(baseUrl, link.getHref());
 			final MimeType type = MimeType.get(link.getType());
@@ -166,7 +166,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	private static void collectReferences(
-		UrlInfoCollection urls,
+		UrlInfoCollection<UrlInfo> urls,
 		OPDSLink opdsLink,
 		String href,
 		UrlInfo.Type type,

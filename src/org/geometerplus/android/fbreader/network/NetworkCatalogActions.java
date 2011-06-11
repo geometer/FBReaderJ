@@ -302,10 +302,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			myResumeNotLoad = resumeNotLoad;
 		}
 
-		public String getResourceKey() {
-			return "downloadingCatalogs";
-		}
-
 		@Override
 		public void doBefore() throws ZLNetworkException {
 			final INetworkLink link = myTree.Item.Link;
@@ -365,7 +361,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return;
 			}
 			if (errorMessage != null) {
-				UIUtil.showErrorMessageText(activity, errorMessage);
+				UIUtil.showMessageText(activity, errorMessage);
 			} else if (childrenEmpty) {
 				UIUtil.showErrorMessage(activity, "emptyCatalog");
 			}
@@ -394,9 +390,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 							return;
 						}
 					} else {
-						tree.ChildrenItems.clear();
-						tree.clear();
-						NetworkView.Instance().fireModelChangedAsync();
+						clearTree(activity, tree);
 					}
 				}
 
@@ -424,13 +418,21 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		});
 	}
 
+	private static void clearTree(Activity activity, final NetworkCatalogTree tree) {
+		activity.runOnUiThread(new Runnable() {
+			public void run() {
+				tree.ChildrenItems.clear();
+				tree.clear();
+				NetworkView.Instance().fireModelChanged();
+			}
+		});
+	}
+
 	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
 		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
-		tree.ChildrenItems.clear();
-		tree.clear();
-		NetworkView.Instance().fireModelChangedAsync();
+		clearTree(activity, tree);
 		ItemsLoadingService.start(
 			activity,
 			tree,

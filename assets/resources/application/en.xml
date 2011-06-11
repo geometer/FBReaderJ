@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- English FBReaderJ resources, by Geometer Plus -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Unknown author"/>
@@ -185,6 +186,14 @@
 		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
 	</node>
+	<node name="selection" value="Selection">
+		<node name="copyToClipboard" value="Copy to clipboard"/>
+		<node name="openInDictionary" value="Open in dictionary"/>
+		<node name="quoteFrom" value="Quote from %s" />
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" />
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" />
+		<node name="clearSelection" value="Clear"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
@@ -203,11 +212,6 @@
 			<node name="previousTOCSection" value="Go to Previous TOC Item"/>
 			<node name="undo" value="Go Back"/>
 			<node name="redo" value="Go Forward"/>
-		</node>
-		<node name="selection" value="Selection">
-			<node name="copyToClipboard" value="Copy to Clipboard"/>
-			<node name="openInDictionary" value="Open in Dictionary"/>
-			<node name="clearSelection" value="Clear"/>
 		</node>
 		<node name="search" value="Search"/>
 		<node name="rotate" value="Rotate screen"/>
@@ -267,6 +271,10 @@
 				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active">
 					<node name="summaryOn" value="Show status bar when menu becomes active"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
+				</node>
+				<node name="disableButtonLights" value="Disable hardware buttons light during reading">
+					<node name="summaryOn" value="Disable button lights (that does not for some devices)"/>
+					<node name="summaryOff" value="Don't try to disable button lights"/>
 				</node>
 			</node>
 			<node name="text" value="Text">
@@ -429,6 +437,7 @@
 				</node>
 				<node name="backgroundColor" value="Background color"/>
 				<node name="selectionBackground" value="Selection background"/>
+				<node name="selectionForeground" value="Selected text"/>
 				<node name="text" value="Regular text"/>
 				<node name="hyperlink" value="Hyperlink text"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text"/>
@@ -536,12 +545,22 @@
 				<node name="dictionary" value="Dictionary"/>
 				<node name="tappingAction" value="Long tapping action">
 					<node name="doNothing" value="Long tapping does nothing"/>
-					<node name="selectWord" value="Long tapping selects the word"/>
-					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary"/>
+					<node name="selectSingleWord" value="Long tapping selects single word"/>
+					<node name="startSelecting" value="Long tapping initiates selecting"/>
+					<node name="openDictionary" value="Long tapping selects single word, release opens dictionary"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navigate over all words">
 					<node name="summaryOn" value="Key navigation visits all words"/>
 					<node name="summaryOff" value="Key navigation visits hyperlinks only"/>
+				</node>
+			</node>
+			<node name="images" value="Images">
+				<node name="summary" value="Image displaying options"/>
+				<node name="backgroundColor" value="Background color for image view"/>
+				<node name="tappingAction" value="Long tapping action">
+					<node name="doNothing" value="Long tapping does nothing"/>
+					<node name="selectImage" value="Long tapping selects the image"/>
+					<node name="openImageView" value="Long tapping opens image view"/>
 				</node>
 			</node>
 			<node name="cancelMenu" value="Cancel menu">
@@ -574,9 +593,6 @@
 					<node name="defaultLanguage" value="Default Language"/>
 					<node name="defaultEncodingSet" value="Default Encoding Set"/>
 					<node name="defaultEncoding" value="Default Encoding"/>
-				</node>
-				<node name="Selection" value="Selection">
-					<node name="enableSelection" value="Enable Text Selection"/>
 				</node>
 			</node>
 		</node>

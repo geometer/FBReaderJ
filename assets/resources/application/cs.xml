@@ -130,7 +130,7 @@
 		<node name="indexInSeries" value="Díl v sérii:"/>
 		<node name="tags" value="Štítky:"/>
 		<node name="catalog" value="Katalog:"/>
-		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
+		<node name="extraLinks" value="Související odkazy"/>
 	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informace o knize"/>
@@ -186,6 +186,14 @@
 		<node name="forward" value="Vpřed"/>
 		<node name="close" value="Zavřít FBReader"/>
 	</node>
+	<node name="selection" value="Výběr">
+		<node name="copyToClipboard" value="Kopírovat do schránky"/>
+		<node name="openInDictionary" value="Otevřít ve slovníku"/>
+		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
+		<node name="clearSelection" value="Vymazat"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Nastavení"/>
 		<node name="bookInfo" value="Informace o knize"/>
@@ -204,11 +212,6 @@
 			<node name="previousTOCSection" value="Přejít na předchozí položku obsahu"/>
 			<node name="undo" value="Přejít zpět"/>
 			<node name="redo" value="Přejít vpřed"/>
-		</node>
-		<node name="selection" value="Výběr">
-			<node name="copyToClipboard" value="Kopírovat do schránky"/>
-			<node name="openInDictionary" value="Otevřít ve slovníku"/>
-			<node name="clearSelection" value="Vymazat"/>
 		</node>
 		<node name="search" value="Hledat"/>
 		<node name="rotate" value="Otočit obrazovku"/>
@@ -267,6 +270,10 @@
 				<node name="showStatusBarWhenMenuIsActive" value="Zobrazit stavový řádek, když je menu aktivní">
 					<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
 					<node name="summaryOff" value="Nezobrazovat stavový řádek, když se menu aktivuje"/>
+				</node>
+				<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
+					<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
+					<node name="summaryOff" value="Nezakazovat tlačítka osvětlení"/>
 				</node>
 			</node>
 			<node name="text" value="Text">
@@ -429,6 +436,7 @@
 				</node>
 				<node name="backgroundColor" value="Barva pozadí"/>
 				<node name="selectionBackground" value="Pozadí výběru"/>
+				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
 				<node name="text" value="Běžný text"/>
 				<node name="hyperlink" value="Hypertextový odkaz"/>
 				<node name="hyperlinkVisited" value="Navštívený hypertextový odkaz"/>
@@ -536,12 +544,22 @@
 				<node name="dictionary" value="Slovník"/>
 				<node name="tappingAction" value="Dlouhé klepnutí">
 					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
-					<node name="selectWord" value="Dlouhé klepnutí vybere slovo"/>
+					<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
+					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
 					<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navigovat přes všechna slova">
 					<node name="summaryOn" value="Navigace klávesami prochází všechna slova"/>
 					<node name="summaryOff" value="Navigace klávesami prochází pouze hypertextové odkazy"/>
+				</node>
+			</node>
+			<node name="images" value="Obrázky">
+				<node name="summary" value="Možnosti zobrazení obrázku"/>
+				<node name="backgroundColor" value="Barva pozadí pro zobrazení obrázku"/>
+				<node name="tappingAction" value="Akce dlouhého klepnutí">
+					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
+					<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
+					<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
 				</node>
 			</node>
 			<node name="cancelMenu" value="Nabídka Zrušit">
@@ -575,9 +593,6 @@
 					<node name="defaultEncodingSet" value="Výchozí sada kódování"/>
 					<node name="defaultEncoding" value="Výchozí kódování"/>
 				</node>
-				<node name="Selection" value="Výběr">
-					<node name="enableSelection" value="Povolit výběr textu"/>
-				</node>
 			</node>
 		</node>
 		<node name="deleteBookBox">
@@ -589,7 +604,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Stahování knihy %s"/>
 			<node name="search" value="Vyhledávání. Čekejte..."/>
-			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
+			<node name="loadInfo" value="Načítání informací. Čekejte..."/>
 			<node name="loadingBook" value="Otevírání knihy. Čekejte..."/>
 			<node name="loadingBookList" value="Otevírání knihovny. Čekejte..."/>
 			<node name="creatingBooksDatabase" value="Vytváření databáze knih. Čekejte..."/>
@@ -620,7 +635,7 @@
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Ověřování"/>
-			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
+			<node name="unencryptedWarning" value="Vaše heslo bude odesláno nešifrovaně"/>
 			<node name="login" value="Uživatelské jméno"/>
 			<node name="password" value="Heslo"/>
 			<node name="skipIP" value="Nevázat na IP adresu"/>

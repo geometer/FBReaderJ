@@ -75,13 +75,28 @@ public abstract class ZLApplication {
 		if (myWindow != null) {
 			myWindow.refreshMenu();
 		}
-		for (ButtonPanel panel : myPanels) {
-			panel.updateStates();
+		for (PopupPanel popup : popupPanels()) {
+			popup.update();
 		}
 	}
 
 	public final void onViewChanged() {
-		hideAllPanels();
+		hideActivePopup();
+	}
+
+	public final void hideActivePopup() {
+		if (myActivePopup != null) {
+			myActivePopup.hide_();
+			myActivePopup = null;
+		}
+	}
+
+	public final void showPopup(String id) {
+		hideActivePopup();
+		myActivePopup = myPopups.get(id);
+		if (myActivePopup != null) {
+			myActivePopup.show_();
+		}
 	}
 
 	public final void addAction(String actionId, ZLAction action) {
@@ -180,24 +195,30 @@ public abstract class ZLApplication {
 		}
 	}
 
-	static public interface ButtonPanel {
-		void updateStates();
-		void hide();
-	}
-	private final List<ButtonPanel> myPanels = new LinkedList<ButtonPanel>();
-	public final List<ButtonPanel> buttonPanels() {
-		return Collections.unmodifiableList(myPanels);
-	}
-	public final void registerButtonPanel(ButtonPanel panel) {
-		myPanels.add(panel);
-	}
-	public final void unregisterButtonPanel(ButtonPanel panel) {
-		myPanels.remove(panel);
-	}
-	public final void hideAllPanels() {
-		for (ButtonPanel panel : myPanels) {
-			panel.hide();
+	public static abstract class PopupPanel {
+		protected final ZLApplication Application;
+
+		protected PopupPanel(ZLApplication application) {
+			application.myPopups.put(getId(), this);
+			Application = application;
 		}
+
+		abstract public String getId();
+		abstract protected void update();
+		abstract protected void hide_();
+		abstract protected void show_();
+	}
+
+	private final HashMap<String,PopupPanel> myPopups = new HashMap<String,PopupPanel>();
+	private PopupPanel myActivePopup;
+	public final Collection<PopupPanel> popupPanels() {
+		return myPopups.values();
+	}
+	public final PopupPanel getActivePopup() {
+		return myActivePopup;
+	}
+	public final PopupPanel getPopupById(String id) {
+		return myPopups.get(id);
 	}
 
 	public int getBatteryLevel() {

@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.dialogs.ZLDialogManager;
 import org.geometerplus.zlibrary.core.options.*;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
@@ -49,11 +50,19 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption NavigateAllWordsOption =
 		new ZLBooleanOption("Options", "NavigateAllWords", false);
 
-	public static enum DictionaryTappingAction {
-		doNothing, selectWord, openDictionary
+	public static enum WordTappingAction {
+		doNothing, selectSingleWord, startSelecting, openDictionary
 	}
-	public final ZLEnumOption<DictionaryTappingAction> DictionaryTappingActionOption =
-		new ZLEnumOption<DictionaryTappingAction>("Options", "DictionaryTappingAction", DictionaryTappingAction.selectWord);
+	public final ZLEnumOption<WordTappingAction> WordTappingActionOption =
+		new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
+
+	public final ZLColorOption ImageViewBackgroundOption =
+		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(127, 127, 127));
+	public static enum ImageTappingAction {
+		doNothing, selectImage, openImageView
+	}
+	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
+		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 
 	public final ZLIntegerRangeOption LeftMarginOption =
 		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);
@@ -78,9 +87,6 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLBooleanOption("Options", "ShowProgressInFooter", true);
 	public final ZLStringOption FooterFontOption =
 		new ZLStringOption("Options", "FooterFont", "Droid Sans");
-
-	final ZLBooleanOption SelectionEnabledOption =
-		new ZLBooleanOption("Options", "IsSelectionEnabled", true);
 
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
@@ -111,15 +117,13 @@ public final class FBReaderApp extends ZLApplication {
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
 		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
 
+		addAction(ActionCode.SELECTION_CLEAR, new SelectionClearAction(this));
+
 		addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
 		addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
 
 		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(this, true));
 		addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(this, false));
-
-		//addAction(ActionCode.COPY_SELECTED_TEXT_TO_CLIPBOARD, new DummyAction(this));
-		//addAction(ActionCode.OPEN_SELECTED_TEXT_IN_DICTIONARY, new DummyAction(this));
-		//addAction(ActionCode.CLEAR_SELECTION, new DummyAction(this));
 
 		addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(this, ColorProfile.DAY));
 		addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction(this, ColorProfile.NIGHT));

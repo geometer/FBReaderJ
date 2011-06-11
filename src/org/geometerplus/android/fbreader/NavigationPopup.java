@@ -34,55 +34,66 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-final class NavigationButtonPanel extends ControlButtonPanel {
+final class NavigationPopup extends PopupPanel {
+	final static String ID = "NavigationPopup";
+
 	private volatile boolean myIsInProgress;
 
-	NavigationButtonPanel(FBReaderApp fbReader) {
+	NavigationPopup(FBReaderApp fbReader) {
 		super(fbReader);
 	}
 
 	public void runNavigation() {
-		if (!getVisibility()) {
+		if (myWindow.getVisibility() == View.GONE) {
 			myIsInProgress = false;
 			initPosition();
-			show(true);
+			Application.showPopup(ID);
 		}
 	}
 
 	@Override
-	public void onShow() {
-		if (myControlPanel != null) {
-			setupNavigation(myControlPanel);
+	public String getId() {
+		return ID;
+	}
+
+	@Override
+	protected void show_() {
+		super.show_();
+		if (myWindow != null) {
+			setupNavigation(myWindow);
 		}
 	}
 
 	@Override
-	public void updateStates() {
-		super.updateStates();
-		if (!myIsInProgress && myControlPanel != null) {
-			setupNavigation(myControlPanel);
+	protected void update() {
+		if (!myIsInProgress && myWindow != null) {
+			setupNavigation(myWindow);
 		}
 	}
 
 	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root) {
-		myControlPanel = new ControlPanel(activity, root, true);
+	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
+		if (myWindow != null) {
+			return;
+		}
 
-		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myControlPanel, false);
+		myWindow = new PopupWindow(activity, root, location, true);
+
+		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
 
 		final SeekBar slider = (SeekBar)layout.findViewById(R.id.book_position_slider);
 		final TextView text = (TextView)layout.findViewById(R.id.book_position_text);
 
 		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			private void gotoPage(int page) {
-				final ZLTextView view = Reader.getTextView();
+				final ZLTextView view = getReader().getTextView();
 				if (page == 1) {
 					view.gotoHome();
 				} else {
 					view.gotoPage(page);
 				}
-				Reader.getViewWidget().reset();
-				Reader.getViewWidget().repaint();
+				getReader().getViewWidget().reset();
+				getReader().getViewWidget().repaint();
 			}
 
 			public void onStopTrackingTouch(SeekBar seekBar) {
@@ -109,12 +120,12 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 			public void onClick(View v) {
 				final ZLTextWordCursor position = StartPosition;
 				if (v == btnCancel && position != null) {
-					Reader.getTextView().gotoPosition(position);
+					getReader().getTextView().gotoPosition(position);
 				} else if (v == btnOk) {
 					storePosition();
 				}
 				StartPosition = null;
-				hide(true);
+				Application.hideActivePopup();
 			}
 		};
 		btnOk.setOnClickListener(listener);
@@ -123,14 +134,14 @@ final class NavigationButtonPanel extends ControlButtonPanel {
 		btnOk.setText(buttonResource.getResource("ok").getValue());
 		btnCancel.setText(buttonResource.getResource("cancel").getValue());
 
-		myControlPanel.addView(layout);
+		myWindow.addView(layout);
 	}
 
-	private void setupNavigation(ControlPanel panel) {
+	private void setupNavigation(PopupWindow panel) {
 		final SeekBar slider = (SeekBar)panel.findViewById(R.id.book_position_slider);
 		final TextView text = (TextView)panel.findViewById(R.id.book_position_text);
 
-		final ZLTextView textView = Reader.getTextView();
+		final ZLTextView textView = getReader().getTextView();
 		final int page = textView.computeCurrentPage();
 		final int pagesNumber = textView.computePageNumber();
 

@@ -24,6 +24,8 @@ import android.util.FloatMath;
 
 import org.geometerplus.zlibrary.core.view.ZLView;
 
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
+
 class CurlAnimationProvider extends AnimationProvider {
 	private final Paint myPaint = new Paint();
 	private final Paint myBackPaint = new Paint();
@@ -135,25 +137,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 		canvas.restore();
         
-		{
-			final int w = Math.min(fgBitmap.getWidth(), 7);
-			final int h = Math.min(fgBitmap.getHeight(), 7);
-			long r = 0, g = 0, b = 0;
-			for (int i = 0; i < w; ++i) {
-				for (int j = 0; j < h; ++j) {
-					int color = fgBitmap.getPixel(i, j);
-					r += color & 0xFF0000;
-					g += color & 0xFF00;
-					b += color & 0xFF;
-				}
-			}
-			r /= w * h;
-			g /= w * h;
-			b /= w * h;
-			r >>= 16;
-			g >>= 8;
-			myEdgePaint.setColor(Color.rgb((int)(r & 0xFF), (int)(g & 0xFF), (int)(b & 0xFF)));
-		}
+		myEdgePaint.setColor(ZLAndroidColorUtil.rgb(ZLAndroidColorUtil.getAverageColor(fgBitmap)));
         
 		myEdgePath.rewind();
 		myEdgePath.moveTo(x, y);

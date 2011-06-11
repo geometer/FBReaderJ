@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FBReaderJ, Traditional Chinese, by Fung.T -->
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="確定" />
+			<node name="cancel" value="取消" />
+			<node name="yes" value="是" />
+			<node name="no" value="否" />
+			<node name="apply" value="實施" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="網絡錯誤" />
+			<node name="unknownErrorMessage" value="未知錯誤" />
+			<node name="operationTimedOutMessage" value="操作逾時" />
+			<node name="somethingWrongMessage" value="出錯&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="無法創建目錄&#10;%s" />
+			<node name="couldntCreateFileMessage" value="無法創建檔案&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="無法連接網絡" />
+			<node name="couldntConnectMessage" value="無法連接主機" />
+			<node name="couldntResolveHostMessage" value="無法解析主機&#10;%s" />
+			<node name="authenticationFailed" value="驗證失敗" />
+			<node name="unsupportedProtocol" value="未支授的協議" />
+			<node name="invalidURL" value="網址無效" />
+			<node name="hostCantBeReached" value="未能連接主機 %s&#10;" />
+			<node name="connectionRefused" value="連接被拒 &#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="紅色" />
+		<node name="green" value="綠色" />
+		<node name="blue" value="藍色" />
+		<node name="black" value="黑色" />
+		<node name="white" value="白色" />
+		<node name="maroon" value="栗子色" />
+		<node name="olive" value="棷欖色" />
+		<node name="navy" value="海軍藍" />
+		<node name="purple" value="紫色" />
+		<node name="teal" value="水鴨色" />
+		<node name="silver" value="銀色" />
+		<node name="gray" value="灰色" />
+		<node name="lime" value="石灰色" />
+		<node name="yellow" value="黃色" />
+		<node name="magenta" value="桃紅色" />
+		<node name="cyan" value="天青色" />
+		<node name="custom..." value="自訂..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabic" />
+		<node name="cs" value="Czech" />
+		<node name="de" value="German" />
+		<node name="de-traditional" value="German (traditional orthography)" />
+		<node name="el" value="Greek" />
+		<node name="en" value="English" />
+		<node name="eo" value="Esperanto" />
+		<node name="es" value="Spanish" />
+		<node name="fi" value="Finnish" />
+		<node name="fr" value="French" />
+		<node name="he" value="Hebrew" />
+		<node name="hu" value="Hungarian" />
+		<node name="id" value="Indonesian" />
+		<node name="it" value="Italian" />
+		<node name="lt" value="Lithuanian" />
+		<node name="nl" value="Dutch" />
+		<node name="no" value="Norwegian" />
+		<node name="pl" value="Polish" />
+		<node name="pt" value="Portuguese" />
+		<node name="ru" value="Russian" />
+		<node name="sv" value="Swedish" />
+		<node name="th" value="Thai" />
+		<node name="tr" value="Turkish" />
+		<node name="uk" value="Ukrainian" />
+		<node name="vi" value="Vietnamese" />
+		<node name="zh" value="中文" />
+		<node name="other" value="其他" />
+		<node name="multi" value="多種語言" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="開" />
+		<node name="off" value="關" />
+		<node name="unchanged" value="不變" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="按鍵動作" />
+	</node>
+</resources>

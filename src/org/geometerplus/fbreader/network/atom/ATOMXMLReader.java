@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-public class ATOMXMLReader extends ZLXMLReaderAdapter {
+public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOMEntry> extends ZLXMLReaderAdapter {
 	public static String intern(String str) {
 		if (str == null || str.length() == 0) {
 			return null;
@@ -34,10 +34,10 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return str.intern();
 	}
 
-	private final ATOMFeedHandler myFeedHandler;
+	private final ATOMFeedHandler<T1, T2> myFeedHandler;
 
-	private ATOMFeedMetadata myFeed;
-	private ATOMEntry myEntry;
+	private T1 myFeed;
+	private T2 myEntry;
 	private ATOMAuthor myAuthor;
 	private ATOMId myId;
 	private ATOMLink myLink;
@@ -99,20 +99,20 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
 	protected boolean myFeedMetadataProcessed;
 
-	public ATOMXMLReader(ATOMFeedHandler handler, boolean readEntryNotFeed) {
+	public ATOMXMLReader(ATOMFeedHandler<T1, T2> handler, boolean readEntryNotFeed) {
 		myFeedHandler = handler;
 		myState = readEntryNotFeed ? FEED : START;
 	}
 
-	protected final ATOMFeedHandler getATOMFeedHandler() {
+	protected final ATOMFeedHandler<T1, T2> getATOMFeedHandler() {
 		return myFeedHandler;
 	}
 
-	protected final ATOMFeedMetadata getATOMFeed() {
+	protected final T1 getATOMFeed() {
 		return myFeed;
 	}
 
-	protected final ATOMEntry getATOMEntry() {
+	protected final T2 getATOMEntry() {
 		return myEntry;
 	}
 
@@ -175,17 +175,13 @@ public class ATOMXMLReader extends ZLXMLReaderAdapter {
 		return new String(bufferContentArray);
 	}
 
-	protected ATOMFeedMetadata createFeed(ZLStringMap attributes) {
-		return new ATOMFeedMetadata(attributes);
-	}
+	protected abstract T1 createFeed(ZLStringMap attributes);
+	protected abstract T2 createEntry(ZLStringMap attributes);
 
 	protected ATOMLink createLink(ZLStringMap attributes) {
 		return new ATOMLink(attributes);
 	}
 
-	protected ATOMEntry createEntry(ZLStringMap attributes) {
-		return new ATOMEntry(attributes);
-	}
 
 	public boolean startElementHandler(
 		final String ns, final String tag,

@@ -25,7 +25,7 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class BasketItem extends OPDSCatalogItem {
-	BasketItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection urls, Accessibility accessibility) {
+	BasketItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection<?> urls, Accessibility accessibility) {
 		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
 		link.setSupportsBasket();
 	}

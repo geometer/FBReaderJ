@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Russian FBReaderJ resources, by Geometer Plus -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Автор не указан"/>
@@ -181,6 +182,14 @@
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрыть FBReader"/>
 	</node>
+	<node name="selection" value="Пометка">
+		<node name="copyToClipboard" value="Скопировать в буфер"/>
+		<node name="openInDictionary" value="Посмотреть в словаре"/>
+		<node name="quoteFrom" value="Цитата из %s"/>
+		<node name="textInBuffer" value="Текст в буфере обмена:&#10;%s" />
+		<node name="bookmarkCreated" value="Создана закладка:&#10;%s" />
+		<node name="clearSelection" value="Убрать пометку"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Настройки"/>
 		<node name="bookInfo" value="О книге"/>
@@ -199,11 +208,6 @@
 			<node name="previousTOCSection" value="К предыдущей главе"/>
 			<node name="undo" value="Назад"/>
 			<node name="redo" value="Вперед"/>
-		</node>
-		<node name="selection" value="Пометка">
-			<node name="copyToClipboard" value="Скопировать в буфер"/>
-			<node name="openInDictionary" value="Посмотреть в словаре"/>
-			<node name="clearSelection" value="Убрать пометку"/>
 		</node>
 		<node name="search" value="Поиск"/>
 		<node name="rotate" value="Повернуть"/>
@@ -262,6 +266,10 @@
 				<node name="showStatusBarWhenMenuIsActive" value="Показывать строку состояния при активации меню">
 					<node name="summaryOn" value="Показывать строку состояния, когда меню появляется на экране"/>
 					<node name="summaryOff" value="Не показывать строку состояния, когда меню появляется на экране"/>
+				</node>
+				<node name="disableButtonLights" value="Выключать подсветку кнопок во время чтения">
+					<node name="summaryOn" value="Выключать подсветку (работает не на всех устройствах)"/>
+					<node name="summaryOff" value="Не пытаться выключать подсветку"/>
 				</node>
 			</node>
 			<node name="text" value="Текст">
@@ -424,6 +432,7 @@
 				</node>
 				<node name="backgroundColor" value="Цвет фона"/>
 				<node name="selectionBackground" value="Фон пометки"/>
+				<node name="selectionForeground" value="Текст пометки"/>
 				<node name="text" value="Обычный текст"/>
 				<node name="hyperlink" value="Гиперссылка"/>
 				<node name="hyperlinkVisited" value="Посещенная ссылка"/>
@@ -520,13 +529,23 @@
 				<node name="summary" value="Настройки словаря"/>
 				<node name="dictionary" value="Словарь"/>
 				<node name="tappingAction" value="Действие при долгом нажатии на экран">
-					<node name="doNothing" value="Не делать ничего"/>
-					<node name="selectWord" value="Выделять слово"/>
-					<node name="openDictionary" value="Выделять слово, а при отпускании &#8211; запускать словарь"/>
+					<node name="doNothing" value="Ничего не делать"/>
+					<node name="selectSingleWord" value="Выделять одно слово"/>
+					<node name="startSelecting" value="Начинать процесс пометки"/>
+					<node name="openDictionary" value="Выделять одно слово, а при отпускании &#8211; запускать словарь"/>
 				</node>
 				<node name="navigateOverAllWords" value="Перемещаться по всем словам">
 					<node name="summaryOn" value="При перемещении с помощью кнопок помечать все слова"/>
 					<node name="summaryOff" value="При перемещении с помощью кнопок помечать только гиперссылки"/>
+				</node>
+			</node>
+			<node name="images" value="Картинки">
+				<node name="summary" value="Настройки отображения картинок"/>
+				<node name="backgroundColor" value="Цвет фона при полноэкранном просмотре"/>
+				<node name="tappingAction" value="Действие при долгом нажатии на экран">
+					<node name="doNothing" value="Не делать ничего"/>
+					<node name="selectImage" value="Выделять картинку"/>
+					<node name="openImageView" value="Запускать полноэкранный просмотр"/>
 				</node>
 			</node>
 			<node name="cancelMenu" value="Меню выхода из программы">
@@ -559,9 +578,6 @@
 					<node name="defaultLanguage" value="Язык по умолчанию"/>
 					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
 					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
-				</node>
-				<node name="Selection" value="Пометка">
-					<node name="enableSelection" value="Разрешить помечать текст"/>
 				</node>
 			</node>
 		</node>

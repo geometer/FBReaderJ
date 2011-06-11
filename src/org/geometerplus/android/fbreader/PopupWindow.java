@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.content.Context;
@@ -28,15 +29,28 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class ControlPanel extends LinearLayout {
-	public ControlPanel(Context context, RelativeLayout root, boolean fillWidth) {
-		super(context);
+public class PopupWindow extends LinearLayout {
+	public static enum Location {
+		Bottom,
+		Floating
+	}
+
+	private final Activity myActivity;
+
+	public PopupWindow(Activity activity, RelativeLayout root, Location location, boolean fillWidth) {
+		super(activity);
+		myActivity = activity;
 
 		setFocusable(false);
 		
 		final LayoutInflater inflater =
-			(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.control_panel, this, true);
+			(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater.inflate(
+			location == Location.Bottom
+				? R.layout.control_panel_bottom : R.layout.control_panel_floating,
+			this,
+			true
+		);
 
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
 			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -54,47 +68,22 @@ public class ControlPanel extends LinearLayout {
 		return true;
 	}
 
-	private interface VisibilityAction {
-		int SHOW_ANIMATED = 0;
-		int SHOW_INSTANTLY = 1;
-		int HIDE_ANIMATED = 2;
-		int HIDE_INSTANTLY = 3;
-	}
-	
-	private Handler myVisibilityHandler = new Handler() {
-		public void handleMessage(Message message) {
-			switch (message.what) {
-				case VisibilityAction.SHOW_ANIMATED:
-					fade(View.VISIBLE, 0.0f, 1.0f);
-					break;
-				case VisibilityAction.SHOW_INSTANTLY:
-					setVisibility(View.VISIBLE);
-					break;
-				case VisibilityAction.HIDE_ANIMATED:
-					fade(View.GONE, 1.0f, 0.0f);
-					break;
-				case VisibilityAction.HIDE_INSTANTLY:
-					setVisibility(View.GONE);
-					break;
+	public void show() {
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				setVisibility(View.VISIBLE);
 			}
-		}
-	};
-
-	public void show(boolean animate) {
-		myVisibilityHandler.sendEmptyMessage(animate ? VisibilityAction.SHOW_ANIMATED : VisibilityAction.SHOW_INSTANTLY);
+		});
 	}
 
-	public void hide(boolean animate) {
-		myVisibilityHandler.sendEmptyMessage(animate ? VisibilityAction.HIDE_ANIMATED : VisibilityAction.HIDE_INSTANTLY);
+	public void hide() {
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				setVisibility(View.GONE);
+			}
+		});
 	}
 	
-	private void fade(int visibility, float startAlpha, float endAlpha) {
-		final AlphaAnimation animation = new AlphaAnimation(startAlpha, endAlpha);
-		animation.setDuration(500);
-		startAnimation(animation);
-		setVisibility(visibility);
-	}
-
 	public void addView(View view) {
 		((LinearLayout)findViewById(R.id.tools_plate)).addView(view);
 	}

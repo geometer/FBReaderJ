@@ -64,10 +64,6 @@ public class NetworkSearchActivity extends Activity {
 			myPattern = pattern;
 		}
 
-		public String getResourceKey() {
-			return "searchingNetwork";
-		}
-
 		@Override
 		public void doBefore() {
 		}

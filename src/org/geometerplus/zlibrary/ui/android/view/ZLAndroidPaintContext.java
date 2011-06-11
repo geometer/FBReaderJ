@@ -43,6 +43,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private final int myHeight;
 	private final int myScrollbarWidth;
 
+	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
+
 	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
 	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
@@ -54,6 +56,8 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myTextPaint.setLinearText(false);
 		myTextPaint.setAntiAlias(true);
 		myTextPaint.setSubpixelText(false);
+
+		myLinePaint.setStyle(Paint.Style.STROKE);
 
 		myOutlinePaint.setColor(Color.rgb(255, 127, 0));
 		myOutlinePaint.setAntiAlias(true);
@@ -96,6 +100,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			}
 		}
 		if (ourWallpaper != null) {
+			myBackgroundColor = ZLAndroidColorUtil.getAverageColor(ourWallpaper);
 			final int w = ourWallpaper.getWidth();
 			final int h = ourWallpaper.getHeight();
 			for (int cw = 0, iw = 1; cw < myWidth; cw += w, ++iw) {
@@ -110,8 +115,34 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 
 	@Override
 	public void clear(ZLColor color) {
+		myBackgroundColor = color;
 		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
 		myCanvas.drawRect(0, 0, myWidth + myScrollbarWidth, myHeight, myFillPaint);
+	}
+
+	@Override
+	public ZLColor getBackgroundColor() {
+		return myBackgroundColor;
+	}
+
+	public void fillPolygon(int[] xs, int ys[]) {
+		final Path path = new Path();
+		final int last = xs.length - 1;
+		path.moveTo(xs[last], ys[last]);
+		for (int i = 0; i <= last; ++i) {
+			path.lineTo(xs[i], ys[i]);
+		}
+		myCanvas.drawPath(path, myFillPaint);
+	}
+
+	public void drawPolygonalLine(int[] xs, int ys[]) {
+		final Path path = new Path();
+		final int last = xs.length - 1;
+		path.moveTo(xs[last], ys[last]);
+		for (int i = 0; i <= last; ++i) {
+			path.lineTo(xs[i], ys[i]);
+		}
+		myCanvas.drawPath(path, myLinePaint);
 	}
 
 	public void drawOutline(int[] xs, int ys[]) {
@@ -201,9 +232,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void setFillColor(ZLColor color, int style) {
+	public void setFillColor(ZLColor color, int alpha, int style) {
 		// TODO: use style
-		myFillPaint.setColor(ZLAndroidColorUtil.rgb(color));
+		myFillPaint.setColor(ZLAndroidColorUtil.rgba(color, alpha));
 	}
 
 	public int getWidth() {

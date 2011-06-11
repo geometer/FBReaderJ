@@ -23,13 +23,11 @@ import java.util.*;
 import java.util.zip.GZIPInputStream;
 import java.io.*;
 import java.net.*;
-import javax.net.ssl.*;
 
 import org.apache.http.*;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
@@ -42,7 +40,6 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 public class ZLNetworkManager {
 	private static ZLNetworkManager ourManager;
@@ -124,10 +121,10 @@ public class ZLNetworkManager {
 		myHttpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
 	}
 
-	private void setCommonHTTPOptions(HttpMessage request) throws ZLNetworkException {
-		//httpConnection.setInstanceFollowRedirects(true);
-		//httpConnection.setAllowUserInteraction(true);
-	}
+	/*private void setCommonHTTPOptions(HttpMessage request) throws ZLNetworkException {
+		httpConnection.setInstanceFollowRedirects(true);
+		httpConnection.setAllowUserInteraction(true);
+	}*/
 
 	public void setCredentialsCreator(CredentialsCreator creator) {
 		myCredentialsCreator = creator;

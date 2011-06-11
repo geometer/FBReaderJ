@@ -77,12 +77,16 @@ public final class Bookmark extends ZLTextFixedPosition {
 	}
 
 	public Bookmark(Book book, String modelId, ZLTextWordCursor cursor, int maxLength, boolean isVisible) {
-		super(cursor);
+		this(book, modelId, cursor, createBookmarkText(cursor, maxLength), isVisible);
+	}
+
+	public Bookmark(Book book, String modelId, ZLTextPosition position, String text, boolean isVisible) {
+		super(position);
 
 		myId = -1;
 		myBookId = book.getId();
 		myBookTitle = book.getTitle();
-		myText = createBookmarkText(cursor, maxLength);
+		myText = text;
 		myCreationDate = new Date();
 		ModelId = modelId;
 		IsVisible = isVisible;

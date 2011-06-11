@@ -53,12 +53,18 @@ public interface ActionCode {
 	String ROTATE = "rotate";
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
+
 	//aagrenmod
 	String DROPBOXSYNC = "dropboxsync";
 	//aagrenmod
-	
-	String COPY_SELECTED_TEXT_TO_CLIPBOARD = "copyToClipboard";
-	String CLEAR_SELECTION = "clearSelection";
 
 	String PROCESS_HYPERLINK = "processHyperlink";
+
+	String SELECTION_SHOW_PANEL = "selectionShowPanel";
+	String SELECTION_HIDE_PANEL = "selectionHidePanel";
+	String SELECTION_CLEAR = "selectionClear";
+	String SELECTION_COPY_TO_CLIPBOARD = "selectionCopyToClipboard";
+	String SELECTION_SHARE = "selectionShare";
+	String SELECTION_OPEN_IN_DICTIONARY = "selectionOpenInDictionary";
+	String SELECTION_ADD_BOOKMARK = "selectionAddBookmark";
 }

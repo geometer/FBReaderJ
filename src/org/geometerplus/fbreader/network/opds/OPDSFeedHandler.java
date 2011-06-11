@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network.opds;
 
-import java.util.*;
-
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -188,7 +186,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 
 	private NetworkItem readCatalogItem(OPDSEntry entry) {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
-		final UrlInfoCollection urlMap = new UrlInfoCollection();
+		final UrlInfoCollection<UrlInfo> urlMap = new UrlInfoCollection<UrlInfo>();
 
 		boolean urlIsAlternate = false;
 		String litresRel = null;
