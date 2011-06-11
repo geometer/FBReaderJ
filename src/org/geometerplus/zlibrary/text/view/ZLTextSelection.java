@@ -22,8 +22,8 @@ package org.geometerplus.zlibrary.text.view;
 public class ZLTextSelection {
 	private final ZLTextView myView;
 
-	private ZLTextRegion myLeftMostRegion;
-	private ZLTextRegion myRightMostRegion;
+	private ZLTextRegion.Soul myLeftMostRegionSoul;
+	private ZLTextRegion.Soul myRightMostRegionSoul;
 
 	private Scroller myScroller;
 
@@ -32,7 +32,7 @@ public class ZLTextSelection {
 	}
 
 	boolean isEmpty() {
-		return myLeftMostRegion == null;
+		return myLeftMostRegionSoul == null;
 	}
 
 	boolean clear() {
@@ -41,22 +41,22 @@ public class ZLTextSelection {
 		}
 
 		stop();
-		myLeftMostRegion = null;
-		myRightMostRegion = null;
+		myLeftMostRegionSoul = null;
+		myRightMostRegionSoul = null;
 		return true;
 	}
 
 	boolean start(int x, int y) {
 		clear();
 
-		myLeftMostRegion = myView.findRegion(
+		final ZLTextRegion region = myView.findRegion(
 			x, y, ZLTextView.MAX_SELECTION_DISTANCE, ZLTextRegion.AnyRegionFilter
 		);
-		if (myLeftMostRegion == null) {
+		if (region == null) {
 			return false;
 		}
 
-		myRightMostRegion = myLeftMostRegion;
+		myRightMostRegionSoul = myLeftMostRegionSoul = region.getSoul();
 		return true;
 	}
 
@@ -111,22 +111,23 @@ public class ZLTextSelection {
 			return cursorToMove;
 		}
 
+		final ZLTextRegion.Soul soul = region.getSoul();
 		if (cursorToMove == ZLTextSelectionCursor.Right) {
-			if (myLeftMostRegion.compareTo(region) <= 0) {
-				myRightMostRegion = region;
+			if (myLeftMostRegionSoul.compareTo(soul) <= 0) {
+				myRightMostRegionSoul = soul;
 				return cursorToMove;
 			} else {
-				myRightMostRegion = myLeftMostRegion;
-				myLeftMostRegion = region;
+				myRightMostRegionSoul = myLeftMostRegionSoul;
+				myLeftMostRegionSoul = soul;
 				return ZLTextSelectionCursor.Left;
 			}
 		} else {
-			if (myRightMostRegion.compareTo(region) >= 0) {
-				myLeftMostRegion = region;
+			if (myRightMostRegionSoul.compareTo(soul) >= 0) {
+				myLeftMostRegionSoul = soul;
 				return cursorToMove;
 			} else {
-				myLeftMostRegion = myRightMostRegion;
-				myRightMostRegion = region;
+				myLeftMostRegionSoul = myRightMostRegionSoul;
+				myRightMostRegionSoul = soul;
 				return ZLTextSelectionCursor.Right;
 			}
 		}
@@ -135,16 +136,92 @@ public class ZLTextSelection {
 	boolean isAreaSelected(ZLTextElementArea area) {
 		return
 			!isEmpty()
-			&& myLeftMostRegion.getFirstArea().weakCompareTo(area) <= 0
-			&& myRightMostRegion.getLastArea().weakCompareTo(area) >= 0;
+			&& myLeftMostRegionSoul.compareTo(area) <= 0
+			&& myRightMostRegionSoul.compareTo(area) >= 0;
 	}
 
-	ZLTextElementArea getStartArea() {
-		return myLeftMostRegion.getFirstArea();
+	ZLTextPosition getStartPosition() {
+		if (isEmpty()) {
+			return null;
+		}
+		return new ZLTextFixedPosition(
+			myLeftMostRegionSoul.ParagraphIndex,
+			myLeftMostRegionSoul.StartElementIndex,
+			0
+		);
 	}
 
-	ZLTextElementArea getEndArea() {
-		return myRightMostRegion.getLastArea();
+	ZLTextPosition getEndPosition() {
+		if (isEmpty()) {
+			return null;
+		}
+		return new ZLTextFixedPosition(
+			myRightMostRegionSoul.ParagraphIndex,
+			myRightMostRegionSoul.EndElementIndex,
+			0
+		);
+	}
+
+	ZLTextElementArea getStartArea(ZLTextPage page) {
+		if (isEmpty()) {
+			return null;
+		}
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (vector.isEmpty()) {
+			return null;
+		}
+		final ZLTextRegion region = vector.getRegion(myLeftMostRegionSoul);
+		if (region != null) {
+			return region.getFirstArea();
+		}
+		if (myRightMostRegionSoul.compareTo(vector.get(0)) >= 0) {
+			return vector.get(0);
+		}
+		return null;
+	}
+
+	ZLTextElementArea getEndArea(ZLTextPage page) {
+		if (isEmpty()) {
+			return null;
+		}
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (vector.isEmpty()) {
+			return null;
+		}
+		final ZLTextRegion region = vector.getRegion(myRightMostRegionSoul);
+		if (region != null) {
+			return region.getLastArea();
+		}
+		if (myRightMostRegionSoul.compareTo(vector.get(vector.size() - 1)) >= 0) {
+			return vector.get(vector.size() - 1);
+		}
+		return null;
+	}
+
+	boolean hasAPartBeforePage(ZLTextPage page) {
+		if (isEmpty()) {
+			return false;
+		}
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (vector.isEmpty()) {
+			return false;
+		}
+		final ZLTextElementArea firstPageArea = vector.get(0);
+		final int cmp = myLeftMostRegionSoul.compareTo(firstPageArea);
+		return cmp < 0 || (cmp == 0 && !firstPageArea.isFirstInElement());
+	}
+
+	boolean hasAPartAfterPage(ZLTextPage page) {
+		if (isEmpty()) {
+			return false;
+		}
+		final ZLTextElementAreaVector vector = page.TextElementMap;
+		if (vector.isEmpty()) {
+			return false;
+		}
+		final ZLTextElementArea lastPageArea = vector.get(vector.size() - 1);
+		final int cmp = myRightMostRegionSoul.compareTo(lastPageArea);
+		return cmp > 0 || (cmp == 0 && !lastPageArea.isLastInElement());
 	}
 
 	private class Scroller implements Runnable {

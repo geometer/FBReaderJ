@@ -22,20 +22,8 @@ package org.geometerplus.zlibrary.text.view;
 public class ZLTextImageRegionSoul extends ZLTextRegion.Soul {
 	public final ZLTextImageElement ImageElement;
 
-	ZLTextImageRegionSoul(ZLTextImageElement imageElement) {
+	ZLTextImageRegionSoul(ZLTextPosition position, ZLTextImageElement imageElement) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
 		ImageElement = imageElement;
-	}
-
-	@Override
-	boolean accepts(ZLTextElementArea area) {
-		return ImageElement == area.Element;
-	}
-
-	@Override
-	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextImageRegionSoul)) {
-			return false;
-		}
-		return ImageElement == ((ZLTextImageRegionSoul)other).ImageElement;
 	}
 }

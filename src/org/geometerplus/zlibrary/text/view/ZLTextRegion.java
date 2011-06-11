@@ -23,12 +23,62 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-public final class ZLTextRegion implements Comparable<ZLTextRegion> {
-	public static abstract class Soul {
-		abstract boolean accepts(ZLTextElementArea area);
+public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
+	public static abstract class Soul implements Comparable<Soul> {
+		final int ParagraphIndex;
+		final int StartElementIndex;
+		final int EndElementIndex;
+
+		protected Soul(int paragraphIndex, int startElementIndex, int endElementIndex) {
+			ParagraphIndex = paragraphIndex;
+			StartElementIndex = startElementIndex;
+			EndElementIndex = endElementIndex;
+		}
+
+		final boolean accepts(ZLTextElementArea area) {
+			return compareTo(area) == 0;
+		}
 	
 		@Override
-		public abstract boolean equals(Object other);
+		public final boolean equals(Object other) {
+			if (other == this) {
+				return true;
+			}
+			if (!(other instanceof Soul)) {
+				return false;
+			}
+			final Soul soul = (Soul)other;
+			return
+				ParagraphIndex == soul.ParagraphIndex &&
+				StartElementIndex == soul.StartElementIndex &&
+				EndElementIndex == soul.EndElementIndex;
+		}
+
+		public final int compareTo(Soul soul) {
+			if (ParagraphIndex != soul.ParagraphIndex) {
+				return ParagraphIndex < soul.ParagraphIndex ? -1 : 1;
+			}
+			if (EndElementIndex < soul.StartElementIndex) {
+				return -1;
+			}
+			if (StartElementIndex > soul.EndElementIndex) {
+				return 1;
+			}
+			return 0;
+		}
+
+		public final int compareTo(ZLTextElementArea area) {
+			if (ParagraphIndex != area.ParagraphIndex) {
+				return ParagraphIndex < area.ParagraphIndex ? -1 : 1;
+			}
+			if (EndElementIndex < area.ElementIndex) {
+				return -1;
+			}
+			if (StartElementIndex > area.ElementIndex) {
+				return 1;
+			}
+			return 0;
+		}
 	}
 
 	public static interface Filter {
@@ -155,6 +205,7 @@ public final class ZLTextRegion implements Comparable<ZLTextRegion> {
 		return other == null || other.isExactlyUnder(this);
 	}
 
+	/*
 	public int compareTo(ZLTextRegion other) {
 		if (myFromIndex != other.myFromIndex) {
 			return myFromIndex < other.myFromIndex ? -1 : 1;
@@ -164,4 +215,5 @@ public final class ZLTextRegion implements Comparable<ZLTextRegion> {
 		}
 		return 0;
 	}
+	*/
 }

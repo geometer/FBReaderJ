@@ -22,20 +22,8 @@ package org.geometerplus.zlibrary.text.view;
 public class ZLTextWordRegionSoul extends ZLTextRegion.Soul {
 	public final ZLTextWord Word;
 
-	ZLTextWordRegionSoul(ZLTextWord word) {
+	ZLTextWordRegionSoul(ZLTextPosition position, ZLTextWord word) {
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
 		Word = word;
-	}
-
-	@Override
-	boolean accepts(ZLTextElementArea area) {
-		return Word == area.Element;
-	}
-
-	@Override
-	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextWordRegionSoul)) {
-			return false;
-		}
-		return Word == ((ZLTextWordRegionSoul)other).Word;
 	}
 }

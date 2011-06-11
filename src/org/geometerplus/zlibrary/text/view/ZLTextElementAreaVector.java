@@ -43,11 +43,11 @@ final class ZLTextElementAreaVector extends ArrayList<ZLTextElementArea> {
 			ZLTextRegion.Soul soul = null;
 			final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
 			if (hyperlink.Id != null) {
-				soul = new ZLTextHyperlinkRegionSoul(hyperlink);
+				soul = new ZLTextHyperlinkRegionSoul(area, hyperlink);
 			} else if (area.Element instanceof ZLTextImageElement) {
-				soul = new ZLTextImageRegionSoul((ZLTextImageElement)area.Element);
+				soul = new ZLTextImageRegionSoul(area, (ZLTextImageElement)area.Element);
 			} else if (area.Element instanceof ZLTextWord && ((ZLTextWord)area.Element).isAWord()) {
-				soul = new ZLTextWordRegionSoul((ZLTextWord)area.Element);
+				soul = new ZLTextWordRegionSoul(area, (ZLTextWord)area.Element);
 			}
 			if (soul != null) {
 				myCurrentElementRegion = new ZLTextRegion(soul, this, size());

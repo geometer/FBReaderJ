@@ -22,20 +22,9 @@ package org.geometerplus.zlibrary.text.view;
 public class ZLTextHyperlinkRegionSoul extends ZLTextRegion.Soul {
 	public final ZLTextHyperlink Hyperlink;
 
-	ZLTextHyperlinkRegionSoul(ZLTextHyperlink hyperlink) {
+	ZLTextHyperlinkRegionSoul(ZLTextPosition position, ZLTextHyperlink hyperlink) {
+		// TODO: fix this call
+		super(position.getParagraphIndex(), position.getElementIndex(), position.getElementIndex());
 		Hyperlink = hyperlink;
-	}
-
-	@Override
-	boolean accepts(ZLTextElementArea area) {
-		return Hyperlink == area.Style.Hyperlink;
-	}
-
-	@Override
-	public boolean equals(Object other) {
-		if (!(other instanceof ZLTextHyperlinkRegionSoul)) {
-			return false;
-		}
-		return Hyperlink == ((ZLTextHyperlinkRegionSoul)other).Hyperlink;
 	}
 }

@@ -272,8 +272,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	private Point getSelectionCursorPoint(ZLTextPage page, ZLTextSelectionCursor cursor) {
-		final ZLTextElementAreaVector vector = page.TextElementMap;
-		if (cursor == ZLTextSelectionCursor.None || mySelection.isEmpty() || vector.isEmpty()) {
+		if (cursor == ZLTextSelectionCursor.None) {
 			return null;
 		}
 
@@ -281,19 +280,20 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			return myMovedSelectionCursorPoint;
 		}
 
-		final ZLTextElementArea firstArea = vector.get(0);
-		final ZLTextElementArea lastArea = vector.get(vector.size() - 1);
-
 		if (cursor == ZLTextSelectionCursor.Left) {	
-			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
-			if (selectionStartArea.compareTo(firstArea) >= 0
-				&& selectionStartArea.compareTo(lastArea) <= 0) {
+			if (mySelection.hasAPartBeforePage(page)) {
+				return null;
+			}
+			final ZLTextElementArea selectionStartArea = mySelection.getStartArea(page);
+			if (selectionStartArea != null) {
 				return new Point(selectionStartArea.XStart, selectionStartArea.YEnd);
 			}
 		} else {
-			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
-			if (selectionEndArea.compareTo(firstArea) >= 0
-				&& selectionEndArea.compareTo(lastArea) <= 0) {
+			if (mySelection.hasAPartAfterPage(page)) {
+				return null;
+			}
+			final ZLTextElementArea selectionEndArea = mySelection.getEndArea(page);
+			if (selectionEndArea != null) {
 				return new Point(selectionEndArea.XEnd, selectionEndArea.YEnd);
 			}
 		}
@@ -669,10 +669,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (!mySelection.isEmpty() && from != to) {
 			final ZLTextElementArea fromArea = page.TextElementMap.get(from);
 			final ZLTextElementArea toArea = page.TextElementMap.get(to - 1);
-			final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
-			final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
-			if (fromArea.compareTo(selectionEndArea) <= 0
-				&& toArea.compareTo(selectionStartArea) >= 0) {
+			final ZLTextElementArea selectionStartArea = mySelection.getStartArea(page);
+			final ZLTextElementArea selectionEndArea = mySelection.getEndArea(page);
+			if (selectionStartArea != null
+				&& selectionEndArea != null
+				&& selectionStartArea.compareTo(toArea) <= 0
+				&& selectionEndArea.compareTo(fromArea) >= 0) {
 				final int top = y + 1;
 				int left, right, bottom = y + info.Height + info.Descent;
 				if (selectionStartArea.compareTo(fromArea) < 0) {
@@ -1416,16 +1418,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (mySelection.isEmpty() || vector.isEmpty()) {
 			return 0;
 		}
-		final ZLTextElementArea selectionStartArea = mySelection.getStartArea();
-		final int index = vector.indexOf(selectionStartArea);
-		if (index != -1) {
-			return vector.get(index).YStart;
+		final ZLTextElementArea selectionStartArea = mySelection.getStartArea(myCurrentPage);
+		if (selectionStartArea != null) {
+			return selectionStartArea.YStart;
 		}
-		final ZLTextElementArea endArea = vector.get(vector.size() - 1);
-		if (selectionStartArea.compareTo(endArea) > 0) {
-			return endArea.YEnd;
+		if (mySelection.hasAPartBeforePage(myCurrentPage)) {
+			return vector.get(0).YStart;
+		} else {
+			return vector.get(vector.size() - 1).YEnd;
 		}
-		return vector.get(0).YStart;
 	}
 
 	public int getSelectionEndY() {
@@ -1433,26 +1434,23 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (mySelection.isEmpty() || vector.isEmpty()) {
 			return 0;
 		}
-		final ZLTextElementArea selectionEndArea = mySelection.getEndArea();
-		final int index = vector.indexOf(selectionEndArea);
-		if (index != -1) {
-			return vector.get(index).YEnd;
+		final ZLTextElementArea selectionEndArea = mySelection.getEndArea(myCurrentPage);
+		if (selectionEndArea != null) {
+			return selectionEndArea.YEnd;
 		}
-		final ZLTextElementArea endArea = vector.get(vector.size() - 1);
-		if (selectionEndArea.compareTo(endArea) > 0) {
-			return endArea.YEnd;
+		if (mySelection.hasAPartAfterPage(myCurrentPage)) {
+			return vector.get(vector.size() - 1).YEnd;
+		} else {
+			return vector.get(0).YStart;
 		}
-		return vector.get(0).YStart;
 	}
 
 	public ZLTextPosition getSelectionStartPosition() {
-		final ZLTextPosition start = mySelection.getStartArea();
-		return new ZLTextFixedPosition(start.getParagraphIndex(), start.getElementIndex(), 0);
+		return mySelection.getStartPosition();
 	}
 
 	public ZLTextPosition getSelectionEndPosition() {
-		final ZLTextPosition end = mySelection.getEndArea();
-		return new ZLTextFixedPosition(end.getParagraphIndex(), end.getElementIndex(), Integer.MAX_VALUE);
+		return mySelection.getEndPosition();
 	}
 
 	public boolean isSelectionEmpty() {
