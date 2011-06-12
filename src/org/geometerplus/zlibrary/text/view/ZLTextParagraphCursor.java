@@ -34,7 +34,7 @@ public final class ZLTextParagraphCursor {
 		private int myFirstMark;
 		private int myLastMark;
 		private final List<ZLTextMark> myMarks;
-		
+
 		private Processor(ZLTextParagraph paragraph, LineBreaker lineBreaker, List<ZLTextMark> marks, int paragraphIndex, ArrayList<ZLTextElement> elements) {
 			myParagraph = paragraph;
 			myLineBreaker = lineBreaker;
@@ -54,20 +54,33 @@ public final class ZLTextParagraphCursor {
 		}
 
 		void fill() {
+			int hyperlinkDepth = 0;
+			ZLTextHyperlink hyperlink = null;
+
 			final ArrayList<ZLTextElement> elements = myElements;
 			for (ZLTextParagraph.EntryIterator it = myParagraph.iterator(); it.hasNext(); ) {
 				it.next();
 				switch (it.getType()) {
 					case ZLTextParagraph.Entry.TEXT:
-						processTextEntry(it.getTextData(), it.getTextOffset(), it.getTextLength());
+						processTextEntry(it.getTextData(), it.getTextOffset(), it.getTextLength(), hyperlink);
 						break;
 					case ZLTextParagraph.Entry.CONTROL:
+						if (hyperlink != null) {
+							hyperlinkDepth += it.getControlIsStart() ? 1 : -1;
+							if (hyperlinkDepth == 0) {
+								hyperlink = null;
+							}
+						}
 						if (it.getControlIsStart()) {
 							final byte hyperlinkType = it.getHyperlinkType();
 							if (hyperlinkType != 0) {
-								elements.add(new ZLTextHyperlinkControlElement(
-									it.getControlKind(), hyperlinkType, it.getHyperlinkId()
-								));
+								final ZLTextHyperlinkControlElement control =
+									new ZLTextHyperlinkControlElement(
+										it.getControlKind(), hyperlinkType, it.getHyperlinkId()
+									);
+								elements.add(control);
+								hyperlink = control.Hyperlink;
+								hyperlinkDepth = 1;
 								break;
 							}
 						}
@@ -79,6 +92,9 @@ public final class ZLTextParagraphCursor {
 						if (image != null) {
 							ZLImageData data = ZLImageManager.Instance().getImageData(image);
 							if (data != null) {
+								if (hyperlink != null) {
+									hyperlink.addElementIndex(elements.size());
+								}
 								elements.add(new ZLTextImageElement(imageEntry.Id, data, image.getURI()));
 							}
 						}
@@ -92,12 +108,12 @@ public final class ZLTextParagraphCursor {
 				}
 			}
 		}
-		
+
 		private static byte[] ourBreaks = new byte[1024];
 		private static final int NO_SPACE = 0;
 		private static final int SPACE = 1;
 		//private static final int NON_BREAKABLE_SPACE = 2;
-		private void processTextEntry(final char[] data, final int offset, final int length) {
+		private void processTextEntry(final char[] data, final int offset, final int length, ZLTextHyperlink hyperlink) {
 			if (length != 0) {
 				if (ourBreaks.length < length) {
 					ourBreaks = new byte[length];
@@ -116,7 +132,7 @@ public final class ZLTextParagraphCursor {
 					ch = data[offset + index];
 					if (Character.isSpace(ch)) {
 						if (index > 0 && spaceState == NO_SPACE) {
-							addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart);
+							addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart, hyperlink);
 						}
 						spaceState = SPACE;
 					} else {
@@ -134,7 +150,7 @@ public final class ZLTextParagraphCursor {
 									breaks[index - 1] != LineBreaker.NOBREAK &&
 									previousChar != '-' &&
 									index != wordStart) {
-									addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart);
+									addWord(data, offset + wordStart, index - wordStart, myOffset + wordStart, hyperlink);
 									wordStart = index;
 								}
 								break;
@@ -149,14 +165,14 @@ public final class ZLTextParagraphCursor {
 					//case NON_BREAKABLE_SPACE:
 						//break;
 					case NO_SPACE:
-						addWord(data, offset + wordStart, length - wordStart, myOffset + wordStart);
+						addWord(data, offset + wordStart, length - wordStart, myOffset + wordStart, hyperlink);
 						break;
 				}
 				myOffset += length;
 			}
 		}
 
-		private final void addWord(char[] data, int offset, int len, int paragraphOffset) {
+		private final void addWord(char[] data, int offset, int len, int paragraphOffset, ZLTextHyperlink hyperlink) {
 			ZLTextWord word = new ZLTextWord(data, offset, len, paragraphOffset);
 			for (int i = myFirstMark; i < myLastMark; ++i) {
 				final ZLTextMark mark = (ZLTextMark)myMarks.get(i);
@@ -164,10 +180,13 @@ public final class ZLTextParagraphCursor {
 					word.addMark(mark.Offset - paragraphOffset, mark.Length);
 				}
 			}
-			myElements.add(word);		
+			if (hyperlink != null) {
+				hyperlink.addElementIndex(myElements.size());
+			}
+			myElements.add(word);
 		}
 	}
-		
+
 	public final int Index;
 	public final ZLTextModel Model;
 	private final ArrayList<ZLTextElement> myElements = new ArrayList<ZLTextElement>();
@@ -177,7 +196,7 @@ public final class ZLTextParagraphCursor {
 		Index = Math.min(index, Model.getParagraphsNumber() - 1);
 		fill();
 	}
-	
+
 	static ZLTextParagraphCursor cursor(ZLTextModel model, int index) {
 		ZLTextParagraphCursor result = ZLTextParagraphCursorCache.get(model, index);
 		if (result == null) {
@@ -201,7 +220,7 @@ public final class ZLTextParagraphCursor {
 				break;
 		}
 	}
-	
+
 	void clear() {
 		myElements.clear();
 	}
@@ -213,11 +232,11 @@ public final class ZLTextParagraphCursor {
 	public boolean isLast() {
 		return (Index + 1 >= Model.getParagraphsNumber());
 	}
-	
+
 	public boolean isEndOfSection() {
-		return (Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);	
+		return (Model.getParagraph(Index).getKind() == ZLTextParagraph.Kind.END_OF_SECTION_PARAGRAPH);
 	}
-	
+
 	int getParagraphLength() {
 		return myElements.size();
 	}
@@ -229,7 +248,7 @@ public final class ZLTextParagraphCursor {
 	public ZLTextParagraphCursor next() {
 		return isLast() ? null : cursor(Model, Index + 1);
 	}
-	
+
 	ZLTextElement getElement(int index) {
 		try {
 			return myElements.get(index);
@@ -239,7 +258,7 @@ public final class ZLTextParagraphCursor {
 	}
 
 	ZLTextParagraph getParagraph() {
-		return Model.getParagraph(Index);	
+		return Model.getParagraph(Index);
 	}
 
 	@Override
