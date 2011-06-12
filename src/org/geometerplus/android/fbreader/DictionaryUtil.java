@@ -45,7 +45,8 @@ public abstract class DictionaryUtil {
 	// Map: dictionary info -> hide if package is not installed
 	private static LinkedHashMap<PackageInfo,Boolean> ourDictionaryInfos =
 		new LinkedHashMap<PackageInfo,Boolean>();
-	private static ZLStringOption ourDictionaryOption;
+	private static ZLStringOption ourSingleWordTranslatorOption;
+	private static ZLStringOption ourMultiWordTranslatorOption;
 
 	private static class InfoReader extends ZLXMLReaderAdapter {
 		@Override
@@ -113,15 +114,24 @@ public abstract class DictionaryUtil {
 		throw new RuntimeException("There are no available dictionary infos");
 	}
 
-	public static ZLStringOption dictionaryOption() {
-		if (ourDictionaryOption == null) {
-			ourDictionaryOption = new ZLStringOption("Dictionary", "Id", firstInfo().Id);
+	public static ZLStringOption singleWordTranslatorOption() {
+		if (ourSingleWordTranslatorOption == null) {
+			ourSingleWordTranslatorOption = new ZLStringOption("Dictionary", "Id", firstInfo().Id);
 		}
-		return ourDictionaryOption;
+		return ourSingleWordTranslatorOption;
 	}
 
-	private static PackageInfo getCurrentDictionaryInfo() {
-		final String id = dictionaryOption().getValue();
+	public static ZLStringOption multiWordTranslatorOption() {
+		if (ourMultiWordTranslatorOption == null) {
+			ourMultiWordTranslatorOption = new ZLStringOption("Translator", "Id", firstInfo().Id);
+		}
+		return ourMultiWordTranslatorOption;
+	}
+
+	private static PackageInfo getCurrentDictionaryInfo(boolean singleWord) {
+		final ZLStringOption option = singleWord
+			? singleWordTranslatorOption() : multiWordTranslatorOption();
+		final String id = option.getValue();
 		for (PackageInfo info : infos().keySet()) {
 			if (info.Id.equals(id)) {
 				return info;
@@ -130,8 +140,8 @@ public abstract class DictionaryUtil {
 		return firstInfo();
 	}
 
-	private static Intent getDictionaryIntent(String text) {
-		return getDictionaryIntent(getCurrentDictionaryInfo(), text);
+	private static Intent getDictionaryIntent(String text, boolean singleWord) {
+		return getDictionaryIntent(getCurrentDictionaryInfo(singleWord), text);
 	}
 
 	public static Intent getDictionaryIntent(PackageInfo dictionaryInfo, String text) {
@@ -154,8 +164,19 @@ public abstract class DictionaryUtil {
 		}			
 	}
 
-	public static void openTextInDictionary(Activity activity, String text, int selectionTop, int selectionBottom) {
-		final PackageInfo info = getCurrentDictionaryInfo();
+	public static void openTextInDictionary(Activity activity, String text, boolean singleWord, int selectionTop, int selectionBottom) {
+		if (singleWord) {
+			int start = 0;
+			int end = text.length();
+			for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
+			for (; start < end && !Character.isLetterOrDigit(text.charAt(end - 1)); --end);
+			if (start == end) {
+				return;
+			}
+			text = text.substring(start, end);
+		}
+
+		final PackageInfo info = getCurrentDictionaryInfo(singleWord);
 		final Intent intent = getDictionaryIntent(info, text);
 		try {
 			if ("ColorDict".equals(info.Id)) {
@@ -175,30 +196,21 @@ public abstract class DictionaryUtil {
 			}
 			activity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			DictionaryUtil.installDictionaryIfNotInstalled(activity);
+			DictionaryUtil.installDictionaryIfNotInstalled(activity, singleWord);
 		}
 	}
 
 	public static void openWordInDictionary(Activity activity, ZLTextWord word, ZLTextRegion region) { 
-		final String text = word.toString();
-		int start = 0;
-		int end = text.length();
-		for (; start < end && !Character.isLetterOrDigit(text.charAt(start)); ++start);
-		for (; start < end && !Character.isLetterOrDigit(text.charAt(end - 1)); --end);
-		if (start == end) {
-			return;
-		}
-
 		openTextInDictionary(
-			activity, text.substring(start, end), region.getTop(), region.getBottom()
+			activity, word.toString(), true, region.getTop(), region.getBottom()
 		);
 	}
 
-	public static void installDictionaryIfNotInstalled(final Activity activity) {
-		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test"), false)) {
+	public static void installDictionaryIfNotInstalled(final Activity activity, boolean singleWord) {
+		if (PackageUtil.canBeStarted(activity, getDictionaryIntent("test", singleWord), false)) {
 			return;
 		}
-		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo();
+		final PackageInfo dictionaryInfo = getCurrentDictionaryInfo(singleWord);
 
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");

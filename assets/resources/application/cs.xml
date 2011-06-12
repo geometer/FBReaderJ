@@ -542,6 +542,7 @@
 			<node name="dictionary" value="Slovník">
 				<node name="summary" value="Nastavení slovníku"/>
 				<node name="dictionary" value="Slovník"/>
+				<node name="translator" value="Translator" toBeTranslated="true"/>
 				<node name="tappingAction" value="Dlouhé klepnutí">
 					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 					<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>

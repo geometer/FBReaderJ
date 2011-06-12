@@ -528,6 +528,7 @@
 			<node name="dictionary" value="Словарь">
 				<node name="summary" value="Настройки словаря"/>
 				<node name="dictionary" value="Словарь"/>
+				<node name="translator" value="Переводчик"/>
 				<node name="tappingAction" value="Действие при долгом нажатии на экран">
 					<node name="doNothing" value="Ничего не делать"/>
 					<node name="selectSingleWord" value="Выделять одно слово"/>

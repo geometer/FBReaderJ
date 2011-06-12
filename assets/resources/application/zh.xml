@@ -528,6 +528,7 @@
 			<node name="dictionary" value="字典">
 				<node name="summary" value="字典设定"/>
 				<node name="dictionary" value="字典"/>
+				<node name="translator" value="Translator" toBeTranslated="true"/>
 				<node name="tappingAction" value="长拍触行为动作">
 					<node name="doNothing" value="长拍触不做任何动作"/>
 					<node name="selectSingleWord" value="长拍触选择词语"/>
