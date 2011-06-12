@@ -218,6 +218,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					myNextPage.reset();
 					myNextPage.StartCursor.setCursor(myCurrentPage.EndCursor);
 					myNextPage.PaintState = PaintStateEnum.START_IS_KNOWN;
+					Application.getViewWidget().reset();
 				}
 				break;
 			}
