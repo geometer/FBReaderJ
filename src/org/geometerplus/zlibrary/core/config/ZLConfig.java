@@ -34,4 +34,14 @@ public abstract class ZLConfig {
 	public abstract void setValue(String group, String name, String value);
 	public abstract void unsetValue(String group, String name);
 	public abstract void removeGroup(String name);
+	/**
+	 * Save current config data to an XML file
+	 * @param filename asbolute path to config file
+	 */
+	public abstract void saveConfigToFile(String filename);
+	/**
+	 * Load config data from an XML file
+	 * @param filename asbolute path to config file
+	 */
+	public abstract void loadConfigFromFile(String filename) throws Exception;
 }

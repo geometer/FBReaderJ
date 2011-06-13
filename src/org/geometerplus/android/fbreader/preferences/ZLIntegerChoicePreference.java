@@ -52,4 +52,8 @@ class ZLIntegerChoicePreference extends ZLStringListPreference {
 	public void onAccept() {
 		myOption.setValue(myValues[findIndexOfValue(getValue())]);
 	}
+
+	public ZLIntegerOption getOption() {
+		return myOption;
+	}
 }

@@ -51,4 +51,8 @@ class BatteryLevelToTurnScreenOffPreference extends ZLStringListPreference {
 		} catch (NumberFormatException e) {
 		}
 	}
+
+	public ZLIntegerRangeOption getOption() {
+		return myOption;
+	}
 }

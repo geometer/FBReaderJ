@@ -65,4 +65,8 @@ class FontOption extends ZLStringListPreference {
 		final String value = getValue();
 		myOption.setValue(UNCHANGED.equals(value) ? "" : value);
 	}
+
+	public ZLStringOption getOption() {
+		return myOption;
+	}
 }

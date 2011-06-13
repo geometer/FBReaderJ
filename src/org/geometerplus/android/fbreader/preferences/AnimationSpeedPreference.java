@@ -156,4 +156,8 @@ class AnimationSpeedPreference extends DialogPreference implements ZLPreference 
 		public void setColorFilter(ColorFilter cf) {
 		}
 	}
+
+	public ZLIntegerRangeOption getOption() {
+		return myOption;
+	}
 }

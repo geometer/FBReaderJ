@@ -47,4 +47,12 @@ class FontStylePreference extends ZLStringListPreference {
 		myBoldOption.setValue((intValue & 0x1) == 0x1);
 		myItalicOption.setValue((intValue & 0x2) == 0x2);
 	}
+
+	public ZLBooleanOption getBoldOption() {
+		return myBoldOption;
+	}
+
+	public ZLBooleanOption getItalicOption() {
+		return myItalicOption;
+	}
 }

@@ -44,4 +44,8 @@ class ZLEnumPreference<T extends Enum<T>> extends ZLStringListPreference {
 	public void onAccept() {
 		myOption.setValue(Enum.valueOf(myOption.getValue().getDeclaringClass(), getValue()));
 	}
+
+	public ZLEnumOption<T> getOption() {
+		return myOption;
+	}
 }

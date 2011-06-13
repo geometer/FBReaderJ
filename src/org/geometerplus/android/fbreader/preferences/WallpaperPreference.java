@@ -69,4 +69,8 @@ class WallpaperPreference extends ZLStringListPreference {
 	public void onAccept() {
 		myOption.setValue(getValue());
 	}
+
+	public ZLStringOption getOption() {
+		return myOption;
+	}
 }

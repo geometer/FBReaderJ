@@ -19,26 +19,6 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import android.content.Context;
-
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-class ZLStringChoicePreference extends ZLStringListPreference {
-	private final ZLStringOption myOption;
-
-	ZLStringChoicePreference(Context context, ZLResource rootResource, String resourceKey, ZLStringOption option, String[] values) {
-		super(context, rootResource, resourceKey);
-		setList(values);
-		setInitialValue(option.getValue());
-		myOption = option;
-	}
-
-	public void onAccept() {
-		myOption.setValue(getValue());
-	}
-
-	public ZLStringOption getOption() {
-		return myOption;
-	}
+public interface ZLOptionHandler {
+	void onDialogValidated(Object data);
 }

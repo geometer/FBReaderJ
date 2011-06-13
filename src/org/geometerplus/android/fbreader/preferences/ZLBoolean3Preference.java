@@ -61,4 +61,8 @@ class ZLBoolean3Preference extends ZLStringListPreference {
 			myOption.setValue(ZLBoolean3.B3_UNDEFINED);
 		}
 	}
+
+	public ZLBoolean3Option getOption() {
+		return myOption;
+	}
 }

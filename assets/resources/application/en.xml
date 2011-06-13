@@ -585,6 +585,11 @@
 					<node name="none" value="No action"/>
 				</node>
 			</node>
+			<node name="handleConfig" value="Config Manager">
+				<node name="summary" value="Backup or restore current configuration parameters"/>
+				<node name="backupFileName" value="Backup to file"/>
+				<node name="restoreFileName" value="Restore from file"/>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">

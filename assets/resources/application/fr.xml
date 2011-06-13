@@ -571,6 +571,11 @@
 					<node name="none" value="Sans effet"/>
 				</node>
 			</node>
+			<node name="handleConfig" value="Gestion configuration">
+				<node name="summary" value="Sauvegarder ou restaurer les paramètres de la configuration actuelle"/>
+				<node name="backupFileName" value="Sauvegarder vers"/>
+				<node name="restoreFileName" value="Restaurer depuis"/>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">

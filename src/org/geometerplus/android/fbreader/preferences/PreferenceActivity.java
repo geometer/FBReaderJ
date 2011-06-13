@@ -20,10 +20,16 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
+import android.preference.Preference;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 import org.geometerplus.zlibrary.text.view.style.*;
 
@@ -35,6 +41,11 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
+import java.lang.ref.WeakReference;
+import org.geometerplus.zlibrary.core.options.ZLBoolean3Option;
+import org.geometerplus.zlibrary.core.options.ZLColorOption;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.util.ZLColor;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 	public PreferenceActivity() {
@@ -416,5 +427,171 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
 			bindings.getOption("<Back>", true), backKeyLongPressActions
 		));
+
+		final Screen saveRestoreConfigScreen = createPreferenceScreen("handleConfig");
+		final ZLPreference backupPref = saveRestoreConfigScreen.addOption(Paths.backupConfigFileOption(), "backupFileName",
+			new ZLOptionHandler() {
+				@Override
+				public void onDialogValidated(Object data) {
+					ZLConfig config = ZLConfig.Instance();
+					config.saveConfigToFile((String)data);
+					Toast.makeText(getApplicationContext(), "Config saved", Toast.LENGTH_SHORT).show();
+				}
+			});
+		final ZLPreference restorePref = saveRestoreConfigScreen.addOption(Paths.backupConfigFileOption(), "restoreFileName",
+			new ZLOptionHandler() {
+				@Override
+				public void onDialogValidated(Object data) {
+					ZLConfig config = ZLConfig.Instance();
+					try {
+						config.loadConfigFromFile((String)data);
+						Toast.makeText(getApplicationContext(), "Config restored!", Toast.LENGTH_SHORT).show();
+						finish();
+					}
+					catch(Exception e) {
+						Toast.makeText(getApplicationContext(), "Could not restore file", Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
+	}
+
+	public static void updatePreference(String groupName, String name, String value) {
+		for(WeakReference<Preference> pref : prefPool) {
+			if (pref != null) {
+				Preference p = pref.get();
+				if(p instanceof ZLColorPreference) {
+					ZLColorOption option = ((ZLColorPreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(new ZLColor(Integer.parseInt(value)));
+						return;
+					}
+				}
+				else if (p instanceof AnimationSpeedPreference) {
+					ZLIntegerRangeOption option = ((AnimationSpeedPreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(Integer.parseInt(value));
+						return;
+					}
+				}
+				else if (p instanceof ZLStringOptionPreference) {
+					ZLStringOption option = ((ZLStringOptionPreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(value);
+						return;
+					}
+				}
+				/*
+				else if (p instanceof ZLStringListPreference) {
+				}
+				 *
+				 */
+				else if (p instanceof ZLStringChoicePreference) {
+					ZLStringOption option = ((ZLStringChoicePreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(value);
+						return;
+					}
+				}
+				else if (p instanceof ZLIntegerRangePreference) {
+					ZLIntegerRangeOption option = ((ZLIntegerRangePreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(Integer.parseInt(value));
+						return;
+					}
+				}
+				else if (p instanceof ZLIntegerChoicePreference) {
+					ZLIntegerOption option = ((ZLIntegerChoicePreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(Integer.parseInt(value));
+						return;
+					}
+				}
+				else if (p instanceof ZLEnumPreference) {
+					return;
+				}
+				else if (p instanceof ZLChoicePreference) {
+					ZLIntegerRangeOption option = ((ZLChoicePreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						ZLChoicePreference cp = (ZLChoicePreference)p;
+						cp.setValue(value);
+						if (name.equals("Base:lineSpacing")) {
+							String bsp = (char)(Integer.parseInt(value)/10 + '0') + "." + (char)(Integer.parseInt(value) % 10 + '0');
+							cp.setInitialValue(bsp);
+						}
+						option.setValue(Integer.parseInt(value));
+						return;
+					}
+				}
+				else if (p instanceof ZLBoolean3Preference) {
+					ZLBoolean3Option option = ((ZLBoolean3Preference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(ZLBoolean3.B3_FALSE);
+						return;
+					}
+				}
+				else if (p instanceof ZLBooleanPreference) {
+					ZLBooleanOption option = ((ZLBooleanPreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(Boolean.parseBoolean(value));
+						return;
+					}
+				}
+				else if (p instanceof WallpaperPreference) {
+					ZLStringOption option = ((WallpaperPreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(value);
+						return;
+					}
+				}
+				else if (p instanceof FontStylePreference) {
+					ZLBooleanOption boption = ((FontStylePreference)p).getBoldOption();
+					ZLBooleanOption ioption = ((FontStylePreference)p).getItalicOption();
+					if (boption.getGroup().equals(groupName) && boption.getName().equals(name)) {
+						boption.forceResync();
+						boption.setValue(Boolean.parseBoolean(value));
+						return;
+					}
+					else if(ioption.getGroup().equals(groupName) && ioption.getName().equals(name)) {
+						ioption.forceResync();
+						ioption.setValue(Boolean.parseBoolean(value));
+						return;
+					}
+				}
+				else if (p instanceof FontOption) {
+					ZLStringOption option = ((FontOption)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(value);
+						return;
+					}
+				}
+				else if (p instanceof DictionaryPreference) {
+					ZLStringOption option = ((DictionaryPreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(value);
+						return;
+					}
+				}
+				else if (p instanceof BatteryLevelToTurnScreenOffPreference) {
+					ZLIntegerRangeOption option = ((BatteryLevelToTurnScreenOffPreference)p).getOption();
+					if (option.getGroup().equals(groupName) && option.getName().equals(name)) {
+						option.forceResync();
+						option.setValue(Integer.parseInt(value));
+						return;
+					}
+				}
+			}
+		}
 	}
 }

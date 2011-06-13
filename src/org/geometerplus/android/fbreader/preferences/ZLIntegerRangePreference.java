@@ -54,4 +54,8 @@ class ZLIntegerRangePreference extends ListPreference implements ZLPreference {
 
 	public void onAccept() {
 	}
+
+	public ZLIntegerRangeOption getOption() {
+		return myOption;
+	}
 }

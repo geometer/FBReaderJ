@@ -19,7 +19,9 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.lang.ref.WeakReference;
 
 import android.os.Bundle;
 import android.preference.*;
@@ -30,6 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
 	private final ArrayList<ZLPreference> myPreferences = new ArrayList<ZLPreference>();
+	public static final List<WeakReference<Preference>> prefPool = new ArrayList<WeakReference<Preference>>();
 
 	protected class Screen {
 		public final ZLResource Resource;
@@ -55,6 +58,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		public ZLPreference addPreference(ZLPreference preference) {
 			myScreen.addPreference((Preference)preference);
 			myPreferences.add(preference);
+			prefPool.add(new WeakReference<Preference>((Preference)preference));
 			return preference;
 		}
 
@@ -67,6 +71,12 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		public ZLPreference addOption(ZLStringOption option, String resourceKey) {
 			return addPreference(
 				new ZLStringOptionPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
+			);
+		}
+
+		public ZLPreference addOption(ZLStringOption option, String resourceKey, ZLOptionHandler handler) {
+			return addPreference(
+				new ZLStringOptionPreference(ZLPreferenceActivity.this, option, Resource, resourceKey, handler)
 			);
 		}
 

@@ -217,4 +217,8 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 		public void setColorFilter(ColorFilter cf) {
 		}
 	}
+
+	public ZLColorOption getOption() {
+		return myOption;
+	}
 }

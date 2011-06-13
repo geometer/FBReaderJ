@@ -26,6 +26,7 @@ import android.content.Context;
 
 class ZLStringOptionPreference extends ZLStringPreference {
 	private final ZLStringOption myOption;
+	private ZLOptionHandler myHandler = null;
 
 	ZLStringOptionPreference(Context context, ZLStringOption option, ZLResource rootResource, String resourceKey) {
 		super(context, rootResource, resourceKey);
@@ -33,7 +34,31 @@ class ZLStringOptionPreference extends ZLStringPreference {
 		setValue(myOption.getValue());
 	}
 
+	ZLStringOptionPreference(Context context, ZLStringOption option, ZLResource rootResource, String resourceKey, ZLOptionHandler handler) {
+		super(context, rootResource, resourceKey);
+		myOption = option;
+		setValue(myOption.getValue());
+		myHandler = handler;
+	}
+
+	@Override
 	public void onAccept() {
 		myOption.setValue(getValue());
+	}
+
+	/**
+	 * Handles option callback
+	 */
+	@Override
+	protected void onDialogClosed(boolean result) {
+		if (result) {
+			if (myHandler != null)
+				myHandler.onDialogValidated(getEditText().getText().toString());
+		}
+		super.onDialogClosed(result);
+	}
+
+	public ZLStringOption getOption() {
+		return myOption;
 	}
 }

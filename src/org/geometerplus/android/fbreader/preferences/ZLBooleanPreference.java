@@ -47,4 +47,8 @@ class ZLBooleanPreference extends CheckBoxPreference implements ZLPreference {
 
 	public void onAccept() {
 	}
+
+	public ZLBooleanOption getOption() {
+		return myOption;
+	}
 }

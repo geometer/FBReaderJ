@@ -53,4 +53,19 @@ public abstract class ZLOption {
 			config.unsetValue(myGroup, myOptionName);
 		}
 	}
+
+	/**
+	 * Forces a database hit instead of using the cached value for that option
+	 */
+	public void forceResync() {
+		myIsSynchronized = false;
+	}
+
+	public String getGroup() {
+		return myGroup;
+	}
+
+	public String getName() {
+		return myOptionName;
+	}
 }

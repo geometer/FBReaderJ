@@ -36,6 +36,11 @@ public abstract class Paths {
 		return new ZLStringOption("Files", "WallpapersDirectory", Environment.getExternalStorageDirectory() + "/Wallpapers");
 	}
 
+	public static ZLStringOption backupConfigFileOption() {
+		// default backup config file name and location
+		return new ZLStringOption("Files", "BackupConfigName", BooksDirectoryOption().getValue() + "/fbreader-config.xml");
+	}
+
 	public static String cacheDirectory() {
 		return BooksDirectoryOption().getValue() + "/.FBReader";
 	}
