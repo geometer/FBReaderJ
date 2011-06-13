@@ -39,7 +39,7 @@ class TurnPageAction extends FBAction {
 
 	public void run() {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		Reader.getViewWidget().startAutoScrolling(
+		Reader.getViewWidget().startAnimatedScrolling(
 			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 			preferences.HorizontalOption.getValue()
 				? FBView.Direction.rightToLeft : FBView.Direction.up,
@@ -49,7 +49,7 @@ class TurnPageAction extends FBAction {
 
 	public void runWithCoordinates(int x, int y) {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		Reader.getViewWidget().startAutoScrolling(
+		Reader.getViewWidget().startAnimatedScrolling(
 			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
 			x, y,
 			preferences.HorizontalOption.getValue()

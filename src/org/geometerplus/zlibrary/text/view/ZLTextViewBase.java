@@ -91,7 +91,8 @@ abstract class ZLTextViewBase extends ZLView {
 
 	void applyControl(ZLTextControlElement control) {
 		if (control.IsStart) {
-			ZLTextStyleDecoration decoration = ZLTextStyleCollection.Instance().getDecoration(control.Kind);
+			final ZLTextStyleDecoration decoration =
+				ZLTextStyleCollection.Instance().getDecoration(control.Kind);
 			if (control instanceof ZLTextHyperlinkControlElement) {
 				setTextStyle(decoration.createDecoratedStyle(myTextStyle, ((ZLTextHyperlinkControlElement)control).Hyperlink));
 			} else {

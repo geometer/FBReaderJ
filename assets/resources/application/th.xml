@@ -528,6 +528,7 @@
 			<node name="dictionary" value="พจนานุกรม">
 				<node name="summary" value="การตั้งค่าพจนานุกรม"/>
 				<node name="dictionary" value="พจนานุกรม"/>
+				<node name="translator" value="Translator" toBeTranslated="true"/>
 				<node name="tappingAction" value="การทำงานเมื่อกดค้างที่หน้าจอ">
 					<node name="doNothing" value="ไม่มีอะไรเกิดขึ้น"/>
 					<node name="selectSingleWord" value="เลือกคำเมื่อกดค้างที่หน้าจอ"/>

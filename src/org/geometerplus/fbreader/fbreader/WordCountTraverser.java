@@ -17,22 +17,38 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBView;
+import org.geometerplus.zlibrary.text.view.*;
 
-public class SelectionDictionaryAction extends FBAndroidAction {
-    SelectionDictionaryAction(FBReader baseActivity, FBReaderApp fbreader) {
-        super(baseActivity, fbreader);
-    }
+class WordCountTraverser extends ZLTextTraverser {
+	protected int myCount;
 
-    public void run() {
-        final FBView fbview = Reader.getTextView();
-        final int selectionStartY = fbview.getSelectionStartY(), selectionEndY = fbview.getSelectionEndY();
-        final String text = fbview.getSelectedText();
-        Reader.getTextView().clearSelection();
-        DictionaryUtil.openTextInDictionary(BaseActivity, text, selectionStartY, selectionEndY);
-    }
+	WordCountTraverser(ZLTextView view) {
+		super(view);
+	}
 
+	@Override
+	protected void processWord(ZLTextWord word) {
+		++myCount;
+	}
+
+	@Override
+	protected void processControlElement(ZLTextControlElement control) {
+		// does nothing
+	}
+
+	@Override
+	protected void processSpace() {
+		// does nothing
+	}
+
+	@Override
+	protected void processEndOfParagraph() {
+		// does nothing
+	}
+
+	public int getCount() {
+		return myCount;
+	}
 }

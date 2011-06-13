@@ -528,6 +528,7 @@
 			<node name="dictionary" value="Dictionnaire">
 				<node name="summary" value="Paramètres du dictionnaire"/>
 				<node name="dictionary" value="Dictionnaire"/>
+				<node name="translator" value="Translator" toBeTranslated="true"/>
 				<node name="tappingAction" value="Configuration de l'appui long">
 					<node name="doNothing" value="Un appui long ne fait rien"/>
 					<node name="selectSingleWord" value="Un appui long selectionne le mot"/>

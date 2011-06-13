@@ -63,6 +63,6 @@ public interface ActionCode {
 	String SELECTION_CLEAR = "selectionClear";
 	String SELECTION_COPY_TO_CLIPBOARD = "selectionCopyToClipboard";
 	String SELECTION_SHARE = "selectionShare";
-	String SELECTION_OPEN_IN_DICTIONARY = "selectionOpenInDictionary";
-	String SELECTION_ADD_BOOKMARK = "selectionAddBookmark";
+	String SELECTION_TRANSLATE = "selectionTranslate";
+	String SELECTION_BOOKMARK = "selectionBookmark";
 }

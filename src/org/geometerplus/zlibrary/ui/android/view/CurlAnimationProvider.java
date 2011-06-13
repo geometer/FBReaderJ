@@ -199,14 +199,14 @@ class CurlAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	protected void startAutoScrollingInternal(int speed) {
+	protected void startAnimatedScrollingInternal(int speed) {
 		mySpeedFactor = (float)Math.pow(2.0, 0.25 * speed);
 		mySpeed *= 1.5;
 		doStep();
 	}
 
 	@Override
-	protected void setupAutoScrollingStart(Integer x, Integer y) {
+	protected void setupAnimatedScrollingStart(Integer x, Integer y) {
 		if (x == null || y == null) {
 			if (myDirection.IsHorizontal) {
 				x = mySpeed < 0 ? myWidth - 3 : 3;
@@ -245,7 +245,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		final int cornerY = myStartY > myHeight / 2 ? myHeight : 0;
 
 		final int boundX, boundY;
-		if (getMode() == Mode.AutoScrollingForward) {
+		if (getMode() == Mode.AnimatedScrollingForward) {
 			boundX = cornerX == 0 ? 2 * myWidth : -myWidth;
 			boundY = cornerY == 0 ? 2 * myHeight : -myHeight;
 		} else {
@@ -268,7 +268,7 @@ class CurlAnimationProvider extends AnimationProvider {
 		}
 
 		final boolean xSpeedIsPositive, ySpeedIsPositive;
-		if (getMode() == Mode.AutoScrollingForward) {
+		if (getMode() == Mode.AnimatedScrollingForward) {
 			xSpeedIsPositive = cornerX == 0;
 			ySpeedIsPositive = cornerY == 0;
 		} else {
