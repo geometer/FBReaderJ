@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 class ZLTextHorizontalConvexHull {
 	private final LinkedList<Rectangle> myRectangles = new LinkedList<Rectangle>();
 
-	ZLTextHorizontalConvexHull(List<ZLTextElementArea> textAreas) {
+	ZLTextHorizontalConvexHull(ZLTextElementArea[] textAreas) {
 		for (ZLTextElementArea area : textAreas) {
 			addArea(area);
 		}

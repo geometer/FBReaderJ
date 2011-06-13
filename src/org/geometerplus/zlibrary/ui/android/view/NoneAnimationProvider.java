@@ -43,7 +43,7 @@ class NoneAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	protected void setupAutoScrollingStart(Integer x, Integer y) {
+	protected void setupAnimatedScrollingStart(Integer x, Integer y) {
 		if (myDirection.IsHorizontal) {
 			myStartX = mySpeed < 0 ? myWidth : 0;
 			myEndX = myWidth - myStartX;
@@ -56,7 +56,7 @@ class NoneAnimationProvider extends AnimationProvider {
 	}
 
 	@Override
-	protected void startAutoScrollingInternal(int speed) {
+	protected void startAnimatedScrollingInternal(int speed) {
 	}
 
 	@Override

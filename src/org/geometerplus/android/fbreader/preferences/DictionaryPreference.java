@@ -32,10 +32,10 @@ import org.geometerplus.android.fbreader.PackageInfo;
 class DictionaryPreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;
 
-	DictionaryPreference(Context context, ZLResource resource, String resourceKey) {
+	DictionaryPreference(Context context, ZLResource resource, String resourceKey, ZLStringOption dictionaryOption) {
 		super(context, resource, resourceKey);
 
-		myOption = DictionaryUtil.dictionaryOption();
+		myOption = dictionaryOption;
 		final List<PackageInfo> infos = DictionaryUtil.dictionaryInfos(context);
 		
 		final String[] values = new String[infos.size()];

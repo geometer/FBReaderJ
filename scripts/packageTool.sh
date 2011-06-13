@@ -19,7 +19,7 @@ updateVersion() {
 	if [ "$micro" == "" ]; then
      micro=0
   fi
-	intversion=$((10000*$major+100*$minor+$micro+2))
+	intversion=$((10000*$major+100*$minor+$micro))
 	sed "s/@INTVERSION@/$intversion/" AndroidManifest.xml.pattern | sed "s/@VERSION@/$version/" > AndroidManifest.xml
 }
 
