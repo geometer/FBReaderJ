@@ -191,11 +191,7 @@ public final class FBReader extends ZLAndroidActivity {
 		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
 		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
 		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
-		//aagrenmod
-		if (!ourDropBoxCredentialsPanel.hasControlPanel()) {
-			ourDropBoxCredentialsPanel.createControlPanel(this, root);
-		}
-		//aagrenmod
+		((PopupPanel)fbReader.getPopupById(DropBoxCredentialsPanel.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
 	}
 
 	@Override

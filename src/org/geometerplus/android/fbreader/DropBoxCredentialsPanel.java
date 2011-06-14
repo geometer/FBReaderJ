@@ -34,27 +34,33 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-final class DropBoxCredentialsPanel extends ControlButtonPanel {
-
-	FBReaderApp myfbreader;
+final class DropBoxCredentialsPanel extends ButtonsPopupPanel {
+	final static String ID = "DropBoxCredentialsPanel";
 
 	DropBoxCredentialsPanel(FBReaderApp fbReader) {
 		super(fbReader);
-		myfbreader = fbReader;
+	}
+
+	@Override
+	public String getId() {
+		return ID;
 	}
 
 	public void runDropBoxCrendentials() {
-		if (!getVisibility()) {
-			show(true);
+		if (myWindow.getVisibility() == View.GONE) {
+			show_();
 		}
 	}
 
 	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root) {
-		final FBReader myactivity = activity;
-		myControlPanel = new ControlPanel(activity, root, true);
+	public void createControlPanel(final FBReader activity, RelativeLayout root, PopupWindow.Location location) {
+		if (myWindow != null) {
+			return;
+		}
 
-		final View layout = activity.getLayoutInflater().inflate(R.layout.dropboxcredentials, myControlPanel, false);
+		myWindow = new PopupWindow(activity, root, location, true);
+
+		final View layout = activity.getLayoutInflater().inflate(R.layout.dropboxcredentials, myWindow, false);
 
 		final EditText dropboxemail = (EditText)layout.findViewById(R.id.dropboxemail);
 		final EditText dropboxpasswd = (EditText)layout.findViewById(R.id.dropboxpasswd);
@@ -67,14 +73,14 @@ final class DropBoxCredentialsPanel extends ControlButtonPanel {
 				if (v != btnCancel) {
 					DropBoxSyncer dbsyncer = DropBoxSyncer.getDropBoxSyncer();
 					dbsyncer.init(
-						myfbreader.Model.Book.File,
-						(ZLTextView)Reader.getCurrentView(),
-						myactivity						
+						getReader().Model.Book.File,
+						getReader().getTextView(),
+						activity						
 					);
 					dbsyncer.setDropBoxCredentials(dropboxemail.getText().toString(), dropboxpasswd.getText().toString());
 					dbsyncer.run();
 				}
-				hide(true);
+				hide_();
 			}
 		};
 		btnOk.setOnClickListener(listener);
@@ -83,7 +89,6 @@ final class DropBoxCredentialsPanel extends ControlButtonPanel {
 		btnOk.setText(buttonResource.getResource("ok").getValue());
 		btnCancel.setText(buttonResource.getResource("cancel").getValue());
 
-		myControlPanel.addView(layout);
+		myWindow.addView(layout);
 	}
-
 }
