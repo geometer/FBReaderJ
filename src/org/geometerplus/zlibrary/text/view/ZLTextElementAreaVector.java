@@ -57,7 +57,7 @@ final class ZLTextElementAreaVector {
 				soul = new ZLTextHyperlinkRegionSoul(area, hyperlink);
 			} else if (area.Element instanceof ZLTextImageElement) {
 				soul = new ZLTextImageRegionSoul(area, (ZLTextImageElement)area.Element);
-			} else if (area.Element instanceof ZLTextWord && ((ZLTextWord)area.Element).isAWord()) {
+			} else if (area.Element instanceof ZLTextWord && !((ZLTextWord)area.Element).isASpace()) {
 				soul = new ZLTextWordRegionSoul(area, (ZLTextWord)area.Element);
 			}
 			if (soul != null) {
