@@ -56,13 +56,13 @@ public final class ZLTextWord extends ZLTextElement {
 		myParagraphOffset = paragraphOffset;
 	}
 
-	public boolean isAWord() {
+	public boolean isASpace() {
 		for (int i = Offset; i < Offset + Length; ++i) {
-			if (Character.isLetterOrDigit(Data[i])) {
-				return true;
+			if (!Character.isWhitespace(Data[i])) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public Mark getMark() {
