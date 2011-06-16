@@ -173,7 +173,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	private void showString(String s) {
 		myView.gotoPosition(myParagraphCursor.Index, 0, 0);
 
-		myReader.repaintView();
+		myReader.getViewWidget().repaint();
 		myReader.showBookTextView();
 		//myView.getModel().Book.storePosition(BookTextView.getStartCursor());
 	}
