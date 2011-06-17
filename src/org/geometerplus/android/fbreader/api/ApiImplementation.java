@@ -45,6 +45,12 @@ public class ApiImplementation extends ApiInterface.Stub {
 	}
 
 	@Override
+	public void setPageStart(TextPosition position) {
+		myReader.getTextView().gotoPosition(position.ParagraphIndex, position.ElementIndex, position.CharIndex);
+		myReader.getViewWidget().repaint();
+	}
+
+	@Override
 	public int getParagraphsNumber() {
 		// TODO: check for NPE
 		return myReader.Model.BookTextModel.getParagraphsNumber();

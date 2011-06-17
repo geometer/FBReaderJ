@@ -27,7 +27,7 @@ public final class TextPosition implements Parcelable {
 	public final int ElementIndex;
 	public final int CharIndex;
 
-	TextPosition(int paragraphIndex, int elementIndex, int charIndex) {
+	public TextPosition(int paragraphIndex, int elementIndex, int charIndex) {
 		ParagraphIndex = paragraphIndex;
 		ElementIndex = elementIndex;
 		CharIndex = charIndex;

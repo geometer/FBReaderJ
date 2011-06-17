@@ -27,5 +27,7 @@ interface ApiInterface {
 	TextPosition getPageStart();
 	TextPosition getPageEnd();
 
+	void setPageStart(in TextPosition position);
+
 	String getParagraphText(int paragraphIndex);
 }

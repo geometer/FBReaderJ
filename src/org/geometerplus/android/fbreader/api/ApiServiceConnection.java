@@ -51,7 +51,7 @@ public class ApiServiceConnection implements ServiceConnection {
 
 	private void checkConnection() throws ApiException {
 		if (myInterface == null) {
-			throw new ApiException("No connection with FBReader");
+			throw new ApiException("Not connected to FBReader");
 		}
 	}
 
@@ -68,6 +68,15 @@ public class ApiServiceConnection implements ServiceConnection {
 		checkConnection();
 		try {
 			return myInterface.getPageEnd();
+		} catch (android.os.RemoteException e) {
+			throw new ApiException(e);
+		}
+	}
+
+	  public synchronized void setPageStart(TextPosition position) throws ApiException {
+		checkConnection();
+		try {
+			myInterface.setPageStart(position);
 		} catch (android.os.RemoteException e) {
 			throw new ApiException(e);
 		}

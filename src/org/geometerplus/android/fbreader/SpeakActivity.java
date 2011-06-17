@@ -179,12 +179,11 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		System.err.println(s);
 	}
 
-	private void showString(String s) {
-		//myView.gotoPosition(myParagraphCursor.Index, 0, 0);
-
-		//myReader.getViewWidget().repaint();
-		//myReader.showBookTextView();
-		//myView.getModel().Book.storePosition(BookTextView.getStartCursor());
+	private void showString(int paragraphIndex) {
+		try {
+			myConnection.setPageStart(new TextPosition(paragraphIndex, 0, 0));
+		} catch (ApiException e) {
+		}
 	}
 
 	private String lookForValidParagraphString(int direction) {
@@ -215,7 +214,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		String s = lookForValidParagraphString(direction);
 
 		if (show) {
-			showString(s);
+			showString(myParagraphIndex);
 		}
 		if (speak) {
 			speakString(s);
