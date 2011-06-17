@@ -55,19 +55,28 @@ public class ApiServiceConnection implements ServiceConnection {
 		}
 	}
 
-	public synchronized int getPageStartParagraphIndex() throws ApiException {
+	public synchronized TextPosition getPageStart() throws ApiException {
 		checkConnection();
 		try {
-			return myInterface.getPageStartParagraphIndex();
+			return myInterface.getPageStart();
 		} catch (android.os.RemoteException e) {
 			throw new ApiException(e);
 		}
 	}
 
-	public synchronized int getMaxParagraphIndex() throws ApiException {
+	public synchronized TextPosition getPageEnd() throws ApiException {
 		checkConnection();
 		try {
-			return myInterface.getMaxParagraphIndex();
+			return myInterface.getPageEnd();
+		} catch (android.os.RemoteException e) {
+			throw new ApiException(e);
+		}
+	}
+
+	public synchronized int getParagraphsNumber() throws ApiException {
+		checkConnection();
+		try {
+			return myInterface.getParagraphsNumber();
 		} catch (android.os.RemoteException e) {
 			throw new ApiException(e);
 		}

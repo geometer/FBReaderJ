@@ -2,16 +2,9 @@ package org.geometerplus.android.fbreader;
 
 import java.util.HashMap;
 
-//import org.geometerplus.fbreader.bookmodel.BookModel;
-//import org.geometerplus.fbreader.fbreader.FBReaderApp;
-//import org.geometerplus.fbreader.fbreader.FBView;
-//import org.geometerplus.zlibrary.text.view.ZLTextElement;
-//import org.geometerplus.zlibrary.text.view.ZLTextParagraphCursor;
-//import org.geometerplus.zlibrary.text.view.ZLTextWord;
-//import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
-
 import org.geometerplus.android.fbreader.api.ApiServiceConnection;
 import org.geometerplus.android.fbreader.api.ApiException;
+import org.geometerplus.android.fbreader.api.TextPosition;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -36,11 +29,9 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	static final int SEARCHBACKWARD = 2;
 
 	private TextToSpeech myTTS;
-	//private FBReaderApp myReader;
-	//private FBView myView;
 
 	private int myParagraphIndex = -1;
-	private int myMaxParagraphIndex;
+	private int myParagraphsNumber;
 	private ImageButton myPauseButton;
 
 	private boolean myIsActive = false;
@@ -109,9 +100,6 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 
 		myConnection = new ApiServiceConnection(this);
 
-		//myReader = (FBReaderApp)FBReaderApp.Instance();
-		//myView = myReader.getTextView();
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_spokentext);
 
@@ -126,9 +114,6 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 
 		TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 		tm.listen(mPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
-
-		//ZLTextWordCursor cursor = myView.getStartCursor();
-		//myParagraphCursor = cursor.getParagraphCursor();
 
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
@@ -167,11 +152,10 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	private void setActive(boolean active) {
 		if (active && myParagraphIndex == -1) {
 			try {
-				myParagraphIndex = myConnection.getPageStartParagraphIndex();
-				myMaxParagraphIndex = myConnection.getMaxParagraphIndex();
+				myParagraphIndex = myConnection.getPageStart().ParagraphIndex;
+				myParagraphsNumber = myConnection.getParagraphsNumber();
 			} catch (ApiException e) {
 			}
-			System.err.println(myParagraphIndex + ":" + myMaxParagraphIndex);
 			active = myParagraphIndex != -1;
 		}
 
@@ -223,7 +207,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	}
 
 	private void nextParagraphString(boolean show, boolean speak, int direction) {
-		if (myParagraphIndex >= myMaxParagraphIndex) {
+		if (myParagraphIndex >= myParagraphsNumber - 1) {
 			stopTalking();
 			return;
 		}
