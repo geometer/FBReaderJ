@@ -8,6 +8,12 @@
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 	<application android:name="org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
 		<activity android:name=".library.BugReportActivity" android:label="FBReader crash" android:configChanges="orientation|keyboardHidden" />
+		<service android:name="org.geometerplus.android.fbreader.api.ApiService">
+			<intent-filter>
+				<action android:name="android.fbreader.action.API" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</service>
 		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -156,6 +162,6 @@
 		</activity>
 		<receiver android:name="org.geometerplus.android.fbreader.network.BookDownloaderCallback" android:process=":networkLibrary" />
 		<service android:name="org.geometerplus.android.fbreader.network.LibraryInitializationService" android:process=":networkLibrary" />
-		<activity android:name="org.geometerplus.android.fbreader.SpeakActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog"/>
+		<activity android:name="org.geometerplus.android.fbreader.SpeakActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog" android:process=":tts"/>
 	</application>
 </manifest>

@@ -2,13 +2,17 @@ package org.geometerplus.android.fbreader;
 
 import java.util.HashMap;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
-import org.geometerplus.fbreader.fbreader.FBView;
-import org.geometerplus.zlibrary.text.view.ZLTextElement;
-import org.geometerplus.zlibrary.text.view.ZLTextParagraphCursor;
-import org.geometerplus.zlibrary.text.view.ZLTextWord;
-import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
+//import org.geometerplus.fbreader.bookmodel.BookModel;
+//import org.geometerplus.fbreader.fbreader.FBReaderApp;
+//import org.geometerplus.fbreader.fbreader.FBView;
+//import org.geometerplus.zlibrary.text.view.ZLTextElement;
+//import org.geometerplus.zlibrary.text.view.ZLTextParagraphCursor;
+//import org.geometerplus.zlibrary.text.view.ZLTextWord;
+//import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
+
+import org.geometerplus.android.fbreader.api.ApiServiceConnection;
+import org.geometerplus.android.fbreader.api.ApiException;
+
 import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
@@ -22,6 +26,8 @@ import android.view.Window;
 import android.widget.ImageButton;
 
 public class SpeakActivity extends Activity implements TextToSpeech.OnInitListener, TextToSpeech.OnUtteranceCompletedListener {
+	private ApiServiceConnection myConnection;
+
 	private static final int CHECK_TTS_INSTALLED = 0;
 	private static final String PARAGRAPHUTTERANCE = "PARAGRAPHUTTERANCE";
 
@@ -30,10 +36,11 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	static final int SEARCHBACKWARD = 2;
 
 	private TextToSpeech myTTS;
-	private FBReaderApp myReader;
-	private FBView myView;
+	//private FBReaderApp myReader;
+	//private FBView myView;
 
-	private ZLTextParagraphCursor myParagraphCursor;
+	private int myParagraphIndex = -1;
+	private int myMaxParagraphIndex;
 	private ImageButton myPauseButton;
 
 	private boolean myIsActive = false;
@@ -79,8 +86,10 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 				stopTalking();
 				myIsActive = false;
 			} else {
-				myIsActive = true;
-				nextParagraphString(true, true, CURRENTORFORWARD);
+				setActive(true);
+				if (myIsActive) {
+					nextParagraphString(true, true, CURRENTORFORWARD);
+				}
 			}
 		}
 	};
@@ -97,8 +106,11 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		super.onCreate(savedInstanceState);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		myReader = (FBReaderApp)FBReaderApp.Instance();
-		myView = myReader.getTextView();
+
+		myConnection = new ApiServiceConnection(this);
+
+		//myReader = (FBReaderApp)FBReaderApp.Instance();
+		//myView = myReader.getTextView();
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_spokentext);
@@ -115,12 +127,18 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 		tm.listen(mPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 
-		ZLTextWordCursor cursor = myView.getStartCursor();
-		myParagraphCursor = cursor.getParagraphCursor();
+		//ZLTextWordCursor cursor = myView.getStartCursor();
+		//myParagraphCursor = cursor.getParagraphCursor();
 
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, CHECK_TTS_INSTALLED);
+	}
+
+	@Override
+	protected void onResume() {
+		myConnection.connect();
+		super.onResume();
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -138,20 +156,25 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		}
 	}
 
-	private String getParagraphText(ZLTextParagraphCursor paraCursor) {
-		StringBuffer sb = new StringBuffer();
-		ZLTextWordCursor cursor = new ZLTextWordCursor(paraCursor);
-		while (!cursor.isEndOfParagraph()) {
-			ZLTextElement element = cursor.getElement();
-			if (element instanceof ZLTextWord) {
-				sb.append(element.toString() + " ");
-			}
-			cursor.nextWord();
+	private String getParagraphText(int paragraphIndex) {
+		try {
+			return myConnection.getParagraphText(paragraphIndex);
+		} catch (ApiException e) {
+			return "";
 		}
-		return(sb.toString());
 	}
 
 	private void setActive(boolean active) {
+		if (active && myParagraphIndex == -1) {
+			try {
+				myParagraphIndex = myConnection.getPageStartParagraphIndex();
+				myMaxParagraphIndex = myConnection.getMaxParagraphIndex();
+			} catch (ApiException e) {
+			}
+			System.err.println(myParagraphIndex + ":" + myMaxParagraphIndex);
+			active = myParagraphIndex != -1;
+		}
+
 		myIsActive = active;
 
 		if (myIsActive) {
@@ -168,37 +191,44 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		callbackMap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, PARAGRAPHUTTERANCE);
 
 		myTTS.speak(s, TextToSpeech.QUEUE_FLUSH, callbackMap);
+		System.err.println(myParagraphIndex);
+		System.err.println(s);
 	}
 
 	private void showString(String s) {
-		myView.gotoPosition(myParagraphCursor.Index, 0, 0);
+		//myView.gotoPosition(myParagraphCursor.Index, 0, 0);
 
-		myReader.getViewWidget().repaint();
-		myReader.showBookTextView();
+		//myReader.getViewWidget().repaint();
+		//myReader.showBookTextView();
 		//myView.getModel().Book.storePosition(BookTextView.getStartCursor());
 	}
 
-	private String lookforValidParagraphString(int direction) {
+	private String lookForValidParagraphString(int direction) {
 		String s = "";
-		while (s.equals("") && myParagraphCursor != null) {
+		while (s.equals("") && myParagraphIndex != -1) {
 			switch (direction) {
 				case SEARCHFORWARD:
-					myParagraphCursor = myParagraphCursor.next();
+					++myParagraphIndex;
 					break;
 				case SEARCHBACKWARD:
-					myParagraphCursor = myParagraphCursor.previous();
+					--myParagraphIndex;
 					break;
 				case CURRENTORFORWARD:
 					direction = SEARCHFORWARD;
 					break;
 			}
-			s = getParagraphText(myParagraphCursor);
+			s = getParagraphText(myParagraphIndex);
 		}
 		return s;
 	}
 
-	private String nextParagraphString(boolean show, boolean speak, int direction) {
-		String s = lookforValidParagraphString(direction);
+	private void nextParagraphString(boolean show, boolean speak, int direction) {
+		if (myParagraphIndex >= myMaxParagraphIndex) {
+			stopTalking();
+			return;
+		}
+
+		String s = lookForValidParagraphString(direction);
 
 		if (show) {
 			showString(s);
@@ -206,13 +236,11 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		if (speak) {
 			speakString(s);
 		}
-
-		return s;
 	}
 
 	@Override
 	protected void onDestroy() {
-		myReader.onWindowClosing(); // save the position
+		//myReader.onWindowClosing(); // save the position
 		setActive(false);
 		myTTS.shutdown();
 		super.onDestroy();
@@ -229,7 +257,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 
 	@Override
 	protected void onPause() {
-		myReader.onWindowClosing(); // save the position
+		//myReader.onWindowClosing(); // save the position
 		super.onPause();
 	}
 
