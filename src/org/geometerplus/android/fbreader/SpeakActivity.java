@@ -60,14 +60,14 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	private View.OnClickListener forwardListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			stopTalking();
-			nextParagraphString(true, false, SEARCHFORWARD);
+			nextParagraphString(false, SEARCHFORWARD);
 		}
 	};
 
 	private View.OnClickListener backListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			stopTalking();
-			nextParagraphString(true, false, SEARCHBACKWARD);
+			nextParagraphString(false, SEARCHBACKWARD);
 		}
 	};
 
@@ -79,7 +79,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 			} else {
 				setActive(true);
 				if (myIsActive) {
-					nextParagraphString(true, true, CURRENTORFORWARD);
+					nextParagraphString(true, CURRENTORFORWARD);
 				}
 			}
 		}
@@ -179,13 +179,6 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		System.err.println(s);
 	}
 
-	private void showString(int paragraphIndex) {
-		try {
-			myConnection.setPageStart(new TextPosition(paragraphIndex, 0, 0));
-		} catch (ApiException e) {
-		}
-	}
-
 	private String lookForValidParagraphString(int direction) {
 		String s = "";
 		while (s.equals("") && myParagraphIndex != -1) {
@@ -205,7 +198,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 		return s;
 	}
 
-	private void nextParagraphString(boolean show, boolean speak, int direction) {
+	private void nextParagraphString(boolean speak, int direction) {
 		if (myParagraphIndex >= myParagraphsNumber - 1) {
 			stopTalking();
 			return;
@@ -213,8 +206,9 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 
 		String s = lookForValidParagraphString(direction);
 
-		if (show) {
-			showString(myParagraphIndex);
+		try {
+			myConnection.setPageStart(new TextPosition(myParagraphIndex, 0, 0));
+		} catch (ApiException e) {
 		}
 		if (speak) {
 			speakString(s);
@@ -254,13 +248,13 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	public void onInit(int status) {
 		myTTS.setOnUtteranceCompletedListener(this);
 		setActive(true);
-		nextParagraphString(true, true, CURRENTORFORWARD);
+		nextParagraphString(true, CURRENTORFORWARD);
 	}
 
 	@Override
 	public void onUtteranceCompleted(String uttId) {
 		if (myIsActive && uttId.equals(PARAGRAPHUTTERANCE)) {
-			nextParagraphString(true, true, SEARCHFORWARD);
+			nextParagraphString(true, SEARCHFORWARD);
 		} else {
 			setActive(false);
 		}
