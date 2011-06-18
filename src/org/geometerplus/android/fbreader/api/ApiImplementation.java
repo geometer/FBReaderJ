@@ -26,6 +26,12 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 public class ApiImplementation extends ApiInterface.Stub {
 	private final FBReaderApp myReader = (FBReaderApp)FBReaderApp.Instance();
 
+	@Override
+	public String getBookLanguage() {
+		// TODO: check for NPE
+		return myReader.Model.Book.getLanguage();
+	}
+
 	private TextPosition getTextPosition(ZLTextWordCursor cursor) {
 		return new TextPosition(
 			cursor.getParagraphIndex(),
@@ -57,8 +63,15 @@ public class ApiImplementation extends ApiInterface.Stub {
 	}
 
 	@Override
+	public int getElementsNumber(int paragraphIndex) {
+		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
+		cursor.moveToParagraph(paragraphIndex);
+		cursor.moveToParagraphEnd();
+		return cursor.getElementIndex();
+	}
+
+	@Override
 	public String getParagraphText(int paragraphIndex) {
-		// TODO: check for NPEs
 		final StringBuffer sb = new StringBuffer();
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);

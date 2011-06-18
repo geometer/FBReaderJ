@@ -22,7 +22,12 @@ package org.geometerplus.android.fbreader.api;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
 interface ApiInterface {
+	//ApiObject request(String name, ApiObject[] parameters);
+
 	int getParagraphsNumber();
+	int getElementsNumber(int paragraphIndex);
+
+	String getBookLanguage();
 
 	TextPosition getPageStart();
 	TextPosition getPageEnd();

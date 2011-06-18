@@ -65,6 +65,15 @@ public class ApiServiceConnection implements ServiceConnection {
 		}
 	}
 
+	public synchronized String getBookLanguage() throws ApiException {
+		checkConnection();
+		try {
+			return myInterface.getBookLanguage();
+		} catch (android.os.RemoteException e) {
+			throw new ApiException(e);
+		}
+	}
+
 	public synchronized TextPosition getPageStart() throws ApiException {
 		checkConnection();
 		try {
