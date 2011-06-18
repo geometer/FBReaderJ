@@ -1,12 +1,6 @@
-package org.geometerplus.android.fbreader;
+package org.geometerplus.fbreader.plugin.tts;
 
 import java.util.HashMap;
-
-import org.geometerplus.android.fbreader.api.ApiServiceConnection;
-import org.geometerplus.android.fbreader.api.ApiException;
-import org.geometerplus.android.fbreader.api.TextPosition;
-
-import org.geometerplus.zlibrary.ui.android.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +11,10 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+
+import org.geometerplus.android.fbreader.api.*;
+
+import org.geometerplus.zlibrary.ui.android.R;
 
 public class SpeakActivity extends Activity implements TextToSpeech.OnInitListener, TextToSpeech.OnUtteranceCompletedListener {
 	private ApiServiceConnection myConnection;
@@ -93,7 +91,7 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	};
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
@@ -219,7 +217,9 @@ public class SpeakActivity extends Activity implements TextToSpeech.OnInitListen
 	protected void onDestroy() {
 		//myReader.onWindowClosing(); // save the position
 		setActive(false);
-		myTTS.shutdown();
+		if (myTTS != null) {
+			myTTS.shutdown();
+		}
 		super.onDestroy();
 	}
 
