@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader.api;
 import android.content.*;
 import android.os.IBinder;
 
-public class ApiServiceConnection implements ServiceConnection, ApiMethods {
+public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods {
 	private static String ACTION_API = "android.fbreader.action.API";
 
 	private final Context myContext;
