@@ -28,7 +28,8 @@ public abstract class ApiObject implements Parcelable {
 		int VOID = 0;
 		int INT = 1;
 		int STRING = 2;
-		int TEXT_POSITION = 3;
+		int BOOLEAN = 3;
+		int TEXT_POSITION = 10;
 	}
 
 	static class Void extends ApiObject {
@@ -62,22 +63,22 @@ public abstract class ApiObject implements Parcelable {
 		}
 	}
 
-	static class Error extends ApiObject {
-		final java.lang.String Message;
+	static class Boolean extends ApiObject {
+		final boolean Value;
 
-		Error(java.lang.String message) {
-			Message = message;
+		Boolean(boolean value) {
+			Value = value;
 		}
 
 		@Override
 		protected int type() {
-			return Type.ERROR;
+			return Type.BOOLEAN;
 		}
 
 		@Override
 		public void writeToParcel(Parcel parcel, int flags) {
 			super.writeToParcel(parcel, flags);
-			parcel.writeString(Message);
+			parcel.writeByte((byte)(Value ? 1 : 0));
 		}
 	}
 
@@ -100,8 +101,31 @@ public abstract class ApiObject implements Parcelable {
 		}
 	}
 
+	static class Error extends ApiObject {
+		final java.lang.String Message;
+
+		Error(java.lang.String message) {
+			Message = message;
+		}
+
+		@Override
+		protected int type() {
+			return Type.ERROR;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeString(Message);
+		}
+	}
+
 	static ApiObject envelope(int value) {
 		return new Integer(value);
+	}
+
+	static ApiObject envelope(boolean value) {
+		return new Boolean(value);
 	}
 
 	static ApiObject envelope(java.lang.String value) {
@@ -131,6 +155,8 @@ public abstract class ApiObject implements Parcelable {
 						return Void.Instance;
 					case Type.INT:
 						return new Integer(parcel.readInt());
+					case Type.BOOLEAN:
+						return new Boolean(parcel.readByte() == 1);
 					case Type.STRING:
 						return new String(parcel.readString());
 					case Type.TEXT_POSITION:

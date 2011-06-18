@@ -52,6 +52,10 @@ public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 					return getTextPosition(myReader.getTextView().getStartCursor());
 				case GET_PAGE_END:
 					return getTextPosition(myReader.getTextView().getEndCursor());
+				case IS_PAGE_END_OF_SECTION:
+					return ApiObject.envelope(isPageEndOfSection());
+				case IS_PAGE_END_OF_TEXT:
+					return ApiObject.envelope(isPageEndOfText());
 				case SET_PAGE_START:
 					setPageStart(
 						(TextPosition)parameters[0]
@@ -75,6 +79,16 @@ public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 			cursor.getElementIndex(),
 			cursor.getCharIndex()
 		);
+	}
+
+	private boolean isPageEndOfSection() {
+		final ZLTextWordCursor cursor = myReader.getTextView().getEndCursor();
+		return cursor.isEndOfParagraph() && cursor.getParagraphCursor().isEndOfSection();
+	}
+
+	private boolean isPageEndOfText() {
+		final ZLTextWordCursor cursor = myReader.getTextView().getEndCursor();
+		return cursor.isEndOfParagraph() && cursor.getParagraphCursor().isLast();
 	}
 
 	private void setPageStart(TextPosition position) {

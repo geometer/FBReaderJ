@@ -91,6 +91,14 @@ public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods 
 		return ((ApiObject.Integer)object).Value;
 	}
 
+	private boolean requestBoolean(int method, ApiObject[] params) throws ApiException {
+		final ApiObject object = request(method, params);
+		if (!(object instanceof ApiObject.Boolean)) {
+			throw new ApiException("Cannot cast return type of method " + method + " to boolean");
+		}
+		return ((ApiObject.Boolean)object).Value;
+	}
+
 	private TextPosition requestTextPosition(int method, ApiObject[] params) throws ApiException {
 		final ApiObject object = request(method, params);
 		if (!(object instanceof TextPosition)) {
@@ -113,12 +121,28 @@ public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods 
 		return requestString(GET_BOOK_LANGUAGE, EMPTY_PARAMETERS);
 	}
 
+	public String getBookTitle() throws ApiException {
+		return requestString(GET_BOOK_TITLE, EMPTY_PARAMETERS);
+	}
+
+	public String getBookFileName() throws ApiException {
+		return requestString(GET_BOOK_FILENAME, EMPTY_PARAMETERS);
+	}
+
 	public TextPosition getPageStart() throws ApiException {
 		return requestTextPosition(GET_PAGE_START, EMPTY_PARAMETERS);
 	}
 
 	public TextPosition getPageEnd() throws ApiException {
 		return requestTextPosition(GET_PAGE_END, EMPTY_PARAMETERS);
+	}
+
+	public boolean isPageEndOfSection() throws ApiException {
+		return requestBoolean(IS_PAGE_END_OF_SECTION, EMPTY_PARAMETERS);
+	}
+
+	public boolean isPageEndOfText() throws ApiException {
+		return requestBoolean(IS_PAGE_END_OF_TEXT, EMPTY_PARAMETERS);
 	}
 
 	public void setPageStart(TextPosition position) throws ApiException {

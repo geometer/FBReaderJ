@@ -20,24 +20,30 @@
 package org.geometerplus.android.fbreader.api;
 
 public interface Api {
-	public void connect();
-	public void disconnect();
+	void connect();
+	void disconnect();
 
 	// fbreader information
-	public String getFBReaderVersion() throws ApiException;
+	String getFBReaderVersion() throws ApiException;
 
 	// book information
-	public String getBookLanguage() throws ApiException;
+	String getBookLanguage() throws ApiException;
+	String getBookTitle() throws ApiException;
+	//String getBookAuthors() throws ApiException;
+	//String getBookTags() throws ApiException;
+	String getBookFileName() throws ApiException;
 
 	// text information
-	public int getParagraphsNumber() throws ApiException;
-	public int getElementsNumber(int paragraphIndex) throws ApiException;
-	public String getParagraphText(int paragraphIndex) throws ApiException;
+	int getParagraphsNumber() throws ApiException;
+	int getElementsNumber(int paragraphIndex) throws ApiException;
+	String getParagraphText(int paragraphIndex) throws ApiException;
 
 	// page information
-	public TextPosition getPageStart() throws ApiException;
-	public TextPosition getPageEnd() throws ApiException;
+	TextPosition getPageStart() throws ApiException;
+	TextPosition getPageEnd() throws ApiException;
+	boolean isPageEndOfSection() throws ApiException;
+	boolean isPageEndOfText() throws ApiException;
 
 	// manage view
-	public void setPageStart(TextPosition position) throws ApiException;
+	void setPageStart(TextPosition position) throws ApiException;
 }
