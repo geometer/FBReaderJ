@@ -19,20 +19,8 @@
 
 package org.geometerplus.android.fbreader.api;
 
-import org.geometerplus.android.fbreader.api.TextPosition;
+import org.geometerplus.android.fbreader.api.ApiObject;
 
 interface ApiInterface {
-	//ApiObject request(String name, ApiObject[] parameters);
-
-	int getParagraphsNumber();
-	int getElementsNumber(int paragraphIndex);
-
-	String getBookLanguage();
-
-	TextPosition getPageStart();
-	TextPosition getPageEnd();
-
-	void setPageStart(in TextPosition position);
-
-	String getParagraphText(int paragraphIndex);
+	ApiObject request(int method, in ApiObject[] parameters);
 }

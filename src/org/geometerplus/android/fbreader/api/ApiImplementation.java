@@ -23,12 +23,43 @@ import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-public class ApiImplementation extends ApiInterface.Stub {
+public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 	private final FBReaderApp myReader = (FBReaderApp)FBReaderApp.Instance();
 
 	@Override
-	public String getBookLanguage() {
-		// TODO: check for NPE
+	public ApiObject request(int method, ApiObject[] parameters) {
+		try {
+			switch (method) {
+				case GET_BOOK_LANGUAGE:
+					return ApiObject.envelope(getBookLanguage());
+				case GET_PARAGRAPHS_NUMBER:
+					return ApiObject.envelope(getParagraphsNumber());
+				case GET_ELEMENTS_NUMBER:
+					return ApiObject.envelope(getElementsNumber(
+						((ApiObject.Integer)parameters[0]).Value
+					));
+				case GET_PARAGRAPH_TEXT:
+					return ApiObject.envelope(getParagraphText(
+						((ApiObject.Integer)parameters[0]).Value
+					));
+				case GET_PAGE_START:
+					return getTextPosition(myReader.getTextView().getStartCursor());
+				case GET_PAGE_END:
+					return getTextPosition(myReader.getTextView().getEndCursor());
+				case SET_PAGE_START:
+					setPageStart(
+						(TextPosition)parameters[0]
+					);
+					return ApiObject.Void.Instance;
+				default:
+					return new ApiObject.Error("Unsupported method code: " + method);
+			}
+		} catch (Throwable e) {
+			return new ApiObject.Error("Exception in method " + method + ": " + e.getMessage());
+		} 
+	}
+
+	private String getBookLanguage() {
 		return myReader.Model.Book.getLanguage();
 	}
 
@@ -40,38 +71,23 @@ public class ApiImplementation extends ApiInterface.Stub {
 		);
 	}
 
-	@Override
-	public TextPosition getPageStart() {
-		return getTextPosition(myReader.getTextView().getStartCursor());
-	}
-
-	@Override
-	public TextPosition getPageEnd() {
-		return getTextPosition(myReader.getTextView().getEndCursor());
-	}
-
-	@Override
-	public void setPageStart(TextPosition position) {
+	private void setPageStart(TextPosition position) {
 		myReader.getTextView().gotoPosition(position.ParagraphIndex, position.ElementIndex, position.CharIndex);
 		myReader.getViewWidget().repaint();
 	}
 
-	@Override
-	public int getParagraphsNumber() {
-		// TODO: check for NPE
+	private int getParagraphsNumber() {
 		return myReader.Model.BookTextModel.getParagraphsNumber();
 	}
 
-	@Override
-	public int getElementsNumber(int paragraphIndex) {
+	private int getElementsNumber(int paragraphIndex) {
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);
 		cursor.moveToParagraphEnd();
 		return cursor.getElementIndex();
 	}
 
-	@Override
-	public String getParagraphText(int paragraphIndex) {
+	private String getParagraphText(int paragraphIndex) {
 		final StringBuffer sb = new StringBuffer();
 		final ZLTextWordCursor cursor = new ZLTextWordCursor(myReader.getTextView().getStartCursor());
 		cursor.moveToParagraph(paragraphIndex);

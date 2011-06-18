@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader.api;
 import android.content.*;
 import android.os.IBinder;
 
-public class ApiServiceConnection implements ServiceConnection {
+public class ApiServiceConnection implements ServiceConnection, ApiMethods {
 	private static String ACTION_API = "android.fbreader.action.API";
 
 	private final Context myContext;
@@ -59,63 +59,77 @@ public class ApiServiceConnection implements ServiceConnection {
 		myInterface = null;
 	}
 
-	private void checkConnection() throws ApiException {
+	private synchronized ApiObject request(int method, ApiObject[] params) throws ApiException {
 		if (myInterface == null) {
 			throw new ApiException("Not connected to FBReader");
 		}
-	}
-
-	public synchronized String getBookLanguage() throws ApiException {
-		checkConnection();
+		final ApiObject object;
 		try {
-			return myInterface.getBookLanguage();
+			object = myInterface.request(method, params);
 		} catch (android.os.RemoteException e) {
 			throw new ApiException(e);
 		}
+		if (object instanceof ApiObject.Error) {
+			throw new ApiException(((ApiObject.Error)object).Message);
+		}
+		return object;
 	}
 
-	public synchronized TextPosition getPageStart() throws ApiException {
-		checkConnection();
-		try {
-			return myInterface.getPageStart();
-		} catch (android.os.RemoteException e) {
-			throw new ApiException(e);
+	private String requestString(int method, ApiObject[] params) throws ApiException {
+		final ApiObject object = request(method, params);
+		if (!(object instanceof ApiObject.String)) {
+			throw new ApiException("Cannot cast return type of method " + method + " to String");
 		}
+		return ((ApiObject.String)object).Value;
 	}
 
-	public synchronized TextPosition getPageEnd() throws ApiException {
-		checkConnection();
-		try {
-			return myInterface.getPageEnd();
-		} catch (android.os.RemoteException e) {
-			throw new ApiException(e);
+	private int requestInt(int method, ApiObject[] params) throws ApiException {
+		final ApiObject object = request(method, params);
+		if (!(object instanceof ApiObject.Integer)) {
+			throw new ApiException("Cannot cast return type of method " + method + " to int");
 		}
+		return ((ApiObject.Integer)object).Value;
 	}
 
-	  public synchronized void setPageStart(TextPosition position) throws ApiException {
-		checkConnection();
-		try {
-			myInterface.setPageStart(position);
-		} catch (android.os.RemoteException e) {
-			throw new ApiException(e);
+	private TextPosition requestTextPosition(int method, ApiObject[] params) throws ApiException {
+		final ApiObject object = request(method, params);
+		if (!(object instanceof TextPosition)) {
+			throw new ApiException("Cannot cast return type of method " + method + " to TextPosition");
 		}
+		return (TextPosition)object;
 	}
 
-	public synchronized int getParagraphsNumber() throws ApiException {
-		checkConnection();
-		try {
-			return myInterface.getParagraphsNumber();
-		} catch (android.os.RemoteException e) {
-			throw new ApiException(e);
-		}
+	private static final ApiObject[] EMPTY_PARAMETERS = new ApiObject[0];
+
+	private static ApiObject[] envelope(int value) {
+		return new ApiObject[] { ApiObject.envelope(value) };
 	}
 
-	public synchronized String getParagraphText(int paragraphIndex) throws ApiException {
-		checkConnection();
-		try {
-			return myInterface.getParagraphText(paragraphIndex);
-		} catch (android.os.RemoteException e) {
-			throw new ApiException(e);
-		}
+	public String getBookLanguage() throws ApiException {
+		return requestString(GET_BOOK_LANGUAGE, EMPTY_PARAMETERS);
+	}
+
+	public TextPosition getPageStart() throws ApiException {
+		return requestTextPosition(GET_PAGE_START, EMPTY_PARAMETERS);
+	}
+
+	public TextPosition getPageEnd() throws ApiException {
+		return requestTextPosition(GET_PAGE_END, EMPTY_PARAMETERS);
+	}
+
+	public void setPageStart(TextPosition position) throws ApiException {
+		request(SET_PAGE_START, new ApiObject[] { position });
+	}
+
+	public int getParagraphsNumber() throws ApiException {
+		return requestInt(GET_PARAGRAPHS_NUMBER, EMPTY_PARAMETERS);
+	}
+
+	public String getParagraphText(int paragraphIndex) throws ApiException {
+		return requestString(GET_PARAGRAPH_TEXT, envelope(paragraphIndex));
+	}
+
+	public int getElementsNumber(int paragraphIndex) throws ApiException {
+		return requestInt(GET_ELEMENTS_NUMBER, envelope(paragraphIndex));
 	}
 }
