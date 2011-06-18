@@ -219,7 +219,6 @@
 		<node name="decreaseFont" value="Zoom out" />
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
-		<node name="speak" value="Speak"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
