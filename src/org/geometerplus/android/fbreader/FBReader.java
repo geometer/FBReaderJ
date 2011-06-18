@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader;
 
+import java.util.*;
+
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -42,6 +44,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.android.fbreader.library.KillerCallback;
+import org.geometerplus.android.fbreader.api.PluginApi;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -50,6 +53,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	final static int REPAINT_CODE = 1;
 	final static int CANCEL_CODE = 2;
+	final static int COLLECT_PLUGINS = 3;
 
 	private int myFullScreenFlag;
 
@@ -57,6 +61,10 @@ public final class FBReader extends ZLAndroidActivity {
 	private static DropBoxCredentialsPanel ourDropBoxCredentialsPanel;
 	//aagrenmod
 	
+	private static final String PLUGIN_ACTION_PREFIX = "___";
+	private final List<PluginApi.ActionInfo> myPluginActions =
+		new LinkedList<PluginApi.ActionInfo>();
+
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
 		String filePath = intent.getStringExtra(BOOK_PATH_KEY);
@@ -192,6 +200,8 @@ public final class FBReader extends ZLAndroidActivity {
 		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
 		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
 		((PopupPanel)fbReader.getPopupById(DropBoxCredentialsPanel.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
+
+		startActivityForResult(new Intent(PluginApi.ACTION_REGISTER), COLLECT_PLUGINS);
 	}
 
 	@Override
@@ -273,6 +283,23 @@ public final class FBReader extends ZLAndroidActivity {
 			case CANCEL_CODE:
 				fbreader.runCancelAction(resultCode - 1);
 				break;
+			case COLLECT_PLUGINS:
+				synchronized (myPluginActions) {
+					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+					int index = 0;
+					for (PluginApi.ActionInfo info : myPluginActions) {
+						fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
+					}
+					myPluginActions.clear();
+					myPluginActions.addAll(PluginApi.getActions(data));
+					index = 0;
+					for (PluginApi.ActionInfo info : myPluginActions) {
+						fbReader.addAction(
+							PLUGIN_ACTION_PREFIX + index++,
+							new RunPluginAction(this, fbReader, info.getId())
+						);
+					}
+				}
 		}
 	}
 
@@ -286,14 +313,19 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 	//aagrenmod
 
+	private void addMenuItem(Menu menu, String actionId, String name) {
+		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+		application.myMainWindow.addMenuItem(menu, actionId, null, name);
+	}
+
 	private void addMenuItem(Menu menu, String actionId, int iconId) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.addMenuItem(menu, actionId, iconId);
+		application.myMainWindow.addMenuItem(menu, actionId, iconId, null);
 	}
 
 	private void addMenuItem(Menu menu, String actionId) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.addMenuItem(menu, actionId, null);
+		application.myMainWindow.addMenuItem(menu, actionId, null, null);
 	}
 
 	@Override
@@ -315,6 +347,12 @@ public final class FBReader extends ZLAndroidActivity {
 		addMenuItem(menu, ActionCode.DROPBOXSYNC);
 		//aagrenmod
 		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);
+		synchronized (myPluginActions) {
+			int index = 0;
+			for (PluginApi.ActionInfo info : myPluginActions) {
+				addMenuItem(menu, PLUGIN_ACTION_PREFIX + index++, info.MenuItemName);
+			}
+		}
 
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.refreshMenu();
