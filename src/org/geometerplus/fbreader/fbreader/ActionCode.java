@@ -56,8 +56,6 @@ public interface ActionCode {
 
 	String PROCESS_HYPERLINK = "processHyperlink";
 
-	String SPEAK = "speak";
-
 	String SELECTION_SHOW_PANEL = "selectionShowPanel";
 	String SELECTION_HIDE_PANEL = "selectionHidePanel";
 	String SELECTION_CLEAR = "selectionClear";
