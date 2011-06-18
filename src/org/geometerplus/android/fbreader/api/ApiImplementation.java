@@ -55,7 +55,7 @@ public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 					return new ApiObject.Error("Unsupported method code: " + method);
 			}
 		} catch (Throwable e) {
-			return new ApiObject.Error("Exception in method " + method + ": " + e.getMessage());
+			return new ApiObject.Error("Exception in method " + method + ": " + e);
 		} 
 	}
 
