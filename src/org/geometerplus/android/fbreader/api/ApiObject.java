@@ -1,0 +1,145 @@
+/*
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
+package org.geometerplus.android.fbreader.api;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public abstract class ApiObject implements Parcelable {
+	protected static interface Type {
+		int ERROR = -1;
+		int VOID = 0;
+		int INT = 1;
+		int STRING = 2;
+		int TEXT_POSITION = 3;
+	}
+
+	static class Void extends ApiObject {
+		static Void Instance = new Void();
+
+		private Void() {
+		}
+
+		@Override
+		protected int type() {
+			return Type.VOID;
+		}
+	}
+
+	static class Integer extends ApiObject {
+		final int Value;
+
+		Integer(int value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.INT;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeInt(Value);
+		}
+	}
+
+	static class Error extends ApiObject {
+		final java.lang.String Message;
+
+		Error(java.lang.String message) {
+			Message = message;
+		}
+
+		@Override
+		protected int type() {
+			return Type.ERROR;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeString(Message);
+		}
+	}
+
+	static class String extends ApiObject {
+		final java.lang.String Value;
+
+		String(java.lang.String value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.STRING;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeString(Value);
+		}
+	}
+
+	static ApiObject envelope(int value) {
+		return new Integer(value);
+	}
+
+	static ApiObject envelope(java.lang.String value) {
+		return new String(value);
+	}
+
+	abstract protected int type();
+
+	public int describeContents() {
+		return 0;
+	}
+
+	public void writeToParcel(Parcel parcel, int flags) {
+		parcel.writeInt(type());
+	}
+
+	public static final Parcelable.Creator<ApiObject> CREATOR =
+		new Parcelable.Creator<ApiObject>() {
+			public ApiObject createFromParcel(Parcel parcel) {
+				final int code = parcel.readInt();
+				switch (code) {
+					default:
+						return new Error("Unknown object code: " + code);
+					case Type.ERROR:
+						return new Error(parcel.readString());
+					case Type.VOID:
+						return Void.Instance;
+					case Type.INT:
+						return new Integer(parcel.readInt());
+					case Type.STRING:
+						return new String(parcel.readString());
+					case Type.TEXT_POSITION:
+						return new TextPosition(parcel.readInt(), parcel.readInt(), parcel.readInt());
+				}
+			}
+
+			public ApiObject[] newArray(int size) {
+				return new ApiObject[size];
+			}
+		};
+}
