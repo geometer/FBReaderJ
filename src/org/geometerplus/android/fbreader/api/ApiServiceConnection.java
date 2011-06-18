@@ -105,6 +105,10 @@ public class ApiServiceConnection implements ServiceConnection, ApiMethods {
 		return new ApiObject[] { ApiObject.envelope(value) };
 	}
 
+	public String getFBReaderVersion() throws ApiException {
+		return requestString(GET_FBREADER_VERSION, EMPTY_PARAMETERS);
+	}
+
 	public String getBookLanguage() throws ApiException {
 		return requestString(GET_BOOK_LANGUAGE, EMPTY_PARAMETERS);
 	}

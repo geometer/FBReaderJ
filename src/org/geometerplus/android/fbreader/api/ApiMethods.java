@@ -20,7 +20,8 @@
 package org.geometerplus.android.fbreader.api;
 
 interface ApiMethods {
-	// program information
+	// fbreader information
+	int GET_FBREADER_VERSION = 1;
 
 	// library information
 

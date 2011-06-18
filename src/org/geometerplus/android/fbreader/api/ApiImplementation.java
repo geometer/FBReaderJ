@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.api;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
+
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -30,6 +32,10 @@ public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 	public ApiObject request(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
+				case GET_FBREADER_VERSION:
+					return ApiObject.envelope(
+						ZLibrary.Instance().getVersionName()
+					);
 				case GET_BOOK_LANGUAGE:
 					return ApiObject.envelope(getBookLanguage());
 				case GET_PARAGRAPHS_NUMBER:
