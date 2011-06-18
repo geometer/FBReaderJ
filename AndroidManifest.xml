@@ -162,6 +162,16 @@
 		</activity>
 		<receiver android:name="org.geometerplus.android.fbreader.network.BookDownloaderCallback" android:process=":networkLibrary" />
 		<service android:name="org.geometerplus.android.fbreader.network.LibraryInitializationService" android:process=":networkLibrary" />
-		<activity android:name="org.geometerplus.android.fbreader.SpeakActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog" android:process=":tts"/>
+		<activity android:name="org.geometerplus.android.fbreader.SpeakActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog" android:process=":tts">
+			<intent-filter>
+				<action android:name="android.fbreader.action.plugin.REGISTER" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.fbreader.action.plugin.RUN" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:host="data.fbreader.org" android:scheme="http" android:path="/plugin/tts" />
+			</intent-filter>
+		</activity>
 	</application>
 </manifest>

@@ -106,7 +106,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
-		fbReader.addAction(ActionCode.SPEAK, new SpeakAction(this, fbReader));
+		fbReader.addAction(ActionCode.SPEAK, new RunPluginAction(this, fbReader, Uri.parse("http://data.fbreader.org/plugin/tts")));
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
 	}
 
