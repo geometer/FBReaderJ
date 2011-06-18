@@ -39,6 +39,16 @@ public class ApiServiceConnection implements ServiceConnection {
 		}
 	}
 
+	public synchronized void disconnect() {
+		if (myInterface != null) {
+			try {
+				myContext.unbindService(this);
+			} catch (IllegalArgumentException e) {
+			}
+			myInterface = null;
+		}
+	}
+
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
 		System.err.println("onServiceConnected call");
 		myInterface = ApiInterface.Stub.asInterface(service);
@@ -51,23 +61,41 @@ public class ApiServiceConnection implements ServiceConnection {
 
 	private void checkConnection() throws ApiException {
 		if (myInterface == null) {
-			throw new ApiException("No connection with FBReader");
+			throw new ApiException("Not connected to FBReader");
 		}
 	}
 
-	public synchronized int getPageStartParagraphIndex() throws ApiException {
+	public synchronized TextPosition getPageStart() throws ApiException {
 		checkConnection();
 		try {
-			return myInterface.getPageStartParagraphIndex();
+			return myInterface.getPageStart();
 		} catch (android.os.RemoteException e) {
 			throw new ApiException(e);
 		}
 	}
 
-	public synchronized int getMaxParagraphIndex() throws ApiException {
+	public synchronized TextPosition getPageEnd() throws ApiException {
 		checkConnection();
 		try {
-			return myInterface.getMaxParagraphIndex();
+			return myInterface.getPageEnd();
+		} catch (android.os.RemoteException e) {
+			throw new ApiException(e);
+		}
+	}
+
+	  public synchronized void setPageStart(TextPosition position) throws ApiException {
+		checkConnection();
+		try {
+			myInterface.setPageStart(position);
+		} catch (android.os.RemoteException e) {
+			throw new ApiException(e);
+		}
+	}
+
+	public synchronized int getParagraphsNumber() throws ApiException {
+		checkConnection();
+		try {
+			return myInterface.getParagraphsNumber();
 		} catch (android.os.RemoteException e) {
 			throw new ApiException(e);
 		}

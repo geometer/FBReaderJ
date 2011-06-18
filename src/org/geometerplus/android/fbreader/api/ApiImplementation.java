@@ -26,16 +26,34 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 public class ApiImplementation extends ApiInterface.Stub {
 	private final FBReaderApp myReader = (FBReaderApp)FBReaderApp.Instance();
 
-	@Override
-	public int getPageStartParagraphIndex() {
-		// TODO: check for NPE
-		return myReader.getTextView().getStartCursor().getParagraphIndex();
+	private TextPosition getTextPosition(ZLTextWordCursor cursor) {
+		return new TextPosition(
+			cursor.getParagraphIndex(),
+			cursor.getElementIndex(),
+			cursor.getCharIndex()
+		);
 	}
 
 	@Override
-	public int getMaxParagraphIndex() {
+	public TextPosition getPageStart() {
+		return getTextPosition(myReader.getTextView().getStartCursor());
+	}
+
+	@Override
+	public TextPosition getPageEnd() {
+		return getTextPosition(myReader.getTextView().getEndCursor());
+	}
+
+	@Override
+	public void setPageStart(TextPosition position) {
+		myReader.getTextView().gotoPosition(position.ParagraphIndex, position.ElementIndex, position.CharIndex);
+		myReader.getViewWidget().repaint();
+	}
+
+	@Override
+	public int getParagraphsNumber() {
 		// TODO: check for NPE
-		return myReader.Model.BookTextModel.getParagraphsNumber() - 1;
+		return myReader.Model.BookTextModel.getParagraphsNumber();
 	}
 
 	@Override

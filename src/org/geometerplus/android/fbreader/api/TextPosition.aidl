@@ -19,15 +19,4 @@
 
 package org.geometerplus.android.fbreader.api;
 
-import org.geometerplus.android.fbreader.api.TextPosition;
-
-interface ApiInterface {
-	int getParagraphsNumber();
-
-	TextPosition getPageStart();
-	TextPosition getPageEnd();
-
-	void setPageStart(in TextPosition position);
-
-	String getParagraphText(int paragraphIndex);
-}
+parcelable TextPosition;
