@@ -39,6 +39,16 @@ public class ApiServiceConnection implements ServiceConnection {
 		}
 	}
 
+	public synchronized void disconnect() {
+		if (myInterface != null) {
+			try {
+				myContext.unbindService(this);
+			} catch (IllegalArgumentException e) {
+			}
+			myInterface = null;
+		}
+	}
+
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
 		System.err.println("onServiceConnected call");
 		myInterface = ApiInterface.Stub.asInterface(service);
