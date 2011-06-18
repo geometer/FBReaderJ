@@ -19,13 +19,12 @@
 
 package org.geometerplus.android.fbreader.api;
 
-import java.io.Serializable;
 import java.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.*;
 
 public abstract class PluginApi {
 	public static final String ACTION_REGISTER = "android.fbreader.action.plugin.REGISTER";
@@ -37,8 +36,7 @@ public abstract class PluginApi {
 		private void updateIntent(Intent intent) {
 			final List<ActionInfo> newActions = implementedActions();
 			if (newActions != null) {
-				ArrayList<ActionInfo> actions =
-					(ArrayList<ActionInfo>)intent.getSerializableExtra(KEY);
+				ArrayList<ActionInfo> actions = intent.getParcelableArrayListExtra(KEY);
 				if (actions == null) {
 					actions = new ArrayList<ActionInfo>();
 				}
@@ -64,7 +62,7 @@ public abstract class PluginApi {
 		}
 	}
 
-	public static class ActionInfo implements Serializable {
+	public static class ActionInfo implements Parcelable {
 		private final String myId;
 		public final String MenuItemName;
 
@@ -76,13 +74,35 @@ public abstract class PluginApi {
 		public Uri getId() {
 			return Uri.parse(myId);
 		}
+
+		public int describeContents() {
+			return 0;
+		}
+
+		public void writeToParcel(Parcel parcel, int flags) {
+			parcel.writeString(myId);
+			parcel.writeString(MenuItemName);
+		}
+
+		public static final Creator<ActionInfo> CREATOR = new Creator<ActionInfo>() {
+			public ActionInfo createFromParcel(Parcel parcel) {
+				return new ActionInfo(
+					Uri.parse(parcel.readString()),
+					parcel.readString()
+				);
+			}
+
+			public ActionInfo[] newArray(int size) {
+				return new ActionInfo[size];
+			}
+		};
 	}
 
 	private static final String KEY = "actions";
 
 	public static List<ActionInfo> getActions(Intent intent) {
 		final List<ActionInfo> actions = intent != null
-			? (ArrayList<ActionInfo>)intent.getSerializableExtra(KEY) : null;
+			? intent.<ActionInfo>getParcelableArrayListExtra(KEY) : null;
 		return actions != null ? actions : Collections.<ActionInfo>emptyList();
 	}
 }
