@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.api;
+package org.geometerplus.zlibrary.text.view;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+interface ZLTextAbstractHighlighting {
+	boolean clear();
 
-public class ApiService extends Service {
-	@Override
-	public IBinder onBind(Intent intent) {
-		return new ApiServerImplementation();
-	}
+	boolean isEmpty();
+	ZLTextPosition getStartPosition();
+	ZLTextPosition getEndPosition();
+	ZLTextElementArea getStartArea(ZLTextPage page);
+	ZLTextElementArea getEndArea(ZLTextPage page);
 }
