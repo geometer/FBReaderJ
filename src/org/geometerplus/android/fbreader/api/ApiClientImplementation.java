@@ -19,16 +19,18 @@
 
 package org.geometerplus.android.fbreader.api;
 
+import java.util.*;
+
 import android.content.*;
 import android.os.IBinder;
 
-public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods {
+public class ApiClientImplementation implements ServiceConnection, Api, ApiMethods {
 	private static String ACTION_API = "android.fbreader.action.API";
 
 	private final Context myContext;
 	private volatile ApiInterface myInterface;
 
-	public ApiServiceConnection(Context context) {
+	public ApiClientImplementation(Context context) {
 		myContext = context;
 		connect();
 	}
@@ -59,20 +61,38 @@ public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods 
 		myInterface = null;
 	}
 
-	private synchronized ApiObject request(int method, ApiObject[] params) throws ApiException {
+	private synchronized void checkConnection() throws ApiException {
 		if (myInterface == null) {
 			throw new ApiException("Not connected to FBReader");
 		}
-		final ApiObject object;
+	}
+
+	private synchronized ApiObject request(int method, ApiObject[] params) throws ApiException {
+		checkConnection();
 		try {
-			object = myInterface.request(method, params);
+			final ApiObject object = myInterface.request(method, params);
+			if (object instanceof ApiObject.Error) {
+				throw new ApiException(((ApiObject.Error)object).Message);
+			}
+			return object;
 		} catch (android.os.RemoteException e) {
 			throw new ApiException(e);
 		}
-		if (object instanceof ApiObject.Error) {
-			throw new ApiException(((ApiObject.Error)object).Message);
+	}
+
+	private synchronized List<ApiObject> requestList(int method, ApiObject[] params) throws ApiException {
+		checkConnection();
+		try {
+			final List<ApiObject> list = myInterface.requestList(method, params);
+			for (ApiObject object : list) {
+				if (object instanceof ApiObject.Error) {
+					throw new ApiException(((ApiObject.Error)object).Message);
+				}
+			}
+			return list;
+		} catch (android.os.RemoteException e) {
+			throw new ApiException(e);
 		}
-		return object;
 	}
 
 	private String requestString(int method, ApiObject[] params) throws ApiException {
@@ -107,6 +127,18 @@ public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods 
 		return (TextPosition)object;
 	}
 
+	private List<String> requestStringList(int method, ApiObject[] params) throws ApiException {
+		final List<ApiObject> list = requestList(method, params);
+		final ArrayList<String> stringList = new ArrayList<String>(list.size());
+		for (ApiObject object : list) {
+			if (!(object instanceof ApiObject.String)) {
+				throw new ApiException("Cannot cast an element returned from method " + method + " to String");
+			}
+			stringList.add(((ApiObject.String)object).Value);
+		}
+		return stringList;
+	}
+
 	private static final ApiObject[] EMPTY_PARAMETERS = new ApiObject[0];
 
 	private static ApiObject[] envelope(int value) {
@@ -123,6 +155,10 @@ public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods 
 
 	public String getBookTitle() throws ApiException {
 		return requestString(GET_BOOK_TITLE, EMPTY_PARAMETERS);
+	}
+
+	public List<String> getBookTags() throws ApiException {
+		return requestStringList(GET_BOOK_TAGS, EMPTY_PARAMETERS);
 	}
 
 	public String getBookFileName() throws ApiException {
@@ -145,10 +181,6 @@ public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods 
 		return requestBoolean(IS_PAGE_END_OF_TEXT, EMPTY_PARAMETERS);
 	}
 
-	public void setPageStart(TextPosition position) throws ApiException {
-		request(SET_PAGE_START, new ApiObject[] { position });
-	}
-
 	public int getParagraphsNumber() throws ApiException {
 		return requestInt(GET_PARAGRAPHS_NUMBER, EMPTY_PARAMETERS);
 	}
@@ -159,5 +191,17 @@ public class ApiServiceConnection implements ServiceConnection, Api, ApiMethods 
 
 	public int getElementsNumber(int paragraphIndex) throws ApiException {
 		return requestInt(GET_ELEMENTS_NUMBER, envelope(paragraphIndex));
+	}
+
+	public void setPageStart(TextPosition position) throws ApiException {
+		request(SET_PAGE_START, new ApiObject[] { position });
+	}
+
+	public void highlightArea(TextPosition start, TextPosition end) throws ApiException {
+		request(HIGHLIGHT_AREA, new ApiObject[] { start, end });
+	}
+
+	public void clearHighlighting() throws ApiException {
+		request(CLEAR_HIGHLIGHTING, EMPTY_PARAMETERS);
 	}
 }

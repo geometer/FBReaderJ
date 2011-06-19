@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.api;
 
+import java.util.List;
+
 public interface Api {
 	void connect();
 	void disconnect();
@@ -29,8 +31,8 @@ public interface Api {
 	// book information
 	String getBookLanguage() throws ApiException;
 	String getBookTitle() throws ApiException;
-	//String getBookAuthors() throws ApiException;
-	//String getBookTags() throws ApiException;
+	//List<String> getBookAuthors() throws ApiException;
+	List<String> getBookTags() throws ApiException;
 	String getBookFileName() throws ApiException;
 
 	// text information
@@ -46,4 +48,6 @@ public interface Api {
 
 	// manage view
 	void setPageStart(TextPosition position) throws ApiException;
+	void highlightArea(TextPosition start, TextPosition end) throws ApiException;
+	void clearHighlighting() throws ApiException;
 }

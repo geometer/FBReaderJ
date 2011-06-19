@@ -49,6 +49,8 @@ interface ApiMethods {
 	int IS_PAGE_END_OF_TEXT = 703;
 	int IS_PAGE_END_OF_SECTION = 704;
 
-	// view change
+	// view management
 	int SET_PAGE_START = 801;
+	int HIGHLIGHT_AREA = 802;
+	int CLEAR_HIGHLIGHTING = 803;
 }
