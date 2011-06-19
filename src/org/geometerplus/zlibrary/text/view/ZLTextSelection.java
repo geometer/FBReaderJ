@@ -19,7 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
-public class ZLTextSelection {
+class ZLTextSelection implements ZLTextAbstractHighlighting {
 	static class Point {
 		int X;
 		int Y;
@@ -45,11 +45,11 @@ public class ZLTextSelection {
 		myView = view;
 	}
 
-	boolean isEmpty() {
+	public boolean isEmpty() {
 		return myLeftMostRegionSoul == null;
 	}
 
-	boolean clear() {
+	public boolean clear() {
 		if (isEmpty()) {
 			return false;
 		}
@@ -103,7 +103,9 @@ public class ZLTextSelection {
 		}
 
 		final ZLTextElementAreaVector vector = myView.myCurrentPage.TextElementMap;
-		if (!vector.isEmpty() && y < vector.get(0).YStart) {
+		final ZLTextElementArea firstArea = vector.getFirstArea();
+		final ZLTextElementArea lastArea = vector.getLastArea();
+		if (firstArea != null && y < firstArea.YStart) {
 			if (myScroller != null && myScroller.scrollsForward()) {
 				myScroller.stop();
 				myScroller = null;
@@ -112,7 +114,7 @@ public class ZLTextSelection {
 				myScroller = new Scroller(false, x, y);
 				return;
 			}
-		} else if (!vector.isEmpty() && y + ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2 > vector.get(vector.size() - 1).YEnd) {
+		} else if (lastArea != null && y + ZLTextSelectionCursor.getHeight() / 2 + ZLTextSelectionCursor.getAccent() / 2 > lastArea.YEnd) {
 			if (myScroller != null && !myScroller.scrollsForward()) {
 				myScroller.stop();
 				myScroller = null;
@@ -181,7 +183,7 @@ public class ZLTextSelection {
 			&& myRightMostRegionSoul.compareTo(area) >= 0;
 	}
 
-	ZLTextPosition getStartPosition() {
+	public ZLTextPosition getStartPosition() {
 		if (isEmpty()) {
 			return null;
 		}
@@ -192,7 +194,7 @@ public class ZLTextSelection {
 		);
 	}
 
-	ZLTextPosition getEndPosition() {
+	public ZLTextPosition getEndPosition() {
 		if (isEmpty()) {
 			return null;
 		}
@@ -203,38 +205,34 @@ public class ZLTextSelection {
 		);
 	}
 
-	ZLTextElementArea getStartArea(ZLTextPage page) {
+	public ZLTextElementArea getStartArea(ZLTextPage page) {
 		if (isEmpty()) {
 			return null;
 		}
 		final ZLTextElementAreaVector vector = page.TextElementMap;
-		if (vector.isEmpty()) {
-			return null;
-		}
 		final ZLTextRegion region = vector.getRegion(myLeftMostRegionSoul);
 		if (region != null) {
 			return region.getFirstArea();
 		}
-		if (myLeftMostRegionSoul.compareTo(vector.get(0)) <= 0) {
-			return vector.get(0);
+		final ZLTextElementArea firstArea = vector.getFirstArea();
+		if (firstArea != null && myLeftMostRegionSoul.compareTo(firstArea) <= 0) {
+			return firstArea;
 		}
 		return null;
 	}
 
-	ZLTextElementArea getEndArea(ZLTextPage page) {
+	public ZLTextElementArea getEndArea(ZLTextPage page) {
 		if (isEmpty()) {
 			return null;
 		}
 		final ZLTextElementAreaVector vector = page.TextElementMap;
-		if (vector.isEmpty()) {
-			return null;
-		}
 		final ZLTextRegion region = vector.getRegion(myRightMostRegionSoul);
 		if (region != null) {
 			return region.getLastArea();
 		}
-		if (myRightMostRegionSoul.compareTo(vector.get(vector.size() - 1)) >= 0) {
-			return vector.get(vector.size() - 1);
+		final ZLTextElementArea lastArea = vector.getLastArea();
+		if (lastArea != null && myRightMostRegionSoul.compareTo(lastArea) >= 0) {
+			return lastArea;
 		}
 		return null;
 	}
@@ -244,10 +242,10 @@ public class ZLTextSelection {
 			return false;
 		}
 		final ZLTextElementAreaVector vector = page.TextElementMap;
-		if (vector.isEmpty()) {
+		final ZLTextElementArea firstPageArea = page.TextElementMap.getFirstArea();
+		if (firstPageArea == null) {
 			return false;
 		}
-		final ZLTextElementArea firstPageArea = vector.get(0);
 		final int cmp = myLeftMostRegionSoul.compareTo(firstPageArea);
 		return cmp < 0 || (cmp == 0 && !firstPageArea.isFirstInElement());
 	}
@@ -256,11 +254,10 @@ public class ZLTextSelection {
 		if (isEmpty()) {
 			return false;
 		}
-		final ZLTextElementAreaVector vector = page.TextElementMap;
-		if (vector.isEmpty()) {
+		final ZLTextElementArea lastPageArea = page.TextElementMap.getLastArea();
+		if (lastPageArea == null) {
 			return false;
 		}
-		final ZLTextElementArea lastPageArea = vector.get(vector.size() - 1);
 		final int cmp = myRightMostRegionSoul.compareTo(lastPageArea);
 		return cmp > 0 || (cmp == 0 && !lastPageArea.isLastInElement());
 	}

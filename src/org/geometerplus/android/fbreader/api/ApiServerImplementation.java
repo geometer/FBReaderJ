@@ -19,25 +19,31 @@
 
 package org.geometerplus.android.fbreader.api;
 
+import java.util.*;
+
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
+public class ApiServerImplementation extends ApiInterface.Stub implements ApiMethods {
 	private final FBReaderApp myReader = (FBReaderApp)FBReaderApp.Instance();
+
+	private ApiObject.Error unsupportedMethodError(int method) {
+		return new ApiObject.Error("Unsupported method code: " + method);
+	}
 
 	@Override
 	public ApiObject request(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
 				case GET_FBREADER_VERSION:
-					return ApiObject.envelope(
-						ZLibrary.Instance().getVersionName()
-					);
+					return ApiObject.envelope(ZLibrary.Instance().getVersionName());
 				case GET_BOOK_LANGUAGE:
-					return ApiObject.envelope(getBookLanguage());
+					return ApiObject.envelope(myReader.Model.Book.getLanguage());
+				case GET_BOOK_TITLE:
+					return ApiObject.envelope(myReader.Model.Book.getTitle());
 				case GET_PARAGRAPHS_NUMBER:
 					return ApiObject.envelope(getParagraphsNumber());
 				case GET_ELEMENTS_NUMBER:
@@ -57,20 +63,36 @@ public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 				case IS_PAGE_END_OF_TEXT:
 					return ApiObject.envelope(isPageEndOfText());
 				case SET_PAGE_START:
-					setPageStart(
-						(TextPosition)parameters[0]
+					setPageStart((TextPosition)parameters[0]);
+					return ApiObject.Void.Instance;
+				case HIGHLIGHT_AREA:
+				{
+					myReader.getTextView().highlight(
+						getZLTextPosition((TextPosition)parameters[0]),
+						getZLTextPosition((TextPosition)parameters[1])
 					);
 					return ApiObject.Void.Instance;
+				}
+				case CLEAR_HIGHLIGHTING:
+					myReader.getTextView().clearHighlighting();
+					return ApiObject.Void.Instance;
 				default:
-					return new ApiObject.Error("Unsupported method code: " + method);
+					return unsupportedMethodError(method);
 			}
 		} catch (Throwable e) {
 			return new ApiObject.Error("Exception in method " + method + ": " + e);
 		} 
 	}
 
-	private String getBookLanguage() {
-		return myReader.Model.Book.getLanguage();
+	@Override
+	public List<ApiObject> requestList(int method, ApiObject[] parameters) {
+		return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
+	}
+
+	@Override
+	public Map<ApiObject,ApiObject> requestMap(int method, ApiObject[] parameters) {
+		final ApiObject error = unsupportedMethodError(method);
+		return Collections.singletonMap(error, error);
 	}
 
 	private TextPosition getTextPosition(ZLTextWordCursor cursor) {
@@ -78,6 +100,14 @@ public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 			cursor.getParagraphIndex(),
 			cursor.getElementIndex(),
 			cursor.getCharIndex()
+		);
+	}
+
+	private ZLTextFixedPosition getZLTextPosition(TextPosition position) {
+		return new ZLTextFixedPosition(
+			position.ParagraphIndex,
+			position.ElementIndex,
+			position.CharIndex
 		);
 	}
 
