@@ -37,7 +37,13 @@ public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 						ZLibrary.Instance().getVersionName()
 					);
 				case GET_BOOK_LANGUAGE:
-					return ApiObject.envelope(getBookLanguage());
+					return ApiObject.envelope(
+						myReader.Model.Book.getLanguage()
+					);
+				case GET_BOOK_TITLE:
+					return ApiObject.envelope(
+						myReader.Model.Book.getTitle()
+					);
 				case GET_PARAGRAPHS_NUMBER:
 					return ApiObject.envelope(getParagraphsNumber());
 				case GET_ELEMENTS_NUMBER:
@@ -67,10 +73,6 @@ public class ApiImplementation extends ApiInterface.Stub implements ApiMethods {
 		} catch (Throwable e) {
 			return new ApiObject.Error("Exception in method " + method + ": " + e);
 		} 
-	}
-
-	private String getBookLanguage() {
-		return myReader.Model.Book.getLanguage();
 	}
 
 	private TextPosition getTextPosition(ZLTextWordCursor cursor) {
