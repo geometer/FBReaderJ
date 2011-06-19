@@ -126,6 +126,8 @@ final class NavigationPopup extends PopupPanel {
 				}
 				StartPosition = null;
 				Application.hideActivePopup();
+				getReader().getViewWidget().reset();
+				getReader().getViewWidget().repaint();
 			}
 		};
 		btnOk.setOnClickListener(listener);

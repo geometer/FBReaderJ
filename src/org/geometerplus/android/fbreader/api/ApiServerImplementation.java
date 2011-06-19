@@ -66,8 +66,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements ApiMet
 					setPageStart((TextPosition)parameters[0]);
 					return ApiObject.Void.Instance;
 				case HIGHLIGHT_AREA:
+				{
+					myReader.getTextView().highlight(
+						getZLTextPosition((TextPosition)parameters[0]),
+						getZLTextPosition((TextPosition)parameters[1])
+					);
 					return ApiObject.Void.Instance;
+				}
 				case CLEAR_HIGHLIGHTING:
+					myReader.getTextView().clearHighlighting();
 					return ApiObject.Void.Instance;
 				default:
 					return unsupportedMethodError(method);
@@ -93,6 +100,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements ApiMet
 			cursor.getParagraphIndex(),
 			cursor.getElementIndex(),
 			cursor.getCharIndex()
+		);
+	}
+
+	private ZLTextFixedPosition getZLTextPosition(TextPosition position) {
+		return new ZLTextFixedPosition(
+			position.ParagraphIndex,
+			position.ElementIndex,
+			position.CharIndex
 		);
 	}
 
