@@ -528,6 +528,7 @@
 			<node name="dictionary" value="Từ điển">
 				<node name="summary" value="Cài đặt từ điển"/>
 				<node name="dictionary" value="Từ điển"/>
+				<node name="translator" value="Translator" toBeTranslated="true"/>
 				<node name="tappingAction" value="Nhấn giữ">
 					<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
 					<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>

@@ -103,6 +103,10 @@ public abstract class ZLApplication {
 		myIdToActionMap.put(actionId, action);
 	}
 
+	public final void removeAction(String actionId) {
+		myIdToActionMap.remove(actionId);
+	}
+
 	public final boolean isActionVisible(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		return (action != null) && action.isVisible();

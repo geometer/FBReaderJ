@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,33 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.android.fbreader;
 
-import java.util.*;
+import android.content.Intent;
+import android.content.ActivityNotFoundException;
+import android.net.Uri;
 
-public class ZLTextHyperlink {
-	public final byte Type;
-	public final String Id;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-	private List<Integer> myElementIndexes;
+class RunPluginAction extends FBAndroidAction {
+	private final Uri myUri;
 
-	public static final ZLTextHyperlink NO_LINK = new ZLTextHyperlink((byte)0, null);
-
-	ZLTextHyperlink(byte type, String id) {
-		Type = type;
-		Id = id;
+	RunPluginAction(FBReader baseActivity, FBReaderApp fbreader, Uri uri) {
+		super(baseActivity, fbreader);
+		myUri = uri;
 	}
 
-	void addElementIndex(int elementIndex) {
-		if (myElementIndexes == null) {
-			myElementIndexes = new LinkedList<Integer>();
+	public void run() {
+		try {
+			BaseActivity.startActivity(new Intent("android.fbreader.action.plugin.RUN", myUri));
+		} catch (ActivityNotFoundException e) {
 		}
-		myElementIndexes.add(elementIndex);
-	}
-
-	List<Integer> elementIndexes() {
-		return myElementIndexes != null
-			? Collections.unmodifiableList(myElementIndexes)
-			: Collections.<Integer>emptyList();
 	}
 }

@@ -17,33 +17,38 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.text.view;
+package org.geometerplus.fbreader.fbreader;
 
-import java.util.*;
+import org.geometerplus.zlibrary.text.view.*;
 
-public class ZLTextHyperlink {
-	public final byte Type;
-	public final String Id;
+class TextBuildTraverser extends ZLTextTraverser {
+	protected final StringBuilder myBuffer = new StringBuilder();
 
-	private List<Integer> myElementIndexes;
-
-	public static final ZLTextHyperlink NO_LINK = new ZLTextHyperlink((byte)0, null);
-
-	ZLTextHyperlink(byte type, String id) {
-		Type = type;
-		Id = id;
+	TextBuildTraverser(ZLTextView view) {
+		super(view);
 	}
 
-	void addElementIndex(int elementIndex) {
-		if (myElementIndexes == null) {
-			myElementIndexes = new LinkedList<Integer>();
-		}
-		myElementIndexes.add(elementIndex);
+	@Override
+	protected void processWord(ZLTextWord word) {
+		myBuffer.append(word.Data, word.Offset, word.Length);
 	}
 
-	List<Integer> elementIndexes() {
-		return myElementIndexes != null
-			? Collections.unmodifiableList(myElementIndexes)
-			: Collections.<Integer>emptyList();
+	@Override
+	protected void processControlElement(ZLTextControlElement control) {
+		// does nothing
+	}
+
+	@Override
+	protected void processSpace() {
+		myBuffer.append(" ");
+	}
+
+	@Override
+	protected void processEndOfParagraph() {
+		myBuffer.append("\n");
+	}
+
+	public String getText() {
+		return myBuffer.toString();
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.view;
+package org.geometerplus.android.fbreader.api;
 
-public interface ZLViewWidget {
-	void reset();
-	void repaint();
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 
-	void startManualScrolling(int x, int y, ZLView.Direction direction);
-	void scrollManuallyTo(int x, int y);
-	void startAnimatedScrolling(ZLView.PageIndex pageIndex, int x, int y, ZLView.Direction direction, int speed);
-	void startAnimatedScrolling(ZLView.PageIndex pageIndex, ZLView.Direction direction, int speed);
-	void startAnimatedScrolling(int x, int y, int speed);
+public class ApiService extends Service {
+	@Override
+	public IBinder onBind(Intent intent) {
+		return new ApiServerImplementation();
+	}
 }

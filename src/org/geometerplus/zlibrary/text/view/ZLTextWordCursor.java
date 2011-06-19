@@ -57,16 +57,18 @@ public final class ZLTextWordCursor extends ZLTextPosition {
 	}
 
 	public boolean isStartOfParagraph() {
-		return (myElementIndex == 0 && myCharIndex == 0);
+		return myElementIndex == 0 && myCharIndex == 0;
 	}
 
 	public boolean isEndOfParagraph() {
-		return (myParagraphCursor != null) && (myElementIndex == myParagraphCursor.getParagraphLength());
+		return
+			myParagraphCursor != null &&
+			myElementIndex == myParagraphCursor.getParagraphLength();
 	}
 
 	@Override
 	public int getParagraphIndex() {
-		return (myParagraphCursor != null) ? myParagraphCursor.Index : 0;
+		return myParagraphCursor != null ? myParagraphCursor.Index : 0;
 	}
 
 	@Override

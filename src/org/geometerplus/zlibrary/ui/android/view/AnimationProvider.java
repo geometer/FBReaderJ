@@ -30,8 +30,8 @@ abstract class AnimationProvider {
 	static enum Mode {
 		NoScrolling(false),
 		ManualScrolling(false),
-		AutoScrollingForward(true),
-		AutoScrollingBackward(true);
+		AnimatedScrollingForward(true),
+		AnimatedScrollingBackward(true);
 
 		final boolean Auto;
 
@@ -81,7 +81,7 @@ abstract class AnimationProvider {
 		}
 	}
 
-	void startAutoScrolling(int x, int y, int speed) {
+	void startAnimatedScrolling(int x, int y, int speed) {
 		if (myMode != Mode.ManualScrolling) {
 			return;
 		}
@@ -96,7 +96,7 @@ abstract class AnimationProvider {
 			(myHeight > myWidth ? myHeight / 4 : myHeight / 3);
 		boolean forward = Math.abs(diff) > minDiff;
 
-		myMode = forward ? Mode.AutoScrollingForward : Mode.AutoScrollingBackward;
+		myMode = forward ? Mode.AnimatedScrollingForward : Mode.AnimatedScrollingBackward;
 
 		float velocity = 15;
 		if (myDrawInfos.size() > 1) {
@@ -136,16 +136,16 @@ abstract class AnimationProvider {
 				break;
 		}
 
-		startAutoScrollingInternal(speed);
+		startAnimatedScrollingInternal(speed);
 	}
 
-	public void startAutoScrolling(ZLView.PageIndex pageIndex, Integer x, Integer y, int speed) {
+	public void startAnimatedScrolling(ZLView.PageIndex pageIndex, Integer x, Integer y, int speed) {
 		if (myMode.Auto) {
 			return;
 		}
 
 		terminate();
-		myMode = Mode.AutoScrollingForward;
+		myMode = Mode.AnimatedScrollingForward;
 
 		switch (myDirection) {
 			case up:
@@ -157,12 +157,12 @@ abstract class AnimationProvider {
 				mySpeed = pageIndex == ZLView.PageIndex.next ? 15 : -15;
 				break;
 		}
-		setupAutoScrollingStart(x, y);
-		startAutoScrollingInternal(speed);
+		setupAnimatedScrollingStart(x, y);
+		startAnimatedScrollingInternal(speed);
 	}
 
-	protected abstract void startAutoScrollingInternal(int speed);
-	protected abstract void setupAutoScrollingStart(Integer x, Integer y);
+	protected abstract void startAnimatedScrollingInternal(int speed);
+	protected abstract void setupAnimatedScrollingStart(Integer x, Integer y);
 
 	boolean inProgress() {
 		return myMode != Mode.NoScrolling;

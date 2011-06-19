@@ -48,8 +48,8 @@ class SelectionPopup extends ButtonsPopupPanel {
 
         addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
         addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
-        addButton(ActionCode.SELECTION_OPEN_IN_DICTIONARY, true, R.drawable.selection_dictionary);
-        addButton(ActionCode.SELECTION_ADD_BOOKMARK, true, R.drawable.selection_bookmark);
+        addButton(ActionCode.SELECTION_TRANSLATE, true, R.drawable.selection_translate);
+        addButton(ActionCode.SELECTION_BOOKMARK, true, R.drawable.selection_bookmark);
         addButton(ActionCode.SELECTION_CLEAR, true, R.drawable.selection_close);
     }
     
@@ -69,10 +69,10 @@ class SelectionPopup extends ButtonsPopupPanel {
 		final int diffTop = screenHeight - selectionEndY;
 		final int diffBottom = selectionStartY;
 		if (diffTop > diffBottom) {
-			verticalPosition = diffTop > myWindow.getHeight() + 10
+			verticalPosition = diffTop > myWindow.getHeight() + 20
 				? RelativeLayout.ALIGN_PARENT_BOTTOM : RelativeLayout.CENTER_VERTICAL;
 		} else {
-			verticalPosition = diffBottom > myWindow.getHeight() + 10
+			verticalPosition = diffBottom > myWindow.getHeight() + 20
 				? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.CENTER_VERTICAL;
 		}
 

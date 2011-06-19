@@ -23,7 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
-public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
+public final class ZLTextRegion {
 	public static abstract class Soul implements Comparable<Soul> {
 		final int ParagraphIndex;
 		final int StartElementIndex;
@@ -107,14 +107,16 @@ public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
 	};
 
 	private final Soul mySoul;
-	private final List<ZLTextElementArea> myList;
+	// this field must be accessed in synchronized context only
+	private final List<ZLTextElementArea> myAreaList;
+	private ZLTextElementArea[] myAreas;
 	private final int myFromIndex;
 	private int myToIndex;
 	private ZLTextHorizontalConvexHull myHull;
 
 	ZLTextRegion(Soul soul, List<ZLTextElementArea> list, int fromIndex) {
 		mySoul = soul;
-		myList = list;
+		myAreaList = list;
 		myFromIndex = fromIndex;
 		myToIndex = fromIndex + 1;
 	}
@@ -128,8 +130,16 @@ public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
 		return mySoul;
 	}
 
-	private List<ZLTextElementArea> textAreas() {
-		return myList.subList(myFromIndex, myToIndex);
+	private ZLTextElementArea[] textAreas() {
+		if (myAreas == null || myAreas.length != myToIndex - myFromIndex) {
+			synchronized (myAreaList) {
+				myAreas = new ZLTextElementArea[myToIndex - myFromIndex];
+				for (int i = 0; i < myAreas.length; ++i) {
+					myAreas[i] = myAreaList.get(i + myFromIndex);
+				}
+			}
+		}
+		return myAreas;
 	}
 	private ZLTextHorizontalConvexHull convexHull() {
 		if (myHull == null) {
@@ -139,11 +149,12 @@ public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
 	}
 
 	ZLTextElementArea getFirstArea() {
-		return myList.get(myFromIndex);
+		return textAreas()[0];
 	}
 
 	ZLTextElementArea getLastArea() {
-		return myList.get(myToIndex - 1);
+		final ZLTextElementArea[] areas = textAreas();
+		return areas[areas.length - 1];
 	}
 
 	public int getTop() {
@@ -189,8 +200,8 @@ public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
 		if (!isUnder(other)) {
 			return false;
 		}
-		final List<ZLTextElementArea> areas0 = textAreas();
-		final List<ZLTextElementArea> areas1 = other.textAreas();
+		final ZLTextElementArea[] areas0 = textAreas();
+		final ZLTextElementArea[] areas1 = other.textAreas();
 		for (ZLTextElementArea i : areas0) {
 			for (ZLTextElementArea j : areas1) {
 				if (i.XStart <= j.XEnd && j.XStart <= i.XEnd) {
@@ -204,16 +215,4 @@ public final class ZLTextRegion /*implements Comparable<ZLTextRegion>*/ {
 	boolean isExactlyOver(ZLTextRegion other) {
 		return other == null || other.isExactlyUnder(this);
 	}
-
-	/*
-	public int compareTo(ZLTextRegion other) {
-		if (myFromIndex != other.myFromIndex) {
-			return myFromIndex < other.myFromIndex ? -1 : 1;
-		}
-		if (myToIndex != other.myToIndex) {
-			return myToIndex < other.myToIndex ? -1 : 1;
-		}
-		return 0;
-	}
-	*/
 }

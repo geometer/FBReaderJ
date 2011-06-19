@@ -22,17 +22,20 @@ package org.geometerplus.android.fbreader;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.FBView;
 
-public class SelectionDictionaryAction extends FBAndroidAction {
-    SelectionDictionaryAction(FBReader baseActivity, FBReaderApp fbreader) {
+public class SelectionTranslateAction extends FBAndroidAction {
+    SelectionTranslateAction(FBReader baseActivity, FBReaderApp fbreader) {
         super(baseActivity, fbreader);
     }
 
     public void run() {
         final FBView fbview = Reader.getTextView();
-        final int selectionStartY = fbview.getSelectionStartY(), selectionEndY = fbview.getSelectionEndY();
-        final String text = fbview.getSelectedText();
-        Reader.getTextView().clearSelection();
-        DictionaryUtil.openTextInDictionary(BaseActivity, text, selectionStartY, selectionEndY);
+        DictionaryUtil.openTextInDictionary(
+			BaseActivity,
+        	fbview.getSelectedText(),
+			fbview.getCountOfSelectedWords() == 1,
+        	fbview.getSelectionStartY(),
+			fbview.getSelectionEndY()
+		);
+        fbview.clearSelection();
     }
-
 }
