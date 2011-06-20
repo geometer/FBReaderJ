@@ -34,7 +34,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements ApiMet
 		return new ApiObject.Error("Unsupported method code: " + method);
 	}
 
-	@Override
 	public ApiObject request(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
@@ -84,12 +83,10 @@ public class ApiServerImplementation extends ApiInterface.Stub implements ApiMet
 		} 
 	}
 
-	@Override
 	public List<ApiObject> requestList(int method, ApiObject[] parameters) {
 		return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 	}
 
-	@Override
 	public Map<ApiObject,ApiObject> requestMap(int method, ApiObject[] parameters) {
 		final ApiObject error = unsupportedMethodError(method);
 		return Collections.singletonMap(error, error);
@@ -127,7 +124,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements ApiMet
 	}
 
 	private int getParagraphsNumber() {
-		return myReader.Model.BookTextModel.getParagraphsNumber();
+		return myReader.Model.getTextModel().getParagraphsNumber();
 	}
 
 	private int getElementsNumber(int paragraphIndex) {
