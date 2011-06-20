@@ -10,13 +10,19 @@ import android.content.*;
 import android.os.IBinder;
 
 public class ApiClientImplementation implements ServiceConnection, Api, ApiMethods {
+	public static interface ConnectionListener {
+		void onConnected();
+	}
+
 	private static String ACTION_API = "android.fbreader.action.API";
 
 	private final Context myContext;
+	private ConnectionListener myListener;
 	private volatile ApiInterface myInterface;
 
-	public ApiClientImplementation(Context context) {
+	public ApiClientImplementation(Context context, ConnectionListener listener) {
 		myContext = context;
+		myListener = listener;
 		connect();
 	}
 
@@ -37,12 +43,13 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
-		System.err.println("onServiceConnected call");
 		myInterface = ApiInterface.Stub.asInterface(service);
+		if (myListener != null) {
+			myListener.onConnected();
+		}
 	}
 
 	public synchronized void onServiceDisconnected(ComponentName name) {
-		System.err.println("onServiceDisconnected call");
 		myInterface = null;
 	}
 
