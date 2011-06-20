@@ -32,10 +32,10 @@ BookModel::BookModel(const shared_ptr<Book> book) : myBook(book) {
 	myImagesWriter = new ZLImageMapWriter(131072, cacheDirectory, "nimages");
 	myBookTextModel = new ZLTextPlainModel(std::string(), book->language(), 131072, cacheDirectory, "ncache");
 	myContentsModel = new ContentsModel(book->language(), cacheDirectory, "ncontents");
-	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(book->file(), false);
+	/*shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(book->file(), false);
 	if (!plugin.isNull()) {
 		plugin->readModel(*this);
-	}
+	}*/
 }
 
 BookModel::~BookModel() {
