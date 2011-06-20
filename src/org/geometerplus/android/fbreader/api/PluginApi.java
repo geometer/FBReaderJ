@@ -7,7 +7,7 @@ package org.geometerplus.android.fbreader.api;
 import java.util.*;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.*;
 import android.net.Uri;
 import android.os.*;
 
@@ -15,36 +15,23 @@ public abstract class PluginApi {
 	public static final String ACTION_REGISTER = "android.fbreader.action.plugin.REGISTER";
 	public static final String ACTION_RUN = "android.fbreader.action.plugin.RUN";
 
-	public static abstract class TestActivity extends Activity {
-		abstract protected List<ActionInfo> implementedActions();
+	public static abstract class PluginInfo extends BroadcastReceiver {
+		public static final String KEY = "actions";
 
-		private void updateIntent(Intent intent) {
-			final List<ActionInfo> newActions = implementedActions();
+		public void onReceive(Context context, Intent intent) {
+			final List<ActionInfo> newActions = implementedActions(context);
 			if (newActions != null) {
-				ArrayList<ActionInfo> actions = intent.getParcelableArrayListExtra(KEY);
+				final Bundle bundle = getResultExtras(true);
+				ArrayList<ActionInfo> actions = bundle.<ActionInfo>getParcelableArrayList(KEY);
 				if (actions == null) {
 					actions = new ArrayList<ActionInfo>();
 				}
 				actions.addAll(newActions);
-				intent.putExtra(KEY, actions);
+				bundle.putParcelableArrayList(KEY, actions);
 			}
-
-			startNextMatchingActivity(intent);
-			setResult(1, intent);
 		}
 
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			updateIntent(getIntent());
-			finish();
-		}
-
-		@Override
-		protected void onNewIntent(Intent intent) {
-			super.onNewIntent(intent);
-			updateIntent(intent);
-		}
+		protected abstract List<ActionInfo> implementedActions(Context context);
 	}
 
 	public static class ActionInfo implements Parcelable {
@@ -81,13 +68,5 @@ public abstract class PluginApi {
 				return new ActionInfo[size];
 			}
 		};
-	}
-
-	private static final String KEY = "actions";
-
-	public static List<ActionInfo> getActions(Intent intent) {
-		final List<ActionInfo> actions = intent != null
-			? intent.<ActionInfo>getParcelableArrayListExtra(KEY) : null;
-		return actions != null ? actions : Collections.<ActionInfo>emptyList();
 	}
 }
