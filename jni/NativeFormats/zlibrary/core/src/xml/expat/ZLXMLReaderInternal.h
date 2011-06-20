@@ -40,6 +40,9 @@ public:
 	bool parseBuffer(const char *buffer, size_t len);
 
 private:
+	void setupEntities();
+
+private:
 	ZLXMLReader &myReader;
 	XML_Parser myParser;
 	bool myInitialized;

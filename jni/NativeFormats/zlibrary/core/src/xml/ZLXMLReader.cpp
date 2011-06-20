@@ -151,6 +151,9 @@ const std::vector<std::string> &ZLXMLReader::externalDTDs() const {
 	return EMPTY_VECTOR;
 }
 
+void ZLXMLReader::collectExternalEntities(std::map<std::string,std::string> &entityMap) {
+}
+
 const char *ZLXMLReader::attributeValue(const char **xmlattributes, const char *name) {
 	while (*xmlattributes != 0) {
 		bool useNext = strcmp(*xmlattributes, name) == 0;

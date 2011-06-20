@@ -26,6 +26,7 @@ JavaVM *AndroidUtil::ourJavaVM = 0;
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
 const char * const AndroidUtil::Class_java_util_List = "java/util/List";
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
+const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
@@ -34,6 +35,9 @@ const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 const char * const AndroidUtil::Class_BookModel = "org/geometerplus/fbreader/bookmodel/BookModel";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
+
+jmethodID AndroidUtil::SMID_ZLibrary_Instance;
+jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
 jmethodID AndroidUtil::MID_ZLFile_size;
@@ -86,8 +90,13 @@ void AndroidUtil::init(JavaVM* jvm) {
 	ourJavaVM = jvm;
 
 	JNIEnv *env = getEnv();
+	jclass cls;
 
-	jclass cls = env->FindClass(Class_ZLFile);
+	cls = env->FindClass(Class_ZLibrary);
+	SMID_ZLibrary_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/library/ZLibrary;");
+	MID_ZLibrary_getVersionName = env->GetMethodID(cls, "getVersionName", "()Ljava/lang/String;");
+
+	cls = env->FindClass(Class_ZLFile);
 	SMID_ZLFile_createFileByPath = env->GetStaticMethodID(cls, "createFileByPath", "(Ljava/lang/String;)Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;");
 	MID_ZLFile_size = env->GetMethodID(cls, "size", "()J");
 	MID_ZLFile_exists = env->GetMethodID(cls, "exists", "()Z");

@@ -19,6 +19,8 @@
 
 #include <cstring>
 
+#include <ZLibrary.h>
+
 #include <ZLStringUtil.h>
 #include <ZLXMLNamespace.h>
 
@@ -94,6 +96,6 @@ void FB2Reader::namespaceListChangedHandler() {
 	myXLinkNamespace.erase();
 }
 
-const std::vector<std::string> &FB2Reader::externalDTDs() const {
-	return EntityFilesCollector::Instance().externalDTDs("fb2");
+void FB2Reader::collectExternalEntities(std::map<std::string,std::string> &entityMap) {
+	entityMap["FBReaderVersion"] = ZLibrary::Version();
 }

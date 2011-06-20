@@ -35,6 +35,7 @@ public:
 	static const char * const Class_java_io_InputStream;
 	static const char * const Class_java_util_List;
 	static const char * const Class_java_util_Locale;
+	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
@@ -43,6 +44,9 @@ public:
 	static const char * const Class_Tag;
 	static const char * const Class_BookModel;
 	static const char * const Class_NativeBookModel;
+
+	static jmethodID SMID_ZLibrary_Instance;
+	static jmethodID MID_ZLibrary_getVersionName;
 
 	static jmethodID SMID_ZLFile_createFileByPath;
 	static jmethodID MID_ZLFile_size;

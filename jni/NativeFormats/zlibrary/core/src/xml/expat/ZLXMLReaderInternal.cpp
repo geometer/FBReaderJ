@@ -86,12 +86,13 @@ static int fUnknownEncodingHandler(void*, const XML_Char *name, XML_Encoding *en
 	return XML_STATUS_ERROR;
 }
 
+static const size_t BUFSIZE = 2048;
+
 static void parseDTD(XML_Parser parser, const std::string &fileName) {
 	XML_Parser entityParser = XML_ExternalEntityParserCreate(parser, 0, 0);
 	ZLFile dtdFile(fileName);
 	shared_ptr<ZLInputStream> entityStream = dtdFile.inputStream();
 	if (!entityStream.isNull() && entityStream->open()) {
-		const size_t BUFSIZE = 2048;
 		char buffer[BUFSIZE];
 		size_t length;
 		do {
@@ -100,6 +101,21 @@ static void parseDTD(XML_Parser parser, const std::string &fileName) {
 				break;
 			}
 		} while (length == BUFSIZE);
+	}
+	XML_ParserFree(entityParser);
+}
+
+static void parseExtraDTDEntities(XML_Parser parser, const std::map<std::string, std::string> &entityMap) {
+	XML_Parser entityParser = XML_ExternalEntityParserCreate(parser, 0, 0);
+	std::string buffer;
+
+	std::map<std::string, std::string>::const_iterator it = entityMap.begin();
+	for (; it != entityMap.end(); ++it) {
+		buffer.clear();
+		buffer.append("<!ENTITY ").append(it->first).append(" \"").append(it->second).append("\">");
+		if (XML_Parse(entityParser, buffer.data(), buffer.size(), 0) == XML_STATUS_ERROR) {
+			break;
+		}
 	}
 	XML_ParserFree(entityParser);
 }
@@ -113,6 +129,20 @@ ZLXMLReaderInternal::~ZLXMLReaderInternal() {
 	XML_ParserFree(myParser);
 }
 
+void ZLXMLReaderInternal::setupEntities() {
+	const std::vector<std::string> &dtds = myReader.externalDTDs();
+	for (std::vector<std::string>::const_iterator it = dtds.begin(); it != dtds.end(); ++it) {
+		myDTDStreamLocks.insert(ZLFile(*it).inputStream());
+		parseDTD(myParser, *it);
+	}
+
+	std::map<std::string,std::string> entityMap;
+	myReader.collectExternalEntities(entityMap);
+	if (!entityMap.empty()) {
+		parseExtraDTDEntities(myParser, entityMap);
+	}
+}
+
 void ZLXMLReaderInternal::init(const char *encoding) {
 	if (myInitialized) {
 		XML_ParserReset(myParser, encoding);
@@ -121,11 +151,7 @@ void ZLXMLReaderInternal::init(const char *encoding) {
 	myInitialized = true;
 	XML_UseForeignDTD(myParser, XML_TRUE);
 
-	const std::vector<std::string> &dtds = myReader.externalDTDs();
-	for (std::vector<std::string>::const_iterator it = dtds.begin(); it != dtds.end(); ++it) {
-		myDTDStreamLocks.insert(ZLFile(*it).inputStream());
-		parseDTD(myParser, *it);
-	}
+	setupEntities();
 
 	XML_SetUserData(myParser, &myReader);
 	if (encoding != 0) {

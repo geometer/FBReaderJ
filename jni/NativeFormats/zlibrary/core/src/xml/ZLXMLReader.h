@@ -91,6 +91,7 @@ protected:
 	virtual bool processNamespaces() const;
 	virtual void namespaceListChangedHandler();
 	virtual const std::vector<std::string> &externalDTDs() const;
+	virtual void collectExternalEntities(std::map<std::string,std::string> &entityMap);
 
 	bool isInterrupted() const;
 

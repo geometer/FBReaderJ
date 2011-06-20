@@ -44,7 +44,7 @@ private:
 	bool processNamespaces() const;
 	void namespaceListChangedHandler();
 
-	const std::vector<std::string> &externalDTDs() const;
+	void collectExternalEntities(std::map<std::string,std::string> &entityMap);
 
 public:
 	enum TagCode {

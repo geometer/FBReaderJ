@@ -11,8 +11,6 @@ myFootnotes && TOCTree --> в файлы!!!
 ** удалить ненужный код в C++ (чтение модели из памяти)
 ** удалить ненужный код в Java (formats, BookReader, WritableTextModel etc.)
 
-** в FBReaderVersion.ent -- нужно каким-то образом динамически формировать значение VERSION
-
 BUGS IN C++:
 	* не учитывается файл OPF из metainf
 	* картинки могут не открываться...

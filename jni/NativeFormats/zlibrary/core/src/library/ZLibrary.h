@@ -34,6 +34,8 @@ public:
 	static std::string Language();
 //	static std::string Country();
 
+	static std::string Version();
+
 	static const std::string BaseDirectory;
 	static const std::string &ZLibraryDirectory();
 
