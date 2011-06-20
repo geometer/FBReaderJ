@@ -114,8 +114,6 @@ public abstract class NetworkAuthenticationManager {
 		return Collections.emptyMap();
 	}
 
-	public abstract void initUser(String userName, String sid) throws ZLNetworkException;
-
 	/*
 	 * Password Recovery
 	 */

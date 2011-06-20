@@ -32,6 +32,7 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 	public String LastName;
 	public String UserId;
 	public String Sid;
+	public boolean CanRebill;
 
 	public LitResLoginXMLReader(String hostName) {
 		super(hostName);
@@ -47,6 +48,9 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 			LastName = attributes.getValue("first-name");
 			UserId = attributes.getValue("user-id");
 			Sid = attributes.getValue("sid");
+			final String stringCanRebill = attributes.getValue("can-rebill");
+			System.err.println("stringCanRebill = " + stringCanRebill);
+			CanRebill = stringCanRebill != null && !"0".equals(stringCanRebill) && !"no".equalsIgnoreCase(stringCanRebill);
 		} else {
 			setException(new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, HostName));
 		}
