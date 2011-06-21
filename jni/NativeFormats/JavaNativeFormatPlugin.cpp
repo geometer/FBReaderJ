@@ -27,13 +27,18 @@
 #endif /* _JNI_H */
 
 
+#include <AndroidLog.h>
 #include <AndroidUtil.h>
+#include <CoversWriter.h>
 
 #include <ZLFile.h>
 #include <ZLTextModel.h>
 
+#include <ZLImageMapWriter.h>
+
 #include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
+#include "fbreader/src/library/Library.h"
 #include "fbreader/src/library/Book.h"
 #include "fbreader/src/library/Author.h"
 #include "fbreader/src/library/Tag.h"
@@ -194,12 +199,31 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 }
 
 extern "C"
-JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readCover(JNIEnv* env, jobject thiz, jobject file) {
+JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readCoverInternal(JNIEnv* env, jobject thiz, jobject file) {
+	AndroidLog log;
+	log.wf("FBREADER", "LOAD COVER...");
+
 	FormatPlugin *plugin = extractPointer(env, thiz);
 	if (plugin == 0) {
 		return 0;
 	}
-	return 0;
+	std::string path;
+	jstring javaPath = (jstring) env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
+	AndroidUtil::extractJavaString(env, javaPath, path);
+	env->DeleteLocalRef(javaPath);
+
+	log.wf("FBREADER", "... FOR PATH: %s", path.c_str());
+
+	shared_ptr<ZLImage> cover = plugin->coverImage(ZLFile(path));
+	if (cover.isNull()) {
+		log.wf("FBREADER", "... cover is NULL; return NULL");
+		return 0;
+	}
+	log.wf("FBREADER", "... cover is ready");
+
+	jobject res = CoversWriter::Instance().writeCover(*cover);
+	log.wf("FBREADER", "... cover is converted to java; return");
+	return res;
 }
 
 extern "C"

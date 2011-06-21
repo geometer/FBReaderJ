@@ -58,6 +58,7 @@ jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
 
 jfieldID AndroidUtil::FID_NativeFormatPlugin_NativePointer;
 jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
+jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 jmethodID AndroidUtil::MID_PluginCollection_getDefaultLanguage;
@@ -120,6 +121,7 @@ void AndroidUtil::init(JavaVM* jvm) {
 	cls = env->FindClass(Class_NativeFormatPlugin);
 	FID_NativeFormatPlugin_NativePointer = env->GetFieldID(cls, "myNativePointer", "J");
 	MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(J)V");
+	SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;");
 
 	cls = env->FindClass(Class_PluginCollection);
 	SMID_PluginCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/PluginCollection;");

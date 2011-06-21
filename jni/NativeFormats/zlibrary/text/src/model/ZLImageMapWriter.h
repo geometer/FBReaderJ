@@ -33,7 +33,7 @@ class ZLImageMapWriter {
 public:
 	ZLImageMapWriter(const size_t rowSize, const std::string &directoryName, const std::string &fileExtension);
 
-	void addImage(const std::string &id, shared_ptr<const ZLImage> image);
+	void addImage(const std::string &id, const ZLImage &image);
 
 	void flush();
 

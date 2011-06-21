@@ -22,7 +22,11 @@ package org.geometerplus.fbreader.formats;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.ZLImageProxy;
+import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 final class NativeFormatPluginException extends RuntimeException {
 	private static final long serialVersionUID = 8641852378027454752L;
@@ -43,6 +47,9 @@ public class NativeFormatPlugin extends FormatPlugin {
 		myNativePointer = ptr;
 	}
 
+
+	private static Object ourCoversLock = new Object();
+
 	@Override
 	public native boolean acceptsFile(ZLFile file);
 
@@ -53,8 +60,36 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public native boolean readModel(BookModel model);
 
 	@Override
-	public native ZLImage readCover(ZLFile file);
+	public ZLImage readCover(final ZLFile file) {
+		return new ZLImageProxy() {
+
+			@Override
+			public int sourceType() {
+				return SourceType.DISK;
+			}
+
+			@Override
+			public String getId() {
+				return file.getPath();
+			}
+
+			@Override
+			public ZLSingleImage getRealImage() {
+				// Synchronized block is needed because of use of temporary storage files;
+				synchronized (ourCoversLock) {
+					return (ZLSingleImage) readCoverInternal(file);
+				}
+			}
+		};
+	}
+
+	protected native ZLImage readCoverInternal(ZLFile file);
 
 	@Override
 	public native String readAnnotation(ZLFile file);
+
+
+	public static ZLImage createImage(String mimeType, String fileName, int offset, int length) {
+		return new ZLFileImage(MimeType.get(mimeType), ZLFile.createFileByPath(fileName), offset, length);
+	}
 }

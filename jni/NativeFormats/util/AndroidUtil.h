@@ -67,6 +67,7 @@ public:
 
 	static jfieldID FID_NativeFormatPlugin_NativePointer;
 	static jmethodID MID_NativeFormatPlugin_init;
+	static jmethodID SMID_NativeFormatPlugin_createImage;
 
 	static jmethodID SMID_PluginCollection_Instance;
 	static jmethodID MID_PluginCollection_getDefaultLanguage;

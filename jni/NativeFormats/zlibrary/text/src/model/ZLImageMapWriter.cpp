@@ -29,11 +29,7 @@ ZLImageMapWriter::ZLImageMapWriter(const size_t rowSize,
 }
 
 
-void ZLImageMapWriter::addImage(const std::string &id, shared_ptr<const ZLImage> image) {
-	if (image.isNull()) {
-		return;
-	}
-
+void ZLImageMapWriter::addImage(const std::string &id, const ZLImage &image) {
 	const size_t dataSize = myAllocator.blocksNumber();
 	const size_t bytesOffset = myAllocator.currentBytesOffset();
 
@@ -41,10 +37,10 @@ void ZLImageMapWriter::addImage(const std::string &id, shared_ptr<const ZLImage>
 	myIndices.push_back((dataSize == 0) ? 0 : (dataSize - 1));
 	myOffsets.push_back(bytesOffset / 2); // offset in words for future use in Java
 
-	if (image->isSingle()) {
-		addSingleImageEntry((const ZLSingleImage&)*image);
+	if (image.isSingle()) {
+		addSingleImageEntry((const ZLSingleImage&)image);
 	} else {
-		addMultiImageEntry((const ZLMultiImage&)*image);
+		addMultiImageEntry((const ZLMultiImage&)image);
 	}
 }
 
