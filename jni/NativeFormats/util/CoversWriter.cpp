@@ -91,8 +91,8 @@ jobject CoversWriter::writeSingleCover(const std::string &bookPath, const ZLSing
 }
 
 bool CoversWriter::fillSingleImageData(ImageData &imageData, const ZLSingleImage &image) {
-	log.wf("FBREADER", "CoversWriter: NO CACHE DATA...");
 	AndroidLog log;
+	log.wf("FBREADER", "CoversWriter: NO CACHE DATA...");
 	switch (image.kind()) {
 		case ZLSingleImage::BASE64_ENCODED_IMAGE:
 		case ZLSingleImage::REGULAR_IMAGE:
