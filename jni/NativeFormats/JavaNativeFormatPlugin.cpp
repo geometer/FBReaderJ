@@ -226,11 +226,11 @@ JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlu
 	return res;
 }
 
-extern "C"
+/*extern "C"
 JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readAnnotation(JNIEnv* env, jobject thiz, jobject file) {
 	FormatPlugin *plugin = extractPointer(env, thiz);
 	if (plugin == 0) {
 		return 0;
 	}
 	return 0;
-}
+}*/
