@@ -41,39 +41,58 @@ CoversWriter &CoversWriter::Instance() {
 }
 
 CoversWriter::CoversWriter() :
-		myDirectoryName(Library::Instance().cacheDirectory()),
 		myFileExtension("ncover"),
 		myCoversCounter(0) {
 }
 
 void CoversWriter::resetCounter() {
 	myCoversCounter = 0;
+	myImageCache.clear();
 }
 
-jobject CoversWriter::writeCover(const ZLImage &image) {
+jobject CoversWriter::writeCover(const std::string &bookPath, const ZLImage &image) {
 	if (image.isSingle()) {
-		return writeSingleCover((const ZLSingleImage&)image);
+		return writeSingleCover(bookPath, (const ZLSingleImage&)image);
 	} else {
 		return 0;
 	}
 }
 
 std::string CoversWriter::makeFileName(size_t index) const {
-	std::string fileName(myDirectoryName);
+	std::string fileName(Library::Instance().cacheDirectory());
 	fileName.append("/").append("image");
 	ZLStringUtil::appendNumber(fileName, index);
 	return fileName.append(".").append(myFileExtension);
 }
 
-jobject CoversWriter::writeSingleCover(const ZLSingleImage &image) {
+jobject CoversWriter::writeSingleCover(const std::string &bookPath, const ZLSingleImage &image) {
 	AndroidLog log;
 	log.wf("FBREADER", "CoversWriter: start");
 
 	JNIEnv *env = AndroidUtil::getEnv();
 
-	jstring javaPath;
-	jint javaOffset, javaSize;
+	ImageData &data = myImageCache[bookPath];
+	if ((data.Path.empty() || !ZLFile(data.Path).exists())
+			&& !fillSingleImageData(data, image)) {
+		return 0;
+	}
 
+	log.wf("FBREADER", "CoversWriter: create java object");
+	jstring javaPath = env->NewStringUTF(data.Path.c_str());
+	jstring javaMime = env->NewStringUTF(image.mimeType().c_str());
+	jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPlugin);
+	jobject res = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_NativeFormatPlugin_createImage,
+			javaMime, javaPath, (jint)data.Offset, (jint)data.Length);
+	env->DeleteLocalRef(javaMime);
+	env->DeleteLocalRef(javaPath);
+	env->DeleteLocalRef(cls);
+	log.wf("FBREADER", "CoversWriter: finish");
+	return res;
+}
+
+bool CoversWriter::fillSingleImageData(ImageData &imageData, const ZLSingleImage &image) {
+	log.wf("FBREADER", "CoversWriter: NO CACHE DATA...");
+	AndroidLog log;
 	switch (image.kind()) {
 		case ZLSingleImage::BASE64_ENCODED_IMAGE:
 		case ZLSingleImage::REGULAR_IMAGE:
@@ -82,7 +101,7 @@ jobject CoversWriter::writeSingleCover(const ZLSingleImage &image) {
 			const shared_ptr<std::string> data = image.stringData();
 			if (data.isNull() || data->empty()) {
 				log.wf("FBREADER", "CoversWriter: data is NULL; return");
-				return 0;
+				return false;
 			}
 			std::string fileName(makeFileName(myCoversCounter++));
 
@@ -94,33 +113,24 @@ jobject CoversWriter::writeSingleCover(const ZLSingleImage &image) {
 			stream->close();
 			log.wf("FBREADER", "CoversWriter: written.");
 
-			javaPath = env->NewStringUTF(fileName.c_str());
-			javaOffset = 0;
-			javaSize = data->length();
+			imageData.Path = fileName;
+			imageData.Offset = 0;
+			imageData.Length = data->length();
 			break;
 		}
 		case ZLSingleImage::FILE_IMAGE:
 		{
 			log.wf("FBREADER", "CoversWriter: need to write nothing.");
 			const ZLFileImage &fileImage = (const ZLFileImage&)image;
-			javaPath = env->NewStringUTF(fileImage.file().path().c_str());
-			javaOffset = fileImage.offset();
-			javaSize = fileImage.size();
+			imageData.Path = fileImage.file().path();
+			imageData.Offset = fileImage.offset();
+			imageData.Length = fileImage.size();
 			break;
 		}
 		default:
-			return 0;
+			log.wf("FBREADER", "CoversWriter: unknown image; return");
+			return false;
 	}
-
-	jstring javaMime = env->NewStringUTF(image.mimeType().c_str());
-
-	log.wf("FBREADER", "CoversWriter: create java object");
-	jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPlugin);
-	jobject res = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_NativeFormatPlugin_createImage,
-			javaMime, javaPath, javaOffset, javaSize);
-	env->DeleteLocalRef(javaMime);
-	env->DeleteLocalRef(javaPath);
-	env->DeleteLocalRef(cls);
-	log.wf("FBREADER", "CoversWriter: finish");
-	return res;
+	log.wf("FBREADER", "CoversWriter: CACHE FILLED");
+	return true;
 }

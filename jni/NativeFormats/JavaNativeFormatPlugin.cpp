@@ -221,7 +221,7 @@ JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlu
 	}
 	log.wf("FBREADER", "... cover is ready");
 
-	jobject res = CoversWriter::Instance().writeCover(*cover);
+	jobject res = CoversWriter::Instance().writeCover(path, *cover);
 	log.wf("FBREADER", "... cover is converted to java; return");
 	return res;
 }

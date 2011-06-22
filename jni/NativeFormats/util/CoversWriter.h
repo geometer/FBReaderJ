@@ -23,6 +23,7 @@
 #include <jni.h>
 
 #include <string>
+#include <map>
 
 #include <shared_ptr.h>
 #include <ZLImage.h>
@@ -39,17 +40,25 @@ public:
 
 	void resetCounter();
 
-	jobject writeCover(const ZLImage &image);
+	jobject writeCover(const std::string &bookPath, const ZLImage &image);
 
 private:
+	struct ImageData {
+		std::string Path;
+		size_t Offset;
+		size_t Length;
+		ImageData() : Offset(0), Length(0) {}
+	};
+
 	std::string makeFileName(size_t index) const;
 
-	jobject writeSingleCover(const ZLSingleImage &image);
+	jobject writeSingleCover(const std::string &bookPath, const ZLSingleImage &image);
+	bool fillSingleImageData(ImageData &imageData, const ZLSingleImage &image);
 
 private:
-	const std::string myDirectoryName;
 	const std::string myFileExtension;
 	size_t myCoversCounter;
+	std::map<std::string, ImageData> myImageCache;
 
 private:
 	CoversWriter(const CoversWriter &);
