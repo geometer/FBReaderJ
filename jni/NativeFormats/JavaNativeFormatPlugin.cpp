@@ -193,8 +193,16 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 
 	shared_ptr<ZLTextModel> textModel = model->bookTextModel();
 	jobject javaTextModel = createTextModel(env, javaModel, *textModel);
-
 	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setBookTextModel, javaTextModel);
+	env->DeleteLocalRef(javaTextModel);
+
+	const std::map<std::string,shared_ptr<ZLTextModel> > &footnotes = model->footnotes();
+	std::map<std::string,shared_ptr<ZLTextModel> >::const_iterator it = footnotes.begin();
+	for (; it != footnotes.end(); ++it) {
+		jobject javaFootnoteModel = createTextModel(env, javaModel, *it->second);
+		env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setFootnoteModel, javaFootnoteModel);
+		env->DeleteLocalRef(javaFootnoteModel);
+	}
 	return JNI_TRUE;
 }
 

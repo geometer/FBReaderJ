@@ -94,6 +94,7 @@ public:
 	static jmethodID MID_NativeBookModel_initBookModel;
 	static jmethodID MID_NativeBookModel_createTextModel;
 	static jmethodID MID_NativeBookModel_setBookTextModel;
+	static jmethodID MID_NativeBookModel_setFootnoteModel;
 
 public:
 	static void init(JavaVM* jvm);

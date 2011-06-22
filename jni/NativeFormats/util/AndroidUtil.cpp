@@ -85,6 +85,7 @@ jfieldID AndroidUtil::FID_BookModel_Book;
 jmethodID AndroidUtil::MID_NativeBookModel_initBookModel;
 jmethodID AndroidUtil::MID_NativeBookModel_createTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setBookTextModel;
+jmethodID AndroidUtil::MID_NativeBookModel_setFootnoteModel;
 
 
 void AndroidUtil::init(JavaVM* jvm) {
@@ -154,6 +155,7 @@ void AndroidUtil::init(JavaVM* jvm) {
 	MID_NativeBookModel_initBookModel = env->GetMethodID(cls, "initBookModel", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V");
 	MID_NativeBookModel_createTextModel = env->GetMethodID(cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)Lorg/geometerplus/zlibrary/text/model/ZLTextModel;");
 	MID_NativeBookModel_setBookTextModel = env->GetMethodID(cls, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V");
+	MID_NativeBookModel_setFootnoteModel = env->GetMethodID(cls, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V");
 }
 
 

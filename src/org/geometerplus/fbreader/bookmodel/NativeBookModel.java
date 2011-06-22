@@ -19,16 +19,17 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
+import java.util.HashMap;
 
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
 
-
 public class NativeBookModel extends BookModel {
 
 	private ZLImageMap myImageMap;
+	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
 	private ZLTextModel myBookTextModel;
 
@@ -56,6 +57,10 @@ public class NativeBookModel extends BookModel {
 		myBookTextModel = model;
 	}
 
+	public void setFootnoteModel(ZLTextModel model) {
+		myFootnotes.put(model.getId(), model);
+	}
+
 
 	@Override
 	public ZLTextModel getTextModel() {
@@ -64,7 +69,7 @@ public class NativeBookModel extends BookModel {
 
 	@Override
 	public ZLTextModel getFootnoteModel(String id) {
-		return null;
+		return myFootnotes.get(id);
 	}
 
 	@Override
