@@ -36,6 +36,7 @@ public class PluginCollection {
 	private static PluginCollection ourInstance;
 
 	private final ArrayList<FormatPlugin> myPlugins = new ArrayList<FormatPlugin>();
+	private final ArrayList<FormatPlugin> myJavaPlugins = new ArrayList<FormatPlugin>();
 	public ZLStringOption DefaultLanguageOption;
 	public ZLStringOption DefaultEncodingOption;
 	public ZLBooleanOption LanguageAutoDetectOption;
@@ -43,9 +44,11 @@ public class PluginCollection {
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
-//			ourInstance.myPlugins.add(new FB2Plugin());
-//			ourInstance.myPlugins.add(new MobipocketPlugin());
-//			ourInstance.myPlugins.add(new OEBPlugin());
+			ourInstance.myJavaPlugins.add(new FB2Plugin());
+			ourInstance.myJavaPlugins.add(new MobipocketPlugin());
+			ourInstance.myJavaPlugins.add(new OEBPlugin());
+
+//			ourInstance.myPlugins.addAll(ourInstance.myJavaPlugins);
 
 			ourInstance.runTests();
 		}
@@ -78,6 +81,15 @@ public class PluginCollection {
 		return plugin;
 	}
 
+	/* package */ FormatPlugin getJavaPlugin(ZLFile file) {
+		for (FormatPlugin plugin : myJavaPlugins) {
+			if (plugin.acceptsFile(file)) {
+				return plugin;
+			}
+		}
+		return null;
+	}
+
 	private native FormatPlugin getNativePlugin(String path);
 	private native void free();
 
@@ -99,6 +111,7 @@ public class PluginCollection {
 	protected void finalize() throws Throwable {
 		deleteInstance();
 		myPlugins.clear();
+		myJavaPlugins.clear();
 		free();
 		super.finalize();
 	};

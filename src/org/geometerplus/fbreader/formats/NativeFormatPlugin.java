@@ -85,11 +85,17 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	protected native ZLImage readCoverInternal(ZLFile file);
 
-	@Override
-	public native String readAnnotation(ZLFile file);
-
-
 	public static ZLImage createImage(String mimeType, String fileName, int offset, int length) {
 		return new ZLFileImage(MimeType.get(mimeType), ZLFile.createFileByPath(fileName), offset, length);
+	}
+
+	// FIXME: temporary implementation; implement as a native code
+	@Override
+	public String readAnnotation(ZLFile file) {
+		FormatPlugin plugin = PluginCollection.Instance().getJavaPlugin(file);
+		if (plugin != null) {
+			return plugin.readAnnotation(file);
+		}
+		return null;
 	}
 }
