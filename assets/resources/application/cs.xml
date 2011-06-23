@@ -189,9 +189,9 @@
 	<node name="selection" value="Výběr">
 		<node name="copyToClipboard" value="Kopírovat do schránky"/>
 		<node name="openInDictionary" value="Otevřít ve slovníku"/>
-		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
-		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
+		<node name="quoteFrom" value="Citovat z %s"/>
+		<node name="textInBuffer" value="Zkopírováno do schránky:&#10;%s"/>
+		<node name="bookmarkCreated" value="Vytvořena záložka:&#10;%s"/>
 		<node name="clearSelection" value="Vymazat"/>
 	</node>
 	<node name="menu">
@@ -436,7 +436,7 @@
 				</node>
 				<node name="backgroundColor" value="Barva pozadí"/>
 				<node name="selectionBackground" value="Pozadí výběru"/>
-				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
+				<node name="selectionForeground" value="Vybraný text"/>
 				<node name="text" value="Běžný text"/>
 				<node name="hyperlink" value="Hypertextový odkaz"/>
 				<node name="hyperlinkVisited" value="Navštívený hypertextový odkaz"/>
@@ -542,11 +542,11 @@
 			<node name="dictionary" value="Slovník">
 				<node name="summary" value="Nastavení slovníku"/>
 				<node name="dictionary" value="Slovník"/>
-				<node name="translator" value="Translator" toBeTranslated="true"/>
+				<node name="translator" value="Překladač"/>
 				<node name="tappingAction" value="Dlouhé klepnutí">
 					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
 					<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
-					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+					<node name="startSelecting" value="Dlouhé klepnutí spustí vybírání"/>
 					<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
 				</node>
 				<node name="navigateOverAllWords" value="Navigovat přes všechna slova">

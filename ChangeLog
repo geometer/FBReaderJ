@@ -1,4 +1,6 @@
-===== 1.2.0 (??? ??, 2011) =====
+===== 1.1.1 (Jun ??, 2011) =====
+* FBReader API has been added (a plugin for text-to-speech functionality that uses this API is released separately)
+* Czech translation has been updated (by Marek Pavelka)
 
 ===== 1.1.0 (Jun 11, 2011) =====
 * Text selection (original code by Dmitry Gordeev)

@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.authentication.litres;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
@@ -37,6 +38,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private final ZLStringOption mySidUserNameOption;
 	private final ZLStringOption mySidOption;
 	private final ZLStringOption myUserIdOption;
+	private final ZLBooleanOption myCanRebillOption;
 
 	private volatile String myInitializedDataSid;
 	private volatile String myAccount;
@@ -50,35 +52,27 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		mySidUserNameOption = new ZLStringOption(link.getSiteName(), "sidUserName", "");
 		mySidOption = new ZLStringOption(link.getSiteName(), "sid", "");
 		myUserIdOption = new ZLStringOption(link.getSiteName(), "userId", "");
+		myCanRebillOption = new ZLBooleanOption(link.getSiteName(), "canRebill", false);
 	}
 
-	@Override
-	public synchronized void initUser(String userName, String sid) throws ZLNetworkException {
-		mySidChecked = false;
-		mySidUserNameOption.setValue(userName);
-		mySidOption.setValue(sid);
-		if (!isAuthorised(true)) {
-			throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
-		}
-	}
-
-	private synchronized void initUser(String userName, String sid, String userId) {
+	public synchronized void initUser(String userName, String sid, String userId, boolean canRebill) {
 		mySidChecked = true;
 		mySidUserNameOption.setValue(userName);
 		mySidOption.setValue(sid);
 		myUserIdOption.setValue(userId);
+		myCanRebillOption.setValue(canRebill);
 	}
 
 	@Override
 	public synchronized void logOut() {
-		initUser("", "", "");
+		initUser("", "", "", false);
 		myInitializedDataSid = null;
 		myPurchasedBookMap.clear();
 		myPurchasedBookList.clear();
 	}
 
 	@Override
-	public boolean isAuthorised(boolean useNetwork /* = true */) throws ZLNetworkException {
+	public boolean isAuthorised(boolean useNetwork) throws ZLNetworkException {
 		final String sid;
 		synchronized (this) {
 			boolean authState =
@@ -120,7 +114,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				logOut();
 				return false;
 			}
-			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId);
+			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 			return true;
 		}
 	}
@@ -154,7 +148,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				logOut();
 				throw exception;
 			}
-			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId);
+			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 		}
 	}
 
@@ -426,6 +420,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public Map<String,String> getTopupData() {
 		final HashMap<String,String> map = new HashMap<String,String>();
 		map.put("litres:userId", myUserIdOption.getValue());
+		map.put("litres:canRebill", myCanRebillOption.getValue() ? "true" : "false");
 		map.put("litres:sid", mySidOption.getValue());
 		return map;
 	}
