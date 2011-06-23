@@ -19,6 +19,9 @@
 
 package org.geometerplus.zlibrary.core.sqliteconfig;
 
+import java.util.List;
+import java.util.LinkedList;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -88,6 +91,28 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		}
 		cursor.close();
 		*/
+	}
+
+	@Override
+	synchronized public List<String> listGroups() {
+		final LinkedList<String> list = new LinkedList<String>();
+		final Cursor cursor = myDatabase.rawQuery("SELECT DISTINCT groupName FROM config", null);
+		while (cursor.moveToNext()) {
+			list.add(cursor.getString(0));
+		}
+		cursor.close();
+		return list;
+	}
+
+	@Override
+	synchronized public List<String> listNames(String group) {
+		final LinkedList<String> list = new LinkedList<String>();
+		final Cursor cursor = myDatabase.rawQuery("SELECT name FROM config WHERE groupName = ?", new String[] { group });
+		while (cursor.moveToNext()) {
+			list.add(cursor.getString(0));
+		}
+		cursor.close();
+		return list;
 	}
 
 	@Override
