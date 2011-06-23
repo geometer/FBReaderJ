@@ -4,6 +4,9 @@
 
 package org.geometerplus.android.fbreader.api;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -115,6 +118,14 @@ public abstract class ApiObject implements Parcelable {
 
 	static ApiObject envelope(java.lang.String value) {
 		return new String(value);
+	}
+
+	static List<ApiObject> envelope(List<java.lang.String> values) {
+		final ArrayList<ApiObject> objects = new ArrayList<ApiObject>(values.size());
+		for (java.lang.String v : values) {
+			objects.add(new String(v));
+		}
+		return objects;
 	}
 
 	abstract protected int type();

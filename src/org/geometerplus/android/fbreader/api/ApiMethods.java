@@ -15,13 +15,17 @@ interface ApiMethods {
 	// bookmarks information
 
 	// preferences
+	int GET_OPTION_GROUPS = 401;
+	int GET_OPTION_NAMES = 402;
+	int GET_OPTION_VALUE = 403;
+	int SET_OPTION_VALUE = 404;
 
 	// book information
 	int GET_BOOK_LANGUAGE = 501;
 	int GET_BOOK_TITLE = 502;
 	int GET_BOOK_AUTHORS = 503;
 	int GET_BOOK_TAGS = 504;
-	int GET_BOOK_FILENAME = 505;
+	int GET_BOOK_FILE_NAME = 505;
 
 	// text information
 	int GET_PARAGRAPHS_NUMBER = 601;

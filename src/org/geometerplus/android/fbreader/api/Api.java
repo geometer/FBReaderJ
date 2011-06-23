@@ -7,11 +7,14 @@ package org.geometerplus.android.fbreader.api;
 import java.util.List;
 
 public interface Api {
-	void connect();
-	void disconnect();
-
-	// fbreader information
+	// information about fbreader
 	String getFBReaderVersion() throws ApiException;
+
+	// preferences information
+	List<String> getOptionGroups() throws ApiException;
+	List<String> getOptionNames(String group) throws ApiException;
+	String getOptionValue(String group, String name) throws ApiException;
+	void setOptionValue(String group, String name, String value) throws ApiException;
 
 	// book information
 	String getBookLanguage() throws ApiException;
