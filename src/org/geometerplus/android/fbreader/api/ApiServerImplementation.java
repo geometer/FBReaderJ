@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.api;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 import org.geometerplus.zlibrary.text.view.*;
 
@@ -104,8 +105,13 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		try {
 			switch (method) {
 				case GET_OPTION_GROUPS:
+					return ApiObject.envelope(getOptionGroups());
 				case GET_OPTION_NAMES:
+					return ApiObject.envelope(getOptionNames(
+						((ApiObject.String)parameters[0]).Value
+					));
 				case GET_BOOK_TAGS:
+					return ApiObject.envelope(getBookTags());
 				default:
 					return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 			}
@@ -137,18 +143,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	// preferences information
 	public List<String> getOptionGroups() {
-		// TODO: implement
-		return Collections.emptyList();
+		return ZLConfig.Instance().listGroups();
 	}
 
 	public List<String> getOptionNames(String group) {
-		// TODO: implement
-		return Collections.emptyList();
+		return ZLConfig.Instance().listNames(group);
 	}
 
 	public String getOptionValue(String group, String name) {
-		// TODO: implement
-		return null;
+		return ZLConfig.Instance().getValue(group, name, null);
 	}
 
 	public void setOptionValue(String group, String name, String value) {
