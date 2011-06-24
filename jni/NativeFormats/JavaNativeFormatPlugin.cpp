@@ -35,6 +35,7 @@
 #include <ZLTextModel.h>
 
 #include <ZLImageMapWriter.h>
+#include <ZLCachedMemoryAllocator.h>
 
 #include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
@@ -141,6 +142,47 @@ static void initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
 	env->PopLocalFrame(0);
 }
 
+static void initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &model) {
+	ZLCachedMemoryAllocator allocator(131072, Library::Instance().cacheDirectory(), "nlinks");
+
+	ZLUnicodeUtil::Ucs2String ucs2id;
+	ZLUnicodeUtil::Ucs2String ucs2modelId;
+
+	const std::map<std::string,BookModel::Label> &links = model.internalHyperlinks();
+	std::map<std::string,BookModel::Label>::const_iterator it = links.begin();
+	for (; it != links.end(); ++it) {
+		const std::string &id = it->first;
+		const BookModel::Label &label = it->second;
+		if (label.Model.isNull()) {
+			continue;
+		}
+		ZLUnicodeUtil::utf8ToUcs2(ucs2id, id);
+		ZLUnicodeUtil::utf8ToUcs2(ucs2modelId, label.Model->id());
+		const size_t idLen = ucs2id.size() * 2;
+		const size_t modelIdLen = ucs2modelId.size() * 2;
+
+		char *ptr = allocator.allocate(idLen + modelIdLen + 8);
+		*(uint16_t*)ptr = ucs2id.size();
+		ptr += 2;
+		memcpy(ptr, &ucs2id.front(), idLen);
+		ptr += idLen;
+		*(uint16_t*)ptr = ucs2modelId.size();
+		ptr += 2;
+		memcpy(ptr, &ucs2modelId.front(), modelIdLen);
+		ptr += modelIdLen;
+		*(int32_t*)ptr = label.ParagraphNumber;
+	}
+	allocator.flush();
+
+	jstring linksDirectoryName = env->NewStringUTF(allocator.directoryName().c_str());
+	jstring linksFileExtension = env->NewStringUTF(allocator.fileExtension().c_str());
+	jint linksBlocksNumber = allocator.blocksNumber();
+	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initInternalHyperlinks,
+			linksDirectoryName, linksFileExtension, linksBlocksNumber);
+	env->DeleteLocalRef(linksDirectoryName);
+	env->DeleteLocalRef(linksFileExtension);
+}
+
 static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &model) {
 	env->PushLocalFrame(16);
 
@@ -190,6 +232,7 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	model->flush();
 
 	initBookModel(env, javaModel, *model);
+	initInternalHyperlinks(env, javaModel, *model);
 
 	shared_ptr<ZLTextModel> textModel = model->bookTextModel();
 	jobject javaTextModel = createTextModel(env, javaModel, *textModel);

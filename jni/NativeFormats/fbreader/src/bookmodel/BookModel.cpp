@@ -76,4 +76,9 @@ void BookModel::flush() {
 	myBookTextModel->flush();
 	myContentsModel->flush();
 	myImagesWriter->flush();
+
+	std::map<std::string,shared_ptr<ZLTextModel> >::const_iterator it = myFootnotes.begin();
+	for (; it != myFootnotes.end(); ++it) {
+		it->second->flush();
+	}
 }
