@@ -58,7 +58,9 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 			Reader.getViewWidget().repaint();
 			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegionSoul)soul).Hyperlink;
 			switch (hyperlink.Type) {
+				// FIXME: EXTERNAL and BOOK handling should be separated
 				case FBHyperlinkType.EXTERNAL:
+				case FBHyperlinkType.BOOK:
 					if (hyperlink.Id.startsWith(ACTION_LINK_PREFIX)) {
 						Reader.doAction(hyperlink.Id.substring(ACTION_LINK_PREFIX.length()));
 					} else {
