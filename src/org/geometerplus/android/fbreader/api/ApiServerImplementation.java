@@ -39,7 +39,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return new ApiObject.Error("Exception in method " + method + ": " + e);
 	}
 
-	@Override
 	public ApiObject request(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
