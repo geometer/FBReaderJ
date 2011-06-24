@@ -133,12 +133,40 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	private static final ApiObject[] EMPTY_PARAMETERS = new ApiObject[0];
 
+	private static ApiObject[] envelope(String value) {
+		return new ApiObject[] { ApiObject.envelope(value) };
+	}
+
 	private static ApiObject[] envelope(int value) {
 		return new ApiObject[] { ApiObject.envelope(value) };
 	}
 
+	// information about fbreader
 	public String getFBReaderVersion() throws ApiException {
 		return requestString(GET_FBREADER_VERSION, EMPTY_PARAMETERS);
+	}
+
+	// preferences information
+	public List<String> getOptionGroups() throws ApiException {
+		return requestStringList(GET_OPTION_GROUPS, EMPTY_PARAMETERS);
+	}
+
+	public List<String> getOptionNames(String group) throws ApiException {
+		return requestStringList(GET_OPTION_NAMES, envelope(group));
+	}
+
+	public String getOptionValue(String group, String name) throws ApiException {
+		return requestString(
+			GET_OPTION_VALUE,
+			new ApiObject[] { ApiObject.envelope(group), ApiObject.envelope(name) }
+		);
+	}
+
+	public void setOptionValue(String group, String name, String value) throws ApiException {
+		request(
+			SET_OPTION_VALUE,
+			new ApiObject[] { ApiObject.envelope(group), ApiObject.envelope(name), ApiObject.envelope(value) }
+		);
 	}
 
 	public String getBookLanguage() throws ApiException {
@@ -154,7 +182,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public String getBookFileName() throws ApiException {
-		return requestString(GET_BOOK_FILENAME, EMPTY_PARAMETERS);
+		return requestString(GET_BOOK_FILE_NAME, EMPTY_PARAMETERS);
 	}
 
 	public TextPosition getPageStart() throws ApiException {
