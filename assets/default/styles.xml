@@ -22,6 +22,7 @@
 	<style id="12" partial="true" name="Cite" italic="true"/>
 	<style id="15" partial="true" name="Internal Hyperlink" allowHyphenations="false" underline="true"/>
 	<style id="37" partial="true" name="External Hyperlink" allowHyphenations="false" underline="true"/>
+	<style id="38" partial="true" name="Link to Another Book" allowHyphenations="false" underline="true"/>
 	<style id="16" partial="true" name="Footnote" fontSizeDelta="-5" vShift="7" allowHyphenations="false"/>
 	<style id="17" partial="true" name="Emphasis" italic="true"/>
 	<style id="18" partial="true" name="Strong" bold="true"/>
