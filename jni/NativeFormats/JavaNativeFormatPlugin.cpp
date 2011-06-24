@@ -215,6 +215,35 @@ static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &mode
 	return env->PopLocalFrame(textModel);
 }
 
+
+static void initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
+	ContentsModel &contentsModel = (ContentsModel&)*model.contentsModel();
+
+	std::vector<jint> childrenNumbers;
+	std::vector<jint> referenceNumbers;
+
+	const size_t size = contentsModel.paragraphsNumber();
+	childrenNumbers.reserve(size);
+	referenceNumbers.reserve(size);
+	for (size_t pos = 0; pos < size; ++pos) {
+		ZLTextTreeParagraph *par = (ZLTextTreeParagraph*)contentsModel[pos];
+		childrenNumbers.push_back(par->children().size());
+		referenceNumbers.push_back(contentsModel.reference(par));
+	}
+
+	jobject javaTextModel = createTextModel(env, javaModel, contentsModel);
+	jintArray javaChildrenNumbers = AndroidUtil::createIntArray(env, childrenNumbers);
+	jintArray javaReferenceNumbers = AndroidUtil::createIntArray(env, referenceNumbers);
+
+	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initTOC,
+			javaTextModel, javaChildrenNumbers, javaReferenceNumbers);
+
+	env->DeleteLocalRef(javaTextModel);
+	env->DeleteLocalRef(javaChildrenNumbers);
+	env->DeleteLocalRef(javaReferenceNumbers);
+}
+
+
 extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModel(JNIEnv* env, jobject thiz, jobject javaModel) {
 	FormatPlugin *plugin = extractPointer(env, thiz);
@@ -233,6 +262,7 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 
 	initBookModel(env, javaModel, *model);
 	initInternalHyperlinks(env, javaModel, *model);
+	initTOC(env, javaModel, *model);
 
 	shared_ptr<ZLTextModel> textModel = model->bookTextModel();
 	jobject javaTextModel = createTextModel(env, javaModel, *textModel);
