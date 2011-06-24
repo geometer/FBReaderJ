@@ -348,7 +348,13 @@ public final class FBReader extends ZLAndroidActivity {
 		synchronized (myPluginActions) {
 			int index = 0;
 			for (PluginApi.ActionInfo info : myPluginActions) {
-				addMenuItem(menu, PLUGIN_ACTION_PREFIX + index++, info.MenuItemName);
+				if (info instanceof PluginApi.MenuActionInfo) {
+					addMenuItem(
+						menu,
+						PLUGIN_ACTION_PREFIX + index++,
+						((PluginApi.MenuActionInfo)info).MenuItemName
+					);
+				}
 			}
 		}
 

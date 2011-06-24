@@ -34,14 +34,16 @@ public abstract class PluginApi {
 		protected abstract List<ActionInfo> implementedActions(Context context);
 	}
 
-	public static class ActionInfo implements Parcelable {
-		private final String myId;
-		public final String MenuItemName;
+	public static abstract class ActionInfo implements Parcelable {
+		protected static final int TYPE_MENU = 1;
 
-		public ActionInfo(Uri id, String menuItemName) {
+		private final String myId;
+
+		protected ActionInfo(Uri id) {
 			myId = id.toString();
-			MenuItemName = menuItemName;
 		}
+
+		protected abstract int getType();
 
 		public Uri getId() {
 			return Uri.parse(myId);
@@ -52,21 +54,46 @@ public abstract class PluginApi {
 		}
 
 		public void writeToParcel(Parcel parcel, int flags) {
+			parcel.writeInt(getType());
 			parcel.writeString(myId);
-			parcel.writeString(MenuItemName);
 		}
 
 		public static final Creator<ActionInfo> CREATOR = new Creator<ActionInfo>() {
 			public ActionInfo createFromParcel(Parcel parcel) {
-				return new ActionInfo(
-					Uri.parse(parcel.readString()),
-					parcel.readString()
-				);
+				switch (parcel.readInt()) {
+					case TYPE_MENU:
+						return new MenuActionInfo(
+							Uri.parse(parcel.readString()),
+							parcel.readString()
+						);
+					default:
+						return null;
+				}
 			}
 
 			public ActionInfo[] newArray(int size) {
 				return new ActionInfo[size];
 			}
 		};
+	}
+
+	public static class MenuActionInfo extends ActionInfo {
+		public final String MenuItemName;
+
+		public MenuActionInfo(Uri id, String menuItemName) {
+			super(id);
+			MenuItemName = menuItemName;
+		}
+
+		@Override
+		protected int getType() {
+			return TYPE_MENU;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeString(MenuItemName);
+		}
 	}
 }
