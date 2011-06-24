@@ -38,6 +38,7 @@ public:
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
+	static const char * const Class_NativeFormatPluginException;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Paths;
 	static const char * const Class_Book;
@@ -92,6 +93,8 @@ public:
 	static jfieldID FID_BookModel_Book;
 
 	static jmethodID MID_NativeBookModel_initBookModel;
+	static jmethodID MID_NativeBookModel_initInternalHyperlinks;
+	static jmethodID MID_NativeBookModel_initTOC;
 	static jmethodID MID_NativeBookModel_createTextModel;
 	static jmethodID MID_NativeBookModel_setBookTextModel;
 	static jmethodID MID_NativeBookModel_setFootnoteModel;

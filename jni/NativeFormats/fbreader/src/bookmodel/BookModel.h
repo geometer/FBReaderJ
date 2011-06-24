@@ -70,7 +70,9 @@ public:
 	const std::map<std::string,shared_ptr<ZLTextModel> > &footnotes() const;
 
 	shared_ptr<ZLImageMapWriter> imageMapWriter() const;
+
 	Label label(const std::string &id) const;
+	const std::map<std::string,Label> &internalHyperlinks() const;
 
 	const shared_ptr<Book> book() const;
 
@@ -92,5 +94,6 @@ inline shared_ptr<ZLTextModel> BookModel::bookTextModel() const { return myBookT
 inline shared_ptr<ZLTextModel> BookModel::contentsModel() const { return myContentsModel; }
 inline const std::map<std::string,shared_ptr<ZLTextModel> > &BookModel::footnotes() const { return myFootnotes; }
 inline shared_ptr<ZLImageMapWriter> BookModel::imageMapWriter() const { return myImagesWriter; }
+inline const std::map<std::string,BookModel::Label> &BookModel::internalHyperlinks() const { return myInternalHyperlinks; }
 
 #endif /* __BOOKMODEL_H__ */
