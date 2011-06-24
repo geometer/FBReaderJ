@@ -253,13 +253,14 @@ public class ZLTextPlainModel implements ZLTextModel {
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks = new ArrayList<ZLTextMark>();
 		if (startIndex > myParagraphsNumber) {
-                	startIndex = myParagraphsNumber;				
+                	startIndex = myParagraphsNumber;
 		}
 		if (endIndex > myParagraphsNumber) {
 			endIndex = myParagraphsNumber;
-		}				
+		}
 		int index = startIndex;
-		for (EntryIteratorImpl it = new EntryIteratorImpl(index); index < endIndex; it.reset(++index)) {
+		EntryIteratorImpl it = new EntryIteratorImpl(index);
+		while (true) {
 			int offset = 0;
 			while (it.hasNext()) {
 				it.next();
@@ -267,14 +268,18 @@ public class ZLTextPlainModel implements ZLTextModel {
 					char[] textData = it.getTextData();
 					int textOffset = it.getTextOffset();
 					int textLength = it.getTextLength();
-					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1; 
+					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1;
 						pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern, pos + 1)) {
 						myMarks.add(new ZLTextMark(index, offset + pos, pattern.getLength()));
 						++count;
 					}
-					offset += textLength;						
-				}				
-			} 
+					offset += textLength;
+				}
+			}
+			if (++index >= endIndex) {
+				break;
+			}
+			it.reset(index);
 		}
 		return count;
 	}
