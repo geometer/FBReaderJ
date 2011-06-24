@@ -48,7 +48,7 @@
 static inline FormatPlugin *extractPointer(JNIEnv *env, jobject base) {
 	jlong ptr = env->GetLongField(base, AndroidUtil::FID_NativeFormatPlugin_NativePointer);
 	if (ptr == 0) {
-		jclass cls = env->FindClass("org/geometerplus/fbreader/formats/NativeFormatPluginException");
+		jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPluginException);
 		env->ThrowNew(cls, "Native FormatPlugin instance is NULL.");
 	}
 	return (FormatPlugin *)ptr;
@@ -125,7 +125,7 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	return JNI_TRUE;
 }
 
-static void initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
+static bool initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
 	shared_ptr<ZLImageMapWriter> imageMapWriter = model.imageMapWriter();
 
 	env->PushLocalFrame(16);
@@ -138,11 +138,11 @@ static void initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
 	jint imageBlocksNumber = imageMapWriter->allocator().blocksNumber();
 	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initBookModel,
 			ids, indices, offsets, imageDirectoryName, imageFileExtension, imageBlocksNumber);
-
 	env->PopLocalFrame(0);
+	return !env->ExceptionCheck();
 }
 
-static void initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &model) {
+static bool initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &model) {
 	ZLCachedMemoryAllocator allocator(131072, Library::Instance().cacheDirectory(), "nlinks");
 
 	ZLUnicodeUtil::Ucs2String ucs2id;
@@ -181,6 +181,7 @@ static void initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &mo
 			linksDirectoryName, linksFileExtension, linksBlocksNumber);
 	env->DeleteLocalRef(linksDirectoryName);
 	env->DeleteLocalRef(linksFileExtension);
+	return !env->ExceptionCheck();
 }
 
 static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &model) {
@@ -212,16 +213,23 @@ static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &mode
 			paragraphLenghts, textSizes, paragraphKinds,
 			directoryName, fileExtension, blocksNumber);
 
+	if (env->ExceptionCheck()) {
+		textModel = 0;
+	}
 	return env->PopLocalFrame(textModel);
 }
 
 
-static void initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
+static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 	ContentsModel &contentsModel = (ContentsModel&)*model.contentsModel();
+
+	jobject javaTextModel = createTextModel(env, javaModel, contentsModel);
+	if (javaTextModel == 0) {
+		return false;
+	}
 
 	std::vector<jint> childrenNumbers;
 	std::vector<jint> referenceNumbers;
-
 	const size_t size = contentsModel.paragraphsNumber();
 	childrenNumbers.reserve(size);
 	referenceNumbers.reserve(size);
@@ -230,8 +238,6 @@ static void initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 		childrenNumbers.push_back(par->children().size());
 		referenceNumbers.push_back(contentsModel.reference(par));
 	}
-
-	jobject javaTextModel = createTextModel(env, javaModel, contentsModel);
 	jintArray javaChildrenNumbers = AndroidUtil::createIntArray(env, childrenNumbers);
 	jintArray javaReferenceNumbers = AndroidUtil::createIntArray(env, referenceNumbers);
 
@@ -241,6 +247,7 @@ static void initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 	env->DeleteLocalRef(javaTextModel);
 	env->DeleteLocalRef(javaChildrenNumbers);
 	env->DeleteLocalRef(javaReferenceNumbers);
+	return !env->ExceptionCheck();
 }
 
 
@@ -260,20 +267,34 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	}
 	model->flush();
 
-	initBookModel(env, javaModel, *model);
-	initInternalHyperlinks(env, javaModel, *model);
-	initTOC(env, javaModel, *model);
+	if (!initBookModel(env, javaModel, *model)
+			|| !initInternalHyperlinks(env, javaModel, *model)
+			|| !initTOC(env, javaModel, *model)) {
+		return JNI_FALSE;
+	}
 
 	shared_ptr<ZLTextModel> textModel = model->bookTextModel();
 	jobject javaTextModel = createTextModel(env, javaModel, *textModel);
+	if (javaTextModel == 0) {
+		return JNI_FALSE;
+	}
 	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setBookTextModel, javaTextModel);
+	if (env->ExceptionCheck()) {
+		return JNI_FALSE;
+	}
 	env->DeleteLocalRef(javaTextModel);
 
 	const std::map<std::string,shared_ptr<ZLTextModel> > &footnotes = model->footnotes();
 	std::map<std::string,shared_ptr<ZLTextModel> >::const_iterator it = footnotes.begin();
 	for (; it != footnotes.end(); ++it) {
 		jobject javaFootnoteModel = createTextModel(env, javaModel, *it->second);
+		if (javaFootnoteModel == 0) {
+			return JNI_FALSE;
+		}
 		env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setFootnoteModel, javaFootnoteModel);
+		if (env->ExceptionCheck()) {
+			return JNI_FALSE;
+		}
 		env->DeleteLocalRef(javaFootnoteModel);
 	}
 	return JNI_TRUE;

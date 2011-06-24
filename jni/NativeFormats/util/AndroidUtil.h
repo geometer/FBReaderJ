@@ -38,6 +38,7 @@ public:
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
+	static const char * const Class_NativeFormatPluginException;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Paths;
 	static const char * const Class_Book;
