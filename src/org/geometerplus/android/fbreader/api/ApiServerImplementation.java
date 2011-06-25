@@ -39,7 +39,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return new ApiObject.Error("Exception in method " + method + ": " + e);
 	}
 
-	@Override
 	public ApiObject request(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
@@ -100,7 +99,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		} 
 	}
 
-	@Override
 	public List<ApiObject> requestList(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
@@ -124,7 +122,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return Collections.<ApiObject,ApiObject>singletonMap(error, error);
 	}
 
-	@Override
 	public Map<ApiObject,ApiObject> requestMap(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
