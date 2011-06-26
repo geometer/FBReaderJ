@@ -37,7 +37,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		private NetworkLibrary.OnNewLinkListener myListener;
 
 		private String myAuthenticationType;
-		private boolean myHasStableIdentifiers;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 		private final HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
 		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>(); 
@@ -54,10 +53,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			myAuthenticationType = type;
 		}
 
-		public void setHasStableIdentifiers(boolean value) {
-			myHasStableIdentifiers = value;
-		}
-
 		public void addUrlRewritingRule(URLRewritingRule rule) {
 			myUrlRewritingRules.add(rule);
 		}
@@ -72,7 +67,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 		public void clear() {
 			myAuthenticationType = null;
-			myHasStableIdentifiers = false;
 			myUrlRewritingRules.clear();
 			myRelationAliases.clear();
 			myExtraData.clear();
@@ -150,7 +144,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				sslCertificate = null;
 			}
 
-			INetworkLink result = link(siteName, title, summary, language, infos, urlConditions, sslCertificate);
+			INetworkLink result = link(id, siteName, title, summary, language, infos, urlConditions, sslCertificate);
 			if (result != null) {
 				myListener.onNewLink(result);
 			}
@@ -158,6 +152,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		}
 
 		private INetworkLink link(
+			String id,
 			String siteName,
 			CharSequence title,
 			CharSequence summary,
@@ -173,14 +168,13 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			final String titleString = title.toString();
 			final String summaryString = summary != null ? summary.toString() : null;
 
-			OPDSNetworkLink opdsLink = new OPDSNetworkLink(
-				OPDSNetworkLink.INVALID_ID,
+			OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
+				id,
 				siteName,
 				titleString,
 				summaryString,
 				language,
-				infos,
-				myHasStableIdentifiers
+				infos
 			);
 
 			/*if (!mySearchType.empty()) {
@@ -243,7 +237,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 	private static final String FBREADER_ADVANCED_SEARCH = "advancedSearch";
 	private static final String FBREADER_AUTHENTICATION = "authentication";
-	private static final String FBREADER_STABLE_IDENTIFIERS = "hasStableIdentifiers";
 	private static final String FBREADER_REWRITING_RULE = "urlRewritingRule";
 	private static final String FBREADER_RELATION_ALIAS = "relationAlias";
 	private static final String FBREADER_EXTRA = "extra";
@@ -278,9 +271,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 						return false;
 					} else if (tag == FBREADER_REWRITING_RULE) {
 						getFeedHandler().addUrlRewritingRule(new URLRewritingRule(attributes));
-						return false;
-					} else if (tag == FBREADER_STABLE_IDENTIFIERS) {
-						getFeedHandler().setHasStableIdentifiers(true);
 						return false;
 					} else if (tag == FBREADER_EXTRA) {
 						final String name = attributes.getValue("name");

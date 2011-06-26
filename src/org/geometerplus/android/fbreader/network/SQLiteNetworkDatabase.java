@@ -43,7 +43,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentCodeVersion = 5;
+		final int currentCodeVersion = 6;
 		if (version >= currentCodeVersion) {
 			return;
 		}
@@ -59,6 +59,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				updateTables3();
 			case 4:
 				updateTables4();
+			case 5:
+				updateTables5();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();
@@ -356,5 +358,19 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				"value TEXT NOT NULL," +
 				"CONSTRAINT Extras_PK PRIMARY KEY (key, link_id))"
 		);
+	}
+
+	private void updateTables5() {
+		myDatabase.execSQL("ALTER TABLE Links RENAME TO Links_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE Links(" +
+				"link_id INTEGER PRIMARY KEY," +
+				"title TEXT NOT NULL," +
+				"site_name TEXT NOT NULL," +
+				"summary TEXT," +
+				"predefined_id TEXT," +
+				"is_enabled INTEGER)");
+		myDatabase.execSQL("INSERT INTO Links (link_id,title,site_name,summary,predefined_id,is_enabled) SELECT link_id,title,site_name,summary,NULL,is_enabled FROM Links_Obsolete");
+		myDatabase.execSQL("DROP TABLE Links_Obsolete");
 	}
 }

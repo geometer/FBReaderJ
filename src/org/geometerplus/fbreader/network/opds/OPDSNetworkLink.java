@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-public class OPDSNetworkLink extends AbstractNetworkLink {
+public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	private TreeMap<RelationAlias,String> myRelationAliases;
 
 	private TreeMap<String,NetworkCatalogItem.Accessibility> myUrlConditions;
@@ -41,12 +41,9 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	private final Map<String,String> myExtraData = new HashMap<String,String>();
 	private NetworkAuthenticationManager myAuthenticationManager;
 
-	private final boolean myHasStableIdentifiers;
-
 	OPDSNetworkLink(int id, String siteName, String title, String summary, String language,
-			UrlInfoCollection<UrlInfoWithDate> infos, boolean hasStableIdentifiers) {
+			UrlInfoCollection<UrlInfoWithDate> infos) {
 		super(id, siteName, title, summary, language, infos);
-		myHasStableIdentifiers = hasStableIdentifiers;
 	}
 
 	final void setRelationAliases(Map<RelationAlias, String> relationAliases) {
@@ -96,10 +93,8 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 				).read(inputStream);
 
 				if (result.Listener.confirmInterrupt()) {
-					if (!myHasStableIdentifiers && result.LastLoadedId != null) {
-						// If current catalog doesn't have stable identifiers
-						// and catalog wasn't completely loaded (i.e. LastLoadedIdentifier is not null)
-						// then reset state to load current page from the beginning 
+					if (result.LastLoadedId != null) {
+						// reset state to load current page from the beginning 
 						result.LastLoadedId = null;
 					} else {
 						result.Listener.commitItems(OPDSNetworkLink.this);
@@ -186,7 +181,6 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 	@Override
 	public String toString() {
 		return "OPDSNetworkLink: {super=" + super.toString()
-			+ "; stableIds=" + myHasStableIdentifiers
 			+ "; authManager=" + (myAuthenticationManager != null ? myAuthenticationManager.getClass().getName() : null)
 			+ "; relationAliases=" + myRelationAliases
 			+ "; urlConditions=" + myUrlConditions

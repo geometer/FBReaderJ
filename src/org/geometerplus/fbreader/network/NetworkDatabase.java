@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.List;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
-import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
+import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 
 public abstract class NetworkDatabase {
 	private static NetworkDatabase ourInstance;
@@ -42,7 +42,7 @@ public abstract class NetworkDatabase {
 		if (siteName == null || title == null || infos.getInfo(UrlInfo.Type.Catalog) == null) {
 			return null;
 		}
-		return new OPDSCustomLink(id, siteName, title, summary, infos);
+		return new OPDSCustomNetworkLink(id, siteName, title, summary, infos);
 	}
 
 	protected abstract List<INetworkLink> listLinks();
