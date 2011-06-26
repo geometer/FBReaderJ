@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.*;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,8 +28,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
-import org.geometerplus.fbreader.network.ICustomNetworkLink;
-import org.geometerplus.fbreader.network.NetworkDatabase;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.android.util.SQLiteUtil;
@@ -77,7 +78,9 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	}
 
 	@Override
-	protected void loadCustomLinks(ICustomLinksHandler handler) {
+	protected List<INetworkLink> loadLinks() {
+		final List<INetworkLink> links = new LinkedList<INetworkLink>();
+
 		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary FROM Links", null);
 		final UrlInfoCollection<UrlInfoWithDate> linksMap = new UrlInfoCollection<UrlInfoWithDate>();
 		while (cursor.moveToNext()) {
@@ -102,9 +105,14 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 			}
 			linksCursor.close();
 
-			handler.handleCustomLinkData(id, siteName, title, summary, linksMap);
+			final INetworkLink l = createLink(id, siteName, title, summary, linksMap);
+			if (l != null) {
+				links.add(l);
+			}
 		}
 		cursor.close();
+
+		return links;
 	}
 
 	private SQLiteStatement myInsertCustomLinkStatement;
