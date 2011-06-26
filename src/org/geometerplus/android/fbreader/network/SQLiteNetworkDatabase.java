@@ -213,7 +213,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				for (UrlInfo info : linksMap.getAllInfos()) {
 					if (myDeleteCustomLinkUrlStatement == null) {
 						myDeleteCustomLinkUrlStatement = myDatabase.compileStatement(
-								"DELETE FROM LinkUrls WHERE link_id = ? AND key = ?");
+							"DELETE FROM LinkUrls WHERE link_id = ? AND key = ?");
 					}
 					myDeleteCustomLinkUrlStatement.bindLong(1, id);
 					myDeleteCustomLinkUrlStatement.bindString(2, info.InfoType.toString());
@@ -231,14 +231,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		executeAsATransaction(new Runnable() {
 			public void run() {
 				final String stringLinkId = String.valueOf(link.getId());
-				myDatabase.rawQuery(
-					"DELETE FROM LinkUrls WHERE link_id = ?",
-					new String[] { stringLinkId }
-				);
-				myDatabase.rawQuery(
-					"DELETE FROM Links WHERE link_id = ?",
-					new String[] { stringLinkId }
-				);
+				myDatabase.delete("Links", "link_id = ?", new String[] { stringLinkId });
+				myDatabase.delete("LinkUrls", "link_id = ?", new String[] { stringLinkId });
 				link.setId(INetworkLink.INVALID_ID);
 			}
 		});
@@ -262,15 +256,11 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		if (link.getId() == INetworkLink.INVALID_ID) {
 			return;
 		}
-		final String stringLinkId = String.valueOf(link.getId());
-		myDatabase.rawQuery(
-			"DELETE FROM Extras WHERE link_id = ?",
-			new String[] { stringLinkId }
-		);
+		myDatabase.delete("Extras", "link_id = ?", new String[] { String.valueOf(link.getId()) });
 		for (Map.Entry<String,String> entry : extras.entrySet()) {
-			myDatabase.rawQuery(
+			myDatabase.execSQL(
 				"INSERT INTO Extras (link_id,key,value) VALUES (?,?,?)",
-				new String[] { stringLinkId, entry.getKey(), entry.getValue() }
+				new Object[] { link.getId(), entry.getKey(), entry.getValue() }
 			);
 		}
 	}
