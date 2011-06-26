@@ -79,7 +79,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 		myAuthenticationManager = mgr;
 	}
 
-	ZLNetworkRequest createNetworkData(String url, final OPDSCatalogItem.State result) {
+	ZLNetworkRequest createNetworkData(final OPDSCatalogItem catalog, String url, final OPDSCatalogItem.State result) {
 		if (url == null) {
 			return null;
 		}
@@ -92,7 +92,7 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 				}
 
 				new OPDSXMLReader(
-					new OPDSFeedHandler(getURL(), result), false
+					new OPDSFeedHandler(catalog, getURL(), result), false
 				).read(inputStream);
 
 				if (result.Listener.confirmInterrupt()) {
@@ -125,11 +125,11 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 			pattern = URLEncoder.encode(pattern, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 		}
-		return createNetworkData(url.replace("%s", pattern), (OPDSCatalogItem.State)data);
+		return createNetworkData(null, url.replace("%s", pattern), (OPDSCatalogItem.State)data);
 	}
 
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		return createNetworkData(data.ResumeURI, (OPDSCatalogItem.State) data);
+		return createNetworkData(null, data.ResumeURI, (OPDSCatalogItem.State) data);
 	}
 
 	public NetworkCatalogItem libraryItem() {

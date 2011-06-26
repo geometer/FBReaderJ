@@ -197,10 +197,27 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return BookUrlInfo.Format.NONE;
 	}
 
-	OPDSBookItem(OPDSNetworkLink networkLink, OPDSEntry entry, String baseUrl, int itemIndex) {
+	public OPDSBookItem(
+		OPDSNetworkLink link, String id, int index,
+		CharSequence title, CharSequence summary,
+		List<AuthorData> authors, List<String> tags,
+		String seriesTitle, float indexInSeries,
+		UrlInfoCollection<?> urls
+	) {
 		super(
-			networkLink, entry.Id.Uri, itemIndex,
-			entry.Title, getAnnotation(entry), getAuthors(entry), getTags(entry),
+			link, id, index,
+			title, summary,
+			authors, tags,
+			seriesTitle, indexInSeries,
+			urls
+		);
+	}
+
+	OPDSBookItem(OPDSNetworkLink networkLink, OPDSEntry entry, String baseUrl, int index) {
+		this(
+			networkLink, entry.Id.Uri, index,
+			entry.Title, getAnnotation(entry),
+			getAuthors(entry), getTags(entry),
 			entry.SeriesTitle, entry.SeriesIndex,
 			getUrls(networkLink, entry, baseUrl)
 		);
@@ -236,6 +253,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		});
 	}
 
+	@Override
 	public OPDSCatalogItem createRelatedCatalogItem(RelatedUrlInfo info) {
 		if (MimeType.APP_ATOM.equals(info.Mime)) {
 			return new OPDSCatalogItem((OPDSNetworkLink)Link, info);
