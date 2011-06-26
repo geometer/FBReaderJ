@@ -42,7 +42,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	private void migrate() {
 		final int version = myDatabase.getVersion();
-		final int currentCodeVersion = 4;
+		final int currentCodeVersion = 5;
 		if (version >= currentCodeVersion) {
 			return;
 		}
@@ -56,6 +56,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				updateTables2();
 			case 3:
 				updateTables3();
+			case 4:
+				updateTables4();
 		}
 		myDatabase.setTransactionSuccessful();
 		myDatabase.endTransaction();
@@ -118,7 +120,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 				if (link.getId() == ICustomNetworkLink.INVALID_ID) {
 					if (myInsertCustomLinkStatement == null) {
 						myInsertCustomLinkStatement = myDatabase.compileStatement(
-							"INSERT INTO Links (title,site_name,summary) VALUES (?,?,?)"
+							"INSERT INTO Links (title,site_name,summary,is_predefined,is_enabled) VALUES (?,?,?,?,?)"
 						);
 					}
 					statement = myInsertCustomLinkStatement;
@@ -141,6 +143,8 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					new UrlInfoCollection<UrlInfoWithDate>();
 
 				if (statement == myInsertCustomLinkStatement) {
+					statement.bindLong(4, 0);
+					statement.bindLong(5, 1);
 					id = statement.executeInsert();
 					link.setId((int) id);
 				} else {
@@ -295,5 +299,32 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		myDatabase.execSQL("UPDATE LinkUrls SET key='Catalog' WHERE key='main'");
 		myDatabase.execSQL("UPDATE LinkUrls SET key='Search' WHERE key='search'");
 		myDatabase.execSQL("UPDATE LinkUrls SET key='Image' WHERE key='icon'");
+	}
+
+	private void updateTables4() {
+		myDatabase.execSQL("ALTER TABLE Links ADD COLUMN is_predefined INTEGER");
+		myDatabase.execSQL("UPDATE Links SET is_predefined=0");
+
+		myDatabase.execSQL("ALTER TABLE Links ADD COLUMN is_enabled INTEGER DEFAULT 1");
+
+		myDatabase.execSQL("ALTER TABLE LinkUrls RENAME TO LinkUrls_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE LinkUrls(" +
+				"key TEXT NOT NULL," +
+				"link_id INTEGER NOT NULL REFERENCES Links(link_id)," +
+				"url TEXT," +
+				"update_time INTEGER," +
+				"CONSTRAINT LinkUrls_PK PRIMARY KEY (key, link_id))"
+		);
+		myDatabase.execSQL("INSERT INTO LinkUrls (key,link_id,url) SELECT key,link_id,url FROM LinkUrls_Obsolete");
+		myDatabase.execSQL("DROP TABLE LinkUrls_Obsolete");
+
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS Extras(" +
+				"link_id INTEGER NOT NULL REFERENCES Links(link_id)," +
+				"key TEXT NOT NULL," +
+				"value TEXT NOT NULL," +
+				"CONSTRAINT Extras_PK PRIMARY KEY (key, link_id))"
+		);
 	}
 }
