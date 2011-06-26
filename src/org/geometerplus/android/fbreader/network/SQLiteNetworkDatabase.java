@@ -80,7 +80,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	}
 
 	@Override
-	protected List<INetworkLink> listLinks() {
+	protected synchronized List<INetworkLink> listLinks() {
 		final List<INetworkLink> links = new LinkedList<INetworkLink>();
 
 		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,predefined_id,title,site_name,summary,language FROM Links", null);
@@ -124,7 +124,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	private SQLiteStatement myInsertCustomLinkUrlStatement;
 	private SQLiteStatement myUpdateCustomLinkUrlStatement;
 	@Override
-	protected void saveLink(final INetworkLink link) {
+	protected synchronized void saveLink(final INetworkLink link) {
 		executeAsATransaction(new Runnable() {
 			public void run() {
 				final SQLiteStatement statement;
@@ -219,7 +219,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	}
 
 	@Override
-	protected void deleteLink(final INetworkLink link) {
+	protected synchronized void deleteLink(final INetworkLink link) {
 		if (link.getId() == INetworkLink.INVALID_ID) {
 			return;
 		}
@@ -234,7 +234,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	}
 
 	@Override
-	protected Map<String,String> getLinkExtras(INetworkLink link) {
+	protected synchronized Map<String,String> getLinkExtras(INetworkLink link) {
 		final HashMap<String,String> extras = new HashMap<String,String>();
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT key,value FROM Extras WHERE link_id = ?",
@@ -248,7 +248,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	}
 
 	@Override
-	protected void setLinkExtras(INetworkLink link, Map<String,String> extras) {
+	protected synchronized void setLinkExtras(INetworkLink link, Map<String,String> extras) {
 		executeAsATransaction(new Runnable() {
 			public void run() {
 				if (link.getId() == INetworkLink.INVALID_ID) {
