@@ -151,7 +151,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					new UrlInfoCollection<UrlInfoWithDate>();
 
 				if (statement == myInsertCustomLinkStatement) {
-					statement.bindLong(4, 0);
+					statement.bindLong(4, link instanceof ICustomNetworkLink ? 0 : 1);
 					statement.bindLong(5, 1);
 					id = statement.executeInsert();
 					link.setId((int) id);
