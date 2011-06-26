@@ -42,8 +42,8 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 		return siteName;
 	}
 
-	public OPDSCustomNetworkLink(int id, String siteName, String title, String summary, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(id, removeWWWPrefix(siteName), title, summary, null, infos);
+	public OPDSCustomNetworkLink(int id, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(id, removeWWWPrefix(siteName), title, summary, language, infos);
 	}
 
 	public boolean hasChanges() {

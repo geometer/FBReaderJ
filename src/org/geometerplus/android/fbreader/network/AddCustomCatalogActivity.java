@@ -241,7 +241,7 @@ public class AddCustomCatalogActivity extends Activity {
 		final UrlInfoCollection<UrlInfoWithDate> infos = new UrlInfoCollection<UrlInfoWithDate>();
 		infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, textUrl));
 		myLink = new OPDSCustomNetworkLink(
-			ICustomNetworkLink.INVALID_ID, siteName, null, null, infos
+			ICustomNetworkLink.INVALID_ID, siteName, null, null, null, infos
 		);
 
 		final Runnable loadInfoRunnable = new Runnable() {
