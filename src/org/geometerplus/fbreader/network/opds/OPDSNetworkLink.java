@@ -43,9 +43,9 @@ public class OPDSNetworkLink extends AbstractNetworkLink {
 
 	private final boolean myHasStableIdentifiers;
 
-	OPDSNetworkLink(String siteName, String title, String summary, String language,
+	OPDSNetworkLink(int id, String siteName, String title, String summary, String language,
 			UrlInfoCollection<UrlInfoWithDate> infos, boolean hasStableIdentifiers) {
-		super(siteName, title, summary, language, infos);
+		super(id, siteName, title, summary, language, infos);
 		myHasStableIdentifiers = hasStableIdentifiers;
 	}
 

@@ -33,8 +33,6 @@ import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
-	private int myId;
-
 	private boolean myHasChanges;
 
 	private static String removeWWWPrefix(String siteName) {
@@ -45,16 +43,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 	}
 
 	public OPDSCustomLink(int id, String siteName, String title, String summary, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(removeWWWPrefix(siteName), title, summary, null, infos, false);
-		myId = id;
-	}
-
-	public int getId() {
-		return myId;
-	}
-
-	public void setId(int id) {
-		myId = id;
+		super(id, removeWWWPrefix(siteName), title, summary, null, infos, false);
 	}
 
 	public boolean hasChanges() {

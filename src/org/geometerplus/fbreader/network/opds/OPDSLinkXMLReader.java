@@ -174,6 +174,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			final String summaryString = summary != null ? summary.toString() : null;
 
 			OPDSNetworkLink opdsLink = new OPDSNetworkLink(
+				OPDSNetworkLink.INVALID_ID,
 				siteName,
 				titleString,
 				summaryString,

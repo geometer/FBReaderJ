@@ -28,6 +28,11 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
 public interface INetworkLink {
+	public static final int INVALID_ID = -1;
+
+	int getId();
+	void setId(int id);
+
 	String getSiteName();
 	String getTitle();
 	String getSummary();
