@@ -123,7 +123,6 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	private SQLiteStatement myUpdateCustomLinkStatement;
 	private SQLiteStatement myInsertCustomLinkUrlStatement;
 	private SQLiteStatement myUpdateCustomLinkUrlStatement;
-	private SQLiteStatement myDeleteCustomLinkUrlStatement;
 	@Override
 	protected void saveLink(final INetworkLink link) {
 		executeAsATransaction(new Runnable() {
@@ -211,13 +210,9 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 					urlStatement.execute();
 				}
 				for (UrlInfo info : linksMap.getAllInfos()) {
-					if (myDeleteCustomLinkUrlStatement == null) {
-						myDeleteCustomLinkUrlStatement = myDatabase.compileStatement(
-							"DELETE FROM LinkUrls WHERE link_id = ? AND key = ?");
-					}
-					myDeleteCustomLinkUrlStatement.bindLong(1, id);
-					myDeleteCustomLinkUrlStatement.bindString(2, info.InfoType.toString());
-					myDeleteCustomLinkUrlStatement.execute();
+					myDatabase.delete("LinkUrls", "link_id = ? AND key = ?",
+						new String[] { String.valueOf(id), info.InfoType.toString() }
+					);
 				}
 			}
 		});
