@@ -243,21 +243,26 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		while (cursor.moveToNext()) {
 			extras.put(cursor.getString(0), cursor.getString(1));
 		}
+		cursor.close();
 		return extras;
 	}
 
 	@Override
 	protected void setLinkExtras(INetworkLink link, Map<String,String> extras) {
-		if (link.getId() == INetworkLink.INVALID_ID) {
-			return;
-		}
-		myDatabase.delete("Extras", "link_id = ?", new String[] { String.valueOf(link.getId()) });
-		for (Map.Entry<String,String> entry : extras.entrySet()) {
-			myDatabase.execSQL(
-				"INSERT INTO Extras (link_id,key,value) VALUES (?,?,?)",
-				new Object[] { link.getId(), entry.getKey(), entry.getValue() }
-			);
-		}
+		executeAsATransaction(new Runnable() {
+			public void run() {
+				if (link.getId() == INetworkLink.INVALID_ID) {
+					return;
+				}
+				myDatabase.delete("Extras", "link_id = ?", new String[] { String.valueOf(link.getId()) });
+				for (Map.Entry<String,String> entry : extras.entrySet()) {
+					myDatabase.execSQL(
+						"INSERT INTO Extras (link_id,key,value) VALUES (?,?,?)",
+						new Object[] { link.getId(), entry.getKey(), entry.getValue() }
+					);
+				}
+			}
+		});
 	}
 	
 	private void createTables() {
