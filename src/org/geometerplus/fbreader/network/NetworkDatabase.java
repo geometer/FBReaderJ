@@ -45,9 +45,10 @@ public abstract class NetworkDatabase {
 		return new OPDSCustomLink(id, siteName, title, summary, infos);
 	}
 
-	protected abstract List<INetworkLink> loadLinks();
-	protected abstract void saveCustomLink(ICustomNetworkLink link);
-	protected abstract void deleteCustomLink(ICustomNetworkLink link);
+	protected abstract List<INetworkLink> listLinks();
+	protected abstract void saveLink(INetworkLink link);
+	protected abstract void deleteLink(INetworkLink link);
+
 	protected abstract Map<String,String> getLinkExtras(INetworkLink link);
 	protected abstract void setLinkExtras(INetworkLink link, Map<String,String> extras);
 }

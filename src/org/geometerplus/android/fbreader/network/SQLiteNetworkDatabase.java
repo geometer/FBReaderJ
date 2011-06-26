@@ -78,7 +78,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	}
 
 	@Override
-	protected List<INetworkLink> loadLinks() {
+	protected List<INetworkLink> listLinks() {
 		final List<INetworkLink> links = new LinkedList<INetworkLink>();
 
 		final Cursor cursor = myDatabase.rawQuery("SELECT link_id,title,site_name,summary FROM Links", null);
@@ -121,11 +121,11 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	private SQLiteStatement myUpdateCustomLinkUrlStatement;
 	private SQLiteStatement myDeleteCustomLinkUrlStatement;
 	@Override
-	protected void saveCustomLink(final ICustomNetworkLink link) {
+	protected void saveLink(final INetworkLink link) {
 		executeAsATransaction(new Runnable() {
 			public void run() {
 				final SQLiteStatement statement;
-				if (link.getId() == ICustomNetworkLink.INVALID_ID) {
+				if (link.getId() == INetworkLink.INVALID_ID) {
 					if (myInsertCustomLinkStatement == null) {
 						myInsertCustomLinkStatement = myDatabase.compileStatement(
 							"INSERT INTO Links (title,site_name,summary,is_predefined,is_enabled) VALUES (?,?,?,?,?)"
@@ -215,32 +215,23 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 		});
 	}
 
-	private SQLiteStatement myDeleteAllCustomLinksStatement;
-	private SQLiteStatement myDeleteCustomLinkStatement;
 	@Override
-	protected void deleteCustomLink(final ICustomNetworkLink link) {
-		if (link.getId() == ICustomNetworkLink.INVALID_ID) {
+	protected void deleteLink(final INetworkLink link) {
+		if (link.getId() == INetworkLink.INVALID_ID) {
 			return;
 		}
 		executeAsATransaction(new Runnable() {
 			public void run() {
-				final long id = link.getId();
-				if (myDeleteAllCustomLinksStatement == null) {
-					myDeleteAllCustomLinksStatement = myDatabase.compileStatement(
-							"DELETE FROM LinkUrls WHERE link_id = ?");
-				}
-				myDeleteAllCustomLinksStatement.bindLong(1, id);
-				myDeleteAllCustomLinksStatement.execute();
-
-				if (myDeleteCustomLinkStatement == null) {
-					myDeleteCustomLinkStatement = myDatabase.compileStatement(
-						"DELETE FROM Links WHERE link_id = ?"
-					);
-				}
-				myDeleteCustomLinkStatement.bindLong(1, id);
-				myDeleteCustomLinkStatement.execute();
-
-				link.setId(ICustomNetworkLink.INVALID_ID);
+				final String stringLinkId = String.valueOf(link.getId());
+				myDatabase.rawQuery(
+					"DELETE FROM LinkUrls WHERE link_id = ?",
+					new String[] { stringLinkId }
+				);
+				myDatabase.rawQuery(
+					"DELETE FROM Links WHERE link_id = ?",
+					new String[] { stringLinkId }
+				);
+				link.setId(INetworkLink.INVALID_ID);
 			}
 		});
 	}
@@ -260,7 +251,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 
 	@Override
 	protected void setLinkExtras(INetworkLink link, Map<String,String> extras) {
-		if (link.getId() == -1) {
+		if (link.getId() == INetworkLink.INVALID_ID) {
 			return;
 		}
 		final String stringLinkId = String.valueOf(link.getId());

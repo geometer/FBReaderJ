@@ -179,7 +179,7 @@ public class NetworkLibrary {
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
 		if (db != null) {
-			myLinks.addAll(db.loadLinks());
+			myLinks.addAll(db.listLinks());
 		}
 
 		myIsAlreadyInitialized = true;
@@ -238,7 +238,7 @@ public class NetworkLibrary {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
 						customLink.reloadInfo(true);
-						NetworkDatabase.Instance().saveCustomLink(customLink);
+						NetworkDatabase.Instance().saveLink(customLink);
 					}
 				}
 			}
@@ -483,13 +483,13 @@ public class NetworkLibrary {
 				}
 			}
 		}
-		NetworkDatabase.Instance().saveCustomLink(link);
+		NetworkDatabase.Instance().saveLink(link);
 		invalidateChildren();
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
 		myLinks.remove(link);
-		NetworkDatabase.Instance().deleteCustomLink(link);
+		NetworkDatabase.Instance().deleteLink(link);
 		invalidateChildren();
 	}
 }
