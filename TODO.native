@@ -16,3 +16,8 @@ BUGS IN C++:
 		* проверить сравнения этого Index в С++
 
 	* программа падает на файле "Canon_EOS_Digital Rebel ... .epub"
+
+
+
+ДЛЯ ПАРКА:
+	* добавить схему "parkru://" в formats/util/MiscUtil.cpp:referenceType
