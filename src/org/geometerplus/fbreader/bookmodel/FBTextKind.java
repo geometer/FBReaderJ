@@ -43,7 +43,7 @@ public interface FBTextKind {
 	byte SUP = 20;
 	byte CODE = 21;
 	byte STRIKETHROUGH = 22;
-	byte CONTENTS_TABLE_ENTRY = 23;
+	//byte CONTENTS_TABLE_ENTRY = 23;
 	//byte LIBRARY_AUTHOR_ENTRY = 24;
 	//byte LIBRARY_BOOK_ENTRY = 25;
 	//byte LIBRARY_ENTRY = 25;
@@ -59,5 +59,5 @@ public interface FBTextKind {
 	byte H5 = 35;
 	byte H6 = 36;
 	byte EXTERNAL_HYPERLINK = 37;
-	byte BOOK_HYPERLINK = 38;
+	//byte BOOK_HYPERLINK = 38;
 };

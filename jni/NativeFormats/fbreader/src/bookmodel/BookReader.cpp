@@ -131,10 +131,10 @@ void BookReader::addHyperlinkControl(FBTextKind kind, const std::string &label) 
 			myHyperlinkType = HYPERLINK_EXTERNAL;
 			type = "external";
 			break;
-		case BOOK_HYPERLINK:
+		/*case BOOK_HYPERLINK:
 			myHyperlinkType = HYPERLINK_BOOK;
 			type = "book";
-			break;
+			break;*/
 		default:
 			myHyperlinkType = HYPERLINK_NONE;
 			break;

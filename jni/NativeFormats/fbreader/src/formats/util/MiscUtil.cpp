@@ -33,7 +33,7 @@ FBTextKind MiscUtil::referenceType(const std::string &link) {
 	if (!isFileReference) {
 		return ZLStringUtil::stringStartsWith(lowerCasedLink, "mailto:") ? EXTERNAL_HYPERLINK : INTERNAL_HYPERLINK;
 	}
-	static const std::string FeedBooksPrefix0 = "http://feedbooks.com/book/stanza/";
+	/*static const std::string FeedBooksPrefix0 = "http://feedbooks.com/book/stanza/";
 	static const std::string FeedBooksPrefix1 = "http://www.feedbooks.com/book/stanza/";
 	bool isBookHyperlink =
 		ZLStringUtil::stringStartsWith(lowerCasedLink, FeedBooksPrefix0) ||
@@ -42,7 +42,8 @@ FBTextKind MiscUtil::referenceType(const std::string &link) {
 		ZLStringUtil::stringEndsWith(lowerCasedLink, ".mobi") ||
 		ZLStringUtil::stringEndsWith(lowerCasedLink, ".chm") ||
 		ZLStringUtil::stringEndsWith(lowerCasedLink, ".fb2");
-	return isBookHyperlink ? BOOK_HYPERLINK : EXTERNAL_HYPERLINK;
+	return isBookHyperlink ? BOOK_HYPERLINK : EXTERNAL_HYPERLINK;*/
+	return EXTERNAL_HYPERLINK;
 }
 
 std::string MiscUtil::htmlDirectoryPrefix(const std::string &fileName) {

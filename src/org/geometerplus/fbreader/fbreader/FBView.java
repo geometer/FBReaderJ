@@ -408,7 +408,6 @@ public final class FBView extends ZLTextView {
 					? profile.VisitedHyperlinkTextOption.getValue()
 					: profile.HyperlinkTextOption.getValue();
 			case FBHyperlinkType.EXTERNAL:
-			case FBHyperlinkType.BOOK:
 				return profile.HyperlinkTextOption.getValue();
 		}
 	}
