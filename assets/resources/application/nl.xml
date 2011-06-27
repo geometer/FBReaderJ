@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011 -->
+<!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011. Updated 22-Jun-2011. -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
@@ -10,8 +10,8 @@
 		<node name="byAuthor" value="Auteurs">
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>
-		<node name="byTitle" value="By title" toBeTranslated="true">
-			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		<node name="byTitle" value="Titel">
+			<node name="summary" value="Boeken gesorteerd op titel" />
 		</node>
 		<node name="byTag" value="Trefwoorden">
 			<node name="summary" value="Boeken gesorteerd op trefwoord"/>
@@ -50,14 +50,14 @@
 		<node name="byAuthor" value="Auteurs">
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>
-		<node name="byTitle" value="By title" toBeTranslated="true">
-			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		<node name="byTitle" value="Titel">
+			<node name="summary" value="Boeken gesorteerd op titel"/>
 		</node>
-		<node name="byDate" value="By date" toBeTranslated="true">
-			<node name="summary" value="Books sorted by date of purchasing" toBeTranslated="true"/>
+		<node name="byDate" value="Datum">
+			<node name="summary" value="Boeken gesorteerd op aankoopdatum"/>
 		</node>
-		<node name="bySeries" value="By series" toBeTranslated="true">
-			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		<node name="bySeries" value="Series">
+			<node name="summary" value="Boeken gesorteerd op series"/>
 		</node>
 		<node name="openCatalog" value="Open catalogus"/>
 		<node name="showResults" value="Toon resulten"/>
@@ -69,8 +69,8 @@
 		<node name="deleteDemo" value="Verwijder voorbeeld"/>
 		<node name="downloadDemo" value="Download voorbeeld"/>
 		<node name="buy" value="Koop (%s)"/>
-		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
-		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="addToBasket" value="Toevoegen aan mandje"/>
+		<node name="removeFromBasket" value="Verwijderen uit mandje"/>
 		<node name="openInBrowser" value="Openen in de browser" />
 		<node name="stopLoading" value="Stop loading" toBeTranslated="true" />
 		<node name="stopSearching" value="Stop searching" toBeTranslated="true" />
@@ -176,18 +176,18 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
-		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
-		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
-		<node name="back" value="Back" toBeTranslated="true"/>
-		<node name="forward" value="Forward" toBeTranslated="true"/>
-		<node name="close" value="Close FBReader" toBeTranslated="true"/>
+		<node name="previousBook" value="Open vorige boek" />
+		<node name="returnTo" value="Terug naar..." />
+		<node name="back" value="Vorige"/>
+		<node name="forward" value="Volgende"/>
+		<node name="close" value="FBReader afsluiten"/>
 	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Kopieer naar klembord"/>
 		<node name="openInDictionary" value="Openen in woordenboek"/>
-		<node name="quoteFrom" value="Quote from %s" toBeTranslated="true"/>
-		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" toBeTranslated="true"/>
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" toBeTranslated="true"/>
+		<node name="quoteFrom" value="Quote van %s"/>
+		<node name="textInBuffer" value="Gekopieerd naar het klembord:&#10;%s"/>
+		<node name="bookmarkCreated" value="Bladwijzder gemaakt:&#10;%s"/>
 		<node name="clearSelection" value="Wissen"/>
 	</node>
 	<node name="menu">
@@ -251,7 +251,7 @@
 				<node name="summary" value="Waar zijn de bestanden opgeslagen"/>
 				<node name="books" value="Map met boeken"/>
 				<node name="fonts" value="Map met lettertypes"/>
-				<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
+				<node name="wallpapers" value="Map met achtergronden"/>
 			</node>
 			<node name="appearance" value="Weergave">
 				<node name="summary" value="Draaien, statusbalk"/>
@@ -425,17 +425,17 @@
 			<node name="colors" value="Kleuren">
 				<node name="summary" value="Kleurinstellingen"/>
 				<node name="background" value="Achtergrond">
-					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
-					<node name="leather" value="Leather" toBeTranslated="true"/>
-					<node name="sepia" value="Sepia" toBeTranslated="true"/>
-					<node name="wood" value="Wood" toBeTranslated="true"/>
+					<node name="solidColor" value="Effen kleur"/>
+					<node name="leather" value="Leer"/>
+					<node name="sepia" value="Sepia"/>
+					<node name="wood" value="Hout"/>
 				</node>
-				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
+				<node name="backgroundColor" value="Achtergrondkleur"/>
 				<node name="selectionBackground" value="Selectie achtergrond"/>
-				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
+				<node name="selectionForeground" value="Geselecteerde tekst"/>
 				<node name="text" value="Normale tekst"/>
 				<node name="hyperlink" value="Hyperlink tekst"/>
-				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
+				<node name="hyperlinkVisited" value="Bezochte hyperlink tekst"/>
 				<node name="highlighting" value="Achtergrond zoekresultaten"/>
 				<node name="footer" value="Voettekst" />
 			</node>
@@ -456,7 +456,7 @@
 				</node>
 				<node name="footerHeight" value="Footer height" toBeTranslated="true" />
 				<node name="footerColor" value="Footer color" toBeTranslated="true" />
-				<node name="tocMarks" value="Show TOC marks" toBeTranslated="true">
+				<node name="tocMarks" value="Toon inhoudsmarkeringen">
 					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
 				</node>
@@ -493,10 +493,10 @@
 			</node>
 			<node name="scrolling" value="Omslaan">
 				<node name="summary" value="Hoe sla je de bladzijdes om"/>
-				<node name="fingerScrolling" value="Touch screen scrolling" toBeTranslated="true">
-					<node name="byTap" value="Scroll pages by finger tap" toBeTranslated="true"/>
-					<node name="byFlick" value="Scroll pages by finger flick" toBeTranslated="true"/>
-					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick" toBeTranslated="true"/>
+				<node name="fingerScrolling" value="Touch screen omslaan">
+					<node name="byTap" value="Omslaan door te tikken op het scherm"/>
+					<node name="byFlick" value="Omslaan door te schuiven over het scherm"/>
+					<node name="byTapAndFlick" value="Omslaan door te schuiven of te tikken op het scherm"/>
 				</node>
 				<node name="enableDoubleTapDetection" value="Dubbel-tik detectie">
 					<node name="summaryOn" value="Dubbel-tik om navigatiescherm te openen"/>
@@ -507,18 +507,18 @@
 					<node name="summaryOff" value="Gebruik volumeknoppen voor geluid"/>
 				</node>
 				<node name="invertVolumeKeys" value="Richting volumeknoppen">
-					<node name="summaryOn" value="Harder (zachter) toets naar vorige (volgende) pagina"/>
-					<node name="summaryOff" value="Harder (zachter) toets naar volgende (vorige) pagina"/>
+					<node name="summaryOn" value="Harder (zachter) toets naar volgende (vorige) pagina"/>
+					<node name="summaryOff" value="Harder (zachter) toets naar vorige (volgende) pagina"/>
 				</node>
 				<node name="animation" value="Animatie">
 					<node name="none" value="Omslaan zonder animatie"/>
-					<node name="curl" value="Curl animation" toBeTranslated="true"/>
+					<node name="curl" value="Krul-animatie" />
 					<node name="slide" value="Slide-animatie"/>
 					<node name="shift" value="Shift-animatie"/>
 				</node>
-				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
-					<node name="fast" value="fast" toBeTranslated="true"/>
-					<node name="slow" value="slow" toBeTranslated="true"/>
+				<node name="animationSpeed" value="Animatiesnelheid">
+					<node name="fast" value="snel"/>
+					<node name="slow" value="langzaam"/>
 				</node>
 				<node name="horizontal" value="Horizontaal omslaan">
 					<node name="summaryOn" value="Pagina's horizontaal omslaan"/>
@@ -528,7 +528,7 @@
 			<node name="dictionary" value="Woordenboek">
 				<node name="summary" value="Woordenboek instellingen"/>
 				<node name="dictionary" value="Woordenboek"/>
-				<node name="translator" value="Translator" toBeTranslated="true"/>
+				<node name="translator" value="Vertaler"/>
 				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
 					<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
@@ -540,8 +540,8 @@
 					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
 				</node>
 			</node>
-			<node name="images" value="Images" toBeTranslated="true">
-				<node name="summary" value="Image displaying options" toBeTranslated="true"/>
+			<node name="images" value="Afbeeldingen">
+				<node name="summary" value="Tonen afbeeldingen opties"/>
 				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
 				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
 					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
@@ -549,26 +549,26 @@
 					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
 				</node>
 			</node>
-			<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
-				<node name="summary" value="Back button action list" toBeTranslated="true"/>
-				<node name="previousBook" value="Previous book" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'return to previous book' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'return to previous book' item" toBeTranslated="true"/>
+			<node name="cancelMenu" value="Afsluitmenu">
+				<node name="summary" value="Terugknop actie"/>
+				<node name="previousBook" value="Vorige boek">
+					<node name="summaryOn" value="Toon 'Open vorige boek' item"/>
+					<node name="summaryOff" value="Verberg 'Open vorige boek' item"/>
 				</node>
-				<node name="positions" value="Last 3 positions" toBeTranslated="true">
-					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+				<node name="positions" value="Laatste 3 posities">
+					<node name="summaryOn" value="Toon laatste 3 posities in het boek"/>
+					<node name="summaryOff" value="Verberg laatste 3 posities in het boek"/>
 				</node>
-				<node name="backKeyAction" value="Back key action" toBeTranslated="true">
-					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
-					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
-					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+				<node name="backKeyAction" value="Terugknop indrukken">
+					<node name="exit" value="FBReader afsluiten"/>
+					<node name="goBack" value="Navigeer terug"/>
+					<node name="cancelMenu" value="Toon afsluitmenu"/>
 				</node>
-				<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
-					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
-					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
-					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
-					<node name="none" value="No action" toBeTranslated="true"/>
+				<node name="backKeyLongPressAction" value="Terugknop lang indrukken">
+					<node name="exit" value="FBReader afsluiten"/>
+					<node name="goBack" value="Navigeer terug"/>
+					<node name="cancelMenu" value="Toon afsluitmenu"/>
+					<node name="none" value="Geen actie"/>
 				</node>
 			</node>
 		</node>
@@ -591,7 +591,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Boek %s wordt gedownload" />
 			<node name="search" value="Bezig met zoeken. Een ogenblik..." />
-			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
+			<node name="loadInfo" value="Informatie wordt geladen. Een ogenblik..."/>
 			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik..." />
 			<node name="loadingBookList" value="Bibliotheek wordt geladen. Een ogenblik..." />
 			<node name="creatingBooksDatabase" value="Boekendatabase wordt gemaakt. Een ogenblik..." />
@@ -665,7 +665,7 @@
 		<node name="permissionDenied" value="Toegang geweigerd"/>
 		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
 		<node name="emptyCatalog" value="Catalogus is leeg"/>
-		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyBasket" value="Je mandje is leeg, sorry"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

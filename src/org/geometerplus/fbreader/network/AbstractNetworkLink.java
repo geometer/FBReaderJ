@@ -26,6 +26,8 @@ import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public abstract class AbstractNetworkLink implements INetworkLink, Basket {
+	private int myId;
+
 	protected String mySiteName;
 	protected String myTitle;
 	protected String mySummary;
@@ -43,12 +45,21 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	 * @param language   language of the catalog. If <code>null</code> we assume this catalog is multilanguage.
 	 * @param infos      collection of URL infos; must always contain one URL with <code>UrlInfo.Type.Catalog</code> identifier
 	 */
-	public AbstractNetworkLink(String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+	public AbstractNetworkLink(int id, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		myId = id;
 		mySiteName = siteName;
 		myTitle = title;
 		mySummary = summary;
 		myLanguage = language != null ? language : "multi";
 		myInfos = new UrlInfoCollection<UrlInfoWithDate>(infos);
+	}
+
+	public int getId() {
+		return myId;
+	}
+
+	public void setId(int id) {
+		myId = id;
 	}
 
 	public final String getSiteName() {

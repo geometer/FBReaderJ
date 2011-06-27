@@ -29,6 +29,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.authentication.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -47,7 +48,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private final List<NetworkBookItem> myPurchasedBookList =
 		new LinkedList<NetworkBookItem>();
 
-	public LitResAuthenticationManager(INetworkLink link) {
+	public LitResAuthenticationManager(OPDSNetworkLink link) {
 		super(link, null);
 		mySidUserNameOption = new ZLStringOption(link.getSiteName(), "sidUserName", "");
 		mySidOption = new ZLStringOption(link.getSiteName(), "sid", "");
@@ -352,7 +353,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
-			new LitResXMLReader(Link, new LinkedList<NetworkItem>())
+			new LitResXMLReader((OPDSNetworkLink)Link, new LinkedList<NetworkItem>())
 		);
 		request.addPostParameter("my", "1");
 		request.addPostParameter("sid", sid);

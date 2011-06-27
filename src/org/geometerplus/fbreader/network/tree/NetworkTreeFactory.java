@@ -50,7 +50,7 @@ public class NetworkTreeFactory {
 			}
 
 			final NetworkBookItem book = (NetworkBookItem)item;
-			final int flags = parent.Item.Flags;
+			final int flags = parent.Item.getFlags();
 			final boolean showAuthors = (flags & NetworkCatalogItem.FLAG_SHOW_AUTHOR) != 0;
 
 			switch (flags & NetworkCatalogItem.FLAGS_GROUP) {

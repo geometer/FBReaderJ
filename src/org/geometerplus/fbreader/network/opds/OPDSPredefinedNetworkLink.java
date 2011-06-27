@@ -17,28 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.opds;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
+import org.geometerplus.fbreader.network.IPredefinedNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-public interface ICustomNetworkLink extends INetworkLink {
-	void setSiteName(String name);
-	void setTitle(String title);
-	void setSummary(String summary);
+public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPredefinedNetworkLink {
+	private final String myPredefinedId;
 
-	UrlInfoCollection<UrlInfoWithDate> urlInfoMap();
-	void setUrl(UrlInfo.Type type, String url);
-	void removeUrl(UrlInfo.Type type);
+	public OPDSPredefinedNetworkLink(int id, String predifinedId, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(id, siteName, title, summary, language, infos);
+		myPredefinedId = predifinedId;
+	}
 
-	boolean isObsolete(long milliSeconds);
-	void reloadInfo(boolean urlsOnly) throws ZLNetworkException;
-
-	// returns true if next methods have changed link's data:
-	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink
-	boolean hasChanges();
-
-	// resets hasChanged() result
-	void resetChanges();
+	public String getPredefinedId() {
+		return myPredefinedId;
+	}
 }

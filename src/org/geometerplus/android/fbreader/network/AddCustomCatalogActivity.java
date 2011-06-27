@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
+import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.android.util.UIUtil;
@@ -240,8 +240,8 @@ public class AddCustomCatalogActivity extends Activity {
 		}
 		final UrlInfoCollection<UrlInfoWithDate> infos = new UrlInfoCollection<UrlInfoWithDate>();
 		infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, textUrl));
-		myLink = new OPDSCustomLink(
-			ICustomNetworkLink.INVALID_ID, siteName, null, null, infos
+		myLink = new OPDSCustomNetworkLink(
+			ICustomNetworkLink.INVALID_ID, siteName, null, null, null, infos
 		);
 
 		final Runnable loadInfoRunnable = new Runnable() {

@@ -19,26 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
-import org.geometerplus.fbreader.network.urlInfo.*;
-
-public interface ICustomNetworkLink extends INetworkLink {
-	void setSiteName(String name);
-	void setTitle(String title);
-	void setSummary(String summary);
-
-	UrlInfoCollection<UrlInfoWithDate> urlInfoMap();
-	void setUrl(UrlInfo.Type type, String url);
-	void removeUrl(UrlInfo.Type type);
-
-	boolean isObsolete(long milliSeconds);
-	void reloadInfo(boolean urlsOnly) throws ZLNetworkException;
-
-	// returns true if next methods have changed link's data:
-	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink
-	boolean hasChanges();
-
-	// resets hasChanged() result
-	void resetChanges();
+public interface IPredefinedNetworkLink extends INetworkLink {
+	String getPredefinedId();
 }

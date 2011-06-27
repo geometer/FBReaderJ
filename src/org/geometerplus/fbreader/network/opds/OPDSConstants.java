@@ -30,8 +30,6 @@ interface OPDSConstants extends ATOMConstants {
 	//String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
 
 	// Entry level / catalog types
-	String REL_CATALOG_AUTHOR = "http://data.fbreader.org/catalog/author";
-	String REL_CATALOG_SERIES = "http://data.fbreader.org/catalog/series";
 	String REL_SUBSECTION = "subsection";
 
 	// Entry level / acquisition links
