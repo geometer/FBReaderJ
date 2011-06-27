@@ -33,6 +33,11 @@ public:
 
 	void flush();
 
+	static void writeUInt16(char *ptr, uint16_t value);
+	static void writeUInt32(char *ptr, uint32_t value);
+	static uint16_t readUInt16(const char *ptr);
+	static uint32_t readUInt32(const char *ptr);
+
 public:
 	const std::string &directoryName() const;
 	const std::string &fileExtension() const;
@@ -63,5 +68,29 @@ inline const std::string &ZLCachedMemoryAllocator::directoryName() const { retur
 inline const std::string &ZLCachedMemoryAllocator::fileExtension() const { return myFileExtension; }
 inline size_t ZLCachedMemoryAllocator::blocksNumber() const { return myPool.size(); }
 inline size_t ZLCachedMemoryAllocator::currentBytesOffset() const { return myOffset; }
+
+inline void ZLCachedMemoryAllocator::writeUInt16(char *ptr, uint16_t value) {
+	*ptr++ = value;
+	*ptr = value >> 8;
+}
+inline void ZLCachedMemoryAllocator::writeUInt32(char *ptr, uint32_t value) {
+	*ptr++ = value;
+	value >>= 8;
+	*ptr++ = value;
+	value >>= 8;
+	*ptr++ = value;
+	*ptr = value >> 8;
+}
+inline uint16_t ZLCachedMemoryAllocator::readUInt16(const char *ptr) {
+	const uint8_t *tmp = (const uint8_t*)ptr;
+	return *tmp + ((uint16_t)*(tmp + 1) << 8);
+}
+inline uint32_t ZLCachedMemoryAllocator::readUInt32(const char *ptr) {
+	const uint8_t *tmp = (const uint8_t*)ptr;
+	return *tmp
+		+ ((uint32_t)*(tmp + 1) << 8)
+		+ ((uint32_t)*(tmp + 2) << 16)
+		+ ((uint32_t)*(tmp + 3) << 24);
+}
 
 #endif /* __ZLCACHEDMEMORYALLOCATOR_H__ */

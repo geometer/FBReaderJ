@@ -15,9 +15,6 @@ BUGS IN C++:
 	* в epub'ах seriesIndex может быть дробным
 		* проверить сравнения этого Index в С++
 
-	* программа падает на файле "Canon_EOS_Digital Rebel ... .epub"
-
-
 
 ДЛЯ ПАРКА:
 	* добавить схему "parkru://" в formats/util/MiscUtil.cpp:referenceType

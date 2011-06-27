@@ -24,6 +24,7 @@
 #include <ZLUnicodeUtil.h>
 #include <ZLImage.h>
 
+#include "ZLCachedMemoryAllocator.h"
 #include "ZLTextParagraph.h"
 
 
@@ -53,7 +54,7 @@ short ZLTextStyleEntry::length(Length name, const Metrics &metrics) const {
 }
 
 ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
-	myMask = *(uint32_t*)address;
+	myMask = ZLCachedMemoryAllocator::readUInt32(address);
 	address += 4;
 
 	const int lengthMinusOne = ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1;
@@ -62,16 +63,16 @@ ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
 		ZLTextStyleEntry::LengthType &l1 = myLengths[i + 1];
 		l0.Unit = (SizeUnit)*address++;
 		l1.Unit = (SizeUnit)*address++;
-		l0.Size = *(int16_t*)address;
+		l0.Size = ZLCachedMemoryAllocator::readUInt16(address);
 		address += 2;
-		l1.Size = *(int16_t*)address;
+		l1.Size = ZLCachedMemoryAllocator::readUInt16(address);
 		address += 2;
 	}
 	if (ZLTextStyleEntry::NUMBER_OF_LENGTHS % 2) {
 		ZLTextStyleEntry::LengthType &l0 = myLengths[lengthMinusOne];
 		l0.Unit = (SizeUnit)*address;
 		address += 2;
-		l0.Size = *(int16_t*)address;
+		l0.Size = ZLCachedMemoryAllocator::readUInt16(address);
 		address += 2;
 	}
 	mySupportedFontModifier = *address++;
@@ -79,7 +80,7 @@ ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
 	myAlignmentType = (ZLTextAlignmentType)*address++;
 	myFontSizeMag = *address++;
 	if (fontFamilySupported()) {
-		const size_t len = *(uint16_t*)address;
+		const size_t len = ZLCachedMemoryAllocator::readUInt16(address);
 		ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 2);
 		ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 		ZLUnicodeUtil::ucs2ToUtf8(myFontFamily, ucs2str);
@@ -100,22 +101,22 @@ shared_ptr<ZLTextParagraphEntry> ZLTextControlEntryPool::controlEntry(ZLTextKind
 }
 
 ZLTextHyperlinkControlEntry::ZLTextHyperlinkControlEntry(const char *address) : ZLTextControlEntry((ZLTextKind)*address, true), myHyperlinkType((ZLHyperlinkType)*(address + 1)) {
-	const size_t len = *(uint16_t*)(address + 2);
+	const size_t len = ZLCachedMemoryAllocator::readUInt16(address + 2);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myLabel, ucs2str);
 }
 
 ZLTextEntry::ZLTextEntry(const char *address) {
-	const size_t len = *(uint32_t*)address;
+	const size_t len = ZLCachedMemoryAllocator::readUInt32(address);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myText, ucs2str);
 }
 
 ImageEntry::ImageEntry(const char *address) {
-	myVOffset = *(int16_t*)address;
-	const size_t len = *(uint16_t*)(address + 2);
+	myVOffset = ZLCachedMemoryAllocator::readUInt16(address);
+	const size_t len = ZLCachedMemoryAllocator::readUInt16(address + 2);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myId, ucs2str);
@@ -159,7 +160,7 @@ void ZLTextParagraph::Iterator::next() {
 		switch (*myPointer) {
 			case ZLTextParagraphEntry::TEXT_ENTRY:
 			{
-				const size_t len = *(uint32_t*)(myPointer + 2);
+				const size_t len = ZLCachedMemoryAllocator::readUInt32(myPointer + 2);
 				myPointer += len * 2 + 6;
 				break;
 			}
@@ -168,25 +169,25 @@ void ZLTextParagraph::Iterator::next() {
 				break;
 			case ZLTextParagraphEntry::HYPERLINK_CONTROL_ENTRY:
 			{
-				const size_t len = *(uint16_t*)(myPointer + 4);
+				const size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer + 4);
 				myPointer += len * 2 + 6;
 				break;
 			}
 			case ZLTextParagraphEntry::IMAGE_ENTRY:
 			{
-				const size_t len = *(uint16_t*)(myPointer + 4);
+				const size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer + 4);
 				myPointer += len * 2 + 6;
 				break;
 			}
 			case ZLTextParagraphEntry::STYLE_ENTRY:
 			{
-				unsigned int mask = *(uint32_t*)(myPointer + 2);
+				unsigned int mask = ZLCachedMemoryAllocator::readUInt32(myPointer + 2);
 				bool withFontFamily = (mask & ZLTextStyleEntry::SUPPORT_FONT_FAMILY) == ZLTextStyleEntry::SUPPORT_FONT_FAMILY;
 
 				myPointer += 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
 						(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);
 				if (withFontFamily) {
-					const size_t len = *(uint16_t*)myPointer;
+					const size_t len = ZLCachedMemoryAllocator::readUInt16(myPointer);
 					myPointer += 2 + 2 * len;
 				}
 				break;

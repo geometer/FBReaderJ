@@ -172,7 +172,7 @@ void ZLTextModel::checkUtf8Text() {
 			|| *(myLastEntryStart + 1) == 0) {
 		return;
 	}
-	const size_t utf8Len = *(uint32_t*)(myLastEntryStart + 2);
+	const size_t utf8Len = ZLCachedMemoryAllocator::readUInt32(myLastEntryStart + 2);
 	ZLUnicodeUtil::Ucs2String ucs2str;
 	ZLUnicodeUtil::utf8ToUcs2(ucs2str, myLastEntryStart + 6, utf8Len);
 
@@ -180,7 +180,7 @@ void ZLTextModel::checkUtf8Text() {
 	myLastEntryStart = myAllocator.reallocateLast(myLastEntryStart, newLen + 6);
 
 	*(myLastEntryStart + 1) = 0;
-	*(uint32_t*)(myLastEntryStart + 2) = ucs2str.size();
+	ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, ucs2str.size());
 	memcpy(myLastEntryStart + 6, &ucs2str.front(), newLen);
 	myTextSizes.back() += ucs2str.size();
 }
@@ -189,16 +189,16 @@ void ZLTextModel::addText(const std::string &text) {
 	const size_t len = text.length();
 	if (myLastEntryStart != 0 && *myLastEntryStart == ZLTextParagraphEntry::TEXT_ENTRY
 			&& *(myLastEntryStart + 1) != 0) {
-		const size_t oldLen = *(uint32_t*)(myLastEntryStart + 2);
+		const size_t oldLen = ZLCachedMemoryAllocator::readUInt32(myLastEntryStart + 2);
 		const size_t newLen = oldLen + len;
 		myLastEntryStart = myAllocator.reallocateLast(myLastEntryStart, newLen + 6);
-		*(uint32_t*)(myLastEntryStart + 2) = newLen;
+		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, newLen);
 		memcpy(myLastEntryStart + 6 + oldLen, text.data(), len);
 	} else {
 		myLastEntryStart = myAllocator.allocate(len + 6);
 		*myLastEntryStart = ZLTextParagraphEntry::TEXT_ENTRY;
 		*(myLastEntryStart + 1) = 1;
-		*(uint32_t*)(myLastEntryStart + 2) = len;
+		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, len);
 		memcpy(myLastEntryStart + 6, text.data(), len);
 		myParagraphs.back()->addEntry(myLastEntryStart);
 		++myParagraphLengths.back();
@@ -215,10 +215,10 @@ void ZLTextModel::addText(const std::vector<std::string> &text) {
 	}
 	if (myLastEntryStart != 0 && *myLastEntryStart == ZLTextParagraphEntry::TEXT_ENTRY
 			&& *(myLastEntryStart + 1) != 0) {
-		const size_t oldLen = *(uint32_t*)(myLastEntryStart + 2);
+		const size_t oldLen = ZLCachedMemoryAllocator::readUInt32(myLastEntryStart + 2);
 		const size_t newLen = oldLen + len;
 		myLastEntryStart = myAllocator.reallocateLast(myLastEntryStart, newLen + 6);
-		*(uint32_t*)(myLastEntryStart + 2) = newLen;
+		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, newLen);
 		size_t offset = 6 + oldLen;
 		for (std::vector<std::string>::const_iterator it = text.begin(); it != text.end(); ++it) {
 			memcpy(myLastEntryStart + offset, it->data(), it->length());
@@ -228,7 +228,7 @@ void ZLTextModel::addText(const std::vector<std::string> &text) {
 		myLastEntryStart = myAllocator.allocate(len + 6);
 		*myLastEntryStart = ZLTextParagraphEntry::TEXT_ENTRY;
 		*(myLastEntryStart + 1) = 1;
-		*(uint32_t*)(myLastEntryStart + 2) = len;
+		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, len);
 		size_t offset = 6;
 		for (std::vector<std::string>::const_iterator it = text.begin(); it != text.end(); ++it) {
 			memcpy(myLastEntryStart + offset, it->data(), it->length());
@@ -281,7 +281,7 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 	*address++ = ZLTextParagraphEntry::STYLE_ENTRY;
 	*address++ = 0;
 
-	*(uint32_t*)address = entry.myMask;
+	ZLCachedMemoryAllocator::writeUInt32(address, entry.myMask);
 	address += 4;*/
 
 	// Pack myLengths array so:
@@ -299,16 +299,16 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 		const ZLTextStyleEntry::LengthType &l1 = entry.myLengths[i + 1];
 		*address++ = l0.Unit;
 		*address++ = l1.Unit;
-		*(int16_t*)address = l0.Size;
+		ZLCachedMemoryAllocator::writeUInt16(address, l0.Size);
 		address += 2;
-		*(int16_t*)address = l1.Size;
+		ZLCachedMemoryAllocator::writeUInt16(address, l1.Size);
 		address += 2;
 	}
 	if (ZLTextStyleEntry::NUMBER_OF_LENGTHS % 2) {
 		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[lengthMinusOne];
 		*address++ = l0.Unit;
 		*address++ = 0;
-		*(int16_t*)address = l0.Size;
+		ZLCachedMemoryAllocator::writeUInt16(address, l0.Size);
 		address += 2;
 	}
 	*address++ = entry.mySupportedFontModifier;
@@ -316,7 +316,7 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 	*address++ = entry.myAlignmentType;
 	*address++ = entry.myFontSizeMag;
 	if (entry.fontFamilySupported()) {
-		*(uint16_t*)address = fontFamily.size();
+		ZLCachedMemoryAllocator::writeUInt16(address, fontFamily.size());
 		memcpy(address + 2, &fontFamily.front(), fontFamilyLen);
 	}
 	myParagraphs.back()->addEntry(myLastEntryStart);
@@ -336,7 +336,7 @@ void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyper
 	*(myLastEntryStart + 1) = 0;
 	*(myLastEntryStart + 2) = textKind;
 	*(myLastEntryStart + 3) = hyperlinkType;
-	*(uint16_t*)(myLastEntryStart + 4) = ucs2label.size();
+	ZLCachedMemoryAllocator::writeUInt16(myLastEntryStart + 4, ucs2label.size());
 	memcpy(myLastEntryStart + 6, &ucs2label.front(), len);
 	myParagraphs.back()->addEntry(myLastEntryStart);
 	++myParagraphLengths.back();
@@ -353,8 +353,8 @@ void ZLTextModel::addImage(const std::string &id, short vOffset) {
 	myLastEntryStart = myAllocator.allocate(len + 6);
 	*myLastEntryStart = ZLTextParagraphEntry::IMAGE_ENTRY;
 	*(myLastEntryStart + 1) = 0;
-	*(int16_t*)(myLastEntryStart + 2) = vOffset;
-	*(uint16_t*)(myLastEntryStart + 4) = ucs2id.size();
+	ZLCachedMemoryAllocator::writeUInt16(myLastEntryStart + 2, vOffset);
+	ZLCachedMemoryAllocator::writeUInt16(myLastEntryStart + 4, ucs2id.size());
 	memcpy(myLastEntryStart + 6, &ucs2id.front(), len);
 	myParagraphs.back()->addEntry(myLastEntryStart);
 	++myParagraphLengths.back();

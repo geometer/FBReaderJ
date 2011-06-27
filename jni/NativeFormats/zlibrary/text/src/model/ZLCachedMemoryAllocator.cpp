@@ -52,7 +52,9 @@ void ZLCachedMemoryAllocator::flush() {
 	if (!myHasChanges) {
 		return;
 	}
-	*(uint16_t*)(myPool.back() + myOffset) = 0;
+	char *ptr = myPool.back() + myOffset;
+	*ptr++ = 0;
+	*ptr = 0;
 	writeCache(myOffset + 2);
 	myHasChanges = false;
 }
@@ -86,8 +88,10 @@ char *ZLCachedMemoryAllocator::allocate(size_t size) {
 		myCurrentRowSize = std::max(myRowSize, size + 2 + sizeof(char*));
 		char *row = new char[myCurrentRowSize];
 
-		*(uint16_t*)(myPool.back() + myOffset) = 0;
-		memcpy(myPool.back() + myOffset + 2, &row, sizeof(char*));
+		char *ptr = myPool.back() + myOffset;
+		*ptr++ = 0;
+		*ptr++ = 0;
+		memcpy(ptr, &row, sizeof(char*));
 		writeCache(myOffset + 2);
 
 		myPool.push_back(row);
@@ -109,8 +113,9 @@ char *ZLCachedMemoryAllocator::reallocateLast(char *ptr, size_t newSize) {
 		char *row = new char[myCurrentRowSize];
 		memcpy(row, ptr, myOffset - oldOffset);
 
-		*(uint16_t*)ptr = 0;
-		memcpy(ptr + 2, &row, sizeof(char*));
+		*ptr++ = 0;
+		*ptr++ = 0;
+		memcpy(ptr, &row, sizeof(char*));
 		writeCache(oldOffset + 2);
 
 		myPool.push_back(row);

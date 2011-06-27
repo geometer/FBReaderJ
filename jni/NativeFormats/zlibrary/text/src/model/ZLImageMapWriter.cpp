@@ -55,7 +55,7 @@ void ZLImageMapWriter::addSingleImageEntry(const ZLSingleImage &image) {
 	char *ptr = address;
 	*ptr++ = image.kind();
 	*ptr++ = 0; // multi ? 1 : 0
-	*(uint16_t*)ptr = ucs2mime.size();
+	ZLCachedMemoryAllocator::writeUInt16(ptr, ucs2mime.size());
 	memcpy(ptr + 2, &ucs2mime.front(), mimeSize);
 
 	switch (image.kind()) {
@@ -70,7 +70,7 @@ void ZLImageMapWriter::addSingleImageEntry(const ZLSingleImage &image) {
 			address = myAllocator.reallocateLast(address, newlen);
 			ptr = address + len;
 
-			*(uint32_t*)ptr = dataSize;
+			ZLCachedMemoryAllocator::writeUInt32(ptr, dataSize);
 			ptr += 4;
 			if (length > 0) {
 				memcpy(ptr, data->data(), length);
@@ -93,11 +93,11 @@ void ZLImageMapWriter::addSingleImageEntry(const ZLSingleImage &image) {
 			address = myAllocator.reallocateLast(address, newlen);
 			ptr = address + len;
 
-			*(uint32_t*)ptr = fileImage.offset();
+			ZLCachedMemoryAllocator::writeUInt32(ptr, fileImage.offset());
 			ptr += 4;
-			*(uint32_t*)ptr = fileImage.size();
+			ZLCachedMemoryAllocator::writeUInt32(ptr, fileImage.size());
 			ptr += 4;
-			*(uint16_t*)ptr = ucs2path.size();
+			ZLCachedMemoryAllocator::writeUInt16(ptr, ucs2path.size());
 			ptr += 2;
 			memcpy(ptr, &ucs2path.front(), pathSize);
 			ptr += pathSize;

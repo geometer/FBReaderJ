@@ -162,15 +162,15 @@ static bool initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &mo
 		const size_t modelIdLen = ucs2modelId.size() * 2;
 
 		char *ptr = allocator.allocate(idLen + modelIdLen + 8);
-		*(uint16_t*)ptr = ucs2id.size();
+		ZLCachedMemoryAllocator::writeUInt16(ptr, ucs2id.size());
 		ptr += 2;
 		memcpy(ptr, &ucs2id.front(), idLen);
 		ptr += idLen;
-		*(uint16_t*)ptr = ucs2modelId.size();
+		ZLCachedMemoryAllocator::writeUInt16(ptr, ucs2modelId.size());
 		ptr += 2;
 		memcpy(ptr, &ucs2modelId.front(), modelIdLen);
 		ptr += modelIdLen;
-		*(int32_t*)ptr = label.ParagraphNumber;
+		ZLCachedMemoryAllocator::writeUInt32(ptr, label.ParagraphNumber);
 	}
 	allocator.flush();
 
