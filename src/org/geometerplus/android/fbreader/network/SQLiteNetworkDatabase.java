@@ -248,7 +248,7 @@ class SQLiteNetworkDatabase extends NetworkDatabase {
 	}
 
 	@Override
-	protected synchronized void setLinkExtras(INetworkLink link, Map<String,String> extras) {
+	protected synchronized void setLinkExtras(final INetworkLink link, final Map<String,String> extras) {
 		executeAsATransaction(new Runnable() {
 			public void run() {
 				if (link.getId() == INetworkLink.INVALID_ID) {

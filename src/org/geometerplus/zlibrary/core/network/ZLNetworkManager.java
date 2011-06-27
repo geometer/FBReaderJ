@@ -166,6 +166,7 @@ public class ZLNetworkManager {
 				httpRequest = new HttpGet(request.URL);
 			}
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
+			httpRequest.setHeader("Accept-Encoding", "gzip");
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
 			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest));
 			HttpResponse response = null;
