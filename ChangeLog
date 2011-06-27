@@ -1,7 +1,8 @@
-===== 1.1.1 (Jun ??, 2011) =====
+===== 1.1.1 (Jun 27, 2011) =====
 * FBReader API has been added (a plugin for text-to-speech functionality that uses this API is released separately)
 * Czech translation has been updated (by Marek Pavelka)
 * Dutch translation has been updated (by Frank Fesevur)
+* German translation has been updated (by Ingolf Kübler)
 * "All books from this series" link for LitRes catalogue
 * Related links for books in "LitRes/My books" catalogue
 
