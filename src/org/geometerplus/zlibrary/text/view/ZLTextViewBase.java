@@ -136,12 +136,12 @@ abstract class ZLTextViewBase extends ZLView {
 	}
 
 	final int getElementDescent(ZLTextElement element) {
-		return (element instanceof ZLTextWord) ? myContext.getDescent() : 0;
+		return element instanceof ZLTextWord ? myContext.getDescent() : 0;
 	}
 
 	final int getWordWidth(ZLTextWord word, int start) {
 		return
-			(start == 0) ?
+			start == 0 ?
 				word.getWidth(myContext) :
 				myContext.getStringWidth(word.Data, word.Offset + start, word.Length - start);
 	}
