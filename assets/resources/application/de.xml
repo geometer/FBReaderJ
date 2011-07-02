@@ -115,7 +115,7 @@
 			<node name="topup" value="Konto aufladen"/>
 			<node name="addCustomCatalog" value="Katalog hinzufügen"/>
 			<node name="refreshCatalogsList" value="Liste der Kataloge aktualisieren"/>
-			<node name="Sprachen" value="Sprachfitler"/>
+			<node name="languages" value="Sprachfitler"/>
 		</node>
 	</node>
 	<node name="networkBookView">
