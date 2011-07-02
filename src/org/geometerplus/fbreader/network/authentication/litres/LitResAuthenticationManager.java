@@ -34,9 +34,8 @@ import org.geometerplus.fbreader.network.authentication.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResAuthenticationManager extends NetworkAuthenticationManager {
-	private volatile boolean mySidChecked;
+	private volatile boolean myFullyInitialized;
 
-	private final ZLStringOption mySidUserNameOption;
 	private final ZLStringOption mySidOption;
 	private final ZLStringOption myUserIdOption;
 	private final ZLBooleanOption myCanRebillOption;
@@ -50,18 +49,18 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	public LitResAuthenticationManager(OPDSNetworkLink link) {
 		super(link, null);
-		mySidUserNameOption = new ZLStringOption(link.getSiteName(), "sidUserName", "");
+
 		mySidOption = new ZLStringOption(link.getSiteName(), "sid", "");
 		myUserIdOption = new ZLStringOption(link.getSiteName(), "userId", "");
 		myCanRebillOption = new ZLBooleanOption(link.getSiteName(), "canRebill", false);
 	}
 
 	public synchronized void initUser(String userName, String sid, String userId, boolean canRebill) {
-		mySidChecked = true;
-		mySidUserNameOption.setValue(userName);
+		UserNameOption.setValue(userName);
 		mySidOption.setValue(sid);
 		myUserIdOption.setValue(userId);
 		myCanRebillOption.setValue(canRebill);
+		myFullyInitialized = !"".equals(userName) && !"".equals(sid) && !"".equals(userId);
 	}
 
 	@Override
@@ -77,10 +76,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		final String sid;
 		synchronized (this) {
 			boolean authState =
-				mySidUserNameOption.getValue().length() != 0 &&
+				UserNameOption.getValue().length() != 0 &&
 				mySidOption.getValue().length() != 0;
 
-			if (mySidChecked || !useNetwork) {
+			if (myFullyInitialized || !useNetwork) {
 				return authState;
 			}
 
@@ -144,7 +143,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 
 		synchronized (this) {
-			mySidChecked = true;
 			if (exception != null) {
 				logOut();
 				throw exception;
@@ -175,7 +173,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	public String currentUserName() {
 		final String value;
 		synchronized (this) {
-			value = mySidUserNameOption.getValue();
+			value = UserNameOption.getValue();
 		}
 		if (value.length() == 0) {
 			return null;
@@ -315,7 +313,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			if (sid.length() == 0) {
 				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
-			if (sid.equals(myInitializedDataSid)) {
+			if (sid.equals(myInitializedDataSid) || !isAuthorised(true)) {
 				return;
 			}
 
