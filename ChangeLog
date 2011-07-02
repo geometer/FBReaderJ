@@ -1,3 +1,8 @@
+===== 1.1.2 (Jul 03, 2011) =====
+* Misc Litres fixes
+* API: menu item request processing has been simplified
+* First word on the page painting issue has been fixed
+
 ===== 1.1.1 (Jun 27, 2011) =====
 * FBReader API has been added (a plugin for text-to-speech functionality that uses this API is released separately)
 * Czech translation has been updated (by Marek Pavelka)

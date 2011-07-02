@@ -60,9 +60,4 @@ interface OPDSConstants extends ATOMConstants {
 	String REL_LINK_SIGN_UP = "http://data.fbreader.org/catalog/sign-up";
 	String REL_LINK_TOPUP = "http://data.fbreader.org/catalog/refill-account";
 	String REL_LINK_RECOVER_PASSWORD = "http://data.fbreader.org/catalog/recover-password";
-
-	// Entry level / OPDS Link Conditions
-	String REL_CONDITION_NEVER = "http://data.fbreader.org/condition/never";
-	String REL_CONDITION_SIGNED_IN = "http://data.fbreader.org/condition/signed-in";
-	String REL_CONDITION_HAS_BOOKS = "http://data.fbreader.org/condition/has-books";
 }

@@ -90,13 +90,14 @@ public final class ZLTextWord extends ZLTextElement {
 	
 	public int getWidth(ZLPaintContext context) {
 		int width = myWidth;
-		if (width == -1) {
+		if (width <= 1) {
 			width = context.getStringWidth(Data, Offset, Length);	
 			myWidth = width;
 		}
 		return width;
 	}
 
+	@Override
 	public String toString() {
 		return new String(Data, Offset, Length);
 	}

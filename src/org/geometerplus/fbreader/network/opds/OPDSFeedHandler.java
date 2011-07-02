@@ -258,16 +258,14 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 					opdsLink,
 					entry.Title,
 					annotation,
-					urlMap,
-					opdsLink.getCondition(entry.Id.Uri)
+					urlMap
 				);
 			} else if (REL_RECOMMENDATIONS.equals(litresRel)) {
 				return new LitResRecommendationsItem(
 					opdsLink,
 					entry.Title,
 					annotation,
-					urlMap,
-					opdsLink.getCondition(entry.Id.Uri)
+					urlMap
 				);
 			} else if (REL_BASKET.equals(litresRel)) {
 				return null;
@@ -276,8 +274,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 					opdsLink,
 					entry.Title,
 					annotation,
-					urlMap,
-					opdsLink.getCondition(entry.Id.Uri)
+					urlMap
 				);
 				*/
 			} else if (REL_TOPUP.equals(litresRel)) {
@@ -291,7 +288,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 				entry.Title,
 				annotation,
 				urlMap,
-				opdsLink.getCondition(entry.Id.Uri),
+				OPDSCatalogItem.Accessibility.ALWAYS,
 				NetworkCatalogItem.FLAGS_DEFAULT
 			);
 		}
