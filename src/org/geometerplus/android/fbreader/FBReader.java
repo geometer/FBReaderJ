@@ -137,10 +137,6 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
-
-		final IntentFilter filter = new IntentFilter();
-		filter.addAction(PluginApi.ACTION_REGISTER);
-		registerReceiver(myPluginInfoReceiver, filter);
 	}
 
  	@Override
@@ -217,6 +213,7 @@ public final class FBReader extends ZLAndroidActivity {
 		synchronized (myPluginActions) {
 			myPluginActions.clear();
 		}
+
 		sendOrderedBroadcast(
 			new Intent(PluginApi.ACTION_REGISTER),
 			null,
