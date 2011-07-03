@@ -2,6 +2,7 @@
 <!-- German FBReaderJ resources, by Victor Massini -->
 <!-- Updated by Ingolf Kübler 2010/11/17 -->
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
+<!-- Updated by Ingolf Kübler 2011/07/03 -->
 <resources>
 	<node name="library">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
@@ -187,7 +188,7 @@
 	<node name="selection" value="Auswahl">
 		<node name="copyToClipboard" value="In die Zwischenablage kopieren"/>
 		<node name="openInDictionary" value="Im Wörterbuch nachschlagen"/>
-		<node name="quoteFrom" value="Zitat von %s"/> <!-- "Zitiert aus %s" -->
+		<node name="quoteFrom" value="Zitat aus '%s'"/>
 		<node name="textInBuffer" value="In die Zwischenablage kopiert:&#10;%s"/>
 		<node name="bookmarkCreated" value="Lesezeichen erstellt:&#10;%s"/>
 		<node name="clearSelection" value="Auswahl aufheben"/>
@@ -527,7 +528,7 @@
 					<node name="summaryOff" value="Seiten vertikal umblättern"/>
 				</node>
 			</node>
-			<node name="dictionary" value="Wöterbuch">
+			<node name="dictionary" value="Wörterbuch">
 				<node name="summary" value="Wörterbucheinstellungen"/>
 				<node name="dictionary" value="Wörterbuch"/>
 				<node name="translator" value="Übersetzer"/>
