@@ -96,7 +96,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			myChangeCounter = state.getInt(ORIENTATION_CHANGE_COUNTER_KEY);
 		}
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		if (ZLAndroidApplication.Instance().DisableButtonLightsOption.getValue()) {
 			disableButtonLight();
 		}
