@@ -21,6 +21,8 @@ package org.geometerplus.zlibrary.ui.android.application;
 
 import java.util.*;
 
+import android.app.Activity;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -31,6 +33,8 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+
+import org.geometerplus.android.util.UIUtil;
 
 public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	private final HashMap<MenuItem,String> myMenuItemMap = new HashMap<MenuItem,String>();
@@ -65,6 +69,30 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
 			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+		}
+	}
+	
+	@Override
+	public void wait(String key, Runnable action) {
+		final Activity activity = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+		if (activity != null) {
+			UIUtil.wait(key, action, activity);
+		} else {
+			action.run();
+		}
+	}
+
+	@Override
+	public void setTitle(final String title) {
+		final Activity activity = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+		if (activity != null) {
+			activity.runOnUiThread(new Runnable() {
+				public void run() {
+					activity.setTitle(title);
+				}
+			});
 		}
 	}
 
