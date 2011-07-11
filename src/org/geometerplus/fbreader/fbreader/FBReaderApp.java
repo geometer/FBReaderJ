@@ -24,7 +24,6 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
-import org.geometerplus.zlibrary.core.util.ZLMainWindowUtil;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
@@ -137,7 +136,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void initWindow() {
 		super.initWindow();
-		ZLMainWindowUtil.Instance().wait("loadingBook", new Runnable() {
+		wait("loadingBook", new Runnable() {
 			public void run() {
 				Book book = createBookForFile(ZLFile.createFileByPath(myArg0));
 				if (book == null) {
@@ -160,7 +159,7 @@ public final class FBReaderApp extends ZLApplication {
 				return;
 			}
 		}
-		ZLMainWindowUtil.Instance().wait("loadingBook", new Runnable() {
+		wait("loadingBook", new Runnable() {
 			public void run() {
 				openBookInternal(book, bookmark);
 			}
@@ -240,6 +239,7 @@ public final class FBReaderApp extends ZLApplication {
 					gotoBookmark(bookmark);
 				}
 				Library.addBookToRecentList(book);
+				setTitle(book.getTitle());
 			}
 		}
 		getViewWidget().repaint();
