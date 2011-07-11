@@ -240,6 +240,7 @@ public final class FBReaderApp extends ZLApplication {
 					gotoBookmark(bookmark);
 				}
 				Library.addBookToRecentList(book);
+				ZLMainWindowUtil.Instance().setTitle(book.getTitle());
 			}
 		}
 		getViewWidget().repaint();

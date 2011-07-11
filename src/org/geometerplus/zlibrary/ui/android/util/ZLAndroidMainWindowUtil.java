@@ -45,9 +45,13 @@ public class ZLAndroidMainWindowUtil extends ZLMainWindowUtil {
 	}
 
 	@Override
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		if (myActivity != null) {
-			myActivity.setTitle(title);
+			myActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					myActivity.setTitle(title);
+				}
+			});
 		}
 	}
 }
