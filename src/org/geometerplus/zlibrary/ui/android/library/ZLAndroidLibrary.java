@@ -35,7 +35,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
+import org.geometerplus.zlibrary.ui.android.util.ZLAndroidMainWindowUtil;
 
 public final class ZLAndroidLibrary extends ZLibrary {
 	private ZLAndroidActivity myActivity;
@@ -48,7 +48,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 	void setActivity(ZLAndroidActivity activity) {
 		myActivity = activity;
-		((ZLAndroidDialogManager)ZLAndroidDialogManager.Instance()).setActivity(activity);
+		((ZLAndroidMainWindowUtil)ZLAndroidMainWindowUtil.Instance()).setActivity(activity);
 		myWidget = null;
 	}
 
