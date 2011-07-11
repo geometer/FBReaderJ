@@ -17,25 +17,37 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.dialogs;
+package org.geometerplus.zlibrary.ui.android.util;
 
 import android.app.*;
 
-import org.geometerplus.zlibrary.core.dialogs.*;
+import org.geometerplus.zlibrary.core.util.*;
 
 import org.geometerplus.android.util.UIUtil;
 
-public class ZLAndroidDialogManager extends ZLDialogManager {
+public class ZLAndroidMainWindowUtil extends ZLMainWindowUtil {
 	private Activity myActivity;
 	
-	public ZLAndroidDialogManager() {
+	public ZLAndroidMainWindowUtil() {
 	}
 
 	public void setActivity(Activity activity) {
 		myActivity = activity;
 	}
 	
+	@Override
 	public void wait(String key, Runnable action) {
-		UIUtil.wait(key, action, myActivity);
+		if (myActivity != null) {
+			UIUtil.wait(key, action, myActivity);
+		} else {
+			action.run();
+		}
+	}
+
+	@Override
+	public void setTitle(String title) {
+		if (myActivity != null) {
+			myActivity.setTitle(title);
+		}
 	}
 }

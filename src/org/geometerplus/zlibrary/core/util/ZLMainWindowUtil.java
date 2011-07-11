@@ -17,18 +17,19 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.dialogs;
+package org.geometerplus.zlibrary.core.util;
 
-public abstract class ZLDialogManager {
-	protected static ZLDialogManager ourInstance;
+public abstract class ZLMainWindowUtil {
+	protected static ZLMainWindowUtil ourInstance;
 
-	protected ZLDialogManager() {
+	protected ZLMainWindowUtil() {
 		ourInstance = this;
 	}
 
-	public static ZLDialogManager Instance() {
+	public static ZLMainWindowUtil Instance() {
 		return ourInstance;
 	} 
 
+	public abstract void setTitle(String key);
 	public abstract void wait(String key, Runnable runnable);
 }
