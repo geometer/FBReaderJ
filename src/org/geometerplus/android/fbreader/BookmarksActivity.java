@@ -68,7 +68,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		final SearchManager manager = (SearchManager)getSystemService(SEARCH_SERVICE);
