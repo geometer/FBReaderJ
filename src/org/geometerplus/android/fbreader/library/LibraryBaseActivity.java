@@ -85,7 +85,8 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
+        final MenuItem item = addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
+		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return true;
     }
 
