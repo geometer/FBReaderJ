@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
@@ -169,16 +170,22 @@ abstract class Util implements UserRegistrationConstants {
 		if (resultCode == Activity.RESULT_OK && data != null) {
 			try {
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
-				final String userName = data.getStringExtra(USER_REGISTRATION_USERNAME);
-				final String litresSid = data.getStringExtra(USER_REGISTRATION_LITRES_SID);
-				mgr.initUser(userName, litresSid);
-				if (userName.length() > 0 && litresSid.length() > 0) {
-					try {
-						mgr.initialize();
-					} catch (ZLNetworkException e) {
-						mgr.logOut();
-						throw e;
-					}
+				if (mgr instanceof LitResAuthenticationManager) {
+					((LitResAuthenticationManager)mgr).initUser(
+						data.getStringExtra(USER_REGISTRATION_USERNAME),
+						data.getStringExtra(USER_REGISTRATION_LITRES_SID),
+						"",
+						false
+					);
+				}
+				if (!mgr.isAuthorised(true)) {
+					throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+				}
+				try {
+					mgr.initialize();
+				} catch (ZLNetworkException e) {
+					mgr.logOut();
+					throw e;
 				}
 			} catch (ZLNetworkException e) {
 				// TODO: show an error message

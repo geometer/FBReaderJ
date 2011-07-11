@@ -31,7 +31,6 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -180,21 +179,7 @@ public class NetworkLibrary {
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
 		if (db != null) {
-			db.loadCustomLinks(
-				new NetworkDatabase.ICustomLinksHandler() {
-					public void handleCustomLinkData(int id, String siteName,
-							String title, String summary, UrlInfoCollection<UrlInfoWithDate> infos) {
-						if (title != null &&
-							siteName != null &&
-							infos.getInfo(UrlInfo.Type.Catalog) != null) {
-							final ICustomNetworkLink link = new OPDSCustomLink(
-								id, siteName, title, summary, infos
-							);
-							myLinks.add(link);
-						}
-					}
-				}
-			);
+			myLinks.addAll(db.listLinks());
 		}
 
 		myIsAlreadyInitialized = true;
@@ -253,7 +238,7 @@ public class NetworkLibrary {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
 						customLink.reloadInfo(true);
-						NetworkDatabase.Instance().saveCustomLink(customLink);
+						NetworkDatabase.Instance().saveLink(customLink);
 					}
 				}
 			}
@@ -498,13 +483,13 @@ public class NetworkLibrary {
 				}
 			}
 		}
-		NetworkDatabase.Instance().saveCustomLink(link);
+		NetworkDatabase.Instance().saveLink(link);
 		invalidateChildren();
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
 		myLinks.remove(link);
-		NetworkDatabase.Instance().deleteCustomLink(link);
+		NetworkDatabase.Instance().deleteLink(link);
 		invalidateChildren();
 	}
 }

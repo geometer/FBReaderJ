@@ -29,6 +29,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendat
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
+	private final OPDSCatalogItem myCatalog;
 	private final String myBaseURL;
 	private final OPDSCatalogItem.State myData;
 
@@ -47,7 +48,8 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 	 * @param result     network results buffer. Must be created using OPDSNetworkLink corresponding to the OPDS feed, 
 	 *                   that will be read using this instance of the reader.
 	 */
-	OPDSFeedHandler(String baseURL, OPDSCatalogItem.State result) {
+	OPDSFeedHandler(OPDSCatalogItem catalog, String baseURL, OPDSCatalogItem.State result) {
+		myCatalog = catalog;
 		myBaseURL = baseURL;
 		myData = result;
 		mySkipUntilId = myData.LastLoadedId;
@@ -71,14 +73,21 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 					myItemsToLoad = len;
 				}
 			}
-			return false;
-		}
-		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
-		for (ATOMLink link : feed.Links) {
-			final MimeType type = MimeType.get(link.getType());
-			final String rel = opdsLink.relation(link.getRel(), type);
-			if (MimeType.APP_ATOM.weakEquals(type) && "next".equals(rel)) {
-				myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
+			if (myCatalog != null) {
+				if ("series".equals(feed.ViewType)) {
+					myCatalog.setFlags(myCatalog.getFlags() & ~OPDSCatalogItem.FLAGS_GROUP);
+				} else if ("authors".equals(feed.ViewType)) {
+					myCatalog.setFlags(myCatalog.getFlags() & ~OPDSCatalogItem.FLAG_SHOW_AUTHOR);
+				}
+			}
+		} else {
+			final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;
+			for (ATOMLink link : feed.Links) {
+				final MimeType type = MimeType.get(link.getType());
+				final String rel = opdsLink.relation(link.getRel(), type);
+				if (MimeType.APP_ATOM.weakEquals(type) && "next".equals(rel)) {
+					myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
+				}
 			}
 		}
 		return false;
@@ -190,7 +199,6 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 
 		boolean urlIsAlternate = false;
 		String litresRel = null;
-		int catalogType = NetworkCatalogItem.FLAGS_DEFAULT;
 		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final MimeType type = MimeType.get(link.getType());
@@ -212,11 +220,6 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 				} else if (!hasCatalogUrl || rel == null || REL_SUBSECTION.equals(rel)) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
 					urlIsAlternate = false;
-					if (REL_CATALOG_AUTHOR.equals(rel)) {
-						catalogType &= ~NetworkCatalogItem.FLAG_SHOW_AUTHOR;
-					} else if (REL_CATALOG_SERIES.equals(rel)) {
-						catalogType &= ~NetworkCatalogItem.FLAGS_GROUP;
-					}
 				}
 			} else if (MimeType.TEXT_HTML.weakEquals(type)) {
 				if (REL_ACQUISITION.equals(rel) ||
@@ -255,16 +258,14 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 					opdsLink,
 					entry.Title,
 					annotation,
-					urlMap,
-					opdsLink.getCondition(entry.Id.Uri)
+					urlMap
 				);
 			} else if (REL_RECOMMENDATIONS.equals(litresRel)) {
 				return new LitResRecommendationsItem(
 					opdsLink,
 					entry.Title,
 					annotation,
-					urlMap,
-					opdsLink.getCondition(entry.Id.Uri)
+					urlMap
 				);
 			} else if (REL_BASKET.equals(litresRel)) {
 				return null;
@@ -273,8 +274,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 					opdsLink,
 					entry.Title,
 					annotation,
-					urlMap,
-					opdsLink.getCondition(entry.Id.Uri)
+					urlMap
 				);
 				*/
 			} else if (REL_TOPUP.equals(litresRel)) {
@@ -288,8 +288,8 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 				entry.Title,
 				annotation,
 				urlMap,
-				opdsLink.getCondition(entry.Id.Uri),
-				catalogType
+				OPDSCatalogItem.Accessibility.ALWAYS,
+				NetworkCatalogItem.FLAGS_DEFAULT
 			);
 		}
 	}

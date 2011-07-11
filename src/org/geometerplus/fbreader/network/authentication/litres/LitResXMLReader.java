@@ -22,13 +22,16 @@ package org.geometerplus.fbreader.network.authentication.litres;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.*;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
-import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.NetworkItem;
+import org.geometerplus.fbreader.network.opds.OPDSBookItem;
+import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.atom.FormattedBuffer;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 class LitResXMLReader extends LitResAuthenticationXMLReader {
-	public final INetworkLink Link;
+	public final OPDSNetworkLink Link;
 	public final List<NetworkItem> Books;
 
 	private int myIndex;
@@ -47,11 +50,11 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 	private String myAuthorFirstName;
 	private String myAuthorMiddleName;
 	private String myAuthorLastName;
-	private LinkedList<NetworkBookItem.AuthorData> myAuthors = new LinkedList<NetworkBookItem.AuthorData>();
+	private LinkedList<OPDSBookItem.AuthorData> myAuthors = new LinkedList<OPDSBookItem.AuthorData>();
 
 	private LinkedList<String> myTags = new LinkedList<String>();
 
-	public LitResXMLReader(INetworkLink link, List<NetworkItem> books) {
+	public LitResXMLReader(OPDSNetworkLink link, List<NetworkItem> books) {
 		super(link.getSiteName());
 		Link = link;
 		Books = books;
@@ -194,8 +197,11 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 				break;
 			case BOOK:
 				if (TAG_BOOK == tag) {
-        
-					Books.add(new NetworkBookItem(
+					myUrls.addInfo(new UrlInfo(	
+						UrlInfo.Type.SingleEntry,
+						"http://data.fbreader.org/catalogs/litres2/full.php5?id=" + myBookId
+					));
+					Books.add(new OPDSBookItem(
 						Link,
 						myBookId,
 						myIndex++,
@@ -246,7 +252,7 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 					if (myAuthorLastName != null) {
 						displayName.append(myAuthorLastName).append(" ");
 					}
-					myAuthors.add(new NetworkBookItem.AuthorData(displayName.toString().trim(), myAuthorLastName));
+					myAuthors.add(new OPDSBookItem.AuthorData(displayName.toString().trim(), myAuthorLastName));
 					myAuthorFirstName = null;
 					myAuthorMiddleName = null;
 					myAuthorLastName = null;

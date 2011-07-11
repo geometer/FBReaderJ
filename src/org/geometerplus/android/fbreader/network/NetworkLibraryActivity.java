@@ -40,7 +40,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
+import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
@@ -67,11 +67,12 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			return null;
 		}
 
-		return new OPDSCustomLink(
+		return new OPDSCustomNetworkLink(
 			intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID),
 			uri.getHost(),
 			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
 			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
+			null,
 			(UrlInfoCollection<UrlInfoWithDate>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
 		);
 	}

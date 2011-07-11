@@ -28,67 +28,103 @@ final class ZLTextElementAreaVector {
 		Collections.synchronizedList(new ArrayList<ZLTextRegion>());
 	private ZLTextRegion myCurrentElementRegion;
 
-	public void clear() {
+	void clear() {
 		myElementRegions.clear();
 		myCurrentElementRegion = null;
 		myAreas.clear();
-	}
-
-	public boolean isEmpty() {
-		return myAreas.isEmpty();
 	}
 
 	public int size() {
 		return myAreas.size();
 	}
 
+	// TODO: remove this unsafe method
 	public ZLTextElementArea get(int index) {
 		return myAreas.get(index);
 	}
 
-	public boolean add(ZLTextElementArea area) {
-		if (myCurrentElementRegion != null
-			&& myCurrentElementRegion.getSoul().accepts(area)) {
-			myCurrentElementRegion.extend();
-		} else {
-			ZLTextRegion.Soul soul = null;
-			final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
-			if (hyperlink.Id != null) {
-				soul = new ZLTextHyperlinkRegionSoul(area, hyperlink);
-			} else if (area.Element instanceof ZLTextImageElement) {
-				soul = new ZLTextImageRegionSoul(area, (ZLTextImageElement)area.Element);
-			} else if (area.Element instanceof ZLTextWord && !((ZLTextWord)area.Element).isASpace()) {
-				soul = new ZLTextWordRegionSoul(area, (ZLTextWord)area.Element);
-			}
-			if (soul != null) {
-				myCurrentElementRegion = new ZLTextRegion(soul, myAreas, size());
-				myElementRegions.add(myCurrentElementRegion);
-			} else {
-				myCurrentElementRegion = null;
-			}
+	public ZLTextElementArea getFirstArea() {
+		synchronized (myAreas) {
+			return myAreas.isEmpty() ? null : myAreas.get(0);
 		}
-		return myAreas.add(area);
 	}
 
-	ZLTextElementArea binarySearch(int x, int y) {
-		int left = 0;
-		int right = size();
-		while (left < right) {
-			final int middle = (left + right) / 2;
-			final ZLTextElementArea candidate = get(middle);
-			if (candidate.YStart > y) {
-				right = middle;
-			} else if (candidate.YEnd < y) {
-				left = middle + 1;
-			} else if (candidate.XStart > x) {
-				right = middle;
-			} else if (candidate.XEnd < x) {
-				left = middle + 1;
+	public ZLTextElementArea getLastArea() {
+		synchronized (myAreas) {
+			return myAreas.isEmpty() ? null : myAreas.get(myAreas.size() - 1);
+		}
+	}
+
+	public boolean add(ZLTextElementArea area) {
+		synchronized (myAreas) {
+			if (myCurrentElementRegion != null
+				&& myCurrentElementRegion.getSoul().accepts(area)) {
+				myCurrentElementRegion.extend();
 			} else {
-				return candidate;
+				ZLTextRegion.Soul soul = null;
+				final ZLTextHyperlink hyperlink = area.Style.Hyperlink;
+				if (hyperlink.Id != null) {
+					soul = new ZLTextHyperlinkRegionSoul(area, hyperlink);
+				} else if (area.Element instanceof ZLTextImageElement) {
+					soul = new ZLTextImageRegionSoul(area, (ZLTextImageElement)area.Element);
+				} else if (area.Element instanceof ZLTextWord && !((ZLTextWord)area.Element).isASpace()) {
+					soul = new ZLTextWordRegionSoul(area, (ZLTextWord)area.Element);
+				}
+				if (soul != null) {
+					myCurrentElementRegion = new ZLTextRegion(soul, myAreas, myAreas.size());
+					myElementRegions.add(myCurrentElementRegion);
+				} else {
+					myCurrentElementRegion = null;
+				}
+			}
+			return myAreas.add(area);
+		}
+	}
+
+	ZLTextElementArea getFirstAfter(ZLTextPosition position) {
+		synchronized (myAreas) {
+			for (ZLTextElementArea area : myAreas) {
+				if (position.compareTo(area) <= 0) {
+					return area;
+				}
 			}
 		}
 		return null;
+	}
+
+	ZLTextElementArea getLastBefore(ZLTextPosition position) {
+		synchronized (myAreas) {
+			for (int i = myAreas.size() - 1; i >= 0; --i) {
+				final ZLTextElementArea area = myAreas.get(i);
+				if (position.compareTo(area) > 0) {
+					return area;
+				}
+			}
+		}
+		return null;
+	}
+
+	ZLTextElementArea binarySearch(int x, int y) {
+		synchronized (myAreas) {
+			int left = 0;
+			int right = myAreas.size();
+			while (left < right) {
+				final int middle = (left + right) / 2;
+				final ZLTextElementArea candidate = myAreas.get(middle);
+				if (candidate.YStart > y) {
+					right = middle;
+				} else if (candidate.YEnd < y) {
+					left = middle + 1;
+				} else if (candidate.XStart > x) {
+					right = middle;
+				} else if (candidate.XEnd < x) {
+					left = middle + 1;
+				} else {
+					return candidate;
+				}
+			}
+			return null;
+		}
 	}
 
 	ZLTextRegion getRegion(ZLTextRegion.Soul soul) {

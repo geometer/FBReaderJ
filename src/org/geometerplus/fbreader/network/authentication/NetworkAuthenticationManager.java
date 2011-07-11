@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
@@ -35,7 +36,7 @@ public abstract class NetworkAuthenticationManager {
 		NetworkAuthenticationManager mgr = ourManagers.get(link.getSiteName());
 		if (mgr == null) {
 			if (managerClass == LitResAuthenticationManager.class) {
-				mgr = new LitResAuthenticationManager(link);
+				mgr = new LitResAuthenticationManager((OPDSNetworkLink)link);
 			}
 			if (mgr != null) {
 				ourManagers.put(link.getSiteName(), mgr);
@@ -113,8 +114,6 @@ public abstract class NetworkAuthenticationManager {
 	public Map<String,String> getTopupData() {
 		return Collections.emptyMap();
 	}
-
-	public abstract void initUser(String userName, String sid) throws ZLNetworkException;
 
 	/*
 	 * Password Recovery

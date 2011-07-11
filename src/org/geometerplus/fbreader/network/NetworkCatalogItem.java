@@ -51,7 +51,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	}
 
 	private final Accessibility myAccessibility;
-	public final int Flags;
+	private int myFlags;
 
 	/**
 	 * Creates new NetworkCatalogItem instance with specified accessibility and type.
@@ -67,7 +67,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	public NetworkCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls);
 		myAccessibility = accessibility;
-		Flags = flags;
+		myFlags = flags;
 	}
 
 	public Map<String,String> extraData() {
@@ -91,6 +91,14 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	 * This method is called when UI-element corresponding to this item is shown to the User.
 	 */
 	public void onDisplayItem() {
+	}
+
+	public int getFlags() {
+		return myFlags;
+	}
+
+	public void setFlags(int flags) {
+		myFlags = flags;
 	}
 
 	public ZLBoolean3 getVisibility() {

@@ -57,6 +57,7 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 	private static final int OPENSEARCH_ITEMSPERPAGE = ATOM_STATE_FIRST_UNUSED + 8;
 	private static final int OPENSEARCH_STARTINDEX = ATOM_STATE_FIRST_UNUSED + 9;
 	private static final int FEC_HACK_SPAN = ATOM_STATE_FIRST_UNUSED + 10;
+	private static final int FBREADER_VIEW = ATOM_STATE_FIRST_UNUSED + 11;
 
 	private static final String TAG_PRICE = "price";
 	private static final String TAG_HACK_SPAN = "span";
@@ -72,6 +73,8 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 	private static final String OPENSEARCH_TAG_TOTALRESULTS = "totalResults";
 	private static final String OPENSEARCH_TAG_ITEMSPERPAGE = "itemsPerPage";
 	private static final String OPENSEARCH_TAG_STARTINDEX = "startIndex";
+
+	private static final String FBREADER_TAG_VIEW = "view";
 
 	@Override
 	protected OPDSFeedMetadata createFeed(ZLStringMap attributes) {
@@ -101,6 +104,10 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 						myState = OPENSEARCH_STARTINDEX;
 					}
 					return false;
+				} else if (ns == XMLNamespaces.FBReaderCatalogMetadata){
+					if (tag == FBREADER_TAG_VIEW) {
+						myState = FBREADER_VIEW;
+					}
 				} else {
 					return super.startElementHandler(ns, tag, attributes, bufferContent);
 				}
@@ -250,6 +257,14 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 							getOPDSFeed().OpensearchStartIndex = Integer.parseInt(bufferContent);
 						} catch (NumberFormatException ex) {
 						}
+					}
+					myState = FEED;
+				}
+				return false;
+			case FBREADER_VIEW:
+				if (ns == XMLNamespaces.FBReaderCatalogMetadata && tag == FBREADER_TAG_VIEW) {
+					if (getOPDSFeed() != null) {
+						getOPDSFeed().ViewType = bufferContent;
 					}
 					myState = FEED;
 				}
