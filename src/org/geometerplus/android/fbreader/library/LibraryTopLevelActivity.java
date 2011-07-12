@@ -120,9 +120,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	}
 
 	private void setSearchResults(Intent intent) {
-		if (myItems.get(0) == mySearchResultsItem) {
-			myItems.remove(0);
-		}
+		myItems.remove(mySearchResultsItem);
 		final String pattern = intent.getStringExtra(SearchManager.QUERY);
 		mySearchResultsItem = new TopLevelTree(
 			myResource.getResource(PATH_SEARCH_RESULTS),

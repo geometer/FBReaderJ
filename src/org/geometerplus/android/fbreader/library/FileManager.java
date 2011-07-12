@@ -169,36 +169,20 @@ public final class FileManager extends BaseActivity {
 		return mySelectedBookPath.startsWith(prefix);
 	}
 
-	private final class FileListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
-		private List<FileItem> myItems = new ArrayList<FileItem>();
-
-		public synchronized void clear() {
-			myItems.clear();
+	private final class FileListAdapter extends ListAdapter<FileItem> {
+		public FileListAdapter() {
+			super(FileManager.this, Collections.<FileItem>emptyList());
 		}
 
-		public synchronized void add(FileItem item) {
-			myItems.add(item);
-		}
-
-		public synchronized void deleteFile(ZLFile file) {
-			for (FileItem item : myItems) {
-				if (file.equals(item.getFile())) {
-					myItems.remove(item);
-					break;
+		public void deleteFile(ZLFile file) {
+			synchronized (myItems) {
+				for (FileItem item : myItems) {
+					if (file.equals(item.getFile())) {
+						myItems.remove(item);
+						break;
+					}
 				}
 			}
-		}
-
-		public synchronized int getCount() {
-			return myItems.size();
-		}
-
-		public synchronized FileItem getItem(int position) {
-			return myItems.get(position);
-		}
-
-		public long getItemId(int position) {
-			return position;
 		}
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
