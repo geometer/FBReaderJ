@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree> {
-
 	private ZLImage myCover;
 	private boolean myCoverRequested;
 
