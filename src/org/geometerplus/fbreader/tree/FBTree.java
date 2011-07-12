@@ -59,9 +59,9 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return getName();
 	}
 
-	public int compareTo(FBTree ct) {
+	public int compareTo(FBTree tree) {
 		final String key0 = getSortKey();
-		final String key1 = ct.getSortKey();
+		final String key1 = tree.getSortKey();
 		if (key0 == null) {
 			return (key1 == null) ? 0 : -1;
 		}
