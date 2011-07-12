@@ -56,7 +56,6 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		myItems = new LinkedList<FBTree>();
 		myItems.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
 			R.drawable.ic_list_library_favorites,
@@ -102,6 +101,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 				}
 			}
 		));
+		myItems = new LinkedList<FBTree>();
 		setListAdapter(new LibraryAdapter(myItems));
 
 		onNewIntent(getIntent());

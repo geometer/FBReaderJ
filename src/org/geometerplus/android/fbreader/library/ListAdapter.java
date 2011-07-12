@@ -31,7 +31,7 @@ public abstract class ListAdapter<T> extends BaseAdapter implements View.OnCreat
 
 	ListAdapter(Activity activity, List<T> items) {
 		myActivity = activity;
-		myItems = Collections.synchronizedList(new ArrayList(items));
+		myItems = Collections.synchronizedList(items);
 	}
 
 	public void clear() {
@@ -46,6 +46,7 @@ public abstract class ListAdapter<T> extends BaseAdapter implements View.OnCreat
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				myItems.add(item);
+				notifyDataSetChanged();
 			}
 		});
 	}

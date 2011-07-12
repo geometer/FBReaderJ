@@ -65,7 +65,6 @@ public final class FileManager extends BaseActivity {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
-			adapter.notifyDataSetChanged();
 		} else {
 			setTitle(myPath);
 			startUpdate();
@@ -335,13 +334,7 @@ public final class FileManager extends BaseActivity {
 				}
 				if (file.isDirectory() || file.isArchive() ||
 					PluginCollection.Instance().getPlugin(file) != null) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							final FileListAdapter adapter = (FileListAdapter)getListAdapter();
-							adapter.add(new FileItem(file));
-							adapter.notifyDataSetChanged();
-						}
-					});
+					((FileListAdapter)getListAdapter()).add(new FileItem(file));
 				}
 			}
 		}

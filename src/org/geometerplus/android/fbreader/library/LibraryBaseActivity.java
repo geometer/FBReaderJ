@@ -106,15 +106,9 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
         }
     }
 
-	protected final class LibraryAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
-		private final List<FBTree> myItems;
-
+	protected final class LibraryAdapter extends ListAdapter<FBTree> {
 		public LibraryAdapter(List<FBTree> items) {
-			myItems = items;
-		}
-
-		public final int getCount() {
-			return myItems.size();
+			super(LibraryBaseActivity.this, items);
 		}
 
 		public int getFirstSelectedItemIndex() {
@@ -126,14 +120,6 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 				++index;
 			}
 			return -1;
-		}
-
-		public final FBTree getItem(int position) {
-			return myItems.get(position);
-		}
-
-		public final long getItemId(int position) {
-			return position;
 		}
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
