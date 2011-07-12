@@ -105,24 +105,10 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
         }
     }
 
-	protected final class LibraryAdapter extends ListAdapter {
-		public LibraryAdapter(List<FBTree> items) {
-			super(LibraryBaseActivity.this, items);
-		}
-
-		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			final LibraryTree tree = (LibraryTree)getItem(position);
-			if (tree instanceof BookTree) {
-				createBookContextMenu(menu, ((BookTree)tree).Book);
-			}
-		}
-	}
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
+		final FBTree tree = ((ListAdapter)getListAdapter()).getItem(position);
 		if (tree instanceof BookTree) {
 			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
 		}

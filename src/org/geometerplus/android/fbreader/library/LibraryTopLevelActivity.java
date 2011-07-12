@@ -55,7 +55,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		final ListAdapter adapter = new LibraryAdapter(new LinkedList<FBTree>());
+		final ListAdapter adapter = new ListAdapter(this, new LinkedList<FBTree>());
 		setListAdapter(adapter);
 		adapter.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
@@ -114,7 +114,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		TopLevelTree tree = (TopLevelTree)((LibraryAdapter)getListAdapter()).getItem(position);
+		TopLevelTree tree = (TopLevelTree)((ListAdapter)getListAdapter()).getItem(position);
 		tree.run();
 	}
 

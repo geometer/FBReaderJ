@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-public abstract class ListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
+public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private final BaseActivity myActivity;
 	private final List<FBTree> myItems;
 
@@ -194,5 +194,18 @@ public abstract class ListAdapter extends BaseAdapter implements View.OnCreateCo
 		}
 
 		return view;
+	}
+
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+		final FBTree tree = getItem(position);
+		if (tree instanceof BookTree) {
+			myActivity.createBookContextMenu(menu, ((BookTree)tree).Book);
+		} else if (tree instanceof FileItem) {
+			final Book book = ((FileItem)getItem(position)).getBook();
+			if (book != null) {
+				myActivity.createBookContextMenu(menu, book); 
+			}
+		}
 	}
 }
