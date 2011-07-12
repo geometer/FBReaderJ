@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.*;
 
-import android.app.ListActivity;
 import android.graphics.Bitmap;
 import android.view.*;
 import android.widget.*;
@@ -34,12 +33,15 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.library.*;
 
-public abstract class ListAdapter<T> extends BaseAdapter implements View.OnCreateContextMenuListener {
-	private final ListActivity myActivity;
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+
+public abstract class ListAdapter<T extends FBTree> extends BaseAdapter implements View.OnCreateContextMenuListener {
+	private final BaseActivity myActivity;
 	protected final List<T> myItems;
 
-	ListAdapter(ListActivity activity, List<T> items) {
+	ListAdapter(BaseActivity activity, List<T> items) {
 		myActivity = activity;
 		myItems = Collections.synchronizedList(items);
 	}
@@ -129,12 +131,46 @@ public abstract class ListAdapter<T> extends BaseAdapter implements View.OnCreat
 		return coverView;
 	}
 
-	protected View createView(View convertView, ViewGroup parent, FBTree item) {
+	private View createView(View convertView, ViewGroup parent, FBTree item) {
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
         ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(item.getName());
 		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(item.getSecondString());
+		return view;
+	}
+
+	@Override
+	public View getView(int position, View convertView, final ViewGroup parent) {
+		final FBTree tree = getItem(position);
+		final View view = createView(convertView, parent, tree);
+		if (myActivity.isTreeSelected(tree)) {
+			view.setBackgroundColor(0xff555555);
+		} else {
+			view.setBackgroundColor(0);
+		}
+
+		final ImageView coverView = getCoverView(view);
+
+		if (tree instanceof ZLAndroidTree) {
+			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
+		} else {
+			final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
+			if (coverBitmap != null) {
+				coverView.setImageBitmap(coverBitmap);
+			} else if (tree instanceof AuthorTree) {
+				coverView.setImageResource(R.drawable.ic_list_library_author);
+			} else if (tree instanceof TagTree) {
+				coverView.setImageResource(R.drawable.ic_list_library_tag);
+			} else if (tree instanceof BookTree) {
+				coverView.setImageResource(R.drawable.ic_list_library_book);
+			} else if (tree instanceof FileManager.FileItem) {
+				coverView.setImageResource(((FileManager.FileItem)tree).getIcon());
+			} else {
+				coverView.setImageResource(R.drawable.ic_list_library_books);
+			}
+		}
+
 		return view;
 	}
 }

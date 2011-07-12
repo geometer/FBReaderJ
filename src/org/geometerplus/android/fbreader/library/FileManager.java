@@ -145,7 +145,10 @@ public final class FileManager extends BaseActivity {
 		));
 	}
 
-	private boolean isItemSelected(FileItem item) {
+	@Override
+	protected boolean isTreeSelected(FBTree tree) {
+		final FileItem item = (FileItem)tree;
+
 		if (mySelectedBookPath == null || !item.isSelectable()) {
 			return false;
 		}
@@ -181,29 +184,9 @@ public final class FileManager extends BaseActivity {
 				createBookContextMenu(menu, book); 
 			}
 		}
-
-		public View getView(int position, View convertView, ViewGroup parent) {
-            final FileItem item = getItem(position);
-			final View view = createView(convertView, parent, item);
-			if (isItemSelected(item)) {
-				view.setBackgroundColor(0xff555555);
-			} else {
-				view.setBackgroundColor(0);
-			}
-			final ImageView coverView = getCoverView(view);
-			final Bitmap coverBitmap = getCoverBitmap(item.getCover());
-
-			if (coverBitmap != null) {
-				coverView.setImageBitmap(coverBitmap);
-			} else {
-				coverView.setImageResource(item.getIcon());
-			}
-
-            return view;
-		}
 	}
 
-	private final class FileItem extends FBTree {
+	final class FileItem extends FBTree {
 		private final ZLFile myFile;
 		private final String myName;
 		private final String mySummary;

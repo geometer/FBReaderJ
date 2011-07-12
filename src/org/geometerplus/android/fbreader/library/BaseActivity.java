@@ -32,6 +32,7 @@ import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
+import org.geometerplus.fbreader.tree.FBTree;
 
 abstract class BaseActivity extends ListActivity {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
@@ -60,6 +61,8 @@ abstract class BaseActivity extends ListActivity {
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		setResult(RESULT_DONT_INVALIDATE_VIEWS);
 	}
+
+	protected abstract boolean isTreeSelected(FBTree tree);
 
 	protected void openBook(Book book) {
 		startActivity(
