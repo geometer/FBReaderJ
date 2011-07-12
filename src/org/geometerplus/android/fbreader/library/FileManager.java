@@ -38,6 +38,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -183,7 +184,7 @@ public final class FileManager extends BaseActivity {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
             final FileItem item = getItem(position);
-			final View view = createView(convertView, parent, item.getName(), item.getSummary());
+			final View view = createView(convertView, parent, item);
 			if (isItemSelected(item)) {
 				view.setBackgroundColor(0xff555555);
 			} else {
@@ -202,14 +203,11 @@ public final class FileManager extends BaseActivity {
 		}
 	}
 
-	private final class FileItem {
+	private final class FileItem extends FBTree {
 		private final ZLFile myFile;
 		private final String myName;
 		private final String mySummary;
 		private final boolean myIsSelectable;
-
-		private ZLImage myCover = null;
-		private boolean myCoverIsInitialized = false;
 
 		public FileItem(ZLFile file, String name, String summary) {
 			myFile = file;
@@ -238,10 +236,12 @@ public final class FileManager extends BaseActivity {
 			myIsSelectable = true;
 		}
 
+		@Override
 		public String getName() {
 			return myName != null ? myName : myFile.getShortName();
 		}
 
+		@Override
 		public String getSummary() {
 			if (mySummary != null) {
 				return mySummary;
@@ -280,12 +280,9 @@ public final class FileManager extends BaseActivity {
 			}
 		}
 
-		public ZLImage getCover() {
-			if (!myCoverIsInitialized) {
-				myCoverIsInitialized = true;
-				myCover = Library.getCover(myFile);
-			}
-			return myCover;
+		@Override
+		public ZLImage createCover() {
+			return Library.getCover(myFile);
 		}
 
 		public ZLFile getFile() {
@@ -329,9 +326,6 @@ public final class FileManager extends BaseActivity {
 			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
 			Collections.sort(children, new FileComparator());
 			for (final ZLFile file : children) {
-				if (Thread.currentThread().isInterrupted()) {
-					break;
-				}
 				if (file.isDirectory() || file.isArchive() ||
 					PluginCollection.Instance().getPlugin(file) != null) {
 					((FileListAdapter)getListAdapter()).add(new FileItem(file));
@@ -342,6 +336,10 @@ public final class FileManager extends BaseActivity {
 
 	private static class FileComparator implements Comparator<ZLFile> {
 		public int compare(ZLFile f0, ZLFile f1) {
+			final boolean isDir = f0.isDirectory();
+			if (isDir != f1.isDirectory()) {
+				return isDir ? -1 : 1;
+			} 
 			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
 		}
 	}
