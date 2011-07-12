@@ -104,7 +104,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		}
         
 		if (tree != null) {
-			final LibraryAdapter adapter = new LibraryAdapter(tree.subTrees());
+			final ListAdapter adapter = new ListAdapter(this, tree.subTrees());
 			setListAdapter(adapter);
 			getListView().setOnCreateContextMenuListener(adapter);
 			setSelection(adapter.getFirstSelectedItemIndex());
@@ -113,7 +113,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
+		final FBTree tree = getListAdapter().getItem(position);
 		if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {

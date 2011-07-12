@@ -35,7 +35,6 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
 	static final String TREE_PATH_KEY = "TreePath";
@@ -107,80 +106,10 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
         }
     }
 
-	protected final class LibraryAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
-		private final List<FBTree> myItems;
-
-		public LibraryAdapter(List<FBTree> items) {
-			myItems = items;
-		}
-
-		public final int getCount() {
-			return myItems.size();
-		}
-
-		public int getFirstSelectedItemIndex() {
-			int index = 0;
-			for (FBTree t : myItems) {
-				if (isTreeSelected(t)) {
-					return index;
-				}
-				++index;
-			}
-			return -1;
-		}
-
-		public final FBTree getItem(int position) {
-			return myItems.get(position);
-		}
-
-		public final long getItemId(int position) {
-			return position;
-		}
-
-		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			final LibraryTree tree = (LibraryTree)getItem(position);
-			if (tree instanceof BookTree) {
-				createBookContextMenu(menu, ((BookTree)tree).Book);
-			}
-		}
-
-		public View getView(int position, View convertView, final ViewGroup parent) {
-			final FBTree tree = getItem(position);
-			final View view = createView(convertView, parent, tree.getName(), tree.getSecondString());
-			if (isTreeSelected(tree)) {
-				view.setBackgroundColor(0xff555555);
-			} else {
-				view.setBackgroundColor(0);
-			}
-
-			final ImageView coverView = getCoverView(view);
-
-			if (tree instanceof ZLAndroidTree) {
-				coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
-			} else {
-				final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
-				if (coverBitmap != null) {
-					coverView.setImageBitmap(coverBitmap);
-				} else if (tree instanceof AuthorTree) {
-					coverView.setImageResource(R.drawable.ic_list_library_author);
-				} else if (tree instanceof TagTree) {
-					coverView.setImageResource(R.drawable.ic_list_library_tag);
-				} else if (tree instanceof BookTree) {
-					coverView.setImageResource(R.drawable.ic_list_library_book);
-				} else {
-					coverView.setImageResource(R.drawable.ic_list_library_books);
-				}
-			}
-
-			return view;
-		}
-	}
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FBTree tree = ((LibraryAdapter)getListAdapter()).getItem(position);
+		final FBTree tree = getListAdapter().getItem(position);
 		if (tree instanceof BookTree) {
 			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
 		}
@@ -193,6 +122,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 		getListView().invalidateViews();
 	}
 
+	@Override
 	protected boolean isTreeSelected(FBTree tree) {
 		if (mySelectedBook == null) {
 			return false;

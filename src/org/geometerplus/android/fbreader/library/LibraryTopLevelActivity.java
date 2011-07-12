@@ -39,7 +39,6 @@ import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
-	private LinkedList<FBTree> myItems;
 	private TopLevelTree mySearchResultsItem;
 
 	@Override
@@ -56,8 +55,9 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		myItems = new LinkedList<FBTree>();
-		myItems.add(new TopLevelTree(
+		final ListAdapter adapter = new ListAdapter(this, new LinkedList<FBTree>());
+		setListAdapter(adapter);
+		adapter.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
 			R.drawable.ic_list_library_favorites,
 			new OpenTreeRunnable(LibraryInstance, new StartTreeActivityRunnable(PATH_FAVORITES, null) {
@@ -70,27 +70,27 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 				}
 			})
 		));
-		myItems.add(new TopLevelTree(
+		adapter.add(new TopLevelTree(
 			myResource.getResource(PATH_RECENT),
 			R.drawable.ic_list_library_recent,
 			new OpenTreeRunnable(LibraryInstance, PATH_RECENT)
 		));
-		myItems.add(new TopLevelTree(
+		adapter.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_AUTHOR),
 			R.drawable.ic_list_library_authors,
 			new OpenTreeRunnable(LibraryInstance, PATH_BY_AUTHOR)
 		));
-		myItems.add(new TopLevelTree(
+		adapter.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_TITLE),
 			R.drawable.ic_list_library_books,
 			new OpenTreeRunnable(LibraryInstance, PATH_BY_TITLE)
 		));
-		myItems.add(new TopLevelTree(
+		adapter.add(new TopLevelTree(
 			myResource.getResource(PATH_BY_TAG),
 			R.drawable.ic_list_library_tags,
 			new OpenTreeRunnable(LibraryInstance, PATH_BY_TAG)
 		));
-		myItems.add(new TopLevelTree(
+		adapter.add(new TopLevelTree(
 			myResource.getResource("fileTree"),
 			R.drawable.ic_list_library_folder,
 			new Runnable() {
@@ -102,7 +102,6 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 				}
 			}
 		));
-		setListAdapter(new LibraryAdapter(myItems));
 
 		onNewIntent(getIntent());
 	}
@@ -115,14 +114,13 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		TopLevelTree tree = (TopLevelTree)((LibraryAdapter)getListAdapter()).getItem(position);
+		final TopLevelTree tree = (TopLevelTree)getListAdapter().getItem(position);
 		tree.run();
 	}
 
 	private void setSearchResults(Intent intent) {
-		if (myItems.get(0) == mySearchResultsItem) {
-			myItems.remove(0);
-		}
+		final ListAdapter adapter = getListAdapter();
+		adapter.remove(mySearchResultsItem);
 		final String pattern = intent.getStringExtra(SearchManager.QUERY);
 		mySearchResultsItem = new TopLevelTree(
 			myResource.getResource(PATH_SEARCH_RESULTS),
@@ -130,8 +128,9 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			R.drawable.ic_list_library_books,
 			new OpenTreeRunnable(LibraryInstance, PATH_SEARCH_RESULTS, pattern)
 		);
-		myItems.add(0, mySearchResultsItem);
+		adapter.add(0, mySearchResultsItem);
 		getListView().invalidateViews();
+		adapter.notifyDataSetChanged();
 		mySearchResultsItem.run();
 	}
 
