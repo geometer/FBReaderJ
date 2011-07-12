@@ -1,0 +1,11 @@
+** plugins (do not work at the moment)
+** merge library & network library
+** settings
+** rotation
+** bookmarks
+** book info activity: replace buttons with action bar icons
+  * new icon: open book
+** network book info activity: replace buttons with action bar icons
+  * new icons: open book, download book, download demo, buy, add to basket
+** margins: default values and values list
+** 2-page view and page turning
