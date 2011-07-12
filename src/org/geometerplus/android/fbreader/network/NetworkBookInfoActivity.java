@@ -98,7 +98,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			setupExtraLinks();
 			setupInfo();
 			setupCover();
-			setupButtons();
 		}
 	}
 
@@ -308,6 +307,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		}
 	}
 
+	/*
 	private final void setupButtons() {
 		final ZLResource resource = ZLResource.resource("networkView");
 		final int buttons[] = new int[] {
@@ -364,9 +364,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 			button.setOnClickListener(null);
 		}
 	}
+	*/
 
 	private void updateView() {
-		setupButtons();
 		final View rootView = findViewById(R.id.network_book_root);
 		rootView.invalidate();
 		rootView.requestLayout();
