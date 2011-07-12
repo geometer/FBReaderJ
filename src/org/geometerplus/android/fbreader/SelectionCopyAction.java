@@ -20,7 +20,7 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Application;
-import android.text.ClipboardManager;
+import android.content.ClipboardManager;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
