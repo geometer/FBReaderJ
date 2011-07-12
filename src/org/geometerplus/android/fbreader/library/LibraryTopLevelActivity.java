@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.Library;
@@ -36,7 +35,6 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	private TopLevelTree mySearchResultsItem;
@@ -144,42 +142,5 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		} else if (ACTION_FOUND.equals(intent.getAction())) {
 			setSearchResults(intent);
 		}
-	}
-}
-
-class TopLevelTree extends FBTree implements ZLAndroidTree {
-	private final ZLResource myResource;
-	private final String myParameter;
-	private final int myCoverResourceId;
-	private final Runnable myAction;
-
-	public TopLevelTree(ZLResource resource, String parameter, int coverResourceId, Runnable action) {
-		myResource = resource;
-		myParameter = parameter;
-		myCoverResourceId = coverResourceId;
-		myAction = action;
-	}
-
-	public TopLevelTree(ZLResource resource, int coverResourceId, Runnable action) {
-		this(resource, null, coverResourceId, action);
-	}
-
-	@Override
-	public String getName() {
-		return myResource.getValue();
-	}
-
-	@Override
-	public String getSummary() {
-		final String summary = myResource.getResource("summary").getValue();
-		return myParameter == null ? summary : summary.replace("%s", myParameter);
-	}
-
-	public int getCoverResourceId() {
-		return myCoverResourceId;
-	}
-
-	public void run() {
-		myAction.run();
 	}
 }
