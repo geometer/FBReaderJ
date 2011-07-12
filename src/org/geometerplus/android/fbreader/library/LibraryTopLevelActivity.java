@@ -114,12 +114,12 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		TopLevelTree tree = (TopLevelTree)((ListAdapter)getListAdapter()).getItem(position);
+		final TopLevelTree tree = (TopLevelTree)getListAdapter().getItem(position);
 		tree.run();
 	}
 
 	private void setSearchResults(Intent intent) {
-		final ListAdapter adapter = (ListAdapter)getListAdapter();
+		final ListAdapter adapter = getListAdapter();
 		adapter.remove(mySearchResultsItem);
 		final String pattern = intent.getStringExtra(SearchManager.QUERY);
 		mySearchResultsItem = new TopLevelTree(

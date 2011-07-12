@@ -113,7 +113,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		FBTree tree = ((ListAdapter)getListAdapter()).getItem(position);
+		final FBTree tree = getListAdapter().getItem(position);
 		if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {

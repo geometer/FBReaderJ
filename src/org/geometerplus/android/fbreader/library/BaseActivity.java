@@ -62,6 +62,11 @@ abstract class BaseActivity extends ListActivity {
 		setResult(RESULT_DONT_INVALIDATE_VIEWS);
 	}
 
+	@Override
+	public ListAdapter getListAdapter() {
+		return (ListAdapter)super.getListAdapter();
+	}
+
 	protected abstract boolean isTreeSelected(FBTree tree);
 
 	protected void openBook(Book book) {

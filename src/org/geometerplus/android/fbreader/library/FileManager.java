@@ -69,11 +69,6 @@ public final class FileManager extends BaseActivity {
 
 		getListView().setOnCreateContextMenuListener(adapter);
 		getListView().setTextFilterEnabled(true);
-		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				runItem((FileItem)((ListAdapter)getListAdapter()).getItem(position));
-			}
-		});
 	}
 
 	private void startUpdate() {
@@ -87,7 +82,7 @@ public final class FileManager extends BaseActivity {
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
 			if (myPath != null) {
-				((ListAdapter)getListAdapter()).clear();
+				getListAdapter().clear();
 				startUpdate();
 			}
 			getListView().invalidateViews();
@@ -100,7 +95,7 @@ public final class FileManager extends BaseActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FileItem fileItem = (FileItem)((ListAdapter)getListAdapter()).getItem(position);
+		final FileItem fileItem = (FileItem)getListAdapter().getItem(position);
 		final Book book = fileItem.getBook(); 
 		if (book != null) {
 			return onContextItemSelected(item.getItemId(), book);
@@ -111,11 +106,13 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-		((ListAdapter)getListAdapter()).remove(new FileItem(book.File));
+		getListAdapter().remove(new FileItem(book.File));
 		getListView().invalidateViews();
 	}
 
-	private void runItem(FileItem item) {
+	@Override
+	public void onListItemClick(ListView listView, View view, int position, long rowId) {
+		final FileItem item = (FileItem)getListAdapter().getItem(position);
 		final ZLFile file = item.getFile();
 		final Book book = item.getBook();
 		if (book != null) {
@@ -134,7 +131,7 @@ public final class FileManager extends BaseActivity {
 
 	private void addItem(String path, String resourceKey) {
 		final ZLResource resource = myResource.getResource(resourceKey);
-		((ListAdapter)getListAdapter()).add(new FileItem(
+		getListAdapter().add(new FileItem(
 			ZLFile.createFileByPath(path),
 			resource.getValue(),
 			resource.getResource("summary").getValue()
@@ -191,7 +188,7 @@ public final class FileManager extends BaseActivity {
 			for (final ZLFile file : children) {
 				if (file.isDirectory() || file.isArchive() ||
 					PluginCollection.Instance().getPlugin(file) != null) {
-					((ListAdapter)getListAdapter()).add(new FileItem(file));
+					getListAdapter().add(new FileItem(file));
 				}
 			}
 		}

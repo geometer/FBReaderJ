@@ -108,7 +108,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FBTree tree = ((ListAdapter)getListAdapter()).getItem(position);
+		final FBTree tree = getListAdapter().getItem(position);
 		if (tree instanceof BookTree) {
 			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
 		}
