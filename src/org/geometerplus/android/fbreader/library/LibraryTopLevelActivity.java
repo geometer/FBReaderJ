@@ -130,6 +130,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		);
 		myItems.add(0, mySearchResultsItem);
 		getListView().invalidateViews();
+		((LibraryAdapter)getListAdapter()).notifyDataSetChanged();
 		mySearchResultsItem.run();
 	}
 
