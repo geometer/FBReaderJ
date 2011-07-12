@@ -22,17 +22,13 @@ package org.geometerplus.android.fbreader.library;
 import java.util.*;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Book;
@@ -183,108 +179,6 @@ public final class FileManager extends BaseActivity {
 			if (book != null) {
 				createBookContextMenu(menu, book); 
 			}
-		}
-	}
-
-	final class FileItem extends FBTree {
-		private final ZLFile myFile;
-		private final String myName;
-		private final String mySummary;
-		private final boolean myIsSelectable;
-
-		public FileItem(ZLFile file, String name, String summary) {
-			myFile = file;
-			myName = name;
-			mySummary = summary;
-			myIsSelectable = false;
-		}
-
-		public FileItem(ZLFile file) {
-			if (file.isArchive() && file.getPath().endsWith(".fb2.zip")) {
-				final List<ZLFile> children = file.children();
-				if (children.size() == 1) {
-					final ZLFile child = children.get(0);
-					if (child.getPath().endsWith(".fb2")) {
-						myFile = child;
-						myName = file.getLongName();
-						mySummary = null;
-						myIsSelectable = true;
-						return;
-					}
-				} 
-			}
-			myFile = file;
-			myName = null;
-			mySummary = null;
-			myIsSelectable = true;
-		}
-
-		@Override
-		public String getName() {
-			return myName != null ? myName : myFile.getShortName();
-		}
-
-		@Override
-		public String getSummary() {
-			if (mySummary != null) {
-				return mySummary;
-			}
-
-			final Book book = getBook();
-			if (book != null) {
-				return book.getTitle();
-			}
-
-			return null;
-		}
-
-		public boolean isSelectable() {
-			return myIsSelectable;
-		}
-
-		public int getIcon() {
-			if (getBook() != null) {
-				return R.drawable.ic_list_library_book;
-			} else if (myFile.isDirectory()) {
-				if (myFile.isReadable()) {
-					return R.drawable.ic_list_library_folder;
-				} else {
-					return R.drawable.ic_list_library_permission_denied;
-				}
-			} else if (myFile.isArchive()) {
-				return R.drawable.ic_list_library_zip;
-			} else {
-				System.err.println(
-					"File " + myFile.getPath() +
-					" that is not a directory, not a book and not an archive " +
-					"has been found in getIcon()"
-				);
-				return R.drawable.ic_list_library_permission_denied;
-			}
-		}
-
-		@Override
-		public ZLImage createCover() {
-			return Library.getCover(myFile);
-		}
-
-		public ZLFile getFile() {
-			return myFile;
-		}
-
-		public Book getBook() {
-			return Book.getByFile(myFile);
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (o == this) {
-				return true;
-			}
-			if (!(o instanceof FileItem)) {
-				return true;
-			}
-			return myFile.equals(((FileItem)o).myFile);
 		}
 	}
 

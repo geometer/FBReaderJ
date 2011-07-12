@@ -164,8 +164,8 @@ public abstract class ListAdapter extends BaseAdapter implements View.OnCreateCo
 				coverView.setImageResource(R.drawable.ic_list_library_tag);
 			} else if (tree instanceof BookTree) {
 				coverView.setImageResource(R.drawable.ic_list_library_book);
-			} else if (tree instanceof FileManager.FileItem) {
-				coverView.setImageResource(((FileManager.FileItem)tree).getIcon());
+			} else if (tree instanceof FileItem) {
+				coverView.setImageResource(((FileItem)tree).getIcon());
 			} else {
 				coverView.setImageResource(R.drawable.ic_list_library_books);
 			}
