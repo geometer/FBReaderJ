@@ -39,7 +39,7 @@ import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 public abstract class ListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private final BaseActivity myActivity;
-	protected final List<FBTree> myItems;
+	private final List<FBTree> myItems;
 
 	ListAdapter(BaseActivity activity, List<FBTree> items) {
 		myActivity = activity;
@@ -72,6 +72,15 @@ public abstract class ListAdapter extends BaseAdapter implements View.OnCreateCo
 		});
 	}
 
+	public void add(final int index, final FBTree item) {
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				myItems.add(index, item);
+				notifyDataSetChanged();
+			}
+		});
+	}
+
 	@Override
 	public int getCount() {
 		return myItems.size();
@@ -85,6 +94,19 @@ public abstract class ListAdapter extends BaseAdapter implements View.OnCreateCo
 	@Override
 	public long getItemId(int position) {
 		return position;
+	}
+
+	public int getFirstSelectedItemIndex() {
+		int index = 0;
+		synchronized (myItems) {
+			for (FBTree t : myItems) {
+				if (myActivity.isTreeSelected(t)) {
+					return index;
+				}
+				++index;
+			}
+		}
+		return -1;
 	}
 
 	protected Bitmap getCoverBitmap(ZLImage cover) {

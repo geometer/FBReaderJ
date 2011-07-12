@@ -110,17 +110,6 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 			super(LibraryBaseActivity.this, items);
 		}
 
-		public int getFirstSelectedItemIndex() {
-			int index = 0;
-			for (FBTree t : myItems) {
-				if (isTreeSelected(t)) {
-					return index;
-				}
-				++index;
-			}
-			return -1;
-		}
-
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			final LibraryTree tree = (LibraryTree)getItem(position);
