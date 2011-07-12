@@ -75,7 +75,7 @@ public final class FileManager extends BaseActivity {
 		getListView().setTextFilterEnabled(true);
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				runItem(((FileListAdapter)getListAdapter()).getItem(position));
+				runItem((FileItem)((FileListAdapter)getListAdapter()).getItem(position));
 			}
 		});
 	}
@@ -104,7 +104,7 @@ public final class FileManager extends BaseActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FileItem fileItem = ((FileListAdapter)getListAdapter()).getItem(position);
+		final FileItem fileItem = (FileItem)((FileListAdapter)getListAdapter()).getItem(position);
 		final Book book = fileItem.getBook(); 
 		if (book != null) {
 			return onContextItemSelected(item.getItemId(), book);
@@ -172,14 +172,14 @@ public final class FileManager extends BaseActivity {
 		return mySelectedBookPath.startsWith(prefix);
 	}
 
-	private final class FileListAdapter extends ListAdapter<FileItem> {
+	private final class FileListAdapter extends ListAdapter {
 		public FileListAdapter() {
-			super(FileManager.this, new ArrayList<FileItem>());
+			super(FileManager.this, new ArrayList<FBTree>());
 		}
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			final Book book = getItem(position).getBook();
+			final Book book = ((FileItem)getItem(position)).getBook();
 			if (book != null) {
 				createBookContextMenu(menu, book); 
 			}

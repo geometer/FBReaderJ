@@ -37,11 +37,11 @@ import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-public abstract class ListAdapter<T extends FBTree> extends BaseAdapter implements View.OnCreateContextMenuListener {
+public abstract class ListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private final BaseActivity myActivity;
-	protected final List<T> myItems;
+	protected final List<FBTree> myItems;
 
-	ListAdapter(BaseActivity activity, List<T> items) {
+	ListAdapter(BaseActivity activity, List<FBTree> items) {
 		myActivity = activity;
 		myItems = Collections.synchronizedList(items);
 	}
@@ -54,7 +54,7 @@ public abstract class ListAdapter<T extends FBTree> extends BaseAdapter implemen
 		});
 	}
 
-	public void remove(final T item) {
+	public void remove(final FBTree item) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				myItems.remove(item);
@@ -63,7 +63,7 @@ public abstract class ListAdapter<T extends FBTree> extends BaseAdapter implemen
 		});
 	}
 
-	public void add(final T item) {
+	public void add(final FBTree item) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				myItems.add(item);
@@ -78,7 +78,7 @@ public abstract class ListAdapter<T extends FBTree> extends BaseAdapter implemen
 	}
 
 	@Override
-	public T getItem(int position) {
+	public FBTree getItem(int position) {
 		return myItems.get(position);
 	}
 

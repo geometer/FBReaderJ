@@ -105,7 +105,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
         }
     }
 
-	protected final class LibraryAdapter extends ListAdapter<FBTree> {
+	protected final class LibraryAdapter extends ListAdapter {
 		public LibraryAdapter(List<FBTree> items) {
 			super(LibraryBaseActivity.this, items);
 		}
