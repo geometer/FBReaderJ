@@ -114,7 +114,7 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-		((FileListAdapter)getListAdapter()).deleteFile(book.File);
+		((FileListAdapter)getListAdapter()).remove(new FileItem(book.File));
 		getListView().invalidateViews();
 	}
 
@@ -170,18 +170,7 @@ public final class FileManager extends BaseActivity {
 
 	private final class FileListAdapter extends ListAdapter<FileItem> {
 		public FileListAdapter() {
-			super(FileManager.this, Collections.<FileItem>emptyList());
-		}
-
-		public void deleteFile(ZLFile file) {
-			synchronized (myItems) {
-				for (FileItem item : myItems) {
-					if (file.equals(item.getFile())) {
-						myItems.remove(item);
-						break;
-					}
-				}
-			}
+			super(FileManager.this, new ArrayList<FileItem>());
 		}
 
 		public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -305,6 +294,17 @@ public final class FileManager extends BaseActivity {
 
 		public Book getBook() {
 			return Book.getByFile(myFile);
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == this) {
+				return true;
+			}
+			if (!(o instanceof FileItem)) {
+				return true;
+			}
+			return myFile.equals(((FileItem)o).myFile);
 		}
 	}
 

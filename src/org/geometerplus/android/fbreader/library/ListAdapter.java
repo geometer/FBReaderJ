@@ -42,6 +42,15 @@ public abstract class ListAdapter<T> extends BaseAdapter implements View.OnCreat
 		});
 	}
 
+	public void remove(final T item) {
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				myItems.remove(item);
+				notifyDataSetChanged();
+			}
+		});
+	}
+
 	public void add(final T item) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
