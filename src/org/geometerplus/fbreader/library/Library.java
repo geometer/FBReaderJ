@@ -61,6 +61,17 @@ public final class Library {
 		return root;
 	}
 
+	public LibraryTree getLibraryTree(LibraryTree.Key key) {
+		if (key == null) {
+			return null;
+		}
+		if (key.Parent == null) {
+			return getRootTree(key.Id);
+		}
+		final LibraryTree parentTree = getLibraryTree(key.Parent);
+		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
+	}
+
 	public boolean hasState(int state) {
 		return myState >= state || myInterrupted;
 	}

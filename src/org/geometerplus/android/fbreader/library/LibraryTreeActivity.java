@@ -51,39 +51,18 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		}
 
 		String title = null;
-		if (myTreePath.length == 1) {
-			title = myResource.getResource(myTreePath[0]).getResource("summary").getValue();
+		if (myTreeKey.Parent == null) {
+			title = myResource.getResource(myTreeKey.Id).getResource("summary").getValue();
 			final String parameter = intent.getStringExtra(PARAMETER_KEY);
 			if (parameter != null) {
 				title = title.replace("%s", parameter);
 			}
 		} else {
-			title = myTreePath[myTreePath.length - 1];
+			title = myTreeKey.Id;
 		}
 		setTitle(title);
 
-		FBTree tree = null;
-		if (Library.ROOT_RECENT.equals(myTreePath[0])) {
-			tree = LibraryInstance.recentBooks();
-		} else if (Library.ROOT_SEARCH_RESULTS.equals(myTreePath[0])) {
-			tree = LibraryInstance.searchResults();
-		} else if (Library.ROOT_BY_AUTHOR.equals(myTreePath[0])) {
-			tree = LibraryInstance.byAuthor();
-		} else if (Library.ROOT_BY_TITLE.equals(myTreePath[0])) {
-			tree = LibraryInstance.byTitle();
-		} else if (Library.ROOT_BY_TAG.equals(myTreePath[0])) {
-			tree = LibraryInstance.byTag();
-		} else if (Library.ROOT_FAVORITES.equals(myTreePath[0])) {
-			tree = LibraryInstance.favorites();
-		}
-        
-		for (int i = 1; i < myTreePath.length; ++i) {
-			if (tree == null) {
-				break;
-			}
-			tree = tree.getSubTreeByName(myTreePath[i]);
-		}
-
+		final FBTree tree = LibraryInstance.getLibraryTree(myTreeKey);
 		if (tree != null) {
 			final ListAdapter adapter = new ListAdapter(this, tree.subTrees());
 			setSelection(adapter.getFirstSelectedItemIndex());

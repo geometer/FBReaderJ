@@ -53,6 +53,7 @@ abstract class BaseActivity extends ListActivity {
 	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
 
 	static final String TREE_PATH_KEY = "TreePath";
+	private static final String TREE_KEY_KEY = "TreeKey";
 	static final String PARAMETER_KEY = "Parameter";
 
 	static final String PATH_FILE_TREE = "fileTree";
@@ -63,8 +64,8 @@ abstract class BaseActivity extends ListActivity {
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
 	private Book mySelectedBook;
-	private String myTreePathString;
 	protected String[] myTreePath;
+	protected FBTree.Key myTreeKey;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -80,8 +81,9 @@ abstract class BaseActivity extends ListActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		myTreePathString = getIntent().getStringExtra(TREE_PATH_KEY);
-		myTreePath = myTreePathString != null ? myTreePathString.split("\000") : new String[0];
+		final String treePathString = getIntent().getStringExtra(TREE_PATH_KEY);
+		myTreePath = treePathString != null ? treePathString.split("\000") : new String[0];
+		myTreeKey = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
         
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;
@@ -124,7 +126,7 @@ abstract class BaseActivity extends ListActivity {
 		} else if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {
-			new OpenTreeRunnable(LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
+			new OpenTreeRunnable(LibraryInstance, tree.getUniqueKey()).run();
 		}
 	}
 
@@ -281,11 +283,11 @@ abstract class BaseActivity extends ListActivity {
 	}
 
 	protected class StartTreeActivityRunnable implements Runnable {
-		private final String myTreePath;
+		private final FBTree.Key myTreeKey;
 		private final String myParameter;
 
-		public StartTreeActivityRunnable(String treePath, String parameter) {
-			myTreePath = treePath;
+		public StartTreeActivityRunnable(FBTree.Key key, String parameter) {
+			myTreeKey = key;
 			myParameter = parameter;
 		}
 
@@ -293,7 +295,7 @@ abstract class BaseActivity extends ListActivity {
 			startActivityForResult(
 				new Intent(BaseActivity.this, LibraryTreeActivity.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(TREE_PATH_KEY, myTreePath)
+					.putExtra(TREE_KEY_KEY, myTreeKey)
 					.putExtra(PARAMETER_KEY, myParameter),
 				CHILD_LIST_REQUEST
 			);
@@ -304,12 +306,12 @@ abstract class BaseActivity extends ListActivity {
 		private final Library myLibrary;
 		private final Runnable myPostRunnable;
 
-		public OpenTreeRunnable(Library library, String treePath) {
-			this(library, treePath, null);
+		public OpenTreeRunnable(Library library, FBTree.Key key) {
+			this(library, key, null);
 		}
 
-		public OpenTreeRunnable(Library library, String treePath, String parameter) {
-			this(library, new StartTreeActivityRunnable(treePath, parameter));
+		public OpenTreeRunnable(Library library, FBTree.Key key, String parameter) {
+			this(library, new StartTreeActivityRunnable(key, parameter));
 		}
 
 		public OpenTreeRunnable(Library library, Runnable postRunnable) {

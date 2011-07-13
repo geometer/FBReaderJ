@@ -30,6 +30,10 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	public static class Key implements Serializable {
 		private static final long serialVersionUID = -6500763093522202052L;
 
+		public static Key createRootKey(String id) {
+			return new Key(null, id);
+		}
+
 		public final Key Parent;
 		public final String Id;
 
@@ -72,6 +76,14 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		super();
 	}
 
+	protected FBTree(FBTree parent) {
+		super(parent);
+	}
+
+	protected FBTree(FBTree parent, int position) {
+		super(parent, position);
+	}
+
 	/**
 	 * Returns unique identifier which can be used in NetworkView methods
 	 * @return unique Key instance
@@ -89,27 +101,16 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	 */
 	protected abstract String getStringId();
 
-	protected FBTree(FBTree parent) {
-		super(parent);
-	}
-
-	protected FBTree(FBTree parent, int position) {
-		super(parent, position);
-	}
-
-	public abstract String getName();
-
-	public final FBTree getSubTreeByName(String name) {
-		if (name == null) {
-			return null;
-		}
-		for (FBTree t : subTrees()) {
-			if (name.equals(t.getName())) {
-				return t;
+	public FBTree getSubTree(String id) {
+		for (FBTree tree : subTrees()) {
+			if (id.equals(tree.getStringId())) {
+				return tree;
 			}
 		}
 		return null;
 	}
+
+	public abstract String getName();
 
 	protected String getSortKey() {
 		return getName();

@@ -47,7 +47,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			Library.ROOT_FAVORITES,
 			myResource.getResource(Library.ROOT_FAVORITES),
 			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(LibraryInstance, new StartTreeActivityRunnable(Library.ROOT_FAVORITES, null) {
+			new OpenTreeRunnable(LibraryInstance, new StartTreeActivityRunnable(FBTree.Key.createRootKey(Library.ROOT_FAVORITES), null) {
 				public void run() {
 					if (LibraryInstance.favorites().hasChildren()) {
 						super.run();
@@ -84,7 +84,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			key,
 			myResource.getResource(key),
 			imageId,
-			new OpenTreeRunnable(LibraryInstance, key)
+			new OpenTreeRunnable(LibraryInstance, FBTree.Key.createRootKey(key))
 		));
 	}
 
@@ -103,7 +103,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			myResource.getResource(Library.ROOT_SEARCH_RESULTS),
 			pattern,
 			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(LibraryInstance, Library.ROOT_SEARCH_RESULTS, pattern)
+			new OpenTreeRunnable(LibraryInstance, FBTree.Key.createRootKey(Library.ROOT_SEARCH_RESULTS), pattern)
 		);
 		adapter.add(0, mySearchResultsItem);
 		getListView().invalidateViews();
