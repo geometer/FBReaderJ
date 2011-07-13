@@ -31,8 +31,6 @@ import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
-	private String myTreePathString;
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -100,16 +98,6 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			setListAdapter(adapter);
 			getListView().setOnCreateContextMenuListener(adapter);
 			setSelection(adapter.getFirstSelectedItemIndex());
-		}
-	}
-
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof BookTree) {
-			showBookInfo(((BookTree)tree).Book);
-		} else {
-			new OpenTreeRunnable(LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
 		}
 	}
 }

@@ -36,8 +36,6 @@ import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
-import org.geometerplus.android.util.UIUtil;
-
 public final class FileManager extends BaseActivity {
 	private ZLFile myFile;
 
@@ -45,13 +43,9 @@ public final class FileManager extends BaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (DatabaseInstance == null || LibraryInstance == null) {
-			finish();
-			return;
-		}
-
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 		setListAdapter(adapter);
+		getListView().setOnCreateContextMenuListener(adapter);
 
 		final String[] path = getIntent().getStringExtra(TREE_PATH_KEY).split("\000");
 
@@ -71,7 +65,6 @@ public final class FileManager extends BaseActivity {
 			startUpdate();
 		}
 
-		getListView().setOnCreateContextMenuListener(adapter);
 		getListView().setTextFilterEnabled(true);
 	}
 
@@ -115,25 +108,6 @@ public final class FileManager extends BaseActivity {
 		super.deleteBook(book, mode);
 		getListAdapter().remove(new FileItem(book.File));
 		getListView().invalidateViews();
-	}
-
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final FileItem item = (FileItem)getListAdapter().getItem(position);
-		final ZLFile file = item.getFile();
-		final Book book = item.getBook();
-		if (book != null) {
-			showBookInfo(book);
-		} else if (!file.isReadable()) {
-			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
-		} else if (file.isDirectory() || file.isArchive()) {
-			startActivityForResult(
-				new Intent(this, FileManager.class)
-					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(TREE_PATH_KEY, PATH_FILE_TREE + '\000' + file.getPath()),
-				CHILD_LIST_REQUEST
-			);
-		}
 	}
 
 	private void addItem(String path, String resourceKey) {

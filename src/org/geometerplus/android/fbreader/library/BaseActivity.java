@@ -32,6 +32,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.android.util.UIUtil;
+
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
@@ -67,6 +69,7 @@ abstract class BaseActivity extends ListActivity {
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
 	private Book mySelectedBook;
+	protected String myTreePathString;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -97,6 +100,34 @@ abstract class BaseActivity extends ListActivity {
 	@Override
 	public ListAdapter getListAdapter() {
 		return (ListAdapter)super.getListAdapter();
+	}
+
+	@Override
+	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
+		final FBTree tree = getListAdapter().getItem(position);
+		if (tree instanceof TopLevelTree) {
+			((TopLevelTree)tree).run();
+		} else if (tree instanceof FileItem) {
+			final FileItem item = (FileItem)tree;
+			final ZLFile file = item.getFile();
+			final Book book = item.getBook();
+			if (book != null) {
+				showBookInfo(book);
+			} else if (!file.isReadable()) {
+				UIUtil.showErrorMessage(this, "permissionDenied");
+			} else if (file.isDirectory() || file.isArchive()) {
+				startActivityForResult(
+					new Intent(this, FileManager.class)
+						.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+						.putExtra(TREE_PATH_KEY, PATH_FILE_TREE + '\000' + file.getPath()),
+					CHILD_LIST_REQUEST
+				);
+			}
+		} else if (tree instanceof BookTree) {
+			showBookInfo(((BookTree)tree).Book);
+		} else {
+			new OpenTreeRunnable(LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
+		}
 	}
 
 	boolean isTreeSelected(FBTree tree) {
@@ -249,5 +280,60 @@ abstract class BaseActivity extends ListActivity {
 				return true;
 		}
 		return false;
+	}
+
+	protected class StartTreeActivityRunnable implements Runnable {
+		private final String myTreePath;
+		private final String myParameter;
+
+		public StartTreeActivityRunnable(String treePath, String parameter) {
+			myTreePath = treePath;
+			myParameter = parameter;
+		}
+
+		public void run() {
+			startActivityForResult(
+				new Intent(BaseActivity.this, LibraryTreeActivity.class)
+					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+					.putExtra(TREE_PATH_KEY, myTreePath)
+					.putExtra(PARAMETER_KEY, myParameter),
+				CHILD_LIST_REQUEST
+			);
+		}
+	}
+
+	protected class OpenTreeRunnable implements Runnable {
+		private final Library myLibrary;
+		private final Runnable myPostRunnable;
+
+		public OpenTreeRunnable(Library library, String treePath) {
+			this(library, treePath, null);
+		}
+
+		public OpenTreeRunnable(Library library, String treePath, String parameter) {
+			this(library, new StartTreeActivityRunnable(treePath, parameter));
+		}
+
+		public OpenTreeRunnable(Library library, Runnable postRunnable) {
+			myLibrary = library;
+			myPostRunnable = postRunnable;
+		}
+
+		public void run() {
+			if (myLibrary == null) {
+				return;
+			}
+			if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
+				myPostRunnable.run();
+			} else {
+				UIUtil.runWithMessage(BaseActivity.this, "loadingBookList",
+				new Runnable() {
+					public void run() {
+						myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
+					}
+				},
+				myPostRunnable);
+			}
+		}
 	}
 }

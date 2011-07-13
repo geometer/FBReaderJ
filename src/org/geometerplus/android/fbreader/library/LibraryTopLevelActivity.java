@@ -101,12 +101,6 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		super.onDestroy();
 	}
 
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final TopLevelTree tree = (TopLevelTree)getListAdapter().getItem(position);
-		tree.run();
-	}
-
 	private void setSearchResults(Intent intent) {
 		final ListAdapter adapter = getListAdapter();
 		adapter.remove(mySearchResultsItem);
