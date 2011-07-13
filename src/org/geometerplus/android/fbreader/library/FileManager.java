@@ -24,12 +24,12 @@ import java.util.Collections;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
@@ -43,12 +43,12 @@ public final class FileManager extends BaseActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 
-		if (PATH_FILE_TREE.equals(myTreeKey.Id)) {
+		if (Library.ROOT_FILE_TREE.equals(myTreeKey.Id)) {
 			myFile = null;
 			setTitle(myResource.getResource(myTreeKey.Id).getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
-			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
+			addItem(Paths.cardDirectory(), "fileTreeCard");
 		} else {
 			myFile = ZLFile.createFileByPath(myTreeKey.Id);
 			if (myFile == null) {

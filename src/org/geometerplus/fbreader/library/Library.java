@@ -41,6 +41,7 @@ public final class Library {
 	public static final String ROOT_BY_AUTHOR = "byAuthor";
 	public static final String ROOT_BY_TITLE = "byTitle";
 	public static final String ROOT_BY_TAG = "byTag";
+	public static final String ROOT_FILE_TREE = "fileTree";
 
 	private final List<Book> myBooks = new LinkedList<Book>();
 	private final Set<Book> myExternalBooks = new HashSet<Book>();

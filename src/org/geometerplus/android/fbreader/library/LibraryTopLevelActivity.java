@@ -62,14 +62,14 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books);
 		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags);
 		adapter.add(new TopLevelTree(
-			PATH_FILE_TREE,
-			myResource.getResource(PATH_FILE_TREE),
+			Library.ROOT_FILE_TREE,
+			myResource.getResource(Library.ROOT_FILE_TREE),
 			R.drawable.ic_list_library_folder,
 			new Runnable() {
 				public void run() {
 					startActivity(
 						new Intent(LibraryTopLevelActivity.this, FileManager.class)
-							.putExtra(TREE_KEY_KEY, FBTree.Key.createRootKey(PATH_FILE_TREE))
+							.putExtra(TREE_KEY_KEY, FBTree.Key.createRootKey(Library.ROOT_FILE_TREE))
 							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
 					);
 				}
