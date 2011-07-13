@@ -20,52 +20,13 @@
 package org.geometerplus.fbreader.network;
 
 import java.util.*;
-import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
-	public static class Key implements Serializable {
-		private static final long serialVersionUID = -6500763093522202052L;
-
-		final Key Parent;
-		final String Id;
-
-		private Key(Key parent, String id) {
-			if (id == null) {
-				throw new IllegalArgumentException("NetworkTree string id must be non-null");
-			}
-			Parent = parent;
-			Id = id;
-		}
-
-		@Override
-		public boolean equals(Object other) {
-			if (other == this) {
-				return true;
-			}
-			if (!(other instanceof NetworkTree.Key)) {
-				return false;
-			}
-			final NetworkTree.Key key = (NetworkTree.Key)other;
-			return Id.equals(key.Id) && ZLMiscUtil.equals(Parent, key.Parent);
-		}
-
-		@Override
-		public int hashCode() {
-			return Id.hashCode();
-		}
-
-		@Override
-		public String toString() {
-			return Parent == null ? Id : Parent.toString() + " :: " + Id;
-		}
-	}
-
 	private Key myKey;
 	private Map<String,Object> myUserData;
 
@@ -127,20 +88,6 @@ public abstract class NetworkTree extends FBTree {
 
 	public abstract NetworkItem getHoldedItem();
 
-	/**
-	 * Returns unique identifier which can be used in NetworkView methods
-	 * @return unique Key instance
-	 */
-	public final Key getUniqueKey() {
-		if (myKey == null) {
-			//final ZLTree parentTree = getParent();
-			final Key parentKey = Parent instanceof NetworkTree ?
-				((NetworkTree)Parent).getUniqueKey() : null;
-			myKey = new Key(parentKey, getStringId());
-		}
-		return myKey;
-	}
-
 	public final synchronized void setUserData(String key, Object data) {
 		if (myUserData == null) {
 			myUserData = new HashMap<String,Object>();
@@ -157,10 +104,21 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 	/**
-	 * Returns id used as a part of unique key above. This string must be
-	 *    not null
-     * and
-     *    be unique for all children of same tree
+	 * Returns unique identifier which can be used in NetworkView methods
+	 * @return unique Key instance
+	 */
+	public final Key getUniqueKey() {
+		if (myKey == null) {
+			final Key parentKey = Parent instanceof NetworkTree ?
+				((NetworkTree)Parent).getUniqueKey() : null;
+			myKey = createKey(parentKey, getStringId());
+		}
+		return myKey;
+	}
+
+	/**
+	 * Returns id used as a part of unique key above. This string must be not null
+     * and be unique for all children of same tree
 	 */
 	protected abstract String getStringId();
 

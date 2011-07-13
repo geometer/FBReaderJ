@@ -20,11 +20,54 @@
 package org.geometerplus.fbreader.tree;
 
 import java.util.*;
+import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree> {
+	public static class Key implements Serializable {
+		private static final long serialVersionUID = -6500763093522202052L;
+
+		public final Key Parent;
+		public final String Id;
+
+		private Key(Key parent, String id) {
+			if (id == null) {
+				throw new IllegalArgumentException("FBTree.Key string id must be non-null");
+			}
+			Parent = parent;
+			Id = id;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (other == this) {
+				return true;
+			}
+			if (!(other instanceof Key)) {
+				return false;
+			}
+			final Key key = (Key)other;
+			return Id.equals(key.Id) && ZLMiscUtil.equals(Parent, key.Parent);
+		}
+
+		@Override
+		public int hashCode() {
+			return Id.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			return Parent == null ? Id : Parent.toString() + " :: " + Id;
+		}
+	}
+
+	protected static Key createKey(Key parent, String id) {
+		return new Key(parent, id);
+	}
+
 	private ZLImage myCover;
 	private boolean myCoverRequested;
 
