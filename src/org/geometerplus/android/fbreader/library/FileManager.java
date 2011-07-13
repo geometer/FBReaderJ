@@ -78,7 +78,18 @@ public final class FileManager extends BaseActivity {
 	}
 
 	private void startUpdate() {
-		new Thread(new SmartFilter()).start();
+		new Thread(new Runnable() {
+			public void run() {
+				final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
+				Collections.sort(children, new FileComparator());
+				for (final ZLFile file : children) {
+					if (file.isDirectory() || file.isArchive() ||
+						PluginCollection.Instance().getPlugin(file) != null) {
+						getListAdapter().add(new FileItem(file));
+					}
+				}
+			}
+		}).start();
 	}
 
 	@Override
@@ -166,19 +177,6 @@ public final class FileManager extends BaseActivity {
 			return false;
 		}
 		return mySelectedBookPath.startsWith(prefix);
-	}
-
-	private final class SmartFilter implements Runnable {
-		public void run() {
-			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
-			Collections.sort(children, new FileComparator());
-			for (final ZLFile file : children) {
-				if (file.isDirectory() || file.isArchive() ||
-					PluginCollection.Instance().getPlugin(file) != null) {
-					getListAdapter().add(new FileItem(file));
-				}
-			}
-		}
 	}
 
 	private static class FileComparator implements Comparator<ZLFile> {
