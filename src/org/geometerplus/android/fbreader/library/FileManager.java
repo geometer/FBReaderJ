@@ -80,14 +80,15 @@ public final class FileManager extends BaseActivity {
 	private void startUpdate() {
 		new Thread(new Runnable() {
 			public void run() {
-				final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
-				Collections.sort(children, new FileComparator());
-				for (final ZLFile file : children) {
+				final ArrayList<FBTree> children = new ArrayList<FBTree>();
+				for (ZLFile file : myFile.children()) {
 					if (file.isDirectory() || file.isArchive() ||
 						PluginCollection.Instance().getPlugin(file) != null) {
-						getListAdapter().add(new FileItem(file));
+						children.add(new FileItem(file));
 					}
 				}
+				Collections.sort(children);
+				getListAdapter().addAll(children);
 			}
 		}).start();
 	}
@@ -177,15 +178,5 @@ public final class FileManager extends BaseActivity {
 			return false;
 		}
 		return mySelectedBookPath.startsWith(prefix);
-	}
-
-	private static class FileComparator implements Comparator<ZLFile> {
-		public int compare(ZLFile f0, ZLFile f1) {
-			final boolean isDir = f0.isDirectory();
-			if (isDir != f1.isDirectory()) {
-				return isDir ? -1 : 1;
-			} 
-			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
-		}
 	}
 }

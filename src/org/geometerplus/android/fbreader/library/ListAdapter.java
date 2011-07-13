@@ -81,6 +81,15 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		});
 	}
 
+	public void addAll(final Collection<FBTree> items) {
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				myItems.addAll(items);
+				notifyDataSetChanged();
+			}
+		});
+	}
+
 	@Override
 	public int getCount() {
 		return myItems.size();

@@ -125,4 +125,14 @@ class FileItem extends FBTree {
 		}
 		return myFile.equals(((FileItem)o).myFile);
 	}
+
+	@Override
+	public int compareTo(FBTree tree) {
+		final FileItem item = (FileItem)tree;
+		final boolean isDir = myFile.isDirectory();
+		if (isDir != item.myFile.isDirectory()) {
+			return isDir ? -1 : 1;
+		} 
+		return getName().compareToIgnoreCase(item.getName());
+	}
 }
