@@ -39,8 +39,6 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
-	public static String FILE_MANAGER_PATH = "FileManagerPath";
-	
 	private ZLFile myFile;
 
 	@Override
@@ -55,11 +53,11 @@ public final class FileManager extends BaseActivity {
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 		setListAdapter(adapter);
 
-		final String path = getIntent().getStringExtra(FILE_MANAGER_PATH);
+		final String path = getIntent().getStringExtra(PATH_FILE_TREE);
 
 		if (path == null) {
 			myFile = null;
-			setTitle(myResource.getResource("fileTree").getValue());
+			setTitle(myResource.getResource(PATH_FILE_TREE).getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
@@ -108,17 +106,6 @@ public final class FileManager extends BaseActivity {
 	} 
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FileItem fileItem = (FileItem)getListAdapter().getItem(position);
-		final Book book = fileItem.getBook(); 
-		if (book != null) {
-			return onContextItemSelected(item.getItemId(), book);
-		}
-		return super.onContextItemSelected(item);
-	}
-
-	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
 		getListAdapter().remove(new FileItem(book.File));
@@ -138,7 +125,7 @@ public final class FileManager extends BaseActivity {
 			startActivityForResult(
 				new Intent(this, FileManager.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(FILE_MANAGER_PATH, file.getPath()),
+					.putExtra(PATH_FILE_TREE, file.getPath()),
 				CHILD_LIST_REQUEST
 			);
 		}

@@ -89,7 +89,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 			new OpenTreeRunnable(LibraryInstance, PATH_BY_TAG)
 		));
 		adapter.add(new TopLevelTree(
-			myResource.getResource("fileTree"),
+			myResource.getResource(PATH_FILE_TREE),
 			R.drawable.ic_list_library_folder,
 			new Runnable() {
 				public void run() {

@@ -40,13 +40,6 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	static final String TREE_PATH_KEY = "TreePath";
 	static final String PARAMETER_KEY = "Parameter";
 
-	static final String PATH_FAVORITES = "favorites";
-	static final String PATH_SEARCH_RESULTS = "searchResults";
-	static final String PATH_RECENT = "recent";
-	static final String PATH_BY_AUTHOR = "byAuthor";
-	static final String PATH_BY_TITLE = "byTitle";
-	static final String PATH_BY_TAG = "byTag";
-
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 
@@ -104,16 +97,6 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
                 return true;
         }
     }
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof BookTree) {
-			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
-		}
-		return super.onContextItemSelected(item);
-	}
 
 	@Override
 	protected void deleteBook(Book book, int mode) {
