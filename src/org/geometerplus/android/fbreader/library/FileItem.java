@@ -69,6 +69,11 @@ class FileItem extends FBTree {
 	}
 
 	@Override
+	protected String getStringId() {
+		return myFile.getPath();
+	}
+
+	@Override
 	public String getSummary() {
 		if (mySummary != null) {
 			return mySummary;

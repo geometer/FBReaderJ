@@ -418,13 +418,7 @@ public class NetworkLibrary {
 		if (parentTree == null) {
 			return null;
 		}
-		for (FBTree tree : parentTree.subTrees()) {
-			final NetworkTree nTree = (NetworkTree)tree;
-			if (key.equals(nTree.getUniqueKey())) {
-				return nTree;
-			}
-		}
-		return null;
+		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
 	}
 
 	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {

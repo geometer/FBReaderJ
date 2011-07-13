@@ -26,15 +26,20 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.tree.FBTree;
+
+import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
-import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 abstract class BaseActivity extends ListActivity {
+	static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	private static final int OPEN_BOOK_ITEM_ID = 0;
@@ -45,32 +50,42 @@ abstract class BaseActivity extends ListActivity {
 
 	protected static final int CHILD_LIST_REQUEST = 0;
 	protected static final int BOOK_INFO_REQUEST = 1;
+
 	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
 	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
-
-	static final String TREE_PATH_KEY = "TreePath";
-	static final String PARAMETER_KEY = "Parameter";
-
-	static final String PATH_FAVORITES = "favorites";
-	static final String PATH_SEARCH_RESULTS = "searchResults";
-	static final String PATH_RECENT = "recent";
-	static final String PATH_BY_AUTHOR = "byAuthor";
-	static final String PATH_BY_TITLE = "byTitle";
-	static final String PATH_BY_TAG = "byTag";
-	static final String PATH_FILE_TREE = "fileTree";
 
 	static BooksDatabase DatabaseInstance;
 	static Library LibraryInstance;
 
-	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
+	private Book mySelectedBook;
+	protected FBTree.Key myTreeKey;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
+		DatabaseInstance = SQLiteBooksDatabase.Instance();
+		if (DatabaseInstance == null) {
+			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
+		}
+		if (LibraryInstance == null) {
+			LibraryInstance = new Library();
+			startService(new Intent(getApplicationContext(), InitializationService.class));
+		}
+
+		myTreeKey = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
+        
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
+		mySelectedBook = null;
+		if (mySelectedBookPath != null) {
+			final ZLFile file = ZLFile.createFileByPath(mySelectedBookPath);
+			if (file != null) {
+				mySelectedBook = Book.getByFile(file);
+			}
+		}
+        
 		setResult(RESULT_DONT_INVALIDATE_VIEWS);
 	}
 
@@ -79,7 +94,85 @@ abstract class BaseActivity extends ListActivity {
 		return (ListAdapter)super.getListAdapter();
 	}
 
-	protected abstract boolean isTreeSelected(FBTree tree);
+	@Override
+	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
+		final FBTree tree = getListAdapter().getItem(position);
+		if (tree instanceof TopLevelTree) {
+			((TopLevelTree)tree).run();
+		} else if (tree instanceof FileItem) {
+			final FileItem item = (FileItem)tree;
+			final ZLFile file = item.getFile();
+			final Book book = item.getBook();
+			if (book != null) {
+				showBookInfo(book);
+			} else if (!file.isReadable()) {
+				UIUtil.showErrorMessage(this, "permissionDenied");
+			} else if (file.isDirectory() || file.isArchive()) {
+				startActivityForResult(
+					new Intent(this, FileManager.class)
+						.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+						.putExtra(TREE_KEY_KEY, tree.getUniqueKey()),
+					CHILD_LIST_REQUEST
+				);
+			}
+		} else if (tree instanceof BookTree) {
+			showBookInfo(((BookTree)tree).Book);
+		} else {
+			new OpenTreeRunnable(LibraryInstance, tree.getUniqueKey()).run();
+		}
+	}
+
+	boolean isTreeSelected(FBTree tree) {
+		if (mySelectedBook == null) {
+			return false;
+		}
+
+		if (tree instanceof BookTree) {
+			return mySelectedBook.equals(((BookTree)tree).Book);
+		} else if (tree instanceof AuthorTree) {
+			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
+		} else if (tree instanceof TitleTree) {
+			final String title = mySelectedBook.getTitle();
+			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
+		} else if (tree instanceof SeriesTree) {
+			final SeriesInfo info = mySelectedBook.getSeriesInfo();
+			final String series = ((SeriesTree)tree).Series;
+			return info != null && series != null && series.equals(info.Name);
+		} else if (tree instanceof TagTree) {
+			final Tag tag = ((TagTree)tree).Tag;
+			for (Tag t : mySelectedBook.tags()) {
+				for (; t != null; t = t.Parent) {
+					if (t == tag) {
+						return true;
+					}
+				}
+			}
+		} else if (tree instanceof FileItem) {
+			final FileItem item = (FileItem)tree;
+			if (!item.isSelectable()) {
+				return false;
+			}
+			final ZLFile file = item.getFile();
+			final String path = file.getPath();
+			if (mySelectedBookPath.equals(path)) {
+				return true;
+			}
+        
+			String prefix = path;
+			if (file.isDirectory()) {
+				if (!prefix.endsWith("/")) {
+					prefix += '/';
+				}
+			} else if (file.isArchive()) {
+				prefix += ':';
+			} else {
+				return false;
+			}
+			return mySelectedBookPath.startsWith(prefix);
+		}
+
+		return false;
+	}
 
 	protected void openBook(Book book) {
 		startActivity(
@@ -91,16 +184,17 @@ abstract class BaseActivity extends ListActivity {
 	}
 
 	protected void createBookContextMenu(ContextMenu menu, Book book) {
+		final ZLResource resource = Library.resource();
 		menu.setHeaderTitle(book.getTitle());
-		menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
-		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, myResource.getResource("showBookInfo").getValue());
+		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
+		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
 		if (LibraryInstance.isBookInFavorites(book)) {
-			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
+			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
-			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
+			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
 		}
 		if ((LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
-			menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
+			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
         }
 	}
 
@@ -179,5 +273,53 @@ abstract class BaseActivity extends ListActivity {
 				return true;
 		}
 		return false;
+	}
+
+	protected class StartTreeActivityRunnable implements Runnable {
+		private final FBTree.Key myTreeKey;
+
+		public StartTreeActivityRunnable(FBTree.Key key) {
+			myTreeKey = key;
+		}
+
+		public void run() {
+			startActivityForResult(
+				new Intent(BaseActivity.this, LibraryTreeActivity.class)
+					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+					.putExtra(TREE_KEY_KEY, myTreeKey),
+				CHILD_LIST_REQUEST
+			);
+		}
+	}
+
+	protected class OpenTreeRunnable implements Runnable {
+		private final Library myLibrary;
+		private final Runnable myPostRunnable;
+
+		public OpenTreeRunnable(Library library, FBTree.Key key) {
+			this(library, new StartTreeActivityRunnable(key));
+		}
+
+		public OpenTreeRunnable(Library library, Runnable postRunnable) {
+			myLibrary = library;
+			myPostRunnable = postRunnable;
+		}
+
+		public void run() {
+			if (myLibrary == null) {
+				return;
+			}
+			if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
+				myPostRunnable.run();
+			} else {
+				UIUtil.runWithMessage(BaseActivity.this, "loadingBookList",
+				new Runnable() {
+					public void run() {
+						myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
+					}
+				},
+				myPostRunnable);
+			}
+		}
 	}
 }

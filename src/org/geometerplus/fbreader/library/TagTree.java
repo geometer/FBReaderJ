@@ -37,6 +37,11 @@ public final class TagTree extends LibraryTree {
 				ZLResource.resource("library").getResource("booksWithNoTags").getValue();
 	}
 
+	@Override
+	protected String getStringId() {
+		return getName();
+	}
+
 	protected String getSortKey() {
 		return (Tag != null) ? Tag.Name : null;
 	}

@@ -37,6 +37,11 @@ public class BookTree extends LibraryTree {
 	}
 
 	@Override
+	protected String getStringId() {
+		return getName();
+	}
+
+	@Override
 	public String getSummary() {
 		if (!myShowAuthors) {
 			return super.getSummary();

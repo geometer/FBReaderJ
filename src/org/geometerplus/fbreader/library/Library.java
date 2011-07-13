@@ -26,6 +26,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
@@ -35,19 +36,46 @@ public final class Library {
 	public static final int STATE_NOT_INITIALIZED = 0;
 	public static final int STATE_FULLY_INITIALIZED = 1;
 
-	private final LinkedList<Book> myBooks = new LinkedList<Book>();
-	private final HashSet<Book> myExternalBooks = new HashSet<Book>();
-	private final LibraryTree myLibraryByAuthor = new RootTree();
-	private final LibraryTree myLibraryByTitle = new RootTree();
-	private final LibraryTree myLibraryByTag = new RootTree();
-	private final LibraryTree myRecentBooks = new RootTree();
-	private final LibraryTree myFavorites = new RootTree();
-	private LibraryTree mySearchResult = new RootTree();
+	public static final String ROOT_FAVORITES = "favorites";
+	public static final String ROOT_SEARCH_RESULTS = "searchResults";
+	public static final String ROOT_RECENT = "recent";
+	public static final String ROOT_BY_AUTHOR = "byAuthor";
+	public static final String ROOT_BY_TITLE = "byTitle";
+	public static final String ROOT_BY_TAG = "byTag";
+	public static final String ROOT_FILE_TREE = "fileTree";
+
+	public static ZLResource resource() {
+		return ZLResource.resource("libraryView");
+	}
+
+	private final List<Book> myBooks = new LinkedList<Book>();
+	private final Set<Book> myExternalBooks = new HashSet<Book>();
+	private final Map<String,RootTree> myRootTrees = new HashMap<String,RootTree>();
 
 	private volatile int myState = STATE_NOT_INITIALIZED;
 	private volatile boolean myInterrupted = false;
 
 	public Library() {
+	}
+
+	public RootTree getRootTree(String id) {
+		RootTree root = myRootTrees.get(id);
+		if (root == null) {
+			root = new RootTree(id);
+			myRootTrees.put(id, root);
+		}
+		return root;
+	}
+
+	public LibraryTree getLibraryTree(LibraryTree.Key key) {
+		if (key == null) {
+			return null;
+		}
+		if (key.Parent == null) {
+			return getRootTree(key.Id);
+		}
+		final LibraryTree parentTree = getLibraryTree(key.Parent);
+		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
 	}
 
 	public boolean hasState(int state) {
@@ -228,7 +256,7 @@ public final class Library {
 		if (tagTree == null) {
 			LibraryTree parent =
 				((tag != null) && (tag.Parent != null)) ?
-					getTagTree(tag.Parent, tagTreeMap) : myLibraryByTag;
+					getTagTree(tag.Parent, tagTreeMap) : getRootTree(ROOT_BY_TAG);
 			tagTree = parent.createTagSubTree(tag);
 			tagTreeMap.put(tag, tagTree);
 		}
@@ -253,7 +281,7 @@ public final class Library {
 			for (Author a : authors) {
 				AuthorTree authorTree = authorTreeMap.get(a);
 				if (authorTree == null) {
-					authorTree = myLibraryByAuthor.createAuthorSubTree(a);
+					authorTree = getRootTree(ROOT_BY_AUTHOR).createAuthorSubTree(a);
 					authorTreeMap.put(a, authorTree);
 				}
 				if (seriesInfo == null) {
@@ -307,14 +335,14 @@ public final class Library {
 				Character c = title.charAt(0);
 				TitleTree tree = letterTrees.get(c);
 				if (tree == null) {
-					tree = myLibraryByTitle.createTitleSubTree(c.toString());
+					tree = getRootTree(ROOT_BY_TITLE).createTitleSubTree(c.toString());
 					letterTrees.put(c, tree);
 				}
 				tree.createBookSubTree(book, true);
 			}
 		} else {
 			for (Book book : myBooks) {
-				myLibraryByTitle.createBookSubTree(book, true);
+				getRootTree(ROOT_BY_TITLE).createBookSubTree(book, true);
 			}
 		}
 
@@ -322,21 +350,21 @@ public final class Library {
 		for (long id : db.loadRecentBookIds()) {
 			Book book = bookById.get(id);
 			if (book != null) {
-				myRecentBooks.createBookSubTree(book, true);
+				getRootTree(ROOT_RECENT).createBookSubTree(book, true);
 			}
 		}
 
 		for (long id : db.loadFavoritesIds()) {
 			Book book = bookById.get(id);
 			if (book != null) {
-				myFavorites.createBookSubTree(book, true);
+				getRootTree(ROOT_FAVORITES).createBookSubTree(book, true);
 			}
 		}
 
-		myFavorites.sortAllChildren();
-		myLibraryByAuthor.sortAllChildren();
-		myLibraryByTitle.sortAllChildren();
-		myLibraryByTag.sortAllChildren();
+		getRootTree(ROOT_FAVORITES).sortAllChildren();
+		getRootTree(ROOT_BY_AUTHOR).sortAllChildren();
+		getRootTree(ROOT_BY_TITLE).sortAllChildren();
+		getRootTree(ROOT_BY_TAG).sortAllChildren();
 
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
@@ -363,22 +391,22 @@ public final class Library {
 
 	public LibraryTree byAuthor() {
 		waitForState(STATE_FULLY_INITIALIZED);
-		return myLibraryByAuthor;
+		return getRootTree(ROOT_BY_AUTHOR);
 	}
 
 	public LibraryTree byTitle() {
 		waitForState(STATE_FULLY_INITIALIZED);
-		return myLibraryByTitle;
+		return getRootTree(ROOT_BY_TITLE);
 	}
 
 	public LibraryTree byTag() {
 		waitForState(STATE_FULLY_INITIALIZED);
-		return myLibraryByTag;
+		return getRootTree(ROOT_BY_TAG);
 	}
 
 	public LibraryTree recentBooks() {
 		waitForState(STATE_FULLY_INITIALIZED);
-		return myRecentBooks;
+		return getRootTree(ROOT_RECENT);
 	}
 
 	public static Book getRecentBook() {
@@ -393,16 +421,16 @@ public final class Library {
 
 	public LibraryTree favorites() {
 		waitForState(STATE_FULLY_INITIALIZED);
-		return myFavorites;
+		return getRootTree(ROOT_FAVORITES);
 	}
 
 	public LibraryTree searchResults() {
-		return mySearchResult;
+		return getRootTree(ROOT_SEARCH_RESULTS);
 	}
 
 	public LibraryTree searchBooks(String pattern) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		final RootTree newSearchResults = new RootTree();
+		final RootTree newSearchResults = new SearchResultsTree(ROOT_SEARCH_RESULTS, pattern);
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();
 			for (Book book : myBooks) {
@@ -412,7 +440,7 @@ public final class Library {
 			}
 			newSearchResults.sortAllChildren();
 			if (newSearchResults.hasChildren()) {
-				mySearchResult = newSearchResults;
+				myRootTrees.put(ROOT_SEARCH_RESULTS, newSearchResults);
 			}
 		}
 		return newSearchResults;
@@ -432,21 +460,22 @@ public final class Library {
 
 	public boolean isBookInFavorites(Book book) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		return myFavorites.containsBook(book);
+		return getRootTree(ROOT_FAVORITES).containsBook(book);
 	}
 
 	public void addBookToFavorites(Book book) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		if (!myFavorites.containsBook(book)) {
-			myFavorites.createBookSubTree(book, true);
-			myFavorites.sortAllChildren();
+		final LibraryTree rootFavorites = getRootTree(ROOT_FAVORITES);
+		if (!rootFavorites.containsBook(book)) {
+			rootFavorites.createBookSubTree(book, true);
+			rootFavorites.sortAllChildren();
 			BooksDatabase.Instance().addToFavorites(book.getId());
 		}
 	}
 
 	public void removeBookFromFavorites(Book book) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		if (myFavorites.removeBook(book)) {
+		if (getRootTree(ROOT_FAVORITES).removeBook(book)) {
 			BooksDatabase.Instance().removeFromFavorites(book.getId());
 		}
 	}
@@ -482,16 +511,15 @@ public final class Library {
 		}
 		waitForState(STATE_FULLY_INITIALIZED);
 		myBooks.remove(book);
-		myLibraryByAuthor.removeBook(book);
-		myLibraryByTag.removeBook(book);
-		if (myRecentBooks.removeBook(book)) {
+		if (getRootTree(ROOT_RECENT).removeBook(book)) {
 			final BooksDatabase db = BooksDatabase.Instance();
 			final List<Long> ids = db.loadRecentBookIds();
 			ids.remove(book.getId());
 			db.saveRecentBookIds(ids);
 		}
-		mySearchResult.removeBook(book);
-		myFavorites.removeBook(book);
+		for (LibraryTree root : myRootTrees.values()) {
+			root.removeBook(book);
+		}
 
 		BooksDatabase.Instance().deleteFromBookList(book.getId());
 		if ((removeMode & REMOVE_FROM_DISK) != 0) {

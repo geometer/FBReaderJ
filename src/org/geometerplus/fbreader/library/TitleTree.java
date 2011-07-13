@@ -31,4 +31,9 @@ public final class TitleTree extends LibraryTree {
 	public String getName() {
 		return Title;
 	}
+
+	@Override
+	protected String getStringId() {
+		return getName();
+	}
 }

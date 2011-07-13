@@ -19,34 +19,16 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
+class SearchResultsTree extends RootTree {
+	private final String myPattern;
 
-public class AuthorTree extends LibraryTree {
-	public final Author Author;
-
-	AuthorTree(LibraryTree parent, Author author) {
-		super(parent);
-		Author = author;
-	}
-
-	SeriesTree createSeriesSubTree(String series) {
-		return new SeriesTree(this, series);
+	SearchResultsTree(String id, String pattern) {
+		super(id);
+		myPattern = pattern != null ? pattern : "";
 	}
 
 	@Override
-	public String getName() {
-		return
-			(Author != null) ?
-				Author.DisplayName :
-				ZLResource.resource("library").getResource("unknownAuthor").getValue();
-	}
-
-	@Override
-	protected String getStringId() {
-		return getName();
-	}
-
-	protected String getSortKey() {
-		return (Author != null) ? Author.SortKey : null;
+	public String getSummary() {
+		return super.getSummary().replace("%s", myPattern);
 	}
 }

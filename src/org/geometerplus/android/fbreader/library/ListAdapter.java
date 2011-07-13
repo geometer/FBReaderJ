@@ -44,6 +44,8 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 	ListAdapter(BaseActivity activity, List<FBTree> items) {
 		myActivity = activity;
 		myItems = Collections.synchronizedList(items);
+		activity.setListAdapter(this);
+		activity.getListView().setOnCreateContextMenuListener(this);
 	}
 
 	public void clear() {

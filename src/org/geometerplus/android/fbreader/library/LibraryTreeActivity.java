@@ -21,26 +21,14 @@ package org.geometerplus.android.fbreader.library;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.library.Library;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
-	private String myTreePathString;
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		if (DatabaseInstance == null || LibraryInstance == null) {
-			finish();
-			return;
-		}
 
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -57,67 +45,15 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			return;
 		}
 
-		myTreePathString = intent.getStringExtra(TREE_PATH_KEY);
-        
-		final String[] path = myTreePathString.split("\000");
-        
-		String title = null;
-		if (path.length == 1) {
-			title = myResource.getResource(path[0]).getResource("summary").getValue();
-			final String parameter = intent.getStringExtra(PARAMETER_KEY);
-			if (parameter != null) {
-				title = title.replace("%s", parameter);
-			}
-		} else {
-			title = path[path.length - 1];
-		}
-		setTitle(title);
-
-		FBTree tree = null;
-		if (PATH_RECENT.equals(path[0])) {
-			tree = LibraryInstance.recentBooks();
-		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
-			tree = LibraryInstance.searchResults();
-		} else if (PATH_BY_AUTHOR.equals(path[0])) {
-			tree = LibraryInstance.byAuthor();
-		} else if (PATH_BY_TITLE.equals(path[0])) {
-			tree = LibraryInstance.byTitle();
-		} else if (PATH_BY_TAG.equals(path[0])) {
-			tree = LibraryInstance.byTag();
-		} else if (PATH_FAVORITES.equals(path[0])) {
-			tree = LibraryInstance.favorites();
-		}
-        
-		for (int i = 1; i < path.length; ++i) {
-			if (tree == null) {
-				break;
-			}
-			tree = tree.getSubTreeByName(path[i]);
-		}
-
-		mySelectedBook = null;
-		if (mySelectedBookPath != null) {
-			final ZLFile file = ZLFile.createFileByPath(mySelectedBookPath);
-			if (file != null) {
-				mySelectedBook = Book.getByFile(file);
-			}
-		}
-        
+		final FBTree tree = LibraryInstance.getLibraryTree(myTreeKey);
 		if (tree != null) {
+			if (myTreeKey.Parent == null) {
+				setTitle(tree.getSecondString());
+			} else {
+				setTitle(tree.getName());
+			}
 			final ListAdapter adapter = new ListAdapter(this, tree.subTrees());
-			setListAdapter(adapter);
-			getListView().setOnCreateContextMenuListener(adapter);
 			setSelection(adapter.getFirstSelectedItemIndex());
-		}
-	}
-
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof BookTree) {
-			showBookInfo(((BookTree)tree).Book);
-		} else {
-			new OpenTreeRunnable(LibraryInstance, myTreePathString + "\000" + tree.getName()).run();
 		}
 	}
 }

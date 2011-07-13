@@ -19,24 +19,20 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.*;
-import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
-
-import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
 	private ZLFile myFile;
@@ -45,33 +41,24 @@ public final class FileManager extends BaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (DatabaseInstance == null || LibraryInstance == null) {
-			finish();
-			return;
-		}
-
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
-		setListAdapter(adapter);
 
-		final String[] path = getIntent().getStringExtra(TREE_PATH_KEY).split("\000");
-
-		if (path.length == 1) {
+		if (Library.ROOT_FILE_TREE.equals(myTreeKey.Id)) {
 			myFile = null;
-			setTitle(myResource.getResource(PATH_FILE_TREE).getValue());
+			setTitle(Library.resource().getResource(myTreeKey.Id).getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
-			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
+			addItem(Paths.cardDirectory(), "fileTreeCard");
 		} else {
-			myFile = ZLFile.createFileByPath(path[1]);
+			myFile = ZLFile.createFileByPath(myTreeKey.Id);
 			if (myFile == null) {
 				finish();
 				return;
 			}
-			setTitle(path[1]);
+			setTitle(myTreeKey.Id);
 			startUpdate();
 		}
 
-		getListView().setOnCreateContextMenuListener(adapter);
 		getListView().setTextFilterEnabled(true);
 	}
 
@@ -87,6 +74,11 @@ public final class FileManager extends BaseActivity {
 				}
 				Collections.sort(children);
 				getListAdapter().addAll(children);
+				runOnUiThread(new Runnable() {
+					public void run() {
+						setSelection(getListAdapter().getFirstSelectedItemIndex());
+					}
+				});
 			}
 		}).start();
 	}
@@ -112,58 +104,12 @@ public final class FileManager extends BaseActivity {
 		getListView().invalidateViews();
 	}
 
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final FileItem item = (FileItem)getListAdapter().getItem(position);
-		final ZLFile file = item.getFile();
-		final Book book = item.getBook();
-		if (book != null) {
-			showBookInfo(book);
-		} else if (!file.isReadable()) {
-			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
-		} else if (file.isDirectory() || file.isArchive()) {
-			startActivityForResult(
-				new Intent(this, FileManager.class)
-					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(TREE_PATH_KEY, PATH_FILE_TREE + '\000' + file.getPath()),
-				CHILD_LIST_REQUEST
-			);
-		}
-	}
-
 	private void addItem(String path, String resourceKey) {
-		final ZLResource resource = myResource.getResource(resourceKey);
+		final ZLResource resource = Library.resource().getResource(resourceKey);
 		getListAdapter().add(new FileItem(
 			ZLFile.createFileByPath(path),
 			resource.getValue(),
 			resource.getResource("summary").getValue()
 		));
-	}
-
-	@Override
-	protected boolean isTreeSelected(FBTree tree) {
-		final FileItem item = (FileItem)tree;
-
-		if (mySelectedBookPath == null || !item.isSelectable()) {
-			return false;
-		}
-
-		final ZLFile file = item.getFile();
-		final String path = file.getPath();
-		if (mySelectedBookPath.equals(path)) {
-			return true;
-		}
-
-		String prefix = path;
-		if (file.isDirectory()) {
-			if (!prefix.endsWith("/")) {
-				prefix += '/';
-			}
-		} else if (file.isArchive()) {
-			prefix += ':';
-		} else {
-			return false;
-		}
-		return mySelectedBookPath.startsWith(prefix);
 	}
 }
