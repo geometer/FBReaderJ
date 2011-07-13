@@ -95,6 +95,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 				public void run() {
 					startActivity(
 						new Intent(LibraryTopLevelActivity.this, FileManager.class)
+							.putExtra(TREE_PATH_KEY, PATH_FILE_TREE)
 							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
 					);
 				}

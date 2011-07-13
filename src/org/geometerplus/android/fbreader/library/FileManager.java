@@ -53,21 +53,21 @@ public final class FileManager extends BaseActivity {
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 		setListAdapter(adapter);
 
-		final String path = getIntent().getStringExtra(PATH_FILE_TREE);
+		final String[] path = getIntent().getStringExtra(TREE_PATH_KEY).split("\000");
 
-		if (path == null) {
+		if (path.length == 1) {
 			myFile = null;
 			setTitle(myResource.getResource(PATH_FILE_TREE).getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
 		} else {
-			myFile = ZLFile.createFileByPath(path);
+			myFile = ZLFile.createFileByPath(path[1]);
 			if (myFile == null) {
 				finish();
 				return;
 			}
-			setTitle(path);
+			setTitle(path[1]);
 			startUpdate();
 		}
 
@@ -125,7 +125,7 @@ public final class FileManager extends BaseActivity {
 			startActivityForResult(
 				new Intent(this, FileManager.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(PATH_FILE_TREE, file.getPath()),
+					.putExtra(TREE_PATH_KEY, PATH_FILE_TREE + '\000' + file.getPath()),
 				CHILD_LIST_REQUEST
 			);
 		}

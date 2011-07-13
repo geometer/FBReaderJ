@@ -48,6 +48,9 @@ abstract class BaseActivity extends ListActivity {
 	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
 	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
 
+	static final String TREE_PATH_KEY = "TreePath";
+	static final String PARAMETER_KEY = "Parameter";
+
 	static final String PATH_FAVORITES = "favorites";
 	static final String PATH_SEARCH_RESULTS = "searchResults";
 	static final String PATH_RECENT = "recent";
