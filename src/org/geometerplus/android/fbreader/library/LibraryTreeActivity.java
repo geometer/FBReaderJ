@@ -49,42 +49,38 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			return;
 		}
 
-		myTreePathString = intent.getStringExtra(TREE_PATH_KEY);
-        
-		final String[] path = myTreePathString.split("\000");
-        
 		String title = null;
-		if (path.length == 1) {
-			title = myResource.getResource(path[0]).getResource("summary").getValue();
+		if (myTreePath.length == 1) {
+			title = myResource.getResource(myTreePath[0]).getResource("summary").getValue();
 			final String parameter = intent.getStringExtra(PARAMETER_KEY);
 			if (parameter != null) {
 				title = title.replace("%s", parameter);
 			}
 		} else {
-			title = path[path.length - 1];
+			title = myTreePath[myTreePath.length - 1];
 		}
 		setTitle(title);
 
 		FBTree tree = null;
-		if (PATH_RECENT.equals(path[0])) {
+		if (PATH_RECENT.equals(myTreePath[0])) {
 			tree = LibraryInstance.recentBooks();
-		} else if (PATH_SEARCH_RESULTS.equals(path[0])) {
+		} else if (PATH_SEARCH_RESULTS.equals(myTreePath[0])) {
 			tree = LibraryInstance.searchResults();
-		} else if (PATH_BY_AUTHOR.equals(path[0])) {
+		} else if (PATH_BY_AUTHOR.equals(myTreePath[0])) {
 			tree = LibraryInstance.byAuthor();
-		} else if (PATH_BY_TITLE.equals(path[0])) {
+		} else if (PATH_BY_TITLE.equals(myTreePath[0])) {
 			tree = LibraryInstance.byTitle();
-		} else if (PATH_BY_TAG.equals(path[0])) {
+		} else if (PATH_BY_TAG.equals(myTreePath[0])) {
 			tree = LibraryInstance.byTag();
-		} else if (PATH_FAVORITES.equals(path[0])) {
+		} else if (PATH_FAVORITES.equals(myTreePath[0])) {
 			tree = LibraryInstance.favorites();
 		}
         
-		for (int i = 1; i < path.length; ++i) {
+		for (int i = 1; i < myTreePath.length; ++i) {
 			if (tree == null) {
 				break;
 			}
-			tree = tree.getSubTreeByName(path[i]);
+			tree = tree.getSubTreeByName(myTreePath[i]);
 		}
 
 		if (tree != null) {

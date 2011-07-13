@@ -55,26 +55,10 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 				}
 			})
 		));
-		adapter.add(new TopLevelTree(
-			myResource.getResource(PATH_RECENT),
-			R.drawable.ic_list_library_recent,
-			new OpenTreeRunnable(LibraryInstance, PATH_RECENT)
-		));
-		adapter.add(new TopLevelTree(
-			myResource.getResource(PATH_BY_AUTHOR),
-			R.drawable.ic_list_library_authors,
-			new OpenTreeRunnable(LibraryInstance, PATH_BY_AUTHOR)
-		));
-		adapter.add(new TopLevelTree(
-			myResource.getResource(PATH_BY_TITLE),
-			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(LibraryInstance, PATH_BY_TITLE)
-		));
-		adapter.add(new TopLevelTree(
-			myResource.getResource(PATH_BY_TAG),
-			R.drawable.ic_list_library_tags,
-			new OpenTreeRunnable(LibraryInstance, PATH_BY_TAG)
-		));
+		addTopLevelTree(PATH_RECENT, R.drawable.ic_list_library_recent);
+		addTopLevelTree(PATH_BY_AUTHOR, R.drawable.ic_list_library_authors);
+		addTopLevelTree(PATH_BY_TITLE, R.drawable.ic_list_library_books);
+		addTopLevelTree(PATH_BY_TAG, R.drawable.ic_list_library_tags);
 		adapter.add(new TopLevelTree(
 			myResource.getResource(PATH_FILE_TREE),
 			R.drawable.ic_list_library_folder,
@@ -90,6 +74,14 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		));
 
 		onNewIntent(getIntent());
+	}
+
+	private void addTopLevelTree(String key, int imageId) {
+		getListAdapter().add(new TopLevelTree(
+			myResource.getResource(key),
+			imageId,
+			new OpenTreeRunnable(LibraryInstance, key)
+		));
 	}
 
 	@Override

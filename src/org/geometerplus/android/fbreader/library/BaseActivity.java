@@ -69,7 +69,8 @@ abstract class BaseActivity extends ListActivity {
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
 	private Book mySelectedBook;
-	protected String myTreePathString;
+	private String myTreePathString;
+	protected String[] myTreePath;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -85,6 +86,9 @@ abstract class BaseActivity extends ListActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
+		myTreePathString = getIntent().getStringExtra(TREE_PATH_KEY);
+		myTreePath = myTreePathString != null ? myTreePathString.split("\000") : new String[0];
+        
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;
 		if (mySelectedBookPath != null) {
