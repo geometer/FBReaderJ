@@ -95,14 +95,6 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			tree = tree.getSubTreeByName(path[i]);
 		}
 
-		mySelectedBook = null;
-		if (mySelectedBookPath != null) {
-			final ZLFile file = ZLFile.createFileByPath(mySelectedBookPath);
-			if (file != null) {
-				mySelectedBook = Book.getByFile(file);
-			}
-		}
-        
 		if (tree != null) {
 			final ListAdapter adapter = new ListAdapter(this, tree.subTrees());
 			setListAdapter(adapter);

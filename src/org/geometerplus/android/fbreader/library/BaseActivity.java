@@ -26,13 +26,15 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
-import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 abstract class BaseActivity extends ListActivity {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
@@ -64,13 +66,31 @@ abstract class BaseActivity extends ListActivity {
 
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
+	private Book mySelectedBook;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
+		DatabaseInstance = SQLiteBooksDatabase.Instance();
+		if (DatabaseInstance == null) {
+			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
+		}
+		if (LibraryInstance == null) {
+			LibraryInstance = new Library();
+			startService(new Intent(getApplicationContext(), InitializationService.class));
+		}
+
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
+		mySelectedBook = null;
+		if (mySelectedBookPath != null) {
+			final ZLFile file = ZLFile.createFileByPath(mySelectedBookPath);
+			if (file != null) {
+				mySelectedBook = Book.getByFile(file);
+			}
+		}
+        
 		setResult(RESULT_DONT_INVALIDATE_VIEWS);
 	}
 
@@ -79,7 +99,57 @@ abstract class BaseActivity extends ListActivity {
 		return (ListAdapter)super.getListAdapter();
 	}
 
-	protected abstract boolean isTreeSelected(FBTree tree);
+	boolean isTreeSelected(FBTree tree) {
+		if (mySelectedBook == null) {
+			return false;
+		}
+
+		if (tree instanceof BookTree) {
+			return mySelectedBook.equals(((BookTree)tree).Book);
+		} else if (tree instanceof AuthorTree) {
+			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
+		} else if (tree instanceof TitleTree) {
+			final String title = mySelectedBook.getTitle();
+			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
+		} else if (tree instanceof SeriesTree) {
+			final SeriesInfo info = mySelectedBook.getSeriesInfo();
+			final String series = ((SeriesTree)tree).Series;
+			return info != null && series != null && series.equals(info.Name);
+		} else if (tree instanceof TagTree) {
+			final Tag tag = ((TagTree)tree).Tag;
+			for (Tag t : mySelectedBook.tags()) {
+				for (; t != null; t = t.Parent) {
+					if (t == tag) {
+						return true;
+					}
+				}
+			}
+		} else if (tree instanceof FileItem) {
+			final FileItem item = (FileItem)tree;
+			if (!item.isSelectable()) {
+				return false;
+			}
+			final ZLFile file = item.getFile();
+			final String path = file.getPath();
+			if (mySelectedBookPath.equals(path)) {
+				return true;
+			}
+        
+			String prefix = path;
+			if (file.isDirectory()) {
+				if (!prefix.endsWith("/")) {
+					prefix += '/';
+				}
+			} else if (file.isArchive()) {
+				prefix += ':';
+			} else {
+				return false;
+			}
+			return mySelectedBookPath.startsWith(prefix);
+		}
+
+		return false;
+	}
 
 	protected void openBook(Book book) {
 		startActivity(

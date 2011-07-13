@@ -87,6 +87,11 @@ public final class FileManager extends BaseActivity {
 				}
 				Collections.sort(children);
 				getListAdapter().addAll(children);
+				runOnUiThread(new Runnable() {
+					public void run() {
+						setSelection(getListAdapter().getFirstSelectedItemIndex());
+					}
+				});
 			}
 		}).start();
 	}
@@ -138,32 +143,5 @@ public final class FileManager extends BaseActivity {
 			resource.getValue(),
 			resource.getResource("summary").getValue()
 		));
-	}
-
-	@Override
-	protected boolean isTreeSelected(FBTree tree) {
-		final FileItem item = (FileItem)tree;
-
-		if (mySelectedBookPath == null || !item.isSelectable()) {
-			return false;
-		}
-
-		final ZLFile file = item.getFile();
-		final String path = file.getPath();
-		if (mySelectedBookPath.equals(path)) {
-			return true;
-		}
-
-		String prefix = path;
-		if (file.isDirectory()) {
-			if (!prefix.endsWith("/")) {
-				prefix += '/';
-			}
-		} else if (file.isArchive()) {
-			prefix += ':';
-		} else {
-			return false;
-		}
-		return mySelectedBookPath.startsWith(prefix);
 	}
 }

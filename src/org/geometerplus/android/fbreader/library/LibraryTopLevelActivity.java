@@ -34,7 +34,6 @@ import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	private TopLevelTree mySearchResultsItem;
@@ -43,15 +42,6 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-		DatabaseInstance = SQLiteBooksDatabase.Instance();
-		if (DatabaseInstance == null) {
-			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
-		}
-		if (LibraryInstance == null) {
-			LibraryInstance = new Library();
-			startService(new Intent(getApplicationContext(), InitializationService.class));
-		}
 
 		final ListAdapter adapter = new ListAdapter(this, new LinkedList<FBTree>());
 		setListAdapter(adapter);

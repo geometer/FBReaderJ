@@ -40,8 +40,6 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 
-	protected Book mySelectedBook;
-
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
@@ -99,41 +97,6 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
 		getListView().invalidateViews();
-	}
-
-	@Override
-	protected boolean isTreeSelected(FBTree tree) {
-		if (mySelectedBook == null) {
-			return false;
-		}
-
-		if (tree instanceof BookTree) {
-			return mySelectedBook.equals(((BookTree)tree).Book);
-		}
-		if (tree instanceof AuthorTree) {
-			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
-		}
-		if (tree instanceof TitleTree) {
-			final String title = mySelectedBook.getTitle();
-			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
-		}
-		if (tree instanceof SeriesTree) {
-			final SeriesInfo info = mySelectedBook.getSeriesInfo();
-			final String series = ((SeriesTree)tree).Series;
-			return info != null && series != null && series.equals(info.Name);
-		}
-		if (tree instanceof TagTree) {
-			final Tag tag = ((TagTree)tree).Tag;
-			for (Tag t : mySelectedBook.tags()) {
-				for (; t != null; t = t.Parent) {
-					if (t == tag) {
-						return true;
-					}
-				}
-			}
-			return false;
-		}
-		return false;
 	}
 
 	protected class StartTreeActivityRunnable implements Runnable {
