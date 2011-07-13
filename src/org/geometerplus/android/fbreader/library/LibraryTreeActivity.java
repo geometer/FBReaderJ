@@ -21,13 +21,7 @@ package org.geometerplus.android.fbreader.library;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.BookTree;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
@@ -95,8 +89,6 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 
 		if (tree != null) {
 			final ListAdapter adapter = new ListAdapter(this, tree.subTrees());
-			setListAdapter(adapter);
-			getListView().setOnCreateContextMenuListener(adapter);
 			setSelection(adapter.getFirstSelectedItemIndex());
 		}
 	}

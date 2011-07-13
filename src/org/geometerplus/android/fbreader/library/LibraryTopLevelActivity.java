@@ -24,13 +24,10 @@ import java.util.LinkedList;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
-import android.widget.ListView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
@@ -44,7 +41,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		final ListAdapter adapter = new ListAdapter(this, new LinkedList<FBTree>());
-		setListAdapter(adapter);
+
 		adapter.add(new TopLevelTree(
 			myResource.getResource(PATH_FAVORITES),
 			R.drawable.ic_list_library_favorites,

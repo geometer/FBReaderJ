@@ -19,22 +19,18 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.List;
-
-import android.app.*;
+import android.app.SearchManager;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.view.*;
-import android.widget.*;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-
-import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
+
+import org.geometerplus.fbreader.library.Book;
 
 abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
 	static final ZLStringOption BookSearchPatternOption =
