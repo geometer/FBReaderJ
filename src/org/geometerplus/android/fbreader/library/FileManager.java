@@ -120,6 +120,8 @@ public final class FileManager extends BaseActivity {
 		final Book book = item.getBook();
 		if (book != null) {
 			showBookInfo(book);
+		} else if (!file.isReadable()) {
+			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
 		} else if (file.isDirectory() || file.isArchive()) {
 			startActivityForResult(
 				new Intent(this, FileManager.class)
@@ -127,8 +129,6 @@ public final class FileManager extends BaseActivity {
 					.putExtra(FILE_MANAGER_PATH, file.getPath()),
 				CHILD_LIST_REQUEST
 			);
-		} else {
-			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
 		}
 	}
 
@@ -170,16 +170,6 @@ public final class FileManager extends BaseActivity {
 
 	private final class SmartFilter implements Runnable {
 		public void run() {
-			if (!myFile.isReadable()) {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
-					}
-				});
-				finish();
-				return;
-			}
-
 			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
 			Collections.sort(children, new FileComparator());
 			for (final ZLFile file : children) {
