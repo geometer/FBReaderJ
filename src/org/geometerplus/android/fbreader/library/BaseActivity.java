@@ -39,6 +39,8 @@ import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 abstract class BaseActivity extends ListActivity {
+	static final String TREE_KEY_KEY = "TreeKey";
+	static final String PARAMETER_KEY = "Parameter";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	private static final int OPEN_BOOK_ITEM_ID = 0;
@@ -49,12 +51,9 @@ abstract class BaseActivity extends ListActivity {
 
 	protected static final int CHILD_LIST_REQUEST = 0;
 	protected static final int BOOK_INFO_REQUEST = 1;
+
 	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
 	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
-
-	static final String TREE_PATH_KEY = "TreePath";
-	private static final String TREE_KEY_KEY = "TreeKey";
-	static final String PARAMETER_KEY = "Parameter";
 
 	static final String PATH_FILE_TREE = "fileTree";
 
@@ -64,7 +63,6 @@ abstract class BaseActivity extends ListActivity {
 	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
 	private Book mySelectedBook;
-	protected String[] myTreePath;
 	protected FBTree.Key myTreeKey;
 
 	@Override
@@ -81,8 +79,6 @@ abstract class BaseActivity extends ListActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		final String treePathString = getIntent().getStringExtra(TREE_PATH_KEY);
-		myTreePath = treePathString != null ? treePathString.split("\000") : new String[0];
 		myTreeKey = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
         
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
@@ -119,7 +115,7 @@ abstract class BaseActivity extends ListActivity {
 				startActivityForResult(
 					new Intent(this, FileManager.class)
 						.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-						.putExtra(TREE_PATH_KEY, PATH_FILE_TREE + '\000' + file.getPath()),
+						.putExtra(TREE_KEY_KEY, tree.getUniqueKey()),
 					CHILD_LIST_REQUEST
 				);
 			}

@@ -43,19 +43,19 @@ public final class FileManager extends BaseActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 
-		if (myTreePath.length == 1) {
+		if (PATH_FILE_TREE.equals(myTreeKey.Id)) {
 			myFile = null;
-			setTitle(myResource.getResource(PATH_FILE_TREE).getValue());
+			setTitle(myResource.getResource(myTreeKey.Id).getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
 		} else {
-			myFile = ZLFile.createFileByPath(myTreePath[1]);
+			myFile = ZLFile.createFileByPath(myTreeKey.Id);
 			if (myFile == null) {
 				finish();
 				return;
 			}
-			setTitle(myTreePath[1]);
+			setTitle(myTreeKey.Id);
 			startUpdate();
 		}
 
