@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
 
+import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.Book;
 
 abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
@@ -73,7 +74,7 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
     }
 
     private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
-        final String label = myResource.getResource("menu").getResource(resourceKey).getValue();
+        final String label = Library.resource().getResource("menu").getResource(resourceKey).getValue();
         final MenuItem item = menu.add(0, index, Menu.NONE, label);
         item.setOnMenuItemClickListener(this);
         item.setIcon(iconId);

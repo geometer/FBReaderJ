@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.library.RootTree;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -43,27 +44,29 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, new LinkedList<FBTree>());
 
+		final RootTree rootFavorites = LibraryInstance.getRootTree(Library.ROOT_FAVORITES);
 		adapter.add(new TopLevelTree(
-			Library.ROOT_FAVORITES,
-			myResource.getResource(Library.ROOT_FAVORITES),
+			rootFavorites,
 			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(LibraryInstance, new StartTreeActivityRunnable(FBTree.Key.createRootKey(Library.ROOT_FAVORITES), null) {
-				public void run() {
-					if (LibraryInstance.favorites().hasChildren()) {
-						super.run();
-					} else {
-						UIUtil.showErrorMessage(LibraryTopLevelActivity.this, "noFavorites");
+			new OpenTreeRunnable(
+				LibraryInstance,
+				new StartTreeActivityRunnable(rootFavorites.getUniqueKey()) {
+					public void run() {
+						if (LibraryInstance.favorites().hasChildren()) {
+							super.run();
+						} else {
+							UIUtil.showErrorMessage(LibraryTopLevelActivity.this, "noFavorites");
+						}
 					}
 				}
-			})
+			)
 		));
 		addTopLevelTree(Library.ROOT_RECENT, R.drawable.ic_list_library_recent);
 		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors);
 		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books);
 		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags);
 		adapter.add(new TopLevelTree(
-			Library.ROOT_FILE_TREE,
-			myResource.getResource(Library.ROOT_FILE_TREE),
+			LibraryInstance.getRootTree(Library.ROOT_FILE_TREE),
 			R.drawable.ic_list_library_folder,
 			new Runnable() {
 				public void run() {
@@ -80,11 +83,11 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	}
 
 	private void addTopLevelTree(String key, int imageId) {
+		final RootTree root = LibraryInstance.getRootTree(key);
 		getListAdapter().add(new TopLevelTree(
-			key,
-			myResource.getResource(key),
+			root,
 			imageId,
-			new OpenTreeRunnable(LibraryInstance, FBTree.Key.createRootKey(key))
+			new OpenTreeRunnable(LibraryInstance, root.getUniqueKey())
 		));
 	}
 
@@ -97,13 +100,11 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	private void setSearchResults(Intent intent) {
 		final ListAdapter adapter = getListAdapter();
 		adapter.remove(mySearchResultsItem);
-		final String pattern = intent.getStringExtra(SearchManager.QUERY);
+		final RootTree searchRoot = LibraryInstance.getRootTree(Library.ROOT_SEARCH_RESULTS);
 		mySearchResultsItem = new TopLevelTree(
-			Library.ROOT_SEARCH_RESULTS,
-			myResource.getResource(Library.ROOT_SEARCH_RESULTS),
-			pattern,
+			searchRoot,
 			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(LibraryInstance, FBTree.Key.createRootKey(Library.ROOT_SEARCH_RESULTS), pattern)
+			new OpenTreeRunnable(LibraryInstance, searchRoot.getUniqueKey())
 		);
 		adapter.add(0, mySearchResultsItem);
 		getListView().invalidateViews();

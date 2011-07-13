@@ -30,11 +30,6 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		if (DatabaseInstance == null || LibraryInstance == null) {
-			finish();
-			return;
-		}
-
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			if (runSearch(intent)) {
@@ -50,20 +45,13 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			return;
 		}
 
-		String title = null;
-		if (myTreeKey.Parent == null) {
-			title = myResource.getResource(myTreeKey.Id).getResource("summary").getValue();
-			final String parameter = intent.getStringExtra(PARAMETER_KEY);
-			if (parameter != null) {
-				title = title.replace("%s", parameter);
-			}
-		} else {
-			title = myTreeKey.Id;
-		}
-		setTitle(title);
-
 		final FBTree tree = LibraryInstance.getLibraryTree(myTreeKey);
 		if (tree != null) {
+			if (myTreeKey.Parent == null) {
+				setTitle(tree.getSecondString());
+			} else {
+				setTitle(tree.getName());
+			}
 			final ListAdapter adapter = new ListAdapter(this, tree.subTrees());
 			setSelection(adapter.getFirstSelectedItemIndex());
 		}

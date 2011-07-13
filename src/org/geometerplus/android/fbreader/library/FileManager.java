@@ -45,7 +45,7 @@ public final class FileManager extends BaseActivity {
 
 		if (Library.ROOT_FILE_TREE.equals(myTreeKey.Id)) {
 			myFile = null;
-			setTitle(myResource.getResource(myTreeKey.Id).getValue());
+			setTitle(Library.resource().getResource(myTreeKey.Id).getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Paths.cardDirectory(), "fileTreeCard");
@@ -105,7 +105,7 @@ public final class FileManager extends BaseActivity {
 	}
 
 	private void addItem(String path, String resourceKey) {
-		final ZLResource resource = myResource.getResource(resourceKey);
+		final ZLResource resource = Library.resource().getResource(resourceKey);
 		getListAdapter().add(new FileItem(
 			ZLFile.createFileByPath(path),
 			resource.getValue(),

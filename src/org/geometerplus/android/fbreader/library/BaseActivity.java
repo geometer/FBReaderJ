@@ -40,7 +40,6 @@ import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 abstract class BaseActivity extends ListActivity {
 	static final String TREE_KEY_KEY = "TreeKey";
-	static final String PARAMETER_KEY = "Parameter";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	private static final int OPEN_BOOK_ITEM_ID = 0;
@@ -58,7 +57,6 @@ abstract class BaseActivity extends ListActivity {
 	static BooksDatabase DatabaseInstance;
 	static Library LibraryInstance;
 
-	protected final ZLResource myResource = ZLResource.resource("libraryView");
 	protected String mySelectedBookPath;
 	private Book mySelectedBook;
 	protected FBTree.Key myTreeKey;
@@ -186,16 +184,17 @@ abstract class BaseActivity extends ListActivity {
 	}
 
 	protected void createBookContextMenu(ContextMenu menu, Book book) {
+		final ZLResource resource = Library.resource();
 		menu.setHeaderTitle(book.getTitle());
-		menu.add(0, OPEN_BOOK_ITEM_ID, 0, myResource.getResource("openBook").getValue());
-		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, myResource.getResource("showBookInfo").getValue());
+		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
+		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
 		if (LibraryInstance.isBookInFavorites(book)) {
-			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, myResource.getResource("removeFromFavorites").getValue());
+			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
-			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, myResource.getResource("addToFavorites").getValue());
+			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
 		}
 		if ((LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
-			menu.add(0, DELETE_BOOK_ITEM_ID, 0, myResource.getResource("deleteBook").getValue());
+			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
         }
 	}
 
@@ -278,19 +277,16 @@ abstract class BaseActivity extends ListActivity {
 
 	protected class StartTreeActivityRunnable implements Runnable {
 		private final FBTree.Key myTreeKey;
-		private final String myParameter;
 
-		public StartTreeActivityRunnable(FBTree.Key key, String parameter) {
+		public StartTreeActivityRunnable(FBTree.Key key) {
 			myTreeKey = key;
-			myParameter = parameter;
 		}
 
 		public void run() {
 			startActivityForResult(
 				new Intent(BaseActivity.this, LibraryTreeActivity.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(TREE_KEY_KEY, myTreeKey)
-					.putExtra(PARAMETER_KEY, myParameter),
+					.putExtra(TREE_KEY_KEY, myTreeKey),
 				CHILD_LIST_REQUEST
 			);
 		}
@@ -301,11 +297,7 @@ abstract class BaseActivity extends ListActivity {
 		private final Runnable myPostRunnable;
 
 		public OpenTreeRunnable(Library library, FBTree.Key key) {
-			this(library, key, null);
-		}
-
-		public OpenTreeRunnable(Library library, FBTree.Key key, String parameter) {
-			this(library, new StartTreeActivityRunnable(key, parameter));
+			this(library, new StartTreeActivityRunnable(key));
 		}
 
 		public OpenTreeRunnable(Library library, Runnable postRunnable) {

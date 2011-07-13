@@ -26,6 +26,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
@@ -43,9 +44,13 @@ public final class Library {
 	public static final String ROOT_BY_TAG = "byTag";
 	public static final String ROOT_FILE_TREE = "fileTree";
 
+	public static ZLResource resource() {
+		return ZLResource.resource("libraryView");
+	}
+
 	private final List<Book> myBooks = new LinkedList<Book>();
 	private final Set<Book> myExternalBooks = new HashSet<Book>();
-	private final Map<String,LibraryTree> myRootTrees = new HashMap<String,LibraryTree>();
+	private final Map<String,RootTree> myRootTrees = new HashMap<String,RootTree>();
 
 	private volatile int myState = STATE_NOT_INITIALIZED;
 	private volatile boolean myInterrupted = false;
@@ -53,8 +58,8 @@ public final class Library {
 	public Library() {
 	}
 
-	private LibraryTree getRootTree(String id) {
-		LibraryTree root = myRootTrees.get(id);
+	public RootTree getRootTree(String id) {
+		RootTree root = myRootTrees.get(id);
 		if (root == null) {
 			root = new RootTree(id);
 			myRootTrees.put(id, root);
@@ -425,7 +430,7 @@ public final class Library {
 
 	public LibraryTree searchBooks(String pattern) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		final RootTree newSearchResults = new RootTree(ROOT_SEARCH_RESULTS);
+		final RootTree newSearchResults = new SearchResultsTree(ROOT_SEARCH_RESULTS, pattern);
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();
 			for (Book book : myBooks) {

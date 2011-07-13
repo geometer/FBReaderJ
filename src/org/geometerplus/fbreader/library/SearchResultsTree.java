@@ -19,29 +19,16 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
+class SearchResultsTree extends RootTree {
+	private final String myPattern;
 
-public class RootTree extends LibraryTree {
-	private final String myId;
-	private final ZLResource myResource;
-
-	RootTree(String id) {
-		myId = id;
-		myResource = Library.resource().getResource(myId);
-	}
-
-	@Override
-	public String getName() {
-		return myResource.getValue();
+	SearchResultsTree(String id, String pattern) {
+		super(id);
+		myPattern = pattern != null ? pattern : "";
 	}
 
 	@Override
 	public String getSummary() {
-		return myResource.getResource("summary").getValue();
-	}
-
-	@Override
-	protected String getStringId() {
-		return myId;
+		return super.getSummary().replace("%s", myPattern);
 	}
 }
