@@ -39,9 +39,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FileManager extends BaseActivity {
-	public static String FILE_MANAGER_PATH = "FileManagerPath";
-	
-	private String myPath;
+	private ZLFile myFile;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -55,15 +53,21 @@ public final class FileManager extends BaseActivity {
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 		setListAdapter(adapter);
 
-		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
+		final String[] path = getIntent().getStringExtra(TREE_PATH_KEY).split("\000");
 
-		if (myPath == null) {
-			setTitle(myResource.getResource("fileTree").getValue());
+		if (path.length == 1) {
+			myFile = null;
+			setTitle(myResource.getResource(PATH_FILE_TREE).getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
 		} else {
-			setTitle(myPath);
+			myFile = ZLFile.createFileByPath(path[1]);
+			if (myFile == null) {
+				finish();
+				return;
+			}
+			setTitle(path[1]);
 			startUpdate();
 		}
 
@@ -72,16 +76,25 @@ public final class FileManager extends BaseActivity {
 	}
 
 	private void startUpdate() {
-		final ZLFile file = ZLFile.createFileByPath(myPath);
-		if (file != null) {
-			new Thread(new SmartFilter(file)).start();
-		}
+		new Thread(new Runnable() {
+			public void run() {
+				final ArrayList<FBTree> children = new ArrayList<FBTree>();
+				for (ZLFile file : myFile.children()) {
+					if (file.isDirectory() || file.isArchive() ||
+						PluginCollection.Instance().getPlugin(file) != null) {
+						children.add(new FileItem(file));
+					}
+				}
+				Collections.sort(children);
+				getListAdapter().addAll(children);
+			}
+		}).start();
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
-			if (myPath != null) {
+			if (myFile != null) {
 				getListAdapter().clear();
 				startUpdate();
 			}
@@ -91,17 +104,6 @@ public final class FileManager extends BaseActivity {
 			getListView().invalidateViews();
 		}
 	} 
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FileItem fileItem = (FileItem)getListAdapter().getItem(position);
-		final Book book = fileItem.getBook(); 
-		if (book != null) {
-			return onContextItemSelected(item.getItemId(), book);
-		}
-		return super.onContextItemSelected(item);
-	}
 
 	@Override
 	protected void deleteBook(Book book, int mode) {
@@ -117,15 +119,15 @@ public final class FileManager extends BaseActivity {
 		final Book book = item.getBook();
 		if (book != null) {
 			showBookInfo(book);
+		} else if (!file.isReadable()) {
+			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
 		} else if (file.isDirectory() || file.isArchive()) {
 			startActivityForResult(
 				new Intent(this, FileManager.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(FILE_MANAGER_PATH, file.getPath()),
+					.putExtra(TREE_PATH_KEY, PATH_FILE_TREE + '\000' + file.getPath()),
 				CHILD_LIST_REQUEST
 			);
-		} else {
-			UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
 		}
 	}
 
@@ -163,44 +165,5 @@ public final class FileManager extends BaseActivity {
 			return false;
 		}
 		return mySelectedBookPath.startsWith(prefix);
-	}
-
-	private final class SmartFilter implements Runnable {
-		private final ZLFile myFile;
-
-		public SmartFilter(ZLFile file) {
-			myFile = file;
-		}
-
-		public void run() {
-			if (!myFile.isReadable()) {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						UIUtil.showErrorMessage(FileManager.this, "permissionDenied");
-					}
-				});
-				finish();
-				return;
-			}
-
-			final ArrayList<ZLFile> children = new ArrayList<ZLFile>(myFile.children());
-			Collections.sort(children, new FileComparator());
-			for (final ZLFile file : children) {
-				if (file.isDirectory() || file.isArchive() ||
-					PluginCollection.Instance().getPlugin(file) != null) {
-					getListAdapter().add(new FileItem(file));
-				}
-			}
-		}
-	}
-
-	private static class FileComparator implements Comparator<ZLFile> {
-		public int compare(ZLFile f0, ZLFile f1) {
-			final boolean isDir = f0.isDirectory();
-			if (isDir != f1.isDirectory()) {
-				return isDir ? -1 : 1;
-			} 
-			return f0.getShortName().compareToIgnoreCase(f1.getShortName());
-		}
 	}
 }
