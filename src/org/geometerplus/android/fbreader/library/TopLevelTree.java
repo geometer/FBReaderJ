@@ -26,25 +26,32 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 class TopLevelTree extends FBTree implements ZLAndroidTree {
+	private final String myId;
 	private final ZLResource myResource;
 	private final String myParameter;
 	private final int myCoverResourceId;
 	private final Runnable myAction;
 
-	public TopLevelTree(ZLResource resource, String parameter, int coverResourceId, Runnable action) {
+	public TopLevelTree(String id, ZLResource resource, String parameter, int coverResourceId, Runnable action) {
+		myId = id;
 		myResource = resource;
 		myParameter = parameter;
 		myCoverResourceId = coverResourceId;
 		myAction = action;
 	}
 
-	public TopLevelTree(ZLResource resource, int coverResourceId, Runnable action) {
-		this(resource, null, coverResourceId, action);
+	public TopLevelTree(String id, ZLResource resource, int coverResourceId, Runnable action) {
+		this(id, resource, null, coverResourceId, action);
 	}
 
 	@Override
 	public String getName() {
 		return myResource.getValue();
+	}
+
+	@Override
+	protected String getStringId() {
+		return myId;
 	}
 
 	@Override

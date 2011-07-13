@@ -27,7 +27,6 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
-	private Key myKey;
 	private Map<String,Object> myUserData;
 
 	protected NetworkTree() {
@@ -102,25 +101,6 @@ public abstract class NetworkTree extends FBTree {
 	public final synchronized Object getUserData(String key) {
 		return myUserData != null ? myUserData.get(key) : null;
 	}
-
-	/**
-	 * Returns unique identifier which can be used in NetworkView methods
-	 * @return unique Key instance
-	 */
-	public final Key getUniqueKey() {
-		if (myKey == null) {
-			final Key parentKey = Parent instanceof NetworkTree ?
-				((NetworkTree)Parent).getUniqueKey() : null;
-			myKey = createKey(parentKey, getStringId());
-		}
-		return myKey;
-	}
-
-	/**
-	 * Returns id used as a part of unique key above. This string must be not null
-     * and be unique for all children of same tree
-	 */
-	protected abstract String getStringId();
 
 	public void removeItems(Set<NetworkItem> items) {
 		if (items.isEmpty() || subTrees().isEmpty()) {

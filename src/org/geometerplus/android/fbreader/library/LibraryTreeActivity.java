@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.library.Library;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
 	@Override
@@ -62,17 +63,17 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		setTitle(title);
 
 		FBTree tree = null;
-		if (PATH_RECENT.equals(myTreePath[0])) {
+		if (Library.ROOT_RECENT.equals(myTreePath[0])) {
 			tree = LibraryInstance.recentBooks();
-		} else if (PATH_SEARCH_RESULTS.equals(myTreePath[0])) {
+		} else if (Library.ROOT_SEARCH_RESULTS.equals(myTreePath[0])) {
 			tree = LibraryInstance.searchResults();
-		} else if (PATH_BY_AUTHOR.equals(myTreePath[0])) {
+		} else if (Library.ROOT_BY_AUTHOR.equals(myTreePath[0])) {
 			tree = LibraryInstance.byAuthor();
-		} else if (PATH_BY_TITLE.equals(myTreePath[0])) {
+		} else if (Library.ROOT_BY_TITLE.equals(myTreePath[0])) {
 			tree = LibraryInstance.byTitle();
-		} else if (PATH_BY_TAG.equals(myTreePath[0])) {
+		} else if (Library.ROOT_BY_TAG.equals(myTreePath[0])) {
 			tree = LibraryInstance.byTag();
-		} else if (PATH_FAVORITES.equals(myTreePath[0])) {
+		} else if (Library.ROOT_FAVORITES.equals(myTreePath[0])) {
 			tree = LibraryInstance.favorites();
 		}
         

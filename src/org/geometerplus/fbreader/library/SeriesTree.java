@@ -32,6 +32,11 @@ public final class SeriesTree extends LibraryTree {
 		return Series;
 	}
 
+	@Override
+	protected String getStringId() {
+		return getName();
+	}
+
 	BookTree createBookInSeriesSubTree(Book book) {
 		return new BookInSeriesTree(this, book);
 	}

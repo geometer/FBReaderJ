@@ -20,7 +20,19 @@
 package org.geometerplus.fbreader.library;
 
 final class RootTree extends LibraryTree {
+	private final String myId;
+
+	RootTree(String id) {
+		myId = id;
+	}
+
+	@Override
 	public String getName() {
 		return null;
+	}
+
+	@Override
+	protected String getStringId() {
+		return myId;
 	}
 }

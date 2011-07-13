@@ -64,16 +64,30 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		}
 	}
 
-	protected static Key createKey(Key parent, String id) {
-		return new Key(parent, id);
-	}
-
 	private ZLImage myCover;
 	private boolean myCoverRequested;
+	private Key myKey;
 
 	protected FBTree() {
 		super();
 	}
+
+	/**
+	 * Returns unique identifier which can be used in NetworkView methods
+	 * @return unique Key instance
+	 */
+	public final Key getUniqueKey() {
+		if (myKey == null) {
+			myKey = new Key(Parent != null ? Parent.getUniqueKey() : null, getStringId());
+		}
+		return myKey;
+	}
+
+	/**
+	 * Returns id used as a part of unique key above. This string must be not null
+     * and be unique for all children of same tree
+	 */
+	protected abstract String getStringId();
 
 	protected FBTree(FBTree parent) {
 		super(parent);

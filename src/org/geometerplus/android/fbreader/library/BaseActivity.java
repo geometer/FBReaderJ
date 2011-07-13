@@ -55,12 +55,6 @@ abstract class BaseActivity extends ListActivity {
 	static final String TREE_PATH_KEY = "TreePath";
 	static final String PARAMETER_KEY = "Parameter";
 
-	static final String PATH_FAVORITES = "favorites";
-	static final String PATH_SEARCH_RESULTS = "searchResults";
-	static final String PATH_RECENT = "recent";
-	static final String PATH_BY_AUTHOR = "byAuthor";
-	static final String PATH_BY_TITLE = "byTitle";
-	static final String PATH_BY_TAG = "byTag";
 	static final String PATH_FILE_TREE = "fileTree";
 
 	static BooksDatabase DatabaseInstance;

@@ -41,6 +41,11 @@ public class AuthorTree extends LibraryTree {
 				ZLResource.resource("library").getResource("unknownAuthor").getValue();
 	}
 
+	@Override
+	protected String getStringId() {
+		return getName();
+	}
+
 	protected String getSortKey() {
 		return (Author != null) ? Author.SortKey : null;
 	}
