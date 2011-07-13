@@ -41,7 +41,7 @@ import org.geometerplus.android.util.UIUtil;
 public final class FileManager extends BaseActivity {
 	public static String FILE_MANAGER_PATH = "FileManagerPath";
 	
-	private String myPath;
+	private ZLFile myFile;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -55,15 +55,21 @@ public final class FileManager extends BaseActivity {
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 		setListAdapter(adapter);
 
-		myPath = getIntent().getStringExtra(FILE_MANAGER_PATH);
+		final String path = getIntent().getStringExtra(FILE_MANAGER_PATH);
 
-		if (myPath == null) {
+		if (path == null) {
+			myFile = null;
 			setTitle(myResource.getResource("fileTree").getValue());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Environment.getExternalStorageDirectory().getPath(), "fileTreeCard");
 		} else {
-			setTitle(myPath);
+			myFile = ZLFile.createFileByPath(path);
+			if (myFile == null) {
+				finish();
+				return;
+			}
+			setTitle(path);
 			startUpdate();
 		}
 
@@ -72,16 +78,13 @@ public final class FileManager extends BaseActivity {
 	}
 
 	private void startUpdate() {
-		final ZLFile file = ZLFile.createFileByPath(myPath);
-		if (file != null) {
-			new Thread(new SmartFilter(file)).start();
-		}
+		new Thread(new SmartFilter()).start();
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
-			if (myPath != null) {
+			if (myFile != null) {
 				getListAdapter().clear();
 				startUpdate();
 			}
@@ -166,12 +169,6 @@ public final class FileManager extends BaseActivity {
 	}
 
 	private final class SmartFilter implements Runnable {
-		private final ZLFile myFile;
-
-		public SmartFilter(ZLFile file) {
-			myFile = file;
-		}
-
 		public void run() {
 			if (!myFile.isReadable()) {
 				runOnUiThread(new Runnable() {
