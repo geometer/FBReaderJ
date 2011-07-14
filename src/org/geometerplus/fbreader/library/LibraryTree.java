@@ -40,6 +40,10 @@ public abstract class LibraryTree extends FBTree {
 		return null;
 	}
 
+	public boolean containsBook(Book book) {
+		return false;
+	}
+
 	TagTree createTagSubTree(Tag tag) {
 		return new TagTree(this, tag);
 	}
@@ -54,15 +58,6 @@ public abstract class LibraryTree extends FBTree {
 
 	BookTree createBookSubTree(Book book, boolean showAuthors) {
 		return new BookTree(this, book, showAuthors);
-	}
-
-	public boolean containsBook(Book book) {
-		for (FBTree tree : this) {
-			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(book)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public boolean removeBook(Book book) {

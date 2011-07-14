@@ -45,4 +45,22 @@ public final class TagTree extends LibraryTree {
 	protected String getSortKey() {
 		return (Tag != null) ? Tag.Name : null;
 	}
+
+	@Override
+	public boolean containsBook(Book book) {
+		if (book == null) {
+			return false;
+		}
+		if (Tag == null) {
+			return book.tags().isEmpty();
+		}
+		for (Tag t : book.tags()) {
+			for (; t != null; t = t.Parent) {
+				if (t == Tag) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

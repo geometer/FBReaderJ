@@ -171,27 +171,17 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 			return false;
 		}
 
+		if (((LibraryTree)tree).containsBook(mySelectedBook)) {
+			return true;
+		}
+
 		final Book book = ((LibraryTree)tree).getBook();
 		if (book != null) {
 			return mySelectedBook.equals(book);
-		} else if (tree instanceof AuthorTree) {
-			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
-		} else if (tree instanceof TitleTree) {
-			final String title = mySelectedBook.getTitle();
-			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
 		} else if (tree instanceof SeriesTree) {
 			final SeriesInfo info = mySelectedBook.getSeriesInfo();
 			final String series = ((SeriesTree)tree).Series;
 			return info != null && series != null && series.equals(info.Name);
-		} else if (tree instanceof TagTree) {
-			final Tag tag = ((TagTree)tree).Tag;
-			for (Tag t : mySelectedBook.tags()) {
-				for (; t != null; t = t.Parent) {
-					if (t == tag) {
-						return true;
-					}
-				}
-			}
 		} else if (tree instanceof FileTree) {
 			final FileTree fileTree = (FileTree)tree;
 			if (!fileTree.isSelectable()) {

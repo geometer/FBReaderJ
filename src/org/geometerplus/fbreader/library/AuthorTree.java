@@ -49,4 +49,9 @@ public class AuthorTree extends LibraryTree {
 	protected String getSortKey() {
 		return (Author != null) ? Author.SortKey : null;
 	}
+
+	@Override
+	public boolean containsBook(Book book) {
+		return book != null && book.authors().contains(Author);
+	}
 }

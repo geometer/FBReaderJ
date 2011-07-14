@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.Paths;
@@ -436,18 +437,28 @@ public final class Library {
 	}
 
 	public boolean isBookInFavorites(Book book) {
+		if (book == null) {
+			return false;
+		}
 		waitForState(STATE_FULLY_INITIALIZED);
-		return getRootTree(ROOT_FAVORITES).containsBook(book);
+		final LibraryTree rootFavorites = getRootTree(ROOT_FAVORITES);
+		for (FBTree tree : rootFavorites.subTrees()) {
+			if (tree instanceof BookTree && book.equals(((BookTree)tree).Book)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void addBookToFavorites(Book book) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		final LibraryTree rootFavorites = getRootTree(ROOT_FAVORITES);
-		if (!rootFavorites.containsBook(book)) {
-			rootFavorites.createBookSubTree(book, true);
-			rootFavorites.sortAllChildren();
-			BooksDatabase.Instance().addToFavorites(book.getId());
+		if (isBookInFavorites(book)) {
+			return;
 		}
+		final LibraryTree rootFavorites = getRootTree(ROOT_FAVORITES);
+		rootFavorites.createBookSubTree(book, true);
+		rootFavorites.sortAllChildren();
+		BooksDatabase.Instance().addToFavorites(book.getId());
 	}
 
 	public void removeBookFromFavorites(Book book) {
