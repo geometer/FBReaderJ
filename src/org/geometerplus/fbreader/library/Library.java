@@ -321,7 +321,7 @@ public final class Library {
 					}
 				}
 			}
-			doGroupTitlesByFirstLetter = letterSet.size() > myBooks.size() + 4;
+			doGroupTitlesByFirstLetter = myBooks.size() > letterSet.size() * 5 / 4;
 		}
 		if (doGroupTitlesByFirstLetter) {
 			final HashMap<Character,TitleTree> letterTrees = new HashMap<Character,TitleTree>();
