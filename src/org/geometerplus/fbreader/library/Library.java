@@ -46,7 +46,7 @@ public final class Library {
 	public static final String ROOT_FILE_TREE = "fileTree";
 
 	public static ZLResource resource() {
-		return ZLResource.resource("libraryView");
+		return ZLResource.resource("library");
 	}
 
 	private final List<Book> myBooks = new LinkedList<Book>();

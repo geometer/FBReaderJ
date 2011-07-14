@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Galician FBReaderJ resources, by Miguel Anxo Bouzada mbouzada[at]gmail.com -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Autor descoñecido"/>
 		<node name="booksWithNoTags" value="Libros sen etiqueta"/>
 		<node name="demo" value="mostra"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Por autor">
 			<node name="summary" value="Libros ordenados por autor"/>
 		</node>

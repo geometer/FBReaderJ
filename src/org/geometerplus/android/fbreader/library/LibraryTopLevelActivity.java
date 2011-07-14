@@ -38,7 +38,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		new ListAdapter(this, LibraryInstance.getRootTree().subTrees());
+		new ListAdapter(this, myCurrentTree.subTrees());
 
 		onNewIntent(getIntent());
 	}
@@ -50,7 +50,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	}
 
 	private void setSearchResults() {
-		final List<FBTree> trees = LibraryInstance.getRootTree().subTrees();
+		final List<FBTree> trees = myCurrentTree.subTrees();
 		getListAdapter().replaceAll(trees);
 		getListView().invalidateViews();
 		new OpenTreeRunnable(trees.get(0)).run();

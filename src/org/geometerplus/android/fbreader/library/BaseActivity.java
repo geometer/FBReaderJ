@@ -81,13 +81,10 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		}
 
 		final FBTree.Key key = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
-		if (key != null) {
-			myCurrentTree = LibraryInstance.getLibraryTree(key);
-			setTitle(myCurrentTree.getTreeTitle());
-		} else {
-			myCurrentTree = null;
-			requestWindowFeature(Window.FEATURE_NO_TITLE);
-		}
+		myCurrentTree = key != null
+			? LibraryInstance.getLibraryTree(key)
+			: LibraryInstance.getRootTree();
+		setTitle(myCurrentTree.getTreeTitle());
         
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;

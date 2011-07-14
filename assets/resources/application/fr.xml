@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French FBReaderJ resources; Initial work: Sébastien Rodriguez Maintainer: Mathias Monnerville <mathias@monnerville.com> -->
+<!-- French FBReaderJ resources; Initial work: Sébastien Rodriguez; Maintainer: Mathias Monnerville <mathias@monnerville.com> -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Auteur inconnu"/>
 		<node name="booksWithNoTags" value="Livres sans étiquettes"/>
 		<node name="demo" value="l'extrait"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Par auteur">
 			<node name="summary" value="Livres triés par auteur"/>
 		</node>

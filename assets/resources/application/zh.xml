@@ -1,12 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Chinese FBReaderJ resources, by http://shucang.com/ -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="佚名" />
 		<node name="booksWithNoTags" value="未归类" />
 		<node name="demo" value="试读本" />
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="作者">
 			<node name="summary" value="按作者排序" />
 		</node>

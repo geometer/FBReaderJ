@@ -23,7 +23,6 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -143,7 +142,7 @@ public class Book {
 		}
 		final String demoPathPrefix = Paths.BooksDirectoryOption().getValue() + java.io.File.separator + "Demos" + java.io.File.separator;
 		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = ZLResource.resource("library").getResource("demo").getValue();
+			final String demoTag = Library.resource().getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");
 			addTag(demoTag);
 		}

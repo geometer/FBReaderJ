@@ -4,12 +4,10 @@
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Ingolf Kübler 2011/07/03 -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
 		<node name="booksWithNoTags" value="Bücher ohne Schlagwörter"/>
 		<node name="demo" value="Leseprobe"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Nach Autoren gruppiert">
 			<node name="summary" value="Bücher nach Autoren auswählen"/>
 		</node>
