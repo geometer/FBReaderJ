@@ -40,7 +40,7 @@ public class ListAdapter extends BaseAdapter {
 
 	ListAdapter(BaseActivity activity, List<FBTree> items) {
 		myActivity = activity;
-		myItems = Collections.synchronizedList(items);
+		myItems = Collections.synchronizedList(new ArrayList<FBTree>(items));
 		activity.setListAdapter(this);
 	}
 

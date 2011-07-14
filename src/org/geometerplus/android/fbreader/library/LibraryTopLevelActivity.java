@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.LinkedList;
+import java.util.Collections;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -40,7 +40,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		final ListAdapter adapter = new ListAdapter(this, new LinkedList<FBTree>());
+		final ListAdapter adapter = new ListAdapter(this, Collections.<FBTree>emptyList());
 
 		addTopLevelTree(Library.ROOT_FAVORITES, R.drawable.ic_list_library_favorites, LibraryTreeActivity.class);
 		addTopLevelTree(Library.ROOT_RECENT, R.drawable.ic_list_library_recent, LibraryTreeActivity.class);

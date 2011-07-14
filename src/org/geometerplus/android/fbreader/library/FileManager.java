@@ -19,22 +19,18 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 
 import org.geometerplus.fbreader.library.FileTree;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.tree.FBTree;
 
 public final class FileManager extends BaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
-		adapter.replaceAll(myCurrentTree.subTrees());
+		final ListAdapter adapter = new ListAdapter(this, myCurrentTree.subTrees());
 		setSelection(getListAdapter().getFirstSelectedItemIndex());
 
 		getListView().setTextFilterEnabled(true);

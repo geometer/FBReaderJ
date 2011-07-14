@@ -64,6 +64,13 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		}
 	}
 
+	public static enum Status {
+		READY_TO_OPEN,
+		WAIT_FOR_OPEN,
+		ALWAYS_RELOAD_BEFORE_OPENING,
+		CANNOT_OPEN
+	};
+
 	private ZLImage myCover;
 	private boolean myCoverRequested;
 	private Key myKey;
@@ -178,5 +185,16 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 			myCoverRequested = true;
 		}
 		return myCover;
+	}
+
+	public Status getOpeningStatus() {
+		return Status.READY_TO_OPEN;
+	}
+
+	public String getOpeningStatusMessage() {
+		return null;
+	}
+
+	public void waitForOpening() {
 	}
 }

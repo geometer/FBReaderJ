@@ -319,11 +319,11 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 	}
 
 	protected class OpenTreeRunnable implements Runnable {
-		private final LibraryTree myTree;
+		private final FBTree myTree;
 		private final Class<?> myActivityClass;
 
 		public OpenTreeRunnable(FBTree tree, Class<?> activityClass) {
-			myTree = (LibraryTree)tree;
+			myTree = tree;
 			myActivityClass = activityClass;
 		}
 
