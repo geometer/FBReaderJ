@@ -22,9 +22,6 @@ package org.geometerplus.android.fbreader.library;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.FileTree;
-
 public class LibraryTreeActivity extends LibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -49,42 +46,5 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 		setSelection(adapter.getFirstSelectedItemIndex());
 
 		getListView().setTextFilterEnabled(true);
-	}
-
-	@Override
-	protected void deleteBook(Book book, int mode) {
-		super.deleteBook(book, mode);
-		if (myCurrentTree instanceof FileTree) {
-			getListAdapter().remove(new FileTree((FileTree)myCurrentTree, book.File));
-		} else {
-			getListAdapter().replaceAll(myCurrentTree.subTrees());
-		}
-		getListView().invalidateViews();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
-		if (myCurrentTree instanceof FileTree) {
-			if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
-				if (myCurrentTree instanceof FileTree) {
-					startUpdate();
-				}
-				getListView().invalidateViews();
-				setResult(RESULT_DO_INVALIDATE_VIEWS);
-			} else if (requestCode == BOOK_INFO_REQUEST) {
-				getListView().invalidateViews();
-			}
-		} else {
-			super.onActivityResult(requestCode, returnCode, intent);
-		}
-	} 
-
-	private void startUpdate() {
-		new Thread(new Runnable() {
-			public void run() {
-				myCurrentTree.waitForOpening();
-				getListAdapter().replaceAll(myCurrentTree.subTrees());
-			}
-		}).start();
 	}
 }

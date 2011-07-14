@@ -70,12 +70,7 @@ public final class Library {
 	}
 
 	private FirstLevelTree getFirstLevelTree(String key) {
-		for (FBTree tree : myRootTree.subTrees()) {
-			if (key.equals(tree.getUniqueKey().Id)) {
-				return (FirstLevelTree)tree;
-			}
-		}
-		return null;
+		return (FirstLevelTree)myRootTree.getSubTree(key);
 	}
 
 	public LibraryTree getLibraryTree(LibraryTree.Key key) {

@@ -41,9 +41,23 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
+			if (myCurrentTree instanceof FileTree) {
+				startUpdate();
+			}
 			getListView().invalidateViews();
 			setResult(RESULT_DO_INVALIDATE_VIEWS);
+		} else if (requestCode == BOOK_INFO_REQUEST) {
+			getListView().invalidateViews();
 		}
+	} 
+
+	private void startUpdate() {
+		new Thread(new Runnable() {
+			public void run() {
+				myCurrentTree.waitForOpening();
+				getListAdapter().replaceAll(myCurrentTree.subTrees());
+			}
+		}).start();
 	}
 
 	@Override
@@ -126,5 +140,16 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 		}
 
 		return R.drawable.ic_list_library_books;
+	}
+
+	@Override
+	protected void deleteBook(Book book, int mode) {
+		super.deleteBook(book, mode);
+		if (myCurrentTree instanceof FileTree) {
+			getListAdapter().remove(new FileTree((FileTree)myCurrentTree, book.File));
+		} else {
+			getListAdapter().replaceAll(myCurrentTree.subTrees());
+		}
+		getListView().invalidateViews();
 	}
 }
