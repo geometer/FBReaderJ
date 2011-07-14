@@ -389,26 +389,6 @@ public final class Library {
 		}
 	}
 
-	public LibraryTree byAuthor() {
-		waitForState(STATE_FULLY_INITIALIZED);
-		return getRootTree(ROOT_BY_AUTHOR);
-	}
-
-	public LibraryTree byTitle() {
-		waitForState(STATE_FULLY_INITIALIZED);
-		return getRootTree(ROOT_BY_TITLE);
-	}
-
-	public LibraryTree byTag() {
-		waitForState(STATE_FULLY_INITIALIZED);
-		return getRootTree(ROOT_BY_TAG);
-	}
-
-	public LibraryTree recentBooks() {
-		waitForState(STATE_FULLY_INITIALIZED);
-		return getRootTree(ROOT_RECENT);
-	}
-
 	public static Book getRecentBook() {
 		List<Long> recentIds = BooksDatabase.Instance().loadRecentBookIds();
 		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
