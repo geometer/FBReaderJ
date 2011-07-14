@@ -21,8 +21,6 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
-//import org.geometerplus.zlibrary.core.tree.ZLTree;
-
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
@@ -32,6 +30,10 @@ public abstract class LibraryTree extends FBTree {
 
 	protected LibraryTree(LibraryTree parent) {
 		super(parent);
+	}
+
+	public String getTreeTitle() {
+		return getName();
 	}
 
 	TagTree createTagSubTree(Tag tag) {

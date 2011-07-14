@@ -30,10 +30,6 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	public static class Key implements Serializable {
 		private static final long serialVersionUID = -6500763093522202052L;
 
-		public static Key createRootKey(String id) {
-			return new Key(null, id);
-		}
-
 		public final Key Parent;
 		public final String Id;
 

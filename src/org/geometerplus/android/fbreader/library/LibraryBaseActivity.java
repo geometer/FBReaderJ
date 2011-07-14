@@ -95,5 +95,6 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
 		getListView().invalidateViews();
+		getListAdapter().notifyDataSetChanged();
 	}
 }

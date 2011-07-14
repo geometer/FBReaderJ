@@ -28,7 +28,7 @@ class SearchResultsTree extends RootTree {
 	}
 
 	@Override
-	public String getSummary() {
+	protected String getSummary() {
 		return super.getSummary().replace("%s", myPattern);
 	}
 }

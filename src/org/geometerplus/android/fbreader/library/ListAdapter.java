@@ -33,9 +33,9 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.library.*;
-
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BookTree;
+import org.geometerplus.fbreader.library.FileTree;
 
 public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private final BaseActivity myActivity;
@@ -120,7 +120,7 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		return -1;
 	}
 
-	protected Bitmap getCoverBitmap(ZLImage cover) {
+	private Bitmap getCoverBitmap(ZLImage cover) {
 		if (cover == null) {
 			return null;
 		}
@@ -148,7 +148,7 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		}
 	};
 
-	protected ImageView getCoverView(View parent) {
+	private ImageView getCoverView(View parent) {
 		if (myCoverWidth == -1) {
 			parent.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 			myCoverHeight = parent.getMeasuredHeight();
@@ -184,24 +184,11 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		}
 
 		final ImageView coverView = getCoverView(view);
-
-		if (tree instanceof ZLAndroidTree) {
-			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
+		final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
+		if (coverBitmap != null) {
+			coverView.setImageBitmap(coverBitmap);
 		} else {
-			final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
-			if (coverBitmap != null) {
-				coverView.setImageBitmap(coverBitmap);
-			} else if (tree instanceof AuthorTree) {
-				coverView.setImageResource(R.drawable.ic_list_library_author);
-			} else if (tree instanceof TagTree) {
-				coverView.setImageResource(R.drawable.ic_list_library_tag);
-			} else if (tree instanceof BookTree) {
-				coverView.setImageResource(R.drawable.ic_list_library_book);
-			} else if (tree instanceof FileItem) {
-				coverView.setImageResource(((FileItem)tree).getIcon());
-			} else {
-				coverView.setImageResource(R.drawable.ic_list_library_books);
-			}
+			coverView.setImageResource(myActivity.getCoverResourceId(tree));
 		}
 
 		return view;
@@ -212,8 +199,8 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		final FBTree tree = getItem(position);
 		if (tree instanceof BookTree) {
 			myActivity.createBookContextMenu(menu, ((BookTree)tree).Book);
-		} else if (tree instanceof FileItem) {
-			final Book book = ((FileItem)getItem(position)).getBook();
+		} else if (tree instanceof FileTree) {
+			final Book book = ((FileTree)getItem(position)).getBook();
 			if (book != null) {
 				myActivity.createBookContextMenu(menu, book); 
 			}

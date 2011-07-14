@@ -17,33 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.library;
+package org.geometerplus.fbreader.library;
 
-import java.util.*;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
-class FileItem extends FBTree {
+public class FileTree extends LibraryTree {
 	private final ZLFile myFile;
 	private final String myName;
 	private final String mySummary;
 	private final boolean myIsSelectable;
 
-	public FileItem(ZLFile file, String name, String summary) {
+	public FileTree(LibraryTree parent, ZLFile file, String name, String summary) {
+		super(parent);
 		myFile = file;
 		myName = name;
 		mySummary = summary;
 		myIsSelectable = false;
 	}
 
-	public FileItem(ZLFile file) {
+	public FileTree(FileTree parent, ZLFile file) {
+		super(parent);
 		if (file.isArchive() && file.getPath().endsWith(".fb2.zip")) {
 			final List<ZLFile> children = file.children();
 			if (children.size() == 1) {
@@ -69,6 +68,11 @@ class FileItem extends FBTree {
 	}
 
 	@Override
+	public String getTreeTitle() {
+		return myFile.getPath();
+	}
+
+	@Override
 	protected String getStringId() {
 		return myFile.getPath();
 	}
@@ -91,22 +95,6 @@ class FileItem extends FBTree {
 		return myIsSelectable;
 	}
 
-	public int getIcon() {
-		if (getBook() != null) {
-			return R.drawable.ic_list_library_book;
-		} else if (myFile.isDirectory()) {
-			if (myFile.isReadable()) {
-				return R.drawable.ic_list_library_folder;
-			} else {
-				return R.drawable.ic_list_library_permission_denied;
-			}
-		} else if (myFile.isArchive()) {
-			return R.drawable.ic_list_library_zip;
-		} else {
-			return R.drawable.ic_list_library_permission_denied;
-		}
-	}
-
 	@Override
 	public ZLImage createCover() {
 		return Library.getCover(myFile);
@@ -120,24 +108,38 @@ class FileItem extends FBTree {
 		return Book.getByFile(myFile);
 	}
 
+	public void update() {
+		if (getBook() != null) {
+			return;
+		}
+		clear();
+		for (ZLFile file : myFile.children()) {
+			if (file.isDirectory() || file.isArchive() ||
+				PluginCollection.Instance().getPlugin(file) != null) {
+				new FileTree(this, file);
+			}
+		}
+		sortAllChildren();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
 			return true;
 		}
-		if (!(o instanceof FileItem)) {
+		if (!(o instanceof FileTree)) {
 			return true;
 		}
-		return myFile.equals(((FileItem)o).myFile);
+		return myFile.equals(((FileTree)o).myFile);
 	}
 
 	@Override
 	public int compareTo(FBTree tree) {
-		final FileItem item = (FileItem)tree;
+		final FileTree fileTree = (FileTree)tree;
 		final boolean isDir = myFile.isDirectory();
-		if (isDir != item.myFile.isDirectory()) {
+		if (isDir != fileTree.myFile.isDirectory()) {
 			return isDir ? -1 : 1;
 		} 
-		return getName().compareToIgnoreCase(item.getName());
+		return getName().compareToIgnoreCase(fileTree.getName());
 	}
 }

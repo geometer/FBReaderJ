@@ -22,9 +22,6 @@ package org.geometerplus.android.fbreader.library;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.library.Library;
-
 public class LibraryTreeActivity extends LibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -45,15 +42,7 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			return;
 		}
 
-		final FBTree tree = LibraryInstance.getLibraryTree(myTreeKey);
-		if (tree != null) {
-			if (myTreeKey.Parent == null) {
-				setTitle(tree.getSecondString());
-			} else {
-				setTitle(tree.getName());
-			}
-			final ListAdapter adapter = new ListAdapter(this, tree.subTrees());
-			setSelection(adapter.getFirstSelectedItemIndex());
-		}
+		final ListAdapter adapter = new ListAdapter(this, myCurrentTree.subTrees());
+		setSelection(adapter.getFirstSelectedItemIndex());
 	}
 }

@@ -19,6 +19,9 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +31,8 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
@@ -39,6 +44,16 @@ import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 abstract class BaseActivity extends ListActivity {
+	private static class FBTreeInfo {
+		final int CoverResourceId;
+		final Runnable Action;
+
+		FBTreeInfo(int coverResourceId, Runnable action) {
+			CoverResourceId = coverResourceId;
+			Action = action;
+		}
+	};
+
 	static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
@@ -59,7 +74,9 @@ abstract class BaseActivity extends ListActivity {
 
 	protected String mySelectedBookPath;
 	private Book mySelectedBook;
-	protected FBTree.Key myTreeKey;
+	protected LibraryTree myCurrentTree;
+
+	private final Map<FBTree,FBTreeInfo> myInfoMap = new HashMap<FBTree,FBTreeInfo>();
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -75,7 +92,14 @@ abstract class BaseActivity extends ListActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		myTreeKey = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
+		requestWindowFeature(Window.FEATURE_ACTION_BAR);
+		final FBTree.Key key = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
+		if (key != null) {
+			myCurrentTree = LibraryInstance.getLibraryTree(key);
+			setTitle(myCurrentTree.getTreeTitle());
+		} else {
+			myCurrentTree = null;
+		}
         
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;
@@ -94,15 +118,48 @@ abstract class BaseActivity extends ListActivity {
 		return (ListAdapter)super.getListAdapter();
 	}
 
+	protected void addFBTreeWithInfo(FBTree tree, int coverResourceId, Runnable action) {
+		getListAdapter().add(tree);
+		myInfoMap.put(tree, new FBTreeInfo(coverResourceId, action));
+	}
+
+	int getCoverResourceId(FBTree tree) {
+		final FBTreeInfo info = myInfoMap.get(tree);
+		if (info != null && info.CoverResourceId != -1) {
+			return info.CoverResourceId;
+		} else if (tree instanceof FileTree) {
+			final FileTree fileTree = (FileTree)tree;
+			if (fileTree.getBook() != null) {
+				return R.drawable.ic_list_library_book;
+			} else if (fileTree.getFile().isDirectory()) {
+				if (fileTree.getFile().isReadable()) {
+					return R.drawable.ic_list_library_folder;
+				} else {
+					return R.drawable.ic_list_library_permission_denied;
+				}
+			} else if (fileTree.getFile().isArchive()) {
+				return R.drawable.ic_list_library_zip;
+			} else {
+				return R.drawable.ic_list_library_permission_denied;
+			}
+		} else if (tree instanceof AuthorTree) {
+			return R.drawable.ic_list_library_author;
+		} else if (tree instanceof TagTree) {
+			return R.drawable.ic_list_library_tag;
+		} else if (tree instanceof BookTree) {
+			return R.drawable.ic_list_library_book;
+		} else {
+			return R.drawable.ic_list_library_books;
+		}
+	}
+
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
 		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof TopLevelTree) {
-			((TopLevelTree)tree).run();
-		} else if (tree instanceof FileItem) {
-			final FileItem item = (FileItem)tree;
-			final ZLFile file = item.getFile();
-			final Book book = item.getBook();
+		if (tree instanceof FileTree) {
+			final FileTree fileTree = (FileTree)tree;
+			final ZLFile file = fileTree.getFile();
+			final Book book = fileTree.getBook();
 			if (book != null) {
 				showBookInfo(book);
 			} else if (!file.isReadable()) {
@@ -118,7 +175,12 @@ abstract class BaseActivity extends ListActivity {
 		} else if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {
-			new OpenTreeRunnable(LibraryInstance, tree.getUniqueKey()).run();
+			final FBTreeInfo info = myInfoMap.get(tree);
+			if (info != null && info.Action != null) {
+				info.Action.run();
+			} else {
+				new OpenTreeRunnable(tree).run();
+			}
 		}
 	}
 
@@ -147,12 +209,12 @@ abstract class BaseActivity extends ListActivity {
 					}
 				}
 			}
-		} else if (tree instanceof FileItem) {
-			final FileItem item = (FileItem)tree;
-			if (!item.isSelectable()) {
+		} else if (tree instanceof FileTree) {
+			final FileTree fileTree = (FileTree)tree;
+			if (!fileTree.isSelectable()) {
 				return false;
 			}
-			final ZLFile file = item.getFile();
+			final ZLFile file = fileTree.getFile();
 			final String path = file.getPath();
 			if (mySelectedBookPath.equals(path)) {
 				return true;
@@ -244,8 +306,8 @@ abstract class BaseActivity extends ListActivity {
 		final FBTree tree = getListAdapter().getItem(position);
 		if (tree instanceof BookTree) {
 			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
-		} else if (tree instanceof FileItem) {
-			final Book book = ((FileItem)tree).getBook(); 
+		} else if (tree instanceof FileTree) {
+			final Book book = ((FileTree)tree).getBook(); 
 			if (book != null) {
 				return onContextItemSelected(item.getItemId(), book);
 			}
@@ -275,51 +337,40 @@ abstract class BaseActivity extends ListActivity {
 		return false;
 	}
 
-	protected class StartTreeActivityRunnable implements Runnable {
-		private final FBTree.Key myTreeKey;
+	protected class OpenTreeRunnable implements Runnable {
+		private final FBTree myTree;
 
-		public StartTreeActivityRunnable(FBTree.Key key) {
-			myTreeKey = key;
+		public OpenTreeRunnable(FBTree tree) {
+			myTree = tree;
 		}
 
 		public void run() {
+			if (LibraryInstance.hasState(Library.STATE_FULLY_INITIALIZED)) {
+				openTree();
+			} else {
+				UIUtil.runWithMessage(
+					BaseActivity.this, "loadingBookList",
+					new Runnable() {
+						public void run() {
+							LibraryInstance.waitForState(Library.STATE_FULLY_INITIALIZED);
+						}
+					},
+					new Runnable() {
+						public void run() {
+							openTree();
+						}
+					}
+				);
+			}
+		}
+
+		protected void openTree() {
 			startActivityForResult(
 				new Intent(BaseActivity.this, LibraryTreeActivity.class)
 					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(TREE_KEY_KEY, myTreeKey),
+					.putExtra(TREE_KEY_KEY, myTree.getUniqueKey()),
 				CHILD_LIST_REQUEST
 			);
-		}
-	}
-
-	protected class OpenTreeRunnable implements Runnable {
-		private final Library myLibrary;
-		private final Runnable myPostRunnable;
-
-		public OpenTreeRunnable(Library library, FBTree.Key key) {
-			this(library, new StartTreeActivityRunnable(key));
-		}
-
-		public OpenTreeRunnable(Library library, Runnable postRunnable) {
-			myLibrary = library;
-			myPostRunnable = postRunnable;
-		}
-
-		public void run() {
-			if (myLibrary == null) {
-				return;
-			}
-			if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
-				myPostRunnable.run();
-			} else {
-				UIUtil.runWithMessage(BaseActivity.this, "loadingBookList",
-				new Runnable() {
-					public void run() {
-						myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
-					}
-				},
-				myPostRunnable);
-			}
 		}
 	}
 }
