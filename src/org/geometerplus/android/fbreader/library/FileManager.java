@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.library;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import android.content.Intent;
 import android.os.Bundle;
