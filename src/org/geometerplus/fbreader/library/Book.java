@@ -300,10 +300,10 @@ public class Book {
 	}
 
 	boolean matches(String pattern) {
-		if ((myTitle != null) && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
+		if (myTitle != null && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
 			return true;
 		}
-		if ((mySeriesInfo != null) && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Name, pattern)) {
+		if (mySeriesInfo != null && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Name, pattern)) {
 			return true;
 		}
 		if (myAuthors != null) {
@@ -319,6 +319,9 @@ public class Book {
 					return true;
 				}
 			}
+		}
+		if (ZLMiscUtil.matchesIgnoreCase(File.getLongName(), pattern)) {
+			return true;
 		}
 		return false;
 	}
