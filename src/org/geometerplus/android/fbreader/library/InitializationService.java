@@ -43,7 +43,7 @@ public class InitializationService extends Service {
 		final Thread libraryInitializer = new Thread("LibraryInitializer") {
 			public void run() {
 				try {
-					LibraryBaseActivity.LibraryInstance.synchronize();
+					LibraryActivity.LibraryInstance.synchronize();
 				} finally {
 					handler.sendMessage(handler.obtainMessage(0));
 				}

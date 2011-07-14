@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.library.FirstLevelTree;
 
 import org.geometerplus.android.util.UIUtil;
 
-public class LibraryTopLevelActivity extends LibraryBaseActivity {
+public class LibraryTopLevelActivity extends LibraryActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);

@@ -34,7 +34,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
-abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
+abstract class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 
