@@ -127,6 +127,21 @@ abstract class BaseActivity extends ListActivity {
 		final FBTreeInfo info = myInfoMap.get(tree);
 		if (info != null && info.CoverResourceId != -1) {
 			return info.CoverResourceId;
+		} else if (tree instanceof FileItem) {
+			final FileItem item = (FileItem)tree;
+			if (item.getBook() != null) {
+				return R.drawable.ic_list_library_book;
+			} else if (item.getFile().isDirectory()) {
+				if (item.getFile().isReadable()) {
+					return R.drawable.ic_list_library_folder;
+				} else {
+					return R.drawable.ic_list_library_permission_denied;
+				}
+			} else if (item.getFile().isArchive()) {
+				return R.drawable.ic_list_library_zip;
+			} else {
+				return R.drawable.ic_list_library_permission_denied;
+			}
 		} else if (tree instanceof AuthorTree) {
 			return R.drawable.ic_list_library_author;
 		} else if (tree instanceof TagTree) {

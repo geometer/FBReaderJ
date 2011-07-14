@@ -36,8 +36,6 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
 
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
-
 public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private final BaseActivity myActivity;
 	private final List<FBTree> myItems;
@@ -188,8 +186,6 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
 		if (coverBitmap != null) {
 			coverView.setImageBitmap(coverBitmap);
-		} else if (tree instanceof ZLAndroidTree) {
-			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
 		} else {
 			coverView.setImageResource(myActivity.getCoverResourceId(tree));
 		}
