@@ -47,7 +47,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors, LibraryTreeActivity.class);
 		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books, LibraryTreeActivity.class);
 		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags, LibraryTreeActivity.class);
-		addTopLevelTree(Library.ROOT_FILE_TREE, R.drawable.ic_list_library_folder, FileManager.class);
+		addTopLevelTree(Library.ROOT_FILE_TREE, R.drawable.ic_list_library_folder, LibraryTreeActivity.class);
 
 		onNewIntent(getIntent());
 	}

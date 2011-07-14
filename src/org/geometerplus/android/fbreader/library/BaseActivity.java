@@ -155,7 +155,7 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		if (book != null) {
 			showBookInfo(book);
 		} else if (tree instanceof FileTree) {
-			new OpenTreeRunnable(tree, FileManager.class).run();
+			new OpenTreeRunnable(tree, LibraryTreeActivity.class).run();
 		} else {
 			final FBTreeInfo info = myInfoMap.get(tree);
 			if (info != null && info.Action != null) {
