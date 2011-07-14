@@ -34,7 +34,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-public class ListAdapter extends BaseAdapter {
+public abstract class ListAdapter extends BaseAdapter {
 	private final BaseActivity myActivity;
 	private final List<FBTree> myItems;
 
@@ -42,6 +42,10 @@ public class ListAdapter extends BaseAdapter {
 		myActivity = activity;
 		myItems = Collections.synchronizedList(new ArrayList<FBTree>(items));
 		activity.setListAdapter(this);
+	}
+
+	protected BaseActivity getActivity() {
+		return myActivity;
 	}
 
 	public void remove(final FBTree item) {
@@ -111,79 +115,5 @@ public class ListAdapter extends BaseAdapter {
 			}
 		}
 		return -1;
-	}
-
-	private Bitmap getCoverBitmap(ZLImage cover) {
-		if (cover == null) {
-			return null;
-		}
-
-		ZLAndroidImageData data = null;
-		final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-		if (cover instanceof ZLLoadableImage) {
-			final ZLLoadableImage img = (ZLLoadableImage)cover;
-			if (img.isSynchronized()) {
-				data = mgr.getImageData(img);
-			} else {
-				img.startSynchronization(myInvalidateViewsRunnable);
-			}
-		} else {
-			data = mgr.getImageData(cover);
-		}
-		return data != null ? data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight) : null;
-	}
-
-	private int myCoverWidth = -1;
-	private int myCoverHeight = -1;
-	private final Runnable myInvalidateViewsRunnable = new Runnable() {
-		public void run() {
-			myActivity.getListView().invalidateViews();
-		}
-	};
-
-	private ImageView getCoverView(View parent) {
-		if (myCoverWidth == -1) {
-			parent.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			myCoverHeight = parent.getMeasuredHeight();
-			myCoverWidth = myCoverHeight * 15 / 32;
-			parent.requestLayout();
-		}
-
-		final ImageView coverView = (ImageView)parent.findViewById(R.id.library_tree_item_icon);
-		coverView.getLayoutParams().width = myCoverWidth;
-		coverView.getLayoutParams().height = myCoverHeight;
-		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		coverView.requestLayout();
-		return coverView;
-	}
-
-	private View createView(View convertView, ViewGroup parent, FBTree item) {
-		final View view = (convertView != null) ?  convertView :
-			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
-
-        ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(item.getName());
-		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(item.getSecondString());
-		return view;
-	}
-
-	@Override
-	public View getView(int position, View convertView, final ViewGroup parent) {
-		final FBTree tree = getItem(position);
-		final View view = createView(convertView, parent, tree);
-		if (myActivity.isTreeSelected(tree)) {
-			view.setBackgroundColor(0xff555555);
-		} else {
-			view.setBackgroundColor(0);
-		}
-
-		final ImageView coverView = getCoverView(view);
-		final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
-		if (coverBitmap != null) {
-			coverView.setImageBitmap(coverBitmap);
-		} else {
-			coverView.setImageResource(myActivity.getCoverResourceId(tree));
-		}
-
-		return view;
 	}
 }

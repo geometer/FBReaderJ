@@ -83,7 +83,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			}
 		}
 
-		final ListAdapter adapter = new ListAdapter(this, getCurrentTree().subTrees());
+		final ListAdapter adapter = new LibraryListAdapter(this, getCurrentTree().subTrees());
 		setSelection(adapter.getFirstSelectedItemIndex());
 		getListView().setTextFilterEnabled(true);
 	}
