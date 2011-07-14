@@ -29,7 +29,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.library.FileTree;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.tree.FBTree;
