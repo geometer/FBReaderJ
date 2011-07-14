@@ -30,7 +30,9 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.tree.FBTree;
 
-class FileItem extends FBTree {
+import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
+
+class FileItem extends FBTree implements ZLAndroidTree {
 	private final ZLFile myFile;
 	private final String myName;
 	private final String mySummary;
@@ -91,7 +93,7 @@ class FileItem extends FBTree {
 		return myIsSelectable;
 	}
 
-	public int getIcon() {
+	public int getCoverResourceId() {
 		if (getBook() != null) {
 			return R.drawable.ic_list_library_book;
 		} else if (myFile.isDirectory()) {

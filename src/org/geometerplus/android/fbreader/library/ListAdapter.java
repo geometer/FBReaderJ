@@ -185,24 +185,20 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 
 		final ImageView coverView = getCoverView(view);
 
-		if (tree instanceof ZLAndroidTree) {
-			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
-		} else {
 			final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
 			if (coverBitmap != null) {
 				coverView.setImageBitmap(coverBitmap);
+			} else if (tree instanceof ZLAndroidTree) {
+				coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
 			} else if (tree instanceof AuthorTree) {
 				coverView.setImageResource(R.drawable.ic_list_library_author);
 			} else if (tree instanceof TagTree) {
 				coverView.setImageResource(R.drawable.ic_list_library_tag);
 			} else if (tree instanceof BookTree) {
 				coverView.setImageResource(R.drawable.ic_list_library_book);
-			} else if (tree instanceof FileItem) {
-				coverView.setImageResource(((FileItem)tree).getIcon());
 			} else {
 				coverView.setImageResource(R.drawable.ic_list_library_books);
 			}
-		}
 
 		return view;
 	}
