@@ -31,7 +31,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public final class FileManager extends BaseActivity {
@@ -63,17 +62,11 @@ public final class FileManager extends BaseActivity {
 	}
 
 	private void startUpdate() {
+		final FileItem parent = new FileItem(myFile);
 		new Thread(new Runnable() {
 			public void run() {
-				final ArrayList<FBTree> children = new ArrayList<FBTree>();
-				for (ZLFile file : myFile.children()) {
-					if (file.isDirectory() || file.isArchive() ||
-						PluginCollection.Instance().getPlugin(file) != null) {
-						children.add(new FileItem(file));
-					}
-				}
-				Collections.sort(children);
-				getListAdapter().addAll(children);
+				parent.update();
+				getListAdapter().addAll(parent.subTrees());
 				runOnUiThread(new Runnable() {
 					public void run() {
 						setSelection(getListAdapter().getFirstSelectedItemIndex());

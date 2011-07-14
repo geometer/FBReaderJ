@@ -28,11 +28,13 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.library.LibraryTree;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
-class FileItem extends FBTree implements ZLAndroidTree {
+class FileItem extends LibraryTree implements ZLAndroidTree {
 	private final ZLFile myFile;
 	private final String myName;
 	private final String mySummary;
@@ -46,6 +48,11 @@ class FileItem extends FBTree implements ZLAndroidTree {
 	}
 
 	public FileItem(ZLFile file) {
+		this(null, file);
+	}
+
+	private FileItem(FileItem parent, ZLFile file) {
+		super(parent);
 		if (file.isArchive() && file.getPath().endsWith(".fb2.zip")) {
 			final List<ZLFile> children = file.children();
 			if (children.size() == 1) {
@@ -120,6 +127,19 @@ class FileItem extends FBTree implements ZLAndroidTree {
 
 	public Book getBook() {
 		return Book.getByFile(myFile);
+	}
+
+	void update() {
+		if (getBook() != null) {
+			return;
+		}
+		for (ZLFile file : myFile.children()) {
+			if (file.isDirectory() || file.isArchive() ||
+				PluginCollection.Instance().getPlugin(file) != null) {
+				new FileItem(this, file);
+			}
+		}
+		sortAllChildren();
 	}
 
 	@Override
