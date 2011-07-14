@@ -27,6 +27,7 @@ public abstract class LibraryTree extends FBTree {
 	public static enum Status {
 		READY_TO_OPEN,
 		WAIT_FOR_OPEN,
+		ALWAYS_RELOAD_BEFORE_OPENING,
 		CANNOT_OPEN
 	};
 

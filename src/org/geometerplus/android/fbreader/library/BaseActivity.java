@@ -328,28 +328,39 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		}
 
 		public void run() {
-			if (myTree.getOpeningStatus() == LibraryTree.Status.WAIT_FOR_OPEN) {
-				UIUtil.runWithMessage(
-					BaseActivity.this, myTree.getOpeningStatusMessage(),
-					new Runnable() {
-						public void run() {
-							myTree.waitForOpening();
-						}
-					},
-					new Runnable() {
-						public void run() {
-							openTree();
-						}
+			switch (myTree.getOpeningStatus()) {
+				case WAIT_FOR_OPEN:
+				case ALWAYS_RELOAD_BEFORE_OPENING:
+					final String messageKey = myTree.getOpeningStatusMessage();
+					if (messageKey != null) {
+						UIUtil.runWithMessage(
+							BaseActivity.this, messageKey,
+							new Runnable() {
+								public void run() {
+									myTree.waitForOpening();
+								}
+							},
+							new Runnable() {
+								public void run() {
+									openTree();
+								}
+							}
+						);
+					} else {
+						myTree.waitForOpening();
+						openTree();
 					}
-				);
-			} else {
-				openTree();
+					break;
+				default:
+					openTree();
+					break;
 			}
 		}
 
 		protected void openTree() {
 			switch (myTree.getOpeningStatus()) {
 				case READY_TO_OPEN:
+				case ALWAYS_RELOAD_BEFORE_OPENING:
 					startActivityForResult(
 						new Intent(BaseActivity.this, myActivityClass)
 							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)

@@ -114,12 +114,12 @@ public class FileTree extends LibraryTree {
 		if (!myFile.isReadable()) {
 			return Status.CANNOT_OPEN;
 		}
-		return Status.READY_TO_OPEN;
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
 	}
 
 	@Override
 	public String getOpeningStatusMessage() {
-		return "permissionDenied";
+		return getOpeningStatus() == Status.CANNOT_OPEN ? "permissionDenied" : null;
 	}
 
 	@Override
