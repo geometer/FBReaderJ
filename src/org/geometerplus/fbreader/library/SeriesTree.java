@@ -40,4 +40,13 @@ public final class SeriesTree extends LibraryTree {
 	BookTree createBookInSeriesSubTree(Book book) {
 		return new BookInSeriesTree(this, book);
 	}
+
+	@Override
+	public boolean containsBook(Book book) {
+		if (book == null) {
+			return false;
+		}
+		final SeriesInfo info = book.getSeriesInfo();
+		return info != null && Series.equals(info.Name);
+	}
 }

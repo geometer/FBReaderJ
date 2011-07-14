@@ -69,4 +69,9 @@ public class RootTree extends LibraryTree {
 	public void waitForOpening() {
 		myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
 	}
+
+	@Override
+	public boolean isSelectable() {
+		return false;
+	}
 }

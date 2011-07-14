@@ -167,41 +167,8 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 	}
 
 	boolean isTreeSelected(FBTree tree) {
-		if (mySelectedBook == null) {
-			return false;
-		}
-
-		if (((LibraryTree)tree).containsBook(mySelectedBook)) {
-			return true;
-		}
-
-		final Book book = ((LibraryTree)tree).getBook();
-		if (book != null) {
-			return mySelectedBook.equals(book);
-		} else if (tree instanceof SeriesTree) {
-			final SeriesInfo info = mySelectedBook.getSeriesInfo();
-			final String series = ((SeriesTree)tree).Series;
-			return info != null && series != null && series.equals(info.Name);
-		} else if (tree instanceof FileTree) {
-			final FileTree fileTree = (FileTree)tree;
-			if (!fileTree.isSelectable()) {
-				return false;
-			}
-			final ZLFile file = fileTree.getFile();
-			String prefix = file.getPath();
-			if (file.isDirectory()) {
-				if (!prefix.endsWith("/")) {
-					prefix += '/';
-				}
-			} else if (file.isArchive()) {
-				prefix += ':';
-			} else {
-				return false;
-			}
-			return mySelectedBookPath.startsWith(prefix);
-		}
-
-		return false;
+		final LibraryTree lTree = (LibraryTree)tree;
+		return lTree.isSelectable() && lTree.containsBook(mySelectedBook);
 	}
 
 	protected void openBook(Book book) {

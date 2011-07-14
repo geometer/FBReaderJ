@@ -91,6 +91,7 @@ public class FileTree extends LibraryTree {
 		return null;
 	}
 
+	@Override
 	public boolean isSelectable() {
 		return myIsSelectable;
 	}
@@ -107,6 +108,24 @@ public class FileTree extends LibraryTree {
 	@Override
 	public Book getBook() {
 		return Book.getByFile(myFile);
+	}
+
+	@Override
+	public boolean containsBook(Book book) {
+		if (book == null) {
+			return false;
+		}
+		if (myFile.isDirectory()) {
+			String prefix = myFile.getPath();
+			if (!prefix.endsWith("/")) {
+				prefix += "/";
+			}
+			return book.File.getPath().startsWith(prefix);
+		} else if (myFile.isArchive()) {
+			return book.File.getPath().startsWith(myFile.getPath() + ":");
+		} else {
+			return book.equals(getBook());
+		}
 	}
 
 	@Override

@@ -69,4 +69,9 @@ public class BookTree extends LibraryTree {
 	protected ZLImage createCover() {
 		return Library.getCover(Book.File);
 	}
+
+	@Override
+	public boolean containsBook(Book book) {
+		return book != null && book.equals(Book);
+	}
 }

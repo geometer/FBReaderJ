@@ -44,6 +44,10 @@ public abstract class LibraryTree extends FBTree {
 		return false;
 	}
 
+	public boolean isSelectable() {
+		return true;
+	}
+
 	TagTree createTagSubTree(Tag tag) {
 		return new TagTree(this, tag);
 	}
