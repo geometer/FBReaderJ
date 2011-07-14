@@ -43,11 +43,10 @@ public final class FileManager extends BaseActivity {
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 
 		myFileItem = LibraryInstance.getLibraryTree(myTreeKey);
+		setTitle(myFileItem.getTreeTitle());
 		if (myFileItem instanceof FileItem) {
-			setTitle(myTreeKey.Id);
 			startUpdate();
 		} else {
-			setTitle(myFileItem.getName());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Paths.cardDirectory(), "fileTreeCard");

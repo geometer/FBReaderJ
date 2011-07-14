@@ -36,7 +36,12 @@ public class RootTree extends LibraryTree {
 	}
 
 	@Override
-	public String getSummary() {
+	public String getTreeTitle() {
+		return getSecondString();
+	}
+
+	@Override
+	protected String getSummary() {
 		return myResource.getResource("summary").getValue();
 	}
 

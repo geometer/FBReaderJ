@@ -75,6 +75,11 @@ class FileItem extends LibraryTree implements ZLAndroidTree {
 	}
 
 	@Override
+	public String getTreeTitle() {
+		return myFile.getPath();
+	}
+
+	@Override
 	protected String getStringId() {
 		return myFile.getPath();
 	}
