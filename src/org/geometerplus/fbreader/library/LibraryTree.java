@@ -24,6 +24,12 @@ import java.util.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
+	public static enum Status {
+		READY_TO_OPEN,
+		WAIT_FOR_OPEN,
+		CANNOT_OPEN
+	};
+
 	protected LibraryTree() {
 		super();
 	}
@@ -34,6 +40,17 @@ public abstract class LibraryTree extends FBTree {
 
 	public String getTreeTitle() {
 		return getName();
+	}
+
+	public Status getOpeningStatus() {
+		return Status.READY_TO_OPEN;
+	}
+
+	public String getOpeningStatusMessage() {
+		return null;
+	}
+
+	public void waitForOpening() {
 	}
 
 	public Book getBook() {

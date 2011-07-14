@@ -22,8 +22,8 @@ package org.geometerplus.fbreader.library;
 class SearchResultsTree extends RootTree {
 	private final String myPattern;
 
-	SearchResultsTree(String id, String pattern) {
-		super(id);
+	SearchResultsTree(Library library, String id, String pattern) {
+		super(library, id);
 		myPattern = pattern != null ? pattern : "";
 	}
 

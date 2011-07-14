@@ -42,46 +42,19 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, new LinkedList<FBTree>());
 
-		final RootTree rootFavorites = LibraryInstance.getRootTree(Library.ROOT_FAVORITES);
-		addFBTreeWithInfo(
-			rootFavorites,
-			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(rootFavorites) {
-				@Override
-				protected void openTree() {
-					if (LibraryInstance.favorites().hasChildren()) {
-						super.openTree();
-					} else {
-						UIUtil.showErrorMessage(LibraryTopLevelActivity.this, "noFavorites");
-					}
-				}
-			}
-		);
-		addTopLevelTree(Library.ROOT_RECENT, R.drawable.ic_list_library_recent);
-		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors);
-		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books);
-		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags);
-		final RootTree fileTreeRoot = LibraryInstance.getRootTree(Library.ROOT_FILE_TREE);
-		addFBTreeWithInfo(
-			fileTreeRoot,
-			R.drawable.ic_list_library_folder,
-			new Runnable() {
-				public void run() {
-					startActivity(
-						new Intent(LibraryTopLevelActivity.this, FileManager.class)
-							.putExtra(TREE_KEY_KEY, fileTreeRoot.getUniqueKey())
-							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					);
-				}
-			}
-		);
+		addTopLevelTree(Library.ROOT_FAVORITES, R.drawable.ic_list_library_favorites, LibraryTreeActivity.class);
+		addTopLevelTree(Library.ROOT_RECENT, R.drawable.ic_list_library_recent, LibraryTreeActivity.class);
+		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors, LibraryTreeActivity.class);
+		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books, LibraryTreeActivity.class);
+		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags, LibraryTreeActivity.class);
+		addTopLevelTree(Library.ROOT_FILE_TREE, R.drawable.ic_list_library_folder, FileManager.class);
 
 		onNewIntent(getIntent());
 	}
 
-	private void addTopLevelTree(String key, int imageId) {
+	private void addTopLevelTree(String key, int imageId, Class<?> activityClass) {
 		final RootTree root = LibraryInstance.getRootTree(key);
-		addFBTreeWithInfo(root, imageId, new OpenTreeRunnable(root));
+		addFBTreeWithInfo(root, imageId, new OpenTreeRunnable(root, activityClass));
 	}
 
 	@Override
@@ -97,7 +70,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		adapter.add(0, mySearchResultsItem);
 		getListView().invalidateViews();
 		adapter.notifyDataSetChanged();
-		new OpenTreeRunnable(mySearchResultsItem).run();
+		new OpenTreeRunnable(mySearchResultsItem, LibraryTreeActivity.class).run();
 	}
 
 	public void onNewIntent(Intent intent) {

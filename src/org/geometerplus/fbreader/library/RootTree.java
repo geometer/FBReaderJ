@@ -22,10 +22,12 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class RootTree extends LibraryTree {
+	private final Library myLibrary;
 	private final String myId;
 	private final ZLResource myResource;
 
-	RootTree(String id) {
+	RootTree(Library library, String id) {
+		myLibrary = library;
 		myId = id;
 		myResource = Library.resource().getResource(myId);
 	}
@@ -48,5 +50,23 @@ public class RootTree extends LibraryTree {
 	@Override
 	protected String getStringId() {
 		return myId;
+	}
+
+	@Override
+	public Status getOpeningStatus() {
+		return
+			myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)
+				? Status.READY_TO_OPEN
+				: Status.WAIT_FOR_OPEN;
+	}
+
+	@Override
+	public String getOpeningStatusMessage() {
+		return "loadingBookList";
+	}
+
+	@Override
+	public void waitForOpening() {
+		myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
 	}
 }

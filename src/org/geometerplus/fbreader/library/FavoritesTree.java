@@ -20,35 +20,24 @@
 package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.fbreader.Paths;
-
-public class FileRootTree extends RootTree {
-	FileRootTree(Library library, String id) {
+public class FavoritesTree extends RootTree {
+	FavoritesTree(Library library, String id) {
 		super(library, id);
-		addChild(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
-		addChild("/", "fileTreeRoot");
-		addChild(Paths.cardDirectory(), "fileTreeCard");
-	}
-
-	private void addChild(String path, String resourceKey) {
-		final ZLResource resource = Library.resource().getResource(resourceKey);
-		new FileTree(
-			this,
-			ZLFile.createFileByPath(path),
-			resource.getValue(),
-			resource.getResource("summary").getValue()
-		);
-	}
-
-	@Override
-	public String getTreeTitle() {
-		return getName();
 	}
 
 	@Override
 	public Status getOpeningStatus() {
-		return Status.READY_TO_OPEN;
+		final Status status = super.getOpeningStatus();
+		if (status == Status.READY_TO_OPEN && !hasChildren()) {
+			return Status.CANNOT_OPEN;
+		}
+		return status;
+	}
+
+	@Override
+	public String getOpeningStatusMessage() {
+		return getOpeningStatus() == Status.CANNOT_OPEN
+			? "noFavorites" : super.getOpeningStatusMessage();
 	}
 }

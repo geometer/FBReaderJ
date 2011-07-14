@@ -175,7 +175,7 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 			if (info != null && info.Action != null) {
 				info.Action.run();
 			} else {
-				new OpenTreeRunnable(tree).run();
+				new OpenTreeRunnable(tree, LibraryTreeActivity.class).run();
 			}
 		}
 	}
@@ -333,21 +333,21 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 	}
 
 	protected class OpenTreeRunnable implements Runnable {
-		private final FBTree myTree;
+		private final LibraryTree myTree;
+		private final Class<?> myActivityClass;
 
-		public OpenTreeRunnable(FBTree tree) {
-			myTree = tree;
+		public OpenTreeRunnable(FBTree tree, Class<?> activityClass) {
+			myTree = (LibraryTree)tree;
+			myActivityClass = activityClass;
 		}
 
 		public void run() {
-			if (LibraryInstance.hasState(Library.STATE_FULLY_INITIALIZED)) {
-				openTree();
-			} else {
+			if (myTree.getOpeningStatus() == LibraryTree.Status.WAIT_FOR_OPEN) {
 				UIUtil.runWithMessage(
-					BaseActivity.this, "loadingBookList",
+					BaseActivity.this, myTree.getOpeningStatusMessage(),
 					new Runnable() {
 						public void run() {
-							LibraryInstance.waitForState(Library.STATE_FULLY_INITIALIZED);
+							myTree.waitForOpening();
 						}
 					},
 					new Runnable() {
@@ -356,16 +356,25 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 						}
 					}
 				);
+			} else {
+				openTree();
 			}
 		}
 
 		protected void openTree() {
-			startActivityForResult(
-				new Intent(BaseActivity.this, LibraryTreeActivity.class)
-					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(TREE_KEY_KEY, myTree.getUniqueKey()),
-				CHILD_LIST_REQUEST
-			);
+			switch (myTree.getOpeningStatus()) {
+				case READY_TO_OPEN:
+					startActivityForResult(
+						new Intent(BaseActivity.this, myActivityClass)
+							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+							.putExtra(TREE_KEY_KEY, myTree.getUniqueKey()),
+						CHILD_LIST_REQUEST
+					);
+					break;
+				case CANNOT_OPEN:
+					UIUtil.showErrorMessage(BaseActivity.this, myTree.getOpeningStatusMessage());
+					break;
+			}
 		}
 	}
 }

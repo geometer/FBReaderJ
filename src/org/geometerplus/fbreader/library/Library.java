@@ -33,8 +33,8 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.Paths;
 
 public final class Library {
-	public static final int STATE_NOT_INITIALIZED = 0;
-	public static final int STATE_FULLY_INITIALIZED = 1;
+	static final int STATE_NOT_INITIALIZED = 0;
+	static final int STATE_FULLY_INITIALIZED = 1;
 
 	public static final String ROOT_FAVORITES = "favorites";
 	public static final String ROOT_SEARCH_RESULTS = "searchResults";
@@ -56,13 +56,14 @@ public final class Library {
 	private volatile boolean myInterrupted = false;
 
 	public Library() {
-		myRootTrees.put(ROOT_FILE_TREE, new FileRootTree(ROOT_FILE_TREE));
+		myRootTrees.put(ROOT_FAVORITES, new FavoritesTree(this, ROOT_FAVORITES));
+		myRootTrees.put(ROOT_FILE_TREE, new FileRootTree(this, ROOT_FILE_TREE));
 	}
 
 	public RootTree getRootTree(String id) {
 		RootTree root = myRootTrees.get(id);
 		if (root == null) {
-			root = new RootTree(id);
+			root = new RootTree(this, id);
 			myRootTrees.put(id, root);
 		}
 		return root;
@@ -79,11 +80,11 @@ public final class Library {
 		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
 	}
 
-	public boolean hasState(int state) {
+	boolean hasState(int state) {
 		return myState >= state || myInterrupted;
 	}
 
-	public void waitForState(int state) {
+	void waitForState(int state) {
 		while (myState < state && !myInterrupted) {
 			synchronized(this) {
 				if (myState < state && !myInterrupted) {
@@ -400,18 +401,13 @@ public final class Library {
 		return (recentIds.size() > 1) ? Book.getById(recentIds.get(1)) : null;
 	}
 
-	public LibraryTree favorites() {
-		waitForState(STATE_FULLY_INITIALIZED);
-		return getRootTree(ROOT_FAVORITES);
-	}
-
 	public LibraryTree searchResults() {
 		return getRootTree(ROOT_SEARCH_RESULTS);
 	}
 
 	public LibraryTree searchBooks(String pattern) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		final RootTree newSearchResults = new SearchResultsTree(ROOT_SEARCH_RESULTS, pattern);
+		final RootTree newSearchResults = new SearchResultsTree(this, ROOT_SEARCH_RESULTS, pattern);
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();
 			for (Book book : myBooks) {
