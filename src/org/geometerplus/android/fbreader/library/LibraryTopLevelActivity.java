@@ -48,10 +48,10 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		adapter.add(new TopLevelTree(
 			rootFavorites,
 			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(LibraryInstance, rootFavorites) {
+			new OpenTreeRunnable(rootFavorites) {
 				@Override
 				protected void openTree() {
-					if (LibraryInstance.favorites().hasChildren()) {
+					if (rootFavorites.hasChildren()) {
 						super.openTree();
 					} else {
 						UIUtil.showErrorMessage(LibraryTopLevelActivity.this, "noFavorites");
@@ -63,14 +63,15 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors);
 		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books);
 		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags);
+		final RootTree fileTreeRoot = LibraryInstance.getRootTree(Library.ROOT_FILE_TREE);
 		adapter.add(new TopLevelTree(
-			LibraryInstance.getRootTree(Library.ROOT_FILE_TREE),
+			fileTreeRoot,
 			R.drawable.ic_list_library_folder,
 			new Runnable() {
 				public void run() {
 					startActivity(
 						new Intent(LibraryTopLevelActivity.this, FileManager.class)
-							.putExtra(TREE_KEY_KEY, FBTree.Key.createRootKey(Library.ROOT_FILE_TREE))
+							.putExtra(TREE_KEY_KEY, fileTreeRoot.getUniqueKey())
 							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
 					);
 				}
@@ -83,9 +84,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	private void addTopLevelTree(String key, int imageId) {
 		final RootTree root = LibraryInstance.getRootTree(key);
 		getListAdapter().add(new TopLevelTree(
-			root,
-			imageId,
-			new OpenTreeRunnable(LibraryInstance, root)
+			root, imageId, new OpenTreeRunnable(root)
 		));
 	}
 
@@ -100,9 +99,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		adapter.remove(mySearchResultsItem);
 		final RootTree searchRoot = LibraryInstance.getRootTree(Library.ROOT_SEARCH_RESULTS);
 		mySearchResultsItem = new TopLevelTree(
-			searchRoot,
-			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(LibraryInstance, searchRoot)
+			searchRoot, R.drawable.ic_list_library_books, new OpenTreeRunnable(searchRoot)
 		);
 		adapter.add(0, mySearchResultsItem);
 		getListView().invalidateViews();

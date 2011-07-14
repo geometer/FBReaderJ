@@ -118,7 +118,7 @@ abstract class BaseActivity extends ListActivity {
 		} else if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {
-			new OpenTreeRunnable(LibraryInstance, tree).run();
+			new OpenTreeRunnable(tree).run();
 		}
 	}
 
@@ -276,26 +276,21 @@ abstract class BaseActivity extends ListActivity {
 	}
 
 	protected class OpenTreeRunnable implements Runnable {
-		private final Library myLibrary;
 		private final FBTree myTree;
 
-		public OpenTreeRunnable(Library library, FBTree tree) {
-			myLibrary = library;
+		public OpenTreeRunnable(FBTree tree) {
 			myTree = tree;
 		}
 
 		public void run() {
-			if (myLibrary == null) {
-				return;
-			}
-			if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
+			if (LibraryInstance.hasState(Library.STATE_FULLY_INITIALIZED)) {
 				openTree();
 			} else {
 				UIUtil.runWithMessage(
 					BaseActivity.this, "loadingBookList",
 					new Runnable() {
 						public void run() {
-							myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
+							LibraryInstance.waitForState(Library.STATE_FULLY_INITIALIZED);
 						}
 					},
 					new Runnable() {
