@@ -36,6 +36,10 @@ public abstract class LibraryTree extends FBTree {
 		return getName();
 	}
 
+	public Book getBook() {
+		return null;
+	}
+
 	TagTree createTagSubTree(Tag tag) {
 		return new TagTree(this, tag);
 	}

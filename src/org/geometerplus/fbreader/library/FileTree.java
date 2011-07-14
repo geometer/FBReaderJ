@@ -104,6 +104,7 @@ public class FileTree extends LibraryTree {
 		return myFile;
 	}
 
+	@Override
 	public Book getBook() {
 		return Book.getByFile(myFile);
 	}

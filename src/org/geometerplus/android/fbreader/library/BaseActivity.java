@@ -127,11 +127,11 @@ abstract class BaseActivity extends ListActivity {
 		final FBTreeInfo info = myInfoMap.get(tree);
 		if (info != null && info.CoverResourceId != -1) {
 			return info.CoverResourceId;
+		} else if (((LibraryTree)tree).getBook() != null) {
+			return R.drawable.ic_list_library_book;
 		} else if (tree instanceof FileTree) {
 			final FileTree fileTree = (FileTree)tree;
-			if (fileTree.getBook() != null) {
-				return R.drawable.ic_list_library_book;
-			} else if (fileTree.getFile().isDirectory()) {
+			if (fileTree.getFile().isDirectory()) {
 				if (fileTree.getFile().isReadable()) {
 					return R.drawable.ic_list_library_folder;
 				} else {
@@ -146,8 +146,6 @@ abstract class BaseActivity extends ListActivity {
 			return R.drawable.ic_list_library_author;
 		} else if (tree instanceof TagTree) {
 			return R.drawable.ic_list_library_tag;
-		} else if (tree instanceof BookTree) {
-			return R.drawable.ic_list_library_book;
 		} else {
 			return R.drawable.ic_list_library_books;
 		}
@@ -155,14 +153,13 @@ abstract class BaseActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof FileTree) {
-			final FileTree fileTree = (FileTree)tree;
-			final ZLFile file = fileTree.getFile();
-			final Book book = fileTree.getBook();
-			if (book != null) {
-				showBookInfo(book);
-			} else if (!file.isReadable()) {
+		final LibraryTree tree = (LibraryTree)getListAdapter().getItem(position);
+		final Book book = tree.getBook();
+		if (book != null) {
+			showBookInfo(book);
+		} else if (tree instanceof FileTree) {
+			final ZLFile file = ((FileTree)tree).getFile();
+			if (!file.isReadable()) {
 				UIUtil.showErrorMessage(this, "permissionDenied");
 			} else if (file.isDirectory() || file.isArchive()) {
 				startActivityForResult(
@@ -172,8 +169,6 @@ abstract class BaseActivity extends ListActivity {
 					CHILD_LIST_REQUEST
 				);
 			}
-		} else if (tree instanceof BookTree) {
-			showBookInfo(((BookTree)tree).Book);
 		} else {
 			final FBTreeInfo info = myInfoMap.get(tree);
 			if (info != null && info.Action != null) {
@@ -189,8 +184,9 @@ abstract class BaseActivity extends ListActivity {
 			return false;
 		}
 
-		if (tree instanceof BookTree) {
-			return mySelectedBook.equals(((BookTree)tree).Book);
+		final Book book = ((LibraryTree)tree).getBook();
+		if (book != null) {
+			return mySelectedBook.equals(book);
 		} else if (tree instanceof AuthorTree) {
 			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
 		} else if (tree instanceof TitleTree) {
@@ -215,12 +211,7 @@ abstract class BaseActivity extends ListActivity {
 				return false;
 			}
 			final ZLFile file = fileTree.getFile();
-			final String path = file.getPath();
-			if (mySelectedBookPath.equals(path)) {
-				return true;
-			}
-        
-			String prefix = path;
+			String prefix = file.getPath();
 			if (file.isDirectory()) {
 				if (!prefix.endsWith("/")) {
 					prefix += '/';
@@ -303,14 +294,9 @@ abstract class BaseActivity extends ListActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof BookTree) {
-			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
-		} else if (tree instanceof FileTree) {
-			final Book book = ((FileTree)tree).getBook(); 
-			if (book != null) {
-				return onContextItemSelected(item.getItemId(), book);
-			}
+		final Book book = ((LibraryTree)getListAdapter().getItem(position)).getBook();
+		if (book != null) {
+			return onContextItemSelected(item.getItemId(), book);
 		}
 		return super.onContextItemSelected(item);
 	}
