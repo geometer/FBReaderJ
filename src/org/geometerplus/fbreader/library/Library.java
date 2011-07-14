@@ -56,6 +56,7 @@ public final class Library {
 	private volatile boolean myInterrupted = false;
 
 	public Library() {
+		myRootTrees.put(ROOT_FILE_TREE, new FileRootTree(ROOT_FILE_TREE));
 	}
 
 	public RootTree getRootTree(String id) {

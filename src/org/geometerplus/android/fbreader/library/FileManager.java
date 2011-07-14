@@ -24,11 +24,6 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-
-import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.FileTree;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.tree.FBTree;
@@ -43,9 +38,7 @@ public final class FileManager extends BaseActivity {
 		if (myCurrentTree instanceof FileTree) {
 			startUpdate();
 		} else {
-			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
-			addItem("/", "fileTreeRoot");
-			addItem(Paths.cardDirectory(), "fileTreeCard");
+			adapter.addAll(myCurrentTree.subTrees());
 		}
 
 		getListView().setTextFilterEnabled(true);
@@ -84,15 +77,5 @@ public final class FileManager extends BaseActivity {
 		super.deleteBook(book, mode);
 		getListAdapter().remove(new FileTree((FileTree)myCurrentTree, book.File));
 		getListView().invalidateViews();
-	}
-
-	private void addItem(String path, String resourceKey) {
-		final ZLResource resource = Library.resource().getResource(resourceKey);
-		getListAdapter().add(new FileTree(
-			myCurrentTree,
-			ZLFile.createFileByPath(path),
-			resource.getValue(),
-			resource.getResource("summary").getValue()
-		));
 	}
 }
