@@ -19,6 +19,9 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +31,8 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
@@ -39,6 +44,16 @@ import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 abstract class BaseActivity extends ListActivity {
+	private static class FBTreeInfo {
+		final int CoverResourceId;
+		final Runnable Action;
+
+		FBTreeInfo(int coverResourceId, Runnable action) {
+			CoverResourceId = coverResourceId;
+			Action = action;
+		}
+	};
+
 	static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
@@ -60,6 +75,8 @@ abstract class BaseActivity extends ListActivity {
 	protected String mySelectedBookPath;
 	private Book mySelectedBook;
 	protected FBTree.Key myTreeKey;
+
+	private final Map<FBTree,FBTreeInfo> myInfoMap = new HashMap<FBTree,FBTreeInfo>();
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -94,12 +111,30 @@ abstract class BaseActivity extends ListActivity {
 		return (ListAdapter)super.getListAdapter();
 	}
 
+	protected void addFBTreeWithInfo(FBTree tree, int coverResourceId, Runnable action) {
+		getListAdapter().add(tree);
+		myInfoMap.put(tree, new FBTreeInfo(coverResourceId, action));
+	}
+
+	int getCoverResourceId(FBTree tree) {
+		final FBTreeInfo info = myInfoMap.get(tree);
+		if (info != null && info.CoverResourceId != -1) {
+			return info.CoverResourceId;
+		} else if (tree instanceof AuthorTree) {
+			return R.drawable.ic_list_library_author;
+		} else if (tree instanceof TagTree) {
+			return R.drawable.ic_list_library_tag;
+		} else if (tree instanceof BookTree) {
+			return R.drawable.ic_list_library_book;
+		} else {
+			return R.drawable.ic_list_library_books;
+		}
+	}
+
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
 		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof TopLevelTree) {
-			((TopLevelTree)tree).run();
-		} else if (tree instanceof FileItem) {
+		if (tree instanceof FileItem) {
 			final FileItem item = (FileItem)tree;
 			final ZLFile file = item.getFile();
 			final Book book = item.getBook();
@@ -118,7 +153,12 @@ abstract class BaseActivity extends ListActivity {
 		} else if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {
-			new OpenTreeRunnable(tree).run();
+			final FBTreeInfo info = myInfoMap.get(tree);
+			if (info != null && info.Action != null) {
+				info.Action.run();
+			} else {
+				new OpenTreeRunnable(tree).run();
+			}
 		}
 	}
 

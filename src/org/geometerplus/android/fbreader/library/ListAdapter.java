@@ -33,7 +33,8 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.library.BookTree;
 
 import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
@@ -189,14 +190,8 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 			coverView.setImageBitmap(coverBitmap);
 		} else if (tree instanceof ZLAndroidTree) {
 			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
-		} else if (tree instanceof AuthorTree) {
-			coverView.setImageResource(R.drawable.ic_list_library_author);
-		} else if (tree instanceof TagTree) {
-			coverView.setImageResource(R.drawable.ic_list_library_tag);
-		} else if (tree instanceof BookTree) {
-			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else {
-			coverView.setImageResource(R.drawable.ic_list_library_books);
+			coverView.setImageResource(myActivity.getCoverResourceId(tree));
 		}
 
 		return view;
