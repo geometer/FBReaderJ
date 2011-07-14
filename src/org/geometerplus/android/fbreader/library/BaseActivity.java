@@ -43,7 +43,7 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
-abstract class BaseActivity extends ListActivity {
+abstract class BaseActivity extends ListActivity implements View.OnCreateContextMenuListener {
 	private static class FBTreeInfo {
 		final int CoverResourceId;
 		final Runnable Action;
@@ -111,6 +111,7 @@ abstract class BaseActivity extends ListActivity {
 		}
         
 		setResult(RESULT_DONT_INVALIDATE_VIEWS);
+		getListView().setOnCreateContextMenuListener(this);
 	}
 
 	@Override
@@ -236,7 +237,15 @@ abstract class BaseActivity extends ListActivity {
 		);
 	}
 
-	protected void createBookContextMenu(ContextMenu menu, Book book) {
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+		final Book book = ((LibraryTree)getListAdapter().getItem(position)).getBook();
+		if (book != null) {
+			createBookContextMenu(menu, book); 
+		}
+	}
+
+	private void createBookContextMenu(ContextMenu menu, Book book) {
 		final ZLResource resource = Library.resource();
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
