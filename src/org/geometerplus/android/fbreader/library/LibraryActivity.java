@@ -44,31 +44,22 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
 
 public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
-	static final String TREE_KEY_KEY = "TreeKey";
+	public static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
-	protected static final int CHILD_LIST_REQUEST = 0;
-	protected static final int BOOK_INFO_REQUEST = 1;
-
-	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
-	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
-
-	static BooksDatabase DatabaseInstance;
 	static Library LibraryInstance;
 
-	static final ZLStringOption BookSearchPatternOption =
-		new ZLStringOption("BookSearch", "Pattern", "");
+	private BooksDatabase myDatabase;
 
-	protected String mySelectedBookPath;
 	private Book mySelectedBook;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		DatabaseInstance = SQLiteBooksDatabase.Instance();
-		if (DatabaseInstance == null) {
-			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
+		myDatabase = SQLiteBooksDatabase.Instance();
+		if (myDatabase == null) {
+			myDatabase = new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 		if (LibraryInstance == null) {
 			LibraryInstance = new Library();
@@ -83,10 +74,10 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		);
 		setTitle(getCurrentTree().getTreeTitle());
 
-		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
+		final String selectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;
-		if (mySelectedBookPath != null) {
-			final ZLFile file = ZLFile.createFileByPath(mySelectedBookPath);
+		if (selectedBookPath != null) {
+			final ZLFile file = ZLFile.createFileByPath(selectedBookPath);
 			if (file != null) {
 				mySelectedBook = Book.getByFile(file);
 			}
@@ -109,15 +100,6 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		return lTree.isSelectable() && lTree.containsBook(mySelectedBook);
 	}
 
-	protected void openBook(Book book) {
-		startActivity(
-			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(Intent.ACTION_VIEW)
-				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-		);
-	}
-
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
 		final LibraryTree tree = (LibraryTree)getListAdapter().getItem(position);
@@ -129,6 +111,11 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		}
 	}
 
+	//
+	// show BookInfoActivity
+	//
+	private static final int BOOK_INFO_REQUEST = 1;
+
 	protected void showBookInfo(Book book) {
 		startActivityForResult(
 			new Intent(getApplicationContext(), BookInfoActivity.class)
@@ -139,28 +126,17 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
-		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
-			if (getCurrentTree() instanceof FileTree) {
-				startUpdate();
-			}
-			getListView().invalidateViews();
-		} else if (requestCode == BOOK_INFO_REQUEST) {
+		if (requestCode == BOOK_INFO_REQUEST) {
 			getListView().invalidateViews();
 		}
 	} 
 
-	private void startUpdate() {
-		new Thread(new Runnable() {
-			public void run() {
-				getCurrentTree().waitForOpening();
-				getListAdapter().replaceAll(getCurrentTree().subTrees());
-			}
-		}).start();
-	}
-
 	//
 	// Search
 	//
+	static final ZLStringOption BookSearchPatternOption =
+		new ZLStringOption("BookSearch", "Pattern", "");
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -261,6 +237,15 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 				return true;
 		}
 		return false;
+	}
+
+	private void openBook(Book book) {
+		startActivity(
+			new Intent(getApplicationContext(), FBReader.class)
+				.setAction(Intent.ACTION_VIEW)
+				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+		);
 	}
 
 	//
