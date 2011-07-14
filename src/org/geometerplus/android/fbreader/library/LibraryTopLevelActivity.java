@@ -46,7 +46,7 @@ public class LibraryTopLevelActivity extends LibraryActivity {
 		final List<FBTree> trees = myCurrentTree.subTrees();
 		getListAdapter().replaceAll(trees);
 		getListView().invalidateViews();
-		new OpenTreeRunnable(trees.get(0)).run();
+		//new OpenTreeRunnable(trees.get(0)).run();
 	}
 
 	public void onNewIntent(Intent intent) {

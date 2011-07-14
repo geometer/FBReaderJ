@@ -96,6 +96,10 @@ public class ListAdapter extends BaseAdapter {
 		return position;
 	}
 
+	public int getIndex(FBTree item) {
+		return myItems.indexOf(item);
+	}
+
 	public int getFirstSelectedItemIndex() {
 		int index = 0;
 		synchronized (myItems) {

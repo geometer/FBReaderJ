@@ -36,10 +36,6 @@ public abstract class LibraryTree extends FBTree {
 		super(parent, position);
 	}
 
-	public String getTreeTitle() {
-		return getName();
-	}
-
 	public Book getBook() {
 		return null;
 	}

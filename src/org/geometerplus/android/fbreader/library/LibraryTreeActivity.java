@@ -44,7 +44,6 @@ public class LibraryTreeActivity extends LibraryActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, myCurrentTree.subTrees());
 		setSelection(adapter.getFirstSelectedItemIndex());
-
 		getListView().setTextFilterEnabled(true);
 	}
 }
