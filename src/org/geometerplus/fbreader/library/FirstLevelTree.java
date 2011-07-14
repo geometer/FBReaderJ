@@ -26,8 +26,16 @@ public class FirstLevelTree extends LibraryTree {
 	private final String myId;
 	private final ZLResource myResource;
 
-	FirstLevelTree(Library library, String id) {
-		myLibrary = library;
+	FirstLevelTree(RootTree root, int position, String id) {
+		super(root, position);
+		myLibrary = root.getLibrary();
+		myId = id;
+		myResource = Library.resource().getResource(myId);
+	}
+
+	FirstLevelTree(RootTree root, String id) {
+		super(root);
+		myLibrary = root.getLibrary();
 		myId = id;
 		myResource = Library.resource().getResource(myId);
 	}

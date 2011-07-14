@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.Collections;
+import java.util.List;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -34,20 +34,11 @@ import org.geometerplus.fbreader.library.FirstLevelTree;
 import org.geometerplus.android.util.UIUtil;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
-	private FirstLevelTree mySearchResultsItem;
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		final ListAdapter adapter = new ListAdapter(this, Collections.<FBTree>emptyList());
-
-		adapter.add(LibraryInstance.getRootTree(Library.ROOT_FAVORITES));
-		adapter.add(LibraryInstance.getRootTree(Library.ROOT_RECENT));
-		adapter.add(LibraryInstance.getRootTree(Library.ROOT_BY_AUTHOR));
-		adapter.add(LibraryInstance.getRootTree(Library.ROOT_BY_TITLE));
-		adapter.add(LibraryInstance.getRootTree(Library.ROOT_BY_TAG));
-		adapter.add(LibraryInstance.getRootTree(Library.ROOT_FILE_TREE));
+		new ListAdapter(this, LibraryInstance.getRootTree().subTrees());
 
 		onNewIntent(getIntent());
 	}
@@ -58,25 +49,22 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		super.onDestroy();
 	}
 
-	private void setSearchResults(Intent intent) {
-		final ListAdapter adapter = getListAdapter();
-		adapter.remove(mySearchResultsItem);
-		mySearchResultsItem = LibraryInstance.getRootTree(Library.ROOT_SEARCH_RESULTS);
-		adapter.add(0, mySearchResultsItem);
+	private void setSearchResults() {
+		final List<FBTree> trees = LibraryInstance.getRootTree().subTrees();
+		getListAdapter().replaceAll(trees);
 		getListView().invalidateViews();
-		adapter.notifyDataSetChanged();
-		new OpenTreeRunnable(mySearchResultsItem).run();
+		new OpenTreeRunnable(trees.get(0)).run();
 	}
 
 	public void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			if (runSearch(intent)) {
-				setSearchResults(intent);
+				setSearchResults();
 			} else {
 				showNotFoundToast();
 			}
 		} else if (ACTION_FOUND.equals(intent.getAction())) {
-			setSearchResults(intent);
+			setSearchResults();
 		}
 	}
 }

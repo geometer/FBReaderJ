@@ -32,6 +32,10 @@ public abstract class LibraryTree extends FBTree {
 		super(parent);
 	}
 
+	protected LibraryTree(LibraryTree parent, int position) {
+		super(parent, position);
+	}
+
 	public String getTreeTitle() {
 		return getName();
 	}
