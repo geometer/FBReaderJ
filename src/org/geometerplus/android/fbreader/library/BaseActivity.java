@@ -19,98 +19,27 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.Map;
-import java.util.HashMap;
-
-import android.app.*;
-import android.content.DialogInterface;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
-
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.fbreader.library.*;
-import org.geometerplus.fbreader.tree.FBTree;
+import android.view.KeyEvent;
+import android.view.View;
 
 import org.geometerplus.android.util.UIUtil;
 
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.BookInfoActivity;
-import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
+import org.geometerplus.fbreader.tree.FBTree;
 
-abstract class BaseActivity extends ListActivity {
-	private static class FBTreeInfo {
-		final int CoverResourceId;
-		final Runnable Action;
-
-		FBTreeInfo(int coverResourceId, Runnable action) {
-			CoverResourceId = coverResourceId;
-			Action = action;
-		}
-	};
-
-	static final String TREE_KEY_KEY = "TreeKey";
-	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
-
-	private static final int OPEN_BOOK_ITEM_ID = 0;
-	private static final int SHOW_BOOK_INFO_ITEM_ID = 1;
-	private static final int ADD_TO_FAVORITES_ITEM_ID = 2;
-	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 3;
-	private static final int DELETE_BOOK_ITEM_ID = 4;
-
-	protected static final int CHILD_LIST_REQUEST = 0;
-	protected static final int BOOK_INFO_REQUEST = 1;
-
-	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
-	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
-
-	static BooksDatabase DatabaseInstance;
-	static Library LibraryInstance;
-
-	protected String mySelectedBookPath;
-	private Book mySelectedBook;
-	protected LibraryTree myCurrentTree;
-
-	private final Map<FBTree,FBTreeInfo> myInfoMap = new HashMap<FBTree,FBTreeInfo>();
+abstract class BaseActivity extends ListActivity implements View.OnCreateContextMenuListener {
+	private FBTree myCurrentTree;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		DatabaseInstance = SQLiteBooksDatabase.Instance();
-		if (DatabaseInstance == null) {
-			DatabaseInstance = new SQLiteBooksDatabase(this, "LIBRARY");
-		}
-		if (LibraryInstance == null) {
-			LibraryInstance = new Library();
-			startService(new Intent(getApplicationContext(), InitializationService.class));
-		}
-
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);
-		final FBTree.Key key = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
-		if (key != null) {
-			myCurrentTree = LibraryInstance.getLibraryTree(key);
-			setTitle(myCurrentTree.getTreeTitle());
-		} else {
-			myCurrentTree = null;
-		}
-        
-		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
-		mySelectedBook = null;
-		if (mySelectedBookPath != null) {
-			final ZLFile file = ZLFile.createFileByPath(mySelectedBookPath);
-			if (file != null) {
-				mySelectedBook = Book.getByFile(file);
-			}
-		}
-        
-		setResult(RESULT_DONT_INVALIDATE_VIEWS);
+
+		getListView().setOnCreateContextMenuListener(this);
 	}
 
 	@Override
@@ -118,259 +47,71 @@ abstract class BaseActivity extends ListActivity {
 		return (ListAdapter)super.getListAdapter();
 	}
 
-	protected void addFBTreeWithInfo(FBTree tree, int coverResourceId, Runnable action) {
-		getListAdapter().add(tree);
-		myInfoMap.put(tree, new FBTreeInfo(coverResourceId, action));
+	protected FBTree getCurrentTree() {
+		return myCurrentTree;
 	}
 
-	int getCoverResourceId(FBTree tree) {
-		final FBTreeInfo info = myInfoMap.get(tree);
-		if (info != null && info.CoverResourceId != -1) {
-			return info.CoverResourceId;
-		} else if (tree instanceof FileTree) {
-			final FileTree fileTree = (FileTree)tree;
-			if (fileTree.getBook() != null) {
-				return R.drawable.ic_list_library_book;
-			} else if (fileTree.getFile().isDirectory()) {
-				if (fileTree.getFile().isReadable()) {
-					return R.drawable.ic_list_library_folder;
+	protected void setCurrentTree(FBTree tree) {
+		myCurrentTree = tree;
+	}
+
+	protected abstract int getCoverResourceId(FBTree tree);
+	abstract boolean isTreeSelected(FBTree tree);
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && myCurrentTree.Parent != null) {
+			final FBTree oldTree = myCurrentTree;
+			openTree(myCurrentTree.Parent);
+			setSelection(getListAdapter().getIndex(oldTree));
+			return true;
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
+	}
+
+	protected void openTree(final FBTree tree) {
+		switch (tree.getOpeningStatus()) {
+			case WAIT_FOR_OPEN:
+			case ALWAYS_RELOAD_BEFORE_OPENING:
+				final String messageKey = tree.getOpeningStatusMessage();
+				if (messageKey != null) {
+					UIUtil.runWithMessage(
+						BaseActivity.this, messageKey,
+						new Runnable() {
+							public void run() {
+								tree.waitForOpening();
+							}
+						},
+						new Runnable() {
+							public void run() {
+								openTreeInternal(tree);
+							}
+						}
+					);
 				} else {
-					return R.drawable.ic_list_library_permission_denied;
+					tree.waitForOpening();
+					openTreeInternal(tree);
 				}
-			} else if (fileTree.getFile().isArchive()) {
-				return R.drawable.ic_list_library_zip;
-			} else {
-				return R.drawable.ic_list_library_permission_denied;
-			}
-		} else if (tree instanceof AuthorTree) {
-			return R.drawable.ic_list_library_author;
-		} else if (tree instanceof TagTree) {
-			return R.drawable.ic_list_library_tag;
-		} else if (tree instanceof BookTree) {
-			return R.drawable.ic_list_library_book;
-		} else {
-			return R.drawable.ic_list_library_books;
+				break;
+			default:
+				openTreeInternal(tree);
+				break;
 		}
 	}
 
-	@Override
-	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof FileTree) {
-			final FileTree fileTree = (FileTree)tree;
-			final ZLFile file = fileTree.getFile();
-			final Book book = fileTree.getBook();
-			if (book != null) {
-				showBookInfo(book);
-			} else if (!file.isReadable()) {
-				UIUtil.showErrorMessage(this, "permissionDenied");
-			} else if (file.isDirectory() || file.isArchive()) {
-				startActivityForResult(
-					new Intent(this, FileManager.class)
-						.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-						.putExtra(TREE_KEY_KEY, tree.getUniqueKey()),
-					CHILD_LIST_REQUEST
-				);
-			}
-		} else if (tree instanceof BookTree) {
-			showBookInfo(((BookTree)tree).Book);
-		} else {
-			final FBTreeInfo info = myInfoMap.get(tree);
-			if (info != null && info.Action != null) {
-				info.Action.run();
-			} else {
-				new OpenTreeRunnable(tree).run();
-			}
-		}
-	}
-
-	boolean isTreeSelected(FBTree tree) {
-		if (mySelectedBook == null) {
-			return false;
-		}
-
-		if (tree instanceof BookTree) {
-			return mySelectedBook.equals(((BookTree)tree).Book);
-		} else if (tree instanceof AuthorTree) {
-			return mySelectedBook.authors().contains(((AuthorTree)tree).Author);
-		} else if (tree instanceof TitleTree) {
-			final String title = mySelectedBook.getTitle();
-			return tree != null && title.trim().startsWith(((TitleTree)tree).Title);
-		} else if (tree instanceof SeriesTree) {
-			final SeriesInfo info = mySelectedBook.getSeriesInfo();
-			final String series = ((SeriesTree)tree).Series;
-			return info != null && series != null && series.equals(info.Name);
-		} else if (tree instanceof TagTree) {
-			final Tag tag = ((TagTree)tree).Tag;
-			for (Tag t : mySelectedBook.tags()) {
-				for (; t != null; t = t.Parent) {
-					if (t == tag) {
-						return true;
-					}
-				}
-			}
-		} else if (tree instanceof FileTree) {
-			final FileTree fileTree = (FileTree)tree;
-			if (!fileTree.isSelectable()) {
-				return false;
-			}
-			final ZLFile file = fileTree.getFile();
-			final String path = file.getPath();
-			if (mySelectedBookPath.equals(path)) {
-				return true;
-			}
-        
-			String prefix = path;
-			if (file.isDirectory()) {
-				if (!prefix.endsWith("/")) {
-					prefix += '/';
-				}
-			} else if (file.isArchive()) {
-				prefix += ':';
-			} else {
-				return false;
-			}
-			return mySelectedBookPath.startsWith(prefix);
-		}
-
-		return false;
-	}
-
-	protected void openBook(Book book) {
-		startActivity(
-			new Intent(getApplicationContext(), FBReader.class)
-				.setAction(Intent.ACTION_VIEW)
-				.putExtra(FBReader.BOOK_PATH_KEY, book.File.getPath())
-				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-		);
-	}
-
-	protected void createBookContextMenu(ContextMenu menu, Book book) {
-		final ZLResource resource = Library.resource();
-		menu.setHeaderTitle(book.getTitle());
-		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
-		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
-		if (LibraryInstance.isBookInFavorites(book)) {
-			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
-		} else {
-			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
-		}
-		if ((LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
-			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
-        }
-	}
-
-	private class BookDeleter implements DialogInterface.OnClickListener {
-		private final Book myBook;
-		private final int myMode;
-
-		BookDeleter(Book book, int removeMode) {
-			myBook = book;
-			myMode = removeMode;
-		}
-
-		public void onClick(DialogInterface dialog, int which) {
-			deleteBook(myBook, myMode);
-			setResult(RESULT_DO_INVALIDATE_VIEWS);
-		}
-	}
-
-	private void tryToDeleteBook(Book book) {
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		final ZLResource boxResource = dialogResource.getResource("deleteBookBox");
-		new AlertDialog.Builder(this)
-			.setTitle(book.getTitle())
-			.setMessage(boxResource.getResource("message").getValue())
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new BookDeleter(book, Library.REMOVE_FROM_DISK))
-			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-			.create().show();
-	}
-
-	protected void deleteBook(Book book, int mode) {
-		LibraryInstance.removeBook(book, mode);
-	}
-
-	protected void showBookInfo(Book book) {
-		startActivityForResult(
-			new Intent(getApplicationContext(), BookInfoActivity.class)
-				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, book.File.getPath()),
-			BOOK_INFO_REQUEST
-		);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof BookTree) {
-			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
-		} else if (tree instanceof FileTree) {
-			final Book book = ((FileTree)tree).getBook(); 
-			if (book != null) {
-				return onContextItemSelected(item.getItemId(), book);
-			}
-		}
-		return super.onContextItemSelected(item);
-	}
-
-	private boolean onContextItemSelected(int itemId, Book book) {
-		switch (itemId) {
-			case OPEN_BOOK_ITEM_ID:
-				openBook(book);
-				return true;
-			case SHOW_BOOK_INFO_ITEM_ID:
-				showBookInfo(book);
-				return true;
-			case ADD_TO_FAVORITES_ITEM_ID:
-				LibraryInstance.addBookToFavorites(book);
-				return true;
-			case REMOVE_FROM_FAVORITES_ITEM_ID:
-				LibraryInstance.removeBookFromFavorites(book);
-				getListView().invalidateViews();
-				return true;
-			case DELETE_BOOK_ITEM_ID:
-				tryToDeleteBook(book);
-				return true;
-		}
-		return false;
-	}
-
-	protected class OpenTreeRunnable implements Runnable {
-		private final FBTree myTree;
-
-		public OpenTreeRunnable(FBTree tree) {
-			myTree = tree;
-		}
-
-		public void run() {
-			if (LibraryInstance.hasState(Library.STATE_FULLY_INITIALIZED)) {
-				openTree();
-			} else {
-				UIUtil.runWithMessage(
-					BaseActivity.this, "loadingBookList",
-					new Runnable() {
-						public void run() {
-							LibraryInstance.waitForState(Library.STATE_FULLY_INITIALIZED);
-						}
-					},
-					new Runnable() {
-						public void run() {
-							openTree();
-						}
-					}
-				);
-			}
-		}
-
-		protected void openTree() {
-			startActivityForResult(
-				new Intent(BaseActivity.this, LibraryTreeActivity.class)
-					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(TREE_KEY_KEY, myTree.getUniqueKey()),
-				CHILD_LIST_REQUEST
-			);
+	private void openTreeInternal(FBTree tree) {
+		switch (tree.getOpeningStatus()) {
+			case READY_TO_OPEN:
+			case ALWAYS_RELOAD_BEFORE_OPENING:
+				myCurrentTree = tree;
+				getListAdapter().replaceAll(myCurrentTree.subTrees());
+				setTitle(myCurrentTree.getTreeTitle());
+				setSelection(getListAdapter().getFirstSelectedItemIndex());
+				break;
+			case CANNOT_OPEN:
+				UIUtil.showErrorMessage(BaseActivity.this, tree.getOpeningStatusMessage());
+				break;
 		}
 	}
 }

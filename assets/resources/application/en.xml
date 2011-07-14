@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- English FBReaderJ resources, by Geometer Plus -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library">
 		<node name="unknownAuthor" value="Unknown author"/>
 		<node name="booksWithNoTags" value="Books with no tags"/>
 		<node name="demo" value="sample"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="By author">
 			<node name="summary" value="Books sorted by author"/>
 		</node>

@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 public final class TagTree extends LibraryTree {
 	public final Tag Tag;
 
@@ -31,10 +29,8 @@ public final class TagTree extends LibraryTree {
 
 	@Override
 	public String getName() {
-		return
-			(Tag != null) ?
-				Tag.Name :
-				ZLResource.resource("library").getResource("booksWithNoTags").getValue();
+		return Tag != null
+			? Tag.Name : Library.resource().getResource("booksWithNoTags").getValue();
 	}
 
 	@Override
@@ -44,5 +40,23 @@ public final class TagTree extends LibraryTree {
 
 	protected String getSortKey() {
 		return (Tag != null) ? Tag.Name : null;
+	}
+
+	@Override
+	public boolean containsBook(Book book) {
+		if (book == null) {
+			return false;
+		}
+		if (Tag == null) {
+			return book.tags().isEmpty();
+		}
+		for (Tag t : book.tags()) {
+			for (; t != null; t = t.Parent) {
+				if (t == Tag) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

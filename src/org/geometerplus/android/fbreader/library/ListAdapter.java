@@ -33,27 +33,15 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.BookTree;
-import org.geometerplus.fbreader.library.FileTree;
 
-public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
+public class ListAdapter extends BaseAdapter {
 	private final BaseActivity myActivity;
 	private final List<FBTree> myItems;
 
 	ListAdapter(BaseActivity activity, List<FBTree> items) {
 		myActivity = activity;
-		myItems = Collections.synchronizedList(items);
+		myItems = Collections.synchronizedList(new ArrayList<FBTree>(items));
 		activity.setListAdapter(this);
-		activity.getListView().setOnCreateContextMenuListener(this);
-	}
-
-	public void clear() {
-		myActivity.runOnUiThread(new Runnable() {
-			public void run() {
-				myItems.clear();
-			}
-		});
 	}
 
 	public void remove(final FBTree item) {
@@ -83,9 +71,10 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		});
 	}
 
-	public void addAll(final Collection<FBTree> items) {
+	public void replaceAll(final Collection<FBTree> items) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
+				myItems.clear();
 				myItems.addAll(items);
 				notifyDataSetChanged();
 			}
@@ -105,6 +94,10 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 	@Override
 	public long getItemId(int position) {
 		return position;
+	}
+
+	public int getIndex(FBTree item) {
+		return myItems.indexOf(item);
 	}
 
 	public int getFirstSelectedItemIndex() {
@@ -192,18 +185,5 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		}
 
 		return view;
-	}
-
-	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-		final FBTree tree = getItem(position);
-		if (tree instanceof BookTree) {
-			myActivity.createBookContextMenu(menu, ((BookTree)tree).Book);
-		} else if (tree instanceof FileTree) {
-			final Book book = ((FileTree)getItem(position)).getBook();
-			if (book != null) {
-				myActivity.createBookContextMenu(menu, book); 
-			}
-		}
 	}
 }

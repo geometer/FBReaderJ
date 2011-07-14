@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Czech FBReaderJ resources, by Marek Pavelka -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Neznámý autor"/>
 		<node name="booksWithNoTags" value="Knihy bez štítků"/>
 		<node name="demo" value="ukázka"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>

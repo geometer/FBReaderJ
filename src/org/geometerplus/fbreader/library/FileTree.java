@@ -91,6 +91,7 @@ public class FileTree extends LibraryTree {
 		return null;
 	}
 
+	@Override
 	public boolean isSelectable() {
 		return myIsSelectable;
 	}
@@ -104,11 +105,44 @@ public class FileTree extends LibraryTree {
 		return myFile;
 	}
 
+	@Override
 	public Book getBook() {
 		return Book.getByFile(myFile);
 	}
 
-	public void update() {
+	@Override
+	public boolean containsBook(Book book) {
+		if (book == null) {
+			return false;
+		}
+		if (myFile.isDirectory()) {
+			String prefix = myFile.getPath();
+			if (!prefix.endsWith("/")) {
+				prefix += "/";
+			}
+			return book.File.getPath().startsWith(prefix);
+		} else if (myFile.isArchive()) {
+			return book.File.getPath().startsWith(myFile.getPath() + ":");
+		} else {
+			return book.equals(getBook());
+		}
+	}
+
+	@Override
+	public Status getOpeningStatus() {
+		if (!myFile.isReadable()) {
+			return Status.CANNOT_OPEN;
+		}
+		return Status.ALWAYS_RELOAD_BEFORE_OPENING;
+	}
+
+	@Override
+	public String getOpeningStatusMessage() {
+		return getOpeningStatus() == Status.CANNOT_OPEN ? "permissionDenied" : null;
+	}
+
+	@Override
+	public void waitForOpening() {
 		if (getBook() != null) {
 			return;
 		}

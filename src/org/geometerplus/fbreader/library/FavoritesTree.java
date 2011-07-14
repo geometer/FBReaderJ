@@ -19,34 +19,25 @@
 
 package org.geometerplus.fbreader.library;
 
-public final class SeriesTree extends LibraryTree {
-	public final String Series;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-	SeriesTree(LibraryTree parent, String series) {
-		super(parent);
-		Series = series;
+public class FavoritesTree extends FirstLevelTree {
+	FavoritesTree(RootTree root, String id) {
+		super(root, id);
 	}
 
 	@Override
-	public String getName() {
-		return Series;
-	}
-
-	@Override
-	protected String getStringId() {
-		return getName();
-	}
-
-	BookTree createBookInSeriesSubTree(Book book) {
-		return new BookInSeriesTree(this, book);
-	}
-
-	@Override
-	public boolean containsBook(Book book) {
-		if (book == null) {
-			return false;
+	public Status getOpeningStatus() {
+		final Status status = super.getOpeningStatus();
+		if (status == Status.READY_TO_OPEN && !hasChildren()) {
+			return Status.CANNOT_OPEN;
 		}
-		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Name);
+		return status;
+	}
+
+	@Override
+	public String getOpeningStatusMessage() {
+		return getOpeningStatus() == Status.CANNOT_OPEN
+			? "noFavorites" : super.getOpeningStatusMessage();
 	}
 }

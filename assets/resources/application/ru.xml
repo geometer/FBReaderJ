@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Russian FBReaderJ resources, by Geometer Plus -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader: библиотека">
 		<node name="unknownAuthor" value="Автор не указан"/>
 		<node name="booksWithNoTags" value="Книги вне категорий"/>
 		<node name="demo" value="фрагмент"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Авторы">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>

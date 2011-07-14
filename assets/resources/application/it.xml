@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Italian FBReaderJ resources, by Vytek and Neoxx from AndDev.it Translate Team -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Autore sconosciuto"/>
 		<node name="booksWithNoTags" value="Libri con nessuna etichetta"/>
 		<node name="demo" value="esempio"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Per autore">
 			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
 		</node>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011. Updated 22-Jun-2011. -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
 		<node name="booksWithNoTags" value="Boeken zonder trefwoorden"/>
 		<node name="demo" value="voorbeeld"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Auteurs">
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>

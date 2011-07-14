@@ -19,11 +19,11 @@
 
 package org.geometerplus.fbreader.library;
 
-class SearchResultsTree extends RootTree {
+class SearchResultsTree extends FirstLevelTree {
 	private final String myPattern;
 
-	SearchResultsTree(String id, String pattern) {
-		super(id);
+	SearchResultsTree(RootTree root, String id, String pattern) {
+		super(root, 0, id);
 		myPattern = pattern != null ? pattern : "";
 	}
 

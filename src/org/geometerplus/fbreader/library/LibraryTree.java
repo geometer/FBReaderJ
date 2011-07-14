@@ -32,8 +32,20 @@ public abstract class LibraryTree extends FBTree {
 		super(parent);
 	}
 
-	public String getTreeTitle() {
-		return getName();
+	protected LibraryTree(LibraryTree parent, int position) {
+		super(parent, position);
+	}
+
+	public Book getBook() {
+		return null;
+	}
+
+	public boolean containsBook(Book book) {
+		return false;
+	}
+
+	public boolean isSelectable() {
+		return true;
 	}
 
 	TagTree createTagSubTree(Tag tag) {
@@ -50,15 +62,6 @@ public abstract class LibraryTree extends FBTree {
 
 	BookTree createBookSubTree(Book book, boolean showAuthors) {
 		return new BookTree(this, book, showAuthors);
-	}
-
-	public boolean containsBook(Book book) {
-		for (FBTree tree : this) {
-			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(book)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public boolean removeBook(Book book) {

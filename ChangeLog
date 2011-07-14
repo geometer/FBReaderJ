@@ -1,3 +1,7 @@
+===== 1.1.3 (??? ??, 2011) =====
+* Library view: grouping books by first letter in title branch
+* Local library search searches by file names too
+
 ===== 1.1.2 (Jul 05, 2011) =====
 * Misc Litres fixes
 * API: menu item request processing has been simplified

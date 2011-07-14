@@ -21,32 +21,24 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public class RootTree extends LibraryTree {
-	private final String myId;
-	private final ZLResource myResource;
+class RootTree extends LibraryTree {
+	private final Library myLibrary;
 
-	RootTree(String id) {
-		myId = id;
-		myResource = Library.resource().getResource(myId);
+	RootTree(Library library) {
+		myLibrary = library;
+	}
+
+	Library getLibrary() {
+		return myLibrary;
 	}
 
 	@Override
 	public String getName() {
-		return myResource.getValue();
-	}
-
-	@Override
-	public String getTreeTitle() {
-		return getSecondString();
-	}
-
-	@Override
-	protected String getSummary() {
-		return myResource.getResource("summary").getValue();
+		return Library.resource().getValue();
 	}
 
 	@Override
 	protected String getStringId() {
-		return myId;
+		return "@FBReaderLibraryRoot";
 	}
 }
