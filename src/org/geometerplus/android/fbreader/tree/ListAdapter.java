@@ -17,20 +17,11 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.library;
+package org.geometerplus.android.fbreader.tree;
 
 import java.util.*;
 
-import android.graphics.Bitmap;
-import android.view.*;
-import android.widget.*;
-
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.R;
+import android.widget.BaseAdapter;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -38,7 +29,7 @@ public abstract class ListAdapter extends BaseAdapter {
 	private final BaseActivity myActivity;
 	private final List<FBTree> myItems;
 
-	ListAdapter(BaseActivity activity, List<FBTree> items) {
+	protected ListAdapter(BaseActivity activity, List<FBTree> items) {
 		myActivity = activity;
 		myItems = Collections.synchronizedList(new ArrayList<FBTree>(items));
 		activity.setListAdapter(this);

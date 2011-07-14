@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.library;
+package org.geometerplus.android.fbreader.tree;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -29,7 +29,7 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-abstract class BaseActivity extends ListActivity implements View.OnCreateContextMenuListener {
+public abstract class BaseActivity extends ListActivity implements View.OnCreateContextMenuListener {
 	private FBTree myCurrentTree;
 
 	@Override
@@ -53,8 +53,8 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		myCurrentTree = tree;
 	}
 
-	protected abstract int getCoverResourceId(FBTree tree);
-	abstract boolean isTreeSelected(FBTree tree);
+	public abstract int getCoverResourceId(FBTree tree);
+	public abstract boolean isTreeSelected(FBTree tree);
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

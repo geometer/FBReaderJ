@@ -34,6 +34,9 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.android.fbreader.tree.BaseActivity;
+import org.geometerplus.android.fbreader.tree.ListAdapter;
+
 class LibraryListAdapter extends ListAdapter {
 	LibraryListAdapter(BaseActivity activity, List<FBTree> items) {
 		super(activity, items);

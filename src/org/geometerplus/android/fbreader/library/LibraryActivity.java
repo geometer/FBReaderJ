@@ -43,6 +43,9 @@ import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
 
+import org.geometerplus.android.fbreader.tree.BaseActivity;
+import org.geometerplus.android.fbreader.tree.ListAdapter;
+
 public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
 	public static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
@@ -95,7 +98,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	}
 
 	@Override
-	boolean isTreeSelected(FBTree tree) {
+	public boolean isTreeSelected(FBTree tree) {
 		final LibraryTree lTree = (LibraryTree)tree;
 		return lTree.isSelectable() && lTree.containsBook(mySelectedBook);
 	}
@@ -280,7 +283,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	// Item icons
 	//
 	@Override
-	protected int getCoverResourceId(FBTree tree) {
+	public int getCoverResourceId(FBTree tree) {
 		if (((LibraryTree)tree).getBook() != null) {
 			return R.drawable.ic_list_library_book;
 		} else if (tree instanceof FirstLevelTree) {
