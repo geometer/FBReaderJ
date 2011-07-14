@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.library;
 
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -31,16 +30,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.tree.FBTree;
 
 abstract class BaseActivity extends ListActivity implements View.OnCreateContextMenuListener {
-	static final String TREE_KEY_KEY = "TreeKey";
-	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
-
-	protected static final int CHILD_LIST_REQUEST = 0;
-	protected static final int BOOK_INFO_REQUEST = 1;
-
-	protected static final int RESULT_DONT_INVALIDATE_VIEWS = 0;
-	protected static final int RESULT_DO_INVALIDATE_VIEWS = 1;
-
-	protected FBTree myCurrentTree;
+	private FBTree myCurrentTree;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -55,6 +45,14 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		return (ListAdapter)super.getListAdapter();
 	}
 
+	protected FBTree getCurrentTree() {
+		return myCurrentTree;
+	}
+
+	protected void setCurrentTree(FBTree tree) {
+		myCurrentTree = tree;
+	}
+
 	protected abstract int getCoverResourceId(FBTree tree);
 	abstract boolean isTreeSelected(FBTree tree);
 
@@ -62,7 +60,7 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && myCurrentTree.Parent != null) {
 			final FBTree oldTree = myCurrentTree;
-			new OpenTreeRunnable(myCurrentTree.Parent).run();
+			openTree(myCurrentTree.Parent);
 			setSelection(getListAdapter().getIndex(oldTree));
 			return true;
 		} else {
@@ -70,56 +68,48 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		}
 	}
 
-	protected class OpenTreeRunnable implements Runnable {
-		private final FBTree myTree;
-
-		public OpenTreeRunnable(FBTree tree) {
-			myTree = tree;
-		}
-
-		public void run() {
-			switch (myTree.getOpeningStatus()) {
-				case WAIT_FOR_OPEN:
-				case ALWAYS_RELOAD_BEFORE_OPENING:
-					final String messageKey = myTree.getOpeningStatusMessage();
-					if (messageKey != null) {
-						UIUtil.runWithMessage(
-							BaseActivity.this, messageKey,
-							new Runnable() {
-								public void run() {
-									myTree.waitForOpening();
-								}
-							},
-							new Runnable() {
-								public void run() {
-									openTree();
-								}
+	protected void openTree(final FBTree tree) {
+		switch (tree.getOpeningStatus()) {
+			case WAIT_FOR_OPEN:
+			case ALWAYS_RELOAD_BEFORE_OPENING:
+				final String messageKey = tree.getOpeningStatusMessage();
+				if (messageKey != null) {
+					UIUtil.runWithMessage(
+						BaseActivity.this, messageKey,
+						new Runnable() {
+							public void run() {
+								tree.waitForOpening();
 							}
-						);
-					} else {
-						myTree.waitForOpening();
-						openTree();
-					}
-					break;
-				default:
-					openTree();
-					break;
-			}
+						},
+						new Runnable() {
+							public void run() {
+								openTreeInternal(tree);
+							}
+						}
+					);
+				} else {
+					tree.waitForOpening();
+					openTreeInternal(tree);
+				}
+				break;
+			default:
+				openTreeInternal(tree);
+				break;
 		}
+	}
 
-		protected void openTree() {
-			switch (myTree.getOpeningStatus()) {
-				case READY_TO_OPEN:
-				case ALWAYS_RELOAD_BEFORE_OPENING:
-					myCurrentTree = myTree;
-					getListAdapter().replaceAll(myCurrentTree.subTrees());
-					setTitle(myCurrentTree.getTreeTitle());
-					setSelection(getListAdapter().getFirstSelectedItemIndex());
-					break;
-				case CANNOT_OPEN:
-					UIUtil.showErrorMessage(BaseActivity.this, myTree.getOpeningStatusMessage());
-					break;
-			}
+	private void openTreeInternal(FBTree tree) {
+		switch (tree.getOpeningStatus()) {
+			case READY_TO_OPEN:
+			case ALWAYS_RELOAD_BEFORE_OPENING:
+				myCurrentTree = tree;
+				getListAdapter().replaceAll(myCurrentTree.subTrees());
+				setTitle(myCurrentTree.getTreeTitle());
+				setSelection(getListAdapter().getFirstSelectedItemIndex());
+				break;
+			case CANNOT_OPEN:
+				UIUtil.showErrorMessage(BaseActivity.this, tree.getOpeningStatusMessage());
+				break;
 		}
 	}
 }
