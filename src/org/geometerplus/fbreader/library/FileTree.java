@@ -109,7 +109,21 @@ public class FileTree extends LibraryTree {
 		return Book.getByFile(myFile);
 	}
 
-	public void update() {
+	@Override
+	public Status getOpeningStatus() {
+		if (!myFile.isReadable()) {
+			return Status.CANNOT_OPEN;
+		}
+		return Status.READY_TO_OPEN;
+	}
+
+	@Override
+	public String getOpeningStatusMessage() {
+		return "permissionDenied";
+	}
+
+	@Override
+	public void waitForOpening() {
 		if (getBook() != null) {
 			return;
 		}

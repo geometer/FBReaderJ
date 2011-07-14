@@ -131,15 +131,11 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		} else if (((LibraryTree)tree).getBook() != null) {
 			return R.drawable.ic_list_library_book;
 		} else if (tree instanceof FileTree) {
-			final FileTree fileTree = (FileTree)tree;
-			if (fileTree.getFile().isDirectory()) {
-				if (fileTree.getFile().isReadable()) {
-					return R.drawable.ic_list_library_folder;
-				} else {
-					return R.drawable.ic_list_library_permission_denied;
-				}
-			} else if (fileTree.getFile().isArchive()) {
+			final ZLFile file = ((FileTree)tree).getFile();
+			if (file.isArchive()) {
 				return R.drawable.ic_list_library_zip;
+			} else if (file.isDirectory() && file.isReadable()) {
+				return R.drawable.ic_list_library_folder;
 			} else {
 				return R.drawable.ic_list_library_permission_denied;
 			}
@@ -159,17 +155,7 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		if (book != null) {
 			showBookInfo(book);
 		} else if (tree instanceof FileTree) {
-			final ZLFile file = ((FileTree)tree).getFile();
-			if (!file.isReadable()) {
-				UIUtil.showErrorMessage(this, "permissionDenied");
-			} else if (file.isDirectory() || file.isArchive()) {
-				startActivityForResult(
-					new Intent(this, FileManager.class)
-						.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-						.putExtra(TREE_KEY_KEY, tree.getUniqueKey()),
-					CHILD_LIST_REQUEST
-				);
-			}
+			new OpenTreeRunnable(tree, FileManager.class).run();
 		} else {
 			final FBTreeInfo info = myInfoMap.get(tree);
 			if (info != null && info.Action != null) {

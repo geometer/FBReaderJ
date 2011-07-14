@@ -47,7 +47,7 @@ public final class FileManager extends BaseActivity {
 	private void startUpdate() {
 		new Thread(new Runnable() {
 			public void run() {
-				((FileTree)myCurrentTree).update();
+				myCurrentTree.waitForOpening();
 				getListAdapter().addAll(myCurrentTree.subTrees());
 				runOnUiThread(new Runnable() {
 					public void run() {
