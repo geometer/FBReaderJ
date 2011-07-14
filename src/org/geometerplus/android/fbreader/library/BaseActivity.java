@@ -44,16 +44,6 @@ import org.geometerplus.android.fbreader.BookInfoActivity;
 import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 
 abstract class BaseActivity extends ListActivity implements View.OnCreateContextMenuListener {
-	private static class FBTreeInfo {
-		final int CoverResourceId;
-		final Runnable Action;
-
-		FBTreeInfo(int coverResourceId, Runnable action) {
-			CoverResourceId = coverResourceId;
-			Action = action;
-		}
-	};
-
 	static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
@@ -76,7 +66,7 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 	private Book mySelectedBook;
 	protected LibraryTree myCurrentTree;
 
-	private final Map<FBTree,FBTreeInfo> myInfoMap = new HashMap<FBTree,FBTreeInfo>();
+	private final Map<FBTree,Integer> myIconMap = new HashMap<FBTree,Integer>();
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -119,15 +109,15 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		return (ListAdapter)super.getListAdapter();
 	}
 
-	protected void addFBTreeWithInfo(FBTree tree, int coverResourceId, Runnable action) {
+	protected void addFBTreeWithIcon(FBTree tree, int coverResourceId) {
 		getListAdapter().add(tree);
-		myInfoMap.put(tree, new FBTreeInfo(coverResourceId, action));
+		myIconMap.put(tree, coverResourceId);
 	}
 
 	int getCoverResourceId(FBTree tree) {
-		final FBTreeInfo info = myInfoMap.get(tree);
-		if (info != null && info.CoverResourceId != -1) {
-			return info.CoverResourceId;
+		final Integer icon = myIconMap.get(tree);
+		if (icon != null) {
+			return icon.intValue();
 		} else if (((LibraryTree)tree).getBook() != null) {
 			return R.drawable.ic_list_library_book;
 		} else if (tree instanceof FileTree) {
@@ -154,15 +144,8 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 		final Book book = tree.getBook();
 		if (book != null) {
 			showBookInfo(book);
-		} else if (tree instanceof FileTree) {
-			new OpenTreeRunnable(tree, LibraryTreeActivity.class).run();
 		} else {
-			final FBTreeInfo info = myInfoMap.get(tree);
-			if (info != null && info.Action != null) {
-				info.Action.run();
-			} else {
-				new OpenTreeRunnable(tree, LibraryTreeActivity.class).run();
-			}
+			new OpenTreeRunnable(tree).run();
 		}
 	}
 
@@ -277,11 +260,9 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 
 	protected class OpenTreeRunnable implements Runnable {
 		private final FBTree myTree;
-		private final Class<?> myActivityClass;
 
-		public OpenTreeRunnable(FBTree tree, Class<?> activityClass) {
+		public OpenTreeRunnable(FBTree tree) {
 			myTree = tree;
-			myActivityClass = activityClass;
 		}
 
 		public void run() {
@@ -319,7 +300,7 @@ abstract class BaseActivity extends ListActivity implements View.OnCreateContext
 				case READY_TO_OPEN:
 				case ALWAYS_RELOAD_BEFORE_OPENING:
 					startActivityForResult(
-						new Intent(BaseActivity.this, myActivityClass)
+						new Intent(BaseActivity.this, LibraryTreeActivity.class)
 							.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
 							.putExtra(TREE_KEY_KEY, myTree.getUniqueKey()),
 						CHILD_LIST_REQUEST

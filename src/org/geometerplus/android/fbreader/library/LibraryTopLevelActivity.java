@@ -42,19 +42,18 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, Collections.<FBTree>emptyList());
 
-		addTopLevelTree(Library.ROOT_FAVORITES, R.drawable.ic_list_library_favorites, LibraryTreeActivity.class);
-		addTopLevelTree(Library.ROOT_RECENT, R.drawable.ic_list_library_recent, LibraryTreeActivity.class);
-		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors, LibraryTreeActivity.class);
-		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books, LibraryTreeActivity.class);
-		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags, LibraryTreeActivity.class);
-		addTopLevelTree(Library.ROOT_FILE_TREE, R.drawable.ic_list_library_folder, LibraryTreeActivity.class);
+		addTopLevelTree(Library.ROOT_FAVORITES, R.drawable.ic_list_library_favorites);
+		addTopLevelTree(Library.ROOT_RECENT, R.drawable.ic_list_library_recent);
+		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors);
+		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books);
+		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags);
+		addTopLevelTree(Library.ROOT_FILE_TREE, R.drawable.ic_list_library_folder);
 
 		onNewIntent(getIntent());
 	}
 
-	private void addTopLevelTree(String key, int imageId, Class<?> activityClass) {
-		final RootTree root = LibraryInstance.getRootTree(key);
-		addFBTreeWithInfo(root, imageId, new OpenTreeRunnable(root, activityClass));
+	private void addTopLevelTree(String key, int imageId) {
+		addFBTreeWithIcon(LibraryInstance.getRootTree(key), imageId);
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		adapter.add(0, mySearchResultsItem);
 		getListView().invalidateViews();
 		adapter.notifyDataSetChanged();
-		new OpenTreeRunnable(mySearchResultsItem, LibraryTreeActivity.class).run();
+		new OpenTreeRunnable(mySearchResultsItem).run();
 	}
 
 	public void onNewIntent(Intent intent) {
