@@ -44,12 +44,8 @@ public final class FileManager extends BaseActivity {
 		new Thread(new Runnable() {
 			public void run() {
 				myCurrentTree.waitForOpening();
+				getListAdapter().clear();
 				getListAdapter().addAll(myCurrentTree.subTrees());
-				runOnUiThread(new Runnable() {
-					public void run() {
-						setSelection(getListAdapter().getFirstSelectedItemIndex());
-					}
-				});
 			}
 		}).start();
 	}
@@ -58,7 +54,6 @@ public final class FileManager extends BaseActivity {
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
 			if (myCurrentTree instanceof FileTree) {
-				getListAdapter().clear();
 				startUpdate();
 			}
 			getListView().invalidateViews();
