@@ -21,17 +21,10 @@ package org.geometerplus.android.fbreader.library;
 
 import java.util.List;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.library.FirstLevelTree;
-
-import org.geometerplus.android.util.UIUtil;
 
 public class LibraryTopLevelActivity extends LibraryActivity {
 	@Override
