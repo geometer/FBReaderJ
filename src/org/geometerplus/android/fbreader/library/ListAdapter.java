@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.library.BookTree;
+import org.geometerplus.fbreader.library.FileTree;
 
 public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenuListener {
 	private final BaseActivity myActivity;
@@ -198,8 +199,8 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		final FBTree tree = getItem(position);
 		if (tree instanceof BookTree) {
 			myActivity.createBookContextMenu(menu, ((BookTree)tree).Book);
-		} else if (tree instanceof FileItem) {
-			final Book book = ((FileItem)getItem(position)).getBook();
+		} else if (tree instanceof FileTree) {
+			final Book book = ((FileTree)getItem(position)).getBook();
 			if (book != null) {
 				myActivity.createBookContextMenu(menu, book); 
 			}

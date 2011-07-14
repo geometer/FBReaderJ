@@ -17,28 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.library;
+package org.geometerplus.fbreader.library;
 
-import java.util.*;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.tree.FBTree;
 
-class FileItem extends LibraryTree {
+public class FileTree extends LibraryTree {
 	private final ZLFile myFile;
 	private final String myName;
 	private final String mySummary;
 	private final boolean myIsSelectable;
 
-	public FileItem(LibraryTree parent, ZLFile file, String name, String summary) {
+	public FileTree(LibraryTree parent, ZLFile file, String name, String summary) {
 		super(parent);
 		myFile = file;
 		myName = name;
@@ -46,7 +41,7 @@ class FileItem extends LibraryTree {
 		myIsSelectable = false;
 	}
 
-	public FileItem(FileItem parent, ZLFile file) {
+	public FileTree(FileTree parent, ZLFile file) {
 		super(parent);
 		if (file.isArchive() && file.getPath().endsWith(".fb2.zip")) {
 			final List<ZLFile> children = file.children();
@@ -113,7 +108,7 @@ class FileItem extends LibraryTree {
 		return Book.getByFile(myFile);
 	}
 
-	void update() {
+	public void update() {
 		if (getBook() != null) {
 			return;
 		}
@@ -121,7 +116,7 @@ class FileItem extends LibraryTree {
 		for (ZLFile file : myFile.children()) {
 			if (file.isDirectory() || file.isArchive() ||
 				PluginCollection.Instance().getPlugin(file) != null) {
-				new FileItem(this, file);
+				new FileTree(this, file);
 			}
 		}
 		sortAllChildren();
@@ -132,19 +127,19 @@ class FileItem extends LibraryTree {
 		if (o == this) {
 			return true;
 		}
-		if (!(o instanceof FileItem)) {
+		if (!(o instanceof FileTree)) {
 			return true;
 		}
-		return myFile.equals(((FileItem)o).myFile);
+		return myFile.equals(((FileTree)o).myFile);
 	}
 
 	@Override
 	public int compareTo(FBTree tree) {
-		final FileItem item = (FileItem)tree;
+		final FileTree fileTree = (FileTree)tree;
 		final boolean isDir = myFile.isDirectory();
-		if (isDir != item.myFile.isDirectory()) {
+		if (isDir != fileTree.myFile.isDirectory()) {
 			return isDir ? -1 : 1;
 		} 
-		return getName().compareToIgnoreCase(item.getName());
+		return getName().compareToIgnoreCase(fileTree.getName());
 	}
 }

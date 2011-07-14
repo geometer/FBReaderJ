@@ -127,17 +127,17 @@ abstract class BaseActivity extends ListActivity {
 		final FBTreeInfo info = myInfoMap.get(tree);
 		if (info != null && info.CoverResourceId != -1) {
 			return info.CoverResourceId;
-		} else if (tree instanceof FileItem) {
-			final FileItem item = (FileItem)tree;
-			if (item.getBook() != null) {
+		} else if (tree instanceof FileTree) {
+			final FileTree fileTree = (FileTree)tree;
+			if (fileTree.getBook() != null) {
 				return R.drawable.ic_list_library_book;
-			} else if (item.getFile().isDirectory()) {
-				if (item.getFile().isReadable()) {
+			} else if (fileTree.getFile().isDirectory()) {
+				if (fileTree.getFile().isReadable()) {
 					return R.drawable.ic_list_library_folder;
 				} else {
 					return R.drawable.ic_list_library_permission_denied;
 				}
-			} else if (item.getFile().isArchive()) {
+			} else if (fileTree.getFile().isArchive()) {
 				return R.drawable.ic_list_library_zip;
 			} else {
 				return R.drawable.ic_list_library_permission_denied;
@@ -156,10 +156,10 @@ abstract class BaseActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView listView, View view, int position, long rowId) {
 		final FBTree tree = getListAdapter().getItem(position);
-		if (tree instanceof FileItem) {
-			final FileItem item = (FileItem)tree;
-			final ZLFile file = item.getFile();
-			final Book book = item.getBook();
+		if (tree instanceof FileTree) {
+			final FileTree fileTree = (FileTree)tree;
+			final ZLFile file = fileTree.getFile();
+			final Book book = fileTree.getBook();
 			if (book != null) {
 				showBookInfo(book);
 			} else if (!file.isReadable()) {
@@ -209,12 +209,12 @@ abstract class BaseActivity extends ListActivity {
 					}
 				}
 			}
-		} else if (tree instanceof FileItem) {
-			final FileItem item = (FileItem)tree;
-			if (!item.isSelectable()) {
+		} else if (tree instanceof FileTree) {
+			final FileTree fileTree = (FileTree)tree;
+			if (!fileTree.isSelectable()) {
 				return false;
 			}
-			final ZLFile file = item.getFile();
+			final ZLFile file = fileTree.getFile();
 			final String path = file.getPath();
 			if (mySelectedBookPath.equals(path)) {
 				return true;
@@ -306,8 +306,8 @@ abstract class BaseActivity extends ListActivity {
 		final FBTree tree = getListAdapter().getItem(position);
 		if (tree instanceof BookTree) {
 			return onContextItemSelected(item.getItemId(), ((BookTree)tree).Book);
-		} else if (tree instanceof FileItem) {
-			final Book book = ((FileItem)tree).getBook(); 
+		} else if (tree instanceof FileTree) {
+			final Book book = ((FileTree)tree).getBook(); 
 			if (book != null) {
 				return onContextItemSelected(item.getItemId(), book);
 			}

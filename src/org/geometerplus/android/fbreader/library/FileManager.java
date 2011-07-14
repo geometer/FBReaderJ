@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Library;
 import org.geometerplus.fbreader.library.LibraryTree;
+import org.geometerplus.fbreader.library.FileTree;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -40,7 +41,7 @@ public final class FileManager extends BaseActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 
-		if (myCurrentTree instanceof FileItem) {
+		if (myCurrentTree instanceof FileTree) {
 			startUpdate();
 		} else {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
@@ -54,7 +55,7 @@ public final class FileManager extends BaseActivity {
 	private void startUpdate() {
 		new Thread(new Runnable() {
 			public void run() {
-				((FileItem)myCurrentTree).update();
+				((FileTree)myCurrentTree).update();
 				getListAdapter().addAll(myCurrentTree.subTrees());
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -68,7 +69,7 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
-			if (myCurrentTree instanceof FileItem) {
+			if (myCurrentTree instanceof FileTree) {
 				getListAdapter().clear();
 				startUpdate();
 			}
@@ -82,13 +83,13 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-		getListAdapter().remove(new FileItem((FileItem)myCurrentTree, book.File));
+		getListAdapter().remove(new FileTree((FileTree)myCurrentTree, book.File));
 		getListView().invalidateViews();
 	}
 
 	private void addItem(String path, String resourceKey) {
 		final ZLResource resource = Library.resource().getResource(resourceKey);
-		getListAdapter().add(new FileItem(
+		getListAdapter().add(new FileTree(
 			myCurrentTree,
 			ZLFile.createFileByPath(path),
 			resource.getValue(),
