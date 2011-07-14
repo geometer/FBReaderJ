@@ -29,12 +29,12 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.library.RootTree;
+import org.geometerplus.fbreader.library.FirstLevelTree;
 
 import org.geometerplus.android.util.UIUtil;
 
 public class LibraryTopLevelActivity extends LibraryBaseActivity {
-	private RootTree mySearchResultsItem;
+	private FirstLevelTree mySearchResultsItem;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -42,18 +42,14 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, Collections.<FBTree>emptyList());
 
-		addTopLevelTree(Library.ROOT_FAVORITES, R.drawable.ic_list_library_favorites);
-		addTopLevelTree(Library.ROOT_RECENT, R.drawable.ic_list_library_recent);
-		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors);
-		addTopLevelTree(Library.ROOT_BY_TITLE, R.drawable.ic_list_library_books);
-		addTopLevelTree(Library.ROOT_BY_TAG, R.drawable.ic_list_library_tags);
-		addTopLevelTree(Library.ROOT_FILE_TREE, R.drawable.ic_list_library_folder);
+		adapter.add(LibraryInstance.getRootTree(Library.ROOT_FAVORITES));
+		adapter.add(LibraryInstance.getRootTree(Library.ROOT_RECENT));
+		adapter.add(LibraryInstance.getRootTree(Library.ROOT_BY_AUTHOR));
+		adapter.add(LibraryInstance.getRootTree(Library.ROOT_BY_TITLE));
+		adapter.add(LibraryInstance.getRootTree(Library.ROOT_BY_TAG));
+		adapter.add(LibraryInstance.getRootTree(Library.ROOT_FILE_TREE));
 
 		onNewIntent(getIntent());
-	}
-
-	private void addTopLevelTree(String key, int imageId) {
-		addFBTreeWithIcon(LibraryInstance.getRootTree(key), imageId);
 	}
 
 	@Override

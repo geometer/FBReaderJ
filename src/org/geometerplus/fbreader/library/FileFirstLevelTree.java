@@ -20,58 +20,35 @@
 package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-public class RootTree extends LibraryTree {
-	private final Library myLibrary;
-	private final String myId;
-	private final ZLResource myResource;
+import org.geometerplus.fbreader.Paths;
 
-	RootTree(Library library, String id) {
-		myLibrary = library;
-		myId = id;
-		myResource = Library.resource().getResource(myId);
+public class FileFirstLevelTree extends FirstLevelTree {
+	FileFirstLevelTree(Library library, String id) {
+		super(library, id);
+		addChild(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
+		addChild("/", "fileTreeRoot");
+		addChild(Paths.cardDirectory(), "fileTreeCard");
 	}
 
-	@Override
-	public String getName() {
-		return myResource.getValue();
+	private void addChild(String path, String resourceKey) {
+		final ZLResource resource = Library.resource().getResource(resourceKey);
+		new FileTree(
+			this,
+			ZLFile.createFileByPath(path),
+			resource.getValue(),
+			resource.getResource("summary").getValue()
+		);
 	}
 
 	@Override
 	public String getTreeTitle() {
-		return getSecondString();
-	}
-
-	@Override
-	protected String getSummary() {
-		return myResource.getResource("summary").getValue();
-	}
-
-	@Override
-	protected String getStringId() {
-		return myId;
+		return getName();
 	}
 
 	@Override
 	public Status getOpeningStatus() {
-		return
-			myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)
-				? Status.READY_TO_OPEN
-				: Status.WAIT_FOR_OPEN;
-	}
-
-	@Override
-	public String getOpeningStatusMessage() {
-		return "loadingBookList";
-	}
-
-	@Override
-	public void waitForOpening() {
-		myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
-	}
-
-	@Override
-	public boolean isSelectable() {
-		return false;
+		return Status.READY_TO_OPEN;
 	}
 }

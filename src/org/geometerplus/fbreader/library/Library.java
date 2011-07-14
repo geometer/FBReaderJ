@@ -51,20 +51,20 @@ public final class Library {
 
 	private final List<Book> myBooks = new LinkedList<Book>();
 	private final Set<Book> myExternalBooks = new HashSet<Book>();
-	private final Map<String,RootTree> myRootTrees = new HashMap<String,RootTree>();
+	private final Map<String,FirstLevelTree> myRootTrees = new HashMap<String,FirstLevelTree>();
 
 	private volatile int myState = STATE_NOT_INITIALIZED;
 	private volatile boolean myInterrupted = false;
 
 	public Library() {
 		myRootTrees.put(ROOT_FAVORITES, new FavoritesTree(this, ROOT_FAVORITES));
-		myRootTrees.put(ROOT_FILE_TREE, new FileRootTree(this, ROOT_FILE_TREE));
+		myRootTrees.put(ROOT_FILE_TREE, new FileFirstLevelTree(this, ROOT_FILE_TREE));
 	}
 
-	public RootTree getRootTree(String id) {
-		RootTree root = myRootTrees.get(id);
+	public FirstLevelTree getRootTree(String id) {
+		FirstLevelTree root = myRootTrees.get(id);
 		if (root == null) {
-			root = new RootTree(this, id);
+			root = new FirstLevelTree(this, id);
 			myRootTrees.put(id, root);
 		}
 		return root;
@@ -408,7 +408,7 @@ public final class Library {
 
 	public LibraryTree searchBooks(String pattern) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		final RootTree newSearchResults = new SearchResultsTree(this, ROOT_SEARCH_RESULTS, pattern);
+		final FirstLevelTree newSearchResults = new SearchResultsTree(this, ROOT_SEARCH_RESULTS, pattern);
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();
 			for (Book book : myBooks) {
