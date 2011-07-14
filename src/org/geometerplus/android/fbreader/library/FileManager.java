@@ -34,7 +34,7 @@ public final class FileManager extends BaseActivity {
 		super.onCreate(icicle);
 
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
-		adapter.addAll(myCurrentTree.subTrees());
+		adapter.replaceAll(myCurrentTree.subTrees());
 		setSelection(getListAdapter().getFirstSelectedItemIndex());
 
 		getListView().setTextFilterEnabled(true);
@@ -44,8 +44,7 @@ public final class FileManager extends BaseActivity {
 		new Thread(new Runnable() {
 			public void run() {
 				myCurrentTree.waitForOpening();
-				getListAdapter().clear();
-				getListAdapter().addAll(myCurrentTree.subTrees());
+				getListAdapter().replaceAll(myCurrentTree.subTrees());
 			}
 		}).start();
 	}

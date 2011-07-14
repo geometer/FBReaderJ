@@ -19,8 +19,13 @@
 
 package org.geometerplus.android.fbreader.library;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
+
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.library.Book;
 
 public class LibraryTreeActivity extends LibraryBaseActivity {
 	@Override
@@ -42,7 +47,15 @@ public class LibraryTreeActivity extends LibraryBaseActivity {
 			return;
 		}
 
-		final ListAdapter adapter = new ListAdapter(this, myCurrentTree.subTrees());
+		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
+		adapter.replaceAll(myCurrentTree.subTrees());
 		setSelection(adapter.getFirstSelectedItemIndex());
+	}
+
+	@Override
+	protected void deleteBook(Book book, int mode) {
+		super.deleteBook(book, mode);
+		getListAdapter().replaceAll(myCurrentTree.subTrees());
+		getListView().invalidateViews();
 	}
 }

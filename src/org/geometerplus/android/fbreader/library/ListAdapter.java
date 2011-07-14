@@ -44,14 +44,6 @@ public class ListAdapter extends BaseAdapter {
 		activity.setListAdapter(this);
 	}
 
-	public void clear() {
-		myActivity.runOnUiThread(new Runnable() {
-			public void run() {
-				myItems.clear();
-			}
-		});
-	}
-
 	public void remove(final FBTree item) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
@@ -79,9 +71,10 @@ public class ListAdapter extends BaseAdapter {
 		});
 	}
 
-	public void addAll(final Collection<FBTree> items) {
+	public void replaceAll(final Collection<FBTree> items) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
+				myItems.clear();
 				myItems.addAll(items);
 				notifyDataSetChanged();
 			}

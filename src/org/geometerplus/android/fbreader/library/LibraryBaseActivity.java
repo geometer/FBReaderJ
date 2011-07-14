@@ -31,7 +31,6 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.library.Library;
-import org.geometerplus.fbreader.library.Book;
 
 abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
 	static final ZLStringOption BookSearchPatternOption =
@@ -89,11 +88,4 @@ abstract class LibraryBaseActivity extends BaseActivity implements MenuItem.OnMe
                 return true;
         }
     }
-
-	@Override
-	protected void deleteBook(Book book, int mode) {
-		super.deleteBook(book, mode);
-		getListView().invalidateViews();
-		getListAdapter().notifyDataSetChanged();
-	}
 }
