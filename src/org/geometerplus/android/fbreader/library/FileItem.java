@@ -40,18 +40,15 @@ class FileItem extends LibraryTree implements ZLAndroidTree {
 	private final String mySummary;
 	private final boolean myIsSelectable;
 
-	public FileItem(ZLFile file, String name, String summary) {
+	public FileItem(LibraryTree parent, ZLFile file, String name, String summary) {
+		super(parent);
 		myFile = file;
 		myName = name;
 		mySummary = summary;
 		myIsSelectable = false;
 	}
 
-	public FileItem(ZLFile file) {
-		this(null, file);
-	}
-
-	private FileItem(FileItem parent, ZLFile file) {
+	public FileItem(FileItem parent, ZLFile file) {
 		super(parent);
 		if (file.isArchive() && file.getPath().endsWith(".fb2.zip")) {
 			final List<ZLFile> children = file.children();
@@ -133,6 +130,7 @@ class FileItem extends LibraryTree implements ZLAndroidTree {
 		if (getBook() != null) {
 			return;
 		}
+		clear();
 		for (ZLFile file : myFile.children()) {
 			if (file.isDirectory() || file.isArchive() ||
 				PluginCollection.Instance().getPlugin(file) != null) {

@@ -25,16 +25,17 @@ import java.util.Collections;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.library.Library;
+import org.geometerplus.fbreader.library.LibraryTree;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public final class FileManager extends BaseActivity {
-	private ZLFile myFile;
+	private LibraryTree myFileItem;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -42,31 +43,25 @@ public final class FileManager extends BaseActivity {
 
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 
-		if (Library.ROOT_FILE_TREE.equals(myTreeKey.Id)) {
-			myFile = null;
-			setTitle(Library.resource().getResource(myTreeKey.Id).getValue());
+		myFileItem = LibraryInstance.getLibraryTree(myTreeKey);
+		if (myFileItem instanceof FileItem) {
+			setTitle(myTreeKey.Id);
+			startUpdate();
+		} else {
+			setTitle(myFileItem.getName());
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
 			addItem("/", "fileTreeRoot");
 			addItem(Paths.cardDirectory(), "fileTreeCard");
-		} else {
-			myFile = ZLFile.createFileByPath(myTreeKey.Id);
-			if (myFile == null) {
-				finish();
-				return;
-			}
-			setTitle(myTreeKey.Id);
-			startUpdate();
 		}
 
 		getListView().setTextFilterEnabled(true);
 	}
 
 	private void startUpdate() {
-		final FileItem parent = new FileItem(myFile);
 		new Thread(new Runnable() {
 			public void run() {
-				parent.update();
-				getListAdapter().addAll(parent.subTrees());
+				((FileItem)myFileItem).update();
+				getListAdapter().addAll(myFileItem.subTrees());
 				runOnUiThread(new Runnable() {
 					public void run() {
 						setSelection(getListAdapter().getFirstSelectedItemIndex());
@@ -79,7 +74,7 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
-			if (myFile != null) {
+			if (myFileItem instanceof FileItem) {
 				getListAdapter().clear();
 				startUpdate();
 			}
@@ -93,13 +88,14 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-		getListAdapter().remove(new FileItem(book.File));
+		getListAdapter().remove(new FileItem((FileItem)myFileItem, book.File));
 		getListView().invalidateViews();
 	}
 
 	private void addItem(String path, String resourceKey) {
 		final ZLResource resource = Library.resource().getResource(resourceKey);
 		getListAdapter().add(new FileItem(
+			myFileItem,
 			ZLFile.createFileByPath(path),
 			resource.getValue(),
 			resource.getResource("summary").getValue()
