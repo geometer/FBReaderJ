@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.*;
+import java.util.List;
 
 import android.graphics.Bitmap;
 import android.view.*;
