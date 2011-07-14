@@ -48,18 +48,16 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		adapter.add(new TopLevelTree(
 			rootFavorites,
 			R.drawable.ic_list_library_favorites,
-			new OpenTreeRunnable(
-				LibraryInstance,
-				new StartTreeActivityRunnable(rootFavorites.getUniqueKey()) {
-					public void run() {
-						if (LibraryInstance.favorites().hasChildren()) {
-							super.run();
-						} else {
-							UIUtil.showErrorMessage(LibraryTopLevelActivity.this, "noFavorites");
-						}
+			new OpenTreeRunnable(LibraryInstance, rootFavorites) {
+				@Override
+				protected void openTree() {
+					if (LibraryInstance.favorites().hasChildren()) {
+						super.openTree();
+					} else {
+						UIUtil.showErrorMessage(LibraryTopLevelActivity.this, "noFavorites");
 					}
 				}
-			)
+			}
 		));
 		addTopLevelTree(Library.ROOT_RECENT, R.drawable.ic_list_library_recent);
 		addTopLevelTree(Library.ROOT_BY_AUTHOR, R.drawable.ic_list_library_authors);
@@ -87,7 +85,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		getListAdapter().add(new TopLevelTree(
 			root,
 			imageId,
-			new OpenTreeRunnable(LibraryInstance, root.getUniqueKey())
+			new OpenTreeRunnable(LibraryInstance, root)
 		));
 	}
 
@@ -104,7 +102,7 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 		mySearchResultsItem = new TopLevelTree(
 			searchRoot,
 			R.drawable.ic_list_library_books,
-			new OpenTreeRunnable(LibraryInstance, searchRoot.getUniqueKey())
+			new OpenTreeRunnable(LibraryInstance, searchRoot)
 		);
 		adapter.add(0, mySearchResultsItem);
 		getListView().invalidateViews();

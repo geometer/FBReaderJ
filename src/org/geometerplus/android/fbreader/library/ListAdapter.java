@@ -120,7 +120,7 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		return -1;
 	}
 
-	protected Bitmap getCoverBitmap(ZLImage cover) {
+	private Bitmap getCoverBitmap(ZLImage cover) {
 		if (cover == null) {
 			return null;
 		}
@@ -148,7 +148,7 @@ public class ListAdapter extends BaseAdapter implements View.OnCreateContextMenu
 		}
 	};
 
-	protected ImageView getCoverView(View parent) {
+	private ImageView getCoverView(View parent) {
 		if (myCoverWidth == -1) {
 			parent.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 			myCoverHeight = parent.getMeasuredHeight();

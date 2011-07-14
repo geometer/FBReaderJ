@@ -118,7 +118,7 @@ abstract class BaseActivity extends ListActivity {
 		} else if (tree instanceof BookTree) {
 			showBookInfo(((BookTree)tree).Book);
 		} else {
-			new OpenTreeRunnable(LibraryInstance, tree.getUniqueKey()).run();
+			new OpenTreeRunnable(LibraryInstance, tree).run();
 		}
 	}
 
@@ -275,34 +275,13 @@ abstract class BaseActivity extends ListActivity {
 		return false;
 	}
 
-	protected class StartTreeActivityRunnable implements Runnable {
-		private final FBTree.Key myTreeKey;
-
-		public StartTreeActivityRunnable(FBTree.Key key) {
-			myTreeKey = key;
-		}
-
-		public void run() {
-			startActivityForResult(
-				new Intent(BaseActivity.this, LibraryTreeActivity.class)
-					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
-					.putExtra(TREE_KEY_KEY, myTreeKey),
-				CHILD_LIST_REQUEST
-			);
-		}
-	}
-
 	protected class OpenTreeRunnable implements Runnable {
 		private final Library myLibrary;
-		private final Runnable myPostRunnable;
+		private final FBTree myTree;
 
-		public OpenTreeRunnable(Library library, FBTree.Key key) {
-			this(library, new StartTreeActivityRunnable(key));
-		}
-
-		public OpenTreeRunnable(Library library, Runnable postRunnable) {
+		public OpenTreeRunnable(Library library, FBTree tree) {
 			myLibrary = library;
-			myPostRunnable = postRunnable;
+			myTree = tree;
 		}
 
 		public void run() {
@@ -310,16 +289,31 @@ abstract class BaseActivity extends ListActivity {
 				return;
 			}
 			if (myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)) {
-				myPostRunnable.run();
+				openTree();
 			} else {
-				UIUtil.runWithMessage(BaseActivity.this, "loadingBookList",
-				new Runnable() {
-					public void run() {
-						myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
+				UIUtil.runWithMessage(
+					BaseActivity.this, "loadingBookList",
+					new Runnable() {
+						public void run() {
+							myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
+						}
+					},
+					new Runnable() {
+						public void run() {
+							openTree();
+						}
 					}
-				},
-				myPostRunnable);
+				);
 			}
+		}
+
+		protected void openTree() {
+			startActivityForResult(
+				new Intent(BaseActivity.this, LibraryTreeActivity.class)
+					.putExtra(SELECTED_BOOK_PATH_KEY, mySelectedBookPath)
+					.putExtra(TREE_KEY_KEY, myTree.getUniqueKey()),
+				CHILD_LIST_REQUEST
+			);
 		}
 	}
 }
