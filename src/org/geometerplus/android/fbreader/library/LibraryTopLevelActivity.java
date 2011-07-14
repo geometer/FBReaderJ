@@ -40,7 +40,6 @@ public class LibraryTopLevelActivity extends LibraryBaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		final ListAdapter adapter = new ListAdapter(this, new LinkedList<FBTree>());
 

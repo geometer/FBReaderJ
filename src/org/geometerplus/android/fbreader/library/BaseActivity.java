@@ -74,7 +74,7 @@ abstract class BaseActivity extends ListActivity {
 
 	protected String mySelectedBookPath;
 	private Book mySelectedBook;
-	protected FBTree.Key myTreeKey;
+	protected LibraryTree myCurrentTree;
 
 	private final Map<FBTree,FBTreeInfo> myInfoMap = new HashMap<FBTree,FBTreeInfo>();
 
@@ -92,7 +92,14 @@ abstract class BaseActivity extends ListActivity {
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		myTreeKey = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
+		final FBTree.Key key = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
+		if (key != null) {
+			myCurrentTree = LibraryInstance.getLibraryTree(key);
+			setTitle(myCurrentTree.getTreeTitle());
+		} else {
+			myCurrentTree = null;
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+		}
         
 		mySelectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;

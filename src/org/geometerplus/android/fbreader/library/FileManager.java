@@ -34,17 +34,13 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public final class FileManager extends BaseActivity {
-	private LibraryTree myFileItem;
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		final ListAdapter adapter = new ListAdapter(this, new ArrayList<FBTree>());
 
-		myFileItem = LibraryInstance.getLibraryTree(myTreeKey);
-		setTitle(myFileItem.getTreeTitle());
-		if (myFileItem instanceof FileItem) {
+		if (myCurrentTree instanceof FileItem) {
 			startUpdate();
 		} else {
 			addItem(Paths.BooksDirectoryOption().getValue(), "fileTreeLibrary");
@@ -58,8 +54,8 @@ public final class FileManager extends BaseActivity {
 	private void startUpdate() {
 		new Thread(new Runnable() {
 			public void run() {
-				((FileItem)myFileItem).update();
-				getListAdapter().addAll(myFileItem.subTrees());
+				((FileItem)myCurrentTree).update();
+				getListAdapter().addAll(myCurrentTree.subTrees());
 				runOnUiThread(new Runnable() {
 					public void run() {
 						setSelection(getListAdapter().getFirstSelectedItemIndex());
@@ -72,7 +68,7 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == CHILD_LIST_REQUEST && returnCode == RESULT_DO_INVALIDATE_VIEWS) {
-			if (myFileItem instanceof FileItem) {
+			if (myCurrentTree instanceof FileItem) {
 				getListAdapter().clear();
 				startUpdate();
 			}
@@ -86,14 +82,14 @@ public final class FileManager extends BaseActivity {
 	@Override
 	protected void deleteBook(Book book, int mode) {
 		super.deleteBook(book, mode);
-		getListAdapter().remove(new FileItem((FileItem)myFileItem, book.File));
+		getListAdapter().remove(new FileItem((FileItem)myCurrentTree, book.File));
 		getListView().invalidateViews();
 	}
 
 	private void addItem(String path, String resourceKey) {
 		final ZLResource resource = Library.resource().getResource(resourceKey);
 		getListAdapter().add(new FileItem(
-			myFileItem,
+			myCurrentTree,
 			ZLFile.createFileByPath(path),
 			resource.getValue(),
 			resource.getResource("summary").getValue()
