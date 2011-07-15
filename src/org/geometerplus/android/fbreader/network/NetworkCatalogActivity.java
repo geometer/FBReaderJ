@@ -24,12 +24,7 @@ import android.view.*;
 import android.widget.BaseAdapter;
 import android.content.Intent;
 
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
@@ -99,58 +94,14 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		return super.onContextItemSelected(item);
 	}
 
-	private final MyCredentialsCreator myCredentialsCreator = new MyCredentialsCreator();
-
-	private class MyCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
-		private volatile String myUsername;
-		private volatile String myPassword;
-        
-		public Credentials createCredentials(String scheme, AuthScope scope) {
-			if (!"basic".equalsIgnoreCase(scope.getScheme())) {
-				return null;
-			}
-
-			final Intent intent = new Intent();
-			final String host = scope.getHost();
-			final String area = scope.getRealm();
-			final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
-			intent.setClass(NetworkCatalogActivity.this, AuthenticationActivity.class);
-			intent.putExtra(AuthenticationActivity.HOST_KEY, host);
-			intent.putExtra(AuthenticationActivity.AREA_KEY, area);
-			intent.putExtra(AuthenticationActivity.SCHEME_KEY, scheme);
-			intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
-			startActivityForResult(intent, BASIC_AUTHENTICATION_CODE);
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-				}
-			}
-        
-			Credentials creds = null;
-			if (myUsername != null && myPassword != null) {
-				option.setValue(myUsername);
-				creds = new UsernamePasswordCredentials(myUsername, myPassword);
-			}
-			myUsername = null;
-			myPassword = null;
-			return creds;
-		}
-	}
+	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
+		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case BASIC_AUTHENTICATION_CODE:
-				synchronized (myCredentialsCreator) {
-					if (resultCode == AuthenticationActivity.RESULT_OK && data != null) {
-						myCredentialsCreator.myUsername =
-							data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
-						myCredentialsCreator.myPassword =
-							data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
-					}
-					myCredentialsCreator.notify();
-				}
+				myCredentialsCreator.onDataReceived(resultCode, data);
 				break;
 			case CUSTOM_AUTHENTICATION_CODE:
 				Util.processCustomAuthentication(
