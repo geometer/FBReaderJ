@@ -29,15 +29,13 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-public abstract class BaseActivity extends ListActivity implements View.OnCreateContextMenuListener {
+public abstract class BaseActivity extends ListActivity {
 	private FBTree myCurrentTree;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-
-		getListView().setOnCreateContextMenuListener(this);
 	}
 
 	@Override
@@ -53,7 +51,6 @@ public abstract class BaseActivity extends ListActivity implements View.OnCreate
 		myCurrentTree = tree;
 	}
 
-	public abstract int getCoverResourceId(FBTree tree);
 	public abstract boolean isTreeSelected(FBTree tree);
 
 	@Override

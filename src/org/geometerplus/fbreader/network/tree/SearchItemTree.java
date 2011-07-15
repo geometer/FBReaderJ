@@ -46,6 +46,14 @@ public class SearchItemTree extends NetworkTree {
 		return ZLResource.resource("networkView").getResource("searchSummary").getValue();
 	}
 
+	@Override
+	public String getTreeTitle() {
+		if (myResult != null) {
+			return myResult.Summary;
+		}
+		return getName();
+	}
+
 	public void setSearchResult(SearchResult result) {
 		myResult = result;
 		clear();

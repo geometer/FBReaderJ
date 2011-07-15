@@ -48,7 +48,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		return (NetworkCatalogActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
 	}
 
-	private NetworkTree myTree;
 	private volatile boolean myInProgress;
 
 	@Override
@@ -57,14 +56,14 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		myTree = Util.getTreeFromIntent(getIntent());
+		setCurrentTree(Util.getTreeFromIntent(getIntent()));
 
-		if (myTree == null) {
+		if (getCurrentTree() == null) {
 			finish();
 			return;
 		}
 
-		setForTree(myTree, this);
+		setForTree((NetworkTree)getCurrentTree(), this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
@@ -73,8 +72,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		if (menuInfo == null && myTree instanceof NetworkCatalogTree) {
-			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
+		if (menuInfo == null && getCurrentTree() instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
 			if (Util.isTopupSupported(this, link)) {
 				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null) {
@@ -88,8 +87,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		if ((item == null || item.getMenuInfo() == null) && myTree instanceof NetworkCatalogTree) {
-			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
+		if ((item == null || item.getMenuInfo() == null) && getCurrentTree() instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
 			if (Util.isTopupSupported(this, link)) {
 				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null && TopupActions.runAction(this, link, item.getItemId())) {
@@ -155,34 +154,23 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 				break;
 			case CUSTOM_AUTHENTICATION_CODE:
 				Util.processCustomAuthentication(
-					this, ((NetworkCatalogTree)myTree).Item.Link, resultCode, data
+					this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data
 				);
 				break;
 			case SIGNUP_CODE:
-				Util.processSignup(((NetworkCatalogTree)myTree).Item.Link, resultCode, data);
+				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
 				break;
 		}
 	}
 
 	private final void setupTitle() {
-		String title = null;
-		final NetworkView networkView = NetworkView.Instance();
-		if (networkView.isInitialized()) {
-			final NetworkTreeActions actions = networkView.getActions(myTree);
-			if (actions != null) {
-				title = actions.getTreeTitle(myTree);
-			}
-		}
-		if (title == null) {
-			title = myTree.getName();
-		}
-		setTitle(title);
+		setTitle(getCurrentTree().getTreeTitle());
 		setProgressBarIndeterminateVisibility(myInProgress);
 	}
 
 	@Override
 	public void onDestroy() {
-		setForTree(myTree, null);
+		setForTree((NetworkTree)getCurrentTree(), null);
 		super.onDestroy();
 	}
 
@@ -194,14 +182,14 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	private final class CatalogAdapter extends BaseAdapter {
 		public final int getCount() {
-			return myTree.subTrees().size();
+			return getCurrentTree().subTrees().size();
 		}
 
 		public final NetworkTree getItem(int position) {
-			if (position < 0 || position >= myTree.subTrees().size()) {
+			if (position < 0 || position >= getCurrentTree().subTrees().size()) {
 				return null;
 			}
-			return (NetworkTree)myTree.subTrees().get(position);
+			return (NetworkTree)getCurrentTree().subTrees().get(position);
 		}
 
 		public final long getItemId(int position) {
@@ -215,7 +203,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		void onModelChanged() {
 			notifyDataSetChanged();
-			for (FBTree child : myTree.subTrees()) {
+			for (FBTree child : getCurrentTree().subTrees()) {
 				if (child instanceof TopUpTree) {
 					child.invalidateChildren();
 				}
@@ -238,7 +226,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public void onModelChanged() {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				final NetworkTree tree = getLoadableNetworkTree(myTree);
+				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
 				myInProgress =
 					tree != null &&
 					ItemsLoadingService.getRunnable(tree) != null;
@@ -266,7 +254,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private void doStopLoading() {
-		final ItemsLoader runnable = ItemsLoadingService.getRunnable(myTree);
+		final ItemsLoader runnable = ItemsLoadingService.getRunnable((NetworkTree)getCurrentTree());
 		if (runnable != null) {
 			runnable.interruptLoading();
 		}
@@ -275,18 +263,18 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		return NetworkView.Instance().createOptionsMenu(menu, myTree);
+		return NetworkView.Instance().createOptionsMenu(menu, (NetworkTree)getCurrentTree());
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		return NetworkView.Instance().prepareOptionsMenu(this, menu, myTree);
+		return NetworkView.Instance().prepareOptionsMenu(this, menu, (NetworkTree)getCurrentTree());
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (NetworkView.Instance().runOptionsMenu(this, item, myTree)) {
+		if (NetworkView.Instance().runOptionsMenu(this, item, (NetworkTree)getCurrentTree())) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

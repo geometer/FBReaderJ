@@ -27,12 +27,14 @@ import android.widget.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.tree.ListAdapter;
@@ -110,9 +112,45 @@ class LibraryListAdapter extends ListAdapter {
 		if (coverBitmap != null) {
 			coverView.setImageBitmap(coverBitmap);
 		} else {
-			coverView.setImageResource(getActivity().getCoverResourceId(tree));
+			coverView.setImageResource(getCoverResourceId(tree));
 		}
 
 		return view;
+	}
+
+	private int getCoverResourceId(FBTree tree) {
+		if (((LibraryTree)tree).getBook() != null) {
+			return R.drawable.ic_list_library_book;
+		} else if (tree instanceof FirstLevelTree) {
+			final String id = tree.getUniqueKey().Id;
+			if (Library.ROOT_FAVORITES.equals(id)) {
+				return R.drawable.ic_list_library_favorites;
+			} else if (Library.ROOT_RECENT.equals(id)) {
+				return R.drawable.ic_list_library_recent;
+			} else if (Library.ROOT_BY_AUTHOR.equals(id)) {
+				return R.drawable.ic_list_library_authors;
+			} else if (Library.ROOT_BY_TITLE.equals(id)) {
+				return R.drawable.ic_list_library_books;
+			} else if (Library.ROOT_BY_TAG.equals(id)) {
+				return R.drawable.ic_list_library_tags;
+			} else if (Library.ROOT_FILE_TREE.equals(id)) {
+				return R.drawable.ic_list_library_folder;
+			}
+		} else if (tree instanceof FileTree) {
+			final ZLFile file = ((FileTree)tree).getFile();
+			if (file.isArchive()) {
+				return R.drawable.ic_list_library_zip;
+			} else if (file.isDirectory() && file.isReadable()) {
+				return R.drawable.ic_list_library_folder;
+			} else {
+				return R.drawable.ic_list_library_permission_denied;
+			}
+		} else if (tree instanceof AuthorTree) {
+			return R.drawable.ic_list_library_author;
+		} else if (tree instanceof TagTree) {
+			return R.drawable.ic_list_library_tag;
+		}
+
+		return R.drawable.ic_list_library_books;
 	}
 }

@@ -77,7 +77,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		);
 	}
 
-	private NetworkTree myTree;
 	private volatile Intent myIntent;
 
 	@Override
@@ -122,8 +121,8 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	void prepareView() {
-		if (myTree == null) {
-			myTree = NetworkLibrary.Instance().getRootTree();
+		if (getCurrentTree() == null) {
+			setCurrentTree(NetworkLibrary.Instance().getRootTree());
 			setListAdapter(new LibraryAdapter());
 			getListView().invalidateViews();
 		}
@@ -161,11 +160,11 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 			if (!NetworkView.Instance().isInitialized()) {
 				return 0;
 			}
-			return myTree.subTrees().size();
+			return getCurrentTree().subTrees().size();
 		}
 
 		public final NetworkTree getItem(int position) {
-			return (NetworkTree)myTree.subTrees().get(position);
+			return (NetworkTree)getCurrentTree().subTrees().get(position);
 		}
 
 		public final long getItemId(int position) {

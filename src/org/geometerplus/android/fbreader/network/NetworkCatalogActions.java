@@ -61,14 +61,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public String getTreeTitle(NetworkTree tree) {
-		if (tree instanceof NetworkCatalogRootTree) {
-			return tree.getName();
-		}
-		return tree.getName() + " - " + ((NetworkCatalogTree)tree).Item.Link.getSiteName();
-	}
-
-	@Override
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
 		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
 		final NetworkURLCatalogItem urlItem =

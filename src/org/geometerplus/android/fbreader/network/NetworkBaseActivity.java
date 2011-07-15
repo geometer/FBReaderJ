@@ -37,12 +37,11 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 import org.geometerplus.fbreader.network.tree.SearchItemTree;
-
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
@@ -52,6 +51,16 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	protected final ZLResource myResource = ZLResource.resource("networkView");
 
 	public BookDownloaderServiceConnection Connection;
+
+	private FBTree myCurrentTree;
+
+	protected FBTree getCurrentTree() {
+		return myCurrentTree;
+	}
+
+	protected void setCurrentTree(FBTree tree) {
+		myCurrentTree = tree;
+	}
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -112,19 +121,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	};
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
-		if (tree instanceof AddCustomCatalogItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_plus);
-			return;
-		}
-		if (tree instanceof SearchItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_searchresult);
-			return;
-		}
-		if (tree instanceof ZLAndroidTree) {
-			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
-			return;
-		}
-
 		Bitmap coverBitmap = null;
 		ZLImage cover = tree.getCover();
 		if (cover != null) {
@@ -148,6 +144,10 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			coverView.setImageBitmap(coverBitmap);
 		} else if (tree instanceof NetworkBookTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
+		} else if (tree instanceof AddCustomCatalogItemTree) {
+			coverView.setImageResource(R.drawable.ic_list_plus);
+		} else if (tree instanceof SearchItemTree) {
+			coverView.setImageResource(R.drawable.ic_list_searchresult);
 		} else {
 			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}
