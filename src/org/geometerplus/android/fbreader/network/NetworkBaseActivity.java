@@ -19,32 +19,18 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-
-import android.app.*;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.*;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
-import org.geometerplus.fbreader.network.tree.SearchItemTree;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
-import org.geometerplus.android.fbreader.tree.ListAdapter;
 
 abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
@@ -102,7 +88,7 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 		super.onDestroy();
 	}
 
-	//@Override
+	@Override
 	public boolean isTreeSelected(FBTree tree) {
 		return false;
 	}

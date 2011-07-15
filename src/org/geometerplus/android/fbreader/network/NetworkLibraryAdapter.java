@@ -21,11 +21,9 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.List;
 
-import android.app.*;
-import android.os.Bundle;
 import android.view.*;
-import android.widget.*;
-import android.content.Intent;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -35,15 +33,11 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
-import org.geometerplus.fbreader.network.tree.SearchItemTree;
+import org.geometerplus.fbreader.network.tree.*;
 
-import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.tree.ListAdapter;
 
 class NetworkLibraryAdapter extends ListAdapter {
