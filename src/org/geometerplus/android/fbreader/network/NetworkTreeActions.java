@@ -46,14 +46,6 @@ abstract class NetworkTreeActions {
 		return myResource.getResource(key).getValue().replace("%s", arg);
 	}
 
-	protected final String getConfirmValue(String key) {
-		return myResource.getResource("confirmQuestions").getResource(key).getValue();
-	}
-
-	protected final String getConfirmValue(String key, String arg) {
-		return myResource.getResource("confirmQuestions").getResource(key).getValue().replace("%s", arg);
-	}
-
 	protected final String getOptionsValue(String key) {
 		return myResource.getResource("menu").getResource(key).getValue();
 	}
@@ -100,7 +92,6 @@ abstract class NetworkTreeActions {
 	public abstract void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree);
 
 	public abstract int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree);
-	public abstract String getConfirmText(NetworkTree tree, int actionCode);
 
 	public abstract boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode);
 

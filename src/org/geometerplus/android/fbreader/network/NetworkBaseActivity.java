@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import android.content.Intent;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -236,7 +235,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			return;
 		}
 		final int actionCode = actions.getDefaultActionCode(this, networkTree);
-		final String confirm = actions.getConfirmText(networkTree, actionCode);
 		if (actionCode == NetworkTreeActions.TREE_SHOW_CONTEXT_MENU) {
 			listView.showContextMenuForChild(view);
 			return;
@@ -244,23 +242,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		if (actionCode < 0) {
 			return;
 		}
-		if (confirm != null) {
-			//final ZLResource resource = myResource.getResource("confirmQuestions");
-			final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-			new AlertDialog.Builder(this)
-				.setTitle(networkTree.getName())
-				.setMessage(confirm)
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						actions.runAction(NetworkBaseActivity.this, networkTree, actionCode);
-					}
-				})
-				.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-				.create().show();
-		} else {
-			actions.runAction(this, networkTree, actionCode);
-		}
+		actions.runAction(this, networkTree, actionCode);
 	}
 
 	@Override
