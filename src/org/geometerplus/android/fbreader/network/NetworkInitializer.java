@@ -101,7 +101,7 @@ class NetworkInitializer extends Handler {
 			if (myActivity instanceof NetworkLibraryActivity) {
 				final NetworkLibraryActivity a = (NetworkLibraryActivity)myActivity;
 				a.startService(new Intent(a.getApplicationContext(), LibraryInitializationService.class));
-				a.prepareView(); // initialization is complete successfully
+				a.onModelChanged(); // initialization is complete successfully
 			}
 		} else {
 			showTryAgainDialog(myActivity, (String)message.obj); // handle initialization error

@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.network;
 
 import android.os.Bundle;
 import android.view.*;
-import android.widget.BaseAdapter;
 import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
@@ -60,8 +59,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		setForTree((NetworkTree)getCurrentTree(), this);
 
-		setListAdapter(new CatalogAdapter());
-		getListView().invalidateViews();
+		setListAdapter(new NetworkLibraryAdapter(this, getCurrentTree().subTrees()));
+
 		setupTitle();
 	}
 
@@ -131,37 +130,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 
-	private final class CatalogAdapter extends BaseAdapter {
-		public final int getCount() {
-			return getCurrentTree().subTrees().size();
-		}
-
-		public final NetworkTree getItem(int position) {
-			if (position < 0 || position >= getCurrentTree().subTrees().size()) {
-				return null;
-			}
-			return (NetworkTree)getCurrentTree().subTrees().get(position);
-		}
-
-		public final long getItemId(int position) {
-			return position;
-		}
-
-		public View getView(int position, View convertView, final ViewGroup parent) {
-			final NetworkTree tree = getItem(position);
-			return setupNetworkTreeItemView(convertView, parent, tree);
-		}
-
-		void onModelChanged() {
-			notifyDataSetChanged();
-			for (FBTree child : getCurrentTree().subTrees()) {
-				if (child instanceof TopUpTree) {
-					child.invalidateChildren();
-				}
-			}
-		}
-	}
-
 	private static NetworkTree getLoadableNetworkTree(NetworkTree tree) {
 		while (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			if (tree.Parent instanceof NetworkTree) {
@@ -189,7 +157,12 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 				 * addEventListener() is called). Therefore CatalogAdapter will be set as 
 				 * adapter in onCreate() method before any calls to onModelChanged().
 				 */
-				((CatalogAdapter)getListAdapter()).onModelChanged();
+				((NetworkLibraryAdapter)getListAdapter()).replaceAll(getCurrentTree().subTrees());
+				for (FBTree child : getCurrentTree().subTrees()) {
+					if (child instanceof TopUpTree) {
+						child.invalidateChildren();
+					}
+				}
             
 				setupTitle();
 			}

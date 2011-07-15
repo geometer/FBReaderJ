@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.List;
+
 import android.app.*;
 import android.os.Bundle;
 import android.view.*;
@@ -41,27 +43,32 @@ import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 import org.geometerplus.fbreader.network.tree.SearchItemTree;
 
-abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
+import org.geometerplus.android.fbreader.tree.BaseActivity;
+import org.geometerplus.android.fbreader.tree.ListAdapter;
+
+abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.EventListener {
+	protected static class NetworkLibraryAdapter extends ListAdapter {
+		NetworkLibraryAdapter(NetworkBaseActivity activity, List<FBTree> items) {
+			super(activity, items);
+		}
+
+		public View getView(int position, View convertView, final ViewGroup parent) {
+			final NetworkTree tree = (NetworkTree)getItem(position);
+			return ((NetworkBaseActivity)getActivity()).setupNetworkTreeItemView(convertView, parent, tree);
+		}
+	}
+
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
 
 	public BookDownloaderServiceConnection Connection;
 
-	private FBTree myCurrentTree;
-
-	protected FBTree getCurrentTree() {
-		return myCurrentTree;
-	}
-
-	protected void setCurrentTree(FBTree tree) {
-		myCurrentTree = tree;
-	}
-
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		OLD_STYLE_FLAG = true;
 
 		SQLiteCookieDatabase.init(this);
 

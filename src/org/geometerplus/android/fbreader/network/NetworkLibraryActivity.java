@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.*;
-import android.widget.BaseAdapter;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -54,6 +53,24 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		myIntent = getIntent();
+
+		setCurrentTree(NetworkLibrary.Instance().getRootTree());
+		setListAdapter(new NetworkLibraryAdapter(this, getCurrentTree().subTrees()));
+
+		if (!NetworkView.Instance().isInitialized()) {
+			if (NetworkInitializer.Instance == null) {
+				new NetworkInitializer(this);
+				NetworkInitializer.Instance.start();
+			} else {
+				NetworkInitializer.Instance.setActivity(this);
+			}
+		} else {
+			onModelChanged();
+			if (myIntent != null) {
+				processIntent(myIntent);
+				myIntent = null;
+			}
+		}
 	}
 
 	@Override
@@ -87,33 +104,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 	}
 
-	void prepareView() {
-		if (getCurrentTree() == null) {
-			setCurrentTree(NetworkLibrary.Instance().getRootTree());
-			setListAdapter(new LibraryAdapter());
-			getListView().invalidateViews();
-		}
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		if (!NetworkView.Instance().isInitialized()) {
-			if (NetworkInitializer.Instance == null) {
-				new NetworkInitializer(this);
-				NetworkInitializer.Instance.start();
-			} else {
-				NetworkInitializer.Instance.setActivity(this);
-			}
-		} else {
-			prepareView();
-			if (myIntent != null) {
-				processIntent(myIntent);
-				myIntent = null;
-			}
-		}
-	}
-
 	@Override
 	public void onDestroy() {
 		if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
@@ -121,29 +111,6 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		}
 		super.onDestroy();
 	}
-
-	private final class LibraryAdapter extends BaseAdapter {
-		public final int getCount() {
-			if (!NetworkView.Instance().isInitialized()) {
-				return 0;
-			}
-			return getCurrentTree().subTrees().size();
-		}
-
-		public final NetworkTree getItem(int position) {
-			return (NetworkTree)getCurrentTree().subTrees().get(position);
-		}
-
-		public final long getItemId(int position) {
-			return position;
-		}
-
-		public View getView(int position, View convertView, final ViewGroup parent) {
-			final NetworkTree tree = getItem(position);
-			return setupNetworkTreeItemView(convertView, parent, tree);
-		}
-	}
-
 
 	protected MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
 		final String label = NetworkLibrary.resource().getResource("menu").getResource(resourceKey).getValue();
@@ -253,6 +220,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	@Override
 	public void onModelChanged() {
 		getListView().invalidateViews();
+		((NetworkLibraryAdapter)getListAdapter()).replaceAll(getCurrentTree().subTrees());
 	}
 
 	private void refreshCatalogsList() {

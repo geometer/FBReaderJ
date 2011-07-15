@@ -53,8 +53,14 @@ public abstract class BaseActivity extends ListActivity {
 
 	public abstract boolean isTreeSelected(FBTree tree);
 
+	protected boolean OLD_STYLE_FLAG = false;
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (OLD_STYLE_FLAG) {
+			return super.onKeyDown(keyCode, event);
+		}
+
 		if (keyCode == KeyEvent.KEYCODE_BACK && myCurrentTree.Parent != null) {
 			final FBTree oldTree = myCurrentTree;
 			openTree(myCurrentTree.Parent);
