@@ -110,6 +110,11 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		super.onDestroy();
 	}
 
+	//@Override
+	public boolean isTreeSelected(FBTree tree) {
+		return false;
+	}
+
 	// method from NetworkView.EventListener
 	public void onModelChanged() {
 	}
