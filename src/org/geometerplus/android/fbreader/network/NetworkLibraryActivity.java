@@ -44,39 +44,6 @@ import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class NetworkLibraryActivity extends NetworkBaseActivity {
-	static final String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
-
-	private static final String ADD_CATALOG_TITLE_KEY = "title";
-	private static final String ADD_CATALOG_SUMMARY_KEY = "summary";
-	private static final String ADD_CATALOG_ID_KEY = "id";
-	private static final String ADD_CATALOG_URLS_MAP_KEY = "urls";
-
-	static void addLinkToIntent(Intent intent, ICustomNetworkLink link) {
-		final String textUrl = link.getUrl(UrlInfo.Type.Catalog);
-		intent.setData(Uri.parse(textUrl));
-		intent
-			.putExtra(ADD_CATALOG_TITLE_KEY, link.getTitle())
-			.putExtra(ADD_CATALOG_SUMMARY_KEY, link.getSummary())
-			.putExtra(ADD_CATALOG_ID_KEY, link.getId())
-			.putExtra(ADD_CATALOG_URLS_MAP_KEY, link.urlInfoMap());
-	}
-
-	static ICustomNetworkLink getLinkFromIntent(Intent intent) {
-		final Uri uri = intent.getData();
-		if (uri == null || !intent.hasExtra(ADD_CATALOG_ID_KEY)) {
-			return null;
-		}
-
-		return new OPDSCustomNetworkLink(
-			intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID),
-			uri.getHost(),
-			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
-			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
-			null,
-			(UrlInfoCollection<UrlInfoWithDate>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
-		);
-	}
-
 	private volatile Intent myIntent;
 
 	@Override
@@ -104,8 +71,8 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	}
 
 	private void processIntent(Intent intent) {
-		if (ADD_CATALOG.equals(intent.getAction())) {
-			final ICustomNetworkLink link = getLinkFromIntent(intent);
+		if (AddCustomCatalogActivity.ADD_CATALOG.equals(intent.getAction())) {
+			final ICustomNetworkLink link = AddCustomCatalogActivity.getLinkFromIntent(intent);
 			if (link != null) {
 				runOnUiThread(new Runnable() {
 					public void run() {

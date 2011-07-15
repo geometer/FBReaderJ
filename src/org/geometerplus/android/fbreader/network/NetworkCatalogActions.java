@@ -264,7 +264,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case CUSTOM_CATALOG_EDIT:
 			{
 				final Intent intent = new Intent(activity, AddCustomCatalogActivity.class);
-				NetworkLibraryActivity.addLinkToIntent(
+				AddCustomCatalogActivity.addLinkToIntent(
 					intent,
 					(ICustomNetworkLink)item.Link
 				);
