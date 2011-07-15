@@ -44,7 +44,7 @@
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader: сетевая библиотека">
 		<node name="byAuthor" value="Авторы">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>

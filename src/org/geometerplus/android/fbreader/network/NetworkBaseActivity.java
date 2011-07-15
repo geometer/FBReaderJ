@@ -28,7 +28,6 @@ import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
@@ -46,8 +45,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
-
-	protected final ZLResource myResource = ZLResource.resource("networkView");
 
 	public BookDownloaderServiceConnection Connection;
 

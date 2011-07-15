@@ -44,7 +44,7 @@
 		<node name="addToFavorites" value="Přidat do oblíbených"/>
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>

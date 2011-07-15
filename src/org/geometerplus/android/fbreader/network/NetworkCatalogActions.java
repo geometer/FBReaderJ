@@ -232,7 +232,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case OPEN_IN_BROWSER_ITEM_ID:
 				if (item instanceof NetworkURLCatalogItem) {
 					final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-					final String message = myResource.getResource("confirmQuestions").getResource("openInBrowser").getValue();
+					final String message = NetworkLibrary.resource().getResource("confirmQuestions").getResource("openInBrowser").getValue();
 					new AlertDialog.Builder(activity)
 						.setTitle(catalogTree.getName())
 						.setMessage(message)

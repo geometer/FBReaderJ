@@ -24,34 +24,28 @@ import android.view.Menu;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 
-
 abstract class NetworkTreeActions {
-
 	// special values to return from getDefaultActionCode(NetworkTree)
 	public static final int TREE_NO_ACTION = -1;
 	public static final int TREE_SHOW_CONTEXT_MENU = -2;
 
-
-	protected final ZLResource myResource = ZLResource.resource("networkView");
-
 	protected final String getTitleValue(String key) {
-		return myResource.getResource(key).getValue();
+		return NetworkLibrary.resource().getResource(key).getValue();
 	}
 
 	protected final String getTitleValue(String key, String arg) {
-		return myResource.getResource(key).getValue().replace("%s", arg);
+		return NetworkLibrary.resource().getResource(key).getValue().replace("%s", arg);
 	}
 
 	protected final String getOptionsValue(String key) {
-		return myResource.getResource("menu").getResource(key).getValue();
+		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue();
 	}
 
 	protected final String getOptionsValue(String key, String arg) {
-		return myResource.getResource("menu").getResource(key).getValue().replace("%s", arg);
+		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue().replace("%s", arg);
 	}
 
 	protected final MenuItem addMenuItem(ContextMenu menu, int id, String key) {

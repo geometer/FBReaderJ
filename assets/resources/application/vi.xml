@@ -44,7 +44,7 @@
 		<node name="addToFavorites" value="Thêm vào yêu thích"/>
 		<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Theo tác giả">
 			<node name="summary" value="Sách được xếp theo tác giả"/>
 		</node>

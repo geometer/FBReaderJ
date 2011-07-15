@@ -44,7 +44,7 @@
 		<node name="addToFavorites" value="Toevoegen aan favorieten"/>
 		<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Auteurs">
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>

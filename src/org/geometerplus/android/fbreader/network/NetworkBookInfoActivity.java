@@ -309,7 +309,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	}
 
 	private final void setupButtons() {
-		final ZLResource resource = ZLResource.resource("networkView");
+		final ZLResource resource = NetworkLibrary.resource();
 		final int buttons[] = new int[] {
 				R.id.network_book_button0,
 				R.id.network_book_button1,
