@@ -23,8 +23,6 @@ import java.util.Set;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
@@ -38,12 +36,20 @@ public class SearchItemTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return ZLResource.resource("networkView").getResource("search").getValue();
+		return NetworkLibrary.resource().getResource("search").getValue();
 	}
 
 	@Override
 	public String getSummary() {
-		return ZLResource.resource("networkView").getResource("searchSummary").getValue();
+		return NetworkLibrary.resource().getResource("searchSummary").getValue();
+	}
+
+	@Override
+	public String getTreeTitle() {
+		if (myResult != null) {
+			return myResult.Summary;
+		}
+		return getName();
 	}
 
 	public void setSearchResult(SearchResult result) {

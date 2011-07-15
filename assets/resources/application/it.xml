@@ -44,7 +44,7 @@
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Per autore">
 			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
 		</node>

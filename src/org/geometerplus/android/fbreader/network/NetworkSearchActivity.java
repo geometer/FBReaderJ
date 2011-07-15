@@ -142,7 +142,7 @@ public class NetworkSearchActivity extends Activity {
 			return;
 		}
 
-		final String summary = ZLResource.resource("networkView").getResource("searchResults").getValue().replace("%s", pattern);
+		final String summary = NetworkLibrary.resource().getResource("searchResults").getValue().replace("%s", pattern);
 		final SearchResult result = new SearchResult(summary);
 
 		tree.setSearchResult(result);

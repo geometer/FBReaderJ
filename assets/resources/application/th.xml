@@ -44,7 +44,7 @@
 		<node name="addToFavorites" value="เพิ่มเป็นหนังสือเล่มโปรด"/>
 		<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="ชื่อผู้แต่ง ">
 			<node name="summary" value="เรียงตามชื่อผู้แต่ง"/>
 		</node>

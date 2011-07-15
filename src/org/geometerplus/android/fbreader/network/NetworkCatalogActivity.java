@@ -24,12 +24,7 @@ import android.view.*;
 import android.widget.BaseAdapter;
 import android.content.Intent;
 
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
@@ -48,7 +43,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		return (NetworkCatalogActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
 	}
 
-	private NetworkTree myTree;
 	private volatile boolean myInProgress;
 
 	@Override
@@ -57,14 +51,14 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		myTree = Util.getTreeFromIntent(getIntent());
+		setCurrentTree(Util.getTreeFromIntent(getIntent()));
 
-		if (myTree == null) {
+		if (getCurrentTree() == null) {
 			finish();
 			return;
 		}
 
-		setForTree(myTree, this);
+		setForTree((NetworkTree)getCurrentTree(), this);
 
 		setListAdapter(new CatalogAdapter());
 		getListView().invalidateViews();
@@ -73,8 +67,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		if (menuInfo == null && myTree instanceof NetworkCatalogTree) {
-			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
+		if (menuInfo == null && getCurrentTree() instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
 			if (Util.isTopupSupported(this, link)) {
 				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null) {
@@ -88,8 +82,8 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		if ((item == null || item.getMenuInfo() == null) && myTree instanceof NetworkCatalogTree) {
-			final INetworkLink link = ((NetworkCatalogTree)myTree).Item.Link;
+		if ((item == null || item.getMenuInfo() == null) && getCurrentTree() instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
 			if (Util.isTopupSupported(this, link)) {
 				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null && TopupActions.runAction(this, link, item.getItemId())) {
@@ -100,89 +94,34 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		return super.onContextItemSelected(item);
 	}
 
-	private final MyCredentialsCreator myCredentialsCreator = new MyCredentialsCreator();
-
-	private class MyCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
-		private volatile String myUsername;
-		private volatile String myPassword;
-        
-		public Credentials createCredentials(String scheme, AuthScope scope) {
-			if (!"basic".equalsIgnoreCase(scope.getScheme())) {
-				return null;
-			}
-
-			final Intent intent = new Intent();
-			final String host = scope.getHost();
-			final String area = scope.getRealm();
-			final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
-			intent.setClass(NetworkCatalogActivity.this, AuthenticationActivity.class);
-			intent.putExtra(AuthenticationActivity.HOST_KEY, host);
-			intent.putExtra(AuthenticationActivity.AREA_KEY, area);
-			intent.putExtra(AuthenticationActivity.SCHEME_KEY, scheme);
-			intent.putExtra(AuthenticationActivity.USERNAME_KEY, option.getValue());
-			startActivityForResult(intent, BASIC_AUTHENTICATION_CODE);
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-				}
-			}
-        
-			Credentials creds = null;
-			if (myUsername != null && myPassword != null) {
-				option.setValue(myUsername);
-				creds = new UsernamePasswordCredentials(myUsername, myPassword);
-			}
-			myUsername = null;
-			myPassword = null;
-			return creds;
-		}
-	}
+	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
+		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case BASIC_AUTHENTICATION_CODE:
-				synchronized (myCredentialsCreator) {
-					if (resultCode == AuthenticationActivity.RESULT_OK && data != null) {
-						myCredentialsCreator.myUsername =
-							data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
-						myCredentialsCreator.myPassword =
-							data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
-					}
-					myCredentialsCreator.notify();
-				}
+				myCredentialsCreator.onDataReceived(resultCode, data);
 				break;
 			case CUSTOM_AUTHENTICATION_CODE:
 				Util.processCustomAuthentication(
-					this, ((NetworkCatalogTree)myTree).Item.Link, resultCode, data
+					this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data
 				);
 				break;
 			case SIGNUP_CODE:
-				Util.processSignup(((NetworkCatalogTree)myTree).Item.Link, resultCode, data);
+				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
 				break;
 		}
 	}
 
 	private final void setupTitle() {
-		String title = null;
-		final NetworkView networkView = NetworkView.Instance();
-		if (networkView.isInitialized()) {
-			final NetworkTreeActions actions = networkView.getActions(myTree);
-			if (actions != null) {
-				title = actions.getTreeTitle(myTree);
-			}
-		}
-		if (title == null) {
-			title = myTree.getName();
-		}
-		setTitle(title);
+		setTitle(getCurrentTree().getTreeTitle());
 		setProgressBarIndeterminateVisibility(myInProgress);
 	}
 
 	@Override
 	public void onDestroy() {
-		setForTree(myTree, null);
+		setForTree((NetworkTree)getCurrentTree(), null);
 		super.onDestroy();
 	}
 
@@ -194,14 +133,14 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 	private final class CatalogAdapter extends BaseAdapter {
 		public final int getCount() {
-			return myTree.subTrees().size();
+			return getCurrentTree().subTrees().size();
 		}
 
 		public final NetworkTree getItem(int position) {
-			if (position < 0 || position >= myTree.subTrees().size()) {
+			if (position < 0 || position >= getCurrentTree().subTrees().size()) {
 				return null;
 			}
-			return (NetworkTree)myTree.subTrees().get(position);
+			return (NetworkTree)getCurrentTree().subTrees().get(position);
 		}
 
 		public final long getItemId(int position) {
@@ -215,7 +154,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 
 		void onModelChanged() {
 			notifyDataSetChanged();
-			for (FBTree child : myTree.subTrees()) {
+			for (FBTree child : getCurrentTree().subTrees()) {
 				if (child instanceof TopUpTree) {
 					child.invalidateChildren();
 				}
@@ -238,7 +177,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public void onModelChanged() {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				final NetworkTree tree = getLoadableNetworkTree(myTree);
+				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
 				myInProgress =
 					tree != null &&
 					ItemsLoadingService.getRunnable(tree) != null;
@@ -266,7 +205,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	private void doStopLoading() {
-		final ItemsLoader runnable = ItemsLoadingService.getRunnable(myTree);
+		final ItemsLoader runnable = ItemsLoadingService.getRunnable((NetworkTree)getCurrentTree());
 		if (runnable != null) {
 			runnable.interruptLoading();
 		}
@@ -275,18 +214,18 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		return NetworkView.Instance().createOptionsMenu(menu, myTree);
+		return NetworkView.Instance().createOptionsMenu(menu, (NetworkTree)getCurrentTree());
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		return NetworkView.Instance().prepareOptionsMenu(this, menu, myTree);
+		return NetworkView.Instance().prepareOptionsMenu(this, menu, (NetworkTree)getCurrentTree());
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (NetworkView.Instance().runOptionsMenu(this, item, myTree)) {
+		if (NetworkView.Instance().runOptionsMenu(this, item, (NetworkTree)getCurrentTree())) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

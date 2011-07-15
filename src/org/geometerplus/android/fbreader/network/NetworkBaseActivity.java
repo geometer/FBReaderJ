@@ -24,12 +24,10 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import android.content.Intent;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
@@ -37,21 +35,28 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 import org.geometerplus.fbreader.network.tree.SearchItemTree;
-
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
 
 abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
 
-	protected final ZLResource myResource = ZLResource.resource("networkView");
-
 	public BookDownloaderServiceConnection Connection;
+
+	private FBTree myCurrentTree;
+
+	protected FBTree getCurrentTree() {
+		return myCurrentTree;
+	}
+
+	protected void setCurrentTree(FBTree tree) {
+		myCurrentTree = tree;
+	}
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -101,6 +106,11 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		super.onDestroy();
 	}
 
+	//@Override
+	public boolean isTreeSelected(FBTree tree) {
+		return false;
+	}
+
 	// method from NetworkView.EventListener
 	public void onModelChanged() {
 	}
@@ -112,19 +122,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 	};
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
-		if (tree instanceof AddCustomCatalogItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_plus);
-			return;
-		}
-		if (tree instanceof SearchItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_searchresult);
-			return;
-		}
-		if (tree instanceof ZLAndroidTree) {
-			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
-			return;
-		}
-
 		Bitmap coverBitmap = null;
 		ZLImage cover = tree.getCover();
 		if (cover != null) {
@@ -148,6 +145,10 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			coverView.setImageBitmap(coverBitmap);
 		} else if (tree instanceof NetworkBookTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
+		} else if (tree instanceof AddCustomCatalogItemTree) {
+			coverView.setImageResource(R.drawable.ic_list_plus);
+		} else if (tree instanceof SearchItemTree) {
+			coverView.setImageResource(R.drawable.ic_list_searchresult);
 		} else {
 			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}
@@ -231,7 +232,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			return;
 		}
 		final int actionCode = actions.getDefaultActionCode(this, networkTree);
-		final String confirm = actions.getConfirmText(networkTree, actionCode);
 		if (actionCode == NetworkTreeActions.TREE_SHOW_CONTEXT_MENU) {
 			listView.showContextMenuForChild(view);
 			return;
@@ -239,23 +239,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		if (actionCode < 0) {
 			return;
 		}
-		if (confirm != null) {
-			//final ZLResource resource = myResource.getResource("confirmQuestions");
-			final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-			new AlertDialog.Builder(this)
-				.setTitle(networkTree.getName())
-				.setMessage(confirm)
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						actions.runAction(NetworkBaseActivity.this, networkTree, actionCode);
-					}
-				})
-				.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-				.create().show();
-		} else {
-			actions.runAction(this, networkTree, actionCode);
-		}
+		actions.runAction(this, networkTree, actionCode);
 	}
 
 	@Override

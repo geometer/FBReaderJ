@@ -44,7 +44,7 @@
 		<node name="addToFavorites" value="Hozzáadás a kedvencekhez"/>
 		<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Szerzők">
 			<node name="summary" value="Könyvek szerzők szerint"/>
 		</node>

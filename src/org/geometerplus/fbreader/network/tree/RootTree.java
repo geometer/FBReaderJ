@@ -19,8 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
 
 public final class RootTree extends NetworkTree {
 	private final String myId;
@@ -31,7 +30,7 @@ public final class RootTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return null;
+		return NetworkLibrary.resource().getValue();
 	}
 
 	@Override

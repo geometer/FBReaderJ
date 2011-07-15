@@ -53,7 +53,7 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 	}
 
 	public SortedCatalogItem(NetworkCatalogItem parent, String resourceKey, List<NetworkItem> children, int flags) {
-		this(parent, ZLResource.resource("networkView").getResource(resourceKey), children, flags);
+		this(parent, NetworkLibrary.resource().getResource(resourceKey), children, flags);
 	}
 
 	@Override

@@ -22,12 +22,15 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
@@ -58,14 +61,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof NetworkCatalogTree;
-	}
-
-	@Override
-	public String getTreeTitle(NetworkTree tree) {
-		if (tree instanceof NetworkCatalogRootTree) {
-			return tree.getName();
-		}
-		return tree.getName() + " - " + ((NetworkCatalogTree)tree).Item.Link.getSiteName();
 	}
 
 	@Override
@@ -144,14 +139,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public String getConfirmText(NetworkTree tree, int actionCode) {
-		if (actionCode == OPEN_IN_BROWSER_ITEM_ID) {
-			return getConfirmValue("openInBrowser");
-		}
-		return null;
-	}
-
-	@Override
 	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
 		addOptionsItem(menu, RELOAD_ITEM_ID, "reload");
 		addOptionsItem(menu, SIGNIN_ITEM_ID, "signIn");
@@ -227,7 +214,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(final NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		if (consumeByVisibility(activity, catalogTree, actionCode)) {
 			return true;
@@ -236,20 +223,27 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		final NetworkCatalogItem item = catalogTree.Item;
 		switch (actionCode) {
 			case OPEN_CATALOG_ITEM_ID:
-			{
 				if (item instanceof BasketItem && item.Link.basket().bookIds().size() == 0) {
 					UIUtil.showErrorMessage(activity, "emptyBasket");
 				} else {
 					doExpandCatalog(activity, catalogTree);
 				}
 				return true;
-			}
 			case OPEN_IN_BROWSER_ITEM_ID:
 				if (item instanceof NetworkURLCatalogItem) {
-					Util.openInBrowser(
-						activity,
-						item.getUrl(UrlInfo.Type.HtmlPage)
-					);
+					final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+					final String message = NetworkLibrary.resource().getResource("confirmQuestions").getResource("openInBrowser").getValue();
+					new AlertDialog.Builder(activity)
+						.setTitle(catalogTree.getName())
+						.setMessage(message)
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								Util.openInBrowser(activity, item.getUrl(UrlInfo.Type.HtmlPage));
+							}
+						})
+						.setNegativeButton(buttonResource.getResource("no").getValue(), null)
+						.create().show();
 				}
 				return true;
 			case RELOAD_ITEM_ID:

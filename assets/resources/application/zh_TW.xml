@@ -44,7 +44,7 @@
 		<node name="addToFavorites" value="收藏"/>
 		<node name="removeFromFavorites" value="從收藏中移除"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="作者">
 			<node name="summary" value="以作者排序"/>
 		</node>

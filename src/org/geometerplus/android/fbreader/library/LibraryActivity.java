@@ -43,7 +43,10 @@ import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.BookInfoActivity;
 
-public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener {
+import org.geometerplus.android.fbreader.tree.BaseActivity;
+import org.geometerplus.android.fbreader.tree.ListAdapter;
+
+public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener {
 	public static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
@@ -83,9 +86,11 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			}
 		}
 
-		final ListAdapter adapter = new ListAdapter(this, getCurrentTree().subTrees());
+		final ListAdapter adapter = new LibraryListAdapter(this, getCurrentTree().subTrees());
 		setSelection(adapter.getFirstSelectedItemIndex());
 		getListView().setTextFilterEnabled(true);
+
+		getListView().setOnCreateContextMenuListener(this);
 	}
 
 	@Override
@@ -95,7 +100,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	}
 
 	@Override
-	boolean isTreeSelected(FBTree tree) {
+	public boolean isTreeSelected(FBTree tree) {
 		final LibraryTree lTree = (LibraryTree)tree;
 		return lTree.isSelectable() && lTree.containsBook(mySelectedBook);
 	}
@@ -274,46 +279,6 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			default:
 				return true;
 		}
-	}
-
-	//
-	// Item icons
-	//
-	@Override
-	protected int getCoverResourceId(FBTree tree) {
-		if (((LibraryTree)tree).getBook() != null) {
-			return R.drawable.ic_list_library_book;
-		} else if (tree instanceof FirstLevelTree) {
-			final String id = tree.getUniqueKey().Id;
-			if (Library.ROOT_FAVORITES.equals(id)) {
-				return R.drawable.ic_list_library_favorites;
-			} else if (Library.ROOT_RECENT.equals(id)) {
-				return R.drawable.ic_list_library_recent;
-			} else if (Library.ROOT_BY_AUTHOR.equals(id)) {
-				return R.drawable.ic_list_library_authors;
-			} else if (Library.ROOT_BY_TITLE.equals(id)) {
-				return R.drawable.ic_list_library_books;
-			} else if (Library.ROOT_BY_TAG.equals(id)) {
-				return R.drawable.ic_list_library_tags;
-			} else if (Library.ROOT_FILE_TREE.equals(id)) {
-				return R.drawable.ic_list_library_folder;
-			}
-		} else if (tree instanceof FileTree) {
-			final ZLFile file = ((FileTree)tree).getFile();
-			if (file.isArchive()) {
-				return R.drawable.ic_list_library_zip;
-			} else if (file.isDirectory() && file.isReadable()) {
-				return R.drawable.ic_list_library_folder;
-			} else {
-				return R.drawable.ic_list_library_permission_denied;
-			}
-		} else if (tree instanceof AuthorTree) {
-			return R.drawable.ic_list_library_author;
-		} else if (tree instanceof TagTree) {
-			return R.drawable.ic_list_library_tag;
-		}
-
-		return R.drawable.ic_list_library_books;
 	}
 
 	//
