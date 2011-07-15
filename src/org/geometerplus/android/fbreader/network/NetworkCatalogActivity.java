@@ -23,8 +23,6 @@ import android.os.Bundle;
 import android.view.*;
 import android.content.Intent;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
@@ -48,20 +46,9 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
-		setCurrentTree(Util.getTreeFromIntent(getIntent()));
-
-		if (getCurrentTree() == null) {
-			finish();
-			return;
-		}
-
 		setForTree((NetworkTree)getCurrentTree(), this);
 
-		setListAdapter(new NetworkLibraryAdapter(this, getCurrentTree().subTrees()));
-
-		setupTitle();
+		setProgressBarIndeterminateVisibility(myInProgress);
 	}
 
 	@Override
@@ -93,41 +80,10 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 		return super.onContextItemSelected(item);
 	}
 
-	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
-		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-			case BASIC_AUTHENTICATION_CODE:
-				myCredentialsCreator.onDataReceived(resultCode, data);
-				break;
-			case CUSTOM_AUTHENTICATION_CODE:
-				Util.processCustomAuthentication(
-					this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data
-				);
-				break;
-			case SIGNUP_CODE:
-				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
-				break;
-		}
-	}
-
-	private final void setupTitle() {
-		setTitle(getCurrentTree().getTreeTitle());
-		setProgressBarIndeterminateVisibility(myInProgress);
-	}
-
 	@Override
 	public void onDestroy() {
 		setForTree((NetworkTree)getCurrentTree(), null);
 		super.onDestroy();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 
 	private static NetworkTree getLoadableNetworkTree(NetworkTree tree) {
@@ -164,7 +120,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 					}
 				}
             
-				setupTitle();
+				setProgressBarIndeterminateVisibility(myInProgress);
 			}
 		});
 	}

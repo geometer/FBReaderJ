@@ -49,13 +49,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-
 		myIntent = getIntent();
-
-		setCurrentTree(NetworkLibrary.Instance().getRootTree());
-		setListAdapter(new NetworkLibraryAdapter(this, getCurrentTree().subTrees()));
 
 		if (!NetworkView.Instance().isInitialized()) {
 			if (NetworkInitializer.Instance == null) {

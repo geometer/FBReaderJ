@@ -25,10 +25,14 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 
@@ -45,6 +49,8 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 
 		OLD_STYLE_FLAG = true;
 
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		SQLiteCookieDatabase.init(this);
 
 		Connection = new BookDownloaderServiceConnection();
@@ -53,6 +59,16 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 			Connection,
 			BIND_AUTO_CREATE
 		);
+
+		NetworkTree tree = Util.getTreeFromIntent(getIntent());
+		if (tree == null) {
+			tree = NetworkLibrary.Instance().getRootTree();
+		}
+		setCurrentTree(tree);
+		setListAdapter(new NetworkLibraryAdapter(this, tree.subTrees()));
+		setTitle(tree.getTreeTitle());
+
+		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 	}
 
 	@Override
@@ -71,6 +87,7 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 		super.onResume();
 		getListView().setOnCreateContextMenuListener(this);
 		onModelChanged(); // do the same update actions as upon onModelChanged
+		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 
 	@Override
@@ -150,5 +167,25 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 	@Override
 	public boolean onSearchRequested() {
 		return false;
+	}
+
+	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
+		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case BASIC_AUTHENTICATION_CODE:
+				myCredentialsCreator.onDataReceived(resultCode, data);
+				break;
+			case CUSTOM_AUTHENTICATION_CODE:
+				Util.processCustomAuthentication(
+					this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data
+				);
+				break;
+			case SIGNUP_CODE:
+				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
+				break;
+		}
 	}
 }
