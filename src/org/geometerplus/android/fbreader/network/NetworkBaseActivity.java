@@ -47,17 +47,6 @@ import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.tree.ListAdapter;
 
 abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.EventListener {
-	protected static class NetworkLibraryAdapter extends ListAdapter {
-		NetworkLibraryAdapter(NetworkBaseActivity activity, List<FBTree> items) {
-			super(activity, items);
-		}
-
-		public View getView(int position, View convertView, final ViewGroup parent) {
-			final NetworkTree tree = (NetworkTree)getItem(position);
-			return ((NetworkBaseActivity)getActivity()).setupNetworkTreeItemView(convertView, parent, tree);
-		}
-	}
-
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
@@ -120,83 +109,6 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 
 	// method from NetworkView.EventListener
 	public void onModelChanged() {
-	}
-
-	private final Runnable myInvalidateViewsRunnable = new Runnable() {
-		public void run() {
-			getListView().invalidateViews();
-		}
-	};
-
-	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
-		Bitmap coverBitmap = null;
-		ZLImage cover = tree.getCover();
-		if (cover != null) {
-			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (cover instanceof ZLLoadableImage) {
-				final ZLLoadableImage img = (ZLLoadableImage)cover;
-				if (img.isSynchronized()) {
-					data = mgr.getImageData(img);
-				} else {
-					img.startSynchronization(myInvalidateViewsRunnable);
-				}
-			} else {
-				data = mgr.getImageData(cover);
-			}
-			if (data != null) {
-				coverBitmap = data.getBitmap(2 * width, 2 * height);
-			}
-		}
-		if (coverBitmap != null) {
-			coverView.setImageBitmap(coverBitmap);
-		} else if (tree instanceof NetworkBookTree) {
-			coverView.setImageResource(R.drawable.ic_list_library_book);
-		} else if (tree instanceof AddCustomCatalogItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_plus);
-		} else if (tree instanceof SearchItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_searchresult);
-		} else {
-			coverView.setImageResource(R.drawable.ic_list_library_books);
-		}
-	}
-
-	private int myCoverWidth = -1;
-	private int myCoverHeight = -1;
-
-	protected View setupNetworkTreeItemView(View convertView, final ViewGroup parent, NetworkTree tree) {
-		final View view = (convertView != null) ? convertView :
-			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
-
-		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
-
-		if (myCoverWidth == -1) {
-			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			myCoverHeight = view.getMeasuredHeight();
-			myCoverWidth = myCoverHeight * 15 / 32;
-			view.requestLayout();
-		}
-
-		final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-		coverView.getLayoutParams().width = myCoverWidth;
-		coverView.getLayoutParams().height = myCoverHeight;
-		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		coverView.requestLayout();
-		setupCover(coverView, tree, myCoverWidth, myCoverWidth);
-
-		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
-		final int status = (tree instanceof NetworkBookTree) ?
-				NetworkBookActions.getBookStatus(((NetworkBookTree) tree).Book, Connection) : 0;
-		if (status != 0) {
-			statusView.setVisibility(View.VISIBLE);
-			statusView.setImageResource(status);
-		} else {
-			statusView.setVisibility(View.GONE);
-		}
-		statusView.requestLayout();
-
-		return view;
 	}
 
 	@Override
