@@ -19,18 +19,29 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.*;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.*;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
+import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.RootTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
@@ -230,5 +241,146 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
 				break;
 		}
+	}
+
+	private static final int MENU_SEARCH = 1;
+	private static final int MENU_REFRESH = 2;
+	private static final int MENU_ADD_CATALOG = 3;
+	private static final int MENU_LANGUAGE_FILTER = 4;
+
+	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+		final String label = NetworkLibrary.resource().getResource("menu").getResource(resourceKey).getValue();
+		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		if (getCurrentTree() instanceof RootTree) {
+			addMenuItem(menu, MENU_SEARCH, "networkSearch", R.drawable.ic_menu_search);
+			addMenuItem(menu, MENU_ADD_CATALOG, "addCustomCatalog", R.drawable.ic_menu_add);
+			addMenuItem(menu, MENU_REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
+			addMenuItem(menu, MENU_LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages);
+			return true;
+		} else {
+			return NetworkView.Instance().createOptionsMenu(menu, (NetworkTree)getCurrentTree());
+		}
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		if (getCurrentTree() instanceof RootTree) {
+			menu.findItem(MENU_SEARCH).setEnabled(!searchIsInProgress());
+			return true;
+		} else {
+			return NetworkView.Instance().prepareOptionsMenu(this, menu, (NetworkTree)getCurrentTree());
+		}
+	}
+
+	protected static boolean searchIsInProgress() {
+		return ItemsLoadingService.getRunnable(
+			NetworkLibrary.Instance().getSearchItemTree()
+		) != null;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (getCurrentTree() instanceof RootTree) {
+			switch (item.getItemId()) {
+				case MENU_SEARCH:
+					return onSearchRequested();
+				case MENU_ADD_CATALOG:
+					AddCustomCatalogItemActions.addCustomCatalog(this);
+					return true;
+				case MENU_REFRESH:
+					refreshCatalogsList();
+					return true;
+				case MENU_LANGUAGE_FILTER:
+					runLanguageFilterDialog();
+					return true;
+				default:
+					return true;
+			}
+		} else {
+			return NetworkView.Instance().runOptionsMenu(this, item, (NetworkTree)getCurrentTree());
+		}
+	}
+
+	private void runLanguageFilterDialog() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+
+		final List<String> allLanguageCodes = library.languageCodes();
+		Collections.sort(allLanguageCodes, new ZLLanguageUtil.CodeComparator());
+		final Collection<String> activeLanguageCodes = library.activeLanguageCodes();
+		final CharSequence[] languageNames = new CharSequence[allLanguageCodes.size()];
+		final boolean[] checked = new boolean[allLanguageCodes.size()];
+
+		for (int i = 0; i < allLanguageCodes.size(); ++i) {
+			final String code = allLanguageCodes.get(i);
+			languageNames[i] = ZLLanguageUtil.languageName(code);
+			checked[i] = activeLanguageCodes.contains(code);
+		}
+
+		final DialogInterface.OnMultiChoiceClickListener listener =
+			new DialogInterface.OnMultiChoiceClickListener() {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					checked[which] = isChecked;
+				}
+			};
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final AlertDialog dialog = new AlertDialog.Builder(this)
+			.setMultiChoiceItems(languageNames, checked, listener)
+			.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
+			.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					final TreeSet<String> newActiveCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+					for (int i = 0; i < checked.length; ++i) {
+						if (checked[i]) {
+							newActiveCodes.add(allLanguageCodes.get(i));
+						}
+					}
+					library.setActiveLanguageCodes(newActiveCodes);
+					library.synchronize();
+					NetworkView.Instance().fireModelChanged();
+				}
+			})
+			.create();
+		dialog.show();
+	}
+
+	private void refreshCatalogsList() {
+		final NetworkView view = NetworkView.Instance();
+
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				if (msg.obj == null) {
+					view.finishBackgroundUpdate();
+				} else {
+					final ZLResource dialogResource = ZLResource.resource("dialog");
+					final ZLResource boxResource = dialogResource.getResource("networkError");
+					final ZLResource buttonResource = dialogResource.getResource("button");
+					new AlertDialog.Builder(NetworkBaseActivity.this)
+						.setTitle(boxResource.getResource("title").getValue())
+						.setMessage((String) msg.obj)
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+						.create().show();
+				}
+			}
+		};
+
+		UIUtil.wait("updatingCatalogsList", new Runnable() {
+			public void run() {
+				String error = null;
+				try {
+					view.runBackgroundUpdate(true);
+				} catch (ZLNetworkException e) {
+					error = e.getMessage();
+				}
+				handler.sendMessage(handler.obtainMessage(0, error));
+			}
+		}, this);
 	}
 }
