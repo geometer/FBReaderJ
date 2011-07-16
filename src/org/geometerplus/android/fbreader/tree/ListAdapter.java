@@ -95,16 +95,14 @@ public abstract class ListAdapter extends BaseAdapter {
 		return myItems.indexOf(item);
 	}
 
-	public int getFirstSelectedItemIndex() {
-		int index = 0;
+	public FBTree getFirstSelectedItem() {
 		synchronized (myItems) {
 			for (FBTree t : myItems) {
 				if (myActivity.isTreeSelected(t)) {
-					return index;
+					return t;
 				}
-				++index;
 			}
 		}
-		return -1;
+		return null;
 	}
 }

@@ -67,6 +67,12 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 	private volatile boolean myInProgress;
 
 	@Override
+	protected FBTree getTreeByKey(FBTree.Key key) {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		return key != null ? library.getTreeByKey(key) : library.getRootTree();
+	}
+
+	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 

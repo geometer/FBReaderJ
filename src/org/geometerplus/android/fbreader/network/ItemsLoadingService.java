@@ -42,7 +42,7 @@ public class ItemsLoadingService extends Service {
 		if (doDownload) {
 			context.startService(
 				new Intent(context.getApplicationContext(), ItemsLoadingService.class)
-					.putExtra(Util.TREE_KEY_KEY, tree.getUniqueKey())
+					.putExtra(NetworkBaseActivity.TREE_KEY_KEY, tree.getUniqueKey())
 			);
 		}
 	}
@@ -89,7 +89,7 @@ public class ItemsLoadingService extends Service {
 			doStop();
 			return;
 		}
-		intent.removeExtra(Util.TREE_KEY_KEY);
+		intent.removeExtra(NetworkBaseActivity.TREE_KEY_KEY);
 
 		if (!NetworkView.Instance().isInitialized()) {
 			doStop();

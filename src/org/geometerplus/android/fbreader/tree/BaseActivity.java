@@ -30,6 +30,11 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class BaseActivity extends ListActivity {
+	private static final String OPEN_TREE_ACTION = "org.fbreader.intent.OPEN_TREE";
+
+	public static final String TREE_KEY_KEY = "TreeKey";
+	public static final String SELECTED_TREE_KEY_KEY = "SelectedTreeKey";
+
 	private FBTree myCurrentTree;
 
 	@Override
@@ -62,9 +67,7 @@ public abstract class BaseActivity extends ListActivity {
 		}
 
 		if (keyCode == KeyEvent.KEYCODE_BACK && myCurrentTree.Parent != null) {
-			final FBTree oldTree = myCurrentTree;
-			openTree(myCurrentTree.Parent);
-			setSelection(getListAdapter().getIndex(oldTree));
+			openTree(myCurrentTree.Parent, myCurrentTree);
 			return true;
 		} else {
 			return super.onKeyDown(keyCode, event);
@@ -72,6 +75,10 @@ public abstract class BaseActivity extends ListActivity {
 	}
 
 	protected void openTree(final FBTree tree) {
+		openTree(tree, null);
+	}
+
+	protected void openTree(final FBTree tree, final FBTree treeToSelect) {
 		switch (tree.getOpeningStatus()) {
 			case WAIT_FOR_OPEN:
 			case ALWAYS_RELOAD_BEFORE_OPENING:
@@ -86,29 +93,52 @@ public abstract class BaseActivity extends ListActivity {
 						},
 						new Runnable() {
 							public void run() {
-								openTreeInternal(tree);
+								openTreeInternal(tree, treeToSelect);
 							}
 						}
 					);
 				} else {
 					tree.waitForOpening();
-					openTreeInternal(tree);
+					openTreeInternal(tree, treeToSelect);
 				}
 				break;
 			default:
-				openTreeInternal(tree);
+				openTreeInternal(tree, treeToSelect);
 				break;
 		}
 	}
 
-	private void openTreeInternal(FBTree tree) {
+	protected abstract FBTree getTreeByKey(FBTree.Key key);
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
+			final FBTree.Key key = (FBTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
+			final FBTree.Key selectedKey = (FBTree.Key)intent.getSerializableExtra(SELECTED_TREE_KEY_KEY);
+			myCurrentTree = getTreeByKey(key);
+			final ListAdapter adapter = getListAdapter();
+			adapter.replaceAll(myCurrentTree.subTrees());
+			setTitle(myCurrentTree.getTreeTitle());
+			final FBTree selectedTree =
+				selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();
+			setSelection(adapter.getIndex(selectedTree));
+		} else {
+			super.onNewIntent(intent);
+		}
+	}
+
+	private void openTreeInternal(FBTree tree, FBTree treeToSelect) {
 		switch (tree.getOpeningStatus()) {
 			case READY_TO_OPEN:
 			case ALWAYS_RELOAD_BEFORE_OPENING:
-				myCurrentTree = tree;
-				getListAdapter().replaceAll(myCurrentTree.subTrees());
-				setTitle(myCurrentTree.getTreeTitle());
-				setSelection(getListAdapter().getFirstSelectedItemIndex());
+				startActivity(new Intent(this, getClass())
+					.setAction(OPEN_TREE_ACTION)
+					.putExtra(TREE_KEY_KEY, tree.getUniqueKey())
+					.putExtra(
+						SELECTED_TREE_KEY_KEY,
+						treeToSelect != null ? treeToSelect.getUniqueKey() : null
+					)
+				);
 				break;
 			case CANNOT_OPEN:
 				UIUtil.showErrorMessage(BaseActivity.this, tree.getOpeningStatusMessage());
