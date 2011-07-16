@@ -23,6 +23,7 @@ import java.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -147,6 +148,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		final TextView descriptionView = (TextView)findViewById(R.id.network_book_description);
 		descriptionView.setText(description);
 		descriptionView.setMovementMethod(new LinkMovementMethod());
+		descriptionView.setTextColor(
+			ColorStateList.valueOf(descriptionView.getTextColors().getDefaultColor())
+		);
 	}
 
 	private final void setupExtraLinks() {

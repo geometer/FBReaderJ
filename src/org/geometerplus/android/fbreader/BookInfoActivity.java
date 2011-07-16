@@ -25,6 +25,7 @@ import java.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -256,6 +257,7 @@ public class BookInfoActivity extends Activity {
 			titleView.setText(myResource.getResource("annotation").getValue());
 			bodyView.setText(HtmlUtil.getHtmlText(annotation));
 			bodyView.setMovementMethod(new LinkMovementMethod());
+			bodyView.setTextColor(ColorStateList.valueOf(bodyView.getTextColors().getDefaultColor()));
 		}
 	}
 
