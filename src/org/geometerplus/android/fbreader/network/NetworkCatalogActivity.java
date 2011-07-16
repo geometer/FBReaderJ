@@ -34,15 +34,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		setForTree((NetworkTree)getCurrentTree(), this);
-
 		setProgressBarIndeterminateVisibility(myInProgress);
-	}
-
-	@Override
-	public void onDestroy() {
-		setForTree((NetworkTree)getCurrentTree(), null);
-		super.onDestroy();
 	}
 
 	private static NetworkTree getLoadableNetworkTree(NetworkTree tree) {

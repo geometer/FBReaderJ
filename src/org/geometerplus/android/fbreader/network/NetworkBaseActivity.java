@@ -80,6 +80,8 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 		setTitle(tree.getTreeTitle());
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
+		setForTree((NetworkTree)getCurrentTree(), this);
 	}
 
 	@Override
@@ -109,6 +111,7 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 
 	@Override
 	public void onDestroy() {
+		setForTree((NetworkTree)getCurrentTree(), null);
 		if (Connection != null) {
 			unbindService(Connection);
 			Connection = null;
