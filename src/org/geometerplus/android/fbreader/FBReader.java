@@ -161,7 +161,9 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
+			super.onNewIntent(intent);
+		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
 				public void run() {
@@ -186,7 +188,6 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 			};
 			UIUtil.wait("search", runnable, this);
-			startActivity(new Intent(this, getClass()));
 		} else {
 			super.onNewIntent(intent);
 		}
