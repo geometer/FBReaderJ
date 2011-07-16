@@ -202,7 +202,7 @@ public final class FBReader extends ZLAndroidActivity {
 			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
-			startActivity(new Intent(this, this.getClass()));
+			startActivity(new Intent(this, getClass()));
 		}
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
