@@ -47,7 +47,6 @@ import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.tree.ListAdapter;
 
 public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener {
-	public static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	static Library LibraryInstance;
@@ -69,14 +68,6 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		final FBTree.Key key = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
-		setCurrentTree(
-			key != null
-				? LibraryInstance.getLibraryTree(key)
-				: LibraryInstance.getRootTree()
-		);
-		setTitle(getCurrentTree().getTreeTitle());
-
 		final String selectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;
 		if (selectedBookPath != null) {
@@ -86,11 +77,17 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			}
 		}
 
-		final ListAdapter adapter = new LibraryListAdapter(this, getCurrentTree().subTrees());
-		setSelection(adapter.getFirstSelectedItemIndex());
+		final ListAdapter adapter = new LibraryListAdapter(this);
+		init(getIntent());
+
 		getListView().setTextFilterEnabled(true);
 
 		getListView().setOnCreateContextMenuListener(this);
+	}
+
+	@Override
+	protected FBTree getTreeByKey(FBTree.Key key) {
+		return key != null ? LibraryInstance.getLibraryTree(key) : LibraryInstance.getRootTree();
 	}
 
 	@Override
@@ -150,6 +147,8 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			} else {
 				UIUtil.showErrorMessage(this, "bookNotFound");
 			}
+		} else {
+			super.onNewIntent(intent);
 		}
 	}
 

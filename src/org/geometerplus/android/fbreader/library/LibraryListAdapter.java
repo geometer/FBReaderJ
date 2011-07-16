@@ -33,15 +33,14 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.tree.ListAdapter;
 
 class LibraryListAdapter extends ListAdapter {
-	LibraryListAdapter(BaseActivity activity, List<FBTree> items) {
-		super(activity, items);
+	LibraryListAdapter(BaseActivity activity) {
+		super(activity);
 	}
 
 	private Bitmap getCoverBitmap(ZLImage cover) {
@@ -88,18 +87,18 @@ class LibraryListAdapter extends ListAdapter {
 		return coverView;
 	}
 
-	private View createView(View convertView, ViewGroup parent, FBTree item) {
+	private View createView(View convertView, ViewGroup parent, LibraryTree tree) {
 		final View view = (convertView != null) ?  convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
-        ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(item.getName());
-		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(item.getSecondString());
+        ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
+		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
 		return view;
 	}
 
 	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
-		final FBTree tree = getItem(position);
+		final LibraryTree tree = (LibraryTree)getItem(position);
 		final View view = createView(convertView, parent, tree);
 		if (getActivity().isTreeSelected(tree)) {
 			view.setBackgroundColor(0xff555555);
@@ -118,8 +117,8 @@ class LibraryListAdapter extends ListAdapter {
 		return view;
 	}
 
-	private int getCoverResourceId(FBTree tree) {
-		if (((LibraryTree)tree).getBook() != null) {
+	private int getCoverResourceId(LibraryTree tree) {
+		if (tree.getBook() != null) {
 			return R.drawable.ic_list_library_book;
 		} else if (tree instanceof FirstLevelTree) {
 			final String id = tree.getUniqueKey().Id;

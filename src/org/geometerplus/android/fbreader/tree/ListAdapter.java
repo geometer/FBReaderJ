@@ -29,9 +29,9 @@ public abstract class ListAdapter extends BaseAdapter {
 	private final BaseActivity myActivity;
 	private final List<FBTree> myItems;
 
-	protected ListAdapter(BaseActivity activity, List<FBTree> items) {
+	protected ListAdapter(BaseActivity activity) {
 		myActivity = activity;
-		myItems = Collections.synchronizedList(new ArrayList<FBTree>(items));
+		myItems = Collections.synchronizedList(new ArrayList<FBTree>());
 		activity.setListAdapter(this);
 	}
 
@@ -95,16 +95,14 @@ public abstract class ListAdapter extends BaseAdapter {
 		return myItems.indexOf(item);
 	}
 
-	public int getFirstSelectedItemIndex() {
-		int index = 0;
+	public FBTree getFirstSelectedItem() {
 		synchronized (myItems) {
 			for (FBTree t : myItems) {
 				if (myActivity.isTreeSelected(t)) {
-					return index;
+					return t;
 				}
-				++index;
 			}
 		}
-		return -1;
+		return null;
 	}
 }

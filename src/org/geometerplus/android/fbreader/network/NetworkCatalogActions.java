@@ -264,7 +264,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			case CUSTOM_CATALOG_EDIT:
 			{
 				final Intent intent = new Intent(activity, AddCustomCatalogActivity.class);
-				NetworkLibraryActivity.addLinkToIntent(
+				AddCustomCatalogActivity.addLinkToIntent(
 					intent,
 					(ICustomNetworkLink)item.Link
 				);
@@ -350,7 +350,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			final NetworkCatalogActivity activity = NetworkCatalogActivity.getByTree(myTree);
+			final NetworkBaseActivity activity = NetworkBaseActivity.getByTree(myTree);
 			if (activity == null) {
 				return;
 			}
