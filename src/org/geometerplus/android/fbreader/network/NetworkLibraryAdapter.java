@@ -34,15 +34,14 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
-import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.ListAdapter;
 
 class NetworkLibraryAdapter extends ListAdapter {
-	NetworkLibraryAdapter(NetworkBaseActivity activity, List<FBTree> items) {
-		super(activity, items);
+	NetworkLibraryAdapter(NetworkBaseActivity activity) {
+		super(activity);
 	}
 
 	private int myCoverWidth = -1;

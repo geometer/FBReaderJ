@@ -29,9 +29,9 @@ public abstract class ListAdapter extends BaseAdapter {
 	private final BaseActivity myActivity;
 	private final List<FBTree> myItems;
 
-	protected ListAdapter(BaseActivity activity, List<FBTree> items) {
+	protected ListAdapter(BaseActivity activity) {
 		myActivity = activity;
-		myItems = Collections.synchronizedList(new ArrayList<FBTree>(items));
+		myItems = Collections.synchronizedList(new ArrayList<FBTree>());
 		activity.setListAdapter(this);
 	}
 

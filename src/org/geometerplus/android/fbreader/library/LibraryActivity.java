@@ -68,11 +68,6 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
 
-		final FBTree.Key key = (FBTree.Key)getIntent().getSerializableExtra(TREE_KEY_KEY);
-		setCurrentTree(getTreeByKey(key));
-
-		setTitle(getCurrentTree().getTreeTitle());
-
 		final String selectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;
 		if (selectedBookPath != null) {
@@ -82,8 +77,9 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			}
 		}
 
-		final ListAdapter adapter = new LibraryListAdapter(this, getCurrentTree().subTrees());
-		setSelection(adapter.getIndex(adapter.getFirstSelectedItem()));
+		final ListAdapter adapter = new LibraryListAdapter(this);
+		init(getIntent());
+
 		getListView().setTextFilterEnabled(true);
 
 		getListView().setOnCreateContextMenuListener(this);

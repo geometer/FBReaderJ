@@ -67,12 +67,6 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 	private volatile boolean myInProgress;
 
 	@Override
-	protected FBTree getTreeByKey(FBTree.Key key) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		return key != null ? library.getTreeByKey(key) : library.getRootTree();
-	}
-
-	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -89,19 +83,20 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 			BIND_AUTO_CREATE
 		);
 
-		NetworkTree tree = Util.getTreeFromIntent(getIntent());
-		if (tree == null) {
-			tree = NetworkLibrary.Instance().getRootTree();
-		}
-		setCurrentTree(tree);
-		setListAdapter(new NetworkLibraryAdapter(this, tree.subTrees()));
-		setTitle(tree.getTreeTitle());
+		setListAdapter(new NetworkLibraryAdapter(this));
+		init(getIntent());
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		setForTree((NetworkTree)getCurrentTree(), this);
 
 		setProgressBarIndeterminateVisibility(myInProgress);
+	}
+
+	@Override
+	protected FBTree getTreeByKey(FBTree.Key key) {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		return key != null ? library.getTreeByKey(key) : library.getRootTree();
 	}
 
 	@Override

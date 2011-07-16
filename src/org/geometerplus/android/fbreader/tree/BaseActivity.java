@@ -52,10 +52,6 @@ public abstract class BaseActivity extends ListActivity {
 		return myCurrentTree;
 	}
 
-	protected void setCurrentTree(FBTree tree) {
-		myCurrentTree = tree;
-	}
-
 	public abstract boolean isTreeSelected(FBTree tree);
 
 	protected boolean OLD_STYLE_FLAG = false;
@@ -113,18 +109,22 @@ public abstract class BaseActivity extends ListActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
-			final FBTree.Key key = (FBTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
-			final FBTree.Key selectedKey = (FBTree.Key)intent.getSerializableExtra(SELECTED_TREE_KEY_KEY);
-			myCurrentTree = getTreeByKey(key);
-			final ListAdapter adapter = getListAdapter();
-			adapter.replaceAll(myCurrentTree.subTrees());
-			setTitle(myCurrentTree.getTreeTitle());
-			final FBTree selectedTree =
-				selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();
-			setSelection(adapter.getIndex(selectedTree));
+			init(intent);
 		} else {
 			super.onNewIntent(intent);
 		}
+	}
+
+	protected void init(Intent intent) {
+		final FBTree.Key key = (FBTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
+		final FBTree.Key selectedKey = (FBTree.Key)intent.getSerializableExtra(SELECTED_TREE_KEY_KEY);
+		myCurrentTree = getTreeByKey(key);
+		final ListAdapter adapter = getListAdapter();
+		adapter.replaceAll(myCurrentTree.subTrees());
+		setTitle(myCurrentTree.getTreeTitle());
+		final FBTree selectedTree =
+			selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();
+		setSelection(adapter.getIndex(selectedTree));
 	}
 
 	private void openTreeInternal(FBTree tree, FBTree treeToSelect) {
