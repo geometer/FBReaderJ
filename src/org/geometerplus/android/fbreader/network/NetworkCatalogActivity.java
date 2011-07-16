@@ -52,21 +52,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		if (menuInfo == null && getCurrentTree() instanceof NetworkCatalogTree) {
-			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
-			if (Util.isTopupSupported(this, link)) {
-				final TopupActions actions = NetworkView.Instance().getTopupActions();
-				if (actions != null) {
-					actions.buildContextMenu(this, menu, link);
-					return;
-				}
-			}
-		}
-		super.onCreateContextMenu(menu, view, menuInfo);
-	}
-
-	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		if ((item == null || item.getMenuInfo() == null) && getCurrentTree() instanceof NetworkCatalogTree) {
 			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
