@@ -350,7 +350,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			final NetworkCatalogActivity activity = NetworkCatalogActivity.getByTree(myTree);
+			final NetworkBaseActivity activity = NetworkBaseActivity.getByTree(myTree);
 			if (activity == null) {
 				return;
 			}

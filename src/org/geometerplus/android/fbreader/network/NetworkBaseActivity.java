@@ -40,6 +40,18 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
 
+	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
+
+	static void setForTree(NetworkTree tree, NetworkBaseActivity activity) {
+		if (tree != null) {
+			tree.setUserData(ACTIVITY_BY_TREE_KEY, activity);
+		}
+	}
+
+	static NetworkBaseActivity getByTree(NetworkTree tree) {
+		return (NetworkBaseActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
+	}
+
 	public BookDownloaderServiceConnection Connection;
 
 	@Override

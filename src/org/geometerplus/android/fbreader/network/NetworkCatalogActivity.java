@@ -28,18 +28,6 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class NetworkCatalogActivity extends NetworkBaseActivity implements UserRegistrationConstants {
-	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
-
-	static void setForTree(NetworkTree tree, NetworkCatalogActivity activity) {
-		if (tree != null) {
-			tree.setUserData(ACTIVITY_BY_TREE_KEY, activity);
-		}
-	}
-
-	static NetworkCatalogActivity getByTree(NetworkTree tree) {
-		return (NetworkCatalogActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
-	}
-
 	private volatile boolean myInProgress;
 
 	@Override
