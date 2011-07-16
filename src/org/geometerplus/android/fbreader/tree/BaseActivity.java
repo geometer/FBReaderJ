@@ -40,7 +40,7 @@ public abstract class BaseActivity extends ListActivity {
 
 	private FBTree myCurrentTree;
 	// we store the key separately because
-	// it will be changed after myCurrentTree.removeSelf() call
+	// it will be changed in case of myCurrentTree.removeSelf() call
 	private FBTree.Key myCurrentKey;
 	private ArrayList<FBTree.Key> myHistory;
 
