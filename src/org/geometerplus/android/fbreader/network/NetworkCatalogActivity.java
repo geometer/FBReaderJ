@@ -52,20 +52,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		if ((item == null || item.getMenuInfo() == null) && getCurrentTree() instanceof NetworkCatalogTree) {
-			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
-			if (Util.isTopupSupported(this, link)) {
-				final TopupActions actions = NetworkView.Instance().getTopupActions();
-				if (actions != null && TopupActions.runAction(this, link, item.getItemId())) {
-					return true;
-				}
-			}
-		}
-		return super.onContextItemSelected(item);
-	}
-
-	@Override
 	public void onDestroy() {
 		setForTree((NetworkTree)getCurrentTree(), null);
 		super.onDestroy();
@@ -91,7 +77,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 					tree != null &&
 					ItemsLoadingService.getRunnable(tree) != null;
 				getListView().invalidateViews();
-            
+
 				/*
 				 * getListAdapter() always returns CatalogAdapter because onModelChanged() 
 				 * can be called only after Activity's onStart() method (where NetworkView's 
@@ -104,7 +90,7 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 						child.invalidateChildren();
 					}
 				}
-            
+
 				setProgressBarIndeterminateVisibility(myInProgress);
 			}
 		});

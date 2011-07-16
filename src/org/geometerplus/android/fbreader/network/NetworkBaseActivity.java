@@ -30,8 +30,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
@@ -138,6 +137,15 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 					return;
 				}
 			}
+		} else if (getCurrentTree() instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
+			if (Util.isTopupSupported(this, link)) {
+				final TopupActions actions = NetworkView.Instance().getTopupActions();
+				if (actions != null) {
+					actions.buildContextMenu(this, menu, link);
+					return;
+				}
+			}
 		}
 		super.onCreateContextMenu(menu, view, menuInfo);
 	}
@@ -150,6 +158,14 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 			if (tree != null) {
 				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
 				if (actions != null && actions.runAction(this, tree, item.getItemId())) {
+					return true;
+				}
+			}
+		} else if (getCurrentTree() instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
+			if (Util.isTopupSupported(this, link)) {
+				final TopupActions actions = NetworkView.Instance().getTopupActions();
+				if (actions != null && TopupActions.runAction(this, link, item.getItemId())) {
 					return true;
 				}
 			}
