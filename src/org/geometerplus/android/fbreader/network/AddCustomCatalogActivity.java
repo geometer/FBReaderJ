@@ -167,7 +167,7 @@ public class AddCustomCatalogActivity extends Activity {
 				ADD_CATALOG,
 				uri,
 				AddCustomCatalogActivity.this,
-				NetworkLibraryActivity.class
+				NetworkTopLevelActivity.class
 			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			addLinkToIntent(intent, myLink);
 			startActivity(intent);

@@ -30,7 +30,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-public class NetworkLibraryActivity extends NetworkBaseActivity {
+public class NetworkTopLevelActivity extends NetworkBaseActivity {
 	private volatile Intent myIntent;
 
 	@Override

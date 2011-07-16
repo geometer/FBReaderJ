@@ -62,8 +62,8 @@ class NetworkInitializer extends Handler {
 				String error = null;
 				try {
 					NetworkView.Instance().initialize();
-					if (myActivity instanceof NetworkLibraryActivity) {
-						((NetworkLibraryActivity)myActivity).processSavedIntent();
+					if (myActivity instanceof NetworkTopLevelActivity) {
+						((NetworkTopLevelActivity)myActivity).processSavedIntent();
 					}
 				} catch (ZLNetworkException e) {
 					error = e.getMessage();
@@ -98,8 +98,8 @@ class NetworkInitializer extends Handler {
 		} else if (message.what == 0) {
 			runInitialization(); // run initialization process
 		} else if (message.obj == null) {
-			if (myActivity instanceof NetworkLibraryActivity) {
-				final NetworkLibraryActivity a = (NetworkLibraryActivity)myActivity;
+			if (myActivity instanceof NetworkTopLevelActivity) {
+				final NetworkTopLevelActivity a = (NetworkTopLevelActivity)myActivity;
 				a.startService(new Intent(a.getApplicationContext(), LibraryInitializationService.class));
 				a.onModelChanged(); // initialization is complete successfully
 			}

@@ -45,7 +45,7 @@ import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 
-abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.EventListener {
+public class NetworkBaseActivity extends BaseActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
