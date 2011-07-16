@@ -111,21 +111,6 @@ public class NetworkCatalogActivity extends NetworkBaseActivity implements UserR
 	}
 
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event)  {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			doStopLoading();
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-
-	private void doStopLoading() {
-		final ItemsLoader runnable = ItemsLoadingService.getRunnable((NetworkTree)getCurrentTree());
-		if (runnable != null) {
-			runnable.interruptLoading();
-		}
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		return NetworkView.Instance().createOptionsMenu(menu, (NetworkTree)getCurrentTree());

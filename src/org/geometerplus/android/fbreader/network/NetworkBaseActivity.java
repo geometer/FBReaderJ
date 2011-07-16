@@ -115,6 +115,18 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 	}
 
 	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			final ItemsLoader runnable =
+				ItemsLoadingService.getRunnable((NetworkTree)getCurrentTree());
+			if (runnable != null) {
+				runnable.interruptLoading();
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		if (menuInfo != null) {
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
