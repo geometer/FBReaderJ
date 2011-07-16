@@ -41,8 +41,7 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.RootTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 
@@ -64,6 +63,8 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 	}
 
 	public BookDownloaderServiceConnection Connection;
+
+	private volatile boolean myInProgress;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -93,6 +94,8 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		setForTree((NetworkTree)getCurrentTree(), this);
+
+		setProgressBarIndeterminateVisibility(myInProgress);
 	}
 
 	@Override
@@ -133,10 +136,6 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 	@Override
 	public boolean isTreeSelected(FBTree tree) {
 		return false;
-	}
-
-	// method from NetworkView.EventListener
-	public void onModelChanged() {
 	}
 
 	@Override
@@ -382,5 +381,44 @@ abstract class NetworkBaseActivity extends BaseActivity implements NetworkView.E
 				handler.sendMessage(handler.obtainMessage(0, error));
 			}
 		}, this);
+	}
+
+	// method from NetworkView.EventListener
+	public void onModelChanged() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
+				myInProgress =
+					tree != null &&
+					ItemsLoadingService.getRunnable(tree) != null;
+				getListView().invalidateViews();
+
+				/*
+				 * getListAdapter() always returns CatalogAdapter because onModelChanged() 
+				 * can be called only after Activity's onStart() method (where NetworkView's 
+				 * addEventListener() is called). Therefore CatalogAdapter will be set as 
+				 * adapter in onCreate() method before any calls to onModelChanged().
+				 */
+				((NetworkLibraryAdapter)getListAdapter()).replaceAll(getCurrentTree().subTrees());
+				for (FBTree child : getCurrentTree().subTrees()) {
+					if (child instanceof TopUpTree) {
+						child.invalidateChildren();
+					}
+				}
+
+				setProgressBarIndeterminateVisibility(myInProgress);
+			}
+		});
+	}
+
+	private static NetworkTree getLoadableNetworkTree(NetworkTree tree) {
+		while (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
+			if (tree.Parent instanceof NetworkTree) {
+				tree = (NetworkTree)tree.Parent;
+			} else {
+				return null;
+			}
+		}
+		return tree;
 	}
 }

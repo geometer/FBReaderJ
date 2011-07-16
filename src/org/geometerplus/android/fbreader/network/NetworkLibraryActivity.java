@@ -78,8 +78,7 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						library.addCustomLink(link);
 						library.synchronize();
-						NetworkView.Instance().fireModelChangedAsync();
-						getListView().invalidateViews();
+						onModelChanged();
 					}
 				});
 			}
@@ -102,11 +101,5 @@ public class NetworkLibraryActivity extends NetworkBaseActivity {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
 		return true;
-	}
-
-	@Override
-	public void onModelChanged() {
-		getListView().invalidateViews();
-		((NetworkLibraryAdapter)getListAdapter()).replaceAll(getCurrentTree().subTrees());
 	}
 }
