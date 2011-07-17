@@ -63,7 +63,7 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden"/>
 		<activity android:name="org.geometerplus.android.fbreader.image.ImageViewActivity" android:process=":imageView" android:configChanges="orientation|keyboardHidden"/>
-		<activity android:name="org.geometerplus.android.fbreader.BookInfoActivity" android:configChanges="orientation|keyboardHidden" android:process=":library"/>
+		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:configChanges="orientation|keyboardHidden" android:process=":library"/>
 		<service android:name="org.geometerplus.android.fbreader.library.InitializationService" android:process=":library" />
 		<receiver android:name="org.geometerplus.android.fbreader.library.KillerCallback" android:process=":library" />
 		<activity android:name="org.geometerplus.android.fbreader.library.LibraryActivity" android:launchMode="singleTask" android:process=":library" android:configChanges="orientation|keyboardHidden">

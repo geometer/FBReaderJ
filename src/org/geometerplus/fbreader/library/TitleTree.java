@@ -22,8 +22,12 @@ package org.geometerplus.fbreader.library;
 public final class TitleTree extends LibraryTree {
 	public final String Title;
 
-	TitleTree(LibraryTree parent, String title) {
-		super(parent);
+	TitleTree(String title) {
+		Title = title;
+	}
+
+	TitleTree(LibraryTree parent, String title, int position) {
+		super(parent, position);
 		Title = title;
 	}
 

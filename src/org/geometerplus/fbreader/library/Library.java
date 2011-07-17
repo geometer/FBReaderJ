@@ -257,21 +257,15 @@ public final class Library {
 		myNullList.add(null);
 	}
 
-	private TagTree getTagTree(Tag tag, HashMap<Tag,TagTree> tagTreeMap) {
-		TagTree tagTree = tagTreeMap.get(tag);
-		if (tagTree == null) {
-			LibraryTree parent =
-				((tag != null) && (tag.Parent != null)) ?
-					getTagTree(tag.Parent, tagTreeMap) : getFirstLevelTree(ROOT_BY_TAG);
-			tagTree = parent.createTagSubTree(tag);
-			tagTreeMap.put(tag, tagTree);
+	private LibraryTree getTagTree(Tag tag) {
+		if (tag == null || tag.Parent == null) {
+			return getFirstLevelTree(ROOT_BY_TAG).getTagSubTree(tag);
+		} else {
+			return getTagTree(tag.Parent).getTagSubTree(tag);
 		}
-		return tagTree;
 	}
 
 	private void build() {
-		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
-		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
 		final HashMap<Long,Book> bookById = new HashMap<Long,Book>();
 
 		collectBooks();
@@ -286,16 +280,12 @@ public final class Library {
 			for (Author a : authors) {
 				final AuthorTree authorTree = getFirstLevelTree(ROOT_BY_AUTHOR).getAuthorSubTree(a);
 				if (seriesInfo == null) {
-					authorTree.createBookSubTree(book, false);
+					authorTree.getBookSubTree(book, false);
 				} else {
 					final String series = seriesInfo.Name;
 					final AuthorSeriesPair pair = new AuthorSeriesPair(a, series);
-					SeriesTree seriesTree = seriesTreeMap.get(pair);
-					if (seriesTree == null) {
-						seriesTree = authorTree.createSeriesSubTree(series);
-						seriesTreeMap.put(pair, seriesTree);
-					}
-					seriesTree.createBookInSeriesSubTree(book);
+					final SeriesTree seriesTree = authorTree.getSeriesSubTree(series);
+					seriesTree.getBookInSeriesSubTree(book);
 				}
 			}
 
@@ -304,7 +294,7 @@ public final class Library {
 				tags = (List<Tag>)myNullList;
 			}
 			for (Tag t : tags) {
-				getTagTree(t, tagTreeMap).createBookSubTree(book, true);
+				getTagTree(t).getBookSubTree(book, true);
 			}
 		}
 
@@ -323,7 +313,6 @@ public final class Library {
 			doGroupTitlesByFirstLetter = myBooks.size() > letterSet.size() * 5 / 4;
 		}
 		if (doGroupTitlesByFirstLetter) {
-			final HashMap<Character,TitleTree> letterTrees = new HashMap<Character,TitleTree>();
 			for (Book book : myBooks) {
 				String title = book.getTitle();
 				if (title == null) {
@@ -334,16 +323,12 @@ public final class Library {
 					continue;
 				}
 				Character c = title.charAt(0);
-				TitleTree tree = letterTrees.get(c);
-				if (tree == null) {
-					tree = getFirstLevelTree(ROOT_BY_TITLE).createTitleSubTree(c.toString());
-					letterTrees.put(c, tree);
-				}
-				tree.createBookSubTree(book, true);
+				final TitleTree tree = getFirstLevelTree(ROOT_BY_TITLE).getTitleSubTree(c.toString());
+				tree.getBookSubTree(book, true);
 			}
 		} else {
 			for (Book book : myBooks) {
-				getFirstLevelTree(ROOT_BY_TITLE).createBookSubTree(book, true);
+				getFirstLevelTree(ROOT_BY_TITLE).getBookSubTree(book, true);
 			}
 		}
 
@@ -351,21 +336,16 @@ public final class Library {
 		for (long id : db.loadRecentBookIds()) {
 			Book book = bookById.get(id);
 			if (book != null) {
-				getFirstLevelTree(ROOT_RECENT).createBookSubTree(book, true);
+				new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
 			}
 		}
 
 		for (long id : db.loadFavoritesIds()) {
 			Book book = bookById.get(id);
 			if (book != null) {
-				getFirstLevelTree(ROOT_FAVORITES).createBookSubTree(book, true);
+				getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
 			}
 		}
-
-		getFirstLevelTree(ROOT_FAVORITES).sortAllChildren();
-		getFirstLevelTree(ROOT_BY_AUTHOR).sortAllChildren();
-		getFirstLevelTree(ROOT_BY_TITLE).sortAllChildren();
-		getFirstLevelTree(ROOT_BY_TAG).sortAllChildren();
 
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
@@ -418,11 +398,8 @@ public final class Library {
 					if (newSearchResults == null) {
 						newSearchResults = createNewSearchResults(pattern);
 					}
-					newSearchResults.createBookSubTree(book, true);
+					newSearchResults.getBookSubTree(book, true);
 				}
-			}
-			if (newSearchResults != null) {
-				newSearchResults.sortAllChildren();
 			}
 		}
 		return newSearchResults;
@@ -460,8 +437,7 @@ public final class Library {
 			return;
 		}
 		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
-		rootFavorites.createBookSubTree(book, true);
-		rootFavorites.sortAllChildren();
+		rootFavorites.getBookSubTree(book, true);
 		BooksDatabase.Instance().addToFavorites(book.getId());
 	}
 
