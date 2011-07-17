@@ -56,8 +56,14 @@ public abstract class LibraryTree extends FBTree {
 		return new TitleTree(this, title);
 	}
 
-	AuthorTree createAuthorSubTree(Author author) {
-		return new AuthorTree(this, author);
+	AuthorTree getAuthorSubTree(Author author) {
+		final AuthorTree temp = new AuthorTree(author);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (AuthorTree)subTrees().get(position);
+		} else {
+			return new AuthorTree(this, author, - position - 1);
+		}
 	}
 
 	BookTree createBookSubTree(Book book, boolean showAuthors) {

@@ -271,7 +271,6 @@ public final class Library {
 
 	private void build() {
 		final HashMap<Tag,TagTree> tagTreeMap = new HashMap<Tag,TagTree>();
-		final HashMap<Author,AuthorTree> authorTreeMap = new HashMap<Author,AuthorTree>();
 		final HashMap<AuthorSeriesPair,SeriesTree> seriesTreeMap = new HashMap<AuthorSeriesPair,SeriesTree>();
 		final HashMap<Long,Book> bookById = new HashMap<Long,Book>();
 
@@ -285,11 +284,7 @@ public final class Library {
 			}
 			final SeriesInfo seriesInfo = book.getSeriesInfo();
 			for (Author a : authors) {
-				AuthorTree authorTree = authorTreeMap.get(a);
-				if (authorTree == null) {
-					authorTree = getFirstLevelTree(ROOT_BY_AUTHOR).createAuthorSubTree(a);
-					authorTreeMap.put(a, authorTree);
-				}
+				final AuthorTree authorTree = getFirstLevelTree(ROOT_BY_AUTHOR).getAuthorSubTree(a);
 				if (seriesInfo == null) {
 					authorTree.createBookSubTree(book, false);
 				} else {

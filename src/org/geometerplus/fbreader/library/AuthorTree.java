@@ -22,8 +22,12 @@ package org.geometerplus.fbreader.library;
 public class AuthorTree extends LibraryTree {
 	public final Author Author;
 
-	AuthorTree(LibraryTree parent, Author author) {
-		super(parent);
+	AuthorTree(Author author) {
+		Author = author;
+	}
+
+	AuthorTree(LibraryTree parent, Author author, int position) {
+		super(parent, position);
 		Author = author;
 	}
 
@@ -34,18 +38,19 @@ public class AuthorTree extends LibraryTree {
 	@Override
 	public String getName() {
 		return
-			(Author != null) ?
+			Author != null ?
 				Author.DisplayName :
 				Library.resource().getResource("unknownAuthor").getValue();
 	}
 
 	@Override
 	protected String getStringId() {
-		return getName();
+		return getName() + ":" + getSortKey();
 	}
 
+	@Override
 	protected String getSortKey() {
-		return (Author != null) ? Author.SortKey : null;
+		return Author != null ? Author.SortKey : null;
 	}
 
 	@Override
