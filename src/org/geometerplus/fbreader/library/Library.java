@@ -261,78 +261,112 @@ public final class Library {
 		}
 	}
 
-	private void build() {
-		final FileInfoSet fileInfos = new FileInfoSet();
-		final Map<Long,Book> savedBooks = BooksDatabase.Instance().loadBooks(fileInfos, true);
-		boolean doGroupTitlesByFirstLetter = false;
-		if (savedBooks.size() > 10) {
-			final HashSet<String> letterSet = new HashSet<String>();
-			for (Book book : savedBooks.values()) {
-				final String letter = TitleTree.firstTitleLetter(book);
-				if (letter != null) {
-					letterSet.add(letter);
-				}
-			}
-			doGroupTitlesByFirstLetter = savedBooks.values().size() > letterSet.size() * 5 / 4;
+	private void addBookToLibrary(Book book, boolean doGroupTitlesByFirstLetter) {
+		myBooks.add(book);
+
+		List<Author> authors = book.authors();
+		if (authors.isEmpty()) {
+			authors = (List<Author>)myNullList;
 		}
-
-		collectBooks(fileInfos, savedBooks);
-
-		final Map<Long,Book> bookById = new HashMap<Long,Book>();
-
-		for (Book book : myBooks) {
-			bookById.put(book.getId(), book);
-			List<Author> authors = book.authors();
-			if (authors.isEmpty()) {
-				authors = (List<Author>)myNullList;
-			}
-			final SeriesInfo seriesInfo = book.getSeriesInfo();
-			for (Author a : authors) {
-				final AuthorTree authorTree = getFirstLevelTree(ROOT_BY_AUTHOR).getAuthorSubTree(a);
-				if (seriesInfo == null) {
-					authorTree.getBookSubTree(book, false);
-				} else {
-					final String series = seriesInfo.Name;
-					final AuthorSeriesPair pair = new AuthorSeriesPair(a, series);
-					final SeriesTree seriesTree = authorTree.getSeriesSubTree(series);
-					seriesTree.getBookInSeriesSubTree(book);
-				}
-			}
-
-			if (doGroupTitlesByFirstLetter) {
-				final String letter = TitleTree.firstTitleLetter(book);
-				if (letter != null) {
-					final TitleTree tree =
-						getFirstLevelTree(ROOT_BY_TITLE).getTitleSubTree(letter);
-					tree.getBookSubTree(book, true);
-				}
+		final SeriesInfo seriesInfo = book.getSeriesInfo();
+		for (Author a : authors) {
+			final AuthorTree authorTree = getFirstLevelTree(ROOT_BY_AUTHOR).getAuthorSubTree(a);
+			if (seriesInfo == null) {
+				authorTree.getBookSubTree(book, false);
 			} else {
-				getFirstLevelTree(ROOT_BY_TITLE).getBookSubTree(book, true);
-			}
-
-			List<Tag> tags = book.tags();
-			if (tags.isEmpty()) {
-				tags = (List<Tag>)myNullList;
-			}
-			for (Tag t : tags) {
-				getTagTree(t).getBookSubTree(book, true);
+				final String series = seriesInfo.Name;
+				final AuthorSeriesPair pair = new AuthorSeriesPair(a, series);
+				final SeriesTree seriesTree = authorTree.getSeriesSubTree(series);
+				seriesTree.getBookInSeriesSubTree(book);
 			}
 		}
 
+		if (doGroupTitlesByFirstLetter) {
+			final String letter = TitleTree.firstTitleLetter(book);
+			if (letter != null) {
+				final TitleTree tree =
+					getFirstLevelTree(ROOT_BY_TITLE).getTitleSubTree(letter);
+				tree.getBookSubTree(book, true);
+			}
+		} else {
+			getFirstLevelTree(ROOT_BY_TITLE).getBookSubTree(book, true);
+		}
+
+		List<Tag> tags = book.tags();
+		if (tags.isEmpty()) {
+			tags = (List<Tag>)myNullList;
+		}
+		for (Tag t : tags) {
+			getTagTree(t).getBookSubTree(book, true);
+		}
+	}
+
+	private void fireModelChangedEvent() {
+		System.err.println("model changed event");
+	}
+
+	private void build() {
+		// Step 0: get list of books from database marked as "existing"
+		final FileInfoSet fileInfos = new FileInfoSet();
+		final Map<Long,Book> savedBooksByFileId = BooksDatabase.Instance().loadBooks(fileInfos, true);
+		final Map<Long,Book> savedBooksByBookId = new HashMap<Long,Book>();
+		for (Book b : savedBooksByFileId.values()) {
+			savedBooksByBookId.put(b.getId(), b);
+		}
+
+		// Step 1: add "existing" books recent and favorites lists
 		final BooksDatabase db = BooksDatabase.Instance();
 		for (long id : db.loadRecentBookIds()) {
-			Book book = bookById.get(id);
+			final Book book = savedBooksByBookId.get(id);
 			if (book != null) {
 				new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
 			}
 		}
 
 		for (long id : db.loadFavoritesIds()) {
-			Book book = bookById.get(id);
+			final Book book = savedBooksByBookId.get(id);
 			if (book != null) {
 				getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
 			}
 		}
+
+		fireModelChangedEvent();
+
+		// Step 2: check if files corresptonding to "existing" books really exists; add books
+        //         to library if yes, remove from recent/favorites list if no;
+        //         collect newly "orphaned" books
+		boolean doGroupTitlesByFirstLetter = false;
+		if (savedBooksByFileId.size() > 10) {
+			final HashSet<String> letterSet = new HashSet<String>();
+			for (Book book : savedBooksByFileId.values()) {
+				final String letter = TitleTree.firstTitleLetter(book);
+				if (letter != null) {
+					letterSet.add(letter);
+				}
+			}
+			doGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
+		}
+
+		final Set<Book> orphanedBooks = new HashSet<Book>();
+		for (Book book : savedBooksByFileId.values()) {
+			if (book.File.exists()) {
+				addBookToLibrary(book, doGroupTitlesByFirstLetter);
+			} else {
+				myRootTree.removeBook(book);
+				orphanedBooks.add(book);
+			}
+			fireModelChangedEvent();
+		}
+		BooksDatabase.Instance().setExistingFlag(orphanedBooks, false);
+
+		// Step 3: collect books from physical files; add new, update already added,
+		// unmark orphaned as existing again, collect newly added
+		final Map<Long,Book> orphanedBooksByFileId = BooksDatabase.Instance().loadBooks(fileInfos, true);
+		final Set<Book> existingBooks = new HashSet<Book>();
+		final Set<Book> newBooks = new HashSet<Book>();
+
+		/*
+		collectBooks(fileInfos, savedBooksByFileId);
 
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
@@ -341,6 +375,7 @@ public final class Library {
 				}
 			}
 		});
+		*/
 
 		myState = STATE_FULLY_INITIALIZED;
 	}
