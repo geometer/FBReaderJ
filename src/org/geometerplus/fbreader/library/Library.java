@@ -50,8 +50,8 @@ public final class Library {
 	}
 
 	private final List<Book> myBooks = new LinkedList<Book>();
-	private final Set<Book> myExternalBooks = new HashSet<Book>();
 	private final RootTree myRootTree = new RootTree(this);
+	private boolean myDoGroupTitlesByFirstLetter;
 
 	private volatile int myState = STATE_NOT_INITIALIZED;
 	private volatile boolean myInterrupted = false;
@@ -90,7 +90,7 @@ public final class Library {
 
 	void waitForState(int state) {
 		while (myState < state && !myInterrupted) {
-			synchronized(this) {
+			synchronized (this) {
 				if (myState < state && !myInterrupted) {
 					try {
 						wait();
@@ -135,48 +135,40 @@ public final class Library {
 	}
 
 	private void collectBooks(
-		ZLFile file,
-		FileInfoSet fileInfos,
-		Map<Long,Book> savedBooks,
+		ZLFile file, FileInfoSet fileInfos,
+		Map<Long,Book> savedBooksByFileId, Map<Long,Book> orphanedBooksByFileId,
+		Set<Book> newBooks,
 		boolean doReadMetaInfo
 	) {
-		Book book = getBook(file, fileInfos, savedBooks, doReadMetaInfo);
-		if (book != null) {
-			myBooks.add(book);
-		} else if (file.isArchive()) {
-			for (ZLFile entry : fileInfos.archiveEntries(file)) {
-				collectBooks(entry, fileInfos, savedBooks, doReadMetaInfo);
-			}
+		final long fileId = fileInfos.getId(file);
+		if (savedBooksByFileId.get(fileId) != null) {
+			return;
 		}
-	}
 
-	private void collectExternalBooks(FileInfoSet fileInfos, Map<Long,Book> savedBooks) {
-		final HashSet<ZLPhysicalFile> myUpdatedFiles = new HashSet<ZLPhysicalFile>();
-		final HashSet<Long> files = new HashSet<Long>(savedBooks.keySet());
-		for (Long fileId: files) {
-			final ZLFile bookFile = fileInfos.getFile(fileId);
-			if (bookFile == null) {
-				continue;
-			}
-			final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
-			if (physicalFile == null || !physicalFile.exists()) {
-				continue;
-			}
-			boolean reloadMetaInfo = false; 
-			if (myUpdatedFiles.contains(physicalFile)) {
-				reloadMetaInfo = true;
-			} else if (!fileInfos.check(physicalFile, physicalFile != bookFile)) {
-				reloadMetaInfo = true;
-				myUpdatedFiles.add(physicalFile);
-			}
-			final Book book = getBook(bookFile, fileInfos, savedBooks, reloadMetaInfo);
-			if (book == null) {
-				continue;
-			}
-			final long bookId = book.getId();
-			if (bookId != -1 && BooksDatabase.Instance().checkBookList(bookId)) {
-				myBooks.add(book);
-				myExternalBooks.add(book);
+		Book book = orphanedBooksByFileId.get(fileId);
+		if (book != null && (!doReadMetaInfo || book.readMetaInfo())) {
+			addBookToLibrary(book);
+			newBooks.add(book);
+			fireModelChangedEvent();
+			return;
+		}
+
+		book = new Book(file);
+		if (book.readMetaInfo()) {
+			addBookToLibrary(book);
+			newBooks.add(book);
+			fireModelChangedEvent();
+			return;
+		}
+
+		if (file.isArchive()) {
+			for (ZLFile entry : fileInfos.archiveEntries(file)) {
+				collectBooks(
+					entry, fileInfos,
+					savedBooksByFileId, orphanedBooksByFileId,
+					newBooks,
+					doReadMetaInfo
+				);
 			}
 		}
 	}
@@ -204,25 +196,6 @@ public final class Library {
 		return fileList;
 	}
 
-	private void collectBooks(FileInfoSet fileInfos, Map<Long,Book> savedBooks) {
-		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
-
-		for (ZLPhysicalFile file : physicalFilesList) {
-			// TODO: better value for this flag
-			final boolean flag = !"epub".equals(file.getExtension());
-			collectBooks(file, fileInfos, savedBooks, !fileInfos.check(file, flag));
-			file.setCached(false);
-		}
-		final Book helpBook = getBook(getHelpFile(), fileInfos, savedBooks, false);
-		if (helpBook != null) {
-			myBooks.add(helpBook);
-		}
-
-		collectExternalBooks(fileInfos, savedBooks);
-
-		fileInfos.save();
-	}
-
 	private static class AuthorSeriesPair {
 		private final Author myAuthor;
 		private final String mySeries;
@@ -248,10 +221,7 @@ public final class Library {
 		}
 	}
 
-	private final ArrayList<?> myNullList = new ArrayList<Object>(1);
-	{
-		myNullList.add(null);
-	}
+	private final List<?> myNullList = Collections.singletonList(null);
 
 	private LibraryTree getTagTree(Tag tag) {
 		if (tag == null || tag.Parent == null) {
@@ -261,7 +231,7 @@ public final class Library {
 		}
 	}
 
-	private void addBookToLibrary(Book book, boolean doGroupTitlesByFirstLetter) {
+	private void addBookToLibrary(Book book) {
 		myBooks.add(book);
 
 		List<Author> authors = book.authors();
@@ -281,7 +251,7 @@ public final class Library {
 			}
 		}
 
-		if (doGroupTitlesByFirstLetter) {
+		if (myDoGroupTitlesByFirstLetter) {
 			final String letter = TitleTree.firstTitleLetter(book);
 			if (letter != null) {
 				final TitleTree tree =
@@ -306,16 +276,17 @@ public final class Library {
 	}
 
 	private void build() {
-		// Step 0: get list of books from database marked as "existing"
+		final BooksDatabase db = BooksDatabase.Instance();
+
+		// Step 0: get database books marked as "existing"
 		final FileInfoSet fileInfos = new FileInfoSet();
-		final Map<Long,Book> savedBooksByFileId = BooksDatabase.Instance().loadBooks(fileInfos, true);
+		final Map<Long,Book> savedBooksByFileId = db.loadBooks(fileInfos, true);
 		final Map<Long,Book> savedBooksByBookId = new HashMap<Long,Book>();
 		for (Book b : savedBooksByFileId.values()) {
 			savedBooksByBookId.put(b.getId(), b);
 		}
 
 		// Step 1: add "existing" books recent and favorites lists
-		final BooksDatabase db = BooksDatabase.Instance();
 		for (long id : db.loadRecentBookIds()) {
 			final Book book = savedBooksByBookId.get(id);
 			if (book != null) {
@@ -332,10 +303,10 @@ public final class Library {
 
 		fireModelChangedEvent();
 
-		// Step 2: check if files corresptonding to "existing" books really exists; add books
-        //         to library if yes, remove from recent/favorites list if no;
-        //         collect newly "orphaned" books
-		boolean doGroupTitlesByFirstLetter = false;
+		// Step 2: check if files corresponding to "existing" books really exists;
+		//         add books to library if yes (and reload book info if needed);
+		//         remove from recent/favorites list if no;
+		//         collect newly "orphaned" books
 		if (savedBooksByFileId.size() > 10) {
 			final HashSet<String> letterSet = new HashSet<String>();
 			for (Book book : savedBooksByFileId.values()) {
@@ -344,38 +315,75 @@ public final class Library {
 					letterSet.add(letter);
 				}
 			}
-			doGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
+			myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
 		}
 
 		final Set<Book> orphanedBooks = new HashSet<Book>();
 		for (Book book : savedBooksByFileId.values()) {
-			if (book.File.exists()) {
-				addBookToLibrary(book, doGroupTitlesByFirstLetter);
-			} else {
-				myRootTree.removeBook(book);
-				orphanedBooks.add(book);
+			synchronized (this) {
+				if (book.File.exists()) {
+					boolean doAdd = true;
+					final ZLPhysicalFile file = book.File.getPhysicalFile();
+					if (file == null) {
+						continue;
+					}
+					if (!fileInfos.check(file, true)) {
+						if (book.readMetaInfo()) {
+							book.save();
+						} else {
+							doAdd = false;
+						}
+						file.setCached(false);
+					}
+					if (doAdd) {
+						addBookToLibrary(book);
+					}
+				} else {
+					myRootTree.removeBook(book);
+					orphanedBooks.add(book);
+				}
 			}
 			fireModelChangedEvent();
 		}
-		BooksDatabase.Instance().setExistingFlag(orphanedBooks, false);
+		db.setExistingFlag(orphanedBooks, false);
 
 		// Step 3: collect books from physical files; add new, update already added,
-		// unmark orphaned as existing again, collect newly added
-		final Map<Long,Book> orphanedBooksByFileId = BooksDatabase.Instance().loadBooks(fileInfos, true);
-		final Set<Book> existingBooks = new HashSet<Book>();
+		//         unmark orphaned as existing again, collect newly added
+		final Map<Long,Book> orphanedBooksByFileId = db.loadBooks(fileInfos, true);
 		final Set<Book> newBooks = new HashSet<Book>();
 
-		/*
-		collectBooks(fileInfos, savedBooksByFileId);
+		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
+		for (ZLPhysicalFile file : physicalFilesList) {
+			collectBooks(
+				file, fileInfos,
+				savedBooksByFileId, orphanedBooksByFileId,
+				newBooks,
+				!fileInfos.check(file, true)
+			);
+			file.setCached(false);
+		}
+		
+		// Step 4: add help file
+		final ZLFile helpFile = getHelpFile();
+		Book helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
+		if (helpBook == null) {
+			helpBook = new Book(helpFile);
+			helpBook.readMetaInfo();
+		}
+		addBookToLibrary(helpBook);
+		fireModelChangedEvent();
+
+		// Step 5: save changes into database
+		fileInfos.save();
 
 		db.executeAsATransaction(new Runnable() {
 			public void run() {
-				for (Book book : myBooks) {
+				for (Book book : newBooks) {
 					book.save();
 				}
 			}
 		});
-		*/
+		db.setExistingFlag(newBooks, true);
 
 		myState = STATE_FULLY_INITIALIZED;
 	}
@@ -477,8 +485,7 @@ public final class Library {
 
 	public int getRemoveBookMode(Book book) {
 		waitForState(STATE_FULLY_INITIALIZED);
-		return (myExternalBooks.contains(book) ? REMOVE_FROM_LIBRARY : REMOVE_DONT_REMOVE)
-			| (canDeleteBookFile(book) ? REMOVE_FROM_DISK : REMOVE_DONT_REMOVE);
+		return canDeleteBookFile(book) ? REMOVE_FROM_DISK : REMOVE_DONT_REMOVE;
 	}
 
 	private boolean canDeleteBookFile(Book book) {
@@ -523,7 +530,7 @@ public final class Library {
 		if (file == null) {
 			return null;
 		}
-		synchronized(ourCoverMap) {
+		synchronized (ourCoverMap) {
 			final String path = file.getPath();
 			final WeakReference<ZLImage> ref = ourCoverMap.get(path);
 			if (ref == NULL_IMAGE) {
