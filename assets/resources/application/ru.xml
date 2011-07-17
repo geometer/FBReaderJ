@@ -11,6 +11,9 @@
 		<node name="byTitle" value="Названия">
 			<node name="summary" value="Книги, разложенные по названиям"/>
 		</node>
+		<node name="bySeries" value="По сериям">
+			<node name="summary" value="Книги, разложенные по сериям"/>
+		</node>
 		<node name="byTag" value="Категории">
 			<node name="summary" value="Книги, разложенные по категориям"/>
 		</node>
