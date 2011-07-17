@@ -204,12 +204,8 @@ public final class Library {
 		return fileList;
 	}
 
-	private void collectBooks() {
+	private void collectBooks(FileInfoSet fileInfos, Map<Long,Book> savedBooks) {
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
-
-		FileInfoSet fileInfos = new FileInfoSet();
-
-		final Map<Long,Book> savedBooks = BooksDatabase.Instance().loadBooks(fileInfos, true);
 
 		for (ZLPhysicalFile file : physicalFilesList) {
 			// TODO: better value for this flag
@@ -266,9 +262,23 @@ public final class Library {
 	}
 
 	private void build() {
-		final HashMap<Long,Book> bookById = new HashMap<Long,Book>();
+		final FileInfoSet fileInfos = new FileInfoSet();
+		final Map<Long,Book> savedBooks = BooksDatabase.Instance().loadBooks(fileInfos, true);
+		boolean doGroupTitlesByFirstLetter = false;
+		if (savedBooks.size() > 10) {
+			final HashSet<String> letterSet = new HashSet<String>();
+			for (Book book : savedBooks.values()) {
+				final String letter = TitleTree.firstTitleLetter(book);
+				if (letter != null) {
+					letterSet.add(letter);
+				}
+			}
+			doGroupTitlesByFirstLetter = savedBooks.values().size() > letterSet.size() * 5 / 4;
+		}
 
-		collectBooks();
+		collectBooks(fileInfos, savedBooks);
+
+		final Map<Long,Book> bookById = new HashMap<Long,Book>();
 
 		for (Book book : myBooks) {
 			bookById.put(book.getId(), book);
@@ -289,38 +299,23 @@ public final class Library {
 				}
 			}
 
-			List<Tag> tags = book.tags();
-			if (tags.isEmpty()) {
-				tags = (List<Tag>)myNullList;
-			}
-			for (Tag t : tags) {
-				getTagTree(t).getBookSubTree(book, true);
-			}
-		}
-
-		boolean doGroupTitlesByFirstLetter = false;
-		if (myBooks.size() > 10) {
-			final HashSet<String> letterSet = new HashSet<String>();
-			for (Book book : myBooks) {
-				final String letter = TitleTree.firstTitleLetter(book);
-				if (letter != null) {
-					letterSet.add(letter);
-				}
-			}
-			doGroupTitlesByFirstLetter = myBooks.size() > letterSet.size() * 5 / 4;
-		}
-		if (doGroupTitlesByFirstLetter) {
-			for (Book book : myBooks) {
+			if (doGroupTitlesByFirstLetter) {
 				final String letter = TitleTree.firstTitleLetter(book);
 				if (letter != null) {
 					final TitleTree tree =
 						getFirstLevelTree(ROOT_BY_TITLE).getTitleSubTree(letter);
 					tree.getBookSubTree(book, true);
 				}
-			}
-		} else {
-			for (Book book : myBooks) {
+			} else {
 				getFirstLevelTree(ROOT_BY_TITLE).getBookSubTree(book, true);
+			}
+
+			List<Tag> tags = book.tags();
+			if (tags.isEmpty()) {
+				tags = (List<Tag>)myNullList;
+			}
+			for (Tag t : tags) {
+				getTagTree(t).getBookSubTree(book, true);
 			}
 		}
 
