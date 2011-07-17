@@ -43,6 +43,7 @@ public final class Library {
 	public static final String ROOT_RECENT = "recent";
 	public static final String ROOT_BY_AUTHOR = "byAuthor";
 	public static final String ROOT_BY_TITLE = "byTitle";
+	public static final String ROOT_BY_SERIES = "bySeries";
 	public static final String ROOT_BY_TAG = "byTag";
 	public static final String ROOT_FILE_TREE = "fileTree";
 
@@ -188,31 +189,6 @@ public final class Library {
 		return fileList;
 	}
 
-	private static class AuthorSeriesPair {
-		private final Author myAuthor;
-		private final String mySeries;
-
-		AuthorSeriesPair(Author author, String series) {
-			myAuthor = author;
-			mySeries = series;
-		}
-
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			}
-			if (!(object instanceof AuthorSeriesPair)) {
-				return false;
-			}
-			AuthorSeriesPair pair = (AuthorSeriesPair)object;
-			return ZLMiscUtil.equals(myAuthor, pair.myAuthor) && mySeries.equals(pair.mySeries);
-		}
-
-		public int hashCode() {
-			return Author.hashCode(myAuthor) + mySeries.hashCode();
-		}
-	}
-
 	private final List<?> myNullList = Collections.singletonList(null);
 
 	private LibraryTree getTagTree(Tag tag) {
@@ -236,11 +212,20 @@ public final class Library {
 			if (seriesInfo == null) {
 				authorTree.getBookSubTree(book, false);
 			} else {
-				final String series = seriesInfo.Name;
-				final AuthorSeriesPair pair = new AuthorSeriesPair(a, series);
-				final SeriesTree seriesTree = authorTree.getSeriesSubTree(series);
-				seriesTree.getBookInSeriesSubTree(book);
+				authorTree.getSeriesSubTree(seriesInfo.Name).getBookInSeriesSubTree(book);
 			}
+		}
+
+		if (seriesInfo != null) {
+			FirstLevelTree seriesRoot = getFirstLevelTree(ROOT_BY_SERIES);
+			if (seriesRoot == null) {
+				seriesRoot = new FirstLevelTree(
+					myRootTree,
+					myRootTree.indexOf(getFirstLevelTree(ROOT_BY_TITLE)) + 1,
+					ROOT_BY_SERIES
+				);
+			}
+			seriesRoot.getSeriesSubTree(seriesInfo.Name).getBookInSeriesSubTree(book);
 		}
 
 		if (myDoGroupTitlesByFirstLetter) {
@@ -288,14 +273,20 @@ public final class Library {
 
 		// Step 1: add "existing" books recent and favorites lists
 		for (long id : db.loadRecentBookIds()) {
-			final Book book = savedBooksByBookId.get(id);
+			Book book = savedBooksByBookId.get(id);
+			if (book == null) {
+				book = Book.getById(id);
+			}
 			if (book != null) {
 				new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
 			}
 		}
 
 		for (long id : db.loadFavoritesIds()) {
-			final Book book = savedBooksByBookId.get(id);
+			Book book = savedBooksByBookId.get(id);
+			if (book == null) {
+				book = Book.getById(id);
+			}
 			if (book != null) {
 				getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
 			}
@@ -349,7 +340,7 @@ public final class Library {
 
 		// Step 3: collect books from physical files; add new, update already added,
 		//         unmark orphaned as existing again, collect newly added
-		final Map<Long,Book> orphanedBooksByFileId = db.loadBooks(fileInfos, true);
+		final Map<Long,Book> orphanedBooksByFileId = db.loadBooks(fileInfos, false);
 		final Set<Book> newBooks = new HashSet<Book>();
 
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();

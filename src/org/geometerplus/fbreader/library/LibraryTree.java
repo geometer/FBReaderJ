@@ -88,6 +88,16 @@ public abstract class LibraryTree extends FBTree {
 		}
 	}
 
+	SeriesTree getSeriesSubTree(String series) {
+		final SeriesTree temp = new SeriesTree(series);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (SeriesTree)subTrees().get(position);
+		} else {
+			return new SeriesTree(this, series, - position - 1);
+		}
+	}
+
 	public boolean removeBook(Book book) {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 		for (FBTree tree : this) {

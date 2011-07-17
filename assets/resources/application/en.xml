@@ -11,6 +11,9 @@
 		<node name="byTitle" value="By title">
 			<node name="summary" value="Books sorted by title"/>
 		</node>
+		<node name="bySeries" value="By series">
+			<node name="summary" value="Books sorted by series"/>
+		</node>
 		<node name="byTag" value="By tag">
 			<node name="summary" value="Books sorted by tag"/>
 		</node>

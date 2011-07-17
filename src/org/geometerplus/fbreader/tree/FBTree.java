@@ -113,6 +113,10 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return null;
 	}
 
+	public int indexOf(FBTree tree) {
+		return subTrees().indexOf(tree);
+	}
+
 	public abstract String getName();
 
 	public String getTreeTitle() {

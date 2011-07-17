@@ -33,16 +33,6 @@ public class AuthorTree extends LibraryTree {
 		Author = author;
 	}
 
-	SeriesTree getSeriesSubTree(String series) {
-		final SeriesTree temp = new SeriesTree(series);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (SeriesTree)subTrees().get(position);
-		} else {
-			return new SeriesTree(this, series, - position - 1);
-		}
-	}
-
 	@Override
 	public String getName() {
 		return
