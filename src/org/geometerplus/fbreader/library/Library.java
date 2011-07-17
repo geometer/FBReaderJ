@@ -34,8 +34,9 @@ import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.fbreader.Paths;
 
 public final class Library {
-	static final int STATE_NOT_INITIALIZED = 0;
-	static final int STATE_FULLY_INITIALIZED = 1;
+	public interface ChangeListener {
+		void onLibraryChanged();
+	}
 
 	public static final String ROOT_FAVORITES = "favorites";
 	public static final String ROOT_SEARCH_RESULTS = "searchResults";
@@ -53,8 +54,8 @@ public final class Library {
 	private final RootTree myRootTree = new RootTree(this);
 	private boolean myDoGroupTitlesByFirstLetter;
 
-	private volatile int myState = STATE_NOT_INITIALIZED;
-	private volatile boolean myInterrupted = false;
+	private final List<ChangeListener> myListeners = new LinkedList<ChangeListener>();
+	private volatile boolean myIsSynchronized = false;
 
 	public Library() {
 		new FavoritesTree(myRootTree, ROOT_FAVORITES);
@@ -73,6 +74,14 @@ public final class Library {
 		return (FirstLevelTree)myRootTree.getSubTree(key);
 	}
 
+	public synchronized void addChangeListener(ChangeListener listener) {
+		myListeners.add(listener);
+	}
+
+	public synchronized void removeChangeListener(ChangeListener listener) {
+		myListeners.remove(listener);
+	}
+
 	public LibraryTree getLibraryTree(LibraryTree.Key key) {
 		if (key == null) {
 			return null;
@@ -82,23 +91,6 @@ public final class Library {
 		}
 		final LibraryTree parentTree = getLibraryTree(key.Parent);
 		return parentTree != null ? (LibraryTree)parentTree.getSubTree(key.Id) : null;
-	}
-
-	boolean hasState(int state) {
-		return myState >= state || myInterrupted;
-	}
-
-	void waitForState(int state) {
-		while (myState < state && !myInterrupted) {
-			synchronized (this) {
-				if (myState < state && !myInterrupted) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-					}
-				}
-			}
-		}
 	}
 
 	public static ZLResourceFile getHelpFile() {
@@ -271,8 +263,10 @@ public final class Library {
 		}
 	}
 
-	private void fireModelChangedEvent() {
-		System.err.println("model changed event");
+	private synchronized void fireModelChangedEvent() {
+		for (ChangeListener l : myListeners) {
+			l.onLibraryChanged();
+		}
 	}
 
 	private void build() {
@@ -384,30 +378,26 @@ public final class Library {
 			}
 		});
 		db.setExistingFlag(newBooks, true);
-
-		myState = STATE_FULLY_INITIALIZED;
 	}
 
-	public synchronized void synchronize() {
-		if (myState == STATE_NOT_INITIALIZED) {
-			try {
-				myInterrupted = false;
-				build();
-			} catch (Throwable t) {
-				myInterrupted = true;
-			}
-			notifyAll();
-		}
+	public void synchronize() {
+		build();
+		myIsSynchronized = true;
+		fireModelChangedEvent();
+	}
+
+	public boolean isSynchronized() {
+		return myIsSynchronized;
 	}
 
 	public static Book getRecentBook() {
 		List<Long> recentIds = BooksDatabase.Instance().loadRecentBookIds();
-		return (recentIds.size() > 0) ? Book.getById(recentIds.get(0)) : null;
+		return recentIds.size() > 0 ? Book.getById(recentIds.get(0)) : null;
 	}
 
 	public static Book getPreviousBook() {
 		List<Long> recentIds = BooksDatabase.Instance().loadRecentBookIds();
-		return (recentIds.size() > 1) ? Book.getById(recentIds.get(1)) : null;
+		return recentIds.size() > 1 ? Book.getById(recentIds.get(1)) : null;
 	}
 
 	private FirstLevelTree createNewSearchResults(String pattern) {
@@ -419,7 +409,6 @@ public final class Library {
 	}
 
 	public LibraryTree searchBooks(String pattern) {
-		waitForState(STATE_FULLY_INITIALIZED);
 		FirstLevelTree newSearchResults = null;
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();
@@ -451,7 +440,6 @@ public final class Library {
 		if (book == null) {
 			return false;
 		}
-		waitForState(STATE_FULLY_INITIALIZED);
 		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
 		for (FBTree tree : rootFavorites.subTrees()) {
 			if (tree instanceof BookTree && book.equals(((BookTree)tree).Book)) {
@@ -462,7 +450,6 @@ public final class Library {
 	}
 
 	public void addBookToFavorites(Book book) {
-		waitForState(STATE_FULLY_INITIALIZED);
 		if (isBookInFavorites(book)) {
 			return;
 		}
@@ -472,7 +459,6 @@ public final class Library {
 	}
 
 	public void removeBookFromFavorites(Book book) {
-		waitForState(STATE_FULLY_INITIALIZED);
 		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book)) {
 			BooksDatabase.Instance().removeFromFavorites(book.getId());
 		}
@@ -484,7 +470,6 @@ public final class Library {
 	public static final int REMOVE_FROM_LIBRARY_AND_DISK = REMOVE_FROM_LIBRARY | REMOVE_FROM_DISK;
 
 	public int getRemoveBookMode(Book book) {
-		waitForState(STATE_FULLY_INITIALIZED);
 		return canDeleteBookFile(book) ? REMOVE_FROM_DISK : REMOVE_DONT_REMOVE;
 	}
 
@@ -506,7 +491,6 @@ public final class Library {
 		if (removeMode == REMOVE_DONT_REMOVE) {
 			return;
 		}
-		waitForState(STATE_FULLY_INITIALIZED);
 		myBooks.remove(book);
 		if (getFirstLevelTree(ROOT_RECENT).removeBook(book)) {
 			final BooksDatabase db = BooksDatabase.Instance();

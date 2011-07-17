@@ -72,8 +72,6 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 
 		OLD_STYLE_FLAG = true;
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
 		SQLiteCookieDatabase.init(this);
 
 		Connection = new BookDownloaderServiceConnection();
