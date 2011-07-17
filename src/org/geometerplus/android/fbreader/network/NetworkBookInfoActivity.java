@@ -62,7 +62,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 		myMainView = getLayoutInflater().inflate(R.layout.network_book, null, false);
 		setContentView(myMainView);
-		myMainView.setOnCreateContextMenuListener(this);
 	}
 
 	@Override
@@ -130,6 +129,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		NetworkView.Instance().getTopupActions().buildContextMenu(this, menu, myBook.Link);
+		unregisterForContextMenu(view);
 	}
 
 	@Override

@@ -167,7 +167,6 @@ class TopupActions extends NetworkTreeActions {
 	public void runStandalone(Activity activity, INetworkLink link) {
 		final int topupActionCode = getDefaultActionCode(activity, link);
 		if (topupActionCode == TREE_SHOW_CONTEXT_MENU) {
-			//activity.getListView().showContextMenu();
 			View view = null;
 			if (activity instanceof NetworkBaseActivity) {	
 				view = ((NetworkBaseActivity)activity).getListView();
@@ -175,6 +174,7 @@ class TopupActions extends NetworkTreeActions {
 				view = ((NetworkBookInfoActivity)activity).getMainView();
 			}
 			if (view != null) {
+				activity.registerForContextMenu(view);
 				view.showContextMenu();
 			}
 		} else if (topupActionCode >= 0) {
