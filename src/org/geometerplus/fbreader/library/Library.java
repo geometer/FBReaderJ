@@ -209,7 +209,7 @@ public final class Library {
 
 		FileInfoSet fileInfos = new FileInfoSet();
 
-		final Map<Long,Book> savedBooks = BooksDatabase.Instance().loadBooks(fileInfos);
+		final Map<Long,Book> savedBooks = BooksDatabase.Instance().loadBooks(fileInfos, true);
 
 		for (ZLPhysicalFile file : physicalFilesList) {
 			// TODO: better value for this flag
