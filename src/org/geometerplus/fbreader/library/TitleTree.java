@@ -32,6 +32,12 @@ public final class TitleTree extends LibraryTree {
 		if ("".equals(title)) {
 			return null;
 		}
+		for (int i = 0; i < title.length(); ++i) {
+			char letter = title.charAt(i);
+			if (Character.isLetterOrDigit(letter)) {
+				return String.valueOf(Character.toUpperCase(letter));
+			}
+		}
 		return String.valueOf(Character.toUpperCase(title.charAt(0)));
 	}
 

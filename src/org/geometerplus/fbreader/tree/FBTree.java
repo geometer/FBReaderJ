@@ -120,7 +120,19 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 	}
 
 	protected String getSortKey() {
-		return getName();
+		final String sortKey = getName();
+		if (sortKey == null ||
+			sortKey.length() <= 1 ||
+			Character.isLetterOrDigit(sortKey.charAt(0))) {
+			return sortKey;
+		}
+
+		for (int i = 1; i < sortKey.length(); ++i) {
+			if (Character.isLetterOrDigit(sortKey.charAt(i))) {
+				return sortKey.substring(i);
+			}
+		}
+		return sortKey;
 	}
 
 	public int compareTo(FBTree tree) {

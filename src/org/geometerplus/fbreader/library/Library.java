@@ -223,7 +223,7 @@ public final class Library {
 		}
 	}
 
-	private void addBookToLibrary(Book book) {
+	private synchronized void addBookToLibrary(Book book) {
 		myBooks.add(book);
 
 		List<Author> authors = book.authors();
@@ -261,9 +261,15 @@ public final class Library {
 		for (Tag t : tags) {
 			getTagTree(t).getBookSubTree(book, true);
 		}
+
+		final SearchResultsTree searchResults =
+			(SearchResultsTree)getFirstLevelTree(ROOT_SEARCH_RESULTS);
+		if (searchResults != null && book.matches(searchResults.getPattern())) {
+			searchResults.getBookSubTree(book, true);
+		}
 	}
 
-	private synchronized void fireModelChangedEvent() {
+	private void fireModelChangedEvent() {
 		for (ChangeListener l : myListeners) {
 			l.onLibraryChanged();
 		}
@@ -408,7 +414,7 @@ public final class Library {
 		return new SearchResultsTree(myRootTree, ROOT_SEARCH_RESULTS, pattern);
 	}
 
-	public LibraryTree searchBooks(String pattern) {
+	public synchronized LibraryTree searchBooks(String pattern) {
 		FirstLevelTree newSearchResults = null;
 		if (pattern != null) {
 			pattern = pattern.toLowerCase();

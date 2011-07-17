@@ -27,6 +27,10 @@ class SearchResultsTree extends FirstLevelTree {
 		myPattern = pattern != null ? pattern : "";
 	}
 
+	final String getPattern() {
+		return myPattern;
+	}
+
 	@Override
 	protected String getSummary() {
 		return super.getSummary().replace("%s", myPattern);
