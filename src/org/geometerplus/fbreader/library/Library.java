@@ -300,31 +300,23 @@ public final class Library {
 
 		boolean doGroupTitlesByFirstLetter = false;
 		if (myBooks.size() > 10) {
-			final HashSet<Character> letterSet = new HashSet<Character>();
+			final HashSet<String> letterSet = new HashSet<String>();
 			for (Book book : myBooks) {
-				String title = book.getTitle();
-				if (title != null) {
-					title = title.trim();
-					if (!"".equals(title)) {
-						letterSet.add(title.charAt(0));
-					}
+				final String letter = TitleTree.firstTitleLetter(book);
+				if (letter != null) {
+					letterSet.add(letter);
 				}
 			}
 			doGroupTitlesByFirstLetter = myBooks.size() > letterSet.size() * 5 / 4;
 		}
 		if (doGroupTitlesByFirstLetter) {
 			for (Book book : myBooks) {
-				String title = book.getTitle();
-				if (title == null) {
-					continue;
+				final String letter = TitleTree.firstTitleLetter(book);
+				if (letter != null) {
+					final TitleTree tree =
+						getFirstLevelTree(ROOT_BY_TITLE).getTitleSubTree(letter);
+					tree.getBookSubTree(book, true);
 				}
-				title = title.trim();
-				if ("".equals(title)) {
-					continue;
-				}
-				Character c = title.charAt(0);
-				final TitleTree tree = getFirstLevelTree(ROOT_BY_TITLE).getTitleSubTree(c.toString());
-				tree.getBookSubTree(book, true);
 			}
 		} else {
 			for (Book book : myBooks) {

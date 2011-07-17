@@ -20,6 +20,21 @@
 package org.geometerplus.fbreader.library;
 
 public final class TitleTree extends LibraryTree {
+	static String firstTitleLetter(Book book) {
+		if (book == null) {
+			return null;
+		}
+		String title = book.getTitle();
+		if (title == null) {
+			return null;
+		}
+		title = title.trim();
+		if ("".equals(title)) {
+			return null;
+		}
+		return String.valueOf(Character.toUpperCase(title.charAt(0)));
+	}
+
 	public final String Title;
 
 	TitleTree(String title) {
@@ -43,6 +58,6 @@ public final class TitleTree extends LibraryTree {
 
 	@Override
 	public boolean containsBook(Book book) {
-		return book != null && book.getTitle() != null && book.getTitle().trim().startsWith(Title);
+		return Title.equals(firstTitleLetter(book));
 	}
 }
