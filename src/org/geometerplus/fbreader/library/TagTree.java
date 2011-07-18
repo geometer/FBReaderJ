@@ -39,7 +39,7 @@ public final class TagTree extends LibraryTree {
 
 	@Override
 	protected String getStringId() {
-		return getName();
+		return "@TagTree " + getName();
 	}
 
 	protected String getSortKey() {

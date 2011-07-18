@@ -432,10 +432,17 @@ public final class Library {
 		db.setExistingFlag(newBooks, true);
 	}
 
-	public void synchronize() {
+	public void startBuild() {
 		setStatus(myStatusMask | STATUS_LOADING);
-		build();
-		setStatus(myStatusMask & ~STATUS_LOADING);
+		new Thread("Library.build") {
+			public void run() {
+				try {
+					build();
+				} finally {
+					setStatus(myStatusMask & ~STATUS_LOADING);
+				}
+			}
+		}.start();
 	}
 
 	public boolean isUpToDate() {
@@ -454,12 +461,15 @@ public final class Library {
 
 	public void startBookSearch(final String pattern) {
 		setStatus(myStatusMask | STATUS_SEARCHING);
-		new Thread(new Runnable() {
+		new Thread("Library.searchBooks") {
 			public void run() {
-				searchBooks(pattern);
-				setStatus(myStatusMask & ~STATUS_SEARCHING);
+				try {
+					searchBooks(pattern);
+				} finally {
+					setStatus(myStatusMask & ~STATUS_SEARCHING);
+				}
 			}
-		}).start();
+		}.start();
 	}
 
 	private void searchBooks(String pattern) {
