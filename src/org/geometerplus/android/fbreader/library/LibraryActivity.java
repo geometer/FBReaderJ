@@ -131,7 +131,12 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == BOOK_INFO_REQUEST) {
+			final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
+			final Book book = Book.getByFile(ZLFile.createFileByPath(path));
+			LibraryInstance.refreshBookInfo(book);
 			getListView().invalidateViews();
+		} else {
+			super.onActivityResult(requestCode, returnCode, intent);
 		}
 	} 
 
@@ -144,10 +149,10 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			if (runSearch(intent)) {
-				openSearchResults();
-			} else {
-				UIUtil.showErrorMessage(this, "bookNotFound");
+			final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			if (pattern != null && pattern.length() > 0) {
+				BookSearchPatternOption.setValue(pattern);
+				LibraryInstance.startBookSearch(pattern);
 			}
 		} else {
 			super.onNewIntent(intent);
@@ -155,11 +160,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	}
 
 	private void openSearchResults() {
-		FBTree tree = getCurrentTree();
-		while (tree.Parent != null) {
-			tree = tree.Parent;
-		}
-		tree = tree.getSubTree(Library.ROOT_SEARCH_RESULTS);
+		final FBTree tree = LibraryInstance.getRootTree().getSubTree(Library.ROOT_SEARCH_RESULTS);
 		if (tree != null) {
 			openTree(tree);
 		}
@@ -169,15 +170,6 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	public boolean onSearchRequested() {
 		startSearch(BookSearchPatternOption.getValue(), true, null, false);
 		return true;
-	}
-
-	private boolean runSearch(Intent intent) {
-		final String pattern = intent.getStringExtra(SearchManager.QUERY);
-		if (pattern == null || pattern.length() == 0) {
-			return false;
-		}
-		BookSearchPatternOption.setValue(pattern);
-		return LibraryInstance.searchBooks(pattern) != null;
 	}
 
 	//
@@ -323,11 +315,23 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		getListView().invalidateViews();
 	}
 
-	public void onLibraryChanged() {
+	public void onLibraryChanged(final Code code) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				getListAdapter().replaceAll(getCurrentTree().subTrees());
-				setProgressBarIndeterminateVisibility(!LibraryInstance.isSynchronized());
+				switch (code) {
+					default:
+						getListAdapter().replaceAll(getCurrentTree().subTrees());
+						break;
+					case StatusChanged:
+						setProgressBarIndeterminateVisibility(!LibraryInstance.isUpToDate());
+						break;
+					case Found:
+						openSearchResults();
+						break;
+					case NotFound:
+						UIUtil.showErrorMessage(LibraryActivity.this, "bookNotFound");
+						break;
+				}
 			}
 		});
 	}

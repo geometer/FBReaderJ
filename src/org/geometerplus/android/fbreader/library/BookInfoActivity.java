@@ -79,6 +79,8 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.book_info);
+
+		setResult(1, getIntent());
 	}
 
 	@Override

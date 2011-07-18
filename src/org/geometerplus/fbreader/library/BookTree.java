@@ -85,4 +85,15 @@ public class BookTree extends LibraryTree {
 	public boolean containsBook(Book book) {
 		return book != null && book.equals(Book);
 	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == this) {
+			return true;
+		}
+		if (!(object instanceof BookTree)) {
+			return false;
+		}
+		return Book.equals(((BookTree)object).Book);
+	}
 }

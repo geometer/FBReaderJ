@@ -1,8 +1,9 @@
 ===== 1.1.3 (Jul ??, 2011) =====
 * Library view: grouping books by first letter in title branch
 * Library view: books by series
-* Library view: load library in background
+* Library view: background initialization
 * Local library search searches by file names too
+* Library view: background search
 * 'invisible if pressed' issue for description in book information dialog has been fixed
 * LitRes: username forgetting issue has been fixed
 
