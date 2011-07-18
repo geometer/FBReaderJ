@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
@@ -42,6 +43,10 @@ public class NetworkLibrary {
 			ourInstance = new NetworkLibrary();
 		}
 		return ourInstance;
+	}
+
+	public static ZLResource resource() {
+		return ZLResource.resource("networkLibrary");
 	}
 
 	private static class LinksComparator implements Comparator<INetworkLink> {
@@ -418,13 +423,7 @@ public class NetworkLibrary {
 		if (parentTree == null) {
 			return null;
 		}
-		for (FBTree tree : parentTree.subTrees()) {
-			final NetworkTree nTree = (NetworkTree)tree;
-			if (key.equals(nTree.getUniqueKey())) {
-				return nTree;
-			}
-		}
-		return null;
+		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
 	}
 
 	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {

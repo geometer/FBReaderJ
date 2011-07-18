@@ -19,44 +19,58 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.app.*;
-import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
-import android.content.Intent;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
+import java.util.*;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.*;
+import android.view.*;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.android.util.UIUtil;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.*;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
-import org.geometerplus.fbreader.network.tree.SearchItemTree;
+import org.geometerplus.android.fbreader.tree.BaseActivity;
 
-import org.geometerplus.android.fbreader.tree.ZLAndroidTree;
-
-abstract class NetworkBaseActivity extends ListActivity implements NetworkView.EventListener {
+public class NetworkBaseActivity extends BaseActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
 
-	protected final ZLResource myResource = ZLResource.resource("networkView");
+	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
+
+	static void setForTree(NetworkTree tree, NetworkBaseActivity activity) {
+		if (tree != null) {
+			tree.setUserData(ACTIVITY_BY_TREE_KEY, activity);
+		}
+	}
+
+	static NetworkBaseActivity getByTree(NetworkTree tree) {
+		return (NetworkBaseActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
+	}
 
 	public BookDownloaderServiceConnection Connection;
+
+	private volatile boolean myInProgress;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		OLD_STYLE_FLAG = true;
 
 		SQLiteCookieDatabase.init(this);
 
@@ -66,6 +80,21 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			Connection,
 			BIND_AUTO_CREATE
 		);
+
+		setListAdapter(new NetworkLibraryAdapter(this));
+		init(getIntent());
+
+		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+
+		setForTree((NetworkTree)getCurrentTree(), this);
+
+		setProgressBarIndeterminateVisibility(myInProgress);
+	}
+
+	@Override
+	protected FBTree getTreeByKey(FBTree.Key key) {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		return key != null ? library.getTreeByKey(key) : library.getRootTree();
 	}
 
 	@Override
@@ -84,6 +113,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		super.onResume();
 		getListView().setOnCreateContextMenuListener(this);
 		onModelChanged(); // do the same update actions as upon onModelChanged
+		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 
 	@Override
@@ -94,6 +124,7 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 
 	@Override
 	public void onDestroy() {
+		setForTree((NetworkTree)getCurrentTree(), null);
 		if (Connection != null) {
 			unbindService(Connection);
 			Connection = null;
@@ -101,94 +132,21 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		super.onDestroy();
 	}
 
-	// method from NetworkView.EventListener
-	public void onModelChanged() {
+	@Override
+	public boolean isTreeSelected(FBTree tree) {
+		return false;
 	}
 
-	private final Runnable myInvalidateViewsRunnable = new Runnable() {
-		public void run() {
-			getListView().invalidateViews();
-		}
-	};
-
-	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
-		if (tree instanceof AddCustomCatalogItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_plus);
-			return;
-		}
-		if (tree instanceof SearchItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_searchresult);
-			return;
-		}
-		if (tree instanceof ZLAndroidTree) {
-			coverView.setImageResource(((ZLAndroidTree)tree).getCoverResourceId());
-			return;
-		}
-
-		Bitmap coverBitmap = null;
-		ZLImage cover = tree.getCover();
-		if (cover != null) {
-			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (cover instanceof ZLLoadableImage) {
-				final ZLLoadableImage img = (ZLLoadableImage)cover;
-				if (img.isSynchronized()) {
-					data = mgr.getImageData(img);
-				} else {
-					img.startSynchronization(myInvalidateViewsRunnable);
-				}
-			} else {
-				data = mgr.getImageData(cover);
-			}
-			if (data != null) {
-				coverBitmap = data.getBitmap(2 * width, 2 * height);
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			final ItemsLoader runnable =
+				ItemsLoadingService.getRunnable((NetworkTree)getCurrentTree());
+			if (runnable != null) {
+				runnable.interruptLoading();
 			}
 		}
-		if (coverBitmap != null) {
-			coverView.setImageBitmap(coverBitmap);
-		} else if (tree instanceof NetworkBookTree) {
-			coverView.setImageResource(R.drawable.ic_list_library_book);
-		} else {
-			coverView.setImageResource(R.drawable.ic_list_library_books);
-		}
-	}
-
-	private int myCoverWidth = -1;
-	private int myCoverHeight = -1;
-
-	protected View setupNetworkTreeItemView(View convertView, final ViewGroup parent, NetworkTree tree) {
-		final View view = (convertView != null) ? convertView :
-			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
-
-		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
-
-		if (myCoverWidth == -1) {
-			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			myCoverHeight = view.getMeasuredHeight();
-			myCoverWidth = myCoverHeight * 15 / 32;
-			view.requestLayout();
-		}
-
-		final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-		coverView.getLayoutParams().width = myCoverWidth;
-		coverView.getLayoutParams().height = myCoverHeight;
-		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		coverView.requestLayout();
-		setupCover(coverView, tree, myCoverWidth, myCoverWidth);
-
-		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
-		final int status = (tree instanceof NetworkBookTree) ?
-				NetworkBookActions.getBookStatus(((NetworkBookTree) tree).Book, Connection) : 0;
-		if (status != 0) {
-			statusView.setVisibility(View.VISIBLE);
-			statusView.setImageResource(status);
-		} else {
-			statusView.setVisibility(View.GONE);
-		}
-		statusView.requestLayout();
-
-		return view;
+		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override
@@ -200,6 +158,15 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
 				if (actions != null) {
 					actions.buildContextMenu(this, menu, tree);
+					return;
+				}
+			}
+		} else if (getCurrentTree() instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
+			if (Util.isTopupSupported(this, link)) {
+				final TopupActions actions = NetworkView.Instance().getTopupActions();
+				if (actions != null) {
+					actions.buildContextMenu(this, menu, link);
 					return;
 				}
 			}
@@ -218,6 +185,14 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 					return true;
 				}
 			}
+		} else if (getCurrentTree() instanceof NetworkCatalogTree) {
+			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
+			if (Util.isTopupSupported(this, link)) {
+				final TopupActions actions = NetworkView.Instance().getTopupActions();
+				if (actions != null && TopupActions.runAction(this, link, item.getItemId())) {
+					return true;
+				}
+			}
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -231,7 +206,6 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 			return;
 		}
 		final int actionCode = actions.getDefaultActionCode(this, networkTree);
-		final String confirm = actions.getConfirmText(networkTree, actionCode);
 		if (actionCode == NetworkTreeActions.TREE_SHOW_CONTEXT_MENU) {
 			listView.showContextMenuForChild(view);
 			return;
@@ -239,27 +213,211 @@ abstract class NetworkBaseActivity extends ListActivity implements NetworkView.E
 		if (actionCode < 0) {
 			return;
 		}
-		if (confirm != null) {
-			//final ZLResource resource = myResource.getResource("confirmQuestions");
-			final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-			new AlertDialog.Builder(this)
-				.setTitle(networkTree.getName())
-				.setMessage(confirm)
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						actions.runAction(NetworkBaseActivity.this, networkTree, actionCode);
-					}
-				})
-				.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-				.create().show();
-		} else {
-			actions.runAction(this, networkTree, actionCode);
-		}
+		actions.runAction(this, networkTree, actionCode);
 	}
 
 	@Override
 	public boolean onSearchRequested() {
 		return false;
+	}
+
+	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
+		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case BASIC_AUTHENTICATION_CODE:
+				myCredentialsCreator.onDataReceived(resultCode, data);
+				break;
+			case CUSTOM_AUTHENTICATION_CODE:
+				Util.processCustomAuthentication(
+					this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data
+				);
+				break;
+			case SIGNUP_CODE:
+				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
+				break;
+		}
+	}
+
+	private static final int MENU_SEARCH = 1;
+	private static final int MENU_REFRESH = 2;
+	private static final int MENU_ADD_CATALOG = 3;
+	private static final int MENU_LANGUAGE_FILTER = 4;
+
+	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+		final String label = NetworkLibrary.resource().getResource("menu").getResource(resourceKey).getValue();
+		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		if (getCurrentTree() instanceof RootTree) {
+			addMenuItem(menu, MENU_SEARCH, "networkSearch", R.drawable.ic_menu_search);
+			addMenuItem(menu, MENU_ADD_CATALOG, "addCustomCatalog", R.drawable.ic_menu_add);
+			addMenuItem(menu, MENU_REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
+			addMenuItem(menu, MENU_LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages);
+			return true;
+		} else {
+			return NetworkView.Instance().createOptionsMenu(menu, (NetworkTree)getCurrentTree());
+		}
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		if (getCurrentTree() instanceof RootTree) {
+			menu.findItem(MENU_SEARCH).setEnabled(!searchIsInProgress());
+			return true;
+		} else {
+			return NetworkView.Instance().prepareOptionsMenu(this, menu, (NetworkTree)getCurrentTree());
+		}
+	}
+
+	protected static boolean searchIsInProgress() {
+		return ItemsLoadingService.getRunnable(
+			NetworkLibrary.Instance().getSearchItemTree()
+		) != null;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (getCurrentTree() instanceof RootTree) {
+			switch (item.getItemId()) {
+				case MENU_SEARCH:
+					return onSearchRequested();
+				case MENU_ADD_CATALOG:
+					AddCustomCatalogItemActions.addCustomCatalog(this);
+					return true;
+				case MENU_REFRESH:
+					refreshCatalogsList();
+					return true;
+				case MENU_LANGUAGE_FILTER:
+					runLanguageFilterDialog();
+					return true;
+				default:
+					return true;
+			}
+		} else {
+			return NetworkView.Instance().runOptionsMenu(this, item, (NetworkTree)getCurrentTree());
+		}
+	}
+
+	private void runLanguageFilterDialog() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+
+		final List<String> allLanguageCodes = library.languageCodes();
+		Collections.sort(allLanguageCodes, new ZLLanguageUtil.CodeComparator());
+		final Collection<String> activeLanguageCodes = library.activeLanguageCodes();
+		final CharSequence[] languageNames = new CharSequence[allLanguageCodes.size()];
+		final boolean[] checked = new boolean[allLanguageCodes.size()];
+
+		for (int i = 0; i < allLanguageCodes.size(); ++i) {
+			final String code = allLanguageCodes.get(i);
+			languageNames[i] = ZLLanguageUtil.languageName(code);
+			checked[i] = activeLanguageCodes.contains(code);
+		}
+
+		final DialogInterface.OnMultiChoiceClickListener listener =
+			new DialogInterface.OnMultiChoiceClickListener() {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					checked[which] = isChecked;
+				}
+			};
+		final ZLResource dialogResource = ZLResource.resource("dialog");
+		final AlertDialog dialog = new AlertDialog.Builder(this)
+			.setMultiChoiceItems(languageNames, checked, listener)
+			.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
+			.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					final TreeSet<String> newActiveCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
+					for (int i = 0; i < checked.length; ++i) {
+						if (checked[i]) {
+							newActiveCodes.add(allLanguageCodes.get(i));
+						}
+					}
+					library.setActiveLanguageCodes(newActiveCodes);
+					library.synchronize();
+					NetworkView.Instance().fireModelChanged();
+				}
+			})
+			.create();
+		dialog.show();
+	}
+
+	private void refreshCatalogsList() {
+		final NetworkView view = NetworkView.Instance();
+
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				if (msg.obj == null) {
+					view.finishBackgroundUpdate();
+				} else {
+					final ZLResource dialogResource = ZLResource.resource("dialog");
+					final ZLResource boxResource = dialogResource.getResource("networkError");
+					final ZLResource buttonResource = dialogResource.getResource("button");
+					new AlertDialog.Builder(NetworkBaseActivity.this)
+						.setTitle(boxResource.getResource("title").getValue())
+						.setMessage((String) msg.obj)
+						.setIcon(0)
+						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+						.create().show();
+				}
+			}
+		};
+
+		UIUtil.wait("updatingCatalogsList", new Runnable() {
+			public void run() {
+				String error = null;
+				try {
+					view.runBackgroundUpdate(true);
+				} catch (ZLNetworkException e) {
+					error = e.getMessage();
+				}
+				handler.sendMessage(handler.obtainMessage(0, error));
+			}
+		}, this);
+	}
+
+	// method from NetworkView.EventListener
+	public void onModelChanged() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
+				myInProgress =
+					tree != null &&
+					ItemsLoadingService.getRunnable(tree) != null;
+				getListView().invalidateViews();
+
+				/*
+				 * getListAdapter() always returns CatalogAdapter because onModelChanged() 
+				 * can be called only after Activity's onStart() method (where NetworkView's 
+				 * addEventListener() is called). Therefore CatalogAdapter will be set as 
+				 * adapter in onCreate() method before any calls to onModelChanged().
+				 */
+				((NetworkLibraryAdapter)getListAdapter()).replaceAll(getCurrentTree().subTrees());
+				for (FBTree child : getCurrentTree().subTrees()) {
+					if (child instanceof TopUpTree) {
+						child.invalidateChildren();
+					}
+				}
+
+				setProgressBarIndeterminateVisibility(myInProgress);
+			}
+		});
+	}
+
+	private static NetworkTree getLoadableNetworkTree(NetworkTree tree) {
+		while (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
+			if (tree.Parent instanceof NetworkTree) {
+				tree = (NetworkTree)tree.Parent;
+			} else {
+				return null;
+			}
+		}
+		return tree;
 	}
 }

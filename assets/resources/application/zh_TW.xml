@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Traditional Chinese FBReaderJ resources, by Fung.T -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="佚名"/>
 		<node name="booksWithNoTags" value="未歸類"/>
 		<node name="demo" value="試讀本"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="作者">
 			<node name="summary" value="按作者排序"/>
 		</node>
 		<node name="byTitle" value="書名">
 			<node name="summary" value="按書名排序"/>
+		</node>
+		<node name="bySeries" value="系列">
+			<node name="summary" value="以系列排序"/>
 		</node>
 		<node name="byTag" value="標籤">
 			<node name="summary" value="按標籤排序"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="收藏"/>
 		<node name="removeFromFavorites" value="從收藏中移除"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="作者">
 			<node name="summary" value="以作者排序"/>
 		</node>

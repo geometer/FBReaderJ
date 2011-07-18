@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Czech FBReaderJ resources, by Marek Pavelka -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Neznámý autor"/>
 		<node name="booksWithNoTags" value="Knihy bez štítků"/>
 		<node name="demo" value="ukázka"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>
 		<node name="byTitle" value="Podle názvu">
 			<node name="summary" value="Knihy seřazeny podle názvu"/>
+		</node>
+		<node name="bySeries" value="Podle série">
+			<node name="summary" value="Knihy seřazeny podle série"/>
 		</node>
 		<node name="byTag" value="Podle štítku">
 			<node name="summary" value="Knihy seřazeny podle štítku"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="Přidat do oblíbených"/>
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>

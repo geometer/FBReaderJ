@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.tree;
+package org.geometerplus.fbreader.library;
 
-public interface ZLAndroidTree {
-	int getCoverResourceId();
+import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+public class FavoritesTree extends FirstLevelTree {
+	FavoritesTree(RootTree root, String id) {
+		super(root, id);
+	}
+
+	@Override
+	public Status getOpeningStatus() {
+		final Status status = super.getOpeningStatus();
+		if (status == Status.READY_TO_OPEN && !hasChildren()) {
+			return Status.CANNOT_OPEN;
+		}
+		return status;
+	}
+
+	@Override
+	public String getOpeningStatusMessage() {
+		return getOpeningStatus() == Status.CANNOT_OPEN
+			? "noFavorites" : super.getOpeningStatusMessage();
+	}
 }

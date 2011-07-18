@@ -42,6 +42,39 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
+	static final String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
+
+	private static final String ADD_CATALOG_TITLE_KEY = "title";
+	private static final String ADD_CATALOG_SUMMARY_KEY = "summary";
+	private static final String ADD_CATALOG_ID_KEY = "id";
+	private static final String ADD_CATALOG_URLS_MAP_KEY = "urls";
+
+	static void addLinkToIntent(Intent intent, ICustomNetworkLink link) {
+		final String textUrl = link.getUrl(UrlInfo.Type.Catalog);
+		intent.setData(Uri.parse(textUrl));
+		intent
+			.putExtra(ADD_CATALOG_TITLE_KEY, link.getTitle())
+			.putExtra(ADD_CATALOG_SUMMARY_KEY, link.getSummary())
+			.putExtra(ADD_CATALOG_ID_KEY, link.getId())
+			.putExtra(ADD_CATALOG_URLS_MAP_KEY, link.urlInfoMap());
+	}
+
+	static ICustomNetworkLink getLinkFromIntent(Intent intent) {
+		final Uri uri = intent.getData();
+		if (uri == null || !intent.hasExtra(ADD_CATALOG_ID_KEY)) {
+			return null;
+		}
+
+		return new OPDSCustomNetworkLink(
+			intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID),
+			uri.getHost(),
+			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
+			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
+			null,
+			(UrlInfoCollection<UrlInfoWithDate>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
+		);
+	}
+
 	private ZLResource myResource;
 	private volatile ICustomNetworkLink myLink;
 
@@ -83,7 +116,7 @@ public class AddCustomCatalogActivity extends Activity {
 		);
 
 		final Intent intent = getIntent();
-		myLink = NetworkLibraryActivity.getLinkFromIntent(intent);
+		myLink = getLinkFromIntent(intent);
 		final Uri uri = intent.getData();
 
 		if (myLink != null) {
@@ -131,12 +164,12 @@ public class AddCustomCatalogActivity extends Activity {
 			myLink.setUrl(UrlInfo.Type.Catalog, uri.toString());
 
 			Intent intent = new Intent(
-				NetworkLibraryActivity.ADD_CATALOG,
+				ADD_CATALOG,
 				uri,
 				AddCustomCatalogActivity.this,
-				NetworkLibraryActivity.class
+				NetworkTopLevelActivity.class
 			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			NetworkLibraryActivity.addLinkToIntent(intent, myLink);
+			addLinkToIntent(intent, myLink);
 			startActivity(intent);
 		}
 	}

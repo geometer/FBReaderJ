@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Vietnamese FBReaderJ resources, by Phạm Văn Hùng_Firestork -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Tác giả chưa biết"/>
 		<node name="booksWithNoTags" value="Sách không từ khóa"/>
 		<node name="demo" value="xem thử"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Theo tác giả">
 			<node name="summary" value="Sách được xếp theo tác giả"/>
 		</node>
 		<node name="byTitle" value="By title" toBeTranslated="true">
 			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
 		<node name="byTag" value="Theo từ khóa">
 			<node name="summary" value="Sách được xếp theo từ khóa "/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="Thêm vào yêu thích"/>
 		<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Theo tác giả">
 			<node name="summary" value="Sách được xếp theo tác giả"/>
 		</node>

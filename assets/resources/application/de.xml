@@ -4,17 +4,18 @@
 <!-- Updated by Ingolf Kübler 2011/06/26 -->
 <!-- Updated by Ingolf Kübler 2011/07/03 -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Unbekannte Autoren"/>
 		<node name="booksWithNoTags" value="Bücher ohne Schlagwörter"/>
 		<node name="demo" value="Leseprobe"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Nach Autoren gruppiert">
 			<node name="summary" value="Bücher nach Autoren auswählen"/>
 		</node>
 		<node name="byTitle" value="Nach Titel sortiert">
 			<node name="summary" value="Bücher nach Titel sortiert"/>
+		</node>
+		<node name="bySeries" value="Nach Serien gruppiert">
+			<node name="summary" value="Bücher nach Buchserie auswählen"/>
 		</node>
 		<node name="byTag" value="Nach Schlagworten gruppiert">
 			<node name="summary" value="Bücher nach Schlagworten (Tags) auswählen"/>
@@ -49,8 +50,8 @@
 		<node name="addToFavorites" value="Buch zu den Favoriten hinzufügen"/>
 		<node name="removeFromFavorites" value="Buch aus der Favoritenliste löschen"/>
 	</node>
-	<node name="networkView">
-      <node name="byAuthor" value="Nach Autoren gruppiert">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
+		<node name="byAuthor" value="Nach Autoren gruppiert">
 			<node name="summary" value="Bücher nach Autoren auswählen"/>
 		</node>
 		<node name="byTitle" value="Nach Titel sortiert">
@@ -637,7 +638,7 @@
 			<node name="catalogTitle" value="Titel"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="Zusammenfassung"/>
-			<node name="catalogTitleExample" value="Z.B.:  Katalog Project Gutenberg."/>
+			<node name="catalogTitleExample" value="Z.B.: Katalog Project Gutenberg."/>
 			<node name="catalogUrlExample" alue="Z.B.: http://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Z.B.: Public Domain Bücher."/>
 			<node name="titleIsEmpty" value="Der Titel sollte nicht leer sein."/>

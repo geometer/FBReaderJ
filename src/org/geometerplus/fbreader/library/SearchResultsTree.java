@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.dialogs;
+package org.geometerplus.fbreader.library;
 
-import android.app.*;
+class SearchResultsTree extends FirstLevelTree {
+	private final String myPattern;
 
-import org.geometerplus.zlibrary.core.dialogs.*;
-
-import org.geometerplus.android.util.UIUtil;
-
-public class ZLAndroidDialogManager extends ZLDialogManager {
-	private Activity myActivity;
-	
-	public ZLAndroidDialogManager() {
+	SearchResultsTree(RootTree root, String id, String pattern) {
+		super(root, 0, id);
+		myPattern = pattern != null ? pattern : "";
 	}
 
-	public void setActivity(Activity activity) {
-		myActivity = activity;
+	final String getPattern() {
+		return myPattern;
 	}
-	
-	public void wait(String key, Runnable action) {
-		UIUtil.wait(key, action, myActivity);
+
+	@Override
+	protected String getSummary() {
+		return super.getSummary().replace("%s", myPattern);
 	}
 }

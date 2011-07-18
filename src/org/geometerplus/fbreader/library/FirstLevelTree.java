@@ -19,46 +19,49 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.util.Collections;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-public final class SeriesTree extends LibraryTree {
-	public final String Series;
+public class FirstLevelTree extends LibraryTree {
+	private final Library myLibrary;
+	private final String myId;
+	private final ZLResource myResource;
 
-	SeriesTree(String series) {
-		Series = series;
+	FirstLevelTree(RootTree root, int position, String id) {
+		super(root, position);
+		myLibrary = root.getLibrary();
+		myId = id;
+		myResource = Library.resource().getResource(myId);
 	}
 
-	SeriesTree(LibraryTree parent, String series, int position) {
-		super(parent, position);
-		Series = series;
+	FirstLevelTree(RootTree root, String id) {
+		super(root);
+		myLibrary = root.getLibrary();
+		myId = id;
+		myResource = Library.resource().getResource(myId);
 	}
 
 	@Override
 	public String getName() {
-		return Series;
+		return myResource.getValue();
+	}
+
+	@Override
+	public String getTreeTitle() {
+		return getSecondString();
+	}
+
+	@Override
+	protected String getSummary() {
+		return myResource.getResource("summary").getValue();
 	}
 
 	@Override
 	protected String getStringId() {
-		return getName();
-	}
-
-	BookTree getBookInSeriesSubTree(Book book) {
-		final BookInSeriesTree temp = new BookInSeriesTree(book);
-		int position = Collections.binarySearch(subTrees(), temp);
-		if (position >= 0) {
-			return (BookInSeriesTree)subTrees().get(position);
-		} else {
-			return new BookInSeriesTree(this, book, - position - 1);
-		}
+		return myId;
 	}
 
 	@Override
-	public boolean containsBook(Book book) {
-		if (book == null) {
-			return false;
-		}
-		final SeriesInfo info = book.getSeriesInfo();
-		return info != null && Series.equals(info.Name);
+	public boolean isSelectable() {
+		return false;
 	}
 }

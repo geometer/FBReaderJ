@@ -239,20 +239,18 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static final String TREE_KEY_KEY = "org.geometerplus.android.fbreader.network.TreeKey";
-
 	static void openTree(Context context, NetworkTree tree) {
 		final Class<?> clz = tree instanceof NetworkBookTree
-			? NetworkBookInfoActivity.class : NetworkCatalogActivity.class;
+			? NetworkBookInfoActivity.class : NetworkBaseActivity.class;
 		context.startActivity(
 			new Intent(context.getApplicationContext(), clz)
-				.putExtra(TREE_KEY_KEY, tree.getUniqueKey())
+				.putExtra(NetworkBaseActivity.TREE_KEY_KEY, tree.getUniqueKey())
 		);
 	}
 
 	public static NetworkTree getTreeFromIntent(Intent intent) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
+		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(NetworkBaseActivity.TREE_KEY_KEY);
 		return library.getTreeByKey(key);
 	}
 }

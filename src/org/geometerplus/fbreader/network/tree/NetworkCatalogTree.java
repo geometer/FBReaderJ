@@ -54,6 +54,11 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	@Override
+	public String getTreeTitle() {
+		return getName() + " - " + Item.Link.getSiteName();
+	}
+
+	@Override
 	protected ZLImage createCover() {
 		return createCover(Item);
 	}

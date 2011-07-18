@@ -32,8 +32,8 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.library.Book;
 
-import org.geometerplus.android.fbreader.BookInfoActivity;
-import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.library.BookInfoActivity;
+import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
