@@ -311,6 +311,9 @@ public final class Library {
 			Book book = savedBooksByBookId.get(id);
 			if (book == null) {
 				book = Book.getById(id);
+				if (book != null && !book.File.exists()) {
+					book = null;
+				}
 			}
 			if (book != null) {
 				new BookTree(getFirstLevelTree(ROOT_RECENT), book, true);
@@ -321,6 +324,9 @@ public final class Library {
 			Book book = savedBooksByBookId.get(id);
 			if (book == null) {
 				book = Book.getById(id);
+				if (book != null && !book.File.exists()) {
+					book = null;
+				}
 			}
 			if (book != null) {
 				getFirstLevelTree(ROOT_FAVORITES).getBookSubTree(book, true);
