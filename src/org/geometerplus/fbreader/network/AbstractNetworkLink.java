@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -168,5 +169,34 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 			+ "; icon=" + icon
 			+ "; infos=" + myInfos
 			+ "}";
+	}
+
+	private String getTitleForComparison() {
+		String title = getTitle();
+		for (int index = 0; index < title.length(); ++index) {
+			final char ch = title.charAt(index);
+			if (ch < 128 && Character.isLetter(ch)) {
+				return title.substring(index);
+			}
+		}
+		return title;
+	}
+
+	private static int getLanguageOrder(String language) {
+		if (language == ZLLanguageUtil.MULTI_LANGUAGE_CODE) {
+			return 1;
+		}
+		if (language.equals(Locale.getDefault().getLanguage())) {
+			return 0;
+		}
+		return 2;
+	}
+
+	public int compareTo(INetworkLink link) {
+		final int diff = getLanguageOrder(getLanguage()) - getLanguageOrder(link.getLanguage());
+		if (diff != 0) {
+			return diff;
+		}
+		return getTitleForComparison().compareToIgnoreCase(((AbstractNetworkLink)link).getTitleForComparison());
 	}
 }

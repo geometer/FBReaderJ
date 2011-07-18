@@ -49,40 +49,6 @@ public class NetworkLibrary {
 		return ZLResource.resource("networkLibrary");
 	}
 
-	private static class LinksComparator implements Comparator<INetworkLink> {
-		private static String filterLinkTitle(String title) {
-			for (int index = 0; index < title.length(); ++index) {
-				final char ch = title.charAt(index);
-				if (ch < 128 && Character.isLetter(ch)) {
-					return title.substring(index);
-				}
-			}
-			return title;
-		}
-
-		private static int languageOrder(String language) {
-			if (language == ZLLanguageUtil.MULTI_LANGUAGE_CODE) {
-				return 1;
-			}
-			if (language.equals(Locale.getDefault().getLanguage())) {
-				return 0;
-			}
-			return 2;
-		}
-
-		public int compare(INetworkLink link1, INetworkLink link2) {
-			final int languageOrder1 = languageOrder(link1.getLanguage());
-			final int languageOrder2 = languageOrder(link2.getLanguage());
-			if (languageOrder1 != languageOrder2) {
-				return languageOrder1 - languageOrder2;
-			}
-			final String title1 = filterLinkTitle(link1.getTitle());
-			final String title2 = filterLinkTitle(link2.getTitle());
-			return title1.compareToIgnoreCase(title2);
-		}
-	}
-
-	
 	public interface OnNewLinkListener {
 		void onNewLink(INetworkLink link);
 	}
@@ -303,7 +269,7 @@ public class NetworkLibrary {
 		int nodeCount = 0;
 
 		final ArrayList<INetworkLink> links = new ArrayList<INetworkLink>(activeLinks());
-		Collections.sort(links, new LinksComparator());
+		Collections.sort(links);
 		for (int i = 0; i < links.size(); ++i) {
 			INetworkLink link = links.get(i);
 			boolean processed = false;
