@@ -166,7 +166,7 @@ public class NetworkLibrary {
 	}
 
 	private boolean myIsAlreadyInitialized;
-	public synchronized void initialize() throws ZLNetworkException {
+	public void initialize() throws ZLNetworkException {
 		if (myIsAlreadyInitialized) {
 			return;
 		}
@@ -473,12 +473,13 @@ public class NetworkLibrary {
 		if (id == ICustomNetworkLink.INVALID_ID) {
 			myLinks.add(link);
 		} else {
-			for (int i = myLinks.size() - 1; i >= 0; --i) {
-				final INetworkLink l = myLinks.get(i);
-				if (l instanceof ICustomNetworkLink &&
-					((ICustomNetworkLink)l).getId() == id) {
-					myLinks.set(i, link);
-					break;
+			synchronized (myLinks) {
+				for (int i = myLinks.size() - 1; i >= 0; --i) {
+					final INetworkLink l = myLinks.get(i);
+					if (l instanceof ICustomNetworkLink && ((ICustomNetworkLink)l).getId() == id) {
+						myLinks.set(i, link);
+						break;
+					}
 				}
 			}
 		}
