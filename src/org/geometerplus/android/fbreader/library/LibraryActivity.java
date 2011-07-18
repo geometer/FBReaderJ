@@ -47,9 +47,8 @@ import org.geometerplus.android.fbreader.tree.ListAdapter;
 public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
-	static Library LibraryInstance;
-
 	private BooksDatabase myDatabase;
+	private Library myLibrary;
 
 	private Book mySelectedBook;
 
@@ -61,11 +60,11 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		if (myDatabase == null) {
 			myDatabase = new SQLiteBooksDatabase(this, "LIBRARY");
 		}
-		if (LibraryInstance == null) {
-			LibraryInstance = new Library();
-			startService(new Intent(getApplicationContext(), InitializationService.class));
+		if (myLibrary == null) {
+			myLibrary = new Library();
+			myLibrary.addChangeListener(this);
+			myLibrary.startBuild();
 		}
-		LibraryInstance.addChangeListener(this);
 
 		final String selectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;
@@ -86,15 +85,13 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 
 	@Override
 	protected FBTree getTreeByKey(FBTree.Key key) {
-		return key != null ? LibraryInstance.getLibraryTree(key) : LibraryInstance.getRootTree();
+		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.getRootTree();
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (LibraryInstance != null) {
-			LibraryInstance.removeChangeListener(this);
-			LibraryInstance = null;
-		}
+		myLibrary.removeChangeListener(this);
+		myLibrary = null;
 		super.onDestroy();
 	}
 
@@ -133,7 +130,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		if (requestCode == BOOK_INFO_REQUEST) {
 			final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
 			final Book book = Book.getByFile(ZLFile.createFileByPath(path));
-			LibraryInstance.refreshBookInfo(book);
+			myLibrary.refreshBookInfo(book);
 			getListView().invalidateViews();
 		} else {
 			super.onActivityResult(requestCode, returnCode, intent);
@@ -152,7 +149,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			if (pattern != null && pattern.length() > 0) {
 				BookSearchPatternOption.setValue(pattern);
-				LibraryInstance.startBookSearch(pattern);
+				myLibrary.startBookSearch(pattern);
 			}
 		} else {
 			super.onNewIntent(intent);
@@ -160,7 +157,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	}
 
 	private void openSearchResults() {
-		final FBTree tree = LibraryInstance.getRootTree().getSubTree(Library.ROOT_SEARCH_RESULTS);
+		final FBTree tree = myLibrary.getRootTree().getSubTree(Library.ROOT_SEARCH_RESULTS);
 		if (tree != null) {
 			openTree(tree);
 		}
@@ -195,12 +192,12 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
 		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
-		if (LibraryInstance.isBookInFavorites(book)) {
+		if (myLibrary.isBookInFavorites(book)) {
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
 		}
-		if ((LibraryInstance.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+		if ((myLibrary.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
 		}
 	}
@@ -224,10 +221,10 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 				showBookInfo(book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
-				LibraryInstance.addBookToFavorites(book);
+				myLibrary.addBookToFavorites(book);
 				return true;
 			case REMOVE_FROM_FAVORITES_ITEM_ID:
-				LibraryInstance.removeBookFromFavorites(book);
+				myLibrary.removeBookFromFavorites(book);
 				getListView().invalidateViews();
 				return true;
 			case DELETE_BOOK_ITEM_ID:
@@ -305,7 +302,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	}
 
 	private void deleteBook(Book book, int mode) {
-		LibraryInstance.removeBook(book, mode);
+		myLibrary.removeBook(book, mode);
 
 		if (getCurrentTree() instanceof FileTree) {
 			getListAdapter().remove(new FileTree((FileTree)getCurrentTree(), book.File));
@@ -323,7 +320,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 						getListAdapter().replaceAll(getCurrentTree().subTrees());
 						break;
 					case StatusChanged:
-						setProgressBarIndeterminateVisibility(!LibraryInstance.isUpToDate());
+						setProgressBarIndeterminateVisibility(!myLibrary.isUpToDate());
 						break;
 					case Found:
 						openSearchResults();
