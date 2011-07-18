@@ -23,7 +23,6 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.*;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -132,18 +131,27 @@ public class Book {
 	}
 
 	boolean readMetaInfo() {
+		myEncoding = null;
+		myLanguage = null;
+		myTitle = null;
+		myAuthors = null;
+		myTags = null;
+		mySeriesInfo = null;
+
+		myIsSaved = false;
+
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
-		if ((plugin == null) || !plugin.readMetaInfo(this)) {
+		if (plugin == null || !plugin.readMetaInfo(this)) {
 			return false;
 		}
-		if ((myTitle == null) || (myTitle.length() == 0)) {
+		if (myTitle == null || myTitle.length() == 0) {
 			final String fileName = File.getShortName();
 			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
 		final String demoPathPrefix = Paths.BooksDirectoryOption().getValue() + java.io.File.separator + "Demos" + java.io.File.separator;
 		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = ZLResource.resource("library").getResource("demo").getValue();
+			final String demoTag = Library.resource().getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");
 			addTag(demoTag);
 		}
@@ -300,10 +308,10 @@ public class Book {
 	}
 
 	boolean matches(String pattern) {
-		if ((myTitle != null) && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
+		if (myTitle != null && ZLMiscUtil.matchesIgnoreCase(myTitle, pattern)) {
 			return true;
 		}
-		if ((mySeriesInfo != null) && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Name, pattern)) {
+		if (mySeriesInfo != null && ZLMiscUtil.matchesIgnoreCase(mySeriesInfo.Name, pattern)) {
 			return true;
 		}
 		if (myAuthors != null) {
@@ -319,6 +327,9 @@ public class Book {
 					return true;
 				}
 			}
+		}
+		if (ZLMiscUtil.matchesIgnoreCase(File.getLongName(), pattern)) {
+			return true;
 		}
 		return false;
 	}

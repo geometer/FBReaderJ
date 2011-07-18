@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Italian FBReaderJ resources, by Vytek and Neoxx from AndDev.it Translate Team -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Autore sconosciuto"/>
 		<node name="booksWithNoTags" value="Libri con nessuna etichetta"/>
 		<node name="demo" value="esempio"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Per autore">
 			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
 		</node>
 		<node name="byTitle" value="By title" toBeTranslated="true">
 			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
 		<node name="byTag" value="Per etichetta">
 			<node name="summary" value="Books sorted by tag" toBeTranslated="true"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="Add to favorites" toBeTranslated="true"/>
 		<node name="removeFromFavorites" value="Remove from favorites" toBeTranslated="true"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Per autore">
 			<node name="summary" value="Books sorted by author" toBeTranslated="true"/>
 		</node>

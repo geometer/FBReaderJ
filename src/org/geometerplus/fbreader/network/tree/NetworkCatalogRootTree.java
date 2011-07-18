@@ -25,4 +25,9 @@ public class NetworkCatalogRootTree extends NetworkCatalogTree {
 	public NetworkCatalogRootTree(RootTree parent, INetworkLink link, int position) {
 		super(parent, (NetworkCatalogItem)link.libraryItem(), position);
 	}
+
+	@Override
+	public String getTreeTitle() {
+		return getName();
+	}
 }

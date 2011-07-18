@@ -32,9 +32,7 @@ import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLink {
-	private int myId;
-
+public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private boolean myHasChanges;
 
 	private static String removeWWWPrefix(String siteName) {
@@ -44,17 +42,8 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 		return siteName;
 	}
 
-	public OPDSCustomLink(int id, String siteName, String title, String summary, UrlInfoCollection<UrlInfoWithDate> infos) {
-		super(removeWWWPrefix(siteName), title, summary, null, infos, false);
-		myId = id;
-	}
-
-	public int getId() {
-		return myId;
-	}
-
-	public void setId(int id) {
-		myId = id;
+	public OPDSCustomNetworkLink(int id, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(id, removeWWWPrefix(siteName), title, summary, language, infos);
 	}
 
 	public boolean hasChanges() {
@@ -116,7 +105,7 @@ public class OPDSCustomLink extends OPDSNetworkLink implements ICustomNetworkLin
 			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog)) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-					final OPDSCatalogInfoHandler info = new OPDSCatalogInfoHandler(getURL(), OPDSCustomLink.this, opensearchDescriptionURLs);
+					final OPDSCatalogInfoHandler info = new OPDSCatalogInfoHandler(getURL(), OPDSCustomNetworkLink.this, opensearchDescriptionURLs);
 					new OPDSXMLReader(info, false).read(inputStream);
         
 					if (!info.FeedStarted) {

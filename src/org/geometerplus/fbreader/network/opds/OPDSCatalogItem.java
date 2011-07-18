@@ -85,7 +85,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		myLoadingState = opdsLink.createOperationData(listener);
 
 		ZLNetworkRequest networkRequest =
-			opdsLink.createNetworkData(getCatalogUrl(), myLoadingState);
+			opdsLink.createNetworkData(this, getCatalogUrl(), myLoadingState);
 
 		doLoadChildren(networkRequest);
 	}

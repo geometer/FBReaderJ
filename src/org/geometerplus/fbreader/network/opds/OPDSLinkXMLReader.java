@@ -37,7 +37,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		private NetworkLibrary.OnNewLinkListener myListener;
 
 		private String myAuthenticationType;
-		private boolean myHasStableIdentifiers;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 		private final HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
 		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>(); 
@@ -54,10 +53,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			myAuthenticationType = type;
 		}
 
-		public void setHasStableIdentifiers(boolean value) {
-			myHasStableIdentifiers = value;
-		}
-
 		public void addUrlRewritingRule(URLRewritingRule rule) {
 			myUrlRewritingRules.add(rule);
 		}
@@ -72,7 +67,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 		public void clear() {
 			myAuthenticationType = null;
-			myHasStableIdentifiers = false;
 			myUrlRewritingRules.clear();
 			myRelationAliases.clear();
 			myExtraData.clear();
@@ -97,8 +91,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 			final UrlInfoCollection<UrlInfoWithDate> infos =
 				new UrlInfoCollection<UrlInfoWithDate>();
-			final HashMap<String,NetworkCatalogItem.Accessibility> urlConditions =
-				new HashMap<String,NetworkCatalogItem.Accessibility>();
 			for (ATOMLink link: entry.Links) {
 				final String href = link.getHref();
 				final MimeType type = MimeType.get(link.getType());
@@ -133,12 +125,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.TopUp, href));
 				} else if (rel == REL_LINK_RECOVER_PASSWORD) {
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.RecoverPassword, href));
-				} else if (rel == REL_CONDITION_NEVER) {
-					urlConditions.put(href, NetworkCatalogItem.Accessibility.NEVER);
-				} else if (rel == REL_CONDITION_SIGNED_IN) {
-					urlConditions.put(href, NetworkCatalogItem.Accessibility.SIGNED_IN);
-				} else if (rel == REL_CONDITION_HAS_BOOKS) {
-					urlConditions.put(href, NetworkCatalogItem.Accessibility.HAS_BOOKS);
 				}
 			}
 
@@ -150,7 +136,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				sslCertificate = null;
 			}
 
-			INetworkLink result = link(siteName, title, summary, language, infos, urlConditions, sslCertificate);
+			INetworkLink result = link(id, siteName, title, summary, language, infos, sslCertificate);
 			if (result != null) {
 				myListener.onNewLink(result);
 			}
@@ -158,12 +144,12 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 		}
 
 		private INetworkLink link(
+			String id,
 			String siteName,
 			CharSequence title,
 			CharSequence summary,
 			String language,
 			UrlInfoCollection<UrlInfoWithDate> infos,
-			HashMap<String,NetworkCatalogItem.Accessibility> urlConditions,
 			String sslCertificate
 		) {
 			if (siteName == null || title == null || infos.getInfo(UrlInfo.Type.Catalog) == null) {
@@ -173,13 +159,14 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			final String titleString = title.toString();
 			final String summaryString = summary != null ? summary.toString() : null;
 
-			OPDSNetworkLink opdsLink = new OPDSNetworkLink(
+			OPDSNetworkLink opdsLink = new OPDSPredefinedNetworkLink(
+				OPDSNetworkLink.INVALID_ID,
+				id,
 				siteName,
 				titleString,
 				summaryString,
 				language,
-				infos,
-				myHasStableIdentifiers
+				infos
 			);
 
 			/*if (!mySearchType.empty()) {
@@ -192,7 +179,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				);
 			}*/
 			opdsLink.setRelationAliases(myRelationAliases);
-			opdsLink.setUrlConditions(urlConditions);
 			opdsLink.setUrlRewritingRules(myUrlRewritingRules);
 			opdsLink.setExtraData(myExtraData);
 
@@ -242,7 +228,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 	private static final String FBREADER_ADVANCED_SEARCH = "advancedSearch";
 	private static final String FBREADER_AUTHENTICATION = "authentication";
-	private static final String FBREADER_STABLE_IDENTIFIERS = "hasStableIdentifiers";
 	private static final String FBREADER_REWRITING_RULE = "urlRewritingRule";
 	private static final String FBREADER_RELATION_ALIAS = "relationAlias";
 	private static final String FBREADER_EXTRA = "extra";
@@ -277,9 +262,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 						return false;
 					} else if (tag == FBREADER_REWRITING_RULE) {
 						getFeedHandler().addUrlRewritingRule(new URLRewritingRule(attributes));
-						return false;
-					} else if (tag == FBREADER_STABLE_IDENTIFIERS) {
-						getFeedHandler().setHasStableIdentifiers(true);
 						return false;
 					} else if (tag == FBREADER_EXTRA) {
 						final String name = attributes.getValue("name");

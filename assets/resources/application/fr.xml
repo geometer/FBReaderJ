@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French FBReaderJ resources; Initial work: Sébastien Rodriguez Maintainer: Mathias Monnerville <mathias@monnerville.com> -->
+<!-- French FBReaderJ resources; Initial work: Sébastien Rodriguez; Maintainer: Mathias Monnerville <mathias@monnerville.com> -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Auteur inconnu"/>
 		<node name="booksWithNoTags" value="Livres sans étiquettes"/>
 		<node name="demo" value="l'extrait"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Par auteur">
 			<node name="summary" value="Livres triés par auteur"/>
 		</node>
 		<node name="byTitle" value="Par titre">
 			<node name="summary" value="Livres triés par titre"/>
+		</node>
+		<node name="bySeries" value="Par série">
+			<node name="summary" value="Livres triés par série"/>
 		</node>
 		<node name="byTag" value="Par libellé">
 			<node name="summary" value="Livres triés par libellé"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="Ajouter aux favoris"/>
 		<node name="removeFromFavorites" value="Supprimer des favoris"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Par auteur">
 			<node name="summary" value="Livres triés par auteur"/>
 		</node>

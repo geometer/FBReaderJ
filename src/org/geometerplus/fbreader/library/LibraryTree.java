@@ -21,8 +21,6 @@ package org.geometerplus.fbreader.library;
 
 import java.util.*;
 
-//import org.geometerplus.zlibrary.core.tree.ZLTree;
-
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class LibraryTree extends FBTree {
@@ -34,42 +32,83 @@ public abstract class LibraryTree extends FBTree {
 		super(parent);
 	}
 
-	TagTree createTagSubTree(Tag tag) {
-		return new TagTree(this, tag);
+	protected LibraryTree(LibraryTree parent, int position) {
+		super(parent, position);
 	}
 
-	TitleTree createTitleSubTree(String title) {
-		return new TitleTree(this, title);
-	}
-
-	AuthorTree createAuthorSubTree(Author author) {
-		return new AuthorTree(this, author);
-	}
-
-	BookTree createBookSubTree(Book book, boolean showAuthors) {
-		return new BookTree(this, book, showAuthors);
+	public Book getBook() {
+		return null;
 	}
 
 	public boolean containsBook(Book book) {
-		for (FBTree tree : this) {
-			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(book)) {
-				return true;
-			}
-		}
 		return false;
+	}
+
+	public boolean isSelectable() {
+		return true;
+	}
+
+	TagTree getTagSubTree(Tag tag) {
+		final TagTree temp = new TagTree(tag);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (TagTree)subTrees().get(position);
+		} else {
+			return new TagTree(this, tag, - position - 1);
+		}
+	}
+
+	TitleTree getTitleSubTree(String title) {
+		final TitleTree temp = new TitleTree(title);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (TitleTree)subTrees().get(position);
+		} else {
+			return new TitleTree(this, title, - position - 1);
+		}
+	}
+
+	AuthorTree getAuthorSubTree(Author author) {
+		final AuthorTree temp = new AuthorTree(author);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (AuthorTree)subTrees().get(position);
+		} else {
+			return new AuthorTree(this, author, - position - 1);
+		}
+	}
+
+	BookTree getBookSubTree(Book book, boolean showAuthors) {
+		final BookTree temp = new BookTree(book, showAuthors);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (BookTree)subTrees().get(position);
+		} else {
+			return new BookTree(this, book, showAuthors, - position - 1);
+		}
+	}
+
+	SeriesTree getSeriesSubTree(String series) {
+		final SeriesTree temp = new SeriesTree(series);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (SeriesTree)subTrees().get(position);
+		} else {
+			return new SeriesTree(this, series, - position - 1);
+		}
 	}
 
 	public boolean removeBook(Book book) {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 		for (FBTree tree : this) {
-			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(book)) {
+			if (tree instanceof BookTree && ((BookTree)tree).Book.equals(book)) {
 				toRemove.add(tree);
 			}
 		}
 		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 			FBTree parent = tree.Parent;
-			for (; (parent != null) && !parent.hasChildren(); parent = parent.Parent) {
+			for (; parent != null && !(parent instanceof FirstLevelTree) && !parent.hasChildren(); parent = parent.Parent) {
 				parent.removeSelf();
 			}
 			for (; parent != null; parent = parent.Parent) {

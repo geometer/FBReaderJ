@@ -67,6 +67,18 @@ public abstract class ZLApplication {
 		setView(myView);
 	}
 
+	protected void setTitle(String title) {
+		if (myWindow != null) {
+			myWindow.setTitle(title);
+		}
+	}
+
+	protected void wait(String key, Runnable runnable) {
+		if (myWindow != null) {
+			myWindow.wait(key, runnable);
+		}
+	}
+
 	public final ZLViewWidget getViewWidget() {
 		return myWindow != null ? myWindow.getViewWidget() : null;
 	}

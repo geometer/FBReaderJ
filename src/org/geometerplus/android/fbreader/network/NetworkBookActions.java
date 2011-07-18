@@ -207,11 +207,6 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public String getConfirmText(NetworkTree tree, int actionCode) {
-		return null;
-	}
-
-	@Override
 	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
 		return false;
 	}

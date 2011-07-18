@@ -48,8 +48,10 @@ class LitResLoginXMLReader extends LitResAuthenticationXMLReader {
 			LastName = attributes.getValue("first-name");
 			UserId = attributes.getValue("user-id");
 			Sid = attributes.getValue("sid");
-			final String stringCanRebill = attributes.getValue("can-rebill");
-			System.err.println("stringCanRebill = " + stringCanRebill);
+			String stringCanRebill = attributes.getValue("can-rebill");
+			if (stringCanRebill == null) {
+				stringCanRebill = attributes.getValue("can_rebill");
+			}
 			CanRebill = stringCanRebill != null && !"0".equals(stringCanRebill) && !"no".equalsIgnoreCase(stringCanRebill);
 		} else {
 			setException(new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, HostName));

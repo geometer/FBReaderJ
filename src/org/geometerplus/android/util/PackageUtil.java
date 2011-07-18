@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.content.pm.*;
 import android.net.Uri;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.CheckBox;
@@ -98,7 +99,19 @@ public abstract class PackageUtil {
 	}
 
 	public static void runInstallPluginDialog(final Activity activity, Map<String,String> pluginData, final Runnable postRunnable) {
-		final String plugin = pluginData.get("androidPlugin");
+		String pluginName = pluginData.get("androidPlugin");
+		if (pluginName == null) {
+			final TelephonyManager telephony =
+				(TelephonyManager)activity.getSystemService(Activity.TELEPHONY_SERVICE);
+			if (telephony != null &&
+				(telephony.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM ||
+				 telephony.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA)) {
+				pluginName = pluginData.get("androidPlugin:gsm");
+			} else {
+				pluginName = pluginData.get("androidPlugin:no_gsm");
+			}
+		}
+		final String plugin = pluginName;
 		if (plugin != null) {
 			final ZLBooleanOption doNotInstallOption = new ZLBooleanOption("doNotInstall", plugin, false);
 			if (!doNotInstallOption.getValue()) {

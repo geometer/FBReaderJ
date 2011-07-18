@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Galician FBReaderJ resources, by Miguel Anxo Bouzada mbouzada[at]gmail.com -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Autor descoñecido"/>
 		<node name="booksWithNoTags" value="Libros sen etiqueta"/>
 		<node name="demo" value="mostra"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Por autor">
 			<node name="summary" value="Libros ordenados por autor"/>
 		</node>
 		<node name="byTitle" value="Por título">
 			<node name="summary" value="Libros ordenados por título"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
 		<node name="byTag" value="Por etiqueta">
 			<node name="summary" value="Libros ordenados por etiqueta"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="Engadir a preferidos"/>
 		<node name="removeFromFavorites" value="Retirar de preferidos"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Por autor">
 			<node name="summary" value="Libros ordenados por autor"/>
 		</node>

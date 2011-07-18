@@ -53,7 +53,7 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 	}
 
 	public SortedCatalogItem(NetworkCatalogItem parent, String resourceKey, List<NetworkItem> children, int flags) {
-		this(parent, ZLResource.resource("networkView").getResource(resourceKey), children, flags);
+		this(parent, NetworkLibrary.resource().getResource(resourceKey), children, flags);
 	}
 
 	@Override
@@ -161,8 +161,8 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 public class LitResBookshelfItem extends NetworkURLCatalogItem {
 	private boolean myForceReload;
 
-	public LitResBookshelfItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Accessibility accessibility) {
-		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT);
+	public LitResBookshelfItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
+		super(link, title, summary, urls, Accessibility.SIGNED_IN, FLAGS_DEFAULT);
 	}
 
 	@Override

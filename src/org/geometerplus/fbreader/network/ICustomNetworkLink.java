@@ -24,11 +24,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public interface ICustomNetworkLink extends INetworkLink {
-	public static final int INVALID_ID = -1;
-
-	int getId();
-	void setId(int id);
-
 	void setSiteName(String name);
 	void setTitle(String title);
 	void setSummary(String summary);

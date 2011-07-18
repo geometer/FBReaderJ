@@ -28,10 +28,10 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.network.opds.OPDSCustomLink;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -43,6 +43,10 @@ public class NetworkLibrary {
 			ourInstance = new NetworkLibrary();
 		}
 		return ourInstance;
+	}
+
+	public static ZLResource resource() {
+		return ZLResource.resource("networkLibrary");
 	}
 
 	private static class LinksComparator implements Comparator<INetworkLink> {
@@ -180,21 +184,7 @@ public class NetworkLibrary {
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
 		if (db != null) {
-			db.loadCustomLinks(
-				new NetworkDatabase.ICustomLinksHandler() {
-					public void handleCustomLinkData(int id, String siteName,
-							String title, String summary, UrlInfoCollection<UrlInfoWithDate> infos) {
-						if (title != null &&
-							siteName != null &&
-							infos.getInfo(UrlInfo.Type.Catalog) != null) {
-							final ICustomNetworkLink link = new OPDSCustomLink(
-								id, siteName, title, summary, infos
-							);
-							myLinks.add(link);
-						}
-					}
-				}
-			);
+			myLinks.addAll(db.listLinks());
 		}
 
 		myIsAlreadyInitialized = true;
@@ -253,7 +243,7 @@ public class NetworkLibrary {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
 						customLink.reloadInfo(true);
-						NetworkDatabase.Instance().saveCustomLink(customLink);
+						NetworkDatabase.Instance().saveLink(customLink);
 					}
 				}
 			}
@@ -433,13 +423,7 @@ public class NetworkLibrary {
 		if (parentTree == null) {
 			return null;
 		}
-		for (FBTree tree : parentTree.subTrees()) {
-			final NetworkTree nTree = (NetworkTree)tree;
-			if (key.equals(nTree.getUniqueKey())) {
-				return nTree;
-			}
-		}
-		return null;
+		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
 	}
 
 	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
@@ -498,13 +482,13 @@ public class NetworkLibrary {
 				}
 			}
 		}
-		NetworkDatabase.Instance().saveCustomLink(link);
+		NetworkDatabase.Instance().saveLink(link);
 		invalidateChildren();
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
 		myLinks.remove(link);
-		NetworkDatabase.Instance().deleteCustomLink(link);
+		NetworkDatabase.Instance().deleteLink(link);
 		invalidateChildren();
 	}
 }
