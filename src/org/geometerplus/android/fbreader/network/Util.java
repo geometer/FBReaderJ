@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
@@ -169,16 +170,22 @@ abstract class Util implements UserRegistrationConstants {
 		if (resultCode == Activity.RESULT_OK && data != null) {
 			try {
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
-				final String userName = data.getStringExtra(USER_REGISTRATION_USERNAME);
-				final String litresSid = data.getStringExtra(USER_REGISTRATION_LITRES_SID);
-				mgr.initUser(userName, litresSid);
-				if (userName.length() > 0 && litresSid.length() > 0) {
-					try {
-						mgr.initialize();
-					} catch (ZLNetworkException e) {
-						mgr.logOut();
-						throw e;
-					}
+				if (mgr instanceof LitResAuthenticationManager) {
+					((LitResAuthenticationManager)mgr).initUser(
+						data.getStringExtra(USER_REGISTRATION_USERNAME),
+						data.getStringExtra(USER_REGISTRATION_LITRES_SID),
+						"",
+						false
+					);
+				}
+				if (!mgr.isAuthorised(true)) {
+					throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+				}
+				try {
+					mgr.initialize();
+				} catch (ZLNetworkException e) {
+					mgr.logOut();
+					throw e;
 				}
 			} catch (ZLNetworkException e) {
 				// TODO: show an error message
@@ -232,20 +239,18 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static final String TREE_KEY_KEY = "org.geometerplus.android.fbreader.network.TreeKey";
-
 	static void openTree(Context context, NetworkTree tree) {
 		final Class<?> clz = tree instanceof NetworkBookTree
-			? NetworkBookInfoActivity.class : NetworkCatalogActivity.class;
+			? NetworkBookInfoActivity.class : NetworkBaseActivity.class;
 		context.startActivity(
 			new Intent(context.getApplicationContext(), clz)
-				.putExtra(TREE_KEY_KEY, tree.getUniqueKey())
+				.putExtra(NetworkBaseActivity.TREE_KEY_KEY, tree.getUniqueKey())
 		);
 	}
 
 	public static NetworkTree getTreeFromIntent(Intent intent) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(TREE_KEY_KEY);
+		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(NetworkBaseActivity.TREE_KEY_KEY);
 		return library.getTreeByKey(key);
 	}
 }

@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.tree;
+package org.geometerplus.fbreader.network;
 
-public interface ZLAndroidTree {
-	int getCoverResourceId();
+public interface IPredefinedNetworkLink extends INetworkLink {
+	String getPredefinedId();
 }

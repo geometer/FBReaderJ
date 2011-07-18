@@ -30,8 +30,6 @@ interface OPDSConstants extends ATOMConstants {
 	//String REL_SUBSCRIPTIONS = "http://opds-spec.org/subscriptions";
 
 	// Entry level / catalog types
-	String REL_CATALOG_AUTHOR = "http://data.fbreader.org/catalog/author";
-	String REL_CATALOG_SERIES = "http://data.fbreader.org/catalog/series";
 	String REL_SUBSECTION = "subsection";
 
 	// Entry level / acquisition links
@@ -62,9 +60,4 @@ interface OPDSConstants extends ATOMConstants {
 	String REL_LINK_SIGN_UP = "http://data.fbreader.org/catalog/sign-up";
 	String REL_LINK_TOPUP = "http://data.fbreader.org/catalog/refill-account";
 	String REL_LINK_RECOVER_PASSWORD = "http://data.fbreader.org/catalog/recover-password";
-
-	// Entry level / OPDS Link Conditions
-	String REL_CONDITION_NEVER = "http://data.fbreader.org/condition/never";
-	String REL_CONDITION_SIGNED_IN = "http://data.fbreader.org/condition/signed-in";
-	String REL_CONDITION_HAS_BOOKS = "http://data.fbreader.org/condition/has-books";
 }

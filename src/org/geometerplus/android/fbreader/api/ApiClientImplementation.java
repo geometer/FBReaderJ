@@ -10,13 +10,19 @@ import android.content.*;
 import android.os.IBinder;
 
 public class ApiClientImplementation implements ServiceConnection, Api, ApiMethods {
+	public static interface ConnectionListener {
+		void onConnected();
+	}
+
 	private static String ACTION_API = "android.fbreader.action.API";
 
 	private final Context myContext;
+	private ConnectionListener myListener;
 	private volatile ApiInterface myInterface;
 
-	public ApiClientImplementation(Context context) {
+	public ApiClientImplementation(Context context, ConnectionListener listener) {
 		myContext = context;
+		myListener = listener;
 		connect();
 	}
 
@@ -37,12 +43,13 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
-		System.err.println("onServiceConnected call");
 		myInterface = ApiInterface.Stub.asInterface(service);
+		if (myListener != null) {
+			myListener.onConnected();
+		}
 	}
 
 	public synchronized void onServiceDisconnected(ComponentName name) {
-		System.err.println("onServiceDisconnected call");
 		myInterface = null;
 	}
 
@@ -126,12 +133,40 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	private static final ApiObject[] EMPTY_PARAMETERS = new ApiObject[0];
 
+	private static ApiObject[] envelope(String value) {
+		return new ApiObject[] { ApiObject.envelope(value) };
+	}
+
 	private static ApiObject[] envelope(int value) {
 		return new ApiObject[] { ApiObject.envelope(value) };
 	}
 
+	// information about fbreader
 	public String getFBReaderVersion() throws ApiException {
 		return requestString(GET_FBREADER_VERSION, EMPTY_PARAMETERS);
+	}
+
+	// preferences information
+	public List<String> getOptionGroups() throws ApiException {
+		return requestStringList(GET_OPTION_GROUPS, EMPTY_PARAMETERS);
+	}
+
+	public List<String> getOptionNames(String group) throws ApiException {
+		return requestStringList(GET_OPTION_NAMES, envelope(group));
+	}
+
+	public String getOptionValue(String group, String name) throws ApiException {
+		return requestString(
+			GET_OPTION_VALUE,
+			new ApiObject[] { ApiObject.envelope(group), ApiObject.envelope(name) }
+		);
+	}
+
+	public void setOptionValue(String group, String name, String value) throws ApiException {
+		request(
+			SET_OPTION_VALUE,
+			new ApiObject[] { ApiObject.envelope(group), ApiObject.envelope(name), ApiObject.envelope(value) }
+		);
 	}
 
 	public String getBookLanguage() throws ApiException {
@@ -147,7 +182,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public String getBookFileName() throws ApiException {
-		return requestString(GET_BOOK_FILENAME, EMPTY_PARAMETERS);
+		return requestString(GET_BOOK_FILE_NAME, EMPTY_PARAMETERS);
 	}
 
 	public TextPosition getPageStart() throws ApiException {

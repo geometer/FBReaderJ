@@ -22,8 +22,12 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public final class BookInSeriesTree extends BookTree {
-	BookInSeriesTree(LibraryTree parent, Book book) {
-		super(parent, book, false);
+	BookInSeriesTree(Book book) {
+		super(book, false);
+	}
+
+	BookInSeriesTree(LibraryTree parent, Book book, int position) {
+		super(parent, book, false, position);
 	}
 
 	@Override

@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.android.fbreader.library;
 
 import java.util.*;
 
@@ -61,7 +61,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 16;
+		final int currentVersion = 17;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -102,6 +102,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables14();
 					case 15:
 						updateTables15();
+					case 16:
+						updateTables16();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -174,9 +176,9 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	@Override
-	protected Map<Long,Book> loadBooks(FileInfoSet infos) {
+	protected Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing) {
 		Cursor cursor = myDatabase.rawQuery(
-			"SELECT book_id,file_id,title,encoding,language FROM Books", null
+			"SELECT book_id,file_id,title,encoding,language FROM Books WHERE `exists` = " + (existing ? 1 : 0), null
 		);
 		final HashMap<Long,Book> booksById = new HashMap<Long,Book>();
 		final HashMap<Long,Book> booksByFileId = new HashMap<Long,Book>();
@@ -252,7 +254,29 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return booksByFileId;
 	}
 
+	@Override
+	protected void setExistingFlag(Collection<Book> books, boolean flag) {
+		if (books.isEmpty()) {
+			return;
+		}
+		final StringBuilder bookSet = new StringBuilder("(");
+		boolean first = true;
+		for (Book b : books) {
+			if (first) {
+				first = false;
+			} else {
+				bookSet.append(",");
+			}
+			bookSet.append(b.getId());
+		}
+		bookSet.append(")");
+		myDatabase.execSQL(
+			"UPDATE Books SET `exists` = " + (flag ? 1 : 0) + " WHERE book_id IN " + bookSet
+		);
+	}
+
 	private SQLiteStatement myUpdateBookInfoStatement;
+	@Override
 	protected void updateBookInfo(long bookId, long fileId, String encoding, String language, String title) {
 		if (myUpdateBookInfoStatement == null) {
 			myUpdateBookInfoStatement = myDatabase.compileStatement(
@@ -1185,5 +1209,11 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				"book_id INTEGER NOT NULL REFERENCES Books(book_id)," +
 				"hyperlink_id TEXT NOT NULL," +
 				"CONSTRAINT VisitedHyperlinks_Unique UNIQUE (book_id, hyperlink_id))");
+	}
+
+	private void updateTables16() {
+		myDatabase.execSQL(
+			"ALTER TABLE Books ADD COLUMN `exists` INTEGER DEFAULT 1"
+		);
 	}
 }

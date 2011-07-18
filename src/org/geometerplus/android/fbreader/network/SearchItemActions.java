@@ -38,15 +38,6 @@ class SearchItemActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public String getTreeTitle(NetworkTree tree) {
-		final SearchResult result = ((SearchItemTree)tree).getSearchResult();
-		if (result != null) {
-			return result.Summary;
-		}
-		return tree.getName();
-	}
-
-	@Override
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
 
@@ -66,11 +57,6 @@ class SearchItemActions extends NetworkTreeActions {
 			return RUN_SEARCH_ITEM_ID;
 		}
 		return TREE_NO_ACTION;
-	}
-
-	@Override
-	public String getConfirmText(NetworkTree tree, int actionCode) {
-		return null;
 	}
 
 	@Override

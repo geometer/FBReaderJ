@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader;
 import java.util.*;
 
 import android.app.SearchManager;
-import android.content.Intent;
+import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -43,6 +43,7 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 
+import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.library.KillerCallback;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
@@ -53,13 +54,35 @@ public final class FBReader extends ZLAndroidActivity {
 
 	final static int REPAINT_CODE = 1;
 	final static int CANCEL_CODE = 2;
-	final static int COLLECT_PLUGINS = 3;
 
 	private int myFullScreenFlag;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
 		new LinkedList<PluginApi.ActionInfo>();
+	private final BroadcastReceiver myPluginInfoReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			final ArrayList<PluginApi.ActionInfo> actions = getResultExtras(true).<PluginApi.ActionInfo>getParcelableArrayList(PluginApi.PluginInfo.KEY);
+			if (actions != null) {
+				synchronized (myPluginActions) {
+					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+					int index = 0;
+					for (PluginApi.ActionInfo info : myPluginActions) {
+						fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
+					}
+					myPluginActions.addAll(actions);
+					index = 0;
+					for (PluginApi.ActionInfo info : myPluginActions) {
+						fbReader.addAction(
+							PLUGIN_ACTION_PREFIX + index++,
+							new RunPluginAction(FBReader.this, fbReader, info.getId())
+						);
+					}
+				}
+			}
+		}
+	};
 
 	@Override
 	protected ZLFile fileFromIntent(Intent intent) {
@@ -139,7 +162,9 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
+			super.onNewIntent(intent);
+		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
 				public void run() {
@@ -164,7 +189,6 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 			};
 			UIUtil.wait("search", runnable, this);
-			startActivity(new Intent(this, getClass()));
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -179,7 +203,7 @@ public final class FBReader extends ZLAndroidActivity {
 			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
-			startActivity(new Intent(this, this.getClass()));
+			startActivity(new Intent(this, getClass()));
 		}
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
@@ -188,7 +212,19 @@ public final class FBReader extends ZLAndroidActivity {
 		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
 		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
 
-		startActivityForResult(new Intent(PluginApi.ACTION_REGISTER), COLLECT_PLUGINS);
+		synchronized (myPluginActions) {
+			myPluginActions.clear();
+		}
+
+		sendOrderedBroadcast(
+			new Intent(PluginApi.ACTION_REGISTER),
+			null,
+			myPluginInfoReceiver,
+			null,
+			RESULT_OK,
+			null,
+			null
+		);
 	}
 
 	@Override
@@ -270,23 +306,6 @@ public final class FBReader extends ZLAndroidActivity {
 			case CANCEL_CODE:
 				fbreader.runCancelAction(resultCode - 1);
 				break;
-			case COLLECT_PLUGINS:
-				synchronized (myPluginActions) {
-					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-					int index = 0;
-					for (PluginApi.ActionInfo info : myPluginActions) {
-						fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
-					}
-					myPluginActions.clear();
-					myPluginActions.addAll(PluginApi.getActions(data));
-					index = 0;
-					for (PluginApi.ActionInfo info : myPluginActions) {
-						fbReader.addAction(
-							PLUGIN_ACTION_PREFIX + index++,
-							new RunPluginAction(this, fbReader, info.getId())
-						);
-					}
-				}
 		}
 	}
 
@@ -328,7 +347,13 @@ public final class FBReader extends ZLAndroidActivity {
 		synchronized (myPluginActions) {
 			int index = 0;
 			for (PluginApi.ActionInfo info : myPluginActions) {
-				addMenuItem(menu, PLUGIN_ACTION_PREFIX + index++, info.MenuItemName);
+				if (info instanceof PluginApi.MenuActionInfo) {
+					addMenuItem(
+						menu,
+						PLUGIN_ACTION_PREFIX + index++,
+						((PluginApi.MenuActionInfo)info).MenuItemName
+					);
+				}
 			}
 		}
 

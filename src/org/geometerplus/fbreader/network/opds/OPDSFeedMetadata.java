@@ -28,6 +28,8 @@ class OPDSFeedMetadata extends ATOMFeedMetadata {
 	public int OpensearchItemsPerPage;
 	public int OpensearchStartIndex = 1;
 
+	public String ViewType;
+
 	protected OPDSFeedMetadata(ZLStringMap attributes) {
 		super(attributes);
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,20 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.dialogs;
+package org.geometerplus.fbreader.network.opds;
 
-import android.app.*;
+import org.geometerplus.fbreader.network.IPredefinedNetworkLink;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
-import org.geometerplus.zlibrary.core.dialogs.*;
+public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPredefinedNetworkLink {
+	private final String myPredefinedId;
 
-import org.geometerplus.android.util.UIUtil;
-
-public class ZLAndroidDialogManager extends ZLDialogManager {
-	private Activity myActivity;
-	
-	public ZLAndroidDialogManager() {
+	public OPDSPredefinedNetworkLink(int id, String predifinedId, String siteName, String title, String summary, String language, UrlInfoCollection<UrlInfoWithDate> infos) {
+		super(id, siteName, title, summary, language, infos);
+		myPredefinedId = predifinedId;
 	}
 
-	public void setActivity(Activity activity) {
-		myActivity = activity;
-	}
-	
-	public void wait(String key, Runnable action) {
-		UIUtil.wait(key, action, myActivity);
+	public String getPredefinedId() {
+		return myPredefinedId;
 	}
 }

@@ -43,7 +43,7 @@ public class TopUpTree extends NetworkTree {
 	public String getSummary() {
 		final NetworkAuthenticationManager mgr = Item.Link.authenticationManager();
 		try {
-			if (mgr.isAuthorised(false)) {
+			if (mgr != null && mgr.isAuthorised(false)) {
 				final String account = mgr.currentAccount();
 				final CharSequence summary = Item.getSummary();
 				if (account != null && summary != null) {

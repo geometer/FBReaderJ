@@ -19,7 +19,11 @@
 
 package org.geometerplus.zlibrary.core.sqliteconfig;
 
+import java.util.List;
+import java.util.LinkedList;
+
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -78,6 +82,29 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		*/
 	}
 
+	@Override
+	synchronized public List<String> listGroups() {
+		final LinkedList<String> list = new LinkedList<String>();
+		final Cursor cursor = myDatabase.rawQuery("SELECT DISTINCT groupName FROM config", null);
+		while (cursor.moveToNext()) {
+			list.add(cursor.getString(0));
+		}
+		cursor.close();
+		return list;
+	}
+
+	@Override
+	synchronized public List<String> listNames(String group) {
+		final LinkedList<String> list = new LinkedList<String>();
+		final Cursor cursor = myDatabase.rawQuery("SELECT name FROM config WHERE groupName = ?", new String[] { group });
+		while (cursor.moveToNext()) {
+			list.add(cursor.getString(0));
+		}
+		cursor.close();
+		return list;
+	}
+
+	@Override
 	synchronized public void removeGroup(String name) {
 		myDeleteGroupStatement.bindString(1, name);
 		try {
@@ -86,6 +113,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		}
 	}
 
+	@Override
 	synchronized public String getValue(String group, String name, String defaultValue) {
 		String answer = defaultValue;
 		myGetValueStatement.bindString(1, group);
@@ -97,6 +125,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		return answer;
 	}
 
+	@Override
 	synchronized public void setValue(String group, String name, String value) {
 		mySetValueStatement.bindString(1, group);
 		mySetValueStatement.bindString(2, name);
@@ -107,6 +136,7 @@ public final class ZLSQLiteConfig extends ZLConfig {
 		}
 	}
 
+	@Override
 	synchronized public void unsetValue(String group, String name) {
 		myUnsetValueStatement.bindString(1, group);
 		myUnsetValueStatement.bindString(2, name);
