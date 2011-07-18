@@ -14,6 +14,9 @@
 		<node name="byTitle" value="Nach Titel sortiert">
 			<node name="summary" value="Bücher nach Titel sortiert"/>
 		</node>
+		<node name="bySeries" value="Nach Serien gruppiert">
+			<node name="summary" value="Bücher nach Buchserie auswählen"/>
+		</node>
 		<node name="byTag" value="Nach Schlagworten gruppiert">
 			<node name="summary" value="Bücher nach Schlagworten (Tags) auswählen"/>
 		</node>

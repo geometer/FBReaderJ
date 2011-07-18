@@ -39,14 +39,12 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
-import org.geometerplus.android.fbreader.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.BookInfoActivity;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.tree.ListAdapter;
 
-public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener {
+public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	static Library LibraryInstance;
@@ -67,6 +65,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			LibraryInstance = new Library();
 			startService(new Intent(getApplicationContext(), InitializationService.class));
 		}
+		LibraryInstance.addChangeListener(this);
 
 		final String selectedBookPath = getIntent().getStringExtra(SELECTED_BOOK_PATH_KEY);
 		mySelectedBook = null;
@@ -92,7 +91,10 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 
 	@Override
 	protected void onDestroy() {
-		LibraryInstance = null;
+		if (LibraryInstance != null) {
+			LibraryInstance.removeChangeListener(this);
+			LibraryInstance = null;
+		}
 		super.onDestroy();
 	}
 
@@ -319,5 +321,14 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			getListAdapter().replaceAll(getCurrentTree().subTrees());
 		}
 		getListView().invalidateViews();
+	}
+
+	public void onLibraryChanged() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				getListAdapter().replaceAll(getCurrentTree().subTrees());
+				setProgressBarIndeterminateVisibility(!LibraryInstance.isSynchronized());
+			}
+		});
 	}
 }

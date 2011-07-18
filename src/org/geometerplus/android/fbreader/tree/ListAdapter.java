@@ -69,9 +69,13 @@ public abstract class ListAdapter extends BaseAdapter {
 	public void replaceAll(final Collection<FBTree> items) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				myItems.clear();
-				myItems.addAll(items);
-				notifyDataSetChanged();
+				if (!myItems.equals(items)) {
+					synchronized (myItems) {
+						myItems.clear();
+						myItems.addAll(items);
+					}
+					notifyDataSetChanged();
+				}
 			}
 		});
 	}

@@ -64,8 +64,16 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public synchronized void logOut() {
-		initUser("", "", "", false);
+	public void logOut() {
+		logOut(true);
+	}
+
+	private synchronized void logOut(boolean full) {
+		if (full) {
+			initUser(UserNameOption.getValue(), "", "", false);
+		} else {
+			myFullyInitialized = false;
+		}
 		myInitializedDataSid = null;
 		myPurchasedBookMap.clear();
 		myPurchasedBookList.clear();
@@ -84,7 +92,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			}
 
 			if (!authState) {
-				logOut();
+				logOut(false);
 				return false;
 			}
 			sid = mySidOption.getValue();
@@ -111,7 +119,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(exception.getCode())) {
 					throw exception;
 				}
-				logOut();
+				logOut(false);
 				return false;
 			}
 			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
@@ -144,7 +152,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		synchronized (this) {
 			if (exception != null) {
-				logOut();
+				logOut(false);
 				throw exception;
 			}
 			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
@@ -220,7 +228,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			if (exception != null) {
 				final String code = exception.getCode();
 				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(code)) {
-					logOut();
+					logOut(false);
 				} else if (NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED.equals(code)) {
 					myPurchasedBookMap.put(book.Id, book);
 					myPurchasedBookList.add(0, book);
@@ -264,7 +272,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
 			if (!sid.equals(myInitializedDataSid)) {
-				logOut();
+				logOut(false);
 				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
 			networkRequest = loadPurchasedBooks();
@@ -281,7 +289,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			if (exception != null) {
 				//loadPurchasedBooksOnError();
 				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(exception.getCode())) {
-					logOut();
+					logOut(false);
 				}
 				throw exception;
 			}

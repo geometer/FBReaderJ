@@ -11,6 +11,9 @@
 		<node name="byTitle" value="Podle názvu">
 			<node name="summary" value="Knihy seřazeny podle názvu"/>
 		</node>
+		<node name="bySeries" value="Podle série">
+			<node name="summary" value="Knihy seřazeny podle série"/>
+		</node>
 		<node name="byTag" value="Podle štítku">
 			<node name="summary" value="Knihy seřazeny podle štítku"/>
 		</node>

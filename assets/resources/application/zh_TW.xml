@@ -11,6 +11,9 @@
 		<node name="byTitle" value="書名">
 			<node name="summary" value="按書名排序"/>
 		</node>
+		<node name="bySeries" value="系列">
+			<node name="summary" value="以系列排序"/>
+		</node>
 		<node name="byTag" value="標籤">
 			<node name="summary" value="按標籤排序"/>
 		</node>

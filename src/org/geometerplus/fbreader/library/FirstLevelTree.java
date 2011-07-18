@@ -61,24 +61,6 @@ public class FirstLevelTree extends LibraryTree {
 	}
 
 	@Override
-	public Status getOpeningStatus() {
-		return
-			myLibrary.hasState(Library.STATE_FULLY_INITIALIZED)
-				? Status.READY_TO_OPEN
-				: Status.WAIT_FOR_OPEN;
-	}
-
-	@Override
-	public String getOpeningStatusMessage() {
-		return "loadingBookList";
-	}
-
-	@Override
-	public void waitForOpening() {
-		myLibrary.waitForState(Library.STATE_FULLY_INITIALIZED);
-	}
-
-	@Override
 	public boolean isSelectable() {
 		return false;
 	}

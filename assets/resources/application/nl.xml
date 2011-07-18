@@ -11,6 +11,9 @@
 		<node name="byTitle" value="Titel">
 			<node name="summary" value="Boeken gesorteerd op titel" />
 		</node>
+		<node name="bySeries" value="Series">
+			<node name="summary" value="Boeken gesorteerd op series"/>
+		</node>
 		<node name="byTag" value="Trefwoorden">
 			<node name="summary" value="Boeken gesorteerd op trefwoord"/>
 		</node>

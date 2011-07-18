@@ -11,6 +11,9 @@
 		<node name="byTitle" value="Par titre">
 			<node name="summary" value="Livres triés par titre"/>
 		</node>
+		<node name="bySeries" value="Par série">
+			<node name="summary" value="Livres triés par série"/>
+		</node>
 		<node name="byTag" value="Par libellé">
 			<node name="summary" value="Livres triés par libellé"/>
 		</node>

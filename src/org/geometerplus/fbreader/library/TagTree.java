@@ -22,8 +22,12 @@ package org.geometerplus.fbreader.library;
 public final class TagTree extends LibraryTree {
 	public final Tag Tag;
 
-	TagTree(LibraryTree parent, Tag tag) {
-		super(parent);
+	TagTree(Tag tag) {
+		Tag = tag;
+	}
+
+	TagTree(LibraryTree parent, Tag tag, int position) {
+		super(parent, position);
 		Tag = tag;
 	}
 

@@ -56,7 +56,8 @@ public abstract class BooksDatabase {
 	protected abstract void executeAsATransaction(Runnable actions);
 
 	// returns map fileId -> book
-	protected abstract Map<Long,Book> loadBooks(FileInfoSet infos);
+	protected abstract Map<Long,Book> loadBooks(FileInfoSet infos, boolean existing);
+	protected abstract void setExistingFlag(Collection<Book> books, boolean flag);
 	protected abstract Book loadBook(long bookId);
 	protected abstract void reloadBook(Book book);
 	protected abstract Book loadBookByFile(long fileId, ZLFile file);

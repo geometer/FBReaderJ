@@ -48,20 +48,54 @@ public abstract class LibraryTree extends FBTree {
 		return true;
 	}
 
-	TagTree createTagSubTree(Tag tag) {
-		return new TagTree(this, tag);
+	TagTree getTagSubTree(Tag tag) {
+		final TagTree temp = new TagTree(tag);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (TagTree)subTrees().get(position);
+		} else {
+			return new TagTree(this, tag, - position - 1);
+		}
 	}
 
-	TitleTree createTitleSubTree(String title) {
-		return new TitleTree(this, title);
+	TitleTree getTitleSubTree(String title) {
+		final TitleTree temp = new TitleTree(title);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (TitleTree)subTrees().get(position);
+		} else {
+			return new TitleTree(this, title, - position - 1);
+		}
 	}
 
-	AuthorTree createAuthorSubTree(Author author) {
-		return new AuthorTree(this, author);
+	AuthorTree getAuthorSubTree(Author author) {
+		final AuthorTree temp = new AuthorTree(author);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (AuthorTree)subTrees().get(position);
+		} else {
+			return new AuthorTree(this, author, - position - 1);
+		}
 	}
 
-	BookTree createBookSubTree(Book book, boolean showAuthors) {
-		return new BookTree(this, book, showAuthors);
+	BookTree getBookSubTree(Book book, boolean showAuthors) {
+		final BookTree temp = new BookTree(book, showAuthors);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (BookTree)subTrees().get(position);
+		} else {
+			return new BookTree(this, book, showAuthors, - position - 1);
+		}
+	}
+
+	SeriesTree getSeriesSubTree(String series) {
+		final SeriesTree temp = new SeriesTree(series);
+		int position = Collections.binarySearch(subTrees(), temp);
+		if (position >= 0) {
+			return (SeriesTree)subTrees().get(position);
+		} else {
+			return new SeriesTree(this, series, - position - 1);
+		}
 	}
 
 	public boolean removeBook(Book book) {

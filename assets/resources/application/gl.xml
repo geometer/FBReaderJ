@@ -11,6 +11,9 @@
 		<node name="byTitle" value="Por título">
 			<node name="summary" value="Libros ordenados por título"/>
 		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
+		</node>
 		<node name="byTag" value="Por etiqueta">
 			<node name="summary" value="Libros ordenados por etiqueta"/>
 		</node>

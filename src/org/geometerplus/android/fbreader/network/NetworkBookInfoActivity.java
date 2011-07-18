@@ -23,6 +23,7 @@ import java.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -61,7 +62,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 		myMainView = getLayoutInflater().inflate(R.layout.network_book, null, false);
 		setContentView(myMainView);
-		myMainView.setOnCreateContextMenuListener(this);
 	}
 
 	@Override
@@ -128,6 +128,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		NetworkView.Instance().getTopupActions().buildContextMenu(this, menu, myBook.Link);
+		unregisterForContextMenu(view);
 	}
 
 	@Override
@@ -146,6 +147,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		final TextView descriptionView = (TextView)findViewById(R.id.network_book_description);
 		descriptionView.setText(description);
 		descriptionView.setMovementMethod(new LinkMovementMethod());
+		descriptionView.setTextColor(
+			ColorStateList.valueOf(descriptionView.getTextColors().getDefaultColor())
+		);
 	}
 
 	private final void setupExtraLinks() {

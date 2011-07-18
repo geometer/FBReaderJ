@@ -23,15 +23,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.android.util.UIUtil;
 
-class NetworkInitializer extends Handler {
+class NetworkInitializer {
 	static NetworkInitializer Instance;
 
 	private Activity myActivity;
@@ -91,28 +89,31 @@ class NetworkInitializer extends Handler {
 			.create().show();
 	}
 
-	@Override
-	public void handleMessage(Message message) {
-		if (myActivity == null) {
-			return;
-		} else if (message.what == 0) {
-			runInitialization(); // run initialization process
-		} else if (message.obj == null) {
-			if (myActivity instanceof NetworkTopLevelActivity) {
-				final NetworkTopLevelActivity a = (NetworkTopLevelActivity)myActivity;
-				a.startService(new Intent(a.getApplicationContext(), LibraryInitializationService.class));
-				a.onModelChanged(); // initialization is complete successfully
-			}
-		} else {
-			showTryAgainDialog(myActivity, (String)message.obj); // handle initialization error
+	public void start() {
+		if (myActivity != null) {
+			myActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					runInitialization();
+				}
+			});
 		}
 	}
 
-	public void start() {
-		sendEmptyMessage(0);
-	}
-
-	private void end(String error) {
-		sendMessage(obtainMessage(1, error));
+	private void end(final String error) {
+		if (myActivity != null) {
+			myActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					if (error == null) {
+						if (myActivity instanceof NetworkTopLevelActivity) {
+							final NetworkTopLevelActivity a = (NetworkTopLevelActivity)myActivity;
+							a.startService(new Intent(a.getApplicationContext(), LibraryInitializationService.class));
+							a.onModelChanged(); // initialization is complete successfully
+						}
+					} else {
+						showTryAgainDialog(myActivity, error); // handle initialization error
+					}
+				}
+			});
+		}
 	}
 }

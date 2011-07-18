@@ -19,33 +19,36 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.util.Collections;
+
 public class AuthorTree extends LibraryTree {
 	public final Author Author;
 
-	AuthorTree(LibraryTree parent, Author author) {
-		super(parent);
+	AuthorTree(Author author) {
 		Author = author;
 	}
 
-	SeriesTree createSeriesSubTree(String series) {
-		return new SeriesTree(this, series);
+	AuthorTree(LibraryTree parent, Author author, int position) {
+		super(parent, position);
+		Author = author;
 	}
 
 	@Override
 	public String getName() {
 		return
-			(Author != null) ?
+			Author != null ?
 				Author.DisplayName :
 				Library.resource().getResource("unknownAuthor").getValue();
 	}
 
 	@Override
 	protected String getStringId() {
-		return getName();
+		return getName() + ":" + getSortKey();
 	}
 
+	@Override
 	protected String getSortKey() {
-		return (Author != null) ? Author.SortKey : null;
+		return Author != null ? Author.SortKey : null;
 	}
 
 	@Override

@@ -24,9 +24,7 @@ import java.util.ArrayList;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.Window;
+import android.view.*;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -51,6 +49,7 @@ public abstract class BaseActivity extends ListActivity {
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 	}
 
 	@Override
