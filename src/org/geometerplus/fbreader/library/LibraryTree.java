@@ -101,14 +101,14 @@ public abstract class LibraryTree extends FBTree {
 	public boolean removeBook(Book book) {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 		for (FBTree tree : this) {
-			if ((tree instanceof BookTree) && ((BookTree)tree).Book.equals(book)) {
+			if (tree instanceof BookTree && ((BookTree)tree).Book.equals(book)) {
 				toRemove.add(tree);
 			}
 		}
 		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 			FBTree parent = tree.Parent;
-			for (; (parent != null) && !parent.hasChildren(); parent = parent.Parent) {
+			for (; parent != null && !(parent instanceof FirstLevelTree) && !parent.hasChildren(); parent = parent.Parent) {
 				parent.removeSelf();
 			}
 			for (; parent != null; parent = parent.Parent) {

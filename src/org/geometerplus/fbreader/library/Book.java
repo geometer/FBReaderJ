@@ -131,11 +131,20 @@ public class Book {
 	}
 
 	boolean readMetaInfo() {
+		myEncoding = null;
+		myLanguage = null;
+		myTitle = null;
+		myAuthors = null;
+		myTags = null;
+		mySeriesInfo = null;
+
+		myIsSaved = false;
+
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
-		if ((plugin == null) || !plugin.readMetaInfo(this)) {
+		if (plugin == null || !plugin.readMetaInfo(this)) {
 			return false;
 		}
-		if ((myTitle == null) || (myTitle.length() == 0)) {
+		if (myTitle == null || myTitle.length() == 0) {
 			final String fileName = File.getShortName();
 			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);

@@ -38,8 +38,8 @@ public final class Library {
 		void onLibraryChanged();
 	}
 
-	public static final String ROOT_FAVORITES = "favorites";
 	public static final String ROOT_SEARCH_RESULTS = "searchResults";
+	public static final String ROOT_FAVORITES = "favorites";
 	public static final String ROOT_RECENT = "recent";
 	public static final String ROOT_BY_AUTHOR = "byAuthor";
 	public static final String ROOT_BY_TITLE = "byTitle";
@@ -258,6 +258,41 @@ public final class Library {
 		for (ChangeListener l : myListeners) {
 			l.onLibraryChanged();
 		}
+	}
+
+	private void removeFromTree(String rootId, Book book) {
+		final FirstLevelTree tree = getFirstLevelTree(rootId);
+		if (tree != null) {
+			tree.removeBook(book);
+		}
+	}
+
+	private void refreshInTree(String rootId, Book book) {
+		final FirstLevelTree tree = getFirstLevelTree(rootId);
+		if (tree != null) {
+			int index = tree.indexOf(new BookTree(book, true));
+			if (index >= 0) {
+				tree.removeBook(book);
+				new BookTree(tree, book, true, index);
+			}
+		}
+	}
+
+	public synchronized void refreshBookInfo(Book book) {
+		if (book == null) {
+			return;
+		}
+
+		myBooks.remove(book);
+		refreshInTree(ROOT_FAVORITES, book);
+		refreshInTree(ROOT_RECENT, book);
+		removeFromTree(ROOT_SEARCH_RESULTS, book);
+		removeFromTree(ROOT_BY_TITLE, book);
+		removeFromTree(ROOT_BY_SERIES, book);
+		removeFromTree(ROOT_BY_AUTHOR, book);
+		removeFromTree(ROOT_BY_TAG, book);
+		addBookToLibrary(book);
+		fireModelChangedEvent();
 	}
 
 	private void build() {

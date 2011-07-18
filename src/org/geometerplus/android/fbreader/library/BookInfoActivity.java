@@ -80,6 +80,8 @@ public class BookInfoActivity extends Activity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
+
+		setResult(1, getIntent());
 	}
 
 	@Override
