@@ -35,7 +35,15 @@ import org.geometerplus.fbreader.Paths;
 
 public final class Library {
 	public interface ChangeListener {
-		void onLibraryChanged();
+		public enum Code {
+			BookAdded,
+			BookRemoved,
+			StatusChanged,
+			Found,
+			NotFound
+		}
+
+		void onLibraryChanged(Code code);
 	}
 
 	public static final String ROOT_SEARCH_RESULTS = "searchResults";
@@ -56,7 +64,15 @@ public final class Library {
 	private boolean myDoGroupTitlesByFirstLetter;
 
 	private final List<ChangeListener> myListeners = new LinkedList<ChangeListener>();
-	private volatile boolean myIsSynchronized = false;
+
+	private final static int STATUS_LOADING = 1;
+	private final static int STATUS_SEARCHING = 2;
+	private volatile int myStatusMask = 0;
+
+	private synchronized void setStatus(int status) {
+		myStatusMask = status;
+		fireModelChangedEvent(ChangeListener.Code.StatusChanged);
+	}
 
 	public Library() {
 		new FavoritesTree(myRootTree, ROOT_FAVORITES);
@@ -142,7 +158,6 @@ public final class Library {
 		if (book != null && (!doReadMetaInfo || book.readMetaInfo())) {
 			addBookToLibrary(book);
 			newBooks.add(book);
-			fireModelChangedEvent();
 			return;
 		}
 
@@ -150,7 +165,6 @@ public final class Library {
 		if (book.readMetaInfo()) {
 			addBookToLibrary(book);
 			newBooks.add(book);
-			fireModelChangedEvent();
 			return;
 		}
 
@@ -252,11 +266,13 @@ public final class Library {
 		if (searchResults != null && book.matches(searchResults.getPattern())) {
 			searchResults.getBookSubTree(book, true);
 		}
+
+		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
-	private void fireModelChangedEvent() {
+	private void fireModelChangedEvent(ChangeListener.Code code) {
 		for (ChangeListener l : myListeners) {
-			l.onLibraryChanged();
+			l.onLibraryChanged(code);
 		}
 	}
 
@@ -292,7 +308,6 @@ public final class Library {
 		removeFromTree(ROOT_BY_AUTHOR, book);
 		removeFromTree(ROOT_BY_TAG, book);
 		addBookToLibrary(book);
-		fireModelChangedEvent();
 	}
 
 	private void build() {
@@ -333,7 +348,7 @@ public final class Library {
 			}
 		}
 
-		fireModelChangedEvent();
+		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 
 		// Step 2: check if files corresponding to "existing" books really exists;
 		//         add books to library if yes (and reload book info if needed);
@@ -372,10 +387,10 @@ public final class Library {
 					}
 				} else {
 					myRootTree.removeBook(book);
+					fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 					orphanedBooks.add(book);
 				}
 			}
-			fireModelChangedEvent();
 		}
 		db.setExistingFlag(orphanedBooks, false);
 
@@ -403,7 +418,6 @@ public final class Library {
 			helpBook.readMetaInfo();
 		}
 		addBookToLibrary(helpBook);
-		fireModelChangedEvent();
 
 		// Step 5: save changes into database
 		fileInfos.save();
@@ -419,13 +433,13 @@ public final class Library {
 	}
 
 	public void synchronize() {
+		setStatus(myStatusMask | STATUS_LOADING);
 		build();
-		myIsSynchronized = true;
-		fireModelChangedEvent();
+		setStatus(myStatusMask & ~STATUS_LOADING);
 	}
 
-	public boolean isSynchronized() {
-		return myIsSynchronized;
+	public boolean isUpToDate() {
+		return myStatusMask == 0;
 	}
 
 	public static Book getRecentBook() {
@@ -438,28 +452,49 @@ public final class Library {
 		return recentIds.size() > 1 ? Book.getById(recentIds.get(1)) : null;
 	}
 
-	private FirstLevelTree createNewSearchResults(String pattern) {
-		final FirstLevelTree old = getFirstLevelTree(ROOT_SEARCH_RESULTS);
-		if (old != null) {
-			old.removeSelf();
-		}
-		return new SearchResultsTree(myRootTree, ROOT_SEARCH_RESULTS, pattern);
+	public void startBookSearch(final String pattern) {
+		setStatus(myStatusMask | STATUS_SEARCHING);
+		new Thread(new Runnable() {
+			public void run() {
+				searchBooks(pattern);
+				setStatus(myStatusMask & ~STATUS_SEARCHING);
+			}
+		}).start();
 	}
 
-	public synchronized LibraryTree searchBooks(String pattern) {
+	private void searchBooks(String pattern) {
+		if (pattern == null) {
+			fireModelChangedEvent(ChangeListener.Code.NotFound);
+			return;
+		}
+
+		pattern = pattern.toLowerCase();
+
+		final SearchResultsTree oldSearchResults = (SearchResultsTree)getFirstLevelTree(ROOT_SEARCH_RESULTS);
+		if (oldSearchResults != null && pattern.equals(oldSearchResults.getPattern())) {
+			fireModelChangedEvent(ChangeListener.Code.Found);
+			return;
+		}
+		
 		FirstLevelTree newSearchResults = null;
-		if (pattern != null) {
-			pattern = pattern.toLowerCase();
-			for (Book book : myBooks) {
-				if (book.matches(pattern)) {
+		for (Book book : myBooks) {
+			if (book.matches(pattern)) {
+				synchronized (this) {
 					if (newSearchResults == null) {
-						newSearchResults = createNewSearchResults(pattern);
+						if (oldSearchResults != null) {
+							oldSearchResults.removeSelf();
+						}
+						newSearchResults = new SearchResultsTree(myRootTree, ROOT_SEARCH_RESULTS, pattern);
+						fireModelChangedEvent(ChangeListener.Code.Found);
 					}
 					newSearchResults.getBookSubTree(book, true);
+					fireModelChangedEvent(ChangeListener.Code.BookAdded);
 				}
 			}
 		}
-		return newSearchResults;
+		if (newSearchResults == null) {
+			fireModelChangedEvent(ChangeListener.Code.NotFound);
+		}
 	}
 
 	public static void addBookToRecentList(Book book) {
