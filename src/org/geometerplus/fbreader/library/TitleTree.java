@@ -59,7 +59,7 @@ public final class TitleTree extends LibraryTree {
 
 	@Override
 	protected String getStringId() {
-		return getName();
+		return "@TitleTree " + getName();
 	}
 
 	@Override

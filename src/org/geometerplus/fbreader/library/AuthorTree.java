@@ -43,7 +43,7 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	protected String getStringId() {
-		return getName() + ":" + getSortKey();
+		return "@AuthorTree" + getName() + ":" + getSortKey();
 	}
 
 	@Override
