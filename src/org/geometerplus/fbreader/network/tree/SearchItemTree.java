@@ -104,4 +104,12 @@ public class SearchItemTree extends NetworkTree {
 	protected String getStringId() {
 		return "@Search";
 	}
+
+	@Override
+	public int compareTo(FBTree tree) {
+		if (!(tree instanceof SearchItemTree)) {
+			return -1;
+		}
+		return 0;
+	}
 }
