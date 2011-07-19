@@ -1,5 +1,4 @@
 * 'sign out' feature for basic-auth
-* SSLCertificate processing
 
 DONE show 'empty basket' message without opening of catalog
 * update basket view if basket content is changed
@@ -14,14 +13,14 @@ DONE show recommendation item if basket is not empty
 * separate search for each catalog (if search URL is presented)
 * menu search button should be available for all catalog levels
 
-* float point numbers as series index
-* replace AuthenticationCatalog by AuthenticationActivity
+DONE float point numbers as series index
+DONE replace AuthenticationCatalog by AuthenticationActivity
 * 'recently visited catalogs' item
 * load search URL for catalogs from these catalogs, not from our generic file
 DONE show library name in network book activity
 
-* litres: credit card top up
-* litres: terminal (?) top up
+DONE litres: credit card top up
+* litres: self-service kiosk top up
 DONE litres: similar books link
 
 ------------------------------

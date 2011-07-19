@@ -63,8 +63,10 @@ public class NetworkLibrary {
 
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
-		for (INetworkLink link : myLinks) {
-			languageSet.add(link.getLanguage());
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				languageSet.add(link.getLanguage());
+			}
 		}
 		return new ArrayList<String>(languageSet);
 	}
@@ -112,10 +114,12 @@ public class NetworkLibrary {
 	private List<INetworkLink> activeLinks() {
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
 		final Collection<String> codes = activeLanguageCodes();
-		for (INetworkLink link : myLinks) {
-			if (link instanceof ICustomNetworkLink ||
-				codes.contains(link.getLanguage())) {
-				filteredList.add(link);
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (link instanceof ICustomNetworkLink ||
+					codes.contains(link.getLanguage())) {
+					filteredList.add(link);
+				}
 			}
 		}
 		return filteredList;
@@ -158,9 +162,11 @@ public class NetworkLibrary {
 
 	private void removeAllLoadedLinks() {
 		final LinkedList<INetworkLink> toRemove = new LinkedList<INetworkLink>();
-		for (INetworkLink link : myLinks) {
-			if (!(link instanceof ICustomNetworkLink)) {
-				toRemove.add(link);
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (!(link instanceof ICustomNetworkLink)) {
+					toRemove.add(link);
+				}
 			}
 		}
 		myLinks.removeAll(toRemove);
@@ -233,9 +239,11 @@ public class NetworkLibrary {
 
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
-		for (INetworkLink link : myLinks) {
-			if (host.contains(link.getSiteName())) {
-				url = link.rewriteUrl(url, externalUrl);
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (host.contains(link.getSiteName())) {
+					url = link.rewriteUrl(url, externalUrl);
+				}
 			}
 		}
 		return url;
