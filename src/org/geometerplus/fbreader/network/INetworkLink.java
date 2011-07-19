@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 
-public interface INetworkLink {
+public interface INetworkLink extends Comparable<INetworkLink> {
 	public static final int INVALID_ID = -1;
 
 	int getId();

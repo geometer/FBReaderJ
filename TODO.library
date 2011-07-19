@@ -1,16 +1,11 @@
-0.99:
-DONE Reload book info from file
-DONE don't run several initialization threads in the same time
-DONE lib.ololo.cc
-
 After 0.99:
-* returning from footnotes (ask if footnote is in the same model and there was page scrolling)
+DONE returning from footnotes (ask if footnote is in the same model and there was page scrolling)
 * prevent from sleep if battery is in charging mode
 * Open the help file if the current book is deleted from library
-* Partial loading from database
+DONE Partial loading from database
 * Database updating in backgorund
 * Watch filesystem after loading
-* Show wait message during search
+DONE Show wait message during search
 * Reload book info for all the files
 * garbage in Boris Akunin, Сказки для идиотов
 
