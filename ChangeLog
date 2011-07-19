@@ -6,6 +6,7 @@
 * Library view: background search
 * 'invisible if pressed' issue for description in book information dialog has been fixed
 * LitRes: username forgetting issue has been fixed
+* Hyphenations for very long words (including multi-line words) has been implemented
 
 ===== 1.1.2 (Jul 05, 2011) =====
 * Misc Litres fixes

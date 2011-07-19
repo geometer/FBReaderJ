@@ -190,7 +190,7 @@ abstract class ZLTextViewBase extends ZLView {
 	final void drawWord(int x, int y, ZLTextWord word, int start, int length, boolean addHyphenationSign, ZLColor color) {
 		final ZLPaintContext context = myContext;
 		context.setTextColor(color);
-		if ((start == 0) && (length == -1)) {
+		if (start == 0 && length == -1) {
 			drawString(x, y, word.Data, word.Offset, word.Length, word.getMark(), 0);
 		} else {
 			if (length == -1) {

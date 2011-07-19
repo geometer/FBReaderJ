@@ -714,7 +714,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			final ZLTextElement element = paragraph.getElement(wordIndex);
 			final ZLTextElementArea area = page.TextElementMap.get(index);
 			if (element == area.Element) {
-				index++;
+				++index;
 				if (area.ChangeStyle) {
 					setTextStyle(area.Style);
 				}
@@ -748,11 +748,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			if (area.ChangeStyle) {
 				setTextStyle(area.Style);
 			}
-			int len = info.EndCharIndex;
+			final int start = info.StartElementIndex == info.EndElementIndex
+				? info.StartCharIndex : 0;
+			final int len = info.EndCharIndex - start;
 			final ZLTextWord word = (ZLTextWord)paragraph.getElement(info.EndElementIndex);
 			drawWord(
 				area.XStart, area.YEnd - context.getDescent() - getTextStyle().getVerticalShift(),
-				word, 0, len, area.AddHyphenationSign,
+				word, start, len, area.AddHyphenationSign,
 				mySelection.isAreaSelected(area)
 					? getSelectedForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 			);
@@ -920,27 +922,35 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					ZLTextHyphenationInfo hyphenationInfo = ZLTextHyphenator.Instance().getInfo(word);
 					int hyphenationPosition = word.Length - 1;
 					int subwordWidth = 0;
-					for(; hyphenationPosition > 0; hyphenationPosition--) {
+					for(; hyphenationPosition > currentCharIndex; hyphenationPosition--) {
 						if (hyphenationInfo.isHyphenationPossible(hyphenationPosition)) {
-							subwordWidth = getWordWidth(word, 0, hyphenationPosition,
-								word.Data[word.Offset + hyphenationPosition - 1] != '-');
+							subwordWidth = getWordWidth(
+								word,
+								currentCharIndex,
+								hyphenationPosition - currentCharIndex,
+								word.Data[word.Offset + hyphenationPosition - 1] != '-'
+							);
 							if (subwordWidth <= spaceLeft) {
 								break;
 							}
 						}
 					}
-					if (hyphenationPosition == 0 && info.EndElementIndex == startIndex) {
-						hyphenationPosition = word.Length == 1 ? 1 : word.Length - 1;
-						subwordWidth = getElementWidth(word, 0);
-						for(; hyphenationPosition > 1; hyphenationPosition--) {
-							subwordWidth = getWordWidth(word, 0, hyphenationPosition,
-								word.Data[word.Offset + hyphenationPosition - 1] != '-');
+					if (hyphenationPosition == currentCharIndex && info.EndElementIndex == startIndex) {
+						hyphenationPosition = word.Length == currentCharIndex + 1 ? word.Length : word.Length - 1;
+						subwordWidth = getWordWidth(word, currentCharIndex, word.Length - currentCharIndex, false);
+						for(; hyphenationPosition > currentCharIndex + 1; hyphenationPosition--) {
+							subwordWidth = getWordWidth(
+								word,
+								currentCharIndex,
+								hyphenationPosition - currentCharIndex,
+								word.Data[word.Offset + hyphenationPosition - 1] != '-'
+							);
 							if (subwordWidth <= spaceLeft) {
 								break;
 							}
 						}
 					}
-					if (hyphenationPosition > 0) {
+					if (hyphenationPosition > currentCharIndex) {
 						info.IsVisible = true;
 						info.Width = newWidth + subwordWidth;
 						if (info.Height < newHeight) {
