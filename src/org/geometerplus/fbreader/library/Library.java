@@ -279,7 +279,7 @@ public final class Library {
 	private void removeFromTree(String rootId, Book book) {
 		final FirstLevelTree tree = getFirstLevelTree(rootId);
 		if (tree != null) {
-			tree.removeBook(book);
+			tree.removeBook(book, false);
 		}
 	}
 
@@ -288,7 +288,7 @@ public final class Library {
 		if (tree != null) {
 			int index = tree.indexOf(new BookTree(book, true));
 			if (index >= 0) {
-				tree.removeBook(book);
+				tree.removeBook(book, false);
 				new BookTree(tree, book, true, index);
 			}
 		}
@@ -386,7 +386,7 @@ public final class Library {
 						addBookToLibrary(book);
 					}
 				} else {
-					myRootTree.removeBook(book);
+					myRootTree.removeBook(book, true);
 					fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 					orphanedBooks.add(book);
 				}
@@ -432,10 +432,17 @@ public final class Library {
 		db.setExistingFlag(newBooks, true);
 	}
 
-	public void synchronize() {
+	public void startBuild() {
 		setStatus(myStatusMask | STATUS_LOADING);
-		build();
-		setStatus(myStatusMask & ~STATUS_LOADING);
+		new Thread("Library.build") {
+			public void run() {
+				try {
+					build();
+				} finally {
+					setStatus(myStatusMask & ~STATUS_LOADING);
+				}
+			}
+		}.start();
 	}
 
 	public boolean isUpToDate() {
@@ -454,12 +461,15 @@ public final class Library {
 
 	public void startBookSearch(final String pattern) {
 		setStatus(myStatusMask | STATUS_SEARCHING);
-		new Thread(new Runnable() {
+		new Thread("Library.searchBooks") {
 			public void run() {
-				searchBooks(pattern);
-				setStatus(myStatusMask & ~STATUS_SEARCHING);
+				try {
+					searchBooks(pattern);
+				} finally {
+					setStatus(myStatusMask & ~STATUS_SEARCHING);
+				}
 			}
-		}).start();
+		}.start();
 	}
 
 	private void searchBooks(String pattern) {
@@ -532,7 +542,7 @@ public final class Library {
 	}
 
 	public void removeBookFromFavorites(Book book) {
-		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book)) {
+		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
 			BooksDatabase.Instance().removeFromFavorites(book.getId());
 		}
 	}
@@ -565,13 +575,14 @@ public final class Library {
 			return;
 		}
 		myBooks.remove(book);
-		if (getFirstLevelTree(ROOT_RECENT).removeBook(book)) {
+		if (getFirstLevelTree(ROOT_RECENT).removeBook(book, false)) {
 			final BooksDatabase db = BooksDatabase.Instance();
 			final List<Long> ids = db.loadRecentBookIds();
 			ids.remove(book.getId());
 			db.saveRecentBookIds(ids);
 		}
-		myRootTree.removeBook(book);
+		getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false);
+		myRootTree.removeBook(book, true);
 
 		BooksDatabase.Instance().deleteFromBookList(book.getId());
 		if ((removeMode & REMOVE_FROM_DISK) != 0) {
