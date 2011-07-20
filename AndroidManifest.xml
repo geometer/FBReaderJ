@@ -7,6 +7,13 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<application android:name="org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
 		<activity android:name=".library.BugReportActivity" android:label="FBReader crash" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden">
+			<intent-filter>
+				<action android:name="android.fbreader.action.CRASH" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="crash" android:path="org.geometerplus.zlibrary.text.model.CachedCharStorageException" />
+			</intent-filter>
+		</activity>
 		<service android:name="org.geometerplus.android.fbreader.api.ApiService">
 			<intent-filter>
 				<action android:name="android.fbreader.action.API" />

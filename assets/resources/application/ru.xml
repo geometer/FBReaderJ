@@ -677,4 +677,10 @@
 		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
 		<node name="encriptedFile" value="файл защищен DRM"/>
 	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="Проблема у FBReader"/>
+			<node name="text" value="FBReader не может сохранить временные файлы. Возможно, вы забыли вставить карту памяти, или она недоступна из-за подключения к компьютеру. Пожалуйста, исправьте эту проблему или введите другое имя каталога для временных файлов."/>
+		</node>
+	</node>
 </resources>
