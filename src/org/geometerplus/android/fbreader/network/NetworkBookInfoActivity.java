@@ -78,6 +78,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		}
 
 		if (myBook == null) {
+			System.err.println("uri = " + getIntent().getData());
+
 			final NetworkTree tree = Util.getTreeFromIntent(getIntent());
 			if (!(tree instanceof NetworkBookTree)) {
 				finish();
