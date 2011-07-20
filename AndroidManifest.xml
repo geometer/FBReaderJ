@@ -145,7 +145,8 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:host="*" android:scheme="fbreader" />
+				<data android:host="*" android:scheme="litres-book" />
+				<data android:host="*.litres.ru" android:scheme="http" path="/pages/biblio_book/" />
 			</intent-filter>
 		</activity>
 		<receiver android:name="org.geometerplus.android.fbreader.network.BookDownloaderCallback" android:process=":networkLibrary" />

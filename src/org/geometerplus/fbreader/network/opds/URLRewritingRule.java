@@ -20,6 +20,8 @@
 package org.geometerplus.fbreader.network.opds;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -81,7 +83,6 @@ class URLRewritingRule {
 			}
 			case REWRITE:
 			{
-				/*
 				final String pattern = myParameters.get("pattern");
 				final String replacement = myParameters.get("replacement");
 				if (pattern == null || replacement == null) {
@@ -93,7 +94,6 @@ class URLRewritingRule {
 						url = replacement.replace("%" + i, matcher.group(1));
 					}
 				}
-				*/
 				return url;
 			}
 		}
