@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Intent;
+import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
@@ -407,14 +408,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource, "backKeyAction",
-			bindings.getOption("<Back>", false), backKeyActions
+			bindings.getOption(KeyEvent.KEYCODE_BACK, false), backKeyActions
 		));
 		final String[] backKeyLongPressActions =
 			//{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
-			bindings.getOption("<Back>", true), backKeyLongPressActions
+			bindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 	}
 }

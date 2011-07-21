@@ -33,23 +33,35 @@ public final class ZLKeyBindings {
 
 	private final String myName;
 	private final ZLStringListOption myKeysOption;
-	private final TreeMap<String,ZLStringOption> myActionMap = new TreeMap<String,ZLStringOption>();
-	private final TreeMap<String,ZLStringOption> myLongPressActionMap = new TreeMap<String,ZLStringOption>();
+	private final TreeMap<Integer,ZLStringOption> myActionMap = new TreeMap<Integer,ZLStringOption>();
+	private final TreeMap<Integer,ZLStringOption> myLongPressActionMap = new TreeMap<Integer,ZLStringOption>();
 
 	public ZLKeyBindings(String name) {
 		myName = name;
 		final List<String> keys = new LinkedList<String>();
 		new Reader(keys).readBindings();
+		Collections.sort(keys);
  		myKeysOption = new ZLStringListOption(name, "KeyList", keys);
+		// this code is here for migration from old versions;
+		// should be removed in FBReader 2.0
+		ZLStringOption oldBackKeyOption = new ZLStringOption(name + ":" + ACTION, "<Back>", "");
+		if (oldBackKeyOption.getValue() != null) {
+			new ZLStringOption(name + ":" + ACTION, "4", oldBackKeyOption.getValue());
+		}
+		oldBackKeyOption = new ZLStringOption(name + ":" + LONG_PRESS_ACTION, "<Back>", "");
+		if (oldBackKeyOption.getValue() != null) {
+			new ZLStringOption(name + ":" + LONG_PRESS_ACTION, "4", oldBackKeyOption.getValue());
+		}
+		// end of migration code
 	}
 
-	private ZLStringOption createOption(String key, boolean longPress, String defaultValue) {
+	private ZLStringOption createOption(int key, boolean longPress, String defaultValue) {
 		final String group = myName + ":" + (longPress ? LONG_PRESS_ACTION : ACTION);
-		return new ZLStringOption(group, key, defaultValue);
+		return new ZLStringOption(group, String.valueOf(key), defaultValue);
 	}
 
-	public ZLStringOption getOption(String key, boolean longPress) {
-		final TreeMap<String,ZLStringOption> map = longPress ? myLongPressActionMap : myActionMap;
+	public ZLStringOption getOption(int key, boolean longPress) {
+		final TreeMap<Integer,ZLStringOption> map = longPress ? myLongPressActionMap : myActionMap;
 		ZLStringOption option = map.get(key);
 		if (option == null) {
 			option = createOption(key, longPress, ZLApplication.NoAction);
@@ -58,17 +70,19 @@ public final class ZLKeyBindings {
 		return option;
 	}
 
-	public void bindKey(String key, boolean longPress, String actionId) {
+	public void bindKey(int key, boolean longPress, String actionId) {
+		final String stringKey = String.valueOf(key);
 		List<String> keys = myKeysOption.getValue();
-		if (!keys.contains(key)) {
+		if (!keys.contains(stringKey)) {
 			keys = new ArrayList<String>(keys);
-			keys.add(key);
+			keys.add(stringKey);
+			Collections.sort(keys);
 			myKeysOption.setValue(keys);
 		}
 		getOption(key, longPress).setValue(actionId);
 	}
 
-	public String getBinding(String key, boolean longPress) {
+	public String getBinding(int key, boolean longPress) {
 		return getOption(key, longPress).getValue();
 	}
 
@@ -87,11 +101,15 @@ public final class ZLKeyBindings {
 		@Override
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			if ("binding".equals(tag)) {
-				final String key = attributes.getValue("key");
+				final String stringKey = attributes.getValue("key");
 				final String actionId = attributes.getValue("action");
-				if (key != null && actionId != null) {
-					myKeyList.add(key);
-					myActionMap.put(key, createOption(key, false, actionId));
+				if (stringKey != null && actionId != null) {
+					try {
+						final int key = Integer.parseInt(stringKey);
+						myKeyList.add(stringKey);
+						myActionMap.put(key, createOption(key, false, actionId));
+					} catch (NumberFormatException e) {
+					}
 				}
 			}
 			return false;
