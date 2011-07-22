@@ -9,6 +9,7 @@
 * Hyphenations for very long words (including multi-line words) has been implemented
 * In case of cache writing failure FBReader shows a solution dialog
 * "Secret feature" has been added: FBReader reads <Books Directory>/keymap.xml file
+* German translation has been updated (by Ingolf Kübler)
 
 ===== 1.1.2 (Jul 05, 2011) =====
 * Misc Litres fixes

@@ -1,26 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author>
-<book-title>Über FBReader</book-title> <lang>de</lang></title-info></description>
+<?xml version="1.0" encoding="UTF-8"?><FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">
+<description><title-info><author><last-name>FBReader</last-name></author><book-title>Über FBReaderJ</book-title><lang>de</lang></title-info></description>
 <body>
 <title><p>Über FBReaderJ &FBReaderVersion;</p></title>
-<p>FBReaderJ ist eine Sowftware zum Anzeigen von eBooks auf der <a l:href="http://www.android.com/">Android Plattform</a>. Es ist ein Klon des <a l:href="http://www.fbreader.org/">FBReader</a> geschrieben in Java von den selben Autoren. FBReaderJ unterstützt mehrere eBook-Formate: <code>oeb</code>, <code>epub</code>, <code>fb2</code>. Es werden <code>zip</code>, <code>tar</code> und <code>gzip</code> Archive direkt unterstützt. In zukünftigen Versionen wird die Liste um die selben Formate erweitert, die auch der originale FBReader unterstützt. FBReader steht in 11 Sprachen zur Verfügung.</p>
-<p>FBReaderJ ist ein schneller eBook-Reader und vielfältig nach persönlichen Bedürfnisse konfigurierbar.
-Farben, Schriften, Steuerung und viele andere Eigenschaften könnnen unter dem Menüpunk <code>Einstellungen</code> individuell angepasst werden.</p>
-<p>FPReader unterstützt Silbentrennung für 16 Spreachen. Ab Android Version 1.6 können eigene TrueType-Fonts verwendet werden.</p>
-<p>FBReaderJ wird unter den Bedingungen der <a l:href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a> berreitgestellt.</p>
+<p>FBReader ist ein Programm zum Anzeigen von elektronischen Büchern (eBooks) in den Formaten <code>ePub</code> und <code>fb2</code>. Bitte beachten Sie: DRM-geschützte Bücher werden nicht unterstützt.</p>
+<p>Kopieren Sie einfach ihre Bücher in den von FBReader unterstützten Formaten in das Verzeichnis <code>Books</code> auf Ihrer Speicherkarte. Die Bücher werden automatisch der <a l:href="fbreader-action://library">Bibliothek hinzugefügt</a>. Alternativ steht ihnen eine <a l:href="fbreader-action://networkLibrary">Netzwerk-Bibliothek</a> mit einer reichhaltige Auswahl an kostenlosen eBooks zur Verfügung.</p>
+<p>Zum Umblättern der Seiten des eBooks wischen Sie horizontal über den Bildschirm oder verwenden Sie die Lautstärketasten ihres Geräts.</p>
+<p><a l:href="fbreader-action://preferences">Der Dialog Einstellungen</a> erlaubt es den FBReader gemäß Ihren Wünschen anzupassen: Farben, Zeichensatz, Datenverzeichnisse, Methoden zum Umblättern, und vieles mehr.</p>
+<p>Das <a l:href="fbreader-action://menu">FBReader Menü</a> erlaubt Ihnen den Zugriff eBook-Bibliotheken und die Kontrolle der Anwendung. Sollte ihr Gerät über keine <code>Menu</code>-Taste verfügen, so tippen Sie einfach unten mittig auf Ihren Bildschirm um das Menü aufzurufen.</p>
+<p>Und nun viel Spaß!</p>
 <empty-line/>
-<subtitle><p>Die ersten Schritte</p></subtitle>
-<p>Es gibt drei Wege um Bücher der FBReaderJ Bibliothek hinzuzufügen.</p>
-<ul>
-   <li>Der erste Weg ist die Buchdatei auf Ihr Gerät in das Verzeichnis <code>/sdcard/Books</code> (oder in einem Unterverzeichnis in diesem) zukopieren. FBReaderJ wird diese Datei automatisch der Bibliothek hinzufügen.</li>
-   <li>Der zweite Möglichkeit ist einen Link auf ein eBook im Standard Android Browser (z.B. auf einen Link zu eien Datei mit der Erweiterung <code>.epub</code>, <code>.oeb</code>, <code>.fb2</code> or <code>.fb2.zip</code>) zu klicken. Das Buch wird dann auf Ihr Gerät geladen und in FBReaderJ geöffnet. Wenn du sie erneut auf den selben Link klicken, wird das Buch nicht nochmal erneut geladen, sondern die lokale Kopie wird zum lesen genutzt.</li>
-   <li>Als dritte Variante können Sie direkt aus FBReaderJ heraus auf Netzwerkbibliotheken mit OPDS-Latalog zugreifen.</li>
-</ul>
-<p>FBReader kann auf externe Wörterbücher und Übersetzungswerke zugreifen. Unterstützt werden ColorDict, Fora Dictionary und FreeDictionary.org.</p>
-<empty-line/>
-<subtitle><p>Verwandte Internetseiten</p></subtitle>
-<p>Weitere Informationen über FBReader and FBReaderJ finden Sie auf der <a l:href="http://www.fbreader.org">FBReader Homepage</a>.</p>
-<p>Wenn Sie über neue Versionen informiert werden möchten, tragen Sie sich bitte bei <a l:href="http://freshmeat.net/projects/fbreaderj">FBReaderJ project at freshmeat</a> ein.</p>
-<p>Falls Sie Fragen oder Anregungen haben, verwenden Sie bitte die <a l:href="http://groups.google.com/group/fbreader">FBReader group at googlegroups</a>.</p>
-</body>
-</FictionBook>
+<subtitle><p>Weitere Informationen</p></subtitle>
+<p>Mehr Information über FBReader finden Sie auf unserer <a l:href="http://www.fbreader.org/FBReaderJ">Web-Seite</a>.</p>
+<p>Folgen Sie uns auf <a l:href="http://twitter.com/fbreader">Twitter</a> und erfahren Sie mehr über neue Versionen und verwandte Themen.</p>
+<p>Hinterlassen Sie ihre Fragen und/oder Anregungen in der <a l:href="http://groups.google.com/group/fbreader">FBReader-Group auf googlegroups</a>.</p>
+<p><a l:href="http://www.fbreader.org/donation/make.php">Spenden</a> Sie, falls Sie die Entwicklung von FBReader unterstützen möchten.</p>
+<p>Kontaktieren Sie die Autoren <a l:href="mailto:contact@geometerplus.com">per eMail</a>.</p>
+</body></FictionBook>
