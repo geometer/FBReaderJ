@@ -39,7 +39,7 @@ public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExcept
 
 		Intent intent = new Intent(
 			"android.fbreader.action.CRASH",
-			new Uri.Builder().scheme("crash").appendPath(exception.getClass().getName()).build()
+			new Uri.Builder().scheme(exception.getClass().getSimpleName()).build()
 		);
 		try {
 			myContext.startActivity(intent);
