@@ -76,9 +76,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		}
 
 		final ListAdapter adapter = new LibraryListAdapter(this);
-		if ("3".equals(new android.os.Build.VERSION().SDK)) {
-			getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
-		}
+		getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
 		init(getIntent());
 
 		getListView().setTextFilterEnabled(true);
