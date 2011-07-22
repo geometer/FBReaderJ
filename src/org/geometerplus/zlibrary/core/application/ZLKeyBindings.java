@@ -23,11 +23,12 @@ import java.util.*;
 
 import android.view.KeyEvent;
 import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.Paths;
 
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
@@ -42,10 +43,10 @@ public final class ZLKeyBindings {
 
 	public ZLKeyBindings(String name) {
 		myName = name;
-		final List<String> keys = new LinkedList<String>();
-		new Reader(keys).readBindings();
-		Collections.sort(keys);
- 		myKeysOption = new ZLStringListOption(name, "KeyList", keys);
+		final Set<String> keys = new TreeSet<String>();
+		new Reader(keys).read(ZLFile.createFileByPath("default/keymap.xml"));
+		new Reader(keys).read(ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue() + "/keymap.xml"));
+ 		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys));
 
 		// this code is for migration from FBReader versions <= 1.1.2
 		ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
@@ -107,10 +108,10 @@ public final class ZLKeyBindings {
 	}
 
 	private class Reader extends ZLXMLReaderAdapter {
-		private final List<String> myKeyList;
+		private final Set<String> myKeySet;
 
-		Reader(List<String> keyList) {
-			myKeyList = keyList;
+		Reader(Set<String> keySet) {
+			myKeySet = keySet;
 		}
 
 		@Override
@@ -126,17 +127,13 @@ public final class ZLKeyBindings {
 				if (stringKey != null && actionId != null) {
 					try {
 						final int key = Integer.parseInt(stringKey);
-						myKeyList.add(stringKey);
+						myKeySet.add(stringKey);
 						myActionMap.put(key, createOption(key, false, actionId));
 					} catch (NumberFormatException e) {
 					}
 				}
 			}
 			return false;
-		}
-
-		public void readBindings() {
-			read(ZLResourceFile.createResourceFile("default/keymap.xml"));
 		}
 	}
 }
