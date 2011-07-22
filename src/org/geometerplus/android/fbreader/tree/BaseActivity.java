@@ -48,9 +48,6 @@ public abstract class BaseActivity extends ListActivity {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		if ("3".equals(new android.os.Build.VERSION().SDK)) {
-			requestWindowFeature(Window.FEATURE_PROGRESS);
-		}
 	}
 
 	@Override

@@ -84,10 +84,6 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 		setListAdapter(new NetworkLibraryAdapter(this));
 		init(getIntent());
 
-		if ("3".equals(new android.os.Build.VERSION().SDK)) {
-			getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
-		}
-
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		setForTree((NetworkTree)getCurrentTree(), this);
