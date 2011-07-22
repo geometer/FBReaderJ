@@ -1,4 +1,4 @@
-===== 1.1.3 (Jul ??, 2011) =====
+===== 1.1.3 (Jul 22, 2011) =====
 * Library view: grouping books by first letter in title branch
 * Library view: books by series
 * Library view: background initialization
@@ -8,6 +8,7 @@
 * LitRes: username forgetting issue has been fixed
 * Hyphenations for very long words (including multi-line words) has been implemented
 * In case of cache writing failure FBReader shows a solution dialog
+* "Secret feature" has been added: FBReader reads <Books Directory>/keymap.xml file
 
 ===== 1.1.2 (Jul 05, 2011) =====
 * Misc Litres fixes

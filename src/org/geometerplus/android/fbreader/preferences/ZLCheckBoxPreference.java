@@ -20,22 +20,20 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Context;
+import android.preference.CheckBoxPreference;
 
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-class ZLBooleanPreference extends ZLCheckBoxPreference {
-	private final ZLBooleanOption myOption;
+abstract class ZLCheckBoxPreference extends CheckBoxPreference implements ZLPreference {
+	ZLCheckBoxPreference(Context context, ZLResource rootResource, String resourceKey) {
+		super(context);
 
-	ZLBooleanPreference(Context context, ZLBooleanOption option, ZLResource rootResource, String resourceKey) {
-		super(context, rootResource, resourceKey);
-		myOption = option;
-		setChecked(option.getValue());
+		ZLResource resource = rootResource.getResource(resourceKey);
+		setTitle(resource.getValue());
+		setSummaryOn(resource.getResource("summaryOn").getValue());
+		setSummaryOff(resource.getResource("summaryOff").getValue());
 	}
 
-	@Override
-	protected void onClick() {
-		super.onClick();
-		myOption.setValue(isChecked());
+	public void onAccept() {
 	}
 }
