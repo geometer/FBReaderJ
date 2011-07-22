@@ -438,7 +438,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			myKeyUnderTracking = -1;
 			return true;
 		} else {
-			return false;
+			final ZLApplication application = ZLApplication.Instance();
+			return
+				application.hasActionForKey(keyCode, false) ||
+				application.hasActionForKey(keyCode, true);
 		}
 	}
 

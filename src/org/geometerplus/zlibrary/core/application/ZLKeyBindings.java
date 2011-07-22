@@ -21,6 +21,10 @@ package org.geometerplus.zlibrary.core.application;
 
 import java.util.*;
 
+import android.view.KeyEvent;
+import org.geometerplus.fbreader.fbreader.ActionCode;
+
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
@@ -42,16 +46,32 @@ public final class ZLKeyBindings {
 		new Reader(keys).readBindings();
 		Collections.sort(keys);
  		myKeysOption = new ZLStringListOption(name, "KeyList", keys);
-		// this code is here for migration from old versions;
-		// should be removed in FBReader 2.0
-		ZLStringOption oldBackKeyOption = new ZLStringOption(name + ":" + ACTION, "<Back>", "");
-		if (oldBackKeyOption.getValue() != null) {
-			new ZLStringOption(name + ":" + ACTION, "4", oldBackKeyOption.getValue());
+
+		// this code is for migration from FBReader versions <= 1.1.2
+		ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
+		if (!"".equals(oldBackKeyOption.getValue())) {
+			bindKey(KeyEvent.KEYCODE_BACK, false, oldBackKeyOption.getValue());
+			oldBackKeyOption.setValue("");
 		}
-		oldBackKeyOption = new ZLStringOption(name + ":" + LONG_PRESS_ACTION, "<Back>", "");
-		if (oldBackKeyOption.getValue() != null) {
-			new ZLStringOption(name + ":" + LONG_PRESS_ACTION, "4", oldBackKeyOption.getValue());
+		oldBackKeyOption = new ZLStringOption(myName + ":" + LONG_PRESS_ACTION, "<Back>", "");
+		if (!"".equals(oldBackKeyOption.getValue())) {
+			bindKey(KeyEvent.KEYCODE_BACK, true, oldBackKeyOption.getValue());
+			oldBackKeyOption.setValue("");
 		}
+
+		final ZLBooleanOption volumeKeysOption =
+			new ZLBooleanOption("Scrolling", "VolumeKeys", true);
+		final ZLBooleanOption invertVolumeKeysOption =
+			new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
+		if (!volumeKeysOption.getValue()) {
+			bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ZLApplication.NoAction);
+			bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ZLApplication.NoAction);
+		} else if (invertVolumeKeysOption.getValue()) {
+			bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+			bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+		}
+		volumeKeysOption.setValue(true);
+		invertVolumeKeysOption.setValue(false);
 		// end of migration code
 	}
 
