@@ -4,7 +4,7 @@ updateVersionArg="--updateVersion"
 buildSourceArchiveArg="--buildSourceArchive"
 
 printUsage() {
-	echo "usages:\n  $0 $updateVersionArg [version]\n  $0 $buildSourceArchiveArg [version]";
+	echo "usages:\n  $0 $updateVersionArg\n  $0 $buildSourceArchiveArg";
 	exit;
 }
 
@@ -19,7 +19,7 @@ updateVersion() {
 	if [ "$micro" == "" ]; then
      micro=0
   fi
-	intversion=$((10000*$major+100*$minor+$micro))
+	intversion=$((100000*$major+1000*$minor+10*$micro+$variant))
 	sed "s/@INTVERSION@/$intversion/" AndroidManifest.xml.pattern | sed "s/@VERSION@/$version/" > AndroidManifest.xml
 }
 
@@ -34,11 +34,11 @@ buildSourceArchive() {
   rm -rf $dir
 }
 
+version=`cat VERSION`
 if [ $# -eq 2 ]; then
-	version=$2;
-	echo $version > VERSION
+	variant=$2;
 else
-	version=`cat VERSION`
+	variant=0
 fi
 
 dir=FBReaderJ-sources-$version
@@ -46,6 +46,7 @@ archive=FBReaderJ-sources-$version.zip
 
 case $1 in
 	$updateVersionArg)
+		variant=$2
 		updateVersion;
 		;;
 	$buildSourceArchiveArg)

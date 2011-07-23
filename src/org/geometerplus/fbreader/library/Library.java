@@ -434,7 +434,7 @@ public final class Library {
 
 	public void startBuild() {
 		setStatus(myStatusMask | STATUS_LOADING);
-		new Thread("Library.build") {
+		final Thread builder = new Thread("Library.build") {
 			public void run() {
 				try {
 					build();
@@ -442,7 +442,9 @@ public final class Library {
 					setStatus(myStatusMask & ~STATUS_LOADING);
 				}
 			}
-		}.start();
+		};
+		builder.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
+		builder.start();
 	}
 
 	public boolean isUpToDate() {
@@ -461,7 +463,7 @@ public final class Library {
 
 	public void startBookSearch(final String pattern) {
 		setStatus(myStatusMask | STATUS_SEARCHING);
-		new Thread("Library.searchBooks") {
+		final Thread searcher = new Thread("Library.searchBooks") {
 			public void run() {
 				try {
 					searchBooks(pattern);
@@ -469,7 +471,9 @@ public final class Library {
 					setStatus(myStatusMask & ~STATUS_SEARCHING);
 				}
 			}
-		}.start();
+		};
+		searcher.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
+		searcher.start();
 	}
 
 	private void searchBooks(String pattern) {
