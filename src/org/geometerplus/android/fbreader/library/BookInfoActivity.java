@@ -305,9 +305,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		return DateFormat.getDateTimeInstance().format(new Date(date));
 	}
 
-	private final int OPEN_BOOK = 1;
-	private final int EDIT_INFO = 2;
-	private final int RELOAD_INFO = 3;
+	private static final int OPEN_BOOK = 1;
+	private static final int EDIT_INFO = 2;
+	private static final int RELOAD_INFO = 3;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
