@@ -128,7 +128,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
-		if (requestCode == BOOK_INFO_REQUEST) {
+		if (requestCode == BOOK_INFO_REQUEST && intent != null) {
 			final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
 			final Book book = Book.getByFile(ZLFile.createFileByPath(path));
 			myLibrary.refreshBookInfo(book);

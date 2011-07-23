@@ -50,12 +50,13 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected void executeAsATransaction(Runnable actions) {
-		myDatabase.beginTransaction();
+		myDatabase.execSQL("BEGIN IMMEDIATE");
 		try {
 			actions.run();
-			myDatabase.setTransactionSuccessful();
+		} catch (Throwable t) {
+			myDatabase.execSQL("ROLLBACK");
 		} finally {
-			myDatabase.endTransaction();
+			myDatabase.execSQL("END");
 		}
 	}
 
