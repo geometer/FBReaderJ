@@ -50,7 +50,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	protected void executeAsATransaction(Runnable actions) {
-		myDatabase.beginTransaction();
+		myDatabase.beginTransactionNonExclusive();
 		try {
 			actions.run();
 			myDatabase.setTransactionSuccessful();
