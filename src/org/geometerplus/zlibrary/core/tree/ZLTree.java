@@ -32,12 +32,12 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	}
 
 	protected ZLTree(T parent) {
-		this(parent, (parent == null) ? 0 : parent.mySubTrees.size());
+		this(parent, (parent == null) ? 0 : parent.subTrees().size());
 	}
 
 	protected ZLTree(T parent, int position) {
-		if (parent != null && (position < 0 || position > parent.mySubTrees.size())) {
-			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + parent.mySubTrees.size() + "]");
+		if (parent != null && (position < 0 || position > parent.subTrees().size())) {
+			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + parent.subTrees().size() + "]");
 		}
 		Parent = parent;
 		if (parent != null) {
@@ -56,16 +56,16 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		return mySubTrees != null;
 	}
 
-	public final List<T> subTrees() {
+	public synchronized final List<T> subTrees() {
+		if (mySubTrees == null) {
+			return Collections.emptyList();
+		}
 		synchronized (mySubTrees) {
-			if (mySubTrees == null) {
-				return Collections.emptyList();
-			}
 			return new ArrayList(mySubTrees);
 		}
 	}
 
-	public final T getTreeByParagraphNumber(int index) {
+	public synchronized final T getTreeByParagraphNumber(int index) {
 		if (index < 0 || index >= mySize) {
 			// TODO: throw an exception?
 			return null;
@@ -74,23 +74,23 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 			return (T)this;
 		}
 		--index;
-		synchronized (mySubTrees) {
-			for (T subtree : mySubTrees) {
-				if (subtree.mySize <= index) {
-					index -= subtree.mySize;
-				} else {
-					return (T)subtree.getTreeByParagraphNumber(index);
+		if (mySubTrees != null) {
+			synchronized (mySubTrees) {
+				for (T subtree : mySubTrees) {
+					if (subtree.mySize <= index) {
+						index -= subtree.mySize;
+					} else {
+						return (T)subtree.getTreeByParagraphNumber(index);
+					}
 				}
 			}
 		}
 		throw new RuntimeException("That's impossible!!!");
 	}
 
-	private void addSubTree(T subtree, int position) {
-		synchronized (this) {
-			if (mySubTrees == null) {
-				mySubTrees = Collections.synchronizedList(new ArrayList<T>());
-			}
+	private synchronized void addSubTree(T subtree, int position) {
+		if (mySubTrees == null) {
+			mySubTrees = Collections.synchronizedList(new ArrayList<T>());
 		}
 		final int subTreeSize = subtree.getSize();
 		synchronized (mySubTrees) {
