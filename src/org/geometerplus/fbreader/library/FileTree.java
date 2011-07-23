@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.util.List;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -146,14 +146,17 @@ public class FileTree extends LibraryTree {
 		if (getBook() != null) {
 			return;
 		}
-		clear();
+		final TreeSet<ZLFile> set = new TreeSet<ZLFile>(ourFileComparator);
 		for (ZLFile file : myFile.children()) {
 			if (file.isDirectory() || file.isArchive() ||
 				PluginCollection.Instance().getPlugin(file) != null) {
-				new FileTree(this, file);
+				set.add(file);
 			}
 		}
-		sortAllChildren();
+		clear();
+		for (ZLFile file : set) {
+			new FileTree(this, file);
+		}
 	}
 
 	@Override
@@ -167,13 +170,18 @@ public class FileTree extends LibraryTree {
 		return myFile.equals(((FileTree)o).myFile);
 	}
 
+	private static final Comparator<ZLFile> ourFileComparator = new Comparator<ZLFile>() {
+		public int compare(ZLFile file0, ZLFile file1) {
+			final boolean isDir = file0.isDirectory();
+			if (isDir != file1.isDirectory()) {
+				return isDir ? -1 : 1;
+			} 
+			return file0.getShortName().compareToIgnoreCase(file1.getShortName());
+		}
+	};
+
 	@Override
 	public int compareTo(FBTree tree) {
-		final FileTree fileTree = (FileTree)tree;
-		final boolean isDir = myFile.isDirectory();
-		if (isDir != fileTree.myFile.isDirectory()) {
-			return isDir ? -1 : 1;
-		} 
-		return getName().compareToIgnoreCase(fileTree.getName());
+		return ourFileComparator.compare(myFile, ((FileTree)tree).myFile);
 	}
 }
