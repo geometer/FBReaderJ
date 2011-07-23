@@ -64,7 +64,6 @@ public abstract class PackageUtil {
 			activity.startActivity(new Intent("android.fbreader.action.TEST", homeUri(pkg)));
 			return true;
 		} catch (ActivityNotFoundException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
