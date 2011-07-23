@@ -311,6 +311,12 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		}
 	}
 
+	private void addMenuItem(Menu menu, int index, String label, int iconId) {
+		final MenuItem item = menu.add(0, index, Menu.NONE, label);
+		item.setIcon(iconId);
+		//item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+	}
+
 	/*
 	private final void setupButtons() {
 		final ZLResource resource = NetworkLibrary.resource();
@@ -394,6 +400,30 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 				updateView();
 			}
 		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		for (final NetworkBookActions.Action a : NetworkBookActions.getContextMenuActions(myBook, myConnection)) {
+			if (a.Id == NetworkTreeActions.TREE_NO_ACTION) {
+				continue;
+			}
+
+			final String text;
+			if (a.Arg == null) {
+				text = NetworkLibrary.resource().getResource(a.Key).getValue();
+			} else {
+				text = NetworkLibrary.resource().getResource(a.Key).getValue().replace("%s", a.Arg);
+			}
+
+			addMenuItem(menu, a.Id, text, R.drawable.ic_menu_read);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return NetworkBookActions.runActionStatic(this, myBook, item.getItemId());
 	}
 
 	@Override
