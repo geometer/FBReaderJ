@@ -63,7 +63,7 @@ public final class Library {
 	private final RootTree myRootTree = new RootTree(this);
 	private boolean myDoGroupTitlesByFirstLetter;
 
-	private final List<ChangeListener> myListeners = new LinkedList<ChangeListener>();
+	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
 
 	private final static int STATUS_LOADING = 1;
 	private final static int STATUS_SEARCHING = 2;
@@ -91,11 +91,11 @@ public final class Library {
 		return (FirstLevelTree)myRootTree.getSubTree(key);
 	}
 
-	public synchronized void addChangeListener(ChangeListener listener) {
+	public void addChangeListener(ChangeListener listener) {
 		myListeners.add(listener);
 	}
 
-	public synchronized void removeChangeListener(ChangeListener listener) {
+	public void removeChangeListener(ChangeListener listener) {
 		myListeners.remove(listener);
 	}
 
@@ -271,8 +271,10 @@ public final class Library {
 	}
 
 	private void fireModelChangedEvent(ChangeListener.Code code) {
-		for (ChangeListener l : myListeners) {
-			l.onLibraryChanged(code);
+		synchronized (myListeners) {
+			for (ChangeListener l : myListeners) {
+				l.onLibraryChanged(code);
+			}
 		}
 	}
 

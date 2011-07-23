@@ -151,16 +151,6 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return key0.toLowerCase().compareTo(key1.toLowerCase());
 	}
 
-	public final void sortAllChildren() {
-		List<FBTree> children = subTrees();
-		if (!children.isEmpty()) {
-			Collections.sort(children);
-			for (FBTree tree : children) {
-				tree.sortAllChildren();
-			}
-		}
-	}
-
 	private String mySecondString;
 
 	public final void invalidateChildren() {
