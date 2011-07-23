@@ -53,11 +53,20 @@ public abstract class PackageUtil {
 	}
 
 	public static boolean isPluginInstalled(Activity activity, String pkg) {
+		/*
 		return canBeStarted(
 			activity,
 			new Intent("android.fbreader.action.TEST", homeUri(pkg)),
 			true
 		);
+		*/
+		try {
+			activity.startActivity(new Intent("android.fbreader.action.TEST", homeUri(pkg)));
+			return true;
+		} catch (ActivityNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public static boolean isPluginInstalled(Activity activity, String pkg, String version) {

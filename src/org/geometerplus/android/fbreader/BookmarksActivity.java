@@ -140,6 +140,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		);
 		item.setOnMenuItemClickListener(this);
 		item.setIcon(R.drawable.ic_menu_search);
+		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 

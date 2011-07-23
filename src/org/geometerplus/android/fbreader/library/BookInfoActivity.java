@@ -313,7 +313,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		if (!myHideOpenButton) {
-			addMenuItem(menu, OPEN_BOOK, "openBook", R.drawable.ic_menu_search);
+			addMenuItem(menu, OPEN_BOOK, "openBook", R.drawable.ic_menu_read);
 		}
 		addMenuItem(menu, EDIT_INFO, "editInfo", R.drawable.ic_menu_edit);
 		addMenuItem(menu, RELOAD_INFO, "reloadInfo", R.drawable.ic_menu_refresh);

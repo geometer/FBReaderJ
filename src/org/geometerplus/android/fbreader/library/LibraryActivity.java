@@ -259,6 +259,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 		final MenuItem item = menu.add(0, index, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
 		item.setIcon(iconId);
+		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return item;
 	}
 

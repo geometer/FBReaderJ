@@ -248,7 +248,10 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 
 	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
 		final String label = NetworkLibrary.resource().getResource("menu").getResource(resourceKey).getValue();
-		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
+		final MenuItem item = menu.add(0, index, Menu.NONE, label);
+		item.setIcon(iconId);
+		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		return item;
 	}
 
 	@Override
