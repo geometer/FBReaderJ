@@ -45,7 +45,11 @@ public final class ZLKeyBindings {
 		myName = name;
 		final Set<String> keys = new TreeSet<String>();
 		new Reader(keys).read(ZLFile.createFileByPath("default/keymap.xml"));
-		new Reader(keys).read(ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue() + "/keymap.xml"));
+		try {
+			new Reader(keys).read(ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue() + "/keymap.xml"));
+		} catch (Exception e) {
+			// ignore
+		}
  		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys));
 
 		// this code is for migration from FBReader versions <= 1.1.2

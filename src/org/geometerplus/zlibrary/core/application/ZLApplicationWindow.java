@@ -33,7 +33,7 @@ abstract public class ZLApplicationWindow {
 		return myApplication;
 	}
 
-	abstract protected void setTitle(String window);
+	abstract protected void setTitle(String title);
 	abstract protected void wait(String key, Runnable runnable);
 
 	abstract protected void refreshMenu();
