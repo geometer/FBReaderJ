@@ -257,6 +257,7 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	if (plugin == 0) {
 		return JNI_FALSE;
 	}
+	CoversWriter::Instance().resetCounter();
 
 	jobject javaBook = env->GetObjectField(javaModel, AndroidUtil::FID_BookModel_Book);
 
