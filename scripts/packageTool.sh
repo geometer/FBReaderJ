@@ -16,6 +16,19 @@ updateVersion() {
 	major=`echo $version | cut -d . -f 1`
 	minor=`echo $version | cut -d . -f 2`
 	micro=`echo $version | cut -d . -f 3`
+	case `git branch | grep "*" | cut -d " " -f 2` in
+		android-1.5)
+			variant=0
+			;;
+		honeycomb)
+			variant=2
+			;;
+		*)
+			variant=1
+			;;
+	esac
+		
+	
 	if [ "$micro" == "" ]; then
      micro=0
   fi
@@ -34,11 +47,11 @@ buildSourceArchive() {
   rm -rf $dir
 }
 
-version=`cat VERSION`
 if [ $# -eq 2 ]; then
-	variant=$2;
+	version=$2
+	echo $version > VERSION
 else
-	variant=0
+	version=`cat VERSION`
 fi
 
 dir=FBReaderJ-sources-$version
@@ -46,7 +59,6 @@ archive=FBReaderJ-sources-$version.zip
 
 case $1 in
 	$updateVersionArg)
-		variant=$2
 		updateVersion;
 		;;
 	$buildSourceArchiveArg)
