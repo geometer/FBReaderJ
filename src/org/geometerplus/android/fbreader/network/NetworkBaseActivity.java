@@ -94,7 +94,11 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 	@Override
 	protected FBTree getTreeByKey(FBTree.Key key) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		return key != null ? library.getTreeByKey(key) : library.getRootTree();
+		FBTree tree = null;
+		if (key != null) {
+			tree = library.getTreeByKey(key);
+		}
+		return tree != null ? tree : library.getRootTree();
 	}
 
 	@Override
