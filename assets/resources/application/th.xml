@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Thai FBReaderJ resources, by Samphan Pojanasophanakul -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="ไม่ทราบชื่อผู้แต่ง"/>
 		<node name="booksWithNoTags" value="หนังสือที่ไม่มีแท็ก"/>
 		<node name="demo" value="ตัวอย่าง"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="ชื่อผู้แต่ง ">
 			<node name="summary" value="เรียงตามชื่อผู้แต่ง"/>
 		</node>
 		<node name="byTitle" value="ชื่อหนังสือ">
 			<node name="summary" value="เรียงตามชื่อหนังสือ"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
 		<node name="byTag" value="แท็ก">
 			<node name="summary" value="เรียงตามแท็ก"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="เพิ่มเป็นหนังสือเล่มโปรด"/>
 		<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="ชื่อผู้แต่ง ">
 			<node name="summary" value="เรียงตามชื่อผู้แต่ง"/>
 		</node>
@@ -675,5 +676,11 @@
 		<node name="unknown" value="ข้อผิดพลาดได้ที่ไม่สามารถระบุได้"/>
 		<node name="unsupportedCompressionMethod" value="ไม่รองรับการบีบอัดข้อมูลชนิดนี้"/>
 		<node name="encriptedFile" value="ไฟล์ถูกป้องกันด้วย DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader problem" toBeTranslated="true"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this problem or enter another directory name below." toBeTranslated="true"/>
+		</node>
 	</node>
 </resources>

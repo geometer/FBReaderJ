@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Russian FBReaderJ resources, by Geometer Plus -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader: библиотека">
 		<node name="unknownAuthor" value="Автор не указан"/>
 		<node name="booksWithNoTags" value="Книги вне категорий"/>
 		<node name="demo" value="фрагмент"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Авторы">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>
 		<node name="byTitle" value="Названия">
 			<node name="summary" value="Книги, разложенные по названиям"/>
+		</node>
+		<node name="bySeries" value="По сериям">
+			<node name="summary" value="Книги, разложенные по сериям"/>
 		</node>
 		<node name="byTag" value="Категории">
 			<node name="summary" value="Книги, разложенные по категориям"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader: сетевая библиотека">
 		<node name="byAuthor" value="Авторы">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>
@@ -675,5 +676,11 @@
 		<node name="unknown" value="неизвестная ошибка"/>
 		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
 		<node name="encriptedFile" value="файл защищен DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="Проблема у FBReader"/>
+			<node name="text" value="FBReader не может сохранить временные файлы. Возможно, вы забыли вставить карту памяти, или она недоступна из-за подключения к компьютеру. Пожалуйста, исправьте эту проблему или введите другое имя каталога для временных файлов."/>
+		</node>
 	</node>
 </resources>

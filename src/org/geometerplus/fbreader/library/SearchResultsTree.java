@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.dialogs;
+package org.geometerplus.fbreader.library;
 
-public abstract class ZLDialogManager {
-	protected static ZLDialogManager ourInstance;
+class SearchResultsTree extends FirstLevelTree {
+	private final String myPattern;
 
-	protected ZLDialogManager() {
-		ourInstance = this;
+	SearchResultsTree(RootTree root, String id, String pattern) {
+		super(root, 0, id);
+		myPattern = pattern != null ? pattern : "";
 	}
 
-	public static ZLDialogManager Instance() {
-		return ourInstance;
-	} 
+	final String getPattern() {
+		return myPattern;
+	}
 
-	public abstract void wait(String key, Runnable runnable);
+	@Override
+	protected String getSummary() {
+		return super.getSummary().replace("%s", myPattern);
+	}
 }

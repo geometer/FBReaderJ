@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Chinese FBReaderJ resources, by http://shucang.com/ -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="佚名" />
 		<node name="booksWithNoTags" value="未归类" />
 		<node name="demo" value="试读本" />
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="作者">
 			<node name="summary" value="按作者排序" />
 		</node>
 		<node name="byTitle" value="By title" toBeTranslated="true">
 			<node name="summary" value="Books sorted by title" toBeTranslated="true"/>
+		</node>
+		<node name="bySeries" value="By series" toBeTranslated="true">
+			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
 		<node name="byTag" value="标签">
 			<node name="summary" value="按标签排序"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="收藏"/>
 		<node name="removeFromFavorites" value="从收藏中移除"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="作者">
 			<node name="summary" value="按作者排序" />
 		</node>
@@ -675,5 +676,11 @@
 		<node name="unknown" value="未知的错误" />
 		<node name="unsupportedCompressionMethod" value="不支持的压缩方法" />
 		<node name="encryptedFile" value="受版权保护文件" />
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader problem" toBeTranslated="true"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this problem or enter another directory name below." toBeTranslated="true"/>
+		</node>
 	</node>
 </resources>

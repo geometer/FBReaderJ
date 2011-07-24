@@ -27,7 +27,6 @@ import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
 
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
-import org.geometerplus.zlibrary.ui.android.dialogs.ZLAndroidDialogManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 public class ZLAndroidApplication extends Application {
@@ -64,7 +63,6 @@ public class ZLAndroidApplication extends Application {
 		super.onCreate();
 		new ZLSQLiteConfig(this);
 		new ZLAndroidImageManager();
-		new ZLAndroidDialogManager();
 		new ZLAndroidLibrary(this);
 	}
 }

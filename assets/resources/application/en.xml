@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- English FBReaderJ resources, by Geometer Plus -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library">
 		<node name="unknownAuthor" value="Unknown author"/>
 		<node name="booksWithNoTags" value="Books with no tags"/>
 		<node name="demo" value="sample"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="By author">
 			<node name="summary" value="Books sorted by author"/>
 		</node>
 		<node name="byTitle" value="By title">
 			<node name="summary" value="Books sorted by title"/>
+		</node>
+		<node name="bySeries" value="By series">
+			<node name="summary" value="Books sorted by series"/>
 		</node>
 		<node name="byTag" value="By tag">
 			<node name="summary" value="Books sorted by tag"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library">
 		<node name="byAuthor" value="By author">
 			<node name="summary" value="Books sorted by author"/>
 		</node>
@@ -689,5 +690,11 @@
 		<node name="unknown" value="Unknown Error"/>
 		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method"/>
 		<node name="encriptedFile" value="DRM-protected File"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader problem"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this problem or enter another directory name below."/>
+		</node>
 	</node>
 </resources>

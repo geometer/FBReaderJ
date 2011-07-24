@@ -106,7 +106,7 @@ public final class FileInfoSet {
 			return true;
 		} else {
 			info.FileSize = fileSize;
-			if (processChildren) {
+			if (processChildren && !"epub".equals(file.getExtension())) {
 				removeChildren(info);
 				myInfosToSave.add(info);
 				addChildren(file);

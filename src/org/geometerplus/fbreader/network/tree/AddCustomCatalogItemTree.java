@@ -19,10 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
 
 public class AddCustomCatalogItemTree extends NetworkTree {
 	public AddCustomCatalogItemTree(NetworkTree parent) {
@@ -31,12 +28,12 @@ public class AddCustomCatalogItemTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return ZLResource.resource("networkView").getResource("addCustomCatalog").getValue();
+		return NetworkLibrary.resource().getResource("addCustomCatalog").getValue();
 	}
 
 	@Override
 	public String getSummary() {
-		return ZLResource.resource("networkView").getResource("addCustomCatalogSummary").getValue();
+		return NetworkLibrary.resource().getResource("addCustomCatalogSummary").getValue();
 	}
 
 	@Override

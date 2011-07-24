@@ -67,6 +67,18 @@ public abstract class ZLApplication {
 		setView(myView);
 	}
 
+	protected void setTitle(String title) {
+		if (myWindow != null) {
+			myWindow.setTitle(title);
+		}
+	}
+
+	protected void wait(String key, Runnable runnable) {
+		if (myWindow != null) {
+			myWindow.wait(key, runnable);
+		}
+	}
+
 	public final ZLViewWidget getViewWidget() {
 		return myWindow != null ? myWindow.getViewWidget() : null;
 	}
@@ -134,12 +146,12 @@ public abstract class ZLApplication {
 	//may be protected
 	abstract public ZLKeyBindings keyBindings();
 
-	public final boolean hasActionForKey(String key, boolean longPress) {
+	public final boolean hasActionForKey(int key, boolean longPress) {
 		final String actionId = keyBindings().getBinding(key, longPress);
 		return actionId != null && !NoAction.equals(actionId);	
 	}
 
-	public final boolean doActionByKey(String key, boolean longPress) {
+	public final boolean doActionByKey(int key, boolean longPress) {
 		final String actionId = keyBindings().getBinding(key, longPress);
 		if (actionId != null) {
 			final ZLAction action = myIdToActionMap.get(actionId);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.dialogs;
+package org.geometerplus.fbreader.library;
 
-import android.app.*;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.core.dialogs.*;
-
-import org.geometerplus.android.util.UIUtil;
-
-public class ZLAndroidDialogManager extends ZLDialogManager {
-	private Activity myActivity;
-	
-	public ZLAndroidDialogManager() {
+public class FavoritesTree extends FirstLevelTree {
+	FavoritesTree(RootTree root, String id) {
+		super(root, id);
 	}
 
-	public void setActivity(Activity activity) {
-		myActivity = activity;
+	@Override
+	public Status getOpeningStatus() {
+		final Status status = super.getOpeningStatus();
+		if (status == Status.READY_TO_OPEN && !hasChildren()) {
+			return Status.CANNOT_OPEN;
+		}
+		return status;
 	}
-	
-	public void wait(String key, Runnable action) {
-		UIUtil.wait(key, action, myActivity);
+
+	@Override
+	public String getOpeningStatusMessage() {
+		return getOpeningStatus() == Status.CANNOT_OPEN
+			? "noFavorites" : super.getOpeningStatusMessage();
 	}
 }

@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader;
+package org.geometerplus.android.fbreader.library;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -25,6 +25,7 @@ import java.util.*;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -46,6 +47,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
+import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity {
@@ -78,6 +80,8 @@ public class BookInfoActivity extends Activity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
+
+		setResult(1, getIntent());
 	}
 
 	@Override
@@ -256,6 +260,7 @@ public class BookInfoActivity extends Activity {
 			titleView.setText(myResource.getResource("annotation").getValue());
 			bodyView.setText(HtmlUtil.getHtmlText(annotation));
 			bodyView.setMovementMethod(new LinkMovementMethod());
+			bodyView.setTextColor(ColorStateList.valueOf(bodyView.getTextColors().getDefaultColor()));
 		}
 	}
 

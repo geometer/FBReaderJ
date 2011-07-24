@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Dutch FBReader resources, by Frank Fesevur 12-Jan-2011. Updated 22-Jun-2011. -->
 <resources>
-	<node name="library">
+	<node name="library" value="FBReader library" toBeTranslated="true">
 		<node name="unknownAuthor" value="Onbekende auteur"/>
 		<node name="booksWithNoTags" value="Boeken zonder trefwoorden"/>
 		<node name="demo" value="voorbeeld"/>
-	</node>
-	<node name="libraryView">
 		<node name="byAuthor" value="Auteurs">
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>
 		<node name="byTitle" value="Titel">
 			<node name="summary" value="Boeken gesorteerd op titel" />
+		</node>
+		<node name="bySeries" value="Series">
+			<node name="summary" value="Boeken gesorteerd op series"/>
 		</node>
 		<node name="byTag" value="Trefwoorden">
 			<node name="summary" value="Boeken gesorteerd op trefwoord"/>
@@ -46,7 +47,7 @@
 		<node name="addToFavorites" value="Toevoegen aan favorieten"/>
 		<node name="removeFromFavorites" value="Verwijderen van favorieten"/>
 	</node>
-	<node name="networkView">
+	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
 		<node name="byAuthor" value="Auteurs">
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>
@@ -675,5 +676,11 @@
 		<node name="unknown" value="Onbekende fout"/>
 		<node name="unsupportedCompressionMethod" value="Compressiemethode niet ondersteund"/>
 		<node name="encriptedFile" value="DRM-beschermd bestand"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader problem" toBeTranslated="true"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this problem or enter another directory name below." toBeTranslated="true"/>
+		</node>
 	</node>
 </resources>
