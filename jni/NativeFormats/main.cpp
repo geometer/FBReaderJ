@@ -19,6 +19,13 @@
 
 #include <jni.h>
 
+// This code is temporary: it makes eclipse not complain
+#ifndef _JNI_H
+#define JNIIMPORT
+#define JNIEXPORT
+#define JNICALL
+#endif /* _JNI_H */
+
 #include <AndroidUtil.h>
 
 #include <ZLibrary.h>
@@ -28,12 +35,15 @@ JavaVM *ourGlobalJavaVM;
 
 extern "C"
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
-	AndroidUtil::init(jvm);
+	const jint version = JNI_VERSION_1_2;
+	if (!AndroidUtil::init(jvm)) {
+		return version;
+	}
 
 	int argc = 0;
 	char **argv;
 	ZLibrary::init(argc, argv);
 	ZLibrary::initApplication("FBReader");
 
-	return JNI_VERSION_1_2;
+	return version;
 }

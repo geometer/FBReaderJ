@@ -100,7 +100,7 @@ public:
 	static jmethodID MID_NativeBookModel_setFootnoteModel;
 
 public:
-	static void init(JavaVM* jvm);
+	static bool init(JavaVM* jvm);
 
 public:
 	static JNIEnv *getEnv();

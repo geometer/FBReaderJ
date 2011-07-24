@@ -91,76 +91,92 @@ jmethodID AndroidUtil::MID_NativeBookModel_setBookTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setFootnoteModel;
 
 
-void AndroidUtil::init(JavaVM* jvm) {
+#define CHECK_NULL(value) if ((value) == 0) { return false; }
+
+bool AndroidUtil::init(JavaVM* jvm) {
 	ourJavaVM = jvm;
 
 	JNIEnv *env = getEnv();
 	jclass cls;
 
-	cls = env->FindClass(Class_ZLibrary);
-	SMID_ZLibrary_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/library/ZLibrary;");
-	MID_ZLibrary_getVersionName = env->GetMethodID(cls, "getVersionName", "()Ljava/lang/String;");
+	CHECK_NULL( cls = env->FindClass(Class_ZLibrary) );
+	CHECK_NULL( SMID_ZLibrary_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/library/ZLibrary;") );
+	CHECK_NULL( MID_ZLibrary_getVersionName = env->GetMethodID(cls, "getVersionName", "()Ljava/lang/String;") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_ZLFile);
-	SMID_ZLFile_createFileByPath = env->GetStaticMethodID(cls, "createFileByPath", "(Ljava/lang/String;)Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;");
-	MID_ZLFile_size = env->GetMethodID(cls, "size", "()J");
-	MID_ZLFile_exists = env->GetMethodID(cls, "exists", "()Z");
-	MID_ZLFile_isDirectory = env->GetMethodID(cls, "isDirectory", "()Z");
-	MID_ZLFile_getInputStream = env->GetMethodID(cls, "getInputStream", "()Ljava/io/InputStream;");
-	MID_ZLFile_children = env->GetMethodID(cls, "children", "()Ljava/util/List;");
-	MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;");
+	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
+	CHECK_NULL( SMID_ZLFile_createFileByPath = env->GetStaticMethodID(cls, "createFileByPath", "(Ljava/lang/String;)Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;") );
+	CHECK_NULL( MID_ZLFile_size = env->GetMethodID(cls, "size", "()J") );
+	CHECK_NULL( MID_ZLFile_exists = env->GetMethodID(cls, "exists", "()Z") );
+	CHECK_NULL( MID_ZLFile_isDirectory = env->GetMethodID(cls, "isDirectory", "()Z") );
+	CHECK_NULL( MID_ZLFile_getInputStream = env->GetMethodID(cls, "getInputStream", "()Ljava/io/InputStream;") );
+	CHECK_NULL( MID_ZLFile_children = env->GetMethodID(cls, "children", "()Ljava/util/List;") );
+	CHECK_NULL( MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_java_io_InputStream);
-	MID_java_io_InputStream_close = env->GetMethodID(cls, "close", "()V");
-	MID_java_io_InputStream_read = env->GetMethodID(cls, "read", "([BII)I");
-	MID_java_io_InputStream_skip = env->GetMethodID(cls, "skip", "(J)J");
+	CHECK_NULL( cls = env->FindClass(Class_java_io_InputStream) );
+	CHECK_NULL( MID_java_io_InputStream_close = env->GetMethodID(cls, "close", "()V") );
+	CHECK_NULL( MID_java_io_InputStream_read = env->GetMethodID(cls, "read", "([BII)I") );
+	CHECK_NULL( MID_java_io_InputStream_skip = env->GetMethodID(cls, "skip", "(J)J") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_java_util_List);
-	MID_java_util_List_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;");
+	CHECK_NULL( cls = env->FindClass(Class_java_util_List) );
+	CHECK_NULL( MID_java_util_List_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_java_util_Locale);
-	SMID_java_util_Locale_getDefault = env->GetStaticMethodID(cls, "getDefault", "()Ljava/util/Locale;");
-	MID_java_util_Locale_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;");
+	CHECK_NULL( cls = env->FindClass(Class_java_util_Locale) );
+	CHECK_NULL( SMID_java_util_Locale_getDefault = env->GetStaticMethodID(cls, "getDefault", "()Ljava/util/Locale;") );
+	CHECK_NULL( MID_java_util_Locale_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_NativeFormatPlugin);
-	FID_NativeFormatPlugin_NativePointer = env->GetFieldID(cls, "myNativePointer", "J");
-	MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(J)V");
-	SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;");
+	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
+	CHECK_NULL( FID_NativeFormatPlugin_NativePointer = env->GetFieldID(cls, "myNativePointer", "J") );
+	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(J)V") );
+	CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_PluginCollection);
-	SMID_PluginCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/PluginCollection;");
-	MID_PluginCollection_getDefaultLanguage = env->GetMethodID(cls, "getDefaultLanguage", "()Ljava/lang/String;");
-	MID_PluginCollection_getDefaultEncoding = env->GetMethodID(cls, "getDefaultEncoding", "()Ljava/lang/String;");
-	MID_PluginCollection_isLanguageAutoDetectEnabled = env->GetMethodID(cls, "isLanguageAutoDetectEnabled", "()Z");
+	CHECK_NULL( cls = env->FindClass(Class_PluginCollection) );
+	CHECK_NULL( SMID_PluginCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/PluginCollection;") );
+	CHECK_NULL( MID_PluginCollection_getDefaultLanguage = env->GetMethodID(cls, "getDefaultLanguage", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_PluginCollection_getDefaultEncoding = env->GetMethodID(cls, "getDefaultEncoding", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_PluginCollection_isLanguageAutoDetectEnabled = env->GetMethodID(cls, "isLanguageAutoDetectEnabled", "()Z") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_Paths);
-	SMID_Paths_cacheDirectory = env->GetStaticMethodID(cls, "cacheDirectory", "()Ljava/lang/String;");
+	CHECK_NULL( cls = env->FindClass(Class_Paths) );
+	CHECK_NULL( SMID_Paths_cacheDirectory = env->GetStaticMethodID(cls, "cacheDirectory", "()Ljava/lang/String;") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_Book);
-	FID_Book_File = env->GetFieldID(cls, "File", "Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;");
-	MID_Book_getTitle = env->GetMethodID(cls, "getTitle", "()Ljava/lang/String;");
-	MID_Book_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;");
-	MID_Book_getEncoding = env->GetMethodID(cls, "getEncoding", "()Ljava/lang/String;");
-	MID_Book_setTitle = env->GetMethodID(cls, "setTitle", "(Ljava/lang/String;)V");
-	MID_Book_setSeriesInfo = env->GetMethodID(cls, "setSeriesInfo", "(Ljava/lang/String;F)V");
-	MID_Book_setLanguage = env->GetMethodID(cls, "setLanguage", "(Ljava/lang/String;)V");
-	MID_Book_setEncoding = env->GetMethodID(cls, "setEncoding", "(Ljava/lang/String;)V");
-	MID_Book_addAuthor = env->GetMethodID(cls, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)V");
-	MID_Book_addTag = env->GetMethodID(cls, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)V");
+	CHECK_NULL( cls = env->FindClass(Class_Book) );
+	CHECK_NULL( FID_Book_File = env->GetFieldID(cls, "File", "Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;") );
+	CHECK_NULL( MID_Book_getTitle = env->GetMethodID(cls, "getTitle", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_Book_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_Book_getEncoding = env->GetMethodID(cls, "getEncoding", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_Book_setTitle = env->GetMethodID(cls, "setTitle", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_Book_setSeriesInfo = env->GetMethodID(cls, "setSeriesInfo", "(Ljava/lang/String;F)V") );
+	CHECK_NULL( MID_Book_setLanguage = env->GetMethodID(cls, "setLanguage", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_Book_setEncoding = env->GetMethodID(cls, "setEncoding", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_Book_addAuthor = env->GetMethodID(cls, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)V") );
+	CHECK_NULL( MID_Book_addTag = env->GetMethodID(cls, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)V") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_Tag);
-	SMID_Tag_getTag = env->GetStaticMethodID(cls, "getTag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)Lorg/geometerplus/fbreader/library/Tag;");
+	CHECK_NULL( cls = env->FindClass(Class_Tag) );
+	CHECK_NULL( SMID_Tag_getTag = env->GetStaticMethodID(cls, "getTag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)Lorg/geometerplus/fbreader/library/Tag;") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_BookModel);
-	FID_BookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;");
+	CHECK_NULL( cls = env->FindClass(Class_BookModel) );
+	CHECK_NULL( FID_BookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;") );
+	env->DeleteLocalRef(cls);
 
-	cls = env->FindClass(Class_NativeBookModel);
-	MID_NativeBookModel_initBookModel = env->GetMethodID(cls, "initBookModel", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V");
-	MID_NativeBookModel_initInternalHyperlinks = env->GetMethodID(cls, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)V");
-	MID_NativeBookModel_initTOC = env->GetMethodID(cls, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)V");
-	MID_NativeBookModel_createTextModel = env->GetMethodID(cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)Lorg/geometerplus/zlibrary/text/model/ZLTextModel;");
-	MID_NativeBookModel_setBookTextModel = env->GetMethodID(cls, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V");
-	MID_NativeBookModel_setFootnoteModel = env->GetMethodID(cls, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V");
+	CHECK_NULL( cls = env->FindClass(Class_NativeBookModel) );
+	CHECK_NULL( MID_NativeBookModel_initBookModel = env->GetMethodID(cls, "initBookModel", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V") );
+	CHECK_NULL( MID_NativeBookModel_initInternalHyperlinks = env->GetMethodID(cls, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)V") );
+	CHECK_NULL( MID_NativeBookModel_initTOC = env->GetMethodID(cls, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)V") );
+	CHECK_NULL( MID_NativeBookModel_createTextModel = env->GetMethodID(cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)Lorg/geometerplus/zlibrary/text/model/ZLTextModel;") );
+	CHECK_NULL( MID_NativeBookModel_setBookTextModel = env->GetMethodID(cls, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
+	CHECK_NULL( MID_NativeBookModel_setFootnoteModel = env->GetMethodID(cls, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
+	env->DeleteLocalRef(cls);
+
+	return true;
 }
 
 
