@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 class RootTree extends LibraryTree {
 	private final Library myLibrary;
 

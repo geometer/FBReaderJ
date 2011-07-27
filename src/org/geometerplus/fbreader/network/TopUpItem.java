@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class TopUpItem extends NetworkItem {

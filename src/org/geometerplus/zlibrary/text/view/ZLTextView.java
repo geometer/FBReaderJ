@@ -1052,9 +1052,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					--spaceCounter;
 				}
 			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement) {
-				if (element instanceof ZLTextWord) {
-					ZLTextWord word = (ZLTextWord)element;
-				}
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0;

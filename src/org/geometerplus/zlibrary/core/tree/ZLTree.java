@@ -61,7 +61,7 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 			return Collections.emptyList();
 		}
 		synchronized (mySubTrees) {
-			return new ArrayList(mySubTrees);
+			return new ArrayList<T>(mySubTrees);
 		}
 	}
 
