@@ -25,7 +25,6 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.ZoomButton;
 
 abstract class ButtonsPopupPanel extends PopupPanel implements View.OnClickListener {

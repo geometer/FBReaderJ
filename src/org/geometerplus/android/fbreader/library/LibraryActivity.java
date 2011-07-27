@@ -34,15 +34,12 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.UIUtil;
-
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
-
 import org.geometerplus.android.fbreader.tree.BaseActivity;
-import org.geometerplus.android.fbreader.tree.ListAdapter;
 
 public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
@@ -75,11 +72,11 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			}
 		}
 
-		final ListAdapter adapter = new LibraryListAdapter(this);
+		new LibraryListAdapter(this);
+
 		init(getIntent());
 
 		getListView().setTextFilterEnabled(true);
-
 		getListView().setOnCreateContextMenuListener(this);
 	}
 

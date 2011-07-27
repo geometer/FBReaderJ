@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.tree;
 
-import java.util.*;
 import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
