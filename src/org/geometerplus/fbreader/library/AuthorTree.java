@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.util.Collections;
-
 public class AuthorTree extends LibraryTree {
 	public final Author Author;
 

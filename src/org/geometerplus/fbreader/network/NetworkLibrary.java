@@ -33,7 +33,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
-import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;

@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import java.util.ArrayList;
-
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.ui.android.R;
