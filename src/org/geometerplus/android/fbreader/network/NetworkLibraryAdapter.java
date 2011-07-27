@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,7 +51,6 @@ class NetworkLibraryAdapter extends ListAdapter {
 		}
 	};
 
-	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		final View view = (convertView != null) ? convertView :

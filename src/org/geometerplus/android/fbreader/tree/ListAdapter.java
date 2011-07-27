@@ -80,17 +80,14 @@ public abstract class ListAdapter extends BaseAdapter {
 		});
 	}
 
-	@Override
 	public int getCount() {
 		return myItems.size();
 	}
 
-	@Override
 	public FBTree getItem(int position) {
 		return myItems.get(position);
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return position;
 	}

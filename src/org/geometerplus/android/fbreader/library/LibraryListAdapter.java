@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import java.util.List;
-
 import android.graphics.Bitmap;
 import android.view.*;
 import android.widget.*;
@@ -96,7 +94,6 @@ class LibraryListAdapter extends ListAdapter {
 		return view;
 	}
 
-	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		final LibraryTree tree = (LibraryTree)getItem(position);
 		final View view = createView(convertView, parent, tree);
