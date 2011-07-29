@@ -28,7 +28,7 @@
 std::vector<std::string> ZLLanguageList::ourLanguageCodes;
 
 std::string ZLLanguageList::patternsDirectoryPath() {
-	return ZLibrary::ZLibraryDirectory() + ZLibrary::FileNameDelimiter + "languagePatterns.zip";
+	return ZLibrary::ZLibraryDirectory() + ZLibrary::FileNameDelimiter + "languagePatterns";
 }
 
 /*std::string ZLLanguageList::languageName(const std::string &code) {
