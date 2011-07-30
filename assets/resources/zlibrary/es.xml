@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Spanish zlibrary resources, by Antonio Trueba -->
+
+<!-- CHANGELOG
+	07-30-2011: First complete release as per FBReader v. 1.1.9
+-->
+
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok" />
+			<node name="cancel" value="Cancelar" />
+			<node name="yes" value="Si" />
+			<node name="no" value="No" />
+			<node name="apply" value="Aplicar" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Error de red" />
+			<node name="unknownErrorMessage" value="Error desconocido" />
+			<node name="operationTimedOutMessage" value="Operation is timed out" />
+			<node name="somethingWrongMessage" value="Algo ha fallado para&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="No se pudo crear el directorio&#10;%s" />
+			<node name="couldntCreateFileMessage" value="No se pudo crear el fichero&#10;%s" />
+			<node name="couldntConnectToNetworkMessage" value="No se pudo conectar a la red" />
+			<node name="couldntConnectMessage" value="No se pudo conectar al servidor&#10;%s" />
+			<node name="couldntResolveHostMessage" value="No se pudo resolver el servidor de red&#10;%s" />
+			<node name="authenticationFailed" value="Fallo de autentificaci&#243;n" />
+			<node name="unsupportedProtocol" value="Protocolo no soportado" />
+			<node name="invalidURL" value="URL inv&#225;lida" />
+			<node name="hostCantBeReached" value="No se puede conectar al servidor&#10; %s" />
+			<node name="connectionRefused" value="Conexi&#243;n rechazada por&#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rojo" />
+		<node name="green" value="Verde" />
+		<node name="blue" value="Azul" />
+		<node name="black" value="Negro" />
+		<node name="white" value="Blanco" />
+		<node name="maroon" value="Marr&#243;n" />
+		<node name="olive" value="Verde claro" />
+		<node name="navy" value="Azul claro" />
+		<node name="purple" value="P&#250;rpura" />
+		<node name="teal" value="Azul verdoso" />
+		<node name="silver" value="Plata" />
+		<node name="gray" value="Gris" />
+		<node name="lime" value="Lima" />
+		<node name="yellow" value="Amarillo" />
+		<node name="magenta" value="Magenta" />
+		<node name="cyan" value="Cian" />
+		<node name="custom..." value="Personalizado..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="&#225;rabe" />
+		<node name="cs" value="Checoslovaco" />
+		<node name="de" value="Alem&#225;n" />
+		<node name="de-traditional" value="Alem&#225;n (ortograf&#237;a tradicional)" />
+		<node name="el" value="Griego" />
+		<node name="en" value="Ingl&#233;s" />
+		<node name="eo" value="Esperanto" />
+		<node name="es" value="Castellano" />
+		<node name="fi" value="Finland&#233;s" />
+		<node name="fr" value="Franc&#233;s" />
+		<node name="he" value="Hebreo" />
+		<node name="hu" value="H&#250;ngaro" />
+		<node name="id" value="Indonesio" />
+		<node name="it" value="Italiano" />
+		<node name="lt" value="Lituano" />
+		<node name="nl" value="Holand&#233;s" />
+		<node name="no" value="Noruego" />
+		<node name="pl" value="Polaco" />
+		<node name="pt" value="Portugu&#233;s" />
+		<node name="ru" value="Ruso" />
+		<node name="sv" value="Sueco" />
+		<node name="th" value="Tailand&#233;s" />
+		<node name="tr" value="Turco" />
+		<node name="uk" value="Ucraniano" />
+		<node name="vi" value="Vietnamita" />
+		<node name="zh" value="Chino" />
+		<node name="other" value="Otro" />
+		<node name="multi" value="Multilenguage" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="on" />
+		<node name="off" value="off" />
+		<node name="unchanged" value="sin cambios" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Acci&#243;n para tecla" />
+	</node>
+</resources>
