@@ -1,5 +1,6 @@
 ===== 1.1.10 (Aug ??, 2011) =====
 * Spanish localization (by Antonio Trueba)
+* Swipe distance for starting page scrolling is <= 1 inch for all devices
 
 ===== 1.1.9 (Jul 25, 2011) =====
 * Fixed file ordering in Library->File tree
