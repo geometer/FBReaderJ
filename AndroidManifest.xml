@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="10103" android:versionName="1.1.3" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="4" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="101101" android:versionName="1.1.10" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="4" android:maxSdkVersion="10"/>
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<application android:name="org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
-		<activity android:name=".library.BugReportActivity" android:label="FBReader crash" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name=".library.BugReportActivity" android:label="FBReader crash" android:configChanges="orientation|keyboardHidden" android:process=":crash" />
+		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" android:process=":crash">
+			<intent-filter>
+				<action android:name="android.fbreader.action.CRASH" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="CachedCharStorageException" />
+			</intent-filter>
+		</activity>
 		<service android:name="org.geometerplus.android.fbreader.api.ApiService">
 			<intent-filter>
 				<action android:name="android.fbreader.action.API" />

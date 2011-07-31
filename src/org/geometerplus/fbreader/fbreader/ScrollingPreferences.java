@@ -37,11 +37,6 @@ public class ScrollingPreferences {
 	public final ZLEnumOption<FingerScrolling> FingerScrollingOption =
 		new ZLEnumOption<FingerScrolling>("Scrolling", "Finger", FingerScrolling.byTapAndFlick);
 
-	public final ZLBooleanOption VolumeKeysOption =
-		new ZLBooleanOption("Scrolling", "VolumeKeys", true);
-	public final ZLBooleanOption InvertVolumeKeysOption =
-		new ZLBooleanOption("Scrolling", "InvertVolumeKeys", false);
-
 	public final ZLEnumOption<ZLView.Animation> AnimationOption =
 		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
 	public final ZLIntegerRangeOption AnimationSpeedOption =

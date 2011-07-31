@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Czech FBReaderJ resources, by Marek Pavelka -->
 <resources>
-	<node name="library" value="FBReader library" toBeTranslated="true">
+	<node name="library" value="Knihovna FBReaderu">
 		<node name="unknownAuthor" value="Neznámý autor"/>
 		<node name="booksWithNoTags" value="Knihy bez štítků"/>
 		<node name="demo" value="ukázka"/>
@@ -35,7 +35,7 @@
 		<node name="fileTreeCard" value="Paměťová karta">
 			<node name="summary" value="Paměťová karta vložena do zařízení"/>
 		</node>
-		<node name="fileTreeLibrary" value="Knihovna FBReader">
+		<node name="fileTreeLibrary" value="Knihovna FBReaderu">
 			<node name="summary" value="Adresář s knihami pro FBReader"/>
 		</node>
 		<node name="menu">
@@ -47,7 +47,7 @@
 		<node name="addToFavorites" value="Přidat do oblíbených"/>
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
 	</node>
-	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
+	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>
@@ -690,5 +690,11 @@
 		<node name="unknown" value="Neznámá chyba"/>
 		<node name="unsupportedCompressionMethod" value="Nepodporovaná metoda komprese"/>
 		<node name="encriptedFile" value="Soubor chráněný DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="Problém FBReaderu"/>
+			<node name="text" value="Adresář vyrovnávací paměti FBReaderu není přístupný pro zápis. Možná jste zapomněli vložit nebo odpojit paměťovou kartu. Opravte tento problém nebo níže vyberte jiný název adresáře."/>
+		</node>
 	</node>
 </resources>

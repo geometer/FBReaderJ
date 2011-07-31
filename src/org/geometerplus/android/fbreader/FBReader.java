@@ -68,7 +68,7 @@ public final class FBReader extends ZLAndroidActivity {
 				synchronized (myPluginActions) {
 					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 					int index = 0;
-					for (PluginApi.ActionInfo info : myPluginActions) {
+					while (index < myPluginActions.size()) {
 						fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
 					}
 					myPluginActions.addAll(actions);

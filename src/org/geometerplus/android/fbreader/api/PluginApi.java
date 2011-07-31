@@ -6,7 +6,6 @@ package org.geometerplus.android.fbreader.api;
 
 import java.util.*;
 
-import android.app.Activity;
 import android.content.*;
 import android.net.Uri;
 import android.os.*;

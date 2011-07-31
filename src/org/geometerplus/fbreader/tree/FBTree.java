@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.tree;
 
-import java.util.*;
 import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
@@ -149,16 +148,6 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 			return 1;
 		}
 		return key0.toLowerCase().compareTo(key1.toLowerCase());
-	}
-
-	public final void sortAllChildren() {
-		List<FBTree> children = subTrees();
-		if (!children.isEmpty()) {
-			Collections.sort(children);
-			for (FBTree tree : children) {
-				tree.sortAllChildren();
-			}
-		}
 	}
 
 	private String mySecondString;

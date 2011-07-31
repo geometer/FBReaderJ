@@ -691,4 +691,10 @@
 		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method"/>
 		<node name="encriptedFile" value="DRM-protected File"/>
 	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader problem"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this problem or enter another directory name below."/>
+		</node>
+	</node>
 </resources>
