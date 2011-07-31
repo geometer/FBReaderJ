@@ -129,19 +129,6 @@ public final class Library {
 		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
 	}
 
-//	private static Book getBook(ZLFile bookFile, FileInfoSet fileInfos, Map<Long,Book> saved, boolean doReadMetaInfo) {
-//		Book book = saved.remove(fileInfos.getId(bookFile));
-//		if (book == null) {
-//			doReadMetaInfo = true;
-//			book = new Book(bookFile);
-//		}
-//
-//		if (doReadMetaInfo && !book.readMetaInfo()) {
-//			return null;
-//		}
-//		return book;
-//	}
-
 	private void collectBooks(
 		ZLFile file, FileInfoSet fileInfos,
 		Map<Long,Book> savedBooksByFileId, Map<Long,Book> orphanedBooksByFileId,
