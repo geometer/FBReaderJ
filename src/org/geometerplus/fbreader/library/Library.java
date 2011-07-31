@@ -25,7 +25,6 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -130,18 +129,18 @@ public final class Library {
 		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
 	}
 
-	private static Book getBook(ZLFile bookFile, FileInfoSet fileInfos, Map<Long,Book> saved, boolean doReadMetaInfo) {
-		Book book = saved.remove(fileInfos.getId(bookFile));
-		if (book == null) {
-			doReadMetaInfo = true;
-			book = new Book(bookFile);
-		}
-
-		if (doReadMetaInfo && !book.readMetaInfo()) {
-			return null;
-		}
-		return book;
-	}
+//	private static Book getBook(ZLFile bookFile, FileInfoSet fileInfos, Map<Long,Book> saved, boolean doReadMetaInfo) {
+//		Book book = saved.remove(fileInfos.getId(bookFile));
+//		if (book == null) {
+//			doReadMetaInfo = true;
+//			book = new Book(bookFile);
+//		}
+//
+//		if (doReadMetaInfo && !book.readMetaInfo()) {
+//			return null;
+//		}
+//		return book;
+//	}
 
 	private void collectBooks(
 		ZLFile file, FileInfoSet fileInfos,

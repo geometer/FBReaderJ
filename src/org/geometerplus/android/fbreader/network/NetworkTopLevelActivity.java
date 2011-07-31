@@ -19,16 +19,10 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.*;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.OPDSCustomNetworkLink;
-import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class NetworkTopLevelActivity extends NetworkBaseActivity {
 	private volatile Intent myIntent;
