@@ -24,6 +24,7 @@ import java.util.*;
 import android.graphics.*;
 import android.util.FloatMath;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 abstract class AnimationProvider {
@@ -91,10 +92,11 @@ abstract class AnimationProvider {
 		}
 
 		final int diff = myDirection.IsHorizontal ? x - myStartX : y - myStartY;
+		final int dpi = ZLibrary.Instance().getDisplayDPI();
 		final int minDiff = myDirection.IsHorizontal ?
 			(myWidth > myHeight ? myWidth / 4 : myWidth / 3) :
 			(myHeight > myWidth ? myHeight / 4 : myHeight / 3);
-		boolean forward = Math.abs(diff) > minDiff;
+		boolean forward = Math.abs(diff) > Math.min(minDiff, dpi);
 
 		myMode = forward ? Mode.AnimatedScrollingForward : Mode.AnimatedScrollingBackward;
 
