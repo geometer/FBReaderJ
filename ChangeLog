@@ -1,3 +1,9 @@
+===== 2.0 alpha 1 (Aug ??, 2011) =====
+* native formats support
+  ** plain text support
+  ** HTML support
+  ** CSS/ePub support
+
 ===== 1.1.10 (Aug ??, 2011) =====
 * Spanish localization (by Antonio Trueba)
 * Swipe distance for starting page scrolling is <= 1 inch for all devices
