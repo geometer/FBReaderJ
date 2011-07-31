@@ -22,20 +22,17 @@ package org.geometerplus.fbreader.library;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public class FirstLevelTree extends LibraryTree {
-	private final Library myLibrary;
 	private final String myId;
 	private final ZLResource myResource;
 
 	FirstLevelTree(RootTree root, int position, String id) {
 		super(root, position);
-		myLibrary = root.getLibrary();
 		myId = id;
 		myResource = Library.resource().getResource(myId);
 	}
 
 	FirstLevelTree(RootTree root, String id) {
 		super(root);
-		myLibrary = root.getLibrary();
 		myId = id;
 		myResource = Library.resource().getResource(myId);
 	}
