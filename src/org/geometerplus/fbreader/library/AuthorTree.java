@@ -41,12 +41,12 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	protected String getStringId() {
-		return "@AuthorTree" + getName() + ":" + getSortKey();
+		return "@AuthorTree" + getSortKey();
 	}
 
 	@Override
 	protected String getSortKey() {
-		return Author != null ? Author.SortKey : null;
+		return Author != null ? Author.SortKey + ":" + Author.DisplayName : null;
 	}
 
 	@Override
