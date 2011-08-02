@@ -488,10 +488,8 @@
 				</node>
 				<node name="dontTurnScreenOff" value="Impedir que la pantalla entre en modo de suspensión">
 					<node name="0" value="Siempre"/>
-					<!--
-					<node name="25" value="Cuando la carga de la batería supere el 25 %"/>
-					<node name="50" value="Cuando la carga de la batería supere el 50 %"/>
-					-->
+					<node name="25" value="Cuando la carga de la batería supere el 25 por ciento"/>
+					<node name="50" value="Cuando la carga de la batería supere el 50 por ciento"/>
 					<node name="100" value="Nunca"/>
 				</node>
 				<node name="dontTurnScreenOffDuringCharging" value="Impedir que la pantalla entre en modo de suspensión durante la carga">
