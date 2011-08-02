@@ -26,10 +26,17 @@
 #include "FormatPlugin.h"
 
 #include "../library/Book.h"
+#include "../../../util/AndroidLog.h"
 
 void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) {
+	AndroidLog log;
+
 	std::string language = book.language();
 	std::string encoding = book.encoding();
+
+	log.errln("detecting encoding for " + book.file().path());
+	log.errln("default values are " + language + "/" + encoding);
+
 	if (!encoding.empty() && !language.empty()) {
 		return;
 	}
@@ -41,7 +48,9 @@ void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) 
 	if (encoding.empty()) {
 		encoding = collection.defaultEncoding();
 	}
+	log.errln("detecting 0...");
 	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
+		log.errln("detecting 1...");
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
 		const size_t size = stream.read(buffer, BUFSIZE);
@@ -50,6 +59,7 @@ void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) 
 			ZLLanguageDetector().findInfo(buffer, size);
 		delete[] buffer;
 		if (!info.isNull()) {
+			log.errln("info is not null");
 			if (!info->Language.empty()) {
 				language = info->Language;
 			}
@@ -59,6 +69,7 @@ void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) 
 			}
 		}
 	}
+	log.errln("result is " + language + "/" + encoding);
 	book.setEncoding(encoding);
 	book.setLanguage(language);
 }
