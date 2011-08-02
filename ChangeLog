@@ -1,12 +1,13 @@
-===== 2.0 alpha 1 (Aug ??, 2011) =====
+===== 2.0 alpha 0 (Aug ??, 2011) =====
 * native formats support
   ** plain text support
   ** HTML support
   ** CSS/ePub support
 
-===== 1.1.10 (Aug ??, 2011) =====
+===== 1.1.10 (Aug 03, 2011) =====
 * Spanish localization (by Antonio Trueba)
-* Swipe distance for starting page scrolling is <= 1 inch for all devices
+* Swipe distance for starting page scrolling is <= .5 inch for all devices
+* Authors with same surnames are not merged in library.
 
 ===== 1.1.9 (Jul 25, 2011) =====
 * Fixed file ordering in Library->File tree
