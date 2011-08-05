@@ -317,7 +317,6 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.err.println("FBReaderApp.onActivityResult " + requestCode + ":" + resultCode);
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
 				onBookInfoResult(RESULT_REPAINT);

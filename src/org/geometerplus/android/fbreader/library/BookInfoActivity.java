@@ -137,8 +137,6 @@ public class BookInfoActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.err.println("BookInfoActivity.onActivityResult " + requestCode + ":" + resultCode);
-
 		final Book book = Book.getByFile(myFile);
 		
 		if (book != null) {
