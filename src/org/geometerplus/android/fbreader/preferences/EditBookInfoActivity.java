@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.preferences;
 
 import java.util.TreeSet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -34,6 +35,7 @@ import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.FBReader;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -84,6 +86,52 @@ class LanguagePreference extends ZLStringListPreference {
 	}
 }
 
+class EncodingPreference extends ZLStringListPreference {
+	private final Activity myActivity;
+	private final Book myBook;
+
+	EncodingPreference(Activity activity, ZLResource rootResource, String resourceKey, Book book) {
+		super(activity, rootResource, resourceKey);
+		myActivity = activity;
+		myBook = book;
+		final TreeSet<String> set = new TreeSet<String>();
+		String encoding = myBook.getEncoding();
+		if (encoding == null) {
+			encoding = "auto";
+		}
+		if (!"auto".equals(encoding)) {
+			set.add("utf-8");
+			set.add("windows-1251");
+			set.add("windows-1252");
+			set.add("koi8-r");
+		}
+		set.add(encoding);
+		String[] names = new String[set.size()];
+		int index = 0;
+		for (String e : set) {
+			names[index++] = e;
+		}
+		setLists(names, names);
+		setInitialValue(encoding);
+	}
+
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
+		if (result) {
+			final String value = getValue();
+			setSummary(value);
+			if (!"auto".equals(value) && !value.equals(myBook.getEncoding())) {
+				myBook.setEncoding(value);
+				myActivity.setResult(FBReader.RESULT_RELOAD_BOOK);
+			}
+		}
+	}
+
+	public void onAccept() {
+	}
+}
+
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private Book myBook;
 
@@ -100,6 +148,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
 		final ZLFile file = ZLFile.createFileByPath(path);
 		myBook = Book.getByFile(file);
+		setResult(FBReader.RESULT_REPAINT);
 
 		if (myBook == null) {
 			finish();
@@ -108,6 +157,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
+		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
 	}
 
 	@Override

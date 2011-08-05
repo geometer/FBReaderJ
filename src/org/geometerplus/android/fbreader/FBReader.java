@@ -52,8 +52,13 @@ import org.geometerplus.android.util.UIUtil;
 public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
-	final static int REPAINT_CODE = 1;
-	final static int CANCEL_CODE = 2;
+	public static final int REQUEST_PREFERENCES = 1;
+	public static final int REQUEST_BOOK_INFO = 2;
+	public static final int REQUEST_CANCEL_MENU = 3;
+
+	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
+	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
+	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	private int myFullScreenFlag;
 
@@ -285,11 +290,12 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	private void onBookInfoResult(int resultCode) {
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		switch (requestCode) {
-			case REPAINT_CODE:
+		switch (resultCode) {
+			case RESULT_DO_NOTHING:
+				break;
+			case RESULT_REPAINT:
 			{
 				final BookModel model = fbreader.Model;
 				if (model != null) {
@@ -303,9 +309,28 @@ public final class FBReader extends ZLAndroidActivity {
 				fbreader.getViewWidget().repaint();
 				break;
 			}
-			case CANCEL_CODE:
+			case RESULT_RELOAD_BOOK:
+				fbreader.reloadBook();
+				break;
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		System.err.println("FBReaderApp.onActivityResult " + requestCode + ":" + resultCode);
+		switch (requestCode) {
+			case REQUEST_PREFERENCES:
+				onBookInfoResult(RESULT_REPAINT);
+				break;
+			case REQUEST_BOOK_INFO:
+				onBookInfoResult(resultCode);
+				break;
+			case REQUEST_CANCEL_MENU:
+			{
+				final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 				fbreader.runCancelAction(resultCode - 1);
 				break;
+			}
 		}
 	}
 

@@ -60,6 +60,7 @@ public class BookInfoActivity extends Activity {
 	private ZLFile myFile;
 	private ZLImage myImage;
 	private boolean myHideOpenButton;
+	private int myResult = FBReader.RESULT_DO_NOTHING;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -81,7 +82,7 @@ public class BookInfoActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
 
-		setResult(1, getIntent());
+		setResult(myResult);
 	}
 
 	@Override
@@ -136,10 +137,16 @@ public class BookInfoActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		System.err.println("BookInfoActivity.onActivityResult " + requestCode + ":" + resultCode);
+
 		final Book book = Book.getByFile(myFile);
+		
 		if (book != null) {
 			setupBookInfo(book);
 		}
+
+		myResult = Math.max(myResult, resultCode);
+		setResult(myResult);
 	}
 
 	private Button findButton(int buttonId) {

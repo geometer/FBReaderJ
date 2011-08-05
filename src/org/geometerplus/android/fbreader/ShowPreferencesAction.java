@@ -33,7 +33,7 @@ class ShowPreferencesAction extends FBAndroidAction {
 	public void run() {
 		BaseActivity.startActivityForResult(
 			new Intent(BaseActivity.getApplicationContext(), PreferenceActivity.class),
-			FBReader.REPAINT_CODE
+			FBReader.REQUEST_PREFERENCES
 		);
 	}
 }
