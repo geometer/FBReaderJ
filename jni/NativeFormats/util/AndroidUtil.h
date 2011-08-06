@@ -108,6 +108,7 @@ public:
 	static jobject createZLFile(JNIEnv *env, const std::string &path);
 	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
+	static std::string convertNonUtfString(const std::string &str);
 
 	static jintArray createIntArray(JNIEnv *env, const std::vector<jint> &data);
 	static jbyteArray createByteArray(JNIEnv *env, const std::vector<jbyte> &data);

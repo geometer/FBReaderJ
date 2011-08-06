@@ -212,6 +212,27 @@ jstring AndroidUtil::createJavaString(JNIEnv* env, const std::string &str) {
 	return env->NewStringUTF(str.c_str());
 }
 
+std::string AndroidUtil::convertNonUtfString(const std::string &str) {
+	const int len = str.length();
+	if (len == 0) {
+		return str;
+	}
+
+	JNIEnv *env = getEnv();
+
+	std::string result;
+	jchar *chars = new jchar[len];
+	for (int i = 0; i < len; ++i) {
+		chars[i] = str[i];
+	}
+	jstring javaString = env->NewString(chars, len);
+	extractJavaString(env, javaString, result);
+	env->DeleteLocalRef(javaString);
+	delete[] chars;
+
+	return result;
+}
+
 jintArray AndroidUtil::createIntArray(JNIEnv *env, const std::vector<jint> &data) {
 	size_t size = data.size();
 	jintArray array = env->NewIntArray(size);
