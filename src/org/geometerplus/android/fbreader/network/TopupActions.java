@@ -42,31 +42,21 @@ class TopupActions extends NetworkTreeActions {
 		}
 
 		boolean isSupported(Activity activity, INetworkLink link) {
-			if (BROWSER_TOPUP_ACTION.equals(IntentAction)) {
-				return Util.isBrowserTopupSupported(activity, link);
-			} else {
-				return Util.isTopupSupported(activity, link, IntentAction);
-			}
+			return Util.isTopupSupported(activity, link, IntentAction);
 		}
 
 		Runnable getRunnable(Activity activity, INetworkLink link) {
-			if (BROWSER_TOPUP_ACTION.equals(IntentAction)) {
-				return browserTopupRunnable(activity, link);
-			} else {
-				return topupRunnable(activity, link, IntentAction);
-			}
+			return topupRunnable(activity, link, IntentAction);
 		}
 	};
 
 	private final ArrayList<ActionInfo> myActionInfos = new ArrayList<ActionInfo>();
 
-	private static final String BROWSER_TOPUP_ACTION = "browserTopupAction";
-
 	{
 		myActionInfos.add(new ActionInfo(Util.CREDIT_CARD_TOPUP_ACTION, "topupViaCreditCard"));
 		myActionInfos.add(new ActionInfo(Util.SMS_TOPUP_ACTION, "topupViaSms"));
 		myActionInfos.add(new ActionInfo(Util.SELF_SERVICE_KIOSK_TOPUP_ACTION, "topupViaSelfServiceKiosk"));
-		myActionInfos.add(new ActionInfo(BROWSER_TOPUP_ACTION, "topupViaBrowser"));
+		myActionInfos.add(new ActionInfo(Util.BROWSER_TOPUP_ACTION, "topupViaBrowser"));
 	}
 
 	@Override
@@ -134,23 +124,23 @@ class TopupActions extends NetworkTreeActions {
 		}
 	}
 
-	private static Runnable browserTopupRunnable(final Activity activity, final INetworkLink link) {
-		return new Runnable() {
-			public void run() {
-				Util.openInBrowser(
-					activity,
-					link.authenticationManager().topupLink()
-				);
-			}
-		};
-	}
-
 	private static Runnable topupRunnable(final Activity activity, final INetworkLink link, final String action) {
-		return new Runnable() {
-			public void run() {
-				Util.runTopupDialog(activity, link, action);
-			}
-		};
+		if (Util.BROWSER_TOPUP_ACTION.equals(action)) {
+			return new Runnable() {
+				public void run() {
+					Util.openInBrowser(
+						activity,
+						link.authenticationManager().topupLink()
+					);
+				}
+			};
+		} else {
+			return new Runnable() {
+				public void run() {
+					Util.runTopupDialog(activity, link, action);
+				}
+			};
+		}
 	}
 
 	private void doTopup(final Activity activity, final INetworkLink link, final Runnable action) {

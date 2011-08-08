@@ -42,6 +42,8 @@ import org.geometerplus.android.util.PackageUtil;
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
+	static final String BROWSER_TOPUP_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_BROWSER_TOPUP";
 	static final String SMS_TOPUP_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING";
 	static final String CREDIT_CARD_TOPUP_ACTION =
@@ -195,18 +197,22 @@ abstract class Util implements UserRegistrationConstants {
 
 	static boolean isTopupSupported(Activity activity, INetworkLink link) {
 		return
-			isBrowserTopupSupported(activity, link) ||
+			isTopupSupported(activity, link, BROWSER_TOPUP_ACTION) ||
 			isTopupSupported(activity, link, SMS_TOPUP_ACTION) ||
 			isTopupSupported(activity, link, CREDIT_CARD_TOPUP_ACTION) ||
 			isTopupSupported(activity, link, SELF_SERVICE_KIOSK_TOPUP_ACTION);
 	}
 
 	static boolean isTopupSupported(Activity activity, INetworkLink link, String action) {
-		return testService(
-			activity,
-			action,
-			link.getUrl(UrlInfo.Type.Catalog)
-		);
+		if (BROWSER_TOPUP_ACTION.equals(action)) {
+			return link.getUrl(UrlInfo.Type.TopUp) != null;
+		} else {
+			return testService(
+				activity,
+				action,
+				link.getUrl(UrlInfo.Type.Catalog)
+			);
+		}
 	}
 
 	static void runTopupDialog(Activity activity, INetworkLink link, String action) {
@@ -226,10 +232,6 @@ abstract class Util implements UserRegistrationConstants {
 			}
 		} catch (ActivityNotFoundException e) {
 		}
-	}
-
-	static boolean isBrowserTopupSupported(Activity activity, INetworkLink link) {
-		return link.getUrl(UrlInfo.Type.TopUp) != null;
 	}
 
 	static void openInBrowser(Context context, String url) {
