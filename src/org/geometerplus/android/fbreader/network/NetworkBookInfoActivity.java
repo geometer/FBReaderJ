@@ -134,7 +134,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		TopupActions.runAction(this, myBook.Link, item.getItemId());
+		NetworkView.Instance().getTopupActions().runAction(this, myBook.Link, item.getItemId());
 		return true;
 	}
 

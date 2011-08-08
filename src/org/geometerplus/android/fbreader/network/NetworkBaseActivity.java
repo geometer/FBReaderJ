@@ -193,7 +193,7 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
 			if (Util.isTopupSupported(this, link)) {
 				final TopupActions actions = NetworkView.Instance().getTopupActions();
-				if (actions != null && TopupActions.runAction(this, link, item.getItemId())) {
+				if (actions != null && actions.runAction(this, link, item.getItemId())) {
 					return true;
 				}
 			}

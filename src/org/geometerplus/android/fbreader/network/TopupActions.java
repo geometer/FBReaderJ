@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.view.View;
 import android.view.Menu;
@@ -30,10 +32,42 @@ import org.geometerplus.fbreader.network.tree.TopUpTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 class TopupActions extends NetworkTreeActions {
-	public static final int TOPUP_VIA_SMS_ITEM_ID = 0;
-	public static final int TOPUP_VIA_BROWSER_ITEM_ID = 1;
-	public static final int TOPUP_VIA_CREDIT_CARD_ITEM_ID = 2;
-	public static final int TOPUP_VIA_SELF_SERVICE_ITEM_ID = 3;
+	static class ActionInfo {
+		final String IntentAction;
+		final String ResourceId;
+
+		ActionInfo(String intentAction, String resourceId) {
+			IntentAction = intentAction;
+			ResourceId = resourceId;
+		}
+
+		boolean isSupported(Activity activity, INetworkLink link) {
+			if (BROWSER_TOPUP_ACTION.equals(IntentAction)) {
+				return Util.isBrowserTopupSupported(activity, link);
+			} else {
+				return Util.isTopupSupported(activity, link, IntentAction);
+			}
+		}
+
+		Runnable getRunnable(Activity activity, INetworkLink link) {
+			if (BROWSER_TOPUP_ACTION.equals(IntentAction)) {
+				return browserTopupRunnable(activity, link);
+			} else {
+				return topupRunnable(activity, link, IntentAction);
+			}
+		}
+	};
+
+	private final ArrayList<ActionInfo> myActionInfos = new ArrayList<ActionInfo>();
+
+	private static final String BROWSER_TOPUP_ACTION = "browserTopupAction";
+
+	{
+		myActionInfos.add(new ActionInfo(Util.CREDIT_CARD_TOPUP_ACTION, "topupViaCreditCard"));
+		myActionInfos.add(new ActionInfo(Util.SMS_TOPUP_ACTION, "topupViaSms"));
+		myActionInfos.add(new ActionInfo(Util.SELF_SERVICE_KIOSK_TOPUP_ACTION, "topupViaSelfServiceKiosk"));
+		myActionInfos.add(new ActionInfo(BROWSER_TOPUP_ACTION, "topupViaBrowser"));
+	}
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
@@ -48,17 +82,11 @@ class TopupActions extends NetworkTreeActions {
 	void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
 		menu.setHeaderTitle(getTitleValue("topupTitle"));
 
-		if (Util.isTopupSupported(activity, link, Util.CREDIT_CARD_TOPUP_ACTION)) {
-			addMenuItem(menu, TOPUP_VIA_CREDIT_CARD_ITEM_ID, "topupViaCreditCard");
-		}
-		if (Util.isTopupSupported(activity, link, Util.SMS_TOPUP_ACTION)) {
-			addMenuItem(menu, TOPUP_VIA_SMS_ITEM_ID, "topupViaSms");
-		}
-		if (Util.isTopupSupported(activity, link, Util.SELF_SERVICE_KIOSK_TOPUP_ACTION)) {
-			addMenuItem(menu, TOPUP_VIA_SELF_SERVICE_ITEM_ID, "topupViaSelfServiceKiosk");
-		}
-		if (Util.isBrowserTopupSupported(activity, link)) {
-			addMenuItem(menu, TOPUP_VIA_BROWSER_ITEM_ID, "topupViaBrowser");
+		for (int i = 0; i < myActionInfos.size(); ++i) {
+			final ActionInfo info = myActionInfos.get(i);
+			if (info.isSupported(activity, link)) {
+				addMenuItem(menu, i, info.ResourceId);
+			}
 		}
 	}
 
@@ -66,28 +94,19 @@ class TopupActions extends NetworkTreeActions {
 	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
 		return getDefaultActionCode(activity, ((TopUpTree)tree).Item.Link);
 	}
-	private int getDefaultActionCode(Activity activity, INetworkLink link) {
-		final boolean browser = Util.isBrowserTopupSupported(activity, link);
-		final boolean sms = Util.isTopupSupported(activity, link, Util.SMS_TOPUP_ACTION);
-		final boolean creditCard = Util.isTopupSupported(activity, link, Util.CREDIT_CARD_TOPUP_ACTION);
-		final boolean selfService = Util.isTopupSupported(activity, link, Util.SELF_SERVICE_KIOSK_TOPUP_ACTION);
-		final int count =
-			(sms ? 1 : 0) +
-			(browser ? 1 : 0) +
-			(creditCard ? 1 : 0) +
-			(selfService ? 1 : 0);
 
-		if (count > 1) {
-			return TREE_SHOW_CONTEXT_MENU;
-		} else if (sms) {
-			return TOPUP_VIA_SMS_ITEM_ID;
-		} else if (creditCard) {
-			return TOPUP_VIA_CREDIT_CARD_ITEM_ID;
-		} else if (selfService) {
-			return TOPUP_VIA_SELF_SERVICE_ITEM_ID;
-		} else /* if (browser) */ { 
-			return TOPUP_VIA_BROWSER_ITEM_ID;
+	private int getDefaultActionCode(Activity activity, INetworkLink link) {
+		int index = TREE_NO_ACTION;
+		for (int i = 0; i < myActionInfos.size(); ++i) {
+			if (myActionInfos.get(i).isSupported(activity, link)) {
+				if (index == TREE_NO_ACTION) {
+					index = i;
+				} else {
+					return TREE_SHOW_CONTEXT_MENU;
+				}
+			}
 		}
+		return index;
 	}
 
 	@Override
@@ -106,28 +125,13 @@ class TopupActions extends NetworkTreeActions {
 		return runAction(activity, link, actionCode);
 	}
 
-	static boolean runAction(Activity activity, INetworkLink link, int actionCode) {
-		Runnable topupRunnable = null;
-		switch (actionCode) {
-			case TOPUP_VIA_SMS_ITEM_ID:
-				topupRunnable = topupRunnable(activity, link, Util.SMS_TOPUP_ACTION);
-				break;
-			case TOPUP_VIA_BROWSER_ITEM_ID:
-				topupRunnable = browserTopupRunnable(activity, link);
-				break;
-			case TOPUP_VIA_CREDIT_CARD_ITEM_ID:
-				topupRunnable = topupRunnable(activity, link, Util.CREDIT_CARD_TOPUP_ACTION);
-				break;
-			case TOPUP_VIA_SELF_SERVICE_ITEM_ID:
-				topupRunnable = topupRunnable(activity, link, Util.SELF_SERVICE_KIOSK_TOPUP_ACTION);
-				break;
-		}
-
-		if (topupRunnable == null) {
+	boolean runAction(Activity activity, INetworkLink link, int actionCode) {
+		try {
+			doTopup(activity, link, myActionInfos.get(actionCode).getRunnable(activity, link));
+			return true;
+		} catch (Exception e) {
 			return false;
 		}
-		doTopup(activity, link, topupRunnable);
-		return true;
 	}
 
 	private static Runnable browserTopupRunnable(final Activity activity, final INetworkLink link) {
@@ -149,7 +153,7 @@ class TopupActions extends NetworkTreeActions {
 		};
 	}
 
-	private static void doTopup(final Activity activity, final INetworkLink link, final Runnable action) {
+	private void doTopup(final Activity activity, final INetworkLink link, final Runnable action) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		if (mgr.mayBeAuthorised(false)) {
 			action.run();
