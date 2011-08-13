@@ -42,14 +42,13 @@ import org.geometerplus.android.util.PackageUtil;
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
-	static final String BROWSER_TOPUP_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_BROWSER_TOPUP";
-	static final String SMS_TOPUP_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_SMS_REFILLING";
-	static final String CREDIT_CARD_TOPUP_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_CREDIT_CARD_TOPUP";
-	static final String SELF_SERVICE_KIOSK_TOPUP_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_SELF_SERVICE_KIOSK_TOPUP";
+	static final String TOPUP_ACTION =
+		"android.fbreader.action.network.TOPUP";
+	static final String LIST_ACTION_ID = "list";
+	static final String BROWSER_ACTION_ID = "browser";
+	static final String SMS_ACTION_ID = "sms";
+	static final String CREDIT_CARD_ACTION_ID = "credit_card";
+	static final String SELF_SERVICE_ACTION_ID = "self_service";
 
 	private static boolean testService(Activity activity, String action, String url) {
 		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
@@ -197,30 +196,29 @@ abstract class Util implements UserRegistrationConstants {
 
 	static boolean isTopupSupported(Activity activity, INetworkLink link) {
 		return
-			isTopupSupported(activity, link, BROWSER_TOPUP_ACTION) ||
-			isTopupSupported(activity, link, SMS_TOPUP_ACTION) ||
-			isTopupSupported(activity, link, CREDIT_CARD_TOPUP_ACTION) ||
-			isTopupSupported(activity, link, SELF_SERVICE_KIOSK_TOPUP_ACTION);
+			isTopupSupported(activity, link, BROWSER_ACTION_ID) ||
+			isTopupSupported(activity, link, SMS_ACTION_ID) ||
+			isTopupSupported(activity, link, CREDIT_CARD_ACTION_ID) ||
+			isTopupSupported(activity, link, SELF_SERVICE_ACTION_ID);
 	}
 
-	static boolean isTopupSupported(Activity activity, INetworkLink link, String action) {
-		if (BROWSER_TOPUP_ACTION.equals(action)) {
+	static boolean isTopupSupported(Activity activity, INetworkLink link, String actionId) {
+		if (BROWSER_ACTION_ID.equals(actionId)) {
 			return link.getUrl(UrlInfo.Type.TopUp) != null;
 		} else {
+			final String url = link.getUrl(UrlInfo.Type.Catalog) + "/" + actionId;
 			return testService(
 				activity,
-				action,
-				link.getUrl(UrlInfo.Type.Catalog)
+				TOPUP_ACTION,
+				url
 			);
 		}
 	}
 
-	static void runTopupDialog(Activity activity, INetworkLink link, String action) {
+	static void runTopupDialog(Activity activity, INetworkLink link, String actionId) {
 		try {
-			final Intent intent = new Intent(
-				action,
-				Uri.parse(link.getUrl(UrlInfo.Type.Catalog))
-			);
+			final String url = link.getUrl(UrlInfo.Type.Catalog) + "/" + actionId;
+			final Intent intent = new Intent(TOPUP_ACTION, Uri.parse(url));
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			if (mgr != null) {
 				for (Map.Entry<String,String> entry : mgr.getTopupData().entrySet()) {

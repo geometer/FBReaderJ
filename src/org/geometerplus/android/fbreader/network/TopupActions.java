@@ -53,10 +53,10 @@ class TopupActions extends NetworkTreeActions {
 	private final ArrayList<ActionInfo> myActionInfos = new ArrayList<ActionInfo>();
 
 	{
-		myActionInfos.add(new ActionInfo(Util.CREDIT_CARD_TOPUP_ACTION, "topupViaCreditCard"));
-		myActionInfos.add(new ActionInfo(Util.SMS_TOPUP_ACTION, "topupViaSms"));
-		myActionInfos.add(new ActionInfo(Util.SELF_SERVICE_KIOSK_TOPUP_ACTION, "topupViaSelfServiceKiosk"));
-		myActionInfos.add(new ActionInfo(Util.BROWSER_TOPUP_ACTION, "topupViaBrowser"));
+		myActionInfos.add(new ActionInfo(Util.CREDIT_CARD_ACTION_ID, "topupViaCreditCard"));
+		myActionInfos.add(new ActionInfo(Util.SMS_ACTION_ID, "topupViaSms"));
+		myActionInfos.add(new ActionInfo(Util.SELF_SERVICE_ACTION_ID, "topupViaSelfServiceKiosk"));
+		myActionInfos.add(new ActionInfo(Util.BROWSER_ACTION_ID, "topupViaBrowser"));
 	}
 
 	@Override
@@ -124,8 +124,8 @@ class TopupActions extends NetworkTreeActions {
 		}
 	}
 
-	private static Runnable topupRunnable(final Activity activity, final INetworkLink link, final String action) {
-		if (Util.BROWSER_TOPUP_ACTION.equals(action)) {
+	private static Runnable topupRunnable(final Activity activity, final INetworkLink link, final String actionId) {
+		if (Util.BROWSER_ACTION_ID.equals(actionId)) {
 			return new Runnable() {
 				public void run() {
 					Util.openInBrowser(
@@ -137,7 +137,7 @@ class TopupActions extends NetworkTreeActions {
 		} else {
 			return new Runnable() {
 				public void run() {
-					Util.runTopupDialog(activity, link, action);
+					Util.runTopupDialog(activity, link, actionId);
 				}
 			};
 		}
