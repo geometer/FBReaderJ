@@ -44,11 +44,13 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
+import org.geometerplus.android.fbreader.api.PluginApi;
 
 public class NetworkBaseActivity extends BaseActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
+	protected static final int LIST_TOPUP_METHODS_CODE = 4;
 
 	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
 
@@ -128,12 +130,31 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 
 	@Override
 	public void onDestroy() {
+		if (getCurrentTree() instanceof RootTree) {
+			if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
+				NetworkInitializer.Instance.setActivity(null);
+			}
+		}
 		setForTree((NetworkTree)getCurrentTree(), null);
 		if (Connection != null) {
 			unbindService(Connection);
 			Connection = null;
 		}
 		super.onDestroy();
+	}
+
+	@Override
+	public boolean onSearchRequested() {
+		if (getCurrentTree() instanceof RootTree) {
+			if (searchIsInProgress()) {
+				return false;
+			}
+			final NetworkLibrary library = NetworkLibrary.Instance();
+			startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -220,11 +241,6 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 		actions.runAction(this, networkTree, actionCode);
 	}
 
-	@Override
-	public boolean onSearchRequested() {
-		return false;
-	}
-
 	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
 		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
 
@@ -242,6 +258,15 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 			case SIGNUP_CODE:
 				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
 				break;
+			case LIST_TOPUP_METHODS_CODE:
+			{
+				final Bundle bundle = data.getExtras();
+				final ArrayList<PluginApi.ActionInfo> infos =
+					bundle != null
+						? bundle.<PluginApi.ActionInfo>getParcelableArrayList(PluginApi.PluginInfo.KEY)
+						: null;
+				System.err.println("infos: " + infos);
+			}
 		}
 	}
 

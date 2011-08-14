@@ -78,22 +78,4 @@ public class NetworkTopLevelActivity extends NetworkBaseActivity {
 			}
 		}
 	}
-
-	@Override
-	public void onDestroy() {
-		if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
-			NetworkInitializer.Instance.setActivity(null);
-		}
-		super.onDestroy();
-	}
-
-	@Override
-	public boolean onSearchRequested() {
-		if (searchIsInProgress()) {
-			return false;
-		}
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
-		return true;
-	}
 }
