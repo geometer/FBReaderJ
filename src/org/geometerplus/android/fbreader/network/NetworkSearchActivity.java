@@ -119,7 +119,7 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			final NetworkBaseActivity activity = NetworkBaseActivity.getByTree(tree);
+			final NetworkLibraryActivity activity = NetworkLibraryActivity.getByTree(tree);
 			if (activity != null) {
 				final ZLResource buttonResource = dialogResource.getResource("button");
 				new AlertDialog.Builder(activity)

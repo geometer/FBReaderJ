@@ -120,7 +120,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
+	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
 		if (!(item instanceof NetworkURLCatalogItem)) {
 			return OPEN_CATALOG_ITEM_ID;
@@ -154,7 +154,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
 		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
 		final NetworkURLCatalogItem urlItem =
 			item instanceof NetworkURLCatalogItem ? (NetworkURLCatalogItem)item : null;
@@ -193,7 +193,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		return true;
 	}
 
-	private boolean consumeByVisibility(final NetworkBaseActivity activity, final NetworkTree tree, final int actionCode) {
+	private boolean consumeByVisibility(final NetworkLibraryActivity activity, final NetworkTree tree, final int actionCode) {
 		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
 		switch (item.getVisibility()) {
 			case B3_TRUE:
@@ -215,7 +215,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean runAction(final NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(final NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
 		if (consumeByVisibility(activity, catalogTree, actionCode)) {
 			return true;
@@ -351,7 +351,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			final NetworkBaseActivity activity = NetworkBaseActivity.getByTree(myTree);
+			final NetworkLibraryActivity activity = NetworkLibraryActivity.getByTree(myTree);
 			if (activity == null) {
 				return;
 			}
@@ -382,7 +382,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 							Util.TOPUP_ACTION,
 							Uri.parse(tree.Item.Link.getUrl(UrlInfo.Type.Catalog))
 						),
-						NetworkBaseActivity.LIST_TOPUP_METHODS_CODE
+						NetworkLibraryActivity.LIST_TOPUP_METHODS_CODE
 					);
 					*/
 				}
@@ -435,7 +435,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		});
 	}
 
-	public void doReloadCatalog(NetworkBaseActivity activity, final NetworkCatalogTree tree) {
+	public void doReloadCatalog(NetworkLibraryActivity activity, final NetworkCatalogTree tree) {
 		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
@@ -447,7 +447,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		);
 	}
 
-	private void doSignOut(final NetworkBaseActivity activity, NetworkCatalogTree tree) {
+	private void doSignOut(final NetworkLibraryActivity activity, NetworkCatalogTree tree) {
 		final NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {

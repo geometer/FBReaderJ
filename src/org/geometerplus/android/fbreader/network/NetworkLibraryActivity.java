@@ -46,7 +46,7 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
-public class NetworkBaseActivity extends BaseActivity implements NetworkView.EventListener {
+public class NetworkLibraryActivity extends BaseActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
@@ -54,14 +54,14 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 
 	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
 
-	static void setForTree(NetworkTree tree, NetworkBaseActivity activity) {
+	static void setForTree(NetworkTree tree, NetworkLibraryActivity activity) {
 		if (tree != null) {
 			tree.setUserData(ACTIVITY_BY_TREE_KEY, activity);
 		}
 	}
 
-	static NetworkBaseActivity getByTree(NetworkTree tree) {
-		return (NetworkBaseActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
+	static NetworkLibraryActivity getByTree(NetworkTree tree) {
+		return (NetworkLibraryActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
 	}
 
 	public BookDownloaderServiceConnection Connection;
@@ -415,7 +415,7 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 					final ZLResource dialogResource = ZLResource.resource("dialog");
 					final ZLResource boxResource = dialogResource.getResource("networkError");
 					final ZLResource buttonResource = dialogResource.getResource("button");
-					new AlertDialog.Builder(NetworkBaseActivity.this)
+					new AlertDialog.Builder(NetworkLibraryActivity.this)
 						.setTitle(boxResource.getResource("title").getValue())
 						.setMessage((String) msg.obj)
 						.setIcon(0)

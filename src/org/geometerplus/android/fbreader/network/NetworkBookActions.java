@@ -99,7 +99,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		final NetworkBookTree bookTree = (NetworkBookTree) tree;
 		final NetworkBookItem book = bookTree.Book;
 
-		Set<Action> actions = getContextMenuActions(book, ((NetworkBaseActivity)activity).Connection);
+		Set<Action> actions = getContextMenuActions(book, ((NetworkLibraryActivity)activity).Connection);
 		for (Action a: actions) {
 			if (a.Arg == null) {
 				addMenuItem(menu, a.Id, a.Key);
@@ -199,7 +199,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
+	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			return SHOW_BOOKS_ITEM_ID;
 		}
@@ -212,12 +212,12 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
 		return false;
 	}
 
 	@Override
-	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			switch (actionCode) {
 				case SHOW_BOOKS_ITEM_ID:

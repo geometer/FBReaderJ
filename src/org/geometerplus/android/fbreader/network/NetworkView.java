@@ -113,7 +113,7 @@ class NetworkView {
 		return false;
 	}
 
-	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
 		final NetworkTreeActions actions = getActions(tree);
 		if (actions != null) {
 			return actions.prepareOptionsMenu(activity, menu, tree);
@@ -121,7 +121,7 @@ class NetworkView {
 		return false;
 	}
 
-	public boolean runOptionsMenu(NetworkBaseActivity activity, MenuItem item, NetworkTree tree) {
+	public boolean runOptionsMenu(NetworkLibraryActivity activity, MenuItem item, NetworkTree tree) {
 		final NetworkTreeActions actions = getActions(tree);
 		if (actions != null) {
 			return actions.runAction(activity, tree, item.getItemId());

@@ -40,7 +40,7 @@ class AddCustomCatalogItemActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
+	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		return RUN_ITEM_ID;
 	}
 
@@ -50,12 +50,12 @@ class AddCustomCatalogItemActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
 		return false;
 	}
 
 	@Override
-	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
 			case RUN_ITEM_ID:
 				addCustomCatalog(activity);

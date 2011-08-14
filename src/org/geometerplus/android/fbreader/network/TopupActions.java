@@ -81,7 +81,7 @@ class TopupActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
+	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		return getDefaultActionCode(activity, ((TopUpTree)tree).Item.Link);
 	}
 
@@ -105,12 +105,12 @@ class TopupActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
 		return false;
 	}
 
 	@Override
-	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		final INetworkLink link = ((TopUpTree)tree).Item.Link;
 		return runAction(activity, link, actionCode);
 	}
@@ -162,8 +162,8 @@ class TopupActions extends NetworkTreeActions {
 		final int topupActionCode = getDefaultActionCode(activity, link);
 		if (topupActionCode == TREE_SHOW_CONTEXT_MENU) {
 			View view = null;
-			if (activity instanceof NetworkBaseActivity) {	
-				view = ((NetworkBaseActivity)activity).getListView();
+			if (activity instanceof NetworkLibraryActivity) {	
+				view = ((NetworkLibraryActivity)activity).getListView();
 			} else if (activity instanceof NetworkBookInfoActivity) {
 				view = ((NetworkBookInfoActivity)activity).getMainView();
 			}

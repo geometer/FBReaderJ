@@ -50,7 +50,7 @@ class SearchItemActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkBaseActivity activity, NetworkTree tree) {
+	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		final boolean isLoading = ItemsLoadingService.getRunnable(tree) != null;
 		if (!isLoading) {
 			return RUN_SEARCH_ITEM_ID;
@@ -64,12 +64,12 @@ class SearchItemActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public boolean prepareOptionsMenu(NetworkBaseActivity activity, Menu menu, NetworkTree tree) {
+	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
 		return false;
 	}
 
 	@Override
-	public boolean runAction(NetworkBaseActivity activity, NetworkTree tree, int actionCode) {
+	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		switch (actionCode) {
 			case RUN_SEARCH_ITEM_ID:
 				activity.onSearchRequested();

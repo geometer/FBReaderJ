@@ -72,7 +72,7 @@ abstract class Util implements UserRegistrationConstants {
 				activity.startActivityForResult(new Intent(
 					REGISTRATION_ACTION,
 					Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
-				), NetworkBaseActivity.SIGNUP_CODE);
+				), NetworkLibraryActivity.SIGNUP_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
@@ -94,7 +94,7 @@ abstract class Util implements UserRegistrationConstants {
 		if (onSuccess != null) {
 			ourAfterRegisrationMap.put(activity, onSuccess);
 		}
-		activity.startActivityForResult(intent, NetworkBaseActivity.CUSTOM_AUTHENTICATION_CODE);
+		activity.startActivityForResult(intent, NetworkLibraryActivity.CUSTOM_AUTHENTICATION_CODE);
 	}
 
 	static void processCustomAuthentication(final Activity activity, final INetworkLink link, int resultCode, Intent data) {
@@ -241,16 +241,16 @@ abstract class Util implements UserRegistrationConstants {
 
 	static void openTree(Context context, NetworkTree tree) {
 		final Class<?> clz = tree instanceof NetworkBookTree
-			? NetworkBookInfoActivity.class : NetworkBaseActivity.class;
+			? NetworkBookInfoActivity.class : NetworkLibraryActivity.class;
 		context.startActivity(
 			new Intent(context.getApplicationContext(), clz)
-				.putExtra(NetworkBaseActivity.TREE_KEY_KEY, tree.getUniqueKey())
+				.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
 		);
 	}
 
 	public static NetworkTree getTreeFromIntent(Intent intent) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(NetworkBaseActivity.TREE_KEY_KEY);
+		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(NetworkLibraryActivity.TREE_KEY_KEY);
 		return library.getTreeByKey(key);
 	}
 }
