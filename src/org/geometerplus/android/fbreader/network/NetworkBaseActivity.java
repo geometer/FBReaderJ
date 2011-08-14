@@ -66,6 +66,7 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 
 	public BookDownloaderServiceConnection Connection;
 
+	private volatile Intent myIntent;
 	private volatile boolean myInProgress;
 
 	@Override
@@ -91,6 +92,25 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 		setForTree((NetworkTree)getCurrentTree(), this);
 
 		setProgressBarIndeterminateVisibility(myInProgress);
+
+		if (getCurrentTree() instanceof RootTree) {
+			myIntent = getIntent();
+        
+			if (!NetworkView.Instance().isInitialized()) {
+				if (NetworkInitializer.Instance == null) {
+					new NetworkInitializer(this);
+					NetworkInitializer.Instance.start();
+				} else {
+					NetworkInitializer.Instance.setActivity(this);
+				}
+			} else {
+				onModelChanged();
+				if (myIntent != null) {
+					processIntent(myIntent);
+					myIntent = null;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -141,6 +161,13 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 			Connection = null;
 		}
 		super.onDestroy();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+
+		processIntent(intent);
 	}
 
 	@Override
@@ -448,5 +475,28 @@ public class NetworkBaseActivity extends BaseActivity implements NetworkView.Eve
 			}
 		}
 		return tree;
+	}
+
+	void processSavedIntent() {
+		if (myIntent != null) {
+			processIntent(myIntent);
+			myIntent = null;
+		}
+	}
+
+	private void processIntent(Intent intent) {
+		if (AddCustomCatalogActivity.ADD_CATALOG.equals(intent.getAction())) {
+			final ICustomNetworkLink link = AddCustomCatalogActivity.getLinkFromIntent(intent);
+			if (link != null) {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						final NetworkLibrary library = NetworkLibrary.Instance();
+						library.addCustomLink(link);
+						library.synchronize();
+						onModelChanged();
+					}
+				});
+			}
+		}
 	}
 }

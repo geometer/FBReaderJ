@@ -34,12 +34,12 @@ class NetworkInitializer {
 
 	private Activity myActivity;
 
-	public NetworkInitializer(Activity activity) {
+	public NetworkInitializer(NetworkBaseActivity activity) {
 		Instance = this;
 		setActivity(activity);
 	}
 
-	public void setActivity(Activity activity) {
+	public void setActivity(NetworkBaseActivity activity) {
 		myActivity = activity;
 	}
 
@@ -60,8 +60,8 @@ class NetworkInitializer {
 				String error = null;
 				try {
 					NetworkView.Instance().initialize();
-					if (myActivity instanceof NetworkTopLevelActivity) {
-						((NetworkTopLevelActivity)myActivity).processSavedIntent();
+					if (myActivity instanceof NetworkBaseActivity) {
+						((NetworkBaseActivity)myActivity).processSavedIntent();
 					}
 				} catch (ZLNetworkException e) {
 					error = e.getMessage();
@@ -104,8 +104,8 @@ class NetworkInitializer {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
 					if (error == null) {
-						if (myActivity instanceof NetworkTopLevelActivity) {
-							final NetworkTopLevelActivity a = (NetworkTopLevelActivity)myActivity;
+						if (myActivity instanceof NetworkBaseActivity) {
+							final NetworkBaseActivity a = (NetworkBaseActivity)myActivity;
 							a.startService(new Intent(a.getApplicationContext(), LibraryInitializationService.class));
 							a.onModelChanged(); // initialization is complete successfully
 						}
