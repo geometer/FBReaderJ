@@ -94,7 +94,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 		if (getCurrentTree() instanceof RootTree) {
 			myIntent = getIntent();
-        
+
 			if (!NetworkView.Instance().isInitialized()) {
 				if (NetworkInitializer.Instance == null) {
 					new NetworkInitializer(this);
@@ -453,9 +453,9 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				getListView().invalidateViews();
 
 				/*
-				 * getListAdapter() always returns CatalogAdapter because onModelChanged() 
-				 * can be called only after Activity's onStart() method (where NetworkView's 
-				 * addEventListener() is called). Therefore CatalogAdapter will be set as 
+				 * getListAdapter() always returns CatalogAdapter because onModelChanged()
+				 * can be called only after Activity's onStart() method (where NetworkView's
+				 * addEventListener() is called). Therefore CatalogAdapter will be set as
 				 * adapter in onCreate() method before any calls to onModelChanged().
 				 */
 				((NetworkLibraryAdapter)getListAdapter()).replaceAll(getCurrentTree().subTrees());
