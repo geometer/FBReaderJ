@@ -70,7 +70,6 @@ public abstract class PluginApi {
 						return new TopupActionInfo(
 							Uri.parse(parcel.readString()),
 							parcel.readString(),
-							parcel.readString(),
 							parcel.readInt()
 						);
 					default:
@@ -105,13 +104,11 @@ public abstract class PluginApi {
 	}
 
 	public static class TopupActionInfo extends ActionInfo {
-		public final String TypeId;
 		public final String MenuItemName;
 		public final int Weight;
 
-		public TopupActionInfo(Uri id, String typeId, String menuItemName, int weight) {
+		public TopupActionInfo(Uri id, String menuItemName, int weight) {
 			super(id);
-			TypeId = typeId;
 			MenuItemName = menuItemName;
 			Weight = weight;
 		}
@@ -124,7 +121,6 @@ public abstract class PluginApi {
 		@Override
 		public void writeToParcel(Parcel parcel, int flags) {
 			super.writeToParcel(parcel, flags);
-			parcel.writeString(TypeId);
 			parcel.writeString(MenuItemName);
 			parcel.writeInt(Weight);
 		}

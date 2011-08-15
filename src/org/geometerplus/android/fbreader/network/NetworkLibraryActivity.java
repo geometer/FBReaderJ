@@ -72,7 +72,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		System.err.println("NetworkLibraryActivity.onCreate");
 
 		SQLiteCookieDatabase.init(this);
 
@@ -276,26 +275,26 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		switch (requestCode) {
 			case BASIC_AUTHENTICATION_CODE:
-				myCredentialsCreator.onDataReceived(resultCode, data);
+				myCredentialsCreator.onDataReceived(resultCode, intent);
 				break;
 			case CUSTOM_AUTHENTICATION_CODE:
 				Util.processCustomAuthentication(
-					this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data
+					this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent
 				);
 				break;
 			case SIGNUP_CODE:
-				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
+				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);
 				break;
 			case LIST_TOPUP_METHODS_CODE:
-				if (data != null) {
-					final Bundle bundle = data.getExtras();
+				if (intent != null) {
 					final ArrayList<PluginApi.ActionInfo> infos =
-						bundle != null
-							? bundle.<PluginApi.ActionInfo>getParcelableArrayList(PluginApi.PluginInfo.KEY)
-							: null;
+						intent.<PluginApi.ActionInfo>getParcelableArrayListExtra(
+							PluginApi.PluginInfo.KEY
+						);
+					System.err.println("data: " + intent.getData());
 					System.err.println("infos: " + infos);
 				}
 		}
