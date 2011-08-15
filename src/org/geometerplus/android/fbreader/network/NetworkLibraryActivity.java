@@ -72,8 +72,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
-		OLD_STYLE_FLAG = true;
+		System.err.println("NetworkLibraryActivity.onCreate");
 
 		SQLiteCookieDatabase.init(this);
 
@@ -190,6 +189,11 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	}
 
 	@Override
+	protected boolean isTreeInvisible(FBTree tree) {
+		return tree instanceof RootTree && ((RootTree)tree).IsFake;
+	}
+
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			final ItemsLoader runnable =
@@ -286,14 +290,14 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, data);
 				break;
 			case LIST_TOPUP_METHODS_CODE:
-			{
-				final Bundle bundle = data.getExtras();
-				final ArrayList<PluginApi.ActionInfo> infos =
-					bundle != null
-						? bundle.<PluginApi.ActionInfo>getParcelableArrayList(PluginApi.PluginInfo.KEY)
-						: null;
-				System.err.println("infos: " + infos);
-			}
+				if (data != null) {
+					final Bundle bundle = data.getExtras();
+					final ArrayList<PluginApi.ActionInfo> infos =
+						bundle != null
+							? bundle.<PluginApi.ActionInfo>getParcelableArrayList(PluginApi.PluginInfo.KEY)
+							: null;
+					System.err.println("infos: " + infos);
+				}
 		}
 	}
 

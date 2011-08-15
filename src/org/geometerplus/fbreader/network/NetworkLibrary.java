@@ -124,8 +124,8 @@ public class NetworkLibrary {
 		return filteredList;
 	}
 
-	private final RootTree myRootTree = new RootTree("@Root");
-	private final RootTree myFakeRootTree = new RootTree("@FakeRoot");
+	private final RootTree myRootTree = new RootTree("@Root", false);
+	private final RootTree myFakeRootTree = new RootTree("@FakeRoot", true);
 	private SearchItemTree mySearchItemTree;
 
 	private boolean myChildrenAreInvalid = true;

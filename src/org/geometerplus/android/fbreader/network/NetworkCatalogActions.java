@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.view.Menu;
 import android.view.ContextMenu;
@@ -376,15 +377,17 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
 			public void run() {
 				if (tree instanceof NetworkCatalogRootTree) {
-					/*
-					activity.startActivityForResult(
-						new Intent(
-							Util.TOPUP_ACTION,
-							Uri.parse(tree.Item.Link.getUrl(UrlInfo.Type.Catalog))
-						),
-						NetworkLibraryActivity.LIST_TOPUP_METHODS_CODE
-					);
-					*/
+					try {
+						activity.startActivityForResult(
+							new Intent(
+								Util.TOPUP_ACTION,
+								Uri.parse(tree.Item.Link.getUrl(UrlInfo.Type.Catalog))
+							),
+							NetworkLibraryActivity.LIST_TOPUP_METHODS_CODE
+						);
+					} catch (ActivityNotFoundException e) {
+						// ignore
+					}
 				}
 
 				boolean resumeNotLoad = false;
