@@ -33,7 +33,8 @@ private:
 
 public:
 	static const char * const Class_java_io_InputStream;
-	static const char * const Class_java_util_List;
+	static const char * const Class_java_util_Collection;
+	static const char * const Class_java_util_Map;
 	static const char * const Class_java_util_Locale;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
@@ -61,7 +62,10 @@ public:
 	static jmethodID MID_java_io_InputStream_read;
 	static jmethodID MID_java_io_InputStream_skip;
 
-	static jmethodID MID_java_util_List_toArray;
+	static jmethodID MID_java_util_Collection_toArray;
+	static jmethodID MID_java_util_Collection_add;
+
+	static jmethodID MID_java_util_Map_put;
 
 	static jmethodID SMID_java_util_Locale_getDefault;
 	static jmethodID MID_java_util_Locale_getLanguage;

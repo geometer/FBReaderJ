@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import android.app.Activity;
@@ -31,6 +32,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
+import org.geometerplus.fbreader.formats.util.NativeUtil;
 import org.geometerplus.fbreader.library.Book;
 
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
@@ -94,24 +96,33 @@ class EncodingPreference extends ZLStringListPreference {
 		super(activity, rootResource, resourceKey);
 		myActivity = activity;
 		myBook = book;
-		final TreeSet<String> set = new TreeSet<String>();
 		String encoding = myBook.getEncoding();
 		if (encoding == null) {
 			encoding = "auto";
 		}
+		final TreeMap<String, String> namesMap = new TreeMap<String, String>();
 		if (!"auto".equals(encoding)) {
-			set.add("utf-8");
-			set.add("windows-1251");
-			set.add("windows-1252");
-			set.add("koi8-r");
+			NativeUtil.collectEncodingNames(namesMap);
+			if (!namesMap.containsKey(encoding)) {
+				for (String key: namesMap.keySet()) {
+					if (key.equalsIgnoreCase(encoding)) {
+						encoding = key;
+						break;
+					}
+				}
+			}
 		}
-		set.add(encoding);
-		String[] names = new String[set.size()];
+		if (!namesMap.containsKey(encoding)) {
+			namesMap.put(encoding, encoding);
+		}
+		String[] names = new String[namesMap.size()];
+		String[] values = new String[namesMap.size()];
 		int index = 0;
-		for (String e : set) {
-			names[index++] = e;
+		for (String key : namesMap.keySet()) {
+			values[index] = key;
+			names[index++] = namesMap.get(key);
 		}
-		setLists(names, names);
+		setLists(values, names);
 		setInitialValue(encoding);
 	}
 
@@ -120,8 +131,7 @@ class EncodingPreference extends ZLStringListPreference {
 		super.onDialogClosed(result);
 		if (result) {
 			final String value = getValue();
-			setSummary(value);
-			if (!"auto".equals(value) && !value.equals(myBook.getEncoding())) {
+			if (!"auto".equals(value) && !value.equalsIgnoreCase(myBook.getEncoding())) {
 				myBook.setEncoding(value);
 				myActivity.setResult(FBReader.RESULT_RELOAD_BOOK);
 			}

@@ -51,7 +51,7 @@ jobjectArray JavaFSDir::getFileChildren(JNIEnv *env) {
 	if (list == 0) {
 		return 0;
 	}
-	jobjectArray array = (jobjectArray)env->CallObjectMethod(list, AndroidUtil::MID_java_util_List_toArray);
+	jobjectArray array = (jobjectArray)env->CallObjectMethod(list, AndroidUtil::MID_java_util_Collection_toArray);
 	env->DeleteLocalRef(list);
 	return array;
 }

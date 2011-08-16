@@ -24,7 +24,8 @@ JavaVM *AndroidUtil::ourJavaVM = 0;
 
 
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
-const char * const AndroidUtil::Class_java_util_List = "java/util/List";
+const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
+const char * const AndroidUtil::Class_java_util_Map = "java/util/Map";
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
@@ -52,7 +53,10 @@ jmethodID AndroidUtil::MID_java_io_InputStream_close;
 jmethodID AndroidUtil::MID_java_io_InputStream_read;
 jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 
-jmethodID AndroidUtil::MID_java_util_List_toArray;
+jmethodID AndroidUtil::MID_java_util_Collection_toArray;
+jmethodID AndroidUtil::MID_java_util_Collection_add;
+
+jmethodID AndroidUtil::MID_java_util_Map_put;
 
 jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
 jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
@@ -120,8 +124,13 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_java_io_InputStream_skip = env->GetMethodID(cls, "skip", "(J)J") );
 	env->DeleteLocalRef(cls);
 
-	CHECK_NULL( cls = env->FindClass(Class_java_util_List) );
-	CHECK_NULL( MID_java_util_List_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;") );
+	CHECK_NULL( cls = env->FindClass(Class_java_util_Collection) );
+	CHECK_NULL( MID_java_util_Collection_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;") );
+	CHECK_NULL( MID_java_util_Collection_add = env->GetMethodID(cls, "add", "(Ljava/lang/Object;)Z") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_java_util_Map) );
+	CHECK_NULL( MID_java_util_Map_put = env->GetMethodID(cls, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_java_util_Locale) );

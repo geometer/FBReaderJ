@@ -81,6 +81,7 @@ LOCAL_SRC_FILES := \
 	NativeFormats/fbreader/src/library/Library.cpp \
 	NativeFormats/fbreader/src/library/Tag.cpp \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
+	NativeFormats/JavaNativeUtil.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/main.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
