@@ -36,33 +36,6 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
 class TopupActions extends NetworkTreeActions {
-	static class ActionInfo {
-		final String IntentAction;
-		final String ResourceId;
-
-		ActionInfo(String intentAction, String resourceId) {
-			IntentAction = intentAction;
-			ResourceId = resourceId;
-		}
-
-		boolean isSupported(Activity activity, INetworkLink link) {
-			return Util.isTopupSupported(activity, link, IntentAction);
-		}
-
-		Runnable getRunnable(Activity activity, INetworkLink link) {
-			return topupRunnable(activity, link, IntentAction);
-		}
-	};
-
-	private final ArrayList<ActionInfo> myActionInfos = new ArrayList<ActionInfo>();
-
-	{
-		//myActionInfos.add(new ActionInfo(Util.CREDIT_CARD_ACTION_ID, "topupViaCreditCard"));
-		//myActionInfos.add(new ActionInfo(Util.SMS_ACTION_ID, "topupViaSms"));
-		//myActionInfos.add(new ActionInfo(Util.SELF_SERVICE_ACTION_ID, "topupViaSelfServiceKiosk"));
-		//myActionInfos.add(new ActionInfo(Util.BROWSER_ACTION_ID, "topupViaBrowser"));
-	}
-
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof TopUpTree;
@@ -77,12 +50,6 @@ class TopupActions extends NetworkTreeActions {
 		menu.setHeaderTitle(getTitleValue("topupTitle"));
 
 		int i = 0;
-		for (; i < myActionInfos.size(); ++i) {
-			final ActionInfo info = myActionInfos.get(i);
-			if (info.isSupported(activity, link)) {
-				addMenuItem(menu, i, info.ResourceId);
-			}
-		}
 		final List<PluginApi.TopupActionInfo> infos =
 			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
 		if (infos != null) {
@@ -127,19 +94,14 @@ class TopupActions extends NetworkTreeActions {
 
 	boolean runAction(final Activity activity, final INetworkLink link, int actionCode) {
 		try {
-			if (actionCode < myActionInfos.size()) {
-				doTopup(activity, link, myActionInfos.get(actionCode).getRunnable(activity, link));
-			} else {
-				actionCode -= myActionInfos.size();
-				final List<PluginApi.TopupActionInfo> infos =
-					NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
-				final String url = infos.get(actionCode).getId().toString();
-				doTopup(activity, link, new Runnable() {
-					public void run() {
-						Util.runTopupDialogWithUrl(activity, link, url);
-					}
-				});
-			}
+			final List<PluginApi.TopupActionInfo> infos =
+				NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
+			final String url = infos.get(actionCode).getId().toString();
+			doTopup(activity, link, new Runnable() {
+				public void run() {
+					Util.runTopupDialog(activity, link, url);
+				}
+			});
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -157,11 +119,7 @@ class TopupActions extends NetworkTreeActions {
 				}
 			};
 		} else {
-			return new Runnable() {
-				public void run() {
-					Util.runTopupDialog(activity, link, actionId);
-				}
-			};
+			return null;
 		}
 	}
 

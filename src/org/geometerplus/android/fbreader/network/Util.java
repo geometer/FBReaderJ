@@ -215,7 +215,7 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static void runTopupDialogWithUrl(Activity activity, INetworkLink link, String url) {
+	static void runTopupDialog(Activity activity, INetworkLink link, String url) {
 		try {
 			final Intent intent = new Intent(TOPUP_ACTION, Uri.parse(url));
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
@@ -229,11 +229,6 @@ abstract class Util implements UserRegistrationConstants {
 			}
 		} catch (ActivityNotFoundException e) {
 		}
-	}
-
-	static void runTopupDialog(Activity activity, INetworkLink link, String actionId) {
-		final String url = link.getUrl(UrlInfo.Type.Catalog) + "/" + actionId;
-		runTopupDialogWithUrl(activity, link, url);
 	}
 
 	static void openInBrowser(Context context, String url) {
