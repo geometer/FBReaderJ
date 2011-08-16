@@ -48,12 +48,16 @@ abstract class NetworkTreeActions {
 		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue().replace("%s", arg);
 	}
 
+	protected final MenuItem addMenuItemWithText(ContextMenu menu, int id, String text) {
+		return menu.add(0, id, 0, text).setEnabled(id != TREE_NO_ACTION);
+	}
+
 	protected final MenuItem addMenuItem(ContextMenu menu, int id, String key) {
-		return menu.add(0, id, 0, getTitleValue(key)).setEnabled(id != TREE_NO_ACTION);
+		return addMenuItemWithText(menu, id, getTitleValue(key));
 	}
 
 	protected final MenuItem addMenuItem(ContextMenu menu, int id, String key, String arg) {
-		return menu.add(0, id, 0, getTitleValue(key, arg)).setEnabled(id != TREE_NO_ACTION);
+		return addMenuItemWithText(menu, id, getTitleValue(key, arg));
 	}
 
 	protected final MenuItem addOptionsItem(Menu menu, int id, String key/*, int iconId*/) {

@@ -32,6 +32,8 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
+import org.geometerplus.android.fbreader.api.PluginApi;
+
 class NetworkView {
 	private static NetworkView ourInstance;
 
@@ -45,6 +47,9 @@ class NetworkView {
 	private volatile boolean myInitialized;
 	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
 	private TopupActions myTopupActions;
+
+	final Map<String,List<PluginApi.TopupActionInfo>> TopupActionInfos =
+		new HashMap<String,List<PluginApi.TopupActionInfo>>();
 
 	private NetworkView() {
 	}

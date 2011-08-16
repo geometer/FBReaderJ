@@ -290,12 +290,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				break;
 			case LIST_TOPUP_METHODS_CODE:
 				if (intent != null) {
-					final ArrayList<PluginApi.ActionInfo> infos =
-						intent.<PluginApi.ActionInfo>getParcelableArrayListExtra(
+					NetworkView.Instance().TopupActionInfos.put(
+						intent.getData().toString(),
+						intent.<PluginApi.TopupActionInfo>getParcelableArrayListExtra(
 							PluginApi.PluginInfo.KEY
-						);
-					System.err.println("data: " + intent.getData());
-					System.err.println("infos: " + infos);
+						)
+					);
 				}
 		}
 	}

@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -30,6 +31,9 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.TopUpTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+
+import org.geometerplus.android.fbreader.api.PluginApi;
 
 class TopupActions extends NetworkTreeActions {
 	static class ActionInfo {
@@ -72,10 +76,18 @@ class TopupActions extends NetworkTreeActions {
 	void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
 		menu.setHeaderTitle(getTitleValue("topupTitle"));
 
-		for (int i = 0; i < myActionInfos.size(); ++i) {
+		int i = 0;
+		for (; i < myActionInfos.size(); ++i) {
 			final ActionInfo info = myActionInfos.get(i);
 			if (info.isSupported(activity, link)) {
 				addMenuItem(menu, i, info.ResourceId);
+			}
+		}
+		final List<PluginApi.TopupActionInfo> infos =
+			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
+		if (infos != null) {
+			for (PluginApi.TopupActionInfo info : infos) {
+				addMenuItemWithText(menu, i++, info.MenuItemName);
 			}
 		}
 	}
