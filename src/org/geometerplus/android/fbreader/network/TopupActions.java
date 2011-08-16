@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import android.app.Activity;
 import android.view.View;

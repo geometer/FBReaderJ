@@ -218,7 +218,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			}
 		} else if (getCurrentTree() instanceof NetworkCatalogTree) {
 			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
-			if (Util.isTopupSupported(this, link)) {
+			if (Util.isTopupSupported(link)) {
 				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null) {
 					actions.buildContextMenu(this, menu, link);
@@ -242,7 +242,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			}
 		} else if (getCurrentTree() instanceof NetworkCatalogTree) {
 			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
-			if (Util.isTopupSupported(this, link)) {
+			if (Util.isTopupSupported(link)) {
 				final TopupActions actions = NetworkView.Instance().getTopupActions();
 				if (actions != null && actions.runAction(this, link, item.getItemId())) {
 					return true;

@@ -39,6 +39,8 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
+import org.geometerplus.android.fbreader.api.PluginApi;
+
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
@@ -194,24 +196,17 @@ abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static boolean isTopupSupported(Activity activity, INetworkLink link) {
-		return
-			isTopupSupported(activity, link, BROWSER_ACTION_ID) ||
-			isTopupSupported(activity, link, SMS_ACTION_ID) ||
-			isTopupSupported(activity, link, CREDIT_CARD_ACTION_ID) ||
-			isTopupSupported(activity, link, SELF_SERVICE_ACTION_ID);
+	static boolean isTopupSupported(INetworkLink link) {
+		final List<PluginApi.TopupActionInfo> infos =
+			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
+		return infos != null && infos.size() > 0;
 	}
 
 	static boolean isTopupSupported(Activity activity, INetworkLink link, String actionId) {
 		if (BROWSER_ACTION_ID.equals(actionId)) {
 			return link.getUrl(UrlInfo.Type.TopUp) != null;
 		} else {
-			final String url = link.getUrl(UrlInfo.Type.Catalog) + "/" + actionId;
-			return testService(
-				activity,
-				TOPUP_ACTION,
-				url
-			);
+			return false;
 		}
 	}
 

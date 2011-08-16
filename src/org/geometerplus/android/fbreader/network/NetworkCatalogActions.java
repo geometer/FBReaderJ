@@ -88,7 +88,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				if (mgr != null) {
 					if (mgr.mayBeAuthorised(false)) {
 						addMenuItem(menu, SIGNOUT_ITEM_ID, "signOut", mgr.currentUserName());
-						if (Util.isTopupSupported(activity, item.Link)) {
+						if (Util.isTopupSupported(item.Link)) {
 							final String account = mgr.currentAccount();
 							if (account != null) {
 								addMenuItem(menu, TOPUP_ITEM_ID, "topup", account);
@@ -177,7 +177,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				userName = mgr.currentUserName();
 				signOut = true;
 				account = mgr.currentAccount();
-				if (account != null && Util.isTopupSupported(activity, item.Link)) {
+				if (account != null && Util.isTopupSupported(item.Link)) {
 					topup = true;
 				}
 			} else {
