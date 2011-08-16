@@ -57,10 +57,10 @@ class TopupActions extends NetworkTreeActions {
 	private final ArrayList<ActionInfo> myActionInfos = new ArrayList<ActionInfo>();
 
 	{
-		myActionInfos.add(new ActionInfo(Util.CREDIT_CARD_ACTION_ID, "topupViaCreditCard"));
-		myActionInfos.add(new ActionInfo(Util.SMS_ACTION_ID, "topupViaSms"));
-		myActionInfos.add(new ActionInfo(Util.SELF_SERVICE_ACTION_ID, "topupViaSelfServiceKiosk"));
-		myActionInfos.add(new ActionInfo(Util.BROWSER_ACTION_ID, "topupViaBrowser"));
+		//myActionInfos.add(new ActionInfo(Util.CREDIT_CARD_ACTION_ID, "topupViaCreditCard"));
+		//myActionInfos.add(new ActionInfo(Util.SMS_ACTION_ID, "topupViaSms"));
+		//myActionInfos.add(new ActionInfo(Util.SELF_SERVICE_ACTION_ID, "topupViaSelfServiceKiosk"));
+		//myActionInfos.add(new ActionInfo(Util.BROWSER_ACTION_ID, "topupViaBrowser"));
 	}
 
 	@Override
@@ -98,17 +98,15 @@ class TopupActions extends NetworkTreeActions {
 	}
 
 	private int getDefaultActionCode(Activity activity, INetworkLink link) {
-		int index = TREE_NO_ACTION;
-		for (int i = 0; i < myActionInfos.size(); ++i) {
-			if (myActionInfos.get(i).isSupported(activity, link)) {
-				if (index == TREE_NO_ACTION) {
-					index = i;
-				} else {
-					return TREE_SHOW_CONTEXT_MENU;
-				}
-			}
+		final List<PluginApi.TopupActionInfo> infos =
+			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
+		if (infos == null || infos.size() == 0) {
+			return TREE_NO_ACTION;
+		} else if (infos.size() == 1) {
+			return 0; // TODO: replace by action code
+		} else {
+			return TREE_SHOW_CONTEXT_MENU;
 		}
-		return index;
 	}
 
 	@Override
@@ -127,9 +125,21 @@ class TopupActions extends NetworkTreeActions {
 		return runAction(activity, link, actionCode);
 	}
 
-	boolean runAction(Activity activity, INetworkLink link, int actionCode) {
+	boolean runAction(final Activity activity, final INetworkLink link, int actionCode) {
 		try {
-			doTopup(activity, link, myActionInfos.get(actionCode).getRunnable(activity, link));
+			if (actionCode < myActionInfos.size()) {
+				doTopup(activity, link, myActionInfos.get(actionCode).getRunnable(activity, link));
+			} else {
+				actionCode -= myActionInfos.size();
+				final List<PluginApi.TopupActionInfo> infos =
+					NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
+				final String url = infos.get(actionCode).getId().toString();
+				doTopup(activity, link, new Runnable() {
+					public void run() {
+						Util.runTopupDialogWithUrl(activity, link, url);
+					}
+				});
+			}
 			return true;
 		} catch (Exception e) {
 			return false;
