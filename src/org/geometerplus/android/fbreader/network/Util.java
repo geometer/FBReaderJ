@@ -46,11 +46,7 @@ abstract class Util implements UserRegistrationConstants {
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
 	static final String TOPUP_ACTION =
 		"android.fbreader.action.network.TOPUP";
-	static final String LIST_ACTION_ID = "list";
 	static final String BROWSER_ACTION_ID = "browser";
-	static final String SMS_ACTION_ID = "sms";
-	static final String CREDIT_CARD_ACTION_ID = "credit_card";
-	static final String SELF_SERVICE_ACTION_ID = "self_service";
 
 	private static boolean testService(Activity activity, String action, String url) {
 		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
