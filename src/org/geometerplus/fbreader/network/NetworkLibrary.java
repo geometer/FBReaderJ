@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class NetworkLibrary {
 	private static NetworkLibrary ourInstance;
@@ -122,6 +123,17 @@ public class NetworkLibrary {
 			}
 		}
 		return filteredList;
+	}
+
+	public INetworkLink getLinkByUrl(String url) {
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (url.equals(link.getUrlInfo(UrlInfo.Type.Catalog).Url)) {
+					return link;
+				}
+			}
+		}
+		return null;
 	}
 
 	private final RootTree myRootTree = new RootTree("@Root", false);

@@ -103,7 +103,7 @@ public abstract class PluginApi {
 		}
 	}
 
-	public static class TopupActionInfo extends ActionInfo {
+	public static class TopupActionInfo extends ActionInfo implements Comparable<TopupActionInfo> {
 		public final String MenuItemName;
 		public final int Weight;
 
@@ -123,6 +123,10 @@ public abstract class PluginApi {
 			super.writeToParcel(parcel, flags);
 			parcel.writeString(MenuItemName);
 			parcel.writeInt(Weight);
+		}
+
+		public int compareTo(TopupActionInfo info) {
+			return Weight - info.Weight;
 		}
 	}
 }

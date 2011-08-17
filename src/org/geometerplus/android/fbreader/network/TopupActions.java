@@ -107,21 +107,6 @@ class TopupActions extends NetworkTreeActions {
 		}
 	}
 
-	private static Runnable topupRunnable(final Activity activity, final INetworkLink link, final String actionId) {
-		if (Util.BROWSER_ACTION_ID.equals(actionId)) {
-			return new Runnable() {
-				public void run() {
-					Util.openInBrowser(
-						activity,
-						link.authenticationManager().topupLink()
-					);
-				}
-			};
-		} else {
-			return null;
-		}
-	}
-
 	private void doTopup(final Activity activity, final INetworkLink link, final Runnable action) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		if (mgr.mayBeAuthorised(false)) {

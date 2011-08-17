@@ -46,7 +46,6 @@ abstract class Util implements UserRegistrationConstants {
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
 	static final String TOPUP_ACTION =
 		"android.fbreader.action.network.TOPUP";
-	static final String BROWSER_ACTION_ID = "browser";
 
 	private static boolean testService(Activity activity, String action, String url) {
 		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
@@ -196,14 +195,6 @@ abstract class Util implements UserRegistrationConstants {
 		final List<PluginApi.TopupActionInfo> infos =
 			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
 		return infos != null && infos.size() > 0;
-	}
-
-	static boolean isTopupSupported(Activity activity, INetworkLink link, String actionId) {
-		if (BROWSER_ACTION_ID.equals(actionId)) {
-			return link.getUrl(UrlInfo.Type.TopUp) != null;
-		} else {
-			return false;
-		}
 	}
 
 	static void runTopupDialog(Activity activity, INetworkLink link, String url) {

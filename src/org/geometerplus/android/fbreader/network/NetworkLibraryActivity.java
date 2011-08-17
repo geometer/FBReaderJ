@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.*;
 import android.view.*;
 import android.widget.AdapterView;
@@ -42,6 +43,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.api.PluginApi;
@@ -290,12 +292,21 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				break;
 			case LIST_TOPUP_METHODS_CODE:
 				if (intent != null) {
-					NetworkView.Instance().TopupActionInfos.put(
-						intent.getData().toString(),
+					final String url = intent.getData().toString();
+					final List<PluginApi.TopupActionInfo> actions =
 						intent.<PluginApi.TopupActionInfo>getParcelableArrayListExtra(
 							PluginApi.PluginInfo.KEY
-						)
-					);
+						);
+					final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(url);
+					if (link != null) {
+						actions.add(new PluginApi.TopupActionInfo(
+							Uri.parse(url + "/browser"),
+							NetworkLibrary.resource().getResource("topupViaBrowser").getValue(),
+							100
+						));
+					} 
+					Collections.sort(actions);
+					NetworkView.Instance().TopupActionInfos.put(url, actions);
 				}
 		}
 	}
