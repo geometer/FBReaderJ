@@ -82,9 +82,6 @@
 		<node name="signOut" value="Abmnelden (%s)"/>
 		<node name="topup" value="Konto aufladen (derzeit: %s)"/>
 		<node name="topupTitle" value="Konto aufladen"/>
-		<node name="topupViaCreditCard" value="Kreditkarte"/>
-		<node name="topupViaSelfServiceKiosk" value="Selbstbedienungskiosk"/>
-		<node name="topupViaSms" value="Textmeldungen"/>
 		<node name="topupViaBrowser" value="Seite im Browser öffnen"/>
 		<node name="topupSummary" value="Derzeit: %s"/>
 		<node name="alreadyDownloading" value="Buch wird schon geladen"/>

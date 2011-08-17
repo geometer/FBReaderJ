@@ -79,9 +79,6 @@
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="topup" value="Recréditer le compte (actuellement : %s)"/>
 		<node name="topupTitle" value="Recréditer le compte"/>
-		<node name="topupViaCreditCard" value="Carte de crédit"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="Messages texte"/>
 		<node name="topupViaBrowser" value="Ouvrir la page dans le navigateur"/>
 		<node name="topupSummary" value="Аctuellement : %s"/>
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
