@@ -39,14 +39,6 @@ bool TxtPlugin::acceptsFile(const ZLFile &file) const {
 }
 
 bool TxtPlugin::readMetaInfo(Book &book) const {
-	shared_ptr<ZLInputStream> stream = book.file().inputStream();
-	if (stream.isNull()) {
-		return false;
-	}
-	detectEncodingAndLanguage(book, *stream);
-	if (book.encoding().empty()) {
-		return false;
-	}
 	return true;
 }
 
@@ -71,3 +63,12 @@ bool TxtPlugin::readModel(BookModel &model) const {
 //FormatInfoPage *TxtPlugin::createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file) {
 //	return new PlainTextInfoPage(dialog, file, ZLResourceKey("Text"), true);
 //}
+
+bool TxtPlugin::readLanguageAndEncoding(Book &book) const {
+	shared_ptr<ZLInputStream> stream = book.file().inputStream();
+	if (stream.isNull()) {
+		return false;
+	}
+	detectEncodingAndLanguage(book, *stream);
+	return !book.encoding().empty();
+}

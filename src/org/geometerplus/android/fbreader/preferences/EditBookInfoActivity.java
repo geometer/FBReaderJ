@@ -165,6 +165,8 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			return;
 		}
 
+		myBook.loadLanguageAndEncoding();
+
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
 		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));

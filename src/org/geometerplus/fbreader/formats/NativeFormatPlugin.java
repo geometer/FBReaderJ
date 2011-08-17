@@ -57,6 +57,9 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public native boolean readMetaInfo(Book book);
 
 	@Override
+	public native boolean readLanguageAndEncoding(Book book);
+
+	@Override
 	public native boolean readModel(BookModel model);
 
 	@Override

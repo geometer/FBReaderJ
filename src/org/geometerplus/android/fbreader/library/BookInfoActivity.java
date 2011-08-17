@@ -92,6 +92,8 @@ public class BookInfoActivity extends Activity {
 		final Book book = Book.getByFile(myFile);
 
 		if (book != null) {
+			book.loadLanguageAndEncoding();
+
 			setupCover(book);
 			setupBookInfo(book);
 			setupAnnotation(book);

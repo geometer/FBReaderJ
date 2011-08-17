@@ -223,7 +223,7 @@ public final class FBReaderApp extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 
-	void openBookInternal(Book book, Bookmark bookmark) {
+	private void openBookInternal(Book book, Bookmark bookmark) {
 		if (book != null) {
 			onViewChanged();
 
@@ -237,6 +237,7 @@ public final class FBReaderApp extends ZLApplication {
 			Model = null;
 			System.gc();
 			System.gc();
+			book.loadLanguageAndEncoding();
 			Model = BookModel.createModel(book);
 			if (Model != null) {
 				ZLTextHyphenator.Instance().load(book.getLanguage());

@@ -77,8 +77,10 @@ void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	env->DeleteLocalRef(javaString);
 
 	javaString = AndroidUtil::createJavaString(env, book.language());
-	env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setLanguage, javaString);
-	env->DeleteLocalRef(javaString);
+	if (javaString != 0) {
+		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setLanguage, javaString);
+		env->DeleteLocalRef(javaString);
+	}
 
 	javaString = AndroidUtil::createJavaString(env, book.encoding());
 	if (javaString != 0) {
@@ -109,6 +111,22 @@ void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	}
 }
 
+void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
+	jstring javaString;
+
+	javaString = AndroidUtil::createJavaString(env, book.language());
+	if (javaString != 0) {
+		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setLanguage, javaString);
+		env->DeleteLocalRef(javaString);
+	}
+
+	javaString = AndroidUtil::createJavaString(env, book.encoding());
+	if (javaString != 0) {
+		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setEncoding, javaString);
+		env->DeleteLocalRef(javaString);
+	}
+}
+
 extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfo(JNIEnv* env, jobject thiz, jobject javaBook) {
 	FormatPlugin *plugin = extractPointer(env, thiz);
@@ -122,6 +140,22 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	}
 
 	fillMetaInfo(env, javaBook, *book);
+	return JNI_TRUE;
+}
+
+extern "C"
+JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readLanguageAndEncoding(JNIEnv* env, jobject thiz, jobject javaBook) {
+	FormatPlugin *plugin = extractPointer(env, thiz);
+	if (plugin == 0) {
+		return JNI_FALSE;
+	}
+
+	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
+	if (!plugin->readLanguageAndEncoding(*book)) {
+		return JNI_FALSE;
+	}
+
+	fillLanguageAndEncoding(env, javaBook, *book);
 	return JNI_TRUE;
 }
 

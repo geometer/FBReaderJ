@@ -116,8 +116,10 @@ public class Book {
 	}
 
 	public void reloadInfoFromFile() {
-		if (readMetaInfo()) {
+		if (readMetaInfo() && readLanguageAndEncoding()) {
 			save();
+		} else {
+			// TODO: handle error situation???
 		}
 	}
 
@@ -128,6 +130,29 @@ public class Book {
 		myTags = database.loadTags(myId);
 		mySeriesInfo = database.loadSeriesInfo(myId);
 		myIsSaved = true;
+	}
+
+	public boolean loadLanguageAndEncoding() {
+		System.err.println("FBREADER: loadLanguageAndEncoding() start");
+		if (myEncoding != null && myLanguage != null) {
+			System.err.println("FBREADER: loadLanguageAndEncoding() ok");
+			return true;
+		}
+		if (readLanguageAndEncoding()) {
+			save();
+			System.err.println("FBREADER: loadLanguageAndEncoding() done");
+			return true;
+		}
+		System.err.println("FBREADER: loadLanguageAndEncoding() failed");
+		return false;
+	}
+
+	private boolean readLanguageAndEncoding() {
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
+		if (plugin == null) {
+			return false;
+		}
+		return plugin.readLanguageAndEncoding(this);
 	}
 
 	boolean readMetaInfo() {
@@ -259,6 +284,12 @@ public class Book {
 	}
 
 	public String getLanguage() {
+		if (myLanguage == null) {
+			//System.err.println("FBREADER: Reading language on demand...");
+			//System.err.println("FBREADER: ... book: " + File.getPath());
+			//Thread.dumpStack();
+			readLanguageAndEncoding();
+		}
 		return myLanguage;
 	}
 
@@ -270,6 +301,12 @@ public class Book {
 	}
 
 	public String getEncoding() {
+		if (myEncoding == null) {
+			//System.err.println("FBREADER: Reading encoding on demand...");
+			//System.err.println("FBREADER: ... book: " + File.getPath());
+			//Thread.dumpStack();
+			readLanguageAndEncoding();
+		}
 		return myEncoding;
 	}
 
