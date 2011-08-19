@@ -208,47 +208,24 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		if (menuInfo != null) {
-			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-			final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
-			if (tree != null) {
-				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-				if (actions != null) {
-					actions.buildContextMenu(this, menu, tree);
-					return;
-				}
-			}
-		} else if (getCurrentTree() instanceof NetworkCatalogTree) {
-			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
-			if (Util.isTopupSupported(link)) {
-				final TopupActions actions = NetworkView.Instance().getTopupActions();
-				if (actions != null) {
-					actions.buildContextMenu(this, menu, link);
-					return;
-				}
+		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		if (tree != null) {
+			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
+			if (actions != null) {
+				actions.buildContextMenu(this, menu, tree);
 			}
 		}
-		super.onCreateContextMenu(menu, view, menuInfo);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		if (item != null && item.getMenuInfo() != null) {
-			final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-			final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
-			if (tree != null) {
-				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-				if (actions != null && actions.runAction(this, tree, item.getItemId())) {
-					return true;
-				}
-			}
-		} else if (getCurrentTree() instanceof NetworkCatalogTree) {
-			final INetworkLink link = ((NetworkCatalogTree)getCurrentTree()).Item.Link;
-			if (Util.isTopupSupported(link)) {
-				final TopupActions actions = NetworkView.Instance().getTopupActions();
-				if (actions != null && actions.runAction(this, link, item.getItemId())) {
-					return true;
-				}
+		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		if (tree != null) {
+			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
+			if (actions != null && actions.runAction(this, tree, item.getItemId())) {
+				return true;
 			}
 		}
 		return super.onContextItemSelected(item);

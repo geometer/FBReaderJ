@@ -44,8 +44,6 @@ import org.geometerplus.android.fbreader.api.PluginApi;
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
-	static final String TOPUP_ACTION =
-		"android.fbreader.action.network.TOPUP";
 
 	private static boolean testService(Activity activity, String action, String url) {
 		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
@@ -195,22 +193,6 @@ abstract class Util implements UserRegistrationConstants {
 		final List<PluginApi.TopupActionInfo> infos =
 			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
 		return infos != null && infos.size() > 0;
-	}
-
-	static void runTopupDialog(Activity activity, INetworkLink link, String url) {
-		try {
-			final Intent intent = new Intent(TOPUP_ACTION, Uri.parse(url));
-			final NetworkAuthenticationManager mgr = link.authenticationManager();
-			if (mgr != null) {
-				for (Map.Entry<String,String> entry : mgr.getTopupData().entrySet()) {
-					intent.putExtra(entry.getKey(), entry.getValue());
-				}
-			}
-			if (PackageUtil.canBeStarted(activity, intent, true)) {
-				activity.startActivity(intent);
-			}
-		} catch (ActivityNotFoundException e) {
-		}
 	}
 
 	static void openInBrowser(Context context, String url) {

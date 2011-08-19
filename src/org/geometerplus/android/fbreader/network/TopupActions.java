@@ -19,9 +19,9 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.Menu;
 import android.view.ContextMenu;
@@ -29,7 +29,6 @@ import android.view.ContextMenu;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.TopUpTree;
-import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.api.PluginApi;
@@ -42,37 +41,11 @@ class TopupActions extends NetworkTreeActions {
 
 	@Override
 	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
-		buildContextMenu(activity, menu, ((TopUpTree)tree).Item.Link);
-	}
-
-	void buildContextMenu(Activity activity, ContextMenu menu, INetworkLink link) {
-		menu.setHeaderTitle(getTitleValue("topupTitle"));
-
-		int i = 0;
-		final List<PluginApi.TopupActionInfo> infos =
-			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
-		if (infos != null) {
-			for (PluginApi.TopupActionInfo info : infos) {
-				addMenuItemWithText(menu, i++, info.MenuItemName);
-			}
-		}
 	}
 
 	@Override
 	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
-		return getDefaultActionCode(activity, ((TopUpTree)tree).Item.Link);
-	}
-
-	private int getDefaultActionCode(Activity activity, INetworkLink link) {
-		final List<PluginApi.TopupActionInfo> infos =
-			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
-		if (infos == null || infos.size() == 0) {
-			return TREE_NO_ACTION;
-		} else if (infos.size() == 1) {
-			return 0; // TODO: replace by action code
-		} else {
-			return TREE_SHOW_CONTEXT_MENU;
-		}
+		return 0;
 	}
 
 	@Override
@@ -88,55 +61,14 @@ class TopupActions extends NetworkTreeActions {
 	@Override
 	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		final INetworkLink link = ((TopUpTree)tree).Item.Link;
-		return runAction(activity, link, actionCode);
-	}
-
-	boolean runAction(final Activity activity, final INetworkLink link, int actionCode) {
-		try {
-			final List<PluginApi.TopupActionInfo> infos =
-				NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
-			final String url = infos.get(actionCode).getId().toString();
-			doTopup(activity, link, new Runnable() {
-				public void run() {
-					Util.runTopupDialog(activity, link, url);
-				}
-			});
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	private void doTopup(final Activity activity, final INetworkLink link, final Runnable action) {
-		final NetworkAuthenticationManager mgr = link.authenticationManager();
-		if (mgr.mayBeAuthorised(false)) {
-			action.run();
-		} else {
-			Util.runAuthenticationDialog(activity, link, null, new Runnable() {
-				public void run() {
-					if (mgr.mayBeAuthorised(false)) {
-						activity.runOnUiThread(action);
-					}
-				}
-			});
-		}
+		runStandalone(activity, link);
+		return true;
 	}
 
 	public void runStandalone(Activity activity, INetworkLink link) {
-		final int topupActionCode = getDefaultActionCode(activity, link);
-		if (topupActionCode == TREE_SHOW_CONTEXT_MENU) {
-			View view = null;
-			if (activity instanceof NetworkLibraryActivity) {	
-				view = ((NetworkLibraryActivity)activity).getListView();
-			} else if (activity instanceof NetworkBookInfoActivity) {
-				view = ((NetworkBookInfoActivity)activity).getMainView();
-			}
-			if (view != null) {
-				activity.registerForContextMenu(view);
-				view.showContextMenu();
-			}
-		} else if (topupActionCode >= 0) {
-			runAction(activity, link, topupActionCode);
-		}
+		activity.startActivity(
+			new Intent(activity, TopupMenuActivity.class)
+				.setData(Uri.parse(link.getUrlInfo(UrlInfo.Type.Catalog).Url))
+		);
 	}
 }

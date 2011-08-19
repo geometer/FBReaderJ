@@ -380,7 +380,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 					try {
 						activity.startActivityForResult(
 							new Intent(
-								Util.TOPUP_ACTION,
+								TopupMenuActivity.TOPUP_ACTION,
 								Uri.parse(tree.Item.Link.getUrl(UrlInfo.Type.Catalog))
 							),
 							NetworkLibraryActivity.LIST_TOPUP_METHODS_CODE

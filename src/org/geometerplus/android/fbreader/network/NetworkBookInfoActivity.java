@@ -126,18 +126,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 		super.onDestroy();
 	}
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		NetworkView.Instance().getTopupActions().buildContextMenu(this, menu, myBook.Link);
-		unregisterForContextMenu(view);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		NetworkView.Instance().getTopupActions().runAction(this, myBook.Link, item.getItemId());
-		return true;
-	}
-
 	private final void setupDescription() {
 		setTextFromResource(R.id.network_book_description_title, "description");
 
