@@ -261,7 +261,8 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut(activity, catalogTree);
 				return true;
 			case TOPUP_ITEM_ID:
-				TopupMenuActivity.runMenu(activity, item.Link);
+				// TODO: replace 112 with required amount
+				TopupMenuActivity.runMenu(activity, item.Link, "112");
 				return true;
 			case CUSTOM_CATALOG_EDIT:
 			{

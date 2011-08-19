@@ -402,7 +402,8 @@ class NetworkBookActions extends NetworkTreeActions {
 								buttonKey = "topup";
 								action = new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int which) {
-										TopupMenuActivity.runMenu(activity, book.Link);
+										// TODO: replace 111 with required amount
+										TopupMenuActivity.runMenu(activity, book.Link, "111");
 									}
 								};
 							} else {

@@ -41,8 +41,8 @@ import org.geometerplus.android.util.PackageUtil;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
 public class TopupMenuActivity extends ListActivity implements AdapterView.OnItemClickListener {
-	static final String TOPUP_ACTION =
-		"android.fbreader.action.network.TOPUP";
+	static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
+	private static final String AMOUNT_KEY = "topup:amount";
 
 	static boolean isTopupSupported(INetworkLink link) {
 		final List<PluginApi.TopupActionInfo> infos =
@@ -50,15 +50,17 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		return infos != null && infos.size() > 0;
 	}
 
-	static void runMenu(Context context, INetworkLink link) {
+	static void runMenu(Context context, INetworkLink link, String amount) {
 		context.startActivity(
 			new Intent(context, TopupMenuActivity.class)
 				.setData(Uri.parse(link.getUrlInfo(UrlInfo.Type.Catalog).Url))
+				.putExtra(AMOUNT_KEY, amount)
 		);
 	}
 
 	private INetworkLink myLink;
 	private List<PluginApi.TopupActionInfo> myInfos;
+	private String myAmount;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -67,6 +69,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		final String url = getIntent().getData().toString();
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
 		myInfos = NetworkView.Instance().TopupActionInfos.get(url);
+		myAmount = getIntent().getStringExtra(AMOUNT_KEY);
 		if (myInfos == null || myInfos.size() == 0) {
 			finish();
 			return;
@@ -97,7 +100,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 							}
 						}
 						// TODO: put amount
-						intent.putExtra("topup:amount", (String)null);
+						intent.putExtra(AMOUNT_KEY, myAmount);
 						if (PackageUtil.canBeStarted(TopupMenuActivity.this, intent, true)) {
 							startActivity(intent);
 						}
