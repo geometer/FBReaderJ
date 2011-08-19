@@ -19,8 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import android.app.ListActivity;
 import android.content.*;
@@ -41,13 +40,12 @@ import org.geometerplus.android.util.PackageUtil;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
 public class TopupMenuActivity extends ListActivity implements AdapterView.OnItemClickListener {
-	static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
+	private static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
 	private static final String AMOUNT_KEY = "topup:amount";
 
 	static boolean isTopupSupported(INetworkLink link) {
-		final List<PluginApi.TopupActionInfo> infos =
-			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
-		return infos != null && infos.size() > 0;
+		// TODO: more correct check
+		return link.authenticationManager().topupLink() != null;
 	}
 
 	static void runMenu(Context context, INetworkLink link, String amount) {
@@ -68,16 +66,27 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		setTitle(NetworkLibrary.resource().getResource("topupTitle").getValue());
 		final String url = getIntent().getData().toString();
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
-		myInfos = NetworkView.Instance().TopupActionInfos.get(url);
 		myAmount = getIntent().getStringExtra(AMOUNT_KEY);
-		if (myInfos == null || myInfos.size() == 0) {
-			finish();
-			return;
-		} else if (myInfos.size() == 1) {
-			runTopupDialog(myInfos.get(0));
+
+		myInfos = new ArrayList<PluginApi.TopupActionInfo>();
+		if (myLink.authenticationManager().topupLink() != null) {
+			myInfos.add(new PluginApi.TopupActionInfo(
+				Uri.parse(url + "/browser"),
+				NetworkLibrary.resource().getResource("topupViaBrowser").getValue(),
+				100
+			));
+		}
+
+		try {
+			startActivityForResult(new Intent(TOPUP_ACTION, getIntent().getData()), 0);
+		} catch (ActivityNotFoundException e) {
+			if (myInfos.size() == 1) {
+				runTopupDialog(myInfos.get(0));
+			}
 			finish();
 			return;
 		}
+
 		setListAdapter(new ActionListAdapter());
 		getListView().setOnItemClickListener(this);
 	}
@@ -85,6 +94,30 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		runTopupDialog(myInfos.get(position));
 		finish();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (intent != null) {
+			final List<PluginApi.TopupActionInfo> actions =
+				intent.<PluginApi.TopupActionInfo>getParcelableArrayListExtra(
+					PluginApi.PluginInfo.KEY
+				);
+			if (actions != null) {
+				myInfos.addAll(actions);
+			}
+			if (myInfos.size() == 0) {
+				finish();
+				return;
+			} else if (myInfos.size() == 1) {
+				runTopupDialog(myInfos.get(0));
+				finish();
+				return;
+			}
+			Collections.sort(myInfos);
+			((ActionListAdapter)getListAdapter()).notifyDataSetChanged();
+			getListView().invalidateViews();
+		}
 	}
 
 	private void runTopupDialog(final PluginApi.TopupActionInfo info) {

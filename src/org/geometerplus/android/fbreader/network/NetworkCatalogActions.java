@@ -377,20 +377,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	static void doExpandCatalog(final Activity activity, final NetworkCatalogTree tree) {
 		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
 			public void run() {
-				if (tree instanceof NetworkCatalogRootTree) {
-					try {
-						activity.startActivityForResult(
-							new Intent(
-								TopupMenuActivity.TOPUP_ACTION,
-								Uri.parse(tree.Item.Link.getUrl(UrlInfo.Type.Catalog))
-							),
-							NetworkLibraryActivity.LIST_TOPUP_METHODS_CODE
-						);
-					} catch (ActivityNotFoundException e) {
-						// ignore
-					}
-				}
-
 				boolean resumeNotLoad = false;
 				if (tree.hasChildren()) {
 					if (tree.isContentValid()) {

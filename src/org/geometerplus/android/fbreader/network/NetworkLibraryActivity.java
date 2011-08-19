@@ -52,7 +52,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
 	protected static final int SIGNUP_CODE = 3;
-	protected static final int LIST_TOPUP_METHODS_CODE = 4;
 
 	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
 
@@ -267,24 +266,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			case SIGNUP_CODE:
 				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);
 				break;
-			case LIST_TOPUP_METHODS_CODE:
-				if (intent != null) {
-					final String url = intent.getData().toString();
-					final List<PluginApi.TopupActionInfo> actions =
-						intent.<PluginApi.TopupActionInfo>getParcelableArrayListExtra(
-							PluginApi.PluginInfo.KEY
-						);
-					final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(url);
-					if (link != null) {
-						actions.add(new PluginApi.TopupActionInfo(
-							Uri.parse(url + "/browser"),
-							NetworkLibrary.resource().getResource("topupViaBrowser").getValue(),
-							100
-						));
-					} 
-					Collections.sort(actions);
-					NetworkView.Instance().TopupActionInfos.put(url, actions);
-				}
 		}
 	}
 
