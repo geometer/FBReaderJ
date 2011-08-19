@@ -261,7 +261,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut(activity, catalogTree);
 				return true;
 			case TOPUP_ITEM_ID:
-				new TopupActions().runStandalone(activity, item.Link);
+				TopupActions.runStandalone(activity, item.Link);
 				return true;
 			case CUSTOM_CATALOG_EDIT:
 			{

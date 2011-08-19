@@ -60,12 +60,11 @@ class TopupActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
-		final INetworkLink link = ((TopUpTree)tree).Item.Link;
-		runStandalone(activity, link);
+		runStandalone(activity, ((TopUpTree)tree).Item.Link);
 		return true;
 	}
 
-	public void runStandalone(Activity activity, INetworkLink link) {
+	static void runStandalone(Activity activity, INetworkLink link) {
 		activity.startActivity(
 			new Intent(activity, TopupMenuActivity.class)
 				.setData(Uri.parse(link.getUrlInfo(UrlInfo.Type.Catalog).Url))

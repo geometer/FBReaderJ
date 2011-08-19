@@ -402,7 +402,7 @@ class NetworkBookActions extends NetworkTreeActions {
 								buttonKey = "topup";
 								action = new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int which) {
-										new TopupActions().runStandalone(activity, book.Link);
+										TopupActions.runStandalone(activity, book.Link);
 									}
 								};
 							} else {
