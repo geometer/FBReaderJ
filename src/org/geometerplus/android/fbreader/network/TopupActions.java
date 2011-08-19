@@ -19,10 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.view.View;
 import android.view.Menu;
 import android.view.ContextMenu;
 
@@ -40,7 +36,7 @@ class TopupActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 	}
 
 	@Override
@@ -60,14 +56,7 @@ class TopupActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
-		runStandalone(activity, ((TopUpTree)tree).Item.Link);
+		TopupMenuActivity.runMenu(activity, ((TopUpTree)tree).Item.Link);
 		return true;
-	}
-
-	static void runStandalone(Activity activity, INetworkLink link) {
-		activity.startActivity(
-			new Intent(activity, TopupMenuActivity.class)
-				.setData(Uri.parse(link.getUrlInfo(UrlInfo.Type.Catalog).Url))
-		);
 	}
 }

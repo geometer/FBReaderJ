@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.ListActivity;
-import android.content.Intent;
-import android.content.ActivityNotFoundException;
+import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
@@ -44,6 +43,19 @@ import org.geometerplus.android.fbreader.api.PluginApi;
 public class TopupMenuActivity extends ListActivity implements AdapterView.OnItemClickListener {
 	static final String TOPUP_ACTION =
 		"android.fbreader.action.network.TOPUP";
+
+	static boolean isTopupSupported(INetworkLink link) {
+		final List<PluginApi.TopupActionInfo> infos =
+			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
+		return infos != null && infos.size() > 0;
+	}
+
+	static void runMenu(Context context, INetworkLink link) {
+		context.startActivity(
+			new Intent(context, TopupMenuActivity.class)
+				.setData(Uri.parse(link.getUrlInfo(UrlInfo.Type.Catalog).Url))
+		);
+	}
 
 	private INetworkLink myLink;
 	private List<PluginApi.TopupActionInfo> myInfos;

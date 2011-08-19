@@ -28,20 +28,18 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 
 class AddCustomCatalogItemActions extends NetworkTreeActions {
-	public static final int RUN_ITEM_ID = 0;
-
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof AddCustomCatalogItemTree;
 	}
 
 	@Override
-	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 	}
 
 	@Override
 	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
-		return RUN_ITEM_ID;
+		return 0;
 	}
 
 	@Override
@@ -56,15 +54,11 @@ class AddCustomCatalogItemActions extends NetworkTreeActions {
 
 	@Override
 	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
-		switch (actionCode) {
-			case RUN_ITEM_ID:
-				addCustomCatalog(activity);
-				return true;
-		}
-		return false;
+		addCustomCatalog(activity);
+		return true;
 	}
 
-	public static void addCustomCatalog(Activity activity) {
+	static void addCustomCatalog(Activity activity) {
 		activity.startActivity(new Intent(activity, AddCustomCatalogActivity.class));
 	}
 }

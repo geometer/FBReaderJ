@@ -66,7 +66,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
 		final NetworkURLCatalogItem urlItem =
 			item instanceof NetworkURLCatalogItem ? (NetworkURLCatalogItem)item : null;
@@ -88,7 +88,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				if (mgr != null) {
 					if (mgr.mayBeAuthorised(false)) {
 						addMenuItem(menu, SIGNOUT_ITEM_ID, "signOut", mgr.currentUserName());
-						if (Util.isTopupSupported(item.Link)) {
+						if (TopupMenuActivity.isTopupSupported(item.Link)) {
 							final String account = mgr.currentAccount();
 							if (account != null) {
 								addMenuItem(menu, TOPUP_ITEM_ID, "topup", account);
@@ -177,7 +177,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				userName = mgr.currentUserName();
 				signOut = true;
 				account = mgr.currentAccount();
-				if (account != null && Util.isTopupSupported(item.Link)) {
+				if (account != null && TopupMenuActivity.isTopupSupported(item.Link)) {
 					topup = true;
 				}
 			} else {
@@ -261,7 +261,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				doSignOut(activity, catalogTree);
 				return true;
 			case TOPUP_ITEM_ID:
-				TopupActions.runStandalone(activity, item.Link);
+				TopupMenuActivity.runMenu(activity, item.Link);
 				return true;
 			case CUSTOM_CATALOG_EDIT:
 			{

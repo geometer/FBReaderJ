@@ -37,7 +37,7 @@ class SearchItemActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
 
 		final boolean isLoading = ItemsLoadingService.getRunnable(tree) != null;

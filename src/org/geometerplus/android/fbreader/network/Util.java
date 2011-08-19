@@ -39,8 +39,6 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
-import org.geometerplus.android.fbreader.api.PluginApi;
-
 abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
@@ -187,12 +185,6 @@ abstract class Util implements UserRegistrationConstants {
 				// TODO: show an error message
 			}
 		}
-	}
-
-	static boolean isTopupSupported(INetworkLink link) {
-		final List<PluginApi.TopupActionInfo> infos =
-			NetworkView.Instance().TopupActionInfos.get(link.getUrlInfo(UrlInfo.Type.Catalog).Url);
-		return infos != null && infos.size() > 0;
 	}
 
 	static void openInBrowser(Context context, String url) {

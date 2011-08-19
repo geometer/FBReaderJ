@@ -89,7 +89,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(Activity activity, ContextMenu menu, NetworkTree tree) {
+	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			addMenuItem(menu, SHOW_BOOKS_ITEM_ID, "showBooks");
@@ -402,7 +402,7 @@ class NetworkBookActions extends NetworkTreeActions {
 								buttonKey = "topup";
 								action = new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int which) {
-										TopupActions.runStandalone(activity, book.Link);
+										TopupMenuActivity.runMenu(activity, book.Link);
 									}
 								};
 							} else {
