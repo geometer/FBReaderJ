@@ -87,12 +87,18 @@ abstract class NetworkTreeActions {
 
 	public abstract boolean canHandleTree(NetworkTree tree);
 
-	public abstract void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree);
-
 	public abstract int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree);
 
 	public abstract boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode);
 
-	public abstract boolean createOptionsMenu(Menu menu, NetworkTree tree);
-	public abstract boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree);
+	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
+	}
+
+	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
+		return false;
+	}
+
+	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
+		return false;
+	}
 }

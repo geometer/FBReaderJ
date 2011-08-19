@@ -19,15 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.view.Menu;
-import android.view.ContextMenu;
-
-import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.TopUpTree;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-
-import org.geometerplus.android.fbreader.api.PluginApi;
 
 class TopupActions extends NetworkTreeActions {
 	@Override
@@ -36,22 +29,8 @@ class TopupActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
-	}
-
-	@Override
 	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		return 0;
-	}
-
-	@Override
-	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
-		return false;
-	}
-
-	@Override
-	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
-		return false;
 	}
 
 	@Override

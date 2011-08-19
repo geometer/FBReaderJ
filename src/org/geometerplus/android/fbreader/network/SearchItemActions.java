@@ -19,17 +19,13 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.app.Activity;
-import android.view.Menu;
 import android.view.ContextMenu;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.SearchItemTree;
 
 class SearchItemActions extends NetworkTreeActions {
-
-	public static final int RUN_SEARCH_ITEM_ID = 0;
-
+	private static final int RUN_SEARCH_ITEM_ID = 0;
 
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
@@ -56,16 +52,6 @@ class SearchItemActions extends NetworkTreeActions {
 			return RUN_SEARCH_ITEM_ID;
 		}
 		return TREE_NO_ACTION;
-	}
-
-	@Override
-	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
-		return false;
-	}
-
-	@Override
-	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
-		return false;
 	}
 
 	@Override

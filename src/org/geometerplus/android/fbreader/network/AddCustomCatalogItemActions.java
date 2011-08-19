@@ -19,10 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
-import android.view.ContextMenu;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
@@ -34,22 +31,8 @@ class AddCustomCatalogItemActions extends NetworkTreeActions {
 	}
 
 	@Override
-	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
-	}
-
-	@Override
 	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		return 0;
-	}
-
-	@Override
-	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
-		return false;
-	}
-
-	@Override
-	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
-		return false;
 	}
 
 	@Override
@@ -58,7 +41,7 @@ class AddCustomCatalogItemActions extends NetworkTreeActions {
 		return true;
 	}
 
-	static void addCustomCatalog(Activity activity) {
+	static void addCustomCatalog(NetworkLibraryActivity activity) {
 		activity.startActivity(new Intent(activity, AddCustomCatalogActivity.class));
 	}
 }
