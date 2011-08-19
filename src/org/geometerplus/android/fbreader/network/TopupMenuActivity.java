@@ -92,17 +92,21 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 			doTopup(new Runnable() {
 				public void run() {
 					try {
-						final Intent intent = new Intent(TOPUP_ACTION, info.getId());
 						final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-						if (mgr != null) {
-							for (Map.Entry<String,String> entry : mgr.getTopupData().entrySet()) {
-								intent.putExtra(entry.getKey(), entry.getValue());
+						if (info.getId().toString().endsWith("/browser")) {
+							// TODO: put amount
+							Util.openInBrowser(TopupMenuActivity.this, mgr.topupLink());
+						} else {
+							final Intent intent = new Intent(TOPUP_ACTION, info.getId());
+							if (mgr != null) {
+								for (Map.Entry<String,String> entry : mgr.getTopupData().entrySet()) {
+									intent.putExtra(entry.getKey(), entry.getValue());
+								}
 							}
-						}
-						// TODO: put amount
-						intent.putExtra(AMOUNT_KEY, myAmount);
-						if (PackageUtil.canBeStarted(TopupMenuActivity.this, intent, true)) {
-							startActivity(intent);
+							intent.putExtra(AMOUNT_KEY, myAmount);
+							if (PackageUtil.canBeStarted(TopupMenuActivity.this, intent, true)) {
+								startActivity(intent);
+							}
 						}
 					} catch (ActivityNotFoundException e) {
 					}
