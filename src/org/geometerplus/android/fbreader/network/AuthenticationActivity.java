@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
+import org.geometerplus.fbreader.network.INetworkLink;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -101,15 +104,22 @@ public class AuthenticationActivity extends Activity {
 	}
 
 	private ZLResource myResource;
+	private INetworkLink myLink;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		setResult(RESULT_CANCELED);
 		setContentView(R.layout.authentication);
 
 		final Intent intent = getIntent();
+		myLink = Util.linkByIntent(intent);
+		if (myLink == null) {
+			finish();
+			return;
+		}
+		setResult(RESULT_CANCELED, Util.intentByLink(new Intent(), myLink));
+
 		final String host = intent.getStringExtra(HOST_KEY);
 		final String area = intent.getStringExtra(AREA_KEY);
 		final String username = intent.getStringExtra(USERNAME_KEY);
@@ -155,7 +165,7 @@ public class AuthenticationActivity extends Activity {
 			signupView.setText(myResource.getResource("register").getValue());
 			signupView.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
-					setResult(RESULT_SIGNUP);
+					setResult(RESULT_SIGNUP, Util.intentByLink(new Intent(), myLink));
 					finish();
 				}
 			});
@@ -169,7 +179,7 @@ public class AuthenticationActivity extends Activity {
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				final Intent data = new Intent();
+				final Intent data = Util.intentByLink(new Intent(), myLink);
 				data.putExtra(
 					USERNAME_KEY,
 					usernameView.getText().toString()

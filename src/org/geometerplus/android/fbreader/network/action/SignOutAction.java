@@ -23,36 +23,36 @@ import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.network.NetworkCatalogActions;
 
-public class SignOutAction extends CatalogAction {
+public class SignOutAction extends Action {
 	public SignOutAction(Activity activity) {
-		super(activity, ActionCode.SIGNOUT, "signOut");
+		super(activity, ActionCode.SIGNOUT, "signOut", -1);
 	}
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		if (!super.isVisible(tree)) {
+		if (!(tree instanceof NetworkCatalogRootTree)) {
 			return false;
 		}
 
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
+		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
 		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 		return mgr != null && mgr.mayBeAuthorised(false);
 	}
 
 	@Override
 	public void run(NetworkTree tree) {
-		NetworkCatalogActions.doSignOut(myActivity, (NetworkCatalogTree)tree);
+		NetworkCatalogActions.doSignOut(myActivity, (NetworkCatalogRootTree)tree);
 	}
 
 	@Override
 	public String getOptionsLabel(NetworkTree tree) {
 		final NetworkAuthenticationManager mgr =
-			(((NetworkCatalogTree)tree).Item).Link.authenticationManager();
+			(((NetworkCatalogRootTree)tree).Item).Link.authenticationManager();
 		final String userName =
 			mgr != null && mgr.mayBeAuthorised(false) ? mgr.currentUserName() : "";
 		return super.getOptionsLabel(tree).replace("%s", userName);
@@ -61,7 +61,7 @@ public class SignOutAction extends CatalogAction {
 	@Override
 	public String getContextLabel(NetworkTree tree) {
 		final NetworkAuthenticationManager mgr =
-			(((NetworkCatalogTree)tree).Item).Link.authenticationManager();
+			(((NetworkCatalogRootTree)tree).Item).Link.authenticationManager();
 		final String userName =
 			mgr != null && mgr.mayBeAuthorised(false) ? mgr.currentUserName() : "";
 		return super.getContextLabel(tree).replace("%s", userName);

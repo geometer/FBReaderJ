@@ -60,9 +60,13 @@ public abstract class BaseActivity extends ListActivity {
 	}
 
 	@Override
-	protected void onNewIntent(Intent intent) {
+	protected void onNewIntent(final Intent intent) {
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
-			init(intent);
+			runOnUiThread(new Runnable() {
+				public void run() {
+					init(intent);
+				}
+			});
 		} else {
 			super.onNewIntent(intent);
 		}

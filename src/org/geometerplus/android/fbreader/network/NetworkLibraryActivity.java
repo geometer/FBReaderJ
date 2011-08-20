@@ -34,6 +34,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -214,8 +215,13 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 	private void fillContextMenuList() {
 		myContextMenuActions.add(new OpenCatalogAction(this));
+		myContextMenuActions.add(new OpenInBrowserAction(this));
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
+		myContextMenuActions.add(new SignOutAction(this));
 		myContextMenuActions.add(new TopupAction(this));
+		myContextMenuActions.add(new SignInAction(this));
+		myContextMenuActions.add(new EditCustomCatalogAction(this));
+		myContextMenuActions.add(new RemoveCustomCatalogAction(this));
 	}
 
 	@Override
@@ -234,10 +240,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				}
 			}
 			if (count == 0) {
+				/*
 				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
 				if (actions != null) {
 					actions.buildContextMenu(this, menu, tree);
 				}
+				*/
 			} else if (count > 1) {
 				menu.setHeaderTitle(tree.getName());
 				for (Action a : myContextMenuActions) {
@@ -249,15 +257,48 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		}
 	}
 
+	private void runAction(final Action action, final NetworkTree tree) {
+		if (tree instanceof NetworkCatalogTree) {
+			final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
+			switch (item.getVisibility()) {
+				case B3_TRUE:
+					action.run(tree);
+					break;
+				case B3_UNDEFINED:
+					Util.runAuthenticationDialog(this, item.Link, null, new Runnable() {
+						public void run() {
+							if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
+								return;
+							}
+							if (action.Code != ActionCode.SIGNIN) {
+								action.run(tree);
+							}
+						}
+					});
+					break;
+			}
+		} else {
+			action.run(tree);
+		}
+	}
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
 		if (tree != null) {
+			for (Action a : myContextMenuActions) {
+				if (a.Code == item.getItemId()) {
+					runAction(a, tree);
+					return true;
+				}
+			}
+			/*
 			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
 			if (actions != null && actions.runAction(this, tree, item.getItemId())) {
 				return true;
 			}
+			*/
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -270,14 +311,13 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
 		Action defaultAction = null;
-		int count = 0;
 		for (Action a : myContextMenuActions) {
 			if (a.isVisible(tree) && a.isEnabled(tree)) {
-				defaultAction = a;
-				++count;
+				runAction(a, tree);
+				return;
 			}
 		}
-		if (count == 0) {
+		/*
 			final NetworkView networkView = NetworkView.Instance();
 			final NetworkTreeActions actions = networkView.getActions(tree);
 			if (actions == null) {
@@ -292,11 +332,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				return;
 			}
 			actions.runAction(this, tree, actionCode);
-		} else if (count == 1) {
-			defaultAction.run(tree);
-		} else {
-			// TODO: select "default" action
-		}
+		*/
 	}
 
 	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
@@ -309,9 +345,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				myCredentialsCreator.onDataReceived(resultCode, intent);
 				break;
 			case CUSTOM_AUTHENTICATION_CODE:
-				Util.processCustomAuthentication(
-					this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent
-				);
+				Util.processCustomAuthentication(this, resultCode, intent);
 				break;
 			case SIGNUP_CODE:
 				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);

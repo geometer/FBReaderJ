@@ -66,7 +66,6 @@ class NetworkBookActions extends NetworkTreeActions {
 			book.reference(UrlInfo.Type.Book) == null;
 	}
 
-	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof NetworkBookTree
 			|| tree instanceof NetworkAuthorTree

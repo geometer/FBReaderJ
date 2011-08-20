@@ -29,7 +29,6 @@ import org.geometerplus.android.fbreader.network.action.ActionCode;
 class SearchItemActions extends NetworkTreeActions {
 	private static final int RUN_SEARCH_ITEM_ID = 0;
 
-	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof SearchItemTree;
 	}

@@ -43,7 +43,6 @@ public class NetworkView {
 	}
 
 	private volatile boolean myInitialized;
-	private final ArrayList<NetworkTreeActions> myActions = new ArrayList<NetworkTreeActions>();
 
 	private NetworkView() {
 	}
@@ -59,11 +58,6 @@ public class NetworkView {
 		library.initialize();
 		library.synchronize();
 
-		myActions.add(new NetworkBookActions());
-		myActions.add(new NetworkCatalogActions());
-		myActions.add(new SearchItemActions());
-		myActions.trimToSize();
-
 		myInitialized = true;
 	}
 
@@ -78,19 +72,6 @@ public class NetworkView {
 		library.finishBackgroundUpdate();
 		library.synchronize();
 		fireModelChanged();
-	}
-
-	/*
-	 * NetworkItem's actions
-	 */
-
-	public NetworkTreeActions getActions(NetworkTree tree) {
-		for (NetworkTreeActions actions : myActions) {
-			if (actions.canHandleTree(tree)) {
-				return actions;
-			}
-		}
-		return null;
 	}
 
 	/*
@@ -147,7 +128,7 @@ public class NetworkView {
 		}
 	}
 
-	final void fireModelChangedAsync() {
+	public final void fireModelChangedAsync() {
 		synchronized (myEventListeners) {
 			if (myEventHandler != null) {
 				myEventHandler.sendEmptyMessage(0);

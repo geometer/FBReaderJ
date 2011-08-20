@@ -43,6 +43,14 @@ public abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
 
+	static INetworkLink linkByIntent(Intent intent) {
+		return NetworkLibrary.Instance().getLinkByUrl(intent.getData().toString());
+	}
+
+	static Intent intentByLink(Intent intent, INetworkLink link) {
+		return intent.setData(Uri.parse(link.getUrl(UrlInfo.Type.Catalog)));
+	}
+
 	private static boolean testService(Activity activity, String action, String url) {
 		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
 	}
@@ -77,7 +85,7 @@ public abstract class Util implements UserRegistrationConstants {
 	public static void runAuthenticationDialog(Activity activity, INetworkLink link, String error, Runnable onSuccess) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 
-		final Intent intent = new Intent(activity, AuthenticationActivity.class);
+		final Intent intent = intentByLink(new Intent(activity, AuthenticationActivity.class), link);
 		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.UserNameOption.getValue());
 		if (isRegistrationSupported(activity, link)) {
 			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
@@ -90,9 +98,15 @@ public abstract class Util implements UserRegistrationConstants {
 		activity.startActivityForResult(intent, NetworkLibraryActivity.CUSTOM_AUTHENTICATION_CODE);
 	}
 
-	static void processCustomAuthentication(final Activity activity, final INetworkLink link, int resultCode, Intent data) {
+	static void processCustomAuthentication(final Activity activity, int resultCode, Intent data) {
+		final INetworkLink link = linkByIntent(data);
+		if (link == null) {
+			return;
+		}
+
 		final Runnable onSuccess = ourAfterRegisrationMap.get(activity);
 		ourAfterRegisrationMap.remove(activity);
+
 		switch (resultCode) {
 			case AuthenticationActivity.RESULT_CANCELED:
 				UIUtil.wait(
@@ -187,7 +201,7 @@ public abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static void openInBrowser(Context context, String url) {
+	public static void openInBrowser(Context context, String url) {
 		if (url != null) {
 			url = NetworkLibrary.Instance().rewriteUrl(url, true);
 			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));

@@ -45,13 +45,12 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 
 	public static boolean isTopupSupported(INetworkLink link) {
 		// TODO: more correct check
-		return link.authenticationManager().topupLink() != null;
+		return link.getUrlInfo(UrlInfo.Type.TopUp) != null;
 	}
 
 	public static void runMenu(Context context, INetworkLink link, String amount) {
 		context.startActivity(
-			new Intent(context, TopupMenuActivity.class)
-				.setData(Uri.parse(link.getUrlInfo(UrlInfo.Type.Catalog).Url))
+			Util.intentByLink(new Intent(context, TopupMenuActivity.class), link)
 				.putExtra(AMOUNT_KEY, amount)
 		);
 	}
@@ -69,7 +68,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		myAmount = getIntent().getStringExtra(AMOUNT_KEY);
 
 		myInfos = new ArrayList<PluginApi.TopupActionInfo>();
-		if (myLink.authenticationManager().topupLink() != null) {
+		if (myLink.getUrlInfo(UrlInfo.Type.TopUp) != null) {
 			myInfos.add(new PluginApi.TopupActionInfo(
 				Uri.parse(url + "/browser"),
 				NetworkLibrary.resource().getResource("topupViaBrowser").getValue(),
@@ -128,7 +127,9 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 						final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 						if (info.getId().toString().endsWith("/browser")) {
 							// TODO: put amount
-							Util.openInBrowser(TopupMenuActivity.this, mgr.topupLink());
+							if (mgr != null) {
+								Util.openInBrowser(TopupMenuActivity.this, mgr.topupLink());
+							}
 						} else {
 							final Intent intent = new Intent(TOPUP_ACTION, info.getId());
 							if (mgr != null) {

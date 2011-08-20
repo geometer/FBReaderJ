@@ -22,18 +22,8 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.DialogInterface;
-import android.content.ActivityNotFoundException;
-import android.net.Uri;
-import android.view.Menu;
-import android.view.ContextMenu;
-import android.view.MenuItem;
 
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
@@ -42,172 +32,18 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.*;
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.opds.BasketItem;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.action.ActionCode;
 
-public class NetworkCatalogActions extends NetworkTreeActions {
-	@Override
-	public boolean canHandleTree(NetworkTree tree) {
-		return tree instanceof NetworkCatalogTree;
-	}
-
-	@Override
-	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-		final NetworkURLCatalogItem urlItem =
-			item instanceof NetworkURLCatalogItem ? (NetworkURLCatalogItem)item : null;
-		menu.setHeaderTitle(tree.getName());
-
-		boolean hasItems = false;
-
-		final String catalogUrl =
-			urlItem != null ? urlItem.getUrl(UrlInfo.Type.Catalog) : null;
-		if (catalogUrl != null &&
-			(!(item instanceof BasketItem) || item.Link.basket().bookIds().size() > 0)) {
-			addMenuItem(menu, ActionCode.OPEN_CATALOG, "openCatalog");
-			hasItems = true;
-		}
-
-		if (tree instanceof NetworkCatalogRootTree) {
-			if (item.getVisibility() == ZLBoolean3.B3_TRUE) {
-				final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-				if (mgr != null) {
-					if (mgr.mayBeAuthorised(false)) {
-						addMenuItem(menu, ActionCode.SIGNOUT, "signOut", mgr.currentUserName());
-						if (TopupMenuActivity.isTopupSupported(item.Link)) {
-							final String account = mgr.currentAccount();
-							if (account != null) {
-								addMenuItem(menu, ActionCode.TOPUP, "topup", account);
-							}
-						}
-					} else {
-						addMenuItem(menu, ActionCode.SIGNIN, "signIn");
-						//if (mgr.passwordRecoverySupported()) {
-						//	registerAction(new PasswordRecoveryAction(mgr), true);
-						//}
-					}
-				}
-			}
-			INetworkLink link = item.Link; 
-			if (link instanceof ICustomNetworkLink) {
-				addMenuItem(menu, ActionCode.CUSTOM_CATALOG_EDIT, "editCustomCatalog");
-				addMenuItem(menu, ActionCode.CUSTOM_CATALOG_REMOVE, "removeCustomCatalog");
-			}
-		} else {
-			if (urlItem != null && urlItem.getUrl(UrlInfo.Type.HtmlPage) != null) {
-				addMenuItem(menu, ActionCode.OPEN_IN_BROWSER, "openInBrowser");
-				hasItems = true;
-			}
-		}
-
-		if (item.getVisibility() == ZLBoolean3.B3_UNDEFINED &&
-			!hasItems && item.Link.authenticationManager() != null) {
-			addMenuItem(menu, ActionCode.SIGNIN, "signIn");
-		}
-	}
-
-	@Override
-	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-		if (!(item instanceof NetworkURLCatalogItem)) {
-			return ActionCode.OPEN_CATALOG;
-		}
-		final NetworkURLCatalogItem urlItem = (NetworkURLCatalogItem)item;
-		if (urlItem.getUrl(UrlInfo.Type.Catalog) != null) {
-			return ActionCode.OPEN_CATALOG;
-		}
-		if (urlItem.getUrl(UrlInfo.Type.HtmlPage) != null) {
-			return ActionCode.OPEN_IN_BROWSER;
-		}
-		if (urlItem.getVisibility() == ZLBoolean3.B3_UNDEFINED &&
-			urlItem.Link.authenticationManager() != null) {
-			return ActionCode.SIGNIN;
-		}
-		return ActionCode.TREE_NO_ACTION;
-	}
-
-	private boolean consumeByVisibility(final NetworkLibraryActivity activity, final NetworkTree tree, final int actionCode) {
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-		switch (item.getVisibility()) {
-			case B3_TRUE:
-				return false;
-			case B3_UNDEFINED:
-				Util.runAuthenticationDialog(activity, item.Link, null, new Runnable() {
-					public void run() {
-						if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
-							return;
-						}
-						if (actionCode != ActionCode.SIGNIN) {
-							runAction(activity, tree, actionCode);
-						}
-					}
-				});
-				break;
-		}
-		return true;
-	}
-
-	@Override
+public class NetworkCatalogActions {
 	public boolean runAction(final NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
-		if (consumeByVisibility(activity, catalogTree, actionCode)) {
-			return true;
-		}
 
 		final NetworkCatalogItem item = catalogTree.Item;
 		switch (actionCode) {
-			case ActionCode.OPEN_CATALOG:
-				if (item instanceof BasketItem && item.Link.basket().bookIds().size() == 0) {
-					UIUtil.showErrorMessage(activity, "emptyBasket");
-				} else {
-					doExpandCatalog(activity, catalogTree);
-				}
-				return true;
-			case ActionCode.OPEN_IN_BROWSER:
-				if (item instanceof NetworkURLCatalogItem) {
-					final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-					final String message = NetworkLibrary.resource().getResource("confirmQuestions").getResource("openInBrowser").getValue();
-					new AlertDialog.Builder(activity)
-						.setTitle(catalogTree.getName())
-						.setMessage(message)
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								Util.openInBrowser(activity, item.getUrl(UrlInfo.Type.HtmlPage));
-							}
-						})
-						.setNegativeButton(buttonResource.getResource("no").getValue(), null)
-						.create().show();
-				}
-				return true;
-			case ActionCode.RELOAD_CATALOG:
-				doReloadCatalog(activity, catalogTree);
-				return true;
 			case ActionCode.SIGNIN:
 				Util.runAuthenticationDialog(activity, item.Link, null, null);
-				return true;
-			case ActionCode.SIGNOUT:
-				doSignOut(activity, catalogTree);
-				return true;
-			case ActionCode.TOPUP:
-				// TODO: replace 112 with required amount
-				TopupMenuActivity.runMenu(activity, item.Link, "112");
-				return true;
-			case ActionCode.CUSTOM_CATALOG_EDIT:
-			{
-				final Intent intent = new Intent(activity, AddCustomCatalogActivity.class);
-				AddCustomCatalogActivity.addLinkToIntent(
-					intent,
-					(ICustomNetworkLink)item.Link
-				);
-				activity.startActivity(intent);
-				return true;
-			}
-			case ActionCode.CUSTOM_CATALOG_REMOVE:
-				removeCustomLink((ICustomNetworkLink)item.Link);
 				return true;
 			case ActionCode.BASKET_CLEAR:
 				item.Link.basket().clear();
@@ -218,7 +54,7 @@ public class NetworkCatalogActions extends NetworkTreeActions {
 		return false;
 	}
 
-	private static class CatalogExpander extends ItemsLoader {
+	public static class CatalogExpander extends ItemsLoader {
 		private final NetworkCatalogTree myTree;
 		private final boolean myCheckAuthentication;
 		private final boolean myResumeNotLoad;
@@ -347,7 +183,7 @@ public class NetworkCatalogActions extends NetworkTreeActions {
 		});
 	}
 
-	private static void clearTree(Activity activity, final NetworkCatalogTree tree) {
+	public static void clearTree(Activity activity, final NetworkCatalogTree tree) {
 		activity.runOnUiThread(new Runnable() {
 			public void run() {
 				tree.ChildrenItems.clear();
@@ -355,18 +191,6 @@ public class NetworkCatalogActions extends NetworkTreeActions {
 				NetworkView.Instance().fireModelChanged();
 			}
 		});
-	}
-
-	public static void doReloadCatalog(Activity activity, final NetworkCatalogTree tree) {
-		if (ItemsLoadingService.getRunnable(tree) != null) {
-			return;
-		}
-		clearTree(activity, tree);
-		ItemsLoadingService.start(
-			activity,
-			tree,
-			new CatalogExpander(activity, tree, false, false)
-		);
 	}
 
 	public static void doSignOut(final Activity activity, NetworkCatalogTree tree) {
@@ -387,12 +211,5 @@ public class NetworkCatalogActions extends NetworkTreeActions {
 			}
 		};
 		UIUtil.wait("signOut", runnable, activity);
-	}
-
-	private void removeCustomLink(ICustomNetworkLink link) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		library.removeCustomLink(link);
-		library.synchronize();
-		NetworkView.Instance().fireModelChangedAsync();
 	}
 }

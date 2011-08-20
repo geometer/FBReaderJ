@@ -61,8 +61,6 @@ abstract class NetworkTreeActions {
 		return addMenuItemWithText(menu, id, getTitleValue(key, arg));
 	}
 
-	public abstract boolean canHandleTree(NetworkTree tree);
-
 	public abstract int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree);
 
 	public abstract boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode);

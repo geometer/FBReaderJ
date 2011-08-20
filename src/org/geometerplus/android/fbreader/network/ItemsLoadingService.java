@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 public class ItemsLoadingService extends Service {
 	private static final String KEY = "ItemsLoadingRunnable";
 
-	static void start(Context context, NetworkTree tree, ItemsLoader runnable) {
+	public static void start(Context context, NetworkTree tree, ItemsLoader runnable) {
 		boolean doDownload = false;
 		synchronized (tree) {
 			if (tree.getUserData(KEY) == null) {
