@@ -222,6 +222,8 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		myContextMenuActions.add(new SignInAction(this));
 		myContextMenuActions.add(new EditCustomCatalogAction(this));
 		myContextMenuActions.add(new RemoveCustomCatalogAction(this));
+		myContextMenuActions.add(new ClearBasketAction(this));
+		myContextMenuActions.add(new ShowBookInfoAction(this));
 	}
 
 	@Override

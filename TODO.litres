@@ -7,7 +7,8 @@ Search actions
 использовать эту сумму в sms и в browser topup
 добавить "другие книги" в "мои книги" по авторам-сериям
 basket
-	ActionCode.BASKET_CLEAR: item.Link.basket().clear();
+	context menu resources
+	options menu resources
 	ActionCode.BASKET_BUY_ALL_BOOKS:
 separate catalog search
 предлагать на выбор вход или регистрацию, "signup link" убран из диалога авторизации
