@@ -345,40 +345,9 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					ItemsLoadingService.getRunnable(tree) == null;
 			}
 		});
-		myMenuActions.add(new CatalogAction(ActionCode.SIGNIN, "signIn") {
-			@Override
-			public boolean isVisible(NetworkTree tree) {
-				if (!super.isVisible(tree)) {
-					return false;
-				}
-
-				final NetworkAuthenticationManager mgr =
-					(((NetworkCatalogTree)tree).Item).Link.authenticationManager();
-				return mgr != null && !mgr.mayBeAuthorised(false);
-			}
-		});
+		myMenuActions.add(new SignInAction(this));
 		myMenuActions.add(new SignUpAction(this));
-		myMenuActions.add(new CatalogAction(ActionCode.SIGNOUT, "signOut") {
-			@Override
-			public boolean isVisible(NetworkTree tree) {
-				if (!super.isVisible(tree)) {
-					return false;
-				}
-
-				final NetworkAuthenticationManager mgr =
-					(((NetworkCatalogTree)tree).Item).Link.authenticationManager();
-				return mgr != null && mgr.mayBeAuthorised(false);
-			}
-
-			@Override
-			public String getLabel(NetworkTree tree) {
-				final NetworkAuthenticationManager mgr =
-					(((NetworkCatalogTree)tree).Item).Link.authenticationManager();
-				final String userName =
-					mgr != null && mgr.mayBeAuthorised(false) ? mgr.currentUserName() : "";
-				return super.getLabel(tree).replace("%s", userName);
-			}
-		});
+		myMenuActions.add(new SignOutAction(this));
 		myMenuActions.add(new CatalogAction(ActionCode.TOPUP, "topup") {
 			@Override
 			public boolean isVisible(NetworkTree tree) {

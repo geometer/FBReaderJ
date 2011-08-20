@@ -74,7 +74,7 @@ public abstract class Util implements UserRegistrationConstants {
 	private static final Map<Activity,Runnable> ourAfterRegisrationMap =
 		new HashMap<Activity,Runnable>();
 
-	static void runAuthenticationDialog(Activity activity, INetworkLink link, String error, Runnable onSuccess) {
+	public static void runAuthenticationDialog(Activity activity, INetworkLink link, String error, Runnable onSuccess) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 
 		final Intent intent = new Intent(activity, AuthenticationActivity.class);

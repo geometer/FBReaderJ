@@ -48,7 +48,7 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.action.ActionCode;
 
-class NetworkCatalogActions extends NetworkTreeActions {
+public class NetworkCatalogActions extends NetworkTreeActions {
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof NetworkCatalogTree;
@@ -369,7 +369,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 		);
 	}
 
-	private void doSignOut(final NetworkLibraryActivity activity, NetworkCatalogTree tree) {
+	public static void doSignOut(final NetworkLibraryActivity activity, NetworkCatalogTree tree) {
 		final NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
