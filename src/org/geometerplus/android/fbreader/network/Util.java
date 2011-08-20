@@ -34,6 +34,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.util.UIUtil;
@@ -141,5 +142,15 @@ public abstract class Util implements UserRegistrationConstants {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(NetworkLibraryActivity.TREE_KEY_KEY);
 		return library.getTreeByKey(key);
+	}
+
+	public static void clearTree(Activity activity, final NetworkCatalogTree tree) {
+		activity.runOnUiThread(new Runnable() {
+			public void run() {
+				tree.ChildrenItems.clear();
+				tree.clear();
+				NetworkView.Instance().fireModelChanged();
+			}
+		});
 	}
 }

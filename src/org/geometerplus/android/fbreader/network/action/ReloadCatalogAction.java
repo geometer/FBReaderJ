@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.network.NetworkCatalogActions;
+import org.geometerplus.android.fbreader.network.Util;
 import org.geometerplus.android.fbreader.network.ItemsLoadingService;
 
 public class ReloadCatalogAction extends CatalogAction {
@@ -54,7 +54,7 @@ public class ReloadCatalogAction extends CatalogAction {
 		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
-		NetworkCatalogActions.clearTree(myActivity, (NetworkCatalogTree)tree);
+		Util.clearTree(myActivity, (NetworkCatalogTree)tree);
 		ItemsLoadingService.start(
 			myActivity,
 			tree,

@@ -1,9 +1,16 @@
+Book actions
+Search actions
+проверить все пути регистрации
+
 правильно ли вызывается commitItems?
 передавать сумму денег в topup-activity
 использовать эту сумму в sms и в browser topup
 добавить "другие книги" в "мои книги" по авторам-сериям
 basket
+	ActionCode.BASKET_CLEAR: item.Link.basket().clear();
+	ActionCode.BASKET_BUY_ALL_BOOKS:
 separate catalog search
+предлагать на выбор вход или регистрацию, "signup link" убран из диалога авторизации
 покупка "без регистрации"
 yandex money
 self service

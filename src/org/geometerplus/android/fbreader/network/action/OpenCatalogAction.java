@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.network.NetworkCatalogActions;
 import org.geometerplus.android.fbreader.network.NetworkView;
 import org.geometerplus.android.fbreader.network.ItemsLoadingService;
 import org.geometerplus.android.fbreader.network.Util;
@@ -78,7 +77,7 @@ public class OpenCatalogAction extends CatalogAction {
 							return;
 						}
 					} else {
-						NetworkCatalogActions.clearTree(myActivity, tree);
+						Util.clearTree(myActivity, tree);
 					}
 				}
 
