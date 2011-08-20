@@ -17,31 +17,34 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.android.fbreader.network.action;
 
 import android.content.Intent;
 
 import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.tree.RootTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 
-class AddCustomCatalogItemActions extends NetworkTreeActions {
-	@Override
-	public boolean canHandleTree(NetworkTree tree) {
-		return tree instanceof AddCustomCatalogItemTree;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+import org.geometerplus.android.fbreader.network.AddCustomCatalogActivity;
+
+import org.geometerplus.zlibrary.ui.android.R;
+
+public class AddCustomCatalogAction extends Action {
+	private final NetworkLibraryActivity myActivity;
+
+	public AddCustomCatalogAction(NetworkLibraryActivity activity) {
+		super(ActionCode.CUSTOM_CATALOG_ADD, "addCustomCatalog", R.drawable.ic_menu_add);
+		myActivity = activity;
 	}
 
 	@Override
-	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
-		return 0;
+	public boolean isVisible(NetworkTree tree) {
+		return tree instanceof RootTree || tree instanceof AddCustomCatalogItemTree;
 	}
 
 	@Override
-	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
-		addCustomCatalog(activity);
-		return true;
-	}
-
-	static void addCustomCatalog(NetworkLibraryActivity activity) {
-		activity.startActivity(new Intent(activity, AddCustomCatalogActivity.class));
+	public void run(NetworkTree tree) {
+		myActivity.startActivity(new Intent(myActivity, AddCustomCatalogActivity.class));
 	}
 }

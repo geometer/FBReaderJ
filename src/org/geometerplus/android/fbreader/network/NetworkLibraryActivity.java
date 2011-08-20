@@ -74,6 +74,9 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	private volatile Intent myIntent;
 	private volatile boolean myInProgress;
 
+	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
+	final List<Action> myContextMenuActions = new ArrayList<Action>();
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -209,14 +212,32 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		return super.onKeyDown(keyCode, event);
 	}
 
+	private void fillContextMenuList() {
+		myContextMenuActions.add(new AddCustomCatalogAction(this));
+	}
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+		if (myContextMenuActions.isEmpty()) {
+			fillContextMenuList();
+		}
+
 		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
 		if (tree != null) {
-			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-			if (actions != null) {
-				actions.buildContextMenu(this, menu, tree);
+			int count = 0;
+			for (Action a : myContextMenuActions) {
+				if (a.isVisible(tree) && a.isEnabled(tree)) {
+					++count;
+				}
+			}
+			if (count == 0) {
+				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
+				if (actions != null) {
+					actions.buildContextMenu(this, menu, tree);
+				}
+			} else if (count > 1) {
+				// TODO: build menu
 			}
 		}
 	}
@@ -236,21 +257,39 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		final NetworkTree networkTree = (NetworkTree)getListAdapter().getItem(position);
-		final NetworkView networkView = NetworkView.Instance();
-		final NetworkTreeActions actions = networkView.getActions(networkTree);
-		if (actions == null) {
-			return;
+		if (myContextMenuActions.isEmpty()) {
+			fillContextMenuList();
 		}
-		final int actionCode = actions.getDefaultActionCode(this, networkTree);
-		if (actionCode == ActionCode.TREE_SHOW_CONTEXT_MENU) {
-			listView.showContextMenuForChild(view);
-			return;
+
+		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
+		Action defaultAction = null;
+		int count = 0;
+		for (Action a : myContextMenuActions) {
+			if (a.isVisible(tree) && a.isEnabled(tree)) {
+				defaultAction = a;
+				++count;
+			}
 		}
-		if (actionCode < 0) {
-			return;
+		if (count == 0) {
+			final NetworkView networkView = NetworkView.Instance();
+			final NetworkTreeActions actions = networkView.getActions(tree);
+			if (actions == null) {
+				return;
+			}
+			final int actionCode = actions.getDefaultActionCode(this, tree);
+			if (actionCode == ActionCode.TREE_SHOW_CONTEXT_MENU) {
+				listView.showContextMenuForChild(view);
+				return;
+			}
+			if (actionCode < 0) {
+				return;
+			}
+			actions.runAction(this, tree, actionCode);
+		} else if (count == 1) {
+			defaultAction.run(tree);
+		} else {
+			// TODO: select "default" action
 		}
-		actions.runAction(this, networkTree, actionCode);
 	}
 
 	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
@@ -281,39 +320,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue().replace("%s", arg);
 	}
 
-	private final MenuItem addOptionsItem(Menu menu, int id, String key/*, int iconId*/) {
-		final MenuItem item = menu.add(0, id, 0, getOptionsValue(key));
-		//item.setIcon(iconId);
-		return item;
-	}
-
-	private final MenuItem addOptionsItem(Menu menu, int id, String key, String arg/*, int iconId*/) {
-		final MenuItem item = menu.add(0, id, 0, getOptionsValue(key, arg));
-		//item.setIcon(iconId);
-		return item;
-	}
-
-	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
-		final String label = NetworkLibrary.resource().getResource("menu").getResource(resourceKey).getValue();
-		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
-	}
-
-	private MenuItem addMenuItem(Menu menu, Action action, NetworkTree tree) {
-		final MenuItem item = menu.add(0, action.Code, Menu.NONE, "");
-		if (action.IconId != -1) {
-			item.setIcon(action.IconId);
-		}
-		return item;
-	}
-
-	final List<Action> myMenuActions = new ArrayList<Action>();
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 
-		myMenuActions.clear();
-		myMenuActions.add(new RootAction(ActionCode.SEARCH, "networkSearch", R.drawable.ic_menu_search) {
+		myOptionsMenuActions.clear();
+		myOptionsMenuActions.add(new RootAction(ActionCode.SEARCH, "networkSearch", R.drawable.ic_menu_search) {
 			@Override
 			public boolean isEnabled(NetworkTree tree) {
 				return !searchIsInProgress();
@@ -324,20 +336,15 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				onSearchRequested();
 			}
 		});
-		myMenuActions.add(new RootAction(ActionCode.CUSTOM_CATALOG_ADD, "addCustomCatalog", R.drawable.ic_menu_add) {
-			@Override
-			public void run(NetworkTree tree) {
-				AddCustomCatalogItemActions.addCustomCatalog(NetworkLibraryActivity.this);
-			}
-		});
-		myMenuActions.add(new RootAction(ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
+		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
+		myOptionsMenuActions.add(new RootAction(ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
 			@Override
 			public void run(NetworkTree tree) {
 				refreshCatalogsList();
 			}
 		});
-		myMenuActions.add(new LanguageFilterAction(this));
-		myMenuActions.add(new CatalogAction(ActionCode.RELOAD_CATALOG, "reload") {
+		myOptionsMenuActions.add(new LanguageFilterAction(this));
+		myOptionsMenuActions.add(new CatalogAction(ActionCode.RELOAD_CATALOG, "reload") {
 			@Override
 			public boolean isVisible(NetworkTree tree) {
 				if (!super.isVisible(tree)) {
@@ -357,10 +364,10 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				NetworkCatalogActions.doReloadCatalog(NetworkLibraryActivity.this, (NetworkCatalogTree)tree);
 			}
 		});
-		myMenuActions.add(new SignInAction(this));
-		myMenuActions.add(new SignUpAction(this));
-		myMenuActions.add(new SignOutAction(this));
-		myMenuActions.add(new CatalogAction(ActionCode.TOPUP, "topup") {
+		myOptionsMenuActions.add(new SignInAction(this));
+		myOptionsMenuActions.add(new SignUpAction(this));
+		myOptionsMenuActions.add(new SignOutAction(this));
+		myOptionsMenuActions.add(new CatalogAction(ActionCode.TOPUP, "topup") {
 			@Override
 			public boolean isVisible(NetworkTree tree) {
 				if (!super.isVisible(tree)) {
@@ -384,8 +391,11 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		});
 
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
-		for (Action a : myMenuActions) {
-			addMenuItem(menu, a, tree);
+		for (Action a : myOptionsMenuActions) {
+			final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
+			if (a.IconId != -1) {
+				item.setIcon(a.IconId);
+			}
 		}
 		//if (tree instanceof NetworkCatalogTree) {
 			//if (((NetworkCatalogTree)tree).Item instanceof BasketItem) {
@@ -401,7 +411,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		super.onPrepareOptionsMenu(menu);
 
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
-		for (Action a : myMenuActions) {
+		for (Action a : myOptionsMenuActions) {
 			final MenuItem item = menu.findItem(a.Code);
 			if (a.isVisible(tree)) {
 				item.setVisible(true);
@@ -423,7 +433,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
-		for (Action a : myMenuActions) {
+		for (Action a : myOptionsMenuActions) {
 			if (a.Code == item.getItemId()) {
 				a.run(tree);
 				break;
