@@ -42,7 +42,7 @@ public class SignInAction extends Action {
 
 		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
 		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-		return mgr != null && mgr.mayBeAuthorised(false);
+		return mgr != null && !mgr.mayBeAuthorised(false);
 	}
 
 	@Override

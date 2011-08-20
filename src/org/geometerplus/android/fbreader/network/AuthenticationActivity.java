@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.*;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -105,6 +107,9 @@ public class AuthenticationActivity extends Activity {
 
 	private ZLResource myResource;
 	private INetworkLink myLink;
+	private Button myOkButton;
+	private Timer myOkButtonUpdater;
+	private TextView myUsernameView;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -148,8 +153,8 @@ public class AuthenticationActivity extends Activity {
 			myResource.getResource("password").getValue()
 		);
 
-		final TextView usernameView = findTextView(R.id.authentication_username);
-		usernameView.setText(username);
+		myUsernameView = findTextView(R.id.authentication_username);
+		myUsernameView.setText(username);
 
 		final TextView errorView = findTextView(R.id.authentication_error);
 		if (error != null && !"".equals(error)) {
@@ -175,14 +180,14 @@ public class AuthenticationActivity extends Activity {
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
-		final Button okButton = findButton(R.id.authentication_ok_button);
-		okButton.setText(buttonResource.getResource("ok").getValue());
-		okButton.setOnClickListener(new Button.OnClickListener() {
+		myOkButton = findButton(R.id.authentication_ok_button);
+		myOkButton.setText(buttonResource.getResource("ok").getValue());
+		myOkButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				final Intent data = Util.intentByLink(new Intent(), myLink);
 				data.putExtra(
 					USERNAME_KEY,
-					usernameView.getText().toString()
+					myUsernameView.getText().toString()
 				);
 				data.putExtra(
 					PASSWORD_KEY,
@@ -208,5 +213,32 @@ public class AuthenticationActivity extends Activity {
 
 	private Button findButton(int resourceId) {
 		return (Button)findViewById(resourceId);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (myOkButtonUpdater == null) {
+			myOkButtonUpdater = new Timer();
+			myOkButtonUpdater.schedule(new TimerTask() {
+				public void run() {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							myOkButton.setEnabled(myUsernameView.getText().length() > 0);
+						}
+					});
+				}
+			}, 0, 100);
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		if (myOkButtonUpdater != null) {
+			myOkButtonUpdater.cancel();
+			myOkButtonUpdater.purge();
+			myOkButtonUpdater = null;
+		}
+		super.onPause();
 	}
 }

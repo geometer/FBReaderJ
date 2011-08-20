@@ -135,13 +135,6 @@ public abstract class Util implements UserRegistrationConstants {
 					data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
 				final String password =
 					data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
-				if (username.length() == 0) {
-					runAuthenticationDialog(
-						activity, link,
-						resource.getResource("loginIsEmpty").getValue(),
-						onSuccess
-					);
-				}
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
 				mgr.UserNameOption.setValue(username);
 				final Runnable runnable = new Runnable() {
