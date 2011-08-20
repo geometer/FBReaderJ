@@ -21,6 +21,8 @@ package org.geometerplus.android.fbreader.network.action;
 
 import java.util.*;
 
+import android.app.Activity;
+
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 
@@ -28,9 +30,11 @@ public abstract class Action {
 	public final int Code;
 	public final int IconId;
 
+	protected final Activity myActivity;
 	private final String myResourceKey;
 
-	protected Action(int code, String resourceKey, int iconId) {
+	protected Action(Activity activity, int code, String resourceKey, int iconId) {
+		myActivity = activity;
 		Code = code;
 		myResourceKey = resourceKey;
 		IconId = iconId;
@@ -44,7 +48,12 @@ public abstract class Action {
 
 	public abstract void run(NetworkTree tree);
 
-	public String getLabel(NetworkTree tree) {
+	public String getContextLabel(NetworkTree tree) {
+		return
+			NetworkLibrary.resource().getResource(myResourceKey).getValue();
+	}
+
+	public String getOptionsLabel(NetworkTree tree) {
 		return
 			NetworkLibrary.resource().getResource("menu").getResource(myResourceKey).getValue();
 	}

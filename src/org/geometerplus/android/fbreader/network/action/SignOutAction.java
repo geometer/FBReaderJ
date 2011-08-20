@@ -19,20 +19,18 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
+import android.app.Activity;
+
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 import org.geometerplus.android.fbreader.network.NetworkCatalogActions;
 
 public class SignOutAction extends CatalogAction {
-	private final NetworkLibraryActivity myActivity;
-
-	public SignOutAction(NetworkLibraryActivity activity) {
-		super(ActionCode.SIGNOUT, "signOut");
-		myActivity = activity;
+	public SignOutAction(Activity activity) {
+		super(activity, ActionCode.SIGNOUT, "signOut");
 	}
 
 	@Override
@@ -52,11 +50,20 @@ public class SignOutAction extends CatalogAction {
 	}
 
 	@Override
-	public String getLabel(NetworkTree tree) {
+	public String getOptionsLabel(NetworkTree tree) {
 		final NetworkAuthenticationManager mgr =
 			(((NetworkCatalogTree)tree).Item).Link.authenticationManager();
 		final String userName =
 			mgr != null && mgr.mayBeAuthorised(false) ? mgr.currentUserName() : "";
-		return super.getLabel(tree).replace("%s", userName);
+		return super.getOptionsLabel(tree).replace("%s", userName);
+	}
+
+	@Override
+	public String getContextLabel(NetworkTree tree) {
+		final NetworkAuthenticationManager mgr =
+			(((NetworkCatalogTree)tree).Item).Link.authenticationManager();
+		final String userName =
+			mgr != null && mgr.mayBeAuthorised(false) ? mgr.currentUserName() : "";
+		return super.getContextLabel(tree).replace("%s", userName);
 	}
 }

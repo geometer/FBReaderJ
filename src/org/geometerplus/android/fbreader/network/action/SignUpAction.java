@@ -19,20 +19,18 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
+import android.app.Activity;
+
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 import org.geometerplus.android.fbreader.network.Util;
 
 public class SignUpAction extends CatalogAction {
-	private final NetworkLibraryActivity myActivity;
-
-	public SignUpAction(NetworkLibraryActivity activity) {
-		super(ActionCode.SIGNUP, "signUp");
-		myActivity = activity;
+	public SignUpAction(Activity activity) {
+		super(activity, ActionCode.SIGNUP, "signUp");
 	}
 
 	@Override

@@ -19,12 +19,14 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
+import android.app.Activity;
+
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.RootTree;
 
 public abstract class RootAction extends Action {
-	protected RootAction(int code, String resourceKey, int iconId) {
-		super(code, resourceKey, iconId);
+	protected RootAction(Activity activity, int code, String resourceKey, int iconId) {
+		super(activity, code, resourceKey, iconId);
 	}
 
 	@Override

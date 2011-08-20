@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network.action;
 
 import java.util.*;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
@@ -32,15 +33,11 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 import org.geometerplus.android.fbreader.network.NetworkView;
 
 public class LanguageFilterAction extends RootAction {
-	private final NetworkLibraryActivity myActivity;
-
-	public LanguageFilterAction(NetworkLibraryActivity activity) {
-		super(ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages);
-		myActivity = activity;
+	public LanguageFilterAction(Activity activity) {
+		super(activity, ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages);
 	}
 
 	@Override

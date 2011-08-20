@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
+import android.app.Activity;
+
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
@@ -26,15 +28,11 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.TopUpTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 import org.geometerplus.android.fbreader.network.TopupMenuActivity;
 
 public class TopupAction extends Action {
-	private final NetworkLibraryActivity myActivity;
-
-	public TopupAction(NetworkLibraryActivity activity) {
-		super(ActionCode.TOPUP, "topup", -1);
-		myActivity = activity;
+	public TopupAction(Activity activity) {
+		super(activity, ActionCode.TOPUP, "topup", -1);
 	}
 
 	@Override
@@ -65,5 +63,23 @@ public class TopupAction extends Action {
 		if (link != null) {
 			TopupMenuActivity.runMenu(myActivity, link, null);
 		}
+	}
+
+	@Override
+	public String getContextLabel(NetworkTree tree) {
+		INetworkLink link = null;
+		if (tree instanceof TopUpTree) {
+			link = ((TopUpTree)tree).Item.Link;
+		} else if (tree instanceof NetworkCatalogTree) {
+			link = ((NetworkCatalogTree)tree).Item.Link;
+		}
+		String account = null;
+		if (link != null) {
+			final NetworkAuthenticationManager mgr = link.authenticationManager();
+			if (mgr != null && mgr.mayBeAuthorised(false)) {
+				account = mgr.currentAccount();
+			}
+		}
+		return super.getContextLabel(tree).replace("%s", account != null ? account : "");
 	}
 }

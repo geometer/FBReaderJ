@@ -19,23 +19,20 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.RootTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 import org.geometerplus.android.fbreader.network.AddCustomCatalogActivity;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class AddCustomCatalogAction extends Action {
-	private final NetworkLibraryActivity myActivity;
-
-	public AddCustomCatalogAction(NetworkLibraryActivity activity) {
-		super(ActionCode.CUSTOM_CATALOG_ADD, "addCustomCatalog", R.drawable.ic_menu_add);
-		myActivity = activity;
+	public AddCustomCatalogAction(Activity activity) {
+		super(activity, ActionCode.CUSTOM_CATALOG_ADD, "addCustomCatalog", R.drawable.ic_menu_add);
 	}
 
 	@Override

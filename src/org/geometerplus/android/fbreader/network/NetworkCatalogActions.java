@@ -306,7 +306,7 @@ public class NetworkCatalogActions extends NetworkTreeActions {
 		}
 	}
 
-	static void doExpandCatalog(final Activity activity, final NetworkCatalogTree tree) {
+	public static void doExpandCatalog(final Activity activity, final NetworkCatalogTree tree) {
 		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
@@ -357,7 +357,7 @@ public class NetworkCatalogActions extends NetworkTreeActions {
 		});
 	}
 
-	public static void doReloadCatalog(NetworkLibraryActivity activity, final NetworkCatalogTree tree) {
+	public static void doReloadCatalog(Activity activity, final NetworkCatalogTree tree) {
 		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
@@ -369,7 +369,7 @@ public class NetworkCatalogActions extends NetworkTreeActions {
 		);
 	}
 
-	public static void doSignOut(final NetworkLibraryActivity activity, NetworkCatalogTree tree) {
+	public static void doSignOut(final Activity activity, NetworkCatalogTree tree) {
 		final NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {

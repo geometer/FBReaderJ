@@ -213,6 +213,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	}
 
 	private void fillContextMenuList() {
+		myContextMenuActions.add(new OpenCatalogAction(this));
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
 		myContextMenuActions.add(new TopupAction(this));
 	}
@@ -238,7 +239,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					actions.buildContextMenu(this, menu, tree);
 				}
 			} else if (count > 1) {
-				// TODO: build menu
+				menu.setHeaderTitle(tree.getName());
+				for (Action a : myContextMenuActions) {
+					if (a.isVisible(tree) && a.isEnabled(tree)) {
+						menu.add(0, a.Code, 0, a.getContextLabel(tree));
+					}
+				}
 			}
 		}
 	}
@@ -326,7 +332,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		super.onCreateOptionsMenu(menu);
 
 		myOptionsMenuActions.clear();
-		myOptionsMenuActions.add(new RootAction(ActionCode.SEARCH, "networkSearch", R.drawable.ic_menu_search) {
+		myOptionsMenuActions.add(new RootAction(this, ActionCode.SEARCH, "networkSearch", R.drawable.ic_menu_search) {
 			@Override
 			public boolean isEnabled(NetworkTree tree) {
 				return !searchIsInProgress();
@@ -338,33 +344,14 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			}
 		});
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
-		myOptionsMenuActions.add(new RootAction(ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
+		myOptionsMenuActions.add(new RootAction(this, ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
 			@Override
 			public void run(NetworkTree tree) {
 				refreshCatalogsList();
 			}
 		});
 		myOptionsMenuActions.add(new LanguageFilterAction(this));
-		myOptionsMenuActions.add(new CatalogAction(ActionCode.RELOAD_CATALOG, "reload") {
-			@Override
-			public boolean isVisible(NetworkTree tree) {
-				if (!super.isVisible(tree)) {
-					return false;
-				}
-				final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-				if (!(item instanceof NetworkURLCatalogItem)) {
-					return false;
-				}
-				return
-					((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog) != null &&
-					ItemsLoadingService.getRunnable(tree) == null;
-			}
-
-			@Override
-			public void run(NetworkTree tree) {
-				NetworkCatalogActions.doReloadCatalog(NetworkLibraryActivity.this, (NetworkCatalogTree)tree);
-			}
-		});
+		myOptionsMenuActions.add(new ReloadCatalogAction(this));
 		myOptionsMenuActions.add(new SignInAction(this));
 		myOptionsMenuActions.add(new SignUpAction(this));
 		myOptionsMenuActions.add(new SignOutAction(this));
@@ -396,7 +383,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			if (a.isVisible(tree)) {
 				item.setVisible(true);
 				item.setEnabled(a.isEnabled(tree));
-				item.setTitle(a.getLabel(tree));
+				item.setTitle(a.getOptionsLabel(tree));
 			} else {
 				item.setVisible(false);
 			}

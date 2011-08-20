@@ -77,7 +77,7 @@
 		<node name="stopSearching" value="Остановить поиск" />
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
-		<node name="topup" value="Пополнить счёт (текущий счёт: %s)" />
+		<node name="topup" value="Пополнить счёт (баланс: %s)" />
 		<node name="topupTitle" value="Пополнить счёт"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
