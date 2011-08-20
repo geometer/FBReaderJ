@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
-class NetworkView {
+public class NetworkView {
 	private static NetworkView ourInstance;
 
 	public static NetworkView Instance() {
@@ -157,7 +157,7 @@ class NetworkView {
 		}
 	}
 
-	final void fireModelChanged() {
+	public final void fireModelChanged() {
 		for (EventListener listener : myEventListeners) {
 			listener.onModelChanged();
 		}
