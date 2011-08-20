@@ -100,45 +100,27 @@ public class NetworkView {
 		void onModelChanged();
 	}
 
-	private Handler myEventHandler;
-	private LinkedList<EventListener> myEventListeners = new LinkedList<EventListener>();
+	private List<EventListener> myEventListeners =
+		Collections.synchronizedList(new LinkedList<EventListener>());
 
 	/*
 	 * This method must be called only from main thread
 	 */
 	public final void addEventListener(EventListener listener) {
-		synchronized (myEventListeners) {
-			if (myEventHandler == null) {
-				myEventHandler = new Handler() {
-					@Override
-					public void handleMessage(Message msg) {
-						fireModelChanged();
-					}
-				};
-			}
-			if (listener != null) {
-				myEventListeners.add(listener);
-			}
+		if (listener != null) {
+			myEventListeners.add(listener);
 		}
 	}
 
 	public final void removeEventListener(EventListener listener) {
-		synchronized (myEventListeners) {
-			myEventListeners.remove(listener);
-		}
-	}
-
-	public final void fireModelChangedAsync() {
-		synchronized (myEventListeners) {
-			if (myEventHandler != null) {
-				myEventHandler.sendEmptyMessage(0);
-			}
-		}
+		myEventListeners.remove(listener);
 	}
 
 	public final void fireModelChanged() {
-		for (EventListener listener : myEventListeners) {
-			listener.onModelChanged();
+		synchronized (myEventListeners) {
+			for (EventListener listener : myEventListeners) {
+				listener.onModelChanged();
+			}
 		}
 	}
 }

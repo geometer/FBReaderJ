@@ -271,7 +271,7 @@ public abstract class NetworkBookActions {
 							}
 						}
 					}
-					NetworkView.Instance().fireModelChangedAsync();
+					NetworkView.Instance().fireModelChanged();
 				}
 			})
 			.setNegativeButton(buttonResource.getResource("no").getValue(), null)
@@ -335,7 +335,7 @@ public abstract class NetworkBookActions {
 							library.synchronize();
 						}
 						if (NetworkView.Instance().isInitialized()) {
-							NetworkView.Instance().fireModelChangedAsync();
+							NetworkView.Instance().fireModelChanged();
 						}
 					}
 				}; // end Handler

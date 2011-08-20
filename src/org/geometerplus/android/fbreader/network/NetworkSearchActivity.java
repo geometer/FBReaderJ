@@ -146,7 +146,7 @@ public class NetworkSearchActivity extends Activity {
 		final SearchResult result = new SearchResult(summary);
 
 		tree.setSearchResult(result);
-		NetworkView.Instance().fireModelChangedAsync();
+		NetworkView.Instance().fireModelChanged();
 
 		ItemsLoadingService.start(
 			this, tree, new Searcher(this, tree, pattern)
