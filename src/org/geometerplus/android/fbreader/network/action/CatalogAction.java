@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader.network.action;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
-public class CatalogAction extends Action {
+public abstract class CatalogAction extends Action {
 	protected CatalogAction(int code, String resourceKey) {
 		super(code, resourceKey, -1);
 	}

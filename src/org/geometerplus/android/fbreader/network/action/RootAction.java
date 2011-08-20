@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader.network.action;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.RootTree;
 
-public class RootAction extends Action {
+public abstract class RootAction extends Action {
 	protected RootAction(int code, String resourceKey, int iconId) {
 		super(code, resourceKey, iconId);
 	}

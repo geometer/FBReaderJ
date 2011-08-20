@@ -42,9 +42,7 @@ public abstract class Action {
 		return true;
 	}
 
-	// TODO: change to abstract
-	public void run(NetworkTree tree) {
-	}
+	public abstract void run(NetworkTree tree);
 
 	public String getLabel(NetworkTree tree) {
 		return
