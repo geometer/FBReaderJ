@@ -24,24 +24,25 @@ import android.app.Activity;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.network.Util;
 
-public class SignInAction extends CatalogAction {
+public class SignInAction extends Action {
 	public SignInAction(Activity activity) {
-		super(activity, ActionCode.SIGNIN, "signIn");
+		super(activity, ActionCode.SIGNIN, "signIn", -1);
 	}
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		if (!super.isVisible(tree)) {
+		if (!(tree instanceof NetworkCatalogRootTree)) {
 			return false;
 		}
 
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
+		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
 		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-		return mgr != null && !mgr.mayBeAuthorised(false);
+		return mgr != null && mgr.mayBeAuthorised(false);
 	}
 
 	@Override

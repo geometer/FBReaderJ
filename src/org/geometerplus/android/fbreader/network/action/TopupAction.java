@@ -24,7 +24,7 @@ import android.app.Activity;
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.tree.TopUpTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -39,8 +39,8 @@ public class TopupAction extends Action {
 	public boolean isVisible(NetworkTree tree) {
 		if (tree instanceof TopUpTree) {
 			return true;
-		} else if (tree instanceof NetworkCatalogTree) {
-			final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
+		} else if (tree instanceof NetworkCatalogRootTree) {
+			final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
 			final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 			return
 				mgr != null &&
@@ -57,8 +57,8 @@ public class TopupAction extends Action {
 		INetworkLink link = null;
 		if (tree instanceof TopUpTree) {
 			link = ((TopUpTree)tree).Item.Link;
-		} else if (tree instanceof NetworkCatalogTree) {
-			link = ((NetworkCatalogTree)tree).Item.Link;
+		} else if (tree instanceof NetworkCatalogRootTree) {
+			link = ((NetworkCatalogRootTree)tree).Item.Link;
 		}
 		if (link != null) {
 			TopupMenuActivity.runMenu(myActivity, link, null);
@@ -70,8 +70,8 @@ public class TopupAction extends Action {
 		INetworkLink link = null;
 		if (tree instanceof TopUpTree) {
 			link = ((TopUpTree)tree).Item.Link;
-		} else if (tree instanceof NetworkCatalogTree) {
-			link = ((NetworkCatalogTree)tree).Item.Link;
+		} else if (tree instanceof NetworkCatalogRootTree) {
+			link = ((NetworkCatalogRootTree)tree).Item.Link;
 		}
 		String account = null;
 		if (link != null) {

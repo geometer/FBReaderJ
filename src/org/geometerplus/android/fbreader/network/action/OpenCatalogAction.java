@@ -46,11 +46,7 @@ public class OpenCatalogAction extends CatalogAction {
 		if (!(item instanceof NetworkURLCatalogItem)) {
 			return true;
 		}
-		final String catalogUrl = ((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog);
-
-		return
-			catalogUrl != null &&
-			(!(item instanceof BasketItem) || item.Link.basket().bookIds().size() > 0);
+		return ((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog) != null;
 	}
 
 	@Override
