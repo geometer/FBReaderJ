@@ -69,11 +69,8 @@ public class AuthenticationActivity extends Activity {
 	static final String USERNAME_KEY = "username";
 	static final String PASSWORD_KEY = "password";
 	static final String ERROR_KEY = "error";
-	static final String SHOW_SIGNUP_LINK_KEY = "showSignupLink";
 	static final String CUSTOM_AUTH_KEY = "customAuth";
                   
-	static final int RESULT_SIGNUP = RESULT_FIRST_USER;
-
 	static class CredentialsCreator implements ZLNetworkManager.CredentialsCreator {
 		private final Activity myActivity;
 		private final int myCode;
@@ -153,7 +150,6 @@ public class AuthenticationActivity extends Activity {
 		final String area = intent.getStringExtra(AREA_KEY);
 		final String username = intent.getStringExtra(USERNAME_KEY);
 		final String error = intent.getStringExtra(ERROR_KEY);
-		final boolean showSignupLink = intent.getBooleanExtra(SHOW_SIGNUP_LINK_KEY, false);
 		myCustomAuthentication = intent.getBooleanExtra(CUSTOM_AUTH_KEY, false);
 		myOnSuccessRunnable = ourOnSuccessRunnableMap.remove(intent.getLongExtra(RUNNABLE_KEY, -1));
 
@@ -183,20 +179,6 @@ public class AuthenticationActivity extends Activity {
 		myUsernameView.setText(username);
 
 		setError(error);
-
-		if (showSignupLink) {
-			findViewById(R.id.authentication_signup_box).setVisibility(View.VISIBLE);
-			final TextView signupView = (TextView)findViewById(R.id.authentication_signup);
-			signupView.setText(myResource.getResource("register").getValue());
-			signupView.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
-					setResult(RESULT_SIGNUP, Util.intentByLink(new Intent(), myLink));
-					finish();
-				}
-			});
-		} else {
-			findViewById(R.id.authentication_signup_box).setVisibility(View.GONE);
-		}
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 

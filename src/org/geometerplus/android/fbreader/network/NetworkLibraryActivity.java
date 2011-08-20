@@ -55,8 +55,7 @@ import org.geometerplus.android.fbreader.network.action.*;
 
 public class NetworkLibraryActivity extends BaseActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
-	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
-	protected static final int SIGNUP_CODE = 3;
+	protected static final int SIGNUP_CODE = 2;
 
 	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
 
@@ -331,9 +330,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		switch (requestCode) {
 			case BASIC_AUTHENTICATION_CODE:
 				myCredentialsCreator.onDataReceived(resultCode, intent);
-				break;
-			case CUSTOM_AUTHENTICATION_CODE:
-				Util.processCustomAuthentication(this, resultCode, intent);
 				break;
 			case SIGNUP_CODE:
 				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);

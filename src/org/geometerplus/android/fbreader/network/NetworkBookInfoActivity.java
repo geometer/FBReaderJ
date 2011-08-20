@@ -389,9 +389,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-			case NetworkLibraryActivity.CUSTOM_AUTHENTICATION_CODE:
-				Util.processCustomAuthentication(this, resultCode, data);
-				break;
 			case NetworkLibraryActivity.SIGNUP_CODE:
 				Util.processSignup(myBook.Link, resultCode, data);
 				break;

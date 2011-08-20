@@ -85,25 +85,9 @@ public abstract class Util implements UserRegistrationConstants {
 		final Intent intent = intentByLink(new Intent(activity, AuthenticationActivity.class), link);
 		AuthenticationActivity.registerRunnable(intent, onSuccess);
 		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.UserNameOption.getValue());
-		if (isRegistrationSupported(activity, link)) {
-			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
-		}
 		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
 		intent.putExtra(AuthenticationActivity.CUSTOM_AUTH_KEY, true);
-		activity.startActivityForResult(intent, NetworkLibraryActivity.CUSTOM_AUTHENTICATION_CODE);
-	}
-
-	static void processCustomAuthentication(final Activity activity, int resultCode, Intent data) {
-		final INetworkLink link = linkByIntent(data);
-		if (link == null) {
-			return;
-		}
-
-		switch (resultCode) {
-			case AuthenticationActivity.RESULT_SIGNUP:
-				runRegistrationDialog(activity, link);
-				break;
-		}
+		activity.startActivity(intent);
 	}
 
 	static void processSignup(INetworkLink link, int resultCode, Intent data) {
