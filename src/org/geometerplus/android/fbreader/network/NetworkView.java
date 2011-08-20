@@ -96,34 +96,6 @@ class NetworkView {
 	}
 
 	/*
-	 * OptionsMenu methods
-	 */
-
-	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
-		final NetworkTreeActions actions = getActions(tree);
-		if (actions != null) {
-			return actions.createOptionsMenu(menu, tree);
-		}
-		return false;
-	}
-
-	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
-		final NetworkTreeActions actions = getActions(tree);
-		if (actions != null) {
-			return actions.prepareOptionsMenu(activity, menu, tree);
-		}
-		return false;
-	}
-
-	public boolean runOptionsMenu(NetworkLibraryActivity activity, MenuItem item, NetworkTree tree) {
-		final NetworkTreeActions actions = getActions(tree);
-		if (actions != null) {
-			return actions.runAction(activity, tree, item.getItemId());
-		}
-		return false;
-	}
-
-	/*
 	 * Code for loading network items (running items-loading service and managing items-loading runnables).
 	 */
 

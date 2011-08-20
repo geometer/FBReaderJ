@@ -339,7 +339,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 					NetworkBookInfoActivity.this.updateView();
 				}
 			});
-			button.setEnabled(a.Id != NetworkTreeActions.TREE_NO_ACTION);
+			button.setEnabled(a.Id != ActionCode.TREE_NO_ACTION);
 		}
 		findViewById(R.id.network_book_left_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
 		findViewById(R.id.network_book_right_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);

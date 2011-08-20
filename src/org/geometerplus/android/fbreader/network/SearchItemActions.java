@@ -41,7 +41,7 @@ class SearchItemActions extends NetworkTreeActions {
 		if (!isLoading) {
 			addMenuItem(menu, RUN_SEARCH_ITEM_ID, "search");
 		} else {
-			addMenuItem(menu, TREE_NO_ACTION, "stoppingNetworkSearch");
+			addMenuItem(menu, ActionCode.TREE_NO_ACTION, "stoppingNetworkSearch");
 		}
 	}
 
@@ -51,7 +51,7 @@ class SearchItemActions extends NetworkTreeActions {
 		if (!isLoading) {
 			return RUN_SEARCH_ITEM_ID;
 		}
-		return TREE_NO_ACTION;
+		return ActionCode.TREE_NO_ACTION;
 	}
 
 	@Override

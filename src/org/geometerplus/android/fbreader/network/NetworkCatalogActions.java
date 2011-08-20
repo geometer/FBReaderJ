@@ -29,6 +29,7 @@ import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.view.Menu;
 import android.view.ContextMenu;
+import android.view.MenuItem;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -46,20 +47,6 @@ import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 class NetworkCatalogActions extends NetworkTreeActions {
-	public static final int OPEN_CATALOG_ITEM_ID = 0;
-	public static final int OPEN_IN_BROWSER_ITEM_ID = 1;
-	public static final int RELOAD_ITEM_ID = 2;
-	public static final int SIGNUP_ITEM_ID = 3;
-	public static final int SIGNIN_ITEM_ID = 4;
-	public static final int SIGNOUT_ITEM_ID = 5;
-	public static final int TOPUP_ITEM_ID = 6;
-
-	public static final int CUSTOM_CATALOG_EDIT = 7;
-	public static final int CUSTOM_CATALOG_REMOVE = 8;
-
-	public static final int BASKET_CLEAR = 9;
-	public static final int BASKET_BUY_ALL_BOOKS = 10;
-
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
 		return tree instanceof NetworkCatalogTree;
@@ -78,7 +65,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			urlItem != null ? urlItem.getUrl(UrlInfo.Type.Catalog) : null;
 		if (catalogUrl != null &&
 			(!(item instanceof BasketItem) || item.Link.basket().bookIds().size() > 0)) {
-			addMenuItem(menu, OPEN_CATALOG_ITEM_ID, "openCatalog");
+			addMenuItem(menu, ActionCode.OPEN_CATALOG, "openCatalog");
 			hasItems = true;
 		}
 
@@ -87,15 +74,15 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 				if (mgr != null) {
 					if (mgr.mayBeAuthorised(false)) {
-						addMenuItem(menu, SIGNOUT_ITEM_ID, "signOut", mgr.currentUserName());
+						addMenuItem(menu, ActionCode.SIGNOUT, "signOut", mgr.currentUserName());
 						if (TopupMenuActivity.isTopupSupported(item.Link)) {
 							final String account = mgr.currentAccount();
 							if (account != null) {
-								addMenuItem(menu, TOPUP_ITEM_ID, "topup", account);
+								addMenuItem(menu, ActionCode.TOPUP, "topup", account);
 							}
 						}
 					} else {
-						addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
+						addMenuItem(menu, ActionCode.SIGNIN, "signIn");
 						//if (mgr.passwordRecoverySupported()) {
 						//	registerAction(new PasswordRecoveryAction(mgr), true);
 						//}
@@ -104,19 +91,19 @@ class NetworkCatalogActions extends NetworkTreeActions {
 			}
 			INetworkLink link = item.Link; 
 			if (link instanceof ICustomNetworkLink) {
-				addMenuItem(menu, CUSTOM_CATALOG_EDIT, "editCustomCatalog");
-				addMenuItem(menu, CUSTOM_CATALOG_REMOVE, "removeCustomCatalog");
+				addMenuItem(menu, ActionCode.CUSTOM_CATALOG_EDIT, "editCustomCatalog");
+				addMenuItem(menu, ActionCode.CUSTOM_CATALOG_REMOVE, "removeCustomCatalog");
 			}
 		} else {
 			if (urlItem != null && urlItem.getUrl(UrlInfo.Type.HtmlPage) != null) {
-				addMenuItem(menu, OPEN_IN_BROWSER_ITEM_ID, "openInBrowser");
+				addMenuItem(menu, ActionCode.OPEN_IN_BROWSER, "openInBrowser");
 				hasItems = true;
 			}
 		}
 
 		if (item.getVisibility() == ZLBoolean3.B3_UNDEFINED &&
 			!hasItems && item.Link.authenticationManager() != null) {
-			addMenuItem(menu, SIGNIN_ITEM_ID, "signIn");
+			addMenuItem(menu, ActionCode.SIGNIN, "signIn");
 		}
 	}
 
@@ -124,74 +111,20 @@ class NetworkCatalogActions extends NetworkTreeActions {
 	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
 		if (!(item instanceof NetworkURLCatalogItem)) {
-			return OPEN_CATALOG_ITEM_ID;
+			return ActionCode.OPEN_CATALOG;
 		}
 		final NetworkURLCatalogItem urlItem = (NetworkURLCatalogItem)item;
 		if (urlItem.getUrl(UrlInfo.Type.Catalog) != null) {
-			return OPEN_CATALOG_ITEM_ID;
+			return ActionCode.OPEN_CATALOG;
 		}
 		if (urlItem.getUrl(UrlInfo.Type.HtmlPage) != null) {
-			return OPEN_IN_BROWSER_ITEM_ID;
+			return ActionCode.OPEN_IN_BROWSER;
 		}
 		if (urlItem.getVisibility() == ZLBoolean3.B3_UNDEFINED &&
 			urlItem.Link.authenticationManager() != null) {
-			return SIGNIN_ITEM_ID;
+			return ActionCode.SIGNIN;
 		}
-		return TREE_NO_ACTION;
-	}
-
-	@Override
-	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
-		addOptionsItem(menu, RELOAD_ITEM_ID, "reload");
-		addOptionsItem(menu, SIGNIN_ITEM_ID, "signIn");
-		addOptionsItem(menu, SIGNUP_ITEM_ID, "signUp");
-		addOptionsItem(menu, SIGNOUT_ITEM_ID, "signOut", "");
-		addOptionsItem(menu, TOPUP_ITEM_ID, "topup");
-		if (((NetworkCatalogTree)tree).Item instanceof BasketItem) {
-			addOptionsItem(menu, BASKET_CLEAR, "clearBasket");
-			addOptionsItem(menu, BASKET_BUY_ALL_BOOKS, "buyAllBooks");
-		}
-		return true;
-	}
-
-	@Override
-	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-		final NetworkURLCatalogItem urlItem =
-			item instanceof NetworkURLCatalogItem ? (NetworkURLCatalogItem)item : null;
-
-		prepareOptionsItem(menu, RELOAD_ITEM_ID,
-			urlItem != null &&
-			urlItem.getUrl(UrlInfo.Type.Catalog) != null &&
-			ItemsLoadingService.getRunnable(tree) == null
-		);
-
-		boolean signIn = false;
-		boolean signOut = false;
-		boolean topup = false;
-		String userName = null;
-		String account = null;
-		NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-		if (mgr != null) {
-			if (mgr.mayBeAuthorised(false)) {
-				userName = mgr.currentUserName();
-				signOut = true;
-				account = mgr.currentAccount();
-				if (account != null && TopupMenuActivity.isTopupSupported(item.Link)) {
-					topup = true;
-				}
-			} else {
-				signIn = true;
-				//if (mgr.passwordRecoverySupported()) {
-				//	registerAction(new PasswordRecoveryAction(mgr), true);
-				//}
-			}
-		}
-		prepareOptionsItem(menu, SIGNIN_ITEM_ID, signIn);
-		prepareOptionsItem(menu, SIGNUP_ITEM_ID, signIn & Util.isRegistrationSupported(activity, item.Link));
-		prepareOptionsItem(menu, SIGNOUT_ITEM_ID, signOut, "signOut", userName);
-		prepareOptionsItem(menu, TOPUP_ITEM_ID, topup);
-		return true;
+		return ActionCode.TREE_NO_ACTION;
 	}
 
 	private boolean consumeByVisibility(final NetworkLibraryActivity activity, final NetworkTree tree, final int actionCode) {
@@ -205,7 +138,7 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
 							return;
 						}
-						if (actionCode != SIGNIN_ITEM_ID) {
+						if (actionCode != ActionCode.SIGNIN) {
 							runAction(activity, tree, actionCode);
 						}
 					}
@@ -224,14 +157,14 @@ class NetworkCatalogActions extends NetworkTreeActions {
 
 		final NetworkCatalogItem item = catalogTree.Item;
 		switch (actionCode) {
-			case OPEN_CATALOG_ITEM_ID:
+			case ActionCode.OPEN_CATALOG:
 				if (item instanceof BasketItem && item.Link.basket().bookIds().size() == 0) {
 					UIUtil.showErrorMessage(activity, "emptyBasket");
 				} else {
 					doExpandCatalog(activity, catalogTree);
 				}
 				return true;
-			case OPEN_IN_BROWSER_ITEM_ID:
+			case ActionCode.OPEN_IN_BROWSER:
 				if (item instanceof NetworkURLCatalogItem) {
 					final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 					final String message = NetworkLibrary.resource().getResource("confirmQuestions").getResource("openInBrowser").getValue();
@@ -248,23 +181,23 @@ class NetworkCatalogActions extends NetworkTreeActions {
 						.create().show();
 				}
 				return true;
-			case RELOAD_ITEM_ID:
+			case ActionCode.RELOAD_CATALOG:
 				doReloadCatalog(activity, catalogTree);
 				return true;
-			case SIGNIN_ITEM_ID:
+			case ActionCode.SIGNIN:
 				Util.runAuthenticationDialog(activity, item.Link, null, null);
 				return true;
-			case SIGNUP_ITEM_ID:
+			case ActionCode.SIGNUP:
 				Util.runRegistrationDialog(activity, item.Link);
 				return true;
-			case SIGNOUT_ITEM_ID:
+			case ActionCode.SIGNOUT:
 				doSignOut(activity, catalogTree);
 				return true;
-			case TOPUP_ITEM_ID:
+			case ActionCode.TOPUP:
 				// TODO: replace 112 with required amount
 				TopupMenuActivity.runMenu(activity, item.Link, "112");
 				return true;
-			case CUSTOM_CATALOG_EDIT:
+			case ActionCode.CUSTOM_CATALOG_EDIT:
 			{
 				final Intent intent = new Intent(activity, AddCustomCatalogActivity.class);
 				AddCustomCatalogActivity.addLinkToIntent(
@@ -274,13 +207,13 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				activity.startActivity(intent);
 				return true;
 			}
-			case CUSTOM_CATALOG_REMOVE:
+			case ActionCode.CUSTOM_CATALOG_REMOVE:
 				removeCustomLink((ICustomNetworkLink)item.Link);
 				return true;
-			case BASKET_CLEAR:
+			case ActionCode.BASKET_CLEAR:
 				item.Link.basket().clear();
 				return true;
-			case BASKET_BUY_ALL_BOOKS:
+			case ActionCode.BASKET_BUY_ALL_BOOKS:
 				return true;
 		}
 		return false;

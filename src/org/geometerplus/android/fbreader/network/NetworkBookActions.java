@@ -30,7 +30,6 @@ import android.os.Handler;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
-import android.view.Menu;
 import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -47,7 +46,6 @@ import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
 import org.geometerplus.fbreader.network.tree.NetworkSeriesTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-
 
 class NetworkBookActions extends NetworkTreeActions {
 	public static final int DOWNLOAD_BOOK_ITEM_ID = 0;
@@ -153,7 +151,7 @@ class NetworkBookActions extends NetworkTreeActions {
 			final BookUrlInfo reference = book.reference(UrlInfo.Type.Book);
 			if (reference != null
 					&& connection != null && connection.isBeingDownloaded(reference.Url)) {
-				actions.add(new Action(TREE_NO_ACTION, "alreadyDownloading"));
+				actions.add(new Action(ActionCode.TREE_NO_ACTION, "alreadyDownloading"));
 			} else if (book.localCopyFileName() != null) {
 				actions.add(new Action(READ_BOOK_ITEM_ID, "read"));
 				actions.add(new Action(DELETE_BOOK_ITEM_ID, "delete"));
@@ -164,7 +162,7 @@ class NetworkBookActions extends NetworkTreeActions {
 		if (useDemoReferences(book)) {
 			final BookUrlInfo reference = book.reference(UrlInfo.Type.BookDemo);
 			if (connection != null && connection.isBeingDownloaded(reference.Url)) {
-				actions.add(new Action(TREE_NO_ACTION, "alreadyDownloadingDemo"));
+				actions.add(new Action(ActionCode.TREE_NO_ACTION, "alreadyDownloadingDemo"));
 			} else if (reference.localCopyFileName(UrlInfo.Type.BookDemo) != null) {
 				actions.add(new Action(READ_DEMO_ITEM_ID, "readDemo"));
 				actions.add(new Action(DELETE_DEMO_ITEM_ID, "deleteDemo"));
@@ -173,7 +171,7 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		}
 		if (useBuyReferences(book)) {
-			int id = TREE_NO_ACTION;
+			int id = ActionCode.TREE_NO_ACTION;
 			BookUrlInfo reference = null;
 			if (book.reference(UrlInfo.Type.BookBuy) != null) {
 				reference = book.reference(UrlInfo.Type.BookBuy);
@@ -204,16 +202,6 @@ class NetworkBookActions extends NetworkTreeActions {
 			return SHOW_BOOKS_ITEM_ID;
 		}
 		return SHOW_BOOK_ACTIVITY_ITEM_ID;
-	}
-
-	@Override
-	public boolean createOptionsMenu(Menu menu, NetworkTree tree) {
-		return false;
-	}
-
-	@Override
-	public boolean prepareOptionsMenu(NetworkLibraryActivity activity, Menu menu, NetworkTree tree) {
-		return false;
 	}
 
 	@Override
