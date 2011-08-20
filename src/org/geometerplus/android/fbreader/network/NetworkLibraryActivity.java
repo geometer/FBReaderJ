@@ -459,18 +459,11 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				myInProgress =
 					tree != null &&
 					ItemsLoadingService.getRunnable(tree) != null;
-				getListView().invalidateViews();
 
-				/*
-				 * getListAdapter() always returns CatalogAdapter because onModelChanged()
-				 * can be called only after Activity's onStart() method (where NetworkView's
-				 * addEventListener() is called). Therefore CatalogAdapter will be set as
-				 * adapter in onCreate() method before any calls to onModelChanged().
-				 */
-				((NetworkLibraryAdapter)getListAdapter()).replaceAll(getCurrentTree().subTrees());
+				getListAdapter().replaceAll(getCurrentTree().subTrees());
 				for (FBTree child : getCurrentTree().subTrees()) {
 					if (child instanceof TopUpTree) {
-						child.invalidateChildren();
+						child.invalidateSummary();
 					}
 				}
 
