@@ -39,16 +39,6 @@ abstract class NetworkTreeActions {
 		return NetworkLibrary.resource().getResource(key).getValue().replace("%s", arg);
 	}
 
-	/*
-	protected final String getOptionsValue(String key) {
-		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue();
-	}
-
-	protected final String getOptionsValue(String key, String arg) {
-		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue().replace("%s", arg);
-	}
-	*/
-
 	protected final MenuItem addMenuItemWithText(ContextMenu menu, int id, String text) {
 		return menu.add(0, id, 0, text).setEnabled(id != ActionCode.TREE_NO_ACTION);
 	}

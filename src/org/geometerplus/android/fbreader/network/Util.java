@@ -208,7 +208,7 @@ public abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	static void openTree(Context context, NetworkTree tree) {
+	public static void openTree(Context context, NetworkTree tree) {
 		final Class<?> clz = tree instanceof NetworkBookTree
 			? NetworkBookInfoActivity.class : NetworkLibraryActivity.class;
 		if (context instanceof NetworkLibraryActivity && clz == NetworkLibraryActivity.class) {

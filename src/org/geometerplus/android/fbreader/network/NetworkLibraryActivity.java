@@ -216,6 +216,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	private void fillContextMenuList() {
 		myContextMenuActions.add(new OpenCatalogAction(this));
 		myContextMenuActions.add(new OpenInBrowserAction(this));
+		myContextMenuActions.add(new ShowBooksAction(this));
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
 		myContextMenuActions.add(new SignOutAction(this));
 		myContextMenuActions.add(new TopupAction(this));
@@ -239,14 +240,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					++count;
 				}
 			}
-			if (count == 0) {
-				/*
-				final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-				if (actions != null) {
-					actions.buildContextMenu(this, menu, tree);
-				}
-				*/
-			} else if (count > 1) {
+			if (count > 1) {
 				menu.setHeaderTitle(tree.getName());
 				for (Action a : myContextMenuActions) {
 					if (a.isVisible(tree) && a.isEnabled(tree)) {
@@ -293,12 +287,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					return true;
 				}
 			}
-			/*
-			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-			if (actions != null && actions.runAction(this, tree, item.getItemId())) {
-				return true;
-			}
-			*/
 		}
 		return super.onContextItemSelected(item);
 	}

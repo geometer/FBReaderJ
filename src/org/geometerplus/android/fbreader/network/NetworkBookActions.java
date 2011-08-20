@@ -43,8 +43,6 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
-import org.geometerplus.fbreader.network.tree.NetworkSeriesTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.network.action.ActionCode;
@@ -67,18 +65,12 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	public boolean canHandleTree(NetworkTree tree) {
-		return tree instanceof NetworkBookTree
-			|| tree instanceof NetworkAuthorTree
-			|| tree instanceof NetworkSeriesTree;
+		return tree instanceof NetworkBookTree;
 	}
 
 	@Override
 	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
-		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
-			addMenuItem(menu, ActionCode.SHOW_BOOKS, "showBooks");
-			return;
-		}
 
 		final NetworkBookTree bookTree = (NetworkBookTree) tree;
 		final NetworkBookItem book = bookTree.Book;
@@ -184,26 +176,12 @@ class NetworkBookActions extends NetworkTreeActions {
 
 	@Override
 	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
-		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
-			return ActionCode.SHOW_BOOKS;
-		}
 		return ActionCode.SHOW_BOOK_ACTIVITY;
 	}
 
 	@Override
 	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
-		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
-			switch (actionCode) {
-				case ActionCode.SHOW_BOOKS:
-					Util.openTree(activity, tree);
-					return true;
-			}
-			return false;
-		} else if (tree instanceof NetworkBookTree) {
-			return runActionStatic(activity, ((NetworkBookTree)tree), actionCode);
-		} else {
-			return false;
-		}
+		return runActionStatic(activity, ((NetworkBookTree)tree), actionCode);
 	}
 
 	static boolean runActionStatic(final Activity activity, final NetworkBookTree tree, int actionCode) {
