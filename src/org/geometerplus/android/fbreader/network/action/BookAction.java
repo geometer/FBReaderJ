@@ -21,38 +21,21 @@ package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
+import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
-import org.geometerplus.android.fbreader.network.Util;
-
-import org.geometerplus.android.util.UIUtil;
-
-public class ShowBookInfoAction extends BookAction {
-	public ShowBookInfoAction(Activity activity) {
-		super(activity, ActionCode.SHOW_BOOK_ACTIVITY, "bookInfo");
+abstract class BookAction extends Action {
+	protected BookAction(Activity activity, int code, String resourceKey) {
+		super(activity, code, resourceKey, -1);
 	}
 
 	@Override
-	public void run(final NetworkTree tree) {
-		if (getBook(tree).isFullyLoaded()) {
-			Util.openTree(myActivity, tree);
-		} else {
-			UIUtil.wait("loadInfo", new Runnable() {
-				public void run() {
-					try {
-						getBook(tree).loadFullInformation();
-					} catch (ZLNetworkException e) {
-						e.printStackTrace();
-					}
-					myActivity.runOnUiThread(new Runnable() {
-						public void run() {
-							Util.openTree(myActivity, tree);
-						}
-					});
-				}
-			}, myActivity);
-		}
+	public boolean isVisible(NetworkTree tree) {
+		return tree instanceof NetworkBookTree;
+	}
+
+	protected NetworkBookItem getBook(NetworkTree tree) {
+		return ((NetworkBookTree)tree).Book;
 	}
 }

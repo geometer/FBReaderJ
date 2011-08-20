@@ -76,6 +76,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
+	final List<Action> myListClickActions = new ArrayList<Action>();
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -215,7 +216,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	private void fillContextMenuList() {
 		myContextMenuActions.add(new OpenCatalogAction(this));
 		myContextMenuActions.add(new OpenInBrowserAction(this));
-		myContextMenuActions.add(new ShowBooksAction(this));
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
 		myContextMenuActions.add(new SignOutAction(this));
 		myContextMenuActions.add(new TopupAction(this));
@@ -223,7 +223,15 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		myContextMenuActions.add(new EditCustomCatalogAction(this));
 		myContextMenuActions.add(new RemoveCustomCatalogAction(this));
 		myContextMenuActions.add(new ClearBasketAction(this));
-		myContextMenuActions.add(new ShowBookInfoAction(this));
+	}
+
+	private void fillListClickList() {
+		myListClickActions.add(new OpenCatalogAction(this));
+		myListClickActions.add(new OpenInBrowserAction(this));
+		myListClickActions.add(new ShowBooksAction(this));
+		myListClickActions.add(new AddCustomCatalogAction(this));
+		myListClickActions.add(new TopupAction(this));
+		myListClickActions.add(new ShowBookInfoAction(this));
 	}
 
 	@Override
@@ -294,34 +302,20 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long rowId) {
-		if (myContextMenuActions.isEmpty()) {
-			fillContextMenuList();
+		if (myListClickActions.isEmpty()) {
+			fillListClickList();
 		}
 
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
 		Action defaultAction = null;
-		for (Action a : myContextMenuActions) {
+		for (Action a : myListClickActions) {
 			if (a.isVisible(tree) && a.isEnabled(tree)) {
 				runAction(a, tree);
 				return;
 			}
 		}
-		/*
-			final NetworkView networkView = NetworkView.Instance();
-			final NetworkTreeActions actions = networkView.getActions(tree);
-			if (actions == null) {
-				return;
-			}
-			final int actionCode = actions.getDefaultActionCode(this, tree);
-			if (actionCode == ActionCode.TREE_SHOW_CONTEXT_MENU) {
-				listView.showContextMenuForChild(view);
-				return;
-			}
-			if (actionCode < 0) {
-				return;
-			}
-			actions.runAction(this, tree, actionCode);
-		*/
+
+		listView.showContextMenuForChild(view);
 	}
 
 	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
