@@ -249,7 +249,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					++count;
 				}
 			}
-			if (count > 1) {
+			if (count > 0) {
 				menu.setHeaderTitle(tree.getName());
 				for (Action a : myContextMenuActions) {
 					if (a.isVisible(tree) && a.isEnabled(tree)) {
