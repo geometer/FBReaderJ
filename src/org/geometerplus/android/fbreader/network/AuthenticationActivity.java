@@ -39,6 +39,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -46,8 +47,24 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.android.util.UIUtil;
 
 public class AuthenticationActivity extends Activity {
+	private static final Map<Long,Runnable> ourOnSuccessRunnableMap =
+		Collections.synchronizedMap(new HashMap<Long,Runnable>());
+	private static volatile long ourNextCode;
+
+	static Intent registerRunnable(Intent intent, Runnable action) {
+		synchronized (ourOnSuccessRunnableMap) {
+			if (action != null) {
+				ourOnSuccessRunnableMap.put(ourNextCode, action);
+				intent.putExtra(RUNNABLE_KEY, ourNextCode);
+				++ourNextCode;
+			}
+		}
+		return intent;
+	}
+
 	private static final String AREA_KEY = "area";
 	private static final String HOST_KEY = "host";
+	private static final String RUNNABLE_KEY = "onSuccess";
 	static final String SCHEME_KEY = "scheme";
 	static final String USERNAME_KEY = "username";
 	static final String PASSWORD_KEY = "password";
@@ -116,6 +133,7 @@ public class AuthenticationActivity extends Activity {
 	private Timer myOkButtonUpdater;
 	private TextView myUsernameView;
 	private boolean myCustomAuthentication;
+	private Runnable myOnSuccessRunnable;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -137,6 +155,7 @@ public class AuthenticationActivity extends Activity {
 		final String error = intent.getStringExtra(ERROR_KEY);
 		final boolean showSignupLink = intent.getBooleanExtra(SHOW_SIGNUP_LINK_KEY, false);
 		myCustomAuthentication = intent.getBooleanExtra(CUSTOM_AUTH_KEY, false);
+		myOnSuccessRunnable = ourOnSuccessRunnableMap.remove(intent.getLongExtra(RUNNABLE_KEY, -1));
 
 		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
 
@@ -199,6 +218,18 @@ public class AuthenticationActivity extends Activity {
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+						if (mgr.mayBeAuthorised(false)) {
+							mgr.logOut();
+						}
+						final NetworkLibrary library = NetworkLibrary.Instance();
+						library.invalidateVisibility();
+						library.synchronize();
+						NetworkView.Instance().fireModelChanged();
+					}
+				});
 				finish();
 			}
 		});
@@ -233,6 +264,13 @@ public class AuthenticationActivity extends Activity {
 						mgr.initialize();
 					}
 					finishOk(username, password);
+					if (myOnSuccessRunnable != null) {
+						myOnSuccessRunnable.run();
+					}
+					final NetworkLibrary library = NetworkLibrary.Instance();
+					library.invalidateVisibility();
+					library.synchronize();
+					NetworkView.Instance().fireModelChanged();
 				} catch (final ZLNetworkException e) {
 					mgr.logOut();
 					runOnUiThread(new Runnable() {

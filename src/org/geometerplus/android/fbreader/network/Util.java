@@ -79,22 +79,17 @@ public abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	private static final Map<Activity,Runnable> ourAfterRegisrationMap =
-		new HashMap<Activity,Runnable>();
-
 	public static void runAuthenticationDialog(Activity activity, INetworkLink link, Runnable onSuccess) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 
 		final Intent intent = intentByLink(new Intent(activity, AuthenticationActivity.class), link);
+		AuthenticationActivity.registerRunnable(intent, onSuccess);
 		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.UserNameOption.getValue());
 		if (isRegistrationSupported(activity, link)) {
 			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
 		}
 		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
 		intent.putExtra(AuthenticationActivity.CUSTOM_AUTH_KEY, true);
-		if (onSuccess != null) {
-			ourAfterRegisrationMap.put(activity, onSuccess);
-		}
 		activity.startActivityForResult(intent, NetworkLibraryActivity.CUSTOM_AUTHENTICATION_CODE);
 	}
 
@@ -104,44 +99,9 @@ public abstract class Util implements UserRegistrationConstants {
 			return;
 		}
 
-		final Runnable onSuccess = ourAfterRegisrationMap.get(activity);
-		ourAfterRegisrationMap.remove(activity);
-
 		switch (resultCode) {
-			case AuthenticationActivity.RESULT_CANCELED:
-				UIUtil.wait(
-					"signOut",
-					new Runnable() {
-						public void run() {
-							final NetworkAuthenticationManager mgr =
-								 link.authenticationManager();
-							if (mgr.mayBeAuthorised(false)) {
-								mgr.logOut();
-							}
-							final NetworkLibrary library = NetworkLibrary.Instance();
-							library.invalidateVisibility();
-							library.synchronize();
-							NetworkView.Instance().fireModelChanged();
-						}
-					},
-					activity
-				);
-				break;
-			case AuthenticationActivity.RESULT_OK:
-				activity.runOnUiThread(new Runnable() {
-					public void run() {
-						if (onSuccess != null) {
-							onSuccess.run();
-						}
-						final NetworkLibrary library = NetworkLibrary.Instance();
-						library.invalidateVisibility();
-						library.synchronize();
-						NetworkView.Instance().fireModelChanged();
-					}
-				});
-				break;
 			case AuthenticationActivity.RESULT_SIGNUP:
-				Util.runRegistrationDialog(activity, link);
+				runRegistrationDialog(activity, link);
 				break;
 		}
 	}
