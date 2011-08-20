@@ -47,6 +47,6 @@ public class SignInAction extends Action {
 
 	@Override
 	public void run(NetworkTree tree) {
-		Util.runAuthenticationDialog(myActivity, ((NetworkCatalogTree)tree).Item.Link, null, null);
+		Util.runAuthenticationDialog(myActivity, ((NetworkCatalogTree)tree).Item.Link, null);
 	}
 }

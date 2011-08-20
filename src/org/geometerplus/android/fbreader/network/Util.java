@@ -82,7 +82,7 @@ public abstract class Util implements UserRegistrationConstants {
 	private static final Map<Activity,Runnable> ourAfterRegisrationMap =
 		new HashMap<Activity,Runnable>();
 
-	public static void runAuthenticationDialog(Activity activity, INetworkLink link, String error, Runnable onSuccess) {
+	public static void runAuthenticationDialog(Activity activity, INetworkLink link, Runnable onSuccess) {
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 
 		final Intent intent = intentByLink(new Intent(activity, AuthenticationActivity.class), link);
@@ -91,7 +91,7 @@ public abstract class Util implements UserRegistrationConstants {
 			intent.putExtra(AuthenticationActivity.SHOW_SIGNUP_LINK_KEY, true);
 		}
 		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
-		intent.putExtra(AuthenticationActivity.ERROR_KEY, error);
+		intent.putExtra(AuthenticationActivity.CUSTOM_AUTH_KEY, true);
 		if (onSuccess != null) {
 			ourAfterRegisrationMap.put(activity, onSuccess);
 		}
@@ -128,39 +128,18 @@ public abstract class Util implements UserRegistrationConstants {
 				);
 				break;
 			case AuthenticationActivity.RESULT_OK:
-			{
-				final ZLResource resource =
-					ZLResource.resource("dialog").getResource("AuthenticationDialog");
-				final String username =
-					data.getStringExtra(AuthenticationActivity.USERNAME_KEY);
-				final String password =
-					data.getStringExtra(AuthenticationActivity.PASSWORD_KEY);
-				final NetworkAuthenticationManager mgr = link.authenticationManager();
-				mgr.UserNameOption.setValue(username);
-				final Runnable runnable = new Runnable() {
+				activity.runOnUiThread(new Runnable() {
 					public void run() {
-						try {
-							mgr.authorise(password);
-							if (mgr.needsInitialization()) {
-								mgr.initialize();
-							}
-							if (onSuccess != null) {
-								onSuccess.run();
-							}
-						} catch (ZLNetworkException e) {
-							mgr.logOut();
-							runAuthenticationDialog(activity, link, e.getMessage(), onSuccess);
-							return;
+						if (onSuccess != null) {
+							onSuccess.run();
 						}
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						library.invalidateVisibility();
 						library.synchronize();
 						NetworkView.Instance().fireModelChanged();
 					}
-				};
-				UIUtil.wait("authentication", runnable, activity);
+				});
 				break;
-			}
 			case AuthenticationActivity.RESULT_SIGNUP:
 				Util.runRegistrationDialog(activity, link);
 				break;

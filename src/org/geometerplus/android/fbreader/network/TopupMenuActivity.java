@@ -156,13 +156,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		if (mgr.mayBeAuthorised(false)) {
 			action.run();
 		} else {
-			Util.runAuthenticationDialog(this, myLink, null, new Runnable() {
-				public void run() {
-					if (mgr.mayBeAuthorised(false)) {
-						runOnUiThread(action);
-					}
-				}
-			});
+			Util.runAuthenticationDialog(this, myLink, action);
 		}
 	}
 

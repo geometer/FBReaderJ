@@ -432,7 +432,7 @@ class NetworkBookActions extends NetworkTreeActions {
 			}
 		} catch (ZLNetworkException e) {
 		}
-		Util.runAuthenticationDialog(activity, book.Link, null, buyOnUiRunnable);
+		Util.runAuthenticationDialog(activity, book.Link, buyOnUiRunnable);
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {

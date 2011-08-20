@@ -259,7 +259,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					action.run(tree);
 					break;
 				case B3_UNDEFINED:
-					Util.runAuthenticationDialog(this, item.Link, null, new Runnable() {
+					Util.runAuthenticationDialog(this, item.Link, new Runnable() {
 						public void run() {
 							if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
 								return;

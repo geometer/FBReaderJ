@@ -42,9 +42,6 @@ public class NetworkCatalogActions {
 
 		final NetworkCatalogItem item = catalogTree.Item;
 		switch (actionCode) {
-			case ActionCode.SIGNIN:
-				Util.runAuthenticationDialog(activity, item.Link, null, null);
-				return true;
 			case ActionCode.BASKET_CLEAR:
 				item.Link.basket().clear();
 				return true;

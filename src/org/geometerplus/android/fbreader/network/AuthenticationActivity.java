@@ -35,11 +35,15 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
+
+import org.geometerplus.android.util.UIUtil;
 
 public class AuthenticationActivity extends Activity {
 	private static final String AREA_KEY = "area";
@@ -49,6 +53,7 @@ public class AuthenticationActivity extends Activity {
 	static final String PASSWORD_KEY = "password";
 	static final String ERROR_KEY = "error";
 	static final String SHOW_SIGNUP_LINK_KEY = "showSignupLink";
+	static final String CUSTOM_AUTH_KEY = "customAuth";
                   
 	static final int RESULT_SIGNUP = RESULT_FIRST_USER;
 
@@ -110,6 +115,7 @@ public class AuthenticationActivity extends Activity {
 	private Button myOkButton;
 	private Timer myOkButtonUpdater;
 	private TextView myUsernameView;
+	private boolean myCustomAuthentication;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -130,6 +136,7 @@ public class AuthenticationActivity extends Activity {
 		final String username = intent.getStringExtra(USERNAME_KEY);
 		final String error = intent.getStringExtra(ERROR_KEY);
 		final boolean showSignupLink = intent.getBooleanExtra(SHOW_SIGNUP_LINK_KEY, false);
+		myCustomAuthentication = intent.getBooleanExtra(CUSTOM_AUTH_KEY, false);
 
 		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
 
@@ -156,13 +163,7 @@ public class AuthenticationActivity extends Activity {
 		myUsernameView = findTextView(R.id.authentication_username);
 		myUsernameView.setText(username);
 
-		final TextView errorView = findTextView(R.id.authentication_error);
-		if (error != null && !"".equals(error)) {
-			errorView.setVisibility(View.VISIBLE);
-			errorView.setText(error);
-		} else {
-			errorView.setVisibility(View.GONE);
-		}
+		setError(error);
 
 		if (showSignupLink) {
 			findViewById(R.id.authentication_signup_box).setVisibility(View.VISIBLE);
@@ -184,17 +185,13 @@ public class AuthenticationActivity extends Activity {
 		myOkButton.setText(buttonResource.getResource("ok").getValue());
 		myOkButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				final Intent data = Util.intentByLink(new Intent(), myLink);
-				data.putExtra(
-					USERNAME_KEY,
-					myUsernameView.getText().toString()
-				);
-				data.putExtra(
-					PASSWORD_KEY,
-					findTextView(R.id.authentication_password).getText().toString()
-				);
-				setResult(RESULT_OK, data);
-				finish();
+				final String username = myUsernameView.getText().toString();
+				final String password = findTextView(R.id.authentication_password).getText().toString();
+				if (myCustomAuthentication) {
+					runCustomAuthentication(username, password);
+				} else {
+					finishOk(username, password);
+				}
 			}
 		});
 
@@ -205,6 +202,48 @@ public class AuthenticationActivity extends Activity {
 				finish();
 			}
 		});
+	}
+
+	private void setError(String error) {
+		final TextView errorView = findTextView(R.id.authentication_error);
+		if (error != null && !"".equals(error)) {
+			errorView.setVisibility(View.VISIBLE);
+			errorView.setText(error);
+		} else {
+			errorView.setVisibility(View.GONE);
+		}
+	}
+
+	private void finishOk(String username, String password) {
+		final Intent data = Util.intentByLink(new Intent(), myLink);
+		data.putExtra(USERNAME_KEY, username);
+		data.putExtra(PASSWORD_KEY, password);
+		setResult(RESULT_OK, data);
+		finish();
+	}
+
+	private void runCustomAuthentication(final String username, final String password) {
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+		mgr.UserNameOption.setValue(username);
+		final Runnable runnable = new Runnable() {
+			public void run() {
+				try {
+					mgr.authorise(password);
+					if (mgr.needsInitialization()) {
+						mgr.initialize();
+					}
+					finishOk(username, password);
+				} catch (final ZLNetworkException e) {
+					mgr.logOut();
+					runOnUiThread(new Runnable() {
+						public void run() {
+							setError(e.getMessage());
+						}
+					});
+				}
+			}
+		};
+		UIUtil.wait("authentication", runnable, this);
 	}
 
 	private TextView findTextView(int resourceId) {
