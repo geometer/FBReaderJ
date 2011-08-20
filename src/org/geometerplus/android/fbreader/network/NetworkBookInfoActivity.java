@@ -48,6 +48,7 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.android.fbreader.network.action.ActionCode;
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
+import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
 	private NetworkBookItem myBook;
@@ -309,13 +310,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 				R.id.network_book_button2,
 				R.id.network_book_button3,
 		};
-		final Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook, myConnection);
+		final List<NetworkBookActions.NBAction> actions = NetworkBookActions.getContextMenuActions(this, myBook, myConnection);
 
 		final boolean skipSecondButton =
 			actions.size() < buttons.length &&
 			actions.size() % 2 == 1;
 		int buttonNumber = 0;
-		for (final NetworkBookActions.Action a : actions) {
+		for (final NetworkBookActions.NBAction a : actions) {
 			if (skipSecondButton && buttonNumber == 1) {
 				++buttonNumber;
 			}
@@ -323,24 +324,17 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 				break;
 			}
 
-			final String text;
-			if (a.Arg == null) {
-				text = resource.getResource(a.Key).getValue();
-			} else {
-				text = resource.getResource(a.Key).getValue().replace("%s", a.Arg);
-			}
-
 			final int buttonId = buttons[buttonNumber++];
 			TextView button = (TextView)findViewById(buttonId);
-			button.setText(text);
+			button.setText(a.getContextLabel(null));
 			button.setVisibility(View.VISIBLE);
 			button.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					NetworkBookActions.runActionStatic(NetworkBookInfoActivity.this, myBook, a.Id);
+					a.run(myBook);
 					NetworkBookInfoActivity.this.updateView();
 				}
 			});
-			button.setEnabled(a.Id != ActionCode.TREE_NO_ACTION);
+			button.setEnabled(a.isEnabled(null));
 		}
 		findViewById(R.id.network_book_left_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
 		findViewById(R.id.network_book_right_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);

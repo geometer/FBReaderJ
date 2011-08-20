@@ -37,6 +37,8 @@ import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.ListAdapter;
 
+import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
+
 class NetworkLibraryAdapter extends ListAdapter {
 	NetworkLibraryAdapter(NetworkLibraryActivity activity) {
 		super(activity);

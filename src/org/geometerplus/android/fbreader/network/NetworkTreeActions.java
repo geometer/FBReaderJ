@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.android.fbreader.network.action.ActionCode;
 
 abstract class NetworkTreeActions {
-	// special values to return from getDefaultActionCode(NetworkTree)
 	protected final String getTitleValue(String key) {
 		return NetworkLibrary.resource().getResource(key).getValue();
 	}

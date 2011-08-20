@@ -69,7 +69,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		return (NetworkLibraryActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
 	}
 
-	public BookDownloaderServiceConnection Connection;
+	BookDownloaderServiceConnection Connection;
 
 	private volatile Intent myIntent;
 	private volatile boolean myInProgress;
@@ -242,20 +242,27 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
-		if (tree != null) {
-			int count = 0;
-			for (Action a : myContextMenuActions) {
-				if (a.isVisible(tree) && a.isEnabled(tree)) {
-					++count;
-				}
+		if (tree == null) {
+			return;
+		}
+
+		final List<? extends Action> actions =
+			tree instanceof NetworkBookTree
+				? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
+				: myContextMenuActions;
+
+		/*
+		int count = 0;
+		for (Action a : actions) {
+			if (a.isVisible(tree) && a.isEnabled(tree)) {
+				++count;
 			}
-			if (count > 0) {
-				menu.setHeaderTitle(tree.getName());
-				for (Action a : myContextMenuActions) {
-					if (a.isVisible(tree) && a.isEnabled(tree)) {
-						menu.add(0, a.Code, 0, a.getContextLabel(tree));
-					}
-				}
+		}
+		*/
+		menu.setHeaderTitle(tree.getName());
+		for (Action a : actions) {
+			if (a.isVisible(tree) && a.isEnabled(tree)) {
+				menu.add(0, a.Code, 0, a.getContextLabel(tree));
 			}
 		}
 	}
@@ -290,7 +297,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
 		if (tree != null) {
-			for (Action a : myContextMenuActions) {
+			final List<? extends Action> actions =
+				tree instanceof NetworkBookTree
+					? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
+					: myContextMenuActions;
+
+			for (Action a : actions) {
 				if (a.Code == item.getItemId()) {
 					runAction(a, tree);
 					return true;
