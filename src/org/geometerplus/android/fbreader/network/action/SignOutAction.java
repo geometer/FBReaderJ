@@ -21,12 +21,15 @@ package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-import org.geometerplus.android.fbreader.network.NetworkCatalogActions;
+import org.geometerplus.android.fbreader.network.NetworkView;
+
+import org.geometerplus.android.util.UIUtil;
 
 public class SignOutAction extends Action {
 	public SignOutAction(Activity activity) {
@@ -46,7 +49,24 @@ public class SignOutAction extends Action {
 
 	@Override
 	public void run(NetworkTree tree) {
-		NetworkCatalogActions.doSignOut(myActivity, (NetworkCatalogRootTree)tree);
+		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
+		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+		final Runnable runnable = new Runnable() {
+			public void run() {
+				if (mgr.mayBeAuthorised(false)) {
+					mgr.logOut();
+					myActivity.runOnUiThread(new Runnable() {
+						public void run() {
+							final NetworkLibrary library = NetworkLibrary.Instance();
+							library.invalidateVisibility();
+							library.synchronize();
+							NetworkView.Instance().fireModelChanged();
+						}
+					});
+				}
+			}
+		};
+		UIUtil.wait("signOut", runnable, myActivity);
 	}
 
 	@Override

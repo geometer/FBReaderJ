@@ -50,85 +50,6 @@ public class NetworkCatalogActions {
 		return false;
 	}
 
-	public static class CatalogExpander extends ItemsLoader {
-		private final NetworkCatalogTree myTree;
-		private final boolean myCheckAuthentication;
-		private final boolean myResumeNotLoad;
-
-		public CatalogExpander(Activity activity,
-				NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
-			super(activity);
-			myTree = tree;
-			myCheckAuthentication = checkAuthentication;
-			myResumeNotLoad = resumeNotLoad;
-		}
-
-		@Override
-		public void doBefore() throws ZLNetworkException {
-			final INetworkLink link = myTree.Item.Link;
-			if (myCheckAuthentication && link.authenticationManager() != null) {
-				final NetworkAuthenticationManager mgr = link.authenticationManager();
-				try {
-					if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
-						mgr.initialize();
-					}
-				} catch (ZLNetworkException e) {
-					mgr.logOut();
-				}
-			}
-		}
-
-		@Override
-		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
-			if (myResumeNotLoad) {
-				myTree.Item.resumeLoading(doWithListener);
-			} else {
-				myTree.Item.loadChildren(doWithListener);
-			}
-		}
-
-		@Override
-		protected void updateItems(List<NetworkItem> items) {
-			for (NetworkItem item: items) {
-				myTree.ChildrenItems.add(item);
-				NetworkTreeFactory.createNetworkTree(myTree, item);
-			}
-			NetworkView.Instance().fireModelChanged();
-		}
-
-		@Override
-		protected void onFinish(String errorMessage, boolean interrupted,
-				Set<NetworkItem> uncommitedItems) {
-			if (interrupted &&
-					(!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
-				myTree.ChildrenItems.clear();
-				myTree.clear();
-			} else {
-				myTree.removeItems(uncommitedItems);
-				myTree.updateLoadedTime();
-				if (!interrupted) {
-					afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
-				}
-				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.invalidateVisibility();
-				library.synchronize();
-			}
-			NetworkView.Instance().fireModelChanged();
-		}
-
-		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			final NetworkLibraryActivity activity = NetworkLibraryActivity.getByTree(myTree);
-			if (activity == null) {
-				return;
-			}
-			if (errorMessage != null) {
-				UIUtil.showMessageText(activity, errorMessage);
-			} else if (childrenEmpty) {
-				UIUtil.showErrorMessage(activity, "emptyCatalog");
-			}
-		}
-	}
-
 	public static void clearTree(Activity activity, final NetworkCatalogTree tree) {
 		activity.runOnUiThread(new Runnable() {
 			public void run() {
@@ -137,25 +58,5 @@ public class NetworkCatalogActions {
 				NetworkView.Instance().fireModelChanged();
 			}
 		});
-	}
-
-	public static void doSignOut(final Activity activity, NetworkCatalogTree tree) {
-		final NetworkAuthenticationManager mgr = tree.Item.Link.authenticationManager();
-		final Runnable runnable = new Runnable() {
-			public void run() {
-				if (mgr.mayBeAuthorised(false)) {
-					mgr.logOut();
-					activity.runOnUiThread(new Runnable() {
-						public void run() {
-							final NetworkLibrary library = NetworkLibrary.Instance();
-							library.invalidateVisibility();
-							library.synchronize();
-							NetworkView.Instance().fireModelChanged();
-						}
-					});
-				}
-			}
-		};
-		UIUtil.wait("signOut", runnable, activity);
 	}
 }

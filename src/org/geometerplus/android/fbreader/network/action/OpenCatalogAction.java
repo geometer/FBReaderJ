@@ -61,12 +61,12 @@ public class OpenCatalogAction extends CatalogAction {
 		if (item instanceof BasketItem && item.Link.basket().bookIds().size() == 0) {
 			UIUtil.showErrorMessage(myActivity, "emptyBasket");
 		} else {
-			doExpandCatalog(myActivity, (NetworkCatalogTree)tree);
+			doExpandCatalog((NetworkCatalogTree)tree);
 		}
 	}
 
-	private static void doExpandCatalog(final Activity activity, final NetworkCatalogTree tree) {
-		NetworkView.Instance().tryResumeLoading(activity, tree, new Runnable() {
+	private void doExpandCatalog(final NetworkCatalogTree tree) {
+		NetworkView.Instance().tryResumeLoading(myActivity, tree, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
 				if (tree.hasChildren()) {
@@ -74,11 +74,11 @@ public class OpenCatalogAction extends CatalogAction {
 						if (tree.Item.supportsResumeLoading()) {
 							resumeNotLoad = true;
 						} else {
-							Util.openTree(activity, tree);
+							Util.openTree(myActivity, tree);
 							return;
 						}
 					} else {
-						NetworkCatalogActions.clearTree(activity, tree);
+						NetworkCatalogActions.clearTree(myActivity, tree);
 					}
 				}
 
@@ -93,22 +93,22 @@ public class OpenCatalogAction extends CatalogAction {
 				 * 3) Remove unused messages (say, by timeout)
 				 */
 				ItemsLoadingService.start(
-					activity,
+					myActivity,
 					tree,
-					new NetworkCatalogActions.CatalogExpander(activity, tree, true, resumeNotLoad)
+					new CatalogExpander(myActivity, tree, true, resumeNotLoad)
 				);
-				processExtraData(activity, tree.Item.extraData(), new Runnable() {
+				processExtraData(tree.Item.extraData(), new Runnable() {
 					public void run() {
-						Util.openTree(activity, tree);
+						Util.openTree(myActivity, tree);
 					}
 				});
 			}
 		});
 	}
 
-	private static void processExtraData(final Activity activity, Map<String,String> extraData, final Runnable postRunnable) {
+	private void processExtraData(Map<String,String> extraData, final Runnable postRunnable) {
 		if (extraData != null && !extraData.isEmpty()) {
-			PackageUtil.runInstallPluginDialog(activity, extraData, postRunnable);
+			PackageUtil.runInstallPluginDialog(myActivity, extraData, postRunnable);
 		} else {
 			postRunnable.run();
 		}

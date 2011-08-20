@@ -65,7 +65,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		}
 	}
 
-	static NetworkLibraryActivity getByTree(NetworkTree tree) {
+	public static NetworkLibraryActivity getByTree(NetworkTree tree) {
 		return (NetworkLibraryActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
 	}
 

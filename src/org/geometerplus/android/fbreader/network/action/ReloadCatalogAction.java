@@ -58,7 +58,7 @@ public class ReloadCatalogAction extends CatalogAction {
 		ItemsLoadingService.start(
 			myActivity,
 			tree,
-			new NetworkCatalogActions.CatalogExpander(myActivity, (NetworkCatalogTree)tree, false, false)
+			new CatalogExpander(myActivity, (NetworkCatalogTree)tree, false, false)
 		);
 	}
 }
