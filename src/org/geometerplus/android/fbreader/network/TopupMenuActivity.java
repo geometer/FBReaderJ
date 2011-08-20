@@ -43,12 +43,12 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 	private static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
 	private static final String AMOUNT_KEY = "topup:amount";
 
-	static boolean isTopupSupported(INetworkLink link) {
+	public static boolean isTopupSupported(INetworkLink link) {
 		// TODO: more correct check
 		return link.authenticationManager().topupLink() != null;
 	}
 
-	static void runMenu(Context context, INetworkLink link, String amount) {
+	public static void runMenu(Context context, INetworkLink link, String amount) {
 		context.startActivity(
 			new Intent(context, TopupMenuActivity.class)
 				.setData(Uri.parse(link.getUrlInfo(UrlInfo.Type.Catalog).Url))

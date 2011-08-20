@@ -62,7 +62,6 @@ public class NetworkView {
 		myActions.add(new NetworkBookActions());
 		myActions.add(new NetworkCatalogActions());
 		myActions.add(new SearchItemActions());
-		myActions.add(new TopupActions());
 		myActions.trimToSize();
 
 		myInitialized = true;

@@ -214,6 +214,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 	private void fillContextMenuList() {
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
+		myContextMenuActions.add(new TopupAction(this));
 	}
 
 	@Override
@@ -367,28 +368,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		myOptionsMenuActions.add(new SignInAction(this));
 		myOptionsMenuActions.add(new SignUpAction(this));
 		myOptionsMenuActions.add(new SignOutAction(this));
-		myOptionsMenuActions.add(new CatalogAction(ActionCode.TOPUP, "topup") {
-			@Override
-			public boolean isVisible(NetworkTree tree) {
-				if (!super.isVisible(tree)) {
-					return false;
-				}
-
-				final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-				final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-				return
-					mgr != null &&
-					mgr.mayBeAuthorised(false) &&
-					mgr.currentAccount() != null &&
-					TopupMenuActivity.isTopupSupported(item.Link);
-			}
-
-			@Override
-			public void run(NetworkTree tree) {
-				// TODO: replace 113 with required amount
-				TopupMenuActivity.runMenu(NetworkLibraryActivity.this, ((NetworkCatalogTree)tree).Item.Link, "113");
-			}
-		});
+		myOptionsMenuActions.add(new TopupAction(this));
 
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
