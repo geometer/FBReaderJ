@@ -46,6 +46,8 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
+import org.geometerplus.android.fbreader.network.action.ActionCode;
+
 public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
 	private NetworkBookItem myBook;
 	private View myMainView;

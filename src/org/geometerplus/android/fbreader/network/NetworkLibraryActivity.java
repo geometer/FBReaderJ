@@ -50,6 +50,8 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 import org.geometerplus.android.fbreader.tree.BaseActivity;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
+import org.geometerplus.android.fbreader.network.action.*;
+
 public class NetworkLibraryActivity extends BaseActivity implements NetworkView.EventListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int CUSTOM_AUTHENTICATION_CODE = 2;
@@ -291,52 +293,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		return item;
 	}
 
-	private static abstract class Action {
-		final int Code;
-		final int IconId;
-
-		private final String myResourceKey;
-
-		Action(int code, String resourceKey, int iconId) {
-			Code = code;
-			myResourceKey = resourceKey;
-			IconId = iconId;
-		}
-
-		abstract boolean isVisible(NetworkTree tree);
-
-		boolean isEnabled(NetworkTree tree) {
-			return true;
-		}
-
-		String getLabel(NetworkTree tree) {
-			return
-				NetworkLibrary.resource().getResource("menu").getResource(myResourceKey).getValue();
-		}
-	}
-
-	private static class RootAction extends Action {
-		RootAction(int code, String resourceKey, int iconId) {
-			super(code, resourceKey, iconId);
-		}
-
-		@Override
-		boolean isVisible(NetworkTree tree) {
-			return tree instanceof RootTree;
-		}
-	}
-
-	private static class CatalogAction extends Action {
-		CatalogAction(int code, String resourceKey) {
-			super(code, resourceKey, -1);
-		}
-
-		@Override
-		boolean isVisible(NetworkTree tree) {
-			return tree instanceof NetworkCatalogTree;
-		}
-	}
-
 	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
 		final String label = NetworkLibrary.resource().getResource("menu").getResource(resourceKey).getValue();
 		return menu.add(0, index, Menu.NONE, label).setIcon(iconId);
@@ -359,16 +315,24 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		myMenuActions.clear();
 		myMenuActions.add(new RootAction(ActionCode.SEARCH, "networkSearch", R.drawable.ic_menu_search) {
 			@Override
-			boolean isEnabled(NetworkTree tree) {
+			public boolean isEnabled(NetworkTree tree) {
 				return !searchIsInProgress();
 			}
+
+			@Override
+			public void run(NetworkTree tree) {
+				onSearchRequested();
+			}
 		});
-		myMenuActions.add(new RootAction(ActionCode.CUSTOM_CATALOG_ADD, "addCustomCatalog", R.drawable.ic_menu_add));
-		myMenuActions.add(new RootAction(ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh));
-		myMenuActions.add(new RootAction(ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages));
+		myMenuActions.add(new RootAction(ActionCode.CUSTOM_CATALOG_ADD, "addCustomCatalog", R.drawable.ic_menu_add) {
+		});
+		myMenuActions.add(new RootAction(ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
+		});
+		myMenuActions.add(new RootAction(ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages) {
+		});
 		myMenuActions.add(new CatalogAction(ActionCode.RELOAD_CATALOG, "reload") {
 			@Override
-			boolean isVisible(NetworkTree tree) {
+			public boolean isVisible(NetworkTree tree) {
 				if (!super.isVisible(tree)) {
 					return false;
 				}
@@ -383,7 +347,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		});
 		myMenuActions.add(new CatalogAction(ActionCode.SIGNIN, "signIn") {
 			@Override
-			boolean isVisible(NetworkTree tree) {
+			public boolean isVisible(NetworkTree tree) {
 				if (!super.isVisible(tree)) {
 					return false;
 				}
@@ -393,24 +357,10 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				return mgr != null && !mgr.mayBeAuthorised(false);
 			}
 		});
-		myMenuActions.add(new CatalogAction(ActionCode.SIGNUP, "signUp") {
-			@Override
-			boolean isVisible(NetworkTree tree) {
-				if (!super.isVisible(tree)) {
-					return false;
-				}
-
-				final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-				final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
-				return
-					mgr != null &&
-					!mgr.mayBeAuthorised(false) &&
-					Util.isRegistrationSupported(NetworkLibraryActivity.this, item.Link);
-			}
-		});
+		myMenuActions.add(new SignUpAction(this));
 		myMenuActions.add(new CatalogAction(ActionCode.SIGNOUT, "signOut") {
 			@Override
-			boolean isVisible(NetworkTree tree) {
+			public boolean isVisible(NetworkTree tree) {
 				if (!super.isVisible(tree)) {
 					return false;
 				}
@@ -421,7 +371,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			}
 
 			@Override
-			String getLabel(NetworkTree tree) {
+			public String getLabel(NetworkTree tree) {
 				final NetworkAuthenticationManager mgr =
 					(((NetworkCatalogTree)tree).Item).Link.authenticationManager();
 				final String userName =
@@ -431,7 +381,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		});
 		myMenuActions.add(new CatalogAction(ActionCode.TOPUP, "topup") {
 			@Override
-			boolean isVisible(NetworkTree tree) {
+			public boolean isVisible(NetworkTree tree) {
 				if (!super.isVisible(tree)) {
 					return false;
 				}
@@ -485,10 +435,16 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (getCurrentTree() instanceof RootTree) {
+		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		for (Action a : myMenuActions) {
+			if (a.Code == item.getItemId()) {
+				a.run(tree);
+				break;
+			}
+		}
+
+		if (tree instanceof RootTree) {
 			switch (item.getItemId()) {
-				case ActionCode.SEARCH:
-					return onSearchRequested();
 				case ActionCode.CUSTOM_CATALOG_ADD:
 					AddCustomCatalogItemActions.addCustomCatalog(this);
 					return true;
@@ -502,7 +458,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					return true;
 			}
 		} else {
-			final NetworkTree tree = (NetworkTree)getCurrentTree();
 			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
 			if (actions != null) {
 				return actions.runAction(this, tree, item.getItemId());

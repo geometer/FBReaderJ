@@ -39,7 +39,7 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
-abstract class Util implements UserRegistrationConstants {
+public abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
 
@@ -47,7 +47,7 @@ abstract class Util implements UserRegistrationConstants {
 		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
 	}
 
-	static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
+	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
 		return testService(
 			activity,
 			REGISTRATION_ACTION,
@@ -55,7 +55,7 @@ abstract class Util implements UserRegistrationConstants {
 		);
 	}
 
-	static void runRegistrationDialog(Activity activity, INetworkLink link) {
+	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		try {
 			final Intent intent = new Intent(
 				REGISTRATION_ACTION,

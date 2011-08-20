@@ -17,29 +17,37 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
+package org.geometerplus.android.fbreader.network.action;
 
-interface ActionCode {
-	int TREE_SHOW_CONTEXT_MENU = -2;
-	int TREE_NO_ACTION = -1;
+import java.util.*;
 
-	int SEARCH = 0;
-	int REFRESH = 1;
-	int LANGUAGE_FILTER = 2;
+import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 
-	int RELOAD_CATALOG = 3;
-	int OPEN_CATALOG = 4;
-	int OPEN_IN_BROWSER = 5;
+public abstract class Action {
+	public final int Code;
+	public final int IconId;
 
-	int SIGNUP = 6;
-	int SIGNIN = 7;
-	int SIGNOUT = 8;
-	int TOPUP = 9;
+	private final String myResourceKey;
 
-	int CUSTOM_CATALOG_ADD = 10;
-	int CUSTOM_CATALOG_EDIT = 11;
-	int CUSTOM_CATALOG_REMOVE = 12;
+	protected Action(int code, String resourceKey, int iconId) {
+		Code = code;
+		myResourceKey = resourceKey;
+		IconId = iconId;
+	}
 
-	int BASKET_CLEAR = 13;
-	int BASKET_BUY_ALL_BOOKS = 14;
+	public abstract boolean isVisible(NetworkTree tree);
+
+	public boolean isEnabled(NetworkTree tree) {
+		return true;
+	}
+
+	// TODO: change to abstract
+	public void run(NetworkTree tree) {
+	}
+
+	public String getLabel(NetworkTree tree) {
+		return
+			NetworkLibrary.resource().getResource("menu").getResource(myResourceKey).getValue();
+	}
 }

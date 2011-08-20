@@ -27,6 +27,8 @@ import android.view.MenuItem;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 
+import org.geometerplus.android.fbreader.network.action.ActionCode;
+
 abstract class NetworkTreeActions {
 	// special values to return from getDefaultActionCode(NetworkTree)
 	protected final String getTitleValue(String key) {

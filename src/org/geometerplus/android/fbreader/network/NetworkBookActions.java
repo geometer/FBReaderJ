@@ -47,6 +47,8 @@ import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
 import org.geometerplus.fbreader.network.tree.NetworkSeriesTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
+import org.geometerplus.android.fbreader.network.action.ActionCode;
+
 class NetworkBookActions extends NetworkTreeActions {
 	public static final int DOWNLOAD_BOOK_ITEM_ID = 0;
 	public static final int DOWNLOAD_DEMO_ITEM_ID = 1;

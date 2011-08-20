@@ -46,6 +46,8 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
+import org.geometerplus.android.fbreader.network.action.ActionCode;
+
 class NetworkCatalogActions extends NetworkTreeActions {
 	@Override
 	public boolean canHandleTree(NetworkTree tree) {
@@ -186,9 +188,6 @@ class NetworkCatalogActions extends NetworkTreeActions {
 				return true;
 			case ActionCode.SIGNIN:
 				Util.runAuthenticationDialog(activity, item.Link, null, null);
-				return true;
-			case ActionCode.SIGNUP:
-				Util.runRegistrationDialog(activity, item.Link);
 				return true;
 			case ActionCode.SIGNOUT:
 				doSignOut(activity, catalogTree);
