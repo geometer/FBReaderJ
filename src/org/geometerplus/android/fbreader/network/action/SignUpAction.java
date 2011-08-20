@@ -51,6 +51,6 @@ public class SignUpAction extends CatalogAction {
 
 	@Override
 	public void run(NetworkTree tree) {
-		Util.runRegistrationDialog(myActivity, (((NetworkCatalogTree)tree).Item).Link);
+		Util.runRegistrationDialog(myActivity, ((NetworkCatalogTree)tree).Item.Link);
 	}
 }

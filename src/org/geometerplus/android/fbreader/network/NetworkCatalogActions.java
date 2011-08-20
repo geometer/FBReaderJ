@@ -357,7 +357,7 @@ public class NetworkCatalogActions extends NetworkTreeActions {
 		});
 	}
 
-	public void doReloadCatalog(NetworkLibraryActivity activity, final NetworkCatalogTree tree) {
+	public static void doReloadCatalog(NetworkLibraryActivity activity, final NetworkCatalogTree tree) {
 		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}

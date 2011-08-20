@@ -325,10 +325,22 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			}
 		});
 		myMenuActions.add(new RootAction(ActionCode.CUSTOM_CATALOG_ADD, "addCustomCatalog", R.drawable.ic_menu_add) {
+			@Override
+			public void run(NetworkTree tree) {
+				AddCustomCatalogItemActions.addCustomCatalog(NetworkLibraryActivity.this);
+			}
 		});
 		myMenuActions.add(new RootAction(ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
+			@Override
+			public void run(NetworkTree tree) {
+				refreshCatalogsList();
+			}
 		});
 		myMenuActions.add(new RootAction(ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages) {
+			@Override
+			public void run(NetworkTree tree) {
+				runLanguageFilterDialog();
+			}
 		});
 		myMenuActions.add(new CatalogAction(ActionCode.RELOAD_CATALOG, "reload") {
 			@Override
@@ -343,6 +355,11 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				return
 					((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog) != null &&
 					ItemsLoadingService.getRunnable(tree) == null;
+			}
+
+			@Override
+			public void run(NetworkTree tree) {
+				NetworkCatalogActions.doReloadCatalog(NetworkLibraryActivity.this, (NetworkCatalogTree)tree);
 			}
 		});
 		myMenuActions.add(new SignInAction(this));
@@ -362,6 +379,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					mgr.mayBeAuthorised(false) &&
 					mgr.currentAccount() != null &&
 					TopupMenuActivity.isTopupSupported(item.Link);
+			}
+
+			@Override
+			public void run(NetworkTree tree) {
+				// TODO: replace 113 with required amount
+				TopupMenuActivity.runMenu(NetworkLibraryActivity.this, ((NetworkCatalogTree)tree).Item.Link, "113");
 			}
 		});
 
@@ -411,28 +434,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				break;
 			}
 		}
-
-		if (tree instanceof RootTree) {
-			switch (item.getItemId()) {
-				case ActionCode.CUSTOM_CATALOG_ADD:
-					AddCustomCatalogItemActions.addCustomCatalog(this);
-					return true;
-				case ActionCode.REFRESH:
-					refreshCatalogsList();
-					return true;
-				case ActionCode.LANGUAGE_FILTER:
-					runLanguageFilterDialog();
-					return true;
-				default:
-					return true;
-			}
-		} else {
-			final NetworkTreeActions actions = NetworkView.Instance().getActions(tree);
-			if (actions != null) {
-				return actions.runAction(this, tree, item.getItemId());
-			}
-			return false;
-		}
+		return true;
 	}
 
 	private void runLanguageFilterDialog() {
