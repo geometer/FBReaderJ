@@ -185,30 +185,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	}
 
 	static boolean runActionStatic(final Activity activity, final NetworkBookTree tree, int actionCode) {
-		switch (actionCode) {
-			case ActionCode.SHOW_BOOK_ACTIVITY:
-				if (tree.Book.isFullyLoaded()) {
-					Util.openTree(activity, tree);
-				} else {
-					UIUtil.wait("loadInfo", new Runnable() {
-						public void run() {
-							try {
-								tree.Book.loadFullInformation();
-							} catch (ZLNetworkException e) {
-								e.printStackTrace();
-							}
-							activity.runOnUiThread(new Runnable() {
-								public void run() {
-									Util.openTree(activity, tree);
-								}
-							});
-						}
-					}, activity);
-				}
-				return true;
-			default:
-				return runActionStatic(activity, tree.Book, actionCode);
-		}
+		return runActionStatic(activity, tree.Book, actionCode);
 	}
 
 	static boolean runActionStatic(Activity activity, NetworkBookItem book, int actionCode) {
