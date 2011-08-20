@@ -47,6 +47,7 @@ import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.android.fbreader.network.action.ActionCode;
+import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
 	private NetworkBookItem myBook;
@@ -165,10 +166,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 						final NetworkCatalogItem catalogItem =
 							myBook.createRelatedCatalogItem(relatedInfo);
 						if (catalogItem != null) {
-							NetworkCatalogActions.doExpandCatalog(
-								NetworkBookInfoActivity.this,
-								NetworkLibrary.Instance().getFakeCatalogTree(catalogItem)
-							);
+							new OpenCatalogAction(NetworkBookInfoActivity.this)
+								.run(NetworkLibrary.Instance().getFakeCatalogTree(catalogItem));
 						} else if (MimeType.TEXT_HTML.equals(relatedInfo.Mime)) {
 							Util.openInBrowser(NetworkBookInfoActivity.this, relatedInfo.Url);
 						}
