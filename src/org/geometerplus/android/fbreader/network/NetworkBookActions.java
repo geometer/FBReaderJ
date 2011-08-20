@@ -50,21 +50,6 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 import org.geometerplus.android.fbreader.network.action.ActionCode;
 
 class NetworkBookActions extends NetworkTreeActions {
-	public static final int DOWNLOAD_BOOK_ITEM_ID = 0;
-	public static final int DOWNLOAD_DEMO_ITEM_ID = 1;
-	public static final int READ_BOOK_ITEM_ID = 2;
-	public static final int READ_DEMO_ITEM_ID = 3;
-	public static final int DELETE_BOOK_ITEM_ID = 4;
-	public static final int DELETE_DEMO_ITEM_ID = 5;
-	public static final int BUY_DIRECTLY_ITEM_ID = 6;
-	public static final int BUY_IN_BROWSER_ITEM_ID = 7;
-	public static final int SHOW_BOOK_ACTIVITY_ITEM_ID = 8;
-	public static final int SHOW_BOOKS_ITEM_ID = 9;
-	public static final int ADD_BOOK_TO_BASKET = 10;
-	public static final int REMOVE_BOOK_FROM_BASKET = 11;
-	public static final int ADD_CATALOG_TO_FAVORITES = 12;
-	public static final int REMOVE_CATALOG_FROM_FAVORITES = 13;
-
 	private static boolean useFullReferences(NetworkBookItem book) {
 		return book.reference(UrlInfo.Type.Book) != null ||
 			book.reference(UrlInfo.Type.BookConditional) != null;
@@ -92,7 +77,7 @@ class NetworkBookActions extends NetworkTreeActions {
 	public void buildContextMenu(NetworkLibraryActivity activity, ContextMenu menu, NetworkTree tree) {
 		menu.setHeaderTitle(tree.getName());
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
-			addMenuItem(menu, SHOW_BOOKS_ITEM_ID, "showBooks");
+			addMenuItem(menu, ActionCode.SHOW_BOOKS, "showBooks");
 			return;
 		}
 
@@ -155,10 +140,10 @@ class NetworkBookActions extends NetworkTreeActions {
 					&& connection != null && connection.isBeingDownloaded(reference.Url)) {
 				actions.add(new Action(ActionCode.TREE_NO_ACTION, "alreadyDownloading"));
 			} else if (book.localCopyFileName() != null) {
-				actions.add(new Action(READ_BOOK_ITEM_ID, "read"));
-				actions.add(new Action(DELETE_BOOK_ITEM_ID, "delete"));
+				actions.add(new Action(ActionCode.READ_BOOK, "read"));
+				actions.add(new Action(ActionCode.DELETE_BOOK, "delete"));
 			} else if (reference != null) {
-				actions.add(new Action(DOWNLOAD_BOOK_ITEM_ID, "download"));
+				actions.add(new Action(ActionCode.DOWNLOAD_BOOK, "download"));
 			}
 		}
 		if (useDemoReferences(book)) {
@@ -166,10 +151,10 @@ class NetworkBookActions extends NetworkTreeActions {
 			if (connection != null && connection.isBeingDownloaded(reference.Url)) {
 				actions.add(new Action(ActionCode.TREE_NO_ACTION, "alreadyDownloadingDemo"));
 			} else if (reference.localCopyFileName(UrlInfo.Type.BookDemo) != null) {
-				actions.add(new Action(READ_DEMO_ITEM_ID, "readDemo"));
-				actions.add(new Action(DELETE_DEMO_ITEM_ID, "deleteDemo"));
+				actions.add(new Action(ActionCode.READ_DEMO, "readDemo"));
+				actions.add(new Action(ActionCode.DELETE_DEMO, "deleteDemo"));
 			} else {
-				actions.add(new Action(DOWNLOAD_DEMO_ITEM_ID, "downloadDemo"));
+				actions.add(new Action(ActionCode.DOWNLOAD_DEMO, "downloadDemo"));
 			}
 		}
 		if (useBuyReferences(book)) {
@@ -177,10 +162,10 @@ class NetworkBookActions extends NetworkTreeActions {
 			BookUrlInfo reference = null;
 			if (book.reference(UrlInfo.Type.BookBuy) != null) {
 				reference = book.reference(UrlInfo.Type.BookBuy);
-				id = BUY_DIRECTLY_ITEM_ID;
+				id = ActionCode.BUY_DIRECTLY;
 			} else if (book.reference(UrlInfo.Type.BookBuyInBrowser) != null) {
 				reference = book.reference(UrlInfo.Type.BookBuyInBrowser);
-				id = BUY_IN_BROWSER_ITEM_ID;
+				id = ActionCode.BUY_IN_BROWSER;
 			}
 			if (reference != null) {
 				final String price = ((BookBuyUrlInfo)reference).Price;
@@ -189,9 +174,9 @@ class NetworkBookActions extends NetworkTreeActions {
 			final Basket basket = book.Link.basket();
 			if (basket != null) {
 				if (basket.contains(book)) {
-					actions.add(new Action(REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
+					actions.add(new Action(ActionCode.REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
 				} else {
-					actions.add(new Action(ADD_BOOK_TO_BASKET, "addToBasket"));
+					actions.add(new Action(ActionCode.ADD_BOOK_TO_BASKET, "addToBasket"));
 				}
 			}
 		}
@@ -201,16 +186,16 @@ class NetworkBookActions extends NetworkTreeActions {
 	@Override
 	public int getDefaultActionCode(NetworkLibraryActivity activity, NetworkTree tree) {
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
-			return SHOW_BOOKS_ITEM_ID;
+			return ActionCode.SHOW_BOOKS;
 		}
-		return SHOW_BOOK_ACTIVITY_ITEM_ID;
+		return ActionCode.SHOW_BOOK_ACTIVITY;
 	}
 
 	@Override
 	public boolean runAction(NetworkLibraryActivity activity, NetworkTree tree, int actionCode) {
 		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
 			switch (actionCode) {
-				case SHOW_BOOKS_ITEM_ID:
+				case ActionCode.SHOW_BOOKS:
 					Util.openTree(activity, tree);
 					return true;
 			}
@@ -224,7 +209,7 @@ class NetworkBookActions extends NetworkTreeActions {
 
 	static boolean runActionStatic(final Activity activity, final NetworkBookTree tree, int actionCode) {
 		switch (actionCode) {
-			case SHOW_BOOK_ACTIVITY_ITEM_ID:
+			case ActionCode.SHOW_BOOK_ACTIVITY:
 				if (tree.Book.isFullyLoaded()) {
 					Util.openTree(activity, tree);
 				} else {
@@ -251,34 +236,34 @@ class NetworkBookActions extends NetworkTreeActions {
 
 	static boolean runActionStatic(Activity activity, NetworkBookItem book, int actionCode) {
 		switch (actionCode) {
-			case DOWNLOAD_BOOK_ITEM_ID:
+			case ActionCode.DOWNLOAD_BOOK:
 				doDownloadBook(activity, book, false);
 				return true;
-			case DOWNLOAD_DEMO_ITEM_ID:
+			case ActionCode.DOWNLOAD_DEMO:
 				doDownloadBook(activity, book, true);
 				return true;
-			case READ_BOOK_ITEM_ID:
+			case ActionCode.READ_BOOK:
 				doReadBook(activity, book, false);
 				return true;
-			case READ_DEMO_ITEM_ID:
+			case ActionCode.READ_DEMO:
 				doReadBook(activity, book, true);
 				return true;
-			case DELETE_BOOK_ITEM_ID:
+			case ActionCode.DELETE_BOOK:
 				tryToDeleteBook(activity, book, false);
 				return true;
-			case DELETE_DEMO_ITEM_ID:
+			case ActionCode.DELETE_DEMO:
 				tryToDeleteBook(activity, book, true);
 				return true;
-			case BUY_DIRECTLY_ITEM_ID:
+			case ActionCode.BUY_DIRECTLY:
 				doBuyDirectly(activity, book);
 				return true;
-			case BUY_IN_BROWSER_ITEM_ID:
+			case ActionCode.BUY_IN_BROWSER:
 				doBuyInBrowser(activity, book);
 				return true;
-			case ADD_BOOK_TO_BASKET:
+			case ActionCode.ADD_BOOK_TO_BASKET:
 				book.Link.basket().add(book);
 				return true;
-			case REMOVE_BOOK_FROM_BASKET:
+			case ActionCode.REMOVE_BOOK_FROM_BASKET:
 				book.Link.basket().remove(book);
 				return true;
 		}

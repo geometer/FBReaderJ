@@ -23,23 +23,36 @@ public interface ActionCode {
 	int TREE_SHOW_CONTEXT_MENU = -2;
 	int TREE_NO_ACTION = -1;
 
-	int SEARCH = 0;
-	int REFRESH = 1;
-	int LANGUAGE_FILTER = 2;
+	int SEARCH = 1;
+	int REFRESH = 2;
+	int LANGUAGE_FILTER = 3;
 
-	int RELOAD_CATALOG = 3;
-	int OPEN_CATALOG = 4;
-	int OPEN_IN_BROWSER = 5;
+	int RELOAD_CATALOG = 11;
+	int OPEN_CATALOG = 12;
+	int OPEN_IN_BROWSER = 13;
 
-	int SIGNUP = 6;
-	int SIGNIN = 7;
-	int SIGNOUT = 8;
-	int TOPUP = 9;
+	int SIGNUP = 21;
+	int SIGNIN = 22;
+	int SIGNOUT = 23;
+	int TOPUP = 24;
 
-	int CUSTOM_CATALOG_ADD = 10;
-	int CUSTOM_CATALOG_EDIT = 11;
-	int CUSTOM_CATALOG_REMOVE = 12;
+	int CUSTOM_CATALOG_ADD = 31;
+	int CUSTOM_CATALOG_EDIT = 32;
+	int CUSTOM_CATALOG_REMOVE = 33;
 
-	int BASKET_CLEAR = 13;
-	int BASKET_BUY_ALL_BOOKS = 14;
+	int BASKET_CLEAR = 41;
+	int BASKET_BUY_ALL_BOOKS = 42;
+
+	int DOWNLOAD_BOOK = 51;
+	int DOWNLOAD_DEMO = 52;
+	int READ_BOOK = 53;
+	int READ_DEMO = 54;
+	int DELETE_BOOK = 55;
+	int DELETE_DEMO = 56;
+	int BUY_DIRECTLY = 57;
+	int BUY_IN_BROWSER = 58;
+	int SHOW_BOOK_ACTIVITY = 59;
+	int SHOW_BOOKS = 60;
+	int ADD_BOOK_TO_BASKET = 61;
+	int REMOVE_BOOK_FROM_BASKET = 62;
 }
