@@ -179,16 +179,13 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 
 	@Override
 	public boolean onSearchRequested() {
-		if (getCurrentTree() instanceof RootTree) {
-			if (searchIsInProgress()) {
-				return false;
-			}
-			final NetworkLibrary library = NetworkLibrary.Instance();
-			startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
-			return true;
-		} else {
+		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		if (!new RunSearchAction(this).isEnabled(tree)) {
 			return false;
 		}
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
+		return true;
 	}
 
 	@Override
@@ -358,17 +355,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		super.onCreateOptionsMenu(menu);
 
 		myOptionsMenuActions.clear();
-		myOptionsMenuActions.add(new RootAction(this, ActionCode.SEARCH, "networkSearch", R.drawable.ic_menu_search) {
-			@Override
-			public boolean isEnabled(NetworkTree tree) {
-				return !searchIsInProgress();
-			}
-
-			@Override
-			public void run(NetworkTree tree) {
-				onSearchRequested();
-			}
-		});
+		myOptionsMenuActions.add(new RunSearchAction(this));
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
 		myOptionsMenuActions.add(new RootAction(this, ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
 			@Override
@@ -415,12 +402,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			}
 		}
 		return true;
-	}
-
-	protected static boolean searchIsInProgress() {
-		return ItemsLoadingService.getRunnable(
-			NetworkLibrary.Instance().getSearchItemTree()
-		) != null;
 	}
 
 	@Override
