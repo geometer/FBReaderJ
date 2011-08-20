@@ -336,12 +336,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 				refreshCatalogsList();
 			}
 		});
-		myMenuActions.add(new RootAction(ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages) {
-			@Override
-			public void run(NetworkTree tree) {
-				runLanguageFilterDialog();
-			}
-		});
+		myMenuActions.add(new LanguageFilterAction(this));
 		myMenuActions.add(new CatalogAction(ActionCode.RELOAD_CATALOG, "reload") {
 			@Override
 			public boolean isVisible(NetworkTree tree) {
@@ -435,48 +430,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 			}
 		}
 		return true;
-	}
-
-	private void runLanguageFilterDialog() {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-
-		final List<String> allLanguageCodes = library.languageCodes();
-		Collections.sort(allLanguageCodes, new ZLLanguageUtil.CodeComparator());
-		final Collection<String> activeLanguageCodes = library.activeLanguageCodes();
-		final CharSequence[] languageNames = new CharSequence[allLanguageCodes.size()];
-		final boolean[] checked = new boolean[allLanguageCodes.size()];
-
-		for (int i = 0; i < allLanguageCodes.size(); ++i) {
-			final String code = allLanguageCodes.get(i);
-			languageNames[i] = ZLLanguageUtil.languageName(code);
-			checked[i] = activeLanguageCodes.contains(code);
-		}
-
-		final DialogInterface.OnMultiChoiceClickListener listener =
-			new DialogInterface.OnMultiChoiceClickListener() {
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					checked[which] = isChecked;
-				}
-			};
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final AlertDialog dialog = new AlertDialog.Builder(this)
-			.setMultiChoiceItems(languageNames, checked, listener)
-			.setTitle(dialogResource.getResource("languageFilterDialog").getResource("title").getValue())
-			.setPositiveButton(dialogResource.getResource("button").getResource("ok").getValue(), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					final TreeSet<String> newActiveCodes = new TreeSet<String>(new ZLLanguageUtil.CodeComparator());
-					for (int i = 0; i < checked.length; ++i) {
-						if (checked[i]) {
-							newActiveCodes.add(allLanguageCodes.get(i));
-						}
-					}
-					library.setActiveLanguageCodes(newActiveCodes);
-					library.synchronize();
-					NetworkView.Instance().fireModelChanged();
-				}
-			})
-			.create();
-		dialog.show();
 	}
 
 	private void refreshCatalogsList() {
