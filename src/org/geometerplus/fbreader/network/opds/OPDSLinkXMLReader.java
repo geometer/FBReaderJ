@@ -195,10 +195,12 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 
 		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
 			myUpdatedTime = feed.Updated;
+			/*
 			if (myUpdatedTime != null && myReadAfterTime != null
 					&& myUpdatedTime.compareTo(myReadAfterTime) <= 0) {
 				return true;
 			}
+			*/
 			return myListener == null; // no listener -- no need to proceed
 		}
 

@@ -183,7 +183,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	}
 
 	private static int getLanguageOrder(String language) {
-		if (language == ZLLanguageUtil.MULTI_LANGUAGE_CODE) {
+		if (ZLLanguageUtil.MULTI_LANGUAGE_CODE.equals(language)) {
 			return 1;
 		}
 		if (language.equals(Locale.getDefault().getLanguage())) {

@@ -110,7 +110,7 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			final SearchItemTree tree = NetworkLibrary.Instance().getSearchItemTree();
+			final SearchItemTree tree = null;//NetworkLibrary.Instance().getSearchItemTree();
 			if (tree == null) {
 				return;
 			}
@@ -132,7 +132,7 @@ public class NetworkSearchActivity extends Activity {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
-		final SearchItemTree tree = library.getSearchItemTree();
+		final SearchItemTree tree = null;//library.getSearchItemTree();
 		if (tree == null ||
 			ItemsLoadingService.getRunnable(tree) != null) {
 			return;

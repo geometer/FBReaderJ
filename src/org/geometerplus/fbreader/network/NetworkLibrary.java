@@ -132,6 +132,7 @@ public class NetworkLibrary {
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
 		final Collection<String> codes = activeLanguageCodes();
 		synchronized (myLinks) {
+			System.err.println("in activeLinks: " + myLinks.size());
 			for (INetworkLink link : myLinks) {
 				if (link instanceof ICustomNetworkLink ||
 					codes.contains(link.getLanguage())) {
@@ -155,7 +156,6 @@ public class NetworkLibrary {
 
 	private final RootTree myRootTree = new RootTree("@Root", false);
 	private final RootTree myFakeRootTree = new RootTree("@FakeRoot", true);
-	private SearchItemTree mySearchItemTree;
 
 	private boolean myChildrenAreInvalid = true;
 	private boolean myUpdateVisibility;
@@ -163,9 +163,9 @@ public class NetworkLibrary {
 	private NetworkLibrary() {
 	}
 
-	private boolean myIsAlreadyInitialized;
+	private volatile boolean myIsInitialized;
 	public void initialize() throws ZLNetworkException {
-		if (myIsAlreadyInitialized) {
+		if (myIsInitialized) {
 			return;
 		}
 
@@ -185,7 +185,7 @@ public class NetworkLibrary {
 			myLinks.addAll(db.listLinks());
 		}
 
-		myIsAlreadyInitialized = true;
+		myIsInitialized = true;
 	}
 
 	private void removeAllLoadedLinks() {
@@ -217,6 +217,7 @@ public class NetworkLibrary {
 	// This method must be called from background thread
 	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
 		synchronized (myBackgroundLock) {
+			System.err.println("runBackgroundUpdate 0");
 			myBackgroundLinks = new ArrayList<INetworkLink>();
 
 			final int cacheMode = clearCache ? OPDSLinkReader.CACHE_CLEAR : OPDSLinkReader.CACHE_UPDATE;
@@ -230,12 +231,16 @@ public class NetworkLibrary {
 				myBackgroundLinks = null;
 				throw e;
 			} finally {
+			System.err.println("runBackgroundUpdate 0.1");
 				if (myBackgroundLinks != null) {
+			System.err.println("runBackgroundUpdate 0.2");
 					if (myBackgroundLinks.isEmpty()) {
+			System.err.println("runBackgroundUpdate 0.3");
 						myBackgroundLinks = null;
 					}
 				}
 			}
+			System.err.println("runBackgroundUpdate 1");
 			// we create this copy to prevent long operations on synchronized list
 			final List<INetworkLink> linksCopy = new ArrayList<INetworkLink>(myLinks);
 			for (INetworkLink link : linksCopy) {
@@ -247,12 +252,14 @@ public class NetworkLibrary {
 					}
 				}
 			}
+			System.err.println("runBackgroundUpdate 2");
 		}
 	}
 
 	// This method MUST be called from main thread
 	// This method has effect only when runBackgroundUpdate method has returned null.
 	public void finishBackgroundUpdate() {
+		System.err.println("finishBackgroundUpdate 0");
 		synchronized (myBackgroundLock) {
 			if (myBackgroundLinks != null) {
 				removeAllLoadedLinks();
@@ -260,6 +267,7 @@ public class NetworkLibrary {
 			}
 			invalidateChildren();
 		}
+		System.err.println("finishBackgroundUpdate 1");
 		synchronize();
 	}
 
@@ -297,76 +305,49 @@ public class NetworkLibrary {
 	}
 
 	private void makeUpToDate() {
+		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
+
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
-		ListIterator<FBTree> nodeIterator = myRootTree.subTrees().listIterator();
-		FBTree currentNode = null;
-		int nodeCount = 0;
-
-		final ArrayList<INetworkLink> links = new ArrayList<INetworkLink>(activeLinks());
-		Collections.sort(links);
-		for (int i = 0; i < links.size(); ++i) {
-			INetworkLink link = links.get(i);
-			boolean processed = false;
-			while (currentNode != null || nodeIterator.hasNext()) {
-				if (currentNode == null) {
-					currentNode = nodeIterator.next();
-				}
-				if (!(currentNode instanceof NetworkCatalogTree)) {
-					toRemove.add(currentNode);
-					currentNode = null;
-					++nodeCount;
-					continue;
-				}
-				final INetworkLink nodeLink = ((NetworkCatalogTree)currentNode).Item.Link;
-				if (link == nodeLink) {
-					if (linkIsChanged(link)) {
-						toRemove.add(currentNode);
+		// we do remove sum tree items:
+		for (FBTree t : myRootTree.subTrees()) {
+			if (t instanceof NetworkCatalogTree) {
+				final INetworkLink link = ((NetworkCatalogTree)t).Item.Link;
+				if (link != null) {
+					if (!linkSet.contains(link)) {
+                        // 1. links not listed in activeLinks list right now
+						toRemove.add(t);
+					} else if (link instanceof ICustomNetworkLink &&
+								((ICustomNetworkLink)link).hasChanges()) {
+                        // 2. custom links that were changed
+						toRemove.add(t);
 					} else {
-						processed = true;
-					}
-					currentNode = null;
-					++nodeCount;
-					break;
-				} else {
-					INetworkLink newNodeLink = null;
-					for (int j = i; j < links.size(); ++j) {
-						final INetworkLink jlnk = links.get(j);
-						if (nodeLink == jlnk) {
-							newNodeLink = jlnk;
-							break;
-						}
-					}
-					if (newNodeLink == null || linkIsChanged(nodeLink)) {
-						toRemove.add(currentNode);
-						currentNode = null;
-						++nodeCount;
-					} else {
-						break;
+						linkSet.remove(link);
 					}
 				}
-			}
-			if (!processed) {
-				makeValid(link);
-				final int nextIndex = nodeIterator.nextIndex();
-				new NetworkCatalogRootTree(myRootTree, link, nodeCount++).Item.onDisplayItem();
-				nodeIterator = myRootTree.subTrees().listIterator(nextIndex + 1);
+			} else {
+				// 3. non-catalog nodes
+				toRemove.add(t);
 			}
 		}
-
-		while (currentNode != null || nodeIterator.hasNext()) {
-			if (currentNode == null) {
-				currentNode = nodeIterator.next();
-			}
-			toRemove.add(currentNode);
-			currentNode = null;
-		}
-
 		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 		}
+
+		// we do add new network catalog items
+		for (INetworkLink link : linkSet) {
+			int index = 0;
+			for (FBTree t : myRootTree.subTrees()) {
+				final INetworkLink l = ((NetworkCatalogTree)t).Item.Link;
+				if (l != null && link.compareTo(l) <= 0) {
+					break;
+				}
+				++index;
+			}
+			new NetworkCatalogRootTree(myRootTree, link, index);
+		}
+		// we do add non-catalog items
 		new AddCustomCatalogItemTree(myRootTree);
-		mySearchItemTree = new SearchItemTree(myRootTree, 0);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
@@ -381,22 +362,22 @@ public class NetworkLibrary {
 	}
 
 	public void synchronize() {
+		System.err.println("synchronize 0");
 		if (myChildrenAreInvalid) {
+		System.err.println("synchronize 1");
 			myChildrenAreInvalid = false;
 			makeUpToDate();
 		}
 		if (myUpdateVisibility) {
+		System.err.println("synchronize 2");
 			myUpdateVisibility = false;
 			updateVisibility();
 		}
+		System.err.println("synchronize 3");
 	}
 
 	public NetworkTree getRootTree() {
 		return myRootTree;
-	}
-
-	public SearchItemTree getSearchItemTree() {
-		return mySearchItemTree;
 	}
 
 	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {
@@ -492,7 +473,10 @@ public class NetworkLibrary {
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
+		System.err.println("removeCustomLink: " + link.getTitle() + " :: " + myLinks.contains(link));
+		System.err.println("before: " + myLinks.size());
 		myLinks.remove(link);
+		System.err.println("after: " + myLinks.size());
 		NetworkDatabase.Instance().deleteLink(link);
 		invalidateChildren();
 	}

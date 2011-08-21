@@ -21,12 +21,9 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
-import android.app.Activity;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 
 public class NetworkView {
 	private static NetworkView ourInstance;
@@ -48,7 +45,9 @@ public class NetworkView {
 	}
 
 	public void initialize() throws ZLNetworkException {
-		new SQLiteNetworkDatabase();
+		if (SQLiteNetworkDatabase.Instance() == null) {
+			new SQLiteNetworkDatabase();
+		}
 
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.initialize();
