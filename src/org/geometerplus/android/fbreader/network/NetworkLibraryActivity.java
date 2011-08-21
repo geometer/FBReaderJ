@@ -25,7 +25,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.*;
+import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -413,34 +413,26 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 	}
 
 	private void refreshCatalogsList() {
-		final Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				if (msg.obj == null) {
-					NetworkLibrary.Instance().finishBackgroundUpdate();
-				} else {
-					final ZLResource dialogResource = ZLResource.resource("dialog");
-					final ZLResource boxResource = dialogResource.getResource("networkError");
-					final ZLResource buttonResource = dialogResource.getResource("button");
-					new AlertDialog.Builder(NetworkLibraryActivity.this)
-						.setTitle(boxResource.getResource("title").getValue())
-						.setMessage((String) msg.obj)
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-						.create().show();
-				}
-			}
-		};
-
 		UIUtil.wait("updatingCatalogsList", new Runnable() {
 			public void run() {
 				String error = null;
 				try {
 					NetworkLibrary.Instance().runBackgroundUpdate(true);
-				} catch (ZLNetworkException e) {
-					error = e.getMessage();
+				} catch (final ZLNetworkException e) {
+					final ZLResource dialogResource = ZLResource.resource("dialog");
+					final ZLResource boxResource = dialogResource.getResource("networkError");
+					final ZLResource buttonResource = dialogResource.getResource("button");
+					runOnUiThread(new Runnable() {
+						public void run() {
+							new AlertDialog.Builder(NetworkLibraryActivity.this)
+								.setTitle(boxResource.getResource("title").getValue())
+								.setMessage(e.getMessage())
+								.setIcon(0)
+								.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+								.create().show();
+						}
+					});
 				}
-				handler.sendMessage(handler.obtainMessage(0, error));
 			}
 		}, this);
 	}

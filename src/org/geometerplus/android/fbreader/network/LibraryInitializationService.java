@@ -19,9 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.app.Service;
 import android.content.Intent;
 
@@ -44,29 +42,13 @@ public class LibraryInitializationService extends Service {
 			return;
 		}
 
-		final Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				if (msg.what > 0 && msg.obj == null) {
-					NetworkLibrary.Instance().finishBackgroundUpdate();
-				}
-				stopSelf();
-			}
-		};
-
 		final Thread thread = new Thread(new Runnable() {
 			public void run() {
-				int code = 0;
-				String error = null;
 				try {
-					try {
-						NetworkLibrary.Instance().runBackgroundUpdate(false);
-					} catch (ZLNetworkException e) {
-						error = e.getMessage();
-					}
-					code = 1;
+					NetworkLibrary.Instance().runBackgroundUpdate(false);
+				} catch (ZLNetworkException e) {
 				} finally {
-					handler.sendMessage(handler.obtainMessage(code, error));
+					stopSelf();
 				}
 			}
 		});

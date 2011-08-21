@@ -169,11 +169,7 @@ public class NetworkLibrary {
 		}
 
 		try {
-			OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CACHE_LOAD, new OnNewLinkListener() {
-				public void onNewLink(INetworkLink link) {
-					myLinks.add(link);
-				}
-			});
+			myLinks.addAll(OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CacheMode.LOAD));
 		} catch (ZLNetworkException e) {
 			removeAllLoadedLinks();
 			throw e;
@@ -210,31 +206,20 @@ public class NetworkLibrary {
 		Log.w("FBREADER", "" + date1 + sign + date2);
 	}*/
 
-	private ArrayList<INetworkLink> myBackgroundLinks;
 	private Object myBackgroundLock = new Object();
 
 	// This method must be called from background thread
 	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
 		synchronized (myBackgroundLock) {
-			myBackgroundLinks = new ArrayList<INetworkLink>();
-
-			final int cacheMode = clearCache ? OPDSLinkReader.CACHE_CLEAR : OPDSLinkReader.CACHE_UPDATE;
-			try {
-				OPDSLinkReader.loadOPDSLinks(cacheMode, new OnNewLinkListener() {
-					public void onNewLink(INetworkLink link) {
-						myBackgroundLinks.add(link);
-					}
-				});
-			} catch (ZLNetworkException e) {
-				myBackgroundLinks = null;
-				throw e;
-			} finally {
-				if (myBackgroundLinks != null) {
-					if (myBackgroundLinks.isEmpty()) {
-						myBackgroundLinks = null;
-					}
-				}
+			final OPDSLinkReader.CacheMode mode =
+				clearCache ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
+			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(mode);
+			if (!loadedLinks.isEmpty()) {
+				removeAllLoadedLinks();
+				myLinks.addAll(loadedLinks);
 			}
+			invalidateChildren();
+
 			// we create this copy to prevent long operations on synchronized list
 			final List<INetworkLink> linksCopy = new ArrayList<INetworkLink>(myLinks);
 			for (INetworkLink link : linksCopy) {
@@ -246,22 +231,10 @@ public class NetworkLibrary {
 					}
 				}
 			}
+
+			synchronize();
 		}
 	}
-
-	// This method MUST be called from main thread
-	// This method has effect only when runBackgroundUpdate method has returned null.
-	public void finishBackgroundUpdate() {
-		synchronized (myBackgroundLock) {
-			if (myBackgroundLinks != null) {
-				removeAllLoadedLinks();
-				myLinks.addAll(myBackgroundLinks);
-			}
-			invalidateChildren();
-		}
-		synchronize();
-	}
-
 
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
