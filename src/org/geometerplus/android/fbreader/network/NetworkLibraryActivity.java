@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -198,6 +197,18 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		return super.onKeyDown(keyCode, event);
 	}
 
+	private void fillOptionsMenuList() {
+		myOptionsMenuActions.add(new RunSearchAction(this));
+		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
+		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
+		myOptionsMenuActions.add(new LanguageFilterAction(this));
+		myOptionsMenuActions.add(new ReloadCatalogAction(this));
+		myOptionsMenuActions.add(new SignInAction(this));
+		myOptionsMenuActions.add(new SignUpAction(this));
+		myOptionsMenuActions.add(new SignOutAction(this));
+		myOptionsMenuActions.add(new TopupAction(this));
+	}
+
 	private void fillContextMenuList() {
 		myContextMenuActions.add(new OpenCatalogAction(this));
 		myContextMenuActions.add(new OpenInBrowserAction(this));
@@ -305,28 +316,13 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		}
 	}
 
-	protected final String getOptionsValue(String key) {
-		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue();
-	}
-
-	protected final String getOptionsValue(String key, String arg) {
-		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue().replace("%s", arg);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 
-		myOptionsMenuActions.clear();
-		myOptionsMenuActions.add(new RunSearchAction(this));
-		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
-		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
-		myOptionsMenuActions.add(new LanguageFilterAction(this));
-		myOptionsMenuActions.add(new ReloadCatalogAction(this));
-		myOptionsMenuActions.add(new SignInAction(this));
-		myOptionsMenuActions.add(new SignUpAction(this));
-		myOptionsMenuActions.add(new SignOutAction(this));
-		myOptionsMenuActions.add(new TopupAction(this));
+		if (myOptionsMenuActions.isEmpty()) {
+			fillOptionsMenuList();
+		}
 
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
