@@ -30,7 +30,6 @@ import android.widget.ListView;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
-import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
