@@ -35,7 +35,6 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
@@ -191,6 +190,8 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		myOptionsMenuActions.add(new SignUpAction(this));
 		myOptionsMenuActions.add(new SignOutAction(this));
 		myOptionsMenuActions.add(new TopupAction(this));
+		myOptionsMenuActions.add(new BuyBasketBooksAction(this));
+		myOptionsMenuActions.add(new ClearBasketAction(this));
 	}
 
 	private void fillContextMenuList() {
@@ -202,6 +203,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		myContextMenuActions.add(new SignInAction(this));
 		myContextMenuActions.add(new EditCustomCatalogAction(this));
 		myContextMenuActions.add(new RemoveCustomCatalogAction(this));
+		myContextMenuActions.add(new BuyBasketBooksAction(this));
 		myContextMenuActions.add(new ClearBasketAction(this));
 	}
 
@@ -214,6 +216,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		myListClickActions.add(new ShowBookInfoAction(this));
 	}
 
+	private List<? extends Action> getContextMenuActions(NetworkTree tree) {
+		return tree instanceof NetworkBookTree
+			? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
+			: myContextMenuActions;
+	}
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		if (myContextMenuActions.isEmpty()) {
@@ -222,27 +230,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 
 		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
-		if (tree == null) {
-			return;
-		}
-
-		final List<? extends Action> actions =
-			tree instanceof NetworkBookTree
-				? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
-				: myContextMenuActions;
-
-		/*
-		int count = 0;
-		for (Action a : actions) {
-			if (a.isVisible(tree) && a.isEnabled(tree)) {
-				++count;
-			}
-		}
-		*/
-		menu.setHeaderTitle(tree.getName());
-		for (Action a : actions) {
-			if (a.isVisible(tree) && a.isEnabled(tree)) {
-				menu.add(0, a.Code, 0, a.getContextLabel(tree));
+		if (tree != null) {
+			menu.setHeaderTitle(tree.getName());
+			for (Action a : getContextMenuActions(tree)) {
+				if (a.isVisible(tree) && a.isEnabled(tree)) {
+					menu.add(0, a.Code, 0, a.getContextLabel(tree));
+				}
 			}
 		}
 	}
@@ -252,12 +245,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
 		if (tree != null) {
-			final List<? extends Action> actions =
-				tree instanceof NetworkBookTree
-					? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
-					: myContextMenuActions;
-
-			for (Action a : actions) {
+			for (Action a : getContextMenuActions(tree)) {
 				if (a.Code == item.getItemId()) {
 					a.checkAndRun(tree);
 					return true;
@@ -315,12 +303,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 				item.setIcon(a.IconId);
 			}
 		}
-		//if (tree instanceof NetworkCatalogTree) {
-			//if (((NetworkCatalogTree)tree).Item instanceof BasketItem) {
-			//	addOptionsItem(menu, ActionCode.BASKET_CLEAR, "clearBasket");
-			//	addOptionsItem(menu, ActionCode.BASKET_BUY_ALL_BOOKS, "buyAllBooks");
-			//}
-		//}
 		return true;
 	}
 

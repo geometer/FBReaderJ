@@ -71,7 +71,9 @@
 		<node name="downloadDemo" value="Скачать фрагмент"/>
 		<node name="buy" value="Купить (%s)"/>
 		<node name="addToBasket" value="Добавить в корзину"/>
-		<node name="removeFromBasket" value="Убрать из корзины"/>
+		<node name="removeFromBasket" value="Удалить из корзины"/>
+		<node name="clearBasket" value="Очистить корзину"/>
+		<node name="buyAllBooks" value="Купить все книги"/>
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="stopLoading" value="Остановить загрузку" />
 		<node name="stopSearching" value="Остановить поиск" />
@@ -112,6 +114,8 @@
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
 			<node name="languages" value="Фильтр по языку"/>
+			<node name="clearBasket" value="Очистить корзину"/>
+			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
 	</node>
 	<node name="networkBookView">
