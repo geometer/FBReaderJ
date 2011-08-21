@@ -83,13 +83,9 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 					new OPDSFeedHandler(catalog, getURL(), result), false
 				).read(inputStream);
 
-				if (result.Listener.confirmInterrupt()) {
-					if (result.LastLoadedId != null) {
-						// reset state to load current page from the beginning 
-						result.LastLoadedId = null;
-					} else {
-						result.Listener.commitItems(OPDSNetworkLink.this);
-					}
+				if (result.Listener.confirmInterrupt() && result.LastLoadedId != null) {
+					// reset state to load current page from the beginning 
+					result.LastLoadedId = null;
 				} else {
 					result.Listener.commitItems(OPDSNetworkLink.this);
 				}

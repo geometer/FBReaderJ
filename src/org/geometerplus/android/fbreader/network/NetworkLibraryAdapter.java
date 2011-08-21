@@ -37,8 +37,10 @@ import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.ListAdapter;
 
+import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
+
 class NetworkLibraryAdapter extends ListAdapter {
-	NetworkLibraryAdapter(NetworkBaseActivity activity) {
+	NetworkLibraryAdapter(NetworkLibraryActivity activity) {
 		super(activity);
 	}
 
@@ -47,7 +49,7 @@ class NetworkLibraryAdapter extends ListAdapter {
 
 	private final Runnable myInvalidateViewsRunnable = new Runnable() {
 		public void run() {
-			((NetworkBaseActivity)getActivity()).getListView().invalidateViews();
+			((NetworkLibraryActivity)getActivity()).getListView().invalidateViews();
 		}
 	};
 
@@ -77,7 +79,7 @@ class NetworkLibraryAdapter extends ListAdapter {
 		final int status = (tree instanceof NetworkBookTree)
 			? NetworkBookActions.getBookStatus(
 				((NetworkBookTree)tree).Book,
-				((NetworkBaseActivity)getActivity()).Connection
+				((NetworkLibraryActivity)getActivity()).Connection
 			  )
 			: 0;
 		if (status != 0) {

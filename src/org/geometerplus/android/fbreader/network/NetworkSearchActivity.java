@@ -42,10 +42,6 @@ public class NetworkSearchActivity extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		if (!NetworkView.Instance().isInitialized()) {
-			finish();
-		}
-
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
@@ -85,7 +81,7 @@ public class NetworkSearchActivity extends Activity {
 				}
 			}
 			myTree.updateSubTrees();
-			NetworkView.Instance().fireModelChanged();
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 
 		@Override
@@ -97,7 +93,7 @@ public class NetworkSearchActivity extends Activity {
 				myTree.updateSubTrees();
 				afterUpdateCatalog(errorMessage, myTree.getSearchResult().isEmpty());
 			}
-			NetworkView.Instance().fireModelChanged();
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
@@ -119,7 +115,7 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			final NetworkBaseActivity activity = NetworkBaseActivity.getByTree(tree);
+			final NetworkLibraryActivity activity = NetworkLibraryActivity.getByTree(tree);
 			if (activity != null) {
 				final ZLResource buttonResource = dialogResource.getResource("button");
 				new AlertDialog.Builder(activity)
@@ -146,7 +142,7 @@ public class NetworkSearchActivity extends Activity {
 		final SearchResult result = new SearchResult(summary);
 
 		tree.setSearchResult(result);
-		NetworkView.Instance().fireModelChangedAsync();
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 		ItemsLoadingService.start(
 			this, tree, new Searcher(this, tree, pattern)

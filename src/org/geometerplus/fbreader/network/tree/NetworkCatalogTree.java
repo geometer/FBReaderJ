@@ -174,4 +174,10 @@ public class NetworkCatalogTree extends NetworkTree {
 	protected String getStringId() {
 		return Item.getStringId();
 	}
+
+	public void clearCatalog() {
+		ChildrenItems.clear();
+		clear();
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+	}
 }

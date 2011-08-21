@@ -218,6 +218,10 @@ public final class FBReader extends ZLAndroidActivity {
 		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
 
 		synchronized (myPluginActions) {
+			int index = 0;
+			while (index < myPluginActions.size()) {
+				fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
+			}
 			myPluginActions.clear();
 		}
 

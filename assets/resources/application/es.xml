@@ -84,9 +84,6 @@
 		<node name="signOut" value="Salir (%s)"/>
 		<node name="topup" value="Actualizar la cuenta (actualmente: %s)"/>
 		<node name="topupTitle" value="Actualizar la cuenta"/>
-		<node name="topupViaCreditCard" value="Tarjeta de crédito"/>
-		<node name="topupViaSelfServiceKiosk" value="Quiosco de autoservicio"/>
-		<node name="topupViaSms" value="Mensaje de texto"/>
 		<node name="topupViaBrowser" value="Abrir la página en el navegador"/>
 		<node name="topupSummary" value="Actualmente: %s"/>
 		<node name="alreadyDownloading" value="El libro se está descargando" />

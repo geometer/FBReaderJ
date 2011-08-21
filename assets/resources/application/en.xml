@@ -79,9 +79,6 @@
 		<node name="signOut" value="Sign out (%s)"/>
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
-		<node name="topupViaCreditCard" value="Credit card"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk"/>
-		<node name="topupViaSms" value="Text messages"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>

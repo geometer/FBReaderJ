@@ -79,9 +79,6 @@
 		<node name="signOut" value="Odhlásit (%s)"/>
 		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="topupTitle" value="Doplnit účet"/>
-		<node name="topupViaCreditCard" value="Platební karta"/>
-		<node name="topupViaSelfServiceKiosk" value="Samoobslužný stánek"/>
-		<node name="topupViaSms" value="Textová zpráva"/>
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
 		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
