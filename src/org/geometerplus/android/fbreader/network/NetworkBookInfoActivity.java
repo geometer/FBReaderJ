@@ -72,7 +72,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onResume() {
 		super.onResume();
 
-		if (!NetworkView.Instance().isInitialized()) {
+		if (!NetworkLibrary.Instance().isInitialized()) {
 			if (NetworkInitializer.Instance == null) {
 				new NetworkInitializer(null);
 				NetworkInitializer.Instance.start();
@@ -120,7 +120,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public void onDestroy() {
-		if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
+		if (!NetworkLibrary.Instance().isInitialized() && NetworkInitializer.Instance != null) {
 			NetworkInitializer.Instance.setActivity(null);
 		}
 		if (myConnection != null) {

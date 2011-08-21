@@ -159,10 +159,15 @@ public class NetworkLibrary {
 	private boolean myChildrenAreInvalid = true;
 	private boolean myUpdateVisibility;
 
+	private volatile boolean myIsInitialized;
+
 	private NetworkLibrary() {
 	}
 
-	private volatile boolean myIsInitialized;
+	public boolean isInitialized() {
+		return myIsInitialized;
+	}
+
 	public void initialize() throws ZLNetworkException {
 		if (myIsInitialized) {
 			return;

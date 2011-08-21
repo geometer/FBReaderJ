@@ -27,8 +27,6 @@ import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-import org.geometerplus.android.fbreader.network.NetworkView;
-
 import org.geometerplus.android.util.UIUtil;
 
 public class SignOutAction extends Action {

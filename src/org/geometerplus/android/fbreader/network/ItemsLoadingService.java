@@ -92,7 +92,7 @@ public class ItemsLoadingService extends Service {
 		}
 		intent.removeExtra(NetworkLibraryActivity.TREE_KEY_KEY);
 
-		if (!NetworkView.Instance().isInitialized()) {
+		if (!NetworkLibrary.Instance().isInitialized()) {
 			doStop();
 			return;
 		}

@@ -94,7 +94,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		if (getCurrentTree() instanceof RootTree) {
 			myIntent = getIntent();
 
-			if (!NetworkView.Instance().isInitialized()) {
+			if (!NetworkLibrary.Instance().isInitialized()) {
 				if (NetworkInitializer.Instance == null) {
 					new NetworkInitializer(this);
 					NetworkInitializer.Instance.start();

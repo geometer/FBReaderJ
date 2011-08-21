@@ -37,7 +37,7 @@ public class LibraryInitializationService extends Service {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 
-		if (!NetworkView.Instance().isInitialized()) {
+		if (!NetworkLibrary.Instance().isInitialized()) {
 			stopSelf();
 			return;
 		}

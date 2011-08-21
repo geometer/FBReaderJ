@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.network.NetworkView;
 import org.geometerplus.android.fbreader.network.ItemsLoader;
 import org.geometerplus.android.fbreader.network.ItemsLoadingService;
 import org.geometerplus.android.fbreader.network.Util;
@@ -95,16 +94,6 @@ public class OpenCatalogAction extends CatalogAction {
 					}
 				}
 
-				/* FIXME: if catalog's loading will be very fast
-				 * then it is possible that loading message is lost
-				 * (see afterUpdateCatalog method).
-				 * 
-				 * For example, this can be fixed via adding method
-				 * NetworkView.postCatalogLoadingResult, that will do the following:
-				 * 1) If there is activity, then show message
-				 * 2) If there is no activity, then save message, and show when activity is created
-				 * 3) Remove unused messages (say, by timeout)
-				 */
 				ItemsLoadingService.start(
 					myActivity,
 					tree,

@@ -86,10 +86,6 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		super(parent, position);
 	}
 
-	/**
-	 * Returns unique identifier which can be used in NetworkView methods
-	 * @return unique Key instance
-	 */
 	public final Key getUniqueKey() {
 		if (myKey == null) {
 			myKey = new Key(Parent != null ? Parent.getUniqueKey() : null, getStringId());
@@ -99,7 +95,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 
 	/**
 	 * Returns id used as a part of unique key above. This string must be not null
-     * and be unique for all children of same tree
+     * and be different for all children of same tree
 	 */
 	protected abstract String getStringId();
 

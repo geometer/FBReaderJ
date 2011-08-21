@@ -61,7 +61,14 @@ class NetworkInitializer {
 			public void run() {
 				String error = null;
 				try {
-					NetworkView.Instance().initialize();
+					if (SQLiteNetworkDatabase.Instance() == null) {
+						new SQLiteNetworkDatabase();
+					}
+                
+					final NetworkLibrary library = NetworkLibrary.Instance();
+					library.initialize();
+					library.synchronize();
+
 					myActivity.processSavedIntent();
 				} catch (ZLNetworkException e) {
 					error = e.getMessage();
