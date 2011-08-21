@@ -115,16 +115,13 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			final NetworkLibraryActivity activity = NetworkLibraryActivity.getByTree(tree);
-			if (activity != null) {
-				final ZLResource buttonResource = dialogResource.getResource("button");
-				new AlertDialog.Builder(activity)
-					.setTitle(boxResource.getResource("title").getValue())
-					.setMessage(msg)
-					.setIcon(0)
-					.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-					.create().show();
-			}
+			final ZLResource buttonResource = dialogResource.getResource("button");
+			new AlertDialog.Builder(myActivity)
+				.setTitle(boxResource.getResource("title").getValue())
+				.setMessage(msg)
+				.setIcon(0)
+				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+				.create().show();
 		}
 	}
 

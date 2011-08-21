@@ -47,18 +47,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int SIGNUP_CODE = 2;
 
-	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
-
-	static void setForTree(NetworkTree tree, NetworkLibraryActivity activity) {
-		if (tree != null) {
-			tree.setUserData(ACTIVITY_BY_TREE_KEY, activity);
-		}
-	}
-
-	public static NetworkLibraryActivity getByTree(NetworkTree tree) {
-		return (NetworkLibraryActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
-	}
-
 	BookDownloaderServiceConnection Connection;
 
 	private volatile Intent myIntent;
@@ -85,8 +73,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		init(getIntent());
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-
-		setForTree((NetworkTree)getCurrentTree(), this);
 
 		setProgressBarIndeterminateVisibility(myInProgress);
 
@@ -148,7 +134,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 				NetworkInitializer.Instance.setActivity(null);
 			}
 		}
-		setForTree((NetworkTree)getCurrentTree(), null);
 		if (Connection != null) {
 			unbindService(Connection);
 			Connection = null;
