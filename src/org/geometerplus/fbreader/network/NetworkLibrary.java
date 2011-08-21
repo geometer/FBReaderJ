@@ -252,8 +252,6 @@ public class NetworkLibrary {
 
 	// This method MUST be called from main thread
 	// This method has effect only when runBackgroundUpdate method has returned null.
-	//
-	// synchronize() method MUST be called after this method
 	public void finishBackgroundUpdate() {
 		synchronized (myBackgroundLock) {
 			if (myBackgroundLinks != null) {
@@ -262,6 +260,7 @@ public class NetworkLibrary {
 			}
 			invalidateChildren();
 		}
+		synchronize();
 	}
 
 

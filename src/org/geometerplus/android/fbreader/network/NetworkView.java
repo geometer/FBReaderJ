@@ -56,34 +56,4 @@ public class NetworkView {
 
 		myInitialized = true;
 	}
-
-	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
-		NetworkLibrary.Instance().runBackgroundUpdate(clearCache);
-	}
-
-	// This method MUST be called from main thread
-	// This method has effect only when runBackgroundUpdate method has returned null
-	public void finishBackgroundUpdate() {
-		NetworkLibrary library = NetworkLibrary.Instance();
-		library.finishBackgroundUpdate();
-		library.synchronize();
-		library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-	}
-
-	/*
-	 * Code for loading network items (running items-loading service and managing items-loading runnables).
-	 */
-
-	public void tryResumeLoading(Activity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
-		final ItemsLoader runnable = ItemsLoadingService.getRunnable(tree);
-		if (runnable != null && runnable.tryResumeLoading()) {
-			Util.openTree(activity, tree);
-			return;
-		}
-		if (runnable == null) {
-			expandRunnable.run();
-		} else {
-			runnable.runOnFinish(expandRunnable);
-		}
-	}
 }

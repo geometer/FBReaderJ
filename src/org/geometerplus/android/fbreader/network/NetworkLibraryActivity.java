@@ -154,7 +154,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 	@Override
 	public void onDestroy() {
 		if (getCurrentTree() instanceof RootTree) {
-			if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
+			if (NetworkInitializer.Instance != null) {
 				NetworkInitializer.Instance.setActivity(null);
 			}
 		}
@@ -413,13 +413,11 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 	}
 
 	private void refreshCatalogsList() {
-		final NetworkView view = NetworkView.Instance();
-
 		final Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				if (msg.obj == null) {
-					view.finishBackgroundUpdate();
+					NetworkLibrary.Instance().finishBackgroundUpdate();
 				} else {
 					final ZLResource dialogResource = ZLResource.resource("dialog");
 					final ZLResource boxResource = dialogResource.getResource("networkError");
@@ -438,7 +436,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 			public void run() {
 				String error = null;
 				try {
-					view.runBackgroundUpdate(true);
+					NetworkLibrary.Instance().runBackgroundUpdate(true);
 				} catch (ZLNetworkException e) {
 					error = e.getMessage();
 				}

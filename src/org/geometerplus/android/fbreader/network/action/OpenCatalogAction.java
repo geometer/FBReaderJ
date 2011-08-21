@@ -31,6 +31,7 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.NetworkView;
+import org.geometerplus.android.fbreader.network.ItemsLoader;
 import org.geometerplus.android.fbreader.network.ItemsLoadingService;
 import org.geometerplus.android.fbreader.network.Util;
 
@@ -64,8 +65,21 @@ public class OpenCatalogAction extends CatalogAction {
 		}
 	}
 
+	private void tryResumeLoading(Activity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
+		final ItemsLoader runnable = ItemsLoadingService.getRunnable(tree);
+		if (runnable != null && runnable.tryResumeLoading()) {
+			Util.openTree(activity, tree);
+			return;
+		}
+		if (runnable == null) {
+			expandRunnable.run();
+		} else {
+			runnable.runOnFinish(expandRunnable);
+		}
+	}
+
 	private void doExpandCatalog(final NetworkCatalogTree tree) {
-		NetworkView.Instance().tryResumeLoading(myActivity, tree, new Runnable() {
+		tryResumeLoading(myActivity, tree, new Runnable() {
 			public void run() {
 				boolean resumeNotLoad = false;
 				if (tree.hasChildren()) {

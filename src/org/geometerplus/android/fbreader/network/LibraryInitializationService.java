@@ -27,6 +27,8 @@ import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
+
 public class LibraryInitializationService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -37,8 +39,7 @@ public class LibraryInitializationService extends Service {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 
-		final NetworkView view = NetworkView.Instance();
-		if (!view.isInitialized()) {
+		if (!NetworkView.Instance().isInitialized()) {
 			stopSelf();
 			return;
 		}
@@ -47,7 +48,7 @@ public class LibraryInitializationService extends Service {
 			@Override
 			public void handleMessage(Message msg) {
 				if (msg.what > 0 && msg.obj == null) {
-					view.finishBackgroundUpdate();
+					NetworkLibrary.Instance().finishBackgroundUpdate();
 				}
 				stopSelf();
 			}
@@ -59,7 +60,7 @@ public class LibraryInitializationService extends Service {
 				String error = null;
 				try {
 					try {
-						view.runBackgroundUpdate(false);
+						NetworkLibrary.Instance().runBackgroundUpdate(false);
 					} catch (ZLNetworkException e) {
 						error = e.getMessage();
 					}
