@@ -50,7 +50,7 @@ import org.geometerplus.android.fbreader.network.action.ActionCode;
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
-public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
+public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
 	private NetworkBookItem myBook;
 	private View myMainView;
 
@@ -362,16 +362,16 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	@Override
 	protected void onStart() {
 		super.onStart();
-		NetworkView.Instance().addEventListener(this);
+		NetworkLibrary.Instance().addChangeListener(this);
 	}
 
 	@Override
 	protected void onStop() {
-		NetworkView.Instance().removeEventListener(this);
+		NetworkLibrary.Instance().removeChangeListener(this);
 		super.onStop();
 	}
 
-	public void onModelChanged() {
+	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code) {
 		runOnUiThread(new Runnable() {
 			public void run() {
 				updateView();

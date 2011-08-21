@@ -85,7 +85,7 @@ public class NetworkSearchActivity extends Activity {
 				}
 			}
 			myTree.updateSubTrees();
-			NetworkView.Instance().fireModelChanged();
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 
 		@Override
@@ -97,7 +97,7 @@ public class NetworkSearchActivity extends Activity {
 				myTree.updateSubTrees();
 				afterUpdateCatalog(errorMessage, myTree.getSearchResult().isEmpty());
 			}
-			NetworkView.Instance().fireModelChanged();
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
@@ -146,7 +146,7 @@ public class NetworkSearchActivity extends Activity {
 		final SearchResult result = new SearchResult(summary);
 
 		tree.setSearchResult(result);
-		NetworkView.Instance().fireModelChanged();
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 		ItemsLoadingService.start(
 			this, tree, new Searcher(this, tree, pattern)

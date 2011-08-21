@@ -27,6 +27,8 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
+
 import org.geometerplus.android.util.UIUtil;
 
 class NetworkInitializer {
@@ -107,7 +109,8 @@ class NetworkInitializer {
 								myActivity.getApplicationContext(),
 								LibraryInitializationService.class
 							));
-							myActivity.onModelChanged(); // initialization is complete successfully
+							// initialization is complete successfully
+							NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 						}
 					} else {
 						showTryAgainDialog(myActivity, error); // handle initialization error

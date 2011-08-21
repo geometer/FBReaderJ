@@ -36,6 +36,21 @@ import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class NetworkLibrary {
+	public interface ChangeListener {
+		public enum Code {
+			SomeCode
+			/*
+			ItemAdded,
+			ItemRemoved,
+			StatusChanged,
+			Found,
+			NotFound
+			*/
+		}
+
+		void onLibraryChanged(Code code);
+	}
+
 	private static NetworkLibrary ourInstance;
 
 	public static NetworkLibrary Instance() {
@@ -60,6 +75,8 @@ public class NetworkLibrary {
 	// it can be used from background thread
 	private final List<INetworkLink> myLinks =
 		Collections.synchronizedList(new ArrayList<INetworkLink>());
+	private final Set<ChangeListener> myListeners =
+		Collections.synchronizedSet(new HashSet<ChangeListener>());
 
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
@@ -351,6 +368,8 @@ public class NetworkLibrary {
 		}
 		new AddCustomCatalogItemTree(myRootTree);
 		mySearchItemTree = new SearchItemTree(myRootTree, 0);
+
+		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
 	private void updateVisibility() {
@@ -359,6 +378,7 @@ public class NetworkLibrary {
 				((NetworkCatalogTree)tree).updateVisibility();
 			}
 		}
+		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
 	public void synchronize() {
@@ -476,5 +496,22 @@ public class NetworkLibrary {
 		myLinks.remove(link);
 		NetworkDatabase.Instance().deleteLink(link);
 		invalidateChildren();
+	}
+
+	public void addChangeListener(ChangeListener listener) {
+		myListeners.add(listener);
+	}
+
+	public void removeChangeListener(ChangeListener listener) {
+		myListeners.remove(listener);
+	}
+
+	// TODO: change to private
+	/*private*/ public void fireModelChangedEvent(ChangeListener.Code code) {
+		synchronized (myListeners) {
+			for (ChangeListener l : myListeners) {
+				l.onLibraryChanged(code);
+			}
+		}
 	}
 }

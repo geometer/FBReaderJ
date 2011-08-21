@@ -22,10 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
-import android.os.Handler;
-import android.os.Message;
-import android.view.MenuItem;
-import android.view.Menu;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
@@ -71,7 +67,7 @@ public class NetworkView {
 		NetworkLibrary library = NetworkLibrary.Instance();
 		library.finishBackgroundUpdate();
 		library.synchronize();
-		fireModelChanged();
+		library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	/*
@@ -88,39 +84,6 @@ public class NetworkView {
 			expandRunnable.run();
 		} else {
 			runnable.runOnFinish(expandRunnable);
-		}
-	}
-
-
-	/*
-	 * Notifying view's components from services
-	 */
-
-	public interface EventListener {
-		void onModelChanged();
-	}
-
-	private List<EventListener> myEventListeners =
-		Collections.synchronizedList(new LinkedList<EventListener>());
-
-	/*
-	 * This method must be called only from main thread
-	 */
-	public final void addEventListener(EventListener listener) {
-		if (listener != null) {
-			myEventListeners.add(listener);
-		}
-	}
-
-	public final void removeEventListener(EventListener listener) {
-		myEventListeners.remove(listener);
-	}
-
-	public final void fireModelChanged() {
-		synchronized (myEventListeners) {
-			for (EventListener listener : myEventListeners) {
-				listener.onModelChanged();
-			}
 		}
 	}
 }

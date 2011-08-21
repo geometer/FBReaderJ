@@ -60,7 +60,6 @@ public class SignOutAction extends Action {
 							final NetworkLibrary library = NetworkLibrary.Instance();
 							library.invalidateVisibility();
 							library.synchronize();
-							NetworkView.Instance().fireModelChanged();
 						}
 					});
 				}

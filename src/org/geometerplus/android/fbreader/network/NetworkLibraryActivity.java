@@ -53,7 +53,7 @@ import org.geometerplus.android.fbreader.api.PluginApi;
 
 import org.geometerplus.android.fbreader.network.action.*;
 
-public class NetworkLibraryActivity extends BaseActivity implements NetworkView.EventListener {
+public class NetworkLibraryActivity extends BaseActivity implements NetworkLibrary.ChangeListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int SIGNUP_CODE = 2;
 
@@ -111,7 +111,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 					NetworkInitializer.Instance.setActivity(this);
 				}
 			} else {
-				onModelChanged();
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 				if (myIntent != null) {
 					processIntent(myIntent);
 					myIntent = null;
@@ -134,24 +134,20 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 	protected void onStart() {
 		super.onStart();
 
-		/*
-		 * Set listener in onStart() to give descendants initialize itself in
-		 * onCreate methods before onModelChanged() will be called.
-		 */
-		NetworkView.Instance().addEventListener(this);
+		NetworkLibrary.Instance().addChangeListener(this);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		getListView().setOnCreateContextMenuListener(this);
-		onModelChanged(); // do the same update actions as upon onModelChanged
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 
 	@Override
 	protected void onStop() {
-		NetworkView.Instance().removeEventListener(this);
+		NetworkLibrary.Instance().removeChangeListener(this);
 		super.onStop();
 	}
 
@@ -451,8 +447,8 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 		}, this);
 	}
 
-	// method from NetworkView.EventListener
-	public void onModelChanged() {
+	// method from NetworkLibrary.ChangeListener
+	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code) {
 		runOnUiThread(new Runnable() {
 			public void run() {
 				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
@@ -499,7 +495,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkView.
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						library.addCustomLink(link);
 						library.synchronize();
-						onModelChanged();
 					}
 				});
 			}

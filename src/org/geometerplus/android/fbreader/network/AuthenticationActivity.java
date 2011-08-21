@@ -209,7 +209,6 @@ public class AuthenticationActivity extends Activity {
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						library.invalidateVisibility();
 						library.synchronize();
-						NetworkView.Instance().fireModelChanged();
 					}
 				});
 				finish();
@@ -252,7 +251,6 @@ public class AuthenticationActivity extends Activity {
 					final NetworkLibrary library = NetworkLibrary.Instance();
 					library.invalidateVisibility();
 					library.synchronize();
-					NetworkView.Instance().fireModelChanged();
 				} catch (final ZLNetworkException e) {
 					mgr.logOut();
 					runOnUiThread(new Runnable() {

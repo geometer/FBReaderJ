@@ -76,7 +76,6 @@ public class LanguageFilterAction extends RootAction {
 					}
 					library.setActiveLanguageCodes(newActiveCodes);
 					library.synchronize();
-					NetworkView.Instance().fireModelChanged();
 				}
 			})
 			.create();

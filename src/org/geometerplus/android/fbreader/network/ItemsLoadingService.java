@@ -26,6 +26,7 @@ import android.os.IBinder;
 import android.os.Handler;
 import android.os.Message;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 
 public class ItemsLoadingService extends Service {
@@ -106,12 +107,12 @@ public class ItemsLoadingService extends Service {
 			public void handleMessage(Message message) {
 				doStop();
 				removeRunnable(tree);
-				NetworkView.Instance().fireModelChanged();
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		};
 
 		// this call is needed to show indeterminate progress bar in title right on downloading start
-		NetworkView.Instance().fireModelChanged();
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 		final Thread loader = new Thread(new Runnable() {
 			public void run() {

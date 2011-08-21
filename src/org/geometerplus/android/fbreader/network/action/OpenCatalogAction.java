@@ -77,7 +77,7 @@ public class OpenCatalogAction extends CatalogAction {
 							return;
 						}
 					} else {
-						Util.clearTree(myActivity, tree);
+						tree.clearCatalog();
 					}
 				}
 

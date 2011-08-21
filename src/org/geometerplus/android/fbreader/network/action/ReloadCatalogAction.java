@@ -54,7 +54,7 @@ public class ReloadCatalogAction extends CatalogAction {
 		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}
-		Util.clearTree(myActivity, (NetworkCatalogTree)tree);
+		((NetworkCatalogTree)tree).clearCatalog();
 		ItemsLoadingService.start(
 			myActivity,
 			tree,

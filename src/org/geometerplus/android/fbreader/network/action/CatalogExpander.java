@@ -82,16 +82,14 @@ class CatalogExpander extends ItemsLoader {
 			myTree.ChildrenItems.add(item);
 			NetworkTreeFactory.createNetworkTree(myTree, item);
 		}
-		NetworkView.Instance().fireModelChanged();
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	@Override
 	protected void onFinish(String errorMessage, boolean interrupted,
 			Set<NetworkItem> uncommitedItems) {
-		if (interrupted &&
-				(!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
-			myTree.ChildrenItems.clear();
-			myTree.clear();
+		if (interrupted && (!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
+			myTree.clearCatalog();
 		} else {
 			myTree.removeItems(uncommitedItems);
 			myTree.updateLoadedTime();
@@ -102,7 +100,6 @@ class CatalogExpander extends ItemsLoader {
 			library.invalidateVisibility();
 			library.synchronize();
 		}
-		NetworkView.Instance().fireModelChanged();
 	}
 
 	private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {

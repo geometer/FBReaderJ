@@ -46,6 +46,5 @@ public class RemoveCustomCatalogAction extends CatalogAction {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.removeCustomLink((ICustomNetworkLink)((NetworkCatalogTree)tree).Item.Link);
 		library.synchronize();
-		NetworkView.Instance().fireModelChanged();
 	}
 }

@@ -143,14 +143,4 @@ public abstract class Util implements UserRegistrationConstants {
 		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(NetworkLibraryActivity.TREE_KEY_KEY);
 		return library.getTreeByKey(key);
 	}
-
-	public static void clearTree(Activity activity, final NetworkCatalogTree tree) {
-		activity.runOnUiThread(new Runnable() {
-			public void run() {
-				tree.ChildrenItems.clear();
-				tree.clear();
-				NetworkView.Instance().fireModelChanged();
-			}
-		});
-	}
 }
