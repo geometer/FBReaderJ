@@ -21,8 +21,6 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,15 +29,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
@@ -353,12 +347,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		myOptionsMenuActions.clear();
 		myOptionsMenuActions.add(new RunSearchAction(this));
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
-		myOptionsMenuActions.add(new RootAction(this, ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
-			@Override
-			public void run(NetworkTree tree) {
-				refreshCatalogsList();
-			}
-		});
+		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
 		myOptionsMenuActions.add(new LanguageFilterAction(this));
 		myOptionsMenuActions.add(new ReloadCatalogAction(this));
 		myOptionsMenuActions.add(new SignInAction(this));
@@ -410,31 +399,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 			}
 		}
 		return true;
-	}
-
-	private void refreshCatalogsList() {
-		UIUtil.wait("updatingCatalogsList", new Runnable() {
-			public void run() {
-				String error = null;
-				try {
-					NetworkLibrary.Instance().runBackgroundUpdate(true);
-				} catch (final ZLNetworkException e) {
-					final ZLResource dialogResource = ZLResource.resource("dialog");
-					final ZLResource boxResource = dialogResource.getResource("networkError");
-					final ZLResource buttonResource = dialogResource.getResource("button");
-					runOnUiThread(new Runnable() {
-						public void run() {
-							new AlertDialog.Builder(NetworkLibraryActivity.this)
-								.setTitle(boxResource.getResource("title").getValue())
-								.setMessage(e.getMessage())
-								.setIcon(0)
-								.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-								.create().show();
-						}
-					});
-				}
-			}
-		}, this);
 	}
 
 	// method from NetworkLibrary.ChangeListener
