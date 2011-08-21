@@ -132,7 +132,6 @@ public class NetworkLibrary {
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
 		final Collection<String> codes = activeLanguageCodes();
 		synchronized (myLinks) {
-			System.err.println("in activeLinks: " + myLinks.size());
 			for (INetworkLink link : myLinks) {
 				if (link instanceof ICustomNetworkLink ||
 					codes.contains(link.getLanguage())) {
@@ -473,10 +472,7 @@ public class NetworkLibrary {
 	}
 
 	public void removeCustomLink(ICustomNetworkLink link) {
-		System.err.println("removeCustomLink: " + link.getTitle() + " :: " + myLinks.contains(link));
-		System.err.println("before: " + myLinks.size());
 		myLinks.remove(link);
-		System.err.println("after: " + myLinks.size());
 		NetworkDatabase.Instance().deleteLink(link);
 		invalidateChildren();
 	}
