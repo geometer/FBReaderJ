@@ -35,7 +35,6 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
-import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 import org.geometerplus.android.fbreader.network.ItemsLoader;
 
 class CatalogExpander extends ItemsLoader {
@@ -93,23 +92,15 @@ class CatalogExpander extends ItemsLoader {
 			myTree.removeItems(uncommitedItems);
 			myTree.updateLoadedTime();
 			if (!interrupted) {
-				afterUpdateCatalog(errorMessage, myTree.ChildrenItems.size() == 0);
+				if (errorMessage != null) {
+					UIUtil.showMessageText(myActivity, errorMessage);
+				} else if (myTree.ChildrenItems.isEmpty()) {
+					UIUtil.showErrorMessage(myActivity, "emptyCatalog");
+				}
 			}
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			library.invalidateVisibility();
 			library.synchronize();
-		}
-	}
-
-	private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-		final NetworkLibraryActivity activity = NetworkLibraryActivity.getByTree(myTree);
-		if (activity == null) {
-			return;
-		}
-		if (errorMessage != null) {
-			UIUtil.showMessageText(activity, errorMessage);
-		} else if (childrenEmpty) {
-			UIUtil.showErrorMessage(activity, "emptyCatalog");
 		}
 	}
 }
