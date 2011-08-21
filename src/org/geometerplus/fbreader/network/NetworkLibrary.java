@@ -216,7 +216,6 @@ public class NetworkLibrary {
 	// This method must be called from background thread
 	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
 		synchronized (myBackgroundLock) {
-			System.err.println("runBackgroundUpdate 0");
 			myBackgroundLinks = new ArrayList<INetworkLink>();
 
 			final int cacheMode = clearCache ? OPDSLinkReader.CACHE_CLEAR : OPDSLinkReader.CACHE_UPDATE;
@@ -230,16 +229,12 @@ public class NetworkLibrary {
 				myBackgroundLinks = null;
 				throw e;
 			} finally {
-			System.err.println("runBackgroundUpdate 0.1");
 				if (myBackgroundLinks != null) {
-			System.err.println("runBackgroundUpdate 0.2");
 					if (myBackgroundLinks.isEmpty()) {
-			System.err.println("runBackgroundUpdate 0.3");
 						myBackgroundLinks = null;
 					}
 				}
 			}
-			System.err.println("runBackgroundUpdate 1");
 			// we create this copy to prevent long operations on synchronized list
 			final List<INetworkLink> linksCopy = new ArrayList<INetworkLink>(myLinks);
 			for (INetworkLink link : linksCopy) {
@@ -251,14 +246,12 @@ public class NetworkLibrary {
 					}
 				}
 			}
-			System.err.println("runBackgroundUpdate 2");
 		}
 	}
 
 	// This method MUST be called from main thread
 	// This method has effect only when runBackgroundUpdate method has returned null.
 	public void finishBackgroundUpdate() {
-		System.err.println("finishBackgroundUpdate 0");
 		synchronized (myBackgroundLock) {
 			if (myBackgroundLinks != null) {
 				removeAllLoadedLinks();
@@ -266,7 +259,6 @@ public class NetworkLibrary {
 			}
 			invalidateChildren();
 		}
-		System.err.println("finishBackgroundUpdate 1");
 		synchronize();
 	}
 
