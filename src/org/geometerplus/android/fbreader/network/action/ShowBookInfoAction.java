@@ -35,7 +35,7 @@ public class ShowBookInfoAction extends BookAction {
 	}
 
 	@Override
-	public void run(final NetworkTree tree) {
+	protected void run(final NetworkTree tree) {
 		if (getBook(tree).isFullyLoaded()) {
 			Util.openTree(myActivity, tree);
 		} else {

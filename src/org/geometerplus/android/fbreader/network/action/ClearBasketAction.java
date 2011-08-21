@@ -38,7 +38,7 @@ public class ClearBasketAction extends CatalogAction {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		((NetworkCatalogTree)tree).Item.Link.basket().clear();
 	}
 }

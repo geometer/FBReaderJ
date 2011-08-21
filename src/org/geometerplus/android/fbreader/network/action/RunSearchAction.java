@@ -46,7 +46,7 @@ public class RunSearchAction extends RootAction {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		myActivity.onSearchRequested();
 	}
 }

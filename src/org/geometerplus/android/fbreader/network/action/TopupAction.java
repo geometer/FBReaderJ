@@ -53,7 +53,7 @@ public class TopupAction extends Action {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		INetworkLink link = null;
 		if (tree instanceof TopUpTree) {
 			link = ((TopUpTree)tree).Item.Link;

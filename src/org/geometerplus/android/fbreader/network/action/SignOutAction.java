@@ -48,7 +48,7 @@ public class SignOutAction extends Action {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
 		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 		final Runnable runnable = new Runnable() {

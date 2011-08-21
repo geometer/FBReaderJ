@@ -41,7 +41,7 @@ public class LanguageFilterAction extends RootAction {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
 		final List<String> allLanguageCodes = library.languageCodes();

@@ -89,7 +89,7 @@ public abstract class NetworkBookActions {
 		}
 
 		@Override
-		public void run(NetworkTree tree) {
+		protected void run(NetworkTree tree) {
 			run(getBook(tree));
 		}
 

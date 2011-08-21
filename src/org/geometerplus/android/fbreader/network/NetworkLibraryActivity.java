@@ -29,8 +29,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -254,31 +252,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		}
 	}
 
-	private void runAction(final Action action, final NetworkTree tree) {
-		if (tree instanceof NetworkCatalogTree) {
-			final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-			switch (item.getVisibility()) {
-				case B3_TRUE:
-					action.run(tree);
-					break;
-				case B3_UNDEFINED:
-					Util.runAuthenticationDialog(this, item.Link, new Runnable() {
-						public void run() {
-							if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
-								return;
-							}
-							if (action.Code != ActionCode.SIGNIN) {
-								action.run(tree);
-							}
-						}
-					});
-					break;
-			}
-		} else {
-			action.run(tree);
-		}
-	}
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
@@ -291,7 +264,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 
 			for (Action a : actions) {
 				if (a.Code == item.getItemId()) {
-					runAction(a, tree);
+					a.checkAndRun(tree);
 					return true;
 				}
 			}
@@ -309,7 +282,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		Action defaultAction = null;
 		for (Action a : myListClickActions) {
 			if (a.isVisible(tree) && a.isEnabled(tree)) {
-				runAction(a, tree);
+				a.checkAndRun(tree);
 				return;
 			}
 		}
@@ -394,7 +367,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			if (a.Code == item.getItemId()) {
-				a.run(tree);
+				a.checkAndRun(tree);
 				break;
 			}
 		}

@@ -38,7 +38,7 @@ public class ShowBooksAction extends Action {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		Util.openTree(myActivity, tree);
 	}
 }

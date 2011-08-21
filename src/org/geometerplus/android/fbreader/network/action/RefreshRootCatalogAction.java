@@ -38,7 +38,7 @@ public class RefreshRootCatalogAction extends RootAction {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		UIUtil.wait("updatingCatalogsList", new Runnable() {
 			public void run() {
 				try {
