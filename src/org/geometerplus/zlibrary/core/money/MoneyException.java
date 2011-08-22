@@ -17,17 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.urlInfo;
+package org.geometerplus.zlibrary.core.money;
 
-import org.geometerplus.zlibrary.core.money.Money;
-
-public class BookBuyUrlInfo extends BookUrlInfo {
-	private static final long serialVersionUID = 7877935250896069650L;
-
-	public final Money Price;
-
-	public BookBuyUrlInfo(Type type, int format, String url, Money price) {
-		super(type, format, url);
-		Price = price;
+public class MoneyException extends RuntimeException {
+	public MoneyException(String message) {
+		super(message);
 	}
 }

@@ -154,7 +154,7 @@ public abstract class NetworkBookActions {
 				id = ActionCode.BUY_IN_BROWSER;
 			}
 			if (reference != null) {
-				final String price = ((BookBuyUrlInfo)reference).Price;
+				final String price = ((BookBuyUrlInfo)reference).Price.toString();
 				actions.add(new NBAction(activity, id, "buy", price));
 			}
 			final Basket basket = book.Link.basket();
