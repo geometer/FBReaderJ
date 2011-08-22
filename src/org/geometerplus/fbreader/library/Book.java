@@ -285,9 +285,9 @@ public class Book {
 
 	public String getLanguage() {
 		if (myLanguage == null) {
-			//System.err.println("FBREADER: Reading language on demand...");
-			//System.err.println("FBREADER: ... book: " + File.getPath());
-			//Thread.dumpStack();
+//			System.err.println("FBREADER: Reading language on demand...");
+//			System.err.println("FBREADER: ... book: " + File.getPath());
+//			Thread.dumpStack();
 			readLanguageAndEncoding();
 		}
 		return myLanguage;
@@ -302,9 +302,9 @@ public class Book {
 
 	public String getEncoding() {
 		if (myEncoding == null) {
-			//System.err.println("FBREADER: Reading encoding on demand...");
-			//System.err.println("FBREADER: ... book: " + File.getPath());
-			//Thread.dumpStack();
+//			System.err.println("FBREADER: Reading encoding on demand...");
+//			System.err.println("FBREADER: ... book: " + File.getPath());
+//			Thread.dumpStack();
 			readLanguageAndEncoding();
 		}
 		return myEncoding;
