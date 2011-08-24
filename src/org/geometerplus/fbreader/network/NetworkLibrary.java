@@ -168,7 +168,7 @@ public class NetworkLibrary {
 		return myIsInitialized;
 	}
 
-	public void initialize() throws ZLNetworkException {
+	public synchronized void initialize() throws ZLNetworkException {
 		if (myIsInitialized) {
 			return;
 		}

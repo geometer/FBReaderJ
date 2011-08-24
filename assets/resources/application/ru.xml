@@ -83,6 +83,10 @@
 		<node name="topupTitle" value="Пополнить счёт"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
+		<node name="basket" value="Корзина"/>
+		<node name="basketSummaryEmpty" value="Пустая корзина"/>
+		<node name="basketSummaryCountOnly" value="Книг: %0"/>
+		<node name="basketSummary" value="Книг: %0, на сумму %1"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />

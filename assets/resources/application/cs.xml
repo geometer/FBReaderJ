@@ -84,7 +84,9 @@
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
 		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
-		<node name="basketSummary" value="Knihy, které chci zakoupit"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 books" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 books (%1)"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje"/>
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje"/>
 		<node name="stoppingCatalogLoading" value="Zastavování načítání"/>

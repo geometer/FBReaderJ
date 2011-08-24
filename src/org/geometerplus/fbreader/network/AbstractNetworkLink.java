@@ -23,6 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -147,6 +148,17 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	// method from Basket interface
 	public final List<String> bookIds() {
 		return myBooksInBasketOption.getValue();
+	}
+
+	// method from Basket interface
+	public final List<NetworkBookItem> books() {
+		// TODO: implement
+		return Collections.emptyList();
+	}
+
+	// method from Basket interface
+	public final Money cost() {
+		return Money.ZERO;
 	}
 
 	public NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener) {

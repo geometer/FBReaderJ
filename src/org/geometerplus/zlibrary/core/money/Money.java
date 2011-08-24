@@ -21,9 +21,18 @@ package org.geometerplus.zlibrary.core.money;
 
 import java.math.BigDecimal;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+
 public class Money implements Comparable<Money> {
+	public static final Money ZERO = new Money();
+
 	public final BigDecimal Amount;
 	public final String Currency;
+
+	private Money() {
+		Amount = BigDecimal.ZERO;
+		Currency = null;
+	}
 
 	public Money(BigDecimal amount, String currency) {
 		Amount = amount;
@@ -49,6 +58,13 @@ public class Money implements Comparable<Money> {
 	}
 
 	public Money add(Money m) {
+		if (Amount.equals(ZERO.Amount)) {
+			return m;
+		}
+		if (m.Amount.equals(ZERO.Amount)) {
+			return this;
+		}
+
 		if (!Currency.equals(m.Currency)) {
 			throw new MoneyException("Different currencies");
 		}
@@ -56,6 +72,13 @@ public class Money implements Comparable<Money> {
 	}
 
 	public Money subtract(Money m) {
+		if (Amount.equals(ZERO.Amount)) {
+			return new Money(m.Amount.negate(), m.Currency);
+		}
+		if (m.Amount.equals(ZERO.Amount)) {
+			return this;
+		}
+
 		if (!Currency.equals(m.Currency)) {
 			throw new MoneyException("Different currencies");
 		}
@@ -63,6 +86,13 @@ public class Money implements Comparable<Money> {
 	}
 
 	public int compareTo(Money m) {
+		if (Amount.equals(ZERO.Amount)) {
+			return m.Amount.equals(ZERO.Amount) ? 0 : -1;
+		}
+		if (m.Amount.equals(ZERO.Amount)) {
+			return 1;
+		}
+
 		if (!Currency.equals(m.Currency)) {
 			throw new MoneyException("Different currencies");
 		}
@@ -78,17 +108,22 @@ public class Money implements Comparable<Money> {
 			return false;
 		}
 		final Money m = (Money)o;
-		return Amount.equals(m.Amount) && Currency.equals(m.Currency);
+		if (Amount.equals(ZERO.Amount)) {
+			return m.Amount.equals(ZERO.Amount);
+		}
+		return Amount.equals(m.Amount) && ZLMiscUtil.equals(Currency, m.Currency);
 	}
 
 	@Override
 	public int hashCode() {
-		return Amount.hashCode() + Currency.hashCode();
+		return Amount.hashCode() + ZLMiscUtil.hashCode(Currency);
 	}
 
 	@Override
 	public String toString() {
-		if ("RUB".equals(Currency)) {
+		if (Currency == null) {
+			return Amount.toString();
+		} else if ("RUB".equals(Currency)) {
 			return Amount + " \u0440.";
 		} else if ("USD".equals(Currency)) {
 			return "$" + Amount;
