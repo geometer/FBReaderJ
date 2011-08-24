@@ -50,7 +50,7 @@ public class ReloadCatalogAction extends CatalogAction {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		if (ItemsLoadingService.getRunnable(tree) != null) {
 			return;
 		}

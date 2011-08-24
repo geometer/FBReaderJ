@@ -33,15 +33,13 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 
-import org.geometerplus.android.fbreader.network.NetworkView;
-
 public class LanguageFilterAction extends RootAction {
 	public LanguageFilterAction(Activity activity) {
 		super(activity, ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages);
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
 		final List<String> allLanguageCodes = library.languageCodes();

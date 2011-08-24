@@ -110,21 +110,18 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			final SearchItemTree tree = NetworkLibrary.Instance().getSearchItemTree();
+			final SearchItemTree tree = null;//NetworkLibrary.Instance().getSearchItemTree();
 			if (tree == null) {
 				return;
 			}
 
-			final NetworkLibraryActivity activity = NetworkLibraryActivity.getByTree(tree);
-			if (activity != null) {
-				final ZLResource buttonResource = dialogResource.getResource("button");
-				new AlertDialog.Builder(activity)
-					.setTitle(boxResource.getResource("title").getValue())
-					.setMessage(msg)
-					.setIcon(0)
-					.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-					.create().show();
-			}
+			final ZLResource buttonResource = dialogResource.getResource("button");
+			new AlertDialog.Builder(myActivity)
+				.setTitle(boxResource.getResource("title").getValue())
+				.setMessage(msg)
+				.setIcon(0)
+				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+				.create().show();
 		}
 	}
 
@@ -132,7 +129,7 @@ public class NetworkSearchActivity extends Activity {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
-		final SearchItemTree tree = library.getSearchItemTree();
+		final SearchItemTree tree = null;//library.getSearchItemTree();
 		if (tree == null ||
 			ItemsLoadingService.getRunnable(tree) != null) {
 			return;

@@ -72,6 +72,8 @@
 		<node name="buy" value="Zakoupit (%s)"/>
 		<node name="addToBasket" value="Přidat do košíku"/>
 		<node name="removeFromBasket" value="Odebrat z košíku"/>
+		<node name="clearBasket" value="Vymazat košík"/>
+		<node name="buyAllBooks" value="Zakoupit všechny knihy"/>
 		<node name="openInBrowser" value="Otevřít v prohlížeči"/>
 		<node name="stopLoading" value="Zastavit načítání"/>
 		<node name="stopSearching" value="Zastavit vyhledávání"/>
@@ -82,7 +84,9 @@
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
 		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
-		<node name="basketSummary" value="Knihy, které chci zakoupit"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 books" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 books (%1)"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje"/>
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje"/>
 		<node name="stoppingCatalogLoading" value="Zastavování načítání"/>

@@ -20,39 +20,45 @@
 package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 
-import org.geometerplus.android.fbreader.network.Util;
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
 
-public class ShowBookInfoAction extends BookAction {
-	public ShowBookInfoAction(Activity activity) {
-		super(activity, ActionCode.SHOW_BOOK_ACTIVITY, "bookInfo");
+public class RefreshRootCatalogAction extends RootAction {
+	public RefreshRootCatalogAction(Activity activity) {
+		super(activity, ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh);
 	}
 
 	@Override
-	protected void run(final NetworkTree tree) {
-		if (getBook(tree).isFullyLoaded()) {
-			Util.openTree(myActivity, tree);
-		} else {
-			UIUtil.wait("loadInfo", new Runnable() {
-				public void run() {
-					try {
-						getBook(tree).loadFullInformation();
-					} catch (ZLNetworkException e) {
-						e.printStackTrace();
-					}
+	protected void run(NetworkTree tree) {
+		UIUtil.wait("updatingCatalogsList", new Runnable() {
+			public void run() {
+				try {
+					NetworkLibrary.Instance().runBackgroundUpdate(true);
+				} catch (final ZLNetworkException e) {
+					final ZLResource dialogResource = ZLResource.resource("dialog");
+					final ZLResource boxResource = dialogResource.getResource("networkError");
+					final ZLResource buttonResource = dialogResource.getResource("button");
 					myActivity.runOnUiThread(new Runnable() {
 						public void run() {
-							Util.openTree(myActivity, tree);
+							new AlertDialog.Builder(myActivity)
+								.setTitle(boxResource.getResource("title").getValue())
+								.setMessage(e.getMessage())
+								.setIcon(0)
+								.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+								.create().show();
 						}
 					});
 				}
-			}, myActivity);
-		}
+			}
+		}, myActivity);
 	}
 }

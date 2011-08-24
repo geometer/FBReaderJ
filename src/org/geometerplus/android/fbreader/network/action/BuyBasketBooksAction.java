@@ -17,43 +17,32 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network;
-
-import java.util.*;
+package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
-import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.opds.BasketItem;
 
-public class NetworkView {
-	private static NetworkView ourInstance;
+public class BuyBasketBooksAction extends CatalogAction {
+	public BuyBasketBooksAction(Activity activity) {
+		super(activity, ActionCode.BASKET_BUY_ALL_BOOKS, "buyAllBooks");
+	}
 
-	public static NetworkView Instance() {
-		if (ourInstance == null) {
-			ourInstance = new NetworkView();
+	@Override
+	public boolean isVisible(NetworkTree tree) {
+		if (super.isVisible(tree)) {
+			System.err.println(((NetworkCatalogTree)tree).Item);
 		}
-		return ourInstance;
+			
+		return
+			super.isVisible(tree) &&
+			((NetworkCatalogTree)tree).Item instanceof BasketItem;
 	}
 
-	private volatile boolean myInitialized;
-
-	private NetworkView() {
-	}
-
-	public boolean isInitialized() {
-		return myInitialized;
-	}
-
-	public void initialize() throws ZLNetworkException {
-		new SQLiteNetworkDatabase();
-
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		library.initialize();
-		library.synchronize();
-
-		myInitialized = true;
+	@Override
+	protected void run(NetworkTree tree) {
+		// TODO: implement
 	}
 }

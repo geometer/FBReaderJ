@@ -37,13 +37,16 @@ public class RunSearchAction extends RootAction {
 
 	@Override
 	public boolean isEnabled(NetworkTree tree) {
+		/*
 		return ItemsLoadingService.getRunnable(
 			NetworkLibrary.Instance().getSearchItemTree()
 		) == null;
+		*/
+		return true;
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		myActivity.onSearchRequested();
 	}
 }

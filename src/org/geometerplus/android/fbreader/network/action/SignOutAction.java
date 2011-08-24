@@ -27,8 +27,6 @@ import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-import org.geometerplus.android.fbreader.network.NetworkView;
-
 import org.geometerplus.android.util.UIUtil;
 
 public class SignOutAction extends Action {
@@ -48,7 +46,7 @@ public class SignOutAction extends Action {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
 		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
 		final Runnable runnable = new Runnable() {

@@ -33,6 +33,7 @@ import android.view.ContextMenu;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -89,7 +90,7 @@ public abstract class NetworkBookActions {
 		}
 
 		@Override
-		public void run(NetworkTree tree) {
+		protected void run(NetworkTree tree) {
 			run(getBook(tree));
 		}
 
@@ -145,17 +146,11 @@ public abstract class NetworkBookActions {
 		}
 		if (useBuyReferences(book)) {
 			int id = ActionCode.TREE_NO_ACTION;
-			BookUrlInfo reference = null;
-			if (book.reference(UrlInfo.Type.BookBuy) != null) {
-				reference = book.reference(UrlInfo.Type.BookBuy);
-				id = ActionCode.BUY_DIRECTLY;
-			} else if (book.reference(UrlInfo.Type.BookBuyInBrowser) != null) {
-				reference = book.reference(UrlInfo.Type.BookBuyInBrowser);
-				id = ActionCode.BUY_IN_BROWSER;
-			}
+			final BookBuyUrlInfo reference = book.buyInfo();
 			if (reference != null) {
-				final String price = ((BookBuyUrlInfo)reference).Price;
-				actions.add(new NBAction(activity, id, "buy", price));
+				id = reference.InfoType == UrlInfo.Type.BookBuy
+					? ActionCode.BUY_DIRECTLY : ActionCode.BUY_IN_BROWSER;
+				actions.add(new NBAction(activity, id, "buy", reference.Price.toString()));
 			}
 			final Basket basket = book.Link.basket();
 			if (basket != null) {
@@ -312,8 +307,18 @@ public abstract class NetworkBookActions {
 								buttonKey = "topup";
 								action = new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int which) {
-										// TODO: replace 111 with required amount
-										TopupMenuActivity.runMenu(activity, book.Link, "111");
+										final BookBuyUrlInfo info = book.buyInfo();
+										Money price = info != null ? info.Price : null;
+										System.err.println("price = " + price);
+										if (price != null) {
+											final Money account = mgr.currentAccount();
+											System.err.println("account = " + account);
+											if (account != null) {
+												price = price.subtract(account);
+											}
+										}
+										System.err.println("price = " + price);
+										TopupMenuActivity.runMenu(activity, book.Link, price);
 									}
 								};
 							} else {

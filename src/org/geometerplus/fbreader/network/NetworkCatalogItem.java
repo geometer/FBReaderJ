@@ -84,15 +84,6 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 
-
-	/**
-	 * Method is called each time this item is displayed to the user.
-	 *
-	 * This method is called when UI-element corresponding to this item is shown to the User.
-	 */
-	public void onDisplayItem() {
-	}
-
 	public int getFlags() {
 		return myFlags;
 	}

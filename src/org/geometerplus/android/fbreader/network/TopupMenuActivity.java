@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
+import java.math.BigDecimal;
 
 import android.app.ListActivity;
 import android.content.*;
@@ -27,6 +28,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+
+import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -42,22 +45,26 @@ import org.geometerplus.android.fbreader.api.PluginApi;
 public class TopupMenuActivity extends ListActivity implements AdapterView.OnItemClickListener {
 	private static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
 	private static final String AMOUNT_KEY = "topup:amount";
+	private static final String CURRENCY_KEY = "topup:currency";
 
 	public static boolean isTopupSupported(INetworkLink link) {
 		// TODO: more correct check
 		return link.getUrlInfo(UrlInfo.Type.TopUp) != null;
 	}
 
-	public static void runMenu(Context context, INetworkLink link, String amount) {
-		context.startActivity(
-			Util.intentByLink(new Intent(context, TopupMenuActivity.class), link)
-				.putExtra(AMOUNT_KEY, amount)
-		);
+	public static void runMenu(Context context, INetworkLink link, Money amount) {
+		final Intent intent =
+			Util.intentByLink(new Intent(context, TopupMenuActivity.class), link);
+		if (amount != null) {
+			intent.putExtra(AMOUNT_KEY, amount.Amount);
+			intent.putExtra(CURRENCY_KEY, amount.Currency);
+		}
+		context.startActivity(intent);
 	}
 
 	private INetworkLink myLink;
 	private List<PluginApi.TopupActionInfo> myInfos;
-	private String myAmount;
+	private BigDecimal myAmount;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -65,7 +72,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		setTitle(NetworkLibrary.resource().getResource("topupTitle").getValue());
 		final String url = getIntent().getData().toString();
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
-		myAmount = getIntent().getStringExtra(AMOUNT_KEY);
+		myAmount = (BigDecimal)getIntent().getSerializableExtra(AMOUNT_KEY);
 
 		myInfos = new ArrayList<PluginApi.TopupActionInfo>();
 		if (myLink.getUrlInfo(UrlInfo.Type.TopUp) != null) {

@@ -21,6 +21,8 @@ package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
 
+import org.geometerplus.zlibrary.core.money.Money;
+
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
@@ -53,7 +55,7 @@ public class TopupAction extends Action {
 	}
 
 	@Override
-	public void run(NetworkTree tree) {
+	protected void run(NetworkTree tree) {
 		INetworkLink link = null;
 		if (tree instanceof TopUpTree) {
 			link = ((TopUpTree)tree).Item.Link;
@@ -73,13 +75,13 @@ public class TopupAction extends Action {
 		} else if (tree instanceof NetworkCatalogRootTree) {
 			link = ((NetworkCatalogRootTree)tree).Item.Link;
 		}
-		String account = null;
+		Money account = null;
 		if (link != null) {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			if (mgr != null && mgr.mayBeAuthorised(false)) {
 				account = mgr.currentAccount();
 			}
 		}
-		return super.getContextLabel(tree).replace("%s", account != null ? account : "");
+		return super.getContextLabel(tree).replace("%s", account != null ? account.toString() : "");
 	}
 }

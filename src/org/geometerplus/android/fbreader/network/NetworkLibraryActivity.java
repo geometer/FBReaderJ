@@ -21,31 +21,20 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.*;
+import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
-import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.tree.BaseActivity;
@@ -56,18 +45,6 @@ import org.geometerplus.android.fbreader.network.action.*;
 public class NetworkLibraryActivity extends BaseActivity implements NetworkLibrary.ChangeListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int SIGNUP_CODE = 2;
-
-	private static final String ACTIVITY_BY_TREE_KEY = "ActivityByTree";
-
-	static void setForTree(NetworkTree tree, NetworkLibraryActivity activity) {
-		if (tree != null) {
-			tree.setUserData(ACTIVITY_BY_TREE_KEY, activity);
-		}
-	}
-
-	public static NetworkLibraryActivity getByTree(NetworkTree tree) {
-		return (NetworkLibraryActivity)tree.getUserData(ACTIVITY_BY_TREE_KEY);
-	}
 
 	BookDownloaderServiceConnection Connection;
 
@@ -96,14 +73,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		setForTree((NetworkTree)getCurrentTree(), this);
-
 		setProgressBarIndeterminateVisibility(myInProgress);
 
 		if (getCurrentTree() instanceof RootTree) {
 			myIntent = getIntent();
 
-			if (!NetworkView.Instance().isInitialized()) {
+			if (!NetworkLibrary.Instance().isInitialized()) {
 				if (NetworkInitializer.Instance == null) {
 					new NetworkInitializer(this);
 					NetworkInitializer.Instance.start();
@@ -158,7 +133,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 				NetworkInitializer.Instance.setActivity(null);
 			}
 		}
-		setForTree((NetworkTree)getCurrentTree(), null);
 		if (Connection != null) {
 			unbindService(Connection);
 			Connection = null;
@@ -206,6 +180,20 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		return super.onKeyDown(keyCode, event);
 	}
 
+	private void fillOptionsMenuList() {
+		myOptionsMenuActions.add(new RunSearchAction(this));
+		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
+		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
+		myOptionsMenuActions.add(new LanguageFilterAction(this));
+		myOptionsMenuActions.add(new ReloadCatalogAction(this));
+		myOptionsMenuActions.add(new SignInAction(this));
+		myOptionsMenuActions.add(new SignUpAction(this));
+		myOptionsMenuActions.add(new SignOutAction(this));
+		myOptionsMenuActions.add(new TopupAction(this));
+		myOptionsMenuActions.add(new BuyBasketBooksAction(this));
+		myOptionsMenuActions.add(new ClearBasketAction(this));
+	}
+
 	private void fillContextMenuList() {
 		myContextMenuActions.add(new OpenCatalogAction(this));
 		myContextMenuActions.add(new OpenInBrowserAction(this));
@@ -215,6 +203,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		myContextMenuActions.add(new SignInAction(this));
 		myContextMenuActions.add(new EditCustomCatalogAction(this));
 		myContextMenuActions.add(new RemoveCustomCatalogAction(this));
+		myContextMenuActions.add(new BuyBasketBooksAction(this));
 		myContextMenuActions.add(new ClearBasketAction(this));
 	}
 
@@ -227,6 +216,12 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		myListClickActions.add(new ShowBookInfoAction(this));
 	}
 
+	private List<? extends Action> getContextMenuActions(NetworkTree tree) {
+		return tree instanceof NetworkBookTree
+			? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
+			: myContextMenuActions;
+	}
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
 		if (myContextMenuActions.isEmpty()) {
@@ -235,53 +230,13 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 
 		final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
-		if (tree == null) {
-			return;
-		}
-
-		final List<? extends Action> actions =
-			tree instanceof NetworkBookTree
-				? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
-				: myContextMenuActions;
-
-		/*
-		int count = 0;
-		for (Action a : actions) {
-			if (a.isVisible(tree) && a.isEnabled(tree)) {
-				++count;
+		if (tree != null) {
+			menu.setHeaderTitle(tree.getName());
+			for (Action a : getContextMenuActions(tree)) {
+				if (a.isVisible(tree) && a.isEnabled(tree)) {
+					menu.add(0, a.Code, 0, a.getContextLabel(tree));
+				}
 			}
-		}
-		*/
-		menu.setHeaderTitle(tree.getName());
-		for (Action a : actions) {
-			if (a.isVisible(tree) && a.isEnabled(tree)) {
-				menu.add(0, a.Code, 0, a.getContextLabel(tree));
-			}
-		}
-	}
-
-	private void runAction(final Action action, final NetworkTree tree) {
-		if (tree instanceof NetworkCatalogTree) {
-			final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-			switch (item.getVisibility()) {
-				case B3_TRUE:
-					action.run(tree);
-					break;
-				case B3_UNDEFINED:
-					Util.runAuthenticationDialog(this, item.Link, new Runnable() {
-						public void run() {
-							if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
-								return;
-							}
-							if (action.Code != ActionCode.SIGNIN) {
-								action.run(tree);
-							}
-						}
-					});
-					break;
-			}
-		} else {
-			action.run(tree);
 		}
 	}
 
@@ -290,14 +245,9 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		final int position = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
 		if (tree != null) {
-			final List<? extends Action> actions =
-				tree instanceof NetworkBookTree
-					? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
-					: myContextMenuActions;
-
-			for (Action a : actions) {
+			for (Action a : getContextMenuActions(tree)) {
 				if (a.Code == item.getItemId()) {
-					runAction(a, tree);
+					a.checkAndRun(tree);
 					return true;
 				}
 			}
@@ -315,7 +265,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		Action defaultAction = null;
 		for (Action a : myListClickActions) {
 			if (a.isVisible(tree) && a.isEnabled(tree)) {
-				runAction(a, tree);
+				a.checkAndRun(tree);
 				return;
 			}
 		}
@@ -338,33 +288,13 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		}
 	}
 
-	protected final String getOptionsValue(String key) {
-		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue();
-	}
-
-	protected final String getOptionsValue(String key, String arg) {
-		return NetworkLibrary.resource().getResource("menu").getResource(key).getValue().replace("%s", arg);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 
-		myOptionsMenuActions.clear();
-		myOptionsMenuActions.add(new RunSearchAction(this));
-		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
-		myOptionsMenuActions.add(new RootAction(this, ActionCode.REFRESH, "refreshCatalogsList", R.drawable.ic_menu_refresh) {
-			@Override
-			public void run(NetworkTree tree) {
-				refreshCatalogsList();
-			}
-		});
-		myOptionsMenuActions.add(new LanguageFilterAction(this));
-		myOptionsMenuActions.add(new ReloadCatalogAction(this));
-		myOptionsMenuActions.add(new SignInAction(this));
-		myOptionsMenuActions.add(new SignUpAction(this));
-		myOptionsMenuActions.add(new SignOutAction(this));
-		myOptionsMenuActions.add(new TopupAction(this));
+		if (myOptionsMenuActions.isEmpty()) {
+			fillOptionsMenuList();
+		}
 
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
@@ -373,12 +303,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 				item.setIcon(a.IconId);
 			}
 		}
-		//if (tree instanceof NetworkCatalogTree) {
-			//if (((NetworkCatalogTree)tree).Item instanceof BasketItem) {
-			//	addOptionsItem(menu, ActionCode.BASKET_CLEAR, "clearBasket");
-			//	addOptionsItem(menu, ActionCode.BASKET_BUY_ALL_BOOKS, "buyAllBooks");
-			//}
-		//}
 		return true;
 	}
 
@@ -405,44 +329,11 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			if (a.Code == item.getItemId()) {
-				a.run(tree);
+				a.checkAndRun(tree);
 				break;
 			}
 		}
 		return true;
-	}
-
-	private void refreshCatalogsList() {
-		final Handler handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				if (msg.obj == null) {
-					NetworkLibrary.Instance().finishBackgroundUpdate();
-				} else {
-					final ZLResource dialogResource = ZLResource.resource("dialog");
-					final ZLResource boxResource = dialogResource.getResource("networkError");
-					final ZLResource buttonResource = dialogResource.getResource("button");
-					new AlertDialog.Builder(NetworkLibraryActivity.this)
-						.setTitle(boxResource.getResource("title").getValue())
-						.setMessage((String) msg.obj)
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-						.create().show();
-				}
-			}
-		};
-
-		UIUtil.wait("updatingCatalogsList", new Runnable() {
-			public void run() {
-				String error = null;
-				try {
-					NetworkLibrary.Instance().runBackgroundUpdate(true);
-				} catch (ZLNetworkException e) {
-					error = e.getMessage();
-				}
-				handler.sendMessage(handler.obtainMessage(0, error));
-			}
-		}, this);
 	}
 
 	// method from NetworkLibrary.ChangeListener
