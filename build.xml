@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="FBReaderJ" default="package">
+<project name="FBReaderJ" default="init">
 	<property file="local.properties" />
 	<property file="build.properties" />
 	<property file="default.properties" />
@@ -12,9 +12,7 @@
 		<pathelement path="${sdk.dir}/tools/lib/jarutils.jar" />
 	</path>
 
-	<taskdef name="setup"
-		classname="com.android.ant.SetupTask"
-		classpathref="android.antlibs" />
+	<taskdef name="setup" classname="com.android.ant.SetupTask" classpathref="android.antlibs" />
 
 	<setup />
 
@@ -22,7 +20,7 @@
 		<fail message="Ant 1.7.0 or higher is required. Please upgrade your ant.">
 			<condition>
 				<not>
-					<antversion property="ant.version" atleast="1.7.0"/>
+					<antversion property="ant.version" atleast="1.7.0" />
 				</not>
 			</condition>
 		</fail>
@@ -34,34 +32,34 @@
 				<os family="windows" />
 			</condition>
 		</fail>
-		<echo message="Building native libraries..."/>
+		<echo message="Building native libraries..." />
 		<exec executable="${ndk.dir}/ndk-build" />
-		<echo message="DONE (Building native libraries)"/>
+		<echo message="DONE (Building native libraries)" />
 	</target>
 
 	<target name="check.native.libraries" depends="init">
-		<echo message="Checking if native libraries are up-to-date..."/>
+		<echo message="Checking if native libraries are up-to-date..." />
 		<condition property="native.libraries.are.uptodate" value="true">
 			<and>
 				<!-- Check if libDeflatingDecompressor exists and is up to date -->
 				<available file="./libs/armeabi/libDeflatingDecompressor.so" />
 				<uptodate targetfile="libs/armeabi/libDeflatingDecompressor.so">
-					<srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp"/>
+					<srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp" />
 				</uptodate>
 				<!-- Check if libLineBreak exists and is up to date -->
 				<available file="./libs/armeabi/libLineBreak.so" />
 				<uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak.so">
-					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
+					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h" />
 				</uptodate>
 			</and>
 		</condition>
-		<echo message="DONE (Checking if native libraries are up-to-date)"/>
+		<echo message="DONE (Checking if native libraries are up-to-date)" />
 	</target>
 
 	<target name="resources" depends="init, check.native.libraries">
 		<echo message="Cleaning up the 'res/drawable' folder..." />
 		<delete dir="res/drawable/">
-			<files includes="**"/>
+			<files includes="**" />
 		</delete>
 		<echo message="DONE (Cleaning up the 'res/drawable' folder)" />
 
@@ -72,10 +70,10 @@
 		</copy>
 		<echo message="DONE (Copying icons files to 'res/drawable/' folder)" />
 	</target>
-
+	<!--
 	<target name="package" depends="init, resources, native, release" />
 	<target name="dbg" depends="init, resources, native, debug" />
-
+-->
 	<target name="clean">
 		<echo message="Deleting temporary files..." />
 		<delete dir="gen" />
