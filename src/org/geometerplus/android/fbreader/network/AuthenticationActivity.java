@@ -221,6 +221,7 @@ public class AuthenticationActivity extends Activity {
 		if (error != null && !"".equals(error)) {
 			errorView.setVisibility(View.VISIBLE);
 			errorView.setText(error);
+			findTextView(R.id.authentication_password).setText("");
 		} else {
 			errorView.setVisibility(View.GONE);
 		}
