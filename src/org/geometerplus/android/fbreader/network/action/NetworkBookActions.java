@@ -24,8 +24,6 @@ import java.io.File;
 
 import android.app.AlertDialog;
 import android.app.Activity;
-import android.os.Message;
-import android.os.Handler;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.DialogInterface;
@@ -286,6 +284,56 @@ public abstract class NetworkBookActions {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 
+		final Runnable buyRunnable = new Runnable() {
+			public void run() {
+				try {
+					mgr.purchaseBook(book);
+					final NetworkLibrary library = NetworkLibrary.Instance();
+					library.invalidateVisibility();
+					library.synchronize();
+				} catch (final ZLNetworkException e) {
+					final String buttonKey;
+					final DialogInterface.OnClickListener action;
+					if (NetworkException.ERROR_PURCHASE_NOT_ENOUGH_MONEY.equals(e.getCode())) {
+						buttonKey = "topup";
+						action = new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								final BookBuyUrlInfo info = book.buyInfo();
+								Money price = info != null ? info.Price : null;
+								System.err.println("price = " + price);
+								if (price != null) {
+									final Money account = mgr.currentAccount();
+									System.err.println("account = " + account);
+									if (account != null) {
+										price = price.subtract(account);
+									}
+								}
+								System.err.println("price = " + price);
+								TopupMenuActivity.runMenu(activity, book.Link, price);
+							}
+						};
+					} else {
+						buttonKey = "ok";
+						action = null;
+					}
+					final ZLResource boxResource = dialogResource.getResource("networkError");
+					activity.runOnUiThread(new Runnable() {
+						public void run() {
+							new AlertDialog.Builder(activity)
+								.setTitle(boxResource.getResource("title").getValue())
+								.setMessage(e.getMessage())
+								.setIcon(0)
+								.setPositiveButton(buttonResource.getResource(buttonKey).getValue(), action)
+								.create().show();
+						}
+					});
+					final NetworkLibrary library = NetworkLibrary.Instance();
+					library.invalidateVisibility();
+					library.synchronize();
+				}
+			}
+		};
+
 		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_NEGATIVE) {
@@ -294,69 +342,19 @@ public abstract class NetworkBookActions {
 				if (!mgr.needPurchase(book)) {
 					return;
 				}
+				UIUtil.wait("purchaseBook", buyRunnable, activity);
 				final boolean downloadBook = which == DialogInterface.BUTTON_NEUTRAL;
-				final Handler handler = new Handler() {
-					public void handleMessage(Message message) {
-						final ZLNetworkException exception = (ZLNetworkException)message.obj;
-						if (exception != null) {
-							String buttonKey;
-							DialogInterface.OnClickListener action = null;
-							if (NetworkException.ERROR_PURCHASE_NOT_ENOUGH_MONEY.equals(
-								exception.getCode())
-							) {
-								buttonKey = "topup";
-								action = new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int which) {
-										final BookBuyUrlInfo info = book.buyInfo();
-										Money price = info != null ? info.Price : null;
-										System.err.println("price = " + price);
-										if (price != null) {
-											final Money account = mgr.currentAccount();
-											System.err.println("account = " + account);
-											if (account != null) {
-												price = price.subtract(account);
-											}
-										}
-										System.err.println("price = " + price);
-										TopupMenuActivity.runMenu(activity, book.Link, price);
-									}
-								};
-							} else {
-								buttonKey = "ok";
-							}
-							final ZLResource boxResource = dialogResource.getResource("networkError");
-							new AlertDialog.Builder(activity)
-								.setTitle(boxResource.getResource("title").getValue())
-								.setMessage(exception.getMessage())
-								.setIcon(0)
-								.setPositiveButton(buttonResource.getResource(buttonKey).getValue(), action)
-								.create().show();
-						} else if (downloadBook) {
+				if (downloadBook) {
+					activity.runOnUiThread(new Runnable() {
+						public void run() {
 							doDownloadBook(activity, book, false);
 						}
-						if (!mgr.mayBeAuthorised(true)) {
-							final NetworkLibrary library = NetworkLibrary.Instance();
-							library.invalidateVisibility();
-							library.synchronize();
-						}
-					}
-				}; // end Handler
-				final Runnable runnable = new Runnable() {
-					public void run() {
-						ZLNetworkException exception = null;
-						try {
-							mgr.purchaseBook(book);
-						} catch (ZLNetworkException e) {
-							exception = e;
-						}
-						handler.sendMessage(handler.obtainMessage(0, exception));
-					}
-				}; // end Runnable
-				UIUtil.wait("purchaseBook", runnable, activity);
-			} // end onClick
-		}; // end listener
+					});
+				}
+			} 
+		};
 
-		final Runnable buyRunnable = new Runnable() {
+		final Runnable buyDialogRunnable = new Runnable() {
 			public void run() {
 				if (!mgr.needPurchase(book)) {
 					final ZLResource boxResource = dialogResource.getResource("alreadyPurchasedBox");
@@ -379,20 +377,18 @@ public abstract class NetworkBookActions {
 					.create().show();
 			}
 		};
-		final Runnable buyOnUiRunnable = new Runnable() {
-			public void run() {
-				activity.runOnUiThread(buyRunnable);
-			}
-		};
-
 		try {
 			if (mgr.isAuthorised(true)) {
-				buyRunnable.run();
-				return;
+				buyDialogRunnable.run();
+			} else {
+				Util.runAuthenticationDialog(activity, book.Link, new Runnable() {
+					public void run() {
+						activity.runOnUiThread(buyDialogRunnable);
+					}
+				});
 			}
 		} catch (ZLNetworkException e) {
 		}
-		Util.runAuthenticationDialog(activity, book.Link, buyOnUiRunnable);
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {
