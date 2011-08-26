@@ -49,7 +49,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 	BookDownloaderServiceConnection Connection;
 
 	private volatile Intent myIntent;
-	private volatile boolean myInProgress;
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
@@ -72,8 +71,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		init(getIntent());
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-
-		setProgressBarIndeterminateVisibility(myInProgress);
 
 		if (getCurrentTree() instanceof RootTree) {
 			myIntent = getIntent();
@@ -341,18 +338,19 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 		runOnUiThread(new Runnable() {
 			public void run() {
 				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
-				myInProgress =
+				final boolean inProgress =
 					tree != null &&
 					ItemsLoadingService.getRunnable(tree) != null;
+				setProgressBarIndeterminateVisibility(inProgress);
 
 				getListAdapter().replaceAll(getCurrentTree().subTrees());
+				getListView().invalidateViews();
+
 				for (FBTree child : getCurrentTree().subTrees()) {
 					if (child instanceof TopUpTree) {
 						child.invalidateSummary();
 					}
 				}
-
-				setProgressBarIndeterminateVisibility(myInProgress);
 			}
 		});
 	}
