@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -88,11 +89,12 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		}
 
 		if (myBook == null) {
-			if ("litres-book".equals(getIntent().getData().getScheme())) {
+			final Uri url = getIntent().getData();
+			if (url != null && "litres-book".equals(url.getScheme())) {
 				// TODO: waiting message
 				myBook = OPDSBookItem.create(
 					NetworkLibrary.Instance().getLinkBySiteName("litres.ru"),
-					getIntent().getData().toString().replace("litres-book://", "http://")
+					url.toString().replace("litres-book://", "http://")
 				);
 			} else {
 				final NetworkTree tree = Util.getTreeFromIntent(getIntent());
