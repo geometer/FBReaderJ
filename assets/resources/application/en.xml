@@ -72,6 +72,8 @@
 		<node name="buy" value="Buy (%s)"/>
 		<node name="addToBasket" value="Add to basket"/>
 		<node name="removeFromBasket" value="Remove from basket"/>
+		<node name="clearBasket" value="Clear basket"/>
+		<node name="buyAllBooks" value="Buy all books"/>
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="stopLoading" value="Stop loading" />
 		<node name="stopSearching" value="Stop searching" />
@@ -79,13 +81,12 @@
 		<node name="signOut" value="Sign out (%s)"/>
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
-		<node name="topupViaCreditCard" value="Credit card"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk"/>
-		<node name="topupViaSms" value="Text messages"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
-		<node name="basketSummary" value="Books I want to buy"/>
+		<node name="basketSummaryEmpty" value="No books"/>
+		<node name="basketSummaryCountOnly" value="%0 books"/>
+		<node name="basketSummary" value="%0 books (%1)"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />

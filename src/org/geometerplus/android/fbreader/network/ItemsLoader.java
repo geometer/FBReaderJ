@@ -29,8 +29,8 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkItem;
 
-abstract class ItemsLoader implements Runnable {
-	private final Activity myActivity;
+public abstract class ItemsLoader implements Runnable {
+	protected final Activity myActivity;
 
 	private final LinkedList<NetworkItem> myItems = new LinkedList<NetworkItem>();
 	private final HashMap<INetworkLink, LinkedList<NetworkItem>> myUncommitedItems = new HashMap<INetworkLink, LinkedList<NetworkItem>>();
@@ -49,7 +49,7 @@ abstract class ItemsLoader implements Runnable {
 	private volatile Runnable myFinishRunnable;
 	private final Object myFinishedLock = new Object();
 
-	ItemsLoader(Activity activity) {
+	public ItemsLoader(Activity activity) {
 		this(activity, 1000);
 	}
 

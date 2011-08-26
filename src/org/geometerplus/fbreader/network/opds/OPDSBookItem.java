@@ -23,6 +23,7 @@ import java.util.*;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.money.Money;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -108,17 +109,10 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.SingleEntry, href));
 			} else if (UrlInfo.Type.BookBuy == referenceType) {
 				final OPDSLink opdsLink = (OPDSLink)link; 
-				String price = null;
-				final OPDSPrice opdsPrice = opdsLink.selectBestPrice();
-				if (opdsPrice != null) {
-					price = BookBuyUrlInfo.price(opdsPrice.Price, opdsPrice.Currency);
-				}
+				Money price = opdsLink.selectBestPrice();
 				if (price == null) {
 					// FIXME: HACK: price handling must be implemented not through attributes!!!
-					price = BookBuyUrlInfo.price(entry.getAttribute(OPDSXMLReader.KEY_PRICE), null);
-				}
-				if (price == null) {
-					price = "";
+					price = new Money(entry.getAttribute(OPDSXMLReader.KEY_PRICE));
 				}
 				if (MimeType.TEXT_HTML.equals(type)) {
 					collectReferences(urls, opdsLink, href,
@@ -170,7 +164,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		OPDSLink opdsLink,
 		String href,
 		UrlInfo.Type type,
-		String price,
+		Money price,
 		boolean addWithoutFormat
 	) {
 		boolean added = false;

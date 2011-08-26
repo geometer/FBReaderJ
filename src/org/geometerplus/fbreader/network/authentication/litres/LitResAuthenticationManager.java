@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
@@ -41,7 +42,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	private final ZLBooleanOption myCanRebillOption;
 
 	private volatile String myInitializedDataSid;
-	private volatile String myAccount;
+	private volatile Money myAccount;
 	private final Map<String,NetworkBookItem> myPurchasedBookMap =
 		new HashMap<String,NetworkBookItem>();
 	private final List<NetworkBookItem> myPurchasedBookList =
@@ -223,7 +224,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		synchronized (this) {
 			if (xmlReader.Account != null) {
-				myAccount = BookBuyUrlInfo.price(xmlReader.Account, "RUB");
+				myAccount = new Money(xmlReader.Account, "RUB");
 			}
 			if (exception != null) {
 				final String code = exception.getCode();
@@ -260,7 +261,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public synchronized String currentAccount() {
+	public synchronized Money currentAccount() {
 		return myAccount;
 	}
 
@@ -403,7 +404,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	private void loadAccountOnSuccess(LitResNetworkRequest accountRequest) {
 		LitResPurchaseXMLReader reader = (LitResPurchaseXMLReader)accountRequest.Reader;
-		myAccount = BookBuyUrlInfo.price(reader.Account, "RUB");
+		myAccount = new Money(reader.Account, "RUB");
 	}
 
 	@Override

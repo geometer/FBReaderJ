@@ -114,7 +114,7 @@ public abstract class LibraryTree extends FBTree {
 				}
 			}
 			for (; parent != null; parent = parent.Parent) {
-				((LibraryTree)parent).invalidateChildren();
+				((LibraryTree)parent).invalidateSummary();
 			}
 		}
 		return !toRemove.isEmpty();

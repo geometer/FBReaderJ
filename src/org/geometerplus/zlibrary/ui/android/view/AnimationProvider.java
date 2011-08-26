@@ -96,7 +96,7 @@ abstract class AnimationProvider {
 		final int minDiff = myDirection.IsHorizontal ?
 			(myWidth > myHeight ? myWidth / 4 : myWidth / 3) :
 			(myHeight > myWidth ? myHeight / 4 : myHeight / 3);
-		boolean forward = Math.abs(diff) > Math.min(minDiff, dpi);
+		boolean forward = Math.abs(diff) > Math.min(minDiff, dpi / 2);
 
 		myMode = forward ? Mode.AnimatedScrollingForward : Mode.AnimatedScrollingBackward;
 

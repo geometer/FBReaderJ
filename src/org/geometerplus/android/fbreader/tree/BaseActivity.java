@@ -60,9 +60,13 @@ public abstract class BaseActivity extends ListActivity {
 	}
 
 	@Override
-	protected void onNewIntent(Intent intent) {
+	protected void onNewIntent(final Intent intent) {
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
-			init(intent);
+			runOnUiThread(new Runnable() {
+				public void run() {
+					init(intent);
+				}
+			});
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -71,14 +75,12 @@ public abstract class BaseActivity extends ListActivity {
 	protected abstract FBTree getTreeByKey(FBTree.Key key);
 	public abstract boolean isTreeSelected(FBTree tree);
 
-	protected boolean OLD_STYLE_FLAG = false;
+	protected boolean isTreeInvisible(FBTree tree) {
+		return false;
+	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (OLD_STYLE_FLAG) {
-			return super.onKeyDown(keyCode, event);
-		}
-
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			FBTree parent = null;
 			while (parent == null && !myHistory.isEmpty()) {
@@ -87,7 +89,7 @@ public abstract class BaseActivity extends ListActivity {
 			if (parent == null) {
 				parent = myCurrentTree.Parent;
 			}
-			if (parent != null) {
+			if (parent != null && !isTreeInvisible(parent)) {
 				openTree(parent, myCurrentTree, false);
 				return true;
 			}
@@ -96,7 +98,8 @@ public abstract class BaseActivity extends ListActivity {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	protected void openTree(final FBTree tree) {
+	// TODO: change to protected
+	public void openTree(final FBTree tree) {
 		openTree(tree, null, true);
 	}
 
@@ -157,7 +160,7 @@ public abstract class BaseActivity extends ListActivity {
 				if (storeInHistory && !myCurrentKey.equals(tree.getUniqueKey())) {
 					myHistory.add(myCurrentKey);
 				}
-				startActivity(new Intent(this, getClass())
+				onNewIntent(new Intent(this, getClass())
 					.setAction(OPEN_TREE_ACTION)
 					.putExtra(TREE_KEY_KEY, tree.getUniqueKey())
 					.putExtra(

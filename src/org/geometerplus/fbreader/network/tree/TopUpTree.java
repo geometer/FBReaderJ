@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.network.tree;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.TopUpItem;
 import org.geometerplus.fbreader.network.NetworkTree;
@@ -44,10 +45,10 @@ public class TopUpTree extends NetworkTree {
 		final NetworkAuthenticationManager mgr = Item.Link.authenticationManager();
 		try {
 			if (mgr != null && mgr.isAuthorised(false)) {
-				final String account = mgr.currentAccount();
+				final Money account = mgr.currentAccount();
 				final CharSequence summary = Item.getSummary();
 				if (account != null && summary != null) {
-					return summary.toString().replace("%s", account);
+					return summary.toString().replace("%s", account.toString());
 				}
 			}
 		} catch (ZLNetworkException e) {

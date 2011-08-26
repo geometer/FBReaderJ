@@ -26,12 +26,13 @@ import android.os.IBinder;
 import android.os.Handler;
 import android.os.Message;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 
 public class ItemsLoadingService extends Service {
 	private static final String KEY = "ItemsLoadingRunnable";
 
-	static void start(Context context, NetworkTree tree, ItemsLoader runnable) {
+	public static void start(Context context, NetworkTree tree, ItemsLoader runnable) {
 		boolean doDownload = false;
 		synchronized (tree) {
 			if (tree.getUserData(KEY) == null) {
@@ -42,12 +43,12 @@ public class ItemsLoadingService extends Service {
 		if (doDownload) {
 			context.startService(
 				new Intent(context.getApplicationContext(), ItemsLoadingService.class)
-					.putExtra(NetworkBaseActivity.TREE_KEY_KEY, tree.getUniqueKey())
+					.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
 			);
 		}
 	}
 
-	static ItemsLoader getRunnable(NetworkTree tree) {
+	public static ItemsLoader getRunnable(NetworkTree tree) {
 		return tree != null ? (ItemsLoader)tree.getUserData(KEY) : null;
 	}
 
@@ -89,9 +90,9 @@ public class ItemsLoadingService extends Service {
 			doStop();
 			return;
 		}
-		intent.removeExtra(NetworkBaseActivity.TREE_KEY_KEY);
+		intent.removeExtra(NetworkLibraryActivity.TREE_KEY_KEY);
 
-		if (!NetworkView.Instance().isInitialized()) {
+		if (!NetworkLibrary.Instance().isInitialized()) {
 			doStop();
 			return;
 		}
@@ -106,12 +107,12 @@ public class ItemsLoadingService extends Service {
 			public void handleMessage(Message message) {
 				doStop();
 				removeRunnable(tree);
-				NetworkView.Instance().fireModelChanged();
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		};
 
 		// this call is needed to show indeterminate progress bar in title right on downloading start
-		NetworkView.Instance().fireModelChangedAsync();
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 		final Thread loader = new Thread(new Runnable() {
 			public void run() {

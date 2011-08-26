@@ -79,9 +79,6 @@
 		<node name="signOut" value="Kijelentkezés (%s)"/>
 		<node name="topup" value="Számla feltöltése (Jelenleg: %s)"/>
 		<node name="topupTitle" value="Számla feltöltése"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="SMS üzenetek"/>
 		<node name="topupViaBrowser" value="Oldal megnyitása böngészőben"/>
 		<node name="topupSummary" value="Jelenleg: %s"/>
 		<node name="alreadyDownloading" value="Könyv letöltése folyamatban" />

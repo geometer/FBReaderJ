@@ -57,10 +57,6 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 	}
 
 	@Override
-	public void onDisplayItem() {
-	}
-
-	@Override
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		for (NetworkItem child : myChildren) {
 			listener.onNewItem(Link, child);
@@ -159,15 +155,10 @@ class BySeriesCatalogItem extends SortedCatalogItem {
 }
 
 public class LitResBookshelfItem extends NetworkURLCatalogItem {
-	private boolean myForceReload;
+	private boolean myForceReload = false;
 
 	public LitResBookshelfItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
 		super(link, title, summary, urls, Accessibility.SIGNED_IN, FLAGS_DEFAULT);
-	}
-
-	@Override
-	public void onDisplayItem() {
-		myForceReload = false;
 	}
 
 	@Override

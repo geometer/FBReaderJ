@@ -21,13 +21,31 @@ package org.geometerplus.fbreader.network.opds;
 
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class BasketItem extends OPDSCatalogItem {
-	BasketItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection<?> urls, Accessibility accessibility) {
-		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
+	BasketItem(OPDSNetworkLink link, UrlInfoCollection<?> urls) {
+		super(
+			link,
+			NetworkLibrary.resource().getResource("basket").getValue(),
+			NetworkLibrary.resource().getResource("basketSummaryEmpty").getValue(),
+			urls,
+			Accessibility.ALWAYS,
+			FLAGS_DEFAULT & ~FLAGS_GROUP
+		);
 		link.setSupportsBasket();
+	}
+
+	@Override
+	public CharSequence getSummary() {
+		final int size = Link.basket().bookIds().size();
+		if (size == 0) {
+			return super.getSummary();
+		}
+		return NetworkLibrary.resource().getResource("basketSummary").getValue()
+			.replace("%0", String.valueOf(size)).replace("%1", "XXX");
 	}
 
 	@Override

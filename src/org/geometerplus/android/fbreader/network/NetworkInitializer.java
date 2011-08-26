@@ -27,19 +27,21 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
+
 import org.geometerplus.android.util.UIUtil;
 
 class NetworkInitializer {
 	static NetworkInitializer Instance;
 
-	private Activity myActivity;
+	private NetworkLibraryActivity myActivity;
 
-	public NetworkInitializer(Activity activity) {
+	public NetworkInitializer(NetworkLibraryActivity activity) {
 		Instance = this;
 		setActivity(activity);
 	}
 
-	public void setActivity(Activity activity) {
+	public void setActivity(NetworkLibraryActivity activity) {
 		myActivity = activity;
 	}
 
@@ -59,10 +61,15 @@ class NetworkInitializer {
 			public void run() {
 				String error = null;
 				try {
-					NetworkView.Instance().initialize();
-					if (myActivity instanceof NetworkTopLevelActivity) {
-						((NetworkTopLevelActivity)myActivity).processSavedIntent();
+					if (SQLiteNetworkDatabase.Instance() == null) {
+						new SQLiteNetworkDatabase();
 					}
+                
+					final NetworkLibrary library = NetworkLibrary.Instance();
+					library.initialize();
+					library.synchronize();
+
+					myActivity.processSavedIntent();
 				} catch (ZLNetworkException e) {
 					error = e.getMessage();
 				}
@@ -104,10 +111,13 @@ class NetworkInitializer {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
 					if (error == null) {
-						if (myActivity instanceof NetworkTopLevelActivity) {
-							final NetworkTopLevelActivity a = (NetworkTopLevelActivity)myActivity;
-							a.startService(new Intent(a.getApplicationContext(), LibraryInitializationService.class));
-							a.onModelChanged(); // initialization is complete successfully
+						if (myActivity != null) {
+							myActivity.startService(new Intent(
+								myActivity.getApplicationContext(),
+								LibraryInitializationService.class
+							));
+							// initialization is complete successfully
+							NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 						}
 					} else {
 						showTryAgainDialog(myActivity, error); // handle initialization error

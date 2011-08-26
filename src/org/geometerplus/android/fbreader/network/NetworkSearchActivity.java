@@ -42,10 +42,6 @@ public class NetworkSearchActivity extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		if (!NetworkView.Instance().isInitialized()) {
-			finish();
-		}
-
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
@@ -85,7 +81,7 @@ public class NetworkSearchActivity extends Activity {
 				}
 			}
 			myTree.updateSubTrees();
-			NetworkView.Instance().fireModelChanged();
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 
 		@Override
@@ -97,7 +93,7 @@ public class NetworkSearchActivity extends Activity {
 				myTree.updateSubTrees();
 				afterUpdateCatalog(errorMessage, myTree.getSearchResult().isEmpty());
 			}
-			NetworkView.Instance().fireModelChanged();
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
@@ -114,21 +110,18 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			final SearchItemTree tree = NetworkLibrary.Instance().getSearchItemTree();
+			final SearchItemTree tree = null;//NetworkLibrary.Instance().getSearchItemTree();
 			if (tree == null) {
 				return;
 			}
 
-			final NetworkBaseActivity activity = NetworkBaseActivity.getByTree(tree);
-			if (activity != null) {
-				final ZLResource buttonResource = dialogResource.getResource("button");
-				new AlertDialog.Builder(activity)
-					.setTitle(boxResource.getResource("title").getValue())
-					.setMessage(msg)
-					.setIcon(0)
-					.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-					.create().show();
-			}
+			final ZLResource buttonResource = dialogResource.getResource("button");
+			new AlertDialog.Builder(myActivity)
+				.setTitle(boxResource.getResource("title").getValue())
+				.setMessage(msg)
+				.setIcon(0)
+				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+				.create().show();
 		}
 	}
 
@@ -136,7 +129,7 @@ public class NetworkSearchActivity extends Activity {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
-		final SearchItemTree tree = library.getSearchItemTree();
+		final SearchItemTree tree = null;//library.getSearchItemTree();
 		if (tree == null ||
 			ItemsLoadingService.getRunnable(tree) != null) {
 			return;
@@ -146,7 +139,7 @@ public class NetworkSearchActivity extends Activity {
 		final SearchResult result = new SearchResult(summary);
 
 		tree.setSearchResult(result);
-		NetworkView.Instance().fireModelChangedAsync();
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 		ItemsLoadingService.start(
 			this, tree, new Searcher(this, tree, pattern)
