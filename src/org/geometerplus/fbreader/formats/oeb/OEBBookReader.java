@@ -80,6 +80,10 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 
 		for (String name : myHtmlFileNames) {
 			final ZLFile xhtmlFile = ZLFile.createFileByPath(myFilePrefix + name);
+			if (xhtmlFile == null) {
+				// NPE fix: null for bad attributes in .opf XML file
+				return false;
+			}
 			final XHTMLReader reader = new XHTMLReader(myModelReader, myFileNumbers);
 			final String referenceName = reader.getFileAlias(MiscUtil.archiveEntryName(xhtmlFile.getPath()));
 
