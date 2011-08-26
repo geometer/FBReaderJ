@@ -244,8 +244,12 @@ public class NetworkLibrary {
 				if (link instanceof ICustomNetworkLink) {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
-						customLink.reloadInfo(true);
-						NetworkDatabase.Instance().saveLink(customLink);
+						try {
+							customLink.reloadInfo(true);
+							NetworkDatabase.Instance().saveLink(customLink);
+						} catch (Throwable t) {
+							// ignore
+						}
 					}
 				}
 			}

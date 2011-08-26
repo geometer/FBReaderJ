@@ -79,6 +79,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 				new NetworkInitializer(this).start();
 			} else {
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+				new NetworkInitializer(this).end(null);
 				if (myIntent != null) {
 					processIntent(myIntent);
 					myIntent = null;
