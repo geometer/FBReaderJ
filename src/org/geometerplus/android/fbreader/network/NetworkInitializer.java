@@ -32,16 +32,9 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.android.util.UIUtil;
 
 class NetworkInitializer {
-	static NetworkInitializer Instance;
-
-	private NetworkLibraryActivity myActivity;
+	private final NetworkLibraryActivity myActivity;
 
 	public NetworkInitializer(NetworkLibraryActivity activity) {
-		Instance = this;
-		setActivity(activity);
-	}
-
-	public void setActivity(NetworkLibraryActivity activity) {
 		myActivity = activity;
 	}
 

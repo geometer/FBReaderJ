@@ -73,16 +73,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		super.onResume();
 
 		if (!NetworkLibrary.Instance().isInitialized()) {
-			if (NetworkInitializer.Instance == null) {
-				new NetworkInitializer(null);
-				NetworkInitializer.Instance.start();
-			} else {
-				NetworkInitializer.Instance.setActivity(null);
-			}
+			new NetworkInitializer(null).start();
 		}
 
 		if (myBook == null) {
-			System.err.println("uri = " + getIntent().getData());
+			if ("litres-book".equals(getIntent().getData().getScheme())) {
+				System.err.println("uri = " + getIntent().getData());
+			}
 
 			final NetworkTree tree = Util.getTreeFromIntent(getIntent());
 			if (!(tree instanceof NetworkBookTree)) {
@@ -122,9 +119,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public void onDestroy() {
-		if (!NetworkLibrary.Instance().isInitialized() && NetworkInitializer.Instance != null) {
-			NetworkInitializer.Instance.setActivity(null);
-		}
 		if (myConnection != null) {
 			unbindService(myConnection);
 			myConnection = null;

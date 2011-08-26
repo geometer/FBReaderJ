@@ -76,12 +76,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 			myIntent = getIntent();
 
 			if (!NetworkLibrary.Instance().isInitialized()) {
-				if (NetworkInitializer.Instance == null) {
-					new NetworkInitializer(this);
-					NetworkInitializer.Instance.start();
-				} else {
-					NetworkInitializer.Instance.setActivity(this);
-				}
+				new NetworkInitializer(this).start();
 			} else {
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 				if (myIntent != null) {
@@ -125,11 +120,6 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 
 	@Override
 	public void onDestroy() {
-		if (getCurrentTree() instanceof RootTree) {
-			if (NetworkInitializer.Instance != null) {
-				NetworkInitializer.Instance.setActivity(null);
-			}
-		}
 		if (Connection != null) {
 			unbindService(Connection);
 			Connection = null;
