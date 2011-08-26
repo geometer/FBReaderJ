@@ -32,16 +32,9 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.android.util.UIUtil;
 
 class NetworkInitializer {
-	static NetworkInitializer Instance;
+	private final Activity myActivity;
 
-	private NetworkLibraryActivity myActivity;
-
-	public NetworkInitializer(NetworkLibraryActivity activity) {
-		Instance = this;
-		setActivity(activity);
-	}
-
-	public void setActivity(NetworkLibraryActivity activity) {
+	public NetworkInitializer(Activity activity) {
 		myActivity = activity;
 	}
 
@@ -55,7 +48,6 @@ class NetworkInitializer {
 		}
 	};
 
-	// run this method only if myActivity != null
 	private void runInitialization() {
 		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
 			public void run() {
@@ -67,9 +59,10 @@ class NetworkInitializer {
                 
 					final NetworkLibrary library = NetworkLibrary.Instance();
 					library.initialize();
-					library.synchronize();
 
-					myActivity.processSavedIntent();
+					if (myActivity instanceof NetworkLibraryActivity) {
+						((NetworkLibraryActivity)myActivity).processSavedIntent();
+					}
 				} catch (ZLNetworkException e) {
 					error = e.getMessage();
 				}
@@ -106,7 +99,7 @@ class NetworkInitializer {
 		}
 	}
 
-	private void end(final String error) {
+	void end(final String error) {
 		if (myActivity != null) {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
@@ -116,8 +109,6 @@ class NetworkInitializer {
 								myActivity.getApplicationContext(),
 								LibraryInitializationService.class
 							));
-							// initialization is complete successfully
-							NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 						}
 					} else {
 						showTryAgainDialog(myActivity, error); // handle initialization error
