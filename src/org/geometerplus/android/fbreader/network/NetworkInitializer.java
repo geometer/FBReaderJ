@@ -60,7 +60,6 @@ class NetworkInitializer {
                 
 					final NetworkLibrary library = NetworkLibrary.Instance();
 					library.initialize();
-					library.synchronize();
 
 					myActivity.processSavedIntent();
 				} catch (ZLNetworkException e) {

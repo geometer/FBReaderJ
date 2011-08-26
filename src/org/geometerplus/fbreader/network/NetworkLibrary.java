@@ -153,6 +153,17 @@ public class NetworkLibrary {
 		return null;
 	}
 
+	public INetworkLink getLinkBySiteName(String siteName) {
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (siteName.equals(link.getSiteName())) {
+					return link;
+				}
+			}
+		}
+		return null;
+	}
+
 	private final RootTree myRootTree = new RootTree("@Root", false);
 	private final RootTree myFakeRootTree = new RootTree("@FakeRoot", true);
 
@@ -184,6 +195,8 @@ public class NetworkLibrary {
 		if (db != null) {
 			myLinks.addAll(db.listLinks());
 		}
+
+		synchronize();
 
 		myIsInitialized = true;
 	}
@@ -331,18 +344,14 @@ public class NetworkLibrary {
 	}
 
 	public void synchronize() {
-		System.err.println("synchronize 0");
 		if (myChildrenAreInvalid) {
-		System.err.println("synchronize 1");
 			myChildrenAreInvalid = false;
 			makeUpToDate();
 		}
 		if (myUpdateVisibility) {
-		System.err.println("synchronize 2");
 			myUpdateVisibility = false;
 			updateVisibility();
 		}
-		System.err.println("synchronize 3");
 	}
 
 	public NetworkTree getRootTree() {

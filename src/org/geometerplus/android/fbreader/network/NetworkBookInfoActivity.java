@@ -35,6 +35,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -45,6 +46,7 @@ import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 
 import org.geometerplus.android.fbreader.network.action.ActionCode;
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
@@ -72,21 +74,34 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onResume() {
 		super.onResume();
 
-		if (!NetworkLibrary.Instance().isInitialized()) {
-			new NetworkInitializer(null).start();
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		if (!library.isInitialized()) {
+			// TODO: waiting message
+			try {
+				library.initialize();
+			} catch (ZLNetworkException e) {
+				// ignore
+			}
 		}
 
 		if (myBook == null) {
 			if ("litres-book".equals(getIntent().getData().getScheme())) {
-				System.err.println("uri = " + getIntent().getData());
+				// TODO: waiting message
+				myBook = OPDSBookItem.create(
+					NetworkLibrary.Instance().getLinkBySiteName("litres.ru"),
+					getIntent().getData().toString().replace("litres-book://", "http://")
+				);
+			} else {
+				final NetworkTree tree = Util.getTreeFromIntent(getIntent());
+				if (tree instanceof NetworkBookTree) {
+					myBook = ((NetworkBookTree)tree).Book;
+				}
 			}
 
-			final NetworkTree tree = Util.getTreeFromIntent(getIntent());
-			if (!(tree instanceof NetworkBookTree)) {
+			if (myBook == null) {
 				finish();
 				return;
 			}
-			myBook = ((NetworkBookTree)tree).Book;
         
 			myConnection = new BookDownloaderServiceConnection();
 			bindService(
@@ -368,6 +383,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code) {
+		if (myBook == null) {
+			return;
+		}
+
 		runOnUiThread(new Runnable() {
 			public void run() {
 				updateView();
