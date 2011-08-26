@@ -344,6 +344,7 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 				setProgressBarIndeterminateVisibility(inProgress);
 
 				getListAdapter().replaceAll(getCurrentTree().subTrees());
+				getListView().invalidateViews();
 
 				for (FBTree child : getCurrentTree().subTrees()) {
 					if (child instanceof TopUpTree) {
