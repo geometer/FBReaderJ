@@ -84,7 +84,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		public void run() {
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			if (!library.isInitialized()) {
-				// TODO: waiting message
 				try {
 					if (SQLiteNetworkDatabase.Instance() == null) {
 						new SQLiteNetworkDatabase();
@@ -98,7 +97,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			if (myBook == null) {
 				final Uri url = getIntent().getData();
 				if (url != null && "litres-book".equals(url.getScheme())) {
-					// TODO: waiting message
 					myBook = OPDSBookItem.create(
 						NetworkLibrary.Instance().getLinkBySiteName("litres.ru"),
 						url.toString().replace("litres-book://", "http://")
