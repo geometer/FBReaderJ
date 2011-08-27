@@ -599,6 +599,7 @@
 			<node name="signOut" value="Đang thoát. Xin chờ..." />
 			<node name="purchaseBook" value="Mua sách. Xin chờ..." />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..."/>
 		</node>
 		<node name="networkError">

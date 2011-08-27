@@ -602,6 +602,7 @@
 			<node name="signOut" value="Buch wird ausgetragen. Bitte warten..."/>
 			<node name="purchaseBook" value="Buch wird gekauft. Bitte warten..."/>
 			<node name="loadingCatalogInfo" value="Kataloginformation wird geladen. Bitte warten..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
 		</node>
 		<node name="networkError">

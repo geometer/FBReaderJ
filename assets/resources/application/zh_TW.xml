@@ -618,6 +618,7 @@
 			<node name="signOut" value="登出中，請稍候..." />
 			<node name="purchaseBook" value="正購買書藉，請稍候..." />
 			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
 		</node>
 		<node name="networkError">

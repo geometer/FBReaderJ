@@ -599,6 +599,7 @@
 			<node name="signOut" value="Rexistrando. Agarde..." />
 			<node name="purchaseBook" value="Comprando libro. Agarde..." />
 			<node name="loadingCatalogInfo" value="Cargando a información do catálogo. Agarde..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Actualizando a lista de catálogos. Agarde..."/>
 		</node>
 		<node name="networkError">
