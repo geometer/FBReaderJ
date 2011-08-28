@@ -27,7 +27,6 @@ import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.network.Util;
 import org.geometerplus.android.fbreader.network.ItemsLoadingService;
 
 public class ReloadCatalogAction extends CatalogAction {

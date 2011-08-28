@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -28,16 +26,13 @@ import android.content.Context;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {

@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
-import java.util.*;
-
 import android.app.Activity;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;

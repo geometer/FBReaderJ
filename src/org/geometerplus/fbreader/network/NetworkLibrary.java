@@ -278,17 +278,17 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
-	private static boolean linkIsChanged(INetworkLink link) {
-		return
-			link instanceof ICustomNetworkLink &&
-			((ICustomNetworkLink)link).hasChanges();
-	}
+//	private static boolean linkIsChanged(INetworkLink link) {
+//		return
+//			link instanceof ICustomNetworkLink &&
+//			((ICustomNetworkLink)link).hasChanges();
+//	}
 
-	private static void makeValid(INetworkLink link) {
-		if (link instanceof ICustomNetworkLink) {
-			((ICustomNetworkLink)link).resetChanges();
-		}
-	}
+//	private static void makeValid(INetworkLink link) {
+//		if (link instanceof ICustomNetworkLink) {
+//			((ICustomNetworkLink)link).resetChanges();
+//		}
+//	}
 
 	private void makeUpToDate() {
 		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());

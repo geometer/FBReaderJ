@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
-import android.content.Intent;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
