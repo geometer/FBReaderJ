@@ -381,11 +381,56 @@ public abstract class NetworkBookActions {
 			if (mgr.isAuthorised(true)) {
 				buyDialogRunnable.run();
 			} else {
-				Util.runAuthenticationDialog(activity, book.Link, new Runnable() {
-					public void run() {
-						activity.runOnUiThread(buyDialogRunnable);
+				final String signInKey = "signIn";
+				final String registerKey = "signUp";
+				final String autoregisterKey = "quickBuy";
+
+				final ArrayList<String> items = new ArrayList<String>();
+				items.add(signInKey);
+				if (Util.isRegistrationSupported(activity, book.Link)) {
+					items.add(registerKey);
+				}
+				if (Util.isAutoregistrationSupported(activity, book.Link)) {
+					items.add(autoregisterKey);
+				}
+
+				if (items.size() > 1) {
+					final ZLResource box = dialogResource.getResource("purchaseActions");
+
+					CharSequence[] names = new CharSequence[items.size()];
+					for (int i = 0; i < names.length; ++i) {
+						names[i] = box.getResource(items.get(i)).getValue();
 					}
-				});
+
+					new AlertDialog.Builder(activity)
+						.setIcon(0)
+						.setTitle(box.getResource("title").getValue())
+						.setItems(names, new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								final String item = items.get(which);
+								if (signInKey.equals(item)) {
+									Util.runAuthenticationDialog(activity, book.Link, new Runnable() {
+										public void run() {
+											activity.runOnUiThread(buyDialogRunnable);
+										}
+									});
+								} else if (registerKey.equals(item)) {
+									Util.runRegistrationDialog(activity, book.Link);
+									// TODO: buy on success
+								} else if (autoregisterKey.equals(item)) {
+									Util.runAutoregistrationDialog(activity, book.Link);
+									// TODO: buy on success
+								}
+							}
+						})
+						.create().show();
+				} else {
+					Util.runAuthenticationDialog(activity, book.Link, new Runnable() {
+						public void run() {
+							activity.runOnUiThread(buyDialogRunnable);
+						}
+					});
+				}
 			}
 		} catch (ZLNetworkException e) {
 		}

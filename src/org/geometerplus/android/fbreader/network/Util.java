@@ -43,6 +43,8 @@ import org.geometerplus.android.util.PackageUtil;
 public abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
+	private static final String AUTOREGISTRATION_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_AUTOREGISTER";
 
 	static INetworkLink linkByIntent(Intent intent) {
 		return NetworkLibrary.Instance().getLinkByUrl(intent.getData().toString());
@@ -64,6 +66,14 @@ public abstract class Util implements UserRegistrationConstants {
 		);
 	}
 
+	public static boolean isAutoregistrationSupported(Activity activity, INetworkLink link) {
+		return testService(
+			activity,
+			AUTOREGISTRATION_ACTION,
+			link.getUrl(UrlInfo.Type.SignUp)
+		);
+	}
+
 	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		try {
 			final Intent intent = new Intent(
@@ -71,10 +81,20 @@ public abstract class Util implements UserRegistrationConstants {
 				Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
 			);
 			if (PackageUtil.canBeStarted(activity, intent, true)) {
-				activity.startActivityForResult(new Intent(
-					REGISTRATION_ACTION,
-					Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
-				), NetworkLibraryActivity.SIGNUP_CODE);
+				activity.startActivityForResult(intent, NetworkLibraryActivity.SIGNUP_CODE);
+			}
+		} catch (ActivityNotFoundException e) {
+		}
+	}
+
+	public static void runAutoregistrationDialog(Activity activity, INetworkLink link) {
+		try {
+			final Intent intent = new Intent(
+				AUTOREGISTRATION_ACTION,
+				Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
+			);
+			if (PackageUtil.canBeStarted(activity, intent, true)) {
+				activity.startActivityForResult(intent, NetworkLibraryActivity.SIGNUP_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
