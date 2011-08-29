@@ -617,6 +617,7 @@
 			<node name="signOut" value="Signing out. Please, wait&#8230;" />
 			<node name="purchaseBook" value="Purchase book. Please, wait&#8230;" />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;" />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">

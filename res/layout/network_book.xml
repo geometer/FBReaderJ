@@ -20,6 +20,7 @@
 			android:layout_weight="1"
 			android:maxLines="2"
 			android:layout_height="wrap_content"
+			android:visibility="gone"
 		/>
 		<Button
 			android:id="@+id/network_book_button3"
@@ -27,6 +28,7 @@
 			android:layout_weight="1"
 			android:maxLines="2"
 			android:layout_height="wrap_content"
+			android:visibility="gone"
 		/>
 	</LinearLayout>
 	<LinearLayout
@@ -53,6 +55,7 @@
 			android:layout_weight="1"
 			android:maxLines="2"
 			android:layout_height="wrap_content"
+			android:visibility="gone"
 		/>
 		<Button
 			android:id="@+id/network_book_button1"
@@ -60,6 +63,7 @@
 			android:layout_weight="1"
 			android:maxLines="2"
 			android:layout_height="wrap_content"
+			android:visibility="gone"
 		/>
 		<LinearLayout
 			android:id="@+id/network_book_right_spacer"

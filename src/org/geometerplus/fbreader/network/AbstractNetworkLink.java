@@ -158,7 +158,14 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 
 	// method from Basket interface
 	public final Money cost() {
-		return Money.ZERO;
+		Money sum = Money.ZERO;
+		for (NetworkBookItem b : books()) {
+			final BookBuyUrlInfo info = b.buyInfo();
+			if (info != null) {
+				sum = sum.add(info.Price);
+			}
+		}
+		return sum;
 	}
 
 	public NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener) {

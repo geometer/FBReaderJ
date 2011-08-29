@@ -599,6 +599,7 @@
 			<node name="signOut" value="Kijelentkezés. Egy kis türelmet..." />
 			<node name="purchaseBook" value="Könyv vásárlása. Egy kis türelmet..." />
 			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
 		</node>
 		<node name="networkError">

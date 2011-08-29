@@ -617,6 +617,7 @@
 			<node name="signOut" value="Odhlašování. Čekejte..."/>
 			<node name="purchaseBook" value="Nakupování knihy. Čekejte..."/>
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
 		</node>
 		<node name="networkError">
