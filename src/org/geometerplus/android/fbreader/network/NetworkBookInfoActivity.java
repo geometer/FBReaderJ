@@ -403,6 +403,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			case NetworkLibraryActivity.SIGNUP_CODE:
 				Util.processSignup(myBook.Link, resultCode, data);
 				break;
+			case NetworkLibraryActivity.AUTO_SIGNIN_CODE:
+				Util.processAutoSignIn(this, myBook.Link, resultCode, data);
+				break;
 		}
 	}
 }

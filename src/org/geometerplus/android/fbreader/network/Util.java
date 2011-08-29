@@ -38,8 +38,8 @@ import org.geometerplus.android.util.PackageUtil;
 public abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
-	private static final String AUTOREGISTRATION_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_AUTOREGISTER";
+	private static final String AUTO_SIGNIN_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_AUTOSIGNIN";
 
 	static INetworkLink linkByIntent(Intent intent) {
 		return NetworkLibrary.Instance().getLinkByUrl(intent.getData().toString());
@@ -61,10 +61,10 @@ public abstract class Util implements UserRegistrationConstants {
 		);
 	}
 
-	public static boolean isAutoregistrationSupported(Activity activity, INetworkLink link) {
+	public static boolean isAutoSignInSupported(Activity activity, INetworkLink link) {
 		return testService(
 			activity,
-			AUTOREGISTRATION_ACTION,
+			AUTO_SIGNIN_ACTION,
 			link.getUrl(UrlInfo.Type.SignUp)
 		);
 	}
@@ -82,14 +82,14 @@ public abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-	public static void runAutoregistrationDialog(Activity activity, INetworkLink link) {
+	public static void runAutoSignInDialog(Activity activity, INetworkLink link) {
 		try {
 			final Intent intent = new Intent(
-				AUTOREGISTRATION_ACTION,
-				Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
+				AUTO_SIGNIN_ACTION,
+				Uri.parse(link.getUrl(UrlInfo.Type.SignIn))
 			);
 			if (PackageUtil.canBeStarted(activity, intent, true)) {
-				activity.startActivityForResult(intent, NetworkLibraryActivity.SIGNUP_CODE);
+				activity.startActivityForResult(intent, NetworkLibraryActivity.AUTO_SIGNIN_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
@@ -132,6 +132,35 @@ public abstract class Util implements UserRegistrationConstants {
 			}
 		}
 	}
+
+	public static void processAutoSignIn(Activity activity, INetworkLink link, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK && data != null) {
+			try {
+				final NetworkAuthenticationManager mgr = link.authenticationManager();
+				if (mgr instanceof LitResAuthenticationManager) {
+					((LitResAuthenticationManager)mgr).initUser(
+						data.getStringExtra(USER_REGISTRATION_USERNAME),
+						data.getStringExtra(USER_REGISTRATION_LITRES_SID),
+						"",
+						false
+					);
+				}
+				if (!mgr.isAuthorised(true)) {
+					throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+				}
+				try {
+					mgr.initialize();
+				} catch (ZLNetworkException e) {
+					mgr.logOut();
+					throw e;
+				}
+				// TODO: implement postRunnable (e.g. buying book on "quick buy")
+			} catch (ZLNetworkException e) {
+				// TODO: show an error message
+			}
+		}
+	}
+
 
 	public static void openInBrowser(Context context, String url) {
 		if (url != null) {

@@ -41,6 +41,7 @@ import org.geometerplus.android.fbreader.network.action.*;
 public class NetworkLibraryActivity extends BaseActivity implements NetworkLibrary.ChangeListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int SIGNUP_CODE = 2;
+	protected static final int AUTO_SIGNIN_CODE = 3;
 
 	BookDownloaderServiceConnection Connection;
 
@@ -267,6 +268,9 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 				break;
 			case SIGNUP_CODE:
 				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);
+				break;
+			case AUTO_SIGNIN_CODE:
+				Util.processAutoSignIn(this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);
 				break;
 		}
 	}

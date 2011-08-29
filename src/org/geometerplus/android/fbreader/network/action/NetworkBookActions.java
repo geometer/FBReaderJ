@@ -381,15 +381,15 @@ public abstract class NetworkBookActions {
 			} else {
 				final String signInKey = "signIn";
 				final String registerKey = "signUp";
-				final String autoregisterKey = "quickBuy";
+				final String quickBuyKey = "quickBuy";
 
 				final ArrayList<String> items = new ArrayList<String>();
 				items.add(signInKey);
 				if (Util.isRegistrationSupported(activity, book.Link)) {
 					items.add(registerKey);
 				}
-				if (Util.isAutoregistrationSupported(activity, book.Link)) {
-					items.add(autoregisterKey);
+				if (Util.isAutoSignInSupported(activity, book.Link)) {
+					items.add(quickBuyKey);
 				}
 
 				if (items.size() > 1) {
@@ -415,12 +415,13 @@ public abstract class NetworkBookActions {
 								} else if (registerKey.equals(item)) {
 									Util.runRegistrationDialog(activity, book.Link);
 									// TODO: buy on success
-								} else if (autoregisterKey.equals(item)) {
-									Util.runAutoregistrationDialog(activity, book.Link);
+								} else if (quickBuyKey.equals(item)) {
+									Util.runAutoSignInDialog(activity, book.Link);
 									// TODO: buy on success
 								}
 							}
 						})
+						.setNegativeButton(buttonResource.getResource("cancel").getValue(), null)
 						.create().show();
 				} else {
 					Util.runAuthenticationDialog(activity, book.Link, new Runnable() {
