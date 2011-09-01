@@ -40,7 +40,13 @@ public class Money implements Comparable<Money> {
 	}
 
 	public Money(String amount, String currency) {
-		Amount = new BigDecimal(amount);
+		BigDecimal a = null;
+		try {
+			a = new BigDecimal(amount);
+		} catch (NumberFormatException e) {
+			a = new BigDecimal(amount.replace(",", "."));
+		}
+		Amount = a;
 		Currency = currency;
 	}
 
