@@ -2,8 +2,9 @@ states:
   A registered, logged in
   B registered, logging state is unclear
   C registered, not logged in, name is stored
-  D registered, not logged in, name is not stored
-  E not registered
+  D registered, not logged in, name is not stored, name = fbreader-auto-*
+  E registered, not logged in, name is not stored, name is user-defined
+  F not registered
 
 actions:
   1 topup account
