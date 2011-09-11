@@ -26,6 +26,12 @@ public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runna
 		myTree = tree;
 	}
 
+	public final void start() {
+		final Thread loaderThread = new Thread(this);
+		loaderThread.setPriority(Thread.MIN_PRIORITY);
+		loaderThread.start();
+	}
+
 	protected T getTree() {
 		return myTree;
 	}

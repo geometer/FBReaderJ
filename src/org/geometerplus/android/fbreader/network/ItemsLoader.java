@@ -45,12 +45,6 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 		myActivity = activity;
 	}
 
-	public void start() {
-		final Thread loaderThread = new Thread(this);
-		loaderThread.setPriority(Thread.MIN_PRIORITY);
-		loaderThread.start();
-	}
-
 	public final void run() {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
@@ -77,7 +71,7 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 			library.removeStoredLoader(getTree());
 			synchronized (myFinishedLock) {
 				if (myPostRunnable != null) {
-					myActivity.runOnUiThread(myPostRunnable);
+					myPostRunnable.run();
 				}
 				myFinished = true;
 			}

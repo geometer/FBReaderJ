@@ -60,7 +60,7 @@ public class OpenCatalogAction extends CatalogAction {
 		}
 	}
 
-	private void tryResumeLoading(Activity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
+	private void tryResumeLoading(final Activity activity, NetworkCatalogTree tree, final Runnable expandRunnable) {
 		final NetworkItemsLoader loader = NetworkLibrary.Instance().getStoredLoader(tree);
 		if (loader != null && loader.canResumeLoading()) {
 			Util.openTree(activity, tree);
@@ -69,7 +69,11 @@ public class OpenCatalogAction extends CatalogAction {
 		if (loader == null) {
 			expandRunnable.run();
 		} else {
-			loader.setPostRunnable(expandRunnable);
+			loader.setPostRunnable(new Runnable() {
+				public void run() {
+					activity.runOnUiThread(expandRunnable);
+				}
+			});
 		}
 	}
 
