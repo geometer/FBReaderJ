@@ -73,11 +73,6 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	public void updateLoadedTime() {
 		myLoadedTime = System.currentTimeMillis();
-		FBTree tree = Parent;
-		while (tree instanceof NetworkCatalogTree) {
-			((NetworkCatalogTree) tree).myLoadedTime = myLoadedTime;
-			tree = tree.Parent;
-		}
 	}
 
 	public void updateVisibility() {
