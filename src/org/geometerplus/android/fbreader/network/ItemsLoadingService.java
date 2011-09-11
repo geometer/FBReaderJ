@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
@@ -29,23 +28,21 @@ import android.os.Message;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 
-public class ItemsLoadingService extends Service {
+public class ItemsLoadingService {
 	private static final String KEY = "ItemsLoadingRunnable";
 
 	public static void start(Context context, NetworkTree tree, ItemsLoader runnable) {
-		boolean doDownload = false;
+		if (runnable == null) {
+			return;
+		}
+
 		synchronized (tree) {
-			if (tree.getUserData(KEY) == null) {
-				tree.setUserData(KEY, runnable);
-				doDownload = true;
+			if (tree.getUserData(KEY) != null) {
+				return;
 			}
+			tree.setUserData(KEY, runnable);
 		}
-		if (doDownload) {
-			context.startService(
-				new Intent(context.getApplicationContext(), ItemsLoadingService.class)
-					.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
-			);
-		}
+		onStart(tree, runnable);
 	}
 
 	public static ItemsLoader getRunnable(NetworkTree tree) {
@@ -62,50 +59,13 @@ public class ItemsLoadingService extends Service {
 		}
 	}
 
-	private volatile int myServiceCounter;
-
-	private void doStart() {
-		++myServiceCounter;
-	}
-
-	private void doStop() {
-		if (--myServiceCounter == 0) {
-			stopSelf();
-		}
-	}
-
-
-	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
-
-	@Override
-	public void onStart(Intent intent, int startId) {
-		super.onStart(intent, startId);
-		doStart();
-
-		final NetworkTree tree = Util.getTreeFromIntent(intent);
-		if (tree == null) {
-			doStop();
-			return;
-		}
-		intent.removeExtra(NetworkLibraryActivity.TREE_KEY_KEY);
-
+	private static void onStart(final NetworkTree tree, final ItemsLoader runnable) {
 		if (!NetworkLibrary.Instance().isInitialized()) {
-			doStop();
-			return;
-		}
-
-		final ItemsLoader runnable = getRunnable(tree);
-		if (runnable == null) {
-			doStop();
 			return;
 		}
 
 		final Handler finishHandler = new Handler() {
 			public void handleMessage(Message message) {
-				doStop();
 				removeRunnable(tree);
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}

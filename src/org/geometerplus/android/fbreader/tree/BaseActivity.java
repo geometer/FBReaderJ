@@ -103,7 +103,10 @@ public abstract class BaseActivity extends ListActivity {
 		openTree(tree, null, true);
 	}
 
-	protected void openTree(final FBTree tree, final FBTree treeToSelect, final boolean storeInHistory) {
+	protected void onCurrentTreeChanged() {
+	}
+
+	private void openTree(final FBTree tree, final FBTree treeToSelect, final boolean storeInHistory) {
 		switch (tree.getOpeningStatus()) {
 			case WAIT_FOR_OPEN:
 			case ALWAYS_RELOAD_BEFORE_OPENING:
@@ -151,6 +154,7 @@ public abstract class BaseActivity extends ListActivity {
 		if (myHistory == null) {
 			myHistory = new ArrayList<FBTree.Key>();
 		}
+		onCurrentTreeChanged();
 	}
 
 	private void openTreeInternal(FBTree tree, FBTree treeToSelect, boolean storeInHistory) {

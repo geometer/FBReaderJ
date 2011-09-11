@@ -377,4 +377,9 @@ public class NetworkLibraryActivity extends BaseActivity implements NetworkLibra
 			}
 		}
 	}
+
+	@Override
+	protected void onCurrentTreeChanged() {
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+	}
 }

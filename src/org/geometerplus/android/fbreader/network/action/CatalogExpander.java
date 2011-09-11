@@ -84,8 +84,7 @@ class CatalogExpander extends ItemsLoader {
 	}
 
 	@Override
-	protected void onFinish(String errorMessage, boolean interrupted,
-			Set<NetworkItem> uncommitedItems) {
+	protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
 		if (interrupted && (!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
 			myTree.clearCatalog();
 		} else {
