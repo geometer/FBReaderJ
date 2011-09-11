@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.network.*;
 public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoader<T> {
 	protected final Activity myActivity;
 
-	private volatile int myItemsCounter = 0;
 	private final LinkedList<NetworkItem> myUncommitedItems = new LinkedList<NetworkItem>();
 	private final Object myItemsMonitor = new Object();
 
@@ -72,7 +71,6 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 				error = e.getMessage();
 			}
 
-			ensureItemsProcessed();
 			finishOnUiThread(error, isLoadingInterrupted());
 			ensureFinishProcessed();
 		} finally {
@@ -96,17 +94,6 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 				runnable.run();
 			} else {
 				myPostRunnable = runnable;
-			}
-		}
-	}
-
-	private final void ensureItemsProcessed() {
-		synchronized (myItemsMonitor) {
-			while (myItemsCounter > 0) {
-				try {
-					myItemsMonitor.wait();
-				} catch (InterruptedException e) {
-				}
 			}
 		}
 	}
@@ -143,24 +130,14 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 
 	protected abstract void addItem(NetworkItem item);
 
-	public abstract void doBefore() throws ZLNetworkException;
-	public abstract void doLoading() throws ZLNetworkException;
+	protected abstract void doBefore() throws ZLNetworkException;
+	protected abstract void doLoading() throws ZLNetworkException;
 
 	public void onNewItem(final NetworkItem item) {
 		synchronized (myItemsMonitor) {
-			++myItemsCounter;
 			myUncommitedItems.add(item);
+			addItem(item);
 		}
-		myActivity.runOnUiThread(new Runnable() {
-			public void run() {
-				synchronized (myItemsMonitor) {
-					addItem(item);
-					--myItemsCounter;
-					// wake up process, that waits for finish condition (see ensureFinish() method)
-					myItemsMonitor.notifyAll();
-				}
-			}
-		});
 	}
 
 	public void commitItems() {
