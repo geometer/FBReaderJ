@@ -35,10 +35,10 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
-import org.geometerplus.android.fbreader.tree.BaseActivity;
+import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.fbreader.network.action.*;
 
-public class NetworkLibraryActivity extends BaseActivity implements NetworkLibrary.ChangeListener {
+public class NetworkLibraryActivity extends TreeActivity implements NetworkLibrary.ChangeListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int SIGNUP_CODE = 2;
 	protected static final int AUTO_SIGNIN_CODE = 3;

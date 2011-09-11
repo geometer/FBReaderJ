@@ -73,7 +73,7 @@ public class OpenCatalogAction extends CatalogAction {
 		if (runnable == null) {
 			expandRunnable.run();
 		} else {
-			runnable.runOnFinish(expandRunnable);
+			runnable.setPostRunnable(expandRunnable);
 		}
 	}
 

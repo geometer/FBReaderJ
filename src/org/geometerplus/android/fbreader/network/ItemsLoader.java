@@ -99,7 +99,7 @@ public abstract class ItemsLoader implements Runnable, NetworkOperationData.OnNe
 		}
 	}
 
-	public void runOnFinish(final Runnable runnable) {
+	public void setPostRunnable(final Runnable runnable) {
 		if (myFinishRunnable != null) {
 			return;
 		}

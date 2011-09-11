@@ -33,11 +33,10 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.fbreader.tree.BaseActivity;
-import org.geometerplus.android.fbreader.tree.ListAdapter;
+import org.geometerplus.android.fbreader.tree.TreeAdapter;
 
-class LibraryListAdapter extends ListAdapter {
-	LibraryListAdapter(BaseActivity activity) {
+class LibraryTreeAdapter extends TreeAdapter {
+	LibraryTreeAdapter(LibraryActivity activity) {
 		super(activity);
 	}
 

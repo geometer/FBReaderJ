@@ -30,7 +30,7 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-public abstract class BaseActivity extends ListActivity {
+public abstract class TreeActivity extends ListActivity {
 	private static final String OPEN_TREE_ACTION = "org.fbreader.intent.OPEN_TREE";
 
 	public static final String TREE_KEY_KEY = "TreeKey";
@@ -51,8 +51,8 @@ public abstract class BaseActivity extends ListActivity {
 	}
 
 	@Override
-	public ListAdapter getListAdapter() {
-		return (ListAdapter)super.getListAdapter();
+	public TreeAdapter getListAdapter() {
+		return (TreeAdapter)super.getListAdapter();
 	}
 
 	protected FBTree getCurrentTree() {
@@ -113,7 +113,7 @@ public abstract class BaseActivity extends ListActivity {
 				final String messageKey = tree.getOpeningStatusMessage();
 				if (messageKey != null) {
 					UIUtil.runWithMessage(
-						BaseActivity.this, messageKey,
+						TreeActivity.this, messageKey,
 						new Runnable() {
 							public void run() {
 								tree.waitForOpening();
@@ -143,7 +143,7 @@ public abstract class BaseActivity extends ListActivity {
 		// not myCurrentKey = key
 		// because key might be null
 		myCurrentKey = myCurrentTree.getUniqueKey();
-		final ListAdapter adapter = getListAdapter();
+		final TreeAdapter adapter = getListAdapter();
 		adapter.replaceAll(myCurrentTree.subTrees());
 		setTitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
@@ -175,7 +175,7 @@ public abstract class BaseActivity extends ListActivity {
 				);
 				break;
 			case CANNOT_OPEN:
-				UIUtil.showErrorMessage(BaseActivity.this, tree.getOpeningStatusMessage());
+				UIUtil.showErrorMessage(TreeActivity.this, tree.getOpeningStatusMessage());
 				break;
 		}
 	}
