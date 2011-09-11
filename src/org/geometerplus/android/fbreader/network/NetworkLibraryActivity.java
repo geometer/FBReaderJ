@@ -156,10 +156,10 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			final ItemsLoader runnable =
-				ItemsLoadingService.getRunnable((NetworkTree)getCurrentTree());
-			if (runnable != null) {
-				runnable.interruptLoading();
+			final NetworkItemsLoader loader =
+				NetworkLibrary.Instance().getStoredLoader((NetworkTree)getCurrentTree());
+			if (loader != null) {
+				loader.interrupt();
 			}
 		}
 		return super.onKeyDown(keyCode, event);
@@ -330,7 +330,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
 				final boolean inProgress =
 					tree != null &&
-					ItemsLoadingService.getRunnable(tree) != null;
+					NetworkLibrary.Instance().getStoredLoader(tree) != null;
 				setProgressBarIndeterminateVisibility(inProgress);
 
 				getListAdapter().replaceAll(getCurrentTree().subTrees());

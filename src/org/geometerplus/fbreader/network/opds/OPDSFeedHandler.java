@@ -107,7 +107,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 	private boolean tryInterrupt() {
 		final int noninterruptableRemainder = 10;
 		return (myItemsToLoad < 0 || myItemsToLoad > noninterruptableRemainder)
-				&& myData.Loader.confirmInterrupt();
+				&& myData.Loader.confirmInterruption();
 	}
 
 	private String calculateEntryId(OPDSEntry entry) {

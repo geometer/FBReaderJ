@@ -23,15 +23,11 @@ import java.util.Map;
 
 import android.app.Activity;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.network.ItemsLoader;
-import org.geometerplus.android.fbreader.network.ItemsLoadingService;
 import org.geometerplus.android.fbreader.network.Util;
 
 import org.geometerplus.android.util.UIUtil;
@@ -65,15 +61,15 @@ public class OpenCatalogAction extends CatalogAction {
 	}
 
 	private void tryResumeLoading(Activity activity, NetworkCatalogTree tree, Runnable expandRunnable) {
-		final ItemsLoader runnable = ItemsLoadingService.getRunnable(tree);
-		if (runnable != null && runnable.tryResumeLoading()) {
+		final NetworkItemsLoader loader = NetworkLibrary.Instance().getStoredLoader(tree);
+		if (loader != null && loader.canResumeLoading()) {
 			Util.openTree(activity, tree);
 			return;
 		}
-		if (runnable == null) {
+		if (loader == null) {
 			expandRunnable.run();
 		} else {
-			runnable.setPostRunnable(expandRunnable);
+			loader.setPostRunnable(expandRunnable);
 		}
 	}
 
@@ -94,10 +90,7 @@ public class OpenCatalogAction extends CatalogAction {
 					}
 				}
 
-				ItemsLoadingService.start(
-					tree,
-					new CatalogExpander(myActivity, tree, true, resumeNotLoad)
-				);
+				new CatalogExpander(myActivity, tree, true, resumeNotLoad).start();
 				processExtraData(tree.Item.extraData(), new Runnable() {
 					public void run() {
 						Util.openTree(myActivity, tree);

@@ -19,16 +19,58 @@
 
 package org.geometerplus.fbreader.network;
 
-public interface NetworkItemsLoader extends Runnable {
-	void onNewItem(NetworkItem item);
+public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runnable {
+	private final T myTree;
 
-	void commitItems();
+	protected NetworkItemsLoader(T tree) {
+		myTree = tree;
+	}
 
-	/**
-	 * @return <code>true</code> to confirm interrupt reading; 
-	 *         <code>false</code> to continue reading.
-	 *         Once <code>true</code> has been returned,
-	 *         all next calls MUST return <code>true</code>.
-	 */
-	boolean confirmInterrupt();
+	protected T getTree() {
+		return myTree;
+	}
+
+	public abstract void onNewItem(NetworkItem item);
+	public abstract void commitItems();
+	public abstract void setPostRunnable(Runnable runnable);
+
+	private final Object myInterruptLock = new Object();
+	private enum InterruptionState {
+		NONE,
+		REQUESTED,
+		CONFIRMED
+	};
+	private InterruptionState myInterruptionState = InterruptionState.NONE;
+
+	public final boolean canResumeLoading() {
+		synchronized (myInterruptLock) {
+			if (myInterruptionState == InterruptionState.REQUESTED) {
+				myInterruptionState = InterruptionState.NONE;
+			}
+			return myInterruptionState == InterruptionState.NONE;
+		}
+	}
+
+	protected final boolean isLoadingInterrupted() {
+		synchronized (myInterruptLock) {
+			return myInterruptionState == InterruptionState.CONFIRMED;
+		}
+	}
+
+	public final void interrupt() {
+		synchronized (myInterruptLock) {
+			if (myInterruptionState == InterruptionState.NONE) {
+				myInterruptionState = InterruptionState.REQUESTED;
+			}
+		}
+	}
+
+	public final boolean confirmInterruption() {
+		synchronized (myInterruptLock) {
+			if (myInterruptionState == InterruptionState.REQUESTED) {
+				myInterruptionState = InterruptionState.CONFIRMED;
+			}
+			return myInterruptionState == InterruptionState.CONFIRMED;
+		}
+	}
 }

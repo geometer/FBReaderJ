@@ -25,11 +25,9 @@ import android.app.Activity;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.NetworkOperationData;
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkItemsLoader;
+import org.geometerplus.fbreader.network.*;
 
-public abstract class ItemsLoader implements NetworkItemsLoader {
+public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoader<T> {
 	protected final Activity myActivity;
 
 	private volatile int myItemsCounter = 0;
@@ -39,37 +37,40 @@ public abstract class ItemsLoader implements NetworkItemsLoader {
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
 
-	private boolean myInterruptRequested;
-	private boolean myInterruptConfirmed;
-	private final Object myInterruptLock = new Object();
-
 	private volatile boolean myFinished;
-	private volatile Runnable myFinishRunnable;
+	private volatile Runnable myPostRunnable;
 	private final Object myFinishedLock = new Object();
 
-	public ItemsLoader(Activity activity) {
+	public ItemsLoader(Activity activity, T tree) {
+		super(tree);
 		myActivity = activity;
 	}
 
-	public void interruptLoading() {
-		synchronized (myInterruptLock) {
-			myInterruptRequested = true;
-		}
-	}
+	public void start() {
+		final NetworkLibrary networkLibrary = NetworkLibrary.Instance();
 
-	public boolean tryResumeLoading() {
-		synchronized (myInterruptLock) {
-			if (!myInterruptConfirmed) {
-				myInterruptRequested = false;
+		if (!networkLibrary.isInitialized()) {
+			return;
+		}
+
+		networkLibrary.storeLoader(getTree(), this);
+
+		// this call is needed to show indeterminate progress bar in title right on downloading start
+		networkLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+
+		final Thread loaderThread = new Thread(new Runnable() {
+			public void run() {
+				try {
+					ItemsLoader.this.run();
+				} finally {
+					networkLibrary.removeStoredLoader(getTree());
+					runFinishHandler();
+					networkLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+				}
 			}
-			return !myInterruptRequested;
-		}
-	}
-
-	private boolean isLoadingInterrupted() {
-		synchronized (myInterruptLock) {
-			return myInterruptConfirmed;
-		}
+		});
+		loaderThread.setPriority(Thread.MIN_PRIORITY);
+		loaderThread.start();
 	}
 
 	public final void run() {
@@ -93,22 +94,22 @@ public abstract class ItemsLoader implements NetworkItemsLoader {
 
 	void runFinishHandler() {
 		synchronized (myFinishedLock) {
-			if (myFinishRunnable != null) {
-				myActivity.runOnUiThread(myFinishRunnable);
+			if (myPostRunnable != null) {
+				myActivity.runOnUiThread(myPostRunnable);
 			}
 			myFinished = true;
 		}
 	}
 
-	public void setPostRunnable(final Runnable runnable) {
-		if (myFinishRunnable != null) {
+	public void setPostRunnable(Runnable runnable) {
+		if (myPostRunnable != null) {
 			return;
 		}
 		synchronized (myFinishedLock) {
 			if (myFinished) {
 				runnable.run();
 			} else {
-				myFinishRunnable = runnable;
+				myPostRunnable = runnable;
 			}
 		}
 	}
@@ -159,7 +160,6 @@ public abstract class ItemsLoader implements NetworkItemsLoader {
 	public abstract void doBefore() throws ZLNetworkException;
 	public abstract void doLoading() throws ZLNetworkException;
 
-	// methods from interface NetworkItemsLoader
 	public void onNewItem(final NetworkItem item) {
 		synchronized (myItemsMonitor) {
 			++myItemsCounter;
@@ -175,15 +175,6 @@ public abstract class ItemsLoader implements NetworkItemsLoader {
 				}
 			}
 		});
-	}
-
-	public boolean confirmInterrupt() {
-		synchronized (myInterruptLock) {
-			if (myInterruptRequested) {
-				myInterruptConfirmed = true;
-			}
-			return myInterruptConfirmed;
-		}
 	}
 
 	public void commitItems() {

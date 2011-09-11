@@ -19,13 +19,10 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.network.ItemsLoadingService;
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class ReloadCatalogAction extends CatalogAction {
@@ -44,18 +41,15 @@ public class ReloadCatalogAction extends CatalogAction {
 		}
 		return
 			((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog) != null &&
-			ItemsLoadingService.getRunnable(tree) == null;
+			NetworkLibrary.Instance().getStoredLoader(tree) == null;
 	}
 
 	@Override
 	protected void run(NetworkTree tree) {
-		if (ItemsLoadingService.getRunnable(tree) != null) {
+		if (NetworkLibrary.Instance().getStoredLoader(tree) != null) {
 			return;
 		}
 		((NetworkCatalogTree)tree).clearCatalog();
-		ItemsLoadingService.start(
-			tree,
-			new CatalogExpander(myActivity, (NetworkCatalogTree)tree, false, false)
-		);
+		new CatalogExpander(myActivity, (NetworkCatalogTree)tree, false, false).start();
 	}
 }

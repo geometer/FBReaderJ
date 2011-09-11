@@ -50,13 +50,11 @@ public class NetworkSearchActivity extends Activity {
 		finish();
 	}
 
-	private static class Searcher extends ItemsLoader {
-		private final SearchItemTree myTree;
+	private static class Searcher extends ItemsLoader<SearchItemTree> {
 		private final String myPattern;
 
 		public Searcher(Activity activity, SearchItemTree tree, String pattern) {
-			super(activity);
-			myTree = tree;
+			super(activity, tree);
 			myPattern = pattern;
 		}
 
@@ -74,10 +72,10 @@ public class NetworkSearchActivity extends Activity {
 
 		@Override
 		protected void addItem(NetworkItem item) {
-			SearchResult result = myTree.getSearchResult();
+			SearchResult result = getTree().getSearchResult();
 			if (item instanceof NetworkBookItem) {
 				result.addBook((NetworkBookItem)item);
-				myTree.updateSubTrees();
+				getTree().updateSubTrees();
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		}
@@ -85,10 +83,10 @@ public class NetworkSearchActivity extends Activity {
 		@Override
 		protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
 			if (interrupted) {
-				myTree.setSearchResult(null);
+				getTree().setSearchResult(null);
 			} else {
-				myTree.updateSubTrees();
-				afterUpdateCatalog(errorMessage, myTree.getSearchResult().isEmpty());
+				getTree().updateSubTrees();
+				afterUpdateCatalog(errorMessage, getTree().getSearchResult().isEmpty());
 			}
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
@@ -128,7 +126,7 @@ public class NetworkSearchActivity extends Activity {
 
 		final SearchItemTree tree = null;//library.getSearchItemTree();
 		if (tree == null ||
-			ItemsLoadingService.getRunnable(tree) != null) {
+			library.getStoredLoader(tree) != null) {
 			return;
 		}
 
@@ -138,9 +136,7 @@ public class NetworkSearchActivity extends Activity {
 		tree.setSearchResult(result);
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
-		ItemsLoadingService.start(
-			tree, new Searcher(this, tree, pattern)
-		);
+		new Searcher(this, tree, pattern).start();
 		Util.openTree(this, tree);
 	}
 }

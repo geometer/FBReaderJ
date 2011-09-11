@@ -75,7 +75,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		return new ZLNetworkRequest(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				if (result.Loader.confirmInterrupt()) {
+				if (result.Loader.confirmInterruption()) {
 					return;
 				}
 
@@ -83,7 +83,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 					new OPDSFeedHandler(catalog, getURL(), result), false
 				).read(inputStream);
 
-				if (result.Loader.confirmInterrupt() && result.LastLoadedId != null) {
+				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
 					// reset state to load current page from the beginning 
 					result.LastLoadedId = null;
 				} else {

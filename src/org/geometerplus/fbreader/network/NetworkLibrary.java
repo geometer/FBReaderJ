@@ -77,6 +77,8 @@ public class NetworkLibrary {
 		Collections.synchronizedList(new ArrayList<INetworkLink>());
 	private final Set<ChangeListener> myListeners =
 		Collections.synchronizedSet(new HashSet<ChangeListener>());
+	private final Map<NetworkTree,NetworkItemsLoader> myLoaders =
+		Collections.synchronizedMap(new HashMap<NetworkTree,NetworkItemsLoader>());
 
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
@@ -411,7 +413,7 @@ public class NetworkLibrary {
 
 			requestList.clear();
 
-			if (loader.confirmInterrupt()) {
+			if (loader.confirmInterruption()) {
 				return;
 			}
 			for (NetworkOperationData data : dataList) {
@@ -463,5 +465,17 @@ public class NetworkLibrary {
 				l.onLibraryChanged(code);
 			}
 		}
+	}
+
+	public final void storeLoader(NetworkTree tree, NetworkItemsLoader loader) {
+		myLoaders.put(tree, loader);
+	}
+
+	public final NetworkItemsLoader getStoredLoader(NetworkTree tree) {
+		return myLoaders.get(tree);
+	}
+
+	public final void removeStoredLoader(NetworkTree tree) {
+		myLoaders.remove(tree);
 	}
 }
