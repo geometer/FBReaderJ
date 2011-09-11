@@ -65,9 +65,9 @@ public class NetworkSearchActivity extends Activity {
 		}
 
 		@Override
-		public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) {
+		public void doLoading() {
 			try {
-				NetworkLibrary.Instance().simpleSearch(myPattern, doWithListener);
+				NetworkLibrary.Instance().simpleSearch(myPattern, this);
 			} catch (ZLNetworkException e) {
 			}
 		}

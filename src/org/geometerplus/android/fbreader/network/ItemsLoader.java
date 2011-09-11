@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkItem;
 
-public abstract class ItemsLoader implements Runnable {
+public abstract class ItemsLoader implements Runnable, NetworkOperationData.OnNewItemListener {
 	protected final Activity myActivity;
 
 	private final LinkedList<NetworkItem> myItems = new LinkedList<NetworkItem>();
@@ -80,39 +80,7 @@ public abstract class ItemsLoader implements Runnable {
 		}
 		String error = null;
 		try {
-			doLoading(new NetworkOperationData.OnNewItemListener() {
-				public void onNewItem(NetworkItem item) {
-					synchronized (myItemsMonitor) {
-						myItems.add(item);
-						myUncommitedItems.add(item);
-					}
-					myActivity.runOnUiThread(new Runnable() {
-						public void run() {
-							synchronized (myItemsMonitor) {
-								updateItems(myItems);
-								myItems.clear();
-								// wake up process, that waits for finish condition (see ensureFinish() method)
-								myItemsMonitor.notifyAll();
-							}
-						}
-					});
-				}
-
-				public boolean confirmInterrupt() {
-					synchronized (myInterruptLock) {
-						if (myInterruptRequested) {
-							myInterruptConfirmed = true;
-						}
-						return myInterruptConfirmed;
-					}
-				}
-
-				public void commitItems() {
-					synchronized (myItemsMonitor) {
-						myUncommitedItems.clear();
-					}
-				}
-			});
+			doLoading();
 		} catch (ZLNetworkException e) {
 			error = e.getMessage();
 		}
@@ -188,5 +156,38 @@ public abstract class ItemsLoader implements Runnable {
 	protected abstract void updateItems(List<NetworkItem> items);
 
 	public abstract void doBefore() throws ZLNetworkException;
-	public abstract void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException;
+	public abstract void doLoading() throws ZLNetworkException;
+
+	// methods from interface NetworkOperationData.OnNewItemListener
+	public void onNewItem(NetworkItem item) {
+		synchronized (myItemsMonitor) {
+			myItems.add(item);
+			myUncommitedItems.add(item);
+		}
+		myActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				synchronized (myItemsMonitor) {
+					updateItems(myItems);
+					myItems.clear();
+					// wake up process, that waits for finish condition (see ensureFinish() method)
+					myItemsMonitor.notifyAll();
+				}
+			}
+		});
+	}
+
+	public boolean confirmInterrupt() {
+		synchronized (myInterruptLock) {
+			if (myInterruptRequested) {
+				myInterruptConfirmed = true;
+			}
+			return myInterruptConfirmed;
+		}
+	}
+
+	public void commitItems() {
+		synchronized (myItemsMonitor) {
+			myUncommitedItems.clear();
+		}
+	}
 }
