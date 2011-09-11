@@ -47,57 +47,43 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 	}
 
 	public void start() {
-		final NetworkLibrary networkLibrary = NetworkLibrary.Instance();
-
-		if (!networkLibrary.isInitialized()) {
-			return;
-		}
-
-		networkLibrary.storeLoader(getTree(), this);
-
-		// this call is needed to show indeterminate progress bar in title right on downloading start
-		networkLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-
-		final Thread loaderThread = new Thread(new Runnable() {
-			public void run() {
-				try {
-					ItemsLoader.this.run();
-				} finally {
-					networkLibrary.removeStoredLoader(getTree());
-					runFinishHandler();
-					networkLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-				}
-			}
-		});
+		final Thread loaderThread = new Thread(this);
 		loaderThread.setPriority(Thread.MIN_PRIORITY);
 		loaderThread.start();
 	}
 
 	public final void run() {
-		try {
-			doBefore();
-		} catch (ZLNetworkException e) {
-			finishOnUiThread(e.getMessage(), false);
-			return;
-		}
-		String error = null;
-		try {
-			doLoading();
-		} catch (ZLNetworkException e) {
-			error = e.getMessage();
-		}
+		final NetworkLibrary library = NetworkLibrary.Instance();
 
-		ensureItemsProcessed();
-		finishOnUiThread(error, isLoadingInterrupted());
-		ensureFinishProcessed();
-	}
+		try {
+			library.storeLoader(getTree(), this);
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
-	void runFinishHandler() {
-		synchronized (myFinishedLock) {
-			if (myPostRunnable != null) {
-				myActivity.runOnUiThread(myPostRunnable);
+			try {
+				doBefore();
+			} catch (ZLNetworkException e) {
+				finishOnUiThread(e.getMessage(), false);
+				return;
 			}
-			myFinished = true;
+			String error = null;
+			try {
+				doLoading();
+			} catch (ZLNetworkException e) {
+				error = e.getMessage();
+			}
+
+			ensureItemsProcessed();
+			finishOnUiThread(error, isLoadingInterrupted());
+			ensureFinishProcessed();
+		} finally {
+			library.removeStoredLoader(getTree());
+			synchronized (myFinishedLock) {
+				if (myPostRunnable != null) {
+					myActivity.runOnUiThread(myPostRunnable);
+				}
+				myFinished = true;
+			}
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
 
