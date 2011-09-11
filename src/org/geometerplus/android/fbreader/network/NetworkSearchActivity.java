@@ -73,15 +73,13 @@ public class NetworkSearchActivity extends Activity {
 		}
 
 		@Override
-		protected void updateItems(List<NetworkItem> items) {
+		protected void addItem(NetworkItem item) {
 			SearchResult result = myTree.getSearchResult();
-			for (NetworkItem item: items) {
-				if (item instanceof NetworkBookItem) {
-					result.addBook((NetworkBookItem)item);
-				}
+			if (item instanceof NetworkBookItem) {
+				result.addBook((NetworkBookItem)item);
+				myTree.updateSubTrees();
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
-			myTree.updateSubTrees();
-			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 
 		@Override

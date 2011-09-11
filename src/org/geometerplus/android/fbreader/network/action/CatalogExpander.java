@@ -75,11 +75,9 @@ class CatalogExpander extends ItemsLoader {
 	}
 
 	@Override
-	protected void updateItems(List<NetworkItem> items) {
-		for (NetworkItem item: items) {
-			myTree.ChildrenItems.add(item);
-			NetworkTreeFactory.createNetworkTree(myTree, item);
-		}
+	protected void addItem(NetworkItem item) {
+		myTree.ChildrenItems.add(item);
+		NetworkTreeFactory.createNetworkTree(myTree, item);
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
