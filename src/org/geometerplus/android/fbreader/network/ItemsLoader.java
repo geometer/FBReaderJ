@@ -30,8 +30,8 @@ import org.geometerplus.fbreader.network.*;
 public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoader<T> {
 	protected final Activity myActivity;
 
-	private final LinkedList<NetworkItem> myUncommitedItems = new LinkedList<NetworkItem>();
-	private final Object myItemsMonitor = new Object();
+	private final List<NetworkItem> myUncommitedItems =
+		Collections.synchronizedList(new LinkedList<NetworkItem>());
 
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
@@ -107,7 +107,7 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				final Set<NetworkItem> uncommitedItems;
-				synchronized (myItemsMonitor) {
+				synchronized (myUncommitedItems) {
 					uncommitedItems = new HashSet<NetworkItem>(myUncommitedItems);
 				}
 				synchronized (myFinishMonitor) {
@@ -128,15 +128,11 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 	protected abstract void doLoading() throws ZLNetworkException;
 
 	public void onNewItem(final NetworkItem item) {
-		synchronized (myItemsMonitor) {
-			myUncommitedItems.add(item);
-			addItem(item);
-		}
+		myUncommitedItems.add(item);
+		addItem(item);
 	}
 
 	public void commitItems() {
-		synchronized (myItemsMonitor) {
-			myUncommitedItems.clear();
-		}
+		myUncommitedItems.clear();
 	}
 }
