@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
-import android.app.Activity;
-
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.NetworkURLCatalogItem;
@@ -28,9 +26,10 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.ItemsLoadingService;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class ReloadCatalogAction extends CatalogAction {
-	public ReloadCatalogAction(Activity activity) {
+	public ReloadCatalogAction(NetworkLibraryActivity activity) {
 		super(activity, ActionCode.RELOAD_CATALOG, "reload");
 	}
 

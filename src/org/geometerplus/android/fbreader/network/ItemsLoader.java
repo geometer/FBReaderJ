@@ -39,8 +39,6 @@ public abstract class ItemsLoader implements Runnable {
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
 
-	private final long myUpdateInterval; // in milliseconds
-
 	private boolean myInterruptRequested;
 	private boolean myInterruptConfirmed;
 	private final Object myInterruptLock = new Object();
@@ -50,12 +48,7 @@ public abstract class ItemsLoader implements Runnable {
 	private final Object myFinishedLock = new Object();
 
 	public ItemsLoader(Activity activity) {
-		this(activity, 1000);
-	}
-
-	private ItemsLoader(Activity activity, long updateIntervalMillis) {
 		myActivity = activity;
-		myUpdateInterval = updateIntervalMillis;
 	}
 
 	public void interruptLoading() {
@@ -98,16 +91,11 @@ public abstract class ItemsLoader implements Runnable {
 		String error = null;
 		try {
 			doLoading(new NetworkOperationData.OnNewItemListener() {
-				private long myUpdateTime;
 				private int myItemsNumber;
 				public void onNewItem(INetworkLink link, NetworkItem item) {
 					addItem(link, item);
 					++myItemsNumber;
-					final long now = System.currentTimeMillis();
-					if (now > myUpdateTime) {
-						updateItemsOnUiThread();
-						myUpdateTime = now + myUpdateInterval;
-					}
+					updateItemsOnUiThread();
 				}
 				public boolean confirmInterrupt() {
 					return confirmInterruptLoading();
@@ -229,6 +217,4 @@ public abstract class ItemsLoader implements Runnable {
 
 	public abstract void doBefore() throws ZLNetworkException;
 	public abstract void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException;
-
-	//public abstract String getResourceKey();
 }

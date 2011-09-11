@@ -20,10 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.IBinder;
-import android.os.Handler;
-import android.os.Message;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
@@ -31,8 +27,10 @@ import org.geometerplus.fbreader.network.NetworkTree;
 public class ItemsLoadingService {
 	private static final String KEY = "ItemsLoadingRunnable";
 
-	public static void start(Context context, NetworkTree tree, ItemsLoader runnable) {
-		if (runnable == null) {
+	public static void start(Context context, final NetworkTree tree, final ItemsLoader runnable) {
+		final NetworkLibrary networkLibrary = NetworkLibrary.Instance();
+
+		if (!networkLibrary.isInitialized()) {
 			return;
 		}
 
@@ -42,7 +40,21 @@ public class ItemsLoadingService {
 			}
 			tree.setUserData(KEY, runnable);
 		}
-		onStart(tree, runnable);
+		// this call is needed to show indeterminate progress bar in title right on downloading start
+		networkLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+
+		final Thread loader = new Thread(new Runnable() {
+			public void run() {
+				try {
+					runnable.run();
+				} finally {
+					removeRunnable(tree);
+					networkLibrary.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+				}
+			}
+		});
+		loader.setPriority(Thread.MIN_PRIORITY);
+		loader.start();
 	}
 
 	public static ItemsLoader getRunnable(NetworkTree tree) {
@@ -57,33 +69,5 @@ public class ItemsLoadingService {
 				runnable.runFinishHandler();
 			}
 		}
-	}
-
-	private static void onStart(final NetworkTree tree, final ItemsLoader runnable) {
-		if (!NetworkLibrary.Instance().isInitialized()) {
-			return;
-		}
-
-		final Handler finishHandler = new Handler() {
-			public void handleMessage(Message message) {
-				removeRunnable(tree);
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-			}
-		};
-
-		// this call is needed to show indeterminate progress bar in title right on downloading start
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-
-		final Thread loader = new Thread(new Runnable() {
-			public void run() {
-				try {
-					runnable.run();
-				} finally {
-					finishHandler.sendEmptyMessage(0);
-				}
-			}
-		});
-		loader.setPriority(Thread.MIN_PRIORITY);
-		loader.start();
 	}
 }
