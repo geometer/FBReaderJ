@@ -56,15 +56,6 @@ public abstract class ItemsLoader implements Runnable {
 		}
 	}
 
-	private boolean confirmInterruptLoading() {
-		synchronized (myInterruptLock) {
-			if (myInterruptRequested) {
-				myInterruptConfirmed = true;
-			}
-			return myInterruptConfirmed;
-		}
-	}
-
 	public boolean tryResumeLoading() {
 		synchronized (myInterruptLock) {
 			if (!myInterruptConfirmed) {
@@ -90,24 +81,42 @@ public abstract class ItemsLoader implements Runnable {
 		String error = null;
 		try {
 			doLoading(new NetworkOperationData.OnNewItemListener() {
-				private int myItemsNumber;
 				public void onNewItem(NetworkItem item) {
-					addItem(item);
-					++myItemsNumber;
-					updateItemsOnUiThread();
+					synchronized (myItemsMonitor) {
+						myItems.add(item);
+						myUncommitedItems.add(item);
+					}
+					myActivity.runOnUiThread(new Runnable() {
+						public void run() {
+							synchronized (myItemsMonitor) {
+								updateItems(myItems);
+								myItems.clear();
+								// wake up process, that waits for finish condition (see ensureFinish() method)
+								myItemsMonitor.notifyAll();
+							}
+						}
+					});
 				}
+
 				public boolean confirmInterrupt() {
-					return confirmInterruptLoading();
+					synchronized (myInterruptLock) {
+						if (myInterruptRequested) {
+							myInterruptConfirmed = true;
+						}
+						return myInterruptConfirmed;
+					}
 				}
+
 				public void commitItems() {
-					ItemsLoader.this.commitItems();
+					synchronized (myItemsMonitor) {
+						myUncommitedItems.clear();
+					}
 				}
 			});
 		} catch (ZLNetworkException e) {
 			error = e.getMessage();
 		}
 
-		updateItemsOnUiThread();
 		ensureItemsProcessed();
 		finishOnUiThread(error, isLoadingInterrupted());
 		ensureFinishProcessed();
@@ -132,32 +141,6 @@ public abstract class ItemsLoader implements Runnable {
 			} else {
 				myFinishRunnable = runnable;
 			}
-		}
-	}
-
-	private final void updateItemsOnUiThread() {
-		myActivity.runOnUiThread(new Runnable() {
-			public void run() {
-				synchronized (myItemsMonitor) {
-					updateItems(myItems);
-					myItems.clear();
-					// wake up process, that waits for finish condition (see ensureFinish() method)
-					myItemsMonitor.notifyAll();
-				}
-			}
-		});
-	}
-
-	private final void addItem(NetworkItem item) {
-		synchronized (myItemsMonitor) {
-			myItems.add(item);
-			myUncommitedItems.add(item);
-		}
-	}
-
-	private final void commitItems() {
-		synchronized (myItemsMonitor) {
-			myUncommitedItems.clear();
 		}
 	}
 
