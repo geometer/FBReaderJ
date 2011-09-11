@@ -168,7 +168,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 		return sum;
 	}
 
-	public NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener) {
+	public NetworkOperationData createOperationData(NetworkItemsLoader listener) {
 		return new NetworkOperationData(this, listener);
 	}
 

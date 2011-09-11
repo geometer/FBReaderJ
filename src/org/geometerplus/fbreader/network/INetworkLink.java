@@ -50,7 +50,7 @@ public interface INetworkLink extends Comparable<INetworkLink> {
 	 * @param listener Network operation listener
 	 * @return instance, which represents the state of the network operation.
 	 */
-	NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener);
+	NetworkOperationData createOperationData(NetworkItemsLoader loader);
 
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);

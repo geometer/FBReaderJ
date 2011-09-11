@@ -67,7 +67,7 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 			ZLNetworkRequest networkRequest) throws ZLNetworkException {
 		while (networkRequest != null) {
 			ZLNetworkManager.Instance().perform(networkRequest);
-			if (data.Listener.confirmInterrupt()) {
+			if (data.Loader.confirmInterrupt()) {
 				return;
 			}
 			networkRequest = data.resume();

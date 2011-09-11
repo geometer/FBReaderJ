@@ -32,8 +32,8 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		public String LastLoadedId;
 		public final HashSet<String> LoadedIds = new HashSet<String>();
 
-		public State(OPDSNetworkLink link, OnNewItemListener listener) {
-			super(link, listener);
+		public State(OPDSNetworkLink link, NetworkItemsLoader loader) {
+			super(link, loader);
 		}
 	}
 	private State myLoadingState;
@@ -79,15 +79,14 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	}
 
 	@Override
-	public final void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
-		OPDSNetworkLink opdsLink = (OPDSNetworkLink) Link;
+	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
+		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
 
-		myLoadingState = opdsLink.createOperationData(listener);
+		myLoadingState = opdsLink.createOperationData(loader);
 
-		ZLNetworkRequest networkRequest =
-			opdsLink.createNetworkData(this, getCatalogUrl(), myLoadingState);
-
-		doLoadChildren(networkRequest);
+		doLoadChildren(
+			opdsLink.createNetworkData(this, getCatalogUrl(), myLoadingState)
+		);
 	}
 
 	@Override
@@ -96,9 +95,9 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	}
 
 	@Override
-	public final void resumeLoading(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+	public final void resumeLoading(NetworkItemsLoader loader) throws ZLNetworkException {
 		if (myLoadingState != null) {
-			myLoadingState.Listener = listener;
+			myLoadingState.Loader = loader;
 			ZLNetworkRequest networkRequest = myLoadingState.resume();
 			doLoadChildren(networkRequest);
 		}

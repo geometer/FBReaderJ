@@ -107,7 +107,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 	private boolean tryInterrupt() {
 		final int noninterruptableRemainder = 10;
 		return (myItemsToLoad < 0 || myItemsToLoad > noninterruptableRemainder)
-				&& myData.Listener.confirmInterrupt();
+				&& myData.Loader.confirmInterrupt();
 	}
 
 	private String calculateEntryId(OPDSEntry entry) {
@@ -188,7 +188,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 			item = readCatalogItem(entry);
 		}
 		if (item != null) {
-			myData.Listener.onNewItem(item);
+			myData.Loader.onNewItem(item);
 		}
 		return tryInterrupt();
 	}

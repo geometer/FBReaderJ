@@ -19,25 +19,16 @@
 
 package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+public interface NetworkItemsLoader extends Runnable {
+	void onNewItem(NetworkItem item);
 
-public class NetworkOperationData {
-	public final INetworkLink Link;
-	public NetworkItemsLoader Loader;
-	public String ResumeURI;
+	void commitItems();
 
-	public NetworkOperationData(INetworkLink link, NetworkItemsLoader loader) {
-		Link = link;
-		Loader = loader;
-	}
-
-	protected void clear() {
-		ResumeURI = null;
-	}
-
-	public final ZLNetworkRequest resume() {
-		final ZLNetworkRequest request = Link.resume(this);
-		clear();
-		return request;
-	}
+	/**
+	 * @return <code>true</code> to confirm interrupt reading; 
+	 *         <code>false</code> to continue reading.
+	 *         Once <code>true</code> has been returned,
+	 *         all next calls MUST return <code>true</code>.
+	 */
+	boolean confirmInterrupt();
 }

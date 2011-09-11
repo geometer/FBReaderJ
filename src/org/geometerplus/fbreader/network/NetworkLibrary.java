@@ -393,24 +393,12 @@ public class NetworkLibrary {
 		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
 	}
 
-	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+	public void simpleSearch(String pattern, final NetworkItemsLoader loader) throws ZLNetworkException {
 		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
-		final NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
-			public synchronized void onNewItem(NetworkItem item) {
-				listener.onNewItem(item);
-			}
-			public synchronized boolean confirmInterrupt() {
-				return listener.confirmInterrupt();
-			}
-			public synchronized void commitItems() {
-				listener.commitItems();
-			}
-		};
-
 		for (INetworkLink link : activeLinks()) {
-			final NetworkOperationData data = link.createOperationData(synchronizedListener);
+			final NetworkOperationData data = link.createOperationData(loader);
 			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
 			if (request != null) {
 				dataList.add(data);
@@ -423,7 +411,7 @@ public class NetworkLibrary {
 
 			requestList.clear();
 
-			if (listener.confirmInterrupt()) {
+			if (loader.confirmInterrupt()) {
 				return;
 			}
 			for (NetworkOperationData data : dataList) {

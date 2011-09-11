@@ -27,8 +27,9 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkItem;
+import org.geometerplus.fbreader.network.NetworkItemsLoader;
 
-public abstract class ItemsLoader implements Runnable, NetworkOperationData.OnNewItemListener {
+public abstract class ItemsLoader implements NetworkItemsLoader {
 	protected final Activity myActivity;
 
 	private volatile int myItemsCounter = 0;
@@ -158,7 +159,7 @@ public abstract class ItemsLoader implements Runnable, NetworkOperationData.OnNe
 	public abstract void doBefore() throws ZLNetworkException;
 	public abstract void doLoading() throws ZLNetworkException;
 
-	// methods from interface NetworkOperationData.OnNewItemListener
+	// methods from interface NetworkItemsLoader
 	public void onNewItem(final NetworkItem item) {
 		synchronized (myItemsMonitor) {
 			++myItemsCounter;

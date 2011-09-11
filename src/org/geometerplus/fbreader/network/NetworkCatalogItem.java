@@ -74,13 +74,13 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 		return Collections.emptyMap();
 	}
 
-	public abstract void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException;
+	public abstract void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException;
 
 	public boolean supportsResumeLoading() {
 		return false;
 	}
 
-	public void resumeLoading(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+	public void resumeLoading(NetworkItemsLoader loader) throws ZLNetworkException {
 		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 
