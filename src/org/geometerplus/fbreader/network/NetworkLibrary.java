@@ -398,14 +398,14 @@ public class NetworkLibrary {
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
 		final NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
-			public synchronized void onNewItem(INetworkLink link, NetworkItem item) {
-				listener.onNewItem(link, item);
+			public synchronized void onNewItem(NetworkItem item) {
+				listener.onNewItem(item);
 			}
 			public synchronized boolean confirmInterrupt() {
 				return listener.confirmInterrupt();
 			}
-			public synchronized void commitItems(INetworkLink link) {
-				listener.commitItems(link);
+			public synchronized void commitItems() {
+				listener.commitItems();
 			}
 		};
 

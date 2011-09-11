@@ -95,7 +95,6 @@ public class OpenCatalogAction extends CatalogAction {
 				}
 
 				ItemsLoadingService.start(
-					myActivity,
 					tree,
 					new CatalogExpander(myActivity, tree, true, resumeNotLoad)
 				);

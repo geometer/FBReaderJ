@@ -87,7 +87,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 					// reset state to load current page from the beginning 
 					result.LastLoadedId = null;
 				} else {
-					result.Listener.commitItems(OPDSNetworkLink.this);
+					result.Listener.commitItems();
 				}
 			}
 		};

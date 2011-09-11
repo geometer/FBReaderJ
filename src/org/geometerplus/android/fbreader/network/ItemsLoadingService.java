@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 public class ItemsLoadingService {
 	private static final String KEY = "ItemsLoadingRunnable";
 
-	public static void start(Context context, final NetworkTree tree, final ItemsLoader runnable) {
+	public static void start(final NetworkTree tree, final ItemsLoader runnable) {
 		final NetworkLibrary networkLibrary = NetworkLibrary.Instance();
 
 		if (!networkLibrary.isInitialized()) {

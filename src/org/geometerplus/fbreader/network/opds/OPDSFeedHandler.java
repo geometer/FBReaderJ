@@ -188,7 +188,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 			item = readCatalogItem(entry);
 		}
 		if (item != null) {
-			myData.Listener.onNewItem(myData.Link, item);
+			myData.Listener.onNewItem(item);
 		}
 		return tryInterrupt();
 	}

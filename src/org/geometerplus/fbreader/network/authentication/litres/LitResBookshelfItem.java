@@ -59,9 +59,9 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 	@Override
 	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
 		for (NetworkItem child : myChildren) {
-			listener.onNewItem(Link, child);
+			listener.onNewItem(child);
 		}
-		listener.commitItems(Link);
+		listener.commitItems();
 	}
 }
 
@@ -183,18 +183,18 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 			if (children.size() <= 5) {
 				Collections.sort(children, new NetworkBookItemComparator());
 				for (NetworkItem item : children) {
-					listener.onNewItem(Link, item);
+					listener.onNewItem(item);
 				}
 			} else {
-				listener.onNewItem(Link, new ByDateCatalogItem(this, children));
-				listener.onNewItem(Link, new ByAuthorCatalogItem(this, children));
-				listener.onNewItem(Link, new ByTitleCatalogItem(this, children));
+				listener.onNewItem(new ByDateCatalogItem(this, children));
+				listener.onNewItem(new ByAuthorCatalogItem(this, children));
+				listener.onNewItem(new ByTitleCatalogItem(this, children));
 				final BySeriesCatalogItem bySeries = new BySeriesCatalogItem(this, children);
 				if (!bySeries.isEmpty()) {
-					listener.onNewItem(Link, bySeries);
+					listener.onNewItem(bySeries);
 				}
 			}
-			listener.commitItems(Link);
+			listener.commitItems();
 		}
 	}
 }

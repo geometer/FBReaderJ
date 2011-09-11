@@ -25,7 +25,6 @@ import android.app.Activity;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.NetworkItem;
 
@@ -33,7 +32,7 @@ public abstract class ItemsLoader implements Runnable {
 	protected final Activity myActivity;
 
 	private final LinkedList<NetworkItem> myItems = new LinkedList<NetworkItem>();
-	private final HashMap<INetworkLink, LinkedList<NetworkItem>> myUncommitedItems = new HashMap<INetworkLink, LinkedList<NetworkItem>>();
+	private final LinkedList<NetworkItem> myUncommitedItems = new LinkedList<NetworkItem>();
 	private final Object myItemsMonitor = new Object();
 
 	private volatile boolean myFinishProcessed;
@@ -92,16 +91,16 @@ public abstract class ItemsLoader implements Runnable {
 		try {
 			doLoading(new NetworkOperationData.OnNewItemListener() {
 				private int myItemsNumber;
-				public void onNewItem(INetworkLink link, NetworkItem item) {
-					addItem(link, item);
+				public void onNewItem(NetworkItem item) {
+					addItem(item);
 					++myItemsNumber;
 					updateItemsOnUiThread();
 				}
 				public boolean confirmInterrupt() {
 					return confirmInterruptLoading();
 				}
-				public void commitItems(INetworkLink link) {
-					ItemsLoader.this.commitItems(link);
+				public void commitItems() {
+					ItemsLoader.this.commitItems();
 				}
 			});
 		} catch (ZLNetworkException e) {
@@ -149,28 +148,20 @@ public abstract class ItemsLoader implements Runnable {
 		});
 	}
 
-	private final void addItem(INetworkLink link, NetworkItem item) {
+	private final void addItem(NetworkItem item) {
 		synchronized (myItemsMonitor) {
 			myItems.add(item);
-			LinkedList<NetworkItem> uncommited = myUncommitedItems.get(link);
-			if (uncommited == null) {
-				uncommited = new LinkedList<NetworkItem>();
-				myUncommitedItems.put(link, uncommited);
-			}
-			uncommited.add(item);
+			myUncommitedItems.add(item);
 		}
 	}
 
-	private final void commitItems(INetworkLink link) {
+	private final void commitItems() {
 		synchronized (myItemsMonitor) {
-			LinkedList<NetworkItem> uncommited = myUncommitedItems.get(link);
-			if (uncommited != null) {
-				uncommited.clear();
-			}
+			myUncommitedItems.clear();
 		}
 	}
 
-	public final void ensureItemsProcessed() {
+	private final void ensureItemsProcessed() {
 		synchronized (myItemsMonitor) {
 			while (myItems.size() > 0) {
 				try {
@@ -181,7 +172,7 @@ public abstract class ItemsLoader implements Runnable {
 		}
 	}
 
-	public final void ensureFinishProcessed() {
+	private final void ensureFinishProcessed() {
 		synchronized (myFinishMonitor) {
 			while (!myFinishProcessed) {
 				try {
@@ -195,11 +186,9 @@ public abstract class ItemsLoader implements Runnable {
 	private final void finishOnUiThread(final String errorMessage, final boolean interrupted) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				HashSet<NetworkItem> uncommitedItems = new HashSet<NetworkItem>();
-				synchronized (myUncommitedItems) {
-					for (LinkedList<NetworkItem> items: myUncommitedItems.values()) {
-						uncommitedItems.addAll(items);
-					}
+				final Set<NetworkItem> uncommitedItems;
+				synchronized (myItemsMonitor) {
+					uncommitedItems = new HashSet<NetworkItem>(myUncommitedItems);
 				}
 				synchronized (myFinishMonitor) {
 					onFinish(errorMessage, interrupted, uncommitedItems);

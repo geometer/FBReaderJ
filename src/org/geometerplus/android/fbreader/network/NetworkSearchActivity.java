@@ -85,8 +85,7 @@ public class NetworkSearchActivity extends Activity {
 		}
 
 		@Override
-		protected void onFinish(String errorMessage, boolean interrupted,
-				Set<NetworkItem> uncommitedItems) {
+		protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
 			if (interrupted) {
 				myTree.setSearchResult(null);
 			} else {
@@ -142,7 +141,7 @@ public class NetworkSearchActivity extends Activity {
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 		ItemsLoadingService.start(
-			this, tree, new Searcher(this, tree, pattern)
+			tree, new Searcher(this, tree, pattern)
 		);
 		Util.openTree(this, tree);
 	}
