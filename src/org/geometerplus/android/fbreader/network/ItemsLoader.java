@@ -30,9 +30,6 @@ import org.geometerplus.fbreader.network.*;
 public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoader<T> {
 	protected final Activity myActivity;
 
-	private final List<NetworkItem> myUncommitedItems =
-		Collections.synchronizedList(new LinkedList<NetworkItem>());
-
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
 
@@ -106,12 +103,8 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 	private final void finishOnUiThread(final String errorMessage, final boolean interrupted) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				final Set<NetworkItem> uncommitedItems;
-				synchronized (myUncommitedItems) {
-					uncommitedItems = new HashSet<NetworkItem>(myUncommitedItems);
-				}
 				synchronized (myFinishMonitor) {
-					onFinish(errorMessage, interrupted, uncommitedItems);
+					onFinish(errorMessage, interrupted, uncommitedItems());
 					myFinishProcessed = true;
 					// wake up process, that waits for finish condition (see ensureFinish() method)
 					myFinishMonitor.notifyAll();
@@ -122,17 +115,6 @@ public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoa
 
 	protected abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems);
 
-	protected abstract void addItem(NetworkItem item);
-
 	protected abstract void doBefore() throws ZLNetworkException;
 	protected abstract void doLoading() throws ZLNetworkException;
-
-	public void onNewItem(final NetworkItem item) {
-		myUncommitedItems.add(item);
-		addItem(item);
-	}
-
-	public void commitItems() {
-		myUncommitedItems.clear();
-	}
 }

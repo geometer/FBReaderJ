@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.*;
+
 public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runnable {
 	private final T myTree;
 
@@ -36,9 +38,8 @@ public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runna
 		return myTree;
 	}
 
-	public abstract void onNewItem(NetworkItem item);
-	public abstract void commitItems();
 	public abstract void setPostRunnable(Runnable runnable);
+	protected abstract void addItem(NetworkItem item);
 
 	private final Object myInterruptLock = new Object();
 	private enum InterruptionState {
@@ -78,5 +79,23 @@ public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runna
 			}
 			return myInterruptionState == InterruptionState.CONFIRMED;
 		}
+	}
+
+	private final List<NetworkItem> myUncommitedItems =
+		Collections.synchronizedList(new LinkedList<NetworkItem>());
+
+	protected final Set<NetworkItem> uncommitedItems() {
+		synchronized (myUncommitedItems) {
+			return new HashSet<NetworkItem>(myUncommitedItems);
+		}
+	}
+
+	public final void onNewItem(final NetworkItem item) {
+		myUncommitedItems.add(item);
+		addItem(item);
+	}
+
+	public final void commitItems() {
+		myUncommitedItems.clear();
 	}
 }
