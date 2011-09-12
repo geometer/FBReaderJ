@@ -282,9 +282,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 				opdsLink,
 				entry.Title,
 				annotation,
-				urlMap,
-				OPDSCatalogItem.Accessibility.ALWAYS,
-				NetworkCatalogItem.FLAGS_DEFAULT
+				urlMap
 			);
 		}
 	}

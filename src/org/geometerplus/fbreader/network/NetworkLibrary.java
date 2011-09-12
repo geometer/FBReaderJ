@@ -312,9 +312,12 @@ public class NetworkLibrary {
 					} else {
 						linkSet.remove(link);
 					}
+				} else {
+					// 3. search item
+					toRemove.add(t);
 				}
 			} else {
-				// 3. non-catalog nodes
+				// 4. non-catalog nodes
 				toRemove.add(t);
 			}
 		}
@@ -335,6 +338,7 @@ public class NetworkLibrary {
 			new NetworkCatalogRootTree(myRootTree, link, index);
 		}
 		// we do add non-catalog items
+		new NetworkCatalogTree(myRootTree, new SearchItem(null), 0);
 		new AddCustomCatalogItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);

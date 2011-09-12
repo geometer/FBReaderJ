@@ -17,46 +17,47 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.authentication.litres;
+package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+//import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.OPDSCatalogItem;
-import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-public class LitResRecommendationsItem extends OPDSCatalogItem {
-	public LitResRecommendationsItem(OPDSNetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
-		super(link, title, summary, urls, Accessibility.HAS_BOOKS, FLAGS_DEFAULT & ~FLAGS_GROUP, null);
+public class SearchItem extends NetworkCatalogItem {
+	public SearchItem(INetworkLink link) {
+		super(
+			link,
+			NetworkLibrary.resource().getResource("search").getValue(),
+			NetworkLibrary.resource().getResource("searchSummaryEmpty").getValue(),
+			new UrlInfoCollection<UrlInfo>(),
+			Accessibility.ALWAYS,
+			FLAGS_DEFAULT
+		);
 	}
 
+	public String getStringId() {
+		return "@Search";
+	}
+
+	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
+	}
+
+	/*
 	@Override
 	protected String getCatalogUrl() {
-		final LitResAuthenticationManager mgr =
-			(LitResAuthenticationManager)Link.authenticationManager();
 		final StringBuilder builder = new StringBuilder();
 		boolean flag = false;
-		for (NetworkBookItem book : mgr.purchasedBooks()) {
+		for (String bookId : Link.basket().bookIds()) {
 			if (flag) {
 				builder.append(',');
 			} else {
 				flag = true;
 			}
-			builder.append(book.Id);
-		}
-		final Basket basket = Link.basket();
-		if (basket != null) {
-			for (String bookId : basket.bookIds()) {
-				if (flag) {
-					builder.append(',');
-				} else {
-					flag = true;
-				}
-				builder.append(bookId);
-			}
+			builder.append(bookId);
 		}
 
 		return ZLNetworkUtil.appendParameter(getUrl(UrlInfo.Type.Catalog), "ids", builder.toString());
 	}
+	*/
 }

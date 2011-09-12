@@ -33,6 +33,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	public static final int FLAG_GROUP_BY_AUTHOR                          = 1 << 1;
 	public static final int FLAG_GROUP_BY_SERIES                          = 1 << 2;
 	public static final int FLAG_GROUP_MORE_THAN_1_BOOK_BY_SERIES         = 1 << 3;
+	public static final int FLAG_ADD_SEARCH_ITEM                          = 1 << 4;
 
 	public static final int FLAGS_DEFAULT =
 		FLAG_SHOW_AUTHOR |

@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.Set;
 
 import android.app.Activity;
 

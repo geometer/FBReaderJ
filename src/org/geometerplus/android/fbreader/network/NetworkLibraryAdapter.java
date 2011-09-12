@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
@@ -119,8 +119,8 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else if (tree instanceof AddCustomCatalogItemTree) {
 			coverView.setImageResource(R.drawable.ic_list_plus);
-		} else if (tree instanceof SearchItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_searchresult);
+		} else if (tree instanceof NetworkCatalogTree && tree.getHoldedItem() instanceof SearchItem) {
+			coverView.setImageResource(android.R.drawable.ic_menu_search);
 		} else {
 			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}

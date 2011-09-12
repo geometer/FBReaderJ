@@ -34,7 +34,8 @@ public class BasketItem extends OPDSCatalogItem {
 			NetworkLibrary.resource().getResource("basketSummaryEmpty").getValue(),
 			urls,
 			Accessibility.ALWAYS,
-			FLAGS_DEFAULT & ~FLAGS_GROUP
+			FLAGS_DEFAULT & ~FLAGS_GROUP,
+			null
 		);
 		link.setSupportsBasket();
 	}

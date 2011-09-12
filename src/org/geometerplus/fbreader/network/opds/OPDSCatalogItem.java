@@ -39,25 +39,23 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	private State myLoadingState;
 	private final Map<String,String> myExtraData;
 
-	OPDSCatalogItem(OPDSNetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Map<String,String> extraData) {
-		super(link, title, summary, urls);
-		myExtraData = extraData;
+	OPDSCatalogItem(OPDSNetworkLink link, RelatedUrlInfo info) {
+		this(link, info.Title, null, createSimpleCollection(info.Url));
 	}
 
-	protected OPDSCatalogItem(OPDSNetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Accessibility accessibility, int flags) {
+	OPDSCatalogItem(OPDSNetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
+		this(link, title, summary, urls, Accessibility.ALWAYS, FLAGS_DEFAULT, null);
+	}
+
+	protected OPDSCatalogItem(OPDSNetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Accessibility accessibility, int flags, Map<String,String> extraData) {
 		super(link, title, summary, urls, accessibility, flags);
-		myExtraData = null;
+		myExtraData = extraData;
 	}
 
 	private static UrlInfoCollection<UrlInfo> createSimpleCollection(String url) {
 		final UrlInfoCollection<UrlInfo> collection = new UrlInfoCollection<UrlInfo>();
 		collection.addInfo(new UrlInfo(UrlInfo.Type.Catalog, url));
 		return collection;
-	}
-
-	OPDSCatalogItem(OPDSNetworkLink link, RelatedUrlInfo info) {
-		super(link, info.Title, null, createSimpleCollection(info.Url));
-		myExtraData = null;
 	}
 
 	private void doLoadChildren(ZLNetworkRequest networkRequest) throws ZLNetworkException {
@@ -81,6 +79,13 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	@Override
 	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
+
+		if ((getFlags() & FLAG_ADD_SEARCH_ITEM) != 0) {
+			if (opdsLink.getUrl(UrlInfo.Type.Search) != null) {
+				loader.onNewItem(new SearchItem(opdsLink));
+				loader.commitItems();
+			}
+		}
 
 		myLoadingState = opdsLink.createOperationData(loader);
 

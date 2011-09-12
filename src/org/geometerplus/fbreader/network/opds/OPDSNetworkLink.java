@@ -119,7 +119,15 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Thumbnail));
-		return new OPDSCatalogItem(this, getTitle(), getSummary(), urlMap, myExtraData);
+		return new OPDSCatalogItem(
+			this,
+			getTitle(),
+			getSummary(),
+			urlMap,
+			OPDSCatalogItem.Accessibility.ALWAYS,
+			OPDSCatalogItem.FLAGS_DEFAULT | OPDSCatalogItem.FLAG_ADD_SEARCH_ITEM,
+			myExtraData
+		);
 	}
 
 	public NetworkAuthenticationManager authenticationManager() {
