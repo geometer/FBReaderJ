@@ -64,9 +64,11 @@ public abstract class ZLAndroidImageData implements ZLImageData {
 				options.inJustDecodeBounds = false;
 				int coefficient = 1;
 				if (!ignoreSize) {
-					while ((myRealHeight > maxHeight * coefficient) ||
-						   (myRealWidth > maxWidth *coefficient)) {
-						coefficient *= 2;
+					if (myRealHeight > maxHeight || myRealWidth > maxWidth) {
+						coefficient = 1 + Math.max(
+							(myRealHeight - 1) / maxHeight,
+							(myRealWidth - 1) / maxWidth
+						);
 					}
 				}
 				options.inSampleSize = coefficient;
