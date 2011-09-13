@@ -27,8 +27,6 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
-	private Map<String,Object> myUserData;
-
 	protected NetworkTree() {
 		super();
 	}
@@ -86,21 +84,6 @@ public abstract class NetworkTree extends FBTree {
 	}
 
 	public abstract NetworkItem getHoldedItem();
-
-	public final synchronized void setUserData(String key, Object data) {
-		if (myUserData == null) {
-			myUserData = new HashMap<String,Object>();
-		}
-		if (data != null) {
-			myUserData.put(key, data);
-		} else {
-			myUserData.remove(key);
-		}
-	}
-
-	public final synchronized Object getUserData(String key) {
-		return myUserData != null ? myUserData.get(key) : null;
-	}
 
 	public void removeItems(Set<NetworkItem> items) {
 		if (items.isEmpty() || subTrees().isEmpty()) {

@@ -599,6 +599,7 @@
 			<node name="signOut" value="กำลังออกจากระบบ, กรุณารอสักครู่..."/>
 			<node name="purchaseBook" value="กำลังซื้อหนังสือ, กรุณารอสักครู่..."/>
 			<node name="loadingCatalogInfo" value="กำลังดาวน์โหลข้อมูลของแคตตาล็อก, กรุณารอสักครู่..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..." />
 		</node>
 		<node name="networkError">

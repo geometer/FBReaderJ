@@ -599,6 +599,7 @@
 			<node name="signOut" value="Afmelden. Een ogenblik..." />
 			<node name="purchaseBook" value="Boek wordt gekocht. Een ogenblik..." />
 			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik..."/>
 		</node>
 		<node name="networkError">

@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network.opds;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.Basket;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
@@ -33,19 +34,25 @@ public class BasketItem extends OPDSCatalogItem {
 			NetworkLibrary.resource().getResource("basketSummaryEmpty").getValue(),
 			urls,
 			Accessibility.ALWAYS,
-			FLAGS_DEFAULT & ~FLAGS_GROUP
+			FLAGS_DEFAULT & ~FLAGS_GROUP,
+			null
 		);
 		link.setSupportsBasket();
 	}
 
 	@Override
 	public CharSequence getSummary() {
-		final int size = Link.basket().bookIds().size();
+		final Basket basket = Link.basket();
+		final int size = basket.bookIds().size();
 		if (size == 0) {
 			return super.getSummary();
+		} else if (size == basket.books().size()) {
+			return NetworkLibrary.resource().getResource("basketSummary").getValue()
+				.replace("%0", String.valueOf(size)).replace("%1", basket.cost().toString());
+		} else {
+			return NetworkLibrary.resource().getResource("basketSummaryCountOnly").getValue()
+				.replace("%0", String.valueOf(size));
 		}
-		return NetworkLibrary.resource().getResource("basketSummary").getValue()
-			.replace("%0", String.valueOf(size)).replace("%1", "XXX");
 	}
 
 	@Override

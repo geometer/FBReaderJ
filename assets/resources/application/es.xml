@@ -604,6 +604,7 @@
 			<node name="signOut" value="Registrando. Espere..." />
 			<node name="purchaseBook" value="Comprando el libro. Espere..." />
 			<node name="loadingCatalogInfo" value="Cargando la información del catálogo. Espere..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Actualizando la lista de catálogos. Espere..."/>
 		</node>
 		<node name="networkError">

@@ -75,7 +75,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		return new ZLNetworkRequest(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				if (result.Listener.confirmInterrupt()) {
+				if (result.Loader.confirmInterruption()) {
 					return;
 				}
 
@@ -83,19 +83,19 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 					new OPDSFeedHandler(catalog, getURL(), result), false
 				).read(inputStream);
 
-				if (result.Listener.confirmInterrupt() && result.LastLoadedId != null) {
+				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
 					// reset state to load current page from the beginning 
 					result.LastLoadedId = null;
 				} else {
-					result.Listener.commitItems(OPDSNetworkLink.this);
+					result.Loader.commitItems();
 				}
 			}
 		};
 	}
 
 	@Override
-	public OPDSCatalogItem.State createOperationData(NetworkOperationData.OnNewItemListener listener) {
-		return new OPDSCatalogItem.State(this, listener);
+	public OPDSCatalogItem.State createOperationData(NetworkItemsLoader loader) {
+		return new OPDSCatalogItem.State(this, loader);
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
@@ -119,7 +119,15 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Thumbnail));
-		return new OPDSCatalogItem(this, getTitle(), getSummary(), urlMap, myExtraData);
+		return new OPDSCatalogItem(
+			this,
+			getTitle(),
+			getSummary(),
+			urlMap,
+			OPDSCatalogItem.Accessibility.ALWAYS,
+			OPDSCatalogItem.FLAGS_DEFAULT | OPDSCatalogItem.FLAG_ADD_SEARCH_ITEM,
+			myExtraData
+		);
 	}
 
 	public NetworkAuthenticationManager authenticationManager() {

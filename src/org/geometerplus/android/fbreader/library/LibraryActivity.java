@@ -39,9 +39,9 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.tree.BaseActivity;
+import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
+public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	private BooksDatabase myDatabase;
@@ -72,7 +72,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			}
 		}
 
-		new LibraryListAdapter(this);
+		new LibraryTreeAdapter(this);
 
 		init(getIntent());
 

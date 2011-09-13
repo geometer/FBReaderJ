@@ -77,6 +77,8 @@ public class NetworkLibrary {
 		Collections.synchronizedList(new ArrayList<INetworkLink>());
 	private final Set<ChangeListener> myListeners =
 		Collections.synchronizedSet(new HashSet<ChangeListener>());
+	private final Map<NetworkTree,NetworkItemsLoader> myLoaders =
+		Collections.synchronizedMap(new HashMap<NetworkTree,NetworkItemsLoader>());
 
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
@@ -278,17 +280,17 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
-	private static boolean linkIsChanged(INetworkLink link) {
-		return
-			link instanceof ICustomNetworkLink &&
-			((ICustomNetworkLink)link).hasChanges();
-	}
+//	private static boolean linkIsChanged(INetworkLink link) {
+//		return
+//			link instanceof ICustomNetworkLink &&
+//			((ICustomNetworkLink)link).hasChanges();
+//	}
 
-	private static void makeValid(INetworkLink link) {
-		if (link instanceof ICustomNetworkLink) {
-			((ICustomNetworkLink)link).resetChanges();
-		}
-	}
+//	private static void makeValid(INetworkLink link) {
+//		if (link instanceof ICustomNetworkLink) {
+//			((ICustomNetworkLink)link).resetChanges();
+//		}
+//	}
 
 	private void makeUpToDate() {
 		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
@@ -310,9 +312,12 @@ public class NetworkLibrary {
 					} else {
 						linkSet.remove(link);
 					}
+				} else {
+					// 3. search item
+					toRemove.add(t);
 				}
 			} else {
-				// 3. non-catalog nodes
+				// 4. non-catalog nodes
 				toRemove.add(t);
 			}
 		}
@@ -333,6 +338,7 @@ public class NetworkLibrary {
 			new NetworkCatalogRootTree(myRootTree, link, index);
 		}
 		// we do add non-catalog items
+		new NetworkCatalogTree(myRootTree, new SearchItem(null), 0);
 		new AddCustomCatalogItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
@@ -393,24 +399,12 @@ public class NetworkLibrary {
 		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
 	}
 
-	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+	public void simpleSearch(String pattern, final NetworkItemsLoader loader) throws ZLNetworkException {
 		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
 		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
-		final NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
-			public synchronized void onNewItem(INetworkLink link, NetworkItem item) {
-				listener.onNewItem(link, item);
-			}
-			public synchronized boolean confirmInterrupt() {
-				return listener.confirmInterrupt();
-			}
-			public synchronized void commitItems(INetworkLink link) {
-				listener.commitItems(link);
-			}
-		};
-
 		for (INetworkLink link : activeLinks()) {
-			final NetworkOperationData data = link.createOperationData(synchronizedListener);
+			final NetworkOperationData data = link.createOperationData(loader);
 			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
 			if (request != null) {
 				dataList.add(data);
@@ -423,7 +417,7 @@ public class NetworkLibrary {
 
 			requestList.clear();
 
-			if (listener.confirmInterrupt()) {
+			if (loader.confirmInterruption()) {
 				return;
 			}
 			for (NetworkOperationData data : dataList) {
@@ -475,5 +469,17 @@ public class NetworkLibrary {
 				l.onLibraryChanged(code);
 			}
 		}
+	}
+
+	public final void storeLoader(NetworkTree tree, NetworkItemsLoader loader) {
+		myLoaders.put(tree, loader);
+	}
+
+	public final NetworkItemsLoader getStoredLoader(NetworkTree tree) {
+		return myLoaders.get(tree);
+	}
+
+	public final void removeStoredLoader(NetworkTree tree) {
+		myLoaders.remove(tree);
 	}
 }

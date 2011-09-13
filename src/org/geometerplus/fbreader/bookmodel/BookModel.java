@@ -61,5 +61,28 @@ public abstract class BookModel {
 
 	public abstract ZLTextModel getTextModel();
 	public abstract ZLTextModel getFootnoteModel(String id);
-	public abstract Label getLabel(String id);
+	protected abstract Label getLabelInternal(String id);
+
+	public interface LabelResolver {
+		List<String> getCandidates(String id);
+	}
+
+	private LabelResolver myResolver;
+
+	public void setLabelResolver(LabelResolver resolver) {
+		myResolver = resolver;
+	}
+
+	public Label getLabel(String id) {
+		Label label = getLabelInternal(id);
+		if (label == null && myResolver != null) {
+			for (String candidate : myResolver.getCandidates(id)) {
+				label = getLabelInternal(candidate);
+				if (label != null) {
+					break;
+				}
+			}
+		}
+		return label;
+	}
 }

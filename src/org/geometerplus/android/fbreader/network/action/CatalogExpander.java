@@ -37,22 +37,20 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 import org.geometerplus.android.fbreader.network.ItemsLoader;
 
-class CatalogExpander extends ItemsLoader {
-	private final NetworkCatalogTree myTree;
+class CatalogExpander extends ItemsLoader<NetworkCatalogTree> {
 	private final boolean myCheckAuthentication;
 	private final boolean myResumeNotLoad;
 
 	public CatalogExpander(Activity activity,
 			NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
-		super(activity);
-		myTree = tree;
+		super(activity, tree);
 		myCheckAuthentication = checkAuthentication;
 		myResumeNotLoad = resumeNotLoad;
 	}
 
 	@Override
 	public void doBefore() throws ZLNetworkException {
-		final INetworkLink link = myTree.Item.Link;
+		final INetworkLink link = getTree().Item.Link;
 		if (myCheckAuthentication && link.authenticationManager() != null) {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			try {
@@ -66,35 +64,32 @@ class CatalogExpander extends ItemsLoader {
 	}
 
 	@Override
-	public void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException {
+	public void doLoading() throws ZLNetworkException {
 		if (myResumeNotLoad) {
-			myTree.Item.resumeLoading(doWithListener);
+			getTree().Item.resumeLoading(this);
 		} else {
-			myTree.Item.loadChildren(doWithListener);
+			getTree().Item.loadChildren(this);
 		}
 	}
 
 	@Override
-	protected void updateItems(List<NetworkItem> items) {
-		for (NetworkItem item: items) {
-			myTree.ChildrenItems.add(item);
-			NetworkTreeFactory.createNetworkTree(myTree, item);
-		}
+	protected void addItem(NetworkItem item) {
+		getTree().ChildrenItems.add(item);
+		NetworkTreeFactory.createNetworkTree(getTree(), item);
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	@Override
-	protected void onFinish(String errorMessage, boolean interrupted,
-			Set<NetworkItem> uncommitedItems) {
-		if (interrupted && (!myTree.Item.supportsResumeLoading() || errorMessage != null)) {
-			myTree.clearCatalog();
+	protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
+		if (interrupted && (!getTree().Item.supportsResumeLoading() || errorMessage != null)) {
+			getTree().clearCatalog();
 		} else {
-			myTree.removeItems(uncommitedItems);
-			myTree.updateLoadedTime();
+			getTree().removeItems(uncommitedItems);
+			getTree().updateLoadedTime();
 			if (!interrupted) {
 				if (errorMessage != null) {
 					UIUtil.showMessageText(myActivity, errorMessage);
-				} else if (myTree.ChildrenItems.isEmpty()) {
+				} else if (getTree().ChildrenItems.isEmpty()) {
 					UIUtil.showErrorMessage(myActivity, "emptyCatalog");
 				}
 			}

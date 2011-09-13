@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -28,21 +26,20 @@ import android.content.Context;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
 	private static final String REGISTRATION_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
+	private static final String AUTO_SIGNIN_ACTION =
+		"android.fbreader.action.NETWORK_LIBRARY_AUTOSIGNIN";
 
 	static INetworkLink linkByIntent(Intent intent) {
 		return NetworkLibrary.Instance().getLinkByUrl(intent.getData().toString());
@@ -64,6 +61,14 @@ public abstract class Util implements UserRegistrationConstants {
 		);
 	}
 
+	public static boolean isAutoSignInSupported(Activity activity, INetworkLink link) {
+		return testService(
+			activity,
+			AUTO_SIGNIN_ACTION,
+			link.getUrl(UrlInfo.Type.SignUp)
+		);
+	}
+
 	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		try {
 			final Intent intent = new Intent(
@@ -71,10 +76,20 @@ public abstract class Util implements UserRegistrationConstants {
 				Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
 			);
 			if (PackageUtil.canBeStarted(activity, intent, true)) {
-				activity.startActivityForResult(new Intent(
-					REGISTRATION_ACTION,
-					Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
-				), NetworkLibraryActivity.SIGNUP_CODE);
+				activity.startActivityForResult(intent, NetworkLibraryActivity.SIGNUP_CODE);
+			}
+		} catch (ActivityNotFoundException e) {
+		}
+	}
+
+	public static void runAutoSignInDialog(Activity activity, INetworkLink link) {
+		try {
+			final Intent intent = new Intent(
+				AUTO_SIGNIN_ACTION,
+				Uri.parse(link.getUrl(UrlInfo.Type.SignIn))
+			);
+			if (PackageUtil.canBeStarted(activity, intent, true)) {
+				activity.startActivityForResult(intent, NetworkLibraryActivity.AUTO_SIGNIN_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
@@ -117,6 +132,35 @@ public abstract class Util implements UserRegistrationConstants {
 			}
 		}
 	}
+
+	public static void processAutoSignIn(Activity activity, INetworkLink link, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK && data != null) {
+			try {
+				final NetworkAuthenticationManager mgr = link.authenticationManager();
+				if (mgr instanceof LitResAuthenticationManager) {
+					((LitResAuthenticationManager)mgr).initUser(
+						data.getStringExtra(USER_REGISTRATION_USERNAME),
+						data.getStringExtra(USER_REGISTRATION_LITRES_SID),
+						"",
+						false
+					);
+				}
+				if (!mgr.isAuthorised(true)) {
+					throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+				}
+				try {
+					mgr.initialize();
+				} catch (ZLNetworkException e) {
+					mgr.logOut();
+					throw e;
+				}
+				// TODO: implement postRunnable (e.g. buying book on "quick buy")
+			} catch (ZLNetworkException e) {
+				// TODO: show an error message
+			}
+		}
+	}
+
 
 	public static void openInBrowser(Context context, String url) {
 		if (url != null) {

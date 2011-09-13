@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -48,9 +49,10 @@ import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 
-import org.geometerplus.android.fbreader.network.action.ActionCode;
 import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
+
+import org.geometerplus.android.util.UIUtil;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
 	private NetworkBookItem myBook;
@@ -74,54 +76,64 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onResume() {
 		super.onResume();
 
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		if (!library.isInitialized()) {
-			// TODO: waiting message
-			try {
-				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase();
+		UIUtil.wait("loadingBookInfo", myInitializer, this);
+	}
+
+	private final Runnable myInitializer = new Runnable() {
+		public void run() {
+			final NetworkLibrary library = NetworkLibrary.Instance();
+			if (!library.isInitialized()) {
+				try {
+					if (SQLiteNetworkDatabase.Instance() == null) {
+						new SQLiteNetworkDatabase();
+					}
+					library.initialize();
+				} catch (ZLNetworkException e) {
+					// ignore
 				}
-				library.initialize();
-			} catch (ZLNetworkException e) {
-				// ignore
+			}
+        
+			if (myBook == null) {
+				final Uri url = getIntent().getData();
+				if (url != null && "litres-book".equals(url.getScheme())) {
+					myBook = OPDSBookItem.create(
+						NetworkLibrary.Instance().getLinkBySiteName("litres.ru"),
+						url.toString().replace("litres-book://", "http://")
+					);
+				} else {
+					final NetworkTree tree = Util.getTreeFromIntent(getIntent());
+					if (tree instanceof NetworkBookTree) {
+						myBook = ((NetworkBookTree)tree).Book;
+					}
+				}
+
+				runOnUiThread(myViewInitializer);
 			}
 		}
+	};
 
-		if (myBook == null) {
-			if ("litres-book".equals(getIntent().getData().getScheme())) {
-				// TODO: waiting message
-				myBook = OPDSBookItem.create(
-					NetworkLibrary.Instance().getLinkBySiteName("litres.ru"),
-					getIntent().getData().toString().replace("litres-book://", "http://")
-				);
-			} else {
-				final NetworkTree tree = Util.getTreeFromIntent(getIntent());
-				if (tree instanceof NetworkBookTree) {
-					myBook = ((NetworkBookTree)tree).Book;
-				}
-			}
-
+	private final Runnable myViewInitializer = new Runnable() {
+		public void run() {
 			if (myBook == null) {
 				finish();
-				return;
+			} else {
+				myConnection = new BookDownloaderServiceConnection();
+				bindService(
+					new Intent(getApplicationContext(), BookDownloaderService.class),
+					myConnection,
+					BIND_AUTO_CREATE
+				);
+            
+				setTitle(myBook.Title);
+            
+				setupDescription();
+				setupExtraLinks();
+				setupInfo();
+				setupCover();
+				setupButtons();
 			}
-        
-			myConnection = new BookDownloaderServiceConnection();
-			bindService(
-				new Intent(getApplicationContext(), BookDownloaderService.class),
-				myConnection,
-				BIND_AUTO_CREATE
-			);
-        
-			setTitle(myBook.Title);
-        
-			setupDescription();
-			setupExtraLinks();
-			setupInfo();
-			setupCover();
-			setupButtons();
 		}
-	}
+	};
 
 	View getMainView() {
 		return myMainView;
@@ -317,7 +329,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	private final void setupButtons() {
-		final ZLResource resource = NetworkLibrary.resource();
 		final int buttons[] = new int[] {
 				R.id.network_book_button0,
 				R.id.network_book_button1,
@@ -402,6 +413,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		switch (requestCode) {
 			case NetworkLibraryActivity.SIGNUP_CODE:
 				Util.processSignup(myBook.Link, resultCode, data);
+				break;
+			case NetworkLibraryActivity.AUTO_SIGNIN_CODE:
+				Util.processAutoSignIn(this, myBook.Link, resultCode, data);
 				break;
 		}
 	}

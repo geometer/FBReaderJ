@@ -28,7 +28,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 
 public class OPDSLinkReader {
 	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.7.xml";

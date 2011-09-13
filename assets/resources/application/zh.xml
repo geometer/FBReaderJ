@@ -599,6 +599,7 @@
 			<node name="signOut" value="退出. 正在处理,请稍等..." />
 			<node name="purchaseBook" value="书籍购买中. 请等待..." />
 			<node name="loadingCatalogInfo" value="加载书库目录信息中，请稍待..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="更新书库目录列表中，请稍待..."/>
 		</node>
 		<node name="networkError">

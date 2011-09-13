@@ -57,11 +57,11 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 	}
 
 	@Override
-	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 		for (NetworkItem child : myChildren) {
-			listener.onNewItem(Link, child);
+			loader.onNewItem(child);
 		}
-		listener.commitItems(Link);
+		loader.commitItems();
 	}
 }
 
@@ -162,7 +162,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 	}
 
 	@Override
-	public void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 		final LitResAuthenticationManager mgr =
 			(LitResAuthenticationManager)Link.authenticationManager();
 
@@ -183,18 +183,18 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 			if (children.size() <= 5) {
 				Collections.sort(children, new NetworkBookItemComparator());
 				for (NetworkItem item : children) {
-					listener.onNewItem(Link, item);
+					loader.onNewItem(item);
 				}
 			} else {
-				listener.onNewItem(Link, new ByDateCatalogItem(this, children));
-				listener.onNewItem(Link, new ByAuthorCatalogItem(this, children));
-				listener.onNewItem(Link, new ByTitleCatalogItem(this, children));
+				loader.onNewItem(new ByDateCatalogItem(this, children));
+				loader.onNewItem(new ByAuthorCatalogItem(this, children));
+				loader.onNewItem(new ByTitleCatalogItem(this, children));
 				final BySeriesCatalogItem bySeries = new BySeriesCatalogItem(this, children);
 				if (!bySeries.isEmpty()) {
-					listener.onNewItem(Link, bySeries);
+					loader.onNewItem(bySeries);
 				}
 			}
-			listener.commitItems(Link);
+			loader.commitItems();
 		}
 	}
 }

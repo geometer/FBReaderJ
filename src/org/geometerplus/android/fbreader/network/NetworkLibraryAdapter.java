@@ -32,14 +32,14 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
-import org.geometerplus.android.fbreader.tree.ListAdapter;
+import org.geometerplus.android.fbreader.tree.TreeAdapter;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
-class NetworkLibraryAdapter extends ListAdapter {
+class NetworkLibraryAdapter extends TreeAdapter {
 	NetworkLibraryAdapter(NetworkLibraryActivity activity) {
 		super(activity);
 	}
@@ -94,6 +94,11 @@ class NetworkLibraryAdapter extends ListAdapter {
 	}
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
+		if (tree instanceof NetworkCatalogTree && tree.getHoldedItem() instanceof SearchItem) {
+			coverView.setImageResource(R.drawable.ic_list_library_books);
+			return;
+		}
+
 		Bitmap coverBitmap = null;
 		ZLImage cover = tree.getCover();
 		if (cover != null) {
@@ -119,8 +124,6 @@ class NetworkLibraryAdapter extends ListAdapter {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else if (tree instanceof AddCustomCatalogItemTree) {
 			coverView.setImageResource(R.drawable.ic_list_plus);
-		} else if (tree instanceof SearchItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_searchresult);
 		} else {
 			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}

@@ -607,6 +607,7 @@
 			<node name="signOut" value="Выход из системы. Подождите, пожалуйста..." />
 			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста..." />
 			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
+			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста..." />
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста..."/>
 		</node>
 		<node name="networkError">

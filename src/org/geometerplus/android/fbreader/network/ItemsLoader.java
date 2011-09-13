@@ -19,181 +19,77 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.Set;
 
 import android.app.Activity;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkOperationData;
-import org.geometerplus.fbreader.network.NetworkItem;
+import org.geometerplus.fbreader.network.*;
 
-public abstract class ItemsLoader implements Runnable {
+public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoader<T> {
 	protected final Activity myActivity;
-
-	private final LinkedList<NetworkItem> myItems = new LinkedList<NetworkItem>();
-	private final HashMap<INetworkLink, LinkedList<NetworkItem>> myUncommitedItems = new HashMap<INetworkLink, LinkedList<NetworkItem>>();
-	private final Object myItemsMonitor = new Object();
 
 	private volatile boolean myFinishProcessed;
 	private final Object myFinishMonitor = new Object();
 
-	private final long myUpdateInterval; // in milliseconds
-
-	private boolean myInterruptRequested;
-	private boolean myInterruptConfirmed;
-	private final Object myInterruptLock = new Object();
-
 	private volatile boolean myFinished;
-	private volatile Runnable myFinishRunnable;
+	private volatile Runnable myPostRunnable;
 	private final Object myFinishedLock = new Object();
 
-	public ItemsLoader(Activity activity) {
-		this(activity, 1000);
-	}
-
-	private ItemsLoader(Activity activity, long updateIntervalMillis) {
+	public ItemsLoader(Activity activity, T tree) {
+		super(tree);
 		myActivity = activity;
-		myUpdateInterval = updateIntervalMillis;
-	}
-
-	public void interruptLoading() {
-		synchronized (myInterruptLock) {
-			myInterruptRequested = true;
-		}
-	}
-
-	private boolean confirmInterruptLoading() {
-		synchronized (myInterruptLock) {
-			if (myInterruptRequested) {
-				myInterruptConfirmed = true;
-			}
-			return myInterruptConfirmed;
-		}
-	}
-
-	public boolean tryResumeLoading() {
-		synchronized (myInterruptLock) {
-			if (!myInterruptConfirmed) {
-				myInterruptRequested = false;
-			}
-			return !myInterruptRequested;
-		}
-	}
-
-	private boolean isLoadingInterrupted() {
-		synchronized (myInterruptLock) {
-			return myInterruptConfirmed;
-		}
 	}
 
 	public final void run() {
-		try {
-			doBefore();
-		} catch (ZLNetworkException e) {
-			finishOnUiThread(e.getMessage(), false);
-			return;
-		}
-		String error = null;
-		try {
-			doLoading(new NetworkOperationData.OnNewItemListener() {
-				private long myUpdateTime;
-				private int myItemsNumber;
-				public void onNewItem(INetworkLink link, NetworkItem item) {
-					addItem(link, item);
-					++myItemsNumber;
-					final long now = System.currentTimeMillis();
-					if (now > myUpdateTime) {
-						updateItemsOnUiThread();
-						myUpdateTime = now + myUpdateInterval;
-					}
-				}
-				public boolean confirmInterrupt() {
-					return confirmInterruptLoading();
-				}
-				public void commitItems(INetworkLink link) {
-					ItemsLoader.this.commitItems(link);
-				}
-			});
-		} catch (ZLNetworkException e) {
-			error = e.getMessage();
-		}
+		final NetworkLibrary library = NetworkLibrary.Instance();
 
-		updateItemsOnUiThread();
-		ensureItemsProcessed();
-		finishOnUiThread(error, isLoadingInterrupted());
-		ensureFinishProcessed();
-	}
+		try {
+			library.storeLoader(getTree(), this);
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
-	void runFinishHandler() {
-		synchronized (myFinishedLock) {
-			if (myFinishRunnable != null) {
-				myActivity.runOnUiThread(myFinishRunnable);
+			try {
+				doBefore();
+			} catch (ZLNetworkException e) {
+				finishOnUiThread(e.getMessage(), false);
+				return;
 			}
-			myFinished = true;
+			String error = null;
+			try {
+				doLoading();
+			} catch (ZLNetworkException e) {
+				error = e.getMessage();
+			}
+
+			finishOnUiThread(error, isLoadingInterrupted());
+			ensureFinishProcessed();
+		} finally {
+			library.removeStoredLoader(getTree());
+			synchronized (myFinishedLock) {
+				if (myPostRunnable != null) {
+					myPostRunnable.run();
+				}
+				myFinished = true;
+			}
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
 
-	public void runOnFinish(final Runnable runnable) {
-		if (myFinishRunnable != null) {
+	public void setPostRunnable(Runnable runnable) {
+		if (myPostRunnable != null) {
 			return;
 		}
 		synchronized (myFinishedLock) {
 			if (myFinished) {
 				runnable.run();
 			} else {
-				myFinishRunnable = runnable;
+				myPostRunnable = runnable;
 			}
 		}
 	}
 
-	private final void updateItemsOnUiThread() {
-		myActivity.runOnUiThread(new Runnable() {
-			public void run() {
-				synchronized (myItemsMonitor) {
-					updateItems(myItems);
-					myItems.clear();
-					// wake up process, that waits for finish condition (see ensureFinish() method)
-					myItemsMonitor.notifyAll();
-				}
-			}
-		});
-	}
-
-	private final void addItem(INetworkLink link, NetworkItem item) {
-		synchronized (myItemsMonitor) {
-			myItems.add(item);
-			LinkedList<NetworkItem> uncommited = myUncommitedItems.get(link);
-			if (uncommited == null) {
-				uncommited = new LinkedList<NetworkItem>();
-				myUncommitedItems.put(link, uncommited);
-			}
-			uncommited.add(item);
-		}
-	}
-
-	private final void commitItems(INetworkLink link) {
-		synchronized (myItemsMonitor) {
-			LinkedList<NetworkItem> uncommited = myUncommitedItems.get(link);
-			if (uncommited != null) {
-				uncommited.clear();
-			}
-		}
-	}
-
-	public final void ensureItemsProcessed() {
-		synchronized (myItemsMonitor) {
-			while (myItems.size() > 0) {
-				try {
-					myItemsMonitor.wait();
-				} catch (InterruptedException e) {
-				}
-			}
-		}
-	}
-
-	public final void ensureFinishProcessed() {
+	private final void ensureFinishProcessed() {
 		synchronized (myFinishMonitor) {
 			while (!myFinishProcessed) {
 				try {
@@ -207,14 +103,8 @@ public abstract class ItemsLoader implements Runnable {
 	private final void finishOnUiThread(final String errorMessage, final boolean interrupted) {
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				HashSet<NetworkItem> uncommitedItems = new HashSet<NetworkItem>();
-				synchronized (myUncommitedItems) {
-					for (LinkedList<NetworkItem> items: myUncommitedItems.values()) {
-						uncommitedItems.addAll(items);
-					}
-				}
 				synchronized (myFinishMonitor) {
-					onFinish(errorMessage, interrupted, uncommitedItems);
+					onFinish(errorMessage, interrupted, uncommitedItems());
 					myFinishProcessed = true;
 					// wake up process, that waits for finish condition (see ensureFinish() method)
 					myFinishMonitor.notifyAll();
@@ -225,10 +115,6 @@ public abstract class ItemsLoader implements Runnable {
 
 	protected abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems);
 
-	protected abstract void updateItems(List<NetworkItem> items);
-
-	public abstract void doBefore() throws ZLNetworkException;
-	public abstract void doLoading(NetworkOperationData.OnNewItemListener doWithListener) throws ZLNetworkException;
-
-	//public abstract String getResourceKey();
+	protected abstract void doBefore() throws ZLNetworkException;
+	protected abstract void doLoading() throws ZLNetworkException;
 }
