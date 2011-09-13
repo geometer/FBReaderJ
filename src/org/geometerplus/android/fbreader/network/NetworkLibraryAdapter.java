@@ -95,7 +95,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
 		if (tree instanceof NetworkCatalogTree && tree.getHoldedItem() instanceof SearchItem) {
-			coverView.setImageResource(R.drawable.ic_list_library_books_search);
+			coverView.setImageResource(R.drawable.ic_list_library_books);
 			return;
 		}
 
