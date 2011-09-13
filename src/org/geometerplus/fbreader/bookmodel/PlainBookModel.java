@@ -89,7 +89,7 @@ public class PlainBookModel extends BookModel {
 	}
 
 	@Override
-	public Label getLabel(String id) {
+	protected Label getLabelInternal(String id) {
 		final int len = id.length();
 		final int size = myInternalHyperlinks.size();
 
