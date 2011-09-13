@@ -94,6 +94,11 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	}
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
+		if (tree instanceof NetworkCatalogTree && tree.getHoldedItem() instanceof SearchItem) {
+			coverView.setImageResource(R.drawable.ic_list_library_books_search);
+			return;
+		}
+
 		Bitmap coverBitmap = null;
 		ZLImage cover = tree.getCover();
 		if (cover != null) {
@@ -119,8 +124,6 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else if (tree instanceof AddCustomCatalogItemTree) {
 			coverView.setImageResource(R.drawable.ic_list_plus);
-		} else if (tree instanceof NetworkCatalogTree && tree.getHoldedItem() instanceof SearchItem) {
-			coverView.setImageResource(android.R.drawable.ic_menu_search);
 		} else {
 			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}
