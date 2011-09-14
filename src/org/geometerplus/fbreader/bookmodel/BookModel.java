@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
+import java.util.*;
+
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
@@ -33,6 +35,17 @@ public abstract class BookModel {
 		final BookModel model;
 		if (plugin instanceof NativeFormatPlugin) {
 			model = new NativeBookModel(book);
+			// TODO: a hack; should be moved into plugin code
+			if ("epub".equalsIgnoreCase(book.File.getExtension())) {
+				model.setLabelResolver(new LabelResolver() {
+					public List<String> getCandidates(String id) {
+						final int index = id.indexOf("#");
+						return index > 0
+							? Collections.<String>singletonList(id.substring(0, index))
+							: Collections.<String>emptyList();
+					}
+				});
+			}
 		} else {
 			model = new PlainBookModel(book);
 		}
