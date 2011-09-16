@@ -25,6 +25,14 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class SearchItem extends NetworkCatalogItem {
+	private static String getInitialSummary(INetworkLink link) {
+		if (link == null) {
+			return NetworkLibrary.resource().getResource("searchSummaryAllCatalogs").getValue();
+		} else {
+			return NetworkLibrary.resource().getResource("searchSummary").getValue().replace("%s", link.getSiteName());
+		}
+	}
+
 	public SearchItem(INetworkLink link) {
 		super(
 			link,
