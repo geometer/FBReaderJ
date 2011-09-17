@@ -59,44 +59,8 @@ public class Searcher extends NetworkItemsLoader {
 
 	@Override
 	protected void onFinish(String errorMessage, boolean interrupted) {
-		if (interrupted) {
-			//getTree().setSearchResult(null);
-		} else {
-			//getTree().updateSubTrees();
-			//afterUpdateCatalog(errorMessage, getTree().getSearchResult().isEmpty());
-		}
-		if (!myItemFound) {
+		if (!interrupted && !myItemFound) {
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.NotFound);
 		}
 	}
-
-	/*
-	private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		ZLResource boxResource = null;
-		String msg;
-		if (errorMessage != null) {
-			boxResource = dialogResource.getResource("networkError");
-			msg = errorMessage;
-		} else if (childrenEmpty) {
-			boxResource = dialogResource.getResource("emptySearchResults");
-			msg = boxResource.getResource("message").getValue();
-		} else {
-			return;
-		}
-
-		final SearchCatalogTree tree = null;//NetworkLibrary.Instance().getSearchCatalogTree();
-		if (tree == null) {
-			return;
-		}
-
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		new AlertDialog.Builder(myActivity)
-			.setTitle(boxResource.getResource("title").getValue())
-			.setMessage(msg)
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-			.create().show();
-	}
-	*/
 }

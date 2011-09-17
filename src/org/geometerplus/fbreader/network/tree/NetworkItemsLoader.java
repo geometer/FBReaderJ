@@ -56,14 +56,14 @@ public abstract class NetworkItemsLoader implements Runnable {
 				onFinish(e.getMessage(), false);
 				return;
 			}
-			String error = null;
+
 			try {
 				doLoading();
+				onFinish(null, isLoadingInterrupted());
 			} catch (ZLNetworkException e) {
-				error = e.getMessage();
+				onFinish(e.getMessage(), isLoadingInterrupted());
 			}
 
-			onFinish(error, isLoadingInterrupted());
 		} finally {
 			library.removeStoredLoader(getTree());
 			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
