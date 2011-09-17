@@ -24,10 +24,10 @@ import java.util.*;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkItem;
 
-public abstract class NetworkItemsLoader<T extends NetworkCatalogTree> implements Runnable {
-	private final T myTree;
+public abstract class NetworkItemsLoader implements Runnable {
+	private final NetworkCatalogTree myTree;
 
-	protected NetworkItemsLoader(T tree) {
+	protected NetworkItemsLoader(NetworkCatalogTree tree) {
 		myTree = tree;
 	}
 
@@ -37,7 +37,7 @@ public abstract class NetworkItemsLoader<T extends NetworkCatalogTree> implement
 		loaderThread.start();
 	}
 
-	public T getTree() {
+	public NetworkCatalogTree getTree() {
 		return myTree;
 	}
 

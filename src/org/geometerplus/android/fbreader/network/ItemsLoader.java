@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
-public abstract class ItemsLoader<T extends NetworkCatalogTree> extends NetworkItemsLoader<T> {
+public abstract class ItemsLoader extends NetworkItemsLoader {
 	protected final Activity myActivity;
 
 	private volatile boolean myFinishProcessed;
@@ -39,7 +39,7 @@ public abstract class ItemsLoader<T extends NetworkCatalogTree> extends NetworkI
 	private volatile Runnable myPostRunnable;
 	private final Object myFinishedLock = new Object();
 
-	public ItemsLoader(Activity activity, T tree) {
+	public ItemsLoader(Activity activity, NetworkCatalogTree tree) {
 		super(tree);
 		myActivity = activity;
 	}

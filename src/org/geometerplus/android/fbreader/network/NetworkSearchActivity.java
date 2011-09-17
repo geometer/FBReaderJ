@@ -32,8 +32,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
-
 
 public class NetworkSearchActivity extends Activity {
 	@Override
@@ -50,7 +50,7 @@ public class NetworkSearchActivity extends Activity {
 		finish();
 	}
 
-	private static class Searcher extends ItemsLoader<SearchCatalogTree> {
+	private static class Searcher extends ItemsLoader {
 		private final String myPattern;
 
 		public Searcher(Activity activity, SearchCatalogTree tree, String pattern) {

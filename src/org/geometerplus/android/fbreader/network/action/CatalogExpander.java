@@ -36,7 +36,7 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 import org.geometerplus.android.fbreader.network.ItemsLoader;
 
-class CatalogExpander extends ItemsLoader<NetworkCatalogTree> {
+class CatalogExpander extends ItemsLoader {
 	private final boolean myCheckAuthentication;
 	private final boolean myResumeNotLoad;
 
