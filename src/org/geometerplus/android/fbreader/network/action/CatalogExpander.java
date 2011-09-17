@@ -50,8 +50,8 @@ class CatalogExpander extends ItemsLoader<NetworkCatalogTree> {
 
 	@Override
 	public void doBefore() throws ZLNetworkException {
-		final INetworkLink link = getTree().Item.Link;
-		if (myCheckAuthentication && link.authenticationManager() != null) {
+		final INetworkLink link = getTree().getLink();
+		if (myCheckAuthentication && link != null && link.authenticationManager() != null) {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			try {
 				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {

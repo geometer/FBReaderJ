@@ -28,28 +28,38 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class NetworkCatalogTree extends NetworkTree {
+	private final INetworkLink myLink;
+
 	public final NetworkCatalogItem Item;
 	private final ArrayList<NetworkCatalogItem> myChildrenItems =
 		new ArrayList<NetworkCatalogItem>();
 
 	private long myLoadedTime = -1;
 
-	public NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
+	public NetworkCatalogTree(RootTree parent, INetworkLink link, NetworkCatalogItem item, int position) {
 		super(parent, position);
+		myLink = link;
 		Item = item;
 		addSearchTree();
 	}
 
 	NetworkCatalogTree(NetworkCatalogTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
+		myLink = parent.myLink;
 		Item = item;
 		addSearchTree();
 	}
 
+	@Override
+	public INetworkLink getLink() {
+		return myLink;
+	}
+
 	private void addSearchTree() {
 		if ((Item.getFlags() & NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM) != 0) {
-			if (Item.Link.getUrl(UrlInfo.Type.Search) != null) {
-				final SearchItem item = new SearchItem(Item.Link);
+			final INetworkLink link = getLink();
+			if (link != null && link.getUrl(UrlInfo.Type.Search) != null) {
+				final SearchItem item = new SearchItem(link);
 				myChildrenItems.add(item);
 				new SearchCatalogTree(this, item, 0);
 			}
@@ -77,7 +87,8 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public String getTreeTitle() {
-		return getName() + " - " + Item.Link.getSiteName();
+		final INetworkLink link = getLink();
+		return link != null ? getName() + " - " + link.getSiteName() : getName();
 	}
 
 	@Override

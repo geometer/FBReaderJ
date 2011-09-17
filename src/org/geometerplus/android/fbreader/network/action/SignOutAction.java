@@ -23,7 +23,6 @@ import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -40,15 +39,13 @@ public class SignOutAction extends Action {
 			return false;
 		}
 
-		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
-		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		return mgr != null && mgr.mayBeAuthorised(false);
 	}
 
 	@Override
 	protected void run(NetworkTree tree) {
-		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
-		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {
 				if (mgr.mayBeAuthorised(false)) {
@@ -68,8 +65,7 @@ public class SignOutAction extends Action {
 
 	@Override
 	public String getOptionsLabel(NetworkTree tree) {
-		final NetworkAuthenticationManager mgr =
-			(((NetworkCatalogRootTree)tree).Item).Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		final String userName =
 			mgr != null && mgr.mayBeAuthorised(false) ? mgr.currentUserName() : "";
 		return super.getOptionsLabel(tree).replace("%s", userName);
@@ -77,8 +73,7 @@ public class SignOutAction extends Action {
 
 	@Override
 	public String getContextLabel(NetworkTree tree) {
-		final NetworkAuthenticationManager mgr =
-			(((NetworkCatalogRootTree)tree).Item).Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		final String userName =
 			mgr != null && mgr.mayBeAuthorised(false) ? mgr.currentUserName() : "";
 		return super.getContextLabel(tree).replace("%s", userName);

@@ -24,7 +24,7 @@ import org.geometerplus.fbreader.network.SearchItem;
 
 public class SearchCatalogTree extends NetworkCatalogTree {
 	public SearchCatalogTree(RootTree parent, SearchItem item, int position) {
-		super(parent, item, position);
+		super(parent, null, item, position);
 		setCover(null);
 	}
 

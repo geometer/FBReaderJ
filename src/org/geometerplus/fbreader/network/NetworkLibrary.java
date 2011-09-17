@@ -300,7 +300,7 @@ public class NetworkLibrary {
 		// we do remove sum tree items:
 		for (FBTree t : myRootTree.subTrees()) {
 			if (t instanceof NetworkCatalogTree) {
-				final INetworkLink link = ((NetworkCatalogTree)t).Item.Link;
+				final INetworkLink link = ((NetworkCatalogTree)t).getLink();
 				if (link != null) {
 					if (!linkSet.contains(link)) {
                         // 1. links not listed in activeLinks list right now
@@ -329,7 +329,7 @@ public class NetworkLibrary {
 		for (INetworkLink link : linkSet) {
 			int index = 0;
 			for (FBTree t : myRootTree.subTrees()) {
-				final INetworkLink l = ((NetworkCatalogTree)t).Item.Link;
+				final INetworkLink l = ((NetworkTree)t).getLink();
 				if (l != null && link.compareTo(l) <= 0) {
 					break;
 				}
@@ -376,7 +376,7 @@ public class NetworkLibrary {
 				return ncTree;
 			}
 		}
-		return new NetworkCatalogTree(myFakeRootTree, item, 0);
+		return new NetworkCatalogTree(myFakeRootTree, item.Link, item, 0);
 	}
 
 	public NetworkTree getTreeByKey(NetworkTree.Key key) {

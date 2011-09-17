@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.tree.TopUpTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -42,13 +41,13 @@ public class TopupAction extends Action {
 		if (tree instanceof TopUpTree) {
 			return true;
 		} else if (tree instanceof NetworkCatalogRootTree) {
-			final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
-			final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+			final INetworkLink link = tree.getLink();
+			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			return
 				mgr != null &&
 				mgr.mayBeAuthorised(false) &&
 				mgr.currentAccount() != null &&
-				TopupMenuActivity.isTopupSupported(item.Link);
+				TopupMenuActivity.isTopupSupported(link);
 		} else {
 			return false;
 		}
@@ -56,12 +55,7 @@ public class TopupAction extends Action {
 
 	@Override
 	protected void run(NetworkTree tree) {
-		INetworkLink link = null;
-		if (tree instanceof TopUpTree) {
-			link = ((TopUpTree)tree).Item.Link;
-		} else if (tree instanceof NetworkCatalogRootTree) {
-			link = ((NetworkCatalogRootTree)tree).Item.Link;
-		}
+		final INetworkLink link = tree.getLink();
 		if (link != null) {
 			TopupMenuActivity.runMenu(myActivity, link, null);
 		}
@@ -69,12 +63,7 @@ public class TopupAction extends Action {
 
 	@Override
 	public String getContextLabel(NetworkTree tree) {
-		INetworkLink link = null;
-		if (tree instanceof TopUpTree) {
-			link = ((TopUpTree)tree).Item.Link;
-		} else if (tree instanceof NetworkCatalogRootTree) {
-			link = ((NetworkCatalogRootTree)tree).Item.Link;
-		}
+		final INetworkLink link = tree.getLink();
 		Money account = null;
 		if (link != null) {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();

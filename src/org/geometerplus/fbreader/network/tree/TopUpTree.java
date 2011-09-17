@@ -42,7 +42,7 @@ public class TopUpTree extends NetworkTree {
 
 	@Override
 	public String getSummary() {
-		final NetworkAuthenticationManager mgr = Item.Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = getLink().authenticationManager();
 		try {
 			if (mgr != null && mgr.isAuthorised(false)) {
 				final Money account = mgr.currentAccount();

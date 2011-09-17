@@ -39,6 +39,11 @@ public abstract class NetworkTree extends FBTree {
 		super(parent, position);
 	}
 
+	public INetworkLink getLink() {
+		final NetworkTree parent = (NetworkTree)Parent;
+		return parent != null ? parent.getLink() : null;
+	}
+
 	public static ZLImage createCover(NetworkItem item) {
 		final String imageUrl = item.getImageUrl();
 		if (imageUrl == null) {

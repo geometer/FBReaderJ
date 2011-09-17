@@ -269,10 +269,10 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 				myCredentialsCreator.onDataReceived(resultCode, intent);
 				break;
 			case SIGNUP_CODE:
-				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);
+				Util.processSignup(((NetworkTree)getCurrentTree()).getLink(), resultCode, intent);
 				break;
 			case AUTO_SIGNIN_CODE:
-				Util.processAutoSignIn(this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);
+				Util.processAutoSignIn(this, ((NetworkTree)getCurrentTree()).getLink(), resultCode, intent);
 				break;
 		}
 	}
