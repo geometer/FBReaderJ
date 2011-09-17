@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class NetworkCatalogTree extends NetworkTree {
 	public final NetworkCatalogItem Item;
-	public final ArrayList<NetworkItem> ChildrenItems = new ArrayList<NetworkItem>();
+	private final ArrayList<NetworkItem> myChildrenItems = new ArrayList<NetworkItem>();
 
 	private long myLoadedTime = -1;
 
@@ -49,12 +49,18 @@ public class NetworkCatalogTree extends NetworkTree {
 		if ((Item.getFlags() & NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM) != 0) {
 			if (Item.Link.getUrl(UrlInfo.Type.Search) != null) {
 				final SearchItem item = new SearchItem(Item.Link);
-				ChildrenItems.add(item);
+				myChildrenItems.add(item);
 				new SearchCatalogTree(this, item, 0);
 			}
 		}
 	}
 
+	void addItem(final NetworkItem item) {
+		myUnconfirmedItems.add(item);
+		myChildrenItems.add(item);
+		NetworkTreeFactory.createNetworkTree(this, item);
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+	}
 
 	@Override
 	public String getName() {
@@ -96,8 +102,8 @@ public class NetworkCatalogTree extends NetworkTree {
 		FBTree currentNode = null;
 		int nodeCount = 0;
 
-		for (int i = 0; i < ChildrenItems.size(); ++i) {
-			NetworkItem currentItem = ChildrenItems.get(i);
+		for (int i = 0; i < myChildrenItems.size(); ++i) {
+			NetworkItem currentItem = myChildrenItems.get(i);
 			if (!(currentItem instanceof NetworkCatalogItem)) {
 				continue;
 			}
@@ -130,8 +136,8 @@ public class NetworkCatalogTree extends NetworkTree {
 					break;
 				} else {
 					boolean found = false;
-					for (int j = i + 1; j < ChildrenItems.size(); ++j) {
-						if (child.Item == ChildrenItems.get(j)) {
+					for (int j = i + 1; j < myChildrenItems.size(); ++j) {
+						if (child.Item == myChildrenItems.get(j)) {
 							found = true;
 							break;
 						}
@@ -174,7 +180,7 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public void removeItems(Set<NetworkItem> items) {
-		ChildrenItems.removeAll(items);
+		myChildrenItems.removeAll(items);
 		super.removeItems(items);
 	}
 
@@ -184,9 +190,24 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	public void clearCatalog() {
-		ChildrenItems.clear();
+		myChildrenItems.clear();
 		clear();
 		addSearchTree();
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+	}
+
+	private final List<NetworkItem> myUnconfirmedItems =
+		Collections.synchronizedList(new LinkedList<NetworkItem>());
+
+	public final void confirmAllItems() {
+		myUnconfirmedItems.clear();
+	}
+
+	public final void removeUnconfirmedItems() {
+		final Set<NetworkItem> unconfirmedItems;
+		synchronized (myUnconfirmedItems) {
+			unconfirmedItems = new HashSet<NetworkItem>(myUnconfirmedItems);
+		}
+		removeItems(unconfirmedItems);
 	}
 }

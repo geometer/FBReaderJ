@@ -17,12 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.NetworkItem;
 
 public abstract class NetworkItemsLoader<T extends NetworkCatalogTree> implements Runnable {
 	private final T myTree;
@@ -37,7 +37,7 @@ public abstract class NetworkItemsLoader<T extends NetworkCatalogTree> implement
 		loaderThread.start();
 	}
 
-	protected T getTree() {
+	public T getTree() {
 		return myTree;
 	}
 
@@ -83,23 +83,7 @@ public abstract class NetworkItemsLoader<T extends NetworkCatalogTree> implement
 		}
 	}
 
-	private final List<NetworkItem> myUncommitedItems =
-		Collections.synchronizedList(new LinkedList<NetworkItem>());
-
-	protected final Set<NetworkItem> uncommitedItems() {
-		synchronized (myUncommitedItems) {
-			return new HashSet<NetworkItem>(myUncommitedItems);
-		}
-	}
-
 	public final void onNewItem(final NetworkItem item) {
-		myUncommitedItems.add(item);
-		getTree().ChildrenItems.add(item);
-		NetworkTreeFactory.createNetworkTree(getTree(), item);
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-	}
-
-	public final void commitItems() {
-		myUncommitedItems.clear();
+		getTree().addItem(item);
 	}
 }

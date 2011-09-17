@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 abstract class SortedCatalogItem extends NetworkCatalogItem {
 	private final List<NetworkItem> myChildren = new LinkedList<NetworkItem>();
@@ -66,7 +67,7 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 		for (NetworkItem child : myChildren) {
 			loader.onNewItem(child);
 		}
-		loader.commitItems();
+		loader.getTree().confirmAllItems();
 	}
 }
 
@@ -199,7 +200,7 @@ public class LitResBookshelfItem extends NetworkURLCatalogItem {
 					loader.onNewItem(bySeries);
 				}
 			}
-			loader.commitItems();
+			loader.getTree().confirmAllItems();
 		}
 	}
 }

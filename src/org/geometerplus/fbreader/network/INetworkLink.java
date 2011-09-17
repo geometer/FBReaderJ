@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public interface INetworkLink extends Comparable<INetworkLink> {
 	public static final int INVALID_ID = -1;

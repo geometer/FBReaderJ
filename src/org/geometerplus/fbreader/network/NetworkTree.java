@@ -106,7 +106,7 @@ public abstract class NetworkTree extends FBTree {
 		treesList.clear();
 		treesList.addAll(subTrees());
 		while (!treesList.isEmpty()) {
-			final NetworkTree tree = (NetworkTree) treesList.remove(treesList.size() - 1);
+			final NetworkTree tree = (NetworkTree)treesList.remove(treesList.size() - 1);
 			tree.removeItems(items);
 		}
 	}

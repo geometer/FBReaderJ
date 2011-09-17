@@ -26,6 +26,7 @@ import android.app.Activity;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 import org.geometerplus.android.fbreader.network.Util;
 

@@ -83,7 +83,7 @@ public class NetworkSearchActivity extends Activity {
 			*/
 
 		@Override
-		protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
+		protected void onFinish(String errorMessage, boolean interrupted) {
 			if (interrupted) {
 				//getTree().setSearchResult(null);
 			} else {

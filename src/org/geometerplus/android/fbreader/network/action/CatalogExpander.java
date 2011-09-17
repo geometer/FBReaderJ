@@ -73,16 +73,16 @@ class CatalogExpander extends ItemsLoader<NetworkCatalogTree> {
 	}
 
 	@Override
-	protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
+	protected void onFinish(String errorMessage, boolean interrupted) {
 		if (interrupted && (!getTree().Item.supportsResumeLoading() || errorMessage != null)) {
 			getTree().clearCatalog();
 		} else {
-			getTree().removeItems(uncommitedItems);
+			getTree().removeUnconfirmedItems();
 			getTree().updateLoadedTime();
 			if (!interrupted) {
 				if (errorMessage != null) {
 					UIUtil.showMessageText(myActivity, errorMessage);
-				} else if (getTree().ChildrenItems.isEmpty()) {
+				} else if (getTree().subTrees().isEmpty()) {
 					UIUtil.showErrorMessage(myActivity, "emptyCatalog");
 				}
 			}

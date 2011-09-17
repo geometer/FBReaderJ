@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class ItemsLoader<T extends NetworkCatalogTree> extends NetworkItemsLoader<T> {
 	protected final Activity myActivity;
@@ -105,7 +106,7 @@ public abstract class ItemsLoader<T extends NetworkCatalogTree> extends NetworkI
 		myActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				synchronized (myFinishMonitor) {
-					onFinish(errorMessage, interrupted, uncommitedItems());
+					onFinish(errorMessage, interrupted);
 					myFinishProcessed = true;
 					// wake up process, that waits for finish condition (see ensureFinish() method)
 					myFinishMonitor.notifyAll();
@@ -114,7 +115,7 @@ public abstract class ItemsLoader<T extends NetworkCatalogTree> extends NetworkI
 		});
 	}
 
-	protected abstract void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems);
+	protected abstract void onFinish(String errorMessage, boolean interrupted);
 
 	protected abstract void doBefore() throws ZLNetworkException;
 	protected abstract void doLoading() throws ZLNetworkException;

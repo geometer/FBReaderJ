@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class SearchItem extends NetworkCatalogItem {
 	private static String getInitialSummary(INetworkLink link) {

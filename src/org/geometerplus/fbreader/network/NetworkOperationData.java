@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
+
 public class NetworkOperationData {
 	public final INetworkLink Link;
 	public NetworkItemsLoader Loader;

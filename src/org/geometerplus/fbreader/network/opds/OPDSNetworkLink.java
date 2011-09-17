@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	private TreeMap<RelationAlias,String> myRelationAliases;
@@ -87,7 +88,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 					// reset state to load current page from the beginning 
 					result.LastLoadedId = null;
 				} else {
-					result.Loader.commitItems();
+					result.Loader.getTree().confirmAllItems();
 				}
 			}
 		};
