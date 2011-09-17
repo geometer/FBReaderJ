@@ -29,7 +29,8 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class NetworkCatalogTree extends NetworkTree {
 	public final NetworkCatalogItem Item;
-	private final ArrayList<NetworkItem> myChildrenItems = new ArrayList<NetworkItem>();
+	private final ArrayList<NetworkCatalogItem> myChildrenItems =
+		new ArrayList<NetworkCatalogItem>();
 
 	private long myLoadedTime = -1;
 
@@ -56,9 +57,10 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	void addItem(final NetworkItem item) {
-		myUnconfirmedItems.add(item);
-		myChildrenItems.add(item);
-		NetworkTreeFactory.createNetworkTree(this, item);
+		if (item instanceof NetworkCatalogItem) {
+			myChildrenItems.add((NetworkCatalogItem)item);
+		}
+		myUnconfirmedTrees.add(NetworkTreeFactory.createNetworkTree(this, item));
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
@@ -99,25 +101,22 @@ public class NetworkCatalogTree extends NetworkTree {
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
 		ListIterator<FBTree> nodeIterator = subTrees().listIterator();
-		FBTree currentNode = null;
+		FBTree currentTree = null;
 		int nodeCount = 0;
 
 		for (int i = 0; i < myChildrenItems.size(); ++i) {
-			NetworkItem currentItem = myChildrenItems.get(i);
-			if (!(currentItem instanceof NetworkCatalogItem)) {
-				continue;
-			}
+			final NetworkCatalogItem currentItem = myChildrenItems.get(i);
 			boolean processed = false;
-			while (currentNode != null || nodeIterator.hasNext()) {
-				if (currentNode == null) {
-					currentNode = nodeIterator.next();
+			while (currentTree != null || nodeIterator.hasNext()) {
+				if (currentTree == null) {
+					currentTree = nodeIterator.next();
 				}
-				if (!(currentNode instanceof NetworkCatalogTree)) {
-					currentNode = null;
+				if (!(currentTree instanceof NetworkCatalogTree)) {
+					currentTree = null;
 					++nodeCount;
 					continue;
 				}
-				NetworkCatalogTree child = (NetworkCatalogTree) currentNode;
+				NetworkCatalogTree child = (NetworkCatalogTree)currentTree;
 				if (child.Item == currentItem) {
 					switch (child.Item.getVisibility()) {
 						case B3_TRUE:
@@ -130,7 +129,7 @@ public class NetworkCatalogTree extends NetworkTree {
 							child.clearCatalog();
 							break;
 					}
-					currentNode = null;
+					currentTree = null;
 					++nodeCount;
 					processed = true;
 					break;
@@ -143,8 +142,8 @@ public class NetworkCatalogTree extends NetworkTree {
 						}
 					}
 					if (!found) {
-						toRemove.add(currentNode);
-						currentNode = null;
+						toRemove.add(currentTree);
+						currentTree = null;
 						++nodeCount;
 					} else {
 						break;
@@ -158,30 +157,29 @@ public class NetworkCatalogTree extends NetworkTree {
 			}
 		}
 
-		while (currentNode != null || nodeIterator.hasNext()) {
-			if (currentNode == null) {
-				currentNode = nodeIterator.next();
+		while (currentTree != null || nodeIterator.hasNext()) {
+			if (currentTree == null) {
+				currentTree = nodeIterator.next();
 			}
-			if (currentNode instanceof NetworkCatalogTree) {
-				toRemove.add(currentNode);
+			if (currentTree instanceof NetworkCatalogTree) {
+				toRemove.add(currentTree);
 			}
-			currentNode = null;
+			currentTree = null;
 		}
 
-		for (FBTree tree: toRemove) {
+		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 		}
 	}
 
 	@Override
-	public NetworkItem getHoldedItem() {
-		return Item;
-	}
-
-	@Override
-	public void removeItems(Set<NetworkItem> items) {
-		myChildrenItems.removeAll(items);
-		super.removeItems(items);
+	public void removeTrees(Set<NetworkTree> trees) {
+		for (NetworkTree t : trees) {
+			if (t instanceof NetworkCatalogTree) {
+				myChildrenItems.remove(((NetworkCatalogTree)t).Item);
+			}
+		}
+		super.removeTrees(trees);
 	}
 
 	@Override
@@ -196,18 +194,16 @@ public class NetworkCatalogTree extends NetworkTree {
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
-	private final List<NetworkItem> myUnconfirmedItems =
-		Collections.synchronizedList(new LinkedList<NetworkItem>());
+	private final Set<NetworkTree> myUnconfirmedTrees =
+		Collections.synchronizedSet(new HashSet<NetworkTree>());
 
 	public final void confirmAllItems() {
-		myUnconfirmedItems.clear();
+		myUnconfirmedTrees.clear();
 	}
 
 	public final void removeUnconfirmedItems() {
-		final Set<NetworkItem> unconfirmedItems;
-		synchronized (myUnconfirmedItems) {
-			unconfirmedItems = new HashSet<NetworkItem>(myUnconfirmedItems);
+		synchronized (myUnconfirmedTrees) {
+			removeTrees(myUnconfirmedTrees);
 		}
-		removeItems(unconfirmedItems);
 	}
 }

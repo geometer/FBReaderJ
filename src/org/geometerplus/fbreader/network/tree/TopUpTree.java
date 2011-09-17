@@ -62,11 +62,6 @@ public class TopUpTree extends NetworkTree {
 	}
 
 	@Override
-	public TopUpItem getHoldedItem() {
-		return Item;
-	}
-
-	@Override
 	protected String getStringId() {
 		return "@TopUp Account";
 	}

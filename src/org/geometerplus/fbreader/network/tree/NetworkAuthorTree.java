@@ -120,11 +120,6 @@ public class NetworkAuthorTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkItem getHoldedItem() {
-		return null;
-	}
-
-	@Override
 	protected String getStringId() {
 		return "@Author:" + Author.DisplayName + ":" + Author.SortKey;
 	}
