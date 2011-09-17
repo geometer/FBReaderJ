@@ -26,6 +26,7 @@ import android.app.Activity;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
+import org.geometerplus.fbreader.network.tree.CatalogExpander;
 
 import org.geometerplus.android.fbreader.network.Util;
 
@@ -50,48 +51,32 @@ public class OpenCatalogAction extends CatalogAction {
 		doExpandCatalog((NetworkCatalogTree)tree);
 	}
 
-	private void tryResumeLoading(final Activity activity, NetworkCatalogTree tree, final Runnable expandRunnable) {
+	private void doExpandCatalog(final NetworkCatalogTree tree) {
 		final NetworkItemsLoader loader = NetworkLibrary.Instance().getStoredLoader(tree);
-		if (loader != null && loader.canResumeLoading()) {
-			Util.openTree(activity, tree);
-			return;
-		}
-		if (loader == null) {
-			expandRunnable.run();
+		if (loader != null) {
+			Util.openTree(myActivity, tree);
 		} else {
-			loader.setPostRunnable(new Runnable() {
+			boolean resumeNotLoad = false;
+			if (tree.hasChildren()) {
+				if (tree.isContentValid()) {
+					if (tree.Item.supportsResumeLoading()) {
+						resumeNotLoad = true;
+					} else {
+						Util.openTree(myActivity, tree);
+						return;
+					}
+				} else {
+					tree.clearCatalog();
+				}
+			}
+
+			new CatalogExpander(tree, true, resumeNotLoad).start();
+			processExtraData(tree.Item.extraData(), new Runnable() {
 				public void run() {
-					activity.runOnUiThread(expandRunnable);
+					Util.openTree(myActivity, tree);
 				}
 			});
 		}
-	}
-
-	private void doExpandCatalog(final NetworkCatalogTree tree) {
-		tryResumeLoading(myActivity, tree, new Runnable() {
-			public void run() {
-				boolean resumeNotLoad = false;
-				if (tree.hasChildren()) {
-					if (tree.isContentValid()) {
-						if (tree.Item.supportsResumeLoading()) {
-							resumeNotLoad = true;
-						} else {
-							Util.openTree(myActivity, tree);
-							return;
-						}
-					} else {
-						tree.clearCatalog();
-					}
-				}
-
-				new CatalogExpander(tree, true, resumeNotLoad).start();
-				processExtraData(tree.Item.extraData(), new Runnable() {
-					public void run() {
-						Util.openTree(myActivity, tree);
-					}
-				});
-			}
-		});
 	}
 
 	private void processExtraData(Map<String,String> extraData, final Runnable postRunnable) {

@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network.action;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.CatalogExpander;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;

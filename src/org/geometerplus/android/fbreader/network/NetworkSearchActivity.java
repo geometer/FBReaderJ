@@ -19,21 +19,15 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-import java.util.Set;
-
-import android.app.AlertDialog;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.os.Bundle;
 import android.content.Intent;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
+import org.geometerplus.fbreader.network.tree.Searcher;
 
 public class NetworkSearchActivity extends Activity {
 	@Override
@@ -44,7 +38,6 @@ public class NetworkSearchActivity extends Activity {
 
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			SearchCatalogTree searchTree = null;
 			final Bundle data = intent.getBundleExtra(SearchManager.APP_DATA);
 			if (data != null) {
 				final NetworkLibrary library = NetworkLibrary.Instance();
@@ -52,105 +45,12 @@ public class NetworkSearchActivity extends Activity {
 					(NetworkTree.Key)data.getSerializable(NetworkLibraryActivity.TREE_KEY_KEY);
 				final NetworkTree tree = library.getTreeByKey(key);
 				if (tree instanceof SearchCatalogTree) {
-					searchTree = (SearchCatalogTree)tree;
+					final String pattern = intent.getStringExtra(SearchManager.QUERY);
+					library.NetworkSearchPatternOption.setValue(pattern);
+					new Searcher((SearchCatalogTree)tree, pattern).start();
 				}
-			}
-			if (searchTree != null) {
-				runSearch(searchTree, intent.getStringExtra(SearchManager.QUERY));
 			}
 		}
 		finish();
-	}
-
-	private static class Searcher extends ItemsLoader {
-		private final String myPattern;
-		private volatile boolean myItemFound;
-
-		public Searcher(SearchCatalogTree tree, String pattern) {
-			super(tree);
-			myPattern = pattern;
-		}
-
-		@Override
-		public void doBefore() {
-		}
-
-		@Override
-		public void doLoading() {
-			//try {
-				//NetworkLibrary.Instance().simpleSearch(myPattern, this);
-			//} catch (ZLNetworkException e) {
-			//}
-		}
-
-		@Override
-		public synchronized void onNewItem(final NetworkItem item) {
-			if (!myItemFound) {
-				((SearchCatalogTree)getTree()).setPattern(myPattern);
-				getTree().clearCatalog();
-				NetworkLibrary.Instance().fireModelChangedEvent(
-					NetworkLibrary.ChangeListener.Code.Found, getTree().getUniqueKey()
-				);
-				myItemFound = true;
-			}
-			super.onNewItem(item);
-		}
-
-		@Override
-		protected void onFinish(String errorMessage, boolean interrupted) {
-			if (interrupted) {
-				//getTree().setSearchResult(null);
-			} else {
-				//getTree().updateSubTrees();
-				//afterUpdateCatalog(errorMessage, getTree().getSearchResult().isEmpty());
-			}
-			if (!myItemFound) {
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.NotFound);
-			}
-		}
-
-		/*
-		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
-			final ZLResource dialogResource = ZLResource.resource("dialog");
-			ZLResource boxResource = null;
-			String msg;
-			if (errorMessage != null) {
-				boxResource = dialogResource.getResource("networkError");
-				msg = errorMessage;
-			} else if (childrenEmpty) {
-				boxResource = dialogResource.getResource("emptySearchResults");
-				msg = boxResource.getResource("message").getValue();
-			} else {
-				return;
-			}
-
-			final SearchCatalogTree tree = null;//NetworkLibrary.Instance().getSearchCatalogTree();
-			if (tree == null) {
-				return;
-			}
-
-			final ZLResource buttonResource = dialogResource.getResource("button");
-			new AlertDialog.Builder(myActivity)
-				.setTitle(boxResource.getResource("title").getValue())
-				.setMessage(msg)
-				.setIcon(0)
-				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-				.create().show();
-		}
-		*/
-	}
-
-	protected void runSearch(SearchCatalogTree tree, String pattern) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		library.NetworkSearchPatternOption.setValue(pattern);
-		new Searcher(tree, pattern).start();
-		/*
-		final String summary = NetworkLibrary.resource().getResource("searchResults").getValue().replace("%s", pattern);
-		final SearchResult result = new SearchResult(summary);
-
-		//tree.setSearchResult(result);
-
-		Util.openTree(this, tree);
-		*/
 	}
 }

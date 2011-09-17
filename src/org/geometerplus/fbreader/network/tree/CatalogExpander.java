@@ -17,22 +17,15 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network.action;
-
-import java.util.*;
+package org.geometerplus.fbreader.network.tree;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
-import org.geometerplus.android.fbreader.network.ItemsLoader;
-
-class CatalogExpander extends ItemsLoader {
+public class CatalogExpander extends NetworkItemsLoader {
 	private final boolean myCheckAuthentication;
 	private final boolean myResumeNotLoad;
 

@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkItem;
 
@@ -41,7 +43,32 @@ public abstract class NetworkItemsLoader implements Runnable {
 		return myTree;
 	}
 
-	public abstract void setPostRunnable(Runnable runnable);
+	public final void run() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+
+		try {
+			library.storeLoader(getTree(), this);
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+
+			try {
+				doBefore();
+			} catch (ZLNetworkException e) {
+				onFinish(e.getMessage(), false);
+				return;
+			}
+			String error = null;
+			try {
+				doLoading();
+			} catch (ZLNetworkException e) {
+				error = e.getMessage();
+			}
+
+			onFinish(error, isLoadingInterrupted());
+		} finally {
+			library.removeStoredLoader(getTree());
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		}
+	}
 
 	private final Object myInterruptLock = new Object();
 	private enum InterruptionState {
@@ -86,4 +113,8 @@ public abstract class NetworkItemsLoader implements Runnable {
 	public void onNewItem(final NetworkItem item) {
 		getTree().addItem(item);
 	}
+
+	protected abstract void onFinish(String errorMessage, boolean interrupted);
+	protected abstract void doBefore() throws ZLNetworkException;
+	protected abstract void doLoading() throws ZLNetworkException;
 }
