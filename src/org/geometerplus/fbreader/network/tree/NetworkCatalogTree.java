@@ -50,7 +50,7 @@ public class NetworkCatalogTree extends NetworkTree {
 			if (Item.Link.getUrl(UrlInfo.Type.Search) != null) {
 				final SearchItem item = new SearchItem(Item.Link);
 				ChildrenItems.add(item);
-				new SearchItemTree(this, item, 0);
+				new SearchCatalogTree(this, item, 0);
 			}
 		}
 	}

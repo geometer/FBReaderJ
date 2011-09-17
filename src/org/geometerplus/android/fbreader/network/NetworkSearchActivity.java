@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.SearchItemTree;
+import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
 
 
 public class NetworkSearchActivity extends Activity {
@@ -50,10 +50,10 @@ public class NetworkSearchActivity extends Activity {
 		finish();
 	}
 
-	private static class Searcher extends ItemsLoader<SearchItemTree> {
+	private static class Searcher extends ItemsLoader<SearchCatalogTree> {
 		private final String myPattern;
 
-		public Searcher(Activity activity, SearchItemTree tree, String pattern) {
+		public Searcher(Activity activity, SearchCatalogTree tree, String pattern) {
 			super(activity, tree);
 			myPattern = pattern;
 		}
@@ -107,7 +107,7 @@ public class NetworkSearchActivity extends Activity {
 				return;
 			}
 
-			final SearchItemTree tree = null;//NetworkLibrary.Instance().getSearchItemTree();
+			final SearchCatalogTree tree = null;//NetworkLibrary.Instance().getSearchCatalogTree();
 			if (tree == null) {
 				return;
 			}
@@ -126,7 +126,7 @@ public class NetworkSearchActivity extends Activity {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
-		final SearchItemTree tree = null;//library.getSearchItemTree();
+		final SearchCatalogTree tree = null;//library.getSearchCatalogTree();
 		if (tree == null ||
 			library.getStoredLoader(tree) != null) {
 			return;

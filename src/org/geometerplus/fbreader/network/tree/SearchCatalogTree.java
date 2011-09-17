@@ -22,13 +22,13 @@ package org.geometerplus.fbreader.network.tree;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.SearchItem;
 
-public class SearchItemTree extends NetworkCatalogTree {
-	public SearchItemTree(RootTree parent, SearchItem item, int position) {
+public class SearchCatalogTree extends NetworkCatalogTree {
+	public SearchCatalogTree(RootTree parent, SearchItem item, int position) {
 		super(parent, item, position);
 		setCover(null);
 	}
 
-	public SearchItemTree(NetworkCatalogTree parent, SearchItem item, int position) {
+	public SearchCatalogTree(NetworkCatalogTree parent, SearchItem item, int position) {
 		super(parent, item, position);
 		setCover(null);
 	}
