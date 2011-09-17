@@ -637,10 +637,6 @@
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" />
 			<node name="cacheDirectoryError" value="Unable to create cache directory" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Search results" />
-			<node name="message" value="There are no suitable books found" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentication" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" />
@@ -693,6 +689,7 @@
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
 		<node name="emptyCatalog" value="Catalog is empty, sorry" />
 		<node name="emptyBasket" value="Your basket is empty, sorry" />
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" />
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

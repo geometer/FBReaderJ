@@ -84,7 +84,7 @@ public class OpenCatalogAction extends CatalogAction {
 					}
 				}
 
-				new CatalogExpander(myActivity, tree, true, resumeNotLoad).start();
+				new CatalogExpander(tree, true, resumeNotLoad).start();
 				processExtraData(tree.Item.extraData(), new Runnable() {
 					public void run() {
 						Util.openTree(myActivity, tree);

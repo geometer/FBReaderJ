@@ -50,6 +50,6 @@ public class ReloadCatalogAction extends CatalogAction {
 			return;
 		}
 		((NetworkCatalogTree)tree).clearCatalog();
-		new CatalogExpander(myActivity, (NetworkCatalogTree)tree, false, false).start();
+		new CatalogExpander((NetworkCatalogTree)tree, false, false).start();
 	}
 }

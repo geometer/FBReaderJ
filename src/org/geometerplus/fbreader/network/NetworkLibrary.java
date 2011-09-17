@@ -38,17 +38,19 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 public class NetworkLibrary {
 	public interface ChangeListener {
 		public enum Code {
-			SomeCode
+			SomeCode,
 			/*
 			ItemAdded,
 			ItemRemoved,
 			StatusChanged,
-			Found,
-			NotFound
 			*/
+			Found,
+			NotFound,
+			EmptyCatalog,
+			NetworkError
 		}
 
-		void onLibraryChanged(Code code);
+		void onLibraryChanged(Code code, Object[] params);
 	}
 
 	private static NetworkLibrary ourInstance;
@@ -174,6 +176,8 @@ public class NetworkLibrary {
 
 	private volatile boolean myIsInitialized;
 
+	private final SearchItem mySearchItem = new AllCatalogsSearchItem();
+
 	private NetworkLibrary() {
 	}
 
@@ -280,18 +284,6 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
-//	private static boolean linkIsChanged(INetworkLink link) {
-//		return
-//			link instanceof ICustomNetworkLink &&
-//			((ICustomNetworkLink)link).hasChanges();
-//	}
-
-//	private static void makeValid(INetworkLink link) {
-//		if (link instanceof ICustomNetworkLink) {
-//			((ICustomNetworkLink)link).resetChanges();
-//		}
-//	}
-
 	private void makeUpToDate() {
 		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
 
@@ -338,7 +330,7 @@ public class NetworkLibrary {
 			new NetworkCatalogRootTree(myRootTree, link, index);
 		}
 		// we do add non-catalog items
-		new SearchCatalogTree(myRootTree, new AllCatalogsSearchItem(), 0);
+		new SearchCatalogTree(myRootTree, mySearchItem, 0);
 		new AddCustomCatalogItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
@@ -463,10 +455,10 @@ public class NetworkLibrary {
 	}
 
 	// TODO: change to private
-	/*private*/ public void fireModelChangedEvent(ChangeListener.Code code) {
+	/*private*/ public void fireModelChangedEvent(ChangeListener.Code code, Object ... params) {
 		synchronized (myListeners) {
 			for (ChangeListener l : myListeners) {
-				l.onLibraryChanged(code);
+				l.onLibraryChanged(code, params);
 			}
 		}
 	}

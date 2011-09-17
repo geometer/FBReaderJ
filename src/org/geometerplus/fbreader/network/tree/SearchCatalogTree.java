@@ -32,6 +32,10 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 		setCover(null);
 	}
 
+	public void setPattern(String pattern) {
+		((SearchItem)Item).setPattern(pattern);
+	}
+
 	@Override
 	public String getTreeTitle() {
 		return getSummary();

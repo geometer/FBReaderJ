@@ -64,9 +64,10 @@ public class NetworkSearchActivity extends Activity {
 
 	private static class Searcher extends ItemsLoader {
 		private final String myPattern;
+		private volatile boolean myItemFound;
 
-		public Searcher(Activity activity, SearchCatalogTree tree, String pattern) {
-			super(activity, tree);
+		public Searcher(SearchCatalogTree tree, String pattern) {
+			super(tree);
 			myPattern = pattern;
 		}
 
@@ -76,23 +77,24 @@ public class NetworkSearchActivity extends Activity {
 
 		@Override
 		public void doLoading() {
-			try {
-				NetworkLibrary.Instance().simpleSearch(myPattern, this);
-			} catch (ZLNetworkException e) {
-			}
+			//try {
+				//NetworkLibrary.Instance().simpleSearch(myPattern, this);
+			//} catch (ZLNetworkException e) {
+			//}
 		}
 
-			/*
 		@Override
-		protected void addItem(NetworkItem item) {
-			SearchResult result = getTree().getSearchResult();
-			if (item instanceof NetworkBookItem) {
-				result.addBook((NetworkBookItem)item);
-				getTree().updateSubTrees();
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		public synchronized void onNewItem(final NetworkItem item) {
+			if (!myItemFound) {
+				((SearchCatalogTree)getTree()).setPattern(myPattern);
+				getTree().clearCatalog();
+				NetworkLibrary.Instance().fireModelChangedEvent(
+					NetworkLibrary.ChangeListener.Code.Found, getTree().getUniqueKey()
+				);
+				myItemFound = true;
 			}
+			super.onNewItem(item);
 		}
-			*/
 
 		@Override
 		protected void onFinish(String errorMessage, boolean interrupted) {
@@ -102,9 +104,12 @@ public class NetworkSearchActivity extends Activity {
 				//getTree().updateSubTrees();
 				//afterUpdateCatalog(errorMessage, getTree().getSearchResult().isEmpty());
 			}
-			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+			if (!myItemFound) {
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.NotFound);
+			}
 		}
 
+		/*
 		private void afterUpdateCatalog(String errorMessage, boolean childrenEmpty) {
 			final ZLResource dialogResource = ZLResource.resource("dialog");
 			ZLResource boxResource = null;
@@ -132,20 +137,19 @@ public class NetworkSearchActivity extends Activity {
 				.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
 				.create().show();
 		}
+		*/
 	}
 
 	protected void runSearch(SearchCatalogTree tree, String pattern) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
-
+		new Searcher(tree, pattern).start();
 		/*
 		final String summary = NetworkLibrary.resource().getResource("searchResults").getValue().replace("%s", pattern);
 		final SearchResult result = new SearchResult(summary);
 
 		//tree.setSearchResult(result);
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
-		new Searcher(this, tree, pattern).start();
 		Util.openTree(this, tree);
 		*/
 	}

@@ -83,7 +83,7 @@ public abstract class NetworkItemsLoader implements Runnable {
 		}
 	}
 
-	public final void onNewItem(final NetworkItem item) {
+	public void onNewItem(final NetworkItem item) {
 		getTree().addItem(item);
 	}
 }

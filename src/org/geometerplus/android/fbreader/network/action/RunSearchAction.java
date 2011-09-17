@@ -61,7 +61,7 @@ public class RunSearchAction extends Action {
 
 	@Override
 	public boolean isEnabled(NetworkTree tree) {
-		return NetworkLibrary.Instance().getStoredLoader(tree) != null;
+		return NetworkLibrary.Instance().getStoredLoader(tree) == null;
 	}
 
 	@Override

@@ -19,27 +19,33 @@
 
 package org.geometerplus.fbreader.network;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public abstract class SearchItem extends NetworkCatalogItem {
-	protected static ZLResource getResource() {
-		return NetworkLibrary.resource().getResource("search");
-	}
-
 	private String myPattern;
 
-	protected SearchItem(INetworkLink link, String summary) {
+	protected SearchItem(INetworkLink link) {
 		super(
 			link,
-			getResource().getValue(),
-			summary,
+			NetworkLibrary.resource().getResource("search").getValue(),
+			"",
 			new UrlInfoCollection<UrlInfo>(),
 			Accessibility.ALWAYS,
 			FLAGS_DEFAULT
 		);
+		setSummary(getSummaryString());
 	}
+
+	public void setPattern(String pattern) {
+		myPattern = pattern;
+		setSummary(getSummaryString());
+	}
+
+	protected String getPattern() {
+		return myPattern;
+	}
+
+	protected abstract String getSummaryString();
 
 	@Override
 	public String getStringId() {

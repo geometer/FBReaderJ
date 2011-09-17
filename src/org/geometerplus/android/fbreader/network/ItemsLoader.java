@@ -21,8 +21,6 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.Set;
 
-import android.app.Activity;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
@@ -30,18 +28,12 @@ import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class ItemsLoader extends NetworkItemsLoader {
-	protected final Activity myActivity;
-
-	private volatile boolean myFinishProcessed;
-	private final Object myFinishMonitor = new Object();
-
 	private volatile boolean myFinished;
 	private volatile Runnable myPostRunnable;
 	private final Object myFinishedLock = new Object();
 
-	public ItemsLoader(Activity activity, NetworkCatalogTree tree) {
+	public ItemsLoader(NetworkCatalogTree tree) {
 		super(tree);
-		myActivity = activity;
 	}
 
 	public final void run() {
@@ -54,7 +46,7 @@ public abstract class ItemsLoader extends NetworkItemsLoader {
 			try {
 				doBefore();
 			} catch (ZLNetworkException e) {
-				finishOnUiThread(e.getMessage(), false);
+				onFinish(e.getMessage(), false);
 				return;
 			}
 			String error = null;
@@ -64,8 +56,7 @@ public abstract class ItemsLoader extends NetworkItemsLoader {
 				error = e.getMessage();
 			}
 
-			finishOnUiThread(error, isLoadingInterrupted());
-			ensureFinishProcessed();
+			onFinish(error, isLoadingInterrupted());
 		} finally {
 			library.removeStoredLoader(getTree());
 			synchronized (myFinishedLock) {
@@ -89,30 +80,6 @@ public abstract class ItemsLoader extends NetworkItemsLoader {
 				myPostRunnable = runnable;
 			}
 		}
-	}
-
-	private final void ensureFinishProcessed() {
-		synchronized (myFinishMonitor) {
-			while (!myFinishProcessed) {
-				try {
-					myFinishMonitor.wait();
-				} catch (InterruptedException e) {
-				}
-			}
-		}
-	}
-
-	private final void finishOnUiThread(final String errorMessage, final boolean interrupted) {
-		myActivity.runOnUiThread(new Runnable() {
-			public void run() {
-				synchronized (myFinishMonitor) {
-					onFinish(errorMessage, interrupted);
-					myFinishProcessed = true;
-					// wake up process, that waits for finish condition (see ensureFinish() method)
-					myFinishMonitor.notifyAll();
-				}
-			}
-		});
 	}
 
 	protected abstract void onFinish(String errorMessage, boolean interrupted);

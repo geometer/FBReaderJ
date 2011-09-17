@@ -396,7 +396,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		super.onStop();
 	}
 
-	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code) {
+	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code, Object[] params) {
 		if (myBook == null) {
 			return;
 		}

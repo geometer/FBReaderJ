@@ -38,6 +38,8 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.fbreader.network.action.*;
 
+import org.geometerplus.android.util.UIUtil;
+
 public class NetworkLibraryActivity extends TreeActivity implements NetworkLibrary.ChangeListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int SIGNUP_CODE = 2;
@@ -324,17 +326,32 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	}
 
 	// method from NetworkLibrary.ChangeListener
-	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code) {
+	public void onLibraryChanged(final NetworkLibrary.ChangeListener.Code code, final Object[] params) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
-				final boolean inProgress =
-					tree != null &&
-					NetworkLibrary.Instance().getStoredLoader(tree) != null;
-				setProgressBarIndeterminateVisibility(inProgress);
-
-				getListAdapter().replaceAll(getCurrentTree().subTrees());
-				getListView().invalidateViews();
+				switch (code) {
+					default:
+					{
+						final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
+						final boolean inProgress =
+							tree != null &&
+							NetworkLibrary.Instance().getStoredLoader(tree) != null;
+						setProgressBarIndeterminateVisibility(inProgress);
+                    
+						getListAdapter().replaceAll(getCurrentTree().subTrees());
+						getListView().invalidateViews();
+						break;
+					}
+					case NotFound:
+						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyNetworkSearchResults");
+						break;
+					case EmptyCatalog:
+						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyCatalog");
+						break;
+					case NetworkError:
+						UIUtil.showMessageText(NetworkLibraryActivity.this, (String)params[0]);
+						break;
+				}
 			}
 		});
 	}

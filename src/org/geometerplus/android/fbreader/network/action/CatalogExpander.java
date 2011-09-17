@@ -21,11 +21,7 @@ package org.geometerplus.android.fbreader.network.action;
 
 import java.util.*;
 
-import android.app.Activity;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-
-import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -40,9 +36,8 @@ class CatalogExpander extends ItemsLoader {
 	private final boolean myCheckAuthentication;
 	private final boolean myResumeNotLoad;
 
-	public CatalogExpander(Activity activity,
-			NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
-		super(activity, tree);
+	public CatalogExpander(NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
+		super(tree);
 		myCheckAuthentication = checkAuthentication;
 		myResumeNotLoad = resumeNotLoad;
 	}
@@ -80,9 +75,13 @@ class CatalogExpander extends ItemsLoader {
 			getTree().updateLoadedTime();
 			if (!interrupted) {
 				if (errorMessage != null) {
-					UIUtil.showMessageText(myActivity, errorMessage);
+					NetworkLibrary.Instance().fireModelChangedEvent(
+						NetworkLibrary.ChangeListener.Code.NetworkError, errorMessage
+					);
 				} else if (getTree().subTrees().isEmpty()) {
-					UIUtil.showErrorMessage(myActivity, "emptyCatalog");
+					NetworkLibrary.Instance().fireModelChangedEvent(
+						NetworkLibrary.ChangeListener.Code.EmptyCatalog, errorMessage
+					);
 				}
 			}
 			final NetworkLibrary library = NetworkLibrary.Instance();

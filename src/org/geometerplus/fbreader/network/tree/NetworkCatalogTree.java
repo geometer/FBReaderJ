@@ -59,13 +59,17 @@ public class NetworkCatalogTree extends NetworkTree {
 		return Item.canBeOpened();
 	}
 
+	private SearchItem mySearchItem;
+ 
 	private void addSearchTree() {
 		if ((Item.getFlags() & NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM) != 0) {
 			final INetworkLink link = getLink();
 			if (link != null && link.getUrl(UrlInfo.Type.Search) != null) {
-				final SearchItem item = new SingleCatalogSearchItem(link);
-				myChildrenItems.add(item);
-				new SearchCatalogTree(this, item, 0);
+				if (mySearchItem == null) {
+					mySearchItem = new SingleCatalogSearchItem(link);
+				}
+				myChildrenItems.add(mySearchItem);
+				new SearchCatalogTree(this, mySearchItem, 0);
 			}
 		}
 	}

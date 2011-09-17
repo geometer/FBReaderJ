@@ -23,6 +23,9 @@ DONE single book activity
 depends_on_ip (?)
 
 resources for search actions
+  errorMessage
+  titles/summaries
+	menu items
 Search actions
   stopping search
 проверить все пути регистрации
