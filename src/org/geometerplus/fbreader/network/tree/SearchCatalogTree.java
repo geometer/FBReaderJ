@@ -31,4 +31,9 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 		super(parent, item, position);
 		setCover(null);
 	}
+
+	@Override
+	public SearchCatalogTree getSearchTree() {
+		return this;
+	}
 }

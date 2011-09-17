@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network.action;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
@@ -39,8 +40,7 @@ public class RunSearchAction extends Action {
 		if (myFromContextMenu) {
 			return tree instanceof SearchCatalogTree;
 		} else {
-			// TODO
-			return true;
+			return ((NetworkCatalogTree)tree).getSearchTree() != null;
 		}
 	}
 

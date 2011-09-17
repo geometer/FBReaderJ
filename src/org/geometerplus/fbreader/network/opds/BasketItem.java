@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
@@ -57,9 +59,14 @@ public class BasketItem extends OPDSCatalogItem {
 
 	@Override
 	protected String getCatalogUrl() {
+		final List<String> ids = Link.basket().bookIds();
+		if (ids.isEmpty()) {
+			return null;
+		}
+
 		final StringBuilder builder = new StringBuilder();
 		boolean flag = false;
-		for (String bookId : Link.basket().bookIds()) {
+		for (String bookId : ids) {
 			if (flag) {
 				builder.append(',');
 			} else {

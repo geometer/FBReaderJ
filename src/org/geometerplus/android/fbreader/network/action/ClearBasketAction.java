@@ -31,7 +31,7 @@ public class ClearBasketAction extends CatalogAction {
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		return tree instanceof BasketCatalogTree;
+		return tree instanceof BasketCatalogTree && ((BasketCatalogTree)tree).canBeOpened();
 	}
 
 	@Override

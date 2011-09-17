@@ -24,7 +24,6 @@ import java.util.Map;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
@@ -48,12 +47,7 @@ public class OpenCatalogAction extends CatalogAction {
 
 	@Override
 	public void run(NetworkTree tree) {
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-		if (item instanceof BasketItem && item.Link.basket().bookIds().size() == 0) {
-			UIUtil.showErrorMessage(myActivity, "emptyBasket");
-		} else {
-			doExpandCatalog((NetworkCatalogTree)tree);
-		}
+		doExpandCatalog((NetworkCatalogTree)tree);
 	}
 
 	private void tryResumeLoading(final Activity activity, NetworkCatalogTree tree, final Runnable expandRunnable) {

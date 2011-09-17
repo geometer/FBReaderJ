@@ -61,9 +61,13 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 		}
 	}
 
+	protected String getCatalogUrl() {
+		return getUrl(UrlInfo.Type.Catalog);
+	}
+
 	@Override
 	public boolean canBeOpened() {
-		return getUrl(UrlInfo.Type.Catalog) != null;
+		return getCatalogUrl() != null;
 	}
 
 	@Override

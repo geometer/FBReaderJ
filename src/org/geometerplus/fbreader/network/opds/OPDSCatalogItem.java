@@ -73,10 +73,6 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		return myExtraData;
 	}
 
-	protected String getCatalogUrl() {
-		return getUrl(UrlInfo.Type.Catalog);
-	}
-
 	@Override
 	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;

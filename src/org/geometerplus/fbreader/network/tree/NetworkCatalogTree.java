@@ -59,6 +59,17 @@ public class NetworkCatalogTree extends NetworkTree {
 		return Item.canBeOpened();
 	}
 
+	public SearchCatalogTree getSearchTree() {
+		for (FBTree tree = this; tree != null; tree = tree.Parent) {
+			for (FBTree t : tree.subTrees()) {
+				if (t instanceof SearchCatalogTree) {
+					return (SearchCatalogTree)t;
+				}
+			}
+		}
+		return null;
+	}
+
 	private void addSearchTree() {
 		if ((Item.getFlags() & NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM) != 0) {
 			final INetworkLink link = getLink();
