@@ -476,7 +476,7 @@ public class NetworkLibrary {
 	}
 
 	public final NetworkItemsLoader getStoredLoader(NetworkTree tree) {
-		return myLoaders.get(tree);
+		return tree != null ? myLoaders.get(tree) : null;
 	}
 
 	public final void removeStoredLoader(NetworkTree tree) {

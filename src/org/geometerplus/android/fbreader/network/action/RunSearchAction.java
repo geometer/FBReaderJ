@@ -20,14 +20,29 @@
 package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
+import android.os.Bundle;
 
+import org.geometerplus.fbreader.tree.FBTree;
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+
 public class RunSearchAction extends Action {
+	private static SearchCatalogTree getSearchTree(FBTree tree) {
+		for (; tree != null; tree = tree.Parent) {
+			for (FBTree t : tree.subTrees()) {
+				if (t instanceof SearchCatalogTree) {
+					return (SearchCatalogTree)t;
+				}
+			}
+		}
+		return null;
+	}
+
 	private final boolean myFromContextMenu;
 
 	public RunSearchAction(Activity activity, boolean fromContextMenu) {
@@ -40,12 +55,23 @@ public class RunSearchAction extends Action {
 		if (myFromContextMenu) {
 			return tree instanceof SearchCatalogTree;
 		} else {
-			return ((NetworkCatalogTree)tree).getSearchTree() != null;
+			return getSearchTree(tree) != null;
 		}
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
-		myActivity.onSearchRequested();
+	public boolean isEnabled(NetworkTree tree) {
+		return NetworkLibrary.Instance().getStoredLoader(tree) != null;
+	}
+
+	@Override
+	public void run(NetworkTree tree) {
+		final Bundle bundle = new Bundle();
+		bundle.putSerializable(
+			NetworkLibraryActivity.TREE_KEY_KEY,
+			getSearchTree(tree).getUniqueKey()
+		);
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		myActivity.startSearch(library.NetworkSearchPatternOption.getValue(), true, bundle, false);
 	}
 }

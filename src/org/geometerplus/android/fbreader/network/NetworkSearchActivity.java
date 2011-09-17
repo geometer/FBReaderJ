@@ -44,8 +44,20 @@ public class NetworkSearchActivity extends Activity {
 
 		final Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			runSearch(pattern);
+			SearchCatalogTree searchTree = null;
+			final Bundle data = intent.getBundleExtra(SearchManager.APP_DATA);
+			if (data != null) {
+				final NetworkLibrary library = NetworkLibrary.Instance();
+				final NetworkTree.Key key =
+					(NetworkTree.Key)data.getSerializable(NetworkLibraryActivity.TREE_KEY_KEY);
+				final NetworkTree tree = library.getTreeByKey(key);
+				if (tree instanceof SearchCatalogTree) {
+					searchTree = (SearchCatalogTree)tree;
+				}
+			}
+			if (searchTree != null) {
+				runSearch(searchTree, intent.getStringExtra(SearchManager.QUERY));
+			}
 		}
 		finish();
 	}
@@ -122,16 +134,11 @@ public class NetworkSearchActivity extends Activity {
 		}
 	}
 
-	protected void runSearch(final String pattern) {
+	protected void runSearch(SearchCatalogTree tree, String pattern) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.NetworkSearchPatternOption.setValue(pattern);
 
-		final SearchCatalogTree tree = null;//library.getSearchCatalogTree();
-		if (tree == null ||
-			library.getStoredLoader(tree) != null) {
-			return;
-		}
-
+		/*
 		final String summary = NetworkLibrary.resource().getResource("searchResults").getValue().replace("%s", pattern);
 		final SearchResult result = new SearchResult(summary);
 
@@ -140,5 +147,6 @@ public class NetworkSearchActivity extends Activity {
 
 		new Searcher(this, tree, pattern).start();
 		Util.openTree(this, tree);
+		*/
 	}
 }

@@ -27,6 +27,8 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class SearchItem extends NetworkCatalogItem {
+	private String myPattern;
+
 	private static String getInitialSummary(INetworkLink link) {
 		final ZLResource resource = NetworkLibrary.resource().getResource("search");
 		if (link == null) {
@@ -47,32 +49,17 @@ public class SearchItem extends NetworkCatalogItem {
 		);
 	}
 
+	@Override
 	public String getStringId() {
 		return "@Search";
 	}
 
+	@Override
 	public boolean canBeOpened() {
 		return false;
 	}
 
+	@Override
 	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 	}
-
-	/*
-	@Override
-	protected String getCatalogUrl() {
-		final StringBuilder builder = new StringBuilder();
-		boolean flag = false;
-		for (String bookId : Link.basket().bookIds()) {
-			if (flag) {
-				builder.append(',');
-			} else {
-				flag = true;
-			}
-			builder.append(bookId);
-		}
-
-		return ZLNetworkUtil.appendParameter(getUrl(UrlInfo.Type.Catalog), "ids", builder.toString());
-	}
-	*/
 }

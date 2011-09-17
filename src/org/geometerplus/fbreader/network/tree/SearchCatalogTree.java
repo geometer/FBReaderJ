@@ -33,11 +33,6 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 	}
 
 	@Override
-	public SearchCatalogTree getSearchTree() {
-		return this;
-	}
-
-	@Override
 	public String getTreeTitle() {
 		return getSummary();
 	}

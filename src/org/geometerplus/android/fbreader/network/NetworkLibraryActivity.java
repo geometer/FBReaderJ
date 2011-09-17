@@ -86,12 +86,9 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	}
 
 	@Override
-	protected FBTree getTreeByKey(FBTree.Key key) {
+	protected NetworkTree getTreeByKey(FBTree.Key key) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		FBTree tree = null;
-		if (key != null) {
-			tree = library.getTreeByKey(key);
-		}
+		final NetworkTree tree = library.getTreeByKey(key);
 		return tree != null ? tree : library.getRootTree();
 	}
 
@@ -135,12 +132,13 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	@Override
 	public boolean onSearchRequested() {
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
-		if (!new RunSearchAction(this, false).isVisible(tree)) {
+		final RunSearchAction action = new RunSearchAction(this, false);
+		if (action.isVisible(tree)) {
+			action.run(tree);
+			return true;
+		} else {
 			return false;
 		}
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
-		return true;
 	}
 
 	@Override
