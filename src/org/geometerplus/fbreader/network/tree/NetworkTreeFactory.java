@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.BasketItem;
 
-public class NetworkTreeFactory {
+class NetworkTreeFactory {
 	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkItem item) {
 		return createNetworkTree(parent, item, -1);
 	}

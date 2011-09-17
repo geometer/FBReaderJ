@@ -32,7 +32,6 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 import org.geometerplus.android.fbreader.network.ItemsLoader;
