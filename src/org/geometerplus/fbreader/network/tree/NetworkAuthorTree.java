@@ -69,7 +69,6 @@ public class NetworkAuthorTree extends NetworkTree {
 		if (myBooksNumber >= books.size()) {
 			return;
 		}
-		invalidateSummary();
 
 		ListIterator<NetworkBookItem> booksIterator = books.listIterator(myBooksNumber);
 		while (booksIterator.hasNext()) {
@@ -108,7 +107,6 @@ public class NetworkAuthorTree extends NetworkTree {
 						}
 						++insertAt;
 					}
-					seriesTree.invalidateSummary();
 					new NetworkBookTree(seriesTree, book, insertAt, false);
 				}
 			} else {

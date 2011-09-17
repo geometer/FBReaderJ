@@ -36,4 +36,9 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 	public SearchCatalogTree getSearchTree() {
 		return this;
 	}
+
+	@Override
+	public String getTreeTitle() {
+		return getSummary();
+	}
 }

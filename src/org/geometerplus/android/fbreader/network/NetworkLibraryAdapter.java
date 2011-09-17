@@ -59,7 +59,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
 
 		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
+		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSummary());
 
 		if (myCoverWidth == -1) {
 			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

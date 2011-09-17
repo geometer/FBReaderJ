@@ -120,6 +120,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 				ids = new ArrayList<String>(ids);
 				ids.add(book.Id);
 				myBooksInBasketOption.setValue(ids);
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		}
 	}
@@ -132,6 +133,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 				ids = new ArrayList<String>(ids);
 				ids.remove(book.Id);
 				myBooksInBasketOption.setValue(ids);
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		}
 	}
@@ -139,6 +141,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	// method from Basket interface
 	public final void clear() {
 		myBooksInBasketOption.setValue(null);
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	// method from Basket interface

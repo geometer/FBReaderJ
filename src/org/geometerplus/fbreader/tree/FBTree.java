@@ -146,23 +146,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return key0.toLowerCase().compareTo(key1.toLowerCase());
 	}
 
-	private String mySecondString;
-
-	public final void invalidateSummary() {
-		mySecondString = null;
-	}
-
-	public final String getSecondString() {
-		if (mySecondString == null) {
-			mySecondString = getSummary();
-			if (mySecondString == null) {
-				mySecondString = "";
-			}
-		}
-		return mySecondString;
-	}
-
-	protected String getSummary() {
+	public String getSummary() {
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
 		for (FBTree subtree : subTrees()) {

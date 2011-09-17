@@ -89,7 +89,7 @@ class LibraryTreeAdapter extends TreeAdapter {
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
         ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
+		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSummary());
 		return view;
 	}
 

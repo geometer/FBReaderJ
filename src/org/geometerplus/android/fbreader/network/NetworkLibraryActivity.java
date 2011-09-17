@@ -337,12 +337,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 
 				getListAdapter().replaceAll(getCurrentTree().subTrees());
 				getListView().invalidateViews();
-
-				for (FBTree child : getCurrentTree().subTrees()) {
-					if (child instanceof TopUpTree) {
-						child.invalidateSummary();
-					}
-				}
 			}
 		});
 	}
