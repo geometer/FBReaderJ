@@ -63,7 +63,7 @@ public class NetworkCatalogTree extends NetworkTree {
 		if ((Item.getFlags() & NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM) != 0) {
 			final INetworkLink link = getLink();
 			if (link != null && link.getUrl(UrlInfo.Type.Search) != null) {
-				final SearchItem item = new SearchItem(link);
+				final SearchItem item = new SingleCatalogSearchItem(link);
 				myChildrenItems.add(item);
 				new SearchCatalogTree(this, item, 0);
 			}
