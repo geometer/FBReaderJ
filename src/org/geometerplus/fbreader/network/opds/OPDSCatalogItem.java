@@ -80,13 +80,6 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
 
-		if ((getFlags() & FLAG_ADD_SEARCH_ITEM) != 0) {
-			if (opdsLink.getUrl(UrlInfo.Type.Search) != null) {
-				loader.onNewItem(new SearchItem(opdsLink));
-				loader.commitItems();
-			}
-		}
-
 		myLoadingState = opdsLink.createOperationData(loader);
 
 		doLoadChildren(

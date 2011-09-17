@@ -25,6 +25,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class NetworkCatalogTree extends NetworkTree {
 	public final NetworkCatalogItem Item;
@@ -35,12 +36,25 @@ public class NetworkCatalogTree extends NetworkTree {
 	public NetworkCatalogTree(RootTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		Item = item;
+		addSearchTree();
 	}
 
 	NetworkCatalogTree(NetworkCatalogTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		Item = item;
+		addSearchTree();
 	}
+
+	private void addSearchTree() {
+		if ((Item.getFlags() & NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM) != 0) {
+			if (Item.Link.getUrl(UrlInfo.Type.Search) != null) {
+				final SearchItem item = new SearchItem(Item.Link);
+				ChildrenItems.add(item);
+				new SearchItemTree(this, item, 0);
+			}
+		}
+	}
+
 
 	@Override
 	public String getName() {
@@ -107,8 +121,7 @@ public class NetworkCatalogTree extends NetworkTree {
 							toRemove.add(child);
 							break;
 						case B3_UNDEFINED:
-							child.clear();
-							child.ChildrenItems.clear();
+							child.clearCatalog();
 							break;
 					}
 					currentNode = null;
@@ -173,6 +186,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	public void clearCatalog() {
 		ChildrenItems.clear();
 		clear();
+		addSearchTree();
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 }
