@@ -96,6 +96,10 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	}
 
 	public ZLBoolean3 getVisibility() {
+		if (Link == null) {
+			return ZLBoolean3.B3_TRUE;
+		}
+
 		final NetworkAuthenticationManager mgr = Link.authenticationManager();
 		switch (myAccessibility) {
 			default:

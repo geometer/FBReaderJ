@@ -135,7 +135,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	@Override
 	public boolean onSearchRequested() {
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
-		if (!new RunSearchAction(this).isEnabled(tree)) {
+		if (!new RunSearchAction(this, false).isVisible(tree)) {
 			return false;
 		}
 		final NetworkLibrary library = NetworkLibrary.Instance();
@@ -166,7 +166,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	}
 
 	private void fillOptionsMenuList() {
-		myOptionsMenuActions.add(new RunSearchAction(this));
+		myOptionsMenuActions.add(new RunSearchAction(this, false));
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
 		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
 		myOptionsMenuActions.add(new LanguageFilterAction(this));
@@ -182,6 +182,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	private void fillContextMenuList() {
 		myContextMenuActions.add(new OpenCatalogAction(this));
 		myContextMenuActions.add(new OpenInBrowserAction(this));
+		myContextMenuActions.add(new RunSearchAction(this, true));
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
 		myContextMenuActions.add(new SignOutAction(this));
 		myContextMenuActions.add(new TopupAction(this));
@@ -195,6 +196,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	private void fillListClickList() {
 		myListClickActions.add(new OpenCatalogAction(this));
 		myListClickActions.add(new OpenInBrowserAction(this));
+		myListClickActions.add(new RunSearchAction(this, true));
 		myListClickActions.add(new ShowBooksAction(this));
 		myListClickActions.add(new AddCustomCatalogAction(this));
 		myListClickActions.add(new TopupAction(this));

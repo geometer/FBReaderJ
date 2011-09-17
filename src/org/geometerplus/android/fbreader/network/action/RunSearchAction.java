@@ -22,22 +22,26 @@ package org.geometerplus.android.fbreader.network.action;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class RunSearchAction extends RootAction {
-	public RunSearchAction(Activity activity) {
+public class RunSearchAction extends Action {
+	private final boolean myFromContextMenu;
+
+	public RunSearchAction(Activity activity, boolean fromContextMenu) {
 		super(activity, ActionCode.SEARCH, "networkSearch", R.drawable.ic_menu_search);
+		myFromContextMenu = fromContextMenu;
 	}
 
 	@Override
-	public boolean isEnabled(NetworkTree tree) {
-		/*
-		return ItemsLoadingService.getRunnable(
-			NetworkLibrary.Instance().getSearchItemTree()
-		) == null;
-		*/
-		return true;
+	public boolean isVisible(NetworkTree tree) {
+		if (myFromContextMenu) {
+			return tree instanceof SearchCatalogTree;
+		} else {
+			// TODO
+			return true;
+		}
 	}
 
 	@Override
