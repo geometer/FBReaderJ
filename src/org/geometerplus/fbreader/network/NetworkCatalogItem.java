@@ -75,6 +75,8 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 		return Collections.emptyMap();
 	}
 
+	public abstract boolean canBeOpened();
+
 	public abstract void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException;
 
 	public boolean supportsResumeLoading() {

@@ -50,6 +50,10 @@ public class SearchItem extends NetworkCatalogItem {
 		return "@Search";
 	}
 
+	public boolean canBeOpened() {
+		return false;
+	}
+
 	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 	}
 

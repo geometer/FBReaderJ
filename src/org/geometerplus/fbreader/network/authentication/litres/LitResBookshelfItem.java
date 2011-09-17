@@ -43,6 +43,11 @@ abstract class SortedCatalogItem extends NetworkCatalogItem {
 		}
 	}
 
+	@Override
+	public boolean canBeOpened() {
+		return true;
+	}
+
 	public boolean isEmpty() {
 		return myChildren.isEmpty();
 	}

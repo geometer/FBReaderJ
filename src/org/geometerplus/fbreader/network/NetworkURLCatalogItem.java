@@ -51,8 +51,7 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	 *  
 	 * @throws ZLNetworkException when network operation couldn't be completed
 	 */
-	protected final void doLoadChildren(NetworkOperationData data,
-			ZLNetworkRequest networkRequest) throws ZLNetworkException {
+	protected final void doLoadChildren(NetworkOperationData data, ZLNetworkRequest networkRequest) throws ZLNetworkException {
 		while (networkRequest != null) {
 			ZLNetworkManager.Instance().perform(networkRequest);
 			if (data.Loader.confirmInterruption()) {
@@ -60,6 +59,11 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 			}
 			networkRequest = data.resume();
 		}
+	}
+
+	@Override
+	public boolean canBeOpened() {
+		return getUrl(UrlInfo.Type.Catalog) != null;
 	}
 
 	@Override

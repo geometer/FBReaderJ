@@ -26,7 +26,6 @@ import android.app.Activity;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.Util;
 
@@ -43,11 +42,7 @@ public class OpenCatalogAction extends CatalogAction {
 		if (!super.isVisible(tree)) {
 			return false;
 		}
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-		if (!(item instanceof NetworkURLCatalogItem)) {
-			return true;
-		}
-		return ((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog) != null;
+		return ((NetworkCatalogTree)tree).Item.canBeOpened();
 	}
 
 	@Override
