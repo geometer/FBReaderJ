@@ -17,25 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network.action;
+package org.geometerplus.fbreader.network.tree;
 
-import android.app.Activity;
+import org.geometerplus.fbreader.network.opds.BasketItem;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
-
-public class BuyBasketBooksAction extends CatalogAction {
-	public BuyBasketBooksAction(Activity activity) {
-		super(activity, ActionCode.BASKET_BUY_ALL_BOOKS, "buyAllBooks");
-	}
-
-	@Override
-	public boolean isVisible(NetworkTree tree) {
-		return tree instanceof BasketCatalogTree;
-	}
-
-	@Override
-	protected void run(NetworkTree tree) {
-		// TODO: implement
+public class BasketCatalogTree extends NetworkCatalogTree {
+	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
+		super(parent, item, position);
 	}
 }

@@ -43,7 +43,7 @@ public class OpenCatalogAction extends CatalogAction {
 		if (!super.isVisible(tree)) {
 			return false;
 		}
-		return ((NetworkCatalogTree)tree).Item.canBeOpened();
+		return ((NetworkCatalogTree)tree).canBeOpened();
 	}
 
 	@Override

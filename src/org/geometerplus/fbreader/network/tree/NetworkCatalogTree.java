@@ -55,6 +55,10 @@ public class NetworkCatalogTree extends NetworkTree {
 		return myLink;
 	}
 
+	public final boolean canBeOpened() {
+		return Item.canBeOpened();
+	}
+
 	private void addSearchTree() {
 		if ((Item.getFlags() & NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM) != 0) {
 			final INetworkLink link = getLink();
