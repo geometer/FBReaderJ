@@ -73,13 +73,6 @@ class CatalogExpander extends ItemsLoader<NetworkCatalogTree> {
 	}
 
 	@Override
-	protected void addItem(NetworkItem item) {
-		getTree().ChildrenItems.add(item);
-		NetworkTreeFactory.createNetworkTree(getTree(), item);
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-	}
-
-	@Override
 	protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
 		if (interrupted && (!getTree().Item.supportsResumeLoading() || errorMessage != null)) {
 			getTree().clearCatalog();

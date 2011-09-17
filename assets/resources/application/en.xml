@@ -60,6 +60,13 @@
 		<node name="bySeries" value="By series">
 			<node name="summary" value="Books sorted by series"/>
 		</node>
+		<node name="search" value="Search">
+			<node name="summary" value="Search books on %s" />
+			<node name="summaryAllCatalogs" value="Search books in all catalogs" />
+		</node>
+		<node name="found" value="Found">
+			<node name="summary" value="Search results for: %s" />
+		</node>
 		<node name="openCatalog" value="Open catalog"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
@@ -91,10 +98,6 @@
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />
 		<node name="stoppingNetworkSearch" value="Stopping search" />
-		<node name="search" value="Search" />
-		<node name="searchSummary" value="Search books on %s" />
-		<node name="searchSummaryAllCatalogs" value="Search books in all catalogs" />
-		<node name="searchResults" value="Search results for: %s" />
 		<node name="editCustomCatalog" value="Edit catalog"/>
 		<node name="removeCustomCatalog" value="Remove catalog"/>
 		<node name="addCustomCatalog" value="Add catalog"/>

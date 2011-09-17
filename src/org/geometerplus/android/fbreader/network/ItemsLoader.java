@@ -26,8 +26,9 @@ import android.app.Activity;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
-public abstract class ItemsLoader<T extends NetworkTree> extends NetworkItemsLoader<T> {
+public abstract class ItemsLoader<T extends NetworkCatalogTree> extends NetworkItemsLoader<T> {
 	protected final Activity myActivity;
 
 	private volatile boolean myFinishProcessed;

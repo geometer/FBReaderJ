@@ -70,6 +70,7 @@ public class NetworkSearchActivity extends Activity {
 			}
 		}
 
+			/*
 		@Override
 		protected void addItem(NetworkItem item) {
 			SearchResult result = getTree().getSearchResult();
@@ -79,14 +80,15 @@ public class NetworkSearchActivity extends Activity {
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		}
+			*/
 
 		@Override
 		protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
 			if (interrupted) {
-				getTree().setSearchResult(null);
+				//getTree().setSearchResult(null);
 			} else {
-				getTree().updateSubTrees();
-				afterUpdateCatalog(errorMessage, getTree().getSearchResult().isEmpty());
+				//getTree().updateSubTrees();
+				//afterUpdateCatalog(errorMessage, getTree().getSearchResult().isEmpty());
 			}
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
@@ -133,7 +135,7 @@ public class NetworkSearchActivity extends Activity {
 		final String summary = NetworkLibrary.resource().getResource("searchResults").getValue().replace("%s", pattern);
 		final SearchResult result = new SearchResult(summary);
 
-		tree.setSearchResult(result);
+		//tree.setSearchResult(result);
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 		new Searcher(this, tree, pattern).start();

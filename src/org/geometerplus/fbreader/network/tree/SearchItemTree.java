@@ -19,97 +19,17 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-import java.util.Set;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.SearchItem;
 
-import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
-
-public class SearchItemTree extends NetworkTree {
-	private SearchResult myResult;
-
-	public SearchItemTree(NetworkTree parent, int position) {
-		super(parent, position);
+public class SearchItemTree extends NetworkCatalogTree {
+	public SearchItemTree(RootTree parent, SearchItem item, int position) {
+		super(parent, item, position);
+		setCover(null);
 	}
 
-	@Override
-	public String getName() {
-		return NetworkLibrary.resource().getResource("search").getValue();
-	}
-
-	@Override
-	public String getSummary() {
-		return NetworkLibrary.resource().getResource("searchSummary").getValue();
-	}
-
-	@Override
-	public String getTreeTitle() {
-		if (myResult != null) {
-			return myResult.Summary;
-		}
-		return getName();
-	}
-
-	public void setSearchResult(SearchResult result) {
-		myResult = result;
-		clear();
-	}
-
-	public SearchResult getSearchResult() {
-		return myResult;
-	}
-
-	public void updateSubTrees() {
-		ListIterator<FBTree> nodeIterator = subTrees().listIterator();
-
-		final Set<NetworkBookItem.AuthorData> authorsSet = myResult.BooksMap.keySet();
-
-		for (NetworkBookItem.AuthorData author: authorsSet) {
-			if (nodeIterator != null) {
-				if (nodeIterator.hasNext()) {
-					FBTree currentNode = nodeIterator.next();
-					if (!(currentNode instanceof NetworkAuthorTree)) {
-						throw new RuntimeException("That's impossible!!!");
-					}
-					NetworkAuthorTree child = (NetworkAuthorTree)currentNode;
-					if (!child.Author.equals(author)) {
-						throw new RuntimeException("That's impossible!!!");
-					}
-					LinkedList<NetworkBookItem> authorBooks = myResult.BooksMap.get(author);
-					child.updateSubTrees(authorBooks);
-					continue;
-				}
-				nodeIterator = null;
-			}
-
-			LinkedList<NetworkBookItem> authorBooks = myResult.BooksMap.get(author);
-			if (authorBooks.size() != 0) {
-				NetworkAuthorTree child = new NetworkAuthorTree(this, author);
-				child.updateSubTrees(authorBooks);
-			}
-		}
-		if (nodeIterator != null && nodeIterator.hasNext()) {
-			throw new RuntimeException("That's impossible!!!");
-		}
-	}
-
-	@Override
-	public NetworkItem getHoldedItem() {
-		return null;
-	}
-
-	@Override
-	protected String getStringId() {
-		return "@Search";
-	}
-
-	@Override
-	public int compareTo(FBTree tree) {
-		if (!(tree instanceof SearchItemTree)) {
-			return -1;
-		}
-		return 0;
+	public SearchItemTree(NetworkCatalogTree parent, SearchItem item, int position) {
+		super(parent, item, position);
+		setCover(null);
 	}
 }

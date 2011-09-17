@@ -21,15 +21,17 @@ package org.geometerplus.fbreader.network;
 
 //import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class SearchItem extends NetworkCatalogItem {
 	private static String getInitialSummary(INetworkLink link) {
+		final ZLResource resource = NetworkLibrary.resource().getResource("search");
 		if (link == null) {
-			return NetworkLibrary.resource().getResource("searchSummaryAllCatalogs").getValue();
+			return resource.getResource("summaryAllCatalogs").getValue();
 		} else {
-			return NetworkLibrary.resource().getResource("searchSummary").getValue().replace("%s", link.getSiteName());
+			return resource.getResource("summary").getValue().replace("%s", link.getSiteName());
 		}
 	}
 
