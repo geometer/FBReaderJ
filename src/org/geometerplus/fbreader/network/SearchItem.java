@@ -37,7 +37,7 @@ public class SearchItem extends NetworkCatalogItem {
 		super(
 			link,
 			NetworkLibrary.resource().getResource("search").getValue(),
-			NetworkLibrary.resource().getResource("searchSummaryEmpty").getValue(),
+			getInitialSummary(link),
 			new UrlInfoCollection<UrlInfo>(),
 			Accessibility.ALWAYS,
 			FLAGS_DEFAULT

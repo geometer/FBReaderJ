@@ -130,6 +130,8 @@ class LibraryTreeAdapter extends TreeAdapter {
 				return R.drawable.ic_list_library_tags;
 			} else if (Library.ROOT_FILE_TREE.equals(id)) {
 				return R.drawable.ic_list_library_folder;
+			} else if (Library.ROOT_SEARCH_RESULTS.equals(id)) {
+				return R.drawable.ic_list_library_search;
 			}
 		} else if (tree instanceof FileTree) {
 			final ZLFile file = ((FileTree)tree).getFile();
