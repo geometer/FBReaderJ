@@ -416,26 +416,16 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		for (final NetworkBookActions.Action a : NetworkBookActions.getContextMenuActions(myBook, myConnection)) {
-			if (a.Id == NetworkTreeActions.TREE_NO_ACTION) {
-				continue;
-			}
-
-			final String text;
-			if (a.Arg == null) {
-				text = NetworkLibrary.resource().getResource(a.Key).getValue();
-			} else {
-				text = NetworkLibrary.resource().getResource(a.Key).getValue().replace("%s", a.Arg);
-			}
-
-			addMenuItem(menu, a.Id, text, R.drawable.ic_menu_read);
+		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myBook, myConnection)) {
+			addMenuItem(menu, a.Id, a.getContextLabel(null), R.drawable.ic_menu_read);
 		}
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		return NetworkBookActions.runActionStatic(this, myBook, item.getItemId());
+		a.run(myBook);
+		NetworkBookInfoActivity.this.updateView();
 	}
 
 	@Override
