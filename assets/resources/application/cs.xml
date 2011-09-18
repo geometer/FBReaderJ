@@ -65,7 +65,7 @@
 			<node name="summaryAllCatalogs" value="Hledat knihy v katalozích"/>
 			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
 		</node>
-		<node name="found" value="Found" toBeTranslated="true">
+		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>

@@ -523,6 +523,16 @@
 					<node name="summaryOff" value="纵向翻阅" />
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="字典">
 				<node name="summary" value="字典设定"/>
 				<node name="dictionary" value="字典"/>
@@ -653,6 +663,12 @@
 			<node name="title" value="购买书籍" />
 			<node name="message" value="该书已经买过." />
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Select action" toBeTranslated="true"/>
+			<node name="signIn" value="Sign in" toBeTranslated="true"/>
+			<node name="signUp" value="Sign up" toBeTranslated="true"/>
+			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="无法访问Android官方应用市场. 请手工安装 %s ."/>
@@ -665,6 +681,7 @@
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
 		<node name="emptyCatalog" value="空书库目录"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="浏览器" />

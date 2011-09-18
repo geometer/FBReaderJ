@@ -540,6 +540,16 @@
 					<node name="custom" value="Particularizate&#8230;"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Dictionar">
 				<node name="summary" value="Setari dictionar "/>
 				<node name="dictionary" value="Dictionar"/>
@@ -631,10 +641,6 @@
 			<node name="noRequiredInformation" value="Informatia solicitata nu exista în catalog"/>
 			<node name="cacheDirectoryError" value="Nu se poate crea un directorul de cache"/>
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Rezultateld cautarii"/>
-			<node name="message" value="Nu exista carti potrivite "/>
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Autentificare"/>
 			<node name="unencryptedWarning" value="Parola dvs. va fi trimisa necriptata"/>
@@ -669,6 +675,12 @@
 			<node name="title" value="Cumparati cartea"/>
 			<node name="message" value="Cartea este deja cumparata"/>
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Select action" toBeTranslated="true"/>
+			<node name="signIn" value="Sign in" toBeTranslated="true"/>
+			<node name="signUp" value="Sign up" toBeTranslated="true"/>
+			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Nu pot accesa Android Market. Va rugam, instalati%s manual"/>
@@ -681,6 +693,7 @@
 		<node name="noFavorites" value="Lista ta de favorite este goala, îmi pare rau"/>
 		<node name="emptyCatalog" value="Catalogul este gol, îmi pare rau"/>
 		<node name="emptyBasket" value="Cosul Dvs. este gol, îmi pare rau"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
