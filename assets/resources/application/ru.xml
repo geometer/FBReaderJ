@@ -60,7 +60,16 @@
 		<node name="bySeries" value="По сериям">
 			<node name="summary" value="Книги, разложенные по сериям"/>
 		</node>
+		<node name="search" value="Поиск">
+			<node name="summary" value="Искать книги на %s" />
+			<node name="summaryAllCatalogs" value="Искать книги во всех каталогах" />
+			<node name="summaryInProgress" value="Идет поиск..." />
+		</node>
+		<node name="found" value="Найдено">
+			<node name="summary" value="Результаты поиска для: %s" />
+		</node>
 		<node name="openCatalog" value="Открыть каталог"/>
+		<node name="networkSearch" value="Искать" />
 		<node name="showResults" value="Показать результаты"/>
 		<node name="showBooks" value="Показать книги"/>
 		<node name="download" value="Скачать"/>
@@ -91,9 +100,6 @@
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
 		<node name="stoppingNetworkSearch" value="Завершение поиска" />
-		<node name="search" value="Поиск" />
-		<node name="searchSummary" value="Поиск книг в каталогах" />
-		<node name="searchResults" value="Результаты поиска для: %s" />
 		<node name="editCustomCatalog" value="Изменить каталог"/>
 		<node name="removeCustomCatalog" value="Удалить каталог"/>
 		<node name="addCustomCatalog" value="Добавить каталог"/>
@@ -112,8 +118,8 @@
 			<node name="networkSearch" value="Поиск в сети"/>
 			<node name="reload" value="Обновить"/>
 			<node name="signIn" value="Войти"/>
-			<node name="signOut" value="Выйти (%s)"/>
 			<node name="signUp" value="Регистрация"/>
+			<node name="signOut" value="Выйти (%s)"/>
 			<node name="topup" value="Пополнить счёт"/>
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
@@ -531,6 +537,16 @@
 					<node name="summaryOff" value="При листании страница движется по вертикали"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Словарь">
 				<node name="summary" value="Настройки словаря"/>
 				<node name="dictionary" value="Словарь"/>
@@ -623,10 +639,6 @@
 			<node name="noRequiredInformation" value="Информация нет в каталоге" />
 			<node name="cacheDirectoryError" value="Не удается создать каталог для кэша" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Результаты поиска" />
-			<node name="message" value="Подходящих книг не найдено" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Авторизация" />
 			<node name="unencryptedWarning" value="Пароль пересылается незашифрованным"/>
@@ -661,6 +673,12 @@
 			<node name="title" value="Покупка книги" />
 			<node name="message" value="Книга уже куплена" />
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Выберите действие" />
+			<node name="signIn" value="Вход" />
+			<node name="signUp" value="Регистрация" />
+			<node name="quickBuy" value="Быстрая покупка" />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Не удается запустить Android Market. Попробуйте установить %s вручную"/>
@@ -673,6 +691,7 @@
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
 		<node name="emptyCatalog" value="Каталог пуст"/>
 		<node name="emptyBasket" value="В корзине нет книг"/>
+		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги" />
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>
