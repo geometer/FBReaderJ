@@ -33,11 +33,10 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
 
-import org.geometerplus.android.fbreader.tree.BaseActivity;
-import org.geometerplus.android.fbreader.tree.ListAdapter;
+import org.geometerplus.android.fbreader.tree.TreeAdapter;
 
-class LibraryListAdapter extends ListAdapter {
-	LibraryListAdapter(BaseActivity activity) {
+class LibraryTreeAdapter extends TreeAdapter {
+	LibraryTreeAdapter(LibraryActivity activity) {
 		super(activity);
 	}
 
@@ -90,7 +89,7 @@ class LibraryListAdapter extends ListAdapter {
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
         ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSecondString());
+		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSummary());
 		return view;
 	}
 
@@ -131,6 +130,8 @@ class LibraryListAdapter extends ListAdapter {
 				return R.drawable.ic_list_library_tags;
 			} else if (Library.ROOT_FILE_TREE.equals(id)) {
 				return R.drawable.ic_list_library_folder;
+			} else if (Library.ROOT_SEARCH_RESULTS.equals(id)) {
+				return R.drawable.ic_list_library_search;
 			}
 		} else if (tree instanceof FileTree) {
 			final ZLFile file = ((FileTree)tree).getFile();

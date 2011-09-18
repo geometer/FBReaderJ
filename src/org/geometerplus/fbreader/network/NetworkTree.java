@@ -27,8 +27,6 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class NetworkTree extends FBTree {
-	private Map<String,Object> myUserData;
-
 	protected NetworkTree() {
 		super();
 	}
@@ -39,6 +37,11 @@ public abstract class NetworkTree extends FBTree {
 
 	protected NetworkTree(NetworkTree parent, int position) {
 		super(parent, position);
+	}
+
+	public INetworkLink getLink() {
+		final NetworkTree parent = (NetworkTree)Parent;
+		return parent != null ? parent.getLink() : null;
 	}
 
 	public static ZLImage createCover(NetworkItem item) {
@@ -85,46 +88,27 @@ public abstract class NetworkTree extends FBTree {
 		return null;
 	}
 
-	public abstract NetworkItem getHoldedItem();
-
-	public final synchronized void setUserData(String key, Object data) {
-		if (myUserData == null) {
-			myUserData = new HashMap<String,Object>();
-		}
-		if (data != null) {
-			myUserData.put(key, data);
-		} else {
-			myUserData.remove(key);
-		}
-	}
-
-	public final synchronized Object getUserData(String key) {
-		return myUserData != null ? myUserData.get(key) : null;
-	}
-
-	public void removeItems(Set<NetworkItem> items) {
-		if (items.isEmpty() || subTrees().isEmpty()) {
+	public void removeTrees(Set<NetworkTree> trees) {
+		if (trees.isEmpty() || subTrees().isEmpty()) {
 			return;
 		}
-		final LinkedList<FBTree> treesList = new LinkedList<FBTree>();
-		for (FBTree tree: subTrees()) {
-			final NetworkItem treeItem = ((NetworkTree)tree).getHoldedItem();
-			if (treeItem != null && items.contains(treeItem)) {
-				treesList.add(tree);
-				items.remove(treeItem);
+		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
+		for (FBTree t : subTrees()) {
+			if (trees.contains(t)) {
+				toRemove.add(t);
+				trees.remove(t);
 			}
 		}
-		for (FBTree tree: treesList) {
+		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 		}
-		if (items.isEmpty()) {
+		if (trees.isEmpty()) {
 			return;
 		}
-		treesList.clear();
-		treesList.addAll(subTrees());
-		while (!treesList.isEmpty()) {
-			final NetworkTree tree = (NetworkTree) treesList.remove(treesList.size() - 1);
-			tree.removeItems(items);
+
+		final LinkedList<FBTree> toProcess = new LinkedList<FBTree>(subTrees());
+		while (!toProcess.isEmpty()) {
+			((NetworkTree)toProcess.remove(toProcess.size() - 1)).removeTrees(trees);
 		}
 	}
 }

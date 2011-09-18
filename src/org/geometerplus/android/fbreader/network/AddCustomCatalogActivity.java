@@ -49,10 +49,8 @@ public class AddCustomCatalogActivity extends Activity {
 	private static final String ADD_CATALOG_ID_KEY = "id";
 	private static final String ADD_CATALOG_URLS_MAP_KEY = "urls";
 
-	static void addLinkToIntent(Intent intent, ICustomNetworkLink link) {
-		final String textUrl = link.getUrl(UrlInfo.Type.Catalog);
-		intent.setData(Uri.parse(textUrl));
-		intent
+	public static void addLinkToIntent(Intent intent, ICustomNetworkLink link) {
+		Util.intentByLink(intent, link)
 			.putExtra(ADD_CATALOG_TITLE_KEY, link.getTitle())
 			.putExtra(ADD_CATALOG_SUMMARY_KEY, link.getSummary())
 			.putExtra(ADD_CATALOG_ID_KEY, link.getId())
@@ -167,7 +165,7 @@ public class AddCustomCatalogActivity extends Activity {
 				ADD_CATALOG,
 				uri,
 				AddCustomCatalogActivity.this,
-				NetworkTopLevelActivity.class
+				NetworkLibraryActivity.class
 			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			addLinkToIntent(intent, myLink);
 			startActivity(intent);

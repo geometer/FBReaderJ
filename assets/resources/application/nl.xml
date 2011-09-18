@@ -79,9 +79,6 @@
 		<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
 		<node name="topup" value="Top up account (currently: %s)" toBeTranslated="true"/>
 		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open pagina in de browser" />
 		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
 		<node name="alreadyDownloading" value="Boek wordt gedownload" />
@@ -602,6 +599,7 @@
 			<node name="signOut" value="Afmelden. Een ogenblik..." />
 			<node name="purchaseBook" value="Boek wordt gekocht. Een ogenblik..." />
 			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik..."/>
 		</node>
 		<node name="networkError">
@@ -616,10 +614,6 @@
 			<node name="notAnOPDS" value="Dit is geen OPDS-catalogus" />
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true" />
 			<node name="cacheDirectoryError" value="Maken van de cache-directory is mislukt" />
-		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Zoekresultaten" />
-			<node name="message" value="Er zijn geen geschikte boeken gevonden" />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authenticatie" />
@@ -667,6 +661,7 @@
 		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
 		<node name="emptyCatalog" value="Catalogus is leeg"/>
 		<node name="emptyBasket" value="Je mandje is leeg, sorry"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

@@ -34,7 +34,8 @@ public abstract class PluginApi {
 	}
 
 	public static abstract class ActionInfo implements Parcelable {
-		protected static final int TYPE_MENU = 1;
+		protected static final int TYPE_MAIN_MENU = 1;
+		protected static final int TYPE_TOPUP = 2;
 
 		private final String myId;
 
@@ -60,10 +61,16 @@ public abstract class PluginApi {
 		public static final Creator<ActionInfo> CREATOR = new Creator<ActionInfo>() {
 			public ActionInfo createFromParcel(Parcel parcel) {
 				switch (parcel.readInt()) {
-					case TYPE_MENU:
+					case TYPE_MAIN_MENU:
 						return new MenuActionInfo(
 							Uri.parse(parcel.readString()),
 							parcel.readString()
+						);
+					case TYPE_TOPUP:
+						return new TopupActionInfo(
+							Uri.parse(parcel.readString()),
+							parcel.readString(),
+							parcel.readInt()
 						);
 					default:
 						return null;
@@ -86,13 +93,40 @@ public abstract class PluginApi {
 
 		@Override
 		protected int getType() {
-			return TYPE_MENU;
+			return TYPE_MAIN_MENU;
 		}
 
 		@Override
 		public void writeToParcel(Parcel parcel, int flags) {
 			super.writeToParcel(parcel, flags);
 			parcel.writeString(MenuItemName);
+		}
+	}
+
+	public static class TopupActionInfo extends ActionInfo implements Comparable<TopupActionInfo> {
+		public final String MenuItemName;
+		public final int Weight;
+
+		public TopupActionInfo(Uri id, String menuItemName, int weight) {
+			super(id);
+			MenuItemName = menuItemName;
+			Weight = weight;
+		}
+
+		@Override
+		protected int getType() {
+			return TYPE_TOPUP;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeString(MenuItemName);
+			parcel.writeInt(Weight);
+		}
+
+		public int compareTo(TopupActionInfo info) {
+			return Weight - info.Weight;
 		}
 	}
 }

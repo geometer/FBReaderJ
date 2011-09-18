@@ -160,6 +160,14 @@ public class NetworkBookItem extends NetworkItem {
 		return reference;
 	}
 
+	public BookBuyUrlInfo buyInfo() {
+		final UrlInfo info = reference(UrlInfo.Type.BookBuy);
+		if (info != null) {
+			return (BookBuyUrlInfo)info;
+		}
+		return (BookBuyUrlInfo)reference(UrlInfo.Type.BookBuyInBrowser);
+	}
+
 	public String localCopyFileName() {
 		final boolean hasBuyReference =
 			this.reference(UrlInfo.Type.BookBuy) != null ||

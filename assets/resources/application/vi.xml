@@ -79,9 +79,6 @@
 		<node name="signOut" value="Đăng xuất (%s)"/>
 		<node name="topup" value="Làm đầy lại tài khoản (hiện tại: %s)"/>
 		<node name="topupTitle" value="Làm đầy lại tài khoản"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="Tin nhắn"/>
 		<node name="topupViaBrowser" value="Mở trang trong trình duyệt"/>
 		<node name="topupSummary" value="Hiện tại: %s"/>
 		<node name="alreadyDownloading" value="Sách đang được tải về" />
@@ -602,6 +599,7 @@
 			<node name="signOut" value="Đang thoát. Xin chờ..." />
 			<node name="purchaseBook" value="Mua sách. Xin chờ..." />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..."/>
 		</node>
 		<node name="networkError">
@@ -616,10 +614,6 @@
 			<node name="notAnOPDS" value="Đây không phải là một catalo OPDS" />
 			<node name="noRequiredInformation" value="Thông tin yêu cầu không định vị được trong catalo" />
 			<node name="cacheDirectoryError" value="Không thể tạo thư mục đệm" />
-		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Kết quả Tìm kiếm" />
-			<node name="message" value="Không tìm thấy sách thích hợp" />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Xác thực" />
@@ -667,6 +661,7 @@
 		<node name="noFavorites" value="Xin lỗi, danh sách yêu thích của bạn đang trống"/>
 		<node name="emptyCatalog" value="Danh mục rỗng"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Trình duyệt"/>

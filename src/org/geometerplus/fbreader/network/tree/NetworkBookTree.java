@@ -23,9 +23,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.network.*;
 
-
 public class NetworkBookTree extends NetworkTree {
-
 	public final NetworkBookItem Book;
 
 	private final boolean myShowAuthors;
@@ -66,11 +64,6 @@ public class NetworkBookTree extends NetworkTree {
 	@Override
 	protected ZLImage createCover() {
 		return createCover(Book);
-	}
-
-	@Override
-	public NetworkItem getHoldedItem() {
-		return Book;
 	}
 
 	@Override

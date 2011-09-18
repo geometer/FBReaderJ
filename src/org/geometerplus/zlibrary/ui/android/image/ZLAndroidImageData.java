@@ -64,18 +64,36 @@ public abstract class ZLAndroidImageData implements ZLImageData {
 				options.inJustDecodeBounds = false;
 				int coefficient = 1;
 				if (!ignoreSize) {
-					while ((myRealHeight > maxHeight * coefficient) ||
-						   (myRealWidth > maxWidth *coefficient)) {
-						coefficient *= 2;
+					if (myRealHeight > maxHeight || myRealWidth > maxWidth) {
+						coefficient = 1 + Math.max(
+							(myRealHeight - 1) / maxHeight,
+							(myRealWidth - 1) / maxWidth
+						);
 					}
 				}
 				options.inSampleSize = coefficient;
 				myBitmap = decodeWithOptions(options);
 				if (myBitmap != null) {
+					if (!ignoreSize) {
+						final int bWidth = myBitmap.getWidth();
+						final int bHeight = myBitmap.getHeight();
+						if (bWidth > 0 && bHeight > 0 && (bWidth > maxWidth || bHeight > maxHeight)) {
+							final int w, h;
+							if (bWidth * maxHeight > bHeight * maxWidth) {
+								w = maxWidth;
+								h = bHeight * maxWidth / bWidth;
+							} else {
+								h = maxHeight;
+								w = bWidth * maxHeight / bHeight;
+							}
+							myBitmap = Bitmap.createScaledBitmap(myBitmap, w, h, false);
+						}
+					}
 					myLastRequestedWidth = maxWidth;
 					myLastRequestedHeight = maxHeight;
 				}
 			} catch (OutOfMemoryError e) {
+				e.printStackTrace();
 			}
 		}
 		return myBitmap;

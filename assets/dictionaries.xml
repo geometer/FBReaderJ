@@ -117,4 +117,22 @@
 		pattern="%s"
 		list="installed"
 	/>
+	<dictionary
+		id="Aard Dictionary"
+		package="aarddict.android"
+		class=".Article"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
+		list="installed"
+	/>
+	<dictionary
+		id="Aard Dictionary Lookup"
+		package="aarddict.android"
+		class=".Lookup"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
+		list="installed"
+	/>
 </dictionaries>

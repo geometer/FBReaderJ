@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series">
 			<node name="summary" value="Books sorted by series"/>
 		</node>
+		<node name="search" value="Search">
+			<node name="summary" value="Search books on %s" />
+			<node name="summaryAllCatalogs" value="Search books in all catalogs" />
+			<node name="summaryInProgress" value="Search in progress" />
+		</node>
+		<node name="found" value="Found">
+			<node name="summary" value="Search results for: %s" />
+		</node>
 		<node name="openCatalog" value="Open catalog"/>
+		<node name="networkSearch" value="Search"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
 		<node name="download" value="Download"/>
@@ -72,6 +81,8 @@
 		<node name="buy" value="Buy (%s)"/>
 		<node name="addToBasket" value="Add to basket"/>
 		<node name="removeFromBasket" value="Remove from basket"/>
+		<node name="clearBasket" value="Clear basket"/>
+		<node name="buyAllBooks" value="Buy all books"/>
 		<node name="openInBrowser" value="Open in browser" />
 		<node name="stopLoading" value="Stop loading" />
 		<node name="stopSearching" value="Stop searching" />
@@ -79,20 +90,16 @@
 		<node name="signOut" value="Sign out (%s)"/>
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
-		<node name="topupViaCreditCard" value="Credit card"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk"/>
-		<node name="topupViaSms" value="Text messages"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
-		<node name="basketSummary" value="Books I want to buy"/>
+		<node name="basketSummaryEmpty" value="No books"/>
+		<node name="basketSummaryCountOnly" value="%0 books"/>
+		<node name="basketSummary" value="%0 books (%1)"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />
 		<node name="stoppingNetworkSearch" value="Stopping search" />
-		<node name="search" value="Search" />
-		<node name="searchSummary" value="Search for books in catalogs" />
-		<node name="searchResults" value="Search results for: %s" />
 		<node name="editCustomCatalog" value="Edit catalog"/>
 		<node name="removeCustomCatalog" value="Remove catalog"/>
 		<node name="addCustomCatalog" value="Add catalog"/>
@@ -616,6 +623,7 @@
 			<node name="signOut" value="Signing out. Please, wait&#8230;" />
 			<node name="purchaseBook" value="Purchase book. Please, wait&#8230;" />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;" />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
@@ -630,10 +638,6 @@
 			<node name="notAnOPDS" value="This is not an OPDS catalog" />
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" />
 			<node name="cacheDirectoryError" value="Unable to create cache directory" />
-		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Search results" />
-			<node name="message" value="There are no suitable books found" />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentication" />
@@ -669,6 +673,12 @@
 			<node name="title" value="Purchase book" />
 			<node name="message" value="Book is already bought" />
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Select action" />
+			<node name="signIn" value="Sign in" />
+			<node name="signUp" value="Sign up" />
+			<node name="quickBuy" value="Quick buy" />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Cannot access Android Market. Please, install %s manually"/>
@@ -681,6 +691,7 @@
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
 		<node name="emptyCatalog" value="Catalog is empty, sorry" />
 		<node name="emptyBasket" value="Your basket is empty, sorry" />
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" />
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

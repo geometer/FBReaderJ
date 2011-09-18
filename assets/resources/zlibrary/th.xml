@@ -56,6 +56,7 @@
 		<node name="es" value="เสปน"/>
 		<node name="fi" value="ฟินแลนด์"/>
 		<node name="fr" value="ฝรั่งเศส"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="ฮีบรู"/>
 		<node name="hu" value="ฮังการี"/>
 		<node name="id" value="อินโดนีเซีย"/>
@@ -65,6 +66,7 @@
 		<node name="no" value="นอร์เวย์"/>
 		<node name="pl" value="โปแลนด์"/>
 		<node name="pt" value="โปรตุเกส"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="รัสเซีย"/>
 		<node name="sv" value="สวีเดน"/>
 		<node name="th" value="ไทย" />

@@ -25,17 +25,17 @@ import android.widget.BaseAdapter;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-public abstract class ListAdapter extends BaseAdapter {
-	private final BaseActivity myActivity;
+public abstract class TreeAdapter extends BaseAdapter {
+	private final TreeActivity myActivity;
 	private final List<FBTree> myItems;
 
-	protected ListAdapter(BaseActivity activity) {
+	protected TreeAdapter(TreeActivity activity) {
 		myActivity = activity;
 		myItems = Collections.synchronizedList(new ArrayList<FBTree>());
 		activity.setListAdapter(this);
 	}
 
-	protected BaseActivity getActivity() {
+	protected TreeActivity getActivity() {
 		return myActivity;
 	}
 
