@@ -65,16 +65,18 @@ public class CatalogExpander extends NetworkItemsLoader {
 			getTree().clearCatalog();
 		} else {
 			getTree().removeUnconfirmedItems();
-			getTree().updateLoadedTime();
 			if (!interrupted) {
 				if (errorMessage != null) {
 					NetworkLibrary.Instance().fireModelChangedEvent(
 						NetworkLibrary.ChangeListener.Code.NetworkError, errorMessage
 					);
-				} else if (getTree().subTrees().isEmpty()) {
-					NetworkLibrary.Instance().fireModelChangedEvent(
-						NetworkLibrary.ChangeListener.Code.EmptyCatalog, errorMessage
-					);
+				} else {
+					getTree().updateLoadedTime();
+					if (getTree().subTrees().isEmpty()) {
+						NetworkLibrary.Instance().fireModelChangedEvent(
+							NetworkLibrary.ChangeListener.Code.EmptyCatalog, errorMessage
+						);
+					}
 				}
 			}
 			final NetworkLibrary library = NetworkLibrary.Instance();

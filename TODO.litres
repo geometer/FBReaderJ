@@ -22,6 +22,8 @@ actions:
 DONE single book activity
 depends_on_ip (?)
 
+иконки в main menu
+
 resources for search actions
   errorMessage
   titles/summaries
