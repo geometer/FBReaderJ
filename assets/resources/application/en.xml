@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series">
 			<node name="summary" value="Books sorted by series"/>
 		</node>
+		<node name="search" value="Search">
+			<node name="summary" value="Search books on %s" />
+			<node name="summaryAllCatalogs" value="Search books in all catalogs" />
+			<node name="summaryInProgress" value="Search in progress" />
+		</node>
+		<node name="found" value="Found">
+			<node name="summary" value="Search results for: %s" />
+		</node>
 		<node name="openCatalog" value="Open catalog"/>
+		<node name="networkSearch" value="Search"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
 		<node name="download" value="Download"/>
@@ -91,9 +100,6 @@
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />
 		<node name="stoppingNetworkSearch" value="Stopping search" />
-		<node name="search" value="Search" />
-		<node name="searchSummary" value="Search for books in catalogs" />
-		<node name="searchResults" value="Search results for: %s" />
 		<node name="editCustomCatalog" value="Edit catalog"/>
 		<node name="removeCustomCatalog" value="Remove catalog"/>
 		<node name="addCustomCatalog" value="Add catalog"/>
@@ -633,10 +639,6 @@
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" />
 			<node name="cacheDirectoryError" value="Unable to create cache directory" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Search results" />
-			<node name="message" value="There are no suitable books found" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentication" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" />
@@ -672,7 +674,7 @@
 			<node name="message" value="Book is already bought" />
 		</node>
 		<node name="purchaseActions">
-			<node name="title" value="Choose action" />
+			<node name="title" value="Select action" />
 			<node name="signIn" value="Sign in" />
 			<node name="signUp" value="Sign up" />
 			<node name="quickBuy" value="Quick buy" />
@@ -689,6 +691,7 @@
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
 		<node name="emptyCatalog" value="Catalog is empty, sorry" />
 		<node name="emptyBasket" value="Your basket is empty, sorry" />
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" />
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

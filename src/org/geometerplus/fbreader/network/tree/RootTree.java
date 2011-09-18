@@ -37,11 +37,6 @@ public final class RootTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkItem getHoldedItem() {
-		return null;
-	}
-
-	@Override
 	protected String getStringId() {
 		return myId;
 	}

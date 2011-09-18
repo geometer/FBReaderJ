@@ -19,47 +19,54 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.LinkedList;
+
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
-import org.geometerplus.fbreader.network.urlInfo.*;
 
-public abstract class SearchItem extends NetworkCatalogItem {
-	private String myPattern;
-
-	protected SearchItem(INetworkLink link, String summary) {
+public class SingleCatalogSearchItem extends SearchItem {
+	public SingleCatalogSearchItem(INetworkLink link) {
 		super(
 			link,
-			NetworkLibrary.resource().getResource("search").getValue(),
-			summary,
-			new UrlInfoCollection<UrlInfo>(),
-			Accessibility.ALWAYS,
-			FLAGS_DEFAULT
+			NetworkLibrary.resource().getResource("search").getResource("summary").getValue().replace("%s", link.getSiteName())
 		);
-	}
-
-	public void setPattern(String pattern) {
-		myPattern = pattern;
-	}
-
-	public String getPattern() {
-		return myPattern;
-	}
-
-	@Override
-	public boolean canBeOpened() {
-		return myPattern != null;
 	}
 
 	@Override
 	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 	}
 
-	public abstract void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException;
-
 	@Override
-	public String getStringId() {
-		return "@Search";
+	public void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
+		final NetworkOperationData data = Link.createOperationData(loader);
+		final ZLNetworkRequest request = Link.simpleSearchRequest(pattern, data);
+
+		if (request == null) {
+			return;
+		}
+
+		final LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
+		final LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
+		dataList.add(data);
+		requestList.add(request);
+
+		while (!requestList.isEmpty()) {
+			ZLNetworkManager.Instance().perform(requestList);
+
+			requestList.clear();
+
+			if (loader.confirmInterruption()) {
+				return;
+			}
+			for (NetworkOperationData d : dataList) {
+				ZLNetworkRequest r = data.resume();
+				if (r!= null) {
+					requestList.add(r);
+				}
+			}
+		}
 	}
 }

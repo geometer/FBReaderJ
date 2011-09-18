@@ -60,7 +60,16 @@
 		<node name="bySeries" value="Podle série">
 			<node name="summary" value="Knihy seřazeny podle série"/>
 		</node>
+		<node name="search" value="Hledat">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Hledat knihy v katalozích"/>
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Nalezené">
+			<node name="summary" value="Hledat výsledky pro: %s"/>
+		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>
+		<node name="networkSearch" value="Hledat"/>
 		<node name="showResults" value="Zobrazit výsledky"/>
 		<node name="showBooks" value="Zobrazit knihy"/>
 		<node name="download" value="Stáhnout"/>
@@ -91,9 +100,6 @@
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje"/>
 		<node name="stoppingCatalogLoading" value="Zastavování načítání"/>
 		<node name="stoppingNetworkSearch" value="Zastavování vyhledávání"/>
-		<node name="search" value="Hledat"/>
-		<node name="searchSummary" value="Hledat knihy v katalozích"/>
-		<node name="searchResults" value="Hledat výsledky pro: %s"/>
 		<node name="editCustomCatalog" value="Upravit katalog"/>
 		<node name="removeCustomCatalog" value="Odebrat katalog"/>
 		<node name="addCustomCatalog" value="Přidat katalog"/>
@@ -111,8 +117,8 @@
 		<node name="menu">
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
-			<node name="signIn" value="Přihlásit"/>
-			<node name="signUp" value="Přihlásit"/>
+			<node name="signIn" value="Přihlásit" toBeTranslated="true"/>
+			<node name="signUp" value="Přihlásit" toBeTranslated="true"/>
 			<node name="signOut" value="Odhlásit (%s)"/>
 			<node name="topup" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
@@ -633,10 +639,6 @@
 			<node name="noRequiredInformation" value="Požadovaná informace není uvedena v katalogu"/>
 			<node name="cacheDirectoryError" value="Nelze vytvořit adresář mezipaměti"/>
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Výsledky vyhledávání"/>
-			<node name="message" value="Nebyly nalezeny žádné vhodné knihy"/>
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Ověřování"/>
 			<node name="unencryptedWarning" value="Vaše heslo bude odesláno nešifrovaně"/>
@@ -671,6 +673,12 @@
 			<node name="title" value="Zakoupit knihu"/>
 			<node name="message" value="Kniha je již zakoupena"/>
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Select action" toBeTranslated="true"/>
+			<node name="signIn" value="Sign in" toBeTranslated="true"/>
+			<node name="signUp" value="Sign up" toBeTranslated="true"/>
+			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Android Market není přístupný. Nainstalujte %s ručně"/>
@@ -683,6 +691,7 @@
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
 		<node name="emptyCatalog" value="Katalog je bohužel prázdný"/>
 		<node name="emptyBasket" value="Váš košík je bohužel prázdný"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>

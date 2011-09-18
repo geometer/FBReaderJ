@@ -22,11 +22,17 @@ actions:
 DONE single book activity
 depends_on_ip (?)
 
+иконки в main menu
+
+resources for search actions
+  errorMessage
+  titles/summaries
+	menu items
 Search actions
-  stopping search
+  stop search
+	reload
 проверить все пути регистрации
 
-правильно ли вызывается commitItems?
 передавать сумму денег в topup-activity
 использовать эту сумму в sms и в browser topup
 добавить "другие книги" в "мои книги" по авторам-сериям

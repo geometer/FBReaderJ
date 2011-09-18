@@ -17,41 +17,28 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.network.action;
-
-import java.util.*;
-
-import android.app.Activity;
+package org.geometerplus.fbreader.network.tree;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-import org.geometerplus.android.util.UIUtil;
-
 import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkItem;
-import org.geometerplus.fbreader.network.NetworkOperationData;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.tree.NetworkTreeFactory;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
-import org.geometerplus.android.fbreader.network.ItemsLoader;
-
-class CatalogExpander extends ItemsLoader<NetworkCatalogTree> {
+public class CatalogExpander extends NetworkItemsLoader {
 	private final boolean myCheckAuthentication;
 	private final boolean myResumeNotLoad;
 
-	public CatalogExpander(Activity activity,
-			NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
-		super(activity, tree);
+	public CatalogExpander(NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
+		super(tree);
 		myCheckAuthentication = checkAuthentication;
 		myResumeNotLoad = resumeNotLoad;
 	}
 
 	@Override
 	public void doBefore() throws ZLNetworkException {
-		final INetworkLink link = getTree().Item.Link;
-		if (myCheckAuthentication && link.authenticationManager() != null) {
+		final INetworkLink link = getTree().getLink();
+		if (myCheckAuthentication && link != null && link.authenticationManager() != null) {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
 			try {
 				if (mgr.isAuthorised(true) && mgr.needsInitialization()) {
@@ -73,24 +60,23 @@ class CatalogExpander extends ItemsLoader<NetworkCatalogTree> {
 	}
 
 	@Override
-	protected void addItem(NetworkItem item) {
-		getTree().ChildrenItems.add(item);
-		NetworkTreeFactory.createNetworkTree(getTree(), item);
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-	}
-
-	@Override
-	protected void onFinish(String errorMessage, boolean interrupted, Set<NetworkItem> uncommitedItems) {
+	protected void onFinish(String errorMessage, boolean interrupted) {
 		if (interrupted && (!getTree().Item.supportsResumeLoading() || errorMessage != null)) {
 			getTree().clearCatalog();
 		} else {
-			getTree().removeItems(uncommitedItems);
-			getTree().updateLoadedTime();
+			getTree().removeUnconfirmedItems();
 			if (!interrupted) {
 				if (errorMessage != null) {
-					UIUtil.showMessageText(myActivity, errorMessage);
-				} else if (getTree().ChildrenItems.isEmpty()) {
-					UIUtil.showErrorMessage(myActivity, "emptyCatalog");
+					NetworkLibrary.Instance().fireModelChangedEvent(
+						NetworkLibrary.ChangeListener.Code.NetworkError, errorMessage
+					);
+				} else {
+					getTree().updateLoadedTime();
+					if (getTree().subTrees().isEmpty()) {
+						NetworkLibrary.Instance().fireModelChangedEvent(
+							NetworkLibrary.ChangeListener.Code.EmptyCatalog, errorMessage
+						);
+					}
 				}
 			}
 			final NetworkLibrary library = NetworkLibrary.Instance();

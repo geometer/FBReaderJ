@@ -615,10 +615,6 @@
 			<node name="noRequiredInformation" value="Thông tin yêu cầu không định vị được trong catalo" />
 			<node name="cacheDirectoryError" value="Không thể tạo thư mục đệm" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Kết quả Tìm kiếm" />
-			<node name="message" value="Không tìm thấy sách thích hợp" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Xác thực" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
@@ -665,6 +661,7 @@
 		<node name="noFavorites" value="Xin lỗi, danh sách yêu thích của bạn đang trống"/>
 		<node name="emptyCatalog" value="Danh mục rỗng"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Trình duyệt"/>

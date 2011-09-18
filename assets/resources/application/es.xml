@@ -528,6 +528,16 @@
 					<node name="summaryOff" value="Desplazar las páginas en vertical"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Diccionario">
 				<node name="summary" value="Preferencias del diccionario"/>
 				<node name="dictionary" value="Diccionario"/>
@@ -658,6 +668,12 @@
 			<node name="title" value="Comprar este libro" />
 			<node name="message" value="Este libro ya ha sido comprado" />
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Select action" toBeTranslated="true"/>
+			<node name="signIn" value="Sign in" toBeTranslated="true"/>
+			<node name="signUp" value="Sign up" toBeTranslated="true"/>
+			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="No es posible acceder a Android Market. Instale %s manualmente "/>
@@ -670,6 +686,7 @@
 		<node name="noFavorites" value="Su lista de preferencias está vacía"/>
 		<node name="emptyCatalog" value="El catálogo está vacío"/>
 		<node name="emptyBasket" value="Su cesta está vacía"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>

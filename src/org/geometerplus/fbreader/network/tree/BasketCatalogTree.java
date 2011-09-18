@@ -17,32 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.tree;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import org.geometerplus.fbreader.network.opds.BasketItem;
 
-public class SearchResult {
-	public final String Summary;
-	public final LinkedHashMap<NetworkBookItem.AuthorData, LinkedList<NetworkBookItem>> BooksMap =
-		new LinkedHashMap<NetworkBookItem.AuthorData, LinkedList<NetworkBookItem>>();
-
-	public SearchResult(String summary) {
-		Summary = summary;
-	}
-
-	public void addBook(NetworkBookItem book) {
-		for (NetworkBookItem.AuthorData author: book.Authors) {
-			LinkedList<NetworkBookItem> list = BooksMap.get(author);
-			if (list == null) {
-				list = new LinkedList<NetworkBookItem>();
-				BooksMap.put(author, list);
-			}
-			list.add(book);
-		}
-	}
-
-	public boolean isEmpty() {
-		return BooksMap.size() == 0;
+public class BasketCatalogTree extends NetworkCatalogTree {
+	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
+		super(parent, item, position);
 	}
 }

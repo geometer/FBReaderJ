@@ -22,8 +22,6 @@ package org.geometerplus.android.fbreader.network.action;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -40,13 +38,12 @@ public class SignInAction extends Action {
 			return false;
 		}
 
-		final NetworkCatalogItem item = ((NetworkCatalogRootTree)tree).Item;
-		final NetworkAuthenticationManager mgr = item.Link.authenticationManager();
+		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		return mgr != null && !mgr.mayBeAuthorised(false);
 	}
 
 	@Override
 	protected void run(NetworkTree tree) {
-		Util.runAuthenticationDialog(myActivity, ((NetworkCatalogTree)tree).Item.Link, null);
+		Util.runAuthenticationDialog(myActivity, tree.getLink(), null);
 	}
 }

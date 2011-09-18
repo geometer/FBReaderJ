@@ -24,9 +24,9 @@ import java.util.Map;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.BasketItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
+import org.geometerplus.fbreader.network.tree.CatalogExpander;
 
 import org.geometerplus.android.fbreader.network.Util;
 
@@ -43,63 +43,48 @@ public class OpenCatalogAction extends CatalogAction {
 		if (!super.isVisible(tree)) {
 			return false;
 		}
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-		if (!(item instanceof NetworkURLCatalogItem)) {
-			return true;
-		}
-		return ((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog) != null;
+		return ((NetworkCatalogTree)tree).canBeOpened();
 	}
 
 	@Override
 	public void run(NetworkTree tree) {
-		final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-		if (item instanceof BasketItem && item.Link.basket().bookIds().size() == 0) {
-			UIUtil.showErrorMessage(myActivity, "emptyBasket");
-		} else {
-			doExpandCatalog((NetworkCatalogTree)tree);
-		}
-	}
-
-	private void tryResumeLoading(final Activity activity, NetworkCatalogTree tree, final Runnable expandRunnable) {
-		final NetworkItemsLoader loader = NetworkLibrary.Instance().getStoredLoader(tree);
-		if (loader != null && loader.canResumeLoading()) {
-			Util.openTree(activity, tree);
-			return;
-		}
-		if (loader == null) {
-			expandRunnable.run();
-		} else {
-			loader.setPostRunnable(new Runnable() {
-				public void run() {
-					activity.runOnUiThread(expandRunnable);
-				}
-			});
-		}
+		doExpandCatalog((NetworkCatalogTree)tree);
 	}
 
 	private void doExpandCatalog(final NetworkCatalogTree tree) {
-		tryResumeLoading(myActivity, tree, new Runnable() {
-			public void run() {
-				boolean resumeNotLoad = false;
-				if (tree.hasChildren()) {
-					if (tree.isContentValid()) {
-						if (tree.Item.supportsResumeLoading()) {
-							resumeNotLoad = true;
-						} else {
-							Util.openTree(myActivity, tree);
-							return;
-						}
-					} else {
-						tree.clearCatalog();
-					}
+		final NetworkItemsLoader loader = NetworkLibrary.Instance().getStoredLoader(tree);
+		if (loader != null && loader.canResumeLoading()) {
+			Util.openTree(myActivity, tree);
+		} else if (loader != null) {
+			loader.setPostRunnable(new Runnable() {
+				public void run() {
+					doLoadCatalog(tree);
 				}
+			});
+		} else {
+			doLoadCatalog(tree);
+		}
+	}
 
-				new CatalogExpander(myActivity, tree, true, resumeNotLoad).start();
-				processExtraData(tree.Item.extraData(), new Runnable() {
-					public void run() {
-						Util.openTree(myActivity, tree);
-					}
-				});
+	private void doLoadCatalog(final NetworkCatalogTree tree) {
+		boolean resumeNotLoad = false;
+		if (tree.hasChildren()) {
+			if (tree.isContentValid()) {
+				if (tree.Item.supportsResumeLoading()) {
+					resumeNotLoad = true;
+				} else {
+					Util.openTree(myActivity, tree);
+					return;
+				}
+			} else {
+				tree.clearCatalog();
+			}
+		}
+
+		new CatalogExpander(tree, true, resumeNotLoad).start();
+		processExtraData(tree.Item.extraData(), new Runnable() {
+			public void run() {
+				Util.openTree(myActivity, tree);
 			}
 		});
 	}

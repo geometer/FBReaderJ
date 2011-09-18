@@ -24,9 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -38,17 +36,19 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 public class NetworkLibrary {
 	public interface ChangeListener {
 		public enum Code {
-			SomeCode
+			SomeCode,
 			/*
 			ItemAdded,
 			ItemRemoved,
 			StatusChanged,
-			Found,
-			NotFound
 			*/
+			Found,
+			NotFound,
+			EmptyCatalog,
+			NetworkError
 		}
 
-		void onLibraryChanged(Code code);
+		void onLibraryChanged(Code code, Object[] params);
 	}
 
 	private static NetworkLibrary ourInstance;
@@ -130,7 +130,7 @@ public class NetworkLibrary {
 		return builder.toString();
 	}
 
-	private List<INetworkLink> activeLinks() {
+	List<INetworkLink> activeLinks() {
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
 		final Collection<String> codes = activeLanguageCodes();
 		synchronized (myLinks) {
@@ -173,6 +173,8 @@ public class NetworkLibrary {
 	private boolean myUpdateVisibility;
 
 	private volatile boolean myIsInitialized;
+
+	private final SearchItem mySearchItem = new AllCatalogsSearchItem();
 
 	private NetworkLibrary() {
 	}
@@ -280,18 +282,6 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
-//	private static boolean linkIsChanged(INetworkLink link) {
-//		return
-//			link instanceof ICustomNetworkLink &&
-//			((ICustomNetworkLink)link).hasChanges();
-//	}
-
-//	private static void makeValid(INetworkLink link) {
-//		if (link instanceof ICustomNetworkLink) {
-//			((ICustomNetworkLink)link).resetChanges();
-//		}
-//	}
-
 	private void makeUpToDate() {
 		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
 
@@ -300,7 +290,7 @@ public class NetworkLibrary {
 		// we do remove sum tree items:
 		for (FBTree t : myRootTree.subTrees()) {
 			if (t instanceof NetworkCatalogTree) {
-				final INetworkLink link = ((NetworkCatalogTree)t).Item.Link;
+				final INetworkLink link = ((NetworkCatalogTree)t).getLink();
 				if (link != null) {
 					if (!linkSet.contains(link)) {
                         // 1. links not listed in activeLinks list right now
@@ -329,7 +319,7 @@ public class NetworkLibrary {
 		for (INetworkLink link : linkSet) {
 			int index = 0;
 			for (FBTree t : myRootTree.subTrees()) {
-				final INetworkLink l = ((NetworkCatalogTree)t).Item.Link;
+				final INetworkLink l = ((NetworkTree)t).getLink();
 				if (l != null && link.compareTo(l) <= 0) {
 					break;
 				}
@@ -338,7 +328,7 @@ public class NetworkLibrary {
 			new NetworkCatalogRootTree(myRootTree, link, index);
 		}
 		// we do add non-catalog items
-		new NetworkCatalogTree(myRootTree, new SearchItem(null), 0);
+		new SearchCatalogTree(myRootTree, mySearchItem, 0);
 		new AddCustomCatalogItemTree(myRootTree);
 
 		fireModelChangedEvent(ChangeListener.Code.SomeCode);
@@ -376,7 +366,7 @@ public class NetworkLibrary {
 				return ncTree;
 			}
 		}
-		return new NetworkCatalogTree(myFakeRootTree, item, 0);
+		return new NetworkCatalogTree(myFakeRootTree, item.Link, item, 0);
 	}
 
 	public NetworkTree getTreeByKey(NetworkTree.Key key) {
@@ -397,36 +387,6 @@ public class NetworkLibrary {
 			return null;
 		}
 		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
-	}
-
-	public void simpleSearch(String pattern, final NetworkItemsLoader loader) throws ZLNetworkException {
-		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
-		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
-
-		for (INetworkLink link : activeLinks()) {
-			final NetworkOperationData data = link.createOperationData(loader);
-			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
-			if (request != null) {
-				dataList.add(data);
-				requestList.add(request);
-			}
-		}
-
-		while (requestList.size() != 0) {
-			ZLNetworkManager.Instance().perform(requestList);
-
-			requestList.clear();
-
-			if (loader.confirmInterruption()) {
-				return;
-			}
-			for (NetworkOperationData data : dataList) {
-				ZLNetworkRequest request = data.resume();
-				if (request != null) {
-					requestList.add(request);
-				}
-			}
-		}
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
@@ -463,10 +423,10 @@ public class NetworkLibrary {
 	}
 
 	// TODO: change to private
-	/*private*/ public void fireModelChangedEvent(ChangeListener.Code code) {
+	/*private*/ public void fireModelChangedEvent(ChangeListener.Code code, Object ... params) {
 		synchronized (myListeners) {
 			for (ChangeListener l : myListeners) {
-				l.onLibraryChanged(code);
+				l.onLibraryChanged(code, params);
 			}
 		}
 	}
@@ -476,7 +436,7 @@ public class NetworkLibrary {
 	}
 
 	public final NetworkItemsLoader getStoredLoader(NetworkTree tree) {
-		return myLoaders.get(tree);
+		return tree != null ? myLoaders.get(tree) : null;
 	}
 
 	public final void removeStoredLoader(NetworkTree tree) {

@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	private int myId;
@@ -119,6 +120,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 				ids = new ArrayList<String>(ids);
 				ids.add(book.Id);
 				myBooksInBasketOption.setValue(ids);
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		}
 	}
@@ -131,6 +133,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 				ids = new ArrayList<String>(ids);
 				ids.remove(book.Id);
 				myBooksInBasketOption.setValue(ids);
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		}
 	}
@@ -138,6 +141,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	// method from Basket interface
 	public final void clear() {
 		myBooksInBasketOption.setValue(null);
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	// method from Basket interface

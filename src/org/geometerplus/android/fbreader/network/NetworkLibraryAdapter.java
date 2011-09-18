@@ -59,7 +59,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
 
 		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
+		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSummary());
 
 		if (myCoverWidth == -1) {
 			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -94,13 +94,8 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	}
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
-		if (tree instanceof NetworkCatalogTree && tree.getHoldedItem() instanceof SearchItem) {
-			coverView.setImageResource(R.drawable.ic_list_library_books);
-			return;
-		}
-
 		Bitmap coverBitmap = null;
-		ZLImage cover = tree.getCover();
+		final ZLImage cover = tree.getCover();
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
@@ -122,6 +117,8 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			coverView.setImageBitmap(coverBitmap);
 		} else if (tree instanceof NetworkBookTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
+		} else if (tree instanceof SearchCatalogTree) {
+			coverView.setImageResource(R.drawable.ic_list_library_search);
 		} else if (tree instanceof AddCustomCatalogItemTree) {
 			coverView.setImageResource(R.drawable.ic_list_plus);
 		} else {

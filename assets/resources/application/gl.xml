@@ -665,6 +665,7 @@
 		<node name="noFavorites" value="A súa lista de preferencias está baleira"/>
 		<node name="emptyCatalog" value="O catálogo está baleiro"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>

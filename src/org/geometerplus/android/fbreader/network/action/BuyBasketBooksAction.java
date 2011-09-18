@@ -22,8 +22,7 @@ package org.geometerplus.android.fbreader.network.action;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.opds.BasketItem;
+import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 
 public class BuyBasketBooksAction extends CatalogAction {
 	public BuyBasketBooksAction(Activity activity) {
@@ -32,13 +31,7 @@ public class BuyBasketBooksAction extends CatalogAction {
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		if (super.isVisible(tree)) {
-			System.err.println(((NetworkCatalogTree)tree).Item);
-		}
-			
-		return
-			super.isVisible(tree) &&
-			((NetworkCatalogTree)tree).Item instanceof BasketItem;
+		return tree instanceof BasketCatalogTree && ((BasketCatalogTree)tree).canBeOpened();
 	}
 
 	@Override

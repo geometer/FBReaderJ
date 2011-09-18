@@ -39,6 +39,11 @@ public abstract class NetworkTree extends FBTree {
 		super(parent, position);
 	}
 
+	public INetworkLink getLink() {
+		final NetworkTree parent = (NetworkTree)Parent;
+		return parent != null ? parent.getLink() : null;
+	}
+
 	public static ZLImage createCover(NetworkItem item) {
 		final String imageUrl = item.getImageUrl();
 		if (imageUrl == null) {
@@ -83,31 +88,27 @@ public abstract class NetworkTree extends FBTree {
 		return null;
 	}
 
-	public abstract NetworkItem getHoldedItem();
-
-	public void removeItems(Set<NetworkItem> items) {
-		if (items.isEmpty() || subTrees().isEmpty()) {
+	public void removeTrees(Set<NetworkTree> trees) {
+		if (trees.isEmpty() || subTrees().isEmpty()) {
 			return;
 		}
-		final LinkedList<FBTree> treesList = new LinkedList<FBTree>();
-		for (FBTree tree: subTrees()) {
-			final NetworkItem treeItem = ((NetworkTree)tree).getHoldedItem();
-			if (treeItem != null && items.contains(treeItem)) {
-				treesList.add(tree);
-				items.remove(treeItem);
+		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
+		for (FBTree t : subTrees()) {
+			if (trees.contains(t)) {
+				toRemove.add(t);
+				trees.remove(t);
 			}
 		}
-		for (FBTree tree: treesList) {
+		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 		}
-		if (items.isEmpty()) {
+		if (trees.isEmpty()) {
 			return;
 		}
-		treesList.clear();
-		treesList.addAll(subTrees());
-		while (!treesList.isEmpty()) {
-			final NetworkTree tree = (NetworkTree) treesList.remove(treesList.size() - 1);
-			tree.removeItems(items);
+
+		final LinkedList<FBTree> toProcess = new LinkedList<FBTree>(subTrees());
+		while (!toProcess.isEmpty()) {
+			((NetworkTree)toProcess.remove(toProcess.size() - 1)).removeTrees(trees);
 		}
 	}
 }

@@ -17,14 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.tree;
 
 import java.util.*;
 
-public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runnable {
-	private final T myTree;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-	protected NetworkItemsLoader(T tree) {
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.NetworkItem;
+
+public abstract class NetworkItemsLoader implements Runnable {
+	private final NetworkCatalogTree myTree;
+
+	private volatile Runnable myPostRunnable;
+	private volatile boolean myFinishedFlag;
+
+	protected NetworkItemsLoader(NetworkCatalogTree tree) {
 		myTree = tree;
 	}
 
@@ -34,12 +42,41 @@ public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runna
 		loaderThread.start();
 	}
 
-	protected T getTree() {
+	public NetworkCatalogTree getTree() {
 		return myTree;
 	}
 
-	public abstract void setPostRunnable(Runnable runnable);
-	protected abstract void addItem(NetworkItem item);
+	public final void run() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+
+		try {
+			library.storeLoader(getTree(), this);
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+
+			try {
+				doBefore();
+			} catch (ZLNetworkException e) {
+				onFinish(e.getMessage(), false);
+				return;
+			}
+
+			try {
+				doLoading();
+				onFinish(null, isLoadingInterrupted());
+			} catch (ZLNetworkException e) {
+				onFinish(e.getMessage(), isLoadingInterrupted());
+			}
+		} finally {
+			library.removeStoredLoader(getTree());
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+			synchronized (this) {
+				if (myPostRunnable != null) {
+					myPostRunnable.run();
+					myFinishedFlag = true;
+				}
+			}
+		}
+	}
 
 	private final Object myInterruptLock = new Object();
 	private enum InterruptionState {
@@ -64,7 +101,7 @@ public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runna
 		}
 	}
 
-	public final void interrupt() {
+	public void interrupt() {
 		synchronized (myInterruptLock) {
 			if (myInterruptionState == InterruptionState.NONE) {
 				myInterruptionState = InterruptionState.REQUESTED;
@@ -81,21 +118,19 @@ public abstract class NetworkItemsLoader<T extends NetworkTree> implements Runna
 		}
 	}
 
-	private final List<NetworkItem> myUncommitedItems =
-		Collections.synchronizedList(new LinkedList<NetworkItem>());
+	public void onNewItem(final NetworkItem item) {
+		getTree().addItem(item);
+	}
 
-	protected final Set<NetworkItem> uncommitedItems() {
-		synchronized (myUncommitedItems) {
-			return new HashSet<NetworkItem>(myUncommitedItems);
+	public synchronized void setPostRunnable(Runnable action) {
+		if (myFinishedFlag) {
+			action.run();
+		} else {
+			myPostRunnable = action;
 		}
 	}
 
-	public final void onNewItem(final NetworkItem item) {
-		myUncommitedItems.add(item);
-		addItem(item);
-	}
-
-	public final void commitItems() {
-		myUncommitedItems.clear();
-	}
+	protected abstract void onFinish(String errorMessage, boolean interrupted);
+	protected abstract void doBefore() throws ZLNetworkException;
+	protected abstract void doLoading() throws ZLNetworkException;
 }

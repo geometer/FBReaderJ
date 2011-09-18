@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class OPDSCatalogItem extends NetworkURLCatalogItem {
 	static class State extends NetworkOperationData {
@@ -72,20 +73,9 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		return myExtraData;
 	}
 
-	protected String getCatalogUrl() {
-		return getUrl(UrlInfo.Type.Catalog);
-	}
-
 	@Override
 	public final void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
-
-		if ((getFlags() & FLAG_ADD_SEARCH_ITEM) != 0) {
-			if (opdsLink.getUrl(UrlInfo.Type.Search) != null) {
-				loader.onNewItem(new SearchItem(opdsLink));
-				loader.commitItems();
-			}
-		}
 
 		myLoadingState = opdsLink.createOperationData(loader);
 

@@ -65,6 +65,7 @@
 		<node name="no" value="Noruegués" />
 		<node name="pl" value="Polaco" />
 		<node name="pt" value="Portugués" />
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="Ruso" />
 		<node name="sv" value="Sueco" />
 		<node name="th" value="Thai" toBeTranslated="true"/>

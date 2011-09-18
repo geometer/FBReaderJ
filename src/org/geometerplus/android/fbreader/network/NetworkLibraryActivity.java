@@ -38,6 +38,8 @@ import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.fbreader.network.action.*;
 
+import org.geometerplus.android.util.UIUtil;
+
 public class NetworkLibraryActivity extends TreeActivity implements NetworkLibrary.ChangeListener {
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int SIGNUP_CODE = 2;
@@ -86,12 +88,9 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	}
 
 	@Override
-	protected FBTree getTreeByKey(FBTree.Key key) {
+	protected NetworkTree getTreeByKey(FBTree.Key key) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
-		FBTree tree = null;
-		if (key != null) {
-			tree = library.getTreeByKey(key);
-		}
+		final NetworkTree tree = library.getTreeByKey(key);
 		return tree != null ? tree : library.getRootTree();
 	}
 
@@ -135,12 +134,13 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	@Override
 	public boolean onSearchRequested() {
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
-		if (!new RunSearchAction(this).isEnabled(tree)) {
+		final RunSearchAction action = new RunSearchAction(this, false);
+		if (action.isVisible(tree) && action.isEnabled(tree)) {
+			action.run(tree);
+			return true;
+		} else {
 			return false;
 		}
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		startSearch(library.NetworkSearchPatternOption.getValue(), true, null, false);
-		return true;
 	}
 
 	@Override
@@ -166,7 +166,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	}
 
 	private void fillOptionsMenuList() {
-		myOptionsMenuActions.add(new RunSearchAction(this));
+		myOptionsMenuActions.add(new RunSearchAction(this, false));
 		myOptionsMenuActions.add(new AddCustomCatalogAction(this));
 		myOptionsMenuActions.add(new RefreshRootCatalogAction(this));
 		myOptionsMenuActions.add(new LanguageFilterAction(this));
@@ -182,6 +182,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	private void fillContextMenuList() {
 		myContextMenuActions.add(new OpenCatalogAction(this));
 		myContextMenuActions.add(new OpenInBrowserAction(this));
+		myContextMenuActions.add(new RunSearchAction(this, true));
 		myContextMenuActions.add(new AddCustomCatalogAction(this));
 		myContextMenuActions.add(new SignOutAction(this));
 		myContextMenuActions.add(new TopupAction(this));
@@ -195,6 +196,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	private void fillListClickList() {
 		myListClickActions.add(new OpenCatalogAction(this));
 		myListClickActions.add(new OpenInBrowserAction(this));
+		myListClickActions.add(new RunSearchAction(this, true));
 		myListClickActions.add(new ShowBooksAction(this));
 		myListClickActions.add(new AddCustomCatalogAction(this));
 		myListClickActions.add(new TopupAction(this));
@@ -267,10 +269,10 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 				myCredentialsCreator.onDataReceived(resultCode, intent);
 				break;
 			case SIGNUP_CODE:
-				Util.processSignup(((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);
+				Util.processSignup(((NetworkTree)getCurrentTree()).getLink(), resultCode, intent);
 				break;
 			case AUTO_SIGNIN_CODE:
-				Util.processAutoSignIn(this, ((NetworkCatalogTree)getCurrentTree()).Item.Link, resultCode, intent);
+				Util.processAutoSignIn(this, ((NetworkTree)getCurrentTree()).getLink(), resultCode, intent);
 				break;
 		}
 	}
@@ -323,23 +325,40 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		return true;
 	}
 
+	private void updateLoadingProgress() {
+		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree lTree = getLoadableNetworkTree(tree);
+		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
+		setProgressBarIndeterminateVisibility(
+			NetworkLibrary.Instance().getStoredLoader(lTree) != null ||
+			NetworkLibrary.Instance().getStoredLoader(sTree) != null
+		);
+	}
+
 	// method from NetworkLibrary.ChangeListener
-	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code) {
+	public void onLibraryChanged(final NetworkLibrary.ChangeListener.Code code, final Object[] params) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
-				final boolean inProgress =
-					tree != null &&
-					NetworkLibrary.Instance().getStoredLoader(tree) != null;
-				setProgressBarIndeterminateVisibility(inProgress);
-
-				getListAdapter().replaceAll(getCurrentTree().subTrees());
-				getListView().invalidateViews();
-
-				for (FBTree child : getCurrentTree().subTrees()) {
-					if (child instanceof TopUpTree) {
-						child.invalidateSummary();
+				switch (code) {
+					default:
+					{
+						updateLoadingProgress();
+						getListAdapter().replaceAll(getCurrentTree().subTrees());
+						getListView().invalidateViews();
+						break;
 					}
+					case Found:
+						openTree((NetworkTree)params[0]);
+						break;
+					case NotFound:
+						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyNetworkSearchResults");
+						break;
+					case EmptyCatalog:
+						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyCatalog");
+						break;
+					case NetworkError:
+						UIUtil.showMessageText(NetworkLibraryActivity.this, (String)params[0]);
+						break;
 				}
 			}
 		});

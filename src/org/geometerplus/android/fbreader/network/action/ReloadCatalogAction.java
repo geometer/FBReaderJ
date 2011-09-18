@@ -19,15 +19,18 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
+import org.geometerplus.zlibrary.ui.android.R;
+
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.CatalogExpander;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class ReloadCatalogAction extends CatalogAction {
 	public ReloadCatalogAction(NetworkLibraryActivity activity) {
-		super(activity, ActionCode.RELOAD_CATALOG, "reload");
+		super(activity, ActionCode.RELOAD_CATALOG, "reload", R.drawable.ic_menu_refresh);
 	}
 
 	@Override
@@ -50,6 +53,6 @@ public class ReloadCatalogAction extends CatalogAction {
 			return;
 		}
 		((NetworkCatalogTree)tree).clearCatalog();
-		new CatalogExpander(myActivity, (NetworkCatalogTree)tree, false, false).start();
+		new CatalogExpander((NetworkCatalogTree)tree, false, false).start();
 	}
 }

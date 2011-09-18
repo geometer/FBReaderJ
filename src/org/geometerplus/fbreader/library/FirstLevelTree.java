@@ -44,11 +44,11 @@ public class FirstLevelTree extends LibraryTree {
 
 	@Override
 	public String getTreeTitle() {
-		return getSecondString();
+		return getSummary();
 	}
 
 	@Override
-	protected String getSummary() {
+	public String getSummary() {
 		return myResource.getResource("summary").getValue();
 	}
 

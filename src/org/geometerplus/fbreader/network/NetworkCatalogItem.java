@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class NetworkCatalogItem extends NetworkItem {
 	// bit mask for flags parameter
@@ -75,6 +76,8 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 		return Collections.emptyMap();
 	}
 
+	public abstract boolean canBeOpened();
+
 	public abstract void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException;
 
 	public boolean supportsResumeLoading() {
@@ -94,6 +97,10 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	}
 
 	public ZLBoolean3 getVisibility() {
+		if (Link == null) {
+			return ZLBoolean3.B3_TRUE;
+		}
+
 		final NetworkAuthenticationManager mgr = Link.authenticationManager();
 		switch (myAccessibility) {
 			default:

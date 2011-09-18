@@ -22,8 +22,7 @@ package org.geometerplus.android.fbreader.network.action;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.opds.BasketItem;
+import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 
 public class ClearBasketAction extends CatalogAction {
 	public ClearBasketAction(Activity activity) {
@@ -32,13 +31,11 @@ public class ClearBasketAction extends CatalogAction {
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		return
-			super.isVisible(tree) &&
-			((NetworkCatalogTree)tree).Item instanceof BasketItem;
+		return tree instanceof BasketCatalogTree && ((BasketCatalogTree)tree).canBeOpened();
 	}
 
 	@Override
 	protected void run(NetworkTree tree) {
-		((NetworkCatalogTree)tree).Item.Link.basket().clear();
+		tree.getLink().basket().clear();
 	}
 }
