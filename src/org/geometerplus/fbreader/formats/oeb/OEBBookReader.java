@@ -56,6 +56,14 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 
 	OEBBookReader(BookModel model) {
 		myModelReader = new BookReader(model);
+		model.setLabelResolver(new BookModel.LabelResolver() {
+			public List<String> getCandidates(String id) {
+				final int index = id.indexOf("#");
+				return index > 0
+					? Collections.<String>singletonList(id.substring(0, index))
+					: Collections.<String>emptyList();
+			}
+		});
 	}
 
 	private TreeMap<String,Integer> myFileNumbers = new TreeMap<String,Integer>();
@@ -80,6 +88,10 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 
 		for (String name : myHtmlFileNames) {
 			final ZLFile xhtmlFile = ZLFile.createFileByPath(myFilePrefix + name);
+			if (xhtmlFile == null) {
+				// NPE fix: null for bad attributes in .opf XML file
+				return false;
+			}
 			final XHTMLReader reader = new XHTMLReader(myModelReader, myFileNumbers);
 			final String referenceName = reader.getFileAlias(MiscUtil.archiveEntryName(xhtmlFile.getPath()));
 

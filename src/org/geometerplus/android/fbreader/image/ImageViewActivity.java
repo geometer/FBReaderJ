@@ -79,6 +79,7 @@ public class ImageViewActivity extends Activity {
 				myBitmap = ((ZLAndroidImageData)imageData).getFullSizeBitmap();
 			} catch (Exception e) {
 				// TODO: error message (?)
+				e.printStackTrace();
 				finish();
 			}
 		} else {

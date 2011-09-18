@@ -20,11 +20,8 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
-import android.os.Handler;
-import android.os.Message;
 import android.content.Context;
 import android.view.*;
-import android.view.animation.AlphaAnimation;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.ui.android.R;

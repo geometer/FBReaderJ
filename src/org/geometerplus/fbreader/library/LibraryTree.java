@@ -113,10 +113,16 @@ public abstract class LibraryTree extends FBTree {
 					parent.removeSelf();
 				}
 			}
-			for (; parent != null; parent = parent.Parent) {
-				((LibraryTree)parent).invalidateChildren();
-			}
 		}
 		return !toRemove.isEmpty();
+	}
+
+	@Override
+	public int compareTo(FBTree tree) {
+		final int cmp = super.compareTo(tree);
+		if (cmp == 0) {
+			return getClass().getSimpleName().compareTo(tree.getClass().getSimpleName());
+		}
+		return cmp;
 	}
 }

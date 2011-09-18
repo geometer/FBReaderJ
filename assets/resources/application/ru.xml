@@ -48,19 +48,28 @@
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
-		<node name="byAuthor" value="Авторы">
+		<node name="byAuthor" value="По авторам">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>
-		<node name="byTitle" value="Названия">
-			<node name="summary" value="Книги, разложенные по названиям"/>
+		<node name="byTitle" value="По названиям">
+			<node name="summary" value="Книги, отсортированные по названиям"/>
 		</node>
-		<node name="byDate" value="Дата">
-			<node name="summary" value="Книги, разложенные по дате покупки"/>
+		<node name="byDate" value="По дате">
+			<node name="summary" value="Книги, отсортированные по дате покупки"/>
 		</node>
 		<node name="bySeries" value="По сериям">
 			<node name="summary" value="Книги, разложенные по сериям"/>
 		</node>
+		<node name="search" value="Поиск">
+			<node name="summary" value="Искать книги на %s" />
+			<node name="summaryAllCatalogs" value="Искать книги во всех каталогах" />
+			<node name="summaryInProgress" value="Идет поиск..." />
+		</node>
+		<node name="found" value="Найдено">
+			<node name="summary" value="Результаты поиска для: %s" />
+		</node>
 		<node name="openCatalog" value="Открыть каталог"/>
+		<node name="networkSearch" value="Искать" />
 		<node name="showResults" value="Показать результаты"/>
 		<node name="showBooks" value="Показать книги"/>
 		<node name="download" value="Скачать"/>
@@ -71,26 +80,26 @@
 		<node name="downloadDemo" value="Скачать фрагмент"/>
 		<node name="buy" value="Купить (%s)"/>
 		<node name="addToBasket" value="Добавить в корзину"/>
-		<node name="removeFromBasket" value="Убрать из корзины"/>
+		<node name="removeFromBasket" value="Удалить из корзины"/>
+		<node name="clearBasket" value="Очистить корзину"/>
+		<node name="buyAllBooks" value="Купить все книги"/>
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="stopLoading" value="Остановить загрузку" />
 		<node name="stopSearching" value="Остановить поиск" />
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
-		<node name="topup" value="Пополнить счёт (текущий счёт: %s)" />
+		<node name="topup" value="Пополнить счёт (баланс: %s)" />
 		<node name="topupTitle" value="Пополнить счёт"/>
-		<node name="topupViaCreditCard" value="Кредитной картой"/>
-		<node name="topupViaSelfServiceKiosk" value="В платежном терминале"/>
-		<node name="topupViaSms" value="Платной SMS"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
+		<node name="basket" value="Корзина"/>
+		<node name="basketSummaryEmpty" value="Пустая корзина"/>
+		<node name="basketSummaryCountOnly" value="Книг: %0"/>
+		<node name="basketSummary" value="Книг: %0, на сумму %1"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
 		<node name="stoppingNetworkSearch" value="Завершение поиска" />
-		<node name="search" value="Поиск" />
-		<node name="searchSummary" value="Поиск книг в каталогах" />
-		<node name="searchResults" value="Результаты поиска для: %s" />
 		<node name="editCustomCatalog" value="Изменить каталог"/>
 		<node name="removeCustomCatalog" value="Удалить каталог"/>
 		<node name="addCustomCatalog" value="Добавить каталог"/>
@@ -109,12 +118,14 @@
 			<node name="networkSearch" value="Поиск в сети"/>
 			<node name="reload" value="Обновить"/>
 			<node name="signIn" value="Войти"/>
-			<node name="signOut" value="Выйти (%s)"/>
 			<node name="signUp" value="Регистрация"/>
+			<node name="signOut" value="Выйти (%s)"/>
 			<node name="topup" value="Пополнить счёт"/>
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
 			<node name="languages" value="Фильтр по языку"/>
+			<node name="clearBasket" value="Очистить корзину"/>
+			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -526,6 +537,16 @@
 					<node name="summaryOff" value="При листании страница движется по вертикали"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Словарь">
 				<node name="summary" value="Настройки словаря"/>
 				<node name="dictionary" value="Словарь"/>
@@ -602,11 +623,12 @@
 			<node name="signOut" value="Выход из системы. Подождите, пожалуйста..." />
 			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста..." />
 			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
+			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста..." />
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
-			<node name="purchaseNotEnoughMoney" value="Недостаточно средств на счете" />
+			<node name="purchaseNotEnoughMoney" value="Недостаточно средств на счёте" />
 			<node name="purchaseMissingBook" value="Книга отсутствует в продаже" />
 			<node name="purchaseAlreadyPurchased" value="Книга уже была куплена" />
 			<node name="bookNotPurchased" value="Книга не была куплена" />
@@ -616,10 +638,6 @@
 			<node name="notAnOPDS" value="Это не OPDS каталог" />
 			<node name="noRequiredInformation" value="Информация нет в каталоге" />
 			<node name="cacheDirectoryError" value="Не удается создать каталог для кэша" />
-		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Результаты поиска" />
-			<node name="message" value="Подходящих книг не найдено" />
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Авторизация" />
@@ -655,6 +673,12 @@
 			<node name="title" value="Покупка книги" />
 			<node name="message" value="Книга уже куплена" />
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Выберите действие" />
+			<node name="signIn" value="Вход" />
+			<node name="signUp" value="Регистрация" />
+			<node name="quickBuy" value="Быстрая покупка" />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Не удается запустить Android Market. Попробуйте установить %s вручную"/>
@@ -667,6 +691,7 @@
 		<node name="noFavorites" value="Вы пока не добавили ни одной книги в «Избранное»"/>
 		<node name="emptyCatalog" value="Каталог пуст"/>
 		<node name="emptyBasket" value="В корзине нет книг"/>
+		<node name="emptyNetworkSearchResults" value="Не найдено ни одной книги" />
 	</node>
 	<node name="external">
 		<node name="browser" value="браузере"/>
@@ -676,5 +701,11 @@
 		<node name="unknown" value="неизвестная ошибка"/>
 		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
 		<node name="encriptedFile" value="файл защищен DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="Проблема у FBReader"/>
+			<node name="text" value="FBReader не может сохранить временные файлы. Возможно, вы забыли вставить карту памяти, или она недоступна из-за подключения к компьютеру. Пожалуйста, исправьте эту проблему или введите другое имя каталога для временных файлов."/>
+		</node>
 	</node>
 </resources>

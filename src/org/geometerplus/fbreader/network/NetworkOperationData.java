@@ -21,30 +21,16 @@ package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class NetworkOperationData {
-
-	public interface OnNewItemListener {
-		void onNewItem(INetworkLink link, NetworkItem item);
-
-		void commitItems(INetworkLink link);
-
-		/**
-		 * @return <code>true</code> to confirm interrupt reading; 
-		 *         <code>false</code> to continue reading.
-		 *         Once <code>true</code> has been returned,
-		 *         all next calls MUST return <code>true</code>.
-		 */
-		boolean confirmInterrupt();
-	}
-
 	public final INetworkLink Link;
-	public OnNewItemListener Listener;
+	public NetworkItemsLoader Loader;
 	public String ResumeURI;
 
-	public NetworkOperationData(INetworkLink link, OnNewItemListener listener) {
+	public NetworkOperationData(INetworkLink link, NetworkItemsLoader loader) {
 		Link = link;
-		Listener = listener;
+		Loader = loader;
 	}
 
 	protected void clear() {

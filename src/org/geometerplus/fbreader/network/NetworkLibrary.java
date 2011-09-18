@@ -24,18 +24,33 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
-import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public class NetworkLibrary {
+	public interface ChangeListener {
+		public enum Code {
+			SomeCode,
+			/*
+			ItemAdded,
+			ItemRemoved,
+			StatusChanged,
+			*/
+			Found,
+			NotFound,
+			EmptyCatalog,
+			NetworkError
+		}
+
+		void onLibraryChanged(Code code, Object[] params);
+	}
+
 	private static NetworkLibrary ourInstance;
 
 	public static NetworkLibrary Instance() {
@@ -60,6 +75,10 @@ public class NetworkLibrary {
 	// it can be used from background thread
 	private final List<INetworkLink> myLinks =
 		Collections.synchronizedList(new ArrayList<INetworkLink>());
+	private final Set<ChangeListener> myListeners =
+		Collections.synchronizedSet(new HashSet<ChangeListener>());
+	private final Map<NetworkTree,NetworkItemsLoader> myLoaders =
+		Collections.synchronizedMap(new HashMap<NetworkTree,NetworkItemsLoader>());
 
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
@@ -111,7 +130,7 @@ public class NetworkLibrary {
 		return builder.toString();
 	}
 
-	private List<INetworkLink> activeLinks() {
+	List<INetworkLink> activeLinks() {
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
 		final Collection<String> codes = activeLanguageCodes();
 		synchronized (myLinks) {
@@ -125,28 +144,52 @@ public class NetworkLibrary {
 		return filteredList;
 	}
 
-	private final RootTree myRootTree = new RootTree("@Root");
-	private final RootTree myFakeRootTree = new RootTree("@FakeRoot");
-	private SearchItemTree mySearchItemTree;
+	public INetworkLink getLinkByUrl(String url) {
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (url.equals(link.getUrlInfo(UrlInfo.Type.Catalog).Url)) {
+					return link;
+				}
+			}
+		}
+		return null;
+	}
+
+	public INetworkLink getLinkBySiteName(String siteName) {
+		synchronized (myLinks) {
+			for (INetworkLink link : myLinks) {
+				if (siteName.equals(link.getSiteName())) {
+					return link;
+				}
+			}
+		}
+		return null;
+	}
+
+	private final RootTree myRootTree = new RootTree("@Root", false);
+	private final RootTree myFakeRootTree = new RootTree("@FakeRoot", true);
 
 	private boolean myChildrenAreInvalid = true;
 	private boolean myUpdateVisibility;
 
+	private volatile boolean myIsInitialized;
+
+	private final SearchItem mySearchItem = new AllCatalogsSearchItem();
+
 	private NetworkLibrary() {
 	}
 
-	private boolean myIsAlreadyInitialized;
-	public void initialize() throws ZLNetworkException {
-		if (myIsAlreadyInitialized) {
+	public boolean isInitialized() {
+		return myIsInitialized;
+	}
+
+	public synchronized void initialize() throws ZLNetworkException {
+		if (myIsInitialized) {
 			return;
 		}
 
 		try {
-			OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CACHE_LOAD, new OnNewLinkListener() {
-				public void onNewLink(INetworkLink link) {
-					myLinks.add(link);
-				}
-			});
+			myLinks.addAll(OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CacheMode.LOAD));
 		} catch (ZLNetworkException e) {
 			removeAllLoadedLinks();
 			throw e;
@@ -157,7 +200,9 @@ public class NetworkLibrary {
 			myLinks.addAll(db.listLinks());
 		}
 
-		myIsAlreadyInitialized = true;
+		synchronize();
+
+		myIsInitialized = true;
 	}
 
 	private void removeAllLoadedLinks() {
@@ -183,59 +228,39 @@ public class NetworkLibrary {
 		Log.w("FBREADER", "" + date1 + sign + date2);
 	}*/
 
-	private ArrayList<INetworkLink> myBackgroundLinks;
 	private Object myBackgroundLock = new Object();
 
 	// This method must be called from background thread
 	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
 		synchronized (myBackgroundLock) {
-			myBackgroundLinks = new ArrayList<INetworkLink>();
-
-			final int cacheMode = clearCache ? OPDSLinkReader.CACHE_CLEAR : OPDSLinkReader.CACHE_UPDATE;
-			try {
-				OPDSLinkReader.loadOPDSLinks(cacheMode, new OnNewLinkListener() {
-					public void onNewLink(INetworkLink link) {
-						myBackgroundLinks.add(link);
-					}
-				});
-			} catch (ZLNetworkException e) {
-				myBackgroundLinks = null;
-				throw e;
-			} finally {
-				if (myBackgroundLinks != null) {
-					if (myBackgroundLinks.isEmpty()) {
-						myBackgroundLinks = null;
-					}
-				}
+			final OPDSLinkReader.CacheMode mode =
+				clearCache ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
+			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(mode);
+			if (!loadedLinks.isEmpty()) {
+				removeAllLoadedLinks();
+				myLinks.addAll(loadedLinks);
 			}
+			invalidateChildren();
+
 			// we create this copy to prevent long operations on synchronized list
 			final List<INetworkLink> linksCopy = new ArrayList<INetworkLink>(myLinks);
 			for (INetworkLink link : linksCopy) {
 				if (link instanceof ICustomNetworkLink) {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
-						customLink.reloadInfo(true);
-						NetworkDatabase.Instance().saveLink(customLink);
+						try {
+							customLink.reloadInfo(true);
+							NetworkDatabase.Instance().saveLink(customLink);
+						} catch (Throwable t) {
+							// ignore
+						}
 					}
 				}
 			}
+
+			synchronize();
 		}
 	}
-
-	// This method MUST be called from main thread
-	// This method has effect only when runBackgroundUpdate method has returned null.
-	//
-	// synchronize() method MUST be called after this method
-	public void finishBackgroundUpdate() {
-		synchronized (myBackgroundLock) {
-			if (myBackgroundLinks != null) {
-				removeAllLoadedLinks();
-				myLinks.addAll(myBackgroundLinks);
-			}
-			invalidateChildren();
-		}
-	}
-
 
 	public String rewriteUrl(String url, boolean externalUrl) {
 		final String host = ZLNetworkUtil.hostFromUrl(url).toLowerCase();
@@ -257,89 +282,56 @@ public class NetworkLibrary {
 		myUpdateVisibility = true;
 	}
 
-	private static boolean linkIsChanged(INetworkLink link) {
-		return
-			link instanceof ICustomNetworkLink &&
-			((ICustomNetworkLink)link).hasChanges();
-	}
-
-	private static void makeValid(INetworkLink link) {
-		if (link instanceof ICustomNetworkLink) {
-			((ICustomNetworkLink)link).resetChanges();
-		}
-	}
-
 	private void makeUpToDate() {
+		final SortedSet<INetworkLink> linkSet = new TreeSet<INetworkLink>(activeLinks());
+
 		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
 
-		ListIterator<FBTree> nodeIterator = myRootTree.subTrees().listIterator();
-		FBTree currentNode = null;
-		int nodeCount = 0;
-
-		final ArrayList<INetworkLink> links = new ArrayList<INetworkLink>(activeLinks());
-		Collections.sort(links);
-		for (int i = 0; i < links.size(); ++i) {
-			INetworkLink link = links.get(i);
-			boolean processed = false;
-			while (currentNode != null || nodeIterator.hasNext()) {
-				if (currentNode == null) {
-					currentNode = nodeIterator.next();
-				}
-				if (!(currentNode instanceof NetworkCatalogTree)) {
-					toRemove.add(currentNode);
-					currentNode = null;
-					++nodeCount;
-					continue;
-				}
-				final INetworkLink nodeLink = ((NetworkCatalogTree)currentNode).Item.Link;
-				if (link == nodeLink) {
-					if (linkIsChanged(link)) {
-						toRemove.add(currentNode);
+		// we do remove sum tree items:
+		for (FBTree t : myRootTree.subTrees()) {
+			if (t instanceof NetworkCatalogTree) {
+				final INetworkLink link = ((NetworkCatalogTree)t).getLink();
+				if (link != null) {
+					if (!linkSet.contains(link)) {
+                        // 1. links not listed in activeLinks list right now
+						toRemove.add(t);
+					} else if (link instanceof ICustomNetworkLink &&
+								((ICustomNetworkLink)link).hasChanges()) {
+                        // 2. custom links that were changed
+						toRemove.add(t);
 					} else {
-						processed = true;
+						linkSet.remove(link);
 					}
-					currentNode = null;
-					++nodeCount;
-					break;
 				} else {
-					INetworkLink newNodeLink = null;
-					for (int j = i; j < links.size(); ++j) {
-						final INetworkLink jlnk = links.get(j);
-						if (nodeLink == jlnk) {
-							newNodeLink = jlnk;
-							break;
-						}
-					}
-					if (newNodeLink == null || linkIsChanged(nodeLink)) {
-						toRemove.add(currentNode);
-						currentNode = null;
-						++nodeCount;
-					} else {
-						break;
-					}
+					// 3. search item
+					toRemove.add(t);
 				}
-			}
-			if (!processed) {
-				makeValid(link);
-				final int nextIndex = nodeIterator.nextIndex();
-				new NetworkCatalogRootTree(myRootTree, link, nodeCount++).Item.onDisplayItem();
-				nodeIterator = myRootTree.subTrees().listIterator(nextIndex + 1);
+			} else {
+				// 4. non-catalog nodes
+				toRemove.add(t);
 			}
 		}
-
-		while (currentNode != null || nodeIterator.hasNext()) {
-			if (currentNode == null) {
-				currentNode = nodeIterator.next();
-			}
-			toRemove.add(currentNode);
-			currentNode = null;
-		}
-
 		for (FBTree tree : toRemove) {
 			tree.removeSelf();
 		}
+
+		// we do add new network catalog items
+		for (INetworkLink link : linkSet) {
+			int index = 0;
+			for (FBTree t : myRootTree.subTrees()) {
+				final INetworkLink l = ((NetworkTree)t).getLink();
+				if (l != null && link.compareTo(l) <= 0) {
+					break;
+				}
+				++index;
+			}
+			new NetworkCatalogRootTree(myRootTree, link, index);
+		}
+		// we do add non-catalog items
+		new SearchCatalogTree(myRootTree, mySearchItem, 0);
 		new AddCustomCatalogItemTree(myRootTree);
-		mySearchItemTree = new SearchItemTree(myRootTree, 0);
+
+		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
 	private void updateVisibility() {
@@ -348,6 +340,7 @@ public class NetworkLibrary {
 				((NetworkCatalogTree)tree).updateVisibility();
 			}
 		}
+		fireModelChangedEvent(ChangeListener.Code.SomeCode);
 	}
 
 	public void synchronize() {
@@ -365,10 +358,6 @@ public class NetworkLibrary {
 		return myRootTree;
 	}
 
-	public SearchItemTree getSearchItemTree() {
-		return mySearchItemTree;
-	}
-
 	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {
 		final String id = item.getStringId();
 		for (FBTree tree : myFakeRootTree.subTrees()) {
@@ -377,7 +366,7 @@ public class NetworkLibrary {
 				return ncTree;
 			}
 		}
-		return new NetworkCatalogTree(myFakeRootTree, item, 0);
+		return new NetworkCatalogTree(myFakeRootTree, item.Link, item, 0);
 	}
 
 	public NetworkTree getTreeByKey(NetworkTree.Key key) {
@@ -398,48 +387,6 @@ public class NetworkLibrary {
 			return null;
 		}
 		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
-	}
-
-	public void simpleSearch(String pattern, final NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
-		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
-		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
-
-		final NetworkOperationData.OnNewItemListener synchronizedListener = new NetworkOperationData.OnNewItemListener() {
-			public synchronized void onNewItem(INetworkLink link, NetworkItem item) {
-				listener.onNewItem(link, item);
-			}
-			public synchronized boolean confirmInterrupt() {
-				return listener.confirmInterrupt();
-			}
-			public synchronized void commitItems(INetworkLink link) {
-				listener.commitItems(link);
-			}
-		};
-
-		for (INetworkLink link : activeLinks()) {
-			final NetworkOperationData data = link.createOperationData(synchronizedListener);
-			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
-			if (request != null) {
-				dataList.add(data);
-				requestList.add(request);
-			}
-		}
-
-		while (requestList.size() != 0) {
-			ZLNetworkManager.Instance().perform(requestList);
-
-			requestList.clear();
-
-			if (listener.confirmInterrupt()) {
-				return;
-			}
-			for (NetworkOperationData data : dataList) {
-				ZLNetworkRequest request = data.resume();
-				if (request != null) {
-					requestList.add(request);
-				}
-			}
-		}
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
@@ -465,5 +412,34 @@ public class NetworkLibrary {
 		myLinks.remove(link);
 		NetworkDatabase.Instance().deleteLink(link);
 		invalidateChildren();
+	}
+
+	public void addChangeListener(ChangeListener listener) {
+		myListeners.add(listener);
+	}
+
+	public void removeChangeListener(ChangeListener listener) {
+		myListeners.remove(listener);
+	}
+
+	// TODO: change to private
+	/*private*/ public void fireModelChangedEvent(ChangeListener.Code code, Object ... params) {
+		synchronized (myListeners) {
+			for (ChangeListener l : myListeners) {
+				l.onLibraryChanged(code, params);
+			}
+		}
+	}
+
+	public final void storeLoader(NetworkTree tree, NetworkItemsLoader loader) {
+		myLoaders.put(tree, loader);
+	}
+
+	public final NetworkItemsLoader getStoredLoader(NetworkTree tree) {
+		return tree != null ? myLoaders.get(tree) : null;
+	}
+
+	public final void removeStoredLoader(NetworkTree tree) {
+		myLoaders.remove(tree);
 	}
 }

@@ -19,22 +19,54 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.Basket;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public class BasketItem extends OPDSCatalogItem {
-	BasketItem(OPDSNetworkLink link, String title, String summary, UrlInfoCollection<?> urls, Accessibility accessibility) {
-		super(link, title, summary, urls, accessibility, FLAGS_DEFAULT & ~FLAGS_GROUP);
+	BasketItem(OPDSNetworkLink link, UrlInfoCollection<?> urls) {
+		super(
+			link,
+			NetworkLibrary.resource().getResource("basket").getValue(),
+			NetworkLibrary.resource().getResource("basketSummaryEmpty").getValue(),
+			urls,
+			Accessibility.ALWAYS,
+			FLAGS_DEFAULT & ~FLAGS_GROUP,
+			null
+		);
 		link.setSupportsBasket();
 	}
 
 	@Override
+	public CharSequence getSummary() {
+		final Basket basket = Link.basket();
+		final int size = basket.bookIds().size();
+		if (size == 0) {
+			return super.getSummary();
+		} else if (size == basket.books().size()) {
+			return NetworkLibrary.resource().getResource("basketSummary").getValue()
+				.replace("%0", String.valueOf(size)).replace("%1", basket.cost().toString());
+		} else {
+			return NetworkLibrary.resource().getResource("basketSummaryCountOnly").getValue()
+				.replace("%0", String.valueOf(size));
+		}
+	}
+
+	@Override
 	protected String getCatalogUrl() {
+		final List<String> ids = Link.basket().bookIds();
+		if (ids.isEmpty()) {
+			return null;
+		}
+
 		final StringBuilder builder = new StringBuilder();
 		boolean flag = false;
-		for (String bookId : Link.basket().bookIds()) {
+		for (String bookId : ids) {
 			if (flag) {
 				builder.append(',');
 			} else {

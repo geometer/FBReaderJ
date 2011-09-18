@@ -79,9 +79,6 @@
 		<node name="signOut" value="Вийти (%s)"/>
 		<node name="topup" value="Поповнити рахунок (поточний рахунок: %s)" />
 		<node name="topupTitle" value="Поповнити рахунок"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="topupSummary" value="Поточний рахунок: %s"/>
 		<node name="alreadyDownloading" value="Книжка завантажується" />
@@ -602,6 +599,7 @@
 			<node name="signOut" value="Вихід із системи. Зачекайте, будь ласка..." />
 			<node name="purchaseBook" value="Йде придбання книги. Зачекайте, будь ласка..." />
 			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
 		</node>
 		<node name="networkError">
@@ -676,5 +674,11 @@
 		<node name="unknown" value="невідома помилка"/>
 	<node name="unsupportedCompressionMethod" value="непідтримуваний метод стиснення"/>
 		<node name="encriptedFile" value="файл захищено DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader problem" toBeTranslated="true"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this problem or enter another directory name below." toBeTranslated="true"/>
+		</node>
 	</node>
 </resources>

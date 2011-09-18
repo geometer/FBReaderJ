@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.*;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,21 +34,42 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
+import org.geometerplus.fbreader.network.INetworkLink;
+import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.android.util.UIUtil;
+
 public class AuthenticationActivity extends Activity {
+	private static final Map<Long,Runnable> ourOnSuccessRunnableMap =
+		Collections.synchronizedMap(new HashMap<Long,Runnable>());
+	private static volatile long ourNextCode;
+
+	static Intent registerRunnable(Intent intent, Runnable action) {
+		synchronized (ourOnSuccessRunnableMap) {
+			if (action != null) {
+				ourOnSuccessRunnableMap.put(ourNextCode, action);
+				intent.putExtra(RUNNABLE_KEY, ourNextCode);
+				++ourNextCode;
+			}
+		}
+		return intent;
+	}
+
 	private static final String AREA_KEY = "area";
 	private static final String HOST_KEY = "host";
+	private static final String RUNNABLE_KEY = "onSuccess";
 	static final String SCHEME_KEY = "scheme";
 	static final String USERNAME_KEY = "username";
 	static final String PASSWORD_KEY = "password";
 	static final String ERROR_KEY = "error";
-	static final String SHOW_SIGNUP_LINK_KEY = "showSignupLink";
+	static final String CUSTOM_AUTH_KEY = "customAuth";
                   
-	static final int RESULT_SIGNUP = RESULT_FIRST_USER;
-
 	static class CredentialsCreator implements ZLNetworkManager.CredentialsCreator {
 		private final Activity myActivity;
 		private final int myCode;
@@ -101,20 +124,33 @@ public class AuthenticationActivity extends Activity {
 	}
 
 	private ZLResource myResource;
+	private INetworkLink myLink;
+	private Button myOkButton;
+	private Timer myOkButtonUpdater;
+	private TextView myUsernameView;
+	private boolean myCustomAuthentication;
+	private Runnable myOnSuccessRunnable;
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		setResult(RESULT_CANCELED);
 		setContentView(R.layout.authentication);
 
 		final Intent intent = getIntent();
+		myLink = Util.linkByIntent(intent);
+		if (myLink == null) {
+			finish();
+			return;
+		}
+		setResult(RESULT_CANCELED, Util.intentByLink(new Intent(), myLink));
+
 		final String host = intent.getStringExtra(HOST_KEY);
 		final String area = intent.getStringExtra(AREA_KEY);
 		final String username = intent.getStringExtra(USERNAME_KEY);
 		final String error = intent.getStringExtra(ERROR_KEY);
-		final boolean showSignupLink = intent.getBooleanExtra(SHOW_SIGNUP_LINK_KEY, false);
+		myCustomAuthentication = intent.getBooleanExtra(CUSTOM_AUTH_KEY, false);
+		myOnSuccessRunnable = ourOnSuccessRunnableMap.remove(intent.getLongExtra(RUNNABLE_KEY, -1));
 
 		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
 
@@ -138,48 +174,24 @@ public class AuthenticationActivity extends Activity {
 			myResource.getResource("password").getValue()
 		);
 
-		final TextView usernameView = findTextView(R.id.authentication_username);
-		usernameView.setText(username);
+		myUsernameView = findTextView(R.id.authentication_username);
+		myUsernameView.setText(username);
 
-		final TextView errorView = findTextView(R.id.authentication_error);
-		if (error != null && !"".equals(error)) {
-			errorView.setVisibility(View.VISIBLE);
-			errorView.setText(error);
-		} else {
-			errorView.setVisibility(View.GONE);
-		}
-
-		if (showSignupLink) {
-			findViewById(R.id.authentication_signup_box).setVisibility(View.VISIBLE);
-			final TextView signupView = (TextView)findViewById(R.id.authentication_signup);
-			signupView.setText(myResource.getResource("register").getValue());
-			signupView.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
-					setResult(RESULT_SIGNUP);
-					finish();
-				}
-			});
-		} else {
-			findViewById(R.id.authentication_signup_box).setVisibility(View.GONE);
-		}
+		setError(error);
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
-		final Button okButton = findButton(R.id.authentication_ok_button);
-		okButton.setText(buttonResource.getResource("ok").getValue());
-		okButton.setOnClickListener(new Button.OnClickListener() {
+		myOkButton = findButton(R.id.authentication_ok_button);
+		myOkButton.setText(buttonResource.getResource("ok").getValue());
+		myOkButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				final Intent data = new Intent();
-				data.putExtra(
-					USERNAME_KEY,
-					usernameView.getText().toString()
-				);
-				data.putExtra(
-					PASSWORD_KEY,
-					findTextView(R.id.authentication_password).getText().toString()
-				);
-				setResult(RESULT_OK, data);
-				finish();
+				final String username = myUsernameView.getText().toString();
+				final String password = findTextView(R.id.authentication_password).getText().toString();
+				if (myCustomAuthentication) {
+					runCustomAuthentication(username, password);
+				} else {
+					finishOk(username, password);
+				}
 			}
 		});
 
@@ -187,9 +199,69 @@ public class AuthenticationActivity extends Activity {
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
+				runOnUiThread(new Runnable() {
+					public void run() {
+						final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+						if (mgr.mayBeAuthorised(false)) {
+							mgr.logOut();
+						}
+						final NetworkLibrary library = NetworkLibrary.Instance();
+						library.invalidateVisibility();
+						library.synchronize();
+					}
+				});
 				finish();
 			}
 		});
+	}
+
+	private void setError(String error) {
+		final TextView errorView = findTextView(R.id.authentication_error);
+		if (error != null && !"".equals(error)) {
+			errorView.setVisibility(View.VISIBLE);
+			errorView.setText(error);
+			findTextView(R.id.authentication_password).setText("");
+		} else {
+			errorView.setVisibility(View.GONE);
+		}
+	}
+
+	private void finishOk(String username, String password) {
+		final Intent data = Util.intentByLink(new Intent(), myLink);
+		data.putExtra(USERNAME_KEY, username);
+		data.putExtra(PASSWORD_KEY, password);
+		setResult(RESULT_OK, data);
+		finish();
+	}
+
+	private void runCustomAuthentication(final String username, final String password) {
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+		mgr.UserNameOption.setValue(username);
+		final Runnable runnable = new Runnable() {
+			public void run() {
+				try {
+					mgr.authorise(password);
+					if (mgr.needsInitialization()) {
+						mgr.initialize();
+					}
+					finishOk(username, password);
+					if (myOnSuccessRunnable != null) {
+						myOnSuccessRunnable.run();
+					}
+					final NetworkLibrary library = NetworkLibrary.Instance();
+					library.invalidateVisibility();
+					library.synchronize();
+				} catch (final ZLNetworkException e) {
+					mgr.logOut();
+					runOnUiThread(new Runnable() {
+						public void run() {
+							setError(e.getMessage());
+						}
+					});
+				}
+			}
+		};
+		UIUtil.wait("authentication", runnable, this);
 	}
 
 	private TextView findTextView(int resourceId) {
@@ -198,5 +270,32 @@ public class AuthenticationActivity extends Activity {
 
 	private Button findButton(int resourceId) {
 		return (Button)findViewById(resourceId);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (myOkButtonUpdater == null) {
+			myOkButtonUpdater = new Timer();
+			myOkButtonUpdater.schedule(new TimerTask() {
+				public void run() {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							myOkButton.setEnabled(myUsernameView.getText().length() > 0);
+						}
+					});
+				}
+			}, 0, 100);
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		if (myOkButtonUpdater != null) {
+			myOkButtonUpdater.cancel();
+			myOkButtonUpdater.purge();
+			myOkButtonUpdater = null;
+		}
+		super.onPause();
 	}
 }

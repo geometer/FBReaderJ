@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network.opds;
 
+import java.util.*;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
@@ -27,67 +28,54 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.atom.ATOMUpdated;
 
 public class OPDSLinkReader {
-	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.6.xml";
+	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.7.xml";
+	static final String FILE_NAME = "fbreader_catalogs-"
+			+ CATALOGS_URL.substring(CATALOGS_URL.lastIndexOf("/") + 1);
 
-	public static final int CACHE_LOAD = 0;
-	public static final int CACHE_UPDATE = 1;
-	public static final int CACHE_CLEAR = 2;
+	public enum CacheMode {
+		LOAD,
+		UPDATE,
+		CLEAR
+	};
 
-	public static void loadOPDSLinks(int cacheMode, final NetworkLibrary.OnNewLinkListener listener) throws ZLNetworkException {
+	public static List<INetworkLink> loadOPDSLinks(CacheMode cacheMode) throws ZLNetworkException {
+		final OPDSLinkXMLReader xmlReader = new OPDSLinkXMLReader();
+
 		final File dirFile = new File(Paths.networkCacheDirectory());
 		if (!dirFile.exists() && !dirFile.mkdirs()) {
 			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(CATALOGS_URL) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-					new OPDSLinkXMLReader(listener, null).read(inputStream);
+					xmlReader.read(inputStream);
 				}
 			});
-			// TODO: Is this error is needed?
-			//throw new ZLNetworkException(NetworkException.ERROR_CACHE_DIRECTORY_ERROR);
-			return;
+			return xmlReader.links();
 		}
-
-		final String fileName = "fbreader_catalogs-"
-			+ CATALOGS_URL.substring(CATALOGS_URL.lastIndexOf(File.separator) + 1);
 
 		boolean cacheIsGood = false;
 		File oldCache = null;
-		ATOMUpdated cacheUpdatedTime = null;
-		final File catalogsFile = new File(dirFile, fileName);
+		final File catalogsFile = new File(dirFile, FILE_NAME);
 		if (catalogsFile.exists()) {
 			switch (cacheMode) {
-			case CACHE_UPDATE:
-				final long diff = System.currentTimeMillis() - catalogsFile.lastModified();
-				final long valid = 7 * 24 * 60 * 60 * 1000; // one week in milliseconds; FIXME: hardcoded const
-				if (diff >= 0 && diff <= valid) {
-					return;
-				}
-				/* FALLTHROUGH */
-			case CACHE_CLEAR:
-				try {
-					final OPDSLinkXMLReader reader = new OPDSLinkXMLReader();
-					reader.read(new FileInputStream(catalogsFile));
-					cacheUpdatedTime = reader.getUpdatedTime();
-				} catch (FileNotFoundException e) {
-					throw new RuntimeException("That's impossible!!!", e); 
-				}
-
-				oldCache = new File(dirFile, "_" + fileName);
-				oldCache.delete();
-				if (!catalogsFile.renameTo(oldCache)) {
-					catalogsFile.delete();
-					oldCache = null;
-				}
-				break;
-			case CACHE_LOAD:
-				cacheIsGood = true;
-				break;
-			default:
-				throw new IllegalArgumentException("Invalid cacheMode value (" + cacheMode
-						+ ") in OPDSLinkReader.loadOPDSLinks method");
+				case UPDATE:
+					final long diff = System.currentTimeMillis() - catalogsFile.lastModified();
+					if (diff >= 0 && diff <= 7 * 24 * 60 * 60 * 1000) { // one week
+						return Collections.emptyList();
+					}
+					/* FALLTHROUGH */
+				case CLEAR:
+					oldCache = new File(dirFile, "_" + FILE_NAME);
+					oldCache.delete();
+					if (!catalogsFile.renameTo(oldCache)) {
+						catalogsFile.delete();
+						oldCache = null;
+					}
+					break;
+				case LOAD:
+					cacheIsGood = true;
+					break;
 			}
 		}
 
@@ -113,9 +101,10 @@ public class OPDSLinkReader {
 		}
 
 		try {
-			new OPDSLinkXMLReader(listener, cacheUpdatedTime).read(new FileInputStream(catalogsFile));
+			xmlReader.read(new FileInputStream(catalogsFile));
+			return xmlReader.links();
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException("That's impossible!!!", e); 
+			return Collections.emptyList();
 		}
 	}
 }

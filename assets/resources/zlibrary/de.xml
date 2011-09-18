@@ -58,6 +58,7 @@
 		<node name="es" value="Spanisch"/>
 		<node name="fi" value="Finnisch"/>
 		<node name="fr" value="Französisch"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="Hebräisch"/>
 		<node name="hu" value="Ungarisch"/>
 		<node name="id" value="Indonesisch"/>
@@ -67,6 +68,7 @@
 		<node name="no" value="Norwegisch"/>
 		<node name="pl" value="Polnisch"/>
 		<node name="pt" value="Portugiesisch"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="Russisch"/>
 		<node name="sv" value="Schwedisch"/>
 		<node name="th" value="Thailändich"/>

@@ -19,30 +19,15 @@
 
 package org.geometerplus.fbreader.network.urlInfo;
 
+import org.geometerplus.zlibrary.core.money.Money;
+
 public class BookBuyUrlInfo extends BookUrlInfo {
 	private static final long serialVersionUID = 7877935250896069650L;
 
-	public final String Price;
+	public final Money Price;
 
-	public BookBuyUrlInfo(Type type, int format, String url, String price) {
+	public BookBuyUrlInfo(Type type, int format, String url, Money price) {
 		super(type, format, url);
 		Price = price;
-	}
-
-	public static String price(String price, String currency) {
-		if (price == null || currency == null) {
-			return price;
-		} else if (currency.equals("RUB")) {
-			return price + " \u0440.";
-		} else if (currency.equals("USD")) {
-			return "$" + price;
-		} else if (currency.equals("GBP")) {
-			return "\u00A3" + price;
-		} else if (currency.equals("EUR")) {
-			return "\u20AC" + price;
-		} else if (currency.equals("JPY")) {
-			return "\u00A5" + price;
-		}
-		return currency + " " + price;
 	}
 }

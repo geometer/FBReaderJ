@@ -28,7 +28,7 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class LitResRecommendationsItem extends OPDSCatalogItem {
 	public LitResRecommendationsItem(OPDSNetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
-		super(link, title, summary, urls, Accessibility.HAS_BOOKS, FLAGS_DEFAULT & ~FLAGS_GROUP);
+		super(link, title, summary, urls, Accessibility.HAS_BOOKS, FLAGS_DEFAULT & ~FLAGS_GROUP, null);
 	}
 
 	@Override
