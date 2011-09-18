@@ -631,10 +631,6 @@
 			<node name="noRequiredInformation" value="Wymagana informacja nie jest podana w katalogu" />
 			<node name="cacheDirectoryError" value="Nie udało się stworzyć katalogu pamięci cache" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Wyniki wyszukiwania" />
-			<node name="message" value="Nie znaleziono pasujących książek" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Uwierzytelnianie" />
 			<node name="unencryptedWarning" value="Hasło będzie przesłane w formie niezaszyfrowanej"/>
@@ -681,6 +677,7 @@
 		<node name="noFavorites" value="Niestety lista ulubionych jest pusta"/>
 		<node name="emptyCatalog" value="Niestety katalog jest pusty" />
 		<node name="emptyBasket" value="Niestety twój koszyk jest pusty" />
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Przeglądarka"/>

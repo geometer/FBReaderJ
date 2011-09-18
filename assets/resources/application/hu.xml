@@ -665,6 +665,7 @@
 		<node name="noFavorites" value="A Kedvencek listája üres"/>
 		<node name="emptyCatalog" value="A katalógus üres"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Böngésző"/>

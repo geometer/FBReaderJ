@@ -615,10 +615,6 @@
 			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true" />
 			<node name="cacheDirectoryError" value="Maken van de cache-directory is mislukt" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Zoekresultaten" />
-			<node name="message" value="Er zijn geen geschikte boeken gevonden" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authenticatie" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
@@ -665,6 +661,7 @@
 		<node name="noFavorites" value="Je lijst met favorieten is leeg"/>
 		<node name="emptyCatalog" value="Catalogus is leeg"/>
 		<node name="emptyBasket" value="Je mandje is leeg, sorry"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

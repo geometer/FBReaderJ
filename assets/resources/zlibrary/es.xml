@@ -61,6 +61,7 @@
 		<node name="es" value="Castellano" />
 		<node name="fi" value="Finland&#233;s" />
 		<node name="fr" value="Franc&#233;s" />
+		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="Hebreo" />
 		<node name="hu" value="H&#250;ngaro" />
 		<node name="id" value="Indonesio" />
@@ -70,6 +71,7 @@
 		<node name="no" value="Noruego" />
 		<node name="pl" value="Polaco" />
 		<node name="pt" value="Portugu&#233;s" />
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="Ruso" />
 		<node name="sv" value="Sueco" />
 		<node name="th" value="Tailand&#233;s" />

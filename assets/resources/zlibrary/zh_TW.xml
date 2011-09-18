@@ -46,31 +46,33 @@
 		<node name="custom..." value="自訂..." />
 	</node>
 	<node name="language">
-		<node name="ar" value="Arabic" />
-		<node name="cs" value="Czech" />
-		<node name="de" value="German" />
+		<node name="ar" value="Arabic" toBeTranslated="true"/>
+		<node name="cs" value="Czech" toBeTranslated="true"/>
+		<node name="de" value="German" toBeTranslated="true"/>
 		<node name="de-traditional" value="German (traditional orthography)" />
-		<node name="el" value="Greek" />
-		<node name="en" value="English" />
-		<node name="eo" value="Esperanto" />
-		<node name="es" value="Spanish" />
-		<node name="fi" value="Finnish" />
-		<node name="fr" value="French" />
-		<node name="he" value="Hebrew" />
-		<node name="hu" value="Hungarian" />
-		<node name="id" value="Indonesian" />
-		<node name="it" value="Italian" />
-		<node name="lt" value="Lithuanian" />
-		<node name="nl" value="Dutch" />
-		<node name="no" value="Norwegian" />
-		<node name="pl" value="Polish" />
-		<node name="pt" value="Portuguese" />
-		<node name="ru" value="Russian" />
-		<node name="sv" value="Swedish" />
-		<node name="th" value="Thai" />
-		<node name="tr" value="Turkish" />
-		<node name="uk" value="Ukrainian" />
-		<node name="vi" value="Vietnamese" />
+		<node name="el" value="Greek" toBeTranslated="true"/>
+		<node name="en" value="English" toBeTranslated="true"/>
+		<node name="eo" value="Esperanto" toBeTranslated="true"/>
+		<node name="es" value="Spanish" toBeTranslated="true"/>
+		<node name="fi" value="Finnish" toBeTranslated="true"/>
+		<node name="fr" value="French" toBeTranslated="true"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="he" value="Hebrew" toBeTranslated="true"/>
+		<node name="hu" value="Hungarian" toBeTranslated="true"/>
+		<node name="id" value="Indonesian" toBeTranslated="true"/>
+		<node name="it" value="Italian" toBeTranslated="true"/>
+		<node name="lt" value="Lithuanian" toBeTranslated="true"/>
+		<node name="nl" value="Dutch" toBeTranslated="true"/>
+		<node name="no" value="Norwegian" toBeTranslated="true"/>
+		<node name="pl" value="Polish" toBeTranslated="true"/>
+		<node name="pt" value="Portuguese" toBeTranslated="true"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ru" value="Russian" toBeTranslated="true"/>
+		<node name="sv" value="Swedish" toBeTranslated="true"/>
+		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="tr" value="Turkish" toBeTranslated="true"/>
+		<node name="uk" value="Ukrainian" toBeTranslated="true"/>
+		<node name="vi" value="Vietnamese" toBeTranslated="true"/>
 		<node name="zh" value="中文" />
 		<node name="other" value="其他" />
 		<node name="multi" value="多種語言" />

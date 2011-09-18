@@ -1,5 +1,12 @@
 ===== 1.1.11 (Sep ??, 2011) =====
-* Updated Italian localization
+* Separate search for each network catalog
+* Basket in LitRes e-book store
+* Image scaling has been fixed
+* Hyperlinks processing in epubs has been fixed
+* Updated Italian localization (by Enrico Speranza)
+* Romanian localization (by Mary Hit)
+* Polish localization (by Tomasz Długosz)
+* Aard dictionary integration has been added
 
 ===== 1.1.10 (Aug 03, 2011) =====
 * Spanish localization (by Antonio Trueba)

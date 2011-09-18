@@ -674,7 +674,7 @@
 			<node name="message" value="Book is already bought" />
 		</node>
 		<node name="purchaseActions">
-			<node name="title" value="Choose action" />
+			<node name="title" value="Select action" />
 			<node name="signIn" value="Sign in" />
 			<node name="signUp" value="Sign up" />
 			<node name="quickBuy" value="Quick buy" />
