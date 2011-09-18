@@ -23,8 +23,10 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	private int myId;
@@ -118,6 +120,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 				ids = new ArrayList<String>(ids);
 				ids.add(book.Id);
 				myBooksInBasketOption.setValue(ids);
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		}
 	}
@@ -130,6 +133,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 				ids = new ArrayList<String>(ids);
 				ids.remove(book.Id);
 				myBooksInBasketOption.setValue(ids);
+				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 			}
 		}
 	}
@@ -137,6 +141,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	// method from Basket interface
 	public final void clear() {
 		myBooksInBasketOption.setValue(null);
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
 	// method from Basket interface
@@ -149,7 +154,25 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 		return myBooksInBasketOption.getValue();
 	}
 
-	public NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener) {
+	// method from Basket interface
+	public final List<NetworkBookItem> books() {
+		// TODO: implement
+		return Collections.emptyList();
+	}
+
+	// method from Basket interface
+	public final Money cost() {
+		Money sum = Money.ZERO;
+		for (NetworkBookItem b : books()) {
+			final BookBuyUrlInfo info = b.buyInfo();
+			if (info != null) {
+				sum = sum.add(info.Price);
+			}
+		}
+		return sum;
+	}
+
+	public NetworkOperationData createOperationData(NetworkItemsLoader listener) {
 		return new NetworkOperationData(this, listener);
 	}
 
@@ -183,7 +206,7 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	}
 
 	private static int getLanguageOrder(String language) {
-		if (language == ZLLanguageUtil.MULTI_LANGUAGE_CODE) {
+		if (ZLLanguageUtil.MULTI_LANGUAGE_CODE.equals(language)) {
 			return 1;
 		}
 		if (language.equals(Locale.getDefault().getLanguage())) {

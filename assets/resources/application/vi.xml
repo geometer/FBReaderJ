@@ -79,9 +79,6 @@
 		<node name="signOut" value="Đăng xuất (%s)"/>
 		<node name="topup" value="Làm đầy lại tài khoản (hiện tại: %s)"/>
 		<node name="topupTitle" value="Làm đầy lại tài khoản"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="Tin nhắn"/>
 		<node name="topupViaBrowser" value="Mở trang trong trình duyệt"/>
 		<node name="topupSummary" value="Hiện tại: %s"/>
 		<node name="alreadyDownloading" value="Sách đang được tải về" />
@@ -602,6 +599,7 @@
 			<node name="signOut" value="Đang thoát. Xin chờ..." />
 			<node name="purchaseBook" value="Mua sách. Xin chờ..." />
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..."/>
 		</node>
 		<node name="networkError">

@@ -23,14 +23,36 @@ import java.util.*;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.money.Money;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
+import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
+	public static OPDSBookItem create(INetworkLink link, String url) {
+		if (link == null || url == null) {
+			return null;
+		}
+
+		final CreateBookHandler handler = new CreateBookHandler(link, url);
+		try {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
+				@Override
+				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
+					new OPDSXMLReader(handler, true).read(inputStream);
+				}
+			});
+		} catch (ZLNetworkException e) {
+			e.printStackTrace();
+			// ignore
+		}
+		return handler.getBook();
+	}
+
 	private static CharSequence getAnnotation(OPDSEntry entry) {
 		if (entry.Content != null) {
 			return entry.Content;
@@ -108,17 +130,10 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.SingleEntry, href));
 			} else if (UrlInfo.Type.BookBuy == referenceType) {
 				final OPDSLink opdsLink = (OPDSLink)link; 
-				String price = null;
-				final OPDSPrice opdsPrice = opdsLink.selectBestPrice();
-				if (opdsPrice != null) {
-					price = BookBuyUrlInfo.price(opdsPrice.Price, opdsPrice.Currency);
-				}
+				Money price = opdsLink.selectBestPrice();
 				if (price == null) {
 					// FIXME: HACK: price handling must be implemented not through attributes!!!
-					price = BookBuyUrlInfo.price(entry.getAttribute(OPDSXMLReader.KEY_PRICE), null);
-				}
-				if (price == null) {
-					price = "";
+					price = new Money(entry.getAttribute(OPDSXMLReader.KEY_PRICE));
 				}
 				if (MimeType.TEXT_HTML.equals(type)) {
 					collectReferences(urls, opdsLink, href,
@@ -170,7 +185,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		OPDSLink opdsLink,
 		String href,
 		UrlInfo.Type type,
-		String price,
+		Money price,
 		boolean addWithoutFormat
 	) {
 		boolean added = false;
@@ -245,9 +260,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		ZLNetworkManager.Instance().perform(new ZLNetworkRequest(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				new OPDSXMLReader(
-					new SingleEntryFeedHandler(url), true
-				).read(inputStream);
+				new OPDSXMLReader(new LoadInfoHandler(url), true).read(inputStream);
 				myInformationIsFull = true;
 			}
 		});
@@ -261,8 +274,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return null;
 	}
 
-	private class SingleEntryFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
-		private final String myUrl;
+	private static abstract class SingleEntryFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
+		protected final String myUrl;
 
 		SingleEntryFeedHandler(String url) {
 			myUrl = url;
@@ -275,6 +288,15 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			return false;
 		}
 
+		public void processFeedEnd() {
+		}
+	}
+
+	private class LoadInfoHandler extends SingleEntryFeedHandler {
+		LoadInfoHandler(String url) {
+			super(url);
+		}
+
 		public boolean processFeedEntry(OPDSEntry entry) {
 			addUrls(getUrls((OPDSNetworkLink)Link, entry, myUrl));
 			final CharSequence summary = getAnnotation(entry);
@@ -283,8 +305,24 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			}
 			return false;
 		}
+	}
 
-		public void processFeedEnd() {
+	private static class CreateBookHandler extends SingleEntryFeedHandler {
+		private final INetworkLink myLink;
+		private OPDSBookItem myBook;
+
+		CreateBookHandler(INetworkLink link, String url) {
+			super(url);
+			myLink = link;
+		}
+
+		OPDSBookItem getBook() {
+			return myBook;
+		}
+
+		public boolean processFeedEntry(OPDSEntry entry) {
+			myBook = new OPDSBookItem((OPDSNetworkLink)myLink, entry, myUrl, 0);
+			return false;
 		}
 	}
 }

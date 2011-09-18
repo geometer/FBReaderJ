@@ -72,6 +72,8 @@
 		<node name="buy" value="Zakoupit (%s)"/>
 		<node name="addToBasket" value="Přidat do košíku"/>
 		<node name="removeFromBasket" value="Odebrat z košíku"/>
+		<node name="clearBasket" value="Vymazat košík"/>
+		<node name="buyAllBooks" value="Zakoupit všechny knihy"/>
 		<node name="openInBrowser" value="Otevřít v prohlížeči"/>
 		<node name="stopLoading" value="Zastavit načítání"/>
 		<node name="stopSearching" value="Zastavit vyhledávání"/>
@@ -79,13 +81,12 @@
 		<node name="signOut" value="Odhlásit (%s)"/>
 		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="topupTitle" value="Doplnit účet"/>
-		<node name="topupViaCreditCard" value="Platební karta"/>
-		<node name="topupViaSelfServiceKiosk" value="Samoobslužný stánek"/>
-		<node name="topupViaSms" value="Textová zpráva"/>
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
 		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
-		<node name="basketSummary" value="Knihy, které chci zakoupit"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 books" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 books (%1)"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje"/>
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje"/>
 		<node name="stoppingCatalogLoading" value="Zastavování načítání"/>
@@ -616,6 +617,7 @@
 			<node name="signOut" value="Odhlašování. Čekejte..."/>
 			<node name="purchaseBook" value="Nakupování knihy. Čekejte..."/>
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
 		</node>
 		<node name="networkError">

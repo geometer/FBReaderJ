@@ -48,14 +48,14 @@
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
 	</node>
 	<node name="networkLibrary" value="FBReader: сетевая библиотека">
-		<node name="byAuthor" value="Авторы">
+		<node name="byAuthor" value="По авторам">
 			<node name="summary" value="Книги, разложенные по авторам"/>
 		</node>
-		<node name="byTitle" value="Названия">
-			<node name="summary" value="Книги, разложенные по названиям"/>
+		<node name="byTitle" value="По названиям">
+			<node name="summary" value="Книги, отсортированные по названиям"/>
 		</node>
-		<node name="byDate" value="Дата">
-			<node name="summary" value="Книги, разложенные по дате покупки"/>
+		<node name="byDate" value="По дате">
+			<node name="summary" value="Книги, отсортированные по дате покупки"/>
 		</node>
 		<node name="bySeries" value="По сериям">
 			<node name="summary" value="Книги, разложенные по сериям"/>
@@ -71,19 +71,22 @@
 		<node name="downloadDemo" value="Скачать фрагмент"/>
 		<node name="buy" value="Купить (%s)"/>
 		<node name="addToBasket" value="Добавить в корзину"/>
-		<node name="removeFromBasket" value="Убрать из корзины"/>
+		<node name="removeFromBasket" value="Удалить из корзины"/>
+		<node name="clearBasket" value="Очистить корзину"/>
+		<node name="buyAllBooks" value="Купить все книги"/>
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="stopLoading" value="Остановить загрузку" />
 		<node name="stopSearching" value="Остановить поиск" />
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
-		<node name="topup" value="Пополнить счёт (текущий счёт: %s)" />
+		<node name="topup" value="Пополнить счёт (баланс: %s)" />
 		<node name="topupTitle" value="Пополнить счёт"/>
-		<node name="topupViaCreditCard" value="Кредитной картой"/>
-		<node name="topupViaSelfServiceKiosk" value="В платежном терминале"/>
-		<node name="topupViaSms" value="Платной SMS"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
+		<node name="basket" value="Корзина"/>
+		<node name="basketSummaryEmpty" value="Пустая корзина"/>
+		<node name="basketSummaryCountOnly" value="Книг: %0"/>
+		<node name="basketSummary" value="Книг: %0, на сумму %1"/>
 		<node name="alreadyDownloading" value="Книга загружается" />
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается" />
 		<node name="stoppingCatalogLoading" value="Остановка загрузки" />
@@ -115,6 +118,8 @@
 			<node name="addCustomCatalog" value="Добавить каталог"/>
 			<node name="refreshCatalogsList" value="Обновить каталоги"/>
 			<node name="languages" value="Фильтр по языку"/>
+			<node name="clearBasket" value="Очистить корзину"/>
+			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -602,11 +607,12 @@
 			<node name="signOut" value="Выход из системы. Подождите, пожалуйста..." />
 			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста..." />
 			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
+			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста..." />
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
-			<node name="purchaseNotEnoughMoney" value="Недостаточно средств на счете" />
+			<node name="purchaseNotEnoughMoney" value="Недостаточно средств на счёте" />
 			<node name="purchaseMissingBook" value="Книга отсутствует в продаже" />
 			<node name="purchaseAlreadyPurchased" value="Книга уже была куплена" />
 			<node name="bookNotPurchased" value="Книга не была куплена" />

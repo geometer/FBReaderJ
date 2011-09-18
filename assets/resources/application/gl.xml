@@ -79,9 +79,6 @@
 		<node name="signOut" value="Saír (%s)"/>
 		<node name="topup" value="Actualizar a conta (actualmente: %s)"/>
 		<node name="topupTitle" value="Actualizar a conta"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="Mensaxes de texto"/>
 		<node name="topupViaBrowser" value="Abrir a páxina no navegador"/>
 		<node name="topupSummary" value="Actualmente: %s"/>
 		<node name="alreadyDownloading" value="O libro está a ser descargado" />
@@ -602,6 +599,7 @@
 			<node name="signOut" value="Rexistrando. Agarde..." />
 			<node name="purchaseBook" value="Comprando libro. Agarde..." />
 			<node name="loadingCatalogInfo" value="Cargando a información do catálogo. Agarde..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Actualizando a lista de catálogos. Agarde..."/>
 		</node>
 		<node name="networkError">

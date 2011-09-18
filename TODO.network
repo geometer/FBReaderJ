@@ -5,8 +5,8 @@ DONE show 'empty basket' message without opening of catalog
 * basket summary
 DONE show recommendation item if basket is not empty
 * new actions in main menu: clear; buy all
-* update recommendations list after each basket updating/purchasing
-* update recommendations list visibility after each basket updating/purchasing
+* update recommendations list after each basket updating/purchasing/signing in/out
+* update recommendations list visibility after each basket updating/purchasing/signing in/out
 * remove book from basket on purchasing
 
 * search item behaviour like search item in local library

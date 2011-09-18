@@ -79,9 +79,6 @@
 		<node name="signOut" value="登出 (%s)"/>
 		<node name="topup" value="升級賬戶 (現為: %s)"/>
 		<node name="topupTitle" value="升級賬戶"/>
-		<node name="topupViaCreditCard" value="信用卡"/>
-		<node name="topupViaSelfServiceKiosk" value="自助櫃位"/>
-		<node name="topupViaSms" value="文字短訊"/>
 		<node name="topupViaBrowser" value="以瀏覽器開啟本頁"/>
 		<node name="topupSummary" value="目前為: %s"/>
 		<node name="basket" value="購物籃"/>
@@ -621,6 +618,7 @@
 			<node name="signOut" value="登出中，請稍候..." />
 			<node name="purchaseBook" value="正購買書藉，請稍候..." />
 			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
 		</node>
 		<node name="networkError">

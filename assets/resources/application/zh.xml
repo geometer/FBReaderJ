@@ -79,9 +79,6 @@
 		<node name="signOut" value="退出 (%s)"/>
 		<node name="topup" value="重新输入账号(目前: %s)" />
 		<node name="topupTitle" value="重新输入账号"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="短消息"/>
 		<node name="topupViaBrowser" value="在浏览器中打开页面"/>
 		<node name="topupSummary" value="当前: %s"/>
 		<node name="alreadyDownloading" value="正在下载" />
@@ -602,6 +599,7 @@
 			<node name="signOut" value="退出. 正在处理,请稍等..." />
 			<node name="purchaseBook" value="书籍购买中. 请等待..." />
 			<node name="loadingCatalogInfo" value="加载书库目录信息中，请稍待..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="更新书库目录列表中，请稍待..."/>
 		</node>
 		<node name="networkError">

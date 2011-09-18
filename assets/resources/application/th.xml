@@ -79,9 +79,6 @@
 		<node name="signOut" value="ออกจากระบบ (%s)"/>
 		<node name="topup" value="เติมเงินเข้าบัญชีผู้ใช้ (ปัจจุบันคือ: %s)"/>
 		<node name="topupTitle" value="เติมเงินเข้าบัญชี"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="ข้อความ"/>
 		<node name="topupViaBrowser" value="เปิดในเว็บเบราว์เซอร์"/>
 		<node name="topupSummary" value="ปัจจุบัน: %s"/>
 		<node name="alreadyDownloading" value="กำลังดาวน์โหลดหนังสือ"/>
@@ -602,6 +599,7 @@
 			<node name="signOut" value="กำลังออกจากระบบ, กรุณารอสักครู่..."/>
 			<node name="purchaseBook" value="กำลังซื้อหนังสือ, กรุณารอสักครู่..."/>
 			<node name="loadingCatalogInfo" value="กำลังดาวน์โหลข้อมูลของแคตตาล็อก, กรุณารอสักครู่..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..." />
 		</node>
 		<node name="networkError">

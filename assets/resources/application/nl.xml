@@ -79,9 +79,6 @@
 		<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
 		<node name="topup" value="Top up account (currently: %s)" toBeTranslated="true"/>
 		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="Text messages" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open pagina in de browser" />
 		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
 		<node name="alreadyDownloading" value="Boek wordt gedownload" />
@@ -602,6 +599,7 @@
 			<node name="signOut" value="Afmelden. Een ogenblik..." />
 			<node name="purchaseBook" value="Boek wordt gekocht. Een ogenblik..." />
 			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik..."/>
 		</node>
 		<node name="networkError">

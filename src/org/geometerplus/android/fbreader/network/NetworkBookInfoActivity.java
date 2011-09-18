@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -35,6 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -45,8 +47,14 @@ import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 
-public class NetworkBookInfoActivity extends Activity implements NetworkView.EventListener {
+import org.geometerplus.android.fbreader.network.action.OpenCatalogAction;
+import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
+
+import org.geometerplus.android.util.UIUtil;
+
+public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
 	private NetworkBookItem myBook;
 	private View myMainView;
 
@@ -68,38 +76,64 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	protected void onResume() {
 		super.onResume();
 
-		if (!NetworkView.Instance().isInitialized()) {
-			if (NetworkInitializer.Instance == null) {
-				new NetworkInitializer(null);
-				NetworkInitializer.Instance.start();
-			} else {
-				NetworkInitializer.Instance.setActivity(null);
-			}
-		}
-
-		if (myBook == null) {
-			final NetworkTree tree = Util.getTreeFromIntent(getIntent());
-			if (!(tree instanceof NetworkBookTree)) {
-				finish();
-				return;
-			}
-			myBook = ((NetworkBookTree)tree).Book;
-        
-			myConnection = new BookDownloaderServiceConnection();
-			bindService(
-				new Intent(getApplicationContext(), BookDownloaderService.class),
-				myConnection,
-				BIND_AUTO_CREATE
-			);
-        
-			setTitle(myBook.Title);
-        
-			setupDescription();
-			setupExtraLinks();
-			setupInfo();
-			setupCover();
-		}
+		UIUtil.wait("loadingBookInfo", myInitializer, this);
 	}
+
+	private final Runnable myInitializer = new Runnable() {
+		public void run() {
+			final NetworkLibrary library = NetworkLibrary.Instance();
+			if (!library.isInitialized()) {
+				try {
+					if (SQLiteNetworkDatabase.Instance() == null) {
+						new SQLiteNetworkDatabase();
+					}
+					library.initialize();
+				} catch (ZLNetworkException e) {
+					// ignore
+				}
+			}
+        
+			if (myBook == null) {
+				final Uri url = getIntent().getData();
+				if (url != null && "litres-book".equals(url.getScheme())) {
+					myBook = OPDSBookItem.create(
+						NetworkLibrary.Instance().getLinkBySiteName("litres.ru"),
+						url.toString().replace("litres-book://", "http://")
+					);
+				} else {
+					final NetworkTree tree = Util.getTreeFromIntent(getIntent());
+					if (tree instanceof NetworkBookTree) {
+						myBook = ((NetworkBookTree)tree).Book;
+					}
+				}
+
+				runOnUiThread(myViewInitializer);
+			}
+		}
+	};
+
+	private final Runnable myViewInitializer = new Runnable() {
+		public void run() {
+			if (myBook == null) {
+				finish();
+			} else {
+				myConnection = new BookDownloaderServiceConnection();
+				bindService(
+					new Intent(getApplicationContext(), BookDownloaderService.class),
+					myConnection,
+					BIND_AUTO_CREATE
+				);
+            
+				setTitle(myBook.Title);
+            
+				setupDescription();
+				setupExtraLinks();
+				setupInfo();
+				setupCover();
+				setupButtons();
+			}
+		}
+	};
 
 	View getMainView() {
 		return myMainView;
@@ -115,26 +149,11 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	@Override
 	public void onDestroy() {
-		if (!NetworkView.Instance().isInitialized() && NetworkInitializer.Instance != null) {
-			NetworkInitializer.Instance.setActivity(null);
-		}
 		if (myConnection != null) {
 			unbindService(myConnection);
 			myConnection = null;
 		}
 		super.onDestroy();
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-		NetworkView.Instance().getTopupActions().buildContextMenu(this, menu, myBook.Link);
-		unregisterForContextMenu(view);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		TopupActions.runAction(this, myBook.Link, item.getItemId());
-		return true;
 	}
 
 	private final void setupDescription() {
@@ -174,10 +193,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 						final NetworkCatalogItem catalogItem =
 							myBook.createRelatedCatalogItem(relatedInfo);
 						if (catalogItem != null) {
-							NetworkCatalogActions.doExpandCatalog(
-								NetworkBookInfoActivity.this,
-								NetworkLibrary.Instance().getFakeCatalogTree(catalogItem)
-							);
+							new OpenCatalogAction(NetworkBookInfoActivity.this)
+								.run(NetworkLibrary.Instance().getFakeCatalogTree(catalogItem));
 						} else if (MimeType.TEXT_HTML.equals(relatedInfo.Mime)) {
 							Util.openInBrowser(NetworkBookInfoActivity.this, relatedInfo.Url);
 						}
@@ -319,20 +336,19 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 
 	/*
 	private final void setupButtons() {
-		final ZLResource resource = NetworkLibrary.resource();
 		final int buttons[] = new int[] {
 				R.id.network_book_button0,
 				R.id.network_book_button1,
 				R.id.network_book_button2,
 				R.id.network_book_button3,
 		};
-		final Set<NetworkBookActions.Action> actions = NetworkBookActions.getContextMenuActions(myBook, myConnection);
+		final List<NetworkBookActions.NBAction> actions = NetworkBookActions.getContextMenuActions(this, myBook, myConnection);
 
 		final boolean skipSecondButton =
 			actions.size() < buttons.length &&
 			actions.size() % 2 == 1;
 		int buttonNumber = 0;
-		for (final NetworkBookActions.Action a : actions) {
+		for (final NetworkBookActions.NBAction a : actions) {
 			if (skipSecondButton && buttonNumber == 1) {
 				++buttonNumber;
 			}
@@ -340,24 +356,17 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 				break;
 			}
 
-			final String text;
-			if (a.Arg == null) {
-				text = resource.getResource(a.Key).getValue();
-			} else {
-				text = resource.getResource(a.Key).getValue().replace("%s", a.Arg);
-			}
-
 			final int buttonId = buttons[buttonNumber++];
 			TextView button = (TextView)findViewById(buttonId);
-			button.setText(text);
+			button.setText(a.getContextLabel(null));
 			button.setVisibility(View.VISIBLE);
 			button.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					NetworkBookActions.runActionStatic(NetworkBookInfoActivity.this, myBook, a.Id);
+					a.run(myBook);
 					NetworkBookInfoActivity.this.updateView();
 				}
 			});
-			button.setEnabled(a.Id != NetworkTreeActions.TREE_NO_ACTION);
+			button.setEnabled(a.isEnabled(null));
 		}
 		findViewById(R.id.network_book_left_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
 		findViewById(R.id.network_book_right_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
@@ -385,16 +394,20 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	@Override
 	protected void onStart() {
 		super.onStart();
-		NetworkView.Instance().addEventListener(this);
+		NetworkLibrary.Instance().addChangeListener(this);
 	}
 
 	@Override
 	protected void onStop() {
-		NetworkView.Instance().removeEventListener(this);
+		NetworkLibrary.Instance().removeChangeListener(this);
 		super.onStop();
 	}
 
-	public void onModelChanged() {
+	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code, Object[] params) {
+		if (myBook == null) {
+			return;
+		}
+
 		runOnUiThread(new Runnable() {
 			public void run() {
 				updateView();
@@ -429,11 +442,11 @@ public class NetworkBookInfoActivity extends Activity implements NetworkView.Eve
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-			case NetworkBaseActivity.CUSTOM_AUTHENTICATION_CODE:
-				Util.processCustomAuthentication(this, myBook.Link, resultCode, data);
-				break;
-			case NetworkBaseActivity.SIGNUP_CODE:
+			case NetworkLibraryActivity.SIGNUP_CODE:
 				Util.processSignup(myBook.Link, resultCode, data);
+				break;
+			case NetworkLibraryActivity.AUTO_SIGNIN_CODE:
+				Util.processAutoSignIn(this, myBook.Link, resultCode, data);
 				break;
 		}
 	}

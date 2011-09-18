@@ -19,12 +19,18 @@
 
 package org.geometerplus.fbreader.network;
 
+import org.geometerplus.zlibrary.core.money.Money;
+
 import java.util.*;
 
 public interface Basket {
 	void add(NetworkBookItem book);
 	void remove(NetworkBookItem book);
 	boolean contains(NetworkBookItem book);
-	List<String> bookIds();
 	void clear();
+
+	List<String> bookIds();
+	List<NetworkBookItem> books();
+
+	Money cost();
 }

@@ -27,19 +27,14 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
+
 import org.geometerplus.android.util.UIUtil;
 
 class NetworkInitializer {
-	static NetworkInitializer Instance;
-
-	private Activity myActivity;
+	private final Activity myActivity;
 
 	public NetworkInitializer(Activity activity) {
-		Instance = this;
-		setActivity(activity);
-	}
-
-	public void setActivity(Activity activity) {
 		myActivity = activity;
 	}
 
@@ -53,15 +48,20 @@ class NetworkInitializer {
 		}
 	};
 
-	// run this method only if myActivity != null
 	private void runInitialization() {
 		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
 			public void run() {
 				String error = null;
 				try {
-					NetworkView.Instance().initialize();
-					if (myActivity instanceof NetworkTopLevelActivity) {
-						((NetworkTopLevelActivity)myActivity).processSavedIntent();
+					if (SQLiteNetworkDatabase.Instance() == null) {
+						new SQLiteNetworkDatabase();
+					}
+                
+					final NetworkLibrary library = NetworkLibrary.Instance();
+					library.initialize();
+
+					if (myActivity instanceof NetworkLibraryActivity) {
+						((NetworkLibraryActivity)myActivity).processSavedIntent();
 					}
 				} catch (ZLNetworkException e) {
 					error = e.getMessage();
@@ -99,15 +99,16 @@ class NetworkInitializer {
 		}
 	}
 
-	private void end(final String error) {
+	void end(final String error) {
 		if (myActivity != null) {
 			myActivity.runOnUiThread(new Runnable() {
 				public void run() {
 					if (error == null) {
-						if (myActivity instanceof NetworkTopLevelActivity) {
-							final NetworkTopLevelActivity a = (NetworkTopLevelActivity)myActivity;
-							a.startService(new Intent(a.getApplicationContext(), LibraryInitializationService.class));
-							a.onModelChanged(); // initialization is complete successfully
+						if (myActivity != null) {
+							myActivity.startService(new Intent(
+								myActivity.getApplicationContext(),
+								LibraryInitializationService.class
+							));
 						}
 					} else {
 						showTryAgainDialog(myActivity, error); // handle initialization error

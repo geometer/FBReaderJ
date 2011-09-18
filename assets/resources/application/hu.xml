@@ -79,9 +79,6 @@
 		<node name="signOut" value="Kijelentkezés (%s)"/>
 		<node name="topup" value="Számla feltöltése (Jelenleg: %s)"/>
 		<node name="topupTitle" value="Számla feltöltése"/>
-		<node name="topupViaCreditCard" value="Credit card" toBeTranslated="true"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service kiosk" toBeTranslated="true"/>
-		<node name="topupViaSms" value="SMS üzenetek"/>
 		<node name="topupViaBrowser" value="Oldal megnyitása böngészőben"/>
 		<node name="topupSummary" value="Jelenleg: %s"/>
 		<node name="alreadyDownloading" value="Könyv letöltése folyamatban" />
@@ -602,6 +599,7 @@
 			<node name="signOut" value="Kijelentkezés. Egy kis türelmet..." />
 			<node name="purchaseBook" value="Könyv vásárlása. Egy kis türelmet..." />
 			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
 		</node>
 		<node name="networkError">

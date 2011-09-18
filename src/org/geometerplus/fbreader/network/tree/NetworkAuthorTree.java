@@ -69,7 +69,6 @@ public class NetworkAuthorTree extends NetworkTree {
 		if (myBooksNumber >= books.size()) {
 			return;
 		}
-		invalidateChildren(); // call to update secondString
 
 		ListIterator<NetworkBookItem> booksIterator = books.listIterator(myBooksNumber);
 		while (booksIterator.hasNext()) {
@@ -108,7 +107,6 @@ public class NetworkAuthorTree extends NetworkTree {
 						}
 						++insertAt;
 					}
-					seriesTree.invalidateChildren(); // call to update secondString
 					new NetworkBookTree(seriesTree, book, insertAt, false);
 				}
 			} else {
@@ -117,11 +115,6 @@ public class NetworkAuthorTree extends NetworkTree {
 		}
 
 		myBooksNumber = books.size();
-	}
-
-	@Override
-	public NetworkItem getHoldedItem() {
-		return null;
 	}
 
 	@Override

@@ -82,9 +82,6 @@
 		<node name="signOut" value="Abmnelden (%s)"/>
 		<node name="topup" value="Konto aufladen (derzeit: %s)"/>
 		<node name="topupTitle" value="Konto aufladen"/>
-		<node name="topupViaCreditCard" value="Kreditkarte"/>
-		<node name="topupViaSelfServiceKiosk" value="Selbstbedienungskiosk"/>
-		<node name="topupViaSms" value="Textmeldungen"/>
 		<node name="topupViaBrowser" value="Seite im Browser öffnen"/>
 		<node name="topupSummary" value="Derzeit: %s"/>
 		<node name="alreadyDownloading" value="Buch wird schon geladen"/>
@@ -605,6 +602,7 @@
 			<node name="signOut" value="Buch wird ausgetragen. Bitte warten..."/>
 			<node name="purchaseBook" value="Buch wird gekauft. Bitte warten..."/>
 			<node name="loadingCatalogInfo" value="Kataloginformation wird geladen. Bitte warten..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
 		</node>
 		<node name="networkError">

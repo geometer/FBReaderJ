@@ -30,7 +30,7 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-public abstract class BaseActivity extends ListActivity {
+public abstract class TreeActivity extends ListActivity {
 	private static final String OPEN_TREE_ACTION = "org.fbreader.intent.OPEN_TREE";
 
 	public static final String TREE_KEY_KEY = "TreeKey";
@@ -53,8 +53,8 @@ public abstract class BaseActivity extends ListActivity {
 	}
 
 	@Override
-	public ListAdapter getListAdapter() {
-		return (ListAdapter)super.getListAdapter();
+	public TreeAdapter getListAdapter() {
+		return (TreeAdapter)super.getListAdapter();
 	}
 
 	protected FBTree getCurrentTree() {
@@ -62,9 +62,13 @@ public abstract class BaseActivity extends ListActivity {
 	}
 
 	@Override
-	protected void onNewIntent(Intent intent) {
+	protected void onNewIntent(final Intent intent) {
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
-			init(intent);
+			runOnUiThread(new Runnable() {
+				public void run() {
+					init(intent);
+				}
+			});
 		} else {
 			super.onNewIntent(intent);
 		}
@@ -73,14 +77,12 @@ public abstract class BaseActivity extends ListActivity {
 	protected abstract FBTree getTreeByKey(FBTree.Key key);
 	public abstract boolean isTreeSelected(FBTree tree);
 
-	protected boolean OLD_STYLE_FLAG = false;
+	protected boolean isTreeInvisible(FBTree tree) {
+		return false;
+	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (OLD_STYLE_FLAG) {
-			return super.onKeyDown(keyCode, event);
-		}
-
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			FBTree parent = null;
 			while (parent == null && !myHistory.isEmpty()) {
@@ -89,7 +91,7 @@ public abstract class BaseActivity extends ListActivity {
 			if (parent == null) {
 				parent = myCurrentTree.Parent;
 			}
-			if (parent != null) {
+			if (parent != null && !isTreeInvisible(parent)) {
 				openTree(parent, myCurrentTree, false);
 				return true;
 			}
@@ -98,18 +100,22 @@ public abstract class BaseActivity extends ListActivity {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	protected void openTree(final FBTree tree) {
+	// TODO: change to protected
+	public void openTree(final FBTree tree) {
 		openTree(tree, null, true);
 	}
 
-	protected void openTree(final FBTree tree, final FBTree treeToSelect, final boolean storeInHistory) {
+	protected void onCurrentTreeChanged() {
+	}
+
+	private void openTree(final FBTree tree, final FBTree treeToSelect, final boolean storeInHistory) {
 		switch (tree.getOpeningStatus()) {
 			case WAIT_FOR_OPEN:
 			case ALWAYS_RELOAD_BEFORE_OPENING:
 				final String messageKey = tree.getOpeningStatusMessage();
 				if (messageKey != null) {
 					UIUtil.runWithMessage(
-						BaseActivity.this, messageKey,
+						TreeActivity.this, messageKey,
 						new Runnable() {
 							public void run() {
 								tree.waitForOpening();
@@ -139,7 +145,7 @@ public abstract class BaseActivity extends ListActivity {
 		// not myCurrentKey = key
 		// because key might be null
 		myCurrentKey = myCurrentTree.getUniqueKey();
-		final ListAdapter adapter = getListAdapter();
+		final TreeAdapter adapter = getListAdapter();
 		adapter.replaceAll(myCurrentTree.subTrees());
 		setTitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
@@ -150,6 +156,7 @@ public abstract class BaseActivity extends ListActivity {
 		if (myHistory == null) {
 			myHistory = new ArrayList<FBTree.Key>();
 		}
+		onCurrentTreeChanged();
 	}
 
 	private void openTreeInternal(FBTree tree, FBTree treeToSelect, boolean storeInHistory) {
@@ -159,7 +166,7 @@ public abstract class BaseActivity extends ListActivity {
 				if (storeInHistory && !myCurrentKey.equals(tree.getUniqueKey())) {
 					myHistory.add(myCurrentKey);
 				}
-				startActivity(new Intent(this, getClass())
+				onNewIntent(new Intent(this, getClass())
 					.setAction(OPEN_TREE_ACTION)
 					.putExtra(TREE_KEY_KEY, tree.getUniqueKey())
 					.putExtra(
@@ -170,7 +177,7 @@ public abstract class BaseActivity extends ListActivity {
 				);
 				break;
 			case CANNOT_OPEN:
-				UIUtil.showErrorMessage(BaseActivity.this, tree.getOpeningStatusMessage());
+				UIUtil.showErrorMessage(TreeActivity.this, tree.getOpeningStatusMessage());
 				break;
 		}
 	}
