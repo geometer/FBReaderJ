@@ -55,6 +55,7 @@
 		<node name="es" value="Hiszpański" />
 		<node name="fi" value="Fiński" />
 		<node name="fr" value="Francuski" />
+		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="Hebrajski" />
 		<node name="hu" value="Węgierski" />
 		<node name="id" value="Indonezyjski" />
@@ -64,6 +65,7 @@
 		<node name="no" value="Norweski" />
 		<node name="pl" value="Polski" />
 		<node name="pt" value="Portugalski" />
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="Rosyjski" />
 		<node name="sv" value="Szwedzki" />
 		<node name="th" value="Tajski" />

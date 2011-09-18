@@ -56,6 +56,7 @@
 		<node name="es" value="Spaans" />
 		<node name="fi" value="Fins" />
 		<node name="fr" value="Frans" />
+		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="Hebreeuws" />
 		<node name="hu" value="Hongaars" />
 		<node name="id" value="Indonesisch" />
@@ -63,8 +64,9 @@
 		<node name="lt" value="Litouws" />
 		<node name="nl" value="Nederlands" />
 		<node name="no" value="Noors" />
-		<node name="pt" value="Portugees" />
 		<node name="pl" value="Pools" />
+		<node name="pt" value="Portugees" />
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="Russisch" />
 		<node name="sv" value="Zweeds" />
 		<node name="th" value="Thais" />

@@ -56,6 +56,7 @@
 		<node name="es" value="Tiếng Tây Ban Nha " />
 		<node name="fi" value="Tiếng Phần Lan" />
 		<node name="fr" value="Tiếng Pháp" />
+		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="Tiếng Do Thái" />
 		<node name="hu" value="Tiếng Hungari" />
 		<node name="id" value="Tiếng Inđônêxia" />
@@ -65,6 +66,7 @@
 		<node name="no" value="Tiếng Nauy" />
 		<node name="pl" toBeTranslated="true" value="Polish" />
 		<node name="pt" value="Tiếng Bồ Đào Nha" />
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="Tiếng Nga" />
 		<node name="sv" value="Tiếng Thụy Điển" />
 		<node name="th" value="Thai" toBeTranslated="true"/>

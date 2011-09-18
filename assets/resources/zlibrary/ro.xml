@@ -55,6 +55,7 @@
 		<node name="es" value="Spaniola" />
 		<node name="fi" value="Finlandeza" />
 		<node name="fr" value="Franceza" />
+		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="Ebraica" />
 		<node name="hu" value="Ungara" />
 		<node name="id" value="Indoneziana" />
