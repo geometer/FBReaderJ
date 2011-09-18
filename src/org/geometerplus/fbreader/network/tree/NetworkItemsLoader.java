@@ -93,7 +93,7 @@ public abstract class NetworkItemsLoader implements Runnable {
 		}
 	}
 
-	public final void interrupt() {
+	public void interrupt() {
 		synchronized (myInterruptLock) {
 			if (myInterruptionState == InterruptionState.NONE) {
 				myInterruptionState = InterruptionState.REQUESTED;

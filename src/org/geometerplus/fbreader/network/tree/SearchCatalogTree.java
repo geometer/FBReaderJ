@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.SearchItem;
 
 public class SearchCatalogTree extends NetworkCatalogTree {
@@ -37,7 +38,24 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 	}
 
 	@Override
+	public boolean isContentValid() {
+		return true;
+	}
+
+	@Override
 	public String getTreeTitle() {
 		return getSummary();
+	}
+
+	@Override
+	public String getSummary() {
+		final String pattern = ((SearchItem)Item).getPattern();
+		if (pattern != null) {
+			return NetworkLibrary.resource().getResource("found").getResource("summary").getValue().replace("%s", pattern);
+		}
+		if (NetworkLibrary.Instance().getStoredLoader(this) != null) {
+			return NetworkLibrary.resource().getResource("search").getResource("summaryInProgress").getValue();
+		}
+		return super.getSummary();
 	}
 }

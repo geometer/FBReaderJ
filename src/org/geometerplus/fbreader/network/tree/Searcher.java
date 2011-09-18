@@ -37,8 +37,18 @@ public class Searcher extends NetworkItemsLoader {
 	}
 
 	@Override
+	public void interrupt() {
+		// Searcher is not interruptable at this moment
+	}
+
+	@Override
 	public void doLoading() throws ZLNetworkException {
-		((SearchItem)getTree().Item).runSearch(this, myPattern);
+		final SearchItem item = (SearchItem)getTree().Item;
+		if (myPattern.equals(item.getPattern())) {
+			myItemFound = true;
+		} else {
+			item.runSearch(this, myPattern);
+		}
 	}
 
 	@Override

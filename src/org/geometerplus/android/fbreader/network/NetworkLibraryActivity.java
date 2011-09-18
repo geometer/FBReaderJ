@@ -135,7 +135,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	public boolean onSearchRequested() {
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		final RunSearchAction action = new RunSearchAction(this, false);
-		if (action.isVisible(tree)) {
+		if (action.isVisible(tree) && action.isEnabled(tree)) {
 			action.run(tree);
 			return true;
 		} else {

@@ -29,15 +29,10 @@ import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class AllCatalogsSearchItem extends SearchItem {
 	public AllCatalogsSearchItem() {
-		super(null);
-	}
-
-	@Override
-	protected String getSummaryString() {
-		return 
-			getPattern() != null
-				? NetworkLibrary.resource().getResource("found").getResource("summary").getValue().replace("%s", getPattern())
-				: NetworkLibrary.resource().getResource("search").getResource("summaryAllCatalogs").getValue();
+		super(
+			null,
+			NetworkLibrary.resource().getResource("search").getResource("summaryAllCatalogs").getValue()
+		);
 	}
 
 	@Override

@@ -63,6 +63,7 @@
 		<node name="search" value="Search">
 			<node name="summary" value="Search books on %s" />
 			<node name="summaryAllCatalogs" value="Search books in all catalogs" />
+			<node name="summaryInProgress" value="Search in progress" />
 		</node>
 		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s" />

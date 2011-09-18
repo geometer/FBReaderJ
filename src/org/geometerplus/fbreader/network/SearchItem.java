@@ -28,24 +28,22 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 public abstract class SearchItem extends NetworkCatalogItem {
 	private String myPattern;
 
-	protected SearchItem(INetworkLink link) {
+	protected SearchItem(INetworkLink link, String summary) {
 		super(
 			link,
 			NetworkLibrary.resource().getResource("search").getValue(),
-			"",
+			summary,
 			new UrlInfoCollection<UrlInfo>(),
 			Accessibility.ALWAYS,
 			FLAGS_DEFAULT
 		);
-		setSummary(getSummaryString());
 	}
 
 	public void setPattern(String pattern) {
 		myPattern = pattern;
-		setSummary(getSummaryString());
 	}
 
-	protected String getPattern() {
+	public String getPattern() {
 		return myPattern;
 	}
 
@@ -53,8 +51,6 @@ public abstract class SearchItem extends NetworkCatalogItem {
 	public boolean canBeOpened() {
 		return myPattern != null;
 	}
-
-	protected abstract String getSummaryString();
 
 	@Override
 	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
