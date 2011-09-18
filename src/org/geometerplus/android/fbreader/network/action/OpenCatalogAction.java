@@ -53,30 +53,40 @@ public class OpenCatalogAction extends CatalogAction {
 
 	private void doExpandCatalog(final NetworkCatalogTree tree) {
 		final NetworkItemsLoader loader = NetworkLibrary.Instance().getStoredLoader(tree);
-		if (loader != null) {
+		if (loader != null && loader.canResumeLoading()) {
 			Util.openTree(myActivity, tree);
-		} else {
-			boolean resumeNotLoad = false;
-			if (tree.hasChildren()) {
-				if (tree.isContentValid()) {
-					if (tree.Item.supportsResumeLoading()) {
-						resumeNotLoad = true;
-					} else {
-						Util.openTree(myActivity, tree);
-						return;
-					}
-				} else {
-					tree.clearCatalog();
-				}
-			}
-
-			new CatalogExpander(tree, true, resumeNotLoad).start();
-			processExtraData(tree.Item.extraData(), new Runnable() {
+		} else if (loader != null) {
+			loader.setPostRunnable(new Runnable() {
 				public void run() {
-					Util.openTree(myActivity, tree);
+					doLoadCatalog(tree);
 				}
 			});
+		} else {
+			doLoadCatalog(tree);
 		}
+	}
+
+	private void doLoadCatalog(final NetworkCatalogTree tree) {
+		boolean resumeNotLoad = false;
+		if (tree.hasChildren()) {
+			if (tree.isContentValid()) {
+				if (tree.Item.supportsResumeLoading()) {
+					resumeNotLoad = true;
+				} else {
+					Util.openTree(myActivity, tree);
+					return;
+				}
+			} else {
+				tree.clearCatalog();
+			}
+		}
+
+		new CatalogExpander(tree, true, resumeNotLoad).start();
+		processExtraData(tree.Item.extraData(), new Runnable() {
+			public void run() {
+				Util.openTree(myActivity, tree);
+			}
+		});
 	}
 
 	private void processExtraData(Map<String,String> extraData, final Runnable postRunnable) {

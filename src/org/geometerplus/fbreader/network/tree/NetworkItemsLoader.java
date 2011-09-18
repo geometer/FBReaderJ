@@ -29,6 +29,9 @@ import org.geometerplus.fbreader.network.NetworkItem;
 public abstract class NetworkItemsLoader implements Runnable {
 	private final NetworkCatalogTree myTree;
 
+	private volatile Runnable myPostRunnable;
+	private volatile boolean myFinishedFlag;
+
 	protected NetworkItemsLoader(NetworkCatalogTree tree) {
 		myTree = tree;
 	}
@@ -66,6 +69,12 @@ public abstract class NetworkItemsLoader implements Runnable {
 		} finally {
 			library.removeStoredLoader(getTree());
 			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+			synchronized (this) {
+				if (myPostRunnable != null) {
+					myPostRunnable.run();
+					myFinishedFlag = true;
+				}
+			}
 		}
 	}
 
@@ -111,6 +120,14 @@ public abstract class NetworkItemsLoader implements Runnable {
 
 	public void onNewItem(final NetworkItem item) {
 		getTree().addItem(item);
+	}
+
+	public synchronized void setPostRunnable(Runnable action) {
+		if (myFinishedFlag) {
+			action.run();
+		} else {
+			myPostRunnable = action;
+		}
 	}
 
 	protected abstract void onFinish(String errorMessage, boolean interrupted);
