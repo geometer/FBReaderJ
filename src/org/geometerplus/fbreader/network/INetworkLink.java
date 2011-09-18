@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public interface INetworkLink extends Comparable<INetworkLink> {
 	public static final int INVALID_ID = -1;
@@ -50,7 +51,7 @@ public interface INetworkLink extends Comparable<INetworkLink> {
 	 * @param listener Network operation listener
 	 * @return instance, which represents the state of the network operation.
 	 */
-	NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener);
+	NetworkOperationData createOperationData(NetworkItemsLoader loader);
 
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);

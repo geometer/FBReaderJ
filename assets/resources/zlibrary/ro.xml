@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok" />
+			<node name="cancel" value="Anuleaza" />
+			<node name="yes" value="Da" />
+			<node name="no" value="Nu" />
+			<node name="apply" value="Aplica" />
+		</node>
+		<node name="networkError">
+			<node name="title" value="Eroare conexiune" />
+			<node name="unknownErrorMessage" value="Eroare necunoscuta" />
+			<node name="operationTimedOutMessage" value="Timpul alocat operatiunii a expirat" />
+			<node name="somethingWrongMessage" value="Ceva nu a mers bine pentru&#10;%s" />
+			<node name="couldntCreateDirectoryMessage" value="Crearea directorului &#10;%s a esuat" />
+			<node name="couldntCreateFileMessage" value="Crearea fisierului &#10;%s a esuat" />
+			<node name="couldntConnectToNetworkMessage" value="Conexiunea la retea a esuat" />
+			<node name="couldntConnectMessage" value="Conexiunea la serverul &#10;%s a esuat" />
+			<node name="couldntResolveHostMessage" value="Eroare DNS catre serverul &#10;%s" />
+			<node name="authenticationFailed" value="Eroare autentificare" />
+			<node name="unsupportedProtocol" value="Protocol neacceptat" />
+			<node name="invalidURL" value="URL Invalid" />
+			<node name="hostCantBeReached" value="Serverul %s&#10; nu poate fi contactat" />
+			<node name="connectionRefused" value="Conexiunea a fost refuzata de &#10;%s" />
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Rosu" />
+		<node name="green" value="Verde" />
+		<node name="blue" value="Albastru" />
+		<node name="black" value="Negru" />
+		<node name="white" value="Alb" />
+		<node name="maroon" value="Maro" />
+		<node name="olive" value="Masliniu" />
+		<node name="navy" value="Bleumarin" />
+		<node name="purple" value="Violet" />
+		<node name="teal" value="Turcuaz" />
+		<node name="silver" value="Argintiu" />
+		<node name="gray" value="Gri" />
+		<node name="lime" value="Verde deschis" />
+		<node name="yellow" value="Galben" />
+		<node name="magenta" value="Purpuriu" />
+		<node name="cyan" value="Bleu" />
+		<node name="custom..." value="Custom..." />
+	</node>
+	<node name="language">
+		<node name="ar" value="Araba" />
+		<node name="cs" value="Ceha" />
+		<node name="de" value="Germana" />
+		<node name="de-traditional" value="Germana (ortografia traditionala)" />
+		<node name="el" value="Greaca" />
+		<node name="en" value="Engleza" />
+		<node name="eo" value="Esperanto" />
+		<node name="es" value="Spaniola" />
+		<node name="fi" value="Finlandeza" />
+		<node name="fr" value="Franceza" />
+		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="he" value="Ebraica" />
+		<node name="hu" value="Ungara" />
+		<node name="id" value="Indoneziana" />
+		<node name="it" value="Italiana" />
+		<node name="lt" value="Lituaniana" />
+		<node name="nl" value="Olandeza" />
+		<node name="no" value="Norvegiana" />
+		<node name="pl" value="Poloneaza" />
+		<node name="pt" value="Portugheza" />
+		<node name="ro" value="Romana" />
+		<node name="ru" value="Rusa" />
+		<node name="sv" value="Suedeza" />
+		<node name="th" value="Tailandeza" />
+		<node name="tr" value="Turca" />
+		<node name="uk" value="Ucrainiana" />
+		<node name="vi" value="Vietnameza" />
+		<node name="zh" value="Chineza" />
+		<node name="other" value="Altele" />
+		<node name="multi" value="Multi limba" />
+	</node>
+	<node name="boolean3">
+		<node name="on" value="deschis" />
+		<node name="off" value="inchis" />
+		<node name="unchanged" value="neschimbat" />
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Functionalitatea Tastei" />
+	</node>
+</resources>

@@ -241,7 +241,6 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		if (isEmpty()) {
 			return false;
 		}
-		final ZLTextElementAreaVector vector = page.TextElementMap;
 		final ZLTextElementArea firstPageArea = page.TextElementMap.getFirstArea();
 		if (firstPageArea == null) {
 			return false;

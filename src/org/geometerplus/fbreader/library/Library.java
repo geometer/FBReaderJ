@@ -25,7 +25,6 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -63,7 +62,7 @@ public final class Library {
 	private final RootTree myRootTree = new RootTree(this);
 	private boolean myDoGroupTitlesByFirstLetter;
 
-	private final List<ChangeListener> myListeners = new LinkedList<ChangeListener>();
+	private final List<ChangeListener> myListeners = Collections.synchronizedList(new LinkedList<ChangeListener>());
 
 	private final static int STATUS_LOADING = 1;
 	private final static int STATUS_SEARCHING = 2;
@@ -91,11 +90,11 @@ public final class Library {
 		return (FirstLevelTree)myRootTree.getSubTree(key);
 	}
 
-	public synchronized void addChangeListener(ChangeListener listener) {
+	public void addChangeListener(ChangeListener listener) {
 		myListeners.add(listener);
 	}
 
-	public synchronized void removeChangeListener(ChangeListener listener) {
+	public void removeChangeListener(ChangeListener listener) {
 		myListeners.remove(listener);
 	}
 
@@ -128,19 +127,6 @@ public final class Library {
 		}
 
 		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
-	}
-
-	private static Book getBook(ZLFile bookFile, FileInfoSet fileInfos, Map<Long,Book> saved, boolean doReadMetaInfo) {
-		Book book = saved.remove(fileInfos.getId(bookFile));
-		if (book == null) {
-			doReadMetaInfo = true;
-			book = new Book(bookFile);
-		}
-
-		if (doReadMetaInfo && !book.readMetaInfo()) {
-			return null;
-		}
-		return book;
 	}
 
 	private void collectBooks(
@@ -271,8 +257,10 @@ public final class Library {
 	}
 
 	private void fireModelChangedEvent(ChangeListener.Code code) {
-		for (ChangeListener l : myListeners) {
-			l.onLibraryChanged(code);
+		synchronized (myListeners) {
+			for (ChangeListener l : myListeners) {
+				l.onLibraryChanged(code);
+			}
 		}
 	}
 
@@ -434,7 +422,7 @@ public final class Library {
 
 	public void startBuild() {
 		setStatus(myStatusMask | STATUS_LOADING);
-		new Thread("Library.build") {
+		final Thread builder = new Thread("Library.build") {
 			public void run() {
 				try {
 					build();
@@ -442,7 +430,9 @@ public final class Library {
 					setStatus(myStatusMask & ~STATUS_LOADING);
 				}
 			}
-		}.start();
+		};
+		builder.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
+		builder.start();
 	}
 
 	public boolean isUpToDate() {
@@ -461,7 +451,7 @@ public final class Library {
 
 	public void startBookSearch(final String pattern) {
 		setStatus(myStatusMask | STATUS_SEARCHING);
-		new Thread("Library.searchBooks") {
+		final Thread searcher = new Thread("Library.searchBooks") {
 			public void run() {
 				try {
 					searchBooks(pattern);
@@ -469,7 +459,9 @@ public final class Library {
 					setStatus(myStatusMask & ~STATUS_SEARCHING);
 				}
 			}
-		}.start();
+		};
+		searcher.setPriority((Thread.MIN_PRIORITY + Thread.NORM_PRIORITY) / 2);
+		searcher.start();
 	}
 
 	private void searchBooks(String pattern) {

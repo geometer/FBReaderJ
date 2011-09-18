@@ -34,46 +34,37 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 	private static class FeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
-		private NetworkLibrary.OnNewLinkListener myListener;
+		private final List<INetworkLink> myLinks = new LinkedList<INetworkLink>();
 
 		private String myAuthenticationType;
 		private final LinkedList<URLRewritingRule> myUrlRewritingRules = new LinkedList<URLRewritingRule>();
 		private final HashMap<RelationAlias, String> myRelationAliases = new HashMap<RelationAlias, String>();
 		private final LinkedHashMap<String,String> myExtraData = new LinkedHashMap<String,String>(); 
-
-		private ATOMUpdated myUpdatedTime;
-		private ATOMUpdated myReadAfterTime;
-
-		public FeedHandler(NetworkLibrary.OnNewLinkListener listener, ATOMUpdated readAfter) {
-			myListener = listener;
-			myReadAfterTime = readAfter;
+		List<INetworkLink> links() {
+			return myLinks;
 		}
 
-		public void setAuthenticationType(String type) {
+		void setAuthenticationType(String type) {
 			myAuthenticationType = type;
 		}
 
-		public void addUrlRewritingRule(URLRewritingRule rule) {
+		void addUrlRewritingRule(URLRewritingRule rule) {
 			myUrlRewritingRules.add(rule);
 		}
 
-		public void addRelationAlias(RelationAlias alias, String relation) {
+		void addRelationAlias(RelationAlias alias, String relation) {
 			myRelationAliases.put(alias, relation);
 		}
 
-		public void putExtraData(String name, String value) {
+		void putExtraData(String name, String value) {
 			myExtraData.put(name, value);
 		}
 
-		public void clear() {
+		void clear() {
 			myAuthenticationType = null;
 			myUrlRewritingRules.clear();
 			myRelationAliases.clear();
 			myExtraData.clear();
-		}
-
-		public ATOMUpdated getUpdatedTime() {
-			return myUpdatedTime;
 		}
 
 		private static final String ENTRY_ID_PREFIX = "urn:fbreader-org-catalog:";
@@ -136,9 +127,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				sslCertificate = null;
 			}
 
-			INetworkLink result = link(id, siteName, title, summary, language, infos, sslCertificate);
-			if (result != null) {
-				myListener.onNewLink(result);
+			if (siteName != null && title != null && infos.getInfo(UrlInfo.Type.Catalog) != null) {
+				myLinks.add(link(id, siteName, title, summary, language, infos, sslCertificate));
 			}
 			return false; 
 		}
@@ -152,10 +142,6 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			UrlInfoCollection<UrlInfoWithDate> infos,
 			String sslCertificate
 		) {
-			if (siteName == null || title == null || infos.getInfo(UrlInfo.Type.Catalog) == null) {
-				return null;
-			}
-
 			final String titleString = title.toString();
 			final String summaryString = summary != null ? summary.toString() : null;
 
@@ -169,41 +155,26 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				infos
 			);
 
-			/*if (!mySearchType.empty()) {
-				opdsLink.setupAdvancedSearch(
-					mySearchType,
-					mySearchFields["titleOrSeries"],
-					mySearchFields["author"],
-					mySearchFields["tag"],
-					mySearchFields["annotation"]
-				);
-			}*/
 			opdsLink.setRelationAliases(myRelationAliases);
 			opdsLink.setUrlRewritingRules(myUrlRewritingRules);
 			opdsLink.setExtraData(myExtraData);
 
-			NetworkAuthenticationManager authManager = null;
-			if (myAuthenticationType == "basic") {
-				//authManager = NetworkAuthenticationManager.createManager(opdsLink, sslCertificate, BasicAuthenticationManager.class);
-			} else if (myAuthenticationType == "litres") {
-				authManager = NetworkAuthenticationManager.createManager(opdsLink, sslCertificate, LitResAuthenticationManager.class);
+			if (myAuthenticationType == "litres") {
+				opdsLink.setAuthenticationManager(
+					NetworkAuthenticationManager.createManager(
+						opdsLink, sslCertificate, LitResAuthenticationManager.class
+					)
+				);
 			}
-			opdsLink.setAuthenticationManager(authManager);
 
 			return opdsLink;
 		}
 
 		public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
-			myUpdatedTime = feed.Updated;
-			if (myUpdatedTime != null && myReadAfterTime != null
-					&& myUpdatedTime.compareTo(myReadAfterTime) <= 0) {
-				return true;
-			}
-			return myListener == null; // no listener -- no need to proceed
+			return false;
 		}
 
 		public void processFeedStart() {
-			myUpdatedTime = null;
 		}
 
 		public void processFeedEnd() {
@@ -211,19 +182,15 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 	}
 
 	public OPDSLinkXMLReader() {
-		super(new FeedHandler(null, null), false);
+		super(new FeedHandler(), false);
 	}
 
-	public OPDSLinkXMLReader(NetworkLibrary.OnNewLinkListener listener, ATOMUpdated readAfter) {
-		super(new FeedHandler(listener, readAfter), false);
+	public List<INetworkLink> links() {
+		return getFeedHandler().links();
 	}
 
 	private FeedHandler getFeedHandler() {
 		return (FeedHandler)getATOMFeedHandler();
-	}
-
-	public ATOMUpdated getUpdatedTime() {
-		return getFeedHandler().getUpdatedTime();
 	}
 
 	private static final String FBREADER_ADVANCED_SEARCH = "advancedSearch";

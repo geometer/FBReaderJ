@@ -79,9 +79,6 @@
 		<node name="signOut" value="登出 (%s)"/>
 		<node name="topup" value="升級賬戶 (現為: %s)"/>
 		<node name="topupTitle" value="升級賬戶"/>
-		<node name="topupViaCreditCard" value="信用卡"/>
-		<node name="topupViaSelfServiceKiosk" value="自助櫃位"/>
-		<node name="topupViaSms" value="文字短訊"/>
 		<node name="topupViaBrowser" value="以瀏覽器開啟本頁"/>
 		<node name="topupSummary" value="目前為: %s"/>
 		<node name="basket" value="購物籃"/>
@@ -621,6 +618,7 @@
 			<node name="signOut" value="登出中，請稍候..." />
 			<node name="purchaseBook" value="正購買書藉，請稍候..." />
 			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候..." />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
 		</node>
 		<node name="networkError">
@@ -674,6 +672,12 @@
 			<node name="title" value="購買書藉" />
 			<node name="message" value="此書已經被買過" />
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Select action" toBeTranslated="true"/>
+			<node name="signIn" value="Sign in" toBeTranslated="true"/>
+			<node name="signUp" value="Sign up" toBeTranslated="true"/>
+			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="無法啟動Android Market，請自行安裝 %s"/>
@@ -686,6 +690,7 @@
 		<node name="noFavorites" value="你並未有收藏"/>
 		<node name="emptyCatalog" value="空目錄" />
 		<node name="emptyBasket" value="購物籃內沒有物品" />
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="瀏覽"/>
@@ -695,5 +700,11 @@
 		<node name="unknown" value="未知錯誤"/>
 		<node name="unsupportedCompressionMethod" value="未支援的壓縮方式"/>
 		<node name="encriptedFile" value="受DRM保護的文件"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader problem" toBeTranslated="true"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this problem or enter another directory name below." toBeTranslated="true"/>
+		</node>
 	</node>
 </resources>

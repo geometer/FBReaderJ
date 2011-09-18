@@ -55,6 +55,7 @@
 		<node name="es" value="Spanish" />
 		<node name="fi" value="Finnish" />
 		<node name="fr" value="French" />
+		<node name="gl" value="Galician" />
 		<node name="he" value="Hebrew" />
 		<node name="hu" value="Hungarian" />
 		<node name="id" value="Indonesian" />
@@ -64,6 +65,7 @@
 		<node name="no" value="Norwegian" />
 		<node name="pl" value="Polish" />
 		<node name="pt" value="Portuguese" />
+		<node name="ro" value="Romanian" />
 		<node name="ru" value="Russian" />
 		<node name="sv" value="Swedish" />
 		<node name="th" value="Thai" />

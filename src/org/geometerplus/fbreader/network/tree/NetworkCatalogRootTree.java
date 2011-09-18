@@ -19,15 +19,24 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
 
 public class NetworkCatalogRootTree extends NetworkCatalogTree {
 	public NetworkCatalogRootTree(RootTree parent, INetworkLink link, int position) {
-		super(parent, (NetworkCatalogItem)link.libraryItem(), position);
+		super(parent, link, (NetworkCatalogItem)link.libraryItem(), position);
 	}
 
 	@Override
 	public String getTreeTitle() {
 		return getName();
+	}
+
+	@Override
+	public int compareTo(FBTree tree) {
+		if (!(tree instanceof NetworkCatalogRootTree)) {
+			return 1;
+		}
+		return getLink().compareTo(((NetworkCatalogRootTree)tree).getLink());
 	}
 }

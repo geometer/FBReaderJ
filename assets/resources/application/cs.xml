@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Czech FBReaderJ resources, by Marek Pavelka -->
 <resources>
-	<node name="library" value="FBReader library" toBeTranslated="true">
+	<node name="library" value="Knihovna FBReaderu">
 		<node name="unknownAuthor" value="Neznámý autor"/>
 		<node name="booksWithNoTags" value="Knihy bez štítků"/>
 		<node name="demo" value="ukázka"/>
@@ -35,7 +35,7 @@
 		<node name="fileTreeCard" value="Paměťová karta">
 			<node name="summary" value="Paměťová karta vložena do zařízení"/>
 		</node>
-		<node name="fileTreeLibrary" value="Knihovna FBReader">
+		<node name="fileTreeLibrary" value="Knihovna FBReaderu">
 			<node name="summary" value="Adresář s knihami pro FBReader"/>
 		</node>
 		<node name="menu">
@@ -47,7 +47,7 @@
 		<node name="addToFavorites" value="Přidat do oblíbených"/>
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
 	</node>
-	<node name="networkLibrary" value="FBReader network library" toBeTranslated="true">
+	<node name="networkLibrary" value="Síťová knihovna FBReaderu">
 		<node name="byAuthor" value="Podle autora">
 			<node name="summary" value="Knihy seřazeny podle autora"/>
 		</node>
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="Podle série">
 			<node name="summary" value="Knihy seřazeny podle série"/>
 		</node>
+		<node name="search" value="Hledat">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Hledat knihy v katalozích"/>
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Nalezené">
+			<node name="summary" value="Hledat výsledky pro: %s"/>
+		</node>
 		<node name="openCatalog" value="Otevřít katalog"/>
+		<node name="networkSearch" value="Hledat"/>
 		<node name="showResults" value="Zobrazit výsledky"/>
 		<node name="showBooks" value="Zobrazit knihy"/>
 		<node name="download" value="Stáhnout"/>
@@ -72,6 +81,8 @@
 		<node name="buy" value="Zakoupit (%s)"/>
 		<node name="addToBasket" value="Přidat do košíku"/>
 		<node name="removeFromBasket" value="Odebrat z košíku"/>
+		<node name="clearBasket" value="Vymazat košík"/>
+		<node name="buyAllBooks" value="Zakoupit všechny knihy"/>
 		<node name="openInBrowser" value="Otevřít v prohlížeči"/>
 		<node name="stopLoading" value="Zastavit načítání"/>
 		<node name="stopSearching" value="Zastavit vyhledávání"/>
@@ -79,20 +90,16 @@
 		<node name="signOut" value="Odhlásit (%s)"/>
 		<node name="topup" value="Doplnit účet (aktuálně: %s)"/>
 		<node name="topupTitle" value="Doplnit účet"/>
-		<node name="topupViaCreditCard" value="Platební karta"/>
-		<node name="topupViaSelfServiceKiosk" value="Samoobslužný stánek"/>
-		<node name="topupViaSms" value="Textová zpráva"/>
 		<node name="topupViaBrowser" value="Otevřít stránku v prohlížeči"/>
 		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
-		<node name="basketSummary" value="Knihy, které chci zakoupit"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 books" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 books (%1)"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje"/>
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje"/>
 		<node name="stoppingCatalogLoading" value="Zastavování načítání"/>
 		<node name="stoppingNetworkSearch" value="Zastavování vyhledávání"/>
-		<node name="search" value="Hledat"/>
-		<node name="searchSummary" value="Hledat knihy v katalozích"/>
-		<node name="searchResults" value="Hledat výsledky pro: %s"/>
 		<node name="editCustomCatalog" value="Upravit katalog"/>
 		<node name="removeCustomCatalog" value="Odebrat katalog"/>
 		<node name="addCustomCatalog" value="Přidat katalog"/>
@@ -110,8 +117,8 @@
 		<node name="menu">
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
-			<node name="signIn" value="Přihlásit"/>
-			<node name="signUp" value="Přihlásit"/>
+			<node name="signIn" value="Přihlásit" toBeTranslated="true"/>
+			<node name="signUp" value="Přihlásit" toBeTranslated="true"/>
 			<node name="signOut" value="Odhlásit (%s)"/>
 			<node name="topup" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
@@ -616,6 +623,7 @@
 			<node name="signOut" value="Odhlašování. Čekejte..."/>
 			<node name="purchaseBook" value="Nakupování knihy. Čekejte..."/>
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
 		</node>
 		<node name="networkError">
@@ -630,10 +638,6 @@
 			<node name="notAnOPDS" value="Toto není OPDS katalog"/>
 			<node name="noRequiredInformation" value="Požadovaná informace není uvedena v katalogu"/>
 			<node name="cacheDirectoryError" value="Nelze vytvořit adresář mezipaměti"/>
-		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Výsledky vyhledávání"/>
-			<node name="message" value="Nebyly nalezeny žádné vhodné knihy"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Ověřování"/>
@@ -669,6 +673,12 @@
 			<node name="title" value="Zakoupit knihu"/>
 			<node name="message" value="Kniha je již zakoupena"/>
 		</node>
+		<node name="purchaseActions">
+			<node name="title" value="Select action" toBeTranslated="true"/>
+			<node name="signIn" value="Sign in" toBeTranslated="true"/>
+			<node name="signUp" value="Sign up" toBeTranslated="true"/>
+			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Android Market není přístupný. Nainstalujte %s ručně"/>
@@ -681,6 +691,7 @@
 		<node name="noFavorites" value="Seznam oblíbených je bohužel prázdný"/>
 		<node name="emptyCatalog" value="Katalog je bohužel prázdný"/>
 		<node name="emptyBasket" value="Váš košík je bohužel prázdný"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Prohlížeč"/>
@@ -690,5 +701,11 @@
 		<node name="unknown" value="Neznámá chyba"/>
 		<node name="unsupportedCompressionMethod" value="Nepodporovaná metoda komprese"/>
 		<node name="encriptedFile" value="Soubor chráněný DRM"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="Problém FBReaderu"/>
+			<node name="text" value="Adresář vyrovnávací paměti FBReaderu není přístupný pro zápis. Možná jste zapomněli vložit nebo odpojit paměťovou kartu. Opravte tento problém nebo níže vyberte jiný název adresáře."/>
+		</node>
 	</node>
 </resources>
