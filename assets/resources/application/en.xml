@@ -69,6 +69,7 @@
 			<node name="summary" value="Search results for: %s" />
 		</node>
 		<node name="openCatalog" value="Open catalog"/>
+		<node name="networkSearch" value="Search"/>
 		<node name="showResults" value="Show results"/>
 		<node name="showBooks" value="Show books"/>
 		<node name="download" value="Download"/>
