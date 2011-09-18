@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-//import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 
@@ -37,11 +37,8 @@ public class Searcher extends NetworkItemsLoader {
 	}
 
 	@Override
-	public void doLoading() {
-		//try {
-			//NetworkLibrary.Instance().simpleSearch(myPattern, this);
-		//} catch (ZLNetworkException e) {
-		//}
+	public void doLoading() throws ZLNetworkException {
+		((SearchItem)getTree().Item).runSearch(this, myPattern);
 	}
 
 	@Override
@@ -50,7 +47,7 @@ public class Searcher extends NetworkItemsLoader {
 			((SearchCatalogTree)getTree()).setPattern(myPattern);
 			getTree().clearCatalog();
 			NetworkLibrary.Instance().fireModelChangedEvent(
-				NetworkLibrary.ChangeListener.Code.Found, getTree().getUniqueKey()
+				NetworkLibrary.ChangeListener.Code.Found, getTree()
 			);
 			myItemFound = true;
 		}

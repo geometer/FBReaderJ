@@ -325,6 +325,16 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		return true;
 	}
 
+	private void updateLoadingProgress() {
+		final NetworkTree tree = (NetworkTree)getCurrentTree();
+		final NetworkTree lTree = getLoadableNetworkTree(tree);
+		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
+		setProgressBarIndeterminateVisibility(
+			NetworkLibrary.Instance().getStoredLoader(lTree) != null ||
+			NetworkLibrary.Instance().getStoredLoader(sTree) != null
+		);
+	}
+
 	// method from NetworkLibrary.ChangeListener
 	public void onLibraryChanged(final NetworkLibrary.ChangeListener.Code code, final Object[] params) {
 		runOnUiThread(new Runnable() {
@@ -332,16 +342,14 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 				switch (code) {
 					default:
 					{
-						final NetworkTree tree = getLoadableNetworkTree((NetworkTree)getCurrentTree());
-						final boolean inProgress =
-							tree != null &&
-							NetworkLibrary.Instance().getStoredLoader(tree) != null;
-						setProgressBarIndeterminateVisibility(inProgress);
-                    
+						updateLoadingProgress();
 						getListAdapter().replaceAll(getCurrentTree().subTrees());
 						getListView().invalidateViews();
 						break;
 					}
+					case Found:
+						openTree((NetworkTree)params[0]);
+						break;
 					case NotFound:
 						UIUtil.showErrorMessage(NetworkLibraryActivity.this, "emptyNetworkSearchResults");
 						break;

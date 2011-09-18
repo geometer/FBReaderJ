@@ -19,6 +19,10 @@
 
 package org.geometerplus.fbreader.network;
 
+import java.util.LinkedList;
+
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
@@ -37,11 +41,33 @@ public class AllCatalogsSearchItem extends SearchItem {
 	}
 
 	@Override
-	public boolean canBeOpened() {
-		return false;
-	}
+	public void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
+		final LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
+		final LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
 
-	@Override
-	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
+		for (INetworkLink link : NetworkLibrary.Instance().activeLinks()) {
+			final NetworkOperationData data = link.createOperationData(loader);
+			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
+			if (request != null) {
+				dataList.add(data);
+				requestList.add(request);
+			}
+		}
+
+		while (!requestList.isEmpty()) {
+			ZLNetworkManager.Instance().perform(requestList);
+
+			requestList.clear();
+
+			if (loader.confirmInterruption()) {
+				return;
+			}
+			for (NetworkOperationData data : dataList) {
+				ZLNetworkRequest request = data.resume();
+				if (request != null) {
+					requestList.add(request);
+				}
+			}
+		}
 	}
 }

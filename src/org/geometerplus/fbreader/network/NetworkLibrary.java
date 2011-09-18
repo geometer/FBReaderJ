@@ -24,9 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -132,7 +130,7 @@ public class NetworkLibrary {
 		return builder.toString();
 	}
 
-	private List<INetworkLink> activeLinks() {
+	List<INetworkLink> activeLinks() {
 		final LinkedList<INetworkLink> filteredList = new LinkedList<INetworkLink>();
 		final Collection<String> codes = activeLanguageCodes();
 		synchronized (myLinks) {
@@ -389,36 +387,6 @@ public class NetworkLibrary {
 			return null;
 		}
 		return parentTree != null ? (NetworkTree)parentTree.getSubTree(key.Id) : null;
-	}
-
-	public void simpleSearch(String pattern, final NetworkItemsLoader loader) throws ZLNetworkException {
-		LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
-		LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
-
-		for (INetworkLink link : activeLinks()) {
-			final NetworkOperationData data = link.createOperationData(loader);
-			final ZLNetworkRequest request = link.simpleSearchRequest(pattern, data);
-			if (request != null) {
-				dataList.add(data);
-				requestList.add(request);
-			}
-		}
-
-		while (requestList.size() != 0) {
-			ZLNetworkManager.Instance().perform(requestList);
-
-			requestList.clear();
-
-			if (loader.confirmInterruption()) {
-				return;
-			}
-			for (NetworkOperationData data : dataList) {
-				ZLNetworkRequest request = data.resume();
-				if (request != null) {
-					requestList.add(request);
-				}
-			}
-		}
 	}
 
 	public void addCustomLink(ICustomNetworkLink link) {
