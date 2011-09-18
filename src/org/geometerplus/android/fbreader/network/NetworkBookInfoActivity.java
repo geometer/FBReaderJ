@@ -130,7 +130,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				setupExtraLinks();
 				setupInfo();
 				setupCover();
-				setupButtons();
 			}
 		}
 	};
