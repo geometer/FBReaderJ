@@ -26,11 +26,13 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 	public SearchCatalogTree(RootTree parent, SearchItem item, int position) {
 		super(parent, null, item, position);
 		setCover(null);
+		item.setPattern(null);
 	}
 
 	public SearchCatalogTree(NetworkCatalogTree parent, SearchItem item, int position) {
 		super(parent, item, position);
 		setCover(null);
+		item.setPattern(null);
 	}
 
 	public void setPattern(String pattern) {
