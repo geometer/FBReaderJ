@@ -333,57 +333,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		//item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
-	/*
-	private final void setupButtons() {
-		final int buttons[] = new int[] {
-				R.id.network_book_button0,
-				R.id.network_book_button1,
-				R.id.network_book_button2,
-				R.id.network_book_button3,
-		};
-		final List<NetworkBookActions.NBAction> actions = NetworkBookActions.getContextMenuActions(this, myBook, myConnection);
-
-		final boolean skipSecondButton =
-			actions.size() < buttons.length &&
-			actions.size() % 2 == 1;
-		int buttonNumber = 0;
-		for (final NetworkBookActions.NBAction a : actions) {
-			if (skipSecondButton && buttonNumber == 1) {
-				++buttonNumber;
-			}
-			if (buttonNumber >= buttons.length) {
-				break;
-			}
-
-			final int buttonId = buttons[buttonNumber++];
-			TextView button = (TextView)findViewById(buttonId);
-			button.setText(a.getContextLabel(null));
-			button.setVisibility(View.VISIBLE);
-			button.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					a.run(myBook);
-					NetworkBookInfoActivity.this.updateView();
-				}
-			});
-			button.setEnabled(a.isEnabled(null));
-		}
-		findViewById(R.id.network_book_left_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
-		findViewById(R.id.network_book_right_spacer).setVisibility(skipSecondButton ? View.VISIBLE : View.GONE);
-		if (skipSecondButton) {
-			final int buttonId = buttons[1];
-			View button = findViewById(buttonId);
-			button.setVisibility(View.GONE);
-			button.setOnClickListener(null);
-		}
-		while (buttonNumber < buttons.length) {
-			final int buttonId = buttons[buttonNumber++];
-			View button = findViewById(buttonId);
-			button.setVisibility(View.GONE);
-			button.setOnClickListener(null);
-		}
-	}
-	*/
-
 	private void updateView() {
 		final View rootView = findViewById(R.id.network_book_root);
 		rootView.invalidate();
@@ -417,7 +366,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myBook, myConnection)) {
-			addMenuItem(menu, a.Code, a.getContextLabel(null), R.drawable.ic_menu_read);
+			addMenuItem(menu, a.Code, a.getContextLabel(null), a.IconId);
 		}
 		return true;
 	}
