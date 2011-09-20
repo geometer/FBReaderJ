@@ -330,7 +330,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	private void addMenuItem(Menu menu, int index, String label, int iconId) {
 		final MenuItem item = menu.add(0, index, Menu.NONE, label);
 		item.setIcon(iconId);
-		//item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
 	private void updateView() {
