@@ -47,7 +47,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 
 	BookDownloaderServiceConnection Connection;
 
-	private volatile Intent myIntent;
+	private volatile Intent myDeferredIntent;
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
@@ -72,16 +72,16 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		if (getCurrentTree() instanceof RootTree) {
-			myIntent = getIntent();
+			myDeferredIntent = getIntent();
 
 			if (!NetworkLibrary.Instance().isInitialized()) {
 				new NetworkInitializer(this).start();
 			} else {
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 				new NetworkInitializer(this).end(null);
-				if (myIntent != null) {
-					processIntent(myIntent);
-					myIntent = null;
+				if (myDeferredIntent != null) {
+					processIntent(myDeferredIntent);
+					myDeferredIntent = null;
 				}
 			}
 		}
@@ -341,12 +341,16 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 			public void run() {
 				switch (code) {
 					default:
-					{
 						updateLoadingProgress();
 						getListAdapter().replaceAll(getCurrentTree().subTrees());
 						getListView().invalidateViews();
 						break;
-					}
+					case InitializationFinished:
+						if (myDeferredIntent != null) {
+							processIntent(myDeferredIntent);
+							myDeferredIntent = null;
+						}
+						break;
 					case Found:
 						openTree((NetworkTree)params[0]);
 						break;
@@ -373,13 +377,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 			}
 		}
 		return tree;
-	}
-
-	void processSavedIntent() {
-		if (myIntent != null) {
-			processIntent(myIntent);
-			myIntent = null;
-		}
 	}
 
 	private void processIntent(Intent intent) {

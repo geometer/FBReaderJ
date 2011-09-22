@@ -36,6 +36,7 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 public class NetworkLibrary {
 	public interface ChangeListener {
 		public enum Code {
+			InitializationFinished,
 			SomeCode,
 			/*
 			ItemAdded,
@@ -203,6 +204,7 @@ public class NetworkLibrary {
 		synchronize();
 
 		myIsInitialized = true;
+		fireModelChangedEvent(ChangeListener.Code.InitializationFinished);
 	}
 
 	private void removeAllLoadedLinks() {
