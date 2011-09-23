@@ -232,11 +232,34 @@ public class NetworkLibrary {
 		Log.w("FBREADER", "" + date1 + sign + date2);
 	}*/
 
-	private Object myBackgroundLock = new Object();
+	private volatile boolean myUpdateInProgress;
+	private Object myUpdateLock = new Object();
 
-	// This method must be called from background thread
-	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
-		synchronized (myBackgroundLock) {
+	public void runBackgroundUpdate(final boolean clearCache) {
+		if (!isInitialized()) {
+			return;
+		}
+
+		final Thread thread = new Thread(new Runnable() {
+			public void run() {
+				try {
+					myUpdateInProgress = true;
+					fireModelChangedEvent(ChangeListener.Code.SomeCode);
+					runBackgroundUpdateInternal(clearCache);
+				} catch (ZLNetworkException e) {
+					fireModelChangedEvent(ChangeListener.Code.NetworkError, e.getMessage());
+				} finally {
+					myUpdateInProgress = false;
+					fireModelChangedEvent(ChangeListener.Code.SomeCode);
+				}
+			}
+		});
+		thread.setPriority(Thread.MIN_PRIORITY);
+		thread.start();
+	}
+
+	private void runBackgroundUpdateInternal(boolean clearCache) throws ZLNetworkException {
+		synchronized (myUpdateLock) {
 			final OPDSLinkReader.CacheMode mode =
 				clearCache ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
 			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(mode);
@@ -441,6 +464,10 @@ public class NetworkLibrary {
 
 	public final NetworkItemsLoader getStoredLoader(NetworkTree tree) {
 		return tree != null ? myLoaders.get(tree) : null;
+	}
+
+	public final boolean isUpdateInProgress() {
+		return myUpdateInProgress;
 	}
 
 	public final void removeStoredLoader(NetworkTree tree) {

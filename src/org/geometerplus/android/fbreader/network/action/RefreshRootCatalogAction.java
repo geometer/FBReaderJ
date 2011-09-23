@@ -36,18 +36,12 @@ public class RefreshRootCatalogAction extends RootAction {
 	}
 
 	@Override
+	public boolean isEnabled(NetworkTree tree) {
+		return !NetworkLibrary.Instance().isUpdateInProgress();
+	}
+
+	@Override
 	protected void run(NetworkTree tree) {
-		UIUtil.wait("updatingCatalogsList", new Runnable() {
-			public void run() {
-				try {
-					NetworkLibrary.Instance().runBackgroundUpdate(true);
-				} catch (final ZLNetworkException e) {
-					NetworkLibrary.Instance().fireModelChangedEvent(
-						NetworkLibrary.ChangeListener.Code.NetworkError,
-						e.getMessage()
-					);
-				}
-			}
-		}, myActivity);
+		NetworkLibrary.Instance().runBackgroundUpdate(true);
 	}
 }

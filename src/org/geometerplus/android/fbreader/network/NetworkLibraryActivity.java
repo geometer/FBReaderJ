@@ -333,6 +333,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		final NetworkTree lTree = getLoadableNetworkTree(tree);
 		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
 		setProgressBarIndeterminateVisibility(
+			NetworkLibrary.Instance().isUpdateInProgress() ||
 			NetworkLibrary.Instance().getStoredLoader(lTree) != null ||
 			NetworkLibrary.Instance().getStoredLoader(sTree) != null
 		);
@@ -352,9 +353,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 						showInitLibraryDialog((String)params[0]);
 						break;
 					case InitializationFinished:
-						startService(new Intent(
-							getApplicationContext(), LibraryInitializationService.class
-						));
+						NetworkLibrary.Instance().runBackgroundUpdate(false);
 						if (myDeferredIntent != null) {
 							processIntent(myDeferredIntent);
 							myDeferredIntent = null;

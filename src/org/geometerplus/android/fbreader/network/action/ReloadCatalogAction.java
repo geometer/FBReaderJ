@@ -42,9 +42,12 @@ public class ReloadCatalogAction extends CatalogAction {
 		if (!(item instanceof NetworkURLCatalogItem)) {
 			return false;
 		}
-		return
-			((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog) != null &&
-			NetworkLibrary.Instance().getStoredLoader(tree) == null;
+		return ((NetworkURLCatalogItem)item).getUrl(UrlInfo.Type.Catalog) != null;
+	}
+
+	@Override
+	public boolean isEnabled(NetworkTree tree) {
+		return NetworkLibrary.Instance().getStoredLoader(tree) == null;
 	}
 
 	@Override

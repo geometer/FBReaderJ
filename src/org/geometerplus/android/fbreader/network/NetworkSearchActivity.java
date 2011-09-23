@@ -45,9 +45,10 @@ public class NetworkSearchActivity extends Activity {
 					(NetworkTree.Key)data.getSerializable(NetworkLibraryActivity.TREE_KEY_KEY);
 				final NetworkTree tree = library.getTreeByKey(key);
 				if (tree instanceof SearchCatalogTree) {
-					final String pattern = intent.getStringExtra(SearchManager.QUERY);
-					library.NetworkSearchPatternOption.setValue(pattern);
-					new Searcher((SearchCatalogTree)tree, pattern).start();
+					new Searcher(
+						(SearchCatalogTree)tree,
+						intent.getStringExtra(SearchManager.QUERY)
+					).start();
 				}
 			}
 		}

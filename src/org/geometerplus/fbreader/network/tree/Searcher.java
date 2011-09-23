@@ -34,6 +34,7 @@ public class Searcher extends NetworkItemsLoader {
 
 	@Override
 	public void doBefore() {
+		NetworkLibrary.Instance().NetworkSearchPatternOption.setValue(myPattern);
 	}
 
 	@Override
