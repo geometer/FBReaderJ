@@ -216,10 +216,14 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	}
 
 	public int compareTo(INetworkLink link) {
-		final int diff = getLanguageOrder(getLanguage()) - getLanguageOrder(link.getLanguage());
+		int diff = getLanguageOrder(getLanguage()) - getLanguageOrder(link.getLanguage());
 		if (diff != 0) {
 			return diff;
 		}
-		return getTitleForComparison().compareToIgnoreCase(((AbstractNetworkLink)link).getTitleForComparison());
+		diff = getTitleForComparison().compareToIgnoreCase(((AbstractNetworkLink)link).getTitleForComparison());
+		if (diff != 0) {
+			return diff;
+		}
+		return getId() - link.getId();
 	}
 }
