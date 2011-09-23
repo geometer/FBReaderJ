@@ -349,7 +349,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 						getListView().invalidateViews();
 						break;
 					case InitializationFailed:
-						showTryAgainDialog((String)params[0]);
+						showInitLibraryDialog((String)params[0]);
 						break;
 					case InitializationFinished:
 						startService(new Intent(
@@ -408,16 +408,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
-	private final DialogInterface.OnClickListener myListener = new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int which) {
-			if (which == DialogInterface.BUTTON_POSITIVE) {
-				initLibrary();
-			} else {
-				finish();
-			}
-		}
-	};
-
 	private void initLibrary() {
 		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
 			public void run() {
@@ -430,7 +420,17 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		}, this);
 	}
 
-	private void showTryAgainDialog(String error) {
+	private void showInitLibraryDialog(String error) {
+		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				if (which == DialogInterface.BUTTON_POSITIVE) {
+					initLibrary();
+				} else {
+					finish();
+				}
+			}
+		};
+
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource boxResource = dialogResource.getResource("networkError");
 		final ZLResource buttonResource = dialogResource.getResource("button");
@@ -438,11 +438,11 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 			.setTitle(boxResource.getResource("title").getValue())
 			.setMessage(error)
 			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("tryAgain").getValue(), myListener)
-			.setNegativeButton(buttonResource.getResource("cancel").getValue(), myListener)
+			.setPositiveButton(buttonResource.getResource("tryAgain").getValue(), listener)
+			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
 			.setOnCancelListener(new DialogInterface.OnCancelListener() {
 				public void onCancel(DialogInterface dialog) {
-					myListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+					listener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
 				}
 			})
 			.create().show();
