@@ -83,14 +83,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		public void run() {
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			if (!library.isInitialized()) {
-				try {
-					if (SQLiteNetworkDatabase.Instance() == null) {
-						new SQLiteNetworkDatabase();
-					}
-					library.initialize();
-				} catch (ZLNetworkException e) {
-					// ignore
+				if (SQLiteNetworkDatabase.Instance() == null) {
+					new SQLiteNetworkDatabase();
 				}
+				library.initialize();
 			}
         
 			if (myBook == null) {
@@ -397,6 +393,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code, Object[] params) {
+		if (code == NetworkLibrary.ChangeListener.Code.InitializationFailed) {
+			// TODO: implement
+		}
+
 		if (myBook == null) {
 			return;
 		}

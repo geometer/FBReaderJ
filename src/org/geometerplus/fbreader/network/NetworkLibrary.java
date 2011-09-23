@@ -37,6 +37,7 @@ public class NetworkLibrary {
 	public interface ChangeListener {
 		public enum Code {
 			InitializationFinished,
+			InitializationFailed,
 			SomeCode,
 			/*
 			ItemAdded,
@@ -184,7 +185,7 @@ public class NetworkLibrary {
 		return myIsInitialized;
 	}
 
-	public synchronized void initialize() throws ZLNetworkException {
+	public synchronized void initialize() {
 		if (myIsInitialized) {
 			return;
 		}
@@ -193,7 +194,8 @@ public class NetworkLibrary {
 			myLinks.addAll(OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CacheMode.LOAD));
 		} catch (ZLNetworkException e) {
 			removeAllLoadedLinks();
-			throw e;
+			fireModelChangedEvent(ChangeListener.Code.InitializationFailed, e.getMessage());
+			return;
 		}
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
