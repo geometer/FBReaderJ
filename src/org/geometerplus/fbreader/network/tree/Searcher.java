@@ -66,7 +66,7 @@ public class Searcher extends NetworkItemsLoader {
 	}
 
 	@Override
-	protected void onFinish(String errorMessage, boolean interrupted) {
+	protected void onFinish(ZLNetworkException exception, boolean interrupted) {
 		if (!interrupted && !myItemFound) {
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.NotFound);
 		}

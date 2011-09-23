@@ -60,21 +60,21 @@ public class CatalogExpander extends NetworkItemsLoader {
 	}
 
 	@Override
-	protected void onFinish(String errorMessage, boolean interrupted) {
-		if (interrupted && (!getTree().Item.supportsResumeLoading() || errorMessage != null)) {
+	protected void onFinish(ZLNetworkException exception, boolean interrupted) {
+		if (interrupted && (!getTree().Item.supportsResumeLoading() || exception != null)) {
 			getTree().clearCatalog();
 		} else {
 			getTree().removeUnconfirmedItems();
 			if (!interrupted) {
-				if (errorMessage != null) {
+				if (exception != null) {
 					NetworkLibrary.Instance().fireModelChangedEvent(
-						NetworkLibrary.ChangeListener.Code.NetworkError, errorMessage
+						NetworkLibrary.ChangeListener.Code.NetworkError, exception.getMessage()
 					);
 				} else {
 					getTree().updateLoadedTime();
 					if (getTree().subTrees().isEmpty()) {
 						NetworkLibrary.Instance().fireModelChangedEvent(
-							NetworkLibrary.ChangeListener.Code.EmptyCatalog, errorMessage
+							NetworkLibrary.ChangeListener.Code.EmptyCatalog
 						);
 					}
 				}
