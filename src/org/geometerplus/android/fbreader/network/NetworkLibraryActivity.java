@@ -391,13 +391,9 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		if (AddCustomCatalogActivity.ADD_CATALOG.equals(intent.getAction())) {
 			final ICustomNetworkLink link = AddCustomCatalogActivity.getLinkFromIntent(intent);
 			if (link != null) {
-				runOnUiThread(new Runnable() {
-					public void run() {
-						final NetworkLibrary library = NetworkLibrary.Instance();
-						library.addCustomLink(link);
-						library.synchronize();
-					}
-				});
+				final NetworkLibrary library = NetworkLibrary.Instance();
+				library.addCustomLink(link);
+				library.synchronize();
 			}
 		}
 	}
