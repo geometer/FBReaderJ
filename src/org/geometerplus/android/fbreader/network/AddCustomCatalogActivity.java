@@ -42,37 +42,11 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
-	private static final String ADD_CATALOG_TITLE_KEY = "title";
-	private static final String ADD_CATALOG_SUMMARY_KEY = "summary";
-	private static final String ADD_CATALOG_ID_KEY = "id";
-	private static final String ADD_CATALOG_URLS_MAP_KEY = "urls";
-
-	public static void addLinkToIntent(Intent intent, ICustomNetworkLink link) {
-		Util.intentByLink(intent, link)
-			.putExtra(ADD_CATALOG_TITLE_KEY, link.getTitle())
-			.putExtra(ADD_CATALOG_SUMMARY_KEY, link.getSummary())
-			.putExtra(ADD_CATALOG_ID_KEY, link.getId())
-			.putExtra(ADD_CATALOG_URLS_MAP_KEY, link.urlInfoMap());
-	}
-
-	static ICustomNetworkLink getLinkFromIntent(Intent intent) {
-		final Uri uri = intent.getData();
-		if (uri == null || !intent.hasExtra(ADD_CATALOG_ID_KEY)) {
-			return null;
-		}
-
-		return new OPDSCustomNetworkLink(
-			intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID),
-			uri.getHost(),
-			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
-			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
-			null,
-			(UrlInfoCollection<UrlInfoWithDate>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
-		);
-	}
+	public static String EDIT_KEY = "EditNotAdd";
 
 	private ZLResource myResource;
 	private volatile ICustomNetworkLink myLink;
+	private boolean myEditNotAdd;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -114,8 +88,18 @@ public class AddCustomCatalogActivity extends Activity {
 		Util.initLibrary(this);
 
 		final Intent intent = getIntent();
-		myLink = getLinkFromIntent(intent);
-		final Uri uri = intent.getData();
+		myLink = null;
+		Uri uri = intent.getData();
+		if (uri != null) {
+			if ("opds".equals(uri.getScheme())) {
+				uri = Uri.parse("http" + uri.toString().substring(4));
+			}
+			final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
+			if (link instanceof ICustomNetworkLink) {
+				myLink = (ICustomNetworkLink)link;
+			}
+		}
+		myEditNotAdd = intent.getBooleanExtra(EDIT_KEY, false);
 
 		if (myLink != null) {
 			setTextById(R.id.add_custom_catalog_url, myLink.getUrl(UrlInfo.Type.Catalog));
@@ -123,6 +107,9 @@ public class AddCustomCatalogActivity extends Activity {
 			setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
 			setExtraFieldsVisibility(true);
 		} else if (uri != null) {
+			if ("opds".equals(uri.getScheme())) {
+				uri = Uri.parse("http" + uri.toString().substring(4));
+			}
 			loadInfoByUri(uri);
 		} else {
 			setExtraFieldsVisibility(false);
@@ -167,12 +154,10 @@ public class AddCustomCatalogActivity extends Activity {
 
 			final Intent intent = new Intent(
 				NetworkLibraryActivity.OPEN_CATALOG_ACTION,
-				uri,
+				myEditNotAdd ? null : uri,
 				AddCustomCatalogActivity.this,
 				NetworkLibraryActivity.class
 			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-			addLinkToIntent(intent, myLink);
 			startActivity(intent);
 			finish();
 		}
@@ -265,8 +250,6 @@ public class AddCustomCatalogActivity extends Activity {
 		if (isEmptyString(uri.getScheme())) {
 			textUrl = "http://" + textUrl;
 			uri = Uri.parse(textUrl);
-		} else if ("opds".equals(uri.getScheme())) {
-			textUrl = "http" + uri.toString().substring(4);
 		}
 
 		setTextById(R.id.add_custom_catalog_url, textUrl);

@@ -24,6 +24,7 @@ import java.util.*;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -55,6 +56,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
 	final List<Action> myListClickActions = new ArrayList<Action>();
+	private Intent myDeferredIntent;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -71,18 +73,19 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 
 		setListAdapter(new NetworkLibraryAdapter(this));
 		init(getIntent());
+		myDeferredIntent = null;
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		if (getCurrentTree() instanceof RootTree) {
 			if (!NetworkLibrary.Instance().isInitialized()) {
 				Util.initLibrary(this);
+				myDeferredIntent = getIntent();
 			} else {
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+				openTreeByIntent(getIntent());
 			}
 		}
-
-		openTreeByIntent(getIntent());
 	}
 
 	@Override
@@ -124,11 +127,14 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 
 	private boolean openTreeByIntent(Intent intent) {
 		if (OPEN_CATALOG_ACTION.equals(intent.getAction())) {
-			final NetworkTree tree =
-				NetworkLibrary.Instance().getCatalogTreeByUrl(intent.getData().toString());
-			if (tree != null) {
-				new OpenCatalogAction(this).run(tree);
-				return true;
+			final Uri uri = intent.getData();
+			if (uri != null) {
+				final NetworkTree tree =
+					NetworkLibrary.Instance().getCatalogTreeByUrl(uri.toString());
+				if (tree != null) {
+					new OpenCatalogAction(this).run(tree);
+					return true;
+				}
 			}
 		}
 		return false;
@@ -361,6 +367,10 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 						break;
 					case InitializationFinished:
 						NetworkLibrary.Instance().runBackgroundUpdate(false);
+						if (myDeferredIntent != null) {
+							openTreeByIntent(myDeferredIntent);
+							myDeferredIntent = null;
+						}
 						break;
 					case Found:
 						openTree((NetworkTree)params[0]);

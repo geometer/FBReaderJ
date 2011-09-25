@@ -47,7 +47,7 @@ public abstract class Util implements UserRegistrationConstants {
 		return uri != null ? NetworkLibrary.Instance().getLinkByUrl(uri.toString()) : null;
 	}
 
-	static Intent intentByLink(Intent intent, INetworkLink link) {
+	public static Intent intentByLink(Intent intent, INetworkLink link) {
 		if (link != null) {
 			intent.setData(Uri.parse(link.getUrl(UrlInfo.Type.Catalog)));
 		}

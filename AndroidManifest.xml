@@ -139,6 +139,12 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkLibraryActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.network.NetworkSearchActivity" />
+			<intent-filter>
+				<action android:name="android.fbreader.action.OPEN_NETWORK_CATALOG" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:host="*" android:scheme="http" />
+				<data android:host="*" android:scheme="https" />
+			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.network.AuthenticationActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog"/>
 		<activity android:name="org.geometerplus.android.fbreader.network.AddCustomCatalogActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog">
