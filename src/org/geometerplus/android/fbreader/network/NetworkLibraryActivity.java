@@ -57,6 +57,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
 	final List<Action> myListClickActions = new ArrayList<Action>();
 	private Intent myDeferredIntent;
+	private boolean mySingleCatalog;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -72,18 +73,20 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		);
 
 		setListAdapter(new NetworkLibraryAdapter(this));
-		init(getIntent());
+		final Intent intent = getIntent();
+		init(intent);
 		myDeferredIntent = null;
 
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		if (getCurrentTree() instanceof RootTree) {
+			mySingleCatalog = intent.getBooleanExtra("SingleCatalog", false);
 			if (!NetworkLibrary.Instance().isInitialized()) {
 				Util.initLibrary(this);
-				myDeferredIntent = getIntent();
+				myDeferredIntent = intent;
 			} else {
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-				openTreeByIntent(getIntent());
+				openTreeByIntent(intent);
 			}
 		}
 	}
@@ -166,7 +169,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 
 	@Override
 	protected boolean isTreeInvisible(FBTree tree) {
-		return tree instanceof RootTree && ((RootTree)tree).IsFake;
+		return tree instanceof RootTree && (mySingleCatalog || ((RootTree)tree).IsFake);
 	}
 
 	@Override
