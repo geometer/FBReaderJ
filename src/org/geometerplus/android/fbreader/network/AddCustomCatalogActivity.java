@@ -42,8 +42,6 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
-	static final String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
-
 	private static final String ADD_CATALOG_TITLE_KEY = "title";
 	private static final String ADD_CATALOG_SUMMARY_KEY = "summary";
 	private static final String ADD_CATALOG_ID_KEY = "id";
@@ -113,6 +111,8 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		);
 
+		Util.initLibrary(this);
+
 		final Intent intent = getIntent();
 		myLink = getLinkFromIntent(intent);
 		final Uri uri = intent.getData();
@@ -161,14 +161,20 @@ public class AddCustomCatalogActivity extends Activity {
 			myLink.setSummary(summary);
 			myLink.setUrl(UrlInfo.Type.Catalog, uri.toString());
 
-			Intent intent = new Intent(
-				ADD_CATALOG,
+			final NetworkLibrary library = NetworkLibrary.Instance();
+			library.addCustomLink(myLink);
+			library.synchronize();
+
+			final Intent intent = new Intent(
+				NetworkLibraryActivity.OPEN_CATALOG_ACTION,
 				uri,
 				AddCustomCatalogActivity.this,
 				NetworkLibraryActivity.class
 			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
 			addLinkToIntent(intent, myLink);
 			startActivity(intent);
+			finish();
 		}
 	}
 

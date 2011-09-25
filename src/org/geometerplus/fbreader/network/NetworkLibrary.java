@@ -157,6 +157,19 @@ public class NetworkLibrary {
 		return null;
 	}
 
+	public NetworkTree getCatalogTreeByUrl(String url) {
+		for (FBTree tree : getRootTree().subTrees()) {
+			if (tree instanceof NetworkCatalogRootTree) {
+				final String cUrl =
+					((NetworkCatalogTree)tree).getLink().getUrlInfo(UrlInfo.Type.Catalog).Url;
+				if (url.equals(cUrl)) {
+					return (NetworkTree)tree;
+				}
+			}
+		}
+		return null;
+	}
+
 	public INetworkLink getLinkBySiteName(String siteName) {
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {

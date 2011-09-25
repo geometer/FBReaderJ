@@ -33,6 +33,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticat
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
@@ -47,6 +48,23 @@ public abstract class Util implements UserRegistrationConstants {
 
 	static Intent intentByLink(Intent intent, INetworkLink link) {
 		return intent.setData(Uri.parse(link.getUrl(UrlInfo.Type.Catalog)));
+	}
+
+	static void initLibrary(Activity activity) {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		if (library.isInitialized()) {
+			return;
+		}
+
+		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+			public void run() {
+				if (SQLiteNetworkDatabase.Instance() == null) {
+					new SQLiteNetworkDatabase();
+				}
+                
+				library.initialize();
+			}
+		}, activity);
 	}
 
 	private static boolean testService(Activity activity, String action, String url) {

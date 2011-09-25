@@ -44,13 +44,13 @@ import org.geometerplus.android.fbreader.network.action.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class NetworkLibraryActivity extends TreeActivity implements NetworkLibrary.ChangeListener {
+	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
+
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
 	protected static final int SIGNUP_CODE = 2;
 	protected static final int AUTO_SIGNIN_CODE = 3;
 
 	BookDownloaderServiceConnection Connection;
-
-	private volatile Intent myDeferredIntent;
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
 	final List<Action> myContextMenuActions = new ArrayList<Action>();
@@ -75,19 +75,14 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		if (getCurrentTree() instanceof RootTree) {
-			myDeferredIntent = getIntent();
-
 			if (!NetworkLibrary.Instance().isInitialized()) {
-				initLibrary();
+				Util.initLibrary(this);
 			} else {
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.InitializationFinished);
 				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-				if (myDeferredIntent != null) {
-					processIntent(myDeferredIntent);
-					myDeferredIntent = null;
-				}
 			}
 		}
+
+		openTreeByIntent(getIntent());
 	}
 
 	@Override
@@ -127,11 +122,23 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		super.onDestroy();
 	}
 
+	private boolean openTreeByIntent(Intent intent) {
+		if (OPEN_CATALOG_ACTION.equals(intent.getAction())) {
+			final NetworkTree tree =
+				NetworkLibrary.Instance().getCatalogTreeByUrl(intent.getData().toString());
+			if (tree != null) {
+				openTree(tree);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-
-		processIntent(intent);
+		if (!openTreeByIntent(intent)) {
+			super.onNewIntent(intent);
+		}
 	}
 
 	@Override
@@ -354,10 +361,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 						break;
 					case InitializationFinished:
 						NetworkLibrary.Instance().runBackgroundUpdate(false);
-						if (myDeferredIntent != null) {
-							processIntent(myDeferredIntent);
-							myDeferredIntent = null;
-						}
 						break;
 					case Found:
 						openTree((NetworkTree)params[0]);
@@ -387,39 +390,16 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		return tree;
 	}
 
-	private void processIntent(Intent intent) {
-		if (AddCustomCatalogActivity.ADD_CATALOG.equals(intent.getAction())) {
-			final ICustomNetworkLink link = AddCustomCatalogActivity.getLinkFromIntent(intent);
-			if (link != null) {
-				final NetworkLibrary library = NetworkLibrary.Instance();
-				library.addCustomLink(link);
-				library.synchronize();
-			}
-		}
-	}
-
 	@Override
 	protected void onCurrentTreeChanged() {
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-	}
-
-	private void initLibrary() {
-		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
-			public void run() {
-				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase();
-				}
-                
-				NetworkLibrary.Instance().initialize();
-			}
-		}, this);
 	}
 
 	private void showInitLibraryDialog(String error) {
 		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				if (which == DialogInterface.BUTTON_POSITIVE) {
-					initLibrary();
+					Util.initLibrary(NetworkLibraryActivity.this);
 				} else {
 					finish();
 				}
