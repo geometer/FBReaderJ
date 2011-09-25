@@ -146,7 +146,7 @@ public class AuthenticationActivity extends Activity {
 		myCustomAuthentication = intent.getBooleanExtra(CUSTOM_AUTH_KEY, false);
 
 		if (myCustomAuthentication) {
-			myLink = Util.linkByIntent(intent);
+			myLink = NetworkLibrary.Instance().getLinkByUrl(String.valueOf(intent.getData()));
 			if (myLink == null) {
 				finish();
 				return;

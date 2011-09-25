@@ -42,11 +42,6 @@ public abstract class Util implements UserRegistrationConstants {
 	private static final String AUTO_SIGNIN_ACTION =
 		"android.fbreader.action.NETWORK_LIBRARY_AUTOSIGNIN";
 
-	static INetworkLink linkByIntent(Intent intent) {
-		final Uri uri = intent.getData();
-		return uri != null ? NetworkLibrary.Instance().getLinkByUrl(uri.toString()) : null;
-	}
-
 	public static Intent intentByLink(Intent intent, INetworkLink link) {
 		if (link != null) {
 			intent.setData(Uri.parse(link.getUrl(UrlInfo.Type.Catalog)));
