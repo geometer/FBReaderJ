@@ -127,7 +127,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 			final NetworkTree tree =
 				NetworkLibrary.Instance().getCatalogTreeByUrl(intent.getData().toString());
 			if (tree != null) {
-				openTree(tree);
+				new OpenCatalogAction(this).run(tree);
 				return true;
 			}
 		}
