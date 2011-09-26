@@ -51,7 +51,7 @@ public class ReloadCatalogAction extends CatalogAction {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		if (NetworkLibrary.Instance().getStoredLoader(tree) != null) {
 			return;
 		}

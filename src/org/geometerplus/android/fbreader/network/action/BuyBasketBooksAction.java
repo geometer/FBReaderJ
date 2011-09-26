@@ -35,7 +35,7 @@ public class BuyBasketBooksAction extends CatalogAction {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		// TODO: implement
 	}
 }

@@ -41,7 +41,7 @@ public class RefreshRootCatalogAction extends RootAction {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		NetworkLibrary.Instance().runBackgroundUpdate(true);
 	}
 }

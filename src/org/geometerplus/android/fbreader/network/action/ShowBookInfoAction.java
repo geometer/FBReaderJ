@@ -20,12 +20,14 @@
 package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 
-import org.geometerplus.android.fbreader.network.Util;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+import org.geometerplus.android.fbreader.network.NetworkBookInfoActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -35,9 +37,9 @@ public class ShowBookInfoAction extends BookAction {
 	}
 
 	@Override
-	protected void run(final NetworkTree tree) {
+	public void run(final NetworkTree tree) {
 		if (getBook(tree).isFullyLoaded()) {
-			Util.openTree(myActivity, tree);
+			showBookInfo(tree);
 		} else {
 			UIUtil.wait("loadInfo", new Runnable() {
 				public void run() {
@@ -48,11 +50,18 @@ public class ShowBookInfoAction extends BookAction {
 					}
 					myActivity.runOnUiThread(new Runnable() {
 						public void run() {
-							Util.openTree(myActivity, tree);
+							showBookInfo(tree);
 						}
 					});
 				}
 			}, myActivity);
 		}
+	}
+
+	private void showBookInfo(NetworkTree tree) {
+		myActivity.startActivity(
+			new Intent(myActivity, NetworkBookInfoActivity.class)
+				.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
+		);
 	}
 }

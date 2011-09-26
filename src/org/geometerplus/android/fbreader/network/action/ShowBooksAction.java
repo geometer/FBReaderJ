@@ -25,7 +25,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkAuthorTree;
 import org.geometerplus.fbreader.network.tree.NetworkSeriesTree;
 
-import org.geometerplus.android.fbreader.network.Util;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
 public class ShowBooksAction extends Action {
 	public ShowBooksAction(Activity activity) {
@@ -38,7 +38,7 @@ public class ShowBooksAction extends Action {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
-		Util.openTree(myActivity, tree);
+	public void run(NetworkTree tree) {
+		((NetworkLibraryActivity)myActivity).openTree(tree);
 	}
 }

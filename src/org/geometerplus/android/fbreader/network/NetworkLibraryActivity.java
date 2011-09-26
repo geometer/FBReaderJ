@@ -32,6 +32,7 @@ import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.zlibrary.ui.android.network.SQLiteCookieDatabase;
 
@@ -135,7 +136,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 				final NetworkTree tree =
 					NetworkLibrary.Instance().getCatalogTreeByUrl(uri.toString());
 				if (tree != null) {
-					new OpenCatalogAction(this).checkAndRun(tree);
+					checkAndRun(new OpenCatalogAction(this), tree);
 					return true;
 				}
 			}
@@ -253,7 +254,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		if (tree != null) {
 			for (Action a : getContextMenuActions(tree)) {
 				if (a.Code == item.getItemId()) {
-					a.checkAndRun(tree);
+					checkAndRun(a, tree);
 					return true;
 				}
 			}
@@ -270,7 +271,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		final NetworkTree tree = (NetworkTree)getListAdapter().getItem(position);
 		for (Action a : myListClickActions) {
 			if (a.isVisible(tree) && a.isEnabled(tree)) {
-				a.checkAndRun(tree);
+				checkAndRun(a, tree);
 				return;
 			}
 		}
@@ -337,7 +338,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			if (a.Code == item.getItemId()) {
-				a.checkAndRun(tree);
+				checkAndRun(a, tree);
 				break;
 			}
 		}
@@ -434,5 +435,32 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 				}
 			})
 			.create().show();
+	}
+
+	private void checkAndRun(final Action action, final NetworkTree tree) {
+		if (tree instanceof NetworkCatalogTree) {
+			final NetworkCatalogTree catalogTree = (NetworkCatalogTree)tree;
+			switch (catalogTree.getVisibility()) {
+				case B3_FALSE:
+					break;
+				case B3_TRUE:
+					action.run(tree);
+					break;
+				case B3_UNDEFINED:
+					Util.runAuthenticationDialog(this, tree.getLink(), new Runnable() {
+						public void run() {
+							if (catalogTree.getVisibility() != ZLBoolean3.B3_TRUE) {
+								return;
+							}
+							if (action.Code != ActionCode.SIGNIN) {
+								action.run(tree);
+							}
+						}
+					});
+					break;
+			}
+		} else {
+			action.run(tree);
+		}
 	}
 }

@@ -44,7 +44,7 @@ public class SignOutAction extends Action {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		final Runnable runnable = new Runnable() {
 			public void run() {

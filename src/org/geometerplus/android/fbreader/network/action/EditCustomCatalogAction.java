@@ -42,7 +42,7 @@ public class EditCustomCatalogAction extends CatalogAction {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		final Intent intent = new Intent(myActivity, AddCustomCatalogActivity.class);
 		Util.intentByLink(intent, tree.getLink());
 		intent.putExtra(AddCustomCatalogActivity.EDIT_KEY, true);
