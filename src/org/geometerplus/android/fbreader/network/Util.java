@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.Context;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -177,11 +176,10 @@ public abstract class Util implements UserRegistrationConstants {
 		}
 	}
 
-
-	public static void openInBrowser(Context context, String url) {
+	public static void openInBrowser(Activity activity, String url) {
 		if (url != null) {
 			url = NetworkLibrary.Instance().rewriteUrl(url, true);
-			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+			activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
 	}
 
