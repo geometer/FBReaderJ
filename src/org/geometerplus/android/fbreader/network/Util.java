@@ -30,8 +30,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.util.UIUtil;

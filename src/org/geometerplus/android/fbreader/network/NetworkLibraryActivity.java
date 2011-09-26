@@ -217,7 +217,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		myListClickActions.add(new OpenCatalogAction(this));
 		myListClickActions.add(new OpenInBrowserAction(this));
 		myListClickActions.add(new RunSearchAction(this, true));
-		myListClickActions.add(new ShowBooksAction(this));
 		myListClickActions.add(new AddCustomCatalogAction(this));
 		myListClickActions.add(new TopupAction(this));
 		myListClickActions.add(new ShowBookInfoAction(this));
