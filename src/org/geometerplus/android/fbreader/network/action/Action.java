@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.NetworkCatalogItem;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 
 import org.geometerplus.android.fbreader.network.Util;
@@ -64,15 +63,14 @@ public abstract class Action {
 
 	public void checkAndRun(final NetworkTree tree) {
 		if (tree instanceof NetworkCatalogTree) {
-			final NetworkCatalogItem item = ((NetworkCatalogTree)tree).Item;
-			switch (item.getVisibility()) {
+			switch (((NetworkCatalogTree)tree).getVisibility()) {
 				case B3_TRUE:
 					run(tree);
 					break;
 				case B3_UNDEFINED:
-					Util.runAuthenticationDialog(myActivity, item.Link, new Runnable() {
+					Util.runAuthenticationDialog(myActivity, tree.getLink(), new Runnable() {
 						public void run() {
-							if (item.getVisibility() != ZLBoolean3.B3_TRUE) {
+							if (((NetworkCatalogTree)tree).getVisibility() != ZLBoolean3.B3_TRUE) {
 								return;
 							}
 							if (Code != ActionCode.SIGNIN) {

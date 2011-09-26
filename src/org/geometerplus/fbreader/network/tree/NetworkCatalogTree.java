@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network.tree;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.*;
@@ -53,6 +54,10 @@ public class NetworkCatalogTree extends NetworkTree {
 	@Override
 	public INetworkLink getLink() {
 		return myLink;
+	}
+
+	public ZLBoolean3 getVisibility() {
+		return Item.getVisibility();
 	}
 
 	public final boolean canBeOpened() {
