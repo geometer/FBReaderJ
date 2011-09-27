@@ -211,6 +211,10 @@ public class NetworkCatalogTree extends NetworkTree {
 		return Item.getStringId();
 	}
 
+	public void startItemsLoader(boolean checkAuthentication, boolean resumeNotLoad) {
+		new CatalogExpander(this, checkAuthentication, resumeNotLoad).start();
+	}
+
 	public void clearCatalog() {
 		myChildrenItems.clear();
 		clear();

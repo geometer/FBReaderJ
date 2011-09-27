@@ -89,7 +89,7 @@ public class OpenCatalogAction extends Action {
 			}
 		}
 
-		new CatalogExpander(tree, true, resumeNotLoad).start();
+		tree.startItemsLoader(true, resumeNotLoad);
 		processExtraData(tree.Item.extraData(), new Runnable() {
 			public void run() {
 				doOpenTree(tree);

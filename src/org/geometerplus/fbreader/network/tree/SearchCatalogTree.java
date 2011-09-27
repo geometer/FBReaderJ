@@ -69,4 +69,8 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 		}
 		return super.getSummary();
 	}
+
+	public void startItemsLoader(String pattern) {
+		new Searcher(this, pattern).start();
+	}
 }

@@ -23,7 +23,6 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.tree.CatalogExpander;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
@@ -56,6 +55,6 @@ public class ReloadCatalogAction extends CatalogAction {
 			return;
 		}
 		((NetworkCatalogTree)tree).clearCatalog();
-		new CatalogExpander((NetworkCatalogTree)tree, false, false).start();
+		((NetworkCatalogTree)tree).startItemsLoader(false, false);
 	}
 }

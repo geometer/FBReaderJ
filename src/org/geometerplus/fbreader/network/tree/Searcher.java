@@ -23,11 +23,11 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 
-public class Searcher extends NetworkItemsLoader {
+class Searcher extends NetworkItemsLoader {
 	private final String myPattern;
 	private volatile boolean myItemFound;
 
-	public Searcher(SearchCatalogTree tree, String pattern) {
+	Searcher(SearchCatalogTree tree, String pattern) {
 		super(tree);
 		myPattern = pattern;
 	}

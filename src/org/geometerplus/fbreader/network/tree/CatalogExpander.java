@@ -25,11 +25,11 @@ import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
-public class CatalogExpander extends NetworkItemsLoader {
+class CatalogExpander extends NetworkItemsLoader {
 	private final boolean myCheckAuthentication;
 	private final boolean myResumeNotLoad;
 
-	public CatalogExpander(NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
+	CatalogExpander(NetworkCatalogTree tree, boolean checkAuthentication, boolean resumeNotLoad) {
 		super(tree);
 		myCheckAuthentication = checkAuthentication;
 		myResumeNotLoad = resumeNotLoad;
