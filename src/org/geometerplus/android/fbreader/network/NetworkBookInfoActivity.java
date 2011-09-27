@@ -93,11 +93,15 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				final Uri url = getIntent().getData();
 				if (url != null && "litres-book".equals(url.getScheme())) {
 					myBook = OPDSBookItem.create(
-						NetworkLibrary.Instance().getLinkBySiteName("litres.ru"),
+						library.getLinkBySiteName("litres.ru"),
 						url.toString().replace("litres-book://", "http://")
 					);
 				} else {
-					final NetworkTree tree = Util.getTreeFromIntent(getIntent());
+					final NetworkTree tree = library.getTreeByKey(
+						(NetworkTree.Key)getIntent().getSerializableExtra(
+							NetworkLibraryActivity.TREE_KEY_KEY
+						)
+					);
 					if (tree instanceof NetworkBookTree) {
 						myBook = ((NetworkBookTree)tree).Book;
 					}

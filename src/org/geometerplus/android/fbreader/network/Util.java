@@ -182,10 +182,4 @@ public abstract class Util implements UserRegistrationConstants {
 			activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
 	}
-
-	public static NetworkTree getTreeFromIntent(Intent intent) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(NetworkLibraryActivity.TREE_KEY_KEY);
-		return library.getTreeByKey(key);
-	}
 }
