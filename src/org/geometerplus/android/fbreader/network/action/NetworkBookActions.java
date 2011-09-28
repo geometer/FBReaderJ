@@ -148,9 +148,9 @@ public abstract class NetworkBookActions {
 					? ActionCode.BUY_DIRECTLY : ActionCode.BUY_IN_BROWSER;
 				actions.add(new NBAction(activity, id, "buy", reference.Price.toString()));
 			}
-			final Basket basket = book.Link.basket();
-			if (basket != null) {
-				if (basket.contains(book)) {
+			final BasketItem basketItem = book.Link.getBasketItem();
+			if (basketItem != null) {
+				if (basketItem.contains(book)) {
 					actions.add(new NBAction(activity, ActionCode.REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
 				} else {
 					actions.add(new NBAction(activity, ActionCode.ADD_BOOK_TO_BASKET, "addToBasket"));
@@ -187,10 +187,10 @@ public abstract class NetworkBookActions {
 				doBuyInBrowser(activity, book);
 				return true;
 			case ActionCode.ADD_BOOK_TO_BASKET:
-				book.Link.basket().add(book);
+				book.Link.getBasketItem().add(book);
 				return true;
 			case ActionCode.REMOVE_BOOK_FROM_BASKET:
-				book.Link.basket().remove(book);
+				book.Link.getBasketItem().remove(book);
 				return true;
 		}
 		return false;

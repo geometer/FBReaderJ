@@ -106,6 +106,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 							infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Search, descr.makeQuery("%s")));
 						}
 					}
+				} else if (rel == "listbooks") {
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.ListBooks, href));
 				} else if (rel == REL_LINK_SIGN_IN) {
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignIn, href));
 				} else if (rel == REL_LINK_SIGN_OUT) {

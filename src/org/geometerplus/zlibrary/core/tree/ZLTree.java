@@ -32,10 +32,13 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	}
 
 	protected ZLTree(T parent) {
-		this(parent, (parent == null) ? 0 : parent.subTrees().size());
+		this(parent, -1);
 	}
 
 	protected ZLTree(T parent, int position) {
+		if (position == -1) {
+			position = parent == null ? 0 : parent.subTrees().size();
+		}
 		if (parent != null && (position < 0 || position > parent.subTrees().size())) {
 			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + parent.subTrees().size() + "]");
 		}

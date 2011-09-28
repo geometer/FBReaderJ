@@ -32,7 +32,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	private final INetworkLink myLink;
 
 	public final NetworkCatalogItem Item;
-	private final ArrayList<NetworkCatalogItem> myChildrenItems =
+	protected final ArrayList<NetworkCatalogItem> myChildrenItems =
 		new ArrayList<NetworkCatalogItem>();
 
 	private long myLoadedTime = -1;
@@ -41,14 +41,14 @@ public class NetworkCatalogTree extends NetworkTree {
 		super(parent, position);
 		myLink = link;
 		Item = item;
-		addSearchTree();
+		addSpecialTrees();
 	}
 
 	NetworkCatalogTree(NetworkCatalogTree parent, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		myLink = parent.myLink;
 		Item = item;
-		addSearchTree();
+		addSpecialTrees();
 	}
 
 	@Override
@@ -65,8 +65,8 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	private SearchItem mySearchItem;
- 
-	private void addSearchTree() {
+
+	protected void addSpecialTrees() {
 		if ((Item.getFlags() & NetworkCatalogItem.FLAG_ADD_SEARCH_ITEM) != 0) {
 			final INetworkLink link = getLink();
 			if (link != null && link.getUrl(UrlInfo.Type.Search) != null) {
@@ -74,7 +74,7 @@ public class NetworkCatalogTree extends NetworkTree {
 					mySearchItem = new SingleCatalogSearchItem(link);
 				}
 				myChildrenItems.add(mySearchItem);
-				new SearchCatalogTree(this, mySearchItem, 0);
+				new SearchCatalogTree(this, mySearchItem, -1);
 			}
 		}
 	}
@@ -218,7 +218,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	public void clearCatalog() {
 		myChildrenItems.clear();
 		clear();
-		addSearchTree();
+		addSpecialTrees();
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 

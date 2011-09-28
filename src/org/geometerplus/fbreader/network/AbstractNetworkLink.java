@@ -21,14 +21,13 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
-import org.geometerplus.zlibrary.core.money.Money;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
-public abstract class AbstractNetworkLink implements INetworkLink, Basket {
+public abstract class AbstractNetworkLink implements INetworkLink {
 	private int myId;
 
 	protected String mySiteName;
@@ -36,8 +35,6 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	protected String mySummary;
 	protected final String myLanguage;
 	protected final UrlInfoCollection<UrlInfoWithDate> myInfos;
-
-	private ZLStringListOption myBooksInBasketOption;
 
 	/**
 	 * Creates new NetworkLink instance.
@@ -102,74 +99,12 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 		return set;
 	}
 
-	public final void setSupportsBasket() {
-		if (myBooksInBasketOption == null) {
-			myBooksInBasketOption = new ZLStringListOption(mySiteName, "Basket", null);
-		}
+	public BasketItem getBasketItem() {
+		return null;
 	}
 
-	public final Basket basket() {
-		return myBooksInBasketOption != null ? this : null;
-	}
-
-	// method from Basket interface
-	public final void add(NetworkBookItem book) {
-		if (book.Id != null && !"".equals(book.Id)) {
-			List<String> ids = myBooksInBasketOption.getValue();
-			if (!ids.contains(book.Id)) {
-				ids = new ArrayList<String>(ids);
-				ids.add(book.Id);
-				myBooksInBasketOption.setValue(ids);
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-			}
-		}
-	}
-
-	// method from Basket interface
-	public final void remove(NetworkBookItem book) {
-		if (book.Id != null && !"".equals(book.Id)) {
-			List<String> ids = myBooksInBasketOption.getValue();
-			if (ids.contains(book.Id)) {
-				ids = new ArrayList<String>(ids);
-				ids.remove(book.Id);
-				myBooksInBasketOption.setValue(ids);
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-			}
-		}
-	}
-
-	// method from Basket interface
-	public final void clear() {
-		myBooksInBasketOption.setValue(null);
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-	}
-
-	// method from Basket interface
-	public final boolean contains(NetworkBookItem book) {
-		return myBooksInBasketOption.getValue().contains(book.Id);
-	}
-
-	// method from Basket interface
-	public final List<String> bookIds() {
-		return myBooksInBasketOption.getValue();
-	}
-
-	// method from Basket interface
-	public final List<NetworkBookItem> books() {
-		// TODO: implement
-		return Collections.emptyList();
-	}
-
-	// method from Basket interface
-	public final Money cost() {
-		Money sum = Money.ZERO;
-		for (NetworkBookItem b : books()) {
-			final BookBuyUrlInfo info = b.buyInfo();
-			if (info != null) {
-				sum = sum.add(info.Price);
-			}
-		}
-		return sum;
+	public ZLNetworkRequest bookListRequest(List<String> bookIds, NetworkOperationData data) {
+		return null;
 	}
 
 	public NetworkOperationData createOperationData(NetworkItemsLoader listener) {

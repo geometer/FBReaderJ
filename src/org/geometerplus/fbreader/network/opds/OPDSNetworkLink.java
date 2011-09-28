@@ -166,6 +166,23 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		return rel;
 	}
 
+	private BasketItem myBasketItem;
+
+	@Override
+	public BasketItem getBasketItem() {
+		final String url = getUrl(UrlInfo.Type.ListBooks);
+		if (url != null && myBasketItem == null) {
+			myBasketItem = new BasketItem(this);
+		}
+		return myBasketItem;
+	}
+
+	@Override
+	public ZLNetworkRequest bookListRequest(List<String> bookIds, NetworkOperationData data) {
+		// TODO: implement
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return "OPDSNetworkLink: {super=" + super.toString()

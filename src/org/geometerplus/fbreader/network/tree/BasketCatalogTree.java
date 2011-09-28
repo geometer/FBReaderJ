@@ -19,10 +19,11 @@
 
 package org.geometerplus.fbreader.network.tree;
 
-import org.geometerplus.fbreader.network.opds.BasketItem;
+import org.geometerplus.fbreader.network.BasketItem;
 
 public class BasketCatalogTree extends NetworkCatalogTree {
 	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
 		super(parent, item, position);
+		setCover(null);
 	}
 }
