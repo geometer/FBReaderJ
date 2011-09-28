@@ -536,6 +536,7 @@ public final class Library {
 	public void removeBookFromFavorites(Book book) {
 		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
 			BooksDatabase.Instance().removeFromFavorites(book.getId());
+			fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 		}
 	}
 
