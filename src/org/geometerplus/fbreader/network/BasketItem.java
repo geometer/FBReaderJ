@@ -28,6 +28,8 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 
 public abstract class BasketItem extends NetworkCatalogItem {
 	private final ZLStringListOption myBooksInBasketOption;
+	private final Map<String,NetworkBookItem> myBooks =
+		Collections.synchronizedMap(new HashMap<String,NetworkBookItem>());
 
 	protected BasketItem(INetworkLink link) {
 		super(
@@ -41,17 +43,24 @@ public abstract class BasketItem extends NetworkCatalogItem {
 		myBooksInBasketOption = new ZLStringListOption(Link.getSiteName(), "Basket", null);
 	}
 
+	public void addItem(NetworkBookItem book) {
+		myBooks.put(book.Id, book);
+	}
+
 	@Override
 	public CharSequence getSummary() {
 		final int size = bookIds().size();
 		if (size == 0) {
 			return super.getSummary();
-		} else if (size == books().size()) {
-			return NetworkLibrary.resource().getResource("basketSummary").getValue()
-				.replace("%0", String.valueOf(size)).replace("%1", cost().toString());
 		} else {
-			return NetworkLibrary.resource().getResource("basketSummaryCountOnly").getValue()
-				.replace("%0", String.valueOf(size));
+			final Money basketCost = cost();
+			if (basketCost != null) {
+				return NetworkLibrary.resource().getResource("basketSummary").getValue()
+					.replace("%0", String.valueOf(size)).replace("%1", basketCost.toString());
+			} else {
+				return NetworkLibrary.resource().getResource("basketSummaryCountOnly").getValue()
+					.replace("%0", String.valueOf(size));
+			}
 		}
 	}
 
@@ -66,31 +75,30 @@ public abstract class BasketItem extends NetworkCatalogItem {
 	}
 
 	public final void add(NetworkBookItem book) {
-		if (book.Id != null && !"".equals(book.Id)) {
-			List<String> ids = bookIds();
-			if (!ids.contains(book.Id)) {
-				ids = new ArrayList<String>(ids);
-				ids.add(book.Id);
-				myBooksInBasketOption.setValue(ids);
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-			}
+		List<String> ids = bookIds();
+		if (!ids.contains(book.Id)) {
+			ids = new ArrayList<String>(ids);
+			ids.add(book.Id);
+			myBooksInBasketOption.setValue(ids);
+			addItem(book);
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
 
 	public final void remove(NetworkBookItem book) {
-		if (book.Id != null && !"".equals(book.Id)) {
-			List<String> ids = bookIds();
-			if (ids.contains(book.Id)) {
-				ids = new ArrayList<String>(ids);
-				ids.remove(book.Id);
-				myBooksInBasketOption.setValue(ids);
-				NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-			}
+		List<String> ids = bookIds();
+		if (ids.contains(book.Id)) {
+			ids = new ArrayList<String>(ids);
+			ids.remove(book.Id);
+			myBooksInBasketOption.setValue(ids);
+			myBooks.remove(book);
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
 
 	public final void clear() {
 		myBooksInBasketOption.setValue(null);
+		myBooks.clear();
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
@@ -102,16 +110,18 @@ public abstract class BasketItem extends NetworkCatalogItem {
 		return myBooksInBasketOption.getValue();
 	}
 
-	private List<NetworkBookItem> books() {
-		// TODO: implement
-		return Collections.emptyList();
-	}
-
 	private Money cost() {
 		Money sum = Money.ZERO;
-		for (NetworkBookItem b : books()) {
-			final BookBuyUrlInfo info = b.buyInfo();
-			if (info != null) {
+		synchronized (myBooks) {
+			for (String id : bookIds()) {
+				final NetworkBookItem b = myBooks.get(id);
+				if (b == null) {
+					return null;
+				}
+				final BookBuyUrlInfo info = b.buyInfo();
+				if (info == null) {
+					return null;
+				}
 				sum = sum.add(info.Price);
 			}
 		}
