@@ -55,7 +55,6 @@ public interface INetworkLink extends Comparable<INetworkLink> {
 
 	BasketItem getBasketItem();
 
-	ZLNetworkRequest bookListRequest(List<String> bookIds, NetworkOperationData data);
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);
 

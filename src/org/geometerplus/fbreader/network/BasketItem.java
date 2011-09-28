@@ -22,16 +22,14 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.money.Money;
-import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
-import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
-public class BasketItem extends NetworkCatalogItem {
+public abstract class BasketItem extends NetworkCatalogItem {
 	private final ZLStringListOption myBooksInBasketOption;
 
-	public BasketItem(INetworkLink link) {
+	protected BasketItem(INetworkLink link) {
 		super(
 			link,
 			NetworkLibrary.resource().getResource("basket").getValue(),
@@ -60,10 +58,6 @@ public class BasketItem extends NetworkCatalogItem {
 	@Override
 	public boolean canBeOpened() {
 		return !bookIds().isEmpty();
-	}
-
-	@Override
-	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
 	}
 
 	@Override
