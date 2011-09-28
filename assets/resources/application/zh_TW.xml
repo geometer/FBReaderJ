@@ -72,6 +72,8 @@
 		<node name="buy" value="購買 (%s)"/>
 		<node name="addToBasket" value="放到購物籃"/>
 		<node name="removeFromBasket" value="從購物籃中移除"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="以瀏覽器開啟" />
 		<node name="stopLoading" value="中止載入" />
 		<node name="stopSearching" value="中止搜尋" />
@@ -82,7 +84,9 @@
 		<node name="topupViaBrowser" value="以瀏覽器開啟本頁"/>
 		<node name="topupSummary" value="目前為: %s"/>
 		<node name="basket" value="購物籃"/>
-		<node name="basketSummary" value="欲購書藉"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="已下載書藉" />
 		<node name="alreadyDownloadingDemo" value="已下載試讀本之書藉" />
 		<node name="stoppingCatalogLoading" value="下載中止中" />
@@ -643,7 +647,6 @@
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="用戶" />
 			<node name="password" value="密碼" />
-			<node name="skipIP" value="不綁定IP地址" />
 			<node name="loginIsEmpty" value="請填上用戶名稱" />
 			<node name="register" value="註冊" />
 		</node>
@@ -699,7 +702,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="未知錯誤"/>
 		<node name="unsupportedCompressionMethod" value="未支援的壓縮方式"/>
-		<node name="encriptedFile" value="受DRM保護的文件"/>
+		<node name="encryptedFile" value="受DRM保護的文件"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

@@ -644,7 +644,6 @@
 			<node name="unencryptedWarning" value="Пароль пересылается незашифрованным"/>
 			<node name="login" value="Имя пользователя" />
 			<node name="password" value="Пароль" />
-			<node name="skipIP" value="Не привязываться к ip-адресу" />
 			<node name="loginIsEmpty" value="Имя пользователя не может быть пустым" />
 			<node name="register" value="Зарегистрироваться" />
 		</node>
@@ -700,7 +699,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="неизвестная ошибка"/>
 		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
-		<node name="encriptedFile" value="файл защищен DRM"/>
+		<node name="encryptedFile" value="файл защищен DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

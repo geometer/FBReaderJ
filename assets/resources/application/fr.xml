@@ -72,6 +72,8 @@
 		<node name="buy" value="Acheter (%s)"/>
 		<node name="addToBasket" value="Ajouter au panier"/>
 		<node name="removeFromBasket" value="Supprimer du panier"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
 		<node name="stopLoading" value="Arrêt du chargement" />
 		<node name="stopSearching" value="Arrêt de la recherche" />
@@ -81,6 +83,10 @@
 		<node name="topupTitle" value="Recréditer le compte"/>
 		<node name="topupViaBrowser" value="Ouvrir la page dans le navigateur"/>
 		<node name="topupSummary" value="Аctuellement : %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
 		<node name="stoppingCatalogLoading" value="Arrêt du chargement" />
@@ -112,6 +118,8 @@
 			<node name="addCustomCatalog" value="Ajouter catalogue"/>
 			<node name="refreshCatalogsList" value="Rafraîchir"/>
 			<node name="languages" value="Filtrer par langue"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -523,6 +531,16 @@
 					<node name="summaryOff" value="Défilement des pages verticalement"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Dictionnaire">
 				<node name="summary" value="Paramètres du dictionnaire"/>
 				<node name="dictionary" value="Dictionnaire"/>
@@ -624,7 +642,6 @@
 			<node name="unencryptedWarning" value="Votre mot de passe va être envoyé en clair"/>
 			<node name="login" value="Identifiant"/>
 			<node name="password" value="Mot de passe"/>
-			<node name="skipIP" value="Ne pas associer à l'adresse IP"/>
 			<node name="loginIsEmpty" value="L'identifiant ne doit pas être vide"/>
 			<node name="register" value="Inscription"/>
 		</node>
@@ -674,7 +691,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Erreur inconnue"/>
 		<node name="unsupportedCompressionMethod" value="Méthode de compression non supportée"/>
-		<node name="encriptedFile" value="Fichier protégé par DRM"/>
+		<node name="encryptedFile" value="Fichier protégé par DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

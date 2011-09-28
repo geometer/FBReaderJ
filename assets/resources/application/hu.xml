@@ -72,6 +72,8 @@
 		<node name="buy" value="Vásárlás (%s)"/>
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Megnyitás böngészőben" />
 		<node name="stopLoading" value="Letöltés leállítása" />
 		<node name="stopSearching" value="Keresés leállítása" />
@@ -81,6 +83,10 @@
 		<node name="topupTitle" value="Számla feltöltése"/>
 		<node name="topupViaBrowser" value="Oldal megnyitása böngészőben"/>
 		<node name="topupSummary" value="Jelenleg: %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Könyv letöltése folyamatban" />
 		<node name="alreadyDownloadingDemo" value="Minta letöltése folyamatban" />
 		<node name="stoppingCatalogLoading" value="Letöltés leállítása" />
@@ -112,6 +118,8 @@
 			<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
 			<node name="refreshCatalogsList" value="Katalógusok frissítése"/>
 			<node name="languages" value="Nyelvi szűrő"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -523,6 +531,16 @@
 					<node name="summaryOff" value="Oldalak görgetése függőlegesen"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Szótár">
 				<node name="summary" value="Szótár beállításai"/>
 				<node name="dictionary" value="Szótár"/>
@@ -624,7 +642,6 @@
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Felhasználónév" />
 			<node name="password" value="Jelszó" />
-			<node name="skipIP" value="IP-címhez kötés nem lehetséges" />
 			<node name="loginIsEmpty" value="A felhasználónév nem lehet üres" />
 			<node name="register" value="Regisztráció" />
 		</node>
@@ -674,7 +691,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Ismeretlen hiba"/>
 		<node name="unsupportedCompressionMethod" value="Nem támogatott tömörítés"/>
-		<node name="encriptedFile" value="Másolásvédett fájl"/>
+		<node name="encryptedFile" value="Másolásvédett fájl"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

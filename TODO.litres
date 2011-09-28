@@ -41,6 +41,8 @@ basket
 	context menu resources
 	options menu resources
 	ActionCode.BASKET_BUY_ALL_BOOKS:
+	update basket on book purchasing/logging in
+  don't add already bought book to basket
 separate catalog search
 предлагать на выбор вход или регистрацию, "signup link" убран из диалога авторизации
 покупка "без регистрации"

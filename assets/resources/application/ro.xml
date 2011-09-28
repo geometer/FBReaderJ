@@ -72,6 +72,8 @@
 		<node name="buy" value="Cumpara (%s)"/>
 		<node name="addToBasket" value="Adauga la cos"/>
 		<node name="removeFromBasket" value="Eliminati din cos"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Deschide în browser"/>
 		<node name="stopLoading" value="Opriti încarcarea"/>
 		<node name="stopSearching" value="Opri cautarea"/>
@@ -85,7 +87,9 @@
 		<node name="topupViaBrowser" value="Pagina deschis în browser"/>
 		<node name="topupSummary" value="În prezent:%s"/>
 		<node name="basket" value="Cos"/>
-		<node name="basketSummary" value="Carti pe care vreau sa le cumpar"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Cartea este în curs de descarcare"/>
 		<node name="alreadyDownloadingDemo" value="Esantionul este în curs de descarcare"/>
 		<node name="stoppingCatalogLoading" value="Oprirea  încarcarii"/>
@@ -540,16 +544,6 @@
 					<node name="custom" value="Particularizate&#8230;"/>
 				</node>
 			</node>
-			<node name="tapZones" value="Tap zones" toBeTranslated="true">
-				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
-				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
-					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
-					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
-					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
-					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
-				</node>
-			</node>
 			<node name="dictionary" value="Dictionar">
 				<node name="summary" value="Setari dictionar "/>
 				<node name="dictionary" value="Dictionar"/>
@@ -646,7 +640,6 @@
 			<node name="unencryptedWarning" value="Parola dvs. va fi trimisa necriptata"/>
 			<node name="login" value="Nume utilizator"/>
 			<node name="password" value="Parola"/>
-			<node name="skipIP" value="Nu atasati de adpresa de IP"/>
 			<node name="loginIsEmpty" value="Numele utilizatorului trebuie sa nu fie gol"/>
 			<node name="register" value="Înscrieti-va"/>
 		</node>
@@ -702,7 +695,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Eroare necunoscuta"/>
 		<node name="unsupportedCompressionMethod" value="Metoda de compresie neacceptata"/>
-		<node name="encriptedFile" value="Fisier protejat prin DRM"/>
+		<node name="encryptedFile" value="Fisier protejat prin DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

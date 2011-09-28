@@ -72,6 +72,8 @@
 		<node name="buy" value="Придбати (%s)"/>
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Показати у браузері" />
 		<node name="stopLoading" value="Припинити завантаження" />
 		<node name="stopSearching" value="Припинити пошук" />
@@ -81,6 +83,10 @@
 		<node name="topupTitle" value="Поповнити рахунок"/>
 		<node name="topupViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="topupSummary" value="Поточний рахунок: %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Книжка завантажується" />
 		<node name="alreadyDownloadingDemo" value="Уривок завантажається" />
 		<node name="stoppingCatalogLoading" value="Зупинка завантаження" />
@@ -112,6 +118,8 @@
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
 			<node name="languages" toBeTranslated="true" value="Language filter"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -523,6 +531,16 @@
 					<node name="summaryOff" value="При гортанні сторінка рухається по вертикалі"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
 				<node name="dictionary" value="Dictionary" toBeTranslated="true"/>
@@ -624,7 +642,6 @@
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Ім’я користувача" />
 			<node name="password" value="Пароль" />
-			<node name="skipIP" value="Не прив’язуватись до ip-адреси" />
 			<node name="loginIsEmpty" value="Ім’я користувача не може бути порожнім" />
 			<node name="register" value="Зареєструватися" />
 		</node>
@@ -673,7 +690,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="невідома помилка"/>
 	<node name="unsupportedCompressionMethod" value="непідтримуваний метод стиснення"/>
-		<node name="encriptedFile" value="файл захищено DRM"/>
+		<node name="encryptedFile" value="файл захищено DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

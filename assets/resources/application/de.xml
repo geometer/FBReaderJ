@@ -647,7 +647,6 @@
 			<node name="unencryptedWarning" value="Ihr Passwort wird unverschlüsselt übertragen."/>
 			<node name="login" value="Benutzername"/>
 			<node name="password" value="Passwort"/>
-			<node name="skipIP" value="Nicht an IP-Adresse binden"/>
 			<node name="loginIsEmpty" value="Es sollte ein Benutzername angegeben werden."/>
 			<node name="register" value="Anmelden"/>
 		</node>
@@ -703,7 +702,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Unbekannter Fehler"/>
 		<node name="unsupportedCompressionMethod" value="Komprimiermethode wird nicht unterstützt"/>
-		<node name="encriptedFile" value="DRM-geschützte Datei"/>
+		<node name="encryptedFile" value="DRM-geschützte Datei"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

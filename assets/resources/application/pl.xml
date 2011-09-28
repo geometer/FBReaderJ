@@ -72,6 +72,8 @@
 		<node name="buy" value="Kup (%s)"/>
 		<node name="addToBasket" value="Dodaj do koszyka"/>
 		<node name="removeFromBasket" value="Usuń z koszyka"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Otwórz w przeglądarce" />
 		<node name="stopLoading" value="Zatrzymaj otwieranie" />
 		<node name="stopSearching" value="Zatrzymaj wyszukiwanie" />
@@ -85,7 +87,9 @@
 		<node name="topupViaBrowser" value="Otwórz w przeglądarce"/>
 		<node name="topupSummary" value="Aktualnie: %s"/>
 		<node name="basket" value="Koszyk"/>
-		<node name="basketSummary" value="Książki wybrane do zakupu"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Książka jest pobierana" />
 		<node name="alreadyDownloadingDemo" value="Fragment jest pobierany" />
 		<node name="stoppingCatalogLoading" value="Zatrzymywanie ładowania" />
@@ -636,7 +640,6 @@
 			<node name="unencryptedWarning" value="Hasło będzie przesłane w formie niezaszyfrowanej"/>
 			<node name="login" value="Nazwa użytkownika" />
 			<node name="password" value="Hasło" />
-			<node name="skipIP" value="Nie przypisuj do adresu IP" />
 			<node name="loginIsEmpty" value="Hasło nie może być puste" />
 			<node name="register" value="Zarejestruj" />
 		</node>
@@ -686,7 +689,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Nieznany błąd"/>
 		<node name="unsupportedCompressionMethod" value="Niewspierana metoda komresji"/>
-		<node name="encriptedFile" value="Plik z zabezpieczeniem DRM"/>
+		<node name="encryptedFile" value="Plik z zabezpieczeniem DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

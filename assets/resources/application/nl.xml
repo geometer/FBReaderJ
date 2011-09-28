@@ -72,6 +72,8 @@
 		<node name="buy" value="Koop (%s)"/>
 		<node name="addToBasket" value="Toevoegen aan mandje"/>
 		<node name="removeFromBasket" value="Verwijderen uit mandje"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Openen in de browser" />
 		<node name="stopLoading" value="Stop loading" toBeTranslated="true" />
 		<node name="stopSearching" value="Stop searching" toBeTranslated="true" />
@@ -81,6 +83,10 @@
 		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
 		<node name="topupViaBrowser" value="Open pagina in de browser" />
 		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Boek wordt gedownload" />
 		<node name="alreadyDownloadingDemo" value="Voorbeeld wordt gedownload" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true" />
@@ -112,6 +118,8 @@
 			<node name="addCustomCatalog" value="Catalogus toevoegen"/>
 			<node name="refreshCatalogsList" value="Catalogi vernieuwen"/>
 			<node name="languages" value="Taalfilter"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -523,6 +531,16 @@
 					<node name="summaryOff" value="Pagina's verticaal omslaan"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Woordenboek">
 				<node name="summary" value="Woordenboek instellingen"/>
 				<node name="dictionary" value="Woordenboek"/>
@@ -620,7 +638,6 @@
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Gebruikersnaam" />
 			<node name="password" value="Wachtwoord" />
-			<node name="skipIP" value="Don't bound to ip-address" toBeTranslated="true" />
 			<node name="loginIsEmpty" value="Gebruikersnaam kan niet leeg zijn" />
 			<node name="register" value="Registeren" />
 		</node>
@@ -670,7 +687,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Onbekende fout"/>
 		<node name="unsupportedCompressionMethod" value="Compressiemethode niet ondersteund"/>
-		<node name="encriptedFile" value="DRM-beschermd bestand"/>
+		<node name="encryptedFile" value="DRM-beschermd bestand"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
