@@ -112,8 +112,8 @@
 			<node name="networkSearch" value="Пошук в мережі"/>
 			<node name="reload" value="Оновити"/>
 			<node name="signIn" value="Увійти"/>
-			<node name="signOut" value="Вийти (%s)"/>
 			<node name="signUp" value="Зареєструватися" />
+			<node name="signOut" value="Вийти (%s)"/>
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
@@ -682,6 +682,7 @@
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Каталог порожній"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>
@@ -689,7 +690,7 @@
 	</node>
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="невідома помилка"/>
-	<node name="unsupportedCompressionMethod" value="непідтримуваний метод стиснення"/>
+		<node name="unsupportedCompressionMethod" value="непідтримуваний метод стиснення"/>
 		<node name="encryptedFile" value="файл захищено DRM"/>
 	</node>
 	<node name="crash">

@@ -113,8 +113,8 @@
 			<node name="networkSearch" value="Ricerca in rete"/>
 			<node name="reload" value="Ricarica"/>
 			<node name="signIn" value="Entra"/>
-			<node name="signOut" value="Esci (%s)"/>
 			<node name="signUp" value="Registrati" />
+			<node name="signOut" value="Esci (%s)"/>
 			<node name="topup" value="Ricarica account"/>
 			<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 			<node name="refreshCatalogsList" value="Aggiorna cataloghi"/>

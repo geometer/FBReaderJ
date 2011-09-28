@@ -112,8 +112,8 @@
 			<node name="networkSearch" value="Internetes keresés"/>
 			<node name="reload" value="Újratöltés"/>
 			<node name="signIn" value="Bejelentkezés"/>
-			<node name="signOut" value="Kijelentkezés (%s)"/>
 			<node name="signUp" value="Regisztráció" />
+			<node name="signOut" value="Kijelentkezés (%s)"/>
 			<node name="topup" value="Számla feltöltése"/>
 			<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
 			<node name="refreshCatalogsList" value="Katalógusok frissítése"/>

@@ -112,8 +112,8 @@
 			<node name="networkSearch" value="网络搜索" />
 			<node name="reload" value="重新加载" />
 			<node name="signIn" value="登录"/>
-			<node name="signOut" value="退出 (%s)"/>
 			<node name="signUp" value="注册" />
+			<node name="signOut" value="退出 (%s)"/>
 			<node name="topup" value="重新输入账号"/>
 			<node name="addCustomCatalog" value="添加书库目录"/>
 			<node name="refreshCatalogsList" value="刷新书库目录"/>
