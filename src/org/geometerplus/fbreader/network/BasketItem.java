@@ -110,6 +110,22 @@ public abstract class BasketItem extends NetworkCatalogItem {
 		return myBooksInBasketOption.getValue();
 	}
 
+	protected NetworkBookItem getBook(String id) {
+		return myBooks.get(id);
+	}
+
+	protected boolean isFullyLoaded() {
+		synchronized (myBooks) {
+			for (String id : bookIds()) {
+				final NetworkBookItem b = myBooks.get(id);
+				if (b == null) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	private Money cost() {
 		Money sum = Money.ZERO;
 		synchronized (myBooks) {

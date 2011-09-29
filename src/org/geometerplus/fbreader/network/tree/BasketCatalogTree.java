@@ -27,6 +27,7 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
 		super(parent, item, position);
 		setCover(null);
+		startItemsLoader(false, false);
 	}
 
 	@Override

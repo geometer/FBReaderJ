@@ -40,6 +40,14 @@ class OPDSBasketItem extends BasketItem {
 			return;
 		}
 
+		if (isFullyLoaded()) {
+			for (String id : ids) {
+				loader.onNewItem(getBook(id));
+			}
+			loader.getTree().confirmAllItems();
+			return;
+		}
+
 		final OPDSNetworkLink opdsLink = (OPDSNetworkLink)Link;
 		String url = opdsLink.getUrl(UrlInfo.Type.ListBooks);
 		if (url == null) {
