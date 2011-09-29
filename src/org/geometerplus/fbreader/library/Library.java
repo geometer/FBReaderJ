@@ -54,6 +54,14 @@ public final class Library {
 	public static final String ROOT_BY_TAG = "byTag";
 	public static final String ROOT_FILE_TREE = "fileTree";
 
+	private static Library ourInstance;
+	public static Library Instance() {
+		if (ourInstance == null) {
+			ourInstance = new Library();
+		}
+		return ourInstance;
+	}
+
 	public static ZLResource resource() {
 		return ZLResource.resource("library");
 	}
@@ -73,7 +81,7 @@ public final class Library {
 		fireModelChangedEvent(ChangeListener.Code.StatusChanged);
 	}
 
-	public Library() {
+	private Library() {
 		new FavoritesTree(myRootTree, ROOT_FAVORITES);
 		new FirstLevelTree(myRootTree, ROOT_RECENT);
 		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
@@ -420,7 +428,15 @@ public final class Library {
 		db.setExistingFlag(newBooks, true);
 	}
 
-	public void startBuild() {
+	private volatile boolean myBuildStarted = false;
+
+	public synchronized void startBuild() {
+		if (myBuildStarted) {
+			fireModelChangedEvent(ChangeListener.Code.StatusChanged);
+			return;
+		}
+		myBuildStarted = true;
+
 		setStatus(myStatusMask | STATUS_LOADING);
 		final Thread builder = new Thread("Library.build") {
 			public void run() {
