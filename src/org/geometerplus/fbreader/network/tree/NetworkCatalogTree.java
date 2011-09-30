@@ -79,7 +79,7 @@ public class NetworkCatalogTree extends NetworkTree {
 		}
 	}
 
-	void addItem(final NetworkItem item) {
+	synchronized void addItem(final NetworkItem item) {
 		if (item instanceof NetworkCatalogItem) {
 			myChildrenItems.add((NetworkCatalogItem)item);
 		}
@@ -215,7 +215,7 @@ public class NetworkCatalogTree extends NetworkTree {
 		new CatalogExpander(this, checkAuthentication, resumeNotLoad).start();
 	}
 
-	public void clearCatalog() {
+	public synchronized void clearCatalog() {
 		myChildrenItems.clear();
 		clear();
 		addSpecialTrees();

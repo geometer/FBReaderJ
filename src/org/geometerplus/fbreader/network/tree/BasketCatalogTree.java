@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.BasketItem;
@@ -26,17 +27,33 @@ import org.geometerplus.fbreader.network.BasketItem;
 public class BasketCatalogTree extends NetworkCatalogTree {
 	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
 		super(parent, item, position);
+		item.setTree(this);
 		setCover(null);
-		startItemsLoader(false, false);
+		if (!item.bookIds().isEmpty()) {
+			startItemsLoader(false, false);
+		}
 	}
 
 	@Override
-	void addItem(NetworkItem item) {
-		if (!(item instanceof NetworkBookItem)) {
+	public synchronized void addItem(NetworkItem i) {
+		if (!(i instanceof NetworkBookItem)) {
 			return;
 		}
 
-		super.addItem(item);
-		((BasketItem)Item).addItem((NetworkBookItem)item);
+		final BasketItem basketItem = (BasketItem)Item;
+		final NetworkBookItem bookItem = (NetworkBookItem)i;
+		if (basketItem.contains(bookItem)) {
+			super.addItem(bookItem);
+			basketItem.addItem(bookItem);
+		}
+	}
+
+	public synchronized void removeItem(NetworkBookItem i) {
+		for (FBTree t : subTrees()) {
+			if (i.equals(((NetworkBookTree)t).Book)) {
+				t.removeSelf();
+				break;
+			}
+		}
 	}
 }
