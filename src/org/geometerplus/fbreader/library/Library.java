@@ -151,6 +151,7 @@ public final class Library {
 		Book book = orphanedBooksByFileId.get(fileId);
 		if (book != null && (!doReadMetaInfo || book.readMetaInfo())) {
 			addBookToLibrary(book);
+			fireModelChangedEvent(ChangeListener.Code.BookAdded);
 			newBooks.add(book);
 			return;
 		}
@@ -158,6 +159,7 @@ public final class Library {
 		book = new Book(file);
 		if (book.readMetaInfo()) {
 			addBookToLibrary(book);
+			fireModelChangedEvent(ChangeListener.Code.BookAdded);
 			newBooks.add(book);
 			return;
 		}
@@ -260,8 +262,6 @@ public final class Library {
 		if (found != null && book.matches(found.getPattern())) {
 			found.getBookSubTree(book, true);
 		}
-
-		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
 	private void fireModelChangedEvent(ChangeListener.Code code) {
@@ -304,6 +304,7 @@ public final class Library {
 		removeFromTree(ROOT_BY_AUTHOR, book);
 		removeFromTree(ROOT_BY_TAG, book);
 		addBookToLibrary(book);
+		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 	}
 
 	private void build() {
@@ -362,6 +363,7 @@ public final class Library {
 		}
 
 		final Set<Book> orphanedBooks = new HashSet<Book>();
+		int count = 0;
 		for (Book book : savedBooksByFileId.values()) {
 			synchronized (this) {
 				if (book.File.exists()) {
@@ -380,6 +382,9 @@ public final class Library {
 					}
 					if (doAdd) {
 						addBookToLibrary(book);
+						if (++count % 16 == 0) {
+							fireModelChangedEvent(ChangeListener.Code.BookAdded);
+						}
 					}
 				} else {
 					myRootTree.removeBook(book, true);
@@ -388,6 +393,7 @@ public final class Library {
 				}
 			}
 		}
+		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 		db.setExistingFlag(orphanedBooks, false);
 
 		// Step 3: collect books from physical files; add new, update already added,
@@ -414,6 +420,7 @@ public final class Library {
 			helpBook.readMetaInfo();
 		}
 		addBookToLibrary(helpBook);
+		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 
 		// Step 5: save changes into database
 		fileInfos.save();
