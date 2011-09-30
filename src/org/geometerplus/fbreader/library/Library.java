@@ -45,7 +45,7 @@ public final class Library {
 		void onLibraryChanged(Code code);
 	}
 
-	public static final String ROOT_SEARCH_RESULTS = "searchResults";
+	public static final String ROOT_FOUND = "found";
 	public static final String ROOT_FAVORITES = "favorites";
 	public static final String ROOT_RECENT = "recent";
 	public static final String ROOT_BY_AUTHOR = "byAuthor";
@@ -255,10 +255,10 @@ public final class Library {
 			getTagTree(t).getBookSubTree(book, true);
 		}
 
-		final SearchResultsTree searchResults =
-			(SearchResultsTree)getFirstLevelTree(ROOT_SEARCH_RESULTS);
-		if (searchResults != null && book.matches(searchResults.getPattern())) {
-			searchResults.getBookSubTree(book, true);
+		final SearchResultsTree found =
+			(SearchResultsTree)getFirstLevelTree(ROOT_FOUND);
+		if (found != null && book.matches(found.getPattern())) {
+			found.getBookSubTree(book, true);
 		}
 
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
@@ -298,7 +298,7 @@ public final class Library {
 		myBooks.remove(book);
 		refreshInTree(ROOT_FAVORITES, book);
 		refreshInTree(ROOT_RECENT, book);
-		removeFromTree(ROOT_SEARCH_RESULTS, book);
+		removeFromTree(ROOT_FOUND, book);
 		removeFromTree(ROOT_BY_TITLE, book);
 		removeFromTree(ROOT_BY_SERIES, book);
 		removeFromTree(ROOT_BY_AUTHOR, book);
@@ -488,7 +488,7 @@ public final class Library {
 
 		pattern = pattern.toLowerCase();
 
-		final SearchResultsTree oldSearchResults = (SearchResultsTree)getFirstLevelTree(ROOT_SEARCH_RESULTS);
+		final SearchResultsTree oldSearchResults = (SearchResultsTree)getFirstLevelTree(ROOT_FOUND);
 		if (oldSearchResults != null && pattern.equals(oldSearchResults.getPattern())) {
 			fireModelChangedEvent(ChangeListener.Code.Found);
 			return;
@@ -502,7 +502,7 @@ public final class Library {
 						if (oldSearchResults != null) {
 							oldSearchResults.removeSelf();
 						}
-						newSearchResults = new SearchResultsTree(myRootTree, ROOT_SEARCH_RESULTS, pattern);
+						newSearchResults = new SearchResultsTree(myRootTree, ROOT_FOUND, pattern);
 						fireModelChangedEvent(ChangeListener.Code.Found);
 					}
 					newSearchResults.getBookSubTree(book, true);

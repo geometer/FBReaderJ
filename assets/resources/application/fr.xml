@@ -23,7 +23,7 @@
 		<node name="favorites" value="Favoris">
 			<node name="summary" value="Ma sélection de livres"/>
 		</node>
-		<node name="searchResults" value="Trouvé(s)">
+		<node name="found" value="Trouvé(s)">
 			<node name="summary" value="Résultats de la recherche : %s"/>
 		</node>
 		<node name="fileTree" value="Système de fichiers">
@@ -60,7 +60,14 @@
 		<node name="bySeries" value="Par série">
 			<node name="summary" value="Livres triés par série"/>
 		</node>
+		<node name="search" value="Rechercher">
+		</node>
+		<node name="found" value="Trouvé(s)">
+			<node name="summary" value="Résultats de la recherche : %s"/>
+		</node>
+		<node name="searchSummary" value="Chercher des livres dans les catalogues" />
 		<node name="openCatalog" value="Ouvrir le catalogue"/>
+		<node name="networkSearch" value="Rechercher" />
 		<node name="showResults" value="Afficher les résultats"/>
 		<node name="showBooks" value="Afficher les livres"/>
 		<node name="download" value="Télécharger"/>
@@ -91,9 +98,6 @@
 		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
 		<node name="stoppingCatalogLoading" value="Arrêt du chargement" />
 		<node name="stoppingNetworkSearch" value="Arrêt de la recherche" />
-		<node name="search" value="Rechercher" />
-		<node name="searchSummary" value="Chercher des livres dans les catalogues" />
-		<node name="searchResults" value="Résultats de la recherche : %s"/>
 		<node name="editCustomCatalog" value="Editer le catalogue"/>
 		<node name="removeCustomCatalog" value="Supprimer le catalogue"/>
 		<node name="addCustomCatalog" value="Ajouter un catalogue"/>
@@ -172,7 +176,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ce livre"/>
 		<node name="allBooks" value="Tous les livres"/>
-		<node name="searchResults" value="Trouvé"/>
+		<node name="found" value="Trouvé"/>
 		<node name="new" value="Nouveau marque-page"/>
 		<node name="open" value="Ouvrir"/>
 		<node name="edit" value="Modifier le marque-page"/>
@@ -633,10 +637,6 @@
 			<node name="noRequiredInformation" value="Certaines informations requises sont absentes du catalogue" />
 			<node name="cacheDirectoryError" value="Impossible de créer le répertoire contenant le cache" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Résultats de la recherche" />
-			<node name="message" value="Aucun livre correspondant trouvé." />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentification"/>
 			<node name="unencryptedWarning" value="Votre mot de passe va être envoyé en clair"/>
@@ -682,7 +682,7 @@
 		<node name="noFavorites" value="Votre liste de favoris est vide"/>
 		<node name="emptyCatalog" value="Le catalogue est vide"/>
 		<node name="emptyBasket" value="Votre panier est vide, désolé"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Aucun livre correspondant trouvé" />
 	</node>
 	<node name="external">
 		<node name="browser" value="Navigateur"/>

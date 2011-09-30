@@ -26,7 +26,7 @@
 		<node name="favorites" value="Favoriten">
 			<node name="summary" value="Meine Lieblingsbücher"/>
 		</node>
-		<node name="searchResults" value="Gefunden">
+		<node name="found" value="Gefunden">
 			<node name="summary" value="Suchergebnisse für: %s"/>
 		</node>
 		<node name="fileTree" value="Dateibaum">
@@ -181,7 +181,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Dieses Buch"/>
 		<node name="allBooks" value="Alle Bücher"/>
-		<node name="searchResults" value="Gefunden"/>
+		<node name="found" value="Gefunden"/>
 		<node name="new" value="Neues Lesezeichen"/>
 		<node name="open" value="Zum dem Lesezeichen gehen"/>
 		<node name="edit" value="Lesezeichen bearbeiten"/>

@@ -23,7 +23,7 @@
 		<node name="favorites" value="Preferidos">
 			<node name="summary" value="Os meus libros seleccionados"/>
 		</node>
-		<node name="searchResults" value="Buscar">
+		<node name="found" value="Buscar">
 			<node name="summary" value="Buscar resultados para: %s"/>
 		</node>
 		<node name="fileTree" value="Árbore de ficheiros">
@@ -93,7 +93,7 @@
 		<node name="stoppingNetworkSearch" value="Detendo a busca" />
 		<node name="search" value="Buscar" />
 		<node name="searchSummary" value="Buscar libros nos catálogos" />
-		<node name="searchResults" value="Buscar resultados para: %s" />
+		<node name="found" value="Buscar resultados para: %s" />
 		<node name="editCustomCatalog" value="Editar o catálogo"/>
 		<node name="removeCustomCatalog" value="Retirar o catálogo"/>
 		<node name="addCustomCatalog" value="Engadir catálogo"/>
@@ -172,7 +172,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Este libro"/>
 		<node name="allBooks" value="Todos os libros"/>
-		<node name="searchResults" value="Atopados"/>
+		<node name="found" value="Atopados"/>
 		<node name="new" value="Novo marcador"/>
 		<node name="open" value="Abrir"/>
 		<node name="edit" value="Editar marcador"/>
@@ -633,10 +633,6 @@
 			<node name="noRequiredInformation" value="A información requirida non está indicada no catálogo" />
 			<node name="cacheDirectoryError" value="Non é posíbel crear o cartafol da caché" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Resultados da busca" />
-			<node name="message" value="Non se atopa ningún libro coincidente" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Autenticación" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
@@ -682,7 +678,7 @@
 		<node name="noFavorites" value="A súa lista de preferencias está baleira"/>
 		<node name="emptyCatalog" value="O catálogo está baleiro"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Non se atopa ningún libro coincidente"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navegador"/>

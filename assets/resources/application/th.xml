@@ -23,7 +23,7 @@
 		<node name="favorites" value="หนังสือเล่มโปรด">
 			<node name="summary" value="หนังสือที่เลือก"/>
 		</node>
-		<node name="searchResults" value="ค้นพบ">
+		<node name="found" value="ค้นพบ">
 			<node name="summary" value="ผลการค้นหาสำหรับ: %s"/>
 		</node>
 		<node name="fileTree" value="คลังไฟล์">
@@ -93,7 +93,7 @@
 		<node name="stoppingNetworkSearch" value="หยุดการค้นหา"/>
 		<node name="search" value="ค้นหา"/>
 		<node name="searchSummary" value="ค้นหาหนังสือในแคตตาล็อก"/>
-		<node name="searchResults" value="ผลการค้นหาสำหรับ: %s"/>
+		<node name="found" value="ผลการค้นหาสำหรับ: %s"/>
 		<node name="editCustomCatalog" value="แก้ไขแคตตาล็อก"/>
 		<node name="removeCustomCatalog" value="ลบแคตตาล็อก"/>
 		<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
@@ -172,7 +172,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="หนังสือเล่มนี้"/>
 		<node name="allBooks" value="หนังสือทั้งหมด"/>
-		<node name="searchResults" value="ค้นพบ"/>
+		<node name="found" value="ค้นพบ"/>
 		<node name="new" value="สร้างบุ๊คมาร์คใหม่"/>
 		<node name="open" value="เปิดบุ๊คมาร์ค"/>
 		<node name="edit" value="แก้ไขบุ๊คมาร์ค"/>

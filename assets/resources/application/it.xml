@@ -24,7 +24,7 @@
 		<node name="favorites" value="Preferiti">
 			<node name="summary" value="I miei libri preferiti"/>
 		</node>
-		<node name="searchResults" value="Trovato">
+		<node name="found" value="Trovato">
 			<node name="summary" value="Cerca risultati per: %s" />
 		</node>
 		<node name="fileTree" value="Albero dei file">
@@ -94,7 +94,7 @@
 		<node name="stoppingNetworkSearch" value="Sto fermando la ricerca" />
 		<node name="search" value="Ricerca" />
 		<node name="searchSummary" value="Cerca libri nei cataloghi" />
-		<node name="searchResults" value="Cerca risultati per: %s" />
+		<node name="found" value="Cerca risultati per: %s" />
 		<node name="editCustomCatalog" value="Modifica catalogo"/>
 		<node name="removeCustomCatalog" value="Cancella catalogo"/>
 		<node name="addCustomCatalog" value="Aggiungi catalogo"/>
@@ -173,7 +173,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Questo libro"/>
 		<node name="allBooks" value="Tutti i libri"/>
-		<node name="searchResults" value="Trovato"/>
+		<node name="found" value="Trovato"/>
 		<node name="new" value="Nuovo segnalibro"/>
 		<node name="open" value="Apri"/>
 		<node name="edit" value="Modifica segnalibro"/>
@@ -634,10 +634,6 @@
 			<node name="noRequiredInformation" value="Le informazioni richieste non sono specificate nel catalogo" />
 			<node name="cacheDirectoryError" value="Impossibile creare la cartella della cache" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Risultati ricerca" />
-			<node name="message" value="Non sono stati trovati libri adatti" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Autenticazione" />
 			<node name="unencryptedWarning" value="La tua password verrà inviata in chiaro"/>
@@ -683,7 +679,7 @@
 		<node name="noFavorites" value="Spiacente, l'elenco dei favoriti e' vuoto"/>
 		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
 		<node name="emptyBasket" value="Spiacente, il carrello è vuoto"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Non sono stati trovati libri adatti"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

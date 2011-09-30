@@ -23,7 +23,7 @@
 		<node name="favorites" value="收藏">
 			<node name="summary" value="我的精選書目"/>
 		</node>
-		<node name="searchResults" value="搜尋結果">
+		<node name="found" value="搜尋結果">
 			<node name="summary" value="%s 的搜尋結果"/>
 		</node>
 		<node name="fileTree" value="檔案">
@@ -93,7 +93,7 @@
 		<node name="stoppingNetworkSearch" value="搜尋中止中" />
 		<node name="search" value="搜尋" />
 		<node name="searchSummary" value="搜尋目錄" />
-		<node name="searchResults" value="%s 的搜尋結果" />
+		<node name="found" value="%s 的搜尋結果" />
 		<node name="editCustomCatalog" value="編輯目錄"/>
 		<node name="removeCustomCatalog" value="刪除目錄"/>
 		<node name="addCustomCatalog" value="新增目錄"/>
@@ -172,7 +172,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="本書"/>
 		<node name="allBooks" value="所有書藉"/>
-		<node name="searchResults" value="搜尋結果"/>
+		<node name="found" value="搜尋結果"/>
 		<node name="new" value="新增書籤"/>
 		<node name="open" value="開啟書籤"/>
 		<node name="edit" value="編輯書籤"/>
@@ -490,8 +490,8 @@
 					<node name="0" value="必然"/>
 					<!-- Percent sign (%) could not be used in resource strings
 								because there is a bug in Cyanogen Mod firmware that
-								crashes the program with such resources -->
-					<!--<node name="25" value="當電量大於25%"/>
+								crashes the program with such resources
+					<node name="25" value="當電量大於25%"/>
 					<node name="50" value="當電量大於50%"/>-->
 					<node name="25" value="While battery level is greater than 25 percent"/>
 					<node name="50" value="While battery level is greater than 50 percent"/>
@@ -638,10 +638,6 @@
 			<node name="noRequiredInformation" value="目錄沒有提供必需的資料" />
 			<node name="cacheDirectoryError" value="未能創建暫存檔案目錄" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="搜尋結果" />
-			<node name="message" value="沒有結果符合" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="驗證" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
@@ -693,7 +689,7 @@
 		<node name="noFavorites" value="你並未有收藏"/>
 		<node name="emptyCatalog" value="空目錄" />
 		<node name="emptyBasket" value="購物籃內沒有物品" />
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="沒有結果符合" />
 	</node>
 	<node name="external">
 		<node name="browser" value="瀏覽"/>

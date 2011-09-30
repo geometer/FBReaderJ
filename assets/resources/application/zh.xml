@@ -23,7 +23,7 @@
 		<node name="favorites" value="喜爱的">
 			<node name="summary" value="我选择的书文"/>
 		</node>
-		<node name="searchResults" value="搜索结果">
+		<node name="found" value="搜索结果">
 			<node name="summary" value="搜索结果: %s" />
 		</node>
 		<node name="fileTree" value="文件树">
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series" toBeTranslated="true">
 			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
+		<node name="search" value="搜索">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="搜索书库目录" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="搜索结果">
+			<node name="summary" value="搜索结果: %s" />
+		</node>
 		<node name="openCatalog" value="打开书库目录" />
+		<node name="networkSearch" value="搜索"/>
 		<node name="showResults" value="显示结果"/>
 		<node name="showBooks" value="显示书籍"/>
 		<node name="download" value="下载" />
@@ -91,9 +100,6 @@
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
 		<node name="stoppingCatalogLoading" value="停止加载" />
 		<node name="stoppingNetworkSearch" value="停止搜索" />
-		<node name="search" value="搜索" />
-		<node name="searchSummary" value="搜索书库目录" />
-		<node name="searchResults" value="搜索结果: %s" />
 		<node name="editCustomCatalog" value="编辑书库目录"/>
 		<node name="removeCustomCatalog" value="移除书库目录"/>
 		<node name="addCustomCatalog" value="增加书库目录"/>
@@ -172,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="本书" />
 		<node name="allBooks" value="所有图书" />
-		<node name="searchResults" value="搜索结果" />
+		<node name="found" value="搜索结果" />
 		<node name="new" value="添加书签" />
 		<node name="open" value="打开书签" />
 		<node name="edit" value="编辑书签" />
@@ -633,10 +639,6 @@
 			<node name="noRequiredInformation" value="书库目录中必须的信息没有定义" />
 			<node name="cacheDirectoryError" value="无法创建缓存目录" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="搜索结果" />
-			<node name="message" value="没有找到对应的书籍." />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="鉴定" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
@@ -688,7 +690,7 @@
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
 		<node name="emptyCatalog" value="空书库目录"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="没有找到对应的书籍"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="浏览器" />

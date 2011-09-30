@@ -23,7 +23,7 @@
 		<node name="favorites" value="Yêu thích">
 			<node name="summary" value="Sách của tôi"/>
 		</node>
-		<node name="searchResults" value="Tìm thấy">
+		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s" />
 		</node>
 		<node name="fileTree" value="Cây Tập tin">
@@ -93,7 +93,7 @@
 		<node name="stoppingNetworkSearch" value="Dừng tìm" />
 		<node name="search" value="Tìm" />
 		<node name="searchSummary" value="Tìm sách trong danh mục" />
-		<node name="searchResults" value="Kết quả tìm kiếm khoảng: %s" />
+		<node name="found" value="Kết quả tìm kiếm khoảng: %s" />
 		<node name="editCustomCatalog" value="Sửa Catalo"/>
 		<node name="removeCustomCatalog" value="Xóa catalo"/>
 		<node name="addCustomCatalog" value="Thêm"/>
@@ -172,7 +172,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Quyển này"/>
 		<node name="allBooks" value="Tất cả sách"/>
-		<node name="searchResults" value="Tìm thấy"/>
+		<node name="found" value="Tìm thấy"/>
 		<node name="new" value="Đánh dấu mới"/>
 		<node name="open" value="Mở"/>
 		<node name="edit" value="Sửa đánh dấu"/>

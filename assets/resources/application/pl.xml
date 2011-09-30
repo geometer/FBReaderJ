@@ -23,7 +23,7 @@
 		<node name="favorites" value="Ulubione">
 			<node name="summary" value="Moje wybrane książki"/>
 		</node>
-		<node name="searchResults" value="Wyszukane">
+		<node name="found" value="Wyszukane">
 			<node name="summary" value="Wyniki dla: %s" />
 		</node>
 		<node name="fileTree" value="Drzewo katalogów">
@@ -93,7 +93,7 @@
 		<node name="stoppingNetworkSearch" value="Zatrzymywanie wyszukiwania" />
 		<node name="search" value="Wyszukaj" />
 		<node name="searchSummary" value="Wyszykaj książki w katalogach" />
-		<node name="searchResults" value="Wyniki wyszukiwania: %s" />
+		<node name="found" value="Wyniki wyszukiwania: %s" />
 		<node name="editCustomCatalog" value="Edytuj katalog"/>
 		<node name="removeCustomCatalog" value="Usuń katalog"/>
 		<node name="addCustomCatalog" value="Dodaj katalog"/>
@@ -172,7 +172,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ta książka"/>
 		<node name="allBooks" value="Wszystkie ksiązki"/>
-		<node name="searchResults" value="Wyszukane"/>
+		<node name="found" value="Wyszukane"/>
 		<node name="new" value="Nowa zakładka"/>
 		<node name="open" value="Otwórz"/>
 		<node name="edit" value="Edytuj zakładkę"/>

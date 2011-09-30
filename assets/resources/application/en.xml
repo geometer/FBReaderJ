@@ -23,7 +23,7 @@
 		<node name="favorites" value="Favorites">
 			<node name="summary" value="My selected books"/>
 		</node>
-		<node name="searchResults" value="Found">
+		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
 		<node name="fileTree" value="File tree">
@@ -178,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="This book"/>
 		<node name="allBooks" value="All books"/>
-		<node name="searchResults" value="Found"/>
+		<node name="found" value="Found"/>
 		<node name="new" value="New bookmark"/>
 		<node name="open" value="Open"/>
 		<node name="edit" value="Edit bookmark"/>
