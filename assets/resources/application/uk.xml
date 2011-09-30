@@ -61,8 +61,10 @@
 			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
 		<node name="search" value="Пошук">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Пошук книжок у каталогах" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
 		</node>
-		<node name="searchSummary" value="Пошук книжок у каталогах" />
 		<node name="found" value="Знайдено">
 			<node name="summary" value="Результати пошуку для: %s" />
 		</node>

@@ -93,7 +93,7 @@
 		<node name="stoppingCatalogLoading" value="Sto fermando il caricamento" />
 		<node name="stoppingNetworkSearch" value="Sto fermando la ricerca" />
 		<node name="search" value="Ricerca" />
-		<node name="searchSummary" value="Cerca libri nei cataloghi" />
+		<node name="summaryAllCatalogs" value="Cerca libri nei cataloghi" />
 		<node name="found" value="Cerca risultati per: %s" />
 		<node name="editCustomCatalog" value="Modifica catalogo"/>
 		<node name="removeCustomCatalog" value="Cancella catalogo"/>

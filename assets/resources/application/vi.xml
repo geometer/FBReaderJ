@@ -92,7 +92,7 @@
 		<node name="stoppingCatalogLoading" value="Dừng tải" />
 		<node name="stoppingNetworkSearch" value="Dừng tìm" />
 		<node name="search" value="Tìm" />
-		<node name="searchSummary" value="Tìm sách trong danh mục" />
+		<node name="summaryAllCatalogs" value="Tìm sách trong danh mục" />
 		<node name="found" value="Kết quả tìm kiếm khoảng: %s" />
 		<node name="editCustomCatalog" value="Sửa Catalo"/>
 		<node name="removeCustomCatalog" value="Xóa catalo"/>

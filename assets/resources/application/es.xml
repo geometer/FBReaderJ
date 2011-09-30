@@ -70,7 +70,7 @@
 			<node name="summaryAllCatalogs" value="Buscar libros en los catálogos"/>
 			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
 		</node>
-		<node name="found" value="Found" toBeTranslated="true">
+		<node name="found" value="Buscar">
 			<node name="summary" value="Buscar resultados para: %s"/>
 		</node>
 		<node name="openCatalog" value="Abrir el catalogo"/>

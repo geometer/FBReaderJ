@@ -61,11 +61,13 @@
 			<node name="summary" value="Livres triés par série"/>
 		</node>
 		<node name="search" value="Rechercher">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Chercher des livres dans les catalogues" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="Trouvé(s)">
 			<node name="summary" value="Résultats de la recherche : %s"/>
 		</node>
-		<node name="searchSummary" value="Chercher des livres dans les catalogues" />
 		<node name="openCatalog" value="Ouvrir le catalogue"/>
 		<node name="networkSearch" value="Rechercher" />
 		<node name="showResults" value="Afficher les résultats"/>

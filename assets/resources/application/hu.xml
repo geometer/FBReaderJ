@@ -92,7 +92,7 @@
 		<node name="stoppingCatalogLoading" value="Letöltés leállítása" />
 		<node name="stoppingNetworkSearch" value="Keresés leállítása" />
 		<node name="search" value="Keresés" />
-		<node name="searchSummary" value="Könyvek keresése a katalógusokban" />
+		<node name="summaryAllCatalogs" value="Könyvek keresése a katalógusokban" />
 		<node name="found" value="Keresés az eredmények között: %s" />
 		<node name="editCustomCatalog" value="Katalógus szerkesztése"/>
 		<node name="removeCustomCatalog" value="Katalógus törlése"/>

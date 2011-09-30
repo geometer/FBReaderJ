@@ -92,7 +92,7 @@
 		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true" />
 		<node name="stoppingNetworkSearch" value="Stopping search" toBeTranslated="true" />
 		<node name="search" value="Zoeken" />
-		<node name="searchSummary" value="Zoeken naar boeken in catalogi" />
+		<node name="summaryAllCatalogs" value="Zoeken naar boeken in catalogi" />
 		<node name="found" value="Zoekresulten voor: %s" />
 		<node name="editCustomCatalog" value="Catalogus bewerken"/>
 		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
