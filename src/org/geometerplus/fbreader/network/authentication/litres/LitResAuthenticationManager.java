@@ -99,7 +99,8 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			sid = mySidOption.getValue();
 		}
 
-		String url = Link.getUrl(UrlInfo.Type.SignIn);
+		final Map<String,String> params = new HashMap<String,String>();
+		final String url = parseUrl(Link.getUrl(UrlInfo.Type.SignIn), params);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -109,6 +110,9 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		ZLNetworkException exception = null;
 		try {
 			final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
+			for (Map.Entry<String,String> entry : params.entrySet()) {
+				request.addPostParameter(entry.getKey(), entry.getValue());
+			}
 			request.addPostParameter("sid", sid);
 			ZLNetworkManager.Instance().perform(request);
 		} catch (ZLNetworkException e) {
@@ -130,7 +134,8 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void authorise(String password) throws ZLNetworkException {
-		String url = Link.getUrl(UrlInfo.Type.SignIn);
+		final Map<String,String> params = new HashMap<String,String>();
+		final String url = parseUrl(Link.getUrl(UrlInfo.Type.SignIn), params);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
@@ -144,6 +149,9 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		ZLNetworkException exception = null;
 		try {
 			final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
+			for (Map.Entry<String,String> entry : params.entrySet()) {
+				request.addPostParameter(entry.getKey(), entry.getValue());
+			}
 			request.addPostParameter("login", login);
 			request.addPostParameter("pwd", password);
 			ZLNetworkManager.Instance().perform(request);
@@ -241,6 +249,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			}
 			myPurchasedBookMap.put(book.Id, book);
 			myPurchasedBookList.add(0, book);
+			final BasketItem basket = book.Link.getBasketItem();
+			if (basket != null) {
+				basket.remove(book);
+			}
 		}
 	}
 
@@ -431,5 +443,19 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		map.put("litres:canRebill", myCanRebillOption.getValue() ? "true" : "false");
 		map.put("litres:sid", mySidOption.getValue());
 		return map;
+	}
+
+	private static String parseUrl(String url, Map<String,String> params) {
+		final String[] parts = url.split("\\?");
+		if (parts.length != 2) {
+			return url;
+		}
+		for (String s : parts[1].split("&")) {
+			final String[] pair = s.split("=");
+			if (pair.length == 2) {
+				params.put(pair[0], pair[1]);
+			}
+		}
+		return parts[0];
 	}
 }

@@ -27,6 +27,8 @@ import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+
 public abstract class BasketItem extends NetworkCatalogItem {
 	private BasketCatalogTree myTree;
 
@@ -145,6 +147,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 
 	private Money cost() {
 		Money sum = Money.ZERO;
+		final NetworkAuthenticationManager mgr = Link.authenticationManager();
 		synchronized (myBooks) {
 			for (String id : bookIds()) {
 				final NetworkBookItem b = myBooks.get(id);
@@ -155,7 +158,9 @@ public abstract class BasketItem extends NetworkCatalogItem {
 				if (info == null) {
 					return null;
 				}
-				sum = sum.add(info.Price);
+				if (mgr == null || mgr.needPurchase(b)) {
+					sum = sum.add(info.Price);
+				}
 			}
 		}
 		return sum;
