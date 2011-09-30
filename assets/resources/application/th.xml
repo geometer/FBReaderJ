@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series" toBeTranslated="true">
 			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
+		<node name="search" value="ค้นหา">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="ค้นหาหนังสือในแคตตาล็อก"/>
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="ค้นพบ">
+			<node name="summary" value="ผลการค้นหาสำหรับ: %s"/>
+		</node>
 		<node name="openCatalog" value="เปิดแคตตาล็อก"/>
+		<node name="networkSearch" value="ค้นหา"/>
 		<node name="showResults" value="แสดงผลการค้นหา"/>
 		<node name="showBooks" value="แสดงหนังสือ"/>
 		<node name="download" value="ดาวน์โหลด"/>
@@ -91,9 +100,6 @@
 		<node name="alreadyDownloadingDemo" value="กำลังดาวน์โหลดหนังสือตัวอย่าง"/>
 		<node name="stoppingCatalogLoading" value="หยุดการโหลด"/>
 		<node name="stoppingNetworkSearch" value="หยุดการค้นหา"/>
-		<node name="search" value="ค้นหา"/>
-		<node name="summaryAllCatalogs" value="ค้นหาหนังสือในแคตตาล็อก"/>
-		<node name="found" value="ผลการค้นหาสำหรับ: %s"/>
 		<node name="editCustomCatalog" value="แก้ไขแคตตาล็อก"/>
 		<node name="removeCustomCatalog" value="ลบแคตตาล็อก"/>
 		<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>

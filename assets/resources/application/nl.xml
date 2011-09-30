@@ -60,7 +60,16 @@
 		<node name="bySeries" value="Series">
 			<node name="summary" value="Boeken gesorteerd op series"/>
 		</node>
+		<node name="search" value="Zoeken">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Zoeken naar boeken in catalogi" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Gevonden">
+			<node name="summary" value="Zoekresultaten voor: %s"/>
+		</node>
 		<node name="openCatalog" value="Open catalogus"/>
+		<node name="networkSearch" value="Zoeken" />
 		<node name="showResults" value="Toon resulten"/>
 		<node name="showBooks" value="Toon boeken"/>
 		<node name="download" value="Download"/>
@@ -91,9 +100,6 @@
 		<node name="alreadyDownloadingDemo" value="Voorbeeld wordt gedownload" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true" />
 		<node name="stoppingNetworkSearch" value="Stopping search" toBeTranslated="true" />
-		<node name="search" value="Zoeken" />
-		<node name="summaryAllCatalogs" value="Zoeken naar boeken in catalogi" />
-		<node name="found" value="Zoekresulten voor: %s" />
 		<node name="editCustomCatalog" value="Catalogus bewerken"/>
 		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
 		<node name="addCustomCatalog" value="Catalogus toevoegen"/>

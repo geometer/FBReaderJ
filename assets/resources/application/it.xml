@@ -61,7 +61,16 @@
 		<node name="bySeries" value="Per serie">
 			<node name="summary" value="Libri ordinati per serie"/>
 		</node>
+		<node name="search" value="Ricerca">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Cerca libri nei cataloghi" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Trovato">
+			<node name="summary" value="Cerca risultati per: %s" />
+		</node>
 		<node name="openCatalog" value="Apri catalogo"/>
+		<node name="networkSearch" value="Ricerca" />
 		<node name="showResults" value="Mostra risultati"/>
 		<node name="showBooks" value="Mostra libri"/>
 		<node name="download" value="Scarica"/>
@@ -92,9 +101,6 @@
 		<node name="alreadyDownloadingDemo" value="Sto scaricando il libro d'esempio" />
 		<node name="stoppingCatalogLoading" value="Sto fermando il caricamento" />
 		<node name="stoppingNetworkSearch" value="Sto fermando la ricerca" />
-		<node name="search" value="Ricerca" />
-		<node name="summaryAllCatalogs" value="Cerca libri nei cataloghi" />
-		<node name="found" value="Cerca risultati per: %s" />
 		<node name="editCustomCatalog" value="Modifica catalogo"/>
 		<node name="removeCustomCatalog" value="Cancella catalogo"/>
 		<node name="addCustomCatalog" value="Aggiungi catalogo"/>
