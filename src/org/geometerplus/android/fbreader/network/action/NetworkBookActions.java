@@ -257,10 +257,6 @@ public abstract class NetworkBookActions {
 		if (mgr == null) {
 			return;
 		}
-		/*if (!NetworkOperationRunnable::tryConnect()) {
-			return;
-		}*/
-
 
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
@@ -374,5 +370,4 @@ public abstract class NetworkBookActions {
 			Util.openInBrowser(activity, reference.Url);
 		}
 	}
-
 }

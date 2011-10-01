@@ -188,7 +188,8 @@ public class AuthenticationActivity extends Activity {
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
-		myOkButton = findButton(R.id.authentication_ok_button);
+		final View buttonsView = findViewById(R.id.authentication_buttons);
+		myOkButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		myOkButton.setText(buttonResource.getResource("ok").getValue());
 		myOkButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -202,7 +203,7 @@ public class AuthenticationActivity extends Activity {
 			}
 		});
 
-		final Button cancelButton = findButton(R.id.authentication_cancel_button);
+		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -275,10 +276,6 @@ public class AuthenticationActivity extends Activity {
 
 	private TextView findTextView(int resourceId) {
 		return (TextView)findViewById(resourceId);
-	}
-
-	private Button findButton(int resourceId) {
-		return (Button)findViewById(resourceId);
 	}
 
 	@Override

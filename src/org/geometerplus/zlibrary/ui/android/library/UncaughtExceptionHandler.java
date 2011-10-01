@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.ui.android.library;
 
 import java.io.*;
 
+import android.app.Activity;
 import android.content.*;
 import android.os.Process;
 import android.net.Uri;
@@ -47,6 +48,10 @@ public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExcept
 			intent = new Intent(myContext, BugReportActivity.class);
 			intent.putExtra(BugReportActivity.STACKTRACE, stackTrace.toString());
 			myContext.startActivity(intent);
+		}
+
+		if (myContext instanceof Activity) {
+			((Activity)myContext).finish();
 		}
 
 		Process.killProcess(Process.myPid());

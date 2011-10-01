@@ -66,7 +66,7 @@ public class AddCustomCatalogActivity extends Activity {
 		setTextFromResource(R.id.add_custom_catalog_summary_example, "catalogSummaryExample");
 
 		setupButton(
-			R.id.add_custom_catalog_ok_button, "ok", new View.OnClickListener() {
+			R.id.ok_button, "ok", new View.OnClickListener() {
 				public void onClick(View view) {
 					final InputMethodManager imm =
 						(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -78,7 +78,7 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		);
 		setupButton(
-			R.id.add_custom_catalog_cancel_button, "cancel", new View.OnClickListener() {
+			R.id.cancel_button, "cancel", new View.OnClickListener() {
 				public void onClick(View view) {
 					finish();
 				}
@@ -187,7 +187,8 @@ public class AddCustomCatalogActivity extends Activity {
 	}
 
 	private void setupButton(int id, String resourceKey, View.OnClickListener listener) {
-		final Button button = (Button)findViewById(id);
+		final Button button =
+			(Button)findViewById(R.id.add_custom_catalog_buttons).findViewById(id);
 		button.setText(
 			ZLResource.resource("dialog").getResource("button").getResource(resourceKey).getValue()
 		);
