@@ -42,52 +42,39 @@ import org.geometerplus.android.util.PackageUtil;
 
 import org.geometerplus.android.fbreader.api.PluginApi;
 
-public class TopupMenuActivity extends ListActivity implements AdapterView.OnItemClickListener {
-	private static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
-	private static final String AMOUNT_KEY = "topup:amount";
-	private static final String CURRENCY_KEY = "topup:currency";
+public class AccountMenuActivity extends ListActivity implements AdapterView.OnItemClickListener {
+	private static final String ACCOUNT_ACTION = "android.fbreader.action.network.ACCOUNT";
 
-	public static boolean isTopupSupported(INetworkLink link) {
-		// TODO: more correct check
-		return link.getUrlInfo(UrlInfo.Type.TopUp) != null;
-	}
-
-	public static void runMenu(Context context, INetworkLink link, Money amount) {
-		final Intent intent =
-			Util.intentByLink(new Intent(context, TopupMenuActivity.class), link);
-		if (amount != null) {
-			intent.putExtra(AMOUNT_KEY, amount.Amount);
-			intent.putExtra(CURRENCY_KEY, amount.Currency);
-		}
-		context.startActivity(intent);
+	public static void runMenu(Context context, INetworkLink link) {
+		context.startActivity(
+			Util.intentByLink(new Intent(context, AccountMenuActivity.class), link)
+		);
 	}
 
 	private INetworkLink myLink;
 	private List<PluginApi.MenuActionInfo> myInfos;
-	private BigDecimal myAmount;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		setTitle(NetworkLibrary.resource().getResource("topupTitle").getValue());
+		setTitle(NetworkLibrary.resource().getResource("accountTitle").getValue());
 		final String url = getIntent().getData().toString();
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
-		myAmount = (BigDecimal)getIntent().getSerializableExtra(AMOUNT_KEY);
 
 		myInfos = new ArrayList<PluginApi.MenuActionInfo>();
-		if (myLink.getUrlInfo(UrlInfo.Type.TopUp) != null) {
+		if (myLink.getUrlInfo(UrlInfo.Type.SignIn) != null) {
 			myInfos.add(new PluginApi.MenuActionInfo(
-				Uri.parse(url + "/browser"),
-				NetworkLibrary.resource().getResource("topupViaBrowser").getValue(),
-				100
+				Uri.parse(url + "/signIn"),
+				NetworkLibrary.resource().getResource("signIn").getValue(),
+				0
 			));
 		}
 
 		try {
-			startActivityForResult(new Intent(TOPUP_ACTION, getIntent().getData()), 0);
+			startActivityForResult(new Intent(ACCOUNT_ACTION, getIntent().getData()), 0);
 		} catch (ActivityNotFoundException e) {
 			if (myInfos.size() == 1) {
-				runTopupDialog(myInfos.get(0));
+				runAccountDialog(myInfos.get(0));
 			}
 			finish();
 			return;
@@ -98,7 +85,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 	}
 
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		runTopupDialog(myInfos.get(position));
+		runAccountDialog(myInfos.get(position));
 		finish();
 	}
 
@@ -116,7 +103,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 				finish();
 				return;
 			} else if (myInfos.size() == 1) {
-				runTopupDialog(myInfos.get(0));
+				runAccountDialog(myInfos.get(0));
 				finish();
 				return;
 			}
@@ -126,18 +113,19 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		}
 	}
 
-	private void runTopupDialog(final PluginApi.MenuActionInfo info) {
+	private void runAccountDialog(final PluginApi.MenuActionInfo info) {
 		try {
-			doTopup(new Runnable() {
+			doAction(new Runnable() {
 				public void run() {
 					try {
 						final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-						if (info.getId().toString().endsWith("/browser")) {
+						if (info.getId().toString().endsWith("/signIn")) {
 							// TODO: put amount
 							if (mgr != null) {
-								Util.openInBrowser(TopupMenuActivity.this, mgr.topupLink());
+								//Util.openInBrowser(TopupMenuActivity.this, mgr.topupLink());
 							}
 						} else {
+							/*
 							final Intent intent = new Intent(TOPUP_ACTION, info.getId());
 							if (mgr != null) {
 								for (Map.Entry<String,String> entry : mgr.getTopupData().entrySet()) {
@@ -148,6 +136,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 							if (PackageUtil.canBeStarted(TopupMenuActivity.this, intent, true)) {
 								startActivity(intent);
 							}
+							*/
 						}
 					} catch (ActivityNotFoundException e) {
 					}
@@ -158,7 +147,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		}
 	}
 
-	private void doTopup(final Runnable action) {
+	private void doAction(final Runnable action) {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 		if (mgr.mayBeAuthorised(false)) {
 			action.run();

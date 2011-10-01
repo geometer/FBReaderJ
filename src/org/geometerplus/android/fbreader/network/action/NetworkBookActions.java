@@ -362,6 +362,8 @@ public abstract class NetworkBookActions {
 			if (mgr.isAuthorised(true)) {
 				buyDialogRunnable.run();
 			} else {
+				AccountMenuActivity.runMenu(activity, book.Link);
+				/*
 				final String signInKey = "signIn";
 				final String registerKey = "signUp";
 				final String quickBuyKey = "quickBuy";
@@ -413,6 +415,7 @@ public abstract class NetworkBookActions {
 						}
 					});
 				}
+				*/
 			}
 		} catch (ZLNetworkException e) {
 		}

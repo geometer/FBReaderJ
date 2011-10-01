@@ -91,6 +91,7 @@
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
+		<node name="accountTitle" value="Select action"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummaryEmpty" value="No books"/>
@@ -671,12 +672,6 @@
 		<node name="alreadyPurchasedBox">
 			<node name="title" value="Purchase book" />
 			<node name="message" value="Book is already bought" />
-		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Select action" />
-			<node name="signIn" value="Sign in" />
-			<node name="signUp" value="Sign up" />
-			<node name="quickBuy" value="Quick buy" />
 		</node>
 	</node>
 	<node name="errorMessage">
