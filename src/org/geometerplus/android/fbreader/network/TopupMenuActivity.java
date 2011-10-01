@@ -22,10 +22,8 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 import java.math.BigDecimal;
 
-import android.app.ListActivity;
 import android.content.*;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
@@ -42,8 +40,7 @@ import org.geometerplus.android.util.PackageUtil;
 
 import org.geometerplus.android.fbreader.api.PluginApi;
 
-public class TopupMenuActivity extends ListActivity implements AdapterView.OnItemClickListener {
-	private static final String TOPUP_ACTION = "android.fbreader.action.network.TOPUP";
+public class TopupMenuActivity extends MenuActivity {
 	private static final String AMOUNT_KEY = "topup:amount";
 	private static final String CURRENCY_KEY = "topup:currency";
 
@@ -63,18 +60,15 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 	}
 
 	private INetworkLink myLink;
-	private List<PluginApi.MenuActionInfo> myInfos;
 	private BigDecimal myAmount;
 
 	@Override
-	protected void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+	protected void init() {
 		setTitle(NetworkLibrary.resource().getResource("topupTitle").getValue());
 		final String url = getIntent().getData().toString();
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
 		myAmount = (BigDecimal)getIntent().getSerializableExtra(AMOUNT_KEY);
 
-		myInfos = new ArrayList<PluginApi.MenuActionInfo>();
 		if (myLink.getUrlInfo(UrlInfo.Type.TopUp) != null) {
 			myInfos.add(new PluginApi.MenuActionInfo(
 				Uri.parse(url + "/browser"),
@@ -82,51 +76,15 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 				100
 			));
 		}
-
-		try {
-			startActivityForResult(new Intent(TOPUP_ACTION, getIntent().getData()), 0);
-		} catch (ActivityNotFoundException e) {
-			if (myInfos.size() == 1) {
-				runTopupDialog(myInfos.get(0));
-			}
-			finish();
-			return;
-		}
-
-		setListAdapter(new ActionListAdapter());
-		getListView().setOnItemClickListener(this);
-	}
-
-	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		runTopupDialog(myInfos.get(position));
-		finish();
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		if (intent != null) {
-			final List<PluginApi.MenuActionInfo> actions =
-				intent.<PluginApi.MenuActionInfo>getParcelableArrayListExtra(
-					PluginApi.PluginInfo.KEY
-				);
-			if (actions != null) {
-				myInfos.addAll(actions);
-			}
-			if (myInfos.size() == 0) {
-				finish();
-				return;
-			} else if (myInfos.size() == 1) {
-				runTopupDialog(myInfos.get(0));
-				finish();
-				return;
-			}
-			Collections.sort(myInfos);
-			((ActionListAdapter)getListAdapter()).notifyDataSetChanged();
-			getListView().invalidateViews();
-		}
+	protected String getAction() {
+		return "android.fbreader.action.network.TOPUP";
 	}
 
-	private void runTopupDialog(final PluginApi.MenuActionInfo info) {
+	@Override
+	protected void runItem(final PluginApi.MenuActionInfo info) {
 		try {
 			doTopup(new Runnable() {
 				public void run() {
@@ -138,7 +96,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 								Util.openInBrowser(TopupMenuActivity.this, mgr.topupLink());
 							}
 						} else {
-							final Intent intent = new Intent(TOPUP_ACTION, info.getId());
+							final Intent intent = new Intent(getAction(), info.getId());
 							if (mgr != null) {
 								for (Map.Entry<String,String> entry : mgr.getTopupData().entrySet()) {
 									intent.putExtra(entry.getKey(), entry.getValue());
@@ -164,28 +122,6 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 			action.run();
 		} else {
 			Util.runAuthenticationDialog(this, myLink, action);
-		}
-	}
-
-	private class ActionListAdapter extends BaseAdapter {
-		public final int getCount() {
-			return myInfos.size();
-		}
-
-		public final Integer getItem(int position) {
-			return position;
-		}
-
-		public final long getItemId(int position) {
-			return position;
-		}
-
-		public View getView(int position, View convertView, final ViewGroup parent) {
-			final View view = convertView != null
-				? convertView
-				: LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_item, parent, false);
-			((TextView)view).setText(myInfos.get(position).MenuItemName);
-			return view;
 		}
 	}
 }

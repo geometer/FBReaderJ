@@ -363,59 +363,6 @@ public abstract class NetworkBookActions {
 				buyDialogRunnable.run();
 			} else {
 				AccountMenuActivity.runMenu(activity, book.Link);
-				/*
-				final String signInKey = "signIn";
-				final String registerKey = "signUp";
-				final String quickBuyKey = "quickBuy";
-
-				final ArrayList<String> items = new ArrayList<String>();
-				items.add(signInKey);
-				if (Util.isRegistrationSupported(activity, book.Link)) {
-					items.add(registerKey);
-				}
-				if (Util.isAutoSignInSupported(activity, book.Link)) {
-					items.add(quickBuyKey);
-				}
-
-				if (items.size() > 1) {
-					final ZLResource box = dialogResource.getResource("purchaseActions");
-
-					CharSequence[] names = new CharSequence[items.size()];
-					for (int i = 0; i < names.length; ++i) {
-						names[i] = box.getResource(items.get(i)).getValue();
-					}
-
-					new AlertDialog.Builder(activity)
-						.setIcon(0)
-						.setTitle(box.getResource("title").getValue())
-						.setItems(names, new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								final String item = items.get(which);
-								if (signInKey.equals(item)) {
-									Util.runAuthenticationDialog(activity, book.Link, new Runnable() {
-										public void run() {
-											activity.runOnUiThread(buyDialogRunnable);
-										}
-									});
-								} else if (registerKey.equals(item)) {
-									Util.runRegistrationDialog(activity, book.Link);
-									// TODO: buy on success
-								} else if (quickBuyKey.equals(item)) {
-									Util.runAutoSignInDialog(activity, book.Link);
-									// TODO: buy on success
-								}
-							}
-						})
-						.setNegativeButton(buttonResource.getResource("cancel").getValue(), null)
-						.create().show();
-				} else {
-					Util.runAuthenticationDialog(activity, book.Link, new Runnable() {
-						public void run() {
-							activity.runOnUiThread(buyDialogRunnable);
-						}
-					});
-				}
-				*/
 			}
 		} catch (ZLNetworkException e) {
 		}

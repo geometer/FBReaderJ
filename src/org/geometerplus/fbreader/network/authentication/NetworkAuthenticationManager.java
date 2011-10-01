@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.core.money.Money;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
-import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public abstract class NetworkAuthenticationManager {
 	private static final HashMap<String, NetworkAuthenticationManager> ourManagers = new HashMap<String, NetworkAuthenticationManager>();
@@ -105,6 +105,13 @@ public abstract class NetworkAuthenticationManager {
 	}
 	public Map<String,String> getTopupData() {
 		return Collections.emptyMap();
+	}
+
+	/*
+     * sign up
+	 */
+	public Map<String,String> getAccountData() {
+		return Collections.singletonMap("signupUrl", Link.getUrl(UrlInfo.Type.SignUp));
 	}
 
 	/*

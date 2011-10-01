@@ -22,7 +22,7 @@ package org.geometerplus.android.fbreader.network.action;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.network.Util;
@@ -34,7 +34,7 @@ public class SignInAction extends Action {
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		if (!(tree instanceof NetworkCatalogRootTree)) {
+		if (!(tree instanceof NetworkCatalogTree)) {
 			return false;
 		}
 

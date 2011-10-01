@@ -35,10 +35,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
-	private static final String REGISTRATION_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
-	private static final String AUTO_SIGNIN_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_AUTOSIGNIN";
+	static final String ACCOUNT_ACTION = "android.fbreader.action.network.ACCOUNT";
 
 	public static Intent intentByLink(Intent intent, INetworkLink link) {
 		if (link != null) {
@@ -71,40 +68,20 @@ public abstract class Util implements UserRegistrationConstants {
 	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
 		return testService(
 			activity,
-			REGISTRATION_ACTION,
-			link.getUrl(UrlInfo.Type.SignUp)
-		);
-	}
-
-	public static boolean isAutoSignInSupported(Activity activity, INetworkLink link) {
-		return testService(
-			activity,
-			AUTO_SIGNIN_ACTION,
-			link.getUrl(UrlInfo.Type.SignUp)
+			ACCOUNT_ACTION,
+			link.getUrl(UrlInfo.Type.Catalog) + "/register"
 		);
 	}
 
 	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		try {
 			final Intent intent = new Intent(
-				REGISTRATION_ACTION,
-				Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
+				ACCOUNT_ACTION,
+				Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register")
 			);
+			intent.putExtra(UserRegistrationConstants.SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
 			if (PackageUtil.canBeStarted(activity, intent, true)) {
 				activity.startActivityForResult(intent, NetworkLibraryActivity.SIGNUP_CODE);
-			}
-		} catch (ActivityNotFoundException e) {
-		}
-	}
-
-	public static void runAutoSignInDialog(Activity activity, INetworkLink link) {
-		try {
-			final Intent intent = new Intent(
-				AUTO_SIGNIN_ACTION,
-				Uri.parse(link.getUrl(UrlInfo.Type.SignIn))
-			);
-			if (PackageUtil.canBeStarted(activity, intent, true)) {
-				activity.startActivityForResult(intent, NetworkLibraryActivity.AUTO_SIGNIN_CODE);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
