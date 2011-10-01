@@ -69,6 +69,20 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		myAuthenticationManager = mgr;
 	}
 
+	/*
+	public AccountStatus getAccountStatus(boolean force) {
+		if (myAuthenticationManager == null) {
+			return AccountStatus.NotSupported;
+		}
+		if ("".equals(myAuthenticationManager.UserNameOption.getValue())) {
+			return AccountStatus.NoUserName;
+		}
+	}
+		SignedIn,
+		SignedOut,
+		NotChecked
+	*/
+
 	ZLNetworkRequest createNetworkData(final OPDSCatalogItem catalog, String url, final OPDSCatalogItem.State result) {
 		if (url == null) {
 			return null;

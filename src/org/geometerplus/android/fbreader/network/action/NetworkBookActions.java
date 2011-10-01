@@ -55,11 +55,6 @@ public abstract class NetworkBookActions {
 			book.reference(UrlInfo.Type.Book) == null;
 	}
 
-	private static boolean useBuyReferences(NetworkBookItem book) {
-		return book.localCopyFileName() == null &&
-			book.reference(UrlInfo.Type.Book) == null;
-	}
-
 	public static class NBAction extends BookAction {
 		private final int myId;
 		private final String myArg;
@@ -107,9 +102,7 @@ public abstract class NetworkBookActions {
 				return R.drawable.ic_list_download;
 			}
 		}
-		if (useBuyReferences(book)
-				&& book.reference(UrlInfo.Type.BookBuy) != null
-				|| book.reference(UrlInfo.Type.BookBuyInBrowser) != null) {
+		if (book.getStatus() == NetworkBookItem.Status.CanBePurchased) {
 			return R.drawable.ic_list_buy;
 		}
 		return 0;
@@ -140,14 +133,11 @@ public abstract class NetworkBookActions {
 				actions.add(new NBAction(activity, ActionCode.DOWNLOAD_DEMO, "downloadDemo"));
 			}
 		}
-		if (useBuyReferences(book)) {
-			int id = ActionCode.TREE_NO_ACTION;
+		if (book.getStatus() == NetworkBookItem.Status.CanBePurchased) {
 			final BookBuyUrlInfo reference = book.buyInfo();
-			if (reference != null) {
-				id = reference.InfoType == UrlInfo.Type.BookBuy
-					? ActionCode.BUY_DIRECTLY : ActionCode.BUY_IN_BROWSER;
-				actions.add(new NBAction(activity, id, "buy", reference.Price.toString()));
-			}
+			final int id = reference.InfoType == UrlInfo.Type.BookBuy
+				? ActionCode.BUY_DIRECTLY : ActionCode.BUY_IN_BROWSER;
+			actions.add(new NBAction(activity, id, "buy", reference.Price.toString()));
 			final BasketItem basketItem = book.Link.getBasketItem();
 			if (basketItem != null) {
 				if (basketItem.contains(book)) {
@@ -201,12 +191,6 @@ public abstract class NetworkBookActions {
 			demo ? UrlInfo.Type.BookDemo : UrlInfo.Type.Book;
 		final BookUrlInfo ref = book.reference(resolvedType);
 		if (ref != null) {
-			final String sslCertificate;
-			if (book.Link.authenticationManager() != null) {
-				sslCertificate = book.Link.authenticationManager().SSLCertificate;
-			} else {
-				sslCertificate = null;
-			}
 			activity.startService(
 				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url), 
 						activity.getApplicationContext(), BookDownloaderService.class)
@@ -214,7 +198,6 @@ public abstract class NetworkBookActions {
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
 					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanUrl())
 					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
-					.putExtra(BookDownloaderService.SSL_CERTIFICATE_KEY, sslCertificate)
 			);
 		}
 	}
@@ -337,7 +320,7 @@ public abstract class NetworkBookActions {
 				if (which == DialogInterface.BUTTON_NEGATIVE) {
 					return;
 				}
-				if (!mgr.needPurchase(book)) {
+				if (book.getStatus() != NetworkBookItem.Status.CanBePurchased) {
 					return;
 				}
 				UIUtil.wait("purchaseBook", buyRunnable, activity);
@@ -354,7 +337,7 @@ public abstract class NetworkBookActions {
 
 		final Runnable buyDialogRunnable = new Runnable() {
 			public void run() {
-				if (!mgr.needPurchase(book)) {
+				if (book.getStatus() != NetworkBookItem.Status.CanBePurchased) {
 					final ZLResource boxResource = dialogResource.getResource("alreadyPurchasedBox");
 					new AlertDialog.Builder(activity)
 						.setTitle(boxResource.getResource("title").getValue())

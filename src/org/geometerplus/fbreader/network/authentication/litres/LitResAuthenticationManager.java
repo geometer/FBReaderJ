@@ -49,7 +49,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		new LinkedList<NetworkBookItem>();
 
 	public LitResAuthenticationManager(OPDSNetworkLink link) {
-		super(link, null);
+		super(link);
 
 		mySidOption = new ZLStringOption(link.getSiteName(), "sid", "");
 		myUserIdOption = new ZLStringOption(link.getSiteName(), "userId", "");
@@ -99,36 +99,27 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			sid = mySidOption.getValue();
 		}
 
-		final Map<String,String> params = new HashMap<String,String>();
-		final String url = parseUrl(Link.getUrl(UrlInfo.Type.SignIn), params);
-		if (url == null) {
-			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
-		}
-
-		final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.getSiteName());
-
-		ZLNetworkException exception = null;
 		try {
+			final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.getSiteName());
+			final Map<String,String> params = new HashMap<String,String>();
+			final String url = parseUrl(Link.getUrl(UrlInfo.Type.SignIn), params);
+			if (url == null) {
+				throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
+			}
 			final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
 			for (Map.Entry<String,String> entry : params.entrySet()) {
 				request.addPostParameter(entry.getKey(), entry.getValue());
 			}
 			request.addPostParameter("sid", sid);
 			ZLNetworkManager.Instance().perform(request);
-		} catch (ZLNetworkException e) {
-			exception = e;
-		}
-
-		synchronized (this) {
-			if (exception != null) {
-				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(exception.getCode())) {
-					throw exception;
-				}
-				logOut(false);
-				return false;
-			}
 			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 			return true;
+		} catch (ZLNetworkException e) {
+			if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
+				throw e;
+			}
+			logOut(false);
+			return false;
 		}
 	}
 
@@ -184,20 +175,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		final String url = ZLNetworkUtil.appendParameter(reference.Url, "sid", sid);
 		return new DecoratedBookUrlInfo(reference, url);
 	}
-
-
-	@Override
-	public String currentUserName() {
-		final String value;
-		synchronized (this) {
-			value = UserNameOption.getValue();
-		}
-		if (value.length() == 0) {
-			return null;
-		}
-		return value;
-	}
-
 
 	@Override
 	public synchronized boolean needPurchase(NetworkBookItem book) {
@@ -446,6 +423,9 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	private static String parseUrl(String url, Map<String,String> params) {
+		if (url == null) {
+			return null;
+		}
 		final String[] parts = url.split("\\?");
 		if (parts.length != 2) {
 			return url;
