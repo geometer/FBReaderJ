@@ -63,7 +63,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 	}
 
 	private INetworkLink myLink;
-	private List<PluginApi.TopupActionInfo> myInfos;
+	private List<PluginApi.MenuActionInfo> myInfos;
 	private BigDecimal myAmount;
 
 	@Override
@@ -74,9 +74,9 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
 		myAmount = (BigDecimal)getIntent().getSerializableExtra(AMOUNT_KEY);
 
-		myInfos = new ArrayList<PluginApi.TopupActionInfo>();
+		myInfos = new ArrayList<PluginApi.MenuActionInfo>();
 		if (myLink.getUrlInfo(UrlInfo.Type.TopUp) != null) {
-			myInfos.add(new PluginApi.TopupActionInfo(
+			myInfos.add(new PluginApi.MenuActionInfo(
 				Uri.parse(url + "/browser"),
 				NetworkLibrary.resource().getResource("topupViaBrowser").getValue(),
 				100
@@ -105,8 +105,8 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (intent != null) {
-			final List<PluginApi.TopupActionInfo> actions =
-				intent.<PluginApi.TopupActionInfo>getParcelableArrayListExtra(
+			final List<PluginApi.MenuActionInfo> actions =
+				intent.<PluginApi.MenuActionInfo>getParcelableArrayListExtra(
 					PluginApi.PluginInfo.KEY
 				);
 			if (actions != null) {
@@ -126,7 +126,7 @@ public class TopupMenuActivity extends ListActivity implements AdapterView.OnIte
 		}
 	}
 
-	private void runTopupDialog(final PluginApi.TopupActionInfo info) {
+	private void runTopupDialog(final PluginApi.MenuActionInfo info) {
 		try {
 			doTopup(new Runnable() {
 				public void run() {
