@@ -54,6 +54,16 @@ public class BuyBooksActivity extends Activity {
 			return;
 		}
 
+		final Intent intent = new Intent(activity, BuyBooksActivity.class);
+		final ArrayList<NetworkTree.Key> keys =
+			new ArrayList<NetworkTree.Key>(trees.size());
+		for (NetworkBookTree t : trees) {
+			keys.add(t.getUniqueKey());
+		}
+		intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, keys);
+		activity.startActivity(intent);
+
+		/*	
 		final INetworkLink link = trees.get(0).getLink();
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 		if (mgr == null) {
@@ -75,9 +85,11 @@ public class BuyBooksActivity extends Activity {
 			}
 		} catch (ZLNetworkException e) {
 		}
+		*/
 	}
 
 	private NetworkLibrary myLibrary;
+	// we assume all the books are from the same catalog
 	private INetworkLink myLink;
 	private List<NetworkBookItem> myBooks;
 	private Money myCost;
@@ -87,7 +99,6 @@ public class BuyBooksActivity extends Activity {
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
-		setContentView(R.layout.buy_book);
 
 		myLibrary = NetworkLibrary.Instance();
 
@@ -109,6 +120,23 @@ public class BuyBooksActivity extends Activity {
 				return;
 			}
 		}
+
+		myLink = myBooks.get(0).Link;
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+		if (mgr == null) {
+			finish();
+			return;
+		}
+
+		try {
+			if (!mgr.isAuthorised(true)) {
+				AccountMenuActivity.runMenu(this, myLink);
+			}
+		} catch (ZLNetworkException e) {
+		}
+
+		setContentView(R.layout.buy_book);
+
 		myCost = calculateCost();
 		if (myCost == null) {
 			// TODO: error message
@@ -116,19 +144,12 @@ public class BuyBooksActivity extends Activity {
 			return;
 		}
 
-		// we assume all the books are from the same catalog
-		myLink = myBooks.get(0).Link;
-		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-		if (mgr == null) {
-			finish();
-			return;
-		}
 		myAccount = mgr.currentAccount();
 
-		setupUI();
+		setupUI(true);
 	}
 
-	private void setupUI() {
+	private void setupUI(boolean authorized) {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 
@@ -145,7 +166,21 @@ public class BuyBooksActivity extends Activity {
 			setTitle(resource.getResource("title").getValue());
 		}
 
-		if (myAccount == null) {
+		if (!authorized) {
+			textArea.setText(resource.getResource("notAuthorized").getValue());
+			okButton.setText(buttonResource.getResource("authorize").getValue());
+			cancelButton.setText(buttonResource.getResource("cancel").getValue());
+			okButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					AccountMenuActivity.runMenu(BuyBooksActivity.this, myLink);
+				} 
+			});
+			cancelButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					finish();
+				} 
+			});
+		} else if (myAccount == null) {
 			textArea.setText(resource.getResource("noAccountInformation").getValue());
 			okButton.setText(buttonResource.getResource("refresh").getValue());
 			cancelButton.setText(buttonResource.getResource("cancel").getValue());
@@ -212,7 +247,17 @@ public class BuyBooksActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		refreshAccountInformation();
+
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+		try {
+			if (mgr.isAuthorised(true)) {
+				refreshAccountInformation();
+			} else {
+				setupUI(false);
+			}
+		} catch (ZLNetworkException e) {
+			setupUI(false);
+		}
 	}
 
 	private Money calculateCost() {
@@ -255,7 +300,7 @@ public class BuyBooksActivity extends Activity {
 						if (updated) {
 							runOnUiThread(new Runnable() {
 								public void run() {
-									setupUI();
+									setupUI(true);
 								}
 							});
 						}

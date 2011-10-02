@@ -48,7 +48,7 @@ public class AccountMenuActivity extends MenuActivity {
 
 	@Override
 	protected void init() {
-		setTitle(NetworkLibrary.resource().getResource("accountMenuTitle").getValue());
+		setTitle(NetworkLibrary.resource().getResource("authorizationMenuTitle").getValue());
 		final String url = getIntent().getData().toString();
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
 
@@ -63,7 +63,7 @@ public class AccountMenuActivity extends MenuActivity {
 
 	@Override
 	protected String getAction() {
-		return "android.fbreader.action.network.ACCOUNT";
+		return Util.AUTHORIZATION_ACTION;
 	}
 
 	@Override

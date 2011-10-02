@@ -91,7 +91,7 @@
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
-		<node name="accountMenuTitle" value="Select action"/>
+		<node name="authorizationMenuTitle" value="Select action"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummaryEmpty" value="No books"/>
@@ -135,6 +135,7 @@
 		<node name="confirm" value="Are you sure you want to buy &#10;&#8220;%s&#8221;?" />
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" />
 		<node name="alreadyBought" value="Book is already bought" />
+		<node name="notAuthorized" value="Authorization required" />
 		<node name="noAccountInformation" value="Cannot load account state" />
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" />
 	</node>
@@ -254,6 +255,7 @@
 			<node name="topup" value="Top up"/>
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
+			<node name="authorize" value="Authorize"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>

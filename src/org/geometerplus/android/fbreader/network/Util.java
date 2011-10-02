@@ -36,7 +36,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
-	static final String ACCOUNT_ACTION = "android.fbreader.action.network.ACCOUNT";
+	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
 
 	public static Intent intentByLink(Intent intent, INetworkLink link) {
 		if (link != null) {
@@ -69,7 +69,7 @@ public abstract class Util implements UserRegistrationConstants {
 	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
 		return testService(
 			activity,
-			ACCOUNT_ACTION,
+			AUTHORIZATION_ACTION,
 			link.getUrl(UrlInfo.Type.Catalog) + "/register"
 		);
 	}
@@ -77,7 +77,7 @@ public abstract class Util implements UserRegistrationConstants {
 	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		try {
 			final Intent intent = new Intent(
-				ACCOUNT_ACTION,
+				AUTHORIZATION_ACTION,
 				Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register")
 			);
 			intent.putExtra(UserRegistrationConstants.SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));

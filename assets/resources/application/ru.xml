@@ -91,7 +91,7 @@
 		<node name="topup" value="Пополнение счёта (баланс: %s)" />
 		<node name="topupTitle" value="Оплата"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
-		<node name="accountMenuTitle" value="Выберите действие"/>
+		<node name="authorizationMenuTitle" value="Выберите действие"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="basket" value="Корзина"/>
 		<node name="basketSummaryEmpty" value="Пустая корзина"/>
@@ -135,6 +135,7 @@
 		<node name="confirm" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
 		<node name="confirmSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
 		<node name="alreadyBought" value="Книга уже куплена" />
+		<node name="notAuthorized" value="Требуется авторизация" />
 		<node name="noAccountInformation" value="Не удалось проверить состояние счета" />
 		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счете только %1" />
 	</node>
@@ -254,6 +255,7 @@
 			<node name="topup" value="Пополнить счёт"/>
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
+			<node name="authorize" value="Авторизоваться"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
