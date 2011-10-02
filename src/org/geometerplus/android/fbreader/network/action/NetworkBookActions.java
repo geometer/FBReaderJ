@@ -38,6 +38,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -82,11 +83,7 @@ public abstract class NetworkBookActions {
 
 		@Override
 		public void run(NetworkTree tree) {
-			run(getBook(tree));
-		}
-
-		public void run(NetworkBookItem book) {
-			runActionStatic(myActivity, book, myId);
+			runActionStatic(myActivity, (NetworkBookTree)tree, myId);
 		}
 	}
 
@@ -150,56 +147,40 @@ public abstract class NetworkBookActions {
 		return actions;
 	}
 
-	private static boolean runActionStatic(Activity activity, NetworkBookItem book, int actionCode) {
+	private static boolean runActionStatic(Activity activity, NetworkBookTree tree, int actionCode) {
 		switch (actionCode) {
 			case ActionCode.DOWNLOAD_BOOK:
-				doDownloadBook(activity, book, false);
+				Util.doDownloadBook(activity, tree.Book, false);
 				return true;
 			case ActionCode.DOWNLOAD_DEMO:
-				doDownloadBook(activity, book, true);
+				Util.doDownloadBook(activity, tree.Book, true);
 				return true;
 			case ActionCode.READ_BOOK:
-				doReadBook(activity, book, false);
+				doReadBook(activity, tree.Book, false);
 				return true;
 			case ActionCode.READ_DEMO:
-				doReadBook(activity, book, true);
+				doReadBook(activity, tree.Book, true);
 				return true;
 			case ActionCode.DELETE_BOOK:
-				tryToDeleteBook(activity, book, false);
+				tryToDeleteBook(activity, tree.Book, false);
 				return true;
 			case ActionCode.DELETE_DEMO:
-				tryToDeleteBook(activity, book, true);
+				tryToDeleteBook(activity, tree.Book, true);
 				return true;
 			case ActionCode.BUY_DIRECTLY:
-				doBuyDirectly(activity, book);
+				doBuyDirectly(activity, tree);
 				return true;
 			case ActionCode.BUY_IN_BROWSER:
-				doBuyInBrowser(activity, book);
+				doBuyInBrowser(activity, tree.Book);
 				return true;
 			case ActionCode.ADD_BOOK_TO_BASKET:
-				book.Link.getBasketItem().add(book);
+				tree.Book.Link.getBasketItem().add(tree.Book);
 				return true;
 			case ActionCode.REMOVE_BOOK_FROM_BASKET:
-				book.Link.getBasketItem().remove(book);
+				tree.Book.Link.getBasketItem().remove(tree.Book);
 				return true;
 		}
 		return false;
-	}
-
-	private static void doDownloadBook(Activity activity, final NetworkBookItem book, boolean demo) {
-		final UrlInfo.Type resolvedType =
-			demo ? UrlInfo.Type.BookDemo : UrlInfo.Type.Book;
-		final BookUrlInfo ref = book.reference(resolvedType);
-		if (ref != null) {
-			activity.startService(
-				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url), 
-						activity.getApplicationContext(), BookDownloaderService.class)
-					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
-					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
-					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanUrl())
-					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
-			);
-		}
 	}
 
 	private static void doReadBook(Activity activity, final NetworkBookItem book, boolean demo) {
@@ -252,113 +233,17 @@ public abstract class NetworkBookActions {
 			.create().show();
 	}
 
-	private static void doBuyDirectly(final Activity activity, final NetworkBookItem book) {
-		final NetworkAuthenticationManager mgr = book.Link.authenticationManager();
+	private static void doBuyDirectly(Activity activity, NetworkBookTree tree) {
+		final NetworkAuthenticationManager mgr = tree.Book.Link.authenticationManager();
 		if (mgr == null) {
 			return;
 		}
 
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-
-		final Runnable buyRunnable = new Runnable() {
-			public void run() {
-				try {
-					mgr.purchaseBook(book);
-					final NetworkLibrary library = NetworkLibrary.Instance();
-					library.invalidateVisibility();
-					library.synchronize();
-				} catch (final ZLNetworkException e) {
-					final String buttonKey;
-					final DialogInterface.OnClickListener action;
-					if (NetworkException.ERROR_PURCHASE_NOT_ENOUGH_MONEY.equals(e.getCode())) {
-						buttonKey = "topup";
-						action = new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int which) {
-								final BookBuyUrlInfo info = book.buyInfo();
-								Money price = info != null ? info.Price : null;
-								System.err.println("price = " + price);
-								if (price != null) {
-									final Money account = mgr.currentAccount();
-									System.err.println("account = " + account);
-									if (account != null) {
-										price = price.subtract(account);
-									}
-								}
-								System.err.println("price = " + price);
-								TopupMenuActivity.runMenu(activity, book.Link, price);
-							}
-						};
-					} else {
-						buttonKey = "ok";
-						action = null;
-					}
-					final ZLResource boxResource = dialogResource.getResource("networkError");
-					activity.runOnUiThread(new Runnable() {
-						public void run() {
-							new AlertDialog.Builder(activity)
-								.setTitle(boxResource.getResource("title").getValue())
-								.setMessage(e.getMessage())
-								.setIcon(0)
-								.setPositiveButton(buttonResource.getResource(buttonKey).getValue(), action)
-								.create().show();
-						}
-					});
-					final NetworkLibrary library = NetworkLibrary.Instance();
-					library.invalidateVisibility();
-					library.synchronize();
-				}
-			}
-		};
-
-		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				if (which == DialogInterface.BUTTON_NEGATIVE) {
-					return;
-				}
-				if (book.getStatus() != NetworkBookItem.Status.CanBePurchased) {
-					return;
-				}
-				UIUtil.wait("purchaseBook", buyRunnable, activity);
-				final boolean downloadBook = which == DialogInterface.BUTTON_NEUTRAL;
-				if (downloadBook) {
-					activity.runOnUiThread(new Runnable() {
-						public void run() {
-							doDownloadBook(activity, book, false);
-						}
-					});
-				}
-			} 
-		};
-
-		final Runnable buyDialogRunnable = new Runnable() {
-			public void run() {
-				if (book.getStatus() != NetworkBookItem.Status.CanBePurchased) {
-					final ZLResource boxResource = dialogResource.getResource("alreadyPurchasedBox");
-					new AlertDialog.Builder(activity)
-						.setTitle(boxResource.getResource("title").getValue())
-						.setMessage(boxResource.getResource("message").getValue())
-						.setIcon(0)
-						.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-						.create().show();
-					return;
-				}
-				final ZLResource boxResource = dialogResource.getResource("purchaseConfirmBox");
-				new AlertDialog.Builder(activity)
-					.setTitle(boxResource.getResource("title").getValue())
-					.setMessage(boxResource.getResource("message").getValue().replace("%s", book.Title))
-					.setIcon(0)
-					.setPositiveButton(buttonResource.getResource("buy").getValue(), listener)
-					.setNeutralButton(buttonResource.getResource("buyAndDownload").getValue(), listener)
-					.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
-					.create().show();
-			}
-		};
 		try {
 			if (mgr.isAuthorised(true)) {
-				buyDialogRunnable.run();
+				BuyBookActivity.run(activity, tree);
 			} else {
-				AccountMenuActivity.runMenu(activity, book.Link);
+				AccountMenuActivity.runMenu(activity, tree.Book.Link);
 			}
 		} catch (ZLNetworkException e) {
 		}

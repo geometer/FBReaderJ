@@ -30,6 +30,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
@@ -157,6 +158,22 @@ public abstract class Util implements UserRegistrationConstants {
 		if (url != null) {
 			url = NetworkLibrary.Instance().rewriteUrl(url, true);
 			activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		}
+	}
+
+	public static void doDownloadBook(Activity activity, final NetworkBookItem book, boolean demo) {
+		final UrlInfo.Type resolvedType =
+			demo ? UrlInfo.Type.BookDemo : UrlInfo.Type.Book;
+		final BookUrlInfo ref = book.reference(resolvedType);
+		if (ref != null) {
+			activity.startService(
+				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url), 
+						activity.getApplicationContext(), BookDownloaderService.class)
+					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
+					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
+					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanUrl())
+					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
+			);
 		}
 	}
 }

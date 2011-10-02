@@ -238,4 +238,8 @@ public class NetworkBookItem extends NetworkItem {
 			}
 		}
 	}
+
+	public String getStringId() {
+		return "@Book:" + Id + ":" + Title;
+	}
 }

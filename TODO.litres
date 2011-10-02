@@ -1,3 +1,4 @@
+ignore first 5 books when creating recommendations
 do we cache cover images?
 
 states:

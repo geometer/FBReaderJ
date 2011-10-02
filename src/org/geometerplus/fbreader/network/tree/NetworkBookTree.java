@@ -28,7 +28,7 @@ public class NetworkBookTree extends NetworkTree {
 
 	private final boolean myShowAuthors;
 
-	NetworkBookTree(NetworkTree parent, NetworkBookItem book, boolean showAuthors) {
+	public NetworkBookTree(NetworkTree parent, NetworkBookItem book, boolean showAuthors) {
 		super(parent);
 		Book = book;
 		myShowAuthors = showAuthors;
@@ -68,6 +68,6 @@ public class NetworkBookTree extends NetworkTree {
 
 	@Override
 	protected String getStringId() {
-		return "@Book:" + Book.Id + ":" + Book.Title;
+		return Book.getStringId();
 	}
 }

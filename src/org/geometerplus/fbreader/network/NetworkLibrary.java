@@ -398,12 +398,23 @@ public class NetworkLibrary {
 		return myRootTree;
 	}
 
+	public NetworkBookTree getFakeBookTree(NetworkBookItem book) {
+		final String id = book.getStringId();
+		for (FBTree tree : myFakeRootTree.subTrees()) {
+			if (tree instanceof NetworkBookTree &&
+				id.equals(tree.getUniqueKey().Id)) {
+				return (NetworkBookTree)tree;
+			}
+		}
+		return new NetworkBookTree(myFakeRootTree, book, true);
+	}
+
 	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {
 		final String id = item.getStringId();
 		for (FBTree tree : myFakeRootTree.subTrees()) {
-			final NetworkCatalogTree ncTree = (NetworkCatalogTree)tree;
-			if (id.equals(ncTree.getUniqueKey().Id)) {
-				return ncTree;
+			if (tree instanceof NetworkCatalogTree &&
+				id.equals(tree.getUniqueKey().Id)) {
+				return (NetworkCatalogTree)tree;
 			}
 		}
 		return new NetworkCatalogTree(myFakeRootTree, item.Link, item, 0);

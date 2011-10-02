@@ -55,6 +55,7 @@ import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 import org.geometerplus.android.util.UIUtil;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
+	private NetworkBookTree myTree;
 	private NetworkBookItem myBook;
 	private View myMainView;
 
@@ -76,11 +77,21 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onResume() {
 		super.onResume();
 
-		UIUtil.wait("loadingBookInfo", myInitializer, this);
+		if (!myInitializerStarted) {
+			UIUtil.wait("loadingNetworkBookInfo", myInitializer, this);
+		}
 	}
+
+	private volatile boolean myInitializerStarted;
 
 	private final Runnable myInitializer = new Runnable() {
 		public void run() {
+			synchronized (this) {
+				if (myInitializerStarted) {
+					return;
+				}
+				myInitializerStarted = true;
+			}
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			if (!library.isInitialized()) {
 				if (SQLiteNetworkDatabase.Instance() == null) {
@@ -96,6 +107,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 						library.getLinkBySiteName("litres.ru"),
 						url.toString().replace("litres-book://", "http://")
 					);
+					if (myBook != null) {
+						myTree = library.getFakeBookTree(myBook);
+					}
 				} else {
 					final NetworkTree tree = library.getTreeByKey(
 						(NetworkTree.Key)getIntent().getSerializableExtra(
@@ -103,7 +117,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 						)
 					);
 					if (tree instanceof NetworkBookTree) {
-						myBook = ((NetworkBookTree)tree).Book;
+						myTree = (NetworkBookTree)tree;
+						myBook = myTree.Book;
 					}
 				}
 
@@ -355,7 +370,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			button.setVisibility(View.VISIBLE);
 			button.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					a.run(myBook);
+					a.run(myTree);
 					NetworkBookInfoActivity.this.updateView();
 				}
 			});
@@ -399,9 +414,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code, Object[] params) {
 		if (code == NetworkLibrary.ChangeListener.Code.InitializationFailed) {
 			// TODO: implement
+			return;
 		}
 
-		if (myBook == null) {
+		if (myBook == null || myTree == null) {
 			return;
 		}
 

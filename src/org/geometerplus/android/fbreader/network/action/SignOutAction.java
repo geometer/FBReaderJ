@@ -23,7 +23,7 @@ import android.app.Activity;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.util.UIUtil;
@@ -35,7 +35,7 @@ public class SignOutAction extends Action {
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		if (!(tree instanceof NetworkCatalogTree)) {
+		if (!(tree instanceof NetworkCatalogRootTree)) {
 			return false;
 		}
 
