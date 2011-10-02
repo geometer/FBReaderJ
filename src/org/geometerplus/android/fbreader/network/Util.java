@@ -76,6 +76,11 @@ public abstract class Util implements UserRegistrationConstants {
 		);
 	}
 
+	static void addAuthorizationData(Intent intent, INetworkLink link) {
+		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
+		intent.putExtra(SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
+	}
+
 	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		try {
 			final NetworkAuthenticationManager mgr = link.authenticationManager();
@@ -83,11 +88,7 @@ public abstract class Util implements UserRegistrationConstants {
 				AUTHORIZATION_ACTION,
 				Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register")
 			);
-			if (mgr != null) {
-				for (Map.Entry<String,String> entry : mgr.getAccountData().entrySet()) {
-					intent.putExtra(entry.getKey(), entry.getValue());
-				}
-			}
+			addAuthorizationData(intent, link);
 			if (PackageUtil.canBeStarted(activity, intent, true)) {
 				activity.startActivity(intent);
 			}

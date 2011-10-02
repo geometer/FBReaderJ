@@ -74,11 +74,7 @@ public class AccountMenuActivity extends MenuActivity {
 				Util.runAuthenticationDialog(AccountMenuActivity.this, myLink, null);
 			} else {
 				final Intent intent = new Intent(getAction(), info.getId());
-				if (mgr != null) {
-					for (Map.Entry<String,String> entry : mgr.getAccountData().entrySet()) {
-						intent.putExtra(entry.getKey(), entry.getValue());
-					}
-				}
+				Util.addAuthorizationData(intent, myLink);
 				if (PackageUtil.canBeStarted(AccountMenuActivity.this, intent, true)) {
 					startActivity(intent);
 				}

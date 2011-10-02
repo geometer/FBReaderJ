@@ -109,16 +109,6 @@ public abstract class NetworkAuthenticationManager {
 	}
 
 	/*
-     * sign up
-	 */
-	public Map<String,String> getAccountData() {
-		final Map<String,String> map = new HashMap<String,String>();
-		map.put("catalogUrl", Link.getUrl(UrlInfo.Type.Catalog));
-		map.put("signupUrl", Link.getUrl(UrlInfo.Type.SignUp));
-		return map;
-	}
-
-	/*
 	 * Password Recovery
 	 */
 	public boolean passwordRecoverySupported() {
