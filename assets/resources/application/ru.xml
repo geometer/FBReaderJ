@@ -667,6 +667,8 @@
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />
 			<node name="message" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
+			<node name="titleSeveralBooks" value="Покупка книг" />
+			<node name="messageSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
 		</node>
 		<node name="alreadyPurchasedBox">
 			<node name="title" value="Покупка книги" />

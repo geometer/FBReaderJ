@@ -20,7 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
-import java.math.BigDecimal;
 
 import android.content.*;
 import android.net.Uri;
@@ -52,22 +51,19 @@ public class TopupMenuActivity extends MenuActivity {
 	public static void runMenu(Context context, INetworkLink link, Money amount) {
 		final Intent intent =
 			Util.intentByLink(new Intent(context, TopupMenuActivity.class), link);
-		if (amount != null) {
-			intent.putExtra(AMOUNT_KEY, amount.Amount);
-			intent.putExtra(CURRENCY_KEY, amount.Currency);
-		}
+		intent.putExtra(AMOUNT_KEY, amount);
 		context.startActivity(intent);
 	}
 
 	private INetworkLink myLink;
-	private BigDecimal myAmount;
+	private Money myAmount;
 
 	@Override
 	protected void init() {
 		setTitle(NetworkLibrary.resource().getResource("topupTitle").getValue());
 		final String url = getIntent().getData().toString();
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
-		myAmount = (BigDecimal)getIntent().getSerializableExtra(AMOUNT_KEY);
+		myAmount = (Money)getIntent().getSerializableExtra(AMOUNT_KEY);
 
 		if (myLink.getUrlInfo(UrlInfo.Type.TopUp) != null) {
 			myInfos.add(new PluginApi.MenuActionInfo(
@@ -93,7 +89,7 @@ public class TopupMenuActivity extends MenuActivity {
 						if (info.getId().toString().endsWith("/browser")) {
 							// TODO: put amount
 							if (mgr != null) {
-								Util.openInBrowser(TopupMenuActivity.this, mgr.topupLink());
+								Util.openInBrowser(TopupMenuActivity.this, mgr.topupLink(myAmount));
 							}
 						} else {
 							final Intent intent = new Intent(getAction(), info.getId());
@@ -102,7 +98,9 @@ public class TopupMenuActivity extends MenuActivity {
 									intent.putExtra(entry.getKey(), entry.getValue());
 								}
 							}
-							intent.putExtra(AMOUNT_KEY, myAmount);
+							if (myAmount != null) {
+								intent.putExtra(AMOUNT_KEY, myAmount.Amount);
+							}
 							if (PackageUtil.canBeStarted(TopupMenuActivity.this, intent, true)) {
 								startActivity(intent);
 							}

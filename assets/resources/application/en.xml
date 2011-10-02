@@ -667,7 +667,9 @@
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Purchase book" />
-			<node name="message" value="Are you sure you want to buy&#10;&#8220;%s&#8221;&#10;book?" />
+			<node name="message" value="Are you sure you want to buy &#10;&#8220;%s&#8221;?" />
+			<node name="titleSeveralBooks" value="Purchase books" />
+			<node name="messageSeveralBooks" value="Are you sure you want to buy %s books?" />
 		</node>
 		<node name="alreadyPurchasedBox">
 			<node name="title" value="Purchase book" />

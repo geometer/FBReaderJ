@@ -100,7 +100,7 @@ public abstract class NetworkAuthenticationManager {
 	 * topup account
 	 */
 
-	public String topupLink() {
+	public String topupLink(Money sum) {
 		return null;
 	}
 	public Map<String,String> getTopupData() {

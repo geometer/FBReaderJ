@@ -234,7 +234,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public String topupLink() {
+	public String topupLink(Money sum) {
 		final String sid;
 		synchronized (this) {
 			sid = mySidOption.getValue();
@@ -242,11 +242,13 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (sid.length() == 0) {
 			return null;
 		}
-		final String url = Link.getUrl(UrlInfo.Type.TopUp);
+		String url = Link.getUrl(UrlInfo.Type.TopUp);
 		if (url == null) {
 			return null;
 		}
-		return ZLNetworkUtil.appendParameter(url, "sid", sid);
+		url = ZLNetworkUtil.appendParameter(url, "sid", sid);
+		url = ZLNetworkUtil.appendParameter(url, "summ", String.valueOf(sum.Amount));
+		return url;
 	}
 
 	@Override

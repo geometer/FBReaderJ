@@ -239,7 +239,7 @@ public abstract class NetworkBookActions {
 
 		try {
 			if (mgr.isAuthorised(true)) {
-				BuyBookActivity.run(activity, tree);
+				BuyBooksActivity.run(activity, tree);
 			} else {
 				AccountMenuActivity.runMenu(activity, tree.Book.Link);
 			}
