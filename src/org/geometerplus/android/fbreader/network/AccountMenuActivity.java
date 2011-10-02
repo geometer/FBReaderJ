@@ -71,11 +71,7 @@ public class AccountMenuActivity extends MenuActivity {
 		try {
 			final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 			if (info.getId().toString().endsWith("/signIn")) {
-				Util.runAuthenticationDialog(AccountMenuActivity.this, myLink, new Runnable() {
-					public void run() {
-						//runOnUiThread(buyDialogRunnable);
-					}
-				});
+				Util.runAuthenticationDialog(AccountMenuActivity.this, myLink, null);
 			} else {
 				final Intent intent = new Intent(getAction(), info.getId());
 				if (mgr != null) {
