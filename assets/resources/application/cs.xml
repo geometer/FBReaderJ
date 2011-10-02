@@ -675,12 +675,6 @@
 			<node name="title" value="Zakoupit knihu"/>
 			<node name="message" value="Kniha je již zakoupena"/>
 		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Select action" toBeTranslated="true"/>
-			<node name="signIn" value="Sign in" toBeTranslated="true"/>
-			<node name="signUp" value="Sign up" toBeTranslated="true"/>
-			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
-		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Android Market není přístupný. Nainstalujte %s ručně"/>

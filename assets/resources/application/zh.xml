@@ -675,12 +675,6 @@
 			<node name="title" value="购买书籍" />
 			<node name="message" value="该书已经买过." />
 		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Select action" toBeTranslated="true"/>
-			<node name="signIn" value="Sign in" toBeTranslated="true"/>
-			<node name="signUp" value="Sign up" toBeTranslated="true"/>
-			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
-		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="无法访问Android官方应用市场. 请手工安装 %s ."/>

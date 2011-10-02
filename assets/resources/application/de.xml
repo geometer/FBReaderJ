@@ -678,12 +678,6 @@
 			<node name="title" value="Buchkauf"/>
 			<node name="message" value="Buch wurde schon gekauft"/>
 		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Select action" toBeTranslated="true"/>
-			<node name="signIn" value="Sign in" toBeTranslated="true"/>
-			<node name="signUp" value="Sign up" toBeTranslated="true"/>
-			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
-		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Es kann nicht auf den Android Market zugegriffen werden. Bitte, installieren Sie %s manuell."/>
