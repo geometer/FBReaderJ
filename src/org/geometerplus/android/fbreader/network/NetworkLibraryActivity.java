@@ -49,8 +49,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
 	protected static final int BASIC_AUTHENTICATION_CODE = 1;
-	protected static final int SIGNUP_CODE = 2;
-	protected static final int AUTO_SIGNIN_CODE = 3;
 
 	BookDownloaderServiceConnection Connection;
 
@@ -286,12 +284,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		switch (requestCode) {
 			case BASIC_AUTHENTICATION_CODE:
 				myCredentialsCreator.onDataReceived(resultCode, intent);
-				break;
-			case SIGNUP_CODE:
-				Util.processSignup(((NetworkTree)getCurrentTree()).getLink(), resultCode, intent);
-				break;
-			case AUTO_SIGNIN_CODE:
-				Util.processAutoSignIn(this, ((NetworkTree)getCurrentTree()).getLink(), resultCode, intent);
 				break;
 		}
 	}

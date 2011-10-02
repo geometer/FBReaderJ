@@ -112,7 +112,10 @@ public abstract class NetworkAuthenticationManager {
      * sign up
 	 */
 	public Map<String,String> getAccountData() {
-		return Collections.singletonMap("signupUrl", Link.getUrl(UrlInfo.Type.SignUp));
+		final Map<String,String> map = new HashMap<String,String>();
+		map.put("catalogUrl", Link.getUrl(UrlInfo.Type.Catalog));
+		map.put("signupUrl", Link.getUrl(UrlInfo.Type.SignUp));
+		return map;
 	}
 
 	/*

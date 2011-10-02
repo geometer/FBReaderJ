@@ -44,6 +44,7 @@ public class NetworkLibrary {
 			ItemRemoved,
 			StatusChanged,
 			*/
+			SignedIn,
 			Found,
 			NotFound,
 			EmptyCatalog,
@@ -147,6 +148,9 @@ public class NetworkLibrary {
 	}
 
 	public INetworkLink getLinkByUrl(String url) {
+		if (url == null) {
+			return null;
+		}
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
 				if (url.equals(link.getUrlInfo(UrlInfo.Type.Catalog).Url)) {

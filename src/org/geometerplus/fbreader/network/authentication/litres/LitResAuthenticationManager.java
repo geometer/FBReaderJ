@@ -247,7 +247,9 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			return null;
 		}
 		url = ZLNetworkUtil.appendParameter(url, "sid", sid);
-		url = ZLNetworkUtil.appendParameter(url, "summ", String.valueOf(sum.Amount));
+		if (sum != null) {
+			url = ZLNetworkUtil.appendParameter(url, "summ", String.valueOf(sum.Amount));
+		}
 		return url;
 	}
 

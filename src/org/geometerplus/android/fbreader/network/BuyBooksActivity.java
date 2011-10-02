@@ -44,7 +44,7 @@ import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationMan
 
 import org.geometerplus.android.fbreader.network.*;
 
-public class BuyBooksActivity extends Activity {
+public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeListener {
 	public static void run(Activity activity, NetworkBookTree tree) {
 		run(activity, Collections.singletonList(tree));
 	}
@@ -62,30 +62,6 @@ public class BuyBooksActivity extends Activity {
 		}
 		intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, keys);
 		activity.startActivity(intent);
-
-		/*	
-		final INetworkLink link = trees.get(0).getLink();
-		final NetworkAuthenticationManager mgr = link.authenticationManager();
-		if (mgr == null) {
-			return;
-		}
-
-		try {
-			if (mgr.isAuthorised(true)) {
-				final Intent intent = new Intent(activity, BuyBooksActivity.class);
-				final ArrayList<NetworkTree.Key> keys =
-					new ArrayList<NetworkTree.Key>(trees.size());
-				for (NetworkBookTree t : trees) {
-					keys.add(t.getUniqueKey());
-				}
-				intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, keys);
-				activity.startActivity(intent);
-			} else {
-				AccountMenuActivity.runMenu(activity, link);
-			}
-		} catch (ZLNetworkException e) {
-		}
-		*/
 	}
 
 	private NetworkLibrary myLibrary;
@@ -195,11 +171,18 @@ public class BuyBooksActivity extends Activity {
 				} 
 			});
 		} else if (myCost.compareTo(myAccount) > 0) {
-			textArea.setText(
-				resource.getResource("unsufficientFunds").getValue()
-					.replace("%0", myCost.toString())
-					.replace("%1", myAccount.toString())
-			);
+			if (Money.ZERO.equals(myAccount)) {
+				textArea.setText(
+					resource.getResource("zeroFunds").getValue()
+						.replace("%0", myCost.toString())
+				);
+			} else {
+				textArea.setText(
+					resource.getResource("unsufficientFunds").getValue()
+						.replace("%0", myCost.toString())
+						.replace("%1", myAccount.toString())
+				);
+			}
 			okButton.setText(buttonResource.getResource("pay").getValue());
 			cancelButton.setText(buttonResource.getResource("refresh").getValue());
 			okButton.setOnClickListener(new View.OnClickListener() {
@@ -245,19 +228,21 @@ public class BuyBooksActivity extends Activity {
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		NetworkLibrary.Instance().addChangeListener(this);
+	}
+
+	@Override
+	protected void onStop() {
+		NetworkLibrary.Instance().removeChangeListener(this);
+		super.onStop();
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
-
-		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-		try {
-			if (mgr.isAuthorised(true)) {
-				refreshAccountInformation();
-			} else {
-				setupUI(false);
-			}
-		} catch (ZLNetworkException e) {
-			setupUI(false);
-		}
+		updateAuthorizationState();
 	}
 
 	private Money calculateCost() {
@@ -353,5 +338,27 @@ public class BuyBooksActivity extends Activity {
 				}
 			}
 		};
+	}
+
+	// method from NetworkLibrary.ChangeListener
+	public void onLibraryChanged(final NetworkLibrary.ChangeListener.Code code, final Object[] params) {
+		switch (code) {
+			case SignedIn:
+				updateAuthorizationState();
+				break;
+		}
+	}
+
+	private void updateAuthorizationState() {
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+		try {
+			if (mgr.isAuthorised(true)) {
+				refreshAccountInformation();
+			} else {
+				setupUI(false);
+			}
+		} catch (ZLNetworkException e) {
+			setupUI(false);
+		}
 	}
 }

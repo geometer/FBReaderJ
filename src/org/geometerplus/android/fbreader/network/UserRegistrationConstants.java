@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.network;
 
 public interface UserRegistrationConstants {
+	String CATALOG_URL = "catalogUrl";
 	String SIGNUP_URL = "signupUrl";
 
 	String USER_REGISTRATION_USERNAME = "userName";

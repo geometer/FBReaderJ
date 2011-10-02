@@ -23,11 +23,23 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import org.geometerplus.fbreader.network.INetworkLink;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 
-public class BookDownloaderCallback extends BroadcastReceiver {
+public class ListenerCallback extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		final NetworkLibrary library = NetworkLibrary.Instance();
+
+		if ("android.fbreader.action.network.SIGNIN".equals(intent.getAction())) {
+			final String url = intent.getStringExtra(UserRegistrationConstants.CATALOG_URL);
+			final INetworkLink link = library.getLinkByUrl(url);
+			if (link != null) {
+				Util.processSignup(link, android.app.Activity.RESULT_OK, intent);
+			}
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
+		} else {
+			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		}
 	}
 }

@@ -138,6 +138,7 @@
 		<node name="notAuthorized" value="Authorization required" />
 		<node name="noAccountInformation" value="Cannot load account state" />
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" />
+		<node name="zeroFunds" value="This purchase costs %0" />
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Book Info" />

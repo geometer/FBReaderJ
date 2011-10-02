@@ -161,7 +161,6 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.network.AccountMenuActivity" android:process=":networkLibrary" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden"/>
 		<activity android:name="org.geometerplus.android.fbreader.network.TopupMenuActivity" android:process=":networkLibrary" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden"/>
-		<service android:name="org.geometerplus.android.fbreader.network.ItemsLoadingService" android:process=":networkLibrary" />
 		<activity android:name="org.geometerplus.android.fbreader.network.NetworkBookInfoActivity" android:process=":networkLibrary" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
@@ -169,7 +168,11 @@
 				<data android:host="*" android:scheme="litres-book" />
 			</intent-filter>
 		</activity>
-		<receiver android:name="org.geometerplus.android.fbreader.network.BookDownloaderCallback" android:process=":networkLibrary" />
-		<service android:name="org.geometerplus.android.fbreader.network.LibraryInitializationService" android:process=":networkLibrary" />
+		<receiver android:name="org.geometerplus.android.fbreader.network.ListenerCallback" android:process=":networkLibrary">
+			<intent-filter>
+				<action android:name="android.fbreader.action.network.SIGNIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</receiver>
 	</application>
 </manifest>

@@ -138,6 +138,7 @@
 		<node name="notAuthorized" value="Требуется авторизация" />
 		<node name="noAccountInformation" value="Не удалось проверить состояние счета" />
 		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счете только %1" />
+		<node name="zeroFunds" value="Для покупки требуется %0" />
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Информация о книге" />
