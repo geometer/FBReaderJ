@@ -267,7 +267,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				logOut(false);
 				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
-			networkRequest = loadPurchasedBooks();
+			networkRequest = loadPurchasedBooksRequest();
 		}
 
 		ZLNetworkException exception = null;
@@ -279,7 +279,6 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		synchronized (this) {
 			if (exception != null) {
-				//loadPurchasedBooksOnError();
 				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(exception.getCode())) {
 					logOut(false);
 				}
@@ -317,35 +316,41 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				return;
 			}
 
-			purchasedBooksRequest = loadPurchasedBooks();
-			accountRequest = loadAccount();
+			purchasedBooksRequest = loadPurchasedBooksRequest();
+			accountRequest = loadAccountRequest();
 		}
 
 		final LinkedList<ZLNetworkRequest> requests = new LinkedList<ZLNetworkRequest>();
 		requests.add(purchasedBooksRequest);
 		requests.add(accountRequest);
 
-		ZLNetworkException exception = null;
 		try {
 			ZLNetworkManager.Instance().perform(requests);
+			synchronized (this) {
+				myInitializedDataSid = sid;
+				loadPurchasedBooksOnSuccess(purchasedBooksRequest);
+				myAccount = new Money(((LitResPurchaseXMLReader)accountRequest.Reader).Account, "RUB");
+			}
 		} catch (ZLNetworkException e) {
-			exception = e;
-		}
-
-		synchronized (this) {
-			if (exception != null) {
+			synchronized (this) {
 				myInitializedDataSid = null;
 				loadPurchasedBooksOnError();
-				loadAccountOnError();
-				throw exception;
+				myAccount = null;
 			}
-			myInitializedDataSid = sid;
-			loadPurchasedBooksOnSuccess(purchasedBooksRequest);
-			loadAccountOnSuccess(accountRequest);
+			throw e;
 		}
 	}
 
-	private LitResNetworkRequest loadPurchasedBooks() {
+	@Override
+	public void refreshAccountInformation() throws ZLNetworkException {
+		final LitResNetworkRequest accountRequest = loadAccountRequest();
+		ZLNetworkManager.Instance().perform(accountRequest);
+		synchronized (this) {
+			myAccount = new Money(((LitResPurchaseXMLReader)accountRequest.Reader).Account, "RUB");
+		}
+	}
+
+	private LitResNetworkRequest loadPurchasedBooksRequest() {
 		final String sid = mySidOption.getValue();
 		final String query = "pages/catalit_browser/";
 
@@ -376,26 +381,16 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 	}
 
-	private LitResNetworkRequest loadAccount() {
-		final String sid = mySidOption.getValue();
+	private LitResNetworkRequest loadAccountRequest() {
 		final String query = "pages/purchase_book/";
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
 			new LitResPurchaseXMLReader(Link.getSiteName())
 		);
-		request.addPostParameter("sid", sid);
+		request.addPostParameter("sid", mySidOption.getValue());
 		request.addPostParameter("art", "0");
 		return request;
-	}
-
-	private void loadAccountOnError() {
-		myAccount = null;
-	}
-
-	private void loadAccountOnSuccess(LitResNetworkRequest accountRequest) {
-		LitResPurchaseXMLReader reader = (LitResPurchaseXMLReader)accountRequest.Reader;
-		myAccount = new Money(reader.Account, "RUB");
 	}
 
 	@Override

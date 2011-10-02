@@ -129,6 +129,15 @@
 			<node name="buyAllBooks" value="Buy all books"/>
 		</node>
 	</node>
+	<node name="buyBook">
+		<node name="title" value="Purchase book" />
+		<node name="titleSeveralBooks" value="Purchase books" />
+		<node name="confirm" value="Are you sure you want to buy &#10;&#8220;%s&#8221;?" />
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" />
+		<node name="alreadyBought" value="Book is already bought" />
+		<node name="noAccountInformation" value="Cannot load account state" />
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" />
+	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Book Info" />
 		<node name="description" value="Description" />
@@ -243,6 +252,8 @@
 			<node name="editInfo" value="Edit" />
 			<node name="reloadInfo" value="Reload" />
 			<node name="topup" value="Top up"/>
+			<node name="pay" value="Pay"/>
+			<node name="refresh" value="Refresh"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>
@@ -626,6 +637,7 @@
 			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;" />
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" />
@@ -664,16 +676,6 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Language filter" />
-		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="Purchase book" />
-			<node name="message" value="Are you sure you want to buy &#10;&#8220;%s&#8221;?" />
-			<node name="titleSeveralBooks" value="Purchase books" />
-			<node name="messageSeveralBooks" value="Are you sure you want to buy %s books?" />
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="Purchase book" />
-			<node name="message" value="Book is already bought" />
 		</node>
 	</node>
 	<node name="errorMessage">

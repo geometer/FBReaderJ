@@ -60,13 +60,19 @@ public class BuyBooksActivity extends Activity {
 		activity.startActivity(intent);
 	}
 
+	private NetworkLibrary myLibrary;
+	private INetworkLink myLink;
+	private List<NetworkBookItem> myBooks;
+	private Money myCost;
+	private Money myAccount;
+
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		setContentView(R.layout.buy_book);
 
-		final NetworkLibrary library = NetworkLibrary.Instance();
+		myLibrary = NetworkLibrary.Instance();
 
 		final List<NetworkTree.Key> keys =
 			(List<NetworkTree.Key>)getIntent().getSerializableExtra(
@@ -76,25 +82,43 @@ public class BuyBooksActivity extends Activity {
 			finish();
 			return;
 		}
-		final List<NetworkBookItem> books = new ArrayList<NetworkBookItem>(keys.size()); 
+		myBooks = new ArrayList<NetworkBookItem>(keys.size()); 
 		for (NetworkTree.Key k : keys) {
-			final NetworkTree tree = library.getTreeByKey(k);
+			final NetworkTree tree = myLibrary.getTreeByKey(k);
 			if (tree instanceof NetworkBookTree) {
-				books.add(((NetworkBookTree)tree).Book);
+				myBooks.add(((NetworkBookTree)tree).Book);
 			} else {
 				finish();
 				return;
 			}
 		}
+		myCost = Money.ZERO;
+		for (NetworkBookItem b : myBooks) {
+			if (b.getStatus() != NetworkBookItem.Status.CanBePurchased) {
+				continue;
+			}
+			final BookBuyUrlInfo info = b.buyInfo();
+			if (info == null || info.Price == null) {
+				// TODO: error message
+				finish();
+				return;
+			}
+			myCost = myCost.add(info.Price);
+		}
 
 		// we assume all the books are from the same catalog
-		final INetworkLink link = books.get(0).Link;
-		final NetworkAuthenticationManager mgr = link.authenticationManager();
+		myLink = myBooks.get(0).Link;
+		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 		if (mgr == null) {
 			finish();
 			return;
 		}
+		myAccount = mgr.currentAccount();
 
+		setupUI();
+	}
+
+	private void setupUI() {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 
@@ -104,39 +128,117 @@ public class BuyBooksActivity extends Activity {
 		final Button cancelButton =
 			(Button)findViewById(R.id.buy_book_buttons).findViewById(R.id.cancel_button);
 
-		final Runnable buyRunnable = new Runnable() {
-			public void run() {
-				Money cost = Money.ZERO;
-				System.err.println("cost = " + cost);
-				try {
-					final Money account = mgr.currentAccount();
-					System.err.println("account = " + account);
-					if (account != null) {
-						for (NetworkBookItem b : books) {
-							final BookBuyUrlInfo info = b.buyInfo();
-							if (b.getStatus() != NetworkBookItem.Status.CanBePurchased) {
-								continue;
-							}
-							if (info == null || info.Price == null) {
-								cost = null;
-								break;
-							}
-							cost = cost.add(info.Price);
-							System.err.println("cost = " + cost);
+		final ZLResource resource = ZLResource.resource("buyBook");
+		if (myBooks.size() > 1) {
+			setTitle(resource.getResource("titleSeveralBooks").getValue());
+		} else {
+			setTitle(resource.getResource("title").getValue());
+		}
+
+		if (myAccount == null) {
+			textArea.setText(resource.getResource("noAccountInformation").getValue());
+			okButton.setText(buttonResource.getResource("refresh").getValue());
+			cancelButton.setText(buttonResource.getResource("cancel").getValue());
+			okButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					refreshAccountInformation();
+				} 
+			});
+			cancelButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					finish();
+				} 
+			});
+		} else if (myCost.compareTo(myAccount) > 0) {
+			textArea.setText(
+				resource.getResource("unsufficientFunds").getValue()
+					.replace("%0", myCost.toString())
+					.replace("%1", myAccount.toString())
+			);
+			okButton.setText(buttonResource.getResource("pay").getValue());
+			cancelButton.setText(buttonResource.getResource("refresh").getValue());
+			okButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					TopupMenuActivity.runMenu(BuyBooksActivity.this, myLink, myCost.subtract(myAccount));
+				} 
+			});
+			cancelButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					refreshAccountInformation();
+				} 
+			});
+		} else {
+			okButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					UIUtil.wait("purchaseBook", buyRunnable(), BuyBooksActivity.this);
+				} 
+			});
+			cancelButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					finish();
+				} 
+			});
+			if (myBooks.size() > 1) {
+				textArea.setText(
+					resource.getResource("confirmSeveralBooks").getValue()
+						.replace("%s", String.valueOf(myBooks.size()))
+				);
+				okButton.setText(buttonResource.getResource("buy").getValue());
+				cancelButton.setText(buttonResource.getResource("cancel").getValue());
+			} else if (myBooks.get(0).getStatus() == NetworkBookItem.Status.CanBePurchased) {
+				textArea.setText(
+					resource.getResource("confirm").getValue().replace("%s", myBooks.get(0).Title)
+				);
+				okButton.setText(buttonResource.getResource("buy").getValue());
+				cancelButton.setText(buttonResource.getResource("cancel").getValue());
+			} else {
+				textArea.setText(resource.getResource("alreadyBought").getValue());
+				cancelButton.setText(buttonResource.getResource("ok").getValue());
+				okButton.setVisibility(View.GONE);
+			}
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		refreshAccountInformation();
+	}
+
+	private void refreshAccountInformation() {
+		UIUtil.wait(
+			"updatingAccountInformation",
+			new Runnable() {
+				public void run() {
+					final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+					try {
+						mgr.refreshAccountInformation();
+						final Money oldAccount = myAccount;
+						myAccount = mgr.currentAccount();
+						if (myAccount != null && !myAccount.equals(oldAccount)) {
+							runOnUiThread(new Runnable() {
+								public void run() {
+									setupUI();
+								}
+							});
 						}
-						cost = cost.subtract(account);
-						System.err.println("cost = " + cost);
-					} else {
-						cost = null;
+						myLibrary.invalidateVisibility();
+						myLibrary.synchronize();
+					} catch (ZLNetworkException e) {
+						// ignore
 					}
-					System.err.println("cost = " + cost);
-					if (cost != null && cost.compareTo(Money.ZERO) > 0 && books.size() > 1) {
-						// we only throw this exception if there are more than 1 book in list
-						// for 1 book we prefer to send request to server and got an error
-						throw new ZLNetworkException(NetworkException.ERROR_PURCHASE_NOT_ENOUGH_MONEY);
-					}
-					
-					for (final NetworkBookItem b : books) {
+				}
+			},
+			this
+		);
+	}
+
+	private Runnable buyRunnable() {
+		return new Runnable() {
+			public void run() {
+				try {
+					final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+					for (final NetworkBookItem b : myBooks) {
 						if (b.getStatus() != NetworkBookItem.Status.CanBePurchased) {
 							continue;
 						}
@@ -149,62 +251,24 @@ public class BuyBooksActivity extends Activity {
 					}
 					finish();
 				} catch (final ZLNetworkException e) {
-					if (NetworkException.ERROR_PURCHASE_NOT_ENOUGH_MONEY.equals(e.getCode())) {
-						TopupMenuActivity.runMenu(BuyBooksActivity.this, link, cost);
-						finish();
-					} else {
-						final ZLResource boxResource = dialogResource.getResource("networkError");
-						runOnUiThread(new Runnable() {
-							public void run() {
-								new AlertDialog.Builder(BuyBooksActivity.this)
-									.setTitle(boxResource.getResource("title").getValue())
-									.setMessage(e.getMessage())
-									.setIcon(0)
-									.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-									.create().show();
-							}
-						});
-					}
+					final ZLResource dialogResource = ZLResource.resource("dialog");
+					final ZLResource buttonResource = dialogResource.getResource("button");
+					final ZLResource boxResource = dialogResource.getResource("networkError");
+					runOnUiThread(new Runnable() {
+						public void run() {
+							new AlertDialog.Builder(BuyBooksActivity.this)
+								.setTitle(boxResource.getResource("title").getValue())
+								.setMessage(e.getMessage())
+								.setIcon(0)
+								.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
+								.create().show();
+						}
+					});
 				} finally {
-					library.invalidateVisibility();
-					library.synchronize();
+					myLibrary.invalidateVisibility();
+					myLibrary.synchronize();
 				}
 			}
 		};
-
-		okButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				UIUtil.wait("purchaseBook", buyRunnable, BuyBooksActivity.this);
-			} 
-		});
-		cancelButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				finish();
-			} 
-		});
-
-		if (books.size() > 1 || books.get(0).getStatus() == NetworkBookItem.Status.CanBePurchased) {
-			final ZLResource boxResource = dialogResource.getResource("purchaseConfirmBox");
-			if (books.size() == 1) {
-				setTitle(boxResource.getResource("title").getValue());
-				textArea.setText(
-					boxResource.getResource("message").getValue().replace("%s", books.get(0).Title)
-				);
-			} else {
-				setTitle(boxResource.getResource("titleSeveralBooks").getValue());
-				textArea.setText(
-					boxResource.getResource("messageSeveralBooks").getValue()
-						.replace("%s", String.valueOf(books.size()))
-				);
-			}
-			okButton.setText(buttonResource.getResource("buy").getValue());
-			cancelButton.setText(buttonResource.getResource("cancel").getValue());
-		} else {
-			final ZLResource boxResource = dialogResource.getResource("alreadyPurchasedBox");
-			setTitle(boxResource.getResource("title").getValue());
-			textArea.setText(boxResource.getResource("message").getValue());
-			cancelButton.setText(buttonResource.getResource("ok").getValue());
-			okButton.setVisibility(View.GONE);
-		}
 	}
 }
