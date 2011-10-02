@@ -48,7 +48,7 @@ public class AccountMenuActivity extends MenuActivity {
 
 	@Override
 	protected void init() {
-		setTitle(NetworkLibrary.resource().getResource("accountTitle").getValue());
+		setTitle(NetworkLibrary.resource().getResource("accountMenuTitle").getValue());
 		final String url = getIntent().getData().toString();
 		myLink = NetworkLibrary.Instance().getLinkByUrl(url);
 

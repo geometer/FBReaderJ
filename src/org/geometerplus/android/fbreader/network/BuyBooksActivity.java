@@ -50,14 +50,31 @@ public class BuyBooksActivity extends Activity {
 	}
 
 	public static void run(Activity activity, List<NetworkBookTree> trees) {
-		final Intent intent = new Intent(activity, BuyBooksActivity.class);
-		final ArrayList<NetworkTree.Key> keys =
-			new ArrayList<NetworkTree.Key>(trees.size());
-		for (NetworkBookTree t : trees) {
-			keys.add(t.getUniqueKey());
+		if (trees.isEmpty()) {
+			return;
 		}
-		intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, keys);
-		activity.startActivity(intent);
+
+		final INetworkLink link = trees.get(0).getLink();
+		final NetworkAuthenticationManager mgr = link.authenticationManager();
+		if (mgr == null) {
+			return;
+		}
+
+		try {
+			if (mgr.isAuthorised(true)) {
+				final Intent intent = new Intent(activity, BuyBooksActivity.class);
+				final ArrayList<NetworkTree.Key> keys =
+					new ArrayList<NetworkTree.Key>(trees.size());
+				for (NetworkBookTree t : trees) {
+					keys.add(t.getUniqueKey());
+				}
+				intent.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, keys);
+				activity.startActivity(intent);
+			} else {
+				AccountMenuActivity.runMenu(activity, link);
+			}
+		} catch (ZLNetworkException e) {
+		}
 	}
 
 	private NetworkLibrary myLibrary;

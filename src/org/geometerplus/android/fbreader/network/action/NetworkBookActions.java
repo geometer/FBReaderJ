@@ -232,19 +232,7 @@ public abstract class NetworkBookActions {
 	}
 
 	private static void doBuyDirectly(Activity activity, NetworkBookTree tree) {
-		final NetworkAuthenticationManager mgr = tree.Book.Link.authenticationManager();
-		if (mgr == null) {
-			return;
-		}
-
-		try {
-			if (mgr.isAuthorised(true)) {
-				BuyBooksActivity.run(activity, tree);
-			} else {
-				AccountMenuActivity.runMenu(activity, tree.Book.Link);
-			}
-		} catch (ZLNetworkException e) {
-		}
+		BuyBooksActivity.run(activity, tree);
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {
