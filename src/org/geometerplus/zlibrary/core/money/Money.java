@@ -19,11 +19,12 @@
 
 package org.geometerplus.zlibrary.core.money;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
-public class Money implements Comparable<Money> {
+public class Money implements Comparable<Money>, Serializable {
 	public static final Money ZERO = new Money();
 
 	public final BigDecimal Amount;

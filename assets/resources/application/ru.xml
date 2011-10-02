@@ -23,7 +23,7 @@
 		<node name="favorites" value="Избранное">
 			<node name="summary" value="Мои любимые книги"/>
 		</node>
-		<node name="searchResults" value="Найдено">
+		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s" />
 		</node>
 		<node name="fileTree" value="Файловая система">
@@ -89,7 +89,7 @@
 		<node name="signIn" value="Войти"/>
 		<node name="signOut" value="Выйти (%s)"/>
 		<node name="topup" value="Пополнить счёт (баланс: %s)" />
-		<node name="topupTitle" value="Пополнить счёт"/>
+		<node name="topupTitle" value="Заплатить"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="basket" value="Корзина"/>
@@ -178,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Эта книга"/>
 		<node name="allBooks" value="Все книги"/>
-		<node name="searchResults" value="Найдено"/>
+		<node name="found" value="Найдено"/>
 		<node name="new" value="Добавить закладку"/>
 		<node name="open" value="Открыть"/>
 		<node name="edit" value="Поправить закладку"/>
@@ -519,8 +519,8 @@
 					<node name="summaryOff" value="Кнопки увеличения/уменьшения звука работают как обычно"/>
 				</node>
 				<node name="invertVolumeKeys" value="Перелистывать кнопками в обратную сторону">
-					<node name="summaryOn" value="Нижняя кнопка листает страницу вперед"/>
-					<node name="summaryOff" value="Верхняя кнопка листает страницу вперед"/>
+					<node name="summaryOn" value="Верхняя кнопка листает страницу вперед"/>
+					<node name="summaryOff" value="Нижняя кнопка листает страницу вперед"/>
 				</node>
 				<node name="animation" value="Анимация">
 					<node name="none" value="Выключить анимацию"/>
@@ -644,7 +644,6 @@
 			<node name="unencryptedWarning" value="Пароль пересылается незашифрованным"/>
 			<node name="login" value="Имя пользователя" />
 			<node name="password" value="Пароль" />
-			<node name="skipIP" value="Не привязываться к ip-адресу" />
 			<node name="loginIsEmpty" value="Имя пользователя не может быть пустым" />
 			<node name="register" value="Зарегистрироваться" />
 		</node>
@@ -668,6 +667,8 @@
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Покупка книги" />
 			<node name="message" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
+			<node name="titleSeveralBooks" value="Покупка книг" />
+			<node name="messageSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
 		</node>
 		<node name="alreadyPurchasedBox">
 			<node name="title" value="Покупка книги" />
@@ -700,7 +701,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="неизвестная ошибка"/>
 		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
-		<node name="encriptedFile" value="файл защищен DRM"/>
+		<node name="encryptedFile" value="файл защищен DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

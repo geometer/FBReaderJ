@@ -23,7 +23,7 @@
 		<node name="favorites" value="Favorites">
 			<node name="summary" value="My selected books"/>
 		</node>
-		<node name="searchResults" value="Found">
+		<node name="found" value="Found">
 			<node name="summary" value="Search results for: %s"/>
 		</node>
 		<node name="fileTree" value="File tree">
@@ -91,11 +91,12 @@
 		<node name="topup" value="Top up account (currently: %s)"/>
 		<node name="topupTitle" value="Top up account"/>
 		<node name="topupViaBrowser" value="Open page in browser"/>
+		<node name="accountTitle" value="Select action"/>
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummaryEmpty" value="No books"/>
-		<node name="basketSummaryCountOnly" value="%0 books"/>
-		<node name="basketSummary" value="%0 books (%1)"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Book is being downloaded" />
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
 		<node name="stoppingCatalogLoading" value="Stopping loading" />
@@ -178,7 +179,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="This book"/>
 		<node name="allBooks" value="All books"/>
-		<node name="searchResults" value="Found"/>
+		<node name="found" value="Found"/>
 		<node name="new" value="New bookmark"/>
 		<node name="open" value="Open"/>
 		<node name="edit" value="Edit bookmark"/>
@@ -644,7 +645,6 @@
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" />
 			<node name="login" value="Username" />
 			<node name="password" value="Password" />
-			<node name="skipIP" value="Don't bound to ip-address" />
 			<node name="loginIsEmpty" value="Username should be non-empty" />
 			<node name="register" value="Sign up" />
 		</node>
@@ -667,17 +667,13 @@
 		</node>
 		<node name="purchaseConfirmBox">
 			<node name="title" value="Purchase book" />
-			<node name="message" value="Are you sure you want to buy&#10;&#8220;%s&#8221;&#10;book?" />
+			<node name="message" value="Are you sure you want to buy &#10;&#8220;%s&#8221;?" />
+			<node name="titleSeveralBooks" value="Purchase books" />
+			<node name="messageSeveralBooks" value="Are you sure you want to buy %s books?" />
 		</node>
 		<node name="alreadyPurchasedBox">
 			<node name="title" value="Purchase book" />
 			<node name="message" value="Book is already bought" />
-		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Select action" />
-			<node name="signIn" value="Sign in" />
-			<node name="signUp" value="Sign up" />
-			<node name="quickBuy" value="Quick buy" />
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -700,7 +696,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Unknown Error"/>
 		<node name="unsupportedCompressionMethod" value="Unsupported Compression Method"/>
-		<node name="encriptedFile" value="DRM-protected File"/>
+		<node name="encryptedFile" value="DRM-protected File"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

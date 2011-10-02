@@ -17,20 +17,30 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.android.fbreader.library;
 
-import org.geometerplus.zlibrary.core.money.Money;
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.os.Bundle;
 
-import java.util.*;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-public interface Basket {
-	void add(NetworkBookItem book);
-	void remove(NetworkBookItem book);
-	boolean contains(NetworkBookItem book);
-	void clear();
+import org.geometerplus.fbreader.library.Library;
 
-	List<String> bookIds();
-	List<NetworkBookItem> books();
+public class LibrarySearchActivity extends Activity {
+	@Override
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 
-	Money cost();
+		final Intent intent = getIntent();
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			final String pattern = intent.getStringExtra(SearchManager.QUERY);
+			if (pattern != null && pattern.length() > 0) {
+				LibraryActivity.BookSearchPatternOption.setValue(pattern);
+				Library.Instance().startBookSearch(pattern);
+			}
+		}
+		finish();
+	}
 }

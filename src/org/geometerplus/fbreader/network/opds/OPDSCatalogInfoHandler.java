@@ -53,7 +53,7 @@ class OPDSCatalogInfoHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEnt
 		for (ATOMLink link: feed.Links) {
 			final MimeType type = MimeType.get(link.getType());
 			final String rel = myLink.relation(link.getRel(), type);
-			if (rel == "search") {
+			if ("search".equals(rel)) {
 				if (MimeType.APP_OPENSEARCHDESCRIPTION.equals(type)) {
 					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
 				} else if (MimeType.APP_ATOM.equals(type)) {

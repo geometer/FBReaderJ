@@ -152,7 +152,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 	void showSearchResultsTab(LinkedList<Bookmark> results) {
 		if (mySearchResultsView == null) {
-			mySearchResultsView = createTab("searchResults", R.id.search_results);
+			mySearchResultsView = createTab("found", R.id.search_results);
 			new BookmarksAdapter(mySearchResultsView, mySearchResults, false);
 		} else {
 			mySearchResults.clear();
@@ -160,7 +160,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		mySearchResults.addAll(results);
 		mySearchResultsView.invalidateViews();
 		mySearchResultsView.requestLayout();
-		getTabHost().setCurrentTabByTag("searchResults");
+		getTabHost().setCurrentTabByTag("found");
 	}
 
 	public boolean onMenuItemClick(MenuItem item) {

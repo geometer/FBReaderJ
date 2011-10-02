@@ -67,33 +67,6 @@
 			android:layout_marginTop="5dp"
 			android:layout_marginBottom="5dp"
 		/>
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:paddingTop="20dp"
-			android:paddingBottom="10dp"
-			android:orientation="horizontal"
-		>
-			<Button
-				android:id="@+id/authentication_ok_button"
-				android:layout_width="fill_parent"
-				android:minWidth="75dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:singleLine="true"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"
-			/>
-			<Button
-				android:id="@+id/authentication_cancel_button"
-				android:layout_width="fill_parent"
-				android:minWidth="75dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:singleLine="true"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"
-			/>
-		</LinearLayout>
+		<include layout="@layout/ok_cancel_buttons" android:id="@+id/authentication_buttons" />
 	</LinearLayout>
 </ScrollView>

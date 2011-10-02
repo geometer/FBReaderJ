@@ -138,18 +138,25 @@ public class AuthenticationActivity extends Activity {
 		setContentView(R.layout.authentication);
 
 		final Intent intent = getIntent();
-		myLink = Util.linkByIntent(intent);
-		if (myLink == null) {
-			finish();
-			return;
-		}
-		setResult(RESULT_CANCELED, Util.intentByLink(new Intent(), myLink));
 
 		final String host = intent.getStringExtra(HOST_KEY);
 		final String area = intent.getStringExtra(AREA_KEY);
 		final String username = intent.getStringExtra(USERNAME_KEY);
 		final String error = intent.getStringExtra(ERROR_KEY);
 		myCustomAuthentication = intent.getBooleanExtra(CUSTOM_AUTH_KEY, false);
+
+		if (myCustomAuthentication) {
+			myLink = NetworkLibrary.Instance().getLinkByUrl(String.valueOf(intent.getData()));
+			if (myLink == null) {
+				finish();
+				return;
+			}
+			setResult(RESULT_CANCELED, Util.intentByLink(new Intent(), myLink));
+		} else {
+			myLink = null;
+			setResult(RESULT_CANCELED);
+		}
+
 		myOnSuccessRunnable = ourOnSuccessRunnableMap.remove(intent.getLongExtra(RUNNABLE_KEY, -1));
 
 		myResource = ZLResource.resource("dialog").getResource("AuthenticationDialog");
@@ -181,7 +188,8 @@ public class AuthenticationActivity extends Activity {
 
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
-		myOkButton = findButton(R.id.authentication_ok_button);
+		final View buttonsView = findViewById(R.id.authentication_buttons);
+		myOkButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		myOkButton.setText(buttonResource.getResource("ok").getValue());
 		myOkButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -195,15 +203,17 @@ public class AuthenticationActivity extends Activity {
 			}
 		});
 
-		final Button cancelButton = findButton(R.id.authentication_cancel_button);
+		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				runOnUiThread(new Runnable() {
 					public void run() {
-						final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-						if (mgr.mayBeAuthorised(false)) {
-							mgr.logOut();
+						if (myLink != null) {
+							final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+							if (mgr.mayBeAuthorised(false)) {
+								mgr.logOut();
+							}
 						}
 						final NetworkLibrary library = NetworkLibrary.Instance();
 						library.invalidateVisibility();
@@ -266,10 +276,6 @@ public class AuthenticationActivity extends Activity {
 
 	private TextView findTextView(int resourceId) {
 		return (TextView)findViewById(resourceId);
-	}
-
-	private Button findButton(int resourceId) {
-		return (Button)findViewById(resourceId);
 	}
 
 	@Override

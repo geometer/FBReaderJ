@@ -104,10 +104,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 			externalUrl = false;
 		}
 		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
-		try {
-			nLibrary.initialize();
-		} catch (ZLNetworkException e) {
-		}
+		nLibrary.initialize();
 		intent.setData(Uri.parse(nLibrary.rewriteUrl(urlString, externalUrl)));
 		try {
 			BaseActivity.startActivity(intent);

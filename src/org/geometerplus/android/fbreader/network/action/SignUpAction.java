@@ -48,7 +48,7 @@ public class SignUpAction extends Action {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		Util.runRegistrationDialog(myActivity, tree.getLink());
 	}
 }

@@ -24,7 +24,7 @@
 		<node name="favorites" value="Preferiti">
 			<node name="summary" value="I miei libri preferiti"/>
 		</node>
-		<node name="searchResults" value="Trovato">
+		<node name="found" value="Trovato">
 			<node name="summary" value="Cerca risultati per: %s" />
 		</node>
 		<node name="fileTree" value="Albero dei file">
@@ -61,7 +61,16 @@
 		<node name="bySeries" value="Per serie">
 			<node name="summary" value="Libri ordinati per serie"/>
 		</node>
+		<node name="search" value="Ricerca">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Cerca libri nei cataloghi" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Trovato">
+			<node name="summary" value="Cerca risultati per: %s" />
+		</node>
 		<node name="openCatalog" value="Apri catalogo"/>
+		<node name="networkSearch" value="Ricerca" />
 		<node name="showResults" value="Mostra risultati"/>
 		<node name="showBooks" value="Mostra libri"/>
 		<node name="download" value="Scarica"/>
@@ -73,6 +82,8 @@
 		<node name="buy" value="Compra (%s)"/>
 		<node name="addToBasket" value="Aggiungi al carrello"/>
 		<node name="removeFromBasket" value="Rimuovi dal carrello"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Apri nel browser" />
 		<node name="stopLoading" value="Ferma caricamento" />
 		<node name="stopSearching" value="Ferma ricerca" />
@@ -82,13 +93,14 @@
 		<node name="topupTitle" value="Ricarica account"/>
 		<node name="topupViaBrowser" value="Apri pagina nel browser"/>
 		<node name="topupSummary" value="Corrente: %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Sto scaricando il libro" />
 		<node name="alreadyDownloadingDemo" value="Sto scaricando il libro d'esempio" />
 		<node name="stoppingCatalogLoading" value="Sto fermando il caricamento" />
 		<node name="stoppingNetworkSearch" value="Sto fermando la ricerca" />
-		<node name="search" value="Ricerca" />
-		<node name="searchSummary" value="Cerca libri nei cataloghi" />
-		<node name="searchResults" value="Cerca risultati per: %s" />
 		<node name="editCustomCatalog" value="Modifica catalogo"/>
 		<node name="removeCustomCatalog" value="Cancella catalogo"/>
 		<node name="addCustomCatalog" value="Aggiungi catalogo"/>
@@ -107,12 +119,14 @@
 			<node name="networkSearch" value="Ricerca in rete"/>
 			<node name="reload" value="Ricarica"/>
 			<node name="signIn" value="Entra"/>
-			<node name="signOut" value="Esci (%s)"/>
 			<node name="signUp" value="Registrati" />
+			<node name="signOut" value="Esci (%s)"/>
 			<node name="topup" value="Ricarica account"/>
 			<node name="addCustomCatalog" value="Aggiungi catalogo"/>
 			<node name="refreshCatalogsList" value="Aggiorna cataloghi"/>
 			<node name="languages" value="Filtro lingua"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -165,7 +179,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Questo libro"/>
 		<node name="allBooks" value="Tutti i libri"/>
-		<node name="searchResults" value="Trovato"/>
+		<node name="found" value="Trovato"/>
 		<node name="new" value="Nuovo segnalibro"/>
 		<node name="open" value="Apri"/>
 		<node name="edit" value="Modifica segnalibro"/>
@@ -308,7 +322,7 @@
 					<node name="summaryOn" value="Sillabare le parole automaticamente"/>
 					<node name="summaryOff" value="Non sillabare le parole automaticamente"/>
 				</node>
-				<node name="allowHyphenations" value="Permetti divisione in sillabe"> 
+				<node name="allowHyphenations" value="Permetti divisione in sillabe">
 					<node name="on" value="sillabare le parole"/>
 					<node name="off" value="Non sillabare le parole"/>
 					<node name="unchanged" value="&lt;non cambiare&gt;"/>
@@ -524,6 +538,16 @@
 					<node name="summaryOff" value="Scorri le pagine in verticale"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Dizionario">
 				<node name="summary" value="Impostazioni del dizionario"/>
 				<node name="dictionary" value="Dizionario"/>
@@ -606,7 +630,7 @@
 		<node name="networkError">
 			<node name="internalError" value="Errore Server Interno" />
 			<node name="purchaseNotEnoughMoney" value="Credito non sufficiente" />
-			<node name="purchaseMissingBook" value="Libro mancante" /> 
+			<node name="purchaseMissingBook" value="Libro mancante" />
 			<node name="purchaseAlreadyPurchased" value="Già acquistato" />
 			<node name="bookNotPurchased" value="Il libro non è stato acquistato" />
 			<node name="downloadLimitExceeded" value="Limite di scaricamento superato" />
@@ -616,16 +640,11 @@
 			<node name="noRequiredInformation" value="Le informazioni richieste non sono specificate nel catalogo" />
 			<node name="cacheDirectoryError" value="Impossibile creare la cartella della cache" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Risultati ricerca" />
-			<node name="message" value="Non sono stati trovati libri adatti" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Autenticazione" />
 			<node name="unencryptedWarning" value="La tua password verrà inviata in chiaro"/>
 			<node name="login" value="Username" />
 			<node name="password" value="Password" />
-			<node name="skipIP" value="Non fornire indirizzo IP" />   
 			<node name="loginIsEmpty" value="Il campo Username non può essere vuoto" />
 			<node name="register" value="Registrati" />
 		</node>
@@ -657,8 +676,8 @@
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Non possono accedere ad Android Market. Per favore, installare manualmente %s"/>
-		<node name="textNotFound" value="Spiacente, non c'è un testo adatto all'interno del libro"/> 
-		<node name="bookNotFound" value="Spiacente, non ci sono libri adatti nella libreria"/>  
+		<node name="textNotFound" value="Spiacente, non c'è un testo adatto all'interno del libro"/>
+		<node name="bookNotFound" value="Spiacente, non ci sono libri adatti nella libreria"/>
 		<node name="bookmarkNotFound" value="Spiacente, non ci sono segnalibri adatti"/>
 		<node name="cannotOpenBook" value="Spiacente, non è possibile aprire il libro in questo momento"/>
 		<node name="dictionaryIsNotInstalled" value="Spiacente, il dizionario non è installato"/>
@@ -666,7 +685,7 @@
 		<node name="noFavorites" value="Spiacente, l'elenco dei favoriti e' vuoto"/>
 		<node name="emptyCatalog" value="Il catalogo è vuoto"/>
 		<node name="emptyBasket" value="Spiacente, il carrello è vuoto"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Non sono stati trovati libri adatti"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -675,7 +694,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Errore Sconosciuto"/>
 		<node name="unsupportedCompressionMethod" value="Metodo compressione non supportato"/>
-		<node name="encriptedFile" value="File protetto con tecnologia DRM"/>
+		<node name="encryptedFile" value="File protetto con tecnologia DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

@@ -23,7 +23,7 @@
 		<node name="favorites" value="Oblíbené">
 			<node name="summary" value="Mé oblíbené knihy"/>
 		</node>
-		<node name="searchResults" value="Nalezené">
+		<node name="found" value="Nalezené">
 			<node name="summary" value="Hledat výsledky pro: %s"/>
 		</node>
 		<node name="fileTree" value="Strom souborů">
@@ -94,8 +94,8 @@
 		<node name="topupSummary" value="Aktuálně: %s"/>
 		<node name="basket" value="Košík"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
-		<node name="basketSummaryCountOnly" value="%0 books" toBeTranslated="true"/>
-		<node name="basketSummary" value="%0 books (%1)"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Kniha se stahuje"/>
 		<node name="alreadyDownloadingDemo" value="Ukázka se stahuje"/>
 		<node name="stoppingCatalogLoading" value="Zastavování načítání"/>
@@ -178,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Tato kniha"/>
 		<node name="allBooks" value="Všechny knihy"/>
-		<node name="searchResults" value="Nalezené"/>
+		<node name="found" value="Nalezené"/>
 		<node name="new" value="Nová záložka"/>
 		<node name="open" value="Otevřít"/>
 		<node name="edit" value="Upravit záložku"/>
@@ -644,7 +644,6 @@
 			<node name="unencryptedWarning" value="Vaše heslo bude odesláno nešifrovaně"/>
 			<node name="login" value="Uživatelské jméno"/>
 			<node name="password" value="Heslo"/>
-			<node name="skipIP" value="Nevázat na IP adresu"/>
 			<node name="loginIsEmpty" value="Uživatelské jméno by nemělo být prázdné"/>
 			<node name="register" value="Přihlásit"/>
 		</node>
@@ -700,7 +699,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Neznámá chyba"/>
 		<node name="unsupportedCompressionMethod" value="Nepodporovaná metoda komprese"/>
-		<node name="encriptedFile" value="Soubor chráněný DRM"/>
+		<node name="encryptedFile" value="Soubor chráněný DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

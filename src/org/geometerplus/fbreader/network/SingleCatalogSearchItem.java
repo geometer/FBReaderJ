@@ -36,10 +36,6 @@ public class SingleCatalogSearchItem extends SearchItem {
 	}
 
 	@Override
-	public void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException {
-	}
-
-	@Override
 	public void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
 		final NetworkOperationData data = Link.createOperationData(loader);
 		final ZLNetworkRequest request = Link.simpleSearchRequest(pattern, data);

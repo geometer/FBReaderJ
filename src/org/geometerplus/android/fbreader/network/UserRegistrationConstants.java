@@ -20,6 +20,8 @@
 package org.geometerplus.android.fbreader.network;
 
 public interface UserRegistrationConstants {
+	String SIGNUP_URL = "signupUrl";
+
 	String USER_REGISTRATION_USERNAME = "userName";
 	String USER_REGISTRATION_PASSWORD = "password";
 	String USER_REGISTRATION_EMAIL = "eMail";
