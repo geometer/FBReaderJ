@@ -1,3 +1,10 @@
+buy book after topup
+buy book after registration
+buy several books
+buy book after auto-sign-in
+auto-sign-in
+do we cache cover images?
+
 states:
   A registered, logged in
   B registered, logging state is unclear
@@ -19,27 +26,16 @@ actions:
     3b from book info activity using menu
     3c from book info activity using button
 
-DONE single book activity
-depends_on_ip (?)
-
 иконки в main menu
 
-resources for search actions
-  errorMessage
-  titles/summaries
-	menu items
 Search actions
-  stop search
+  interrupt search
 	reload
-проверить все пути регистрации
 
-передавать сумму денег в topup-activity
-использовать эту сумму в sms и в browser topup
+использовать переданную сумму в sms
 добавить "другие книги" в "мои книги" по авторам-сериям
 basket
-	context menu resources
-	options menu resources
-	ActionCode.BASKET_BUY_ALL_BOOKS:
+	update basket on book purchasing/logging in
 separate catalog search
 предлагать на выбор вход или регистрацию, "signup link" убран из диалога авторизации
 покупка "без регистрации"

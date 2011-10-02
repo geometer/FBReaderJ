@@ -23,7 +23,7 @@
 		<node name="favorites" value="Favorites" toBeTranslated="true">
 			<node name="summary" value="My selected books" toBeTranslated="true"/>
 		</node>
-		<node name="searchResults" value="Знайдено">
+		<node name="found" value="Знайдено">
 			<node name="summary" value="Результати пошуку для: %s" />
 		</node>
 		<node name="fileTree" value="File tree" toBeTranslated="true">
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series" toBeTranslated="true">
 			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
+		<node name="search" value="Пошук">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Пошук книжок у каталогах" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Знайдено">
+			<node name="summary" value="Результати пошуку для: %s" />
+		</node>
 		<node name="openCatalog" value="Відкрити теку"/>
+		<node name="networkSearch" value="Пошук" />
 		<node name="showResults" value="Показати результати"/>
 		<node name="showBooks" value="Показати книжки"/>
 		<node name="download" value="Завантажити"/>
@@ -72,6 +81,8 @@
 		<node name="buy" value="Придбати (%s)"/>
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Показати у браузері" />
 		<node name="stopLoading" value="Припинити завантаження" />
 		<node name="stopSearching" value="Припинити пошук" />
@@ -81,13 +92,14 @@
 		<node name="topupTitle" value="Поповнити рахунок"/>
 		<node name="topupViaBrowser" value="Open page in browser" toBeTranslated="true"/>
 		<node name="topupSummary" value="Поточний рахунок: %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Книжка завантажується" />
 		<node name="alreadyDownloadingDemo" value="Уривок завантажається" />
 		<node name="stoppingCatalogLoading" value="Зупинка завантаження" />
 		<node name="stoppingNetworkSearch" value="Завершення пошуку" />
-		<node name="search" value="Пошук" />
-		<node name="searchSummary" value="Пошук книжок у каталогах" />
-		<node name="searchResults" value="Результати пошуку для: %s" />
 		<node name="editCustomCatalog" value="Змінити теку"/>
 		<node name="removeCustomCatalog" value="Видалити теку"/>
 		<node name="addCustomCatalog" value="Додати теку"/>
@@ -106,12 +118,14 @@
 			<node name="networkSearch" value="Пошук в мережі"/>
 			<node name="reload" value="Оновити"/>
 			<node name="signIn" value="Увійти"/>
-			<node name="signOut" value="Вийти (%s)"/>
 			<node name="signUp" value="Зареєструватися" />
+			<node name="signOut" value="Вийти (%s)"/>
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="addCustomCatalog" value="Додати каталог"/>
 			<node name="refreshCatalogsList" value="Оновити каталоги"/>
 			<node name="languages" toBeTranslated="true" value="Language filter"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -164,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ця книга"/>
 		<node name="allBooks" value="Усі книги"/>
-		<node name="searchResults" value="Знайдено"/>
+		<node name="found" value="Знайдено"/>
 		<node name="new" value="Додати закладку"/>
 		<node name="open" value="Відкрити"/>
 		<node name="edit" value="Поправити закладку"/>
@@ -523,6 +537,16 @@
 					<node name="summaryOff" value="При гортанні сторінка рухається по вертикалі"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Dictionary" toBeTranslated="true">
 				<node name="summary" value="Dictionary settings" toBeTranslated="true"/>
 				<node name="dictionary" value="Dictionary" toBeTranslated="true"/>
@@ -615,16 +639,11 @@
 			<node name="noRequiredInformation" value="Необхідна інформація не знайдена в каталозі" />
 			<node name="cacheDirectoryError" value="Не вдається створити каталог для кеша" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Результати пошуку" />
-			<node name="message" value="Відповідних книг не знайдено" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Авторизація" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Ім’я користувача" />
 			<node name="password" value="Пароль" />
-			<node name="skipIP" value="Не прив’язуватись до ip-адреси" />
 			<node name="loginIsEmpty" value="Ім’я користувача не може бути порожнім" />
 			<node name="register" value="Зареєструватися" />
 		</node>
@@ -665,6 +684,7 @@
 		<node name="noFavorites" value="Your favorites list is empty, sorry" toBeTranslated="true"/>
 		<node name="emptyCatalog" value="Каталог порожній"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Відповідних книг не знайдено"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="браузері"/>
@@ -672,8 +692,8 @@
 	</node>
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="невідома помилка"/>
-	<node name="unsupportedCompressionMethod" value="непідтримуваний метод стиснення"/>
-		<node name="encriptedFile" value="файл захищено DRM"/>
+		<node name="unsupportedCompressionMethod" value="непідтримуваний метод стиснення"/>
+		<node name="encryptedFile" value="файл захищено DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

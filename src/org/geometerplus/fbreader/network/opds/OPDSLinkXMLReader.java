@@ -106,6 +106,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 							infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Search, descr.makeQuery("%s")));
 						}
 					}
+				} else if (rel == "listbooks") {
+					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.ListBooks, href));
 				} else if (rel == REL_LINK_SIGN_IN) {
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignIn, href));
 				} else if (rel == REL_LINK_SIGN_OUT) {
@@ -119,16 +121,8 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				}
 			}
 
-			final String sslCertificate;
-			final String path = "network/" + siteName + ".crt";
-			if (ZLResourceFile.createResourceFile(path).exists()) {
-				sslCertificate = path;
-			} else {
-				sslCertificate = null;
-			}
-
 			if (siteName != null && title != null && infos.getInfo(UrlInfo.Type.Catalog) != null) {
-				myLinks.add(link(id, siteName, title, summary, language, infos, sslCertificate));
+				myLinks.add(link(id, siteName, title, summary, language, infos));
 			}
 			return false; 
 		}
@@ -139,8 +133,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			CharSequence title,
 			CharSequence summary,
 			String language,
-			UrlInfoCollection<UrlInfoWithDate> infos,
-			String sslCertificate
+			UrlInfoCollection<UrlInfoWithDate> infos
 		) {
 			final String titleString = title.toString();
 			final String summaryString = summary != null ? summary.toString() : null;
@@ -162,7 +155,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			if (myAuthenticationType == "litres") {
 				opdsLink.setAuthenticationManager(
 					NetworkAuthenticationManager.createManager(
-						opdsLink, sslCertificate, LitResAuthenticationManager.class
+						opdsLink, LitResAuthenticationManager.class
 					)
 				);
 			}

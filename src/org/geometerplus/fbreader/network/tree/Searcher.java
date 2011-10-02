@@ -23,17 +23,18 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 
-public class Searcher extends NetworkItemsLoader {
+class Searcher extends NetworkItemsLoader {
 	private final String myPattern;
 	private volatile boolean myItemFound;
 
-	public Searcher(SearchCatalogTree tree, String pattern) {
+	Searcher(SearchCatalogTree tree, String pattern) {
 		super(tree);
 		myPattern = pattern;
 	}
 
 	@Override
 	public void doBefore() {
+		NetworkLibrary.Instance().NetworkSearchPatternOption.setValue(myPattern);
 	}
 
 	@Override
@@ -65,7 +66,7 @@ public class Searcher extends NetworkItemsLoader {
 	}
 
 	@Override
-	protected void onFinish(String errorMessage, boolean interrupted) {
+	protected void onFinish(ZLNetworkException exception, boolean interrupted) {
 		if (!interrupted && !myItemFound) {
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.NotFound);
 		}

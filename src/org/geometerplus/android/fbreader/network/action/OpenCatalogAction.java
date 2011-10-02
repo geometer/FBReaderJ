@@ -24,37 +24,45 @@ import java.util.Map;
 import android.app.Activity;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.tree.NetworkCatalogTree;
-import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
-import org.geometerplus.fbreader.network.tree.CatalogExpander;
+import org.geometerplus.fbreader.network.tree.*;
 
-import org.geometerplus.android.fbreader.network.Util;
+import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
 
-import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
-public class OpenCatalogAction extends CatalogAction {
+public class OpenCatalogAction extends Action {
 	public OpenCatalogAction(Activity activity) {
-		super(activity, ActionCode.OPEN_CATALOG, "openCatalog");
+		super(activity, ActionCode.OPEN_CATALOG, "openCatalog", -1);
 	}
 
 	@Override
 	public boolean isVisible(NetworkTree tree) {
-		if (!super.isVisible(tree)) {
+		if (tree instanceof NetworkAuthorTree || tree instanceof NetworkSeriesTree) {
+			return true;
+		} else if (tree instanceof NetworkCatalogTree) {
+			return ((NetworkCatalogTree)tree).canBeOpened();
+		} else {
 			return false;
 		}
-		return ((NetworkCatalogTree)tree).canBeOpened();
 	}
 
 	@Override
 	public void run(NetworkTree tree) {
-		doExpandCatalog((NetworkCatalogTree)tree);
+		if (tree instanceof NetworkCatalogTree) {
+			doExpandCatalog((NetworkCatalogTree)tree);
+		} else {
+			doOpenTree(tree);
+		}
+	}
+
+	private void doOpenTree(NetworkTree tree) {
+		((NetworkLibraryActivity)myActivity).openTree(tree);
 	}
 
 	private void doExpandCatalog(final NetworkCatalogTree tree) {
 		final NetworkItemsLoader loader = NetworkLibrary.Instance().getStoredLoader(tree);
 		if (loader != null && loader.canResumeLoading()) {
-			Util.openTree(myActivity, tree);
+			doOpenTree(tree);
 		} else if (loader != null) {
 			loader.setPostRunnable(new Runnable() {
 				public void run() {
@@ -73,7 +81,7 @@ public class OpenCatalogAction extends CatalogAction {
 				if (tree.Item.supportsResumeLoading()) {
 					resumeNotLoad = true;
 				} else {
-					Util.openTree(myActivity, tree);
+					doOpenTree(tree);
 					return;
 				}
 			} else {
@@ -81,10 +89,10 @@ public class OpenCatalogAction extends CatalogAction {
 			}
 		}
 
-		new CatalogExpander(tree, true, resumeNotLoad).start();
+		tree.startItemsLoader(true, resumeNotLoad);
 		processExtraData(tree.Item.extraData(), new Runnable() {
 			public void run() {
-				Util.openTree(myActivity, tree);
+				doOpenTree(tree);
 			}
 		});
 	}

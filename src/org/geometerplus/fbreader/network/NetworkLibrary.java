@@ -36,6 +36,8 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 public class NetworkLibrary {
 	public interface ChangeListener {
 		public enum Code {
+			InitializationFinished,
+			InitializationFailed,
 			SomeCode,
 			/*
 			ItemAdded,
@@ -155,6 +157,19 @@ public class NetworkLibrary {
 		return null;
 	}
 
+	public NetworkTree getCatalogTreeByUrl(String url) {
+		for (FBTree tree : getRootTree().subTrees()) {
+			if (tree instanceof NetworkCatalogRootTree) {
+				final String cUrl =
+					((NetworkCatalogTree)tree).getLink().getUrlInfo(UrlInfo.Type.Catalog).Url;
+				if (url.equals(cUrl)) {
+					return (NetworkTree)tree;
+				}
+			}
+		}
+		return null;
+	}
+
 	public INetworkLink getLinkBySiteName(String siteName) {
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
@@ -183,7 +198,7 @@ public class NetworkLibrary {
 		return myIsInitialized;
 	}
 
-	public synchronized void initialize() throws ZLNetworkException {
+	public synchronized void initialize() {
 		if (myIsInitialized) {
 			return;
 		}
@@ -192,7 +207,8 @@ public class NetworkLibrary {
 			myLinks.addAll(OPDSLinkReader.loadOPDSLinks(OPDSLinkReader.CacheMode.LOAD));
 		} catch (ZLNetworkException e) {
 			removeAllLoadedLinks();
-			throw e;
+			fireModelChangedEvent(ChangeListener.Code.InitializationFailed, e.getMessage());
+			return;
 		}
 
 		final NetworkDatabase db = NetworkDatabase.Instance();
@@ -203,6 +219,7 @@ public class NetworkLibrary {
 		synchronize();
 
 		myIsInitialized = true;
+		fireModelChangedEvent(ChangeListener.Code.InitializationFinished);
 	}
 
 	private void removeAllLoadedLinks() {
@@ -228,11 +245,34 @@ public class NetworkLibrary {
 		Log.w("FBREADER", "" + date1 + sign + date2);
 	}*/
 
-	private Object myBackgroundLock = new Object();
+	private volatile boolean myUpdateInProgress;
+	private Object myUpdateLock = new Object();
 
-	// This method must be called from background thread
-	public void runBackgroundUpdate(boolean clearCache) throws ZLNetworkException {
-		synchronized (myBackgroundLock) {
+	public void runBackgroundUpdate(final boolean clearCache) {
+		if (!isInitialized()) {
+			return;
+		}
+
+		final Thread thread = new Thread(new Runnable() {
+			public void run() {
+				try {
+					myUpdateInProgress = true;
+					fireModelChangedEvent(ChangeListener.Code.SomeCode);
+					runBackgroundUpdateInternal(clearCache);
+				} catch (ZLNetworkException e) {
+					fireModelChangedEvent(ChangeListener.Code.NetworkError, e.getMessage());
+				} finally {
+					myUpdateInProgress = false;
+					fireModelChangedEvent(ChangeListener.Code.SomeCode);
+				}
+			}
+		});
+		thread.setPriority(Thread.MIN_PRIORITY);
+		thread.start();
+	}
+
+	private void runBackgroundUpdateInternal(boolean clearCache) throws ZLNetworkException {
+		synchronized (myUpdateLock) {
 			final OPDSLinkReader.CacheMode mode =
 				clearCache ? OPDSLinkReader.CacheMode.CLEAR : OPDSLinkReader.CacheMode.UPDATE;
 			final List<INetworkLink> loadedLinks = OPDSLinkReader.loadOPDSLinks(mode);
@@ -358,12 +398,23 @@ public class NetworkLibrary {
 		return myRootTree;
 	}
 
+	public NetworkBookTree getFakeBookTree(NetworkBookItem book) {
+		final String id = book.getStringId();
+		for (FBTree tree : myFakeRootTree.subTrees()) {
+			if (tree instanceof NetworkBookTree &&
+				id.equals(tree.getUniqueKey().Id)) {
+				return (NetworkBookTree)tree;
+			}
+		}
+		return new NetworkBookTree(myFakeRootTree, book, true);
+	}
+
 	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {
 		final String id = item.getStringId();
 		for (FBTree tree : myFakeRootTree.subTrees()) {
-			final NetworkCatalogTree ncTree = (NetworkCatalogTree)tree;
-			if (id.equals(ncTree.getUniqueKey().Id)) {
-				return ncTree;
+			if (tree instanceof NetworkCatalogTree &&
+				id.equals(tree.getUniqueKey().Id)) {
+				return (NetworkCatalogTree)tree;
 			}
 		}
 		return new NetworkCatalogTree(myFakeRootTree, item.Link, item, 0);
@@ -437,6 +488,10 @@ public class NetworkLibrary {
 
 	public final NetworkItemsLoader getStoredLoader(NetworkTree tree) {
 		return tree != null ? myLoaders.get(tree) : null;
+	}
+
+	public final boolean isUpdateInProgress() {
+		return myUpdateInProgress;
 	}
 
 	public final void removeStoredLoader(NetworkTree tree) {

@@ -88,7 +88,8 @@
 
 	<target name="distclean" depends="clean">
 		<echo message="Deleting native libraries..." />
-		<delete dir="libs" />
+		<delete dir="libs/armeabi" />
+		<delete dir="libs/armeabi-v7" />
 		<echo message="DONE (Deleting native libraries)" />
 	</target>
 </project>

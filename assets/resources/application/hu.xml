@@ -23,7 +23,7 @@
 		<node name="favorites" value="Kedvencek">
 			<node name="summary" value="Kedvencnek jelölt könyveim"/>
 		</node>
-		<node name="searchResults" value="Találatok">
+		<node name="found" value="Találatok">
 			<node name="summary" value="Keresés: %s" />
 		</node>
 		<node name="fileTree" value="Könytárfa">
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series" toBeTranslated="true">
 			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
+		<node name="search" value="Keresés">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Könyvek keresése a katalógusokban" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Találatok">
+			<node name="summary" value="Keresés az eredmények között: %s" />
+		</node>
 		<node name="openCatalog" value="Katalógus megnyitása"/>
+		<node name="networkSearch" value="Keresés" />
 		<node name="showResults" value="Eredmények"/>
 		<node name="showBooks" value="Könyvek"/>
 		<node name="download" value="Letöltés"/>
@@ -72,6 +81,8 @@
 		<node name="buy" value="Vásárlás (%s)"/>
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Megnyitás böngészőben" />
 		<node name="stopLoading" value="Letöltés leállítása" />
 		<node name="stopSearching" value="Keresés leállítása" />
@@ -81,13 +92,14 @@
 		<node name="topupTitle" value="Számla feltöltése"/>
 		<node name="topupViaBrowser" value="Oldal megnyitása böngészőben"/>
 		<node name="topupSummary" value="Jelenleg: %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Könyv letöltése folyamatban" />
 		<node name="alreadyDownloadingDemo" value="Minta letöltése folyamatban" />
 		<node name="stoppingCatalogLoading" value="Letöltés leállítása" />
 		<node name="stoppingNetworkSearch" value="Keresés leállítása" />
-		<node name="search" value="Keresés" />
-		<node name="searchSummary" value="Könyvek keresése a katalógusokban" />
-		<node name="searchResults" value="Keresés az eredmények között: %s" />
 		<node name="editCustomCatalog" value="Katalógus szerkesztése"/>
 		<node name="removeCustomCatalog" value="Katalógus törlése"/>
 		<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
@@ -106,12 +118,14 @@
 			<node name="networkSearch" value="Internetes keresés"/>
 			<node name="reload" value="Újratöltés"/>
 			<node name="signIn" value="Bejelentkezés"/>
-			<node name="signOut" value="Kijelentkezés (%s)"/>
 			<node name="signUp" value="Regisztráció" />
+			<node name="signOut" value="Kijelentkezés (%s)"/>
 			<node name="topup" value="Számla feltöltése"/>
 			<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
 			<node name="refreshCatalogsList" value="Katalógusok frissítése"/>
 			<node name="languages" value="Nyelvi szűrő"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -164,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ez a könyv"/>
 		<node name="allBooks" value="Minden könyv"/>
-		<node name="searchResults" value="Találat"/>
+		<node name="found" value="Találat"/>
 		<node name="new" value="Új könyvjelző"/>
 		<node name="open" value="Megnyitás"/>
 		<node name="edit" value="Könyvjelző szerkesztése"/>
@@ -523,6 +537,16 @@
 					<node name="summaryOff" value="Oldalak görgetése függőlegesen"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Szótár">
 				<node name="summary" value="Szótár beállításai"/>
 				<node name="dictionary" value="Szótár"/>
@@ -615,16 +639,11 @@
 			<node name="noRequiredInformation" value="Szükséges információ nincs megadva a katalógusban" />
 			<node name="cacheDirectoryError" value="Gyorsítótár létrehozása sikertelen" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="Eredmények" />
-			<node name="message" value="Nem található megfelelő könyv" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Bejelentkezés" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Felhasználónév" />
 			<node name="password" value="Jelszó" />
-			<node name="skipIP" value="IP-címhez kötés nem lehetséges" />
 			<node name="loginIsEmpty" value="A felhasználónév nem lehet üres" />
 			<node name="register" value="Regisztráció" />
 		</node>
@@ -665,7 +684,7 @@
 		<node name="noFavorites" value="A Kedvencek listája üres"/>
 		<node name="emptyCatalog" value="A katalógus üres"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Nem található megfelelő könyv"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Böngésző"/>
@@ -674,7 +693,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Ismeretlen hiba"/>
 		<node name="unsupportedCompressionMethod" value="Nem támogatott tömörítés"/>
-		<node name="encriptedFile" value="Másolásvédett fájl"/>
+		<node name="encryptedFile" value="Másolásvédett fájl"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

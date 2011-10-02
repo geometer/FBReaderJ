@@ -23,7 +23,7 @@
 		<node name="favorites" value="Ulubione">
 			<node name="summary" value="Moje wybrane książki"/>
 		</node>
-		<node name="searchResults" value="Wyszukane">
+		<node name="found" value="Wyszukane">
 			<node name="summary" value="Wyniki dla: %s" />
 		</node>
 		<node name="fileTree" value="Drzewo katalogów">
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="Seriami">
 			<node name="summary" value="Książki posortowane seriami"/>
 		</node>
+		<node name="search" value="Wyszukaj">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Wyszykaj książki w katalogach" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Wyszukane">
+			<node name="summary" value="Wyniki wyszukiwania: %s" />
+		</node>
 		<node name="openCatalog" value="Otwórz katalog"/>
+		<node name="networkSearch" value="Wyszukaj" />
 		<node name="showResults" value="Pokaż wyniki"/>
 		<node name="showBooks" value="Pokaż książki"/>
 		<node name="download" value="Pobierz"/>
@@ -72,6 +81,8 @@
 		<node name="buy" value="Kup (%s)"/>
 		<node name="addToBasket" value="Dodaj do koszyka"/>
 		<node name="removeFromBasket" value="Usuń z koszyka"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Otwórz w przeglądarce" />
 		<node name="stopLoading" value="Zatrzymaj otwieranie" />
 		<node name="stopSearching" value="Zatrzymaj wyszukiwanie" />
@@ -79,20 +90,16 @@
 		<node name="signOut" value="Wyloguj (%s)"/>
 		<node name="topup" value="Doładuj konto (aktualnie: %s)"/>
 		<node name="topupTitle" value="Doładuj konto"/>
-		<node name="topupViaCreditCard" value="Karta kredytowa"/>
-		<node name="topupViaSelfServiceKiosk" value="Kiosk samoobsługowy"/>
-		<node name="topupViaSms" value="SMS"/>
 		<node name="topupViaBrowser" value="Otwórz w przeglądarce"/>
 		<node name="topupSummary" value="Aktualnie: %s"/>
 		<node name="basket" value="Koszyk"/>
-		<node name="basketSummary" value="Książki wybrane do zakupu"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Książka jest pobierana" />
 		<node name="alreadyDownloadingDemo" value="Fragment jest pobierany" />
 		<node name="stoppingCatalogLoading" value="Zatrzymywanie ładowania" />
 		<node name="stoppingNetworkSearch" value="Zatrzymywanie wyszukiwania" />
-		<node name="search" value="Wyszukaj" />
-		<node name="searchSummary" value="Wyszykaj książki w katalogach" />
-		<node name="searchResults" value="Wyniki wyszukiwania: %s" />
 		<node name="editCustomCatalog" value="Edytuj katalog"/>
 		<node name="removeCustomCatalog" value="Usuń katalog"/>
 		<node name="addCustomCatalog" value="Dodaj katalog"/>
@@ -171,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Ta książka"/>
 		<node name="allBooks" value="Wszystkie ksiązki"/>
-		<node name="searchResults" value="Wyszukane"/>
+		<node name="found" value="Wyszukane"/>
 		<node name="new" value="Nowa zakładka"/>
 		<node name="open" value="Otwórz"/>
 		<node name="edit" value="Edytuj zakładkę"/>
@@ -616,6 +623,7 @@
 			<node name="signOut" value="Wylogowywanie. Proszę czekać&#8230;" />
 			<node name="purchaseBook" value="Zakup książki. Proszę czekać&#8230;" />
 			<node name="loadingCatalogInfo" value="Ładowanie danych katalogu. Proszę czekać&#8230;" />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Aktualizacja listy katalogów. Proszę czekać&#8230;"/>
 		</node>
 		<node name="networkError">
@@ -636,7 +644,6 @@
 			<node name="unencryptedWarning" value="Hasło będzie przesłane w formie niezaszyfrowanej"/>
 			<node name="login" value="Nazwa użytkownika" />
 			<node name="password" value="Hasło" />
-			<node name="skipIP" value="Nie przypisuj do adresu IP" />
 			<node name="loginIsEmpty" value="Hasło nie może być puste" />
 			<node name="register" value="Zarejestruj" />
 		</node>
@@ -686,7 +693,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Nieznany błąd"/>
 		<node name="unsupportedCompressionMethod" value="Niewspierana metoda komresji"/>
-		<node name="encriptedFile" value="Plik z zabezpieczeniem DRM"/>
+		<node name="encryptedFile" value="Plik z zabezpieczeniem DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

@@ -20,9 +20,7 @@
 package org.geometerplus.android.fbreader.network.action;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.NetworkTree;
@@ -38,27 +36,12 @@ public class RefreshRootCatalogAction extends RootAction {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
-		UIUtil.wait("updatingCatalogsList", new Runnable() {
-			public void run() {
-				try {
-					NetworkLibrary.Instance().runBackgroundUpdate(true);
-				} catch (final ZLNetworkException e) {
-					final ZLResource dialogResource = ZLResource.resource("dialog");
-					final ZLResource boxResource = dialogResource.getResource("networkError");
-					final ZLResource buttonResource = dialogResource.getResource("button");
-					myActivity.runOnUiThread(new Runnable() {
-						public void run() {
-							new AlertDialog.Builder(myActivity)
-								.setTitle(boxResource.getResource("title").getValue())
-								.setMessage(e.getMessage())
-								.setIcon(0)
-								.setPositiveButton(buttonResource.getResource("ok").getValue(), null)
-								.create().show();
-						}
-					});
-				}
-			}
-		}, myActivity);
+	public boolean isEnabled(NetworkTree tree) {
+		return !NetworkLibrary.Instance().isUpdateInProgress();
+	}
+
+	@Override
+	public void run(NetworkTree tree) {
+		NetworkLibrary.Instance().runBackgroundUpdate(true);
 	}
 }
