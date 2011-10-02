@@ -1,4 +1,9 @@
 ignore first 5 books when creating recommendations
+buy book after topup
+buy book after registration
+buy several books
+buy book after auto-sign-in
+auto-sign-in
 do we cache cover images?
 
 states:
