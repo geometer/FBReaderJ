@@ -117,8 +117,8 @@
 		<node name="menu">
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
-			<node name="signIn" value="Přihlásit" toBeTranslated="true"/>
-			<node name="signUp" value="Přihlásit" toBeTranslated="true"/>
+			<node name="signIn" value="Přihlásit"/>
+			<node name="signUp" value="Sign up" toBeTranslated="true"/>
 			<node name="signOut" value="Odhlásit (%s)"/>
 			<node name="topup" value="Doplnit účet"/>
 			<node name="addCustomCatalog" value="Přidat katalog"/>
@@ -242,6 +242,8 @@
 			<node name="editInfo" value="Upravit"/>
 			<node name="reloadInfo" value="Znovu načíst"/>
 			<node name="topup" value="Doplnit účet"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>
@@ -625,6 +627,7 @@
 			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte..."/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>

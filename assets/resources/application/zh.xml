@@ -242,6 +242,8 @@
 			<node name="editInfo" value="编辑" />
 			<node name="reloadInfo" value="重新加载" />
 			<node name="topup" value="重新输入账号"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件" />
@@ -625,6 +627,7 @@
 			<node name="loadingCatalogInfo" value="加载书库目录信息中，请稍待..." />
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="更新书库目录列表中，请稍待..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错" />

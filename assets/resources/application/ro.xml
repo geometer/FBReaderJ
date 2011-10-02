@@ -242,6 +242,8 @@
 			<node name="editInfo" value="Editeaza"/>
 			<node name="reloadInfo" value="Reîncarca"/>
 			<node name="topup" value="Incarca"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -625,6 +627,7 @@
 			<node name="loadingCatalogInfo" value="Se incarca informatii despre catalog. Va rugam, asteptati&#8230;"/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam, asteptati&#8230;"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>

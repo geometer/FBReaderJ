@@ -247,6 +247,8 @@
 			<node name="editInfo" value="Editar" />
 			<node name="reloadInfo" value="Recargar" />
 			<node name="topup" value="Completar"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar complemento"/>
@@ -630,6 +632,7 @@
 			<node name="loadingCatalogInfo" value="Cargando la información del catálogo. Espere..." />
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Actualizando la lista de catálogos. Espere..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Se ha producido un error interno del servidor" />

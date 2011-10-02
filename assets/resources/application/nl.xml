@@ -242,6 +242,8 @@
 			<node name="editInfo" value="Bewerken" />
 			<node name="reloadInfo" value="Vernieuwen" />
 			<node name="topup" value="Top up" toBeTranslated="true" />
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-in installeren"/>
@@ -625,6 +627,7 @@
 			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik..." />
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interne serverfout" />

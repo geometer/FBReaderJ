@@ -242,6 +242,8 @@
 			<node name="editInfo" value="編輯" />
 			<node name="reloadInfo" value="重新整理" />
 			<node name="topup" value="升級賬戶"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安裝插件"/>
@@ -630,6 +632,7 @@
 			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候..." />
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="伺服器出錯" />

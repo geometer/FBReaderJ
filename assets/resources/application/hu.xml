@@ -242,6 +242,8 @@
 			<node name="editInfo" value="Szerkesztés" />
 			<node name="reloadInfo" value="Újratölt" />
 			<node name="topup" value="Számla feltöltése"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin telepítése" />
@@ -625,6 +627,7 @@
 			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..." />
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba" />

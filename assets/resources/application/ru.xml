@@ -128,6 +128,15 @@
 			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
 	</node>
+	<node name="buyBook">
+		<node name="title" value="Покупка книги" />
+		<node name="titleSeveralBooks" value="Покупка книг" />
+		<node name="confirm" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
+		<node name="confirmSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
+		<node name="alreadyBought" value="Книга уже куплена" />
+		<node name="noAccountInformation" value="Не удалось проверить состояние счета" />
+		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счете только %1" />
+	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Информация о книге" />
 		<node name="description" value="Описание" />
@@ -242,6 +251,8 @@
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
 			<node name="topup" value="Пополнить счёт"/>
+			<node name="pay" value="Заплатить"/>
+			<node name="refresh" value="Обновить"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
@@ -625,6 +636,7 @@
 			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
 			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста..." />
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста..."/>
+			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
@@ -663,16 +675,6 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Фильтр по языку" />
-		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="Покупка книги" />
-			<node name="message" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
-			<node name="titleSeveralBooks" value="Покупка книг" />
-			<node name="messageSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="Покупка книги" />
-			<node name="message" value="Книга уже куплена" />
 		</node>
 		<node name="purchaseActions">
 			<node name="title" value="Выберите действие" />

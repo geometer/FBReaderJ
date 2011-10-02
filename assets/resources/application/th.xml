@@ -242,6 +242,8 @@
 			<node name="editInfo" value="แก้ไข"/>
 			<node name="reloadInfo" value="โหลดใหม่"/>
 			<node name="topup" value="เติมเงิน"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="ติดตั้งปลั๊กอิน"/>
@@ -625,6 +627,7 @@
 			<node name="loadingCatalogInfo" value="กำลังดาวน์โหลข้อมูลของแคตตาล็อก, กรุณารอสักครู่..."/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..." />
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="เซิร์ฟเวอร์ภายในเกิดขัดข้อง"/>
