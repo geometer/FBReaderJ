@@ -92,18 +92,11 @@ public class BuyBooksActivity extends Activity {
 				return;
 			}
 		}
-		myCost = Money.ZERO;
-		for (NetworkBookItem b : myBooks) {
-			if (b.getStatus() != NetworkBookItem.Status.CanBePurchased) {
-				continue;
-			}
-			final BookBuyUrlInfo info = b.buyInfo();
-			if (info == null || info.Price == null) {
-				// TODO: error message
-				finish();
-				return;
-			}
-			myCost = myCost.add(info.Price);
+		myCost = calculateCost();
+		if (myCost == null) {
+			// TODO: error message
+			finish();
+			return;
 		}
 
 		// we assume all the books are from the same catalog
@@ -205,6 +198,21 @@ public class BuyBooksActivity extends Activity {
 		refreshAccountInformation();
 	}
 
+	private Money calculateCost() {
+		Money cost = Money.ZERO;
+		for (NetworkBookItem b : myBooks) {
+			if (b.getStatus() != NetworkBookItem.Status.CanBePurchased) {
+				continue;
+			}
+			final BookBuyUrlInfo info = b.buyInfo();
+			if (info == null || info.Price == null) {
+				return null;
+			}
+			cost = cost.add(info.Price);
+		}
+		return cost;
+	}
+
 	private void refreshAccountInformation() {
 		UIUtil.wait(
 			"updatingAccountInformation",
@@ -212,16 +220,29 @@ public class BuyBooksActivity extends Activity {
 				public void run() {
 					final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 					try {
+						boolean updated = false;
+
 						mgr.refreshAccountInformation();
-						final Money oldAccount = myAccount;
-						myAccount = mgr.currentAccount();
-						if (myAccount != null && !myAccount.equals(oldAccount)) {
+						final Money account = mgr.currentAccount();
+						if (account != null && !account.equals(myAccount)) {
+							myAccount = account;
+							updated = true;
+						}
+
+						final Money cost = calculateCost();
+						if (cost != null && !cost.equals(myCost)) {
+							myCost = cost;
+							updated = true;
+						}
+
+						if (updated) {
 							runOnUiThread(new Runnable() {
 								public void run() {
 									setupUI();
 								}
 							});
 						}
+
 						myLibrary.invalidateVisibility();
 						myLibrary.synchronize();
 					} catch (ZLNetworkException e) {
