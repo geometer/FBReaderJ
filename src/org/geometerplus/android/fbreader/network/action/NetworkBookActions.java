@@ -30,11 +30,9 @@ import android.content.DialogInterface;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;

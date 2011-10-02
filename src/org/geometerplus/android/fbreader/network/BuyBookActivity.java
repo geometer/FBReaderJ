@@ -23,9 +23,7 @@ import java.util.*;
 
 import android.app.AlertDialog;
 import android.app.Activity;
-import android.net.Uri;
 import android.content.Intent;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -38,11 +36,10 @@ import org.geometerplus.zlibrary.core.money.Money;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
-import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
-import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.urlInfo.BookBuyUrlInfo;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
 import org.geometerplus.android.fbreader.network.*;
