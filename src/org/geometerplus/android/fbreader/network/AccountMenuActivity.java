@@ -73,8 +73,7 @@ public class AccountMenuActivity extends MenuActivity {
 			if (info.getId().toString().endsWith("/signIn")) {
 				Util.runAuthenticationDialog(AccountMenuActivity.this, myLink, null);
 			} else {
-				final Intent intent = new Intent(getAction(), info.getId());
-				Util.addAuthorizationData(intent, myLink);
+				final Intent intent = Util.authorizationIntent(myLink, info.getId());
 				if (PackageUtil.canBeStarted(AccountMenuActivity.this, intent, true)) {
 					startActivity(intent);
 				}

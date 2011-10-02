@@ -23,23 +23,51 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.geometerplus.fbreader.network.INetworkLink;
-import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
-public class ListenerCallback extends BroadcastReceiver {
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
+
+public class ListenerCallback extends BroadcastReceiver implements UserRegistrationConstants {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
 		if ("android.fbreader.action.network.SIGNIN".equals(intent.getAction())) {
-			final String url = intent.getStringExtra(UserRegistrationConstants.CATALOG_URL);
+			final String url = intent.getStringExtra(CATALOG_URL);
 			final INetworkLink link = library.getLinkByUrl(url);
 			if (link != null) {
-				Util.processSignup(link, android.app.Activity.RESULT_OK, intent);
+				processSignup(link, intent);
 			}
 			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
 		} else {
 			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+		}
+	}
+
+	private static void processSignup(INetworkLink link, Intent data) {
+		try {
+			final NetworkAuthenticationManager mgr = link.authenticationManager();
+			if (mgr instanceof LitResAuthenticationManager) {
+				((LitResAuthenticationManager)mgr).initUser(
+					data.getStringExtra(USER_REGISTRATION_USERNAME),
+					data.getStringExtra(USER_REGISTRATION_LITRES_SID),
+					"",
+					false
+				);
+			}
+			if (!mgr.isAuthorised(true)) {
+				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+			}
+			try {
+				mgr.initialize();
+			} catch (ZLNetworkException e) {
+				mgr.logOut();
+				throw e;
+			}
+		} catch (ZLNetworkException e) {
+			// TODO: show an error message
 		}
 	}
 }
