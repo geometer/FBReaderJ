@@ -22,7 +22,6 @@ package org.geometerplus.fbreader.network.tree;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.network.*;
-import org.geometerplus.fbreader.network.opds.BasketItem;
 
 class NetworkTreeFactory {
 	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkItem item) {
@@ -37,9 +36,7 @@ class NetworkTreeFactory {
 			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + subtreesSize + "]");
 		}
 
-		if (item instanceof BasketItem) {
-			return new BasketCatalogTree(parent, (BasketItem)item, position);
-		} else if (item instanceof NetworkCatalogItem) {
+		if (item instanceof NetworkCatalogItem) {
 			final NetworkCatalogItem catalogItem = (NetworkCatalogItem)item;
 			if (catalogItem.getVisibility() == ZLBoolean3.B3_FALSE) {
 				return null;

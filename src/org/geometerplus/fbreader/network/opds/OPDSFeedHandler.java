@@ -267,11 +267,6 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 					annotation,
 					urlMap
 				);
-			} else if (REL_BASKET.equals(litresRel)) {
-				return new BasketItem(
-					opdsLink,
-					urlMap
-				);
 			} else if (REL_TOPUP.equals(litresRel)) {
 				return new TopUpItem(opdsLink, urlMap);
 			} else {

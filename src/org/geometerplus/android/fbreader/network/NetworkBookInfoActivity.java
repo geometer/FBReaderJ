@@ -55,6 +55,7 @@ import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 import org.geometerplus.android.util.UIUtil;
 
 public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.ChangeListener {
+	private NetworkBookTree myTree;
 	private NetworkBookItem myBook;
 	private View myMainView;
 
@@ -76,34 +77,48 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onResume() {
 		super.onResume();
 
-		UIUtil.wait("loadingBookInfo", myInitializer, this);
+		if (!myInitializerStarted) {
+			UIUtil.wait("loadingNetworkBookInfo", myInitializer, this);
+		}
 	}
+
+	private volatile boolean myInitializerStarted;
 
 	private final Runnable myInitializer = new Runnable() {
 		public void run() {
+			synchronized (this) {
+				if (myInitializerStarted) {
+					return;
+				}
+				myInitializerStarted = true;
+			}
 			final NetworkLibrary library = NetworkLibrary.Instance();
 			if (!library.isInitialized()) {
-				try {
-					if (SQLiteNetworkDatabase.Instance() == null) {
-						new SQLiteNetworkDatabase();
-					}
-					library.initialize();
-				} catch (ZLNetworkException e) {
-					// ignore
+				if (SQLiteNetworkDatabase.Instance() == null) {
+					new SQLiteNetworkDatabase();
 				}
+				library.initialize();
 			}
         
 			if (myBook == null) {
 				final Uri url = getIntent().getData();
 				if (url != null && "litres-book".equals(url.getScheme())) {
 					myBook = OPDSBookItem.create(
-						NetworkLibrary.Instance().getLinkBySiteName("litres.ru"),
+						library.getLinkBySiteName("litres.ru"),
 						url.toString().replace("litres-book://", "http://")
 					);
+					if (myBook != null) {
+						myTree = library.getFakeBookTree(myBook);
+					}
 				} else {
-					final NetworkTree tree = Util.getTreeFromIntent(getIntent());
+					final NetworkTree tree = library.getTreeByKey(
+						(NetworkTree.Key)getIntent().getSerializableExtra(
+							NetworkLibraryActivity.TREE_KEY_KEY
+						)
+					);
 					if (tree instanceof NetworkBookTree) {
-						myBook = ((NetworkBookTree)tree).Book;
+						myTree = (NetworkBookTree)tree;
+						myBook = myTree.Book;
 					}
 				}
 
@@ -355,7 +370,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 			button.setVisibility(View.VISIBLE);
 			button.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					a.run(myBook);
+					a.run(myTree);
 					NetworkBookInfoActivity.this.updateView();
 				}
 			});
@@ -397,7 +412,12 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	public void onLibraryChanged(NetworkLibrary.ChangeListener.Code code, Object[] params) {
-		if (myBook == null) {
+		if (code == NetworkLibrary.ChangeListener.Code.InitializationFailed) {
+			// TODO: implement
+			return;
+		}
+
+		if (myBook == null || myTree == null) {
 			return;
 		}
 

@@ -23,7 +23,7 @@
 		<node name="favorites" value="收藏">
 			<node name="summary" value="我的精選書目"/>
 		</node>
-		<node name="searchResults" value="搜尋結果">
+		<node name="found" value="搜尋結果">
 			<node name="summary" value="%s 的搜尋結果"/>
 		</node>
 		<node name="fileTree" value="檔案">
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="系列">
 			<node name="summary" value="以系列排序"/>
 		</node>
+		<node name="search" value="搜尋">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="搜尋目錄" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="搜尋結果">
+			<node name="summary" value="%s 的搜尋結果"/>
+		</node>
 		<node name="openCatalog" value="打開目錄"/>
+		<node name="networkSearch" value="搜尋" />
 		<node name="showResults" value="顯示結果"/>
 		<node name="showBooks" value="顯示書藉"/>
 		<node name="download" value="下載"/>
@@ -72,6 +81,8 @@
 		<node name="buy" value="購買 (%s)"/>
 		<node name="addToBasket" value="放到購物籃"/>
 		<node name="removeFromBasket" value="從購物籃中移除"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="以瀏覽器開啟" />
 		<node name="stopLoading" value="中止載入" />
 		<node name="stopSearching" value="中止搜尋" />
@@ -82,14 +93,13 @@
 		<node name="topupViaBrowser" value="以瀏覽器開啟本頁"/>
 		<node name="topupSummary" value="目前為: %s"/>
 		<node name="basket" value="購物籃"/>
-		<node name="basketSummary" value="欲購書藉"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="已下載書藉" />
 		<node name="alreadyDownloadingDemo" value="已下載試讀本之書藉" />
 		<node name="stoppingCatalogLoading" value="下載中止中" />
 		<node name="stoppingNetworkSearch" value="搜尋中止中" />
-		<node name="search" value="搜尋" />
-		<node name="searchSummary" value="搜尋目錄" />
-		<node name="searchResults" value="%s 的搜尋結果" />
 		<node name="editCustomCatalog" value="編輯目錄"/>
 		<node name="removeCustomCatalog" value="刪除目錄"/>
 		<node name="addCustomCatalog" value="新增目錄"/>
@@ -168,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="本書"/>
 		<node name="allBooks" value="所有書藉"/>
-		<node name="searchResults" value="搜尋結果"/>
+		<node name="found" value="搜尋結果"/>
 		<node name="new" value="新增書籤"/>
 		<node name="open" value="開啟書籤"/>
 		<node name="edit" value="編輯書籤"/>
@@ -486,8 +496,8 @@
 					<node name="0" value="必然"/>
 					<!-- Percent sign (%) could not be used in resource strings
 								because there is a bug in Cyanogen Mod firmware that
-								crashes the program with such resources -->
-					<!--<node name="25" value="當電量大於25%"/>
+								crashes the program with such resources
+					<node name="25" value="當電量大於25%"/>
 					<node name="50" value="當電量大於50%"/>-->
 					<node name="25" value="While battery level is greater than 25 percent"/>
 					<node name="50" value="While battery level is greater than 50 percent"/>
@@ -634,16 +644,11 @@
 			<node name="noRequiredInformation" value="目錄沒有提供必需的資料" />
 			<node name="cacheDirectoryError" value="未能創建暫存檔案目錄" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="搜尋結果" />
-			<node name="message" value="沒有結果符合" />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="驗證" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="用戶" />
 			<node name="password" value="密碼" />
-			<node name="skipIP" value="不綁定IP地址" />
 			<node name="loginIsEmpty" value="請填上用戶名稱" />
 			<node name="register" value="註冊" />
 		</node>
@@ -690,7 +695,7 @@
 		<node name="noFavorites" value="你並未有收藏"/>
 		<node name="emptyCatalog" value="空目錄" />
 		<node name="emptyBasket" value="購物籃內沒有物品" />
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="沒有結果符合" />
 	</node>
 	<node name="external">
 		<node name="browser" value="瀏覽"/>
@@ -699,7 +704,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="未知錯誤"/>
 		<node name="unsupportedCompressionMethod" value="未支援的壓縮方式"/>
-		<node name="encriptedFile" value="受DRM保護的文件"/>
+		<node name="encryptedFile" value="受DRM保護的文件"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

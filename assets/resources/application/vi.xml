@@ -23,7 +23,7 @@
 		<node name="favorites" value="Yêu thích">
 			<node name="summary" value="Sách của tôi"/>
 		</node>
-		<node name="searchResults" value="Tìm thấy">
+		<node name="found" value="Tìm thấy">
 			<node name="summary" value="Kết quả tìm kiếm khoảng: %s" />
 		</node>
 		<node name="fileTree" value="Cây Tập tin">
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series" toBeTranslated="true">
 			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
+		<node name="search" value="Tìm">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Tìm sách trong danh mục" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="Tìm thấy">
+			<node name="summary" value="Kết quả tìm kiếm khoảng: %s" />
+		</node>
 		<node name="openCatalog" value="Mở danh mục"/>
+		<node name="networkSearch" value="Tìm" />
 		<node name="showResults" value="Hiện kết quả"/>
 		<node name="showBooks" value="Show books"/>
 		<node name="download" value="Tải về"/>
@@ -72,6 +81,8 @@
 		<node name="buy" value="Mua (%s)"/>
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Mở trình duyệt" />
 		<node name="stopLoading" value="Dừng tải" />
 		<node name="stopSearching" value="Dừng tìm kiếm" />
@@ -81,13 +92,14 @@
 		<node name="topupTitle" value="Làm đầy lại tài khoản"/>
 		<node name="topupViaBrowser" value="Mở trang trong trình duyệt"/>
 		<node name="topupSummary" value="Hiện tại: %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Sách đang được tải về" />
 		<node name="alreadyDownloadingDemo" value="Bản thử đang được tải về" />
 		<node name="stoppingCatalogLoading" value="Dừng tải" />
 		<node name="stoppingNetworkSearch" value="Dừng tìm" />
-		<node name="search" value="Tìm" />
-		<node name="searchSummary" value="Tìm sách trong danh mục" />
-		<node name="searchResults" value="Kết quả tìm kiếm khoảng: %s" />
 		<node name="editCustomCatalog" value="Sửa Catalo"/>
 		<node name="removeCustomCatalog" value="Xóa catalo"/>
 		<node name="addCustomCatalog" value="Thêm"/>
@@ -106,12 +118,14 @@
 			<node name="networkSearch" value="Tìm trên mạng"/>
 			<node name="reload" value="Tải lại"/>
 			<node name="signIn" value="Đăng nhập"/>
-			<node name="signOut" value="Đăng xuất (%s)"/>
 			<node name="signUp" value="Đăng ký" />
+			<node name="signOut" value="Đăng xuất (%s)"/>
 			<node name="topup" value="Tái đầy tài khoản "/>
 			<node name="addCustomCatalog" value="Thêm catalo"/>
 			<node name="refreshCatalogsList" value="Tải lại các catalo"/>
 			<node name="languages" value="Bộ lọc ngôn ngữ"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -164,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Quyển này"/>
 		<node name="allBooks" value="Tất cả sách"/>
-		<node name="searchResults" value="Tìm thấy"/>
+		<node name="found" value="Tìm thấy"/>
 		<node name="new" value="Đánh dấu mới"/>
 		<node name="open" value="Mở"/>
 		<node name="edit" value="Sửa đánh dấu"/>
@@ -523,6 +537,16 @@
 					<node name="summaryOff" value="Cuộn trang theo chiều dọc"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="Từ điển">
 				<node name="summary" value="Cài đặt từ điển"/>
 				<node name="dictionary" value="Từ điển"/>
@@ -620,7 +644,6 @@
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="Người dùng" />
 			<node name="password" value="Mật khẩu" />
-			<node name="skipIP" value="Đừng giới hạn địa chỉ ip" />
 			<node name="loginIsEmpty" value="Tên người dùng không được rỗng" />
 			<node name="register" value="Đăng ký" />
 		</node>
@@ -670,7 +693,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Lỗi chưa biết"/>
 		<node name="unsupportedCompressionMethod" value="Không thể mở cách thức nén này"/>
-		<node name="encriptedFile" value="Tập tin được bảo vệ DRM"/>
+		<node name="encryptedFile" value="Tập tin được bảo vệ DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

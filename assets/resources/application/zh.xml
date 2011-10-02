@@ -23,7 +23,7 @@
 		<node name="favorites" value="喜爱的">
 			<node name="summary" value="我选择的书文"/>
 		</node>
-		<node name="searchResults" value="搜索结果">
+		<node name="found" value="搜索结果">
 			<node name="summary" value="搜索结果: %s" />
 		</node>
 		<node name="fileTree" value="文件树">
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series" toBeTranslated="true">
 			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
+		<node name="search" value="搜索">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="搜索书库目录" />
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="搜索结果">
+			<node name="summary" value="搜索结果: %s" />
+		</node>
 		<node name="openCatalog" value="打开书库目录" />
+		<node name="networkSearch" value="搜索"/>
 		<node name="showResults" value="显示结果"/>
 		<node name="showBooks" value="显示书籍"/>
 		<node name="download" value="下载" />
@@ -72,6 +81,8 @@
 		<node name="buy" value="购买(%s)" />
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="在浏览器中打开" />
 		<node name="stopLoading" value="停止加载" />
 		<node name="stopSearching" value="停止搜索" />
@@ -81,13 +92,14 @@
 		<node name="topupTitle" value="重新输入账号"/>
 		<node name="topupViaBrowser" value="在浏览器中打开页面"/>
 		<node name="topupSummary" value="当前: %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="正在下载" />
 		<node name="alreadyDownloadingDemo" value="正在下载试读本" />
 		<node name="stoppingCatalogLoading" value="停止加载" />
 		<node name="stoppingNetworkSearch" value="停止搜索" />
-		<node name="search" value="搜索" />
-		<node name="searchSummary" value="搜索书库目录" />
-		<node name="searchResults" value="搜索结果: %s" />
 		<node name="editCustomCatalog" value="编辑书库目录"/>
 		<node name="removeCustomCatalog" value="移除书库目录"/>
 		<node name="addCustomCatalog" value="增加书库目录"/>
@@ -106,12 +118,14 @@
 			<node name="networkSearch" value="网络搜索" />
 			<node name="reload" value="重新加载" />
 			<node name="signIn" value="登录"/>
-			<node name="signOut" value="退出 (%s)"/>
 			<node name="signUp" value="注册" />
+			<node name="signOut" value="退出 (%s)"/>
 			<node name="topup" value="重新输入账号"/>
 			<node name="addCustomCatalog" value="添加书库目录"/>
 			<node name="refreshCatalogsList" value="刷新书库目录"/>
 			<node name="languages" value="语言过滤"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="networkBookView">
@@ -164,7 +178,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="本书" />
 		<node name="allBooks" value="所有图书" />
-		<node name="searchResults" value="搜索结果" />
+		<node name="found" value="搜索结果" />
 		<node name="new" value="添加书签" />
 		<node name="open" value="打开书签" />
 		<node name="edit" value="编辑书签" />
@@ -625,16 +639,11 @@
 			<node name="noRequiredInformation" value="书库目录中必须的信息没有定义" />
 			<node name="cacheDirectoryError" value="无法创建缓存目录" />
 		</node>
-		<node name="emptySearchResults">
-			<node name="title" value="搜索结果" />
-			<node name="message" value="没有找到对应的书籍." />
-		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="鉴定" />
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="登录" />
 			<node name="password" value="密码" />
-			<node name="skipIP" value="不绑定到IP地址" />
 			<node name="loginIsEmpty" value="用户名不允许为空" />
 			<node name="register" value="注册" />
 		</node>
@@ -681,7 +690,7 @@
 		<node name="noFavorites" value="对不起，你的收藏列表为空"/>
 		<node name="emptyCatalog" value="空书库目录"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry" toBeTranslated="true"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="没有找到对应的书籍"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="浏览器" />

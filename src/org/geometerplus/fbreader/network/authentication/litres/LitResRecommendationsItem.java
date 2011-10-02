@@ -45,9 +45,9 @@ public class LitResRecommendationsItem extends OPDSCatalogItem {
 			}
 			builder.append(book.Id);
 		}
-		final Basket basket = Link.basket();
-		if (basket != null) {
-			for (String bookId : basket.bookIds()) {
+		final BasketItem basketItem = Link.getBasketItem();
+		if (basketItem != null) {
+			for (String bookId : basketItem.bookIds()) {
 				if (flag) {
 					builder.append(',');
 				} else {

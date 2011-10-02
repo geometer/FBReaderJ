@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.application.*;
@@ -61,10 +62,11 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
 		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 
+	private final int myDpi = ZLibrary.Instance().getDisplayDPI();
 	public final ZLIntegerRangeOption LeftMarginOption =
-		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, 4);
+		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 30, myDpi / 10);
 	public final ZLIntegerRangeOption RightMarginOption =
-		new ZLIntegerRangeOption("Options", "RightMargin", 0, 30, 4);
+		new ZLIntegerRangeOption("Options", "RightMargin", 0, 30, myDpi / 10);
 	public final ZLIntegerRangeOption TopMarginOption =
 		new ZLIntegerRangeOption("Options", "TopMargin", 0, 30, 0);
 	public final ZLIntegerRangeOption BottomMarginOption =

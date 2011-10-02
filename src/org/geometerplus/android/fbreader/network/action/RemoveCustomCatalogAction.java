@@ -24,6 +24,7 @@ import android.app.Activity;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 
 public class RemoveCustomCatalogAction extends CatalogAction {
 	public RemoveCustomCatalogAction(Activity activity) {
@@ -33,12 +34,12 @@ public class RemoveCustomCatalogAction extends CatalogAction {
 	@Override
 	public boolean isVisible(NetworkTree tree) {
 		return
-			super.isVisible(tree) &&
+			tree instanceof NetworkCatalogRootTree &&
 			tree.getLink() instanceof ICustomNetworkLink;
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		library.removeCustomLink((ICustomNetworkLink)tree.getLink());
 		library.synchronize();
