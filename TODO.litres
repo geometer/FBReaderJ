@@ -1,4 +1,3 @@
-always sign in after registration
 auto-sign-in
 resources synchronization
 honeycomb
@@ -36,8 +35,8 @@ Search actions
 basket
 	update basket on book purchasing/logging in
 separate catalog search
-предлагать на выбор вход или регистрацию, "signup link" убран из диалога авторизации
 покупка "без регистрации"
 yandex money
 self service
 paypal
+"cannot read DRM'd ePub"
