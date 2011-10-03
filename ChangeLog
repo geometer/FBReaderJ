@@ -1,4 +1,4 @@
-===== 1.1.11 (Sep ??, 2011) =====
+===== 1.1.11 (Oct ??, 2011) =====
 * Separate search for each network catalog
 * Basket in LitRes e-book store
 * Image scaling has been fixed
@@ -7,6 +7,7 @@
 * Romanian localization (by Mary Hit)
 * Polish localization (by Tomasz Długosz)
 * Aard dictionary integration has been added
+* android.fbreader.action.VIEW action for opening FBReader from external applications
 
 ===== 1.1.10 (Aug 03, 2011) =====
 * Spanish localization (by Antonio Trueba)
