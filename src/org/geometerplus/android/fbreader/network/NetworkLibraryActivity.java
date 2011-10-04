@@ -222,7 +222,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 
 	private List<? extends Action> getContextMenuActions(NetworkTree tree) {
 		return tree instanceof NetworkBookTree
-			? NetworkBookActions.getContextMenuActions(this, ((NetworkBookTree)tree).Book, Connection)
+			? NetworkBookActions.getContextMenuActions(this, (NetworkBookTree)tree, Connection)
 			: myContextMenuActions;
 	}
 

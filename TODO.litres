@@ -1,4 +1,4 @@
-remove from basket => show basket
+remove from basket => open basket
 better error message (UnknownHostException)
 always sign in after registration
 auto-sign-in

@@ -37,6 +37,7 @@ import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -103,7 +104,8 @@ public abstract class NetworkBookActions {
 		return 0;
 	}
 
-	public static List<NBAction> getContextMenuActions(Activity activity, NetworkBookItem book, BookDownloaderServiceConnection connection) {
+	public static List<NBAction> getContextMenuActions(Activity activity, NetworkBookTree tree, BookDownloaderServiceConnection connection) {
+		final NetworkBookItem book = tree.Book;
 		List<NBAction> actions = new LinkedList<NBAction>();
 		if (useFullReferences(book)) {
 			final BookUrlInfo reference = book.reference(UrlInfo.Type.Book);
@@ -136,7 +138,12 @@ public abstract class NetworkBookActions {
 			final BasketItem basketItem = book.Link.getBasketItem();
 			if (basketItem != null) {
 				if (basketItem.contains(book)) {
-					actions.add(new NBAction(activity, ActionCode.REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
+					if (tree.Parent instanceof BasketCatalogTree ||
+						activity instanceof NetworkLibraryActivity) {
+						actions.add(new NBAction(activity, ActionCode.REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
+					} else {
+						actions.add(new NBAction(activity, ActionCode.OPEN_BASKET, "openBasket"));
+					}
 				} else {
 					actions.add(new NBAction(activity, ActionCode.ADD_BOOK_TO_BASKET, "addToBasket"));
 				}
@@ -176,6 +183,9 @@ public abstract class NetworkBookActions {
 				return true;
 			case ActionCode.REMOVE_BOOK_FROM_BASKET:
 				tree.Book.Link.getBasketItem().remove(tree.Book);
+				return true;
+			case ActionCode.OPEN_BASKET:
+				// TODO: implement
 				return true;
 		}
 		return false;
