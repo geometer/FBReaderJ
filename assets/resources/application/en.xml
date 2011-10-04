@@ -81,6 +81,7 @@
 		<node name="buy" value="Buy (%s)"/>
 		<node name="addToBasket" value="Add to basket"/>
 		<node name="removeFromBasket" value="Remove from basket"/>
+		<node name="openBasket" value="Open basket"/>
 		<node name="clearBasket" value="Clear basket"/>
 		<node name="buyAllBooks" value="Buy all books"/>
 		<node name="openInBrowser" value="Open in browser" />
