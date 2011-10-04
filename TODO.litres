@@ -1,3 +1,6 @@
+remove from basket => show basket
+better error message (UnknownHostException)
+always sign in after registration
 auto-sign-in
 resources synchronization
 honeycomb
