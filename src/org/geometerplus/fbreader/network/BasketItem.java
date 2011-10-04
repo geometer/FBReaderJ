@@ -78,7 +78,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 
 	@Override
 	public String getStringId() {
-		return "@Basket";
+		return "@Basket:" + Link.getSiteName();
 	}
 
 	public final void add(NetworkBookItem book) {
