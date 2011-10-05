@@ -81,6 +81,7 @@
 		<node name="buy" value="Купить (%s)"/>
 		<node name="addToBasket" value="Добавить в корзину"/>
 		<node name="removeFromBasket" value="Удалить из корзины"/>
+		<node name="openBasket" value="Корзина"/>
 		<node name="clearBasket" value="Очистить корзину"/>
 		<node name="buyAllBooks" value="Купить все книги"/>
 		<node name="openInBrowser" value="Показать в браузере" />
