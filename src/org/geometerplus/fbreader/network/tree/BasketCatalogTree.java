@@ -37,6 +37,14 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 		}
 	}
 
+	public BasketCatalogTree(RootTree parent, BasketItem item) {
+		super(parent, item.Link, item, 0);
+		setCover(null);
+		if (!item.bookIds().isEmpty()) {
+			startItemsLoader(false, false);
+		}
+	}
+
 	public synchronized List<FBTree> subTrees() {
 		final BasketItem basketItem = (BasketItem)Item;
 		final long generation = basketItem.getGeneration();

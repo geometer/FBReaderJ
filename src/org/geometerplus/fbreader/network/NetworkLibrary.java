@@ -413,6 +413,17 @@ public class NetworkLibrary {
 		return new NetworkBookTree(myFakeRootTree, book, true);
 	}
 
+	public BasketCatalogTree getFakeBasketTree(BasketItem item) {
+		final String id = item.getStringId();
+		for (FBTree tree : myFakeRootTree.subTrees()) {
+			if (tree instanceof BasketCatalogTree &&
+				id.equals(tree.getUniqueKey().Id)) {
+				return (BasketCatalogTree)tree;
+			}
+		}
+		return new BasketCatalogTree(myFakeRootTree, item);
+	}
+
 	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {
 		final String id = item.getStringId();
 		for (FBTree tree : myFakeRootTree.subTrees()) {

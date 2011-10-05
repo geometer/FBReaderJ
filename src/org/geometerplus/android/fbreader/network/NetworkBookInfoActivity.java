@@ -77,6 +77,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onResume() {
 		super.onResume();
 
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+
 		if (!myInitializerStarted) {
 			UIUtil.wait("loadingNetworkBookInfo", myInitializer, this);
 		}

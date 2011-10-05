@@ -153,39 +153,41 @@ public abstract class NetworkBookActions {
 	}
 
 	private static boolean runActionStatic(Activity activity, NetworkBookTree tree, int actionCode) {
+		final NetworkBookItem book = tree.Book;
 		switch (actionCode) {
 			case ActionCode.DOWNLOAD_BOOK:
-				Util.doDownloadBook(activity, tree.Book, false);
+				Util.doDownloadBook(activity, book, false);
 				return true;
 			case ActionCode.DOWNLOAD_DEMO:
-				Util.doDownloadBook(activity, tree.Book, true);
+				Util.doDownloadBook(activity, book, true);
 				return true;
 			case ActionCode.READ_BOOK:
-				doReadBook(activity, tree.Book, false);
+				doReadBook(activity, book, false);
 				return true;
 			case ActionCode.READ_DEMO:
-				doReadBook(activity, tree.Book, true);
+				doReadBook(activity, book, true);
 				return true;
 			case ActionCode.DELETE_BOOK:
-				tryToDeleteBook(activity, tree.Book, false);
+				tryToDeleteBook(activity, book, false);
 				return true;
 			case ActionCode.DELETE_DEMO:
-				tryToDeleteBook(activity, tree.Book, true);
+				tryToDeleteBook(activity, book, true);
 				return true;
 			case ActionCode.BUY_DIRECTLY:
 				doBuyDirectly(activity, tree);
 				return true;
 			case ActionCode.BUY_IN_BROWSER:
-				doBuyInBrowser(activity, tree.Book);
+				doBuyInBrowser(activity, book);
 				return true;
 			case ActionCode.ADD_BOOK_TO_BASKET:
-				tree.Book.Link.getBasketItem().add(tree.Book);
+				book.Link.getBasketItem().add(book);
 				return true;
 			case ActionCode.REMOVE_BOOK_FROM_BASKET:
-				tree.Book.Link.getBasketItem().remove(tree.Book);
+				book.Link.getBasketItem().remove(book);
 				return true;
 			case ActionCode.OPEN_BASKET:
-				// TODO: implement
+				new OpenCatalogAction(activity)
+					.run(NetworkLibrary.Instance().getFakeBasketTree(book.Link.getBasketItem()));
 				return true;
 		}
 		return false;
