@@ -59,7 +59,7 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		return mySubTrees != null && !mySubTrees.isEmpty();
 	}
 
-	public final List<T> subTrees() {
+	public List<T> subTrees() {
 		if (mySubTrees == null) {
 			return Collections.emptyList();
 		}
