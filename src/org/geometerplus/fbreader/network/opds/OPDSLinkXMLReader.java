@@ -29,8 +29,11 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.fbreaderorg.FBReaderOrgAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.*;
+
+import android.os.Debug;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 	private static class FeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
@@ -109,6 +112,7 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 				} else if (rel == "listbooks") {
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.ListBooks, href));
 				} else if (rel == REL_LINK_SIGN_IN) {
+					Debug.waitForDebugger();
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignIn, href));
 				} else if (rel == REL_LINK_SIGN_OUT) {
 					infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.SignOut, href));
@@ -152,10 +156,19 @@ class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
 			opdsLink.setUrlRewritingRules(myUrlRewritingRules);
 			opdsLink.setExtraData(myExtraData);
 
+			Debug.waitForDebugger();
 			if (myAuthenticationType == "litres") {
 				opdsLink.setAuthenticationManager(
 					NetworkAuthenticationManager.createManager(
 						opdsLink, LitResAuthenticationManager.class
+					)
+				);
+			}
+			
+			if (myAuthenticationType == "fbreaderorg") {
+				opdsLink.setAuthenticationManager(
+					NetworkAuthenticationManager.createManager(
+						opdsLink, FBReaderOrgAuthenticationManager.class
 					)
 				);
 			}

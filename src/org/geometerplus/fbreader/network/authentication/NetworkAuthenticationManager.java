@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
+import org.geometerplus.fbreader.network.authentication.fbreaderorg.FBReaderOrgAuthenticationManager;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
@@ -38,6 +39,9 @@ public abstract class NetworkAuthenticationManager {
 		if (mgr == null) {
 			if (managerClass == LitResAuthenticationManager.class) {
 				mgr = new LitResAuthenticationManager((OPDSNetworkLink)link);
+			}
+			if (managerClass == FBReaderOrgAuthenticationManager.class) {
+				mgr = new FBReaderOrgAuthenticationManager((OPDSNetworkLink)link);
 			}
 			if (mgr != null) {
 				ourManagers.put(link.getSiteName(), mgr);

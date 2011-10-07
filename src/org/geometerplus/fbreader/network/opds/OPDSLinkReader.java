@@ -30,7 +30,7 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.*;
 
 public class OPDSLinkReader {
-	static final String CATALOGS_URL = "http://data.fbreader.org/catalogs/generic-1.7.xml";
+	static final String CATALOGS_URL = "https://data.fbreader.org/sync/generic-1.7.xml";
 	static final String FILE_NAME = "fbreader_catalogs-"
 			+ CATALOGS_URL.substring(CATALOGS_URL.lastIndexOf("/") + 1);
 
@@ -79,7 +79,7 @@ public class OPDSLinkReader {
 			}
 		}
 
-		if (!cacheIsGood) {
+		if (true) {//!cacheIsGood) {
 			try {
 				ZLNetworkManager.Instance().downloadToFile(CATALOGS_URL, catalogsFile);
 			} catch (ZLNetworkException e) {
