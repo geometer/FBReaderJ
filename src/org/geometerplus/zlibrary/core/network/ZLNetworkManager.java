@@ -170,9 +170,18 @@ public class ZLNetworkManager {
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
 			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest));
 			HttpResponse response = null;
+			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
-				response = httpClient.execute(httpRequest, myHttpContext);
-				entity = response.getEntity();
+				try {
+					response = httpClient.execute(httpRequest, myHttpContext);
+					entity = response.getEntity();
+					lastException = null;
+				} catch (IOException e) {
+					lastException = e;
+				}
+			}
+			if (lastException != null) {
+				throw lastException;
 			}
 			final int responseCode = response.getStatusLine().getStatusCode();
 
@@ -201,7 +210,7 @@ public class ZLNetworkManager {
 			}
 		} catch (ZLNetworkException e) {
 			throw e;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			final String[] eName = e.getClass().getName().split("\\.");
 			if (eName.length > 0) {
