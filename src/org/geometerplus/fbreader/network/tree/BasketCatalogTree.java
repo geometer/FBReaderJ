@@ -81,14 +81,16 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 		if (!(i instanceof NetworkBookItem)) {
 			return;
 		}
+		final NetworkBookItem bookItem = (NetworkBookItem)i;
+		final String id = bookItem.getStringId();
 		for (FBTree t : subTrees()) {
-			if (t instanceof NetworkBookTree && i.equals(((NetworkBookTree)t).Book)) {
+			if (t instanceof NetworkBookTree &&
+				id.equals(((NetworkBookTree)t).Book.getStringId())) {
 				return;
 			}
 		}
 
 		final BasketItem basketItem = (BasketItem)Item;
-		final NetworkBookItem bookItem = (NetworkBookItem)i;
 		if (basketItem.contains(bookItem)) {
 			super.addItem(bookItem);
 			basketItem.addItem(bookItem);
