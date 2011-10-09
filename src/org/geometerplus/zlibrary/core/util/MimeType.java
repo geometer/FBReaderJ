@@ -70,6 +70,9 @@ public final class MimeType {
 
 	// a special MIME type for the litres OPDS catalog
 	public static final MimeType APP_LITRES = get("application/litres+xml");
+	
+	// a special MIME type for the FBReaderOrg OPDS catalog
+	public static final MimeType APP_FBREADER_ORG = get("application/fbreaderorg+xml");
 
 	// MIME types / text
 	public static final MimeType TEXT_HTML = get("text/html");

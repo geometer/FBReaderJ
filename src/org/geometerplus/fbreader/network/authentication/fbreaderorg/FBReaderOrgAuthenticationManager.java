@@ -1,12 +1,23 @@
 package org.geometerplus.fbreader.network.authentication.fbreaderorg;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+
 import org.geometerplus.fbreader.network.NetworkBookItem;
+import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.DecoratedBookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.zlibrary.core.money.Money;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import android.os.Bundle;
 import android.os.Debug;
@@ -22,18 +33,18 @@ public class FBReaderOrgAuthenticationManager extends NetworkAuthenticationManag
 	
 	public FBReaderOrgAuthenticationManager(OPDSNetworkLink link) {
 		super(link);
-		Debug.waitForDebugger();
 		mySidOption = new ZLStringOption(link.getSiteName(), "sid", "");
 		myUserIdOption = new ZLStringOption(link.getSiteName(), "userId", "");
 		myFBIdOption = new ZLStringOption(link.getSiteName(), "fb_id", "");
+		String uid = myUserIdOption.getValue();
+		String sid = mySidOption.getValue();
+		String fbid = myFBIdOption.getValue();
+		String username = UserNameOption.getValue();
+		myFullyInitialized = !"".equals(sid) && !"".equals(uid) && !"".equals(fbid) && !"".equals(username);
 	}
 	
 	private synchronized void logOut(boolean full) {
-		if (full) {
-			initUser(UserNameOption.getValue(), "", "");
-		} else {
-			myFullyInitialized = false;
-		}
+		initUser(UserNameOption.getValue(), "", "");
 	}
 	
 	public synchronized void initUser(String userName, String sid, String userId) {
@@ -53,7 +64,8 @@ public class FBReaderOrgAuthenticationManager extends NetworkAuthenticationManag
 		try {
 		result = ServerInterface.ourAuthLogin(
 				UserNameOption.getValue(), 
-				password
+				password,
+				myFBIdOption.getValue()
 				);
 		} catch (ZLNetworkException e) {
 			exception = e;
@@ -71,37 +83,117 @@ public class FBReaderOrgAuthenticationManager extends NetworkAuthenticationManag
 						result.getString(ServerInterface.SIG_KEY), 
 						result.getString(ServerInterface.USER_ID_KEY)
 						);
-			}
-			else {
+				//Link.libraryItem().
+			} else {
 				logOut(false);
+				throw new ZLNetworkException(ZLNetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
 		}
 	}
 
 	@Override
 	public BookUrlInfo downloadReference(NetworkBookItem book) {
-		// TODO Auto-generated method stub
-		return null;
+		final String sid;
+		synchronized (this) {
+			sid = mySidOption.getValue();
+		}
+		if (sid.length() == 0) {
+			return null;
+		}
+		BookUrlInfo reference = book.reference(UrlInfo.Type.Book);
+		if (reference == null) {
+			return null;
+		}
+		
+		BookUrlRequest request = new BookUrlRequest(reference.Url);
+		try {
+			ZLNetworkManager.Instance().perform(request);
+		} catch (ZLNetworkException e) {
+			return null;
+		}
+		return new DecoratedBookUrlInfo(reference, request.result);
 	}
 
 	@Override
 	public boolean isAuthorised(boolean useNetwork) throws ZLNetworkException {
-		// TODO Auto-generated method stub
+		synchronized (this) {
+			boolean authState =
+				UserNameOption.getValue().length() != 0 &&
+				mySidOption.getValue().length() != 0;
+
+			if (myFullyInitialized || !useNetwork) {
+				return authState;
+			}
+
+			if (!authState) {
+				logOut(false);
+				return false;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public void logOut() {
-		// TODO Auto-generated method stub
-		
+		logOut(true);
 	}
 
 	@Override
 	public void refreshAccountInformation() throws ZLNetworkException {
-		// TODO Auto-generated method stub
 		
 	}
 	
+	@Override
+	public Money currentAccount() {
+		return new Money(new BigDecimal(100500), "RUB");
+	}
 	
-
+	@Override
+	public void purchaseBook(NetworkBookItem book) throws ZLNetworkException {
+		String url = book.getAllInfos(UrlInfo.Type.BookBuy).get(0).Url;
+		
+		ZLNetworkRequest request = new ZLNetworkRequest(url) {
+			@Override
+			public void handleStream(InputStream inputStream, int length)
+					throws IOException, ZLNetworkException {
+				byte[] b = new byte[4096];
+				inputStream.read(b);
+				String result = (new String(b)).trim();
+				if (!"ok".equals(result)){
+					throw new ZLNetworkException(NetworkException.ERROR_BOOK_NOT_PURCHASED);
+				}
+			}
+		};
+		request.addPostParameter("account", UserNameOption.getValue());
+		ZLNetworkManager.Instance().perform(request);
+		return;
+	};
+	
+	public UrlInfo addAuthParametersToURL(UrlInfo urlInfo){
+		String url = urlInfo.Url;
+		url = ZLNetworkUtil.appendParameter(url, "account", UserNameOption.getValue());
+		url = ZLNetworkUtil.appendParameter(url, "sid", mySidOption.getValue());
+		return new UrlInfo(urlInfo.InfoType, url);
+	}
+	
+	class BookUrlRequest extends ZLNetworkRequest {
+		
+		public String result = null;
+		
+		public BookUrlRequest(String url) {
+			super(url);
+		}
+		
+		@Override
+		public void handleStream(InputStream inputStream, int length)
+				throws IOException, ZLNetworkException {
+			byte[] b = new byte[4096];
+			inputStream.read(b);
+			String result = (new String(b)).trim();
+			if ("ok".equals(result.substring(0,2))){
+				result = result.substring(3);
+			}
+		}
+	};
+	
 }

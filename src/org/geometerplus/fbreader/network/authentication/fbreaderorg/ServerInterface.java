@@ -86,21 +86,24 @@ public class ServerInterface{
 	}
 	
 	
-	public static Bundle ourAuthRegister(String account, String password)
+	public static Bundle ourAuthRegister(String account, String password, String FBId)
 					throws ZLNetworkException {
-		return ourAuth(account, password, ApiMethod.REGISTER);
+		return ourAuth(account, password, FBId, ApiMethod.REGISTER);
 	}
 
-	public static Bundle ourAuthLogin(String account, String password) 
+	public static Bundle ourAuthLogin(String account, String password, String FBId) 
 					throws ZLNetworkException {
-		return ourAuth(account, password, ApiMethod.LOGIN);
+		return ourAuth(account, password, FBId, ApiMethod.LOGIN);
 	}
 
 	private static Bundle ourAuth(String account, 
-								   String password, ApiMethod method) 
+								   String password, 
+								   String FBId, 
+								   ApiMethod method) 
 									throws ZLNetworkException {
 		JSONArray args = new JSONArray();
 		args.put(account);
+		args.put(FBId);
 		args.put(Digests.hashSHA256(password));
 		return jsonToBundle(callAPI(method, args));
 	}
@@ -121,7 +124,7 @@ public class ServerInterface{
 	
 	private enum ApiMethod {
         REGISTER("register"),
-        LOGIN("login");
+        LOGIN("login_catalog");
         
 		private String myValue;
 		

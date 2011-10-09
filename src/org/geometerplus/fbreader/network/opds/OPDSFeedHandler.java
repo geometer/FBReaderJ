@@ -24,6 +24,9 @@ import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.atom.*;
+import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.fbreaderorg.FBReaderOrgAuthenticationManager;
+import org.geometerplus.fbreader.network.authentication.fbreaderorg.FBReaderOrgBookshelfItem;
 import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfItem;
 import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 import org.geometerplus.fbreader.network.urlInfo.*;
@@ -199,6 +202,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 
 		boolean urlIsAlternate = false;
 		String litresRel = null;
+		String fbreaderorgRel = null;
 		for (ATOMLink link : entry.Links) {
 			final String href = ZLNetworkUtil.url(myBaseURL, link.getHref());
 			final MimeType type = MimeType.get(link.getType());
@@ -231,6 +235,9 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 			} else if (MimeType.APP_LITRES.weakEquals(type)) {
 				urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
 				litresRel = rel;
+			} else if (MimeType.APP_FBREADER_ORG.weakEquals(type)) {
+				urlMap.addInfo(new UrlInfo(UrlInfo.Type.Catalog, href));
+				fbreaderorgRel = rel;
 			}
 		}
 
@@ -271,6 +278,29 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 				return new TopUpItem(opdsLink, urlMap);
 			} else {
 				return null;
+			}
+		} else if (fbreaderorgRel != null ) {
+			if (REL_BOOKSHELF.equals(fbreaderorgRel)) {
+				FBReaderOrgAuthenticationManager mgr = 
+					(FBReaderOrgAuthenticationManager)myData.Link.authenticationManager();
+				UrlInfoCollection<UrlInfo> newUrlMap = new UrlInfoCollection<UrlInfo>();
+				for (UrlInfo urlInfo : urlMap.getAllInfos()) {
+					UrlInfo newUrlInfo = mgr.addAuthParametersToURL(urlInfo);
+					newUrlMap.addInfo(newUrlInfo);
+				}
+				return new FBReaderOrgBookshelfItem(
+						opdsLink,
+						entry.Title,
+						annotation,
+						newUrlMap
+					);
+			} else {
+				return new OPDSCatalogItem(
+						opdsLink,
+						entry.Title,
+						annotation,
+						urlMap
+					);
 			}
 		} else {
 			return new OPDSCatalogItem(

@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.network.authentication.litres;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
