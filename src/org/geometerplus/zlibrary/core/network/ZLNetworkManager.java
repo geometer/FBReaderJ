@@ -212,12 +212,13 @@ public class ZLNetworkManager {
 			throw e;
 		} catch (IOException e) {
 			e.printStackTrace();
-			final String[] eName = e.getClass().getName().split("\\.");
-			if (eName.length > 0) {
-				throw new ZLNetworkException(true, eName[eName.length - 1] + ": " + e.getMessage(), e);
+			final String code;
+			if (e instanceof UnknownHostException) {
+				code = ZLNetworkException.ERROR_RESOLVE_HOST;
 			} else {
-				throw new ZLNetworkException(true, e.getMessage(), e);
+				code = ZLNetworkException.ERROR_CONNECT_TO_HOST;
 			}
+			throw new ZLNetworkException(code, ZLNetworkUtil.hostFromUrl(request.URL), e);
 		} finally {
 			request.doAfter(success);
 			if (httpClient != null) {
@@ -246,6 +247,7 @@ public class ZLNetworkManager {
 			try {
 				perform(r);
 			} catch (ZLNetworkException e) {
+				e.printStackTrace();
 				errors.add(e.getMessage());
 			}
 		}
