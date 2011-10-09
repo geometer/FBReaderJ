@@ -291,7 +291,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				logOut(false);
 				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 			}
-			networkRequest = loadPurchasedBooksRequest();
+			networkRequest = loadPurchasedBooksRequest(sid);
 		}
 
 		ZLNetworkException exception = null;
@@ -340,8 +340,8 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				return;
 			}
 
-			purchasedBooksRequest = loadPurchasedBooksRequest();
-			accountRequest = loadAccountRequest();
+			purchasedBooksRequest = loadPurchasedBooksRequest(sid);
+			accountRequest = loadAccountRequest(sid);
 		}
 
 		final LinkedList<ZLNetworkRequest> requests = new LinkedList<ZLNetworkRequest>();
@@ -367,15 +367,14 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public void refreshAccountInformation() throws ZLNetworkException {
-		final LitResNetworkRequest accountRequest = loadAccountRequest();
+		final LitResNetworkRequest accountRequest = loadAccountRequest(mySidOption.getValue());
 		ZLNetworkManager.Instance().perform(accountRequest);
 		synchronized (this) {
 			myAccount = new Money(((LitResPurchaseXMLReader)accountRequest.Reader).Account, "RUB");
 		}
 	}
 
-	private LitResNetworkRequest loadPurchasedBooksRequest() {
-		final String sid = mySidOption.getValue();
+	private LitResNetworkRequest loadPurchasedBooksRequest(String sid) {
 		final String query = "pages/catalit_browser/";
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
@@ -399,14 +398,14 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		}
 	}
 
-	private LitResNetworkRequest loadAccountRequest() {
+	private LitResNetworkRequest loadAccountRequest(String sid) {
 		final String query = "pages/purchase_book/";
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
 			new LitResPurchaseXMLReader(Link.getSiteName())
 		);
-		request.addPostParameter("sid", mySidOption.getValue());
+		request.addPostParameter("sid", sid);
 		request.addPostParameter("art", "0");
 		return request;
 	}
