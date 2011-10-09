@@ -81,6 +81,7 @@
 		<node name="buy" value="Vásárlás (%s)"/>
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
 		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Megnyitás böngészőben" />
@@ -91,6 +92,7 @@
 		<node name="topup" value="Számla feltöltése (Jelenleg: %s)"/>
 		<node name="topupTitle" value="Számla feltöltése"/>
 		<node name="topupViaBrowser" value="Oldal megnyitása böngészőben"/>
+		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
 		<node name="topupSummary" value="Jelenleg: %s"/>
 		<node name="basket" value="Basket" toBeTranslated="true"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
@@ -127,6 +129,17 @@
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Könyv vásárlása" />
+		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
+		<node name="confirm" value="Biztosan megvásárolja ezt a könyvet?&#10;&#8220;%s&#8221;" />
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
+		<node name="alreadyBought" value="Ezt a könyvet már megvásárolta" />
+		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
+		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Könyv adatai" />
@@ -242,6 +255,9 @@
 			<node name="editInfo" value="Szerkesztés" />
 			<node name="reloadInfo" value="Újratölt" />
 			<node name="topup" value="Számla feltöltése"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
+			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin telepítése" />
@@ -625,6 +641,7 @@
 			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..." />
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba" />
@@ -663,14 +680,6 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Nyelvi szűrő"/>
-		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="Könyv vásárlása" />
-			<node name="message" value="Biztosan megvásárolja ezt a könyvet?&#10;&#8220;%s&#8221;" />
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="Könyv vásárlása" />
-			<node name="message" value="Ezt a könyvet már megvásárolta" />
 		</node>
 	</node>
 	<node name="errorMessage">

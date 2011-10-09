@@ -81,6 +81,7 @@
 		<node name="buy" value="Придбати (%s)"/>
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
 		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Показати у браузері" />
@@ -91,6 +92,7 @@
 		<node name="topup" value="Поповнити рахунок (поточний рахунок: %s)" />
 		<node name="topupTitle" value="Поповнити рахунок"/>
 		<node name="topupViaBrowser" value="Open page in browser" toBeTranslated="true"/>
+		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
 		<node name="topupSummary" value="Поточний рахунок: %s"/>
 		<node name="basket" value="Basket" toBeTranslated="true"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
@@ -127,6 +129,17 @@
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Придбання книги" />
+		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
+		<node name="confirm" value="Ви впевненні, що хочете придбати книгу&#10;«%s»?" />
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
+		<node name="alreadyBought" value="Книга вже придбана" />
+		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
+		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Інформація про книгу" />
@@ -242,6 +255,9 @@
 			<node name="editInfo" value="Edit" toBeTranslated="true" />
 			<node name="reloadInfo" value="Reload" toBeTranslated="true" />
 			<node name="topup" value="Поповнити рахунок"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
+			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin" toBeTranslated="true" />
@@ -625,6 +641,7 @@
 			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка..." />
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутрішня помилка сервера" />
@@ -663,14 +680,6 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Language filter" toBeTranslated="true" />
-		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="Придбання книги" />
-			<node name="message" value="Ви впевненні, що хочете придбати книгу&#10;«%s»?" />
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="Придбання книги" />
-			<node name="message" value="Книга вже придбана" />
 		</node>
 	</node>
 	<node name="errorMessage">

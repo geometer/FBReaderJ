@@ -44,6 +44,7 @@ public class NetworkLibrary {
 			ItemRemoved,
 			StatusChanged,
 			*/
+			SignedIn,
 			Found,
 			NotFound,
 			EmptyCatalog,
@@ -147,6 +148,9 @@ public class NetworkLibrary {
 	}
 
 	public INetworkLink getLinkByUrl(String url) {
+		if (url == null) {
+			return null;
+		}
 		synchronized (myLinks) {
 			for (INetworkLink link : myLinks) {
 				if (url.equals(link.getUrlInfo(UrlInfo.Type.Catalog).Url)) {
@@ -407,6 +411,17 @@ public class NetworkLibrary {
 			}
 		}
 		return new NetworkBookTree(myFakeRootTree, book, true);
+	}
+
+	public BasketCatalogTree getFakeBasketTree(BasketItem item) {
+		final String id = item.getStringId();
+		for (FBTree tree : myFakeRootTree.subTrees()) {
+			if (tree instanceof BasketCatalogTree &&
+				id.equals(tree.getUniqueKey().Id)) {
+				return (BasketCatalogTree)tree;
+			}
+		}
+		return new BasketCatalogTree(myFakeRootTree, item);
 	}
 
 	public NetworkCatalogTree getFakeCatalogTree(NetworkCatalogItem item) {

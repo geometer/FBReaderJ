@@ -77,6 +77,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	protected void onResume() {
 		super.onResume();
 
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
+
 		if (!myInitializerStarted) {
 			UIUtil.wait("loadingNetworkBookInfo", myInitializer, this);
 		}
@@ -385,7 +387,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myBook, myConnection)) {
+		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myTree, myConnection)) {
 			addMenuItem(menu, a.Code, a.getContextLabel(null), a.IconId);
 		}
 		return true;
@@ -393,25 +395,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myBook, myConnection)) {
+		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myTree, myConnection)) {
 			if (a.Code == item.getItemId()) {
-				a.run(myBook);
+				a.run(myTree);
 				NetworkBookInfoActivity.this.updateView();
 				return true;
 			}
 		}
 		return false;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-			case NetworkLibraryActivity.SIGNUP_CODE:
-				Util.processSignup(myBook.Link, resultCode, data);
-				break;
-			case NetworkLibraryActivity.AUTO_SIGNIN_CODE:
-				Util.processAutoSignIn(this, myBook.Link, resultCode, data);
-				break;
-		}
 	}
 }

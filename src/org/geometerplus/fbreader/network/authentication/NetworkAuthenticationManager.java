@@ -62,6 +62,7 @@ public abstract class NetworkAuthenticationManager {
 	public abstract void authorise(String password) throws ZLNetworkException;
 	public abstract void logOut();
 	public abstract BookUrlInfo downloadReference(NetworkBookItem book);
+	public abstract void refreshAccountInformation() throws ZLNetworkException;
 
 	public final boolean mayBeAuthorised(boolean useNetwork) {
 		try {
@@ -105,13 +106,6 @@ public abstract class NetworkAuthenticationManager {
 	}
 	public Map<String,String> getTopupData() {
 		return Collections.emptyMap();
-	}
-
-	/*
-     * sign up
-	 */
-	public Map<String,String> getAccountData() {
-		return Collections.singletonMap("signupUrl", Link.getUrl(UrlInfo.Type.SignUp));
 	}
 
 	/*

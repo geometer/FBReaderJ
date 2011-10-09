@@ -19,19 +19,61 @@
 
 package org.geometerplus.fbreader.network.tree;
 
+import java.util.*;
+
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.NetworkItem;
 import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.BasketItem;
 
 public class BasketCatalogTree extends NetworkCatalogTree {
+	private long myGeneration = -1;
+
 	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
 		super(parent, item, position);
-		item.setTree(this);
 		setCover(null);
 		if (!item.bookIds().isEmpty()) {
 			startItemsLoader(false, false);
 		}
+	}
+
+	public BasketCatalogTree(RootTree parent, BasketItem item) {
+		super(parent, item.Link, item, 0);
+		setCover(null);
+		if (!item.bookIds().isEmpty()) {
+			startItemsLoader(false, false);
+		}
+	}
+
+	public synchronized List<FBTree> subTrees() {
+		final BasketItem basketItem = (BasketItem)Item;
+		final long generation = basketItem.getGeneration();
+		if (generation != myGeneration) {
+			myGeneration = generation;
+			final List<FBTree> toRemove = new ArrayList<FBTree>();
+			final Set<String> idsToAdd = new TreeSet(basketItem.bookIds());
+			for (FBTree t : super.subTrees()) {
+				if (!(t instanceof NetworkBookTree)) {
+					continue;
+				}
+				final NetworkBookTree bookTree = (NetworkBookTree)t;
+				if (basketItem.contains(bookTree.Book)) {
+					idsToAdd.remove(bookTree.Book.Id);
+				} else {
+					toRemove.add(bookTree);
+				}
+			}
+			for (FBTree t : toRemove) {
+				t.removeSelf();
+			}
+			for (String id : idsToAdd) {
+				final NetworkBookItem book = basketItem.getBook(id);
+				if (book != null) {
+					NetworkTreeFactory.createNetworkTree(this, book);
+				}
+			}
+		}
+		return super.subTrees();
 	}
 
 	@Override
@@ -39,21 +81,19 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 		if (!(i instanceof NetworkBookItem)) {
 			return;
 		}
+		final NetworkBookItem bookItem = (NetworkBookItem)i;
+		final String id = bookItem.getStringId();
+		for (FBTree t : subTrees()) {
+			if (t instanceof NetworkBookTree &&
+				id.equals(((NetworkBookTree)t).Book.getStringId())) {
+				return;
+			}
+		}
 
 		final BasketItem basketItem = (BasketItem)Item;
-		final NetworkBookItem bookItem = (NetworkBookItem)i;
 		if (basketItem.contains(bookItem)) {
 			super.addItem(bookItem);
 			basketItem.addItem(bookItem);
-		}
-	}
-
-	public synchronized void removeItem(NetworkBookItem i) {
-		for (FBTree t : subTrees()) {
-			if (i.equals(((NetworkBookTree)t).Book)) {
-				t.removeSelf();
-				break;
-			}
 		}
 	}
 }

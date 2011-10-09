@@ -1,10 +1,6 @@
-honeycomb!!!
-
-buy book after topup
-buy book after registration
-buy several books
-buy book after auto-sign-in
 auto-sign-in
+resources synchronization
+honeycomb
 do we cache cover images?
 
 states:
@@ -34,13 +30,14 @@ Search actions
   interrupt search
 	reload
 
+recently visited catalogs
 использовать переданную сумму в sms
 добавить "другие книги" в "мои книги" по авторам-сериям
 basket
 	update basket on book purchasing/logging in
 separate catalog search
-предлагать на выбор вход или регистрацию, "signup link" убран из диалога авторизации
 покупка "без регистрации"
 yandex money
 self service
 paypal
+"cannot read DRM'd ePub"
