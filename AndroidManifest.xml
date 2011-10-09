@@ -86,6 +86,9 @@
 		<activity android:name="org.geometerplus.android.fbreader.library.LibraryActivity" android:launchMode="singleTask" android:process=":library" android:configChanges="orientation|keyboardHidden">
 			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.library.LibrarySearchActivity" />
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.library.ShelfActivity" android:launchMode="singleTask" android:process=":library" android:configChanges="orientation|keyboardHidden">
+			<meta-data android:name="android.app.default_searchable" android:value="org.geometerplus.android.fbreader.library.LibrarySearchActivity" />
+		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.TOCActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name="org.geometerplus.android.fbreader.BookmarksActivity" android:launchMode="singleTask" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
