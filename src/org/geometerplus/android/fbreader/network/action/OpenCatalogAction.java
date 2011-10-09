@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.network.action;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
@@ -56,7 +57,14 @@ public class OpenCatalogAction extends Action {
 	}
 
 	private void doOpenTree(NetworkTree tree) {
-		((NetworkLibraryActivity)myActivity).openTree(tree);
+		if (myActivity instanceof NetworkLibraryActivity) {
+			((NetworkLibraryActivity)myActivity).openTree(tree);
+		} else {
+			myActivity.startActivity(
+				new Intent(myActivity.getApplicationContext(), NetworkLibraryActivity.class)
+					.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
+			);
+		}
 	}
 
 	private void doExpandCatalog(final NetworkCatalogTree tree) {

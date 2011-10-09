@@ -28,7 +28,7 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 
 public abstract class BasketItem extends NetworkCatalogItem {
-	private BasketCatalogTree myTree;
+	private long myGeneration = 0;
 
 	private final ZLStringListOption myBooksInBasketOption;
 	private final Map<String,NetworkBookItem> myBooks =
@@ -44,10 +44,6 @@ public abstract class BasketItem extends NetworkCatalogItem {
 			FLAGS_DEFAULT & ~FLAGS_GROUP
 		);
 		myBooksInBasketOption = new ZLStringListOption(Link.getSiteName(), "Basket", null);
-	}
-
-	public void setTree(BasketCatalogTree tree) {
-		myTree = tree;
 	}
 
 	public void addItem(NetworkBookItem book) {
@@ -78,7 +74,11 @@ public abstract class BasketItem extends NetworkCatalogItem {
 
 	@Override
 	public String getStringId() {
-		return "@Basket";
+		return "@Basket:" + Link.getSiteName();
+	}
+
+	public long getGeneration() {
+		return myGeneration;
 	}
 
 	public final void add(NetworkBookItem book) {
@@ -87,11 +87,8 @@ public abstract class BasketItem extends NetworkCatalogItem {
 			ids = new ArrayList<String>(ids);
 			ids.add(book.Id);
 			myBooksInBasketOption.setValue(ids);
-			if (myTree != null) {
-				myTree.addItem(book);
-			} else {
-				addItem(book);
-			}
+			addItem(book);
+			++myGeneration;
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
@@ -103,9 +100,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 			ids.remove(book.Id);
 			myBooksInBasketOption.setValue(ids);
 			myBooks.remove(book);
-			if (myTree != null) {
-				myTree.removeItem(book);
-			}
+			++myGeneration;
 			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
@@ -113,9 +108,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 	public final void clear() {
 		myBooksInBasketOption.setValue(null);
 		myBooks.clear();
-		if (myTree != null) {
-			myTree.clearCatalog();
-		}
+		++myGeneration;
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 	}
 
@@ -127,7 +120,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 		return myBooksInBasketOption.getValue();
 	}
 
-	protected NetworkBookItem getBook(String id) {
+	public NetworkBookItem getBook(String id) {
 		return myBooks.get(id);
 	}
 

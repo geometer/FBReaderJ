@@ -81,16 +81,18 @@
 		<node name="buy" value="Купить (%s)"/>
 		<node name="addToBasket" value="Добавить в корзину"/>
 		<node name="removeFromBasket" value="Удалить из корзины"/>
+		<node name="openBasket" value="Корзина"/>
 		<node name="clearBasket" value="Очистить корзину"/>
 		<node name="buyAllBooks" value="Купить все книги"/>
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="stopLoading" value="Остановить загрузку" />
 		<node name="stopSearching" value="Остановить поиск" />
-		<node name="signIn" value="Войти"/>
-		<node name="signOut" value="Выйти (%s)"/>
-		<node name="topup" value="Пополнить счёт (баланс: %s)" />
-		<node name="topupTitle" value="Заплатить"/>
+		<node name="signIn" value="Вход"/>
+		<node name="signOut" value="Выход (%s)"/>
+		<node name="topup" value="Пополнение счёта (баланс: %s)" />
+		<node name="topupTitle" value="Оплата"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
+		<node name="authorizationMenuTitle" value="Выберите действие"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="basket" value="Корзина"/>
 		<node name="basketSummaryEmpty" value="Пустая корзина"/>
@@ -115,7 +117,7 @@
 		<node name="downloadingCatalogs" value="Идет загрузка каталогов"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Поиск книг в сети"/> <!-- used as notification title -->
 		<node name="menu">
-			<node name="networkSearch" value="Поиск в сети"/>
+			<node name="networkSearch" value="Искать в сети"/>
 			<node name="reload" value="Обновить"/>
 			<node name="signIn" value="Войти"/>
 			<node name="signUp" value="Регистрация"/>
@@ -127,6 +129,17 @@
 			<node name="clearBasket" value="Очистить корзину"/>
 			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Покупка книги" />
+		<node name="titleSeveralBooks" value="Покупка книг" />
+		<node name="confirm" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
+		<node name="confirmSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
+		<node name="alreadyBought" value="Книга уже куплена" />
+		<node name="notAuthorized" value="Требуется авторизация" />
+		<node name="noAccountInformation" value="Не удалось проверить состояние счета" />
+		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счете только %1" />
+		<node name="zeroFunds" value="Для покупки требуется %0" />
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Информация о книге" />
@@ -242,6 +255,9 @@
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
 			<node name="topup" value="Пополнить счёт"/>
+			<node name="pay" value="Заплатить"/>
+			<node name="refresh" value="Обновить"/>
+			<node name="authorize" value="Авторизоваться"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
@@ -625,6 +641,7 @@
 			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
 			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста..." />
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста..."/>
+			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
@@ -663,22 +680,6 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Фильтр по языку" />
-		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="Покупка книги" />
-			<node name="message" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
-			<node name="titleSeveralBooks" value="Покупка книг" />
-			<node name="messageSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="Покупка книги" />
-			<node name="message" value="Книга уже куплена" />
-		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Выберите действие" />
-			<node name="signIn" value="Вход" />
-			<node name="signUp" value="Регистрация" />
-			<node name="quickBuy" value="Быстрая покупка" />
 		</node>
 	</node>
 	<node name="errorMessage">

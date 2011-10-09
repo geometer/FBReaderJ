@@ -1,17 +1,17 @@
 * 'sign out' feature for basic-auth
 
 DONE show 'empty basket' message without opening of catalog
-* update basket view if basket content is changed
-* basket summary
+DONE update basket view if basket content is changed
+DONE basket summary
 DONE show recommendation item if basket is not empty
-* new actions in main menu: clear; buy all
+DONE new actions in main menu: clear; buy all
 * update recommendations list after each basket updating/purchasing/signing in/out
 * update recommendations list visibility after each basket updating/purchasing/signing in/out
 * remove book from basket on purchasing
 
 * search item behaviour like search item in local library
-* separate search for each catalog (if search URL is presented)
-* menu search button should be available for all catalog levels
+DONE separate search for each catalog (if search URL is presented)
+DONE menu search button should be available for all catalog levels
 
 DONE float point numbers as series index
 DONE replace AuthenticationCatalog by AuthenticationActivity
