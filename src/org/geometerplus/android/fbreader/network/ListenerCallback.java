@@ -38,36 +38,37 @@ public class ListenerCallback extends BroadcastReceiver implements UserRegistrat
 			final String url = intent.getStringExtra(CATALOG_URL);
 			final INetworkLink link = library.getLinkByUrl(url);
 			if (link != null) {
-				processSignup(link, intent);
+				final NetworkAuthenticationManager mgr = link.authenticationManager();
+				if (mgr instanceof LitResAuthenticationManager) {
+					try {
+						processSignup((LitResAuthenticationManager)mgr, intent);
+						library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
+					} catch (ZLNetworkException e) {
+						e.printStackTrace();
+					}
+				}
 			}
-			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
 		} else {
 			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 		}
 	}
 
-	private static void processSignup(INetworkLink link, Intent data) {
+	private static void processSignup(LitResAuthenticationManager mgr, Intent data) throws ZLNetworkException {
+		mgr.initUser(
+			data.getStringExtra(USER_REGISTRATION_USERNAME),
+			data.getStringExtra(USER_REGISTRATION_LITRES_SID),
+			"",
+			false
+		);
+		//if (!mgr.isAuthorised(true)) {
+		//	throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
+		//}
 		try {
-			final NetworkAuthenticationManager mgr = link.authenticationManager();
-			if (mgr instanceof LitResAuthenticationManager) {
-				((LitResAuthenticationManager)mgr).initUser(
-					data.getStringExtra(USER_REGISTRATION_USERNAME),
-					data.getStringExtra(USER_REGISTRATION_LITRES_SID),
-					"",
-					false
-				);
-			}
-			if (!mgr.isAuthorised(true)) {
-				throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
-			}
-			try {
-				mgr.initialize();
-			} catch (ZLNetworkException e) {
-				mgr.logOut();
-				throw e;
-			}
+			mgr.authorise(data.getStringExtra(USER_REGISTRATION_PASSWORD));
+			mgr.initialize();
 		} catch (ZLNetworkException e) {
-			// TODO: show an error message
+			mgr.logOut();
+			throw e;
 		}
 	}
 }
