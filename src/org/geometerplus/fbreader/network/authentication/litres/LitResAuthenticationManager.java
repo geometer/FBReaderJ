@@ -43,10 +43,35 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	private volatile String myInitializedDataSid;
 	private volatile Money myAccount;
-	private final Map<String,NetworkBookItem> myPurchasedBookMap =
-		new HashMap<String,NetworkBookItem>();
-	private final List<NetworkBookItem> myPurchasedBookList =
-		new LinkedList<NetworkBookItem>();
+	private final BookCollection myPurchasedBooks = new BookCollection();
+
+	private final class BookCollection {
+		private final Map<String,NetworkBookItem> myMap = new HashMap<String,NetworkBookItem>();
+		private final List<NetworkBookItem> myList = new LinkedList<NetworkBookItem>();
+
+		public void clear() {
+			myMap.clear();
+			myList.clear();
+		}
+
+		public void addToStart(NetworkBookItem book) {
+			myMap.put(book.Id, book);
+			myList.add(0, book);
+		}
+
+		public void addToEnd(NetworkBookItem book) {
+			myMap.put(book.Id, book);
+			myList.add(book);
+		}
+
+		public boolean contains(NetworkBookItem book) {
+			return myMap.containsKey(book.Id);
+		}
+
+		public List<NetworkBookItem> list() {
+			return Collections.unmodifiableList(myList);
+		}
+	}
 
 	public LitResAuthenticationManager(OPDSNetworkLink link) {
 		super(link);
@@ -76,8 +101,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			myFullyInitialized = false;
 		}
 		myInitializedDataSid = null;
-		myPurchasedBookMap.clear();
-		myPurchasedBookList.clear();
+		myPurchasedBooks.clear();
 	}
 
 	@Override
@@ -178,7 +202,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public synchronized boolean needPurchase(NetworkBookItem book) {
-		return !myPurchasedBookMap.containsKey(book.Id);
+		return !myPurchasedBooks.contains(book);
 	}
 
 	@Override
@@ -216,16 +240,14 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 				if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(code)) {
 					logOut(false);
 				} else if (NetworkException.ERROR_PURCHASE_ALREADY_PURCHASED.equals(code)) {
-					myPurchasedBookMap.put(book.Id, book);
-					myPurchasedBookList.add(0, book);
+					myPurchasedBooks.addToStart(book);
 				}
 				throw exception;
 			}
 			if (xmlReader.BookId == null || !xmlReader.BookId.equals(book.Id)) {
 				throw new ZLNetworkException(NetworkException.ERROR_SOMETHING_WRONG, Link.getSiteName());
 			}
-			myPurchasedBookMap.put(book.Id, book);
-			myPurchasedBookList.add(0, book);
+			myPurchasedBooks.addToStart(book);
 			final BasketItem basket = book.Link.getBasketItem();
 			if (basket != null) {
 				basket.remove(book);
@@ -292,7 +314,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 	@Override
 	public synchronized List<NetworkBookItem> purchasedBooks() {
-		return Collections.unmodifiableList(myPurchasedBookList);
+		return myPurchasedBooks.list();
 	}
 
 	@Override
@@ -358,7 +380,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 
 		final LitResNetworkRequest request = new LitResNetworkRequest(
 			LitResUtil.url(Link, query),
-			new LitResXMLReader((OPDSNetworkLink)Link, new LinkedList<NetworkItem>())
+			new LitResXMLReader((OPDSNetworkLink)Link)
 		);
 		request.addPostParameter("my", "1");
 		request.addPostParameter("sid", sid);
@@ -366,20 +388,14 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	private void loadPurchasedBooksOnError() {
-		myPurchasedBookMap.clear();
-		myPurchasedBookList.clear();
+		myPurchasedBooks.clear();
 	}
 
 	private void loadPurchasedBooksOnSuccess(LitResNetworkRequest purchasedBooksRequest) {
 		LitResXMLReader reader = (LitResXMLReader)purchasedBooksRequest.Reader;
-		myPurchasedBookMap.clear();
-		myPurchasedBookList.clear();
-		for (NetworkItem item : reader.Books) {
-			if (item instanceof NetworkBookItem) {
-				NetworkBookItem book = (NetworkBookItem)item;
-				myPurchasedBookMap.put(book.Id, book);
-				myPurchasedBookList.add(book);
-			}
+		myPurchasedBooks.clear();
+		for (NetworkBookItem book : reader.Books) {
+			myPurchasedBooks.addToEnd(book);
 		}
 	}
 
@@ -406,7 +422,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
-		final LitResPasswordRecoveryXMLReader xmlReader =  new LitResPasswordRecoveryXMLReader(Link.getSiteName());
+		final LitResPasswordRecoveryXMLReader xmlReader = new LitResPasswordRecoveryXMLReader(Link.getSiteName());
 		final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
 		request.addPostParameter("mail", email);
 		ZLNetworkManager.Instance().perform(request);
