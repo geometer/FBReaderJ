@@ -25,6 +25,7 @@ import android.app.AlertDialog;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
@@ -106,7 +107,9 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 		try {
 			if (!mgr.isAuthorised(true)) {
-				AccountMenuActivity.runMenu(this, myLink);
+				// FIXME : if uncommented, we get two dialogs when press
+				// "buy book"
+				//AccountMenuActivity.runMenu(this, myLink);
 			}
 		} catch (ZLNetworkException e) {
 		}

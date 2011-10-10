@@ -145,7 +145,11 @@ public class FBReaderOrgAuthenticationManager extends NetworkAuthenticationManag
 	
 	@Override
 	public Money currentAccount() {
-		return new Money(new BigDecimal(100500), "RUB");
+		if (myFullyInitialized) {
+			return new Money(new BigDecimal(100500), "RUB");
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
