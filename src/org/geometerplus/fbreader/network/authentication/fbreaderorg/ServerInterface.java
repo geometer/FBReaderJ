@@ -1,6 +1,7 @@
 package org.geometerplus.fbreader.network.authentication.fbreaderorg;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -8,8 +9,6 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.os.Bundle;
 
 
 public class ServerInterface{
@@ -46,23 +45,16 @@ public class ServerInterface{
 //    define("WRONG_PW", 4);
 //    define("WRONG_DIGEST", 5);
     
-    public static Bundle jsonToBundle(JSONObject json) {
-    	Bundle result = new Bundle();
+    public static HashMap<String, String> jsonToMap(JSONObject json) {
+    	HashMap<String, String> result = new HashMap<String, String>();
     	Iterator<?> jsonKeys = json.keys();
     	while (jsonKeys.hasNext()) {
-    		Object next = jsonKeys.next();
-    		if (next instanceof String) {
-    			String key = (String)next;
-    			if (key.equals(SUCCESS_KEY)) {
-        			result.putBoolean(key, json.optBoolean(key));
-        			continue;
-        		}
-    			if (key.equals(ERROR_CODE)) {
-    				result.putInt(key, json.optInt(key));
-    				continue;
-    			}
-    			result.putString(key, json.optString(key, ""));
-    		}
+    		String next = jsonKeys.next().toString();
+    		try {
+				result.put(next, json.get(next).toString());
+			} catch (JSONException e) {
+				// do nothing 
+			}
     	}
     	return result;
     }
@@ -86,26 +78,26 @@ public class ServerInterface{
 	}
 	
 	
-	public static Bundle ourAuthRegister(String account, String password, String FBId)
+	public static HashMap<String, String> ourAuthRegister(String account, String password, String FBId)
 					throws ZLNetworkException {
 		return ourAuth(account, password, FBId, ApiMethod.REGISTER);
 	}
 
-	public static Bundle ourAuthLogin(String account, String password, String FBId) 
+	public static HashMap<String, String> ourAuthLogin(String account, String password, String FBId) 
 					throws ZLNetworkException {
 		return ourAuth(account, password, FBId, ApiMethod.LOGIN);
 	}
 
-	private static Bundle ourAuth(String account, 
-								   String password, 
-								   String FBId, 
-								   ApiMethod method) 
-									throws ZLNetworkException {
+	private static HashMap<String, String> ourAuth(
+			String account, 
+			String password, 
+			String FBId, 
+			ApiMethod method) throws ZLNetworkException {
 		JSONArray args = new JSONArray();
 		args.put(account);
 		args.put(FBId);
 		args.put(Digests.hashSHA256(password));
-		return jsonToBundle(callAPI(method, args));
+		return jsonToMap(callAPI(method, args));
 	}
 	
 	
