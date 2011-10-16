@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
+import android.app.Activity;
 import android.content.*;
 import android.net.Uri;
 import android.view.*;
@@ -39,6 +40,12 @@ public class AuthorizationMenuActivity extends MenuActivity {
 	public static void runMenu(Context context, INetworkLink link) {
 		context.startActivity(
 			Util.intentByLink(new Intent(context, AuthorizationMenuActivity.class), link)
+		);
+	}
+
+	public static void runMenu(Activity activity, INetworkLink link, int code) {
+		activity.startActivityForResult(
+			Util.intentByLink(new Intent(activity, AuthorizationMenuActivity.class), link), code
 		);
 	}
 

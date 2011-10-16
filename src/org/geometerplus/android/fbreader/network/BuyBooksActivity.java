@@ -104,14 +104,15 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 			return;
 		}
 
+		setContentView(R.layout.buy_book);
+
 		try {
 			if (!mgr.isAuthorised(true)) {
-				AuthorizationMenuActivity.runMenu(this, myLink);
+				findViewById(R.id.buy_book_buttons).setVisibility(View.GONE);
+				AuthorizationMenuActivity.runMenu(this, myLink, 1);
 			}
 		} catch (ZLNetworkException e) {
 		}
-
-		setContentView(R.layout.buy_book);
 
 		myCost = calculateCost();
 		if (myCost == null) {
@@ -125,6 +126,12 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		setupUI(AuthorizationState.Authorized);
 
 		NetworkLibrary.Instance().addChangeListener(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		findViewById(R.id.buy_book_buttons).setVisibility(View.VISIBLE);
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private static enum AuthorizationState {
