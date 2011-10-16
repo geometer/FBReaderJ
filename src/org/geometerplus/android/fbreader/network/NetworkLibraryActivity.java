@@ -296,11 +296,11 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 			fillOptionsMenuList();
 		}
 
-//		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		for (Action a : myOptionsMenuActions) {
 			final MenuItem item = menu.add(0, a.Code, Menu.NONE, "");
 			if (a.IconId != -1) {
 				item.setIcon(a.IconId);
+				item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 			}
 		}
 		return true;
@@ -356,6 +356,7 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 						updateLoadingProgress();
 						getListAdapter().replaceAll(getCurrentTree().subTrees());
 						getListView().invalidateViews();
+						invalidateOptionsMenu();
 						break;
 					case InitializationFailed:
 						showInitLibraryDialog((String)params[0]);
