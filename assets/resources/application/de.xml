@@ -84,6 +84,7 @@
 		<node name="buy" value="(%s) kaufen"/>
 		<node name="addToBasket" value="Zum Warenkorb hinzufügen"/>
 		<node name="removeFromBasket" value="Aus dem Warenkorb löschen"/>
+		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
 		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Im Browser öffnen"/>
@@ -94,6 +95,7 @@
 		<node name="topup" value="Konto aufladen (derzeit: %s)"/>
 		<node name="topupTitle" value="Konto aufladen"/>
 		<node name="topupViaBrowser" value="Seite im Browser öffnen"/>
+		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
 		<node name="topupSummary" value="Derzeit: %s"/>
 		<node name="basket" value="Basket" toBeTranslated="true"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
@@ -130,6 +132,17 @@
 			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Buchkauf"/>
+		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
+		<node name="confirm" value="Wollen Sie das Buch&#10;&#8220;%s&#8221;&#10;wirklich kaufen?"/>
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
+		<node name="alreadyBought" value="Buch wurde schon gekauft"/>
+		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
+		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Buchinformation"/>
@@ -245,6 +258,9 @@
 			<node name="editInfo" value="Bearbeiten"/>
 			<node name="reloadInfo" value="Aktualisieren"/>
 			<node name="topup" value="Konto aufladen"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
+			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin installieren"/>
@@ -628,6 +644,7 @@
 			<node name="loadingCatalogInfo" value="Kataloginformation wird geladen. Bitte warten..."/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler."/>
@@ -666,20 +683,6 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Sprachfilter"/>
-		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="Buchkauf"/>
-			<node name="message" value="Wollen Sie das Buch&#10;&#8220;%s&#8221;&#10;wirklich kaufen?"/>
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="Buchkauf"/>
-			<node name="message" value="Buch wurde schon gekauft"/>
-		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Select action" toBeTranslated="true"/>
-			<node name="signIn" value="Sign in" toBeTranslated="true"/>
-			<node name="signUp" value="Sign up" toBeTranslated="true"/>
-			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

@@ -37,6 +37,7 @@ import org.geometerplus.android.fbreader.FBReader;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
+import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
 import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 
@@ -103,7 +104,8 @@ public abstract class NetworkBookActions {
 		return 0;
 	}
 
-	public static List<NBAction> getContextMenuActions(Activity activity, NetworkBookItem book, BookDownloaderServiceConnection connection) {
+	public static List<NBAction> getContextMenuActions(Activity activity, NetworkBookTree tree, BookDownloaderServiceConnection connection) {
+		final NetworkBookItem book = tree.Book;
 		List<NBAction> actions = new LinkedList<NBAction>();
 		if (useFullReferences(book)) {
 			final BookUrlInfo reference = book.reference(UrlInfo.Type.Book);
@@ -136,7 +138,12 @@ public abstract class NetworkBookActions {
 			final BasketItem basketItem = book.Link.getBasketItem();
 			if (basketItem != null) {
 				if (basketItem.contains(book)) {
-					actions.add(new NBAction(activity, ActionCode.REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
+					if (tree.Parent instanceof BasketCatalogTree ||
+						activity instanceof NetworkLibraryActivity) {
+						actions.add(new NBAction(activity, ActionCode.REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
+					} else {
+						actions.add(new NBAction(activity, ActionCode.OPEN_BASKET, "openBasket"));
+					}
 				} else {
 					actions.add(new NBAction(activity, ActionCode.ADD_BOOK_TO_BASKET, "addToBasket"));
 				}
@@ -146,36 +153,41 @@ public abstract class NetworkBookActions {
 	}
 
 	private static boolean runActionStatic(Activity activity, NetworkBookTree tree, int actionCode) {
+		final NetworkBookItem book = tree.Book;
 		switch (actionCode) {
 			case ActionCode.DOWNLOAD_BOOK:
-				Util.doDownloadBook(activity, tree.Book, false);
+				Util.doDownloadBook(activity, book, false);
 				return true;
 			case ActionCode.DOWNLOAD_DEMO:
-				Util.doDownloadBook(activity, tree.Book, true);
+				Util.doDownloadBook(activity, book, true);
 				return true;
 			case ActionCode.READ_BOOK:
-				doReadBook(activity, tree.Book, false);
+				doReadBook(activity, book, false);
 				return true;
 			case ActionCode.READ_DEMO:
-				doReadBook(activity, tree.Book, true);
+				doReadBook(activity, book, true);
 				return true;
 			case ActionCode.DELETE_BOOK:
-				tryToDeleteBook(activity, tree.Book, false);
+				tryToDeleteBook(activity, book, false);
 				return true;
 			case ActionCode.DELETE_DEMO:
-				tryToDeleteBook(activity, tree.Book, true);
+				tryToDeleteBook(activity, book, true);
 				return true;
 			case ActionCode.BUY_DIRECTLY:
 				doBuyDirectly(activity, tree);
 				return true;
 			case ActionCode.BUY_IN_BROWSER:
-				doBuyInBrowser(activity, tree.Book);
+				doBuyInBrowser(activity, book);
 				return true;
 			case ActionCode.ADD_BOOK_TO_BASKET:
-				tree.Book.Link.getBasketItem().add(tree.Book);
+				book.Link.getBasketItem().add(book);
 				return true;
 			case ActionCode.REMOVE_BOOK_FROM_BASKET:
-				tree.Book.Link.getBasketItem().remove(tree.Book);
+				book.Link.getBasketItem().remove(book);
+				return true;
+			case ActionCode.OPEN_BASKET:
+				new OpenCatalogAction(activity)
+					.run(NetworkLibrary.Instance().getFakeBasketTree(book.Link.getBasketItem()));
 				return true;
 		}
 		return false;
@@ -232,19 +244,7 @@ public abstract class NetworkBookActions {
 	}
 
 	private static void doBuyDirectly(Activity activity, NetworkBookTree tree) {
-		final NetworkAuthenticationManager mgr = tree.Book.Link.authenticationManager();
-		if (mgr == null) {
-			return;
-		}
-
-		try {
-			if (mgr.isAuthorised(true)) {
-				BuyBooksActivity.run(activity, tree);
-			} else {
-				AccountMenuActivity.runMenu(activity, tree.Book.Link);
-			}
-		} catch (ZLNetworkException e) {
-		}
+		BuyBooksActivity.run(activity, tree);
 	}
 
 	private static void doBuyInBrowser(Activity activity, final NetworkBookItem book) {

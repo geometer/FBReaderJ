@@ -76,7 +76,12 @@ public class SQLiteCookieDatabase extends CookieDatabase {
 			"DELETE FROM CookiePort WHERE cookie_id = ?"
 		);
 
-		final long time = new Date().getTime();
+		removeObsolete(new Date());
+	}
+
+	@Override
+	protected void removeObsolete(Date date) {
+		final long time = date.getTime();
 		myDatabase.execSQL(
 			"DELETE FROM CookiePort WHERE cookie_id IN " +
 			"(SELECT cookie_id FROM Cookie WHERE date_of_expiration <= " + time + ")"
@@ -87,7 +92,13 @@ public class SQLiteCookieDatabase extends CookieDatabase {
 	}
 
 	@Override
-	protected void saveCookies(Collection<Cookie> cookies) {
+	protected void removeAll() {
+		myDatabase.execSQL("DELETE FROM CookiePort");
+		myDatabase.execSQL("DELETE FROM Cookie");
+	}
+
+	@Override
+	protected void saveCookies(List<Cookie> cookies) {
 		for (Cookie c : cookies) {
 			if (!c.isPersistent()) {
 				continue;
@@ -112,7 +123,7 @@ public class SQLiteCookieDatabase extends CookieDatabase {
 	}
 
 	@Override
-	protected Collection<Cookie> loadCookies() {
+	protected List<Cookie> loadCookies() {
 		final List<Cookie> list = new LinkedList<Cookie>();
 		final Cursor cursor = myDatabase.rawQuery(
 			"SELECT cookie_id,host,path,name,value,date_of_expiration,secure FROM Cookie", null

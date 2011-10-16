@@ -48,20 +48,30 @@ public abstract class NetworkAuthenticationManager {
 
 
 	public final INetworkLink Link;
-	public final ZLStringOption UserNameOption;
+	protected final ZLStringOption UserNameOption;
 
 	protected NetworkAuthenticationManager(INetworkLink link) {
 		Link = link;
 		UserNameOption = new ZLStringOption(link.getSiteName(), "userName", "");
 	}
 
+	public String getUserName() {
+		return UserNameOption.getValue();
+	}
+
+	public String getVisibleUserName() {
+		final String username = getUserName();
+		return username.startsWith("fbreader-auto-") ? "auto" : username;
+	}
+
 	/*
 	 * Common manager methods
 	 */
 	public abstract boolean isAuthorised(boolean useNetwork /* = true */) throws ZLNetworkException;
-	public abstract void authorise(String password) throws ZLNetworkException;
+	public abstract void authorise(String username, String password) throws ZLNetworkException;
 	public abstract void logOut();
 	public abstract BookUrlInfo downloadReference(NetworkBookItem book);
+	public abstract void refreshAccountInformation() throws ZLNetworkException;
 
 	public final boolean mayBeAuthorised(boolean useNetwork) {
 		try {
@@ -105,13 +115,6 @@ public abstract class NetworkAuthenticationManager {
 	}
 	public Map<String,String> getTopupData() {
 		return Collections.emptyMap();
-	}
-
-	/*
-     * sign up
-	 */
-	public Map<String,String> getAccountData() {
-		return Collections.singletonMap("signupUrl", Link.getUrl(UrlInfo.Type.SignUp));
 	}
 
 	/*
