@@ -356,6 +356,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		final View rootView = findViewById(R.id.network_book_root);
 		rootView.invalidate();
 		rootView.requestLayout();
+		invalidateOptionsMenu();
 	}
 
 	@Override
