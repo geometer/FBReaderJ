@@ -1,4 +1,7 @@
-honeycomb
+honeycomb:
+  icons
+  network protection
+  TTS
 do we cache cover images?
 
 states:
