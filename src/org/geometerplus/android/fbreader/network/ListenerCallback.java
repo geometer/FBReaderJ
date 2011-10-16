@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticat
 
 public class ListenerCallback extends BroadcastReceiver implements UserRegistrationConstants {
 	@Override
-	public void onReceive(Context context, Intent intent) {
+	public void onReceive(Context context, final Intent intent) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
 		if ("android.fbreader.action.network.SIGNIN".equals(intent.getAction())) {
@@ -40,11 +40,15 @@ public class ListenerCallback extends BroadcastReceiver implements UserRegistrat
 			if (link != null) {
 				final NetworkAuthenticationManager mgr = link.authenticationManager();
 				if (mgr instanceof LitResAuthenticationManager) {
-					try {
-						processSignup((LitResAuthenticationManager)mgr, intent);
-					} catch (ZLNetworkException e) {
-						e.printStackTrace();
-					}
+					new Thread(new Runnable() {
+						public void run() {
+							try {
+								processSignup((LitResAuthenticationManager)mgr, intent);
+							} catch (ZLNetworkException e) {
+								e.printStackTrace();
+							}
+						}
+					}).start();
 				}
 			}
 		} else {

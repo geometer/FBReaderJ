@@ -54,6 +54,10 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			myList.clear();
 		}
 
+		public boolean isEmpty() {
+			return myList.isEmpty();
+		}
+
 		public void addToStart(NetworkBookItem book) {
 			myMap.put(book.Id, book);
 			myList.add(0, book);
@@ -81,16 +85,27 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		myCanRebillOption = new ZLBooleanOption(link.getSiteName(), "canRebill", false);
 	}
 
-	public synchronized void initUser(String username, String sid, String userId, boolean canRebill) {
+	public synchronized boolean initUser(String username, String sid, String userId, boolean canRebill) {
+		boolean changed = false;
 		if (username == null) {
 			username = UserNameOption.getValue();
-		} else {
+		} else if (!username.equals(UserNameOption.getValue())) {
+			changed = true;
 			UserNameOption.setValue(username);
 		}
+		changed |= !sid.equals(mySidOption.getValue());
 		mySidOption.setValue(sid);
+		changed |= !userId.equals(myUserIdOption.getValue());
 		myUserIdOption.setValue(userId);
+		changed |= canRebill != myCanRebillOption.getValue();
 		myCanRebillOption.setValue(canRebill);
-		myFullyInitialized = !"".equals(username) && !"".equals(sid) && !"".equals(userId);
+		final boolean fullyInitialized =
+			!"".equals(username) && !"".equals(sid) && !"".equals(userId);
+		if (fullyInitialized != myFullyInitialized) {
+			changed = true;
+			myFullyInitialized = fullyInitialized;
+		}
+		return changed;
 	}
 
 	@Override
@@ -99,17 +114,20 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	private synchronized void logOut(boolean full) {
-		if ("".equals(mySidOption.getValue())) {
-			return;
-		}
+		boolean changed = false;
 		if (full) {
-			initUser(null, "", "", false);
+			changed = initUser(null, "", "", false);
 		} else {
+			changed = myFullyInitialized;
 			myFullyInitialized = false;
 		}
+		changed |= myInitializedDataSid != null;
 		myInitializedDataSid = null;
+		changed |= !myPurchasedBooks.isEmpty();
 		myPurchasedBooks.clear();
-		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
+		if (changed) {
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
+		}
 	}
 
 	@Override

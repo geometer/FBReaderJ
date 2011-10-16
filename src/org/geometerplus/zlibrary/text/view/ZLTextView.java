@@ -877,10 +877,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				isVisible = true;
 			}
 			if (newWidth > maxWidth) {
-				if (info.EndElementIndex != startIndex) {
-					break;
-				}
-				if (isHyphenationPossible() && element instanceof ZLTextWord) {
+				if (info.EndElementIndex != startIndex || element instanceof ZLTextWord) {
 					break;
 				}
 			}
@@ -911,7 +908,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 		} while (currentElementIndex != endIndex);
 
-		if (currentElementIndex != endIndex && isHyphenationPossible()) {
+		if (currentElementIndex != endIndex &&
+			(isHyphenationPossible() || info.EndElementIndex == startIndex)) {
 			ZLTextElement element = paragraphCursor.getElement(currentElementIndex);
 			if (element instanceof ZLTextWord) {
 				final ZLTextWord word = (ZLTextWord)element;
