@@ -246,11 +246,10 @@ public class AuthenticationActivity extends Activity {
 
 	private void runCustomAuthentication(final String username, final String password) {
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-		mgr.UserNameOption.setValue(username);
 		final Runnable runnable = new Runnable() {
 			public void run() {
 				try {
-					mgr.authorise(password);
+					mgr.authorise(username, password);
 					if (mgr.needsInitialization()) {
 						mgr.initialize();
 					}
