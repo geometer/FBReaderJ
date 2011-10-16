@@ -67,7 +67,7 @@ public class SignOutAction extends Action {
 	public String getOptionsLabel(NetworkTree tree) {
 		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		final String userName =
-			mgr != null && mgr.mayBeAuthorised(false) ? mgr.UserNameOption.getValue() : "";
+			mgr != null && mgr.mayBeAuthorised(false) ? mgr.getVisibleUserName() : "";
 		return super.getOptionsLabel(tree).replace("%s", userName);
 	}
 
@@ -75,7 +75,7 @@ public class SignOutAction extends Action {
 	public String getContextLabel(NetworkTree tree) {
 		final NetworkAuthenticationManager mgr = tree.getLink().authenticationManager();
 		final String userName =
-			mgr != null && mgr.mayBeAuthorised(false) ? mgr.UserNameOption.getValue() : "";
+			mgr != null && mgr.mayBeAuthorised(false) ? mgr.getVisibleUserName() : "";
 		return super.getContextLabel(tree).replace("%s", userName);
 	}
 }
