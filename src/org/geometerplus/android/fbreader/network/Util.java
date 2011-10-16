@@ -95,7 +95,7 @@ public abstract class Util implements UserRegistrationConstants {
 
 		final Intent intent = intentByLink(new Intent(activity, AuthenticationActivity.class), link);
 		AuthenticationActivity.registerRunnable(intent, onSuccess);
-		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.UserNameOption.getValue());
+		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.getUserName());
 		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
 		intent.putExtra(AuthenticationActivity.CUSTOM_AUTH_KEY, true);
 		activity.startActivity(intent);

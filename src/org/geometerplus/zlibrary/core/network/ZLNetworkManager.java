@@ -78,42 +78,41 @@ public class ZLNetworkManager {
 	};
 
 	private final HttpContext myHttpContext = new BasicHttpContext();
-	private final CookieStore myCookieStore = new BasicCookieStore() {
-		private volatile boolean myIsInitialized;
-
-		@Override
+	private final CookieStore myCookieStore = new CookieStore() {
 		public synchronized void addCookie(Cookie cookie) {
-			super.addCookie(cookie);
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
 				db.saveCookies(Collections.singletonList(cookie));
 			}
 		}
 
-		@Override
 		public synchronized void addCookies(Cookie[] cookies) {
-			super.addCookies(cookies);
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
 				db.saveCookies(Arrays.asList(cookies));
 			}
 		}
 
-		@Override
 		public synchronized void clear() {
-			super.clear();
-			// TODO: clear database
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.removeAll();
+			}
 		}
 
-		@Override
+		public synchronized boolean clearExpired(Date date) {
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.removeObsolete(date);
+				// TODO: detect if any Cookie has been removed
+				return true;
+			}
+			return false;
+		}
+
 		public synchronized List<Cookie> getCookies() {
 			final CookieDatabase db = CookieDatabase.getInstance();
-			if (!myIsInitialized && db != null) {
-				myIsInitialized = true;
-				final Collection<Cookie> fromDb = db.loadCookies();
-				super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
-			}
-			return super.getCookies();
+			return db != null ? db.loadCookies() : Collections.<Cookie>emptyList();
 		}
 	};
 

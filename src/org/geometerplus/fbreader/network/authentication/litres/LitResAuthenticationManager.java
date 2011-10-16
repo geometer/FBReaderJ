@@ -81,12 +81,16 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 		myCanRebillOption = new ZLBooleanOption(link.getSiteName(), "canRebill", false);
 	}
 
-	public synchronized void initUser(String userName, String sid, String userId, boolean canRebill) {
-		UserNameOption.setValue(userName);
+	public synchronized void initUser(String username, String sid, String userId, boolean canRebill) {
+		if (username == null) {
+			username = UserNameOption.getValue();
+		} else {
+			UserNameOption.setValue(username);
+		}
 		mySidOption.setValue(sid);
 		myUserIdOption.setValue(userId);
 		myCanRebillOption.setValue(canRebill);
-		myFullyInitialized = !"".equals(userName) && !"".equals(sid) && !"".equals(userId);
+		myFullyInitialized = !"".equals(username) && !"".equals(sid) && !"".equals(userId);
 	}
 
 	@Override
@@ -95,13 +99,17 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	private synchronized void logOut(boolean full) {
+		if ("".equals(mySidOption.getValue())) {
+			return;
+		}
 		if (full) {
-			initUser(UserNameOption.getValue(), "", "", false);
+			initUser(null, "", "", false);
 		} else {
 			myFullyInitialized = false;
 		}
 		myInitializedDataSid = null;
 		myPurchasedBooks.clear();
+		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
 	}
 
 	@Override
@@ -136,7 +144,7 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 			}
 			request.addPostParameter("sid", sid);
 			ZLNetworkManager.Instance().perform(request);
-			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
+			initUser(null, xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 			return true;
 		} catch (ZLNetworkException e) {
 			if (NetworkException.ERROR_AUTHENTICATION_FAILED.equals(e.getCode())) {
@@ -148,38 +156,30 @@ public class LitResAuthenticationManager extends NetworkAuthenticationManager {
 	}
 
 	@Override
-	public void authorise(String password) throws ZLNetworkException {
+	public void authorise(String username, String password) throws ZLNetworkException {
 		final Map<String,String> params = new HashMap<String,String>();
 		final String url = parseUrl(Link.getUrl(UrlInfo.Type.SignIn), params);
 		if (url == null) {
 			throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 		}
-		final String login;
 		synchronized (this) {
-			login = UserNameOption.getValue();
+			UserNameOption.setValue(username);
 		}
 
-		final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.getSiteName());
-
-		ZLNetworkException exception = null;
 		try {
+			final LitResLoginXMLReader xmlReader = new LitResLoginXMLReader(Link.getSiteName());
 			final LitResNetworkRequest request = new LitResNetworkRequest(url, xmlReader);
 			for (Map.Entry<String,String> entry : params.entrySet()) {
 				request.addPostParameter(entry.getKey(), entry.getValue());
 			}
-			request.addPostParameter("login", login);
+			request.addPostParameter("login", username);
 			request.addPostParameter("pwd", password);
 			ZLNetworkManager.Instance().perform(request);
+			NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
+			initUser(null, xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
 		} catch (ZLNetworkException e) {
-			exception = e;
-		}
-
-		synchronized (this) {
-			if (exception != null) {
-				logOut(false);
-				throw exception;
-			}
-			initUser(UserNameOption.getValue(), xmlReader.Sid, xmlReader.UserId, xmlReader.CanRebill);
+			logOut(false);
+			throw e;
 		}
 	}
 

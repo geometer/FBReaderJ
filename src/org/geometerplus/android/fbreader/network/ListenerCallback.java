@@ -42,7 +42,6 @@ public class ListenerCallback extends BroadcastReceiver implements UserRegistrat
 				if (mgr instanceof LitResAuthenticationManager) {
 					try {
 						processSignup((LitResAuthenticationManager)mgr, intent);
-						library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SignedIn);
 					} catch (ZLNetworkException e) {
 						e.printStackTrace();
 					}
@@ -64,7 +63,10 @@ public class ListenerCallback extends BroadcastReceiver implements UserRegistrat
 		//	throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
 		//}
 		try {
-			mgr.authorise(data.getStringExtra(USER_REGISTRATION_PASSWORD));
+			mgr.authorise(
+				data.getStringExtra(USER_REGISTRATION_USERNAME),
+				data.getStringExtra(USER_REGISTRATION_PASSWORD)
+			);
 			mgr.initialize();
 		} catch (ZLNetworkException e) {
 			mgr.logOut();
