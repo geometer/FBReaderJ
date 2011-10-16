@@ -104,14 +104,15 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 			return;
 		}
 
+		setContentView(R.layout.buy_book);
+
 		try {
 			if (!mgr.isAuthorised(true)) {
-				AuthorizationMenuActivity.runMenu(this, myLink);
+				findViewById(R.id.buy_book_buttons).setVisibility(View.GONE);
+				AuthorizationMenuActivity.runMenu(this, myLink, 1);
 			}
 		} catch (ZLNetworkException e) {
 		}
-
-		setContentView(R.layout.buy_book);
 
 		myCost = calculateCost();
 		if (myCost == null) {
@@ -127,12 +128,26 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		NetworkLibrary.Instance().addChangeListener(this);
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		findViewById(R.id.buy_book_buttons).setVisibility(View.VISIBLE);
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 	private static enum AuthorizationState {
 		Authorized,
 		NotAuthorized
 	};
 
-	private void setupUI(AuthorizationState state) {
+	private void setupUI(final AuthorizationState state) {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				setupUIInternal(state);
+			}
+		});
+	}
+
+	private void setupUIInternal(AuthorizationState state) {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 
@@ -267,6 +282,14 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	}
 
 	private void refreshAccountInformation() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				refreshAccountInformationInternal();
+			}
+		});
+	}
+
+	private void refreshAccountInformationInternal() {
 		UIUtil.wait(
 			"updatingAccountInformation",
 			new Runnable() {
@@ -348,15 +371,11 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 	// method from NetworkLibrary.ChangeListener
 	public void onLibraryChanged(final NetworkLibrary.ChangeListener.Code code, final Object[] params) {
-		runOnUiThread(new Runnable() {
-			public void run() {
-				switch (code) {
-					case SignedIn:
-						updateAuthorizationState();
-						break;
-				}
-			}
-		});
+		switch (code) {
+			case SignedIn:
+				updateAuthorizationState();
+				break;
+		}
 	}
 
 	private void updateAuthorizationState() {

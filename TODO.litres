@@ -1,6 +1,5 @@
-auto-sign-in
-resources synchronization
-honeycomb
+honeycomb:
+  TTS
 do we cache cover images?
 
 states:
