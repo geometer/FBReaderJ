@@ -38,7 +38,7 @@ public class ATOMFeedMetadata extends ATOMCommonAttributes {
 	public CharSequence Title;    // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
 
-	protected ATOMFeedMetadata(ZLStringMap source) {
+	public ATOMFeedMetadata(ZLStringMap source) {
 		super(source);
 	}
 }

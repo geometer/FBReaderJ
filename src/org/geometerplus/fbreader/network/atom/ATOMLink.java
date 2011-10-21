@@ -29,7 +29,7 @@ public class ATOMLink extends ATOMCommonAttributes {
 	public static final String TITLE = "title";
 	public static final String LENGTH = "length";
 
-	protected ATOMLink(ZLStringMap source) {
+	public ATOMLink(ZLStringMap source) {
 		super(source);
 		readAttribute(HREF, source);
 		readAttribute(REL, source);
