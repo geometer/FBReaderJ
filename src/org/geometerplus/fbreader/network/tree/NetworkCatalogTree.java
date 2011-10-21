@@ -89,7 +89,7 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return Item.Title.toString();
+		return Item.Title != null ? Item.Title.toString() : "";
 	}
 
 	@Override
