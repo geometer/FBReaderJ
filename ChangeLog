@@ -1,3 +1,7 @@
+===== 1.2.1 (Oct ??, 2011) =====
+* Fixed network library crash for buy links with no price
+* x86 devices support
+
 ===== 1.2.0 (Oct 16, 2011) =====
 * Separate search for each network catalog
 * Basket in LitRes e-book store
