@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOMEntry> extends ZLXMLReaderAdapter {
+public abstract class ATOMXMLReader<MetadataType extends ATOMFeedMetadata, EntryType extends ATOMEntry> extends ZLXMLReaderAdapter {
 	public static String intern(String str) {
 		if (str == null || str.length() == 0) {
 			return null;
@@ -34,10 +34,10 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 		return str.intern();
 	}
 
-	private final ATOMFeedHandler<T1, T2> myFeedHandler;
+	private final ATOMFeedHandler<MetadataType, EntryType> myFeedHandler;
 
-	private T1 myFeed;
-	private T2 myEntry;
+	private MetadataType myFeed;
+	private EntryType myEntry;
 	private ATOMAuthor myAuthor;
 	private ATOMId myId;
 	private ATOMLink myLink;
@@ -99,20 +99,20 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
 	protected boolean myFeedMetadataProcessed;
 
-	public ATOMXMLReader(ATOMFeedHandler<T1, T2> handler, boolean readEntryNotFeed) {
+	public ATOMXMLReader(ATOMFeedHandler<MetadataType, EntryType> handler, boolean readEntryNotFeed) {
 		myFeedHandler = handler;
 		myState = readEntryNotFeed ? FEED : START;
 	}
 
-	protected final ATOMFeedHandler<T1, T2> getATOMFeedHandler() {
+	protected final ATOMFeedHandler<MetadataType, EntryType> getATOMFeedHandler() {
 		return myFeedHandler;
 	}
 
-	protected final T1 getATOMFeed() {
+	protected final MetadataType getATOMFeed() {
 		return myFeed;
 	}
 
-	protected final T2 getATOMEntry() {
+	protected final EntryType getATOMEntry() {
 		return myEntry;
 	}
 
@@ -175,8 +175,8 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 		return new String(bufferContentArray);
 	}
 
-	protected abstract T1 createFeed(ZLStringMap attributes);
-	protected abstract T2 createEntry(ZLStringMap attributes);
+	protected abstract MetadataType createFeed(ZLStringMap attributes);
+	protected abstract EntryType createEntry(ZLStringMap attributes);
 
 	protected ATOMLink createLink(ZLStringMap attributes) {
 		return new ATOMLink(attributes);
