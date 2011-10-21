@@ -54,13 +54,13 @@ public class NetworkSeriesTree extends NetworkTree {
 		int count = 0;
 
 		Set<NetworkBookItem.AuthorData> authorSet = new TreeSet<NetworkBookItem.AuthorData>();
-		for (FBTree tree: subTrees()) {
+		for (FBTree tree : subTrees()) {
 			if (!(tree instanceof NetworkBookTree)) {
 				continue;
 			}
-			final NetworkBookItem book = ((NetworkBookTree) tree).Book;
+			final NetworkBookItem book = ((NetworkBookTree)tree).Book;
 
-			for (NetworkBookItem.AuthorData author: book.Authors) {
+			for (NetworkBookItem.AuthorData author : book.Authors) {
 				if (!authorSet.contains(author)) {
 					authorSet.add(author);
 					if (count++ > 0) {
@@ -78,9 +78,9 @@ public class NetworkSeriesTree extends NetworkTree {
 
 	@Override
 	protected ZLImage createCover() {
-		for (FBTree tree: subTrees()) {
+		for (FBTree tree : subTrees()) {
 			if (tree instanceof NetworkBookTree) {
-				return ((NetworkBookTree) tree).createCover();
+				return ((NetworkBookTree)tree).createCover();
 			}
 		}
 		return null;
