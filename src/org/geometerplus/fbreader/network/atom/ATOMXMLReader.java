@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-public abstract class ATOMXMLReader<MetadataType extends ATOMFeedMetadata,EntryType extends ATOMEntry> extends ZLXMLReaderAdapter {
+public class ATOMXMLReader<MetadataType extends ATOMFeedMetadata,EntryType extends ATOMEntry> extends ZLXMLReaderAdapter {
 	public static String intern(String str) {
 		if (str == null || str.length() == 0) {
 			return null;
@@ -175,20 +175,6 @@ public abstract class ATOMXMLReader<MetadataType extends ATOMFeedMetadata,EntryT
 		return new String(bufferContentArray);
 	}
 
-	/*
-	protected ATOMFeedMetadata createFeed(ZLStringMap attributes) {
-		return new ATOMFeedMetadata(attributes);
-	}
-
-	protected ATOMEntry createEntry(ZLStringMap attributes) {
-		return new ATOMEntry(attributes);
-	}
-
-	protected ATOMLink createLink(ZLStringMap attributes) {
-		return new ATOMLink(attributes);
-	}
-	*/
-
 	public boolean startElementHandler(
 		final String ns, final String tag,
 		final ZLStringMap attributes, final String bufferContent
@@ -215,7 +201,7 @@ public abstract class ATOMXMLReader<MetadataType extends ATOMFeedMetadata,EntryT
 						myIcon = new ATOMIcon(attributes);
 						myState = F_ICON;
 					} else if (tag == TAG_LINK) {
-						myLink = myFeedHandler.createLink(attributes);			// TODO
+						myLink = myFeedHandler.createLink(attributes); // TODO
 						myState = F_LINK;
 					} else if (tag == TAG_CATEGORY) {
 						myCategory = new ATOMCategory(attributes);
