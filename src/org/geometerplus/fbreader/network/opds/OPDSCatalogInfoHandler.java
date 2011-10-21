@@ -25,9 +25,8 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 import org.geometerplus.fbreader.network.atom.ATOMLink;
-import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 
-class OPDSCatalogInfoHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
+class OPDSCatalogInfoHandler extends AbstractOPDSFeedHandler {
 	public boolean FeedStarted;
 	public String Icon;
 	public CharSequence Title;

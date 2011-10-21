@@ -78,21 +78,6 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 	private static final String FBREADER_TAG_VIEW = "view";
 
 	@Override
-	protected OPDSFeedMetadata createFeed(ZLStringMap attributes) {
-		return new OPDSFeedMetadata(attributes);
-	}
-
-	@Override
-	protected OPDSLink createLink(ZLStringMap attributes) {
-		return new OPDSLink(attributes);
-	}
-
-	@Override
-	protected OPDSEntry createEntry(ZLStringMap attributes) {
-		return new OPDSEntry(attributes);
-	}
-
-	@Override
 	public boolean startElementHandler(String ns, String tag, ZLStringMap attributes, String bufferContent) {
 		switch (myState) {
 			case FEED:
