@@ -17,22 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.atom;
+package org.geometerplus.fbreader.network.opds;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-public interface ATOMFeedHandler<MetadataType extends ATOMFeedMetadata,EntryType extends ATOMEntry> {
-	void processFeedStart();
+import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 
-	// returns true iff reading process should be interrupted
-	boolean processFeedMetadata(MetadataType feed, boolean beforeEntries);
+abstract class AbstractOPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
+	public OPDSFeedMetadata createFeed(ZLStringMap attributes) {
+		return new OPDSFeedMetadata(attributes);
+	}
 
-	// returns true iff reading process should be interrupted
-	boolean processFeedEntry(EntryType entry);
+	public OPDSEntry createEntry(ZLStringMap attributes) {
+		return new OPDSEntry(attributes);
+	}
 
-	void processFeedEnd();
-
-	MetadataType createFeed(ZLStringMap attributes);
-	EntryType createEntry(ZLStringMap attributes);
-	ATOMLink createLink(ZLStringMap attributes);
+	public OPDSLink createLink(ZLStringMap attributes) {
+		return new OPDSLink(attributes);
+	}
 }

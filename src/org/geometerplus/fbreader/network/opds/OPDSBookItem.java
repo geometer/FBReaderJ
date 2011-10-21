@@ -277,7 +277,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return null;
 	}
 
-	private static abstract class SingleEntryFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
+	private static abstract class SingleEntryFeedHandler extends AbstractOPDSFeedHandler {
 		protected final String myUrl;
 
 		SingleEntryFeedHandler(String url) {
