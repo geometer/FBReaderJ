@@ -51,8 +51,5 @@
         <p>หากต้องการรับแจ้งข่าว เมื่อโปรแกรมมีการออกเวอร์ชันใหม่ สามารถลงชื่อเพื่อรับข่าวสารของ <a
                 l:href="http://freshmeat.net/projects/fbreaderj">โปรเจ็คต์ FBreader ที่
                 freshmeat</a></p>
-        <p>ถ้าหากมีข้อสงสัยหรือข้อแนะนำ สามารถติดต่อได้ทาง <a
-                l:href="http://groups.google.com/group/fbreader">กลุ่มผู้ใช้ FBReader ที่ Google
-                Groups</a></p>
     </body>
 </FictionBook>
