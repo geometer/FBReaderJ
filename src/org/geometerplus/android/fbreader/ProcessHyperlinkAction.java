@@ -95,13 +95,15 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		}
 	}
 
-	private void openInBrowser(String urlString) {
+	private void openInBrowser(final String urlString) {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
-		boolean externalUrl = true;
+		final boolean externalUrl;
 		if (BookDownloader.acceptsUri(Uri.parse(urlString))) {
 			intent.setClass(BaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
+		} else {
+			externalUrl = true;
 		}
 		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
 		new Thread(new Runnable() {
