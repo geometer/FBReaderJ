@@ -65,6 +65,12 @@ LOCAL_SRC_FILES := \
 	NativeFormats/fbreader/src/formats/oeb/OEBPlugin.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBTextStream.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfImage.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfPlugin.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfReader.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfReaderStream.cpp \
 	NativeFormats/fbreader/src/formats/txt/PlainTextFormat.cpp \
 	NativeFormats/fbreader/src/formats/txt/TxtBookReader.cpp \
 	NativeFormats/fbreader/src/formats/txt/TxtPlugin.cpp \
