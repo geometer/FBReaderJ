@@ -17,28 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network.atom;
-
-import java.util.*;
+package org.geometerplus.fbreader.network.opds;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-public class ATOMFeedMetadata extends ATOMCommonAttributes {
-	public ATOMId Id;
+import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 
-	public LinkedList<ATOMAuthor> Authors = new LinkedList<ATOMAuthor>();
-	public LinkedList<ATOMCategory> Categories = new LinkedList<ATOMCategory>();
-	//public LinkedList<ATOMContributor> Contributors = new LinkedList<ATOMContributor>();
-	//public ATOMGenerator Generator;
-	public ATOMIcon Icon;
-	public LinkedList<ATOMLink> Links = new LinkedList<ATOMLink>();
-	//public ATOMLogo Logo;
-	//public String Rights;   // TODO: implement ATOMTextConstruct
-	public CharSequence Subtitle; // TODO: implement ATOMTextConstruct
-	public CharSequence Title;    // TODO: implement ATOMTextConstruct
-	public ATOMUpdated Updated;
+abstract class AbstractOPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
+	public OPDSFeedMetadata createFeed(ZLStringMap attributes) {
+		return new OPDSFeedMetadata(attributes);
+	}
 
-	public ATOMFeedMetadata(ZLStringMap source) {
-		super(source);
+	public OPDSEntry createEntry(ZLStringMap attributes) {
+		return new OPDSEntry(attributes);
+	}
+
+	public OPDSLink createLink(ZLStringMap attributes) {
+		return new OPDSLink(attributes);
 	}
 }
