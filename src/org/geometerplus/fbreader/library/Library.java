@@ -66,7 +66,7 @@ public final class Library {
 		return ZLResource.resource("library");
 	}
 
-	private final List<Book> myBooks = new LinkedList<Book>();
+	private final List<Book> myBooks = Collections.synchronizedList(new LinkedList<Book>());
 	private final RootTree myRootTree = new RootTree(this);
 	private boolean myDoGroupTitlesByFirstLetter;
 
@@ -502,7 +502,11 @@ public final class Library {
 		}
 		
 		FirstLevelTree newSearchResults = null;
-		for (Book book : myBooks) {
+		final List<Book> booksCopy;
+		synchronized (myBooks) {
+			booksCopy = new ArrayList<Book>(myBooks);
+		}
+		for (Book book : booksCopy) {
 			if (book.matches(pattern)) {
 				synchronized (this) {
 					if (newSearchResults == null) {

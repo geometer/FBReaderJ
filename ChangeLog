@@ -1,3 +1,10 @@
+===== 1.2.1 (Oct ??, 2011) =====
+* Fixed network library crash for buy links with no price
+* Fixed possible library crash during search
+* Fixed possible crash on opening external links on Android 3.* devices
+* x86 devices support
+* Changed MiniHelp text: google groups are not linked more
+
 ===== 1.2.0 (Oct 16, 2011) =====
 * Separate search for each network catalog
 * Basket in LitRes e-book store

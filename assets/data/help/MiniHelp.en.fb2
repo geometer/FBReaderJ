@@ -8,10 +8,9 @@
 <p><a l:href="fbreader-action://menu">FBReader's Menu</a> allows you to navigate through libraries and to control the application. If your device has no hardware <code>Menu</code> button, touch bottom-center part of the screen to run menu.</p>
 <p>Enjoy!</p>
 <empty-line/>
-<subtitle><p>Related sites</p></subtitle>
+<subtitle><p>Related links</p></subtitle>
 <p>Find more information about FBReader at <a l:href="http://www.fbreader.org/FBReaderJ">our site</a>.</p>
 <p>Follow us at <a l:href="http://twitter.com/fbreader">twitter</a> to learn about new releases and related news.</p>
-<p>Post your questions and/or suggestions in <a l:href="http://groups.google.com/group/fbreader">FBReader group at googlegroups</a>.</p>
 <p><a l:href="http://www.fbreader.org/donation/make.php">Make a donation</a> if you would like to support the development of FBReader.</p>
 <p>Contact authors <a l:href="mailto:contact@geometerplus.com">via e-mail</a>.</p>
 </body>
