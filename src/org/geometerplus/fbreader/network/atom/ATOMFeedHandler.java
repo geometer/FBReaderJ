@@ -19,14 +19,20 @@
 
 package org.geometerplus.fbreader.network.atom;
 
-public interface ATOMFeedHandler<T1 extends ATOMFeedMetadata,T2 extends ATOMEntry> {
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
+
+public interface ATOMFeedHandler<MetadataType extends ATOMFeedMetadata,EntryType extends ATOMEntry> {
 	void processFeedStart();
 
 	// returns true iff reading process should be interrupted
-	boolean processFeedMetadata(T1 feed, boolean beforeEntries);
+	boolean processFeedMetadata(MetadataType feed, boolean beforeEntries);
 
 	// returns true iff reading process should be interrupted
-	boolean processFeedEntry(T2 entry);
+	boolean processFeedEntry(EntryType entry);
 
 	void processFeedEnd();
+
+	MetadataType createFeed(ZLStringMap attributes);
+	EntryType createEntry(ZLStringMap attributes);
+	ATOMLink createLink(ZLStringMap attributes);
 }

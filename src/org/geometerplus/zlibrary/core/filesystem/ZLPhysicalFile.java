@@ -24,7 +24,7 @@ import java.io.*;
 
 public final class ZLPhysicalFile extends ZLFile {
 	private final File myFile;
-	
+
 	ZLPhysicalFile(String path) {
 		this(new File(path));
 	}
@@ -33,22 +33,22 @@ public final class ZLPhysicalFile extends ZLFile {
 		myFile = file;
 		init();
 	}
-	
+
 	@Override
 	public boolean exists() {
 		return myFile.exists();
 	}
-	
+
 	@Override
 	public long size() {
 		return myFile.length();
-	}	
-	
+	}
+
 	@Override
 	public boolean isDirectory() {
 		return myFile.isDirectory();
 	}
-	
+
 	@Override
 	public boolean isReadable() {
 		return myFile.canRead();
@@ -62,7 +62,7 @@ public final class ZLPhysicalFile extends ZLFile {
 	public String getPath() {
 		return myFile.getPath();
 	}
-	
+
 	@Override
 	public String getLongName() {
 		return isDirectory() ? getPath() : myFile.getName();
@@ -77,7 +77,7 @@ public final class ZLPhysicalFile extends ZLFile {
 	public ZLPhysicalFile getPhysicalFile() {
 		return this;
 	}
-    
+ 
 	@Override
 	public InputStream getInputStream() throws IOException {
 		return new FileInputStream(myFile);

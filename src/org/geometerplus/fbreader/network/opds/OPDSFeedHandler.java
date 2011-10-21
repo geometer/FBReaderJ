@@ -28,7 +28,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfIt
 import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
+class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	private final OPDSCatalogItem myCatalog;
 	private final String myBaseURL;
 	private final OPDSCatalogItem.State myData;

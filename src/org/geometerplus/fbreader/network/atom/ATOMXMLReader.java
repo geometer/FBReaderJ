@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOMEntry> extends ZLXMLReaderAdapter {
+public class ATOMXMLReader<MetadataType extends ATOMFeedMetadata,EntryType extends ATOMEntry> extends ZLXMLReaderAdapter {
 	public static String intern(String str) {
 		if (str == null || str.length() == 0) {
 			return null;
@@ -34,10 +34,10 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 		return str.intern();
 	}
 
-	private final ATOMFeedHandler<T1, T2> myFeedHandler;
+	private final ATOMFeedHandler<MetadataType,EntryType> myFeedHandler;
 
-	private T1 myFeed;
-	private T2 myEntry;
+	private MetadataType myFeed;
+	private EntryType myEntry;
 	private ATOMAuthor myAuthor;
 	private ATOMId myId;
 	private ATOMLink myLink;
@@ -99,20 +99,20 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 	protected final FormattedBuffer myFormattedBuffer = new FormattedBuffer();
 	protected boolean myFeedMetadataProcessed;
 
-	public ATOMXMLReader(ATOMFeedHandler<T1, T2> handler, boolean readEntryNotFeed) {
+	public ATOMXMLReader(ATOMFeedHandler<MetadataType,EntryType> handler, boolean readEntryNotFeed) {
 		myFeedHandler = handler;
 		myState = readEntryNotFeed ? FEED : START;
 	}
 
-	protected final ATOMFeedHandler<T1, T2> getATOMFeedHandler() {
+	protected final ATOMFeedHandler<MetadataType,EntryType> getATOMFeedHandler() {
 		return myFeedHandler;
 	}
 
-	protected final T1 getATOMFeed() {
+	protected final MetadataType getATOMFeed() {
 		return myFeed;
 	}
 
-	protected final T2 getATOMEntry() {
+	protected final EntryType getATOMEntry() {
 		return myEntry;
 	}
 
@@ -175,14 +175,6 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 		return new String(bufferContentArray);
 	}
 
-	protected abstract T1 createFeed(ZLStringMap attributes);
-	protected abstract T2 createEntry(ZLStringMap attributes);
-
-	protected ATOMLink createLink(ZLStringMap attributes) {
-		return new ATOMLink(attributes);
-	}
-
-
 	public boolean startElementHandler(
 		final String ns, final String tag,
 		final ZLStringMap attributes, final String bufferContent
@@ -192,7 +184,7 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 			case START:
 				if (ns == XMLNamespaces.Atom && tag == TAG_FEED) {
 					myFeedHandler.processFeedStart();
-					myFeed = createFeed(attributes);
+					myFeed = myFeedHandler.createFeed(attributes);
 					myState = FEED;
 					myFeedMetadataProcessed = false;
 				}
@@ -209,7 +201,7 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 						myIcon = new ATOMIcon(attributes);
 						myState = F_ICON;
 					} else if (tag == TAG_LINK) {
-						myLink = createLink(attributes);			// TODO
+						myLink = myFeedHandler.createLink(attributes); // TODO
 						myState = F_LINK;
 					} else if (tag == TAG_CATEGORY) {
 						myCategory = new ATOMCategory(attributes);
@@ -226,7 +218,7 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 						myUpdated = new ATOMUpdated(attributes);
 						myState = F_UPDATED;
 					} else if (tag == TAG_ENTRY) {
-						myEntry = createEntry(attributes);
+						myEntry = myFeedHandler.createEntry(attributes);
 						myState = F_ENTRY;
 						// Process feed metadata just before first feed entry
 						if (myFeed != null && !myFeedMetadataProcessed) {
@@ -248,7 +240,7 @@ public abstract class ATOMXMLReader<T1 extends ATOMFeedMetadata, T2 extends ATOM
 						myCategory = new ATOMCategory(attributes);
 						myState = FE_CATEGORY;
 					} else if (tag == TAG_LINK) {
-						myLink = createLink(attributes);				// TODO
+						myLink = myFeedHandler.createLink(attributes);				// TODO
 						myState = FE_LINK;
 					} else if (tag == TAG_PUBLISHED) {
 						myPublished = new ATOMPublished(attributes);

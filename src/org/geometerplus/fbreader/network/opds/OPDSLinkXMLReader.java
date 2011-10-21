@@ -33,7 +33,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticat
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSLinkXMLReader extends OPDSXMLReader implements OPDSConstants {
-	private static class FeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
+	private static class FeedHandler extends AbstractOPDSFeedHandler {
 		private final List<INetworkLink> myLinks = new LinkedList<INetworkLink>();
 
 		private String myAuthenticationType;
