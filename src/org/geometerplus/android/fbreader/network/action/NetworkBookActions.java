@@ -134,7 +134,8 @@ public abstract class NetworkBookActions {
 			final BookBuyUrlInfo reference = book.buyInfo();
 			final int id = reference.InfoType == UrlInfo.Type.BookBuy
 				? ActionCode.BUY_DIRECTLY : ActionCode.BUY_IN_BROWSER;
-			actions.add(new NBAction(activity, id, "buy", reference.Price.toString()));
+			final String priceString = reference.Price != null ? reference.Price.toString() : "";
+			actions.add(new NBAction(activity, id, "buy", priceString));
 			final BasketItem basketItem = book.Link.getBasketItem();
 			if (basketItem != null) {
 				if (basketItem.contains(book)) {
