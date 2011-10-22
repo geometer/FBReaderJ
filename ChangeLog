@@ -1,5 +1,6 @@
 ===== 2.0 alpha 1 (Oct ??, 2011) =====
 * RTF support
+* More encodings in the list
 * non-ascii archive entry names issue has been fixed
 
 ===== 2.0 alpha 0 (Aug 06, 2011) =====
