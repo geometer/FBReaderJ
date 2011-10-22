@@ -218,7 +218,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					spacePercentOption, spacingValues, spacingKeys
 				));
 			}
-				
 		}
 
 		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
@@ -372,7 +371,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 				volumeKeysPreferences.setEnabled(isChecked());
 			}
-		});	
+		});
 		volumeKeysPreferences.add(scrollingScreen.addPreference(new ZLCheckBoxPreference(
 			this, scrollingScreen.Resource, "invertVolumeKeys"
 		) {
