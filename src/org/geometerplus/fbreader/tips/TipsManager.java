@@ -25,17 +25,66 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 
+import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.atom.ATOMXMLReader;
 
 public class TipsManager {
 	public static ZLBooleanOption ShowTipsOption =
 		new ZLBooleanOption("tips", "showTips", true);
-	public static final ZLIntegerOption LastShownOption =
-		new ZLIntegerOption("tips", "shownAt", 0);
 
-	public List<Tip> collectTips(ZLFile file) {
-		final TipsFeedHandler handler = new TipsFeedHandler();
-		new ATOMXMLReader(handler, false).read(file);
-		return Collections.unmodifiableList(handler.Tips);
+	// time when last tip was shown, 2^16 milliseconds
+	private static final ZLIntegerOption ourLastShownOption =
+		new ZLIntegerOption("tips", "shownAt", 0);
+	// index of next tip to show
+	private static final ZLIntegerOption ourIndexOption =
+		new ZLIntegerOption("tips", "index", 0);
+
+	private static ZLFile getFile() {
+		return ZLFile.createFileByPath(Paths.networkCacheDirectory() + "/tips/tips.xml");
+	}
+
+	private List<Tip> myTips;
+	private List<Tip> getTips() {
+		if (myTips == null) {
+			final ZLFile file = getFile();
+			if (file.exists()) {
+				final TipsFeedHandler handler = new TipsFeedHandler();
+				new ATOMXMLReader(handler, false).read(file);
+				final List<Tip> tips = Collections.unmodifiableList(handler.Tips);
+				if (tips.size() > 0) {
+					myTips = tips;
+				}
+			}
+		}
+		return myTips;
+	}
+
+	public boolean hasNextTip() {
+		final List<Tip> tips = getTips();
+		return tips != null && ourIndexOption.getValue() < tips.size();
+	}
+
+	public Tip getNextTip() {
+		final List<Tip> tips = getTips();
+		if (tips == null) {
+			return null;
+		}
+
+		final int index = ourIndexOption.getValue();
+		if (index >= tips.size()) {
+			getFile().getPhysicalFile().delete();
+			ourIndexOption.setValue(0);
+			return null;
+		}
+
+		ourIndexOption.setValue(index + 1);
+		ourLastShownOption.setValue(currentTime());
+		return tips.get(index);
+	}
+
+	private static final int DELAY = 0;//(24 * 60 * 60 * 1000) >> 16; // 1 day
+
+	private static int currentTime() {
+		return (int)(new Date().getTime() >> 16);
 	}
 }
