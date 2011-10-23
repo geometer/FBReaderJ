@@ -109,6 +109,17 @@ public class TipsManager {
 		return (int)(new Date().getTime() >> 16);
 	}
 
+	public boolean tipShouldBeShown() {
+		return
+			ShowTipsOption.getValue() &&
+			myLastShownOption.getValue() + DELAY < currentTime() &&
+			hasNextTip();
+	}
+
+	public boolean tipsShouldBeDownloaded() {
+		return ShowTipsOption.getValue() || !hasNextTip() && !myDownloadInProgress;
+	}
+
 	public synchronized void startDownloading() {
 		if (!ShowTipsOption.getValue() || hasNextTip()) {
 			return;
