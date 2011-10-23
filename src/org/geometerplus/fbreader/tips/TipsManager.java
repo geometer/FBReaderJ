@@ -20,10 +20,13 @@
 package org.geometerplus.fbreader.tips;
 
 import java.util.*;
+import java.io.File;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.atom.ATOMXMLReader;
@@ -48,17 +51,23 @@ public class TipsManager {
 	private final ZLIntegerOption myIndexOption =
 		new ZLIntegerOption("tips", "index", 0);
 
+	private volatile boolean myDownloadInProgress;
+
 	private TipsManager() {
 	}
 
-	private ZLFile getFile() {
-		return ZLFile.createFileByPath(Paths.networkCacheDirectory() + "/tips/tips.xml");
+	private String getUrl() {
+		return "http://data.fbreader.org/tips/tips.xml"; // FIXME
+	}
+
+	private String getLocalFilePath() {
+		return Paths.networkCacheDirectory() + "/tips/tips.xml";
 	}
 
 	private List<Tip> myTips;
 	private List<Tip> getTips() {
 		if (myTips == null) {
-			final ZLFile file = getFile();
+			final ZLFile file = ZLFile.createFileByPath(getLocalFilePath());
 			if (file.exists()) {
 				final TipsFeedHandler handler = new TipsFeedHandler();
 				new ATOMXMLReader(handler, false).read(file);
@@ -84,7 +93,7 @@ public class TipsManager {
 
 		final int index = myIndexOption.getValue();
 		if (index >= tips.size()) {
-			getFile().getPhysicalFile().delete();
+			new File(getLocalFilePath()).delete();
 			myIndexOption.setValue(0);
 			return null;
 		}
@@ -98,5 +107,31 @@ public class TipsManager {
 
 	private int currentTime() {
 		return (int)(new Date().getTime() >> 16);
+	}
+
+	public synchronized void startDownloading() {
+		if (!ShowTipsOption.getValue() || hasNextTip()) {
+			return;
+		}
+
+		if (myDownloadInProgress) {
+			return;
+		}
+		myDownloadInProgress = true;
+
+		new File(Paths.networkCacheDirectory() + "/tips").mkdirs();
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					ZLNetworkManager.Instance().downloadToFile(
+						getUrl(), new File(getLocalFilePath())
+					);
+				} catch (ZLNetworkException e) {
+					e.printStackTrace();
+				} finally {
+					myDownloadInProgress = false;
+				}
+			}
+		});
 	}
 }
