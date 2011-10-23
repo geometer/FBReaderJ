@@ -117,17 +117,14 @@ public class TipsManager {
 	}
 
 	public boolean tipsShouldBeDownloaded() {
-		return ShowTipsOption.getValue() || !hasNextTip() && !myDownloadInProgress;
+		return ShowTipsOption.getValue() && !hasNextTip() && !myDownloadInProgress;
 	}
 
 	public synchronized void startDownloading() {
-		if (!ShowTipsOption.getValue() || hasNextTip()) {
+		if (!tipsShouldBeDownloaded()) {
 			return;
 		}
 
-		if (myDownloadInProgress) {
-			return;
-		}
 		myDownloadInProgress = true;
 
 		new File(Paths.networkCacheDirectory() + "/tips").mkdirs();
