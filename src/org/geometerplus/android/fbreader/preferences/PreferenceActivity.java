@@ -447,6 +447,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
-		tipsScreen.addOption(TipsManager.ShowTipsOption, "showTips");
+		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
 	}
 }

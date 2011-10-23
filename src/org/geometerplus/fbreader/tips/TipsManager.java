@@ -29,17 +29,29 @@ import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.network.atom.ATOMXMLReader;
 
 public class TipsManager {
-	public static ZLBooleanOption ShowTipsOption =
+	private static TipsManager ourInstance;
+
+	public static TipsManager Instance() {
+		if (ourInstance == null) {
+			ourInstance = new TipsManager();
+		}
+		return ourInstance;
+	}
+
+	public ZLBooleanOption ShowTipsOption =
 		new ZLBooleanOption("tips", "showTips", true);
 
 	// time when last tip was shown, 2^16 milliseconds
-	private static final ZLIntegerOption ourLastShownOption =
+	private final ZLIntegerOption myLastShownOption =
 		new ZLIntegerOption("tips", "shownAt", 0);
 	// index of next tip to show
-	private static final ZLIntegerOption ourIndexOption =
+	private final ZLIntegerOption myIndexOption =
 		new ZLIntegerOption("tips", "index", 0);
 
-	private static ZLFile getFile() {
+	private TipsManager() {
+	}
+
+	private ZLFile getFile() {
 		return ZLFile.createFileByPath(Paths.networkCacheDirectory() + "/tips/tips.xml");
 	}
 
@@ -61,7 +73,7 @@ public class TipsManager {
 
 	public boolean hasNextTip() {
 		final List<Tip> tips = getTips();
-		return tips != null && ourIndexOption.getValue() < tips.size();
+		return tips != null && myIndexOption.getValue() < tips.size();
 	}
 
 	public Tip getNextTip() {
@@ -70,21 +82,21 @@ public class TipsManager {
 			return null;
 		}
 
-		final int index = ourIndexOption.getValue();
+		final int index = myIndexOption.getValue();
 		if (index >= tips.size()) {
 			getFile().getPhysicalFile().delete();
-			ourIndexOption.setValue(0);
+			myIndexOption.setValue(0);
 			return null;
 		}
 
-		ourIndexOption.setValue(index + 1);
-		ourLastShownOption.setValue(currentTime());
+		myIndexOption.setValue(index + 1);
+		myLastShownOption.setValue(currentTime());
 		return tips.get(index);
 	}
 
-	private static final int DELAY = 0;//(24 * 60 * 60 * 1000) >> 16; // 1 day
+	private final int DELAY = 0;//(24 * 60 * 60 * 1000) >> 16; // 1 day
 
-	private static int currentTime() {
+	private int currentTime() {
 		return (int)(new Date().getTime() >> 16);
 	}
 }
