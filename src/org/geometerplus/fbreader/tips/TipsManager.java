@@ -22,15 +22,20 @@ package org.geometerplus.fbreader.tips;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
 
-import org.geometerplus.fbreader.network.atom.*;
+import org.geometerplus.fbreader.network.atom.ATOMXMLReader;
 
-class TipsFeedHandler extends AbstractATOMFeedHandler {
-	final List<Tip> Tips = new LinkedList<Tip>();
+public class TipsManager {
+	public static ZLBooleanOption ShowTipsOption =
+		new ZLBooleanOption("tips", "showTips", true);
+	public static final ZLIntegerOption LastShownOption =
+		new ZLIntegerOption("tips", "shownAt", 0);
 
-	@Override
-	public boolean processFeedEntry(ATOMEntry entry) {
-		Tips.add(new Tip(entry.Title, entry.Content));
-		return false;
+	public List<Tip> collectTips(ZLFile file) {
+		final TipsFeedHandler handler = new TipsFeedHandler();
+		new ATOMXMLReader(handler, false).read(file);
+		return Collections.unmodifiableList(handler.Tips);
 	}
 }
