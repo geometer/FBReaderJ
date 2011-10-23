@@ -688,6 +688,10 @@
 		<node name="languageFilterDialog">
 			<node name="title" value="Фильтр по языку" />
 		</node>
+		<node name="tips">
+			<node name="dontShowAgain" value="Больше не показывать" />
+			<node name="more" value="Ещё" />
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Не удается запустить Android Market. Попробуйте установить %s вручную"/>
