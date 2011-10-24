@@ -38,7 +38,7 @@ public class ATOMEntry extends ATOMCommonAttributes {
 	public CharSequence Title;   // TODO: implement ATOMTextConstruct
 	public ATOMUpdated Updated;
 
-	public ATOMEntry(ZLStringMap source) {
+	protected ATOMEntry(ZLStringMap source) {
 		super(source);
 	}
 

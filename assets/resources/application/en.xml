@@ -609,6 +609,13 @@
 					<node name="none" value="No action"/>
 				</node>
 			</node>
+			<node name="tips" value="Tips">
+				<node name="summary" value="Daily tips settings"/>
+				<node name="showTips" value="Show tips">
+					<node name="summaryOn" value="Show daily tips"/>
+					<node name="summaryOff" value="Do not show"/>
+				</node>				
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -680,6 +687,10 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Language filter" />
+		</node>
+		<node name="tips">
+			<node name="dontShowAgain" value="Don't show again" />
+			<node name="more" value="Next tip" />
 		</node>
 	</node>
 	<node name="errorMessage">

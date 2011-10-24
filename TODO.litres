@@ -1,3 +1,5 @@
+проблема с продолжением загрузки каталога "авторы на букву C" в manybooks
+добавить "восстановление пароля" в litres menu
 honeycomb:
   TTS
 do we cache cover images?
@@ -32,10 +34,6 @@ Search actions
 recently visited catalogs
 использовать переданную сумму в sms
 добавить "другие книги" в "мои книги" по авторам-сериям
-basket
-	update basket on book purchasing/logging in
-separate catalog search
-покупка "без регистрации"
 yandex money
 self service
 paypal
