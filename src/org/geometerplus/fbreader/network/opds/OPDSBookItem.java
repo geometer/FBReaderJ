@@ -133,7 +133,10 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				Money price = opdsLink.selectBestPrice();
 				if (price == null) {
 					// FIXME: HACK: price handling must be implemented not through attributes!!!
-					price = new Money(entry.getAttribute(OPDSXMLReader.KEY_PRICE));
+					final String priceAttribute = entry.getAttribute(OPDSXMLReader.KEY_PRICE);
+					if (priceAttribute != null) {
+						price = new Money(priceAttribute);
+					}
 				}
 				if (MimeType.TEXT_HTML.equals(type)) {
 					collectReferences(urls, opdsLink, href,
@@ -274,7 +277,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		return null;
 	}
 
-	private static abstract class SingleEntryFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry> {
+	private static abstract class SingleEntryFeedHandler extends AbstractOPDSFeedHandler {
 		protected final String myUrl;
 
 		SingleEntryFeedHandler(String url) {

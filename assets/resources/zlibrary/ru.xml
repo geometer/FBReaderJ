@@ -11,7 +11,7 @@
 		<node name="networkError">
 			<node name="title" value="Ошибка при работе с сетью" />
 			<node name="unknownErrorMessage" value="Неизвестная ошибка" />
-			<node name="operationTimedOutMessage" value="Отведенное время истекло" />
+			<node name="operationTimedOutMessage" value="Отведённое время истекло" />
 			<node name="somethingWrongMessage" value="Ошибка при работе с&#10;%s" />
 			<node name="couldntCreateDirectoryMessage" value="Не удалось создать каталог&#10;%s" />
 			<node name="couldntCreateFileMessage" value="Не удалось создать файл&#10;%s" />
@@ -27,7 +27,7 @@
 	</node>
 	<node name="color">
 		<node name="red" value="Красный"/>
-		<node name="green" value="Зеленый"/>
+		<node name="green" value="Зелёный"/>
 		<node name="blue" value="Синий"/>
 		<node name="black" value="Черный"/>
 		<node name="white" value="Белый"/>

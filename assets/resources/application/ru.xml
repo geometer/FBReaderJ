@@ -27,7 +27,7 @@
 			<node name="summary" value="Результаты поиска для: %s" />
 		</node>
 		<node name="fileTree" value="Файловая система">
-			<node name="summary" value="Файлы на моем устройстве"/>
+			<node name="summary" value="Файлы на моём устройстве"/>
 		</node>
 		<node name="fileTreeRoot" value="Устройство">
 			<node name="summary" value="Просмотр всех файлов на устройстве"/>
@@ -63,7 +63,7 @@
 		<node name="search" value="Поиск">
 			<node name="summary" value="Искать книги на %s" />
 			<node name="summaryAllCatalogs" value="Искать книги во всех каталогах" />
-			<node name="summaryInProgress" value="Идет поиск..." />
+			<node name="summaryInProgress" value="Идёт поиск..." />
 		</node>
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s" />
@@ -114,7 +114,7 @@
 			<node name="buy" value="Вы хотите купить эту книгу? (%s)"/>
 			<node name="openInBrowser" value="Вы хотите открыть этот каталог в браузере?" />
 		</node>
-		<node name="downloadingCatalogs" value="Идет загрузка каталогов"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Идёт загрузка каталогов"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Поиск книг в сети"/> <!-- used as notification title -->
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>
@@ -137,8 +137,8 @@
 		<node name="confirmSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
 		<node name="alreadyBought" value="Книга уже куплена" />
 		<node name="notAuthorized" value="Требуется авторизация" />
-		<node name="noAccountInformation" value="Не удалось проверить состояние счета" />
-		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счете только %1" />
+		<node name="noAccountInformation" value="Не удалось проверить состояние счёта" />
+		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счёте только %1" />
 		<node name="zeroFunds" value="Для покупки требуется %0" />
 	</node>
 	<node name="networkBookView">
@@ -412,7 +412,7 @@
 					<node name="Code" value="Текст программы">
 						<node name="summary" value=""/>
 					</node>
-					<node name="StrikeThrough" value="Зачеркнутый текст">
+					<node name="StrikeThrough" value="Зачёркнутый текст">
 						<node name="summary" value=""/>
 					</node>
 					<node name="Italic" value="Курсив">
@@ -609,6 +609,13 @@
 					<node name="none" value="Ничего не делать"/>
 				</node>
 			</node>
+			<node name="tips" value="Советы">
+				<node name="summary" value="Ежедневные советы"/>
+				<node name="showTips" value="Показывать советы">
+					<node name="summaryOn" value="Показывать"/>
+					<node name="summaryOff" value="Не показывать"/>
+				</node>				
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -680,6 +687,10 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Фильтр по языку" />
+		</node>
+		<node name="tips">
+			<node name="dontShowAgain" value="Больше не показывать" />
+			<node name="more" value="Ещё" />
 		</node>
 	</node>
 	<node name="errorMessage">

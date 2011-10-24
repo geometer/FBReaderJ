@@ -86,7 +86,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 			finish();
 			return;
 		}
-		myBooks = new ArrayList<NetworkBookItem>(keys.size()); 
+		myBooks = new ArrayList<NetworkBookItem>(keys.size());
 		for (NetworkTree.Key k : keys) {
 			final NetworkTree tree = myLibrary.getTreeByKey(k);
 			if (tree instanceof NetworkBookTree) {
@@ -104,14 +104,15 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 			return;
 		}
 
+		setContentView(R.layout.buy_book);
+
 		try {
 			if (!mgr.isAuthorised(true)) {
-				AccountMenuActivity.runMenu(this, myLink);
+				findViewById(R.id.buy_book_buttons).setVisibility(View.GONE);
+				AuthorizationMenuActivity.runMenu(this, myLink, 1);
 			}
 		} catch (ZLNetworkException e) {
 		}
-
-		setContentView(R.layout.buy_book);
 
 		myCost = calculateCost();
 		if (myCost == null) {
@@ -122,10 +123,31 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 
 		myAccount = mgr.currentAccount();
 
-		setupUI(true);
+		setupUI(AuthorizationState.Authorized);
+
+		NetworkLibrary.Instance().addChangeListener(this);
 	}
 
-	private void setupUI(boolean authorized) {
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		findViewById(R.id.buy_book_buttons).setVisibility(View.VISIBLE);
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	private static enum AuthorizationState {
+		Authorized,
+		NotAuthorized
+	};
+
+	private void setupUI(final AuthorizationState state) {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				setupUIInternal(state);
+			}
+		});
+	}
+
+	private void setupUIInternal(AuthorizationState state) {
 		final ZLResource dialogResource = ZLResource.resource("dialog");
 		final ZLResource buttonResource = dialogResource.getResource("button");
 
@@ -142,101 +164,100 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 			setTitle(resource.getResource("title").getValue());
 		}
 
-		if (!authorized) {
-			textArea.setText(resource.getResource("notAuthorized").getValue());
-			okButton.setText(buttonResource.getResource("authorize").getValue());
-			cancelButton.setText(buttonResource.getResource("cancel").getValue());
-			okButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					AccountMenuActivity.runMenu(BuyBooksActivity.this, myLink);
-				} 
-			});
-			cancelButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					finish();
-				} 
-			});
-		} else if (myAccount == null) {
-			textArea.setText(resource.getResource("noAccountInformation").getValue());
-			okButton.setText(buttonResource.getResource("refresh").getValue());
-			cancelButton.setText(buttonResource.getResource("cancel").getValue());
-			okButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					refreshAccountInformation();
-				} 
-			});
-			cancelButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					finish();
-				} 
-			});
-		} else if (myCost.compareTo(myAccount) > 0) {
-			if (Money.ZERO.equals(myAccount)) {
-				textArea.setText(
-					resource.getResource("zeroFunds").getValue()
-						.replace("%0", myCost.toString())
-				);
-			} else {
-				textArea.setText(
-					resource.getResource("unsufficientFunds").getValue()
-						.replace("%0", myCost.toString())
-						.replace("%1", myAccount.toString())
-				);
-			}
-			okButton.setText(buttonResource.getResource("pay").getValue());
-			cancelButton.setText(buttonResource.getResource("refresh").getValue());
-			okButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					TopupMenuActivity.runMenu(BuyBooksActivity.this, myLink, myCost.subtract(myAccount));
-				} 
-			});
-			cancelButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					refreshAccountInformation();
-				} 
-			});
-		} else {
-			okButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					UIUtil.wait("purchaseBook", buyRunnable(), BuyBooksActivity.this);
-				} 
-			});
-			cancelButton.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					finish();
-				} 
-			});
-			if (myBooks.size() > 1) {
-				textArea.setText(
-					resource.getResource("confirmSeveralBooks").getValue()
-						.replace("%s", String.valueOf(myBooks.size()))
-				);
-				okButton.setText(buttonResource.getResource("buy").getValue());
+		switch (state) {
+			case NotAuthorized:
+				textArea.setText(resource.getResource("notAuthorized").getValue());
+				okButton.setText(buttonResource.getResource("authorize").getValue());
 				cancelButton.setText(buttonResource.getResource("cancel").getValue());
-			} else if (myBooks.get(0).getStatus() == NetworkBookItem.Status.CanBePurchased) {
-				textArea.setText(
-					resource.getResource("confirm").getValue().replace("%s", myBooks.get(0).Title)
-				);
-				okButton.setText(buttonResource.getResource("buy").getValue());
-				cancelButton.setText(buttonResource.getResource("cancel").getValue());
-			} else {
-				textArea.setText(resource.getResource("alreadyBought").getValue());
-				cancelButton.setText(buttonResource.getResource("ok").getValue());
-				okButton.setVisibility(View.GONE);
-			}
+				okButton.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						AuthorizationMenuActivity.runMenu(BuyBooksActivity.this, myLink);
+					}
+				});
+				cancelButton.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						finish();
+					}
+				});
+				break;
+			case Authorized:
+				if (myAccount == null) {
+					textArea.setText(resource.getResource("noAccountInformation").getValue());
+					okButton.setText(buttonResource.getResource("refresh").getValue());
+					cancelButton.setText(buttonResource.getResource("cancel").getValue());
+					okButton.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+							refreshAccountInformation();
+						}
+					});
+					cancelButton.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+							finish();
+						}
+					});
+				} else if (myCost.compareTo(myAccount) > 0) {
+					if (Money.ZERO.equals(myAccount)) {
+						textArea.setText(
+							resource.getResource("zeroFunds").getValue()
+								.replace("%0", myCost.toString())
+						);
+					} else {
+						textArea.setText(
+							resource.getResource("unsufficientFunds").getValue()
+								.replace("%0", myCost.toString())
+								.replace("%1", myAccount.toString())
+						);
+					}
+					okButton.setText(buttonResource.getResource("pay").getValue());
+					cancelButton.setText(buttonResource.getResource("refresh").getValue());
+					okButton.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+							TopupMenuActivity.runMenu(BuyBooksActivity.this, myLink, myCost.subtract(myAccount));
+						}
+					});
+					cancelButton.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+							refreshAccountInformation();
+						}
+					});
+				} else {
+					okButton.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+							UIUtil.wait("purchaseBook", buyRunnable(), BuyBooksActivity.this);
+						}
+					});
+					cancelButton.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+							finish();
+						}
+					});
+					if (myBooks.size() > 1) {
+						textArea.setText(
+							resource.getResource("confirmSeveralBooks").getValue()
+								.replace("%s", String.valueOf(myBooks.size()))
+						);
+						okButton.setText(buttonResource.getResource("buy").getValue());
+						cancelButton.setText(buttonResource.getResource("cancel").getValue());
+					} else if (myBooks.get(0).getStatus() == NetworkBookItem.Status.CanBePurchased) {
+						textArea.setText(
+							resource.getResource("confirm").getValue().replace("%s", myBooks.get(0).Title)
+						);
+						okButton.setText(buttonResource.getResource("buy").getValue());
+						cancelButton.setText(buttonResource.getResource("cancel").getValue());
+					} else {
+						textArea.setText(resource.getResource("alreadyBought").getValue());
+						cancelButton.setText(buttonResource.getResource("ok").getValue());
+						okButton.setVisibility(View.GONE);
+					}
+				}
+				break;
 		}
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		NetworkLibrary.Instance().addChangeListener(this);
-	}
-
-	@Override
-	protected void onStop() {
+	protected void onDestroy() {
 		NetworkLibrary.Instance().removeChangeListener(this);
-		super.onStop();
+		super.onDestroy();
 	}
 
 	@Override
@@ -261,6 +282,14 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	}
 
 	private void refreshAccountInformation() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				refreshAccountInformationInternal();
+			}
+		});
+	}
+
+	private void refreshAccountInformationInternal() {
 		UIUtil.wait(
 			"updatingAccountInformation",
 			new Runnable() {
@@ -285,7 +314,7 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 						if (updated) {
 							runOnUiThread(new Runnable() {
 								public void run() {
-									setupUI(true);
+									setupUI(AuthorizationState.Authorized);
 								}
 							});
 						}
@@ -353,12 +382,14 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 		try {
 			if (mgr.isAuthorised(true)) {
+				setupUI(AuthorizationState.Authorized);
 				refreshAccountInformation();
 			} else {
-				setupUI(false);
+				setupUI(AuthorizationState.NotAuthorized);
 			}
 		} catch (ZLNetworkException e) {
-			setupUI(false);
+			e.printStackTrace();
+			setupUI(AuthorizationState.NotAuthorized);
 		}
 	}
 }
