@@ -81,6 +81,7 @@
 		<node name="buy" value="Zakoupit (%s)"/>
 		<node name="addToBasket" value="Přidat do košíku"/>
 		<node name="removeFromBasket" value="Odebrat z košíku"/>
+		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
 		<node name="clearBasket" value="Vymazat košík"/>
 		<node name="buyAllBooks" value="Zakoupit všechny knihy"/>
 		<node name="openInBrowser" value="Otevřít v prohlížeči"/>

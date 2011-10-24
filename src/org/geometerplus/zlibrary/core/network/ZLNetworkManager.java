@@ -78,42 +78,41 @@ public class ZLNetworkManager {
 	};
 
 	private final HttpContext myHttpContext = new BasicHttpContext();
-	private final CookieStore myCookieStore = new BasicCookieStore() {
-		private volatile boolean myIsInitialized;
-
-		@Override
+	private final CookieStore myCookieStore = new CookieStore() {
 		public synchronized void addCookie(Cookie cookie) {
-			super.addCookie(cookie);
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
 				db.saveCookies(Collections.singletonList(cookie));
 			}
 		}
 
-		@Override
 		public synchronized void addCookies(Cookie[] cookies) {
-			super.addCookies(cookies);
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
 				db.saveCookies(Arrays.asList(cookies));
 			}
 		}
 
-		@Override
 		public synchronized void clear() {
-			super.clear();
-			// TODO: clear database
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.removeAll();
+			}
 		}
 
-		@Override
+		public synchronized boolean clearExpired(Date date) {
+			final CookieDatabase db = CookieDatabase.getInstance();
+			if (db != null) {
+				db.removeObsolete(date);
+				// TODO: detect if any Cookie has been removed
+				return true;
+			}
+			return false;
+		}
+
 		public synchronized List<Cookie> getCookies() {
 			final CookieDatabase db = CookieDatabase.getInstance();
-			if (!myIsInitialized && db != null) {
-				myIsInitialized = true;
-				final Collection<Cookie> fromDb = db.loadCookies();
-				super.addCookies(fromDb.toArray(new Cookie[fromDb.size()]));
-			}
-			return super.getCookies();
+			return db != null ? db.loadCookies() : Collections.<Cookie>emptyList();
 		}
 	};
 
@@ -170,9 +169,18 @@ public class ZLNetworkManager {
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
 			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest));
 			HttpResponse response = null;
+			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
-				response = httpClient.execute(httpRequest, myHttpContext);
-				entity = response.getEntity();
+				try {
+					response = httpClient.execute(httpRequest, myHttpContext);
+					entity = response.getEntity();
+					lastException = null;
+				} catch (IOException e) {
+					lastException = e;
+				}
+			}
+			if (lastException != null) {
+				throw lastException;
 			}
 			final int responseCode = response.getStatusLine().getStatusCode();
 
@@ -201,14 +209,15 @@ public class ZLNetworkManager {
 			}
 		} catch (ZLNetworkException e) {
 			throw e;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-			final String[] eName = e.getClass().getName().split("\\.");
-			if (eName.length > 0) {
-				throw new ZLNetworkException(true, eName[eName.length - 1] + ": " + e.getMessage(), e);
+			final String code;
+			if (e instanceof UnknownHostException) {
+				code = ZLNetworkException.ERROR_RESOLVE_HOST;
 			} else {
-				throw new ZLNetworkException(true, e.getMessage(), e);
+				code = ZLNetworkException.ERROR_CONNECT_TO_HOST;
 			}
+			throw new ZLNetworkException(code, ZLNetworkUtil.hostFromUrl(request.URL), e);
 		} finally {
 			request.doAfter(success);
 			if (httpClient != null) {
@@ -237,6 +246,7 @@ public class ZLNetworkManager {
 			try {
 				perform(r);
 			} catch (ZLNetworkException e) {
+				e.printStackTrace();
 				errors.add(e.getMessage());
 			}
 		}

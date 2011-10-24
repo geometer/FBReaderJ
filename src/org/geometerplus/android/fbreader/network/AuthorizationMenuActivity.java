@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
+import android.app.Activity;
 import android.content.*;
 import android.net.Uri;
 import android.view.*;
@@ -35,10 +36,16 @@ import org.geometerplus.android.util.PackageUtil;
 
 import org.geometerplus.android.fbreader.api.PluginApi;
 
-public class AccountMenuActivity extends MenuActivity {
+public class AuthorizationMenuActivity extends MenuActivity {
 	public static void runMenu(Context context, INetworkLink link) {
 		context.startActivity(
-			Util.intentByLink(new Intent(context, AccountMenuActivity.class), link)
+			Util.intentByLink(new Intent(context, AuthorizationMenuActivity.class), link)
+		);
+	}
+
+	public static void runMenu(Activity activity, INetworkLink link, int code) {
+		activity.startActivityForResult(
+			Util.intentByLink(new Intent(activity, AuthorizationMenuActivity.class), link), code
 		);
 	}
 
@@ -69,10 +76,10 @@ public class AccountMenuActivity extends MenuActivity {
 		try {
 			final NetworkAuthenticationManager mgr = myLink.authenticationManager();
 			if (info.getId().toString().endsWith("/signIn")) {
-				Util.runAuthenticationDialog(AccountMenuActivity.this, myLink, null);
+				Util.runAuthenticationDialog(AuthorizationMenuActivity.this, myLink, null);
 			} else {
 				final Intent intent = Util.authorizationIntent(myLink, info.getId());
-				if (PackageUtil.canBeStarted(AccountMenuActivity.this, intent, true)) {
+				if (PackageUtil.canBeStarted(AuthorizationMenuActivity.this, intent, true)) {
 					startActivity(intent);
 				}
 			}

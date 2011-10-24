@@ -81,6 +81,7 @@
 		<node name="buy" value="Acheter (%s)"/>
 		<node name="addToBasket" value="Ajouter au panier"/>
 		<node name="removeFromBasket" value="Supprimer du panier"/>
+		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
 		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Ouvrir dans un navigateur" />

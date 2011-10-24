@@ -17,26 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.network;
+package org.geometerplus.fbreader.network.opds;
 
-import java.util.List;
-import java.util.Date;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import org.apache.http.cookie.Cookie;
+import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 
-public abstract class CookieDatabase {
-	private static CookieDatabase ourInstance;
-
-	public static CookieDatabase getInstance() {
-		return ourInstance;
+abstract class AbstractOPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
+	public OPDSFeedMetadata createFeed(ZLStringMap attributes) {
+		return new OPDSFeedMetadata(attributes);
 	}
 
-	protected CookieDatabase() {
-		ourInstance = this;
+	public OPDSEntry createEntry(ZLStringMap attributes) {
+		return new OPDSEntry(attributes);
 	}
 
-	protected abstract void removeObsolete(Date date);
-	protected abstract void removeAll();
-	protected abstract void saveCookies(List<Cookie> cookies);
-	protected abstract List<Cookie> loadCookies();
+	public OPDSLink createLink(ZLStringMap attributes) {
+		return new OPDSLink(attributes);
+	}
 }
