@@ -33,6 +33,16 @@ public class NetworkCatalogRootTree extends NetworkCatalogTree {
 	}
 
 	@Override
+	protected void addSpecialTrees() {
+		super.addSpecialTrees();
+		final BasketItem basketItem = getLink().getBasketItem();
+		if (basketItem != null) {
+			myChildrenItems.add(basketItem);
+			new BasketCatalogTree(this, basketItem, -1);
+		}
+	}
+
+	@Override
 	public int compareTo(FBTree tree) {
 		if (!(tree instanceof NetworkCatalogRootTree)) {
 			return 1;

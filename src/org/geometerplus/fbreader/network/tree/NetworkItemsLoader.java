@@ -56,7 +56,7 @@ public abstract class NetworkItemsLoader implements Runnable {
 			try {
 				doBefore();
 			} catch (ZLNetworkException e) {
-				onFinish(e.getMessage(), false);
+				onFinish(e, false);
 				return;
 			}
 
@@ -64,7 +64,7 @@ public abstract class NetworkItemsLoader implements Runnable {
 				doLoading();
 				onFinish(null, isLoadingInterrupted());
 			} catch (ZLNetworkException e) {
-				onFinish(e.getMessage(), isLoadingInterrupted());
+				onFinish(e, isLoadingInterrupted());
 			}
 		} finally {
 			library.removeStoredLoader(getTree());
@@ -130,7 +130,7 @@ public abstract class NetworkItemsLoader implements Runnable {
 		}
 	}
 
-	protected abstract void onFinish(String errorMessage, boolean interrupted);
+	protected abstract void onFinish(ZLNetworkException exception, boolean interrupted);
 	protected abstract void doBefore() throws ZLNetworkException;
 	protected abstract void doLoading() throws ZLNetworkException;
 }

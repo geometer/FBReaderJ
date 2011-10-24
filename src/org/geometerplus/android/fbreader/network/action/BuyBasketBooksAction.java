@@ -19,10 +19,15 @@
 
 package org.geometerplus.android.fbreader.network.action;
 
+import java.util.*;
+
 import android.app.Activity;
 
-import org.geometerplus.fbreader.network.NetworkTree;
-import org.geometerplus.fbreader.network.tree.BasketCatalogTree;
+import org.geometerplus.fbreader.network.*;
+import org.geometerplus.fbreader.network.tree.*;
+import org.geometerplus.fbreader.tree.FBTree;
+
+import org.geometerplus.android.fbreader.network.BuyBooksActivity;
 
 public class BuyBasketBooksAction extends CatalogAction {
 	public BuyBasketBooksAction(Activity activity) {
@@ -35,7 +40,28 @@ public class BuyBasketBooksAction extends CatalogAction {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
-		// TODO: implement
+	public boolean isEnabled(NetworkTree tree) {
+		if (NetworkLibrary.Instance().getStoredLoader(tree) != null) {
+			return false;
+		}
+		final Set<String> bookIds = new HashSet<String>();
+		for (FBTree t : tree.subTrees()) {
+			if (t instanceof NetworkBookTree) {
+				bookIds.add(((NetworkBookTree)t).Book.Id);
+			}
+		}
+		final BasketItem item = (BasketItem)((BasketCatalogTree)tree).Item;
+		return bookIds.equals(new HashSet(item.bookIds()));
+	}
+
+	@Override
+	public void run(NetworkTree tree) {
+		final ArrayList<NetworkBookTree> bookTrees = new ArrayList<NetworkBookTree>();
+		for (FBTree t : tree.subTrees()) {
+			if (t instanceof NetworkBookTree) {
+				bookTrees.add((NetworkBookTree)t);
+			}
+		}
+		BuyBooksActivity.run(myActivity, bookTrees);
 	}
 }

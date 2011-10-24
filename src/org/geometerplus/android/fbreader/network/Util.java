@@ -19,77 +19,72 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.Context;
 import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
-import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
-import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
-	private static final String REGISTRATION_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_REGISTER";
-	private static final String AUTO_SIGNIN_ACTION =
-		"android.fbreader.action.NETWORK_LIBRARY_AUTOSIGNIN";
+	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
 
-	static INetworkLink linkByIntent(Intent intent) {
-		return NetworkLibrary.Instance().getLinkByUrl(intent.getData().toString());
+	public static Intent intentByLink(Intent intent, INetworkLink link) {
+		if (link != null) {
+			intent.setData(Uri.parse(link.getUrl(UrlInfo.Type.Catalog)));
+		}
+		return intent;
 	}
 
-	static Intent intentByLink(Intent intent, INetworkLink link) {
-		return intent.setData(Uri.parse(link.getUrl(UrlInfo.Type.Catalog)));
+	static void initLibrary(Activity activity) {
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		if (library.isInitialized()) {
+			return;
+		}
+
+		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
+			public void run() {
+				if (SQLiteNetworkDatabase.Instance() == null) {
+					new SQLiteNetworkDatabase();
+				}
+                
+				library.initialize();
+			}
+		}, activity);
 	}
 
-	private static boolean testService(Activity activity, String action, String url) {
-		return url != null && PackageUtil.canBeStarted(activity, new Intent(action, Uri.parse(url)), true);
+	static Intent authorizationIntent(INetworkLink link, Uri id) {
+		final Intent intent = new Intent(AUTHORIZATION_ACTION, id);
+		intent.putExtra(CATALOG_URL, link.getUrl(UrlInfo.Type.Catalog));
+		intent.putExtra(SIGNIN_URL, link.getUrl(UrlInfo.Type.SignIn));
+		intent.putExtra(SIGNUP_URL, link.getUrl(UrlInfo.Type.SignUp));
+		intent.putExtra(RECOVER_PASSWORD_URL, link.getUrl(UrlInfo.Type.RecoverPassword));
+		return intent;
+	}
+
+	private static Intent registrationIntent(INetworkLink link) {
+		return authorizationIntent(link, Uri.parse(link.getUrl(UrlInfo.Type.Catalog) + "/register"));
 	}
 
 	public static boolean isRegistrationSupported(Activity activity, INetworkLink link) {
-		return testService(
-			activity,
-			REGISTRATION_ACTION,
-			link.getUrl(UrlInfo.Type.SignUp)
-		);
-	}
-
-	public static boolean isAutoSignInSupported(Activity activity, INetworkLink link) {
-		return testService(
-			activity,
-			AUTO_SIGNIN_ACTION,
-			link.getUrl(UrlInfo.Type.SignUp)
-		);
+		return PackageUtil.canBeStarted(activity, registrationIntent(link), true);
 	}
 
 	public static void runRegistrationDialog(Activity activity, INetworkLink link) {
 		try {
-			final Intent intent = new Intent(
-				REGISTRATION_ACTION,
-				Uri.parse(link.getUrl(UrlInfo.Type.SignUp))
-			);
+			final Intent intent = registrationIntent(link);
 			if (PackageUtil.canBeStarted(activity, intent, true)) {
-				activity.startActivityForResult(intent, NetworkLibraryActivity.SIGNUP_CODE);
-			}
-		} catch (ActivityNotFoundException e) {
-		}
-	}
-
-	public static void runAutoSignInDialog(Activity activity, INetworkLink link) {
-		try {
-			final Intent intent = new Intent(
-				AUTO_SIGNIN_ACTION,
-				Uri.parse(link.getUrl(UrlInfo.Type.SignIn))
-			);
-			if (PackageUtil.canBeStarted(activity, intent, true)) {
-				activity.startActivityForResult(intent, NetworkLibraryActivity.AUTO_SIGNIN_CODE);
+				activity.startActivity(intent);
 			}
 		} catch (ActivityNotFoundException e) {
 		}
@@ -100,91 +95,32 @@ public abstract class Util implements UserRegistrationConstants {
 
 		final Intent intent = intentByLink(new Intent(activity, AuthenticationActivity.class), link);
 		AuthenticationActivity.registerRunnable(intent, onSuccess);
-		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.UserNameOption.getValue());
+		intent.putExtra(AuthenticationActivity.USERNAME_KEY, mgr.getUserName());
 		intent.putExtra(AuthenticationActivity.SCHEME_KEY, "https");
 		intent.putExtra(AuthenticationActivity.CUSTOM_AUTH_KEY, true);
 		activity.startActivity(intent);
 	}
 
-	static void processSignup(INetworkLink link, int resultCode, Intent data) {
-		if (resultCode == Activity.RESULT_OK && data != null) {
-			try {
-				final NetworkAuthenticationManager mgr = link.authenticationManager();
-				if (mgr instanceof LitResAuthenticationManager) {
-					((LitResAuthenticationManager)mgr).initUser(
-						data.getStringExtra(USER_REGISTRATION_USERNAME),
-						data.getStringExtra(USER_REGISTRATION_LITRES_SID),
-						"",
-						false
-					);
-				}
-				if (!mgr.isAuthorised(true)) {
-					throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
-				}
-				try {
-					mgr.initialize();
-				} catch (ZLNetworkException e) {
-					mgr.logOut();
-					throw e;
-				}
-			} catch (ZLNetworkException e) {
-				// TODO: show an error message
-			}
-		}
-	}
-
-	public static void processAutoSignIn(Activity activity, INetworkLink link, int resultCode, Intent data) {
-		if (resultCode == Activity.RESULT_OK && data != null) {
-			try {
-				final NetworkAuthenticationManager mgr = link.authenticationManager();
-				if (mgr instanceof LitResAuthenticationManager) {
-					((LitResAuthenticationManager)mgr).initUser(
-						data.getStringExtra(USER_REGISTRATION_USERNAME),
-						data.getStringExtra(USER_REGISTRATION_LITRES_SID),
-						"",
-						false
-					);
-				}
-				if (!mgr.isAuthorised(true)) {
-					throw new ZLNetworkException(NetworkException.ERROR_AUTHENTICATION_FAILED);
-				}
-				try {
-					mgr.initialize();
-				} catch (ZLNetworkException e) {
-					mgr.logOut();
-					throw e;
-				}
-				// TODO: implement postRunnable (e.g. buying book on "quick buy")
-			} catch (ZLNetworkException e) {
-				// TODO: show an error message
-			}
-		}
-	}
-
-
-	public static void openInBrowser(Context context, String url) {
+	public static void openInBrowser(Activity activity, String url) {
 		if (url != null) {
 			url = NetworkLibrary.Instance().rewriteUrl(url, true);
-			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+			activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 		}
 	}
 
-	public static void openTree(Context context, NetworkTree tree) {
-		final Class<?> clz = tree instanceof NetworkBookTree
-			? NetworkBookInfoActivity.class : NetworkLibraryActivity.class;
-		if (context instanceof NetworkLibraryActivity && clz == NetworkLibraryActivity.class) {
-			((NetworkLibraryActivity)context).openTree(tree);
-		} else {
-			context.startActivity(
-				new Intent(context.getApplicationContext(), clz)
-					.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
+	public static void doDownloadBook(Activity activity, final NetworkBookItem book, boolean demo) {
+		final UrlInfo.Type resolvedType =
+			demo ? UrlInfo.Type.BookDemo : UrlInfo.Type.Book;
+		final BookUrlInfo ref = book.reference(resolvedType);
+		if (ref != null) {
+			activity.startService(
+				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url), 
+						activity.getApplicationContext(), BookDownloaderService.class)
+					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
+					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)
+					.putExtra(BookDownloaderService.CLEAN_URL_KEY, ref.cleanUrl())
+					.putExtra(BookDownloaderService.TITLE_KEY, book.Title)
 			);
 		}
-	}
-
-	public static NetworkTree getTreeFromIntent(Intent intent) {
-		final NetworkLibrary library = NetworkLibrary.Instance();
-		final NetworkTree.Key key = (NetworkTree.Key)intent.getSerializableExtra(NetworkLibraryActivity.TREE_KEY_KEY);
-		return library.getTreeByKey(key);
 	}
 }

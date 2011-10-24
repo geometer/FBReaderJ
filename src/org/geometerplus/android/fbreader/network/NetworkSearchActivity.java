@@ -27,7 +27,6 @@ import android.content.Intent;
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.SearchCatalogTree;
-import org.geometerplus.fbreader.network.tree.Searcher;
 
 public class NetworkSearchActivity extends Activity {
 	@Override
@@ -45,9 +44,9 @@ public class NetworkSearchActivity extends Activity {
 					(NetworkTree.Key)data.getSerializable(NetworkLibraryActivity.TREE_KEY_KEY);
 				final NetworkTree tree = library.getTreeByKey(key);
 				if (tree instanceof SearchCatalogTree) {
-					final String pattern = intent.getStringExtra(SearchManager.QUERY);
-					library.NetworkSearchPatternOption.setValue(pattern);
-					new Searcher((SearchCatalogTree)tree, pattern).start();
+					((SearchCatalogTree)tree).startItemsLoader(
+						intent.getStringExtra(SearchManager.QUERY)
+					);
 				}
 			}
 		}

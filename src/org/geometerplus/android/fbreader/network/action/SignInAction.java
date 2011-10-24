@@ -43,7 +43,7 @@ public class SignInAction extends Action {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		Util.runAuthenticationDialog(myActivity, tree.getLink(), null);
 	}
 }

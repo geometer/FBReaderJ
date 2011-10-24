@@ -23,8 +23,8 @@
 		<node name="favorites" value="Favoritele mele">
 			<node name="summary" value="Cartile mele selectate"/>
 		</node>
-		<node name="searchResults" value="S-au gasit">
-			<node name="summary" value="Rezultatele cautarii pentru:%s"/>
+		<node name="found" value="S-au gasit">
+			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
 		</node>
 		<node name="fileTree" value="Listare copac a fisierelor">
 			<node name="summary" value="Cauta in sistemul de fisiere"/>
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="Dupa serie">
 			<node name="summary" value="Carti sortate de serie"/>
 		</node>
+		<node name="search" value="Cautare">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="Cauta carti în cataloage"/>
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="S-au gasit">
+			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
+		</node>
 		<node name="openCatalog" value="Deschide catalogul"/>
+		<node name="networkSearch" value="Cautare"/>
 		<node name="showResults" value="Arata rezultatele"/>
 		<node name="showBooks" value="Afisati cartile"/>
 		<node name="download" value="Descarca"/>
@@ -72,27 +81,27 @@
 		<node name="buy" value="Cumpara (%s)"/>
 		<node name="addToBasket" value="Adauga la cos"/>
 		<node name="removeFromBasket" value="Eliminati din cos"/>
+		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="Deschide în browser"/>
 		<node name="stopLoading" value="Opriti încarcarea"/>
 		<node name="stopSearching" value="Opri cautarea"/>
 		<node name="signIn" value="Conectati-va în"/>
 		<node name="signOut" value="Deconectare (%s)"/>
-		<node name="topup" value="Incarcati contul (în prezent:%s)"/>
+		<node name="topup" value="Incarcati contul (în prezent: %s)"/>
 		<node name="topupTitle" value="Incarcati contul"/>
-		<node name="topupViaCreditCard" value="Card de credit"/>
-		<node name="topupViaSelfServiceKiosk" value="Self-service chiosc"/>
-		<node name="topupViaSms" value="Mesaje text"/>
 		<node name="topupViaBrowser" value="Pagina deschis în browser"/>
-		<node name="topupSummary" value="În prezent:%s"/>
+		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
+		<node name="topupSummary" value="În prezent: %s"/>
 		<node name="basket" value="Cos"/>
-		<node name="basketSummary" value="Carti pe care vreau sa le cumpar"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="Cartea este în curs de descarcare"/>
 		<node name="alreadyDownloadingDemo" value="Esantionul este în curs de descarcare"/>
 		<node name="stoppingCatalogLoading" value="Oprirea  încarcarii"/>
 		<node name="stoppingNetworkSearch" value="Oprirea cautarii"/>
-		<node name="search" value="Cautare"/>
-		<node name="searchSummary" value="Cauta carti în cataloage"/>
-		<node name="searchResults" value="Rezultatele cautarii pentru:%s"/>
 		<node name="editCustomCatalog" value="Editare catalog"/>
 		<node name="removeCustomCatalog" value="Eliminati catalog"/>
 		<node name="addCustomCatalog" value="Adauga catalog"/>
@@ -120,6 +129,17 @@
 			<node name="clearBasket" value="Clar cos"/>
 			<node name="buyAllBooks" value="Cumpara toate cartile"/>
 		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Cumpara cartea"/>
+		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
+		<node name="confirm" value="Sunteti sigur ca doriti sa cumparati cartea &#10;&#8220; %s&#8221;&#10;?"/>
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
+		<node name="alreadyBought" value="Cartea este deja cumparata"/>
+		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
+		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Informatii despre carte"/>
@@ -171,7 +191,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Aceasta carte"/>
 		<node name="allBooks" value="Toate cartile"/>
-		<node name="searchResults" value="S-au gasit"/>
+		<node name="found" value="S-au gasit"/>
 		<node name="new" value="Marcaj nou"/>
 		<node name="open" value="Deschis"/>
 		<node name="edit" value="Editeaza marcaj"/>
@@ -235,6 +255,9 @@
 			<node name="editInfo" value="Editeaza"/>
 			<node name="reloadInfo" value="Reîncarca"/>
 			<node name="topup" value="Incarca"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
+			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -540,16 +563,6 @@
 					<node name="custom" value="Particularizate&#8230;"/>
 				</node>
 			</node>
-			<node name="tapZones" value="Tap zones" toBeTranslated="true">
-				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
-				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
-					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
-					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
-					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
-					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
-				</node>
-			</node>
 			<node name="dictionary" value="Dictionar">
 				<node name="summary" value="Setari dictionar "/>
 				<node name="dictionary" value="Dictionar"/>
@@ -626,7 +639,9 @@
 			<node name="signOut" value="Iesire. Va rugam, asteptati&#8230;"/>
 			<node name="purchaseBook" value="Se cumpara cartea. Va rugam, asteptati&#8230;"/>
 			<node name="loadingCatalogInfo" value="Se incarca informatii despre catalog. Va rugam, asteptati&#8230;"/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam, asteptati&#8230;"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>
@@ -646,7 +661,6 @@
 			<node name="unencryptedWarning" value="Parola dvs. va fi trimisa necriptata"/>
 			<node name="login" value="Nume utilizator"/>
 			<node name="password" value="Parola"/>
-			<node name="skipIP" value="Nu atasati de adpresa de IP"/>
 			<node name="loginIsEmpty" value="Numele utilizatorului trebuie sa nu fie gol"/>
 			<node name="register" value="Înscrieti-va"/>
 		</node>
@@ -666,20 +680,6 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Filtreaza limba"/>
-		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="Cumpara cartea"/>
-			<node name="message" value="Sunteti sigur ca doriti sa cumparati cartea &#10;&#8220; %s&#8221;&#10;?"/>
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="Cumparati cartea"/>
-			<node name="message" value="Cartea este deja cumparata"/>
-		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Select action" toBeTranslated="true"/>
-			<node name="signIn" value="Sign in" toBeTranslated="true"/>
-			<node name="signUp" value="Sign up" toBeTranslated="true"/>
-			<node name="quickBuy" value="Quick buy" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -702,7 +702,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="Eroare necunoscuta"/>
 		<node name="unsupportedCompressionMethod" value="Metoda de compresie neacceptata"/>
-		<node name="encriptedFile" value="Fisier protejat prin DRM"/>
+		<node name="encryptedFile" value="Fisier protejat prin DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

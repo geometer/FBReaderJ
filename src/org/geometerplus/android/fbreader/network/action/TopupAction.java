@@ -54,7 +54,7 @@ public class TopupAction extends Action {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		final INetworkLink link = tree.getLink();
 		if (link != null) {
 			TopupMenuActivity.runMenu(myActivity, link, null);

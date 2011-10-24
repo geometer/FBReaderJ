@@ -42,10 +42,12 @@ import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.library.KillerCallback;
 import org.geometerplus.android.fbreader.api.PluginApi;
+import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -138,6 +140,13 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
+
+		final TipsManager manager = TipsManager.Instance();
+		if (manager.tipShouldBeShown()) {
+			startActivity(new Intent(this, TipsActivity.class));
+		} else if (manager.tipsShouldBeDownloaded()) {
+			manager.startDownloading();
+		}
 	}
 
  	@Override

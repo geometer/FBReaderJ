@@ -25,9 +25,10 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -67,6 +68,20 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	final void setAuthenticationManager(NetworkAuthenticationManager mgr) {
 		myAuthenticationManager = mgr;
 	}
+
+	/*
+	public AccountStatus getAccountStatus(boolean force) {
+		if (myAuthenticationManager == null) {
+			return AccountStatus.NotSupported;
+		}
+		if ("".equals(myAuthenticationManager.UserNameOption.getValue())) {
+			return AccountStatus.NoUserName;
+		}
+	}
+		SignedIn,
+		SignedOut,
+		NotChecked
+	*/
 
 	ZLNetworkRequest createNetworkData(final OPDSCatalogItem catalog, String url, final OPDSCatalogItem.State result) {
 		if (url == null) {
@@ -112,7 +127,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		return createNetworkData(null, data.ResumeURI, (OPDSCatalogItem.State) data);
+		return createNetworkData(null, data.ResumeURI, (OPDSCatalogItem.State)data);
 	}
 
 	public NetworkCatalogItem libraryItem() {
@@ -164,6 +179,17 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 			}
 		}
 		return rel;
+	}
+
+	private BasketItem myBasketItem;
+
+	@Override
+	public BasketItem getBasketItem() {
+		final String url = getUrl(UrlInfo.Type.ListBooks);
+		if (url != null && myBasketItem == null) {
+			myBasketItem = new OPDSBasketItem(this);
+		}
+		return myBasketItem;
 	}
 
 	@Override

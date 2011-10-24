@@ -17,20 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.network;
+package org.geometerplus.fbreader.network.opds;
 
-import org.geometerplus.zlibrary.core.money.Money;
+import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
-import java.util.*;
+import org.geometerplus.fbreader.network.atom.ATOMFeedHandler;
 
-public interface Basket {
-	void add(NetworkBookItem book);
-	void remove(NetworkBookItem book);
-	boolean contains(NetworkBookItem book);
-	void clear();
+abstract class AbstractOPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
+	public OPDSFeedMetadata createFeed(ZLStringMap attributes) {
+		return new OPDSFeedMetadata(attributes);
+	}
 
-	List<String> bookIds();
-	List<NetworkBookItem> books();
+	public OPDSEntry createEntry(ZLStringMap attributes) {
+		return new OPDSEntry(attributes);
+	}
 
-	Money cost();
+	public OPDSLink createLink(ZLStringMap attributes) {
+		return new OPDSLink(attributes);
+	}
 }
