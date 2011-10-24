@@ -26,11 +26,13 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 	public SearchCatalogTree(RootTree parent, SearchItem item, int position) {
 		super(parent, null, item, position);
 		setCover(null);
+		item.setPattern(null);
 	}
 
 	public SearchCatalogTree(NetworkCatalogTree parent, SearchItem item, int position) {
 		super(parent, item, position);
 		setCover(null);
+		item.setPattern(null);
 	}
 
 	public void setPattern(String pattern) {
@@ -58,13 +60,17 @@ public class SearchCatalogTree extends NetworkCatalogTree {
 
 	@Override
 	public String getSummary() {
-		if (NetworkLibrary.Instance().getStoredLoader(this) != null) {
-			return NetworkLibrary.resource().getResource("search").getResource("summaryInProgress").getValue();
-		}
 		final String pattern = ((SearchItem)Item).getPattern();
 		if (pattern != null) {
 			return NetworkLibrary.resource().getResource("found").getResource("summary").getValue().replace("%s", pattern);
 		}
+		if (NetworkLibrary.Instance().getStoredLoader(this) != null) {
+			return NetworkLibrary.resource().getResource("search").getResource("summaryInProgress").getValue();
+		}
 		return super.getSummary();
+	}
+
+	public void startItemsLoader(String pattern) {
+		new Searcher(this, pattern).start();
 	}
 }

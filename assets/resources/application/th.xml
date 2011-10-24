@@ -23,7 +23,7 @@
 		<node name="favorites" value="หนังสือเล่มโปรด">
 			<node name="summary" value="หนังสือที่เลือก"/>
 		</node>
-		<node name="searchResults" value="ค้นพบ">
+		<node name="found" value="ค้นพบ">
 			<node name="summary" value="ผลการค้นหาสำหรับ: %s"/>
 		</node>
 		<node name="fileTree" value="คลังไฟล์">
@@ -60,7 +60,16 @@
 		<node name="bySeries" value="By series" toBeTranslated="true">
 			<node name="summary" value="Books sorted by series" toBeTranslated="true"/>
 		</node>
+		<node name="search" value="ค้นหา">
+			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summaryAllCatalogs" value="ค้นหาหนังสือในแคตตาล็อก"/>
+			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+		</node>
+		<node name="found" value="ค้นพบ">
+			<node name="summary" value="ผลการค้นหาสำหรับ: %s"/>
+		</node>
 		<node name="openCatalog" value="เปิดแคตตาล็อก"/>
+		<node name="networkSearch" value="ค้นหา"/>
 		<node name="showResults" value="แสดงผลการค้นหา"/>
 		<node name="showBooks" value="แสดงหนังสือ"/>
 		<node name="download" value="ดาวน์โหลด"/>
@@ -72,6 +81,9 @@
 		<node name="buy" value="ซื้อ (%s)"/>
 		<node name="addToBasket" value="Add to basket" toBeTranslated="true"/>
 		<node name="removeFromBasket" value="Remove from basket" toBeTranslated="true"/>
+		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
+		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		<node name="openInBrowser" value="เปิดในเว็บบราวเซอร์"/>
 		<node name="stopLoading" value="หยุดการโหลด"/>
 		<node name="stopSearching" value="หยุดการค้นหา"/>
@@ -80,14 +92,16 @@
 		<node name="topup" value="เติมเงินเข้าบัญชีผู้ใช้ (ปัจจุบันคือ: %s)"/>
 		<node name="topupTitle" value="เติมเงินเข้าบัญชี"/>
 		<node name="topupViaBrowser" value="เปิดในเว็บเบราว์เซอร์"/>
+		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
 		<node name="topupSummary" value="ปัจจุบัน: %s"/>
+		<node name="basket" value="Basket" toBeTranslated="true"/>
+		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
+		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
+		<node name="basketSummary" value="%0 book(s) (%1)"/>
 		<node name="alreadyDownloading" value="กำลังดาวน์โหลดหนังสือ"/>
 		<node name="alreadyDownloadingDemo" value="กำลังดาวน์โหลดหนังสือตัวอย่าง"/>
 		<node name="stoppingCatalogLoading" value="หยุดการโหลด"/>
 		<node name="stoppingNetworkSearch" value="หยุดการค้นหา"/>
-		<node name="search" value="ค้นหา"/>
-		<node name="searchSummary" value="ค้นหาหนังสือในแคตตาล็อก"/>
-		<node name="searchResults" value="ผลการค้นหาสำหรับ: %s"/>
 		<node name="editCustomCatalog" value="แก้ไขแคตตาล็อก"/>
 		<node name="removeCustomCatalog" value="ลบแคตตาล็อก"/>
 		<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
@@ -112,7 +126,20 @@
 			<node name="addCustomCatalog" value="เพิ่มแคตตาล็อก"/>
 			<node name="refreshCatalogsList" value="รีเฟรชแคตตาล็อก"/>
 			<node name="languages" value="ตัวกรองภาษา"/>
+			<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
+			<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="ซื้อหนังสือ"/>
+		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
+		<node name="confirm" value="คุณแน่ใจว่าจะซื้อหนังสือ&#10;&#8220;%s&#8221;&#10;?"/>
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
+		<node name="alreadyBought" value="หนังสือถูกซื้อเรียบร้อยแล้ว"/>
+		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
+		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
+		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="ข้อมูลหนังสือ"/>
@@ -164,7 +191,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="หนังสือเล่มนี้"/>
 		<node name="allBooks" value="หนังสือทั้งหมด"/>
-		<node name="searchResults" value="ค้นพบ"/>
+		<node name="found" value="ค้นพบ"/>
 		<node name="new" value="สร้างบุ๊คมาร์คใหม่"/>
 		<node name="open" value="เปิดบุ๊คมาร์ค"/>
 		<node name="edit" value="แก้ไขบุ๊คมาร์ค"/>
@@ -228,6 +255,9 @@
 			<node name="editInfo" value="แก้ไข"/>
 			<node name="reloadInfo" value="โหลดใหม่"/>
 			<node name="topup" value="เติมเงิน"/>
+			<node name="pay" value="Pay" toBeTranslated="true"/>
+			<node name="refresh" value="Refresh" toBeTranslated="true"/>
+			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="ติดตั้งปลั๊กอิน"/>
@@ -523,6 +553,16 @@
 					<node name="summaryOff" value="เลื่อนหน้าตามแนวตั้ง"/>
 				</node>
 			</node>
+			<node name="tapZones" value="Tap zones" toBeTranslated="true">
+				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+				</node>
+			</node>
 			<node name="dictionary" value="พจนานุกรม">
 				<node name="summary" value="การตั้งค่าพจนานุกรม"/>
 				<node name="dictionary" value="พจนานุกรม"/>
@@ -601,6 +641,7 @@
 			<node name="loadingCatalogInfo" value="กำลังดาวน์โหลข้อมูลของแคตตาล็อก, กรุณารอสักครู่..."/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..." />
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="เซิร์ฟเวอร์ภายในเกิดขัดข้อง"/>
@@ -620,7 +661,6 @@
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
 			<node name="login" value="ชื่อผู้ใช้"/>
 			<node name="password" value="รหัสผ่าน"/>
-			<node name="skipIP" value="ไม่ผูกกับไอพีนี้"/>
 			<node name="loginIsEmpty" value="กรุณาใส่ชื่อผู้ใช้"/>
 			<node name="register" value="ลงทะเบียน"/>
 		</node>
@@ -640,14 +680,6 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="ตัวกรองภาษา"/>
-		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="ซื้อหนังสือ"/>
-			<node name="message" value="คุณแน่ใจว่าจะซื้อหนังสือ&#10;&#8220;%s&#8221;&#10;?"/>
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="ซื้อหนังสือ"/>
-			<node name="message" value="หนังสือถูกซื้อเรียบร้อยแล้ว"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -670,7 +702,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="ข้อผิดพลาดได้ที่ไม่สามารถระบุได้"/>
 		<node name="unsupportedCompressionMethod" value="ไม่รองรับการบีบอัดข้อมูลชนิดนี้"/>
-		<node name="encriptedFile" value="ไฟล์ถูกป้องกันด้วย DRM"/>
+		<node name="encryptedFile" value="ไฟล์ถูกป้องกันด้วย DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

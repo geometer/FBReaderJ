@@ -51,7 +51,7 @@ public class OpenInBrowserAction extends CatalogAction {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		final String url =
 			((NetworkURLCatalogItem)((NetworkCatalogTree)tree).Item).getUrl(UrlInfo.Type.HtmlPage);
 

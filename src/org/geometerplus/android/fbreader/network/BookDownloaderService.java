@@ -241,7 +241,7 @@ public class BookDownloaderService extends Service {
 
 	private void sendDownloaderCallback() {
 		sendBroadcast(
-			new Intent(getApplicationContext(), BookDownloaderCallback.class)
+			new Intent(getApplicationContext(), ListenerCallback.class)
 		);
 	}
 

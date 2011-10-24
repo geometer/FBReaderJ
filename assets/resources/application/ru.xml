@@ -23,11 +23,11 @@
 		<node name="favorites" value="Избранное">
 			<node name="summary" value="Мои любимые книги"/>
 		</node>
-		<node name="searchResults" value="Найдено">
+		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s" />
 		</node>
 		<node name="fileTree" value="Файловая система">
-			<node name="summary" value="Файлы на моем устройстве"/>
+			<node name="summary" value="Файлы на моём устройстве"/>
 		</node>
 		<node name="fileTreeRoot" value="Устройство">
 			<node name="summary" value="Просмотр всех файлов на устройстве"/>
@@ -63,7 +63,7 @@
 		<node name="search" value="Поиск">
 			<node name="summary" value="Искать книги на %s" />
 			<node name="summaryAllCatalogs" value="Искать книги во всех каталогах" />
-			<node name="summaryInProgress" value="Идет поиск..." />
+			<node name="summaryInProgress" value="Идёт поиск..." />
 		</node>
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s" />
@@ -81,16 +81,18 @@
 		<node name="buy" value="Купить (%s)"/>
 		<node name="addToBasket" value="Добавить в корзину"/>
 		<node name="removeFromBasket" value="Удалить из корзины"/>
+		<node name="openBasket" value="Корзина"/>
 		<node name="clearBasket" value="Очистить корзину"/>
 		<node name="buyAllBooks" value="Купить все книги"/>
 		<node name="openInBrowser" value="Показать в браузере" />
 		<node name="stopLoading" value="Остановить загрузку" />
 		<node name="stopSearching" value="Остановить поиск" />
-		<node name="signIn" value="Войти"/>
-		<node name="signOut" value="Выйти (%s)"/>
-		<node name="topup" value="Пополнить счёт (баланс: %s)" />
-		<node name="topupTitle" value="Пополнить счёт"/>
+		<node name="signIn" value="Вход"/>
+		<node name="signOut" value="Выход (%s)"/>
+		<node name="topup" value="Пополнение счёта (баланс: %s)" />
+		<node name="topupTitle" value="Оплата"/>
 		<node name="topupViaBrowser" value="В окне браузера"/>
+		<node name="authorizationMenuTitle" value="Выберите действие"/>
 		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="basket" value="Корзина"/>
 		<node name="basketSummaryEmpty" value="Пустая корзина"/>
@@ -112,10 +114,10 @@
 			<node name="buy" value="Вы хотите купить эту книгу? (%s)"/>
 			<node name="openInBrowser" value="Вы хотите открыть этот каталог в браузере?" />
 		</node>
-		<node name="downloadingCatalogs" value="Идет загрузка каталогов"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Идёт загрузка каталогов"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Поиск книг в сети"/> <!-- used as notification title -->
 		<node name="menu">
-			<node name="networkSearch" value="Поиск в сети"/>
+			<node name="networkSearch" value="Искать в сети"/>
 			<node name="reload" value="Обновить"/>
 			<node name="signIn" value="Войти"/>
 			<node name="signUp" value="Регистрация"/>
@@ -127,6 +129,17 @@
 			<node name="clearBasket" value="Очистить корзину"/>
 			<node name="buyAllBooks" value="Купить все книги"/>
 		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Покупка книги" />
+		<node name="titleSeveralBooks" value="Покупка книг" />
+		<node name="confirm" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
+		<node name="confirmSeveralBooks" value="Вы уверены, что хотите приобрести %s книги?" />
+		<node name="alreadyBought" value="Книга уже куплена" />
+		<node name="notAuthorized" value="Требуется авторизация" />
+		<node name="noAccountInformation" value="Не удалось проверить состояние счёта" />
+		<node name="unsufficientFunds" value="Для покупки требуется %0, а на счёте только %1" />
+		<node name="zeroFunds" value="Для покупки требуется %0" />
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Информация о книге" />
@@ -178,7 +191,7 @@
 	<node name="bookmarksView">
 		<node name="thisBook" value="Эта книга"/>
 		<node name="allBooks" value="Все книги"/>
-		<node name="searchResults" value="Найдено"/>
+		<node name="found" value="Найдено"/>
 		<node name="new" value="Добавить закладку"/>
 		<node name="open" value="Открыть"/>
 		<node name="edit" value="Поправить закладку"/>
@@ -242,6 +255,9 @@
 			<node name="editInfo" value="Изменить" />
 			<node name="reloadInfo" value="Обновить" />
 			<node name="topup" value="Пополнить счёт"/>
+			<node name="pay" value="Заплатить"/>
+			<node name="refresh" value="Обновить"/>
+			<node name="authorize" value="Авторизоваться"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
@@ -396,7 +412,7 @@
 					<node name="Code" value="Текст программы">
 						<node name="summary" value=""/>
 					</node>
-					<node name="StrikeThrough" value="Зачеркнутый текст">
+					<node name="StrikeThrough" value="Зачёркнутый текст">
 						<node name="summary" value=""/>
 					</node>
 					<node name="Italic" value="Курсив">
@@ -519,8 +535,8 @@
 					<node name="summaryOff" value="Кнопки увеличения/уменьшения звука работают как обычно"/>
 				</node>
 				<node name="invertVolumeKeys" value="Перелистывать кнопками в обратную сторону">
-					<node name="summaryOn" value="Нижняя кнопка листает страницу вперед"/>
-					<node name="summaryOff" value="Верхняя кнопка листает страницу вперед"/>
+					<node name="summaryOn" value="Верхняя кнопка листает страницу вперед"/>
+					<node name="summaryOff" value="Нижняя кнопка листает страницу вперед"/>
 				</node>
 				<node name="animation" value="Анимация">
 					<node name="none" value="Выключить анимацию"/>
@@ -593,6 +609,13 @@
 					<node name="none" value="Ничего не делать"/>
 				</node>
 			</node>
+			<node name="tips" value="Советы">
+				<node name="summary" value="Ежедневные советы"/>
+				<node name="showTips" value="Показывать советы">
+					<node name="summaryOn" value="Показывать"/>
+					<node name="summaryOff" value="Не показывать"/>
+				</node>				
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -625,6 +648,7 @@
 			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста..." />
 			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста..." />
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста..."/>
+			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста..."/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера" />
@@ -644,7 +668,6 @@
 			<node name="unencryptedWarning" value="Пароль пересылается незашифрованным"/>
 			<node name="login" value="Имя пользователя" />
 			<node name="password" value="Пароль" />
-			<node name="skipIP" value="Не привязываться к ip-адресу" />
 			<node name="loginIsEmpty" value="Имя пользователя не может быть пустым" />
 			<node name="register" value="Зарегистрироваться" />
 		</node>
@@ -665,19 +688,9 @@
 		<node name="languageFilterDialog">
 			<node name="title" value="Фильтр по языку" />
 		</node>
-		<node name="purchaseConfirmBox">
-			<node name="title" value="Покупка книги" />
-			<node name="message" value="Вы уверены, что хотите приобрести книгу&#10;«%s»?" />
-		</node>
-		<node name="alreadyPurchasedBox">
-			<node name="title" value="Покупка книги" />
-			<node name="message" value="Книга уже куплена" />
-		</node>
-		<node name="purchaseActions">
-			<node name="title" value="Выберите действие" />
-			<node name="signIn" value="Вход" />
-			<node name="signUp" value="Регистрация" />
-			<node name="quickBuy" value="Быстрая покупка" />
+		<node name="tips">
+			<node name="dontShowAgain" value="Больше не показывать" />
+			<node name="more" value="Ещё" />
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -700,7 +713,7 @@
 	<node name="mobipocketPlugin">
 		<node name="unknown" value="неизвестная ошибка"/>
 		<node name="unsupportedCompressionMethod" value="неподдерживаемый метод сжатия"/>
-		<node name="encriptedFile" value="файл защищен DRM"/>
+		<node name="encryptedFile" value="файл защищен DRM"/>
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">

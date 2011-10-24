@@ -24,7 +24,9 @@ import android.content.Intent;
 
 import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
+import org.geometerplus.fbreader.network.tree.NetworkCatalogRootTree;
 
+import org.geometerplus.android.fbreader.network.Util;
 import org.geometerplus.android.fbreader.network.AddCustomCatalogActivity;
 
 public class EditCustomCatalogAction extends CatalogAction {
@@ -35,14 +37,15 @@ public class EditCustomCatalogAction extends CatalogAction {
 	@Override
 	public boolean isVisible(NetworkTree tree) {
 		return
-			super.isVisible(tree) &&
+			tree instanceof NetworkCatalogRootTree &&
 			tree.getLink() instanceof ICustomNetworkLink;
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		final Intent intent = new Intent(myActivity, AddCustomCatalogActivity.class);
-		AddCustomCatalogActivity.addLinkToIntent(intent, (ICustomNetworkLink)tree.getLink());
+		Util.intentByLink(intent, tree.getLink());
+		intent.putExtra(AddCustomCatalogActivity.EDIT_KEY, true);
 		myActivity.startActivity(intent);
 	}
 }

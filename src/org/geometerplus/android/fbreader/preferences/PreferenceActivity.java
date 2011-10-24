@@ -34,6 +34,7 @@ import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
+import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
 
@@ -218,7 +219,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					spacePercentOption, spacingValues, spacingKeys
 				));
 			}
-				
 		}
 
 		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
@@ -372,7 +372,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				}
 				volumeKeysPreferences.setEnabled(isChecked());
 			}
-		});	
+		});
 		volumeKeysPreferences.add(scrollingScreen.addPreference(new ZLCheckBoxPreference(
 			this, scrollingScreen.Resource, "invertVolumeKeys"
 		) {
@@ -445,5 +445,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
+
+		final Screen tipsScreen = createPreferenceScreen("tips");
+		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
 	}
 }

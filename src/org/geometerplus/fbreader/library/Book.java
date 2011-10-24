@@ -428,6 +428,6 @@ public class Book {
 		if (!(o instanceof Book)) {
 			return false;
 		}
-		return myId == ((Book)o).myId;
+		return File.equals(((Book)o).File);
 	}
 }

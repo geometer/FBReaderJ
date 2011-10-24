@@ -36,7 +36,8 @@ public class BookDownloader extends Activity {
 			return false;
 		}
 
-		if ("epub".equals(uri.getScheme())) {
+		final String scheme = uri.getScheme();
+		if ("epub".equals(scheme) || "book".equals(scheme)) {
 			return true;
 		}
 

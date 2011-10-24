@@ -41,7 +41,7 @@ public class AddCustomCatalogAction extends Action {
 	}
 
 	@Override
-	protected void run(NetworkTree tree) {
+	public void run(NetworkTree tree) {
 		myActivity.startActivity(new Intent(myActivity, AddCustomCatalogActivity.class));
 	}
 }

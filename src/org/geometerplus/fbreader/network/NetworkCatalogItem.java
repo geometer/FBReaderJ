@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
@@ -118,7 +120,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 					return ZLBoolean3.B3_UNDEFINED;
 				}
 			case HAS_BOOKS:
-				if ((Link.basket() != null && Link.basket().bookIds().size() > 0) ||
+				if ((Link.getBasketItem() != null && Link.getBasketItem().bookIds().size() > 0) ||
 					(mgr != null && mgr.purchasedBooks().size() > 0)) {
 					return ZLBoolean3.B3_TRUE;
 				} else {
@@ -128,4 +130,23 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	}
 
 	public abstract String getStringId();
+
+	/**
+	 * Performs all necessary operations with NetworkOperationData and NetworkRequest
+	 * to complete loading children items.
+	 * 
+	 * @param data Network operation data instance
+	 * @param networkRequest initial network request
+	 *  
+	 * @throws ZLNetworkException when network operation couldn't be completed
+	 */
+	protected final void doLoadChildren(NetworkOperationData data, ZLNetworkRequest networkRequest) throws ZLNetworkException {
+		while (networkRequest != null) {
+			ZLNetworkManager.Instance().perform(networkRequest);
+			if (data.Loader.confirmInterruption()) {
+				return;
+			}
+			networkRequest = data.resume();
+		}
+	}
 }

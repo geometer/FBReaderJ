@@ -31,7 +31,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class TreeActivity extends ListActivity {
-	private static final String OPEN_TREE_ACTION = "org.fbreader.intent.OPEN_TREE";
+	private static final String OPEN_TREE_ACTION = "android.fbreader.action.OPEN_TREE";
 
 	public static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_TREE_KEY_KEY = "SelectedTreeKey";

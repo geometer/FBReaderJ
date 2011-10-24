@@ -23,7 +23,7 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.*;
 
-import org.geometerplus.fbreader.network.NetworkItem;
+import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.opds.OPDSBookItem;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.atom.FormattedBuffer;
@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 
 class LitResXMLReader extends LitResAuthenticationXMLReader {
 	public final OPDSNetworkLink Link;
-	public final List<NetworkItem> Books;
+	public final List<NetworkBookItem> Books = new LinkedList<NetworkBookItem>();
 
 	private int myIndex;
 
@@ -53,10 +53,9 @@ class LitResXMLReader extends LitResAuthenticationXMLReader {
 
 	private LinkedList<String> myTags = new LinkedList<String>();
 
-	public LitResXMLReader(OPDSNetworkLink link, List<NetworkItem> books) {
+	public LitResXMLReader(OPDSNetworkLink link) {
 		super(link.getSiteName());
 		Link = link;
-		Books = books;
 	}
 
 
