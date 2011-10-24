@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:orientation="vertical"
+	>
+		<TextView
+			android:id="@+id/buy_book_text"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="10dp"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+		/>
+		<include layout="@layout/ok_cancel_buttons" android:id="@+id/buy_book_buttons" />
+	</LinearLayout>
+</ScrollView>

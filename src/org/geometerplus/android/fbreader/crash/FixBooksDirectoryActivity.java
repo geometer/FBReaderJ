@@ -51,7 +51,8 @@ public class FixBooksDirectoryActivity extends Activity {
 		final EditText directoryView = (EditText)findViewById(R.id.books_directory_fix_directory);
 		directoryView.setText(Paths.BooksDirectoryOption().getValue());
 
-		final Button okButton = (Button)findViewById(R.id.books_directory_fix_ok_button);
+		final View buttonsView = findViewById(R.id.books_directory_fix_buttons);
+		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
 		okButton.setText(buttonResource.getResource("ok").getValue());
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -61,7 +62,7 @@ public class FixBooksDirectoryActivity extends Activity {
 			}
 		});
 
-		final Button cancelButton = (Button)findViewById(R.id.books_directory_fix_cancel_button);
+		final Button cancelButton = (Button)buttonsView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {

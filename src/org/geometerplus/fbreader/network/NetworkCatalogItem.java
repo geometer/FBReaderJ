@@ -22,10 +22,13 @@ package org.geometerplus.fbreader.network;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class NetworkCatalogItem extends NetworkItem {
 	// bit mask for flags parameter
@@ -33,6 +36,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	public static final int FLAG_GROUP_BY_AUTHOR                          = 1 << 1;
 	public static final int FLAG_GROUP_BY_SERIES                          = 1 << 2;
 	public static final int FLAG_GROUP_MORE_THAN_1_BOOK_BY_SERIES         = 1 << 3;
+	public static final int FLAG_ADD_SEARCH_ITEM                          = 1 << 4;
 
 	public static final int FLAGS_DEFAULT =
 		FLAG_SHOW_AUTHOR |
@@ -74,23 +78,16 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 		return Collections.emptyMap();
 	}
 
-	public abstract void loadChildren(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException;
+	public abstract boolean canBeOpened();
+
+	public abstract void loadChildren(NetworkItemsLoader loader) throws ZLNetworkException;
 
 	public boolean supportsResumeLoading() {
 		return false;
 	}
 
-	public void resumeLoading(NetworkOperationData.OnNewItemListener listener) throws ZLNetworkException {
+	public void resumeLoading(NetworkItemsLoader loader) throws ZLNetworkException {
 		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
-	}
-
-
-	/**
-	 * Method is called each time this item is displayed to the user.
-	 *
-	 * This method is called when UI-element corresponding to this item is shown to the User.
-	 */
-	public void onDisplayItem() {
 	}
 
 	public int getFlags() {
@@ -102,6 +99,10 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	}
 
 	public ZLBoolean3 getVisibility() {
+		if (Link == null) {
+			return ZLBoolean3.B3_TRUE;
+		}
+
 		final NetworkAuthenticationManager mgr = Link.authenticationManager();
 		switch (myAccessibility) {
 			default:
@@ -119,7 +120,7 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 					return ZLBoolean3.B3_UNDEFINED;
 				}
 			case HAS_BOOKS:
-				if ((Link.basket() != null && Link.basket().bookIds().size() > 0) ||
+				if ((Link.getBasketItem() != null && Link.getBasketItem().bookIds().size() > 0) ||
 					(mgr != null && mgr.purchasedBooks().size() > 0)) {
 					return ZLBoolean3.B3_TRUE;
 				} else {
@@ -129,4 +130,23 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	}
 
 	public abstract String getStringId();
+
+	/**
+	 * Performs all necessary operations with NetworkOperationData and NetworkRequest
+	 * to complete loading children items.
+	 * 
+	 * @param data Network operation data instance
+	 * @param networkRequest initial network request
+	 *  
+	 * @throws ZLNetworkException when network operation couldn't be completed
+	 */
+	protected final void doLoadChildren(NetworkOperationData data, ZLNetworkRequest networkRequest) throws ZLNetworkException {
+		while (networkRequest != null) {
+			ZLNetworkManager.Instance().perform(networkRequest);
+			if (data.Loader.confirmInterruption()) {
+				return;
+			}
+			networkRequest = data.resume();
+		}
+	}
 }

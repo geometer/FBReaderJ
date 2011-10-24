@@ -1,4 +1,28 @@
-===== 1.1.9 (??? ??, 2011) =====
+===== 1.2.1 (Oct 22, 2011) =====
+* Fixed network library crash for buy links with no price
+* Fixed possible library crash during search
+* Fixed possible crash on opening external links on Android 3.* devices
+* x86 devices support
+* Changed MiniHelp text: google groups is not linked more
+
+===== 1.2.0 (Oct 16, 2011) =====
+* Separate search for each network catalog
+* Basket in LitRes e-book store
+* Image scaling has been fixed
+* Hyperlinks processing in epubs has been fixed
+* Updated Italian localization (by Enrico Speranza)
+* Romanian localization (by Mary Hit)
+* Polish localization (by Tomasz Długosz)
+* Aard dictionary integration has been added
+* android.fbreader.action.VIEW action for opening FBReader from external applications
+* Hyphenates long (multi-line) words even if hyphenations are disabled
+
+===== 1.1.10 (Aug 03, 2011) =====
+* Spanish localization (by Antonio Trueba)
+* Swipe distance for starting page scrolling is <= .5 inch for all devices
+* Authors with same surnames are not merged in library.
+
+===== 1.1.9 (Jul 25, 2011) =====
 * Fixed file ordering in Library->File tree
 
 ===== 1.1.4-1.1.8 (Jul 22-23, 2011) =====

@@ -6,7 +6,6 @@ package org.geometerplus.android.fbreader.api;
 
 import java.util.*;
 
-import android.app.Activity;
 import android.content.*;
 import android.net.Uri;
 import android.os.*;
@@ -35,7 +34,8 @@ public abstract class PluginApi {
 	}
 
 	public static abstract class ActionInfo implements Parcelable {
-		protected static final int TYPE_MENU = 1;
+		protected static final int TYPE_MENU_OBSOLETE = 1;
+		protected static final int TYPE_MENU = 2;
 
 		private final String myId;
 
@@ -61,10 +61,17 @@ public abstract class PluginApi {
 		public static final Creator<ActionInfo> CREATOR = new Creator<ActionInfo>() {
 			public ActionInfo createFromParcel(Parcel parcel) {
 				switch (parcel.readInt()) {
+					case TYPE_MENU_OBSOLETE:
+						return new MenuActionInfo(
+							Uri.parse(parcel.readString()),
+							parcel.readString(),
+							Integer.MAX_VALUE
+						);
 					case TYPE_MENU:
 						return new MenuActionInfo(
 							Uri.parse(parcel.readString()),
-							parcel.readString()
+							parcel.readString(),
+							parcel.readInt()
 						);
 					default:
 						return null;
@@ -77,12 +84,14 @@ public abstract class PluginApi {
 		};
 	}
 
-	public static class MenuActionInfo extends ActionInfo {
+	public static class MenuActionInfo extends ActionInfo implements Comparable<MenuActionInfo> {
 		public final String MenuItemName;
+		public final int Weight;
 
-		public MenuActionInfo(Uri id, String menuItemName) {
+		public MenuActionInfo(Uri id, String menuItemName, int weight) {
 			super(id);
 			MenuItemName = menuItemName;
+			Weight = weight;
 		}
 
 		@Override
@@ -94,6 +103,11 @@ public abstract class PluginApi {
 		public void writeToParcel(Parcel parcel, int flags) {
 			super.writeToParcel(parcel, flags);
 			parcel.writeString(MenuItemName);
+			parcel.writeInt(Weight);
+		}
+
+		public int compareTo(MenuActionInfo info) {
+			return Weight - info.Weight;
 		}
 	}
 }

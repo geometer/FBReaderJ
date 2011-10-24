@@ -32,10 +32,13 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	}
 
 	protected ZLTree(T parent) {
-		this(parent, (parent == null) ? 0 : parent.subTrees().size());
+		this(parent, -1);
 	}
 
 	protected ZLTree(T parent, int position) {
+		if (position == -1) {
+			position = parent == null ? 0 : parent.subTrees().size();
+		}
 		if (parent != null && (position < 0 || position > parent.subTrees().size())) {
 			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + parent.subTrees().size() + "]");
 		}
@@ -53,15 +56,15 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	}
 
 	public final boolean hasChildren() {
-		return mySubTrees != null;
+		return mySubTrees != null && !mySubTrees.isEmpty();
 	}
 
-	public synchronized final List<T> subTrees() {
+	public List<T> subTrees() {
 		if (mySubTrees == null) {
 			return Collections.emptyList();
 		}
 		synchronized (mySubTrees) {
-			return new ArrayList(mySubTrees);
+			return new ArrayList<T>(mySubTrees);
 		}
 	}
 
@@ -110,11 +113,6 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		ZLTree<?> parent = Parent;
 		if (parent != null) {
 			parent.mySubTrees.remove(this);
-			synchronized (parent) {
-				if (parent.mySubTrees.isEmpty()) {
-					parent.mySubTrees = null;
-				}
-			}
 			for (; parent != null; parent = parent.Parent) {
 				parent.mySize -= subTreeSize;
 			}
@@ -123,8 +121,8 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 
 	public final void clear() {
 		final int subTreesSize = mySize - 1;
-		synchronized (this) {
-			mySubTrees = null;
+		if (mySubTrees != null) {
+			mySubTrees.clear();
 		}
 		mySize = 1;
 		if (subTreesSize > 0) {

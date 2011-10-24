@@ -95,24 +95,31 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		}
 	}
 
-	private void openInBrowser(String urlString) {
+	private void openInBrowser(final String urlString) {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
-		boolean externalUrl = true;
+		final boolean externalUrl;
 		if (BookDownloader.acceptsUri(Uri.parse(urlString))) {
 			intent.setClass(BaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
+		} else {
+			externalUrl = true;
 		}
 		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
-		try {
-			nLibrary.initialize();
-		} catch (ZLNetworkException e) {
-		}
-		intent.setData(Uri.parse(NetworkLibrary.Instance().rewriteUrl(urlString, externalUrl)));
-		try {
-			BaseActivity.startActivity(intent);
-		} catch (ActivityNotFoundException e) {
-			// TODO: show an error message
-		}
+		new Thread(new Runnable() {
+			public void run() {
+				nLibrary.initialize();
+				intent.setData(Uri.parse(nLibrary.rewriteUrl(urlString, externalUrl)));
+				BaseActivity.runOnUiThread(new Runnable() {
+					public void run() {
+						try {
+							BaseActivity.startActivity(intent);
+						} catch (ActivityNotFoundException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		}).start();
 	}
 }

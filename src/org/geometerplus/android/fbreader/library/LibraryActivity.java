@@ -19,7 +19,6 @@
 
 package org.geometerplus.android.fbreader.library;
 
-import android.app.SearchManager;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.DialogInterface;
@@ -34,17 +33,14 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.UIUtil;
-
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
 
+import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.tree.TreeActivity;
 
-import org.geometerplus.android.fbreader.tree.BaseActivity;
-import org.geometerplus.android.fbreader.tree.ListAdapter;
-
-public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
+public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	private BooksDatabase myDatabase;
@@ -61,7 +57,7 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			myDatabase = new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 		if (myLibrary == null) {
-			myLibrary = new Library();
+			myLibrary = Library.Instance();
 			myLibrary.addChangeListener(this);
 			myLibrary.startBuild();
 		}
@@ -75,11 +71,11 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 			}
 		}
 
-		final ListAdapter adapter = new LibraryListAdapter(this);
+		new LibraryTreeAdapter(this);
+
 		init(getIntent());
 
 		getListView().setTextFilterEnabled(true);
-
 		getListView().setOnCreateContextMenuListener(this);
 	}
 
@@ -143,21 +139,8 @@ public class LibraryActivity extends BaseActivity implements MenuItem.OnMenuItem
 	static final ZLStringOption BookSearchPatternOption =
 		new ZLStringOption("BookSearch", "Pattern", "");
 
-	@Override
-	protected void onNewIntent(Intent intent) {
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			final String pattern = intent.getStringExtra(SearchManager.QUERY);
-			if (pattern != null && pattern.length() > 0) {
-				BookSearchPatternOption.setValue(pattern);
-				myLibrary.startBookSearch(pattern);
-			}
-		} else {
-			super.onNewIntent(intent);
-		}
-	}
-
 	private void openSearchResults() {
-		final FBTree tree = myLibrary.getRootTree().getSubTree(Library.ROOT_SEARCH_RESULTS);
+		final FBTree tree = myLibrary.getRootTree().getSubTree(Library.ROOT_FOUND);
 		if (tree != null) {
 			openTree(tree);
 		}

@@ -91,26 +91,6 @@ public final class BookModel {
 		final int idLength = (modelId != null) ? modelId.length() : 0;
 		final int len = 4 + labelLength + idLength;
 
-		/*
-		try {
-			final OutputStreamWriter writer =
-				new OutputStreamWriter(
-					new FileOutputStream(linksFileName(label.hashCode() % 50), true),
-					"UTF-16LE"
-				);
-			writer.write(labelLength);
-			writer.write(label);
-			writer.write(idLength);
-			if (idLength > 0) {
-				writer.write(modelId);
-			}
-			writer.write(paragraphNumber >> 16);
-			writer.write(paragraphNumber);
-			writer.close();
-		} catch (IOException e) {
-		}
-		*/
-
 		char[] block = myCurrentLinkBlock;
 		int offset = myCurrentLinkBlockOffset;
 		if ((block == null) || (offset + len > block.length)) {
@@ -134,42 +114,32 @@ public final class BookModel {
 		myCurrentLinkBlockOffset = offset;
 	}
 
+	public interface LabelResolver {
+		List<String> getCandidates(String id);
+	}
+
+	private LabelResolver myResolver;
+
+	public void setLabelResolver(LabelResolver resolver) {
+		myResolver = resolver;
+	}
+
 	public Label getLabel(String id) {
-		final int len = id.length();
-		final int size = myInternalHyperlinks.size();
-		/*
-		try {
-			final File file = new File(linksFileName(id.hashCode() % 50));
-			if (!file.exists()) {
-				return null;
-			}
-			final char[] block = new char[(int)file.length()];
-			final InputStreamReader reader =
-				new InputStreamReader(
-					new FileInputStream(file),
-					"UTF-16LE"
-				);
-			reader.read(block);
-			reader.close();
-			for (int offset = 0; offset < block.length; ) {
-				final int labelLength = (int)block[offset++];
-				if (labelLength == 0) {
+		Label label = getLabelInternal(id);
+		if (label == null && myResolver != null) {
+			for (String candidate : myResolver.getCandidates(id)) {
+				label = getLabelInternal(candidate);
+				if (label != null) {
 					break;
 				}
-				final int idLength = (int)block[offset + labelLength];
-				if ((labelLength != len) || !id.equals(new String(block, offset, labelLength))) {
-					offset += labelLength + idLength + 3;
-					continue;
-				}
-				offset += labelLength + 1;
-				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
-				offset += idLength;
-				final int paragraphNumber = (((int)block[offset++]) << 16) + (int)block[offset];
-				return new Label(modelId, paragraphNumber);
 			}
-		} catch (IOException e) {
 		}
-		*/
+		return label;
+	}
+
+	private Label getLabelInternal(String id) {
+		final int len = id.length();
+		final int size = myInternalHyperlinks.size();
 		for (int i = 0; i < size; ++i) {
 			final char[] block = myInternalHyperlinks.block(i);
 			for (int offset = 0; offset < block.length; ) {

@@ -37,11 +37,6 @@ public class AddCustomCatalogItemTree extends NetworkTree {
 	}
 
 	@Override
-	public NetworkItem getHoldedItem() {
-		return null;
-	}
-
-	@Override
 	protected String getStringId() {
 		return "@Add Custom Catalog";
 	}

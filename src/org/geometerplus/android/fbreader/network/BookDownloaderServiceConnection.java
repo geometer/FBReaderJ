@@ -23,7 +23,7 @@ import android.os.IBinder;
 import android.content.ServiceConnection;
 import android.content.ComponentName;
 
-class BookDownloaderServiceConnection implements ServiceConnection {
+public class BookDownloaderServiceConnection implements ServiceConnection {
 
 	private BookDownloaderInterface myInterface;
 

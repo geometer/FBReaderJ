@@ -877,10 +877,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				isVisible = true;
 			}
 			if (newWidth > maxWidth) {
-				if (info.EndElementIndex != startIndex) {
-					break;
-				}
-				if (isHyphenationPossible() && element instanceof ZLTextWord) {
+				if (info.EndElementIndex != startIndex || element instanceof ZLTextWord) {
 					break;
 				}
 			}
@@ -911,7 +908,8 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 		} while (currentElementIndex != endIndex);
 
-		if (currentElementIndex != endIndex && isHyphenationPossible()) {
+		if (currentElementIndex != endIndex &&
+			(isHyphenationPossible() || info.EndElementIndex == startIndex)) {
 			ZLTextElement element = paragraphCursor.getElement(currentElementIndex);
 			if (element instanceof ZLTextWord) {
 				final ZLTextWord word = (ZLTextWord)element;
@@ -1052,9 +1050,6 @@ public abstract class ZLTextView extends ZLTextViewBase {
 					--spaceCounter;
 				}
 			} else if (element instanceof ZLTextWord || element instanceof ZLTextImageElement) {
-				if (element instanceof ZLTextWord) {
-					ZLTextWord word = (ZLTextWord)element;
-				}
 				final int height = getElementHeight(element);
 				final int descent = getElementDescent(element);
 				final int length = element instanceof ZLTextWord ? ((ZLTextWord)element).Length : 0;

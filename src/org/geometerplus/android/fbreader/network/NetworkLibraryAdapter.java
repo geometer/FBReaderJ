@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.List;
-
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,13 +32,15 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
-import org.geometerplus.fbreader.network.NetworkTree;
+import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
-import org.geometerplus.android.fbreader.tree.ListAdapter;
+import org.geometerplus.android.fbreader.tree.TreeAdapter;
 
-class NetworkLibraryAdapter extends ListAdapter {
-	NetworkLibraryAdapter(NetworkBaseActivity activity) {
+import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
+
+class NetworkLibraryAdapter extends TreeAdapter {
+	NetworkLibraryAdapter(NetworkLibraryActivity activity) {
 		super(activity);
 	}
 
@@ -49,18 +49,17 @@ class NetworkLibraryAdapter extends ListAdapter {
 
 	private final Runnable myInvalidateViewsRunnable = new Runnable() {
 		public void run() {
-			((NetworkBaseActivity)getActivity()).getListView().invalidateViews();
+			((NetworkLibraryActivity)getActivity()).getListView().invalidateViews();
 		}
 	};
 
-	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		final View view = (convertView != null) ? convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
 
 		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSecondString());
+		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSummary());
 
 		if (myCoverWidth == -1) {
 			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -80,7 +79,7 @@ class NetworkLibraryAdapter extends ListAdapter {
 		final int status = (tree instanceof NetworkBookTree)
 			? NetworkBookActions.getBookStatus(
 				((NetworkBookTree)tree).Book,
-				((NetworkBaseActivity)getActivity()).Connection
+				((NetworkLibraryActivity)getActivity()).Connection
 			  )
 			: 0;
 		if (status != 0) {
@@ -96,7 +95,7 @@ class NetworkLibraryAdapter extends ListAdapter {
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
 		Bitmap coverBitmap = null;
-		ZLImage cover = tree.getCover();
+		final ZLImage cover = tree.getCover();
 		if (cover != null) {
 			ZLAndroidImageData data = null;
 			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
@@ -118,10 +117,12 @@ class NetworkLibraryAdapter extends ListAdapter {
 			coverView.setImageBitmap(coverBitmap);
 		} else if (tree instanceof NetworkBookTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
+		} else if (tree instanceof SearchCatalogTree) {
+			coverView.setImageResource(R.drawable.ic_list_library_search);
+		} else if (tree instanceof BasketCatalogTree) {
+			coverView.setImageResource(R.drawable.ic_list_library_basket);
 		} else if (tree instanceof AddCustomCatalogItemTree) {
 			coverView.setImageResource(R.drawable.ic_list_plus);
-		} else if (tree instanceof SearchItemTree) {
-			coverView.setImageResource(R.drawable.ic_list_searchresult);
 		} else {
 			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}

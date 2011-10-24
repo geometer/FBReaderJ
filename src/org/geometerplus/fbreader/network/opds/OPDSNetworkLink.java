@@ -25,13 +25,15 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
+import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	private TreeMap<RelationAlias,String> myRelationAliases;
@@ -67,6 +69,20 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		myAuthenticationManager = mgr;
 	}
 
+	/*
+	public AccountStatus getAccountStatus(boolean force) {
+		if (myAuthenticationManager == null) {
+			return AccountStatus.NotSupported;
+		}
+		if ("".equals(myAuthenticationManager.UserNameOption.getValue())) {
+			return AccountStatus.NoUserName;
+		}
+	}
+		SignedIn,
+		SignedOut,
+		NotChecked
+	*/
+
 	ZLNetworkRequest createNetworkData(final OPDSCatalogItem catalog, String url, final OPDSCatalogItem.State result) {
 		if (url == null) {
 			return null;
@@ -75,7 +91,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		return new ZLNetworkRequest(url) {
 			@Override
 			public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-				if (result.Listener.confirmInterrupt()) {
+				if (result.Loader.confirmInterruption()) {
 					return;
 				}
 
@@ -83,23 +99,19 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 					new OPDSFeedHandler(catalog, getURL(), result), false
 				).read(inputStream);
 
-				if (result.Listener.confirmInterrupt()) {
-					if (result.LastLoadedId != null) {
-						// reset state to load current page from the beginning 
-						result.LastLoadedId = null;
-					} else {
-						result.Listener.commitItems(OPDSNetworkLink.this);
-					}
+				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
+					// reset state to load current page from the beginning 
+					result.LastLoadedId = null;
 				} else {
-					result.Listener.commitItems(OPDSNetworkLink.this);
+					result.Loader.getTree().confirmAllItems();
 				}
 			}
 		};
 	}
 
 	@Override
-	public OPDSCatalogItem.State createOperationData(NetworkOperationData.OnNewItemListener listener) {
-		return new OPDSCatalogItem.State(this, listener);
+	public OPDSCatalogItem.State createOperationData(NetworkItemsLoader loader) {
+		return new OPDSCatalogItem.State(this, loader);
 	}
 
 	public ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data) {
@@ -115,7 +127,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 	}
 
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		return createNetworkData(null, data.ResumeURI, (OPDSCatalogItem.State) data);
+		return createNetworkData(null, data.ResumeURI, (OPDSCatalogItem.State)data);
 	}
 
 	public NetworkCatalogItem libraryItem() {
@@ -123,7 +135,15 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Catalog));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Image));
 		urlMap.addInfo(getUrlInfo(UrlInfo.Type.Thumbnail));
-		return new OPDSCatalogItem(this, getTitle(), getSummary(), urlMap, myExtraData);
+		return new OPDSCatalogItem(
+			this,
+			getTitle(),
+			getSummary(),
+			urlMap,
+			OPDSCatalogItem.Accessibility.ALWAYS,
+			OPDSCatalogItem.FLAGS_DEFAULT | OPDSCatalogItem.FLAG_ADD_SEARCH_ITEM,
+			myExtraData
+		);
 	}
 
 	public NetworkAuthenticationManager authenticationManager() {
@@ -159,6 +179,17 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 			}
 		}
 		return rel;
+	}
+
+	private BasketItem myBasketItem;
+
+	@Override
+	public BasketItem getBasketItem() {
+		final String url = getUrl(UrlInfo.Type.ListBooks);
+		if (url != null && myBasketItem == null) {
+			myBasketItem = new OPDSBasketItem(this);
+		}
+		return myBasketItem;
 	}
 
 	@Override

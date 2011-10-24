@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.library;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
 public class FavoritesTree extends FirstLevelTree {
 	FavoritesTree(RootTree root, String id) {
 		super(root, id);

@@ -26,8 +26,17 @@ import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.fbreader.network.authentication.NetworkAuthenticationManager;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public interface INetworkLink extends Comparable<INetworkLink> {
+	public enum AccountStatus {
+		NotSupported,
+		NoUserName,
+		SignedIn,
+		SignedOut,
+		NotChecked
+	};
+
 	public static final int INVALID_ID = -1;
 
 	int getId();
@@ -42,6 +51,14 @@ public interface INetworkLink extends Comparable<INetworkLink> {
 	Set<UrlInfo.Type> getUrlKeys();
 
 	/**
+	 * @param force if local status is not checked then
+     *    if force is set to false, NotChecked will be returned
+     *    if force is set to true, network check will be performed;
+	 *       that will take some time and can return NotChecked (if network is not available)
+     */
+	//AccountStatus getAccountStatus(boolean force);
+
+	/**
 	 * @return 2-letters language code or special token "multi"
 	 */
 	String getLanguage();
@@ -50,15 +67,15 @@ public interface INetworkLink extends Comparable<INetworkLink> {
 	 * @param listener Network operation listener
 	 * @return instance, which represents the state of the network operation.
 	 */
-	NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener);
+	NetworkOperationData createOperationData(NetworkItemsLoader loader);
+
+	BasketItem getBasketItem();
 
 	ZLNetworkRequest simpleSearchRequest(String pattern, NetworkOperationData data);
 	ZLNetworkRequest resume(NetworkOperationData data);
 
 	NetworkCatalogItem libraryItem();
 	NetworkAuthenticationManager authenticationManager();
-
-	Basket basket();
 
 	String rewriteUrl(String url, boolean isUrlExternal);
 }
