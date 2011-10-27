@@ -171,13 +171,17 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
+		final Uri data = intent.getData();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
+		} else if (Intent.ACTION_VIEW.equals(intent.getAction())
+					&& data != null && "fbreader-action".equals(data.getScheme())) {
+			fbReader.doAction(data.getEncodedSchemeSpecificPart());
 		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
 				public void run() {
-					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 					final TextSearchPopup popup = (TextSearchPopup)fbReader.getPopupById(TextSearchPopup.ID);
 					popup.initPosition();
 					fbReader.TextSearchPatternOption.setValue(pattern);
