@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Intent;
+import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
@@ -33,6 +34,7 @@ import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
+import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.DictionaryUtil;
 
@@ -217,7 +219,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 					spacePercentOption, spacingValues, spacingKeys
 				));
 			}
-				
 		}
 
 		final ZLPreferenceSet footerPreferences = new ZLPreferenceSet();
@@ -345,24 +346,55 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		//final Screen tapZonesScreen = createPreferenceScreen("tapZones");
 		//tapZonesScreen.addOption(scrollingPreferences.TapZonesSchemeOption, "tapZonesScheme");
 
+		final ZLKeyBindings keyBindings = fbReader.keyBindings();
+
 		final Screen scrollingScreen = createPreferenceScreen("scrolling");
 		scrollingScreen.addOption(scrollingPreferences.FingerScrollingOption, "fingerScrolling");
 		scrollingScreen.addOption(fbReader.EnableDoubleTapOption, "enableDoubleTapDetection");
 
 		final ZLPreferenceSet volumeKeysPreferences = new ZLPreferenceSet();
-		scrollingScreen.addPreference(new ZLBooleanPreference(
-			this, scrollingPreferences.VolumeKeysOption, scrollingScreen.Resource, "volumeKeys"
+		scrollingScreen.addPreference(new ZLCheckBoxPreference(
+			this, scrollingScreen.Resource, "volumeKeys"
 		) {
+			{
+				setChecked(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
+			}
+
 			@Override
 			protected void onClick() {
 				super.onClick();
+				if (isChecked()) {
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+				} else {
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, FBReaderApp.NoAction);
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, FBReaderApp.NoAction);
+				}
 				volumeKeysPreferences.setEnabled(isChecked());
 			}
-		});	
-		volumeKeysPreferences.add(scrollingScreen.addOption(
-			scrollingPreferences.InvertVolumeKeysOption, "invertVolumeKeys"
-		));
-		volumeKeysPreferences.setEnabled(scrollingPreferences.VolumeKeysOption.getValue());
+		});
+		volumeKeysPreferences.add(scrollingScreen.addPreference(new ZLCheckBoxPreference(
+			this, scrollingScreen.Resource, "invertVolumeKeys"
+		) {
+			{
+				setChecked(ActionCode.VOLUME_KEY_SCROLL_FORWARD.equals(
+					keyBindings.getBinding(KeyEvent.KEYCODE_VOLUME_UP, false)
+				));
+			}
+
+			@Override
+			protected void onClick() {
+				super.onClick();
+				if (isChecked()) {
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+				} else {
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_DOWN, false, ActionCode.VOLUME_KEY_SCROLL_FORWARD);
+					keyBindings.bindKey(KeyEvent.KEYCODE_VOLUME_UP, false, ActionCode.VOLUME_KEY_SCROLL_BACK);
+				}
+			}
+		}));
+		volumeKeysPreferences.setEnabled(fbReader.hasActionForKey(KeyEvent.KEYCODE_VOLUME_UP, false));
 
 		scrollingScreen.addOption(scrollingPreferences.AnimationOption, "animation");
 		scrollingScreen.addPreference(new AnimationSpeedPreference(
@@ -401,20 +433,20 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
 		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");
 		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");
-		final ZLKeyBindings bindings = fbReader.keyBindings();
 		final String[] backKeyActions =
-			//{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU };
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource, "backKeyAction",
-			bindings.getOption("<Back>", false), backKeyActions
+			keyBindings.getOption(KeyEvent.KEYCODE_BACK, false), backKeyActions
 		));
 		final String[] backKeyLongPressActions =
-			//{ ActionCode.EXIT, ActionCode.GO_BACK, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
 			{ ActionCode.EXIT, ActionCode.SHOW_CANCEL_MENU, FBReaderApp.NoAction };
 		cancelMenuScreen.addPreference(new ZLStringChoicePreference(
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
-			bindings.getOption("<Back>", true), backKeyLongPressActions
+			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
+
+		final Screen tipsScreen = createPreferenceScreen("tips");
+		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
 	}
 }

@@ -28,7 +28,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResBookshelfIt
 import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendationsItem;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
-class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OPDSConstants {
+class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	private final OPDSCatalogItem myCatalog;
 	private final String myBaseURL;
 	private final OPDSCatalogItem.State myData;
@@ -107,7 +107,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 	private boolean tryInterrupt() {
 		final int noninterruptableRemainder = 10;
 		return (myItemsToLoad < 0 || myItemsToLoad > noninterruptableRemainder)
-				&& myData.Listener.confirmInterrupt();
+				&& myData.Loader.confirmInterruption();
 	}
 
 	private String calculateEntryId(OPDSEntry entry) {
@@ -188,7 +188,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 			item = readCatalogItem(entry);
 		}
 		if (item != null) {
-			myData.Listener.onNewItem(myData.Link, item);
+			myData.Loader.onNewItem(item);
 		}
 		return tryInterrupt();
 	}
@@ -267,16 +267,6 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 					annotation,
 					urlMap
 				);
-			} else if (REL_BASKET.equals(litresRel)) {
-				return null;
-				/*
-				return new BasketItem(
-					opdsLink,
-					entry.Title,
-					annotation,
-					urlMap
-				);
-				*/
 			} else if (REL_TOPUP.equals(litresRel)) {
 				return new TopUpItem(opdsLink, urlMap);
 			} else {
@@ -287,9 +277,7 @@ class OPDSFeedHandler implements ATOMFeedHandler<OPDSFeedMetadata,OPDSEntry>, OP
 				opdsLink,
 				entry.Title,
 				annotation,
-				urlMap,
-				OPDSCatalogItem.Accessibility.ALWAYS,
-				NetworkCatalogItem.FLAGS_DEFAULT
+				urlMap
 			);
 		}
 	}

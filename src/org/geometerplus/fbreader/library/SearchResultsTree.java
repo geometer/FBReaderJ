@@ -32,7 +32,7 @@ class SearchResultsTree extends FirstLevelTree {
 	}
 
 	@Override
-	protected String getSummary() {
+	public String getSummary() {
 		return super.getSummary().replace("%s", myPattern);
 	}
 }

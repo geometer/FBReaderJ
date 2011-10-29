@@ -4,7 +4,7 @@ updateVersionArg="--updateVersion"
 buildSourceArchiveArg="--buildSourceArchive"
 
 printUsage() {
-	echo "usages:\n  $0 $updateVersionArg [version]\n  $0 $buildSourceArchiveArg [version]";
+	echo "usages:\n  $0 $updateVersionArg\n  $0 $buildSourceArchiveArg";
 	exit;
 }
 
@@ -16,10 +16,23 @@ updateVersion() {
 	major=`echo $version | cut -d . -f 1`
 	minor=`echo $version | cut -d . -f 2`
 	micro=`echo $version | cut -d . -f 3`
+	case `git branch | grep "*" | cut -d " " -f 2` in
+		android-1.5)
+			variant=0
+			;;
+		honeycomb)
+			variant=2
+			;;
+		*)
+			variant=1
+			;;
+	esac
+		
+	
 	if [ "$micro" == "" ]; then
      micro=0
   fi
-	intversion=$((10000*$major+100*$minor+$micro))
+	intversion=$((100000*$major+1000*$minor+10*$micro+$variant))
 	sed "s/@INTVERSION@/$intversion/" AndroidManifest.xml.pattern | sed "s/@VERSION@/$version/" > AndroidManifest.xml
 }
 
@@ -35,7 +48,7 @@ buildSourceArchive() {
 }
 
 if [ $# -eq 2 ]; then
-	version=$2;
+	version=$2
 	echo $version > VERSION
 else
 	version=`cat VERSION`

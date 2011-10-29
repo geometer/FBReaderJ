@@ -54,7 +54,7 @@ public abstract class NetworkItem {
 		mySummary = summary;
 	}
 
-	public final CharSequence getSummary() {
+	public CharSequence getSummary() {
 		return mySummary;
 	}
 

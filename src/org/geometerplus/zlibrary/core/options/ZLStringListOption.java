@@ -21,33 +21,11 @@ package org.geometerplus.zlibrary.core.options;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+
 public class ZLStringListOption extends ZLOption {
 	private final List<String> myDefaultValue;
 	private List<String> myValue;
-
-	private static String listToString(List<String> list) {
-		if (list == null || list.isEmpty()) {
-			return "";
-		}
-		final StringBuilder builder = new StringBuilder();
-		boolean first = true;
-		for (String s : list) {
-			if (first) {
-				first = false;
-			} else {
-				builder.append(",");
-			}
-			builder.append(s);
-		}
-		return builder.toString();
-	}
-
-	private static List<String> stringToList(String str) {
-		if (str == null || "".equals(str)) {
-			return Collections.emptyList();
-		}
-		return Arrays.asList(str.split(","));
-	}
 
 	public ZLStringListOption(String group, String optionName, List<String> defaultValue) {
 		super(group, optionName);
@@ -57,9 +35,9 @@ public class ZLStringListOption extends ZLOption {
 
 	public List<String> getValue() {
 		if (!myIsSynchronized) {
-			final String value = getConfigValue(listToString(myDefaultValue));
+			final String value = getConfigValue(ZLMiscUtil.listToString(myDefaultValue));
 			if (value != null) {
-				myValue = stringToList(value);
+				myValue = ZLMiscUtil.stringToList(value);
 			}
 			myIsSynchronized = true;
 		}
@@ -77,7 +55,7 @@ public class ZLStringListOption extends ZLOption {
 		if (value.equals(myDefaultValue)) {
 			unsetConfigValue();
 		} else {
-			setConfigValue(listToString(value));
+			setConfigValue(ZLMiscUtil.listToString(value));
 		}
 		myIsSynchronized = true;
 	}

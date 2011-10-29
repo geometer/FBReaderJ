@@ -20,8 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,41 +40,11 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
-	static final String ADD_CATALOG = "android.fbreader.action.ADD_CATALOG";
-
-	private static final String ADD_CATALOG_TITLE_KEY = "title";
-	private static final String ADD_CATALOG_SUMMARY_KEY = "summary";
-	private static final String ADD_CATALOG_ID_KEY = "id";
-	private static final String ADD_CATALOG_URLS_MAP_KEY = "urls";
-
-	static void addLinkToIntent(Intent intent, ICustomNetworkLink link) {
-		final String textUrl = link.getUrl(UrlInfo.Type.Catalog);
-		intent.setData(Uri.parse(textUrl));
-		intent
-			.putExtra(ADD_CATALOG_TITLE_KEY, link.getTitle())
-			.putExtra(ADD_CATALOG_SUMMARY_KEY, link.getSummary())
-			.putExtra(ADD_CATALOG_ID_KEY, link.getId())
-			.putExtra(ADD_CATALOG_URLS_MAP_KEY, link.urlInfoMap());
-	}
-
-	static ICustomNetworkLink getLinkFromIntent(Intent intent) {
-		final Uri uri = intent.getData();
-		if (uri == null || !intent.hasExtra(ADD_CATALOG_ID_KEY)) {
-			return null;
-		}
-
-		return new OPDSCustomNetworkLink(
-			intent.getIntExtra(ADD_CATALOG_ID_KEY, ICustomNetworkLink.INVALID_ID),
-			uri.getHost(),
-			intent.getStringExtra(ADD_CATALOG_TITLE_KEY),
-			intent.getStringExtra(ADD_CATALOG_SUMMARY_KEY),
-			null,
-			(UrlInfoCollection<UrlInfoWithDate>)intent.getSerializableExtra(ADD_CATALOG_URLS_MAP_KEY)
-		);
-	}
+	public static String EDIT_KEY = "EditNotAdd";
 
 	private ZLResource myResource;
 	private volatile ICustomNetworkLink myLink;
+	private boolean myEditNotAdd;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -96,7 +64,7 @@ public class AddCustomCatalogActivity extends Activity {
 		setTextFromResource(R.id.add_custom_catalog_summary_example, "catalogSummaryExample");
 
 		setupButton(
-			R.id.add_custom_catalog_ok_button, "ok", new View.OnClickListener() {
+			R.id.ok_button, "ok", new View.OnClickListener() {
 				public void onClick(View view) {
 					final InputMethodManager imm =
 						(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -108,16 +76,28 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		);
 		setupButton(
-			R.id.add_custom_catalog_cancel_button, "cancel", new View.OnClickListener() {
+			R.id.cancel_button, "cancel", new View.OnClickListener() {
 				public void onClick(View view) {
 					finish();
 				}
 			}
 		);
 
+		Util.initLibrary(this);
+
 		final Intent intent = getIntent();
-		myLink = getLinkFromIntent(intent);
-		final Uri uri = intent.getData();
+		myLink = null;
+		Uri uri = intent.getData();
+		if (uri != null) {
+			if ("opds".equals(uri.getScheme())) {
+				uri = Uri.parse("http" + uri.toString().substring(4));
+			}
+			final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
+			if (link instanceof ICustomNetworkLink) {
+				myLink = (ICustomNetworkLink)link;
+			}
+		}
+		myEditNotAdd = intent.getBooleanExtra(EDIT_KEY, false);
 
 		if (myLink != null) {
 			setTextById(R.id.add_custom_catalog_url, myLink.getUrl(UrlInfo.Type.Catalog));
@@ -125,6 +105,9 @@ public class AddCustomCatalogActivity extends Activity {
 			setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
 			setExtraFieldsVisibility(true);
 		} else if (uri != null) {
+			if ("opds".equals(uri.getScheme())) {
+				uri = Uri.parse("http" + uri.toString().substring(4));
+			}
 			loadInfoByUri(uri);
 		} else {
 			setExtraFieldsVisibility(false);
@@ -163,14 +146,18 @@ public class AddCustomCatalogActivity extends Activity {
 			myLink.setSummary(summary);
 			myLink.setUrl(UrlInfo.Type.Catalog, uri.toString());
 
-			Intent intent = new Intent(
-				ADD_CATALOG,
-				uri,
+			final NetworkLibrary library = NetworkLibrary.Instance();
+			library.addCustomLink(myLink);
+			library.synchronize();
+
+			final Intent intent = new Intent(
+				NetworkLibraryActivity.OPEN_CATALOG_ACTION,
+				myEditNotAdd ? null : uri,
 				AddCustomCatalogActivity.this,
-				NetworkTopLevelActivity.class
+				NetworkLibraryActivity.class
 			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			addLinkToIntent(intent, myLink);
 			startActivity(intent);
+			finish();
 		}
 	}
 
@@ -198,7 +185,8 @@ public class AddCustomCatalogActivity extends Activity {
 	}
 
 	private void setupButton(int id, String resourceKey, View.OnClickListener listener) {
-		final Button button = (Button)findViewById(id);
+		final Button button =
+			(Button)findViewById(R.id.add_custom_catalog_buttons).findViewById(id);
 		button.setText(
 			ZLResource.resource("dialog").getResource("button").getResource(resourceKey).getValue()
 		);
@@ -227,42 +215,11 @@ public class AddCustomCatalogActivity extends Activity {
 		setErrorText(myResource.getResource(resourceKey).getValue());
 	}
 
-	private void runErrorDialog(final String errorText) {
-		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				switch (which) {
-					case DialogInterface.BUTTON_POSITIVE:
-						setExtraFieldsVisibility(true);
-						break;
-					case DialogInterface.BUTTON_NEUTRAL:
-						break;
-					case DialogInterface.BUTTON_NEGATIVE:
-						AddCustomCatalogActivity.this.finish();
-						break;
-				}
-			}
-		};
-
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource boxResource = dialogResource.getResource("networkError");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		new AlertDialog.Builder(this)
-			.setTitle(boxResource.getResource("title").getValue())
-			.setMessage(errorText)
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("continue").getValue(), listener)
-			.setNeutralButton(buttonResource.getResource("editUrl").getValue(), listener)
-			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
-			.create().show();
-	}
-
 	private void loadInfoByUri(Uri uri) {
 		String textUrl = uri.toString();
 		if (isEmptyString(uri.getScheme())) {
 			textUrl = "http://" + textUrl;
 			uri = Uri.parse(textUrl);
-		} else if ("opds".equals(uri.getScheme())) {
-			textUrl = "http" + uri.toString().substring(4);
 		}
 
 		setTextById(R.id.add_custom_catalog_url, textUrl);
@@ -294,7 +251,6 @@ public class AddCustomCatalogActivity extends Activity {
 							setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
 							setExtraFieldsVisibility(true);
 						} else {
-							runErrorDialog(myError);
 							myLink = null;
 						}
 					}

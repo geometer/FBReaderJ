@@ -52,7 +52,7 @@ public abstract class PackageUtil {
 		return Uri.parse("http://data.fbreader.org/android/packages/" + pkg + ".apk_version_" + version);
 	}
 
-	public static boolean isPluginInstalled(Activity activity, String pkg) {
+	private static boolean isPluginInstalled(Activity activity, String pkg) {
 		return canBeStarted(
 			activity,
 			new Intent("android.fbreader.action.TEST", homeUri(pkg)),
@@ -60,7 +60,7 @@ public abstract class PackageUtil {
 		);
 	}
 
-	public static boolean isPluginInstalled(Activity activity, String pkg, String version) {
+	private static boolean isPluginInstalled(Activity activity, String pkg, String version) {
 		return canBeStarted(
 			activity,
 			new Intent("android.fbreader.action.TEST", homeUri(pkg, version)),

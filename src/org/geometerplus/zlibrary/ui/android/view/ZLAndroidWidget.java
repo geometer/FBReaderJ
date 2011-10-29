@@ -29,7 +29,6 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
-import org.geometerplus.zlibrary.ui.android.util.ZLAndroidKeyUtil;
 
 public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongClickListener {
 	private final Paint myPaint = new Paint();
@@ -387,35 +386,33 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		return view.onFingerLongPress(myPressedX, myPressedY);
 	}
 
-	private String myKeyUnderTracking;
+	private int myKeyUnderTracking = -1;
 	private long myTrackingStartTime;
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		final ZLApplication application = ZLApplication.Instance();
 
 		switch (keyCode) {
-			case KeyEvent.KEYCODE_VOLUME_DOWN:
-			case KeyEvent.KEYCODE_VOLUME_UP:
-			case KeyEvent.KEYCODE_BACK:
-			case KeyEvent.KEYCODE_ENTER:
-			case KeyEvent.KEYCODE_DPAD_CENTER:
-			{
-				final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
-				if (myKeyUnderTracking != null) {
-					if (myKeyUnderTracking.equals(keyName)) {
+			default:
+				if (application.hasActionForKey(keyCode, true) ||
+					application.hasActionForKey(keyCode, false)) {
+					if (myKeyUnderTracking != -1) {
+						if (myKeyUnderTracking == keyCode) {
+							return true;
+						} else {
+							myKeyUnderTracking = -1;
+						}
+					}
+					if (application.hasActionForKey(keyCode, true)) {
+						myKeyUnderTracking = keyCode;
+						myTrackingStartTime = System.currentTimeMillis();
 						return true;
 					} else {
-						myKeyUnderTracking = null;
+						return application.doActionByKey(keyCode, false);
 					}
-				}
-				if (application.hasActionForKey(keyName, true)) {
-					myKeyUnderTracking = keyName;
-					myTrackingStartTime = System.currentTimeMillis();
-					return true;
 				} else {
-					return application.doActionByKey(keyName, false);
+					return false;
 				}
-			}
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 				application.getCurrentView().onTrackballRotated(-1, 0);
 				return true;
@@ -428,30 +425,23 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			case KeyEvent.KEYCODE_DPAD_UP:
 				application.getCurrentView().onTrackballRotated(0, -1);
 				return true;
-			default:
-				return false;
 		}
 	}
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		switch (keyCode) {
-			case KeyEvent.KEYCODE_VOLUME_DOWN:
-			case KeyEvent.KEYCODE_VOLUME_UP:
-			case KeyEvent.KEYCODE_BACK:
-			case KeyEvent.KEYCODE_ENTER:
-			case KeyEvent.KEYCODE_DPAD_CENTER:
-				if (myKeyUnderTracking != null) {
-					final String keyName = ZLAndroidKeyUtil.getKeyNameByCode(keyCode);
-					if (myKeyUnderTracking.equals(keyName)) {
-						final boolean longPress = System.currentTimeMillis() >
-							myTrackingStartTime + ViewConfiguration.getLongPressTimeout();
-						ZLApplication.Instance().doActionByKey(keyName, longPress);
-					}
-					myKeyUnderTracking = null;
-				}
-				return true;
-			default:
-				return false;
+		if (myKeyUnderTracking != -1) {
+			if (myKeyUnderTracking == keyCode) {
+				final boolean longPress = System.currentTimeMillis() >
+					myTrackingStartTime + ViewConfiguration.getLongPressTimeout();
+				ZLApplication.Instance().doActionByKey(keyCode, longPress);
+			}
+			myKeyUnderTracking = -1;
+			return true;
+		} else {
+			final ZLApplication application = ZLApplication.Instance();
+			return
+				application.hasActionForKey(keyCode, false) ||
+				application.hasActionForKey(keyCode, true);
 		}
 	}
 

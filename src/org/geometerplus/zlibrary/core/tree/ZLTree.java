@@ -25,17 +25,20 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	private int mySize = 1;
 	public final T Parent;
 	public final int Level;
-	private ArrayList<T> mySubTrees;
+	private volatile List<T> mySubTrees;
 
 	protected ZLTree() {
 		this(null);
 	}
 
 	protected ZLTree(T parent) {
-		this(parent, (parent == null) ? 0 : parent.subTrees().size());
+		this(parent, -1);
 	}
 
 	protected ZLTree(T parent, int position) {
+		if (position == -1) {
+			position = parent == null ? 0 : parent.subTrees().size();
+		}
 		if (parent != null && (position < 0 || position > parent.subTrees().size())) {
 			throw new IndexOutOfBoundsException("`position` value equals " + position + " but must be in range [0; " + parent.subTrees().size() + "]");
 		}
@@ -53,47 +56,55 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 	}
 
 	public final boolean hasChildren() {
-		return mySubTrees != null;
+		return mySubTrees != null && !mySubTrees.isEmpty();
 	}
 
-	public final List<T> subTrees() {
+	public List<T> subTrees() {
 		if (mySubTrees == null) {
 			return Collections.emptyList();
 		}
-		return mySubTrees;
+		synchronized (mySubTrees) {
+			return new ArrayList<T>(mySubTrees);
+		}
 	}
 
-	public final T getTreeByParagraphNumber(int index) {
-		if ((index < 0) || (index >= mySize)) {
-			// TODO: throw exception?
+	public synchronized final T getTreeByParagraphNumber(int index) {
+		if (index < 0 || index >= mySize) {
+			// TODO: throw an exception?
 			return null;
 		}
 		if (index == 0) {
 			return (T)this;
 		}
 		--index;
-		for (T subtree : mySubTrees) {
-			if (subtree.mySize <= index) {
-				index -= subtree.mySize;
-			} else {
-				return (T)subtree.getTreeByParagraphNumber(index);
+		if (mySubTrees != null) {
+			synchronized (mySubTrees) {
+				for (T subtree : mySubTrees) {
+					if (subtree.mySize <= index) {
+						index -= subtree.mySize;
+					} else {
+						return (T)subtree.getTreeByParagraphNumber(index);
+					}
+				}
 			}
 		}
 		throw new RuntimeException("That's impossible!!!");
 	}
 
-	private void addSubTree(T subtree, int position) {
+	private synchronized void addSubTree(T subtree, int position) {
 		if (mySubTrees == null) {
-			mySubTrees = new ArrayList<T>();
+			mySubTrees = Collections.synchronizedList(new ArrayList<T>());
 		}
 		final int subTreeSize = subtree.getSize();
-		final int thisSubTreesSize = mySubTrees.size();
-		while (position < thisSubTreesSize) {
-			subtree = mySubTrees.set(position++, subtree);
-		}
-		mySubTrees.add(subtree);
-		for (ZLTree<?> parent = this; parent != null; parent = parent.Parent) {
-			parent.mySize += subTreeSize;
+		synchronized (mySubTrees) {
+			final int thisSubTreesSize = mySubTrees.size();
+			while (position < thisSubTreesSize) {
+				subtree = mySubTrees.set(position++, subtree);
+			}
+			mySubTrees.add(subtree);
+			for (ZLTree<?> parent = this; parent != null; parent = parent.Parent) {
+				parent.mySize += subTreeSize;
+			}
 		}
 	}
 
@@ -102,9 +113,6 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 		ZLTree<?> parent = Parent;
 		if (parent != null) {
 			parent.mySubTrees.remove(this);
-			if (parent.mySubTrees.isEmpty()) {
-				parent.mySubTrees = null;
-			}
 			for (; parent != null; parent = parent.Parent) {
 				parent.mySize -= subTreeSize;
 			}
@@ -113,7 +121,9 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 
 	public final void clear() {
 		final int subTreesSize = mySize - 1;
-		mySubTrees = null;
+		if (mySubTrees != null) {
+			mySubTrees.clear();
+		}
 		mySize = 1;
 		if (subTreesSize > 0) {
 			for (ZLTree<?> parent = Parent; parent != null; parent = parent.Parent) {
@@ -157,10 +167,12 @@ public abstract class ZLTree<T extends ZLTree<T>> implements Iterable<T> {
 				while (!myIndexStack.isEmpty()) {
 					final int index = myIndexStack.removeLast() + 1;
 					parent = parent.Parent;
-					if (parent.mySubTrees.size() > index) {
-						myCurrentElement = parent.mySubTrees.get(index);
-						myIndexStack.add(index);
-						break;
+					synchronized (parent.mySubTrees) {
+						if (parent.mySubTrees.size() > index) {
+							myCurrentElement = parent.mySubTrees.get(index);
+							myIndexStack.add(index);
+							break;
+						}
 					}
 				}
 				if (myIndexStack.isEmpty()) {

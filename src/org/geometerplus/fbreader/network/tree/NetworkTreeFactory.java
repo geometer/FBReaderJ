@@ -23,7 +23,7 @@ import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
 import org.geometerplus.fbreader.network.*;
 
-public class NetworkTreeFactory {
+class NetworkTreeFactory {
 	public static NetworkTree createNetworkTree(NetworkCatalogTree parent, NetworkItem item) {
 		return createNetworkTree(parent, item, -1);
 	}
@@ -37,13 +37,11 @@ public class NetworkTreeFactory {
 		}
 
 		if (item instanceof NetworkCatalogItem) {
-			NetworkCatalogItem catalogItem = (NetworkCatalogItem) item;
+			final NetworkCatalogItem catalogItem = (NetworkCatalogItem)item;
 			if (catalogItem.getVisibility() == ZLBoolean3.B3_FALSE) {
 				return null;
 			}
-			NetworkCatalogTree tree = new NetworkCatalogTree(parent, catalogItem, position);
-			catalogItem.onDisplayItem();
-			return tree;
+			return new NetworkCatalogTree(parent, catalogItem, position);
 		} else if (item instanceof NetworkBookItem) {
 			if (position != subtreesSize) {
 				throw new RuntimeException("Unable to insert NetworkBookItem to the middle of the catalog");

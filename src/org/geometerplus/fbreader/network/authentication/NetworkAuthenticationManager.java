@@ -23,16 +23,17 @@ import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
+import org.geometerplus.zlibrary.core.money.Money;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.opds.OPDSNetworkLink;
 import org.geometerplus.fbreader.network.authentication.litres.LitResAuthenticationManager;
-import org.geometerplus.fbreader.network.urlInfo.BookUrlInfo;
+import org.geometerplus.fbreader.network.urlInfo.*;
 
 public abstract class NetworkAuthenticationManager {
 	private static final HashMap<String, NetworkAuthenticationManager> ourManagers = new HashMap<String, NetworkAuthenticationManager>();
 
-	public static NetworkAuthenticationManager createManager(INetworkLink link, String sslCertificate, Class<? extends NetworkAuthenticationManager> managerClass) {
+	public static NetworkAuthenticationManager createManager(INetworkLink link, Class<? extends NetworkAuthenticationManager> managerClass) {
 		NetworkAuthenticationManager mgr = ourManagers.get(link.getSiteName());
 		if (mgr == null) {
 			if (managerClass == LitResAuthenticationManager.class) {
@@ -47,22 +48,30 @@ public abstract class NetworkAuthenticationManager {
 
 
 	public final INetworkLink Link;
-	public final ZLStringOption UserNameOption;
-	public final String SSLCertificate;
+	protected final ZLStringOption UserNameOption;
 
-	protected NetworkAuthenticationManager(INetworkLink link, String sslCertificate) {
+	protected NetworkAuthenticationManager(INetworkLink link) {
 		Link = link;
 		UserNameOption = new ZLStringOption(link.getSiteName(), "userName", "");
-		SSLCertificate = sslCertificate;
+	}
+
+	public String getUserName() {
+		return UserNameOption.getValue();
+	}
+
+	public String getVisibleUserName() {
+		final String username = getUserName();
+		return username.startsWith("fbreader-auto-") ? "auto" : username;
 	}
 
 	/*
 	 * Common manager methods
 	 */
 	public abstract boolean isAuthorised(boolean useNetwork /* = true */) throws ZLNetworkException;
-	public abstract void authorise(String password) throws ZLNetworkException;
+	public abstract void authorise(String username, String password) throws ZLNetworkException;
 	public abstract void logOut();
 	public abstract BookUrlInfo downloadReference(NetworkBookItem book);
+	public abstract void refreshAccountInformation() throws ZLNetworkException;
 
 	public final boolean mayBeAuthorised(boolean useNetwork) {
 		try {
@@ -71,11 +80,6 @@ public abstract class NetworkAuthenticationManager {
 		}
 		return true;
 	}
-
-	/*
-	 * Account specific methods (can be called only if authorised!!!)
-	 */
-	public abstract String currentUserName();
 
 	public boolean needsInitialization() {
 		return false;
@@ -98,17 +102,15 @@ public abstract class NetworkAuthenticationManager {
 		return Collections.emptyList();
 	}
 
-	public String currentAccount() {
+	public Money currentAccount() {
 		return null;
 	}
-
-	//public abstract ZLNetworkSSLCertificate certificate();
 
 	/*
 	 * topup account
 	 */
 
-	public String topupLink() {
+	public String topupLink(Money sum) {
 		return null;
 	}
 	public Map<String,String> getTopupData() {

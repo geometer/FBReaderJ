@@ -21,11 +21,13 @@ package org.geometerplus.fbreader.network;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.urlInfo.*;
+import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
-public abstract class AbstractNetworkLink implements INetworkLink, Basket {
+public abstract class AbstractNetworkLink implements INetworkLink {
 	private int myId;
 
 	protected String mySiteName;
@@ -33,8 +35,6 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 	protected String mySummary;
 	protected final String myLanguage;
 	protected final UrlInfoCollection<UrlInfoWithDate> myInfos;
-
-	private ZLStringListOption myBooksInBasketOption;
 
 	/**
 	 * Creates new NetworkLink instance.
@@ -99,56 +99,15 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 		return set;
 	}
 
-	public final void setSupportsBasket() {
-		if (myBooksInBasketOption == null) {
-			myBooksInBasketOption = new ZLStringListOption(mySiteName, "Basket", null);
-		}
+	public BasketItem getBasketItem() {
+		return null;
 	}
 
-	public final Basket basket() {
-		return myBooksInBasketOption != null ? this : null;
+	public ZLNetworkRequest bookListRequest(List<String> bookIds, NetworkOperationData data) {
+		return null;
 	}
 
-	// method from Basket interface
-	public final void add(NetworkBookItem book) {
-		if (book.Id != null && !"".equals(book.Id)) {
-			List<String> ids = myBooksInBasketOption.getValue();
-			if (!ids.contains(book.Id)) {
-				ids = new ArrayList<String>(ids);
-				ids.add(book.Id);
-				myBooksInBasketOption.setValue(ids);
-			}
-		}
-	}
-
-	// method from Basket interface
-	public final void remove(NetworkBookItem book) {
-		if (book.Id != null && !"".equals(book.Id)) {
-			List<String> ids = myBooksInBasketOption.getValue();
-			if (ids.contains(book.Id)) {
-				ids = new ArrayList<String>(ids);
-				ids.remove(book.Id);
-				myBooksInBasketOption.setValue(ids);
-			}
-		}
-	}
-
-	// method from Basket interface
-	public final void clear() {
-		myBooksInBasketOption.setValue(null);
-	}
-
-	// method from Basket interface
-	public final boolean contains(NetworkBookItem book) {
-		return myBooksInBasketOption.getValue().contains(book.Id);
-	}
-
-	// method from Basket interface
-	public final List<String> bookIds() {
-		return myBooksInBasketOption.getValue();
-	}
-
-	public NetworkOperationData createOperationData(NetworkOperationData.OnNewItemListener listener) {
+	public NetworkOperationData createOperationData(NetworkItemsLoader listener) {
 		return new NetworkOperationData(this, listener);
 	}
 
@@ -168,5 +127,38 @@ public abstract class AbstractNetworkLink implements INetworkLink, Basket {
 			+ "; icon=" + icon
 			+ "; infos=" + myInfos
 			+ "}";
+	}
+
+	private String getTitleForComparison() {
+		String title = getTitle();
+		for (int index = 0; index < title.length(); ++index) {
+			final char ch = title.charAt(index);
+			if (ch < 128 && Character.isLetter(ch)) {
+				return title.substring(index);
+			}
+		}
+		return title;
+	}
+
+	private static int getLanguageOrder(String language) {
+		if (ZLLanguageUtil.MULTI_LANGUAGE_CODE.equals(language)) {
+			return 1;
+		}
+		if (language.equals(Locale.getDefault().getLanguage())) {
+			return 0;
+		}
+		return 2;
+	}
+
+	public int compareTo(INetworkLink link) {
+		int diff = getLanguageOrder(getLanguage()) - getLanguageOrder(link.getLanguage());
+		if (diff != 0) {
+			return diff;
+		}
+		diff = getTitleForComparison().compareToIgnoreCase(((AbstractNetworkLink)link).getTitleForComparison());
+		if (diff != 0) {
+			return diff;
+		}
+		return getId() - link.getId();
 	}
 }

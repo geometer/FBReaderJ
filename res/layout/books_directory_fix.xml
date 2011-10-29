@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:orientation="vertical"
+	>
+		<TextView
+			android:id="@+id/books_directory_fix_text"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="10dp"
+		/>
+		<EditText
+			android:id="@+id/books_directory_fix_directory"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+		/>
+		<include layout="@layout/ok_cancel_buttons" android:id="@+id/books_directory_fix_buttons" />
+	</LinearLayout>
+</ScrollView>

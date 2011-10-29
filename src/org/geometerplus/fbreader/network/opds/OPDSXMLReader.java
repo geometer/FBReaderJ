@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.network.opds;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
+import org.geometerplus.zlibrary.core.money.Money;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.network.atom.*;
@@ -75,21 +76,6 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 	private static final String OPENSEARCH_TAG_STARTINDEX = "startIndex";
 
 	private static final String FBREADER_TAG_VIEW = "view";
-
-	@Override
-	protected OPDSFeedMetadata createFeed(ZLStringMap attributes) {
-		return new OPDSFeedMetadata(attributes);
-	}
-
-	@Override
-	protected OPDSLink createLink(ZLStringMap attributes) {
-		return new OPDSLink(attributes);
-	}
-
-	@Override
-	protected OPDSEntry createEntry(ZLStringMap attributes) {
-		return new OPDSEntry(attributes);
-	}
 
 	@Override
 	public boolean startElementHandler(String ns, String tag, ZLStringMap attributes, String bufferContent) {
@@ -163,7 +149,7 @@ public class OPDSXMLReader extends ATOMXMLReader<OPDSFeedMetadata, OPDSEntry> {
 			case FEL_PRICE:
 				if (ns == XMLNamespaces.Opds && tag == TAG_PRICE) {
 					if (bufferContent != null && myPriceCurrency != null) {
-						getOPDSLink().Prices.add(new OPDSPrice(bufferContent.intern(), myPriceCurrency));
+						getOPDSLink().Prices.add(new Money(bufferContent, myPriceCurrency));
 						myPriceCurrency = null;
 					}
 					myState = FE_LINK;

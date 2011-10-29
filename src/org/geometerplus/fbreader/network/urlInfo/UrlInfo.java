@@ -35,6 +35,7 @@ public class UrlInfo implements Serializable {
 		Image,
 		Thumbnail,
 		Search,
+		ListBooks,
 		SignIn,
 		SignOut,
 		SignUp,

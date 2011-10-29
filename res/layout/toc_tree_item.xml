@@ -21,7 +21,6 @@
 		android:layout_marginBottom="5dip"
 		android:gravity="center_vertical|left"
 		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:singleLine="true"
 		android:ellipsize="marquee"
 		android:marqueeRepeatLimit="marquee_forever"
 	/>

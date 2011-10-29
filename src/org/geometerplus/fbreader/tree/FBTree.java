@@ -19,7 +19,6 @@
 
 package org.geometerplus.fbreader.tree;
 
-import java.util.*;
 import java.io.Serializable;
 
 import org.geometerplus.zlibrary.core.tree.ZLTree;
@@ -87,10 +86,6 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		super(parent, position);
 	}
 
-	/**
-	 * Returns unique identifier which can be used in NetworkView methods
-	 * @return unique Key instance
-	 */
 	public final Key getUniqueKey() {
 		if (myKey == null) {
 			myKey = new Key(Parent != null ? Parent.getUniqueKey() : null, getStringId());
@@ -100,7 +95,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 
 	/**
 	 * Returns id used as a part of unique key above. This string must be not null
-     * and be unique for all children of same tree
+     * and be different for all children of same tree
 	 */
 	protected abstract String getStringId();
 
@@ -151,33 +146,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return key0.toLowerCase().compareTo(key1.toLowerCase());
 	}
 
-	public final void sortAllChildren() {
-		List<FBTree> children = subTrees();
-		if (!children.isEmpty()) {
-			Collections.sort(children);
-			for (FBTree tree : children) {
-				tree.sortAllChildren();
-			}
-		}
-	}
-
-	private String mySecondString;
-
-	public final void invalidateChildren() {
-		mySecondString = null;
-	}
-
-	public final String getSecondString() {
-		if (mySecondString == null) {
-			mySecondString = getSummary();
-			if (mySecondString == null) {
-				mySecondString = "";
-			}
-		}
-		return mySecondString;
-	}
-
-	protected String getSummary() {
+	public String getSummary() {
 		StringBuilder builder = new StringBuilder();
 		int count = 0;
 		for (FBTree subtree : subTrees()) {
@@ -194,6 +163,11 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 
 	protected ZLImage createCover() {
 		return null;
+	}
+
+	protected void setCover(ZLImage cover) {
+		myCoverRequested = true;
+		myCover = cover;
 	}
 
 	public final ZLImage getCover() {

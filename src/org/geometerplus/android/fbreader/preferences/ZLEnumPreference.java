@@ -41,7 +41,9 @@ class ZLEnumPreference<T extends Enum<T>> extends ZLStringListPreference {
 		setInitialValue(initialValue.toString());
 	}
 
-	public void onAccept() {
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
 		myOption.setValue(Enum.valueOf(myOption.getValue().getDeclaringClass(), getValue()));
 	}
 }

@@ -56,6 +56,7 @@
 		<node name="es" value="西班牙语" />
 		<node name="fi" value="芬兰语" />
 		<node name="fr" value="法语" />
+		<node name="gl" value="Galician" toBeTranslated="true"/>
 		<node name="he" value="希伯来语" />
 		<node name="hu" value="匈牙利语" />
 		<node name="id" value="印度语" />
@@ -65,6 +66,7 @@
 		<node name="no" value="挪威语" />
 		<node name="pl" value="波兰语" />
 		<node name="pt" value="葡萄牙语" />
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="俄罗斯语" />
 		<node name="sv" value="瑞典语" />
 		<node name="th" value="Thai" toBeTranslated="true"/>

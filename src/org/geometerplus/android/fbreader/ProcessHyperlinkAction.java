@@ -36,8 +36,6 @@ import org.geometerplus.android.fbreader.network.BookDownloaderService;
 import org.geometerplus.android.fbreader.image.ImageViewActivity;
 
 class ProcessHyperlinkAction extends FBAndroidAction {
-	private static final String ACTION_LINK_PREFIX = "fbreader-action://";
-
 	ProcessHyperlinkAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
 	}
@@ -59,11 +57,7 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 			final ZLTextHyperlink hyperlink = ((ZLTextHyperlinkRegionSoul)soul).Hyperlink;
 			switch (hyperlink.Type) {
 				case FBHyperlinkType.EXTERNAL:
-					if (hyperlink.Id.startsWith(ACTION_LINK_PREFIX)) {
-						Reader.doAction(hyperlink.Id.substring(ACTION_LINK_PREFIX.length()));
-					} else {
-						openInBrowser(hyperlink.Id);
-					}
+					openInBrowser(hyperlink.Id);
 					break;
 				case FBHyperlinkType.INTERNAL:
 					Reader.Model.Book.markHyperlinkAsVisited(hyperlink.Id);
@@ -95,24 +89,31 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		}
 	}
 
-	private void openInBrowser(String urlString) {
+	private void openInBrowser(final String urlString) {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
-		boolean externalUrl = true;
+		final boolean externalUrl;
 		if (BookDownloader.acceptsUri(Uri.parse(urlString))) {
 			intent.setClass(BaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
+		} else {
+			externalUrl = true;
 		}
 		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
-		try {
-			nLibrary.initialize();
-		} catch (ZLNetworkException e) {
-		}
-		intent.setData(Uri.parse(NetworkLibrary.Instance().rewriteUrl(urlString, externalUrl)));
-		try {
-			BaseActivity.startActivity(intent);
-		} catch (ActivityNotFoundException e) {
-			// TODO: show an error message
-		}
+		new Thread(new Runnable() {
+			public void run() {
+				nLibrary.initialize();
+				intent.setData(Uri.parse(nLibrary.rewriteUrl(urlString, externalUrl)));
+				BaseActivity.runOnUiThread(new Runnable() {
+					public void run() {
+						try {
+							BaseActivity.startActivity(intent);
+						} catch (ActivityNotFoundException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		}).start();
 	}
 }

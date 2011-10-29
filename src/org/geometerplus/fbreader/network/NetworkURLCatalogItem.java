@@ -20,25 +20,11 @@
 package org.geometerplus.fbreader.network;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
-import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfoCollection;
 
 public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
-	/**
-	 * Creates new NetworkURLCatalogItem instance with <code>Accessibility.ALWAYS</code> accessibility and <code>FLAGS_DEFAULT</code> flags.
-	 *
-	 * @param link       corresponding NetworkLink object. Must be not <code>null</code>.
-	 * @param title      title of this library item. Must be not <code>null</code>.
-	 * @param summary    description of this library item. Can be <code>null</code>.
-	 * @param urls       collection of item-related URLs. Can be <code>null</code>.
-	 */
-	public NetworkURLCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls) {
-		this(link, title, summary, urls, Accessibility.ALWAYS, FLAGS_DEFAULT);
-	}
-
 	/**
 	 * Creates new NetworkURLCatalogItem instance with specified accessibility and type.
 	 *
@@ -50,28 +36,17 @@ public abstract class NetworkURLCatalogItem extends NetworkCatalogItem {
 	 *                      in the network library view. 
 	 * @param flags         value defines how to show book items in this catalog.
 	 */
-	public NetworkURLCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Accessibility accessibility, int flags) {
+	protected NetworkURLCatalogItem(INetworkLink link, CharSequence title, CharSequence summary, UrlInfoCollection<?> urls, Accessibility accessibility, int flags) {
 		super(link, title, summary, urls, accessibility, flags);
 	}
 
-	/**
-	 * Performs all necessary operations with NetworkOperationData and NetworkRequest
-	 * to complete loading children items.
-	 * 
-	 * @param data Network operation data instance
-	 * @param networkRequest initial network request
-	 *  
-	 * @throws ZLNetworkException when network operation couldn't be completed
-	 */
-	protected final void doLoadChildren(NetworkOperationData data,
-			ZLNetworkRequest networkRequest) throws ZLNetworkException {
-		while (networkRequest != null) {
-			ZLNetworkManager.Instance().perform(networkRequest);
-			if (data.Listener.confirmInterrupt()) {
-				return;
-			}
-			networkRequest = data.resume();
-		}
+	protected String getCatalogUrl() {
+		return getUrl(UrlInfo.Type.Catalog);
+	}
+
+	@Override
+	public boolean canBeOpened() {
+		return getCatalogUrl() != null;
 	}
 
 	@Override

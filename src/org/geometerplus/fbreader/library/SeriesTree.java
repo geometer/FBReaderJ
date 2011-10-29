@@ -40,7 +40,7 @@ public final class SeriesTree extends LibraryTree {
 
 	@Override
 	protected String getStringId() {
-		return getName();
+		return "@SeriesTree " + getName();
 	}
 
 	BookTree getBookInSeriesSubTree(Book book) {

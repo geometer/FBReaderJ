@@ -54,7 +54,7 @@ public class BookTree extends LibraryTree {
 
 	@Override
 	protected String getStringId() {
-		return getName();
+		return "@BookTree " + getName();
 	}
 
 	@Override
