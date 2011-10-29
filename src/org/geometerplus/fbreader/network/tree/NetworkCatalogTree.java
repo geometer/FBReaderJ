@@ -40,6 +40,9 @@ public class NetworkCatalogTree extends NetworkTree {
 	public NetworkCatalogTree(RootTree parent, INetworkLink link, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		myLink = link;
+		if (item == null) {
+			throw new IllegalArgumentException("item cannot be null");
+		}
 		Item = item;
 		addSpecialTrees();
 	}
