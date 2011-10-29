@@ -81,15 +81,6 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource, resourceKey)
 			);
 		}
-
-		public void close() {
-			myScreen.getDialog().dismiss();
-			ZLPreferenceActivity.this.getListView().invalidateViews();
-		}
-
-		public void setOnPreferenceClickListener(PreferenceScreen.OnPreferenceClickListener onPreferenceClickListener) {
-			myScreen.setOnPreferenceClickListener(onPreferenceClickListener);
-		}
 	}
 
 	private PreferenceScreen myScreen;
