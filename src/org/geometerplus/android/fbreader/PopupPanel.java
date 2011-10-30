@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -55,8 +56,8 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 		}
 	}
 
-	private final void removeWindow() {
-		if (myWindow != null) {
+	private final void removeWindow(Activity activity) {
+		if (myWindow != null && activity == myWindow.getActivity()) {
 			ViewGroup root = (ViewGroup)myWindow.getParent();
 			myWindow.hide();
 			root.removeView(myWindow);
@@ -64,9 +65,9 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 		}
 	}
 
-	public static void removeAllWindows(ZLApplication application) {
+	public static void removeAllWindows(ZLApplication application, Activity activity) {
 		for (ZLApplication.PopupPanel popup : application.popupPanels()) {
-			((PopupPanel)popup).removeWindow();
+			((PopupPanel)popup).removeWindow(activity);
 		}
 	}
 

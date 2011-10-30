@@ -44,7 +44,7 @@ final class NavigationPopup extends PopupPanel {
 	}
 
 	public void runNavigation() {
-		if (myWindow.getVisibility() == View.GONE) {
+		if (myWindow != null && myWindow.getVisibility() == View.GONE) {
 			myIsInProgress = false;
 			initPosition();
 			Application.showPopup(ID);
@@ -73,7 +73,7 @@ final class NavigationPopup extends PopupPanel {
 
 	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
-		if (myWindow != null) {
+		if (myWindow != null && activity == myWindow.getActivity()) {
 			return;
 		}
 
