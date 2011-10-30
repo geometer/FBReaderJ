@@ -66,7 +66,9 @@ class WallpaperPreference extends ZLStringListPreference {
 		setInitialValue(myOption.getValue());
 	}
 
-	public void onAccept() {
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
 		myOption.setValue(getValue());
 	}
 }

@@ -57,7 +57,7 @@ public class TipsManager {
 	}
 
 	private String getUrl() {
-		return "http://data.fbreader.org/tips/tips.xml"; // FIXME
+		return "https://data.fbreader.org/tips/tips.php";
 	}
 
 	private String getLocalFilePath() {
@@ -82,7 +82,18 @@ public class TipsManager {
 
 	public boolean hasNextTip() {
 		final List<Tip> tips = getTips();
-		return tips != null && myIndexOption.getValue() < tips.size();
+		if (tips == null) {
+			return false;
+		}
+
+		final int index = myIndexOption.getValue();
+		if (index >= tips.size()) {
+			new File(getLocalFilePath()).delete();
+			myIndexOption.setValue(0);
+			return false;
+		}
+
+		return true;
 	}
 
 	public Tip getNextTip() {
@@ -140,6 +151,6 @@ public class TipsManager {
 					myDownloadInProgress = false;
 				}
 			}
-		});
+		}).start();
 	}
 }

@@ -1,4 +1,4 @@
-===== 2.0 alpha 1 (Oct ??, 2011) =====
+===== 2.0 alpha 1 (??? ??, 2011) =====
 * RTF support
 * More encodings in the list
 * non-ascii archive entry names issue has been fixed
@@ -8,6 +8,10 @@
   ** plain text support
   ** HTML support
   ** CSS/ePub support
+
+===== 1.2.2 (??? ??, 2011) =====
+* Tips subsystem has been implemented
+* Fixed an exception in adding custom catalog (if an incorrect URL was entered)
 
 ===== 1.2.1 (Oct 22, 2011) =====
 * Fixed network library crash for buy links with no price
