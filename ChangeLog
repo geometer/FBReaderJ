@@ -1,3 +1,7 @@
+===== 1.2.2 (??? ??, 2011) =====
+* Tips subsystem has been implemented
+* Fixed an exception in adding custom catalog (if an incorrect URL was entered)
+
 ===== 1.2.1 (Oct 22, 2011) =====
 * Fixed network library crash for buy links with no price
 * Fixed possible library crash during search
