@@ -341,6 +341,7 @@ public class BookDownloaderService extends Service {
 					success = true;
 				} catch (ZLNetworkException e) {
 					// TODO: show error message to User
+					e.printStackTrace();
 					file.delete();
 				} finally {
 					downloadFinishHandler.sendEmptyMessage(success ? 1 : 0);
