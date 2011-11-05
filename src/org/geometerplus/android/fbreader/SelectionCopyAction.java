@@ -35,7 +35,8 @@ public class SelectionCopyAction extends FBAndroidAction {
 		super(baseActivity, fbreader);
 	}
 
-	public void run() {
+	@Override
+    protected void run(Object ... params) {
 		final String text = Reader.getTextView().getSelectedText();
 		Reader.getTextView().clearSelection();
 

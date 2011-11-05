@@ -24,7 +24,8 @@ class ExitAction extends FBAction {
 		super(fbreader);
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		if (Reader.getCurrentView() != Reader.BookTextView) {
 			Reader.showBookTextView();
 		} else {

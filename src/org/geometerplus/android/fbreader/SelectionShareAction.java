@@ -30,7 +30,8 @@ public class SelectionShareAction extends FBAndroidAction {
 		super(baseActivity, fbreader);
 	}
 
-	public void run() {
+	@Override
+    protected void run(Object ... params) {
 		final String text = Reader.getTextView().getSelectedText();
 		final String title = Reader.Model.Book.getTitle();
 		Reader.getTextView().clearSelection();
