@@ -70,7 +70,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 17;
+		final int currentVersion = 18;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -113,6 +113,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables15();
 					case 16:
 						updateTables16();
+					case 17:
+						updateTables17();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -1224,5 +1226,14 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.execSQL(
 			"ALTER TABLE Books ADD COLUMN `exists` INTEGER DEFAULT 1"
 		);
+	}
+
+	private void updateTables17() {
+		myDatabase.execSQL(
+			"CREATE TABLE IF NOT EXISTS BookStatus(" +
+				"book_id INTEGER NOT NULL REFERENCES Books(book_id) PRIMARY KEY," +
+				"access_time INTEGER NOT NULL," +
+				"pages_full INTEGER NOT NULL," +
+				"page_current INTEGER NOT NULL)");
 	}
 }

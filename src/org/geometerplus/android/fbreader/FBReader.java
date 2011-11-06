@@ -182,8 +182,7 @@ public final class FBReader extends ZLAndroidActivity {
 			super.onNewIntent(intent);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())
 					&& data != null && "fbreader-action".equals(data.getScheme())) {
-			fbReader.doAction(data.getEncodedSchemeSpecificPart());
-			// TODO: use fragment
+			fbReader.doAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
