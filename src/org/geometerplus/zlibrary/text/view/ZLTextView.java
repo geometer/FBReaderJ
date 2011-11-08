@@ -483,7 +483,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 0;
 		}
-		ZLTextPage page = getPage(pageIndex);
+		final ZLTextPage page = getPage(pageIndex);
 		preparePaintInfo(page);
 		if (startNotEndOfPage) {
 			return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
@@ -613,12 +613,60 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myContext.getStringWidth(pattern, 0, length) / ((float)length);
 	}
 
-	public final synchronized int computePageNumber() {
-		return computeTextPageNumber(sizeOfFullText());
+	public static class PagePosition {
+		public final int Current;
+		public final int Total;
+
+		PagePosition(int current, int total) {
+			Current = current;
+			Total = total;
+		}
 	}
 
-	public final synchronized int computeCurrentPage() {
-		return computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
+	public final synchronized PagePosition pagePosition() {
+		final int currentCharIndex = getCurrentCharNumber(PageIndex.current, false);
+		final int lastCharIndex = sizeOfFullText();
+		int current = computeTextPageNumber(currentCharIndex);
+		int total = computeTextPageNumber(lastCharIndex);
+
+		if (current == total) {
+			if (currentCharIndex < lastCharIndex) {
+				if (total <= 2) {
+					total += 1;
+				} else {
+					current -= 1;
+				}
+			} else {
+				if (total == 1) {
+					ZLTextWordCursor cursor = myCurrentPage.StartCursor;
+					if (cursor == null || cursor.isNull()) {
+						preparePaintInfo(myCurrentPage);
+						cursor = myCurrentPage.StartCursor;
+					}
+					if (cursor != null && !cursor.isNull() &&
+						(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst())) {
+						total = 2;
+						current = 2;
+					}
+				}
+				if (total == 2) {
+					ZLTextWordCursor cursor = myPreviousPage.StartCursor;
+					if (cursor == null || cursor.isNull()) {
+						preparePaintInfo(myPreviousPage);
+						cursor = myPreviousPage.StartCursor;
+					}
+					if (cursor != null && !cursor.isNull() &&
+						(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst())) {
+						total = 3;
+						current = 3;
+					}
+				}
+			}
+		} else if (total == 2 && getCurrentCharNumber(PageIndex.next, false) < lastCharIndex) {
+			total = 3;
+		}
+
+		return new PagePosition(current, total);
 	}
 
 	public final synchronized void gotoPage(int page) {
