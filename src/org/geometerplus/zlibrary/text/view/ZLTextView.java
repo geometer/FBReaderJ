@@ -628,14 +628,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		int total = computeTextPageNumber(sizeOfFullText());
 
 		if (total > 3) {
-			System.err.println("return 0");
 			return new PagePosition(current, total);
 		}
 
 		preparePaintInfo(myCurrentPage);
 		ZLTextWordCursor cursor = myCurrentPage.StartCursor;
 		if (cursor == null || cursor.isNull()) {
-			System.err.println("return 1");
 			return new PagePosition(current, total);
 		}
 
@@ -655,25 +653,19 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		total = current;
 		cursor = myCurrentPage.EndCursor;
 		if (cursor == null || cursor.isNull()) {
-			System.err.println("return 2");
 			return new PagePosition(current, total);
 		}
-		System.err.println("hello 0");
 		if (!cursor.isEndOfText()) {
-		System.err.println("hello 1");
 			ZLTextWordCursor nextCursor = myNextPage.EndCursor;
 			if (nextCursor == null || nextCursor.isNull()) {
-		System.err.println("hello 2");
 				preparePaintInfo(myNextPage);
 				nextCursor = myNextPage.EndCursor;
 			}
 			if (nextCursor != null) {
-		System.err.println("hello 3");
 				total += nextCursor.isEndOfText() ? 1 : 2;
 			}
 		}
 
-		System.err.println("return 3");
 		return new PagePosition(current, total);
 	}
 
