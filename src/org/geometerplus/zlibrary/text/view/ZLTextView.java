@@ -483,7 +483,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 0;
 		}
-		ZLTextPage page = getPage(pageIndex);
+		final ZLTextPage page = getPage(pageIndex);
 		preparePaintInfo(page);
 		if (startNotEndOfPage) {
 			return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
@@ -613,12 +613,60 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myContext.getStringWidth(pattern, 0, length) / ((float)length);
 	}
 
-	public final synchronized int computePageNumber() {
-		return computeTextPageNumber(sizeOfFullText());
+	public static class PagePosition {
+		public final int Current;
+		public final int Total;
+
+		PagePosition(int current, int total) {
+			Current = current;
+			Total = total;
+		}
 	}
 
-	public final synchronized int computeCurrentPage() {
-		return computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
+	public final synchronized PagePosition pagePosition() {
+		int current = computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
+		int total = computeTextPageNumber(sizeOfFullText());
+
+		if (total > 3) {
+			return new PagePosition(current, total);
+		}
+
+		preparePaintInfo(myCurrentPage);
+		ZLTextWordCursor cursor = myCurrentPage.StartCursor;
+		if (cursor == null || cursor.isNull()) {
+			return new PagePosition(current, total);
+		}
+
+		if (cursor.isStartOfText()) {
+			current = 1;
+		} else {
+			ZLTextWordCursor prevCursor = myPreviousPage.StartCursor;
+			if (prevCursor == null || prevCursor.isNull()) {
+				preparePaintInfo(myPreviousPage);
+				prevCursor = myPreviousPage.StartCursor;
+			}
+			if (prevCursor != null && !prevCursor.isNull()) {
+				current = prevCursor.isStartOfText() ? 2 : 3;
+			}
+		}
+
+		total = current;
+		cursor = myCurrentPage.EndCursor;
+		if (cursor == null || cursor.isNull()) {
+			return new PagePosition(current, total);
+		}
+		if (!cursor.isEndOfText()) {
+			ZLTextWordCursor nextCursor = myNextPage.EndCursor;
+			if (nextCursor == null || nextCursor.isNull()) {
+				preparePaintInfo(myNextPage);
+				nextCursor = myNextPage.EndCursor;
+			}
+			if (nextCursor != null) {
+				total += nextCursor.isEndOfText() ? 1 : 2;
+			}
+		}
+
+		return new PagePosition(current, total);
 	}
 
 	public final synchronized void gotoPage(int page) {

@@ -27,7 +27,7 @@ class SelectionHidePanelAction extends FBAndroidAction {
 	}
 
 	@Override
-	protected void run() {
+    protected void run(Object ... params) {
 		BaseActivity.hideSelectionPanel();
 	}
 }

@@ -26,12 +26,14 @@ class FindPreviousAction extends FBAction {
 		super(fbreader);
 	}
 
+	@Override
 	public boolean isEnabled() {
 		ZLTextView view = Reader.getTextView();
 		return (view != null) && view.canFindPrevious();
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		Reader.getTextView().findPrevious();
 	}
 }

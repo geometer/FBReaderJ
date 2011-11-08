@@ -218,6 +218,9 @@ public class ZLNetworkManager {
 				code = ZLNetworkException.ERROR_CONNECT_TO_HOST;
 			}
 			throw new ZLNetworkException(code, ZLNetworkUtil.hostFromUrl(request.URL), e);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ZLNetworkException(true, e.getMessage(), e);
 		} finally {
 			request.doAfter(success);
 			if (httpClient != null) {

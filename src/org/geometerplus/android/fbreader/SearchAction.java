@@ -26,11 +26,13 @@ class SearchAction extends FBAndroidAction {
 		super(baseActivity, fbreader);
 	}
 
+	@Override
 	public boolean isVisible() {
 		return Reader.Model != null;
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		BaseActivity.onSearchRequested();
 	}
 }

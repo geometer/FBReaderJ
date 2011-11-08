@@ -379,17 +379,21 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	}
 
 	private void updateAuthorizationState() {
-		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-		try {
-			if (mgr.isAuthorised(true)) {
-				setupUI(AuthorizationState.Authorized);
-				refreshAccountInformation();
-			} else {
-				setupUI(AuthorizationState.NotAuthorized);
+		new Thread(new Runnable() {
+			public void run() {
+				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+				try {
+					if (mgr.isAuthorised(true)) {
+						setupUI(AuthorizationState.Authorized);
+						refreshAccountInformation();
+					} else {
+						setupUI(AuthorizationState.NotAuthorized);
+					}
+				} catch (ZLNetworkException e) {
+					e.printStackTrace();
+					setupUI(AuthorizationState.NotAuthorized);
+				}
 			}
-		} catch (ZLNetworkException e) {
-			e.printStackTrace();
-			setupUI(AuthorizationState.NotAuthorized);
-		}
+		}).start();
 	}
 }

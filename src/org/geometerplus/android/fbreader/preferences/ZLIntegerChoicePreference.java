@@ -49,7 +49,9 @@ class ZLIntegerChoicePreference extends ZLStringListPreference {
 		setInitialValue(valueResourceKeys[index]);
 	}
 
-	public void onAccept() {
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
 		myOption.setValue(myValues[findIndexOfValue(getValue())]);
 	}
 }

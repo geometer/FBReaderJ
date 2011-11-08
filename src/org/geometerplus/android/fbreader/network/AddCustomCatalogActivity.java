@@ -20,8 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -217,35 +215,6 @@ public class AddCustomCatalogActivity extends Activity {
 		setErrorText(myResource.getResource(resourceKey).getValue());
 	}
 
-	private void runErrorDialog(final String errorText) {
-		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				switch (which) {
-					case DialogInterface.BUTTON_POSITIVE:
-						setExtraFieldsVisibility(true);
-						break;
-					case DialogInterface.BUTTON_NEUTRAL:
-						break;
-					case DialogInterface.BUTTON_NEGATIVE:
-						AddCustomCatalogActivity.this.finish();
-						break;
-				}
-			}
-		};
-
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource boxResource = dialogResource.getResource("networkError");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		new AlertDialog.Builder(this)
-			.setTitle(boxResource.getResource("title").getValue())
-			.setMessage(errorText)
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("continue").getValue(), listener)
-			.setNeutralButton(buttonResource.getResource("editUrl").getValue(), listener)
-			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
-			.create().show();
-	}
-
 	private void loadInfoByUri(Uri uri) {
 		String textUrl = uri.toString();
 		if (isEmptyString(uri.getScheme())) {
@@ -282,7 +251,6 @@ public class AddCustomCatalogActivity extends Activity {
 							setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
 							setExtraFieldsVisibility(true);
 						} else {
-							runErrorDialog(myError);
 							myLink = null;
 						}
 					}
