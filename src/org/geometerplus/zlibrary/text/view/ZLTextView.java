@@ -624,48 +624,56 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public final synchronized PagePosition pagePosition() {
-		final int currentCharIndex = getCurrentCharNumber(PageIndex.current, false);
-		final int lastCharIndex = sizeOfFullText();
-		int current = computeTextPageNumber(currentCharIndex);
-		int total = computeTextPageNumber(lastCharIndex);
+		int current = computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
+		int total = computeTextPageNumber(sizeOfFullText());
 
-		if (current == total) {
-			if (currentCharIndex < lastCharIndex) {
-				if (total <= 2) {
-					total += 1;
-				} else {
-					current -= 1;
-				}
-			} else {
-				if (total == 1) {
-					ZLTextWordCursor cursor = myCurrentPage.StartCursor;
-					if (cursor == null || cursor.isNull()) {
-						preparePaintInfo(myCurrentPage);
-						cursor = myCurrentPage.StartCursor;
-					}
-					if (cursor != null && !cursor.isNull() &&
-						(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst())) {
-						total = 2;
-						current = 2;
-					}
-				}
-				if (total == 2) {
-					ZLTextWordCursor cursor = myPreviousPage.StartCursor;
-					if (cursor == null || cursor.isNull()) {
-						preparePaintInfo(myPreviousPage);
-						cursor = myPreviousPage.StartCursor;
-					}
-					if (cursor != null && !cursor.isNull() &&
-						(!cursor.isStartOfParagraph() || !cursor.getParagraphCursor().isFirst())) {
-						total = 3;
-						current = 3;
-					}
-				}
-			}
-		} else if (total == 2 && getCurrentCharNumber(PageIndex.next, false) < lastCharIndex) {
-			total = 3;
+		if (total > 3) {
+			System.err.println("return 0");
+			return new PagePosition(current, total);
 		}
 
+		preparePaintInfo(myCurrentPage);
+		ZLTextWordCursor cursor = myCurrentPage.StartCursor;
+		if (cursor == null || cursor.isNull()) {
+			System.err.println("return 1");
+			return new PagePosition(current, total);
+		}
+
+		if (cursor.isStartOfText()) {
+			current = 1;
+		} else {
+			ZLTextWordCursor prevCursor = myPreviousPage.StartCursor;
+			if (prevCursor == null || prevCursor.isNull()) {
+				preparePaintInfo(myPreviousPage);
+				prevCursor = myPreviousPage.StartCursor;
+			}
+			if (prevCursor != null && !prevCursor.isNull()) {
+				current = prevCursor.isStartOfText() ? 2 : 3;
+			}
+		}
+
+		total = current;
+		cursor = myCurrentPage.EndCursor;
+		if (cursor == null || cursor.isNull()) {
+			System.err.println("return 2");
+			return new PagePosition(current, total);
+		}
+		System.err.println("hello 0");
+		if (!cursor.isEndOfText()) {
+		System.err.println("hello 1");
+			ZLTextWordCursor nextCursor = myNextPage.EndCursor;
+			if (nextCursor == null || nextCursor.isNull()) {
+		System.err.println("hello 2");
+				preparePaintInfo(myNextPage);
+				nextCursor = myNextPage.EndCursor;
+			}
+			if (nextCursor != null) {
+		System.err.println("hello 3");
+				total += nextCursor.isEndOfText() ? 1 : 2;
+			}
+		}
+
+		System.err.println("return 3");
 		return new PagePosition(current, total);
 	}
 
