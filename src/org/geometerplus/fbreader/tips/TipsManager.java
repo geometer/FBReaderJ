@@ -114,7 +114,7 @@ public class TipsManager {
 		return tips.get(index);
 	}
 
-	private final int DELAY = 0;//(24 * 60 * 60 * 1000) >> 16; // 1 day
+	private final int DELAY = (24 * 60 * 60 * 1000) >> 16; // 1 day
 
 	private int currentTime() {
 		return (int)(new Date().getTime() >> 16);
