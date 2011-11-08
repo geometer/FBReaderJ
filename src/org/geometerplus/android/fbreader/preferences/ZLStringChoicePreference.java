@@ -34,7 +34,9 @@ class ZLStringChoicePreference extends ZLStringListPreference {
 		myOption = option;
 	}
 
-	public void onAccept() {
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
 		myOption.setValue(getValue());
 	}
 }

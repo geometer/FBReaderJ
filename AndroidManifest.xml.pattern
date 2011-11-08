@@ -33,6 +33,11 @@
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="fbreader-action" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
 				<data android:host="" android:scheme="file" />
 				<data android:pathPattern=".*\\.epub" />
 				<data android:pathPattern=".*\\.oeb" />
@@ -181,5 +186,6 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</receiver>
+		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog"/>
 	</application>
 </manifest>

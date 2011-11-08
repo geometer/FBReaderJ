@@ -83,7 +83,7 @@ public final class FBView extends ZLTextView {
 			return true;
 		}
 
-		myReader.doActionWithCoordinates(getZoneMap().getActionByCoordinates(
+		myReader.doAction(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
 		), x, y);
@@ -101,7 +101,7 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
-		myReader.doActionWithCoordinates(getZoneMap().getActionByCoordinates(
+		myReader.doAction(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(), TapZoneMap.Tap.doubleTap
 		), x, y);
 		return true;
@@ -489,14 +489,13 @@ public final class FBView extends ZLTextView {
 				height > 10, false, false
 			);
 
-			final int pagesProgress = computeCurrentPage();
-			final int bookLength = computePageNumber();
+			final PagePosition pagePosition = FBView.this.pagePosition();
 
 			final StringBuilder info = new StringBuilder();
 			if (reader.FooterShowProgressOption.getValue()) {
-				info.append(pagesProgress);
+				info.append(pagePosition.Current);
 				info.append("/");
-				info.append(bookLength);
+				info.append(pagePosition.Total);
 			}
 			if (reader.FooterShowBatteryOption.getValue()) {
 				if (info.length() > 0) {
@@ -537,7 +536,7 @@ public final class FBView extends ZLTextView {
 			context.drawLine(gaugeRight, lineWidth, left, lineWidth);
 
 			final int gaugeInternalRight =
-				left + lineWidth + (int)(1.0 * myGaugeWidth * pagesProgress / bookLength);
+				left + lineWidth + (int)(1.0 * myGaugeWidth * pagePosition.Current / pagePosition.Total);
 
 			context.setFillColor(fillColor);
 			context.fillRectangle(left + 1, height - 2 * lineWidth, gaugeInternalRight, lineWidth + 1);

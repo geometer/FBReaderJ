@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.os.Bundle;
 import android.preference.*;
@@ -29,7 +30,10 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
+	public static String SCREEN_KEY = "screen";
+
 	private final ArrayList<ZLPreference> myPreferences = new ArrayList<ZLPreference>();
+	private final HashMap<String,Screen> myScreenMap = new HashMap<String,Screen>();
 
 	protected class Screen {
 		public final ZLResource Resource;
@@ -81,15 +85,6 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource, resourceKey)
 			);
 		}
-
-		public void close() {
-			myScreen.getDialog().dismiss();
-			ZLPreferenceActivity.this.getListView().invalidateViews();
-		}
-
-		public void setOnPreferenceClickListener(PreferenceScreen.OnPreferenceClickListener onPreferenceClickListener) {
-			myScreen.setOnPreferenceClickListener(onPreferenceClickListener);
-		}
 	}
 
 	private PreferenceScreen myScreen;
@@ -100,7 +95,8 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 	}
 
 	Screen createPreferenceScreen(String resourceKey) {
-		Screen screen = new Screen(Resource, resourceKey);
+		final Screen screen = new Screen(Resource, resourceKey);
+		myScreenMap.put(resourceKey, screen);
 		myScreen.addPreference(screen.myScreen);
 		return screen;
 	}
@@ -135,9 +131,10 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 		myScreen = getPreferenceManager().createPreferenceScreen(this);
 
-		init(getIntent());
-
-		setPreferenceScreen(myScreen);
+		final Intent intent = getIntent();
+		init(intent);
+		final Screen screen = myScreenMap.get(intent.getStringExtra(SCREEN_KEY));
+		setPreferenceScreen(screen != null ? screen.myScreen : myScreen);
 	}
 
 	@Override

@@ -40,6 +40,9 @@ public class NetworkCatalogTree extends NetworkTree {
 	public NetworkCatalogTree(RootTree parent, INetworkLink link, NetworkCatalogItem item, int position) {
 		super(parent, position);
 		myLink = link;
+		if (item == null) {
+			throw new IllegalArgumentException("item cannot be null");
+		}
 		Item = item;
 		addSpecialTrees();
 	}
@@ -89,7 +92,8 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		return Item.Title != null ? Item.Title.toString() : "";
+		final String title = Item.Title;
+		return title != null ? String.valueOf(title) : "";
 	}
 
 	@Override

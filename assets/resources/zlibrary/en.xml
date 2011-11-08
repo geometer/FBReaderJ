@@ -12,17 +12,17 @@
 			<node name="title" value="Network error" />
 			<node name="unknownErrorMessage" value="Unknown error" />
 			<node name="operationTimedOutMessage" value="Operation is timed out" />
-			<node name="somethingWrongMessage" value="Something goes wrong for&#10;%s" />
-			<node name="couldntCreateDirectoryMessage" value="Couldn&apos;t create a directory&#10;%s" />
-			<node name="couldntCreateFileMessage" value="Couldn&apos;t create a file&#10;%s" />
+			<node name="somethingWrongMessage" value="Something goes wrong for %s" />
+			<node name="couldntCreateDirectoryMessage" value="Couldn&apos;t create a directory %s" />
+			<node name="couldntCreateFileMessage" value="Couldn&apos;t create a file %s" />
 			<node name="couldntConnectToNetworkMessage" value="Couldn&apos;t connect to the network" />
-			<node name="couldntConnectMessage" value="Couldn&apos;t connect to host&#10;%s" />
-			<node name="couldntResolveHostMessage" value="Couldn&apos;t resolve host&#10;%s" />
+			<node name="couldntConnectMessage" value="Couldn&apos;t connect to host %s" />
+			<node name="couldntResolveHostMessage" value="Couldn&apos;t resolve host %s" />
 			<node name="authenticationFailed" value="Authentication failed" />
 			<node name="unsupportedProtocol" value="Unsupported protocol" />
 			<node name="invalidURL" value="Invalid URL" />
-			<node name="hostCantBeReached" value="Host %s&#10;cannot be reached" />
-			<node name="connectionRefused" value="Connection was refused by&#10;%s" />
+			<node name="hostCantBeReached" value="Host %s cannot be reached" />
+			<node name="connectionRefused" value="Connection was refused by %s" />
 		</node>
 	</node>
 	<node name="color">

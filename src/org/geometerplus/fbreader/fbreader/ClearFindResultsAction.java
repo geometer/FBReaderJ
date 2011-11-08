@@ -24,7 +24,8 @@ class ClearFindResultsAction extends FBAction {
 		super(fbreader);
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		Reader.getTextView().clearFindResults();
 	}
 }
