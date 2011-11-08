@@ -2,6 +2,7 @@
 * Tips subsystem has been implemented
 * Fixed an exception in adding custom catalog (if an incorrect URL was entered)
 * Updated Romanian localization (by Mary Hit)
+* More accurate page counting for short books (<= 3 pages)
 
 ===== 1.2.1 (Oct 22, 2011) =====
 * Fixed network library crash for buy links with no price
