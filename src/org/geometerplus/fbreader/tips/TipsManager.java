@@ -42,7 +42,7 @@ public class TipsManager {
 	}
 
 	public ZLBooleanOption ShowTipsOption =
-		new ZLBooleanOption("tips", "showTips", true);
+		new ZLBooleanOption("tips", "showTips", false);
 
 	// time when last tip was shown, 2^16 milliseconds
 	private final ZLIntegerOption myLastShownOption =
