@@ -92,7 +92,7 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	@Override
 	public String getName() {
-		final String title = Item.Title;
+		final CharSequence title = Item.Title;
 		return title != null ? String.valueOf(title) : "";
 	}
 
