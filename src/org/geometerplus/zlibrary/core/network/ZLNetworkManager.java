@@ -39,6 +39,7 @@ import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
 public class ZLNetworkManager {
@@ -77,19 +78,52 @@ public class ZLNetworkManager {
 		}
 	};
 
-	private final HttpContext myHttpContext = new BasicHttpContext();
+	private static class Key {
+		final String Domain;
+		final String Path;
+		final String Name;
+
+		Key(Cookie c) {
+			Domain = c.getDomain();
+			Path = c.getPath();
+			Name = c.getName();
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == this) {
+				return true;
+			}
+			if (!(o instanceof Key)) {
+				return false;
+			}
+			final Key k = (Key)o;
+			return
+				ZLMiscUtil.equals(Domain, k.Domain) &&
+				ZLMiscUtil.equals(Path, k.Path) &&
+				ZLMiscUtil.equals(Name, k.Name);
+		}
+
+		@Override
+		public int hashCode() {
+			return
+				ZLMiscUtil.hashCode(Domain) +
+				ZLMiscUtil.hashCode(Path) +
+				ZLMiscUtil.hashCode(Name);
+		}
+	};
+
 	private final CookieStore myCookieStore = new CookieStore() {
+		private HashMap<Key,Cookie> myCookies;
+
 		public synchronized void addCookie(Cookie cookie) {
+			if (myCookies == null) {
+				getCookies();
+			}
+			myCookies.put(new Key(cookie), cookie);
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
 				db.saveCookies(Collections.singletonList(cookie));
-			}
-		}
-
-		public synchronized void addCookies(Cookie[] cookies) {
-			final CookieDatabase db = CookieDatabase.getInstance();
-			if (db != null) {
-				db.saveCookies(Arrays.asList(cookies));
 			}
 		}
 
@@ -98,9 +132,14 @@ public class ZLNetworkManager {
 			if (db != null) {
 				db.removeAll();
 			}
+			if (myCookies != null) {
+				myCookies.clear();
+			}
 		}
 
 		public synchronized boolean clearExpired(Date date) {
+			myCookies = null;
+
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
 				db.removeObsolete(date);
@@ -111,14 +150,18 @@ public class ZLNetworkManager {
 		}
 
 		public synchronized List<Cookie> getCookies() {
-			final CookieDatabase db = CookieDatabase.getInstance();
-			return db != null ? db.loadCookies() : Collections.<Cookie>emptyList();
+			if (myCookies == null) {
+				myCookies = new HashMap<Key,Cookie>();
+				final CookieDatabase db = CookieDatabase.getInstance();
+				if (db != null) {
+					for (Cookie c : db.loadCookies()) {
+						myCookies.put(new Key(c), c);
+					}
+				}
+			}
+			return new ArrayList<Cookie>(myCookies.values());
 		}
 	};
-
-	{
-		myHttpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
-	}
 
 	/*private void setCommonHTTPOptions(HttpMessage request) throws ZLNetworkException {
 		httpConnection.setInstanceFollowRedirects(true);
@@ -134,6 +177,9 @@ public class ZLNetworkManager {
 		DefaultHttpClient httpClient = null;
 		HttpEntity entity = null;
 		try {
+			final HttpContext httpContext = new BasicHttpContext();
+			httpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
+
 			request.doBefore();
 			final HttpParams params = new BasicHttpParams();
 			HttpConnectionParams.setSoTimeout(params, 30000);
@@ -172,7 +218,7 @@ public class ZLNetworkManager {
 			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
 				try {
-					response = httpClient.execute(httpRequest, myHttpContext);
+					response = httpClient.execute(httpRequest, httpContext);
 					entity = response.getEntity();
 					lastException = null;
 				} catch (IOException e) {
