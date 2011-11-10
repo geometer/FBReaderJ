@@ -27,6 +27,9 @@ import android.os.Process;
 public class KillerCallback extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Process.killProcess(Process.myPid());
+		if (LibraryActivity.ourToBeKilled) {
+			System.err.println("kill");
+			Process.killProcess(Process.myPid());
+		}
 	}
 }
