@@ -4,6 +4,7 @@
 * Updated Romanian localization (by Mary Hit)
 * More accurate page counting for short books (<= 3 pages)
 * Session cookies processing has been fixed
+* Problem with catalog reloading has been fixed
 
 ===== 1.2.1 (Oct 22, 2011) =====
 * Fixed network library crash for buy links with no price

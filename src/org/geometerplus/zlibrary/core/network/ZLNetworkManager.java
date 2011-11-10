@@ -113,7 +113,6 @@ public class ZLNetworkManager {
 		}
 	};
 
-	private final HttpContext myHttpContext = new BasicHttpContext();
 	private final CookieStore myCookieStore = new CookieStore() {
 		private HashMap<Key,Cookie> myCookies;
 
@@ -164,10 +163,6 @@ public class ZLNetworkManager {
 		}
 	};
 
-	{
-		myHttpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
-	}
-
 	/*private void setCommonHTTPOptions(HttpMessage request) throws ZLNetworkException {
 		httpConnection.setInstanceFollowRedirects(true);
 		httpConnection.setAllowUserInteraction(true);
@@ -182,6 +177,9 @@ public class ZLNetworkManager {
 		DefaultHttpClient httpClient = null;
 		HttpEntity entity = null;
 		try {
+			final HttpContext httpContext = new BasicHttpContext();
+			httpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
+
 			request.doBefore();
 			final HttpParams params = new BasicHttpParams();
 			HttpConnectionParams.setSoTimeout(params, 30000);
@@ -220,7 +218,7 @@ public class ZLNetworkManager {
 			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
 				try {
-					response = httpClient.execute(httpRequest, myHttpContext);
+					response = httpClient.execute(httpRequest, httpContext);
 					entity = response.getEntity();
 					lastException = null;
 				} catch (IOException e) {
