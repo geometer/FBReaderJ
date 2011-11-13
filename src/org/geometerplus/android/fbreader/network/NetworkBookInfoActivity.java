@@ -147,6 +147,8 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				setupExtraLinks();
 				setupInfo();
 				setupCover();
+
+				invalidateOptionsMenu();
 			}
 		}
 	};
@@ -390,8 +392,10 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myTree, myConnection)) {
-			addMenuItem(menu, a.Code, a.getContextLabel(null), a.IconId);
+		if (myTree != null) {
+			for (final NetworkBookActions.NBAction a : NetworkBookActions.getContextMenuActions(this, myTree, myConnection)) {
+				addMenuItem(menu, a.Code, a.getContextLabel(null), a.IconId);
+			}
 		}
 		return true;
 	}
