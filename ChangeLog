@@ -1,5 +1,6 @@
 ===== 1.2.3 (??? ??, 2011) =====
 * Tips subsystem has been implemented
+* Network book info dialog crash on 3.* devices has been fixed
 
 ===== 1.2.2 (Nov 10, 2011) =====
 * Fixed an exception in adding custom catalog (if an incorrect URL was entered)
