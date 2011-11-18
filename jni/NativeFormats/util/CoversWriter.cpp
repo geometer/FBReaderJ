@@ -60,6 +60,10 @@ jobject CoversWriter::writeCover(const std::string &bookPath, const ZLImage &ima
 
 std::string CoversWriter::makeFileName(size_t index) const {
 	std::string fileName(Library::Instance().cacheDirectory());
+	ZLFile dir(fileName);
+	if (dir.directory(true).isNull() || !dir.exists()) {
+		return std::string();
+	}
 	fileName.append("/").append("image");
 	ZLStringUtil::appendNumber(fileName, index);
 	return fileName.append(".").append(myFileExtension);
@@ -104,6 +108,10 @@ bool CoversWriter::fillSingleImageData(ImageData &imageData, const ZLSingleImage
 				return false;
 			}
 			std::string fileName(makeFileName(myCoversCounter++));
+			if (fileName.length() == 0) {
+				log.wf("FBREADER", "CoversWriter: file was not created; return");
+				return false;
+			}
 
 			log.wf("FBREADER", "CoversWriter: writing to: %s", fileName.c_str());
 			ZLFile file(fileName);
