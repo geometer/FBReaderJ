@@ -53,14 +53,10 @@ public abstract class ZLTextHyphenator {
 		final boolean[] isLetter = new boolean[len];
 		final char[] pattern = new char[len + 2];
 		final char[] data = word.Data;
-		boolean containsSoftHyphen = false;
 		pattern[0] = ' ';
 		for (int i = 0, j = word.Offset; i < len; ++i, ++j) {
 			char symbol = data[j];
-			if (symbol == (char)0xAD) {
-				containsSoftHyphen = true;
-				break;
-			} if (ZLCharacterUtil.isLetter(symbol)) {
+			if (ZLCharacterUtil.isLetter(symbol)) {
 				isLetter[i] = true;
 				pattern[i + 1] = Character.toLowerCase(symbol);
 			} else {
@@ -71,27 +67,29 @@ public abstract class ZLTextHyphenator {
 
 		final ZLTextHyphenationInfo info = new ZLTextHyphenationInfo(len + 2);
 		final boolean[] mask = info.Mask;
-		if (containsSoftHyphen) {
-			for (int i = 0, j = word.Offset - 1; i <= len; ++i, ++j) {
-				mask[i] = data[j] == (char)0xAD;
-			}
-		} else {
-			hyphenate(pattern, mask, len + 2);
-			for (int i = 0, j = word.Offset - 1; i <= len; ++i, ++j) {
-				if ((i < 2) || (i > len - 2)) {
-					mask[i] = false;
-				} else if (data[j] == '-') {
-					mask[i] = (i >= 3)
-						&& isLetter[i - 3] 
-						&& isLetter[i - 2] 
-						&& isLetter[i] 
-						&& isLetter[i + 1];
-				} else {
-					mask[i] = mask[i] 
-						&& isLetter[i - 2] 
-						&& isLetter[i - 1] 
-						&& isLetter[i] 
-						&& isLetter[i + 1];
+		hyphenate(pattern, mask, len + 2);
+		for (int i = 0, j = word.Offset - 1; i <= len; ++i, ++j) {
+			if ((i < 2) || (i > len - 2)) {
+				mask[i] = false;
+			} else {
+				switch (data[j]) {
+					case (char)0xAD: // soft hyphen
+						mask[i] = true;
+						break;
+					case '-':
+						mask[i] = (i >= 3)
+							&& isLetter[i - 3] 
+							&& isLetter[i - 2] 
+							&& isLetter[i] 
+							&& isLetter[i + 1];
+						break;
+					default:
+						mask[i] = mask[i] 
+							&& isLetter[i - 2] 
+							&& isLetter[i - 1] 
+							&& isLetter[i] 
+							&& isLetter[i + 1];
+						break;
 				}
 			}
 		}
