@@ -55,10 +55,10 @@ public abstract class ZLTextHyphenator {
 		final char[] data = word.Data;
 		pattern[0] = ' ';
 		for (int i = 0, j = word.Offset; i < len; ++i, ++j) {
-			char symbol = data[j];
-			if (ZLCharacterUtil.isLetter(symbol)) {
+			char character = data[j];
+			if (ZLCharacterUtil.isLetter(character)) {
 				isLetter[i] = true;
-				pattern[i + 1] = Character.toLowerCase(symbol);
+				pattern[i + 1] = Character.toLowerCase(character);
 			} else {
 				pattern[i + 1] = ' ';
 			}
