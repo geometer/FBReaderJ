@@ -14,6 +14,13 @@
 				<data android:scheme="CachedCharStorageException" />
 			</intent-filter>
 		</activity>
+		<activity android:name="org.geometerplus.android.fbreader.crash.MissingNativeLibraryActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" android:process=":crash">
+			<intent-filter>
+				<action android:name="android.fbreader.action.CRASH" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="ExceptionInInitializer" />
+			</intent-filter>
+		</activity>
 		<service android:name="org.geometerplus.android.fbreader.api.ApiService">
 			<intent-filter>
 				<action android:name="android.fbreader.action.API" />

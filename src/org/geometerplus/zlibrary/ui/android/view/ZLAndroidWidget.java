@@ -392,39 +392,24 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		final ZLApplication application = ZLApplication.Instance();
 
-		switch (keyCode) {
-			default:
-				if (application.hasActionForKey(keyCode, true) ||
-					application.hasActionForKey(keyCode, false)) {
-					if (myKeyUnderTracking != -1) {
-						if (myKeyUnderTracking == keyCode) {
-							return true;
-						} else {
-							myKeyUnderTracking = -1;
-						}
-					}
-					if (application.hasActionForKey(keyCode, true)) {
-						myKeyUnderTracking = keyCode;
-						myTrackingStartTime = System.currentTimeMillis();
-						return true;
-					} else {
-						return application.doActionByKey(keyCode, false);
-					}
+		if (application.hasActionForKey(keyCode, true) ||
+			application.hasActionForKey(keyCode, false)) {
+			if (myKeyUnderTracking != -1) {
+				if (myKeyUnderTracking == keyCode) {
+					return true;
 				} else {
-					return false;
+					myKeyUnderTracking = -1;
 				}
-			case KeyEvent.KEYCODE_DPAD_LEFT:
-				application.getCurrentView().onTrackballRotated(-1, 0);
+			}
+			if (application.hasActionForKey(keyCode, true)) {
+				myKeyUnderTracking = keyCode;
+				myTrackingStartTime = System.currentTimeMillis();
 				return true;
-			case KeyEvent.KEYCODE_DPAD_RIGHT:
-				application.getCurrentView().onTrackballRotated(1, 0);
-				return true;
-			case KeyEvent.KEYCODE_DPAD_DOWN:
-				application.getCurrentView().onTrackballRotated(0, 1);
-				return true;
-			case KeyEvent.KEYCODE_DPAD_UP:
-				application.getCurrentView().onTrackballRotated(0, -1);
-				return true;
+			} else {
+				return application.doActionByKey(keyCode, false);
+			}
+		} else {
+			return false;
 		}
 	}
 

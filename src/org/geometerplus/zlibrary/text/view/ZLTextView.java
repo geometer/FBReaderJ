@@ -1467,7 +1467,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myCurrentPage.TextElementMap.findRegion(x, y, maxDistance, filter);
 	}
 
-	protected void selectRegion(ZLTextRegion region) {
+	public void selectRegion(ZLTextRegion region) {
 		final ZLTextRegion.Soul soul = region != null ? region.getSoul() : null;
 		if (soul == null || !soul.equals(mySelectedRegionSoul)) {
 			myHighlightSelectedRegion = true;
@@ -1543,7 +1543,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myHighlightSelectedRegion = true;
 	}
 
-	protected ZLTextRegion nextRegion(Direction direction, ZLTextRegion.Filter filter) {
+	public ZLTextRegion nextRegion(Direction direction, ZLTextRegion.Filter filter) {
 		return myCurrentPage.TextElementMap.nextRegion(getSelectedRegion(), direction, filter);
 	}
 
