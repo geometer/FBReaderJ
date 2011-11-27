@@ -41,6 +41,11 @@ public interface ActionCode {
 	String TURN_PAGE_BACK = "previousPage";
 	String TURN_PAGE_FORWARD = "nextPage";
 
+	String MOVE_CURSOR_UP = "moveCursorUp";
+	String MOVE_CURSOR_DOWN = "moveCursorDown";
+	String MOVE_CURSOR_LEFT = "moveCursorLeft";
+	String MOVE_CURSOR_RIGHT = "moveCursorRight";
+
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
 	String VOLUME_KEY_SCROLL_BACK = "volumeKeyScrollBackward";
 	String SHOW_MENU = "menu";
