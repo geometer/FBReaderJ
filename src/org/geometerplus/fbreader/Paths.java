@@ -47,4 +47,8 @@ public abstract class Paths {
 	public static String networkCacheDirectory() {
 		return cacheDirectory() + "/cache";
 	}
+
+	public static String systemShareDirectory() {
+		return "/system/usr/share/FBReader";
+	}
 }
