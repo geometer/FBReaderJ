@@ -614,7 +614,7 @@
 				<node name="showTips" value="Show tips">
 					<node name="summaryOn" value="Show daily tips"/>
 					<node name="summaryOff" value="Do not show"/>
-				</node>				
+				</node>
 			</node>
 		</node>
 		<node name="OptionsDialog">

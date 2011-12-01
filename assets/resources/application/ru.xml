@@ -614,7 +614,7 @@
 				<node name="showTips" value="Показывать советы">
 					<node name="summaryOn" value="Показывать"/>
 					<node name="summaryOff" value="Не показывать"/>
-				</node>				
+				</node>
 			</node>
 		</node>
 		<node name="OptionsDialog">

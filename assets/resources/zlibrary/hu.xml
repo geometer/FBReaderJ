@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Hungarian zlibrary resources, by L. B. Szabó. Based on FBReader translation by Sándor Gábor -->
+<!-- Hungarian zlibrary resources, by L. B. Szabó.  -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -13,7 +13,7 @@
 			<node name="title" value="Hálózati hiba" />
 			<node name="unknownErrorMessage" value="Ismeretlen hiba" />
 			<node name="operationTimedOutMessage" value="Időtúllépés" />
-			<node name="somethingWrongMessage" value="Valam hiba történt&#10;%s" />
+			<node name="somethingWrongMessage" value="Valami hiba történt&#10;%s" />
 			<node name="couldntCreateDirectoryMessage" value="Könyvtár létrhozása sikertelen&#10;%s" />
 			<node name="couldntCreateFileMessage" value="Fájl létrehozása sikertelen&#10;%s" />
 			<node name="couldntConnectToNetworkMessage" value="Hálózati csatlakozás sikertelen" />
@@ -56,7 +56,7 @@
 		<node name="es" value="Spanyol" />
 		<node name="fi" value="Finn" />
 		<node name="fr" value="Francia" />
-		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="gl" value="Galíciai"/>
 		<node name="he" value="Héber" />
 		<node name="hu" value="Magyar" />
 		<node name="id" value="Indonéz" />
@@ -66,10 +66,10 @@
 		<node name="no" value="Norvég" />
 		<node name="pl" value="Lengyel" />
 		<node name="pt" value="Portugál" />
-		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ro" value="Román" />
 		<node name="ru" value="Orosz" />
 		<node name="sv" value="Svéd" />
-		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="th" value="Thai" />
 		<node name="tr" value="Török" />
 		<node name="uk" value="Ukrán" />
 		<node name="vi" value="Vietnami" />
