@@ -3,6 +3,9 @@
 * Soft hyphen symbol (0xAD) support
 * FBReader shows special info dialog in case of native library loading failure
 * keymap.xml can be used for DPad key bindings too
+* FBReader reads /system/usr/share/FBReader/keymap.xml
+* Updated Hungarian localization (by Szabó Lajos Balázs)
+* Updated Czech localization (by Marek Pavelka)
 
 ===== 1.2.3 (Nov 24, 2011) =====
 * Network book info dialog crash on 3.* devices has been fixed
