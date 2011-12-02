@@ -1,4 +1,4 @@
-===== 1.2.4 (??? ??, 2011) =====
+===== 1.2.4 (Dec 02, 2011) =====
 * Android 4.* text painting issue has been fixed
 * Tips subsystem has been implemented
 * Soft hyphen symbol (0xAD) support
@@ -7,6 +7,7 @@
 * FBReader reads /system/usr/share/FBReader/keymap.xml
 * Updated Hungarian localization (by Szabó Lajos Balázs)
 * Updated Czech localization (by Marek Pavelka)
+* Updated Chinese localization (by Shucang)
 * Page drawing speed optimization
 
 ===== 1.2.3 (Nov 24, 2011) =====
