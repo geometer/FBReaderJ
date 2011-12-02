@@ -20,6 +20,9 @@ updateVersion() {
 		android-1.5)
 			variant=0
 			;;
+		ice-cream-sandwich)
+			variant=3
+			;;
 		honeycomb)
 			variant=2
 			;;
