@@ -253,7 +253,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			}
 		}
 		if (!containsSoftHyphen) {
-			return (int)(myTextPaint.measureText(string, offset, length) + 0.5f);
+			return (int)(myTextPaint.measureText(new String(string, offset, length)) + 0.5f);
 		} else {
 			final char[] corrected = new char[length];
 			int len = 0;
