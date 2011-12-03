@@ -1,5 +1,5 @@
-===== 1.2.4 (Dec 02, 2011) =====
-* Android 4.* text painting issue has been fixed
+===== 1.2.4 (Dec 03, 2011) =====
+* Android 4.* issues have been fixed
 * Tips subsystem has been implemented
 * Soft hyphen symbol (0xAD) support
 * FBReader shows special info dialog in case of native library loading failure
