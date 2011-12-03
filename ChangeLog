@@ -1,5 +1,8 @@
-===== 1.2.5 (Dec ??, 2011) =====
+===== 1.2.6 (Dec ??, 2011) =====
 * Tips subsystem has been implemented
+
+===== 1.2.5 (Dec 03, 2011) =====
+* Installation on devices with pre-installed old version has been fixed
 
 ===== 1.2.4 (Dec 03, 2011) =====
 * Android 4.* issues have been fixed
