@@ -26,7 +26,7 @@ public abstract class Decompressor {
         }
     }
 
-    public static Decompressor init(MyBufferedInputStream is, LocalFileHeader header) throws IOException {
+    static Decompressor init(MyBufferedInputStream is, LocalFileHeader header) throws IOException {
         switch (header.CompressionMethod) {
         case 0:
             return new NoCompressionDecompressor(is, header);
