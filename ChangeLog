@@ -1,6 +1,11 @@
+===== 1.2.6 (Dec ??, 2011) =====
+* Tips subsystem has been implemented
+
+===== 1.2.5 (Dec 03, 2011) =====
+* Installation on devices with pre-installed old version has been fixed
+
 ===== 1.2.4 (Dec 03, 2011) =====
 * Android 4.* issues have been fixed
-* Tips subsystem has been implemented
 * Soft hyphen symbol (0xAD) support
 * FBReader shows special info dialog in case of native library loading failure
 * keymap.xml can be used for DPad key bindings too
