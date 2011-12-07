@@ -519,12 +519,12 @@
 					<node name="summaryOff" value="Switch screen off even if device is in charging mode"/>
 				</node>
 			</node>
-			<node name="scrolling" value="Scrolling">
-				<node name="summary" value="How to scroll text"/>
-				<node name="fingerScrolling" value="Touch screen scrolling">
-					<node name="byTap" value="Scroll pages by finger tap"/>
-					<node name="byFlick" value="Scroll pages by finger flick"/>
-					<node name="byTapAndFlick" value="Scroll pages by finger tap or flick"/>
+			<node name="scrolling" value="Page turning">
+				<node name="summary" value="How to turn pages"/>
+				<node name="fingerScrolling" value="Touch screen page turning">
+					<node name="byTap" value="Turn pages by finger tap"/>
+					<node name="byFlick" value="Turn pages by finger flick"/>
+					<node name="byTapAndFlick" value="Turn pages by finger tap or flick"/>
 				</node>
 				<node name="enableDoubleTapDetection" value="Double tap detection">
 					<node name="summaryOn" value="Double tap to run navigation dialog/menu"/>
@@ -539,7 +539,7 @@
 					<node name="summaryOff" value="Lower (louder) key turns to next (previous) page"/>
 				</node>
 				<node name="animation" value="Animation">
-					<node name="none" value="Scroll with no animation"/>
+					<node name="none" value="Turn pages with no animation"/>
 					<node name="curl" value="Curl animation"/>
 					<node name="slide" value="Slide animation"/>
 					<node name="shift" value="Shift animation"/>
