@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="102051" android:versionName="1.2.5" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="102061" android:versionName="1.2.6" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="4" android:maxSdkVersion="10"/>
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true" />
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -18,7 +18,7 @@
 			<intent-filter>
 				<action android:name="android.fbreader.action.CRASH" />
 				<category android:name="android.intent.category.DEFAULT" />
-				<data android:scheme="ExceptionInInitializerError" />
+				<data android:scheme="ExceptionInInitializer" />
 			</intent-filter>
 		</activity>
 		<service android:name="org.geometerplus.android.fbreader.api.ApiService">
