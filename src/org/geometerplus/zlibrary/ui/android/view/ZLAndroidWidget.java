@@ -90,7 +90,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			ZLApplication.Instance().onRepaintFinished();
 		}
 
-		setSystemUiVisibility(RelativeLayout.SYSTEM_UI_FLAG_LOW_PROFILE);
+		setSystemUiVisibility(SYSTEM_UI_FLAG_LOW_PROFILE);
 	}
 
 	private AnimationProvider myAnimationProvider;
