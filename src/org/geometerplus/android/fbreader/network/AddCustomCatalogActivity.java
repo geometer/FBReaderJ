@@ -40,8 +40,6 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.android.util.UIUtil;
 
-import android.util.Log;
-
 public class AddCustomCatalogActivity extends Activity {
 	public static String EDIT_KEY = "EditNotAdd";
 
