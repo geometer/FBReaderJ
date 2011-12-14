@@ -1,6 +1,8 @@
 ===== 1.3 (Dec ??, 2011) =====
 * Tips subsystem has been implemented
 * Android 3.*, 4.*: bottom buttons are hidden during book reading
+* Curl page turning animation on android 4.* devices has been fixed
+* Bottom button line is hidden during reading on android 3/4.* devices
 
 ===== 1.2.5 (Dec 03, 2011) =====
 * Installation on devices with pre-installed old version has been fixed
