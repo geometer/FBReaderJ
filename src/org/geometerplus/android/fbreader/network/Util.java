@@ -91,6 +91,7 @@ public abstract class Util implements UserRegistrationConstants {
 	}
 
 	public static void runAuthenticationDialog(Activity activity, INetworkLink link, Runnable onSuccess) {
+
 		final NetworkAuthenticationManager mgr = link.authenticationManager();
 
 		final Intent intent = intentByLink(new Intent(activity, AuthenticationActivity.class), link);
