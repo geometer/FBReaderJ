@@ -99,7 +99,6 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 	public void reloadInfo(final boolean urlsOnly) throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
-
 		ZLNetworkException error = null;
 		try {
 			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog)) {
