@@ -38,6 +38,7 @@ import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
 	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
+	static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
 
 	public static Intent intentByLink(Intent intent, INetworkLink link) {
 		if (link != null) {
