@@ -48,8 +48,6 @@ import org.geometerplus.android.util.UIUtil;
 public class NetworkLibraryActivity extends TreeActivity implements NetworkLibrary.ChangeListener {
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
-	protected static final int BASIC_AUTHENTICATION_CODE = 1;
-
 	BookDownloaderServiceConnection Connection;
 
 	final List<Action> myOptionsMenuActions = new ArrayList<Action>();
@@ -61,6 +59,8 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		AuthenticationActivity.initCredentialsCreator(this);
 
 		SQLiteCookieDatabase.init(this);
 
@@ -109,7 +109,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		super.onResume();
 		getListView().setOnCreateContextMenuListener(this);
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
-		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 
 	@Override
@@ -274,18 +273,6 @@ public class NetworkLibraryActivity extends TreeActivity implements NetworkLibra
 		}
 
 		listView.showContextMenuForChild(view);
-	}
-
-	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
-		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		switch (requestCode) {
-			case BASIC_AUTHENTICATION_CODE:
-				myCredentialsCreator.onDataReceived(resultCode, intent);
-				break;
-		}
 	}
 
 	@Override
