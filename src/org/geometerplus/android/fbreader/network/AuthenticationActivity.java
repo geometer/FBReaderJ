@@ -22,15 +22,12 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
-
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
@@ -70,56 +67,30 @@ public class AuthenticationActivity extends Activity {
 	static final String ERROR_KEY = "error";
 	static final String CUSTOM_AUTH_KEY = "customAuth";
                   
-	static class CredentialsCreator implements ZLNetworkManager.CredentialsCreator {
-		private final Activity myActivity;
-		private final int myCode;
+	static void initCredentialsCreator(Context context) {
+		final ZLNetworkManager manager = ZLNetworkManager.Instance();
+		if (manager.getCredentialsCreator() == null) {
+			manager.setCredentialsCreator(new CredentialsCreator(context));
+		}
+	}
 
-		private volatile String myUsername;
-		private volatile String myPassword;
-        
-		CredentialsCreator(Activity activity, int code) {
-			myActivity = activity;
-			myCode = code;
+	static class CredentialsCreator extends ZLNetworkManager.BasicCredentialsCreator {
+		private final Context myContext;
+
+		CredentialsCreator(Context context) {
+			myContext = context.getApplicationContext();
 		}
 
-		synchronized void onDataReceived(int resultCode, Intent data) {
-			if (resultCode == RESULT_OK && data != null) {
-				myUsername = data.getStringExtra(USERNAME_KEY);
-				myPassword = data.getStringExtra(PASSWORD_KEY);
-			}
-			notify();
-		}
-
-		public Credentials createCredentials(String scheme, AuthScope scope) {
-			if (!"basic".equalsIgnoreCase(scope.getScheme())) {
-				return null;
-			}
-
+		@Override
+		protected void startAuthenticationDialog(String host, String area, String scheme, String username) {
 			final Intent intent = new Intent();
-			final String host = scope.getHost();
-			final String area = scope.getRealm();
-			final ZLStringOption option = new ZLStringOption("username", host + ":" + area, "");
-			intent.setClass(myActivity, AuthenticationActivity.class);
+			intent.setClass(myContext, AuthenticationActivity.class);
 			intent.putExtra(HOST_KEY, host);
 			intent.putExtra(AREA_KEY, area);
 			intent.putExtra(SCHEME_KEY, scheme);
-			intent.putExtra(USERNAME_KEY, option.getValue());
-			myActivity.startActivityForResult(intent, myCode);
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-				}
-			}
-        
-			Credentials creds = null;
-			if (myUsername != null && myPassword != null) {
-				option.setValue(myUsername);
-				creds = new UsernamePasswordCredentials(myUsername, myPassword);
-			}
-			myUsername = null;
-			myPassword = null;
-			return creds;
+			intent.putExtra(USERNAME_KEY, username);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			myContext.startActivity(intent);
 		}
 	}
 
@@ -237,10 +208,11 @@ public class AuthenticationActivity extends Activity {
 	}
 
 	private void finishOk(String username, String password) {
-		final Intent data = Util.intentByLink(new Intent(), myLink);
-		data.putExtra(USERNAME_KEY, username);
-		data.putExtra(PASSWORD_KEY, password);
-		setResult(RESULT_OK, data);
+		final ZLNetworkManager.CredentialsCreator creator =
+			ZLNetworkManager.Instance().getCredentialsCreator();
+		if (creator instanceof CredentialsCreator) {
+			((CredentialsCreator)creator).setCredentials(username, password);
+		}
 		finish();
 	}
 
@@ -302,5 +274,15 @@ public class AuthenticationActivity extends Activity {
 			myOkButtonUpdater = null;
 		}
 		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		final ZLNetworkManager.CredentialsCreator creator =
+			ZLNetworkManager.Instance().getCredentialsCreator();
+		if (creator instanceof CredentialsCreator) {
+			((CredentialsCreator)creator).release();
+		}
+		super.onStop();
 	}
 }
