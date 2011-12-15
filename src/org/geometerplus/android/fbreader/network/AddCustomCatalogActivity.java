@@ -224,6 +224,7 @@ public class AddCustomCatalogActivity extends Activity {
 			textUrl = "http://" + textUrl;
 			uri = Uri.parse(textUrl);
 		}
+
 		setTextById(R.id.add_custom_catalog_url, textUrl);
 		final String siteName = uri.getHost();
 		if (isEmptyString(siteName)) {
@@ -235,6 +236,7 @@ public class AddCustomCatalogActivity extends Activity {
 		myLink = new OPDSCustomNetworkLink(
 			ICustomNetworkLink.INVALID_ID, siteName, null, null, null, infos
 		);
+
 		final Runnable loadInfoRunnable = new Runnable() {
 			private String myError;
 
