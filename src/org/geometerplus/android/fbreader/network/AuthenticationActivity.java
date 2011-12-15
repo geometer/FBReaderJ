@@ -304,4 +304,3 @@ public class AuthenticationActivity extends Activity {
 		super.onPause();
 	}
 }
-
