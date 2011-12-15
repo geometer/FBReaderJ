@@ -30,7 +30,6 @@ import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
-import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -43,8 +42,6 @@ import org.geometerplus.android.util.UIUtil;
 public class AddCustomCatalogActivity extends Activity {
 	public static String EDIT_KEY = "EditNotAdd";
 
-	protected static final int BASIC_AUTHENTICATION_CODE = 1;
-
 	private ZLResource myResource;
 	private volatile ICustomNetworkLink myLink;
 	private boolean myEditNotAdd;
@@ -53,6 +50,9 @@ public class AddCustomCatalogActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		AuthenticationActivity.initCredentialsCreator(this);
+
 		setContentView(R.layout.add_custom_catalog);
 
 		myResource = ZLResource.resource("dialog").getResource("CustomCatalogDialog");
@@ -262,23 +262,5 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		}; 
 		UIUtil.wait("loadingCatalogInfo", loadInfoRunnable, this);
-	}
-
-	private final AuthenticationActivity.CredentialsCreator myCredentialsCreator =
-		new AuthenticationActivity.CredentialsCreator(this, BASIC_AUTHENTICATION_CODE);
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		switch (requestCode) {
-			case BASIC_AUTHENTICATION_CODE:
-				myCredentialsCreator.onDataReceived(resultCode, intent);
-				break;
-		}
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		ZLNetworkManager.Instance().setCredentialsCreator(myCredentialsCreator);
 	}
 }

@@ -60,9 +60,14 @@ public class ZLNetworkManager {
 		private volatile String myUsername;
 		private volatile String myPassword;
 
-		synchronized protected void setCredentials(String username, String password) {
+		synchronized public void setCredentials(String username, String password) {
 			myUsername = username;
 			myPassword = password;
+			release();
+		}
+
+		synchronized public void release() {
+			notifyAll();
 		}
 
 		public Credentials createCredentials(String scheme, AuthScope scope) {
@@ -95,7 +100,7 @@ public class ZLNetworkManager {
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
 	}
 
-	private CredentialsCreator myCredentialsCreator;
+	private volatile CredentialsCreator myCredentialsCreator;
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
@@ -209,6 +214,10 @@ public class ZLNetworkManager {
 
 	public void setCredentialsCreator(CredentialsCreator creator) {
 		myCredentialsCreator = creator;
+	}
+
+	public CredentialsCreator getCredentialsCreator() {
+		return myCredentialsCreator;
 	}
 
 	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
