@@ -37,10 +37,13 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.util.EntityUtils;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
+import android.util.Log;
 
 public class ZLNetworkManager {
 	private static ZLNetworkManager ourManager;
@@ -53,10 +56,12 @@ public class ZLNetworkManager {
 	}
 
 	public static interface CredentialsCreator {
-		Credentials createCredentials(String scheme, AuthScope scope);
+		Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode);
 	}
 
 	public static abstract class BasicCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
+		static HashMap<AuthScope, Credentials> CredMap = new HashMap<AuthScope, Credentials> ();
+
 		private volatile String myUsername;
 		private volatile String myPassword;
 
@@ -70,9 +75,14 @@ public class ZLNetworkManager {
 			notifyAll();
 		}
 
-		public Credentials createCredentials(String scheme, AuthScope scope) {
-			if (!"basic".equalsIgnoreCase(scope.getScheme())) {
+		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode) {
+//Log.d("fbreader", scope.getHost() + ":" + String.valueOf(scope.getPort()) + " " + scope.getScheme() + " " + scope.getRealm());
+			if (!"basic".equalsIgnoreCase(scope.getScheme()) && !"digest".equalsIgnoreCase(scope.getScheme())) {
 				return null;
+			}
+
+			if (CredMap.containsKey(scope) || quietMode) {
+				return CredMap.get(scope);
 			}
 
 			final String host = scope.getHost();
@@ -91,6 +101,7 @@ public class ZLNetworkManager {
 			if (myUsername != null && myPassword != null) {
 				usernameOption.setValue(myUsername);
 				creds = new UsernamePasswordCredentials(myUsername, myPassword);
+				CredMap.put(scope, creds);
 			}
 			myUsername = null;
 			myPassword = null;
@@ -104,9 +115,11 @@ public class ZLNetworkManager {
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
+		private final boolean myQuiet;
 
-		MyCredentialsProvider(HttpUriRequest request) {
+		MyCredentialsProvider(HttpUriRequest request, boolean quiet) {
 			myRequest = request;
+			myQuiet = quiet;
 		}
 
 		@Override
@@ -116,7 +129,7 @@ public class ZLNetworkManager {
 				return c;
 			}
 			if (myCredentialsCreator != null) {
-				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope);
+				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuiet);
 			}
 			return null;
 		}
@@ -261,7 +274,7 @@ public class ZLNetworkManager {
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
 			httpRequest.setHeader("Accept-Encoding", "gzip");
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
-			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest));
+			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest, request.isQuiet()));
 			HttpResponse response = null;
 			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
@@ -269,8 +282,32 @@ public class ZLNetworkManager {
 					response = httpClient.execute(httpRequest, httpContext);
 					entity = response.getEntity();
 					lastException = null;
+					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+						if (response.containsHeader("Www-Authenticate")) {
+							Header h = response.getFirstHeader("Www-Authenticate");
+							for (HeaderElement he:h.getElements()) {
+								if (he.getName().equalsIgnoreCase("digest realm") || he.getName().equalsIgnoreCase("basic realm")) {
+									String realm = he.getValue();
+									URI uri = httpRequest.getURI();
+									String host = uri.getHost();
+									String scheme = "BASIC";
+									if (he.getName().equalsIgnoreCase("digest realm")) {
+										scheme = "DIGEST";
+									}
+									int port = uri.getPort();
+									AuthScope scope = new AuthScope(host, port, realm, scheme);
+									if (BasicCredentialsCreator.CredMap.containsKey(scope)) {
+Log.d("fbreader", "saved credentials failed");
+										BasicCredentialsCreator.CredMap.remove(scope);
+										entity = null;
+									}
+								}
+							}
+						}
+					}
 				} catch (IOException e) {
 					lastException = e;
+						Log.d("fbreader", e.getMessage());
 				}
 			}
 			if (lastException != null) {

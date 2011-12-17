@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.urlInfo.*;
+import android.util.Log;
 
 public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private boolean myHasChanges;
@@ -97,12 +98,16 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 	}
 
 	public void reloadInfo(final boolean urlsOnly) throws ZLNetworkException {
+		reloadInfo(urlsOnly, false);
+	}
+
+	public void reloadInfo(final boolean urlsOnly, boolean quietMode) throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
 
 		ZLNetworkException error = null;
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog)) {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog), quietMode) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					final OPDSCatalogInfoHandler info = new OPDSCatalogInfoHandler(getURL(), OPDSCustomNetworkLink.this, opensearchDescriptionURLs);
