@@ -43,8 +43,6 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-import android.util.Log;
-
 public class ZLNetworkManager {
 	private static ZLNetworkManager ourManager;
 
@@ -76,7 +74,6 @@ public class ZLNetworkManager {
 		}
 
 		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode) {
-//Log.d("fbreader", scope.getHost() + ":" + String.valueOf(scope.getPort()) + " " + scope.getScheme() + " " + scope.getRealm());
 			if (!"basic".equalsIgnoreCase(scope.getScheme()) && !"digest".equalsIgnoreCase(scope.getScheme())) {
 				return null;
 			}
@@ -297,7 +294,6 @@ public class ZLNetworkManager {
 									int port = uri.getPort();
 									AuthScope scope = new AuthScope(host, port, realm, scheme);
 									if (BasicCredentialsCreator.CredMap.containsKey(scope)) {
-Log.d("fbreader", "saved credentials failed");
 										BasicCredentialsCreator.CredMap.remove(scope);
 										entity = null;
 									}
@@ -307,7 +303,6 @@ Log.d("fbreader", "saved credentials failed");
 					}
 				} catch (IOException e) {
 					lastException = e;
-						Log.d("fbreader", e.getMessage());
 				}
 			}
 			if (lastException != null) {

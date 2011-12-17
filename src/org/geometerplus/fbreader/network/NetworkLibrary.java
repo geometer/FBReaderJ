@@ -32,7 +32,6 @@ import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.network.tree.*;
 import org.geometerplus.fbreader.network.opds.OPDSLinkReader;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
-import android.util.Log;
 
 public class NetworkLibrary {
 	public interface ChangeListener {

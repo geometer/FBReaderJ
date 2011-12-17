@@ -65,7 +65,6 @@ public class AddCustomCatalogActivity extends Activity {
 		setTextFromResource(R.id.add_custom_catalog_title_example, "catalogTitleExample");
 		setTextFromResource(R.id.add_custom_catalog_url_example, "catalogUrlExample");
 		setTextFromResource(R.id.add_custom_catalog_summary_example, "catalogSummaryExample");
-		setTextById(R.id.add_custom_catalog_url, "http://192.168.0.5:8080/opds");
 
 		setupButton(
 			R.id.ok_button, "ok", new View.OnClickListener() {

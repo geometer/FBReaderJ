@@ -31,7 +31,6 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.fbreader.network.ICustomNetworkLink;
 import org.geometerplus.fbreader.network.NetworkException;
 import org.geometerplus.fbreader.network.urlInfo.*;
-import android.util.Log;
 
 public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNetworkLink {
 	private boolean myHasChanges;
