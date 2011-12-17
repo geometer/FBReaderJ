@@ -55,10 +55,12 @@ public class ZLNetworkManager {
 
 	public static interface CredentialsCreator {
 		Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode);
+		boolean credentialsExist(AuthScope scope);
+		void removeCredentials(AuthScope scope);
 	}
 
 	public static abstract class BasicCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
-		static HashMap<AuthScope, Credentials> CredMap = new HashMap<AuthScope, Credentials> ();
+		final private HashMap<AuthScope, Credentials> myCredentialsMap = new HashMap<AuthScope, Credentials> ();
 
 		private volatile String myUsername;
 		private volatile String myPassword;
@@ -78,8 +80,8 @@ public class ZLNetworkManager {
 				return null;
 			}
 
-			if (CredMap.containsKey(scope) || quietMode) {
-				return CredMap.get(scope);
+			if (myCredentialsMap.containsKey(scope) || quietMode) {
+				return myCredentialsMap.get(scope);
 			}
 
 			final String host = scope.getHost();
@@ -98,11 +100,19 @@ public class ZLNetworkManager {
 			if (myUsername != null && myPassword != null) {
 				usernameOption.setValue(myUsername);
 				creds = new UsernamePasswordCredentials(myUsername, myPassword);
-				CredMap.put(scope, creds);
+				myCredentialsMap.put(scope, creds);
 			}
 			myUsername = null;
 			myPassword = null;
 			return creds;
+		}
+
+		public boolean credentialsExist(AuthScope scope) {
+			return myCredentialsMap.containsKey(scope);
+		}
+
+		public void removeCredentials(AuthScope scope) {
+			myCredentialsMap.remove(scope);
 		}
 
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
@@ -293,8 +303,8 @@ public class ZLNetworkManager {
 									}
 									int port = uri.getPort();
 									AuthScope scope = new AuthScope(host, port, realm, scheme);
-									if (BasicCredentialsCreator.CredMap.containsKey(scope)) {
-										BasicCredentialsCreator.CredMap.remove(scope);
+									if (myCredentialsCreator.credentialsExist(scope)) {
+										myCredentialsCreator.removeCredentials(scope);
 										entity = null;
 									}
 								}
