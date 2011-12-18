@@ -217,7 +217,11 @@ public final class NetworkImage extends ZLLoadableImage {
 			if (path == null) {
 				return null;
 			}
-			myFileImage = new ZLFileImage(mimeType(), ZLFile.createFileByPath(path));
+			final ZLFile file = ZLFile.createFileByPath(path);
+			if (file == null) {
+				return null;
+			}
+			myFileImage = new ZLFileImage(mimeType(), file);
 		}
 		return myFileImage.inputStream();
 	}
