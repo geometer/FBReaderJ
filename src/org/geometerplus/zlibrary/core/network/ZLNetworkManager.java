@@ -53,13 +53,7 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
-	public static interface CredentialsCreator {
-		Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode);
-		boolean credentialsExist(AuthScope scope);
-		void removeCredentials(AuthScope scope);
-	}
-
-	public static abstract class BasicCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
+	public static abstract class CredentialsCreator {
 		final private HashMap<AuthScope, Credentials> myCredentialsMap = new HashMap<AuthScope, Credentials> ();
 
 		private volatile String myUsername;
@@ -76,7 +70,9 @@ public class ZLNetworkManager {
 		}
 
 		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode) {
-			if (!"basic".equalsIgnoreCase(scope.getScheme()) && !"digest".equalsIgnoreCase(scope.getScheme())) {
+			final String authScheme = scope.getScheme();
+			if (!"basic".equalsIgnoreCase(authScheme) &&
+				!"digest".equalsIgnoreCase(authScheme)) {
 				return null;
 			}
 
