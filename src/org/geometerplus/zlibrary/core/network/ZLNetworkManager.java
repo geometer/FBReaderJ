@@ -103,12 +103,8 @@ public class ZLNetworkManager {
 			return creds;
 		}
 
-		public boolean credentialsExist(AuthScope scope) {
-			return myCredentialsMap.containsKey(scope);
-		}
-
-		public void removeCredentials(AuthScope scope) {
-			myCredentialsMap.remove(scope);
+		public boolean removeCredentials(AuthScope scope) {
+			return myCredentialsMap.remove(scope) != null;
 		}
 
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
@@ -299,8 +295,7 @@ public class ZLNetworkManager {
 									}
 									int port = uri.getPort();
 									AuthScope scope = new AuthScope(host, port, realm, scheme);
-									if (myCredentialsCreator.credentialsExist(scope)) {
-										myCredentialsCreator.removeCredentials(scope);
+									if (myCredentialsCreator.removeCredentials(scope)) {
 										entity = null;
 									}
 								}
