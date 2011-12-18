@@ -96,17 +96,13 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 		return false;
 	}
 
-	public void reloadInfo(final boolean urlsOnly) throws ZLNetworkException {
-		reloadInfo(urlsOnly, false);
-	}
-
-	public void reloadInfo(final boolean urlsOnly, boolean quietMode) throws ZLNetworkException {
+	public void reloadInfo(final boolean urlsOnly, boolean quietly) throws ZLNetworkException {
 		final LinkedList<String> opensearchDescriptionURLs = new LinkedList<String>();
 		final List<OpenSearchDescription> descriptions = Collections.synchronizedList(new LinkedList<OpenSearchDescription>());
 
 		ZLNetworkException error = null;
 		try {
-			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog), quietMode) {
+			ZLNetworkManager.Instance().perform(new ZLNetworkRequest(getUrl(UrlInfo.Type.Catalog), quietly) {
 				@Override
 				public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
 					final OPDSCatalogInfoHandler info = new OPDSCatalogInfoHandler(getURL(), OPDSCustomNetworkLink.this, opensearchDescriptionURLs);

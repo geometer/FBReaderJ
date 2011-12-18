@@ -34,7 +34,6 @@ public interface ICustomNetworkLink extends INetworkLink {
 
 	boolean isObsolete(long milliSeconds);
 	void reloadInfo(boolean urlsOnly, boolean quiet) throws ZLNetworkException;
-	void reloadInfo(boolean urlsOnly) throws ZLNetworkException;
 
 	// returns true if next methods have changed link's data:
 	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink
