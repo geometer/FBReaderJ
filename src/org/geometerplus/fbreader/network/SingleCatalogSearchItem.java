@@ -19,8 +19,6 @@
 
 package org.geometerplus.fbreader.network;
 
-import java.util.LinkedList;
-
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
@@ -38,31 +36,14 @@ public class SingleCatalogSearchItem extends SearchItem {
 	@Override
 	public void runSearch(NetworkItemsLoader loader, String pattern) throws ZLNetworkException {
 		final NetworkOperationData data = Link.createOperationData(loader);
-		final ZLNetworkRequest request = Link.simpleSearchRequest(pattern, data);
+		ZLNetworkRequest request = Link.simpleSearchRequest(pattern, data);
 
-		if (request == null) {
-			return;
-		}
-
-		final LinkedList<ZLNetworkRequest> requestList = new LinkedList<ZLNetworkRequest>();
-		final LinkedList<NetworkOperationData> dataList = new LinkedList<NetworkOperationData>();
-		dataList.add(data);
-		requestList.add(request);
-
-		while (!requestList.isEmpty()) {
-			ZLNetworkManager.Instance().perform(requestList);
-
-			requestList.clear();
-
+		while (request != null) {
+			ZLNetworkManager.Instance().perform(request);
 			if (loader.confirmInterruption()) {
 				return;
 			}
-			for (NetworkOperationData d : dataList) {
-				ZLNetworkRequest r = data.resume();
-				if (r!= null) {
-					requestList.add(r);
-				}
-			}
+			request = data.resume();
 		}
 	}
 }
