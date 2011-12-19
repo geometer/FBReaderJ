@@ -104,7 +104,7 @@ public class ZLNetworkManager {
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
-		private final boolean myQuitely;
+		private final boolean myQuietly;
 
 		MyCredentialsProvider(HttpUriRequest request, boolean quietly) {
 			myRequest = request;
