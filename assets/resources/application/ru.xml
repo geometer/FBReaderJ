@@ -301,7 +301,7 @@
 				</node>
 			</node>
 			<node name="text" value="Текст">
-				<node name="summary" value="Шрифты, переносы, и т.д."/>
+				<node name="summary" value="Шрифты, переносы и т.д."/>
 				<node name="font" value="Шрифт">
 					<node name="unchanged" value="&lt;не менять&gt;"/>
 				</node>
@@ -348,7 +348,7 @@
 				<node name="leftIndent" value="Отступ слева"/>
 				<node name="rightIndent" value="Отступ справа"/>
 				<node name="more" value="Другие стили">
-					<node name="summary" value="Отдельные настройки для заголовков, эпиграфов, и т.д."/>
+					<node name="summary" value="Отдельные настройки для заголовков, эпиграфов и т.д."/>
 					<node name="Regular Paragraph" value="Обычный текст">
 						<node name="summary" value=""/>
 					</node>

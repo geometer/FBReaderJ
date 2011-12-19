@@ -50,6 +50,9 @@ public class AddCustomCatalogActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		AuthenticationActivity.initCredentialsCreator(this);
+
 		setContentView(R.layout.add_custom_catalog);
 
 		myResource = ZLResource.resource("dialog").getResource("CustomCatalogDialog");
@@ -240,7 +243,7 @@ public class AddCustomCatalogActivity extends Activity {
 			public void run() {
 				try {
 					myError = null;
-					myLink.reloadInfo(false);
+					myLink.reloadInfo(false, false);
 				} catch (ZLNetworkException e) {
 					myError = e.getMessage();
 				}
