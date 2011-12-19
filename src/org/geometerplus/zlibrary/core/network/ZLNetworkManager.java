@@ -129,7 +129,7 @@ public class ZLNetworkManager {
 				return c;
 			}
 			if (myCredentialsCreator != null) {
-				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuitely);
+				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuietly);
 			}
 			return null;
 		}
