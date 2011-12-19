@@ -68,7 +68,7 @@ public class ZLNetworkManager {
 			notifyAll();
 		}
 
-		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode) {
+		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietly) {
 			final String authScheme = scope.getScheme();
 			if (!"basic".equalsIgnoreCase(authScheme) &&
 				!"digest".equalsIgnoreCase(authScheme)) {
@@ -83,11 +83,13 @@ public class ZLNetworkManager {
 			final String area = scope.getRealm();
 			final ZLStringOption usernameOption =
 				new ZLStringOption("username", host + ":" + area, "");
-			startAuthenticationDialog(host, area, scheme, usernameOption.getValue());
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
+			if (!quietly) {
+				startAuthenticationDialog(host, area, scheme, usernameOption.getValue());
+				synchronized (this) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+					}
 				}
 			}
 
@@ -113,11 +115,11 @@ public class ZLNetworkManager {
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
-		private final boolean myQuiet;
+		private final boolean myQuietly;
 
-		MyCredentialsProvider(HttpUriRequest request, boolean quiet) {
+		MyCredentialsProvider(HttpUriRequest request, boolean quietly) {
 			myRequest = request;
-			myQuiet = quiet;
+			myQuietly = quietly;
 		}
 
 		@Override
@@ -127,7 +129,7 @@ public class ZLNetworkManager {
 				return c;
 			}
 			if (myCredentialsCreator != null) {
-				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuiet);
+				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuitely);
 			}
 			return null;
 		}
