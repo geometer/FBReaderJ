@@ -52,11 +52,7 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
-	public static interface CredentialsCreator {
-		Credentials createCredentials(String scheme, AuthScope scope);
-	}
-
-	public static abstract class BasicCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
+	public static abstract class CredentialsCreator {
 		private volatile String myUsername;
 		private volatile String myPassword;
 
@@ -71,7 +67,9 @@ public class ZLNetworkManager {
 		}
 
 		public Credentials createCredentials(String scheme, AuthScope scope) {
-			if (!"basic".equalsIgnoreCase(scope.getScheme())) {
+			final String authScheme = scope.getScheme();
+			if (!"basic".equalsIgnoreCase(authScheme) &&
+				!"digest".equalsIgnoreCase(authScheme)) {
 				return null;
 			}
 

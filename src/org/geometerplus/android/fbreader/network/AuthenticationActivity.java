@@ -74,7 +74,7 @@ public class AuthenticationActivity extends Activity {
 		}
 	}
 
-	static class CredentialsCreator extends ZLNetworkManager.BasicCredentialsCreator {
+	static class CredentialsCreator extends ZLNetworkManager.CredentialsCreator {
 		private final Context myContext;
 
 		CredentialsCreator(Context context) {
@@ -210,8 +210,8 @@ public class AuthenticationActivity extends Activity {
 	private void finishOk(String username, String password) {
 		final ZLNetworkManager.CredentialsCreator creator =
 			ZLNetworkManager.Instance().getCredentialsCreator();
-		if (creator instanceof CredentialsCreator) {
-			((CredentialsCreator)creator).setCredentials(username, password);
+		if (creator != null) {
+			creator.setCredentials(username, password);
 		}
 		finish();
 	}
@@ -280,8 +280,8 @@ public class AuthenticationActivity extends Activity {
 	protected void onStop() {
 		final ZLNetworkManager.CredentialsCreator creator =
 			ZLNetworkManager.Instance().getCredentialsCreator();
-		if (creator instanceof CredentialsCreator) {
-			((CredentialsCreator)creator).release();
+		if (creator != null) {
+			creator.release();
 		}
 		super.onStop();
 	}

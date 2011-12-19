@@ -30,14 +30,25 @@ public abstract class ZLNetworkRequest {
 	public final String PostData;
 	public final Map<String,String> PostParameters = new HashMap<String,String>();
 
+	private final boolean myIsQuiet;
+
 	protected ZLNetworkRequest(String url) {
-		this(url, null, null);
+		this(url, null, null, false);
+	}
+
+	protected ZLNetworkRequest(String url, boolean quiet) {
+		this(url, null, null, quiet);
 	}
 
 	protected ZLNetworkRequest(String url, String sslCertificate, String postData) {
+		this(url, null, null, false);
+	}
+
+	protected ZLNetworkRequest(String url, String sslCertificate, String postData, boolean quiet) {
 		URL = url;
 		SSLCertificate = sslCertificate;
 		PostData = postData;
+		myIsQuiet = quiet;
 	}
 
 	public void addPostParameter(String name, String value) {
@@ -46,6 +57,10 @@ public abstract class ZLNetworkRequest {
 
 	public String getURL() {
 		return URL;
+	}
+
+	public boolean isQuiet() {
+		return myIsQuiet;
 	}
 
 	public void doBefore() throws ZLNetworkException {
