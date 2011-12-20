@@ -27,6 +27,8 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</service>
+		<receiver android:name="org.geometerplus.android.fbreader.widget.FBReaderWidget" android:process=":widget">
+		</receiver>
 		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
