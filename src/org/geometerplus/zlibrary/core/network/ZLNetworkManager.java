@@ -37,7 +37,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.util.EntityUtils;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
@@ -53,13 +52,7 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
-	public static interface CredentialsCreator {
-		Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode);
-		boolean credentialsExist(AuthScope scope);
-		void removeCredentials(AuthScope scope);
-	}
-
-	public static abstract class BasicCredentialsCreator implements ZLNetworkManager.CredentialsCreator {
+	public static abstract class CredentialsCreator {
 		final private HashMap<AuthScope, Credentials> myCredentialsMap = new HashMap<AuthScope, Credentials> ();
 
 		private volatile String myUsername;
@@ -75,8 +68,10 @@ public class ZLNetworkManager {
 			notifyAll();
 		}
 
-		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietMode) {
-			if (!"basic".equalsIgnoreCase(scope.getScheme()) && !"digest".equalsIgnoreCase(scope.getScheme())) {
+		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietly) {
+			final String authScheme = scope.getScheme();
+			if (!"basic".equalsIgnoreCase(authScheme) &&
+				!"digest".equalsIgnoreCase(authScheme)) {
 				return null;
 			}
 
@@ -88,11 +83,13 @@ public class ZLNetworkManager {
 			final String area = scope.getRealm();
 			final ZLStringOption usernameOption =
 				new ZLStringOption("username", host + ":" + area, "");
-			startAuthenticationDialog(host, area, scheme, usernameOption.getValue());
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
+			if (!quietly) {
+				startAuthenticationDialog(host, area, scheme, usernameOption.getValue());
+				synchronized (this) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+					}
 				}
 			}
 
@@ -107,12 +104,8 @@ public class ZLNetworkManager {
 			return creds;
 		}
 
-		public boolean credentialsExist(AuthScope scope) {
-			return myCredentialsMap.containsKey(scope);
-		}
-
-		public void removeCredentials(AuthScope scope) {
-			myCredentialsMap.remove(scope);
+		public boolean removeCredentials(AuthScope scope) {
+			return myCredentialsMap.remove(scope) != null;
 		}
 
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
@@ -122,11 +115,11 @@ public class ZLNetworkManager {
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
-		private final boolean myQuiet;
+		private final boolean myQuietly;
 
-		MyCredentialsProvider(HttpUriRequest request, boolean quiet) {
+		MyCredentialsProvider(HttpUriRequest request, boolean quietly) {
 			myRequest = request;
-			myQuiet = quiet;
+			myQuietly = quietly;
 		}
 
 		@Override
@@ -136,7 +129,7 @@ public class ZLNetworkManager {
 				return c;
 			}
 			if (myCredentialsCreator != null) {
-				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuiet);
+				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuietly);
 			}
 			return null;
 		}
@@ -303,8 +296,7 @@ public class ZLNetworkManager {
 									}
 									int port = uri.getPort();
 									AuthScope scope = new AuthScope(host, port, realm, scheme);
-									if (myCredentialsCreator.credentialsExist(scope)) {
-										myCredentialsCreator.removeCredentials(scope);
+									if (myCredentialsCreator.removeCredentials(scope)) {
 										entity = null;
 									}
 								}

@@ -256,7 +256,7 @@ public class AddCustomCatalogActivity extends Activity {
 			public void run() {
 				try {
 					myError = null;
-					myLink.reloadInfo(false);
+					myLink.reloadInfo(false, false);
 				} catch (ZLNetworkException e) {
 					myError = e.getMessage();
 				}
