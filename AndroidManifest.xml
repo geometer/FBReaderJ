@@ -28,6 +28,10 @@
 			</intent-filter>
 		</service>
 		<receiver android:name="org.geometerplus.android.fbreader.widget.FBReaderWidget" android:process=":widget">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget" />
 		</receiver>
 		<activity android:name="org.geometerplus.android.fbreader.FBReader" android:launchMode="singleTask" android:icon="@drawable/fbreader" android:label="FBReader" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
