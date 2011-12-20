@@ -75,7 +75,7 @@ public class ZLNetworkManager {
 				return null;
 			}
 
-			if (myCredentialsMap.containsKey(scope) || quietMode) {
+			if (myCredentialsMap.containsKey(scope) || quietly) {
 				return myCredentialsMap.get(scope);
 			}
 
