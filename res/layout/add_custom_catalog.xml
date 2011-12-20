@@ -137,5 +137,15 @@
 			android:layout_marginBottom="5dp"
 		/>
 		<include layout="@layout/ok_cancel_buttons" android:id="@+id/add_custom_catalog_buttons" />
+		<Button
+			android:id="@+id/search_button"
+			android:layout_width="fill_parent"
+			android:layout_weight="1"
+			android:maxLines="2"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginBottom="10dp"
+		/>
 	</LinearLayout>
 </ScrollView>

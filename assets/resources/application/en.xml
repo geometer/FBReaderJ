@@ -649,6 +649,7 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" />
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
+			<node name="searchingForCatalogs" value="Searching for available catalogs. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error" />
@@ -684,6 +685,11 @@
 			<node name="invalidUrl" value="Invalid URL" />
 			<node name="titleAlreadyExists" value="Specified title is already in use" />
 			<node name="siteAlreadyExists" value="Specified site is already in use" />
+			<node name="localNetworkSearch" value="Search services in local network" />
+		</node>
+		<node name="SearchForCatalogs">
+			<node name="title" value="Search" />
+			<node name="empty" value="No catalogs available" />
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Language filter" />

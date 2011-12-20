@@ -46,6 +46,7 @@ public class AddCustomCatalogActivity extends Activity {
 	private volatile ICustomNetworkLink myLink;
 	private boolean myEditNotAdd;
 
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -85,6 +86,16 @@ public class AddCustomCatalogActivity extends Activity {
 				}
 			}
 		);
+
+		final Button button = (Button)findViewById(R.id.search_button);
+		button.setText(myResource.getResource("localNetworkSearch").getValue());
+		button.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				final Intent intent = new Intent();
+				intent.setClass(AddCustomCatalogActivity.this, SearchForCatalogsActivity.class);
+				startActivityForResult(intent, 1);
+			}
+		});
 
 		Util.initLibrary(this);
 
@@ -170,10 +181,12 @@ public class AddCustomCatalogActivity extends Activity {
 
 	private void setExtraFieldsVisibility(boolean show) {
 		final int visibility = show ? View.VISIBLE : View.GONE;
+		final int searchVisibility = (!show) ? View.VISIBLE : View.GONE;
 		runOnUiThread(new Runnable() {
 			public void run() {
 				findViewById(R.id.add_custom_catalog_title_group).setVisibility(visibility);
 				findViewById(R.id.add_custom_catalog_summary_group).setVisibility(visibility);
+				findViewById(R.id.search_button).setVisibility(searchVisibility);
 			}
 		});
 	}
@@ -262,5 +275,18 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		}; 
 		UIUtil.wait("loadingCatalogInfo", loadInfoRunnable, this);
+	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+				case 1:
+					setTextById(R.id.add_custom_catalog_url, intent.getStringExtra(SearchForCatalogsActivity.URL_RETURNED));
+					onOkButton();
+					break;
+			}
+		}
 	}
 }
