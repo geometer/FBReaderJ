@@ -92,7 +92,7 @@ public class AddCustomCatalogActivity extends Activity {
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				final Intent intent = new Intent();
-				intent.setClass(AddCustomCatalogActivity.this, SearchForCatalogsActivity.class);
+				intent.setClass(AddCustomCatalogActivity.this, ScanLocalNetworkActivity.class);
 				startActivityForResult(intent, 1);
 			}
 		});
@@ -283,7 +283,7 @@ public class AddCustomCatalogActivity extends Activity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 				case 1:
-					setTextById(R.id.add_custom_catalog_url, intent.getStringExtra(SearchForCatalogsActivity.URL_RETURNED));
+					setTextById(R.id.add_custom_catalog_url, intent.getStringExtra(ScanLocalNetworkActivity.URL_RETURNED));
 					onOkButton();
 					break;
 			}

@@ -47,8 +47,7 @@ import org.geometerplus.android.util.UIUtil;
 
 import android.util.Log;
 
-public class SearchForCatalogsActivity extends ListActivity {
-
+public class ScanLocalNetworkActivity extends ListActivity {
 	public final static String URL_RETURNED = "OPDS_URL";
 
 	private final static String[] TYPES = {"_stanza._tcp.local."};
@@ -114,7 +113,7 @@ public class SearchForCatalogsActivity extends ListActivity {
 
 				runOnUiThread(new Runnable() {
 					public void run() {
-						SearchForCatalogsActivity.this.setListAdapter(adapter);
+						ScanLocalNetworkActivity.this.setListAdapter(adapter);
 					}
 				});
 				setErrorText(myError);
