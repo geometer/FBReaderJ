@@ -40,6 +40,9 @@ public abstract class Util implements UserRegistrationConstants {
 	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
 	static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
 
+	public static final String ADD_CATALOG_ACTION = "android.fbreader.action.ADD_OPDS_CATALOG";
+	public static final String EDIT_CATALOG_ACTION = "android.fbreader.action.EDIT_OPDS_CATALOG";
+
 	public static Intent intentByLink(Intent intent, INetworkLink link) {
 		if (link != null) {
 			intent.setData(Uri.parse(link.getUrl(UrlInfo.Type.Catalog)));

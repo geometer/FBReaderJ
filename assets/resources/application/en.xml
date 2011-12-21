@@ -690,7 +690,6 @@
 			<node name="invalidUrl" value="Invalid URL" />
 			<node name="titleAlreadyExists" value="Specified title is already in use" />
 			<node name="siteAlreadyExists" value="Specified site is already in use" />
-			<node name="localNetworkSearch" value="Search services in local network" />
 		</node>
 		<node name="SearchForCatalogs">
 			<node name="title" value="Search" />

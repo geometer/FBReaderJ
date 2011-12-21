@@ -50,7 +50,7 @@ public class AddCatalogMenuActivity extends MenuActivity {
 
 	@Override
 	protected String getAction() {
-		return "android.fbreader.action.ADD_CUSTOM_CATALOG";
+		return Util.ADD_CATALOG_ACTION;
 	}
 
 	@Override

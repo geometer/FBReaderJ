@@ -40,12 +40,9 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
-	public static String EDIT_KEY = "EditNotAdd";
-
 	private ZLResource myResource;
 	private volatile ICustomNetworkLink myLink;
 	private boolean myEditNotAdd;
-
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -87,22 +84,14 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		);
 
-		final Button button = (Button)findViewById(R.id.search_button);
-		button.setText(myResource.getResource("localNetworkSearch").getValue());
-		button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				final Intent intent = new Intent();
-				intent.setClass(AddCustomCatalogActivity.this, ScanLocalNetworkActivity.class);
-				startActivityForResult(intent, 1);
-			}
-		});
-
 		Util.initLibrary(this);
 
 		final Intent intent = getIntent();
+		final String action = intent.getAction();
+		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(action);
 		myLink = null;
 		Uri uri = null;
-		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+		if (myEditNotAdd || Intent.ACTION_VIEW.equals(action)) {
 			uri = intent.getData();
 			if (uri != null) {
 				if ("opds".equals(uri.getScheme())) {
@@ -114,7 +103,6 @@ public class AddCustomCatalogActivity extends Activity {
 				}
 			}
 		}
-		myEditNotAdd = intent.getBooleanExtra(EDIT_KEY, false);
 
 		if (myLink != null) {
 			setTextById(R.id.add_custom_catalog_url, myLink.getUrl(UrlInfo.Type.Catalog));
@@ -184,12 +172,10 @@ public class AddCustomCatalogActivity extends Activity {
 
 	private void setExtraFieldsVisibility(boolean show) {
 		final int visibility = show ? View.VISIBLE : View.GONE;
-		final int searchVisibility = (!show) ? View.VISIBLE : View.GONE;
 		runOnUiThread(new Runnable() {
 			public void run() {
 				findViewById(R.id.add_custom_catalog_title_group).setVisibility(visibility);
 				findViewById(R.id.add_custom_catalog_summary_group).setVisibility(visibility);
-				findViewById(R.id.search_button).setVisibility(searchVisibility);
 			}
 		});
 	}
@@ -278,18 +264,5 @@ public class AddCustomCatalogActivity extends Activity {
 			}
 		}; 
 		UIUtil.wait("loadingCatalogInfo", loadInfoRunnable, this);
-	}
-
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		if (resultCode == RESULT_OK) {
-			switch (requestCode) {
-				case 1:
-					setTextById(R.id.add_custom_catalog_url, intent.getStringExtra(ScanLocalNetworkActivity.URL_RETURNED));
-					onOkButton();
-					break;
-			}
-		}
 	}
 }
