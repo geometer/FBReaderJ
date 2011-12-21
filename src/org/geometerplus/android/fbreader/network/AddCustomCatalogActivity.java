@@ -101,14 +101,17 @@ public class AddCustomCatalogActivity extends Activity {
 
 		final Intent intent = getIntent();
 		myLink = null;
-		Uri uri = intent.getData();
-		if (uri != null) {
-			if ("opds".equals(uri.getScheme())) {
-				uri = Uri.parse("http" + uri.toString().substring(4));
-			}
-			final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
-			if (link instanceof ICustomNetworkLink) {
-				myLink = (ICustomNetworkLink)link;
+		Uri uri = null;
+		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			uri = intent.getData();
+			if (uri != null) {
+				if ("opds".equals(uri.getScheme())) {
+					uri = Uri.parse("http" + uri.toString().substring(4));
+				}
+				final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
+				if (link instanceof ICustomNetworkLink) {
+					myLink = (ICustomNetworkLink)link;
+				}
 			}
 		}
 		myEditNotAdd = intent.getBooleanExtra(EDIT_KEY, false);

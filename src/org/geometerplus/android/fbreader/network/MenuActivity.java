@@ -45,11 +45,17 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 		try {
 			startActivityForResult(new Intent(getAction(), getIntent().getData()), 0);
 		} catch (ActivityNotFoundException e) {
-			if (myInfos.size() == 1) {
-				runItem(myInfos.get(0));
+			switch (myInfos.size()) {
+				default:
+					break;
+				case 0:
+					finish();
+					return;
+				case 1:
+					runItem(myInfos.get(0));
+					finish();
+					return;
 			}
-			finish();
-			return;
 		}
 
 		setListAdapter(new ActionListAdapter());

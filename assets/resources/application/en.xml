@@ -116,6 +116,11 @@
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogs"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Searching for books in network"/> <!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Add catalog"/>
+			<node name="editUrl" value="Enter URL manually"/>
+			<node name="scanLocalNetwork" value="Scan local network"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Network search"/>
 			<node name="reload" value="Reload"/>
