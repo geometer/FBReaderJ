@@ -45,16 +45,8 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 		try {
 			startActivityForResult(new Intent(getAction(), getIntent().getData()), 0);
 		} catch (ActivityNotFoundException e) {
-			switch (myInfos.size()) {
-				default:
-					break;
-				case 0:
-					finish();
-					return;
-				case 1:
-					runItem(myInfos.get(0));
-					finish();
-					return;
+			if (finishInitialization()) {
+				return;
 			}
 		}
 
@@ -67,6 +59,20 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 		finish();
 	}
 
+	private boolean finishInitialization() {
+		switch (myInfos.size()) {
+			default:
+				return false;
+			case 0:
+				finish();
+				return true;
+			case 1:
+				runItem(myInfos.get(0));
+				finish();
+				return true;
+		}
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (intent != null) {
@@ -77,12 +83,7 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 			if (actions != null) {
 				myInfos.addAll(actions);
 			}
-			if (myInfos.size() == 0) {
-				finish();
-				return;
-			} else if (myInfos.size() == 1) {
-				runItem(myInfos.get(0));
-				finish();
+			if (finishInitialization()) {
 				return;
 			}
 			Collections.sort(myInfos);
