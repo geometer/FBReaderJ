@@ -27,7 +27,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.view.*;
+import android.view.View;
 import android.widget.*;
 
 import javax.jmdns.*;
