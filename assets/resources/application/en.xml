@@ -656,7 +656,7 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&8230;"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
