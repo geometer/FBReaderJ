@@ -20,35 +20,34 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
+import java.io.IOException;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.net.wifi.WifiManager.MulticastLock;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
-
-import android.net.wifi.WifiManager;
-import android.net.wifi.WifiManager.MulticastLock;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceListener;
 import javax.jmdns.ServiceInfo;
 
-import java.io.IOException;
-
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+
+import org.geometerplus.fbreader.network.NetworkLibrary;
+
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
 
-import android.util.Log;
-
 public class ScanLocalNetworkActivity extends ListActivity {
 	private final static String[] ourServiceTypes = { "_stanza._tcp.local." };
 
-	private ZLResource myResource;
+	private final ZLResource myResource = NetworkLibrary.Instance().resource().getResource("addCatalog");
 
 	private MulticastLock myLock;
 
@@ -59,9 +58,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 		setContentView(R.layout.scan_local_network);
 
-		myResource = ZLResource.resource("dialog").getResource("SearchForCatalogs");
-
-		setTitle(myResource.getResource("title").getValue());
+		setTitle(myResource.getResource("localCatalogs").getValue());
 
 		final Button cbutton = (Button)findViewById(R.id.scan_local_network_buttons).findViewById(R.id.cancel_button);
 		cbutton.setText(ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue());
@@ -75,7 +72,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		rbutton.setText(ZLResource.resource("dialog").getResource("button").getResource("reload").getValue());
 		rbutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				reload();
+				scan();
 			}
 		});
 
@@ -84,7 +81,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		myLock.setReferenceCounted(true);
 		myLock.acquire();
 
-		reload();
+		scan();
 	}
 
 	@Override
@@ -95,10 +92,30 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		}
 	}
 
-	private void reload() {
-		final Runnable searchRunnable = new Runnable() {
+	private void scan() {
+		final Runnable scanRunnable = new Runnable() {
 			public void run() {
-				final ArrayAdapter<ServiceInfoItem> adapter = getAdapterFromSearch();
+				final ArrayList<ServiceInfoItem> services = new ArrayList<ServiceInfoItem>();
+            
+				try {
+					final JmDNS mcDNS = JmDNS.create();
+					for (String type : ourServiceTypes) {
+						for (ServiceInfo si : mcDNS.list(type)) {
+							services.add(new ServiceInfoItem(si));
+						}
+					}
+					setError(
+						services.isEmpty() ? myResource.getResource("noCatalogsFound").getValue() : null
+					);
+				} catch (IOException e) {
+					setError(e.getMessage());
+				}
+            
+				final ArrayAdapter<ServiceInfoItem> adapter = new ArrayAdapter<ServiceInfoItem>(
+					ScanLocalNetworkActivity.this,
+					R.layout.local_service_item,
+					services
+				);
 
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -107,7 +124,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 				});
 			}
 		};
-		UIUtil.wait("searchingForCatalogs", searchRunnable, this);
+		UIUtil.wait("scanningLocalNetwork", scanRunnable, this);
 	}
 
 	private void setError(final String error) {
@@ -141,24 +158,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		public String getUrl() {
 			return myServiceInfo.getURLs()[0];
 		}
-	}
-
-	private ArrayAdapter<ServiceInfoItem> getAdapterFromSearch() {
-		final ArrayList <ServiceInfoItem> services = new ArrayList <ServiceInfoItem>();
-
-		try {
-			final JmDNS mcDNS = JmDNS.create();
-			for (String type : ourServiceTypes) {
-				for (ServiceInfo si : mcDNS.list(type)) {
-					services.add(new ServiceInfoItem(si));
-				}
-			}
-			setError(services.isEmpty() ? myResource.getResource("empty").getValue() : null);
-		} catch (IOException e) {
-			setError(e.getMessage());
-		}
-
-		return new ArrayAdapter<ServiceInfoItem>(this, R.layout.search_catalogs_item, services);
 	}
 
 	@Override
