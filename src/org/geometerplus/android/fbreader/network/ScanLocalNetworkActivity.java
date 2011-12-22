@@ -112,7 +112,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 				});
 				setErrorText(myError);
 			}
-		}; 
+		};
 		UIUtil.wait("searchingForCatalogs", searchRunnable, this);
 	}
 
@@ -157,9 +157,8 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			}
 		}
 
-
-		for (String type:TYPES) {
-			for (ServiceInfo si:myJmdns.list(type)) {
+		for (String type : TYPES) {
+			for (ServiceInfo si : myJmdns.list(type)) {
 				services.add(new ServiceInfoItem(si));
 			}
 		}
@@ -168,7 +167,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	}
 
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
+	protected void onListItemClick(ListView parent, View view, int position, long id) {
 		final ServiceInfoItem item = (ServiceInfoItem)getListAdapter().getItem(position);
 		startActivity(new Intent(
 			Intent.ACTION_VIEW,
