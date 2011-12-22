@@ -19,14 +19,13 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.net.wifi.WifiManager.MulticastLock;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -40,14 +39,14 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
-
+ 
 public class ScanLocalNetworkActivity extends ListActivity {
 	private final static String[] ourServiceTypes = { "_stanza._tcp.local." };
 
 	private final ZLResource myResource =
 		NetworkLibrary.Instance().resource().getResource("addCatalog");
 
-	private MulticastLock myLock;
+	private WifiManager.MulticastLock myLock;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -58,21 +57,22 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 		setTitle(myResource.getResource("localCatalogs").getValue());
 
+		final View buttonView = findViewById(R.id.scan_local_network_buttons);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
-		final Button cbutton = (Button)findViewById(R.id.scan_local_network_buttons).findViewById(R.id.cancel_button);
-		cbutton.setText(buttonResource.getResource("cancel").getValue());
-		cbutton.setOnClickListener(new View.OnClickListener() {
+		final Button rescanButton = (Button)buttonView.findViewById(R.id.ok_button);
+		rescanButton.setText(buttonResource.getResource("rescan").getValue());
+		rescanButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				finish();
+				scan();
 			}
 		});
 
-		final Button rbutton = (Button)findViewById(R.id.scan_local_network_buttons).findViewById(R.id.ok_button);
-		rbutton.setText(buttonResource.getResource("rescan").getValue());
-		rbutton.setOnClickListener(new View.OnClickListener() {
+		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
+		cancelButton.setText(buttonResource.getResource("cancel").getValue());
+		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				scan();
+				finish();
 			}
 		});
 
@@ -101,8 +101,8 @@ public class ScanLocalNetworkActivity extends ListActivity {
 				try {
 					final JmDNS mcDNS = JmDNS.create();
 					for (String type : ourServiceTypes) {
-						for (ServiceInfo si : mcDNS.list(type)) {
-							services.add(new ServiceInfoItem(si));
+						for (ServiceInfo info : mcDNS.list(type)) {
+							services.add(new ServiceInfoItem(info));
 						}
 					}
 					errorText = services.isEmpty()
