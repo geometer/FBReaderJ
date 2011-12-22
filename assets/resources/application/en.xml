@@ -265,6 +265,7 @@
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
 			<node name="authorize" value="Authorize"/>
+			<node name="rescan" value="Rescan" />
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>

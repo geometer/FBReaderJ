@@ -7,7 +7,6 @@
 			<node name="yes" value="Yes" />
 			<node name="no" value="No" />
 			<node name="apply" value="Apply" />
-			<node name="rescan" value="Rescan" />
 		</node>
 		<node name="networkError">
 			<node name="title" value="Network error" />
