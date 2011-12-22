@@ -66,7 +66,7 @@ public class ZLNetworkManager {
 			notifyAll();
 		}
 
-		public Credentials createCredentials(String scheme, AuthScope scope) {
+		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietly) {
 			final String authScheme = scope.getScheme();
 			if (!"basic".equalsIgnoreCase(authScheme) &&
 				!"digest".equalsIgnoreCase(authScheme)) {
@@ -77,11 +77,13 @@ public class ZLNetworkManager {
 			final String area = scope.getRealm();
 			final ZLStringOption usernameOption =
 				new ZLStringOption("username", host + ":" + area, "");
-			startAuthenticationDialog(host, area, scheme, usernameOption.getValue());
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
+			if (!quietly) {
+				startAuthenticationDialog(host, area, scheme, usernameOption.getValue());
+				synchronized (this) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+					}
 				}
 			}
 
@@ -102,9 +104,11 @@ public class ZLNetworkManager {
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
+		private final boolean myQuietly;
 
-		MyCredentialsProvider(HttpUriRequest request) {
+		MyCredentialsProvider(HttpUriRequest request, boolean quietly) {
 			myRequest = request;
+			myQuietly = quietly;
 		}
 
 		@Override
@@ -114,7 +118,7 @@ public class ZLNetworkManager {
 				return c;
 			}
 			if (myCredentialsCreator != null) {
-				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope);
+				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuietly);
 			}
 			return null;
 		}
@@ -259,7 +263,7 @@ public class ZLNetworkManager {
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
 			httpRequest.setHeader("Accept-Encoding", "gzip");
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
-			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest));
+			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest, request.isQuiet()));
 			HttpResponse response = null;
 			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
