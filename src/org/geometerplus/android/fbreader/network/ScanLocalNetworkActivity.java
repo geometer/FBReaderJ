@@ -100,7 +100,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			public void run() {
 				final ArrayList<ServiceInfoItem> services = new ArrayList<ServiceInfoItem>();
 				String errorText;
-            
+
 				try {
 					final JmDNS mcDNS = JmDNS.create();
 					for (String type : ourServiceTypes) {
@@ -113,7 +113,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 				} catch (Exception e) {
 					errorText = e.getMessage();
 				}
-            
+
 				setup(services, errorText);
 			}
 		};
