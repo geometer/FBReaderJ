@@ -22,6 +22,8 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:textColor="#ff0000"
+			android:visibility="gone"
+			android:textAppearance="?android:attr/textAppearanceMedium"
 		/>
 		<include layout="@layout/ok_cancel_buttons" android:id="@+id/scan_local_network_buttons" />
 	</LinearLayout>
