@@ -46,7 +46,7 @@ import org.geometerplus.android.util.UIUtil;
 import android.util.Log;
 
 public class ScanLocalNetworkActivity extends ListActivity {
-	private final static String[] TYPES = {"_stanza._tcp.local."};
+	private final static String[] ourServiceTypes = { "_stanza._tcp.local." };
 
 	private ZLResource myResource;
 
@@ -54,25 +54,17 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	private JmDNS myJmdns;
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (myLock != null) {
-			myLock.release();
-		}
-	}
-
-	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		setContentView(R.layout.search_catalogs);
+		setContentView(R.layout.scan_local_network);
 
 		myResource = ZLResource.resource("dialog").getResource("SearchForCatalogs");
 
 		setTitle(myResource.getResource("title").getValue());
 
-		final Button cbutton = (Button)findViewById(R.id.search_catalog_buttons).findViewById(R.id.cancel_button);
+		final Button cbutton = (Button)findViewById(R.id.scan_local_network_buttons).findViewById(R.id.cancel_button);
 		cbutton.setText(ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue());
 		cbutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -80,7 +72,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			}
 		});
 
-		final Button rbutton = (Button)findViewById(R.id.search_catalog_buttons).findViewById(R.id.ok_button);
+		final Button rbutton = (Button)findViewById(R.id.scan_local_network_buttons).findViewById(R.id.ok_button);
 		rbutton.setText(ZLResource.resource("dialog").getResource("button").getResource("reload").getValue());
 		rbutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -96,6 +88,14 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		myJmdns = null;
 
 		reload();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (myLock != null) {
+			myLock.release();
+		}
 	}
 
 	private void reload() {
@@ -119,11 +119,15 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	private void setErrorText(final String errorText) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				final TextView errorView = (TextView)findViewById(android.R.id.empty);
+				final View listView = findViewById(android.R.id.list);
+				final View errorView = findViewById(R.id.scan_local_network_error);
 				if (errorText != null) {
-					errorView.setText(errorText);
+					listView.setVisibility(View.GONE);
+					errorView.setVisibility(View.VISIBLE);
+					((TextView)errorView).setText(errorText);
 				} else {
-					errorView.setText(myResource.getResource("empty").getValue());
+					listView.setVisibility(View.VISIBLE);
+					errorView.setVisibility(View.GONE);
 				}
 			}
 		});
@@ -146,7 +150,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	}
 
 	private ArrayAdapter<ServiceInfoItem> getAdapterFromSearch() {
-		ArrayList <ServiceInfoItem> services = new ArrayList <ServiceInfoItem>();
+		final ArrayList <ServiceInfoItem> services = new ArrayList <ServiceInfoItem>();
 
 		if (myJmdns == null) {
 			try {
@@ -157,24 +161,27 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			}
 		}
 
-		for (String type : TYPES) {
+		for (String type : ourServiceTypes) {
 			for (ServiceInfo si : myJmdns.list(type)) {
 				services.add(new ServiceInfoItem(si));
 			}
 		}
-		ArrayAdapter<ServiceInfoItem> adapter = new ArrayAdapter<ServiceInfoItem>(this, R.layout.search_catalogs_item, services);
-		return adapter;
+		return new ArrayAdapter<ServiceInfoItem>(this, R.layout.search_catalogs_item, services);
 	}
 
 	@Override
 	protected void onListItemClick(ListView parent, View view, int position, long id) {
 		final ServiceInfoItem item = (ServiceInfoItem)getListAdapter().getItem(position);
-		startActivity(new Intent(
-			Intent.ACTION_VIEW,
-			Uri.parse(item.getUrl()),
-			getApplicationContext(),
-			AddCustomCatalogActivity.class
-		));
-		finish();
+		try {
+			startActivity(new Intent(
+				Intent.ACTION_VIEW,
+				Uri.parse(item.getUrl()),
+				getApplicationContext(),
+				AddCustomCatalogActivity.class
+			));
+			finish();
+		} catch (Exception e) {
+			// TODO: show an error message
+		}
 	}
 }

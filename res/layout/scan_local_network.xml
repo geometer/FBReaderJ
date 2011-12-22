@@ -10,19 +10,19 @@
 		android:paddingRight="10dp"
 		android:orientation="vertical"
 	>
-		<ListView 
+		<ListView
+			android:id="@android:id/list"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1" 
-			android:id="@android:id/list">
-		</ListView>
+			android:layout_weight="1"
+		/>
 		<TextView
-			android:id="@android:id/empty"
+			android:id="@+id/scan_local_network_error"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1" 
+			android:layout_weight="1"
 			android:textColor="#ff0000"
 		/>
-		<include layout="@layout/ok_cancel_buttons" android:id="@+id/search_catalog_buttons" />
+		<include layout="@layout/ok_cancel_buttons" android:id="@+id/scan_local_network_buttons" />
 	</LinearLayout>
 </ScrollView>
