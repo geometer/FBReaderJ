@@ -23,12 +23,10 @@ import java.util.*;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.*;
 
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.MulticastLock;
@@ -48,8 +46,6 @@ import org.geometerplus.android.util.UIUtil;
 import android.util.Log;
 
 public class ScanLocalNetworkActivity extends ListActivity {
-	public final static String URL_RETURNED = "OPDS_URL";
-
 	private final static String[] TYPES = {"_stanza._tcp.local."};
 
 	private ZLResource myResource;
@@ -80,7 +76,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		cbutton.setText(ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue());
 		cbutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-        			finish();
+				finish();
 			}
 		});
 
@@ -88,7 +84,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		rbutton.setText(ZLResource.resource("dialog").getResource("button").getResource("reload").getValue());
 		rbutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-        			Reload();
+				reload();
 			}
 		});
 
@@ -99,12 +95,10 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 		myJmdns = null;
 
-		Reload();
+		reload();
+	}
 
-
-        }
-
-	private void Reload() {
+	private void reload() {
 		final Runnable searchRunnable = new Runnable() {
 			private String myError;
 
@@ -136,7 +130,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	}
 
 	private static class ServiceInfoItem {
-
 		private final ServiceInfo myServiceInfo;
 
 		public ServiceInfoItem(ServiceInfo si) {
@@ -153,7 +146,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	}
 
 	private ArrayAdapter<ServiceInfoItem> getAdapterFromSearch() {
-
 		ArrayList <ServiceInfoItem> services = new ArrayList <ServiceInfoItem>();
 
 		if (myJmdns == null) {
@@ -177,11 +169,13 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		ServiceInfoItem item = (ServiceInfoItem) getListAdapter().getItem(position);
-		Intent intent = new Intent();
-		intent.putExtra(URL_RETURNED, item.getUrl());
-		setResult(RESULT_OK, intent);
+		final ServiceInfoItem item = (ServiceInfoItem)getListAdapter().getItem(position);
+		startActivity(new Intent(
+			Intent.ACTION_VIEW,
+			Uri.parse(item.getUrl()),
+			getApplicationContext(),
+			AddCustomCatalogActivity.class
+		));
 		finish();
 	}
-
 }
