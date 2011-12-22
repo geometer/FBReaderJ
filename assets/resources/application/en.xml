@@ -61,12 +61,12 @@
 			<node name="summary" value="Books sorted by series"/>
 		</node>
 		<node name="search" value="Search">
-			<node name="summary" value="Search books on %s" />
-			<node name="summaryAllCatalogs" value="Search books in all catalogs" />
-			<node name="summaryInProgress" value="Search in progress" />
+			<node name="summary" value="Search books on %s"/>
+			<node name="summaryAllCatalogs" value="Search books in all catalogs"/>
+			<node name="summaryInProgress" value="Search in progress"/>
 		</node>
 		<node name="found" value="Found">
-			<node name="summary" value="Search results for: %s" />
+			<node name="summary" value="Search results for: %s"/>
 		</node>
 		<node name="openCatalog" value="Open catalog"/>
 		<node name="networkSearch" value="Search"/>
@@ -84,9 +84,9 @@
 		<node name="openBasket" value="Open basket"/>
 		<node name="clearBasket" value="Clear basket"/>
 		<node name="buyAllBooks" value="Buy all books"/>
-		<node name="openInBrowser" value="Open in browser" />
-		<node name="stopLoading" value="Stop loading" />
-		<node name="stopSearching" value="Stop searching" />
+		<node name="openInBrowser" value="Open in browser"/>
+		<node name="stopLoading" value="Stop loading"/>
+		<node name="stopSearching" value="Stop searching"/>
 		<node name="signIn" value="Sign in"/>
 		<node name="signOut" value="Sign out (%s)"/>
 		<node name="topup" value="Top up account (currently: %s)"/>
@@ -98,10 +98,10 @@
 		<node name="basketSummaryEmpty" value="No books"/>
 		<node name="basketSummaryCountOnly" value="%0 book(s)"/>
 		<node name="basketSummary" value="%0 book(s) (%1)"/>
-		<node name="alreadyDownloading" value="Book is being downloaded" />
-		<node name="alreadyDownloadingDemo" value="Sample is being downloaded" />
-		<node name="stoppingCatalogLoading" value="Stopping loading" />
-		<node name="stoppingNetworkSearch" value="Stopping search" />
+		<node name="alreadyDownloading" value="Book is being downloaded"/>
+		<node name="alreadyDownloadingDemo" value="Sample is being downloaded"/>
+		<node name="stoppingCatalogLoading" value="Stopping loading"/>
+		<node name="stoppingNetworkSearch" value="Stopping search"/>
 		<node name="editCustomCatalog" value="Edit catalog"/>
 		<node name="removeCustomCatalog" value="Remove catalog"/>
 		<node name="addCustomCatalog" value="Add catalog"/>
@@ -112,7 +112,7 @@
 			<node name="readDemo" value="Do you want to read sample?"/>
 			<node name="downloadDemo" value="Do you want to download sample?"/>
 			<node name="buy" value="Do you want to buy this book? (%s)"/>
-			<node name="openInBrowser" value="Do you want to open this catalog in browser?" />
+			<node name="openInBrowser" value="Do you want to open this catalog in browser?"/>
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogs"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Searching for books in network"/> <!-- used as notification title -->
@@ -120,6 +120,8 @@
 			<node name="title" value="Add catalog"/>
 			<node name="editUrl" value="Enter URL manually"/>
 			<node name="scanLocalNetwork" value="Scan local network"/>
+			<node name="localCatalogs" value="Local OPDS catalogs"/>
+			<node name="noCatalogsFound" value="No catalogs found, sorry"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Network search"/>
@@ -136,57 +138,57 @@
 		</node>
 	</node>
 	<node name="buyBook">
-		<node name="title" value="Purchase book" />
-		<node name="titleSeveralBooks" value="Purchase books" />
-		<node name="confirm" value="Are you sure you want to buy &#10;&#8220;%s&#8221;?" />
-		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" />
-		<node name="alreadyBought" value="Book is already bought" />
-		<node name="notAuthorized" value="Authorization required" />
-		<node name="noAccountInformation" value="Cannot load account state" />
-		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" />
-		<node name="zeroFunds" value="This purchase costs %0" />
+		<node name="title" value="Purchase book"/>
+		<node name="titleSeveralBooks" value="Purchase books"/>
+		<node name="confirm" value="Are you sure you want to buy &#10;&#8220;%s&#8221;?"/>
+		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?"/>
+		<node name="alreadyBought" value="Book is already bought"/>
+		<node name="notAuthorized" value="Authorization required"/>
+		<node name="noAccountInformation" value="Cannot load account state"/>
+		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1"/>
+		<node name="zeroFunds" value="This purchase costs %0"/>
 	</node>
 	<node name="networkBookView">
-		<node name="bookInfo" value="Book Info" />
-		<node name="description" value="Description" />
-		<node name="noDescription" value="No description available." />
-		<node name="title" value="Title:" />
-		<node name="authors" value="Authors:" />
-		<node name="series" value="Series:" />
-		<node name="indexInSeries" value="Index in series:" />
-		<node name="tags" value="Tags:" />
-		<node name="catalog" value="Catalog:" />
-		<node name="extraLinks" value="Related links" />
+		<node name="bookInfo" value="Book Info"/>
+		<node name="description" value="Description"/>
+		<node name="noDescription" value="No description available."/>
+		<node name="title" value="Title:"/>
+		<node name="authors" value="Authors:"/>
+		<node name="series" value="Series:"/>
+		<node name="indexInSeries" value="Index in series:"/>
+		<node name="tags" value="Tags:"/>
+		<node name="catalog" value="Catalog:"/>
+		<node name="extraLinks" value="Related links"/>
 	</node>
 	<node name="bookInfo">
-		<node name="bookInfo" value="Book Info" />
-		<node name="fileInfo" value="File Info" />
-		<node name="annotation" value="Annotation" />
-		<node name="title" value="Title:" />
-		<node name="authors" value="Authors:" />
-		<node name="series" value="Series:" />
-		<node name="indexInSeries" value="Index in series:" />
-		<node name="tags" value="Tags:" />
+		<node name="bookInfo" value="Book Info"/>
+		<node name="fileInfo" value="File Info"/>
+		<node name="annotation" value="Annotation"/>
+		<node name="title" value="Title:"/>
+		<node name="authors" value="Authors:"/>
+		<node name="series" value="Series:"/>
+		<node name="indexInSeries" value="Index in series:"/>
+		<node name="tags" value="Tags:"/>
 		<node name="language" value="Language:"/>
-		<node name="name" value="Name:" />
-		<node name="type" value="Type:" />
-		<node name="size" value="Size:" />
-		<node name="time" value="Last modified:" />
-		<node name="sizeInBytes" value="%s byte(s)" />
-		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="name" value="Name:"/>
+		<node name="type" value="Type:"/>
+		<node name="size" value="Size:"/>
+		<node name="time" value="Last modified:"/>
+		<node name="sizeInBytes" value="%s byte(s)"/>
+		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="menu">
-			<node name="edit" value="Edit" />
+			<node name="edit" value="Edit"/>
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Book has been downloaded" />
-		<node name="tickerError" value="Book download error" />
-		<node name="contentSuccess" value="Download complete" />
-		<node name="contentError" value="Download failed" />
-		<node name="downloadingStarted" value="Book downloading has been started" />
-		<node name="alreadyDownloading" value="Book is already being downloaded" />
-		<node name="cannotCreateDirectory" value="Unable to create directory %s" />
-		<node name="cannotCreateFile" value="Unable to create file %s" />
+		<node name="tickerSuccess" value="Book has been downloaded"/>
+		<node name="tickerError" value="Book download error"/>
+		<node name="contentSuccess" value="Download complete"/>
+		<node name="contentError" value="Download failed"/>
+		<node name="downloadingStarted" value="Book downloading has been started"/>
+		<node name="alreadyDownloading" value="Book is already being downloaded"/>
+		<node name="cannotCreateDirectory" value="Unable to create directory %s"/>
+		<node name="cannotCreateFile" value="Unable to create file %s"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Expand tree"/>
@@ -215,9 +217,9 @@
 	<node name="selection" value="Selection">
 		<node name="copyToClipboard" value="Copy to clipboard"/>
 		<node name="openInDictionary" value="Open in dictionary"/>
-		<node name="quoteFrom" value="Quote from %s" />
-		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s" />
-		<node name="bookmarkCreated" value="Bookmark created:&#10;%s" />
+		<node name="quoteFrom" value="Quote from %s"/>
+		<node name="textInBuffer" value="Copied to the clipboard:&#10;%s"/>
+		<node name="bookmarkCreated" value="Bookmark created:&#10;%s"/>
 		<node name="clearSelection" value="Clear"/>
 	</node>
 	<node name="menu">
@@ -241,28 +243,29 @@
 		</node>
 		<node name="search" value="Search"/>
 		<node name="rotate" value="Rotate screen"/>
-		<node name="increaseFont" value="Zoom in" />
-		<node name="decreaseFont" value="Zoom out" />
+		<node name="increaseFont" value="Zoom in"/>
+		<node name="decreaseFont" value="Zoom out"/>
 		<node name="toggleFullscreen" value="Full Screen"/>
 		<node name="bookmarks" value="Bookmarks"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Install" />
-			<node name="update" value="Update" />
-			<node name="skip" value="Skip" />
-			<node name="buy" value="Buy" />
-			<node name="buyAndDownload" value="Buy and download" />
-			<node name="continue" value="Continue" />
-			<node name="editUrl" value="Edit URL" />
-			<node name="tryAgain" value="Try again" />
-			<node name="openBook" value="Read" />
-			<node name="editInfo" value="Edit" />
-			<node name="reloadInfo" value="Reload" />
+			<node name="install" value="Install"/>
+			<node name="update" value="Update"/>
+			<node name="skip" value="Skip"/>
+			<node name="buy" value="Buy"/>
+			<node name="buyAndDownload" value="Buy and download"/>
+			<node name="continue" value="Continue"/>
+			<node name="editUrl" value="Edit URL"/>
+			<node name="tryAgain" value="Try again"/>
+			<node name="openBook" value="Read"/>
+			<node name="editInfo" value="Edit"/>
+			<node name="reloadInfo" value="Reload"/>
 			<node name="topup" value="Top up"/>
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
 			<node name="authorize" value="Authorize"/>
+			<node name="rescan" value="Rescan" />
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>
@@ -470,7 +473,7 @@
 				<node name="hyperlink" value="Hyperlink text"/>
 				<node name="hyperlinkVisited" value="Visited hyperlink text"/>
 				<node name="highlighting" value="Search results background"/>
-				<node name="footer" value="Footer" />
+				<node name="footer" value="Footer"/>
 			</node>
 			<node name="margins" value="Margins">
 				<node name="summary" value="Text margins"/>
@@ -487,8 +490,8 @@
 					<node name="showAsProgress" value="Vertical progress bar"/>
 					<node name="showAsFooter" value="Horizontal footer"/>
 				</node>
-				<node name="footerHeight" value="Footer height" />
-				<node name="footerColor" value="Footer color" />
+				<node name="footerHeight" value="Footer height"/>
+				<node name="footerColor" value="Footer color"/>
 				<node name="tocMarks" value="Show TOC marks">
 					<node name="summaryOn" value="Show TOC marks in the footer bar"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar"/>
@@ -646,56 +649,57 @@
 			<node name="loadingBookList" value="Opening library. Please, wait&#8230;"/>
 			<node name="creatingBooksDatabase" value="Creating books database. Please, wait&#8230;"/>
 			<node name="updatingBooksDatabase" value="Updating books database. Please, wait&#8230;"/>
-			<node name="loadingNetworkLibrary" value="Opening library. Please, wait&#8230;" />
-			<node name="authentication" value="Authentication. Please, wait&#8230;" />
-			<node name="signOut" value="Signing out. Please, wait&#8230;" />
-			<node name="purchaseBook" value="Purchase book. Please, wait&#8230;" />
-			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;" />
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" />
+			<node name="loadingNetworkLibrary" value="Opening library. Please, wait&#8230;"/>
+			<node name="authentication" value="Authentication. Please, wait&#8230;"/>
+			<node name="signOut" value="Signing out. Please, wait&#8230;"/>
+			<node name="purchaseBook" value="Purchase book. Please, wait&#8230;"/>
+			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;"/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
-			<node name="internalError" value="Internal server error" />
-			<node name="purchaseNotEnoughMoney" value="Not enough money" />
-			<node name="purchaseMissingBook" value="Missing book" />
-			<node name="purchaseAlreadyPurchased" value="Already purchased" />
-			<node name="bookNotPurchased" value="Book was not purchased" />
-			<node name="downloadLimitExceeded" value="Download limit exceeded" />
-			<node name="noUserEmail" value="No user was registered&#10;with specified e-mail address" />
-			<node name="unsupportedOperation" value="Unsupported operation" />
-			<node name="notAnOPDS" value="This is not an OPDS catalog" />
-			<node name="noRequiredInformation" value="Required information is not specified in the catalog" />
-			<node name="cacheDirectoryError" value="Unable to create cache directory" />
+			<node name="internalError" value="Internal server error"/>
+			<node name="purchaseNotEnoughMoney" value="Not enough money"/>
+			<node name="purchaseMissingBook" value="Missing book"/>
+			<node name="purchaseAlreadyPurchased" value="Already purchased"/>
+			<node name="bookNotPurchased" value="Book was not purchased"/>
+			<node name="downloadLimitExceeded" value="Download limit exceeded"/>
+			<node name="noUserEmail" value="No user was registered&#10;with specified e-mail address"/>
+			<node name="unsupportedOperation" value="Unsupported operation"/>
+			<node name="notAnOPDS" value="This is not an OPDS catalog"/>
+			<node name="noRequiredInformation" value="Required information is not specified in the catalog"/>
+			<node name="cacheDirectoryError" value="Unable to create cache directory"/>
 		</node>
 		<node name="AuthenticationDialog">
-			<node name="title" value="Authentication" />
-			<node name="unencryptedWarning" value="Your password will be sent unencrypted" />
-			<node name="login" value="Username" />
-			<node name="password" value="Password" />
-			<node name="loginIsEmpty" value="Username should be non-empty" />
-			<node name="register" value="Sign up" />
+			<node name="title" value="Authentication"/>
+			<node name="unencryptedWarning" value="Your password will be sent unencrypted"/>
+			<node name="login" value="Username"/>
+			<node name="password" value="Password"/>
+			<node name="loginIsEmpty" value="Username should be non-empty"/>
+			<node name="register" value="Sign up"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog" />
-			<node name="catalogTitle" value="Title" />
-			<node name="catalogUrl" value="URL" />
-			<node name="catalogSummary" value="Summary" />
-			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog" />
-			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/" />
-			<node name="catalogSummaryExample" value="E.g.: Public domain books" />
-			<node name="titleIsEmpty" value="Title should be non-empty" />
-			<node name="urlIsEmpty" value="URL should be non-empty" />
-			<node name="invalidUrl" value="Invalid URL" />
-			<node name="titleAlreadyExists" value="Specified title is already in use" />
-			<node name="siteAlreadyExists" value="Specified site is already in use" />
+			<node name="title" value="FBReader: add custom catalog"/>
+			<node name="catalogTitle" value="Title"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Summary"/>
+			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog"/>
+			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="E.g.: Public domain books"/>
+			<node name="titleIsEmpty" value="Title should be non-empty"/>
+			<node name="urlIsEmpty" value="URL should be non-empty"/>
+			<node name="invalidUrl" value="Invalid URL"/>
+			<node name="titleAlreadyExists" value="Specified title is already in use"/>
+			<node name="siteAlreadyExists" value="Specified site is already in use"/>
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Language filter" />
+			<node name="title" value="Language filter"/>
 		</node>
 		<node name="tips">
-			<node name="dontShowAgain" value="Don't show again" />
-			<node name="more" value="Next tip" />
+			<node name="dontShowAgain" value="Don't show again"/>
+			<node name="more" value="Next tip"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -707,9 +711,9 @@
 		<node name="dictionaryIsNotInstalled" value="Dictionary is not installed, sorry"/>
 		<node name="permissionDenied" value="Permission denied, sorry"/>
 		<node name="noFavorites" value="Your favorites list is empty, sorry"/>
-		<node name="emptyCatalog" value="Catalog is empty, sorry" />
-		<node name="emptyBasket" value="Your basket is empty, sorry" />
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" />
+		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
+		<node name="emptyBasket" value="Your basket is empty, sorry"/>
+		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
