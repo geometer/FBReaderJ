@@ -20,9 +20,9 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
-import java.io.IOException;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
@@ -47,7 +47,8 @@ import org.geometerplus.android.util.UIUtil;
 public class ScanLocalNetworkActivity extends ListActivity {
 	private final static String[] ourServiceTypes = { "_stanza._tcp.local." };
 
-	private final ZLResource myResource = NetworkLibrary.Instance().resource().getResource("addCatalog");
+	private final ZLResource myResource =
+		NetworkLibrary.Instance().resource().getResource("addCatalog");
 
 	private MulticastLock myLock;
 
@@ -60,8 +61,10 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 		setTitle(myResource.getResource("localCatalogs").getValue());
 
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+
 		final Button cbutton = (Button)findViewById(R.id.scan_local_network_buttons).findViewById(R.id.cancel_button);
-		cbutton.setText(ZLResource.resource("dialog").getResource("button").getResource("cancel").getValue());
+		cbutton.setText(buttonResource.getResource("cancel").getValue());
 		cbutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				finish();
@@ -69,14 +72,14 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		});
 
 		final Button rbutton = (Button)findViewById(R.id.scan_local_network_buttons).findViewById(R.id.ok_button);
-		rbutton.setText(ZLResource.resource("dialog").getResource("button").getResource("reload").getValue());
+		rbutton.setText(buttonResource.getResource("rescan").getValue());
 		rbutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				scan();
 			}
 		});
 
-		WifiManager wifi = (android.net.wifi.WifiManager)getSystemService(android.content.Context.WIFI_SERVICE);
+		final WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
 		myLock = wifi.createMulticastLock("FBReader_lock");
 		myLock.setReferenceCounted(true);
 		myLock.acquire();
@@ -96,6 +99,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		final Runnable scanRunnable = new Runnable() {
 			public void run() {
 				final ArrayList<ServiceInfoItem> services = new ArrayList<ServiceInfoItem>();
+				String errorText;
             
 				try {
 					final JmDNS mcDNS = JmDNS.create();
@@ -104,38 +108,32 @@ public class ScanLocalNetworkActivity extends ListActivity {
 							services.add(new ServiceInfoItem(si));
 						}
 					}
-					setError(
-						services.isEmpty() ? myResource.getResource("noCatalogsFound").getValue() : null
-					);
-				} catch (IOException e) {
-					setError(e.getMessage());
+					errorText = services.isEmpty()
+						? myResource.getResource("noCatalogsFound").getValue() : null;
+				} catch (Exception e) {
+					errorText = e.getMessage();
 				}
             
-				final ArrayAdapter<ServiceInfoItem> adapter = new ArrayAdapter<ServiceInfoItem>(
-					ScanLocalNetworkActivity.this,
-					R.layout.local_service_item,
-					services
-				);
-
-				runOnUiThread(new Runnable() {
-					public void run() {
-						ScanLocalNetworkActivity.this.setListAdapter(adapter);
-					}
-				});
+				setup(services, errorText);
 			}
 		};
 		UIUtil.wait("scanningLocalNetwork", scanRunnable, this);
 	}
 
-	private void setError(final String error) {
+	private void setup(final ArrayList<ServiceInfoItem> services, final String errorText) {
 		runOnUiThread(new Runnable() {
 			public void run() {
+				setListAdapter(new ArrayAdapter<ServiceInfoItem>(
+					ScanLocalNetworkActivity.this,
+					R.layout.local_service_item,
+					services
+				));
 				final View listView = findViewById(android.R.id.list);
 				final View errorView = findViewById(R.id.scan_local_network_error);
-				if (error != null) {
+				if (errorText != null) {
 					listView.setVisibility(View.GONE);
 					errorView.setVisibility(View.VISIBLE);
-					((TextView)errorView).setText(error);
+					((TextView)errorView).setText(errorText);
 				} else {
 					listView.setVisibility(View.VISIBLE);
 					errorView.setVisibility(View.GONE);

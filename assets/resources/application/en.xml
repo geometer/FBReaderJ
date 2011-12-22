@@ -121,7 +121,7 @@
 			<node name="editUrl" value="Enter URL manually"/>
 			<node name="scanLocalNetwork" value="Scan local network"/>
 			<node name="localCatalogs" value="Local OPDS catalogs"/>
-			<node name="noCatalogsFound" value="No catalogs found"/>
+			<node name="noCatalogsFound" value="No catalogs found, sorry"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Network search"/>
