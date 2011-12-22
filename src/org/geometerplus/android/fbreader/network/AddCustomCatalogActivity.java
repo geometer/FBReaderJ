@@ -159,7 +159,7 @@ public class AddCustomCatalogActivity extends Activity {
 				NetworkLibraryActivity.OPEN_CATALOG_ACTION,
 				myEditNotAdd ? null : uri,
 				AddCustomCatalogActivity.this,
-				NetworkLibraryActivity.class
+				NetworkLibraryPrimaryActivity.class
 			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			finish();
