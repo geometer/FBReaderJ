@@ -142,8 +142,8 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	private static class ServiceInfoItem {
 		private final ServiceInfo myServiceInfo;
 
-		public ServiceInfoItem(ServiceInfo si) {
-			myServiceInfo = si;
+		public ServiceInfoItem(ServiceInfo info) {
+			myServiceInfo = info;
 		}
 
 		public String toString() {
