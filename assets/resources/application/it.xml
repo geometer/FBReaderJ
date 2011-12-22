@@ -707,8 +707,12 @@
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="Problema FBReader"/>
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 			<node name="text" value="La cartella della cache FBReader non è accessibile in scrittura. Può essere che si sia dimenticato di inserire o smontare la scheda di memoria. Si prega di risolvere questo problema od immettere un altro nome cartella sottostante."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
 		</node>
 	</node>
 </resources>
