@@ -116,6 +116,11 @@
 		</node>
 		<node name="downloadingCatalogs" value="Downloading catalogs"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Searching for books in network"/> <!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Add catalog"/>
+			<node name="editUrl" value="Enter URL manually"/>
+			<node name="scanLocalNetwork" value="Scan local network"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Network search"/>
 			<node name="reload" value="Reload"/>
@@ -717,12 +722,12 @@
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="FBReader problem"/>
-			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this problem or enter another directory name below."/>
+			<node name="title" value="FBReader issue"/>
+			<node name="text" value="FBReader cache directory is not accessible for writing. May be you forget to insert or unmount your memory card. Please fix this issue or enter another directory name below."/>
 		</node>
 		<node name="missingNativeLibrary">
-			<node name="title" value="FBReader problem"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the problem persists please try to reinstall FBReader."/>
+			<node name="title" value="FBReader issue"/>
+			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader."/>
 		</node>
 	</node>
 </resources>
