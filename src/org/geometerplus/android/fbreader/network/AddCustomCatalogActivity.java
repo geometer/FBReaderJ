@@ -40,8 +40,6 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
-	public static String EDIT_KEY = "EditNotAdd";
-
 	private ZLResource myResource;
 	private volatile ICustomNetworkLink myLink;
 	private boolean myEditNotAdd;
@@ -89,18 +87,22 @@ public class AddCustomCatalogActivity extends Activity {
 		Util.initLibrary(this);
 
 		final Intent intent = getIntent();
+		final String action = intent.getAction();
+		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(action);
 		myLink = null;
-		Uri uri = intent.getData();
-		if (uri != null) {
-			if ("opds".equals(uri.getScheme())) {
-				uri = Uri.parse("http" + uri.toString().substring(4));
-			}
-			final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
-			if (link instanceof ICustomNetworkLink) {
-				myLink = (ICustomNetworkLink)link;
+		Uri uri = null;
+		if (myEditNotAdd || Intent.ACTION_VIEW.equals(action)) {
+			uri = intent.getData();
+			if (uri != null) {
+				if ("opds".equals(uri.getScheme())) {
+					uri = Uri.parse("http" + uri.toString().substring(4));
+				}
+				final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
+				if (link instanceof ICustomNetworkLink) {
+					myLink = (ICustomNetworkLink)link;
+				}
 			}
 		}
-		myEditNotAdd = intent.getBooleanExtra(EDIT_KEY, false);
 
 		if (myLink != null) {
 			setTextById(R.id.add_custom_catalog_url, myLink.getUrl(UrlInfo.Type.Catalog));

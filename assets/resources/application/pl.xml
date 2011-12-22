@@ -709,5 +709,9 @@
 			<node name="title" value="Problem z FBReaderem"/>
 			<node name="text" value="Katalog pamięci podręczmek FBReadera nie jest udostępniony do zapisu. Być może zapomoniałeś wsunąć lub odmontować kartę pamięci. Proszę rozwiązać ten problem lub ustawić inny katalog poniżej."/>
 		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
+		</node>
 	</node>
 </resources>

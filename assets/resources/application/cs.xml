@@ -717,8 +717,12 @@
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="Problém FBReaderu"/>
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 			<node name="text" value="Adresář vyrovnávací paměti FBReaderu není přístupný pro zápis. Možná jste zapomněli vložit nebo odpojit paměťovou kartu. Opravte tento problém nebo níže vyberte jiný název adresáře."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
 		</node>
 	</node>
 </resources>
