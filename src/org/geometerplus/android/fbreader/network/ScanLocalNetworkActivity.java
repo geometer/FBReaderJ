@@ -51,7 +51,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	private ZLResource myResource;
 
 	private MulticastLock myLock;
-	private JmDNS myJmdns;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -85,8 +84,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		myLock.setReferenceCounted(true);
 		myLock.acquire();
 
-		myJmdns = null;
-
 		reload();
 	}
 
@@ -100,8 +97,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 	private void reload() {
 		final Runnable searchRunnable = new Runnable() {
-			private String myError;
-
 			public void run() {
 				final ArrayAdapter<ServiceInfoItem> adapter = getAdapterFromSearch();
 
@@ -110,21 +105,20 @@ public class ScanLocalNetworkActivity extends ListActivity {
 						ScanLocalNetworkActivity.this.setListAdapter(adapter);
 					}
 				});
-				setErrorText(myError);
 			}
 		};
 		UIUtil.wait("searchingForCatalogs", searchRunnable, this);
 	}
 
-	private void setErrorText(final String errorText) {
+	private void setError(final String error) {
 		runOnUiThread(new Runnable() {
 			public void run() {
 				final View listView = findViewById(android.R.id.list);
 				final View errorView = findViewById(R.id.scan_local_network_error);
-				if (errorText != null) {
+				if (error != null) {
 					listView.setVisibility(View.GONE);
 					errorView.setVisibility(View.VISIBLE);
-					((TextView)errorView).setText(errorText);
+					((TextView)errorView).setText(error);
 				} else {
 					listView.setVisibility(View.VISIBLE);
 					errorView.setVisibility(View.GONE);
@@ -152,20 +146,18 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	private ArrayAdapter<ServiceInfoItem> getAdapterFromSearch() {
 		final ArrayList <ServiceInfoItem> services = new ArrayList <ServiceInfoItem>();
 
-		if (myJmdns == null) {
-			try {
-				myJmdns = JmDNS.create();
-			} catch (IOException e) {
-				setErrorText(e.getMessage());
-				return new ArrayAdapter<ServiceInfoItem>(this, R.layout.search_catalogs_item, services);
+		try {
+			final JmDNS mcDNS = JmDNS.create();
+			for (String type : ourServiceTypes) {
+				for (ServiceInfo si : mcDNS.list(type)) {
+					services.add(new ServiceInfoItem(si));
+				}
 			}
+			setError(services.isEmpty() ? myResource.getResource("empty").getValue() : null);
+		} catch (IOException e) {
+			setError(e.getMessage());
 		}
 
-		for (String type : ourServiceTypes) {
-			for (ServiceInfo si : myJmdns.list(type)) {
-				services.add(new ServiceInfoItem(si));
-			}
-		}
 		return new ArrayAdapter<ServiceInfoItem>(this, R.layout.search_catalogs_item, services);
 	}
 
