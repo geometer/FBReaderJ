@@ -31,10 +31,7 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceListener;
-import javax.jmdns.ServiceInfo;
+import javax.jmdns.*;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
