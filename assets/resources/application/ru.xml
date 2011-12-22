@@ -116,6 +116,11 @@
 		</node>
 		<node name="downloadingCatalogs" value="Идёт загрузка каталогов"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Поиск книг в сети"/> <!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Добавление каталога"/>
+			<node name="editUrl" value="Ввести адрес вручную"/>
+			<node name="scanLocalNetwork" value="Поискать в локальной сети"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>
 			<node name="reload" value="Обновить"/>
@@ -719,6 +724,10 @@
 		<node name="fixBooksDirectory">
 			<node name="title" value="Проблема у FBReader"/>
 			<node name="text" value="FBReader не может сохранить временные файлы. Возможно, вы забыли вставить карту памяти, или она недоступна из-за подключения к компьютеру. Пожалуйста, исправьте эту проблему или введите другое имя каталога для временных файлов."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="Проблема у FBReader"/>
+			<node name="text" value="Не удаётся загрузить нативную библиотеку. Возможно, FBReader неправильно установлен. Если это сообщение повторяется при каждой попытке запуска, попробуйте переустановить FBReader."/>
 		</node>
 	</node>
 </resources>
