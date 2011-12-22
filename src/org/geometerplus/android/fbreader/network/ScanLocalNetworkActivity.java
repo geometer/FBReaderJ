@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
@@ -82,6 +84,14 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		scan();
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (myLock != null) {
+			myLock.release();
+		}
+	}
+
 	private void scan() {
 		final Runnable scanRunnable = new Runnable() {
 			public void run() {
@@ -130,7 +140,34 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	}
 
 	private static class ServiceInfoItem {
-		ServiceInfoItem(ServiceInfo info) {
+		private final ServiceInfo myServiceInfo;
+
+		public ServiceInfoItem(ServiceInfo info) {
+			myServiceInfo = info;
+		}
+
+		public String toString() {
+			return myServiceInfo.getName();
+		}
+
+		public String getUrl() {
+			return myServiceInfo.getURLs()[0];
+		}
+	}
+
+	@Override
+	protected void onListItemClick(ListView parent, View view, int position, long id) {
+		final ServiceInfoItem item = (ServiceInfoItem)getListAdapter().getItem(position);
+		try {
+			startActivity(new Intent(
+				Intent.ACTION_VIEW,
+				Uri.parse(item.getUrl()),
+				getApplicationContext(),
+				AddCustomCatalogActivity.class
+			));
+			finish();
+		} catch (Exception e) {
+			// TODO: show an error message
 		}
 	}
 }
