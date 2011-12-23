@@ -42,6 +42,8 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
+import android.util.Log;
+
 public class ZLNetworkManager {
 	private static ZLNetworkManager ourManager;
 
@@ -52,7 +54,51 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
+	private static class AuthScopeRepresentation {
+		public final String Host;
+		public final int Port;
+		public final String Realm;
+		public final String Scheme;
+
+		public AuthScopeRepresentation(String host, int port, String realm, String scheme) {
+			Host = host;
+			Port = port;
+			Realm = realm;
+			Scheme = scheme;
+		}
+
+		public AuthScopeRepresentation(AuthScope scope) {
+			Host = scope.getHost();
+			Port = scope.getPort();
+			Realm = scope.getRealm();
+			Scheme = scope.getScheme();
+		}
+
+		public boolean equals(Object obj) {
+			if(this == obj)
+				return true;
+			if((obj == null) || (obj.getClass() != this.getClass()))
+				return false;
+			AuthScopeRepresentation asr = (AuthScopeRepresentation)obj;
+			return Port == asr.Port &&
+			(Host == asr.Host || (Host != null && Host.equals(asr.Host))) &&
+			(Realm == asr.Realm || (Realm != null && Realm.equals(asr.Realm))) &&
+			(Scheme == asr.Scheme || (Scheme != null && Scheme.equals(asr.Scheme)));
+		}
+
+		public int hashCode() {
+			int hash = 7;
+			hash = 31 * hash + Port;
+			hash = 31 * hash + (null == Host ? 0 : Host.hashCode());
+			hash = 31 * hash + (null == Realm ? 0 : Realm.hashCode());
+			hash = 31 * hash + (null == Scheme ? 0 : Scheme.hashCode());
+			return hash;
+		}
+	}
+
 	public static abstract class CredentialsCreator {
+		final private HashMap<AuthScopeRepresentation, Credentials> myCredentialsMap = new HashMap<AuthScopeRepresentation, Credentials> ();
+
 		private volatile String myUsername;
 		private volatile String myPassword;
 
@@ -73,6 +119,10 @@ public class ZLNetworkManager {
 				return null;
 			}
 
+			if (myCredentialsMap.containsKey(new AuthScopeRepresentation(scope)) || quietly) {
+				return myCredentialsMap.get(new AuthScopeRepresentation(scope));
+			}
+
 			final String host = scope.getHost();
 			final String area = scope.getRealm();
 			final ZLStringOption usernameOption =
@@ -86,15 +136,19 @@ public class ZLNetworkManager {
 					}
 				}
 			}
-
 			Credentials creds = null;
 			if (myUsername != null && myPassword != null) {
 				usernameOption.setValue(myUsername);
 				creds = new UsernamePasswordCredentials(myUsername, myPassword);
+				myCredentialsMap.put(new AuthScopeRepresentation(scope), creds);
 			}
 			myUsername = null;
 			myPassword = null;
 			return creds;
+		}
+
+		public boolean removeCredentials(AuthScopeRepresentation scope) {
+			return myCredentialsMap.remove(scope) != null;
 		}
 
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
@@ -271,6 +325,30 @@ public class ZLNetworkManager {
 					response = httpClient.execute(httpRequest, httpContext);
 					entity = response.getEntity();
 					lastException = null;
+					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+						if (response.containsHeader("Www-Authenticate")) {
+							Header h = response.getFirstHeader("Www-Authenticate");
+							for (HeaderElement he:h.getElements()) {
+								if (he.getName().equalsIgnoreCase("digest realm") || he.getName().equalsIgnoreCase("basic realm")) {
+									String realm = he.getValue();
+									URI uri = httpRequest.getURI();
+									String host = uri.getHost();
+									String scheme = "BASIC";
+									if (he.getName().equalsIgnoreCase("digest realm")) {
+										scheme = "DIGEST";
+									}
+									int port = uri.getPort();
+									if (port == -1) {
+										port = 80;//FIXME: use default port
+									}
+									AuthScopeRepresentation scope = new AuthScopeRepresentation(host, port, realm, scheme);
+									if (myCredentialsCreator.removeCredentials(scope)) {
+										entity = null;
+									}
+								}
+							}
+						}
+					}
 				} catch (IOException e) {
 					lastException = e;
 				}

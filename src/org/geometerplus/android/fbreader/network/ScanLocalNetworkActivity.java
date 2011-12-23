@@ -30,6 +30,10 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 
 import javax.jmdns.*;
 
@@ -48,6 +52,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		NetworkLibrary.Instance().resource().getResource("addCatalog");
 
 	private WifiManager.MulticastLock myLock;
+	private WifiManager myWifi;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -77,8 +82,8 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			}
 		});
 
-		final WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-		myLock = wifi.createMulticastLock("FBReader_lock");
+		myWifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+		myLock = myWifi.createMulticastLock("FBReader_lock");
 		myLock.setReferenceCounted(true);
 		myLock.acquire();
 
@@ -110,6 +115,9 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	}
 
 	private void scan() {
+		if (myWifi.getWifiState() != WifiManager.WIFI_STATE_ENABLED && myWifi.getWifiState() != WifiManager.WIFI_STATE_ENABLING) {
+			showWifiDialog();
+		}
 		final Runnable scanRunnable = new Runnable() {
 			public void run() {
 				final ArrayList<ServiceInfoItem> services = new ArrayList<ServiceInfoItem>();
@@ -136,6 +144,35 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		};
 		UIUtil.wait("scanningLocalNetwork", scanRunnable, this);
 	}
+
+	private void showWifiDialog() {
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle(myResource.getResource("wifiDisabled").getValue());
+		alertDialog.setMessage(myResource.getResource("enableWifi").getValue());
+		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
+		alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, buttonResource.getResource("ok").getValue(), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				final Runnable wifiRunnable = new Runnable() {
+					public void run() {
+						if (!myWifi.setWifiEnabled(true)) {
+							finish();
+						}
+						while(!myWifi.isWifiEnabled()) {
+						}
+					}
+				};
+				UIUtil.wait("enablingWifi", wifiRunnable, ScanLocalNetworkActivity.this);
+				scan();
+			}
+		});
+		alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, buttonResource.getResource("cancel").getValue(), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				finish();
+			}
+		});
+		alertDialog.show();
+	}
+
 
 	private void setup(final ArrayList<ServiceInfoItem> services, final String errorText) {
 		runOnUiThread(new Runnable() {
