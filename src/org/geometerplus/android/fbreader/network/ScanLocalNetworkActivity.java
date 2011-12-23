@@ -19,7 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.net.*;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -97,6 +98,22 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		}
 	}
 
+	private List<InetAddress> getLocalIpAddresses() {
+		final List<InetAddress> addresses = new LinkedList<InetAddress>();
+		try {
+			for (NetworkInterface iface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
+				for (InetAddress addr : Collections.list(iface.getInetAddresses())) {
+					if (!addr.isLoopbackAddress() && addr instanceof Inet4Address) {
+						addresses.add(addr);
+					}
+				}
+			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		return addresses;
+	}
+
 	private void scan() {
 		if (myWifi.getWifiState() != WifiManager.WIFI_STATE_ENABLED && myWifi.getWifiState() != WifiManager.WIFI_STATE_ENABLING) {
 			showWifiDialog();
@@ -107,11 +124,14 @@ public class ScanLocalNetworkActivity extends ListActivity {
 				String errorText;
 
 				try {
-					final JmDNS mcDNS = JmDNS.create();
-					for (String type : ourServiceTypes) {
-						for (ServiceInfo info : mcDNS.list(type)) {
-							services.add(new ServiceInfoItem(info));
+					for (InetAddress address : getLocalIpAddresses()) {
+						final JmDNS mcDNS = JmDNS.create(address, "FBReader");
+						for (String type : ourServiceTypes) {
+							for (ServiceInfo info : mcDNS.list(type)) {
+								services.add(new ServiceInfoItem(info));
+							}
 						}
+						mcDNS.close();
 					}
 					errorText = services.isEmpty()
 						? myResource.getResource("noCatalogsFound").getValue() : null;
