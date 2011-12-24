@@ -96,10 +96,19 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 	private List<InetAddress> getLocalIpAddresses() {
 		final List<InetAddress> addresses = new LinkedList<InetAddress>();
+		Method testPtoPMethod = null;
+		try {
+			testPtoPMethod = NetworkInterface.class.getMethod("isPointToPoint");
+		} catch (NoSuchMethodException e) {
+		}
 		try {
 			for (NetworkInterface iface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
-				if (iface.isPointToPoint()) {
-					continue;
+				try {
+					if (testPtoPMethod != null && (Boolean)testPtoPMethod.invoke(iface)) {
+						continue;
+					}
+				} catch (IllegalAccessException e) {
+				} catch (InvocationTargetException e) {
 				}
 				for (InetAddress addr : Collections.list(iface.getInetAddresses())) {
 					if (!addr.isLoopbackAddress() && addr instanceof Inet4Address) {
