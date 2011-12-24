@@ -102,6 +102,9 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		final List<InetAddress> addresses = new LinkedList<InetAddress>();
 		try {
 			for (NetworkInterface iface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
+				if (iface.isPointToPoint()) {
+					continue;
+				}
 				for (InetAddress addr : Collections.list(iface.getInetAddresses())) {
 					if (!addr.isLoopbackAddress() && addr instanceof Inet4Address) {
 						addresses.add(addr);
@@ -121,20 +124,26 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		final Runnable scanRunnable = new Runnable() {
 			public void run() {
 				final ArrayList<ServiceInfoItem> services = new ArrayList<ServiceInfoItem>();
-				String errorText;
+				String errorText = null;
 
 				try {
-					for (InetAddress address : getLocalIpAddresses()) {
-						final JmDNS mcDNS = JmDNS.create(address, "FBReader");
-						for (String type : ourServiceTypes) {
-							for (ServiceInfo info : mcDNS.list(type)) {
-								services.add(new ServiceInfoItem(info));
+					final List<InetAddress> addresses = getLocalIpAddresses();
+					if (addresses.isEmpty()) {
+						errorText = myResource.getResource("noLocalConnection").getValue();
+					} else {
+						for (InetAddress address : addresses) {
+							final JmDNS mcDNS = JmDNS.create(address, "FBReader");
+							for (String type : ourServiceTypes) {
+								for (ServiceInfo info : mcDNS.list(type)) {
+									services.add(new ServiceInfoItem(info));
+								}
 							}
+							mcDNS.close();
 						}
-						mcDNS.close();
+						if (services.isEmpty()) {
+							errorText = myResource.getResource("noCatalogsFound").getValue();
+						}
 					}
-					errorText = services.isEmpty()
-						? myResource.getResource("noCatalogsFound").getValue() : null;
 				} catch (Exception e) {
 					errorText = e.getMessage();
 				}
