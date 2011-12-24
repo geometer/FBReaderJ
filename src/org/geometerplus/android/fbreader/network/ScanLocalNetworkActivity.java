@@ -155,11 +155,12 @@ public class ScanLocalNetworkActivity extends ListActivity {
 					services
 				));
 				final View listView = findViewById(android.R.id.list);
-				final View errorView = findViewById(R.id.scan_local_network_error);
+				final TextView errorView = (TextView)findViewById(R.id.scan_local_network_error);
 				if (errorText != null) {
 					listView.setVisibility(View.GONE);
 					errorView.setVisibility(View.VISIBLE);
-					((TextView)errorView).setText(errorText);
+					errorView.setText(errorText);
+					errorView.setTextColor(Color.RED);
 				} else {
 					listView.setVisibility(View.VISIBLE);
 					errorView.setVisibility(View.GONE);
