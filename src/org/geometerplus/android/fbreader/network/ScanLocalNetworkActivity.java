@@ -65,14 +65,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		final View buttonView = findViewById(R.id.scan_local_network_buttons);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 
-		final Button rescanButton = (Button)buttonView.findViewById(R.id.ok_button);
-		rescanButton.setText(buttonResource.getResource("rescan").getValue());
-		rescanButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				scan();
-			}
-		});
-
 		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -81,12 +73,41 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			}
 		});
 
-		final WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-		myLock = wifi.createMulticastLock("FBReader_lock");
-		myLock.setReferenceCounted(true);
-		myLock.acquire();
+		final WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+		final int state = wifiManager.getWifiState();
+		if (state != WifiManager.WIFI_STATE_ENABLED && state != WifiManager.WIFI_STATE_ENABLING) {
+			setTitle(myResource.getResource("wifiIsTurnedOff").getValue());
+			final View listView = findViewById(android.R.id.list);
+			final TextView errorView = (TextView)findViewById(R.id.scan_local_network_error);
+			listView.setVisibility(View.GONE);
+			errorView.setVisibility(View.VISIBLE);
+			errorView.setText(myResource.getResource("turnWiFiOn").getValue());
 
-		scan();
+			final Button turnOnButton = (Button)buttonView.findViewById(R.id.ok_button);
+			turnOnButton.setText(buttonResource.getResource("turnOn").getValue());
+			turnOnButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					wifiManager.setWifiEnabled(true);
+					finish();
+				}
+			});
+
+			myLock = null;
+		} else {
+			final Button rescanButton = (Button)buttonView.findViewById(R.id.ok_button);
+			rescanButton.setText(buttonResource.getResource("rescan").getValue());
+			rescanButton.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					scan();
+				}
+			});
+
+			myLock = wifiManager.createMulticastLock("FBReader_lock");
+			myLock.setReferenceCounted(true);
+			myLock.acquire();
+
+			scan();
+		}
 	}
 
 	@Override
