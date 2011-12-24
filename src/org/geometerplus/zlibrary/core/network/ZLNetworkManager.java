@@ -119,8 +119,8 @@ public class ZLNetworkManager {
 
 			final AuthScopeKey key = new AuthScopeKey(scope);
 			Credentials creds = myCredentialsMap.get(key);
-			if (cred != null || quietly) {
-				return cred;
+			if (creds != null || quietly) {
+				return creds;
 			}
 
 			final String host = scope.getHost();
