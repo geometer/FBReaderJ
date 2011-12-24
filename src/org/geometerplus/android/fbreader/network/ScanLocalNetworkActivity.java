@@ -40,7 +40,7 @@ import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.UIUtil;
- 
+
 public class ScanLocalNetworkActivity extends ListActivity {
 	private final static String[] ourServiceTypes = { "_stanza._tcp.local." };
 
