@@ -52,7 +52,51 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
+	private static class AuthScopeKey {
+		private final AuthScope myScope;
+
+		public AuthScopeKey(AuthScope scope) {
+			myScope = scope;
+		}
+
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (!(obj instanceof AuthScopeKey)) {
+				return false;
+			}
+
+			final AuthScope scope = ((AuthScopeKey)obj).myScope;
+			if (myScope == null) {
+				return scope == null;
+			}
+			if (scope == null) {
+				return false;
+			}
+			return
+				myScope.getPort() == scope.getPort() &&
+				ZLMiscUtil.equals(myScope.getHost(), scope.getHost()) &&
+				ZLMiscUtil.equals(myScope.getScheme(), scope.getScheme()) &&
+				ZLMiscUtil.equals(myScope.getRealm(), scope.getRealm());
+		}
+
+		public int hashCode() {
+			if (myScope == null) {
+				return 0;
+			}
+			return
+				myScope.getPort() +
+				ZLMiscUtil.hashCode(myScope.getHost()) +
+				ZLMiscUtil.hashCode(myScope.getScheme()) +
+				ZLMiscUtil.hashCode(myScope.getRealm());
+		}
+	}
+
 	public static abstract class CredentialsCreator {
+		final private HashMap<AuthScopeKey,Credentials> myCredentialsMap =
+			new HashMap<AuthScopeKey,Credentials>();
+
 		private volatile String myUsername;
 		private volatile String myPassword;
 
@@ -73,6 +117,12 @@ public class ZLNetworkManager {
 				return null;
 			}
 
+			final AuthScopeKey key = new AuthScopeKey(scope);
+			Credentials creds = myCredentialsMap.get(key);
+			if (cred != null || quietly) {
+				return cred;
+			}
+
 			final String host = scope.getHost();
 			final String area = scope.getRealm();
 			final ZLStringOption usernameOption =
@@ -87,14 +137,18 @@ public class ZLNetworkManager {
 				}
 			}
 
-			Credentials creds = null;
 			if (myUsername != null && myPassword != null) {
 				usernameOption.setValue(myUsername);
 				creds = new UsernamePasswordCredentials(myUsername, myPassword);
+				myCredentialsMap.put(key, creds);
 			}
 			myUsername = null;
 			myPassword = null;
 			return creds;
+		}
+
+		public boolean removeCredentials(AuthScopeKey key) {
+			return myCredentialsMap.remove(key) != null;
 		}
 
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
@@ -271,6 +325,15 @@ public class ZLNetworkManager {
 					response = httpClient.execute(httpRequest, httpContext);
 					entity = response.getEntity();
 					lastException = null;
+					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+						final AuthState state = (AuthState)httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
+						if (state != null) {
+							final AuthScopeKey key = new AuthScopeKey(state.getAuthScope());
+							if (myCredentialsCreator.removeCredentials(key)) {
+								entity = null;
+							}
+						}
+					}
 				} catch (IOException e) {
 					lastException = e;
 				}
