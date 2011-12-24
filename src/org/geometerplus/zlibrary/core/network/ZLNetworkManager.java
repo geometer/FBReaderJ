@@ -54,50 +54,50 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
-	private static class AuthScopeRepresentation {
-		public final String Host;
-		public final int Port;
-		public final String Realm;
-		public final String Scheme;
+	private static class AuthScopeKey {
+		private final AuthScope myScope;
 
-		public AuthScopeRepresentation(String host, int port, String realm, String scheme) {
-			Host = host;
-			Port = port;
-			Realm = realm;
-			Scheme = scheme;
-		}
-
-		public AuthScopeRepresentation(AuthScope scope) {
-			Host = scope.getHost();
-			Port = scope.getPort();
-			Realm = scope.getRealm();
-			Scheme = scope.getScheme();
+		public AuthScopeKey(AuthScope scope) {
+			myScope = scope;
 		}
 
 		public boolean equals(Object obj) {
-			if(this == obj)
+			if (this == obj) {
 				return true;
-			if((obj == null) || (obj.getClass() != this.getClass()))
+			}
+			if (!(obj instanceof AuthScopeKey)) {
 				return false;
-			AuthScopeRepresentation asr = (AuthScopeRepresentation)obj;
-			return Port == asr.Port &&
-			(Host == asr.Host || (Host != null && Host.equals(asr.Host))) &&
-			(Realm == asr.Realm || (Realm != null && Realm.equals(asr.Realm))) &&
-			(Scheme == asr.Scheme || (Scheme != null && Scheme.equals(asr.Scheme)));
+			}
+
+			final AuthScope scope = ((AuthScopeKey)obj).myScope;
+			if (myScope == null) {
+				return scope == null;
+			}
+			if (scope == null) {
+				return false;
+			}
+			return
+				myScope.getPort() == scope.getPort() &&
+				ZLMiscUtil.equals(myScope.getHost(), scope.getHost()) &&
+				ZLMiscUtil.equals(myScope.getScheme(), scope.getScheme()) &&
+				ZLMiscUtil.equals(myScope.getRealm(), scope.getRealm());
 		}
 
 		public int hashCode() {
-			int hash = 7;
-			hash = 31 * hash + Port;
-			hash = 31 * hash + (null == Host ? 0 : Host.hashCode());
-			hash = 31 * hash + (null == Realm ? 0 : Realm.hashCode());
-			hash = 31 * hash + (null == Scheme ? 0 : Scheme.hashCode());
-			return hash;
+			if (myScope == null) {
+				return 0;
+			}
+			return
+				myScope.getPort() +
+				ZLMiscUtil.hashCode(myScope.getHost()) +
+				ZLMiscUtil.hashCode(myScope.getScheme()) +
+				ZLMiscUtil.hashCode(myScope.getRealm());
 		}
 	}
 
 	public static abstract class CredentialsCreator {
-		final private HashMap<AuthScopeRepresentation, Credentials> myCredentialsMap = new HashMap<AuthScopeRepresentation, Credentials> ();
+		final private HashMap<AuthScopeKey,Credentials> myCredentialsMap =
+			new HashMap<AuthScopeKey,Credentials>();
 
 		private volatile String myUsername;
 		private volatile String myPassword;
@@ -119,8 +119,10 @@ public class ZLNetworkManager {
 				return null;
 			}
 
-			if (myCredentialsMap.containsKey(new AuthScopeRepresentation(scope)) || quietly) {
-				return myCredentialsMap.get(new AuthScopeRepresentation(scope));
+			final AuthScopeKey key = new AuthScopeKey(scope);
+			Credentials creds = myCredentialsMap.get(key);
+			if (cred != null || quietly) {
+				return cred;
 			}
 
 			final String host = scope.getHost();
@@ -136,19 +138,19 @@ public class ZLNetworkManager {
 					}
 				}
 			}
-			Credentials creds = null;
+
 			if (myUsername != null && myPassword != null) {
 				usernameOption.setValue(myUsername);
 				creds = new UsernamePasswordCredentials(myUsername, myPassword);
-				myCredentialsMap.put(new AuthScopeRepresentation(scope), creds);
+				myCredentialsMap.put(key, creds);
 			}
 			myUsername = null;
 			myPassword = null;
 			return creds;
 		}
 
-		public boolean removeCredentials(AuthScopeRepresentation scope) {
-			return myCredentialsMap.remove(scope) != null;
+		public boolean removeCredentials(AuthScopeKey key) {
+			return myCredentialsMap.remove(key) != null;
 		}
 
 		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
@@ -328,8 +330,8 @@ public class ZLNetworkManager {
 					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
 						final AuthState state = (AuthState)httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
 						if (state != null) {
-							AuthScopeRepresentation scope = new AuthScopeRepresentation(state.getAuthScope());
-							if (myCredentialsCreator.removeCredentials(scope)) {
+							final AuthScopeKey key = new AuthScopeKey(state.getAuthScope());
+							if (myCredentialsCreator.removeCredentials(key)) {
 								entity = null;
 							}
 						}
