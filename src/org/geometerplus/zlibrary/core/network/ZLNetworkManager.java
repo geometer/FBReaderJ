@@ -52,6 +52,47 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
+	private static class AuthScopeKey {
+		private final AuthScope myScope;
+
+		public AuthScopeKey(AuthScope scope) {
+			myScope = scope;
+		}
+
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (!(obj instanceof AuthScopeKey)) {
+				return false;
+			}
+
+			final AuthScope scope = ((AuthScopeKey)obj).myScope;
+			if (myScope == null) {
+				return scope == null;
+			}
+			if (scope == null) {
+				return false;
+			}
+			return
+				myScope.getPort() == scope.getPort() &&
+				ZLMiscUtil.equals(myScope.getHost(), scope.getHost()) &&
+				ZLMiscUtil.equals(myScope.getScheme(), scope.getScheme()) &&
+				ZLMiscUtil.equals(myScope.getRealm(), scope.getRealm());
+		}
+
+		public int hashCode() {
+			if (myScope == null) {
+				return 0;
+			}
+			return
+				myScope.getPort() +
+				ZLMiscUtil.hashCode(myScope.getHost()) +
+				ZLMiscUtil.hashCode(myScope.getScheme()) +
+				ZLMiscUtil.hashCode(myScope.getRealm());
+		}
+	}
+
 	public static abstract class CredentialsCreator {
 		private volatile String myUsername;
 		private volatile String myPassword;
