@@ -181,7 +181,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 	}
 
 	private void setup(final ArrayList<ServiceInfoItem> services, final String errorText) {
-		System.err.println("setup " + services.size() + " " + errorText);
 		runOnUiThread(new Runnable() {
 			public void run() {
 				setListAdapter(new ArrayAdapter<ServiceInfoItem>(
