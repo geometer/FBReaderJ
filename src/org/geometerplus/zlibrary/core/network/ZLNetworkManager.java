@@ -42,8 +42,6 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-import android.util.Log;
-
 public class ZLNetworkManager {
 	private static ZLNetworkManager ourManager;
 
