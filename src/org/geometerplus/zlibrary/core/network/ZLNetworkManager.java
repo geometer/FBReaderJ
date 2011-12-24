@@ -326,26 +326,11 @@ public class ZLNetworkManager {
 					entity = response.getEntity();
 					lastException = null;
 					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-						if (response.containsHeader("Www-Authenticate")) {
-							Header h = response.getFirstHeader("Www-Authenticate");
-							for (HeaderElement he:h.getElements()) {
-								if (he.getName().equalsIgnoreCase("digest realm") || he.getName().equalsIgnoreCase("basic realm")) {
-									String realm = he.getValue();
-									URI uri = httpRequest.getURI();
-									String host = uri.getHost();
-									String scheme = "BASIC";
-									if (he.getName().equalsIgnoreCase("digest realm")) {
-										scheme = "DIGEST";
-									}
-									int port = uri.getPort();
-									if (port == -1) {
-										port = 80;//FIXME: use default port
-									}
-									AuthScopeRepresentation scope = new AuthScopeRepresentation(host, port, realm, scheme);
-									if (myCredentialsCreator.removeCredentials(scope)) {
-										entity = null;
-									}
-								}
+						final AuthState state = (AuthState)httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
+						if (state != null) {
+							AuthScopeRepresentation scope = new AuthScopeRepresentation(state.getAuthScope());
+							if (myCredentialsCreator.removeCredentials(scope)) {
+								entity = null;
 							}
 						}
 					}
