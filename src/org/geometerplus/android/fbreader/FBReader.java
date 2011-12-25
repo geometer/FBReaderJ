@@ -234,7 +234,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 
 		sendOrderedBroadcast(
-			new Intent(PluginApi.ACTION_REGISTER),
+			new Intent(PluginApi.ACTION_REGISTER).addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES),
 			null,
 			myPluginInfoReceiver,
 			null,
