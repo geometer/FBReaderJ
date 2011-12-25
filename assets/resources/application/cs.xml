@@ -661,6 +661,7 @@
 			<node name="loadingNetworkBookInfo" value="Načítání informací o knize. Čekejte&#8230;" />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte&#8230;"/>
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte&#8230;"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>

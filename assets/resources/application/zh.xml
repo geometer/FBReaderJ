@@ -661,6 +661,7 @@
 			<node name="loadingNetworkBookInfo" value="书籍信息加载中，请等待&#8230;"  />
 			<node name="updatingCatalogsList" value="更新书库列表中，请稍待..."/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待&#8230;" />
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错" />

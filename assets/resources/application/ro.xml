@@ -661,6 +661,7 @@
 			<node name="loadingNetworkBookInfo" value="Se incarca informatii despre carte. Va rugam asteptati &#8230;"/>
 			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati&#8230;"/>
 			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati&#8230;"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>
