@@ -33,7 +33,8 @@ class RunPluginAction extends FBAndroidAction {
 		myUri = uri;
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		try {
 			BaseActivity.startActivity(new Intent("android.fbreader.action.plugin.RUN", myUri));
 		} catch (ActivityNotFoundException e) {

@@ -483,7 +483,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 0;
 		}
-		ZLTextPage page = getPage(pageIndex);
+		final ZLTextPage page = getPage(pageIndex);
 		preparePaintInfo(page);
 		if (startNotEndOfPage) {
 			return Math.max(0, sizeOfTextBeforeCursor(page.StartCursor));
@@ -572,11 +572,13 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	private final char[] myLettersBuffer = new char[512];
 	private int myLettersBufferLength = 0;
 	private ZLTextModel myLettersModel = null;
+	private float myCharWidth = -1f;
 
 	private final float computeCharWidth() {
 		if (myLettersModel != myModel) {
 			myLettersModel = myModel;
 			myLettersBufferLength = 0;
+			myCharWidth = -1f;
 
 			int paragraph = 0;
 			final int textSize = myModel.getTextLength(myModel.getParagraphsNumber() - 1);
@@ -605,20 +607,70 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			}
 		}
 
-		final float charWidth = computeCharWidth(myLettersBuffer, myLettersBufferLength);
-		return charWidth;
+		if (myCharWidth < 0f) {
+			myCharWidth = computeCharWidth(myLettersBuffer, myLettersBufferLength);
+		}
+		return myCharWidth;
 	}
 
 	private final float computeCharWidth(char[] pattern, int length) {
 		return myContext.getStringWidth(pattern, 0, length) / ((float)length);
 	}
 
-	public final synchronized int computePageNumber() {
-		return computeTextPageNumber(sizeOfFullText());
+	public static class PagePosition {
+		public final int Current;
+		public final int Total;
+
+		PagePosition(int current, int total) {
+			Current = current;
+			Total = total;
+		}
 	}
 
-	public final synchronized int computeCurrentPage() {
-		return computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
+	public final synchronized PagePosition pagePosition() {
+		int current = computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
+		int total = computeTextPageNumber(sizeOfFullText());
+
+		if (total > 3) {
+			return new PagePosition(current, total);
+		}
+
+		preparePaintInfo(myCurrentPage);
+		ZLTextWordCursor cursor = myCurrentPage.StartCursor;
+		if (cursor == null || cursor.isNull()) {
+			return new PagePosition(current, total);
+		}
+
+		if (cursor.isStartOfText()) {
+			current = 1;
+		} else {
+			ZLTextWordCursor prevCursor = myPreviousPage.StartCursor;
+			if (prevCursor == null || prevCursor.isNull()) {
+				preparePaintInfo(myPreviousPage);
+				prevCursor = myPreviousPage.StartCursor;
+			}
+			if (prevCursor != null && !prevCursor.isNull()) {
+				current = prevCursor.isStartOfText() ? 2 : 3;
+			}
+		}
+
+		total = current;
+		cursor = myCurrentPage.EndCursor;
+		if (cursor == null || cursor.isNull()) {
+			return new PagePosition(current, total);
+		}
+		if (!cursor.isEndOfText()) {
+			ZLTextWordCursor nextCursor = myNextPage.EndCursor;
+			if (nextCursor == null || nextCursor.isNull()) {
+				preparePaintInfo(myNextPage);
+				nextCursor = myNextPage.EndCursor;
+			}
+			if (nextCursor != null) {
+				total += nextCursor.isEndOfText() ? 1 : 2;
+			}
+		}
+
+		return new PagePosition(current, total);
 	}
 
 	public final synchronized void gotoPage(int page) {
@@ -1282,6 +1334,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public void clearCaches() {
 		rebuildPaintInfo();
 		Application.getViewWidget().reset();
+		myCharWidth = -1;
 	}
 
 	protected void rebuildPaintInfo() {
@@ -1419,7 +1472,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myCurrentPage.TextElementMap.findRegion(x, y, maxDistance, filter);
 	}
 
-	protected void selectRegion(ZLTextRegion region) {
+	public void selectRegion(ZLTextRegion region) {
 		final ZLTextRegion.Soul soul = region != null ? region.getSoul() : null;
 		if (soul == null || !soul.equals(mySelectedRegionSoul)) {
 			myHighlightSelectedRegion = true;
@@ -1495,7 +1548,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		myHighlightSelectedRegion = true;
 	}
 
-	protected ZLTextRegion nextRegion(Direction direction, ZLTextRegion.Filter filter) {
+	public ZLTextRegion nextRegion(Direction direction, ZLTextRegion.Filter filter) {
 		return myCurrentPage.TextElementMap.nextRegion(getSelectedRegion(), direction, filter);
 	}
 

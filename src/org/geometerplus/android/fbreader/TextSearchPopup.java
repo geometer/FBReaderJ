@@ -46,7 +46,7 @@ final class TextSearchPopup extends ButtonsPopupPanel {
 
 	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
-		if (myWindow != null) {
+		if (myWindow != null && activity == myWindow.getActivity()) {
 			return;
 		}
 

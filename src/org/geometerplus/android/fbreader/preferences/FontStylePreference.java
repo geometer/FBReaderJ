@@ -42,7 +42,9 @@ class FontStylePreference extends ZLStringListPreference {
 		setInitialValue(myValues[intValue]);
 	}
 
-	public void onAccept() {
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
 		final int intValue = findIndexOfValue(getValue());
 		myBoldOption.setValue((intValue & 0x1) == 0x1);
 		myItalicOption.setValue((intValue & 0x2) == 0x2);

@@ -20,8 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,8 +40,6 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
-	public static String EDIT_KEY = "EditNotAdd";
-
 	private ZLResource myResource;
 	private volatile ICustomNetworkLink myLink;
 	private boolean myEditNotAdd;
@@ -52,6 +48,9 @@ public class AddCustomCatalogActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		AuthenticationActivity.initCredentialsCreator(this);
+
 		setContentView(R.layout.add_custom_catalog);
 
 		myResource = ZLResource.resource("dialog").getResource("CustomCatalogDialog");
@@ -88,18 +87,22 @@ public class AddCustomCatalogActivity extends Activity {
 		Util.initLibrary(this);
 
 		final Intent intent = getIntent();
+		final String action = intent.getAction();
+		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(action);
 		myLink = null;
-		Uri uri = intent.getData();
-		if (uri != null) {
-			if ("opds".equals(uri.getScheme())) {
-				uri = Uri.parse("http" + uri.toString().substring(4));
-			}
-			final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
-			if (link instanceof ICustomNetworkLink) {
-				myLink = (ICustomNetworkLink)link;
+		Uri uri = null;
+		if (myEditNotAdd || Intent.ACTION_VIEW.equals(action)) {
+			uri = intent.getData();
+			if (uri != null) {
+				if ("opds".equals(uri.getScheme())) {
+					uri = Uri.parse("http" + uri.toString().substring(4));
+				}
+				final INetworkLink link = NetworkLibrary.Instance().getLinkByUrl(uri.toString());
+				if (link instanceof ICustomNetworkLink) {
+					myLink = (ICustomNetworkLink)link;
+				}
 			}
 		}
-		myEditNotAdd = intent.getBooleanExtra(EDIT_KEY, false);
 
 		if (myLink != null) {
 			setTextById(R.id.add_custom_catalog_url, myLink.getUrl(UrlInfo.Type.Catalog));
@@ -156,7 +159,7 @@ public class AddCustomCatalogActivity extends Activity {
 				NetworkLibraryActivity.OPEN_CATALOG_ACTION,
 				myEditNotAdd ? null : uri,
 				AddCustomCatalogActivity.this,
-				NetworkLibraryActivity.class
+				NetworkLibraryPrimaryActivity.class
 			).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			finish();
@@ -217,35 +220,6 @@ public class AddCustomCatalogActivity extends Activity {
 		setErrorText(myResource.getResource(resourceKey).getValue());
 	}
 
-	private void runErrorDialog(final String errorText) {
-		final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				switch (which) {
-					case DialogInterface.BUTTON_POSITIVE:
-						setExtraFieldsVisibility(true);
-						break;
-					case DialogInterface.BUTTON_NEUTRAL:
-						break;
-					case DialogInterface.BUTTON_NEGATIVE:
-						AddCustomCatalogActivity.this.finish();
-						break;
-				}
-			}
-		};
-
-		final ZLResource dialogResource = ZLResource.resource("dialog");
-		final ZLResource boxResource = dialogResource.getResource("networkError");
-		final ZLResource buttonResource = dialogResource.getResource("button");
-		new AlertDialog.Builder(this)
-			.setTitle(boxResource.getResource("title").getValue())
-			.setMessage(errorText)
-			.setIcon(0)
-			.setPositiveButton(buttonResource.getResource("continue").getValue(), listener)
-			.setNeutralButton(buttonResource.getResource("editUrl").getValue(), listener)
-			.setNegativeButton(buttonResource.getResource("cancel").getValue(), listener)
-			.create().show();
-	}
-
 	private void loadInfoByUri(Uri uri) {
 		String textUrl = uri.toString();
 		if (isEmptyString(uri.getScheme())) {
@@ -271,7 +245,7 @@ public class AddCustomCatalogActivity extends Activity {
 			public void run() {
 				try {
 					myError = null;
-					myLink.reloadInfo(false);
+					myLink.reloadInfo(false, false);
 				} catch (ZLNetworkException e) {
 					myError = e.getMessage();
 				}
@@ -282,7 +256,6 @@ public class AddCustomCatalogActivity extends Activity {
 							setTextById(R.id.add_custom_catalog_summary, myLink.getSummary());
 							setExtraFieldsVisibility(true);
 						} else {
-							runErrorDialog(myError);
 							myLink = null;
 						}
 					}

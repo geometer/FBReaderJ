@@ -78,4 +78,7 @@ abstract class ZLStringListPreference extends ListPreference implements ZLPrefer
 			setSummary(getEntry());
 		}
 	}
+
+	public void onAccept() {
+	}
 }

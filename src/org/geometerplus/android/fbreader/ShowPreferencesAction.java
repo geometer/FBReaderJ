@@ -30,10 +30,13 @@ class ShowPreferencesAction extends FBAndroidAction {
 		super(baseActivity, fbreader);
 	}
 
-	public void run() {
-		BaseActivity.startActivityForResult(
-			new Intent(BaseActivity.getApplicationContext(), PreferenceActivity.class),
-			FBReader.REPAINT_CODE
-		);
+	@Override
+	protected void run(Object ... params) {
+		final Intent intent =
+			new Intent(BaseActivity.getApplicationContext(), PreferenceActivity.class);
+		if (params.length == 1 && params[0] instanceof String) {
+			intent.putExtra(PreferenceActivity.SCREEN_KEY, (String)params[0]);
+		}
+		BaseActivity.startActivityForResult(intent, FBReader.REPAINT_CODE);
 	}
 }

@@ -24,10 +24,12 @@ class RotateAction extends FBAction {
 		super(fbreader);
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		Reader.rotateScreen();
 	}
 
+	@Override
 	public boolean isVisible() {
 		return Reader.canRotateScreen();
 	}

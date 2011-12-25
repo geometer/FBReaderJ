@@ -30,7 +30,8 @@ class ShowCancelMenuAction extends FBAndroidAction {
 		super(baseActivity, fbreader);
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		if (Reader.getCurrentView() != Reader.BookTextView) {
 			Reader.showBookTextView();
 		} else {

@@ -24,12 +24,14 @@ class FindNextAction extends FBAction {
 		super(fbreader);
 	}
 
+	@Override
 	public boolean isEnabled() {
 		FBView view = Reader.getTextView();
 		return (view != null) && view.canFindNext();
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		Reader.getTextView().findNext();
 	}
 }
