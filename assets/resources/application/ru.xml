@@ -694,6 +694,8 @@
 			<node name="title" value="Фильтр по языку" />
 		</node>
 		<node name="tips">
+			<node name="title" value="Совет дня" />
+			<node name="initializationText" value="Хотите ли вы раз в день получать советы по использованию FBReader? Новые советы будут загружаться с сервера FBReader. Это потребует скачивания 1-2 килобайт в неделю.&#10;&#10;Включить советы?" />
 			<node name="dontShowAgain" value="Больше не показывать" />
 			<node name="more" value="Ещё" />
 		</node>

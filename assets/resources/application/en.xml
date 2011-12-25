@@ -703,6 +703,8 @@
 			<node name="title" value="Language filter"/>
 		</node>
 		<node name="tips">
+			<node name="title" value="Tip of the day" />
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
 		</node>
