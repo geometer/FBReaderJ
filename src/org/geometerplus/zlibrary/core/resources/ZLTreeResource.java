@@ -124,10 +124,10 @@ final class ZLTreeResource extends ZLResource {
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			final ArrayList<ZLTreeResource> stack = myStack;
 			if (!stack.isEmpty() && (NODE.equals(tag))) {
-				String name = attributes.getValue("name");
+				final String name = attributes.getValue("name");
 				if (name != null) {
-					String value = attributes.getValue("value");
-					ZLTreeResource peek = stack.get(stack.size() - 1);
+					final String value = attributes.getValue("value");
+					final ZLTreeResource peek = stack.get(stack.size() - 1);
 					ZLTreeResource node;
 					HashMap<String,ZLTreeResource> children = peek.myChildren;
 					if (children == null) {
