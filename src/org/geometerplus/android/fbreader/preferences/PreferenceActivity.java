@@ -51,9 +51,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
-		if (AndroidFontUtil.areExternalFontsSupported()) {
-			directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
-		}
+		directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
 		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
 
 		final ZLPreferenceSet statusBarPreferences = new ZLPreferenceSet();
@@ -446,9 +444,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
 
-		/*
 		final Screen tipsScreen = createPreferenceScreen("tips");
 		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
-		*/
 	}
 }

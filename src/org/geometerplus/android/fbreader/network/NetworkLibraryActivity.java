@@ -45,7 +45,7 @@ import org.geometerplus.android.fbreader.network.action.*;
 
 import org.geometerplus.android.util.UIUtil;
 
-public class NetworkLibraryActivity extends TreeActivity implements NetworkLibrary.ChangeListener {
+public abstract class NetworkLibraryActivity extends TreeActivity implements NetworkLibrary.ChangeListener {
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
 	BookDownloaderServiceConnection Connection;

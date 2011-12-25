@@ -140,13 +140,6 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
-
-		final TipsManager manager = TipsManager.Instance();
-		if (manager.tipShouldBeShown()) {
-			startActivity(new Intent(this, TipsActivity.class));
-		} else if (manager.tipsShouldBeDownloaded()) {
-			manager.startDownloading();
-		}
 	}
 
  	@Override
@@ -234,7 +227,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 
 		sendOrderedBroadcast(
-			new Intent(PluginApi.ACTION_REGISTER),
+			new Intent(PluginApi.ACTION_REGISTER).addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES),
 			null,
 			myPluginInfoReceiver,
 			null,
@@ -242,6 +235,22 @@ public final class FBReader extends ZLAndroidActivity {
 			null,
 			null
 		);
+
+		final TipsManager manager = TipsManager.Instance();
+		System.err.println("TIPS: " + manager.requiredAction());
+		switch (manager.requiredAction()) {
+			case Initialize:
+				startActivity(new Intent(TipsActivity.INITIALIZE_ACTION, null, this, TipsActivity.class));
+				break;
+			case Show:
+				startActivity(new Intent(TipsActivity.SHOW_TIP_ACTION, null, this, TipsActivity.class));
+				break;
+			case Download:
+				manager.startDownloading();
+				break;
+			case None:
+				break;
+		}
 	}
 
 	@Override
