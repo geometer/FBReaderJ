@@ -72,16 +72,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	}
 
 	private void disableButtonLight() {
-		try {
-			final WindowManager.LayoutParams attrs = getWindow().getAttributes();
-			final Class<?> cls = attrs.getClass();
-			final Field fld = cls.getField("buttonBrightness");
-			if (fld != null && "float".equals(fld.getType().toString())) {
-				fld.setFloat(attrs, 0);
-			}
-		} catch (NoSuchFieldException e) {
-		} catch (IllegalAccessException e) {
-		}
+		getWindow().getAttributes().buttonBrightness = 0f;
 	}
 
 	protected abstract ZLFile fileFromIntent(Intent intent);
