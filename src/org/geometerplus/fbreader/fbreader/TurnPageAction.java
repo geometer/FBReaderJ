@@ -27,6 +27,7 @@ class TurnPageAction extends FBAction {
 		myForward = forward;
 	}
 
+	@Override
 	public boolean isEnabled() {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 
@@ -37,24 +38,26 @@ class TurnPageAction extends FBAction {
 			fingerScrolling == ScrollingPreferences.FingerScrolling.byTapAndFlick;
 	}
 
-	public void run() {
+	@Override
+	public void run(Object ... params) {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		Reader.getViewWidget().startAnimatedScrolling(
-			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
-			preferences.HorizontalOption.getValue()
-				? FBView.Direction.rightToLeft : FBView.Direction.up,
-			preferences.AnimationSpeedOption.getValue()
-		);
-	}
-
-	public void runWithCoordinates(int x, int y) {
-		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
-		Reader.getViewWidget().startAnimatedScrolling(
-			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
-			x, y,
-			preferences.HorizontalOption.getValue()
-				? FBView.Direction.rightToLeft : FBView.Direction.up,
-			preferences.AnimationSpeedOption.getValue()
-		);
+		if (params.length == 2 && params[0] instanceof Integer && params[1] instanceof Integer) {
+			final int x = (Integer)params[0];
+			final int y = (Integer)params[1];
+			Reader.getViewWidget().startAnimatedScrolling(
+				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+				x, y,
+				preferences.HorizontalOption.getValue()
+					? FBView.Direction.rightToLeft : FBView.Direction.up,
+				preferences.AnimationSpeedOption.getValue()
+			);
+		} else {
+			Reader.getViewWidget().startAnimatedScrolling(
+				myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,
+				preferences.HorizontalOption.getValue()
+					? FBView.Direction.rightToLeft : FBView.Direction.up,
+				preferences.AnimationSpeedOption.getValue()
+			);
+		}
 	}
 }

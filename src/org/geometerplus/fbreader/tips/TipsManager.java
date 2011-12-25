@@ -41,8 +41,10 @@ public class TipsManager {
 		return ourInstance;
 	}
 
+	public ZLBooleanOption TipsAreInitializedOption =
+		new ZLBooleanOption("tips", "showTips", false);
 	public ZLBooleanOption ShowTipsOption =
-		new ZLBooleanOption("tips", "showTips", true);
+		new ZLBooleanOption("tips", "showTips", false);
 
 	// time when last tip was shown, 2^16 milliseconds
 	private final ZLIntegerOption myLastShownOption =
@@ -114,25 +116,37 @@ public class TipsManager {
 		return tips.get(index);
 	}
 
-	private final int DELAY = 0;//(24 * 60 * 60 * 1000) >> 16; // 1 day
+	private final int DELAY = (24 * 60 * 60 * 1000) >> 16; // 1 day
 
 	private int currentTime() {
 		return (int)(new Date().getTime() >> 16);
 	}
 
-	public boolean tipShouldBeShown() {
-		return
-			ShowTipsOption.getValue() &&
-			myLastShownOption.getValue() + DELAY < currentTime() &&
-			hasNextTip();
+	public static enum Action {
+		Initialize,
+		Show,
+		Download,
+		None
 	}
 
-	public boolean tipsShouldBeDownloaded() {
-		return ShowTipsOption.getValue() && !hasNextTip() && !myDownloadInProgress;
+	public Action requiredAction() {
+		if (!TipsAreInitializedOption.getValue()) {
+			return Action.Initialize;
+		}
+		if (ShowTipsOption.getValue()) {
+			if (hasNextTip()) {
+				return myLastShownOption.getValue() + DELAY < currentTime()
+					? Action.Show : Action.None;
+			} else {
+				return myDownloadInProgress
+					? Action.None : Action.Download;
+			}
+		}
+		return Action.None;
 	}
 
 	public synchronized void startDownloading() {
-		if (!tipsShouldBeDownloaded()) {
+		if (requiredAction() != Action.Download) {
 			return;
 		}
 

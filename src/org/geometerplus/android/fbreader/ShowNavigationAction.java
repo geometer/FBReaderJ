@@ -36,7 +36,8 @@ class ShowNavigationAction extends FBAndroidAction {
 		return textModel != null && textModel.getParagraphsNumber() != 0;
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		BaseActivity.navigate();
 	}
 }

@@ -40,11 +40,13 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		super(baseActivity, fbreader);
 	}
 
+	@Override
 	public boolean isEnabled() {
 		return Reader.getTextView().getSelectedRegion() != null;
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		final ZLTextRegion region = Reader.getTextView().getSelectedRegion();
 		if (region == null) {
 			return;

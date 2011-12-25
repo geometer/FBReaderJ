@@ -1,7 +1,7 @@
 DONE отделять пробелами гиперлинки в тексте
 DONE гиперлинки, позволяющие открывать определенные вью FBReaderJ
-* вставить задержку в день
+DONE вставить задержку в день
 * 'show right now' item in settings
 * tips search
 * ask your question
-* preferences "open sub-screen" feature
+DONE preferences "open sub-screen" feature

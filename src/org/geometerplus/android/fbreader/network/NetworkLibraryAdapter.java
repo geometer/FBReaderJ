@@ -55,6 +55,9 @@ class NetworkLibraryAdapter extends TreeAdapter {
 
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
+		if (tree == null) {
+			throw new IllegalArgumentException("tree == null");
+		}
 		final View view = (convertView != null) ? convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
 

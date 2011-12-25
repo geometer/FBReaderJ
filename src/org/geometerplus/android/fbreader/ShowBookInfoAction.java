@@ -30,11 +30,13 @@ class ShowBookInfoAction extends FBAndroidAction {
 		super(baseActivity, fbreader);
 	}
 
+	@Override
 	public boolean isVisible() {
 		return Reader.Model != null;
 	}
 
-	public void run() {
+	@Override
+	protected void run(Object ... params) {
 		BaseActivity.startActivityForResult(
 			new Intent(BaseActivity.getApplicationContext(), BookInfoActivity.class)
 				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, Reader.Model.Book.File.getPath())

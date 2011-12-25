@@ -60,6 +60,10 @@ public class PopupWindow extends LinearLayout {
 		setVisibility(View.GONE);
 	}
 
+	Activity getActivity() {
+		return myActivity;
+	}
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return true;

@@ -140,13 +140,6 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
-
-		final TipsManager manager = TipsManager.Instance();
-		if (manager.tipShouldBeShown()) {
-			startActivity(new Intent(this, TipsActivity.class));
-		} else if (manager.tipsShouldBeDownloaded()) {
-			manager.startDownloading();
-		}
 	}
 
  	@Override
@@ -177,8 +170,7 @@ public final class FBReader extends ZLAndroidActivity {
 			super.onNewIntent(intent);
 		} else if (Intent.ACTION_VIEW.equals(intent.getAction())
 					&& data != null && "fbreader-action".equals(data.getScheme())) {
-			fbReader.doAction(data.getEncodedSchemeSpecificPart());
-			// TODO: use fragment
+			fbReader.doAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
@@ -243,6 +235,22 @@ public final class FBReader extends ZLAndroidActivity {
 			null,
 			null
 		);
+
+		final TipsManager manager = TipsManager.Instance();
+		System.err.println("TIPS: " + manager.requiredAction());
+		switch (manager.requiredAction()) {
+			case Initialize:
+				startActivity(new Intent(TipsActivity.INITIALIZE_ACTION, null, this, TipsActivity.class));
+				break;
+			case Show:
+				startActivity(new Intent(TipsActivity.SHOW_TIP_ACTION, null, this, TipsActivity.class));
+				break;
+			case Download:
+				manager.startDownloading();
+				break;
+			case None:
+				break;
+		}
 	}
 
 	@Override
@@ -257,7 +265,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public void onStop() {
-		PopupPanel.removeAllWindows(FBReaderApp.Instance());
+		PopupPanel.removeAllWindows(FBReaderApp.Instance(), this);
 		super.onStop();
 	}
 

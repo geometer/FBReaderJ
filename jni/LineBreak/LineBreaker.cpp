@@ -14,6 +14,13 @@ void Java_org_vimgadgets_linebreak_LineBreaker_setLineBreaksForCharArray(JNIEnv 
 	const char *langArray = (lang != 0) ? env->GetStringUTFChars(lang, 0) : 0;
 
 	set_linebreaks_utf16(dataArray + offset, length, langArray, (char*)breaksArray);
+	const jchar* start = dataArray + offset;
+	const jchar* end = start + length;
+	for (const jchar* ptr = start; ptr < end; ++ptr) {
+		if (*ptr == (jchar)0xAD) {
+			breaksArray[ptr - start] = LINEBREAK_NOBREAK;
+		}
+	}
 
 	if (lang != 0) {
   	env->ReleaseStringUTFChars(lang, langArray);
