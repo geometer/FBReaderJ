@@ -122,6 +122,9 @@
 			<node name="scanLocalNetwork" value="Scan local network"/>
 			<node name="localCatalogs" value="Local OPDS catalogs"/>
 			<node name="noCatalogsFound" value="No catalogs found, sorry"/>
+			<node name="noLocalConnection" value="Your device is not connected to a local network"/>
+			<node name="wifiIsTurnedOff" value="WiFi is turned off"/>
+			<node name="turnWiFiOn" value="Please, turn WiFi on and try again"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Network search"/>
@@ -266,6 +269,7 @@
 			<node name="refresh" value="Refresh"/>
 			<node name="authorize" value="Authorize"/>
 			<node name="rescan" value="Rescan" />
+			<node name="turnOn" value="Turn on" />
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>
@@ -698,6 +702,8 @@
 			<node name="title" value="Language filter"/>
 		</node>
 		<node name="tips">
+			<node name="title" value="Tip of the day" />
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
 		</node>
