@@ -12,17 +12,17 @@
 			<node name="title" value="Ошибка при работе с сетью" />
 			<node name="unknownErrorMessage" value="Неизвестная ошибка" />
 			<node name="operationTimedOutMessage" value="Отведённое время истекло" />
-			<node name="somethingWrongMessage" value="Ошибка при работе с&#10;%s" />
-			<node name="couldntCreateDirectoryMessage" value="Не удалось создать каталог&#10;%s" />
-			<node name="couldntCreateFileMessage" value="Не удалось создать файл&#10;%s" />
+			<node name="somethingWrongMessage" value="Ошибка при работе с %s" />
+			<node name="couldntCreateDirectoryMessage" value="Не удалось создать каталог %s" />
+			<node name="couldntCreateFileMessage" value="Не удалось создать файл %s" />
 			<node name="couldntConnectToNetworkMessage" value="Не удалось соединиться с сетью" />
-			<node name="couldntConnectMessage" value="Не удалось соединиться с сайтом&#10;%s" />
-			<node name="couldntResolveHostMessage" value="Не удается найти сайт&#10;%s" />
+			<node name="couldntConnectMessage" value="Не удалось соединиться с сайтом %s" />
+			<node name="couldntResolveHostMessage" value="Не удается найти сайт %s" />
 			<node name="authenticationFailed" value="Ошибка авторизации" />
 			<node name="unsupportedProtocol" value="Неизвестный протокол" />
 			<node name="invalidURL" value="Неправильный URL" />
 			<node name="hostCantBeReached" value="Сайт %s недоступен" />
-			<node name="connectionRefused" value="Соединение закрыто сайтом&#10;%s" />
+			<node name="connectionRefused" value="Соединение закрыто сайтом %s" />
 		</node>
 	</node>
 	<node name="color">

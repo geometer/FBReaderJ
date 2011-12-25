@@ -165,15 +165,14 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 		return null;
 	}
 
-	protected void setCover(ZLImage cover) {
-		myCoverRequested = true;
-		myCover = cover;
+	protected boolean canUseParentCover() {
+		return true;
 	}
 
 	public final ZLImage getCover() {
 		if (!myCoverRequested) {
 			myCover = createCover();
-			if (myCover == null && Parent != null) {
+			if (myCover == null && Parent != null && canUseParentCover()) {
 				myCover = Parent.getCover();
 			}
 			myCoverRequested = true;

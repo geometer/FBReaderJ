@@ -245,7 +245,26 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 	
 	public int getStringWidth(char[] string, int offset, int length) {
-		return (int)(myTextPaint.measureText(string, offset, length) + 0.5f);
+		boolean containsSoftHyphen = false;
+		for (int i = offset; i < offset + length; ++i) {
+			if (string[i] == (char)0xAD) {
+				containsSoftHyphen = true;
+				break;
+			}
+		}
+		if (!containsSoftHyphen) {
+			return (int)(myTextPaint.measureText(new String(string, offset, length)) + 0.5f);
+		} else {
+			final char[] corrected = new char[length];
+			int len = 0;
+			for (int o = offset; o < offset + length; ++o) {
+				final char chr = string[o];
+				if (chr != (char)0xAD) {
+					corrected[len++] = chr;
+				}
+			}
+			return (int)(myTextPaint.measureText(corrected, 0, len) + 0.5f);
+		}
 	}
 	protected int getSpaceWidthInternal() {
 		return (int)(myTextPaint.measureText(" ", 0, 1) + 0.5f);
@@ -257,7 +276,26 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		return (int)(myTextPaint.descent() + 0.5f);
 	}
 	public void drawString(int x, int y, char[] string, int offset, int length) {
-		myCanvas.drawText(string, offset, length, x, y, myTextPaint);
+		boolean containsSoftHyphen = false;
+		for (int i = offset; i < offset + length; ++i) {
+			if (string[i] == (char)0xAD) {
+				containsSoftHyphen = true;
+				break;
+			}
+		}
+		if (!containsSoftHyphen) {
+			myCanvas.drawText(string, offset, length, x, y, myTextPaint);
+		} else {
+			final char[] corrected = new char[length];
+			int len = 0;
+			for (int o = offset; o < offset + length; ++o) {
+				final char chr = string[o];
+				if (chr != (char)0xAD) {
+					corrected[len++] = chr;
+				}
+			}
+			myCanvas.drawText(corrected, 0, len, x, y, myTextPaint);
+		}
 	}
 
 	public int imageWidth(ZLImageData imageData) {

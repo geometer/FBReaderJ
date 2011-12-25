@@ -27,7 +27,8 @@ public class SelectionTranslateAction extends FBAndroidAction {
         super(baseActivity, fbreader);
     }
 
-    public void run() {
+	@Override
+    protected void run(Object ... params) {
         final FBView fbview = Reader.getTextView();
         DictionaryUtil.openTextInDictionary(
 			BaseActivity,

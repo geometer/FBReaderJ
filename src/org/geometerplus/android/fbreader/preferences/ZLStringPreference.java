@@ -51,4 +51,7 @@ abstract class ZLStringPreference extends EditTextPreference implements ZLPrefer
 		}
 		super.onDialogClosed(result);
 	}
+
+	public void onAccept() {
+	}
 }

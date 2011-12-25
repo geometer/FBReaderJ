@@ -34,7 +34,7 @@ public class ListenerCallback extends BroadcastReceiver implements UserRegistrat
 	public void onReceive(Context context, final Intent intent) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
-		if ("android.fbreader.action.network.SIGNIN".equals(intent.getAction())) {
+		if (Util.SIGNIN_ACTION.equals(intent.getAction())) {
 			final String url = intent.getStringExtra(CATALOG_URL);
 			final INetworkLink link = library.getLinkByUrl(url);
 			if (link != null) {

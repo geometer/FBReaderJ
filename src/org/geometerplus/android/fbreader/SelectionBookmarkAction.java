@@ -32,7 +32,8 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 		super(baseApplication, fbreader);
 	}
 
-	public void run() {
+	@Override
+    protected void run(Object ... params) {
 		final FBView fbview = Reader.getTextView();
 		final String text = fbview.getSelectedText();
 

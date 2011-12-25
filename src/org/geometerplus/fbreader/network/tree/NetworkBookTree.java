@@ -41,6 +41,11 @@ public class NetworkBookTree extends NetworkTree {
 	}
 
 	@Override
+	protected boolean canUseParentCover() {
+		return false;
+	}
+
+	@Override
 	public String getName() {
 		return Book.Title.toString();
 	}

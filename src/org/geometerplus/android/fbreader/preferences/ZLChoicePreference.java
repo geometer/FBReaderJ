@@ -38,7 +38,9 @@ class ZLChoicePreference extends ZLStringListPreference {
 		setInitialValue(valueResourceKeys[option.getValue() - option.MinValue]);
 	}
 
-	public void onAccept() {
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
 		myOption.setValue(myOption.MinValue + findIndexOfValue(getValue()));
 	}
 }

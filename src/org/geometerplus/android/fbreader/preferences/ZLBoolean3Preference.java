@@ -51,7 +51,9 @@ class ZLBoolean3Preference extends ZLStringListPreference {
 		}
 	}
 
-	public void onAccept() {
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
 		final String value = getValue();
 		if (ON.equals(value)) {
 			myOption.setValue(ZLBoolean3.B3_TRUE);
