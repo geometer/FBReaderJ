@@ -116,6 +116,16 @@
 		</node>
 		<node name="downloadingCatalogs" value="Stahování katalogů"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Vyhledávání knih v síti"/> <!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Add catalog" toBeTranslated="true"/>
+			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
+			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
+			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
+			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
+			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
+			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
+			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Prohledávání sítě"/>
 			<node name="reload" value="Znovu načíst"/>
@@ -258,6 +268,8 @@
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
 			<node name="authorize" value="Authorizovat"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>
@@ -649,6 +661,7 @@
 			<node name="loadingNetworkBookInfo" value="Načítání informací o knize. Čekejte&#8230;" />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte&#8230;"/>
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte&#8230;"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
@@ -689,6 +702,8 @@
 			<node name="title" value="Filtr jazyků"/>
 		</node>
 		<node name="tips">
+			<node name="title" value="Tip of the day" />
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
 			<node name="dontShowAgain" value="Znovu nezobrazovat" />
 			<node name="more" value="Další tip" />
 		</node>

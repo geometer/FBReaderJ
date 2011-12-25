@@ -123,7 +123,7 @@
 			<node name="localCatalogs" value="Local OPDS catalogs"/>
 			<node name="noCatalogsFound" value="No catalogs found, sorry"/>
 			<node name="noLocalConnection" value="Your device is not connected to a local network"/>
-			<node name="wifiIsTurnedOff" value="Wifi is turned off"/>
+			<node name="wifiIsTurnedOff" value="WiFi is turned off"/>
 			<node name="turnWiFiOn" value="Please, turn WiFi on and try again"/>
 		</node>
 		<node name="menu">
@@ -662,7 +662,6 @@
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
 			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;"/>
-			<node name="turningWiFiOn" value="Turning WiFi on. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
@@ -703,6 +702,8 @@
 			<node name="title" value="Language filter"/>
 		</node>
 		<node name="tips">
+			<node name="title" value="Tip of the day" />
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
 		</node>
