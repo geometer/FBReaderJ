@@ -46,7 +46,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void init(Intent intent) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		final ZLAndroidApplication androidApp = ZLAndroidApplication.Instance();
+		final ZLAndroidApplication androidApp = (ZLAndroidApplication)getApplication();
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");

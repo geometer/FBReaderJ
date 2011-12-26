@@ -30,8 +30,6 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
 public class ZLAndroidApplication extends Application {
-	private static ZLAndroidApplication ourApplication;
-
 	public final ZLBooleanOption AutoOrientationOption = new ZLBooleanOption("LookNFeel", "AutoOrientation", false);
 	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
 	public final ZLBooleanOption ShowStatusBarWhenMenuIsActiveOption = new ZLBooleanOption("LookNFeel", "ShowStatusBarWithMenu", true);
@@ -39,14 +37,6 @@ public class ZLAndroidApplication extends Application {
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", true);
-
-	public static ZLAndroidApplication Instance() {
-		return ourApplication;
-	}
-
-	public ZLAndroidApplication() {
-		ourApplication = this;
-	}
 
 	private boolean hasNoHardwareMenuButton() {
 		return

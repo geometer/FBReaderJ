@@ -97,7 +97,8 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		if (ZLAndroidApplication.Instance().DisableButtonLightsOption.getValue()) {
+		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
+		if (androidApplication.DisableButtonLightsOption.getValue()) {
 			disableButtonLight();
 		}
 		setContentView(R.layout.main);
@@ -106,9 +107,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		getLibrary().setActivity(this);
 
 		final ZLFile fileToOpen = fileFromIntent(getIntent());
-		if (((ZLAndroidApplication)getApplication()).myMainWindow == null) {
-			ZLApplication application = createApplication(fileToOpen);
-			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
+		if (androidApplication.myMainWindow == null) {
+			final ZLApplication application = createApplication(fileToOpen);
+			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
 		} else {
 			ZLApplication.Instance().openFile(fileToOpen);
@@ -120,7 +121,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	public void onStart() {
 		super.onStart();
 
-		if (ZLAndroidApplication.Instance().AutoOrientationOption.getValue()) {
+		if (((ZLAndroidApplication)getApplication()).AutoOrientationOption.getValue()) {
 			setAutoRotationMode();
 		} else {
 			switch (myOrientation) {
@@ -180,13 +181,14 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		switchWakeLock(
-			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() <
+			application.BatteryLevelToTurnScreenOffOption.getValue() <
 			ZLApplication.Instance().getBatteryLevel()
 		);
 		myStartTimer = true;
 		final int brightnessLevel =
-			((ZLAndroidApplication)getApplication()).ScreenBrightnessLevelOption.getValue();
+			application.ScreenBrightnessLevelOption.getValue();
 		if (brightnessLevel != 0) {
 			setScreenBrightness(brightnessLevel);
 		} else {
@@ -236,7 +238,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	private int myChangeCounter;
 	private int myOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 	private void setAutoRotationMode() {
-		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		myOrientation = application.AutoOrientationOption.getValue() ?
 			ActivityInfo.SCREEN_ORIENTATION_SENSOR : ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
 		setRequestedOrientation(myOrientation);
@@ -292,9 +294,10 @@ public abstract class ZLAndroidActivity extends Activity {
 	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			final int level = intent.getIntExtra("level", 100);
-			((ZLAndroidApplication)getApplication()).myMainWindow.setBatteryLevel(level);
+			final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+			application.myMainWindow.setBatteryLevel(level);
 			switchWakeLock(
-				ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() < level
+				application.BatteryLevelToTurnScreenOffOption.getValue() < level
 			);
 		}
 	};

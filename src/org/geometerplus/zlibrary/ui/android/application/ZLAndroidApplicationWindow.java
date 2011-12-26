@@ -106,7 +106,11 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	public boolean canRotate() {
-		return !ZLAndroidApplication.Instance().AutoOrientationOption.getValue();
+		final Activity activity = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+		return
+			activity != null &&
+			!((ZLAndroidApplication)activity.getApplication()).AutoOrientationOption.getValue();
 	}
 
 	public void close() {

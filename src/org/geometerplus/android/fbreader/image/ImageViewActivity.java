@@ -46,7 +46,7 @@ public class ImageViewActivity extends Activity {
 		super.onCreate(icicle);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
+		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		final boolean showStatusBar = application.ShowStatusBarOption.getValue();
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
