@@ -48,7 +48,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
 	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", true);
 
-	private static boolean hasNoHardwareMenuButton() {
+	private boolean hasNoHardwareMenuButton() {
 		return
 			// Eken M001
 			(Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) ||
