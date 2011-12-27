@@ -36,5 +36,6 @@ abstract public class ZLResource {
 
 	abstract public boolean hasValue();
 	abstract public String getValue();
+	abstract public String getValue(int condition);
 	abstract public ZLResource getResource(String key);
 }
