@@ -31,7 +31,7 @@ import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
@@ -46,8 +46,8 @@ public class ImageViewActivity extends Activity {
 		super.onCreate(icicle);
 
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);
-		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
-		final boolean showStatusBar = application.ShowStatusBarOption.getValue();
+		final ZLAndroidLibrary library = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		final boolean showStatusBar = library.ShowStatusBarOption.getValue();
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
 			showStatusBar ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
