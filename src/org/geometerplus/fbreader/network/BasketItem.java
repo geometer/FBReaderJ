@@ -58,10 +58,10 @@ public abstract class BasketItem extends NetworkCatalogItem {
 		} else {
 			final Money basketCost = cost();
 			if (basketCost != null) {
-				return NetworkLibrary.resource().getResource("basketSummary").getValue()
+				return NetworkLibrary.resource().getResource("basketSummary").getValue(size)
 					.replace("%0", String.valueOf(size)).replace("%1", basketCost.toString());
 			} else {
-				return NetworkLibrary.resource().getResource("basketSummaryCountOnly").getValue()
+				return NetworkLibrary.resource().getResource("basketSummaryCountOnly").getValue(size)
 					.replace("%0", String.valueOf(size));
 			}
 		}
