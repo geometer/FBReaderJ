@@ -307,8 +307,8 @@
 					<node name="summaryOn" value="Show status bar when menu becomes active"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
 				</node>
-				<node name="disableButtonLights" value="Disable hardware buttons light during reading">
-					<node name="summaryOn" value="Disable button lights (that does not for some devices)"/>
+				<node name="disableButtonLights" value="Disable buttons light during reading">
+					<node name="summaryOn" value="Disable button lights (does not work for some devices)"/>
 					<node name="summaryOff" value="Don't try to disable button lights"/>
 				</node>
 			</node>
