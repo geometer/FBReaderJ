@@ -96,8 +96,12 @@
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummaryEmpty" value="No books"/>
-		<node name="basketSummaryCountOnly" value="%0 book(s)"/>
-		<node name="basketSummary" value="%0 book(s) (%1)"/>
+		<node name="basketSummaryCountOnly" value="%0 books">
+			<node condition="value 1" value="%0 book"/>
+		</node>
+		<node name="basketSummary" value="%0 books (%1)">
+			<node condition="value 1" value="%0 book (%1)"/>
+		</node>
 		<node name="alreadyDownloading" value="Book is being downloaded"/>
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded"/>
 		<node name="stoppingCatalogLoading" value="Stopping loading"/>

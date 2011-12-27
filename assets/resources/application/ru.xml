@@ -96,8 +96,20 @@
 		<node name="topupSummary" value="Текущий счёт: %s"/>
 		<node name="basket" value="Корзина"/>
 		<node name="basketSummaryEmpty" value="Пустая корзина"/>
-		<node name="basketSummaryCountOnly" value="Книг: %0"/>
-		<node name="basketSummary" value="Книг: %0, на сумму %1"/>
+		<node name="basketSummaryCountOnly" value="%0 книг">
+			<node condition="range 11 19" value="%0 книг"/>
+			<node condition="mod 1 10" value="%0 книгa"/>
+			<node condition="mod 2 10" value="%0 книги"/>
+			<node condition="mod 3 10" value="%0 книги"/>
+			<node condition="mod 4 10" value="%0 книги"/>
+		</node>
+		<node name="basketSummary" value="%0 книг, на сумму %1">
+			<node condition="range 11 19" value="%0 книг, на сумму %1"/>
+			<node condition="mod 1 10" value="%0 книгa, на сумму %1"/>
+			<node condition="mod 2 10" value="%0 книги, на сумму %1"/>
+			<node condition="mod 3 10" value="%0 книги, на сумму %1"/>
+			<node condition="mod 4 10" value="%0 книги, на сумму %1"/>
+		</node>
 		<node name="alreadyDownloading" value="Книга загружается"/>
 		<node name="alreadyDownloadingDemo" value="Фрагмент загружается"/>
 		<node name="stoppingCatalogLoading" value="Остановка загрузки"/>
