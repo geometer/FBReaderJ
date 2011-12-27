@@ -186,17 +186,6 @@ public class ImageViewActivity extends Activity {
 		private int mySavedY;
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
-			switch (event.getPointerCount()) {
-				case 1:
-					return onSingleTouchEvent(event);
-				case 2:
-					return onDoubleTouchEvent(event);
-				default:
-					return false;
-			}
-		}
-
-		private boolean onSingleTouchEvent(MotionEvent event) {
 			int x = (int)event.getX();
 			int y = (int)event.getY();
 
@@ -217,39 +206,6 @@ public class ImageViewActivity extends Activity {
 					mySavedX = x;
 					mySavedY = y;
 					break;
-			}
-			return true;
-		}
-
-		private float myStartPinchDistance2 = -1;
-		private float myStartZoomFactor;
-		private boolean onDoubleTouchEvent(MotionEvent event) {
-			switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_POINTER_UP:
-					myStartPinchDistance2 = -1;
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-				{
-					final float diffX = event.getX(0) - event.getX(1); 
-					final float diffY = event.getY(0) - event.getY(1); 
-					myStartPinchDistance2 = Math.max(diffX * diffX + diffY * diffY, 10f);
-					myStartZoomFactor = myZoomFactor;
-					break;
-				}
-				case MotionEvent.ACTION_MOVE:
-				{
-					final float diffX = event.getX(0) - event.getX(1); 
-					final float diffY = event.getY(0) - event.getY(1); 
-					final float distance2 = Math.max(diffX * diffX + diffY * diffY, 10f);
-					if (myStartPinchDistance2 < 0) {
-						myStartPinchDistance2 = distance2;
-						myStartZoomFactor = myZoomFactor;
-					} else {
-						myZoomFactor = myStartZoomFactor * FloatMath.sqrt(distance2 / myStartPinchDistance2);
-						postInvalidate();
-					}
-				}
-				break;
 			}
 			return true;
 		}
