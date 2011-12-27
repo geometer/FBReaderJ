@@ -263,7 +263,12 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-		root.setSystemUiVisibility(RelativeLayout.SYSTEM_UI_FLAG_LOW_PROFILE);
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+		if (zlibrary.DisableButtonLightsOption.getValue()) {
+			root.setSystemUiVisibility(RelativeLayout.SYSTEM_UI_FLAG_LOW_PROFILE);
+		} else {
+			root.setSystemUiVisibility(RelativeLayout.SYSTEM_UI_FLAG_VISIBLE);
+		}
 	}
 
 	@Override
