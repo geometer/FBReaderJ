@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,8 +37,8 @@ import org.geometerplus.android.util.SQLiteUtil;
 class SQLiteNetworkDatabase extends NetworkDatabase {
 	private final SQLiteDatabase myDatabase;
 
-	SQLiteNetworkDatabase() {
-		myDatabase = ZLAndroidApplication.Instance().openOrCreateDatabase("network.db", Context.MODE_PRIVATE, null);
+	SQLiteNetworkDatabase(Application application) {
+		myDatabase = application.openOrCreateDatabase("network.db", Context.MODE_PRIVATE, null);
 		migrate();
 	}
 
