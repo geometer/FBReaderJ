@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.graphics.*;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.FloatMath;
 import android.view.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -100,8 +101,9 @@ public class ImageViewActivity extends Activity {
 	private class ImageView extends View {
 		private final Paint myPaint = new Paint();
 
-		private int myDx;
-		private int myDy;
+		private int myDx = 0;
+		private int myDy = 0;
+		private float myZoomFactor = 1.0f;
 
 		ImageView() {
 			super(ImageViewActivity.this);
@@ -117,21 +119,34 @@ public class ImageViewActivity extends Activity {
 				return;
 			}
 
-			final int bw = myBitmap.getWidth();
-			final int bh = myBitmap.getHeight();
+			final int bw = (int)(myBitmap.getWidth() * myZoomFactor);
+			final int bh = (int)(myBitmap.getHeight() * myZoomFactor);
 			
-			final int left, top;
+			final Rect src = new Rect(0, 0, (int)(w / myZoomFactor), (int)(h / myZoomFactor));
+			final Rect dst = new Rect(0, 0, w, h);
 			if (bw <= w) {
-				left = (w - bw) / 2;
+				src.left = 0;
+				src.right = myBitmap.getWidth();
+				dst.left = (w - bw) / 2;
+				dst.right = dst.left + bw;
 			} else {
-				left = Math.max(w - bw, Math.min(0, (w - bw) / 2 + myDx));
+				final int bWidth = myBitmap.getWidth();
+				final int pWidth = (int)(w / myZoomFactor);
+				src.left = Math.min(bWidth - pWidth, Math.max((bWidth - pWidth) / 2 - myDx, 0));
+				src.right += src.left;
 			}
 			if (bh <= h) {
-				top = (h - bh) / 2;
+				src.top = 0;
+				src.bottom = myBitmap.getHeight();
+				dst.top = (h - bh) / 2;
+				dst.bottom = dst.top + bh;
 			} else {
-				top = Math.max(h - bh, Math.min(0, (h - bh) / 2 + myDy));
+				final int bHeight = myBitmap.getHeight();
+				final int pHeight = (int)(h / myZoomFactor);
+				src.top = Math.min(bHeight - pHeight, Math.max((bHeight - pHeight) / 2 - myDy, 0));
+				src.bottom += src.top;
 			}
-			canvas.drawBitmap(myBitmap, left, top, myPaint);
+			canvas.drawBitmap(myBitmap, src, dst, myPaint);
 		}
 
 		private void shift(int dx, int dy) {
@@ -141,8 +156,8 @@ public class ImageViewActivity extends Activity {
 
 			final int w = getWidth();
 			final int h = getHeight();
-			final int bw = myBitmap.getWidth();
-			final int bh = myBitmap.getHeight();
+			final int bw = (int)(myBitmap.getWidth() * myZoomFactor);
+			final int bh = (int)(myBitmap.getHeight() * myZoomFactor);
 
 			final int newDx, newDy;
 
@@ -171,6 +186,17 @@ public class ImageViewActivity extends Activity {
 		private int mySavedY;
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
+			switch (event.getPointerCount()) {
+				case 1:
+					return onSingleTouchEvent(event);
+				case 2:
+					return onDoubleTouchEvent(event);
+				default:
+					return false;
+			}
+		}
+
+		private boolean onSingleTouchEvent(MotionEvent event) {
 			int x = (int)event.getX();
 			int y = (int)event.getY();
 
@@ -191,6 +217,39 @@ public class ImageViewActivity extends Activity {
 					mySavedX = x;
 					mySavedY = y;
 					break;
+			}
+			return true;
+		}
+
+		private float myStartPinchDistance2 = -1;
+		private float myStartZoomFactor;
+		private boolean onDoubleTouchEvent(MotionEvent event) {
+			switch (event.getAction() & MotionEvent.ACTION_MASK) {
+				case MotionEvent.ACTION_POINTER_UP:
+					myStartPinchDistance2 = -1;
+					break;
+				case MotionEvent.ACTION_POINTER_DOWN:
+				{
+					final float diffX = event.getX(0) - event.getX(1); 
+					final float diffY = event.getY(0) - event.getY(1); 
+					myStartPinchDistance2 = Math.max(diffX * diffX + diffY * diffY, 10f);
+					myStartZoomFactor = myZoomFactor;
+					break;
+				}
+				case MotionEvent.ACTION_MOVE:
+				{
+					final float diffX = event.getX(0) - event.getX(1); 
+					final float diffY = event.getY(0) - event.getY(1); 
+					final float distance2 = Math.max(diffX * diffX + diffY * diffY, 10f);
+					if (myStartPinchDistance2 < 0) {
+						myStartPinchDistance2 = distance2;
+						myStartZoomFactor = myZoomFactor;
+					} else {
+						myZoomFactor = myStartZoomFactor * FloatMath.sqrt(distance2 / myStartPinchDistance2);
+						postInvalidate();
+					}
+				}
+				break;
 			}
 			return true;
 		}
