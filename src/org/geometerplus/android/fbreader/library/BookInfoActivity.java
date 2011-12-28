@@ -287,7 +287,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		}
 		final int kilo = 1024;
 		if (size < kilo) { // less than 1 kilobyte
-			return myResource.getResource("sizeInBytes").getValue().replaceAll("%s", String.valueOf(size));
+			return myResource.getResource("sizeInBytes").getValue((int)size).replaceAll("%s", String.valueOf(size));
 		}
 		final String value;
 		if (size < kilo * kilo) { // less than 1 megabyte
