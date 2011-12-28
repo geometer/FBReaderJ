@@ -96,7 +96,7 @@ public final class ZLTextParagraphCursor {
 								if (hyperlink != null) {
 									hyperlink.addElementIndex(elements.size());
 								}
-								elements.add(new ZLTextImageElement(imageEntry.Id, data, image.getURI()));
+								elements.add(new ZLTextImageElement(imageEntry.Id, data, image.getURI(), imageEntry.IsCover));
 							}
 						}
 						break;

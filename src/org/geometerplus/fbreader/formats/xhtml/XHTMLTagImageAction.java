@@ -48,7 +48,7 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 					modelReader.endParagraph();
 				}
 				final String imageName = imageFile.getLongName();
-				modelReader.addImageReference(imageName, (short)0);
+				modelReader.addImageReference(imageName, (short)0, false);
 				modelReader.addImage(imageName, new ZLFileImage(MimeType.IMAGE_AUTO, imageFile));
 				if (flag) {
 					modelReader.beginParagraph();

@@ -375,9 +375,11 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 					} catch (NumberFormatException e) {
 					}
 					imgRef = imgRef.substring(1);
-					if (!imgRef.equals(myCoverImageReference) ||
-							myParagraphsBeforeBodyNumber != myBookReader.Model.BookTextModel.getParagraphsNumber()) {
-						myBookReader.addImageReference(imgRef, offset);
+					final boolean isCoverImage =
+						myParagraphsBeforeBodyNumber ==
+						myBookReader.Model.BookTextModel.getParagraphsNumber();
+					if (!imgRef.equals(myCoverImageReference) || !isCoverImage) {
+						myBookReader.addImageReference(imgRef, offset, myInsideCoverpage || isCoverImage);
 					}
 					if (myInsideCoverpage) {
 						myCoverImageReference = imgRef;
