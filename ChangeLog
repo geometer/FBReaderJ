@@ -7,6 +7,7 @@
 * Plural forms support in resources has been implemented
 * Image in image view can be scaled using pinch (Android 2+)
 * Full-screen cover images
+* An exception in *.mobi file reading has been fixed
 
 ===== 1.2.6 (Dec 19, 2011) =====
 * Android 3.*, 4.*: bottom buttons are hidden during book reading
