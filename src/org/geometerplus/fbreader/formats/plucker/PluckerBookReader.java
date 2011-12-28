@@ -341,7 +341,7 @@ public class PluckerBookReader extends BookReader {
 					break;
 				case 0x1A:
 					safeBeginParagraph();
-					addImageReference(fromNumber(twoBytes(ptr, cur + 1)), (short) 0);
+					addImageReference(fromNumber(twoBytes(ptr, cur + 1)), (short)0, false);
 					break;
 				case 0x22:
 					if (!myParagraphStarted) {
@@ -380,7 +380,7 @@ public class PluckerBookReader extends BookReader {
 				case 0x53: // color setting is ignored
 					break;
 				case 0x5C:
-					addImageReference(fromNumber(twoBytes(ptr, cur + 3)), (short) 0);
+					addImageReference(fromNumber(twoBytes(ptr, cur + 3)), (short)0, false);
 					break;
 				case 0x60: // underlined text is ignored
 					break;

@@ -238,7 +238,6 @@ public final class FBReader extends ZLAndroidActivity {
 		);
 
 		final TipsManager manager = TipsManager.Instance();
-		System.err.println("TIPS: " + manager.requiredAction());
 		switch (manager.requiredAction()) {
 			case Initialize:
 				startActivity(new Intent(TipsActivity.INITIALIZE_ACTION, null, this, TipsActivity.class));
