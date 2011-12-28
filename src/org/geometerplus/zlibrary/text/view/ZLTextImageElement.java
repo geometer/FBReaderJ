@@ -25,10 +25,12 @@ public final class ZLTextImageElement extends ZLTextElement {
 	public final String Id;
 	public final ZLImageData ImageData;
 	public final String URI;
+	public final boolean IsCover;
     
-	ZLTextImageElement(String id, ZLImageData imageData, String uri) {
+	ZLTextImageElement(String id, ZLImageData imageData, String uri, boolean isCover) {
 		Id = id;
 		ImageData = imageData;
 		URI = uri;
+		IsCover = isCover;
 	}
 }

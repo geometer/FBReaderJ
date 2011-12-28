@@ -779,7 +779,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 							? getSelectedForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
-					context.drawImage(areaX, areaY, ((ZLTextImageElement)element).ImageData);
+					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
+					context.drawImage(
+						areaX, areaY,
+						imageElement.ImageData,
+						getTextAreaSize(),
+						imageElement.IsCover
+							? ZLPaintContext.ScalingType.FitMaximum
+							: ZLPaintContext.ScalingType.IntegerCoefficient
+					);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*

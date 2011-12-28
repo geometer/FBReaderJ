@@ -162,7 +162,8 @@ public class ZLTextPlainModel implements ZLTextModel {
 					final short len = (short)data[dataOffset++];
 					final String id = new String(data, dataOffset, len);
 					dataOffset += len;
-					myImageEntry = new ZLImageEntry(myImageMap, id, vOffset);
+					final boolean isCover = data[dataOffset++] != 0;
+					myImageEntry = new ZLImageEntry(myImageMap, id, vOffset, isCover);
 					break;
 				}
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
