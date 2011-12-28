@@ -25,6 +25,17 @@ import android.os.IBinder;
 
 public class LibraryService extends Service {
 	@Override
+	public void onStart(Intent intent, int startId) {
+		onStartCommand(intent, 0, startId);
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		System.err.println("LibraryService started for intent " + intent);
+		return START_STICKY;
+	}
+
+	@Override
 	public IBinder onBind(Intent intent) {
 		System.err.println("LibraryService binded for intent " + intent);
 		return null;

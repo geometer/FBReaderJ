@@ -17,23 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.library;
+package org.geometerplus.android.fbreader;
 
-import android.app.Application;
+import android.content.Intent;
 
-import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.android.fbreader.libraryService.LibraryService;
 
-import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
-public abstract class ZLAndroidApplication extends Application {
-	public ZLAndroidApplicationWindow myMainWindow;
-
+public class FBReaderApplication extends ZLAndroidApplication {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		new ZLSQLiteConfig(this);
-		new ZLAndroidImageManager();
-		new ZLAndroidLibrary(this);
+		bindService(new Intent(this, LibraryService.class), null, LibraryService.BIND_AUTO_CREATE);
 	}
 }
