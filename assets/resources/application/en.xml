@@ -96,8 +96,12 @@
 		<node name="topupSummary" value="Currently: %s"/>
 		<node name="basket" value="Basket"/>
 		<node name="basketSummaryEmpty" value="No books"/>
-		<node name="basketSummaryCountOnly" value="%0 book(s)"/>
-		<node name="basketSummary" value="%0 book(s) (%1)"/>
+		<node name="basketSummaryCountOnly" value="%0 books">
+			<node condition="value 1" value="%0 book"/>
+		</node>
+		<node name="basketSummary" value="%0 books (%1)">
+			<node condition="value 1" value="%0 book (%1)"/>
+		</node>
 		<node name="alreadyDownloading" value="Book is being downloaded"/>
 		<node name="alreadyDownloadingDemo" value="Sample is being downloaded"/>
 		<node name="stoppingCatalogLoading" value="Stopping loading"/>
@@ -123,7 +127,7 @@
 			<node name="localCatalogs" value="Local OPDS catalogs"/>
 			<node name="noCatalogsFound" value="No catalogs found, sorry"/>
 			<node name="noLocalConnection" value="Your device is not connected to a local network"/>
-			<node name="wifiIsTurnedOff" value="Wifi is turned off"/>
+			<node name="wifiIsTurnedOff" value="WiFi is turned off"/>
 			<node name="turnWiFiOn" value="Please, turn WiFi on and try again"/>
 		</node>
 		<node name="menu">
@@ -307,8 +311,8 @@
 					<node name="summaryOn" value="Show status bar when menu becomes active"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
 				</node>
-				<node name="disableButtonLights" value="Disable hardware buttons light during reading">
-					<node name="summaryOn" value="Disable button lights (that does not for some devices)"/>
+				<node name="disableButtonLights" value="Disable buttons light during reading">
+					<node name="summaryOn" value="Disable button lights (does not work for some devices)"/>
 					<node name="summaryOff" value="Don't try to disable button lights"/>
 				</node>
 			</node>
@@ -662,7 +666,6 @@
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
 			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;"/>
-			<node name="turningWiFiOn" value="Turning WiFi on. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
@@ -703,6 +706,8 @@
 			<node name="title" value="Language filter"/>
 		</node>
 		<node name="tips">
+			<node name="title" value="Tip of the day" />
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
 		</node>

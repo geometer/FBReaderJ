@@ -116,6 +116,16 @@
 		</node>
 		<node name="downloadingCatalogs" value="书库目录下载" /> <!-- used as notification title -->
 		<node name="searchingNetwork" value="搜索书库"/> <!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Add catalog" toBeTranslated="true"/>
+			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
+			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
+			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
+			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
+			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
+			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
+			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="网络搜索" />
 			<node name="reload" value="重新加载" />
@@ -258,6 +268,8 @@
 			<node name="pay" value="支付" />
 			<node name="refresh" value="刷新" />
 			<node name="authorize" value="授权" />
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件" />
@@ -609,6 +621,13 @@
 					<node name="none" value="不做任何事" />
 				</node>
 			</node>
+			<node name="tips" value="Tips" toBeTranslated="true">
+				<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
+				<node name="showTips" value="Show tips" toBeTranslated="true">
+					<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
+					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -642,6 +661,7 @@
 			<node name="loadingNetworkBookInfo" value="书籍信息加载中，请等待&#8230;"  />
 			<node name="updatingCatalogsList" value="更新书库列表中，请稍待..."/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待&#8230;" />
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错" />
@@ -680,6 +700,12 @@
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="语言过滤" />
+		</node>
+		<node name="tips">
+			<node name="title" value="Tip of the day" toBeTranslated="true" />
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
+			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
+			<node name="more" value="Next tip" toBeTranslated="true"/>
 		</node>
 	</node>
 	<node name="errorMessage">

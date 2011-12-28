@@ -388,21 +388,21 @@ public class BookReader {
 		beginContentsParagraph(-1);
 	}
 	
-	public final void addImageReference(String ref) {
-		addImageReference(ref, (short)0);
+	public final void addImageReference(String ref, boolean isCover) {
+		addImageReference(ref, (short)0, isCover);
 	}
 
-	public final void addImageReference(String ref, short vOffset) {
+	public final void addImageReference(String ref, short vOffset, boolean isCover) {
 		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			mySectionContainsRegularContents = true;
 			if (myTextParagraphExists) {
 				flushTextBufferToParagraph();
-				textModel.addImage(ref, vOffset);
+				textModel.addImage(ref, vOffset, isCover);
 			} else {
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				textModel.addControl(FBTextKind.IMAGE, true);
-				textModel.addImage(ref, vOffset);
+				textModel.addImage(ref, vOffset, isCover);
 				textModel.addControl(FBTextKind.IMAGE, false);
 				endParagraph();
 			}

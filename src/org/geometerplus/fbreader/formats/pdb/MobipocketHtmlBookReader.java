@@ -72,10 +72,10 @@ public class MobipocketHtmlBookReader extends HtmlReader {
 						final int index = Integer.parseInt(recIndex.toString());
 						if (paragraphIsOpen()) {
 							endParagraph();
-							addImageReference("" + index);
+							addImageReference("" + index, false);
 							beginParagraph();
 						} else {
-							addImageReference("" + index);
+							addImageReference("" + index, false);
 						}
 					} catch (NumberFormatException e) {
 					}

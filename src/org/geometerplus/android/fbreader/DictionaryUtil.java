@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextWord;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
@@ -191,8 +191,8 @@ public abstract class DictionaryUtil {
 				final int minHeight = Math.min(200, screenHeight * 2 / 3);
 				intent.putExtra(ColorDict3.HEIGHT, Math.max(minHeight, Math.min(maxHeight, space)));
 				intent.putExtra(ColorDict3.GRAVITY, showAtBottom ? Gravity.BOTTOM : Gravity.TOP);
-				final ZLAndroidApplication application = ZLAndroidApplication.Instance();
-				intent.putExtra(ColorDict3.FULLSCREEN, !application.ShowStatusBarOption.getValue());
+				final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
+				intent.putExtra(ColorDict3.FULLSCREEN, !zlibrary.ShowStatusBarOption.getValue());
 			}
 			activity.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
