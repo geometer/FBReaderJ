@@ -17,11 +17,10 @@
  * 02110-1301, USA.
  */
 
-#include "CoversWriter.h"
-
 #include <AndroidLog.h>
 #include <AndroidUtil.h>
 
+#include <ZLDir.h>
 #include <ZLFile.h>
 #include <ZLOutputStream.h>
 #include <ZLStringUtil.h>
@@ -30,6 +29,7 @@
 
 #include "../fbreader/src/library/Library.h"
 
+#include "CoversWriter.h"
 
 shared_ptr<CoversWriter> CoversWriter::ourInstance;
 
