@@ -22,6 +22,26 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	private ConnectionListener myListener;
 	private volatile ApiInterface myInterface;
 
+	private final List<ApiListener> myApiListeners =
+		Collections.synchronizedList(new LinkedList<ApiListener>());
+
+	private final BroadcastReceiver myEventReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (myInterface == null || myApiListeners.size() == 0) {
+				return;
+			}
+			final int code = intent.getIntExtra(EVENT_TYPE, -1);
+			if (code != -1) {
+				synchronized (myApiListeners) {
+					for (ApiListener l : myApiListeners) {
+						l.onEvent(code);
+					}
+				}
+			}
+		}
+	};
+
 	public ApiClientImplementation(Context context, ConnectionListener listener) {
 		myContext = context;
 		myListener = listener;
