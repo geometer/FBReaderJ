@@ -21,6 +21,9 @@ package org.geometerplus.android.fbreader.api;
 
 import java.util.*;
 
+import android.content.ContextWrapper;
+import android.content.Intent;
+
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
 
@@ -29,6 +32,13 @@ import org.geometerplus.zlibrary.text.view.*;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
+	public static void sendEvent(ContextWrapper context, String eventType) {
+		context.sendBroadcast(
+			new Intent(ApiClientImplementation.ACTION_API_CALLBACK)
+				.putExtra(ApiClientImplementation.EVENT_TYPE, eventType)
+		);
+	}
+
 	private final FBReaderApp myReader = (FBReaderApp)FBReaderApp.Instance();
 
 	private ApiObject.Error unsupportedMethodError(int method) {
@@ -62,6 +72,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelope(getBookTitle());
 				case GET_BOOK_FILE_NAME:
 					return ApiObject.envelope(getBookFileName());
+				case GET_BOOK_HASH:
+					return ApiObject.envelope(getBookHash());
 				case GET_PARAGRAPHS_NUMBER:
 					return ApiObject.envelope(getParagraphsNumber());
 				case GET_ELEMENTS_NUMBER:
@@ -96,7 +108,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			}
 		} catch (Throwable e) {
 			return new ApiObject.Error("Exception in method " + method + ": " + e);
-		} 
+		}
 	}
 
 	public List<ApiObject> requestList(int method, ApiObject[] parameters) {
@@ -115,7 +127,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			}
 		} catch (Throwable e) {
 			return Collections.<ApiObject>singletonList(exceptionInMethodError(method, e));
-		} 
+		}
 	}
 
 	private Map<ApiObject,ApiObject> errorMap(ApiObject.Error error) {
@@ -130,7 +142,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 			}
 		} catch (Throwable e) {
 			return errorMap(exceptionInMethodError(method, e));
-		} 
+		}
 	}
 
 	// information about fbreader
@@ -171,6 +183,10 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	public String getBookFileName() {
 		// TODO: implement
 		return null;
+	}
+
+	public String getBookHash() {
+		return myReader.Model.Book.getContentHashCode();
 	}
 
 	// page information

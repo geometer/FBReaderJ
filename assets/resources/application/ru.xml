@@ -189,7 +189,12 @@
 		<node name="type" value="Тип:"/>
 		<node name="size" value="Размер:"/>
 		<node name="time" value="Последнее изменение:"/>
-		<node name="sizeInBytes" value="%s байт"/>
+		<node name="sizeInBytes" value="%s байт">
+			<node condition="range 11 19" value="%0 байт"/>
+			<node condition="mod 2 10" value="%0 байта"/>
+			<node condition="mod 3 10" value="%0 байта"/>
+			<node condition="mod 4 10" value="%0 байта"/>
+		</node>
 		<node name="sizeInKiloBytes" value="%s кБ"/>
 		<node name="menu">
 			<node name="edit" value="Редактировать"/>
