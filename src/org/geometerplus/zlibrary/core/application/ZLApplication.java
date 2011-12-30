@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,17 +129,10 @@ public abstract class ZLApplication {
 		return (action != null) && action.isEnabled();
 	}
 
-	public final void doAction(String actionId) {
+	public final void doAction(String actionId, Object ... params) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
-			action.checkAndRun();
-		}
-	}
-
-	public final void doActionWithCoordinates(String actionId, int x, int y) {
-		final ZLAction action = myIdToActionMap.get(actionId);
-		if (action != null && action.isEnabled()) {
-			action.runWithCoordinates(x, y);
+			action.checkAndRun(params);
 		}
 	}
 
@@ -196,19 +189,15 @@ public abstract class ZLApplication {
 			return isVisible();
 		}
 
-		public final boolean checkAndRun() {
+		public final boolean checkAndRun(Object ... params) {
 			if (isEnabled()) {
-				run();
+				run(params);
 				return true;
 			}
 			return false;
 		}
 
-		abstract protected void run();
-
-		protected void runWithCoordinates(int x, int y) {
-			run();
-		}
+		abstract protected void run(Object ... params);
 	}
 
 	public static abstract class PopupPanel {

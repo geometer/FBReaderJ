@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,10 @@ import org.geometerplus.android.util.PackageUtil;
 
 public abstract class Util implements UserRegistrationConstants {
 	static final String AUTHORIZATION_ACTION = "android.fbreader.action.network.AUTHORIZATION";
+	static final String SIGNIN_ACTION = "android.fbreader.action.network.SIGNIN";
+
+	public static final String ADD_CATALOG_ACTION = "android.fbreader.action.ADD_OPDS_CATALOG";
+	public static final String EDIT_CATALOG_ACTION = "android.fbreader.action.EDIT_OPDS_CATALOG";
 
 	public static Intent intentByLink(Intent intent, INetworkLink link) {
 		if (link != null) {
@@ -46,7 +50,7 @@ public abstract class Util implements UserRegistrationConstants {
 		return intent;
 	}
 
-	static void initLibrary(Activity activity) {
+	static void initLibrary(final Activity activity) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		if (library.isInitialized()) {
 			return;
@@ -55,7 +59,7 @@ public abstract class Util implements UserRegistrationConstants {
 		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
 			public void run() {
 				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase();
+					new SQLiteNetworkDatabase(activity.getApplication());
 				}
                 
 				library.initialize();

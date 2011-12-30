@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ public interface ICustomNetworkLink extends INetworkLink {
 	void removeUrl(UrlInfo.Type type);
 
 	boolean isObsolete(long milliSeconds);
-	void reloadInfo(boolean urlsOnly) throws ZLNetworkException;
+	void reloadInfo(boolean urlsOnly, boolean quietly) throws ZLNetworkException;
 
 	// returns true if next methods have changed link's data:
 	//   setSiteName, setTitle, setSummary, setIcon, setLink, removeLink

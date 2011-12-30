@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,8 @@ public class SelectionBookmarkAction extends FBAndroidAction {
 		super(baseApplication, fbreader);
 	}
 
-	public void run() {
+	@Override
+    protected void run(Object ... params) {
 		final FBView fbview = Reader.getTextView();
 		final String text = fbview.getSelectedText();
 

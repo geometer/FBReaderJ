@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,13 +33,16 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	}
 
 	private void addChild(String path, String resourceKey) {
-		final ZLResource resource = Library.resource().getResource(resourceKey);
-		new FileTree(
-			this,
-			ZLFile.createFileByPath(path),
-			resource.getValue(),
-			resource.getResource("summary").getValue()
-		);
+		final ZLFile file = ZLFile.createFileByPath(path);
+		if (file != null) {
+			final ZLResource resource = Library.resource().getResource(resourceKey);
+			new FileTree(
+				this,
+				file,
+				resource.getValue(),
+				resource.getResource("summary").getValue()
+			);
+		}
 	}
 
 	@Override

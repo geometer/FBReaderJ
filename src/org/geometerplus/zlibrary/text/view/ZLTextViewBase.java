@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,10 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract ZLColor getSelectedForegroundColor();
 	public abstract ZLColor getTextColor(ZLTextHyperlink hyperlink);
 	public abstract ZLColor getHighlightingColor();
+
+	ZLPaintContext.Size getTextAreaSize() {
+		return new ZLPaintContext.Size(getTextAreaWidth(), getTextAreaHeight());
+	}
 
 	int getTextAreaHeight() {
 		return myContext.getHeight() - getTopMargin() - getBottomMargin();
@@ -116,7 +120,15 @@ abstract class ZLTextViewBase extends ZLView {
 		if (element instanceof ZLTextWord) {
 			return getWordWidth((ZLTextWord)element, charIndex);
 		} else if (element instanceof ZLTextImageElement) {
-			return myContext.imageWidth(((ZLTextImageElement)element).ImageData);
+			final ZLTextImageElement imageElement = (ZLTextImageElement)element;
+			final ZLPaintContext.Size size = myContext.imageSize(
+				imageElement.ImageData,
+				getTextAreaSize(),
+				imageElement.IsCover
+					? ZLPaintContext.ScalingType.FitMaximum
+					: ZLPaintContext.ScalingType.IntegerCoefficient
+			);
+			return size != null ? size.Width : 0;
 		} else if (element == ZLTextElement.IndentElement) {
 			return myTextStyle.getFirstLineIndentDelta();
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
@@ -129,7 +141,15 @@ abstract class ZLTextViewBase extends ZLView {
 		if (element instanceof ZLTextWord) {
 			return getWordHeight();
 		} else if (element instanceof ZLTextImageElement) {
-			return myContext.imageHeight(((ZLTextImageElement)element).ImageData) +
+			final ZLTextImageElement imageElement = (ZLTextImageElement)element;
+			final ZLPaintContext.Size size = myContext.imageSize(
+				imageElement.ImageData,
+				getTextAreaSize(),
+				imageElement.IsCover
+					? ZLPaintContext.ScalingType.FitMaximum
+					: ZLPaintContext.ScalingType.IntegerCoefficient
+			);
+			return (size != null ? size.Height : 0) +
 				Math.max(myContext.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
 		}
 		return 0;

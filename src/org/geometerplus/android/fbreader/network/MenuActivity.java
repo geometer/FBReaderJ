@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,11 +45,9 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 		try {
 			startActivityForResult(new Intent(getAction(), getIntent().getData()), 0);
 		} catch (ActivityNotFoundException e) {
-			if (myInfos.size() == 1) {
-				runItem(myInfos.get(0));
+			if (finishInitialization()) {
+				return;
 			}
-			finish();
-			return;
 		}
 
 		setListAdapter(new ActionListAdapter());
@@ -59,6 +57,20 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		runItem(myInfos.get(position));
 		finish();
+	}
+
+	private boolean finishInitialization() {
+		switch (myInfos.size()) {
+			default:
+				return false;
+			case 0:
+				finish();
+				return true;
+			case 1:
+				runItem(myInfos.get(0));
+				finish();
+				return true;
+		}
 	}
 
 	@Override
@@ -71,12 +83,7 @@ abstract class MenuActivity extends ListActivity implements AdapterView.OnItemCl
 			if (actions != null) {
 				myInfos.addAll(actions);
 			}
-			if (myInfos.size() == 0) {
-				finish();
-				return;
-			} else if (myInfos.size() == 1) {
-				runItem(myInfos.get(0));
-				finish();
+			if (finishInitialization()) {
 				return;
 			}
 			Collections.sort(myInfos);

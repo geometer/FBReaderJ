@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
 #include <jni.h>
 
 #include <string.h>
@@ -7,51 +26,40 @@
 
 #define								SIZE							10
 
-static jobject				keys[SIZE]				= { 0 };
-static z_stream*			values[SIZE]			= { 0 };
+static z_stream*			ourStreams[SIZE]			= { 0 };
 
 extern "C"
-jboolean Java_org_amse_ys_zip_DeflatingDecompressor_startInflating(JNIEnv *env, jobject thiz) {
+jint Java_org_amse_ys_zip_DeflatingDecompressor_startInflating(JNIEnv *env, jobject thiz) {
 	int i;
 	for (i = 0; i < SIZE; ++i) {
-		if (keys[i] == 0) {
-			keys[i] = thiz;
-			values[i] = new z_stream;
-			memset(values[i], 0, sizeof(z_stream));
-			inflateInit2(values[i], -MAX_WBITS);
-			return 1;
+		if (ourStreams[i] == 0) {
+			ourStreams[i] = new z_stream;
+			memset(ourStreams[i], 0, sizeof(z_stream));
+			inflateInit2(ourStreams[i], -MAX_WBITS);
+			return i;
 		}
 	}
-	return 0;
+	return -1;
 }
 
 extern "C"
-void Java_org_amse_ys_zip_DeflatingDecompressor_endInflating(JNIEnv *env, jobject thiz) {
-	int i;
-	for (i = 0; i < SIZE; ++i) {
-		if (keys[i] == thiz) {
-			keys[i] = 0;
-			inflateEnd(values[i]);
-			delete values[i];
-			values[i] = 0;
-			break;
-		}
+void Java_org_amse_ys_zip_DeflatingDecompressor_endInflating(JNIEnv *env, jobject thiz, jint inflatorId) {
+	if (inflatorId >= 0 && inflatorId < SIZE) {
+		inflateEnd(ourStreams[inflatorId]);
+		delete ourStreams[inflatorId];
+		ourStreams[inflatorId] = 0;
 	}
 }
 
 // returns (endFlag << 32) + ((used inLength) << 16) + outLength
 extern "C"
-jlong Java_org_amse_ys_zip_DeflatingDecompressor_inflate(JNIEnv *env, jobject thiz, jbyteArray in, jint inOffset, jint inLength, jbyteArray out) {
-	int i;
-	z_stream *stream = 0;
-	for (i = 0; i < SIZE; ++i) {
-		if (keys[i] == thiz) {
-			stream = values[i];
-			break;
-		}
-	}
-	if (stream == 0) {
+jlong Java_org_amse_ys_zip_DeflatingDecompressor_inflate(JNIEnv *env, jobject thiz, jint inflatorId, jbyteArray in, jint inOffset, jint inLength, jbyteArray out) {
+	if (inflatorId < 0 || inflatorId >= SIZE) {
 		return -1;
+	}
+	z_stream *stream = ourStreams[inflatorId];
+	if (stream == 0) {
+		return -2;
 	}
 
 	jbyte* inStart = env->GetByteArrayElements(in, 0);
@@ -71,5 +79,5 @@ jlong Java_org_amse_ys_zip_DeflatingDecompressor_inflate(JNIEnv *env, jobject th
 		}
 		return result;
 	}
-	return -2;
+	return -3;
 }

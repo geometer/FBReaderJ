@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ class SelectionPopup extends ButtonsPopupPanel {
 
 	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
-		if (myWindow != null) {
+		if (myWindow != null && activity == myWindow.getActivity()) {
 			return;
 		}
 

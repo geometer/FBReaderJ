@@ -61,9 +61,9 @@
 			<node name="summary" value="Carti sortate de serie"/>
 		</node>
 		<node name="search" value="Cautare">
-			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
+			<node name="summary" value="Cauta carti pe %s"/>
 			<node name="summaryAllCatalogs" value="Cauta carti în cataloage"/>
-			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
+			<node name="summaryInProgress" value="Cautare in derulare"/>
 		</node>
 		<node name="found" value="S-au gasit">
 			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
@@ -81,9 +81,9 @@
 		<node name="buy" value="Cumpara (%s)"/>
 		<node name="addToBasket" value="Adauga la cos"/>
 		<node name="removeFromBasket" value="Eliminati din cos"/>
-		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
-		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
-		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
+		<node name="openBasket" value="Deschide cosul"/>
+		<node name="clearBasket" value="Goleste cosul"/>
+		<node name="buyAllBooks" value="Cumpara toate cartile"/>
 		<node name="openInBrowser" value="Deschide în browser"/>
 		<node name="stopLoading" value="Opriti încarcarea"/>
 		<node name="stopSearching" value="Opri cautarea"/>
@@ -92,12 +92,12 @@
 		<node name="topup" value="Incarcati contul (în prezent: %s)"/>
 		<node name="topupTitle" value="Incarcati contul"/>
 		<node name="topupViaBrowser" value="Pagina deschis în browser"/>
-		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
+		<node name="authorizationMenuTitle" value="Alegeti actiunea"/>
 		<node name="topupSummary" value="În prezent: %s"/>
 		<node name="basket" value="Cos"/>
-		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
-		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
-		<node name="basketSummary" value="%0 book(s) (%1)"/>
+		<node name="basketSummaryEmpty" value="Nicio carte"/>
+		<node name="basketSummaryCountOnly" value="%0 carti"/>
+		<node name="basketSummary" value="%0 carti (%1)"/>
 		<node name="alreadyDownloading" value="Cartea este în curs de descarcare"/>
 		<node name="alreadyDownloadingDemo" value="Esantionul este în curs de descarcare"/>
 		<node name="stoppingCatalogLoading" value="Oprirea  încarcarii"/>
@@ -116,6 +116,16 @@
 		</node>
 		<node name="downloadingCatalogs" value="Descarcare cataloage"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Cauta pentru carti în retea"/> <!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Add catalog" toBeTranslated="true"/>
+			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
+			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
+			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
+			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
+			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
+			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
+			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
+		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Reteaua de cautare"/>
 			<node name="reload" value="Reîncarca"/>
@@ -132,14 +142,14 @@
 	</node>
 	<node name="buyBook">
 		<node name="title" value="Cumpara cartea"/>
-		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
+		<node name="titleSeveralBooks" value="Cumpara carti"/>
 		<node name="confirm" value="Sunteti sigur ca doriti sa cumparati cartea &#10;&#8220; %s&#8221;&#10;?"/>
-		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
+		<node name="confirmSeveralBooks" value="Sunteti sigur ca doriti sa cumparati %s carti?"/>
 		<node name="alreadyBought" value="Cartea este deja cumparata"/>
-		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
-		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
-		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
-		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
+		<node name="notAuthorized" value="Este necesara autorizatie"/>
+		<node name="noAccountInformation" value="Nu se poate incarca situatia contului"/>
+		<node name="unsufficientFunds" value="Costul este de %0 dar aveti disponibil doar %1"/>
+		<node name="zeroFunds" value="Costul este de %0"/>
 	</node>
 	<node name="networkBookView">
 		<node name="bookInfo" value="Informatii despre carte"/>
@@ -255,9 +265,11 @@
 			<node name="editInfo" value="Editeaza"/>
 			<node name="reloadInfo" value="Reîncarca"/>
 			<node name="topup" value="Incarca"/>
-			<node name="pay" value="Pay" toBeTranslated="true"/>
-			<node name="refresh" value="Refresh" toBeTranslated="true"/>
-			<node name="authorize" value="Authorize" toBeTranslated="true"/>
+			<node name="pay" value="Plateste"/>
+			<node name="refresh" value="Actualizare"/>
+			<node name="authorize" value="Autorizeaza"/>
+			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -609,6 +621,13 @@
 					<node name="none" value="Nicio actiune"/>
 				</node>
 			</node>
+			<node name="tips" value="Tips" toBeTranslated="true">
+				<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
+				<node name="showTips" value="Show tips" toBeTranslated="true">
+					<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
+					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -638,10 +657,11 @@
 			<node name="authentication" value="Autentificare. Va rugam, asteptati&#8230;"/>
 			<node name="signOut" value="Iesire. Va rugam, asteptati&#8230;"/>
 			<node name="purchaseBook" value="Se cumpara cartea. Va rugam, asteptati&#8230;"/>
-			<node name="loadingCatalogInfo" value="Se incarca informatii despre catalog. Va rugam, asteptati&#8230;"/>
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
-			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam, asteptati&#8230;"/>
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
+			<node name="loadingCatalogInfo" value="Se incarca informatii despre catalog. Va rugam asteptati&#8230;"/>
+			<node name="loadingNetworkBookInfo" value="Se incarca informatii despre carte. Va rugam asteptati &#8230;"/>
+			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati&#8230;"/>
+			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati&#8230;"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>
@@ -681,6 +701,12 @@
 		<node name="languageFilterDialog">
 			<node name="title" value="Filtreaza limba"/>
 		</node>
+		<node name="tips">
+			<node name="title" value="Tip of the day" toBeTranslated="true" />
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
+			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
+			<node name="more" value="Next tip" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="Nu pot accesa Android Market. Va rugam, instalati%s manual"/>
@@ -693,7 +719,7 @@
 		<node name="noFavorites" value="Lista ta de favorite este goala, îmi pare rau"/>
 		<node name="emptyCatalog" value="Catalogul este gol, îmi pare rau"/>
 		<node name="emptyBasket" value="Cosul Dvs. este gol, îmi pare rau"/>
-		<node name="emptyNetworkSearchResults" value="No books found, sorry" toBeTranslated="true"/>
+		<node name="emptyNetworkSearchResults" value="Nu s-a gasit nici o carte"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>
@@ -706,8 +732,12 @@
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="Problema FBReader"/>
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 			<node name="text" value="Directorul de cache pentru FBReader nu este accesibil pentru scriere. Poate ati uitat sa inserati sau montati cartela de memorie. Va rugam sa corectati aceasta problema sau introduceti un alt nume de director de mai jos."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
 		</node>
 	</node>
 </resources>

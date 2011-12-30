@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,9 @@ import android.os.Process;
 public class KillerCallback extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Process.killProcess(Process.myPid());
+		if (LibraryActivity.ourToBeKilled) {
+			System.err.println("kill");
+			Process.killProcess(Process.myPid());
+		}
 	}
 }
