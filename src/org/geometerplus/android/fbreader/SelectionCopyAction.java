@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,6 @@ import android.text.ClipboardManager;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
-
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.util.UIUtil;
@@ -41,7 +39,7 @@ public class SelectionCopyAction extends FBAndroidAction {
 		Reader.getTextView().clearSelection();
 
 		final ClipboardManager clipboard =
-			(ClipboardManager)ZLAndroidApplication.Instance().getSystemService(Application.CLIPBOARD_SERVICE);
+			(ClipboardManager)BaseActivity.getApplication().getSystemService(Application.CLIPBOARD_SERVICE);
 		clipboard.setText(text);
 		UIUtil.showMessageText(
 			BaseActivity,

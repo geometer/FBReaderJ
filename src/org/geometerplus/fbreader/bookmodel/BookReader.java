@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -228,7 +228,7 @@ public class BookReader {
 	private int myUnderflowLength;
 
 	public final void addByteData(byte[] data, int start, int length) {
-		if (!myTextParagraphExists || (length == 0)) {
+		if (!myTextParagraphExists || length == 0) {
 			return;
 		}
 		myTextParagraphIsNonEmpty = true;
@@ -241,7 +241,7 @@ public class BookReader {
 
 		if (myUnderflowLength > 0) {
 			int l = myUnderflowLength;
-			while (length-- > 0) {
+			while (length-- > 0 && l < 4) {
 				myUnderflowByteBuffer[l++] = data[start++];
 				final ByteBuffer ubb = ByteBuffer.wrap(myUnderflowByteBuffer);
 				myByteDecoder.decode(ubb, cb, false);
@@ -388,21 +388,21 @@ public class BookReader {
 		beginContentsParagraph(-1);
 	}
 	
-	public final void addImageReference(String ref) {
-		addImageReference(ref, (short)0);
+	public final void addImageReference(String ref, boolean isCover) {
+		addImageReference(ref, (short)0, isCover);
 	}
 
-	public final void addImageReference(String ref, short vOffset) {
+	public final void addImageReference(String ref, short vOffset, boolean isCover) {
 		final ZLTextWritableModel textModel = myCurrentTextModel;
 		if (textModel != null) {
 			mySectionContainsRegularContents = true;
 			if (myTextParagraphExists) {
 				flushTextBufferToParagraph();
-				textModel.addImage(ref, vOffset);
+				textModel.addImage(ref, vOffset, isCover);
 			} else {
 				beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				textModel.addControl(FBTextKind.IMAGE, true);
-				textModel.addImage(ref, vOffset);
+				textModel.addImage(ref, vOffset, isCover);
 				textModel.addControl(FBTextKind.IMAGE, false);
 				endParagraph();
 			}

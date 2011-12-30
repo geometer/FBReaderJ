@@ -706,6 +706,12 @@
 		<node name="languageFilterDialog">
 			<node name="title" value="語言篩選" />
 		</node>
+		<node name="tips">
+			<node name="title" value="Tip of the day" toBeTranslated="true" />
+			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
+			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
+			<node name="more" value="Next tip" toBeTranslated="true"/>
+		</node>
 	</node>
 	<node name="errorMessage">
 		<node name="cannotRunAndroidMarket" value="無法啟動Android Market，請自行安裝 %s"/>

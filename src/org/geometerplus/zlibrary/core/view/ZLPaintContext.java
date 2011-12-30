@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -145,9 +145,35 @@ abstract public class ZLPaintContext {
 	}
 	abstract public void drawString(int x, int y, char[] string, int offset, int length);
 
-	abstract public int imageWidth(ZLImageData image);
-	abstract public int imageHeight(ZLImageData image);
-	abstract public void drawImage(int x, int y, ZLImageData image);
+	public static final class Size {
+		public final int Width;
+		public final int Height;
+
+		public Size(int w, int h) {
+			Width = w;
+			Height = h;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (other == this) {
+				return true;
+			}
+			if (!(other instanceof Size)) {
+				return false;
+			}
+			final Size s = (Size)other;
+			return Width == s.Width && Height == s.Height;
+		}
+	}
+	public static enum ScalingType {
+		OriginalSize,
+		IntegerCoefficient,
+		FitMaximum
+	}
+
+	abstract public Size imageSize(ZLImageData image, Size maxSize, ScalingType scaling);
+	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling);
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);

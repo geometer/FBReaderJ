@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -162,7 +162,8 @@ public class ZLTextPlainModel implements ZLTextModel {
 					final short len = (short)data[dataOffset++];
 					final String id = new String(data, dataOffset, len);
 					dataOffset += len;
-					myImageEntry = new ZLImageEntry(myImageMap, id, vOffset);
+					final boolean isCover = data[dataOffset++] != 0;
+					myImageEntry = new ZLImageEntry(myImageMap, id, vOffset, isCover);
 					break;
 				}
 				case ZLTextParagraph.Entry.FIXED_HSPACE:

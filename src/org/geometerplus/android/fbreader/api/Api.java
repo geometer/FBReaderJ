@@ -22,6 +22,7 @@ public interface Api {
 	//List<String> getBookAuthors() throws ApiException;
 	List<String> getBookTags() throws ApiException;
 	String getBookFileName() throws ApiException;
+	String getBookHash() throws ApiException;
 
 	// text information
 	int getParagraphsNumber() throws ApiException;
