@@ -51,17 +51,27 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	public synchronized void connect() {
 		if (myInterface == null) {
 			myContext.bindService(new Intent(ACTION_API), this, Context.BIND_AUTO_CREATE);
+			myContext.registerReceiver(myEventReceiver, new IntentFilter(ACTION_API_CALLBACK));
 		}
 	}
 
 	public synchronized void disconnect() {
 		if (myInterface != null) {
+			myContext.unregisterReceiver(myEventReceiver);
 			try {
 				myContext.unbindService(this);
 			} catch (IllegalArgumentException e) {
 			}
 			myInterface = null;
 		}
+	}
+
+	public void addListener(ApiListener listener) {
+		myApiListeners.add(listener);
+	}
+
+	public void removeListener(ApiListener listener) {
+		myApiListeners.remove(listener);
 	}
 
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
