@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ public interface ZLTextWritableModel extends ZLTextModel {
 
 	//void addControl(ZLTextForcedControlEntry entry);
 	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
-	void addImage(String id, short vOffset);
+	void addImage(String id, short vOffset, boolean isCover);
 	void addFixedHSpace(short length);
 
 	void stopReading();

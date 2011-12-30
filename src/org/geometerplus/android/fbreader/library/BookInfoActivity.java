@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -293,7 +293,7 @@ public class BookInfoActivity extends Activity {
 		}
 		final int kilo = 1024;
 		if (size < kilo) { // less than 1 kilobyte
-			return myResource.getResource("sizeInBytes").getValue().replaceAll("%s", String.valueOf(size));
+			return myResource.getResource("sizeInBytes").getValue((int)size).replaceAll("%s", String.valueOf(size));
 		}
 		final String value;
 		if (size < kilo * kilo) { // less than 1 megabyte

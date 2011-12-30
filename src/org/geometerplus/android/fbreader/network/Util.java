@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ public abstract class Util implements UserRegistrationConstants {
 		return intent;
 	}
 
-	static void initLibrary(Activity activity) {
+	static void initLibrary(final Activity activity) {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 		if (library.isInitialized()) {
 			return;
@@ -59,7 +59,7 @@ public abstract class Util implements UserRegistrationConstants {
 		UIUtil.wait("loadingNetworkLibrary", new Runnable() {
 			public void run() {
 				if (SQLiteNetworkDatabase.Instance() == null) {
-					new SQLiteNetworkDatabase();
+					new SQLiteNetworkDatabase(activity.getApplication());
 				}
                 
 				library.initialize();

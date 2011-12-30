@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
 		attrs.screenBrightness = percent / 100.0f;
 		getWindow().setAttributes(attrs);
-		((ZLAndroidApplication)getApplication()).ScreenBrightnessLevelOption.setValue(percent);
+		getLibrary().ScreenBrightnessLevelOption.setValue(percent);
 	}
 
 	final int getScreenBrightness() {
@@ -97,7 +97,7 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		if (ZLAndroidApplication.Instance().DisableButtonLightsOption.getValue()) {
+		if (getLibrary().DisableButtonLightsOption.getValue()) {
 			disableButtonLight();
 		}
 		setContentView(R.layout.main);
@@ -106,9 +106,10 @@ public abstract class ZLAndroidActivity extends Activity {
 		getLibrary().setActivity(this);
 
 		final ZLFile fileToOpen = fileFromIntent(getIntent());
-		if (((ZLAndroidApplication)getApplication()).myMainWindow == null) {
-			ZLApplication application = createApplication(fileToOpen);
-			((ZLAndroidApplication)getApplication()).myMainWindow = new ZLAndroidApplicationWindow(application);
+		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
+		if (androidApplication.myMainWindow == null) {
+			final ZLApplication application = createApplication(fileToOpen);
+			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
 		} else {
 			ZLApplication.Instance().openFile(fileToOpen);
@@ -120,7 +121,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	public void onStart() {
 		super.onStart();
 
-		if (ZLAndroidApplication.Instance().AutoOrientationOption.getValue()) {
+		if (getLibrary().AutoOrientationOption.getValue()) {
 			setAutoRotationMode();
 		} else {
 			switch (myOrientation) {
@@ -181,12 +182,12 @@ public abstract class ZLAndroidActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		switchWakeLock(
-			ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() <
+			getLibrary().BatteryLevelToTurnScreenOffOption.getValue() <
 			ZLApplication.Instance().getBatteryLevel()
 		);
 		myStartTimer = true;
 		final int brightnessLevel =
-			((ZLAndroidApplication)getApplication()).ScreenBrightnessLevelOption.getValue();
+			getLibrary().ScreenBrightnessLevelOption.getValue();
 		if (brightnessLevel != 0) {
 			setScreenBrightness(brightnessLevel);
 		} else {
@@ -236,8 +237,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	private int myChangeCounter;
 	private int myOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 	private void setAutoRotationMode() {
-		final ZLAndroidApplication application = ZLAndroidApplication.Instance();
-		myOrientation = application.AutoOrientationOption.getValue() ?
+		myOrientation = getLibrary().AutoOrientationOption.getValue() ?
 			ActivityInfo.SCREEN_ORIENTATION_SENSOR : ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
 		setRequestedOrientation(myOrientation);
 		myChangeCounter = 0;
@@ -292,9 +292,10 @@ public abstract class ZLAndroidActivity extends Activity {
 	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			final int level = intent.getIntExtra("level", 100);
-			((ZLAndroidApplication)getApplication()).myMainWindow.setBatteryLevel(level);
+			final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+			application.myMainWindow.setBatteryLevel(level);
 			switchWakeLock(
-				ZLAndroidApplication.Instance().BatteryLevelToTurnScreenOffOption.getValue() < level
+				getLibrary().BatteryLevelToTurnScreenOffOption.getValue() < level
 			);
 		}
 	};
