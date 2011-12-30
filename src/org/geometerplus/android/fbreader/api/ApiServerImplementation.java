@@ -186,8 +186,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookHash() {
-		// TODO: implement
-		return null;
+		return myReader.Model.Book.getContentHashCode();
 	}
 
 	// page information
