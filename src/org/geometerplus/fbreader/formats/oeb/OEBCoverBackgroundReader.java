@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,58 +28,15 @@ import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.fbreader.formats.util.MiscUtil;
 
 class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespaces {
-	private class XHTMLImageFinder extends ZLXMLReaderAdapter {
-		@Override
-		public boolean processNamespaces() {
-			return true;
-		}
-
-		@Override
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			tag = tag.toLowerCase();
-			String href = null;
-			if ("img".equals(tag)) {
-				href = attributes.getValue("src");
-			} else if ("image".equals(tag)) {
-				href = getAttributeValue(attributes, XLink, "href");
-			}
-
-			if (href != null) {
-				myImage = new ZLFileImage(
-					MimeType.IMAGE_AUTO,
-					ZLFile.createFileByPath(myXHTMLPathPrefix + MiscUtil.decodeHtmlReference(href))
-				);
-				return true;
-			}
-
-			return false;
-		}
-	}
-
 	private ZLFileImage myImage;
 	private String myPathPrefix;
-	private String myXHTMLPathPrefix;
-	private String myCoverXHTML;
 	private boolean myReadGuide;
 
 	public ZLFileImage readCover(ZLFile file) {
 		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
 		myReadGuide = false;
 		myImage = null;
-		myCoverXHTML = null;
 		read(file);
-		if (myCoverXHTML != null) {
-			final ZLFile coverFile = ZLFile.createFileByPath(myCoverXHTML);
-			if (coverFile != null) {
-				final String ext = coverFile.getExtension();
-				if ("gif".equals(ext) || "jpg".equals(ext) || "jpeg".equals(ext)) {
-					myImage = new ZLFileImage(MimeType.IMAGE_AUTO, coverFile);
-				} else {
-					myXHTMLPathPrefix = MiscUtil.htmlDirectoryPrefix(coverFile);
-					new XHTMLImageFinder().read(coverFile);
-				}
-			}
-		}
 		return myImage;
 	}
 
@@ -98,7 +55,9 @@ class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespac
 			if (COVER == type) {
 				final String href = attributes.getValue("href");
 				if (href != null) {
-					myCoverXHTML = myPathPrefix + MiscUtil.decodeHtmlReference(href);
+					final ZLFile coverFile =
+						ZLFile.createFileByPath(myPathPrefix + MiscUtil.decodeHtmlReference(href));
+					myImage = XHTMLImageFinder.getCoverImage(coverFile);
 					return true;
 				}
 			} else if (COVER_IMAGE == type) {

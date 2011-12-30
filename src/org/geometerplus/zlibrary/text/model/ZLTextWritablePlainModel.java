@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,16 +129,18 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myBlockOffset = blockOffset + labelLength;
 	}
 	
-	public void addImage(String id, short vOffset) {
+	public void addImage(String id, short vOffset, boolean isCover) {
 		final int len = id.length();
-		final char[] block = getDataBlock(3 + len);
+		final char[] block = getDataBlock(4 + len);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
 		block[blockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
 		block[blockOffset++] = (char)vOffset;
 		block[blockOffset++] = (char)len;
 		id.getChars(0, len, block, blockOffset);
-		myBlockOffset = blockOffset + len;
+		blockOffset += len;
+		block[blockOffset++] = (char)(isCover ? 1 : 0);
+		myBlockOffset = blockOffset;
 	}
 	
 	public void addFixedHSpace(short length) {

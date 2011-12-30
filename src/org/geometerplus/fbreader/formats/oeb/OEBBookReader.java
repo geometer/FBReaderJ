@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private String myOPFSchemePrefix;
 	private String myFilePrefix;
 	private String myNCXTOCFileName;
+	private String myCoverFileName;
 
 	OEBBookReader(BookModel model) {
 		myModelReader = new BookReader(model);
@@ -86,11 +87,15 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myModelReader.setMainTextModel();
 		myModelReader.pushKind(FBTextKind.REGULAR);
 
+		int count = 0;
 		for (String name : myHtmlFileNames) {
 			final ZLFile xhtmlFile = ZLFile.createFileByPath(myFilePrefix + name);
 			if (xhtmlFile == null) {
 				// NPE fix: null for bad attributes in .opf XML file
 				return false;
+			}
+			if (count++ == 0 && xhtmlFile.getPath().equals(myCoverFileName)) {
+				continue;
 			}
 			final XHTMLReader reader = new XHTMLReader(myModelReader, myFileNumbers);
 			final String referenceName = reader.getFileAlias(MiscUtil.archiveEntryName(xhtmlFile.getPath()));
@@ -175,6 +180,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private static final String ITEMREF = "itemref";
 	private static final String ITEM = "item";
 
+	private static final String COVER = "cover";
 	private static final String COVER_IMAGE = "other.ms-coverimage-standard";
 
 	private static final int READ_NONE = 0;
@@ -225,12 +231,25 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 				if (title != null) {
 					myGuideTOC.add(new Reference(title, href));
 				}
-				if (type != null && COVER_IMAGE.equals(type)) {
-					myModelReader.setMainTextModel();
+				if (COVER.equals(type)) {
 					final ZLFile imageFile = ZLFile.createFileByPath(myFilePrefix + href);
+					myCoverFileName = imageFile.getPath();
 					final String imageName = imageFile.getLongName();
-					myModelReader.addImageReference(imageName, (short)0);
+					final ZLFileImage image = XHTMLImageFinder.getCoverImage(imageFile);
+					if (image != null) {
+						myModelReader.setMainTextModel();
+						myModelReader.addImageReference(imageName, (short)0, true);
+						myModelReader.addImage(imageName, image);
+						myModelReader.insertEndOfSectionParagraph();
+					}
+				} else if (COVER_IMAGE.equals(type)) {
+					final ZLFile imageFile = ZLFile.createFileByPath(myFilePrefix + href);
+					myCoverFileName = imageFile.getPath();
+					final String imageName = imageFile.getLongName();
+					myModelReader.setMainTextModel();
+					myModelReader.addImageReference(imageName, (short)0, true);
 					myModelReader.addImage(imageName, new ZLFileImage(MimeType.IMAGE_AUTO, imageFile));
+					myModelReader.insertEndOfSectionParagraph();
 				}
 			}
 		} else if (myState == READ_TOUR && SITE == tag) {

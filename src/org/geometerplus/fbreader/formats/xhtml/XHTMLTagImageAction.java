@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ class XHTMLTagImageAction extends XHTMLTagAction {
 					modelReader.endParagraph();
 				}
 				final String imageName = imageFile.getLongName();
-				modelReader.addImageReference(imageName, (short)0);
+				modelReader.addImageReference(imageName, (short)0, false);
 				modelReader.addImage(imageName, new ZLFileImage(MimeType.IMAGE_AUTO, imageFile));
 				if (flag) {
 					modelReader.beginParagraph();
