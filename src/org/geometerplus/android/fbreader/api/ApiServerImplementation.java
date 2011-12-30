@@ -72,6 +72,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelope(getBookTitle());
 				case GET_BOOK_FILE_NAME:
 					return ApiObject.envelope(getBookFileName());
+				case GET_BOOK_HASH:
+					return ApiObject.envelope(getBookHash());
 				case GET_PARAGRAPHS_NUMBER:
 					return ApiObject.envelope(getParagraphsNumber());
 				case GET_ELEMENTS_NUMBER:
@@ -179,6 +181,11 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookFileName() {
+		// TODO: implement
+		return null;
+	}
+
+	public String getBookHash() {
 		// TODO: implement
 		return null;
 	}
