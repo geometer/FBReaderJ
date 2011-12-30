@@ -14,7 +14,9 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		void onConnected();
 	}
 
-	private static String ACTION_API = "android.fbreader.action.API";
+	private static final String ACTION_API = "android.fbreader.action.API";
+	static final String ACTION_API_CALLBACK = "android.fbreader.action.API_CALLBACK";
+	static final String EVENT_TYPE = "event.type";
 
 	private final Context myContext;
 	private ConnectionListener myListener;
