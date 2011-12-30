@@ -101,9 +101,9 @@ public class ImageViewActivity extends Activity {
 	private class ImageView extends View {
 		private final Paint myPaint = new Paint();
 
-		private int myDx = 0;
-		private int myDy = 0;
-		private float myZoomFactor = 1.0f;
+		private volatile int myDx = 0;
+		private volatile int myDy = 0;
+		private volatile float myZoomFactor = 1.0f;
 
 		ImageView() {
 			super(ImageViewActivity.this);
@@ -154,21 +154,21 @@ public class ImageViewActivity extends Activity {
 				return;
 			}
 
-			final int w = getWidth();
-			final int h = getHeight();
-			final int bw = (int)(myBitmap.getWidth() * myZoomFactor);
-			final int bh = (int)(myBitmap.getHeight() * myZoomFactor);
+			final int w = (int)(getWidth() / myZoomFactor);
+			final int h = (int)(getHeight() / myZoomFactor);
+			final int bw = myBitmap.getWidth();
+			final int bh = myBitmap.getHeight();
 
 			final int newDx, newDy;
 
 			if (w < bw) {
-				final int delta = bw - w;
+				final int delta = (bw - w) / 2;
 				newDx = Math.max(-delta, Math.min(delta, myDx + dx));
 			} else {
 				newDx = myDx;
 			}
 			if (h < bh) {
-				final int delta = bh - h;
+				final int delta = (bh - h) / 2;
 				newDy = Math.max(-delta, Math.min(delta, myDy + dy));
 			} else {
 				newDy = myDy;
@@ -200,7 +200,10 @@ public class ImageViewActivity extends Activity {
 					break;
 				case MotionEvent.ACTION_MOVE:
 					if (myMotionControl) {
-						shift(x - mySavedX, y - mySavedY);
+						shift(
+							(int)((x - mySavedX) / myZoomFactor),
+							(int)((y - mySavedY) / myZoomFactor)
+						);
 					}
 					myMotionControl = true;
 					mySavedX = x;

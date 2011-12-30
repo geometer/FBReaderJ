@@ -20,6 +20,10 @@
 package org.geometerplus.fbreader.library;
 
 import java.util.*;
+import java.io.InputStream;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.*;
@@ -412,6 +416,41 @@ public class Book {
 	public void insertIntoBookList() {
 		if (myId != -1) {
 			BooksDatabase.Instance().insertIntoBookList(myId);
+		}
+	}
+
+	public String getContentHashCode() {
+		InputStream stream = null;
+
+		try {
+			final MessageDigest hash = MessageDigest.getInstance("SHA-256");
+			stream = File.getInputStream();
+
+			final byte[] buffer = new byte[2048];
+			while (true) {
+				final int nread = stream.read(buffer);
+				if (nread == -1) {
+					break;
+				}
+				hash.update(buffer, 0, nread);
+			}
+
+			final Formatter f = new Formatter();
+			for (byte b : hash.digest()) {
+				f.format("%02X", b & 0xFF);
+			}
+			return f.toString();
+		} catch (IOException e) {
+			return null;
+		} catch (NoSuchAlgorithmException e) {
+			return null;
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+				}
+			}
 		}
 	}
 
