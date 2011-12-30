@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,82 +29,104 @@ final class DummyPaintContext extends ZLPaintContext {
 	DummyPaintContext() {
 	}
 
+	@Override
 	public void clear(ZLFile wallpaperFile, boolean doMirror) {
 	}
 
+	@Override
 	public void clear(ZLColor color) {
 	}
 
+	@Override
 	public ZLColor getBackgroundColor() {
 		return new ZLColor(0, 0, 0);
 	}
 
+	@Override
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
 	}
 
+	@Override
 	public void setTextColor(ZLColor color) {
 	}
 
+	@Override
 	public void setLineColor(ZLColor color, int style) {
 	}
+	@Override
 	public void setLineWidth(int width) {
 	}
 
+	@Override
 	public void setFillColor(ZLColor color, int alpha, int style) {
 	}
 
+	@Override
 	public int getWidth() {
 		return 1;
 	}
+	@Override
 	public int getHeight() {
 		return 1;
 	}
 	
+	@Override
 	public int getStringWidth(char[] string, int offset, int length) {
 		return 1;
 	}
 
+	@Override
 	protected int getSpaceWidthInternal() {
 		return 1;
 	}
 
+	@Override
 	protected int getStringHeightInternal() {
 		return 1;
 	}
 
+	@Override
 	protected int getDescentInternal() {
 		return 1;
 	}
 
+	@Override
 	public void drawString(int x, int y, char[] string, int offset, int length) {
 	}
 
-	public int imageWidth(ZLImageData image) {
-		return 1;
+	@Override
+	public Size imageSize(ZLImageData image, Size maxSize, ScalingType scaling) {
+		return null;
 	}
-	public int imageHeight(ZLImageData image) {
-		return 1;
-	}
-	public void drawImage(int x, int y, ZLImageData image) {
+	@Override
+	public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling) {
 	}
 
+	@Override
 	public void drawLine(int x0, int y0, int x1, int y1) {
 	}
+	@Override
 	public void fillRectangle(int x0, int y0, int x1, int y1) {
 	}
+	@Override
 	public void drawFilledCircle(int x, int y, int r) {
 	}
 
+	@Override
 	public void fillPolygon(int[] xs, int ys[]) {
 	}
+	@Override
 	public void drawPolygonalLine(int[] xs, int ys[]) {
 	}
+	@Override
 	public void drawOutline(int[] xs, int ys[]) {
 	}
 
+	@Override
 	public String realFontFamilyName(String fontFamily) {
 		return fontFamily;
 	}
+	@Override
 	protected void fillFamiliesList(ArrayList<String> families) {
 	}
 }

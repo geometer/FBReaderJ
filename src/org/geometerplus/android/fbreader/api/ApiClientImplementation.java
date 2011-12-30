@@ -14,11 +14,33 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		void onConnected();
 	}
 
-	private static String ACTION_API = "android.fbreader.action.API";
+	private static final String ACTION_API = "android.fbreader.action.API";
+	static final String ACTION_API_CALLBACK = "android.fbreader.action.API_CALLBACK";
+	static final String EVENT_TYPE = "event.type";
 
 	private final Context myContext;
 	private ConnectionListener myListener;
 	private volatile ApiInterface myInterface;
+
+	private final List<ApiListener> myApiListeners =
+		Collections.synchronizedList(new LinkedList<ApiListener>());
+
+	private final BroadcastReceiver myEventReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (myInterface == null || myApiListeners.size() == 0) {
+				return;
+			}
+			final int code = intent.getIntExtra(EVENT_TYPE, -1);
+			if (code != -1) {
+				synchronized (myApiListeners) {
+					for (ApiListener l : myApiListeners) {
+						l.onEvent(code);
+					}
+				}
+			}
+		}
+	};
 
 	public ApiClientImplementation(Context context, ConnectionListener listener) {
 		myContext = context;
@@ -29,17 +51,27 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	public synchronized void connect() {
 		if (myInterface == null) {
 			myContext.bindService(new Intent(ACTION_API), this, Context.BIND_AUTO_CREATE);
+			myContext.registerReceiver(myEventReceiver, new IntentFilter(ACTION_API_CALLBACK));
 		}
 	}
 
 	public synchronized void disconnect() {
 		if (myInterface != null) {
+			myContext.unregisterReceiver(myEventReceiver);
 			try {
 				myContext.unbindService(this);
 			} catch (IllegalArgumentException e) {
 			}
 			myInterface = null;
 		}
+	}
+
+	public void addListener(ApiListener listener) {
+		myApiListeners.add(listener);
+	}
+
+	public void removeListener(ApiListener listener) {
+		myApiListeners.remove(listener);
 	}
 
 	public synchronized void onServiceConnected(ComponentName className, IBinder service) {
@@ -183,6 +215,10 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	public String getBookFileName() throws ApiException {
 		return requestString(GET_BOOK_FILE_NAME, EMPTY_PARAMETERS);
+	}
+
+	public String getBookHash() throws ApiException {
+		return requestString(GET_BOOK_HASH, EMPTY_PARAMETERS);
 	}
 
 	public TextPosition getPageStart() throws ApiException {

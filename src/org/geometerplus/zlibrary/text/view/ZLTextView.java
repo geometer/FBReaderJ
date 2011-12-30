@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -779,7 +779,15 @@ public abstract class ZLTextView extends ZLTextViewBase {
 							? getSelectedForegroundColor() : getTextColor(getTextStyle().Hyperlink)
 					);
 				} else if (element instanceof ZLTextImageElement) {
-					context.drawImage(areaX, areaY, ((ZLTextImageElement)element).ImageData);
+					final ZLTextImageElement imageElement = (ZLTextImageElement)element;
+					context.drawImage(
+						areaX, areaY,
+						imageElement.ImageData,
+						getTextAreaSize(),
+						imageElement.IsCover
+							? ZLPaintContext.ScalingType.FitMaximum
+							: ZLPaintContext.ScalingType.IntegerCoefficient
+					);
 				} else if (element == ZLTextElement.HSpace) {
 					final int cw = context.getSpaceWidth();
 					/*
