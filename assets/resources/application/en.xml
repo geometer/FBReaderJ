@@ -181,7 +181,9 @@
 		<node name="type" value="Type:"/>
 		<node name="size" value="Size:"/>
 		<node name="time" value="Last modified:"/>
-		<node name="sizeInBytes" value="%s byte(s)"/>
+		<node name="sizeInBytes" value="%s bytes">
+			<node condition="value 1" value="%s byte"/>
+		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="menu">
 			<node name="edit" value="Edit"/>
