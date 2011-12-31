@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,9 @@ class FontStylePreference extends ZLStringListPreference {
 		setInitialValue(myValues[intValue]);
 	}
 
-	public void onAccept() {
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
 		final int intValue = findIndexOfValue(getValue());
 		myBoldOption.setValue((intValue & 0x1) == 0x1);
 		myItalicOption.setValue((intValue & 0x2) == 0x2);

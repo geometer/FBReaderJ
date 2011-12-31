@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,11 @@ import android.app.SearchManager;
 import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -46,7 +47,7 @@ import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 import org.geometerplus.android.fbreader.library.KillerCallback;
-import org.geometerplus.android.fbreader.api.PluginApi;
+import org.geometerplus.android.fbreader.api.*;
 import org.geometerplus.android.fbreader.tips.TipsActivity;
 
 import org.geometerplus.android.util.UIUtil;
@@ -101,9 +102,9 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myFullScreenFlag =
-			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
@@ -141,19 +142,20 @@ public final class FBReader extends ZLAndroidActivity {
 
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
 
-		final TipsManager manager = TipsManager.Instance();
-		if (manager.tipShouldBeShown()) {
-			startActivity(new Intent(this, TipsActivity.class));
-		} else if (manager.tipsShouldBeDownloaded()) {
-			manager.startDownloading();
+		fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_SYSTEM));
+		fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_PORTRAIT));
+		fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_LANDSCAPE));
+		if (ZLibrary.Instance().supportsAllOrientations()) {
+			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_PORTRAIT));
+			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
 	}
 
  	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		if (!application.ShowStatusBarOption.getValue() &&
-			application.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		if (!zlibrary.ShowStatusBarOption.getValue() &&
+			zlibrary.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 		return super.onPrepareOptionsMenu(menu);
@@ -162,22 +164,36 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onOptionsMenuClosed(Menu menu) {
 		super.onOptionsMenuClosed(menu);
-		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		if (!application.ShowStatusBarOption.getValue() &&
-			application.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		if (!zlibrary.ShowStatusBarOption.getValue() &&
+			zlibrary.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		if (!zlibrary.ShowStatusBarOption.getValue() &&
+			zlibrary.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	protected void onNewIntent(Intent intent) {
+		final Uri data = intent.getData();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0) {
 			super.onNewIntent(intent);
+		} else if (Intent.ACTION_VIEW.equals(intent.getAction())
+					&& data != null && "fbreader-action".equals(data.getScheme())) {
+			fbReader.doAction(data.getEncodedSchemeSpecificPart(), data.getFragment());
 		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			final String pattern = intent.getStringExtra(SearchManager.QUERY);
 			final Runnable runnable = new Runnable() {
 				public void run() {
-					final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 					final TextSearchPopup popup = (TextSearchPopup)fbReader.getPopupById(TextSearchPopup.ID);
 					popup.initPosition();
 					fbReader.TextSearchPatternOption.setValue(pattern);
@@ -206,14 +222,16 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 
 		final int fullScreenFlag =
-			application.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
 		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
 			startActivity(new Intent(this, getClass()));
 		}
+
+		SetScreenOrientationAction.setOrientation(this, zlibrary.OrientationOption.getValue());
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
@@ -238,6 +256,21 @@ public final class FBReader extends ZLAndroidActivity {
 			null,
 			null
 		);
+
+		final TipsManager manager = TipsManager.Instance();
+		switch (manager.requiredAction()) {
+			case Initialize:
+				startActivity(new Intent(TipsActivity.INITIALIZE_ACTION, null, this, TipsActivity.class));
+				break;
+			case Show:
+				startActivity(new Intent(TipsActivity.SHOW_TIP_ACTION, null, this, TipsActivity.class));
+				break;
+			case Download:
+				manager.startDownloading();
+				break;
+			case None:
+				break;
+		}
 	}
 
 	@Override
@@ -248,11 +281,13 @@ public final class FBReader extends ZLAndroidActivity {
 		} catch (Throwable t) {
 		}
 		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
+		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
 	}
 
 	@Override
 	public void onStop() {
-		PopupPanel.removeAllWindows(FBReaderApp.Instance());
+		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_CLOSED);
+		PopupPanel.removeAllWindows(FBReaderApp.Instance(), this);
 		super.onStop();
 	}
 
@@ -353,7 +388,14 @@ public final class FBReader extends ZLAndroidActivity {
 		addMenuItem(menu, ActionCode.SEARCH, R.drawable.ic_menu_search);
 		addMenuItem(menu, ActionCode.SHOW_PREFERENCES);
 		addMenuItem(menu, ActionCode.SHOW_BOOK_INFO);
-		addMenuItem(menu, ActionCode.ROTATE);
+		final Menu subMenu = menu.addSubMenu("Screen orientation");
+		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_SYSTEM);
+		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT);
+		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE);
+		if (ZLibrary.Instance().supportsAllOrientations()) {
+			addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+			addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+		}
 		addMenuItem(menu, ActionCode.INCREASE_FONT);
 		addMenuItem(menu, ActionCode.DECREASE_FONT);
 		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);

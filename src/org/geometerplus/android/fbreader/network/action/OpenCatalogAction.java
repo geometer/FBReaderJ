@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.network.NetworkLibraryActivity;
+import org.geometerplus.android.fbreader.network.NetworkLibrarySecondaryActivity;
 
 import org.geometerplus.android.util.PackageUtil;
 
@@ -61,7 +62,7 @@ public class OpenCatalogAction extends Action {
 			((NetworkLibraryActivity)myActivity).openTree(tree);
 		} else {
 			myActivity.startActivity(
-				new Intent(myActivity.getApplicationContext(), NetworkLibraryActivity.class)
+				new Intent(myActivity.getApplicationContext(), NetworkLibrarySecondaryActivity.class)
 					.putExtra(NetworkLibraryActivity.TREE_KEY_KEY, tree.getUniqueKey())
 			);
 		}

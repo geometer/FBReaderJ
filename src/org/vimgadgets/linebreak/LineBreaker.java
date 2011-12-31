@@ -2,7 +2,7 @@ package org.vimgadgets.linebreak;
 
 public final class LineBreaker {
 	static {
-		System.loadLibrary("LineBreak");
+		System.loadLibrary("LineBreak-v2");
 		init();
 	}
 

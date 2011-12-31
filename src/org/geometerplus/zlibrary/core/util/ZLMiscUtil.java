@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ public abstract class ZLMiscUtil {
 			   (text.toLowerCase().indexOf(lowerCasePattern) >= 0);
 	}
 
-	public static String listToString(List<String> list) {
+	public static String listToString(List<String> list, String delimiter) {
 		if (list == null || list.isEmpty()) {
 			return "";
 		}
@@ -77,17 +77,17 @@ public abstract class ZLMiscUtil {
 			if (first) {
 				first = false;
 			} else {
-				builder.append(",");
+				builder.append(delimiter);
 			}
 			builder.append(s);
 		}
 		return builder.toString();
 	}
 
-	public static List<String> stringToList(String str) {
+	public static List<String> stringToList(String str, String delimiter) {
 		if (str == null || "".equals(str)) {
 			return Collections.emptyList();
 		}
-		return Arrays.asList(str.split(","));
+		return Arrays.asList(str.split(delimiter));
 	}
 }

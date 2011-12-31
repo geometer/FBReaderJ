@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 
 	public BasketCatalogTree(NetworkCatalogTree parent, BasketItem item, int position) {
 		super(parent, item, position);
-		setCover(null);
 		if (!item.bookIds().isEmpty()) {
 			startItemsLoader(false, false);
 		}
@@ -39,12 +38,17 @@ public class BasketCatalogTree extends NetworkCatalogTree {
 
 	public BasketCatalogTree(RootTree parent, BasketItem item) {
 		super(parent, item.Link, item, 0);
-		setCover(null);
 		if (!item.bookIds().isEmpty()) {
 			startItemsLoader(false, false);
 		}
 	}
 
+	@Override
+	protected boolean canUseParentCover() {
+		return false;
+	}
+
+	@Override
 	public synchronized List<FBTree> subTrees() {
 		final BasketItem basketItem = (BasketItem)Item;
 		final long generation = basketItem.getGeneration();

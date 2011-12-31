@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -68,7 +67,21 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
-			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+			final MenuItem menuItem = entry.getKey();
+			menuItem.setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+			switch (application.isActionChecked(actionId)) {
+				case B3_TRUE:
+					menuItem.setCheckable(true);
+					menuItem.setChecked(true);
+					break;
+				case B3_FALSE:
+					menuItem.setCheckable(true);
+					menuItem.setChecked(false);
+					break;
+				case B3_UNDEFINED:
+					menuItem.setCheckable(false);
+					break;
+			}
 		}
 	}
 	
@@ -98,15 +111,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	protected ZLViewWidget getViewWidget() {
 		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-	}
-
-	@Override
-	public void rotate() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).rotateScreen();
-	}
-
-	public boolean canRotate() {
-		return !ZLAndroidApplication.Instance().AutoOrientationOption.getValue();
 	}
 
 	public void close() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,13 @@ package org.geometerplus.zlibrary.ui.android.library;
 
 import java.io.*;
 import java.util.*;
+import java.lang.reflect.Field;
 
 import android.app.Application;
-import android.content.res.AssetFileDescriptor;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.AssetFileDescriptor;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
@@ -32,11 +35,28 @@ import android.util.DisplayMetrics;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 public final class ZLAndroidLibrary extends ZLibrary {
+	public final ZLBooleanOption ShowStatusBarOption = new ZLBooleanOption("LookNFeel", "ShowStatusBar", hasNoHardwareMenuButton());
+	public final ZLBooleanOption ShowStatusBarWhenMenuIsActiveOption = new ZLBooleanOption("LookNFeel", "ShowStatusBarWithMenu", true);
+	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
+	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
+	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", true);
+
+	private boolean hasNoHardwareMenuButton() {
+		return
+			// Eken M001
+			(Build.DISPLAY != null && Build.DISPLAY.contains("simenxie")) ||
+			// PanDigital
+			"PD_Novel".equals(Build.MODEL);
+	}
+
 	private ZLAndroidActivity myActivity;
 	private final Application myApplication;
 	private ZLAndroidWidget myWidget;
@@ -48,12 +68,6 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	void setActivity(ZLAndroidActivity activity) {
 		myActivity = activity;
 		myWidget = null;
-	}
-
-	public void rotateScreen() {
-		if (myActivity != null)	{
-			myActivity.rotate();
-		}
 	}
 
 	public void finish() {
@@ -144,6 +158,15 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		}
 		set.add("multi");
 		return set;
+	}
+
+	@Override
+	public boolean supportsAllOrientations() {
+		try {
+			return ActivityInfo.class.getField("SCREEN_ORIENTATION_REVERSE_PORTRAIT") != null;
+		} catch (NoSuchFieldException e) {
+			return false;
+		}
 	}
 
 	private final class AndroidAssetsFile extends ZLResourceFile {

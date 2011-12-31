@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -379,17 +379,21 @@ public class BuyBooksActivity extends Activity implements NetworkLibrary.ChangeL
 	}
 
 	private void updateAuthorizationState() {
-		final NetworkAuthenticationManager mgr = myLink.authenticationManager();
-		try {
-			if (mgr.isAuthorised(true)) {
-				setupUI(AuthorizationState.Authorized);
-				refreshAccountInformation();
-			} else {
-				setupUI(AuthorizationState.NotAuthorized);
+		new Thread(new Runnable() {
+			public void run() {
+				final NetworkAuthenticationManager mgr = myLink.authenticationManager();
+				try {
+					if (mgr.isAuthorised(true)) {
+						setupUI(AuthorizationState.Authorized);
+						refreshAccountInformation();
+					} else {
+						setupUI(AuthorizationState.NotAuthorized);
+					}
+				} catch (ZLNetworkException e) {
+					e.printStackTrace();
+					setupUI(AuthorizationState.NotAuthorized);
+				}
 			}
-		} catch (ZLNetworkException e) {
-			e.printStackTrace();
-			setupUI(AuthorizationState.NotAuthorized);
-		}
+		}).start();
 	}
 }

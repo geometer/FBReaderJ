@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ public abstract class BasketItem extends NetworkCatalogItem {
 			Accessibility.ALWAYS,
 			FLAGS_DEFAULT & ~FLAGS_GROUP
 		);
-		myBooksInBasketOption = new ZLStringListOption(Link.getSiteName(), "Basket", null);
+		myBooksInBasketOption = new ZLStringListOption(Link.getSiteName(), "Basket", null, ",");
 	}
 
 	public void addItem(NetworkBookItem book) {
@@ -58,10 +58,10 @@ public abstract class BasketItem extends NetworkCatalogItem {
 		} else {
 			final Money basketCost = cost();
 			if (basketCost != null) {
-				return NetworkLibrary.resource().getResource("basketSummary").getValue()
+				return NetworkLibrary.resource().getResource("basketSummary").getValue(size)
 					.replace("%0", String.valueOf(size)).replace("%1", basketCost.toString());
 			} else {
-				return NetworkLibrary.resource().getResource("basketSummaryCountOnly").getValue()
+				return NetworkLibrary.resource().getResource("basketSummaryCountOnly").getValue(size)
 					.replace("%0", String.valueOf(size));
 			}
 		}
