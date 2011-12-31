@@ -56,7 +56,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ZLPreferenceSet statusBarPreferences = new ZLPreferenceSet();
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
-		appearanceScreen.addOption(androidLibrary.AutoOrientationOption, "autoOrientation");
+		appearanceScreen.addPreference(new ZLStringChoicePreference(
+			this, appearanceScreen.Resource, "screenOrientation",
+			androidLibrary.OrientationOption, androidLibrary.allOrientations()
+		));
 		appearanceScreen.addPreference(
 			new ZLBooleanPreference(
 				this, androidLibrary.ShowStatusBarOption, appearanceScreen.Resource, "showStatusBar"

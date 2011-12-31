@@ -100,16 +100,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
 	}
 
-	@Override
-	public void rotate() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).rotateScreen();
-	}
-
-	public boolean canRotate() {
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-		return zlibrary.AutoOrientationOption.getValue();
-	}
-
 	public void close() {
 		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).finish();
 	}
