@@ -252,6 +252,12 @@
 		</node>
 		<node name="search" value="Search"/>
 		<node name="rotate" value="Rotate screen"/>
+		<node name="screenOrientation" value="Screen orientation"/>
+		<node name="screenOrientationAuto" value="Auto"/>
+		<node name="screenOrientationPortrait" value="Portrait"/>
+		<node name="screenOrientationLandscape" value="Landscape"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape"/>
 		<node name="increaseFont" value="Zoom in"/>
 		<node name="decreaseFont" value="Zoom out"/>
 		<node name="toggleFullscreen" value="Full Screen"/>
@@ -301,6 +307,13 @@
 			</node>
 			<node name="appearance" value="Appearance">
 				<node name="summary" value="Rotation, status bar"/>
+				<node name="screenOrientation" value="Screen orientation">
+					<node name="auto" value="Auto"/>
+					<node name="portrait" value="Portrait"/>
+					<node name="landscape" value="Landscape"/>
+					<node name="reversePortrait" value="Reverse portrait"/>
+					<node name="reverseLandscape" value="Reverse landscape"/>
+				</node>
 				<node name="autoOrientation" value="Automatic rotation">
 					<node name="summaryOn" value="The display will rotate when user moves the device"/>
 					<node name="summaryOff" value="The display will not rotate when user moves the device"/>
