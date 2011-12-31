@@ -253,7 +253,7 @@
 		<node name="search" value="Search"/>
 		<node name="rotate" value="Rotate screen"/>
 		<node name="screenOrientation" value="Screen orientation"/>
-		<node name="screenOrientationAuto" value="Auto"/>
+		<node name="screenOrientationSystem" value="System"/>
 		<node name="screenOrientationPortrait" value="Portrait"/>
 		<node name="screenOrientationLandscape" value="Landscape"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait"/>
@@ -308,7 +308,7 @@
 			<node name="appearance" value="Appearance">
 				<node name="summary" value="Rotation, status bar"/>
 				<node name="screenOrientation" value="Screen orientation">
-					<node name="auto" value="Auto"/>
+					<node name="system" value="System"/>
 					<node name="portrait" value="Portrait"/>
 					<node name="landscape" value="Landscape"/>
 					<node name="reversePortrait" value="Reverse portrait"/>
