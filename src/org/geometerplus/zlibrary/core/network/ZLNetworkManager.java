@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,7 @@ import java.io.*;
 import java.net.*;
 
 import org.apache.http.*;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
+import org.apache.http.auth.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
@@ -39,7 +38,9 @@ import org.apache.http.params.*;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.BasicHttpContext;
 
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public class ZLNetworkManager {
 	private static ZLNetworkManager ourManager;
@@ -51,17 +52,117 @@ public class ZLNetworkManager {
 		return ourManager;
 	}
 
-	public static interface CredentialsCreator {
-		Credentials createCredentials(String scheme, AuthScope scope);
+	private static class AuthScopeKey {
+		private final AuthScope myScope;
+
+		public AuthScopeKey(AuthScope scope) {
+			myScope = scope;
+		}
+
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (!(obj instanceof AuthScopeKey)) {
+				return false;
+			}
+
+			final AuthScope scope = ((AuthScopeKey)obj).myScope;
+			if (myScope == null) {
+				return scope == null;
+			}
+			if (scope == null) {
+				return false;
+			}
+			return
+				myScope.getPort() == scope.getPort() &&
+				ZLMiscUtil.equals(myScope.getHost(), scope.getHost()) &&
+				ZLMiscUtil.equals(myScope.getScheme(), scope.getScheme()) &&
+				ZLMiscUtil.equals(myScope.getRealm(), scope.getRealm());
+		}
+
+		public int hashCode() {
+			if (myScope == null) {
+				return 0;
+			}
+			return
+				myScope.getPort() +
+				ZLMiscUtil.hashCode(myScope.getHost()) +
+				ZLMiscUtil.hashCode(myScope.getScheme()) +
+				ZLMiscUtil.hashCode(myScope.getRealm());
+		}
 	}
 
-	private CredentialsCreator myCredentialsCreator;
+	public static abstract class CredentialsCreator {
+		final private HashMap<AuthScopeKey,Credentials> myCredentialsMap =
+			new HashMap<AuthScopeKey,Credentials>();
+
+		private volatile String myUsername;
+		private volatile String myPassword;
+
+		synchronized public void setCredentials(String username, String password) {
+			myUsername = username;
+			myPassword = password;
+			release();
+		}
+
+		synchronized public void release() {
+			notifyAll();
+		}
+
+		public Credentials createCredentials(String scheme, AuthScope scope, boolean quietly) {
+			final String authScheme = scope.getScheme();
+			if (!"basic".equalsIgnoreCase(authScheme) &&
+				!"digest".equalsIgnoreCase(authScheme)) {
+				return null;
+			}
+
+			final AuthScopeKey key = new AuthScopeKey(scope);
+			Credentials creds = myCredentialsMap.get(key);
+			if (creds != null || quietly) {
+				return creds;
+			}
+
+			final String host = scope.getHost();
+			final String area = scope.getRealm();
+			final ZLStringOption usernameOption =
+				new ZLStringOption("username", host + ":" + area, "");
+			if (!quietly) {
+				startAuthenticationDialog(host, area, scheme, usernameOption.getValue());
+				synchronized (this) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+
+			if (myUsername != null && myPassword != null) {
+				usernameOption.setValue(myUsername);
+				creds = new UsernamePasswordCredentials(myUsername, myPassword);
+				myCredentialsMap.put(key, creds);
+			}
+			myUsername = null;
+			myPassword = null;
+			return creds;
+		}
+
+		public boolean removeCredentials(AuthScopeKey key) {
+			return myCredentialsMap.remove(key) != null;
+		}
+
+		abstract protected void startAuthenticationDialog(String host, String area, String scheme, String username);
+	}
+
+	private volatile CredentialsCreator myCredentialsCreator;
 
 	private class MyCredentialsProvider extends BasicCredentialsProvider {
 		private final HttpUriRequest myRequest;
+		private final boolean myQuietly;
 
-		MyCredentialsProvider(HttpUriRequest request) {
+		MyCredentialsProvider(HttpUriRequest request, boolean quietly) {
 			myRequest = request;
+			myQuietly = quietly;
 		}
 
 		@Override
@@ -71,25 +172,58 @@ public class ZLNetworkManager {
 				return c;
 			}
 			if (myCredentialsCreator != null) {
-				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope);
+				return myCredentialsCreator.createCredentials(myRequest.getURI().getScheme(), authscope, myQuietly);
 			}
 			return null;
 		}
 	};
 
-	private final HttpContext myHttpContext = new BasicHttpContext();
+	private static class Key {
+		final String Domain;
+		final String Path;
+		final String Name;
+
+		Key(Cookie c) {
+			Domain = c.getDomain();
+			Path = c.getPath();
+			Name = c.getName();
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == this) {
+				return true;
+			}
+			if (!(o instanceof Key)) {
+				return false;
+			}
+			final Key k = (Key)o;
+			return
+				ZLMiscUtil.equals(Domain, k.Domain) &&
+				ZLMiscUtil.equals(Path, k.Path) &&
+				ZLMiscUtil.equals(Name, k.Name);
+		}
+
+		@Override
+		public int hashCode() {
+			return
+				ZLMiscUtil.hashCode(Domain) +
+				ZLMiscUtil.hashCode(Path) +
+				ZLMiscUtil.hashCode(Name);
+		}
+	};
+
 	private final CookieStore myCookieStore = new CookieStore() {
+		private HashMap<Key,Cookie> myCookies;
+
 		public synchronized void addCookie(Cookie cookie) {
+			if (myCookies == null) {
+				getCookies();
+			}
+			myCookies.put(new Key(cookie), cookie);
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
 				db.saveCookies(Collections.singletonList(cookie));
-			}
-		}
-
-		public synchronized void addCookies(Cookie[] cookies) {
-			final CookieDatabase db = CookieDatabase.getInstance();
-			if (db != null) {
-				db.saveCookies(Arrays.asList(cookies));
 			}
 		}
 
@@ -98,9 +232,14 @@ public class ZLNetworkManager {
 			if (db != null) {
 				db.removeAll();
 			}
+			if (myCookies != null) {
+				myCookies.clear();
+			}
 		}
 
 		public synchronized boolean clearExpired(Date date) {
+			myCookies = null;
+
 			final CookieDatabase db = CookieDatabase.getInstance();
 			if (db != null) {
 				db.removeObsolete(date);
@@ -111,14 +250,18 @@ public class ZLNetworkManager {
 		}
 
 		public synchronized List<Cookie> getCookies() {
-			final CookieDatabase db = CookieDatabase.getInstance();
-			return db != null ? db.loadCookies() : Collections.<Cookie>emptyList();
+			if (myCookies == null) {
+				myCookies = new HashMap<Key,Cookie>();
+				final CookieDatabase db = CookieDatabase.getInstance();
+				if (db != null) {
+					for (Cookie c : db.loadCookies()) {
+						myCookies.put(new Key(c), c);
+					}
+				}
+			}
+			return new ArrayList<Cookie>(myCookies.values());
 		}
 	};
-
-	{
-		myHttpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
-	}
 
 	/*private void setCommonHTTPOptions(HttpMessage request) throws ZLNetworkException {
 		httpConnection.setInstanceFollowRedirects(true);
@@ -129,18 +272,25 @@ public class ZLNetworkManager {
 		myCredentialsCreator = creator;
 	}
 
+	public CredentialsCreator getCredentialsCreator() {
+		return myCredentialsCreator;
+	}
+
 	public void perform(ZLNetworkRequest request) throws ZLNetworkException {
 		boolean success = false;
 		DefaultHttpClient httpClient = null;
 		HttpEntity entity = null;
 		try {
+			final HttpContext httpContext = new BasicHttpContext();
+			httpContext.setAttribute(ClientContext.COOKIE_STORE, myCookieStore);
+
 			request.doBefore();
 			final HttpParams params = new BasicHttpParams();
 			HttpConnectionParams.setSoTimeout(params, 30000);
 			HttpConnectionParams.setConnectionTimeout(params, 15000);
 			httpClient = new DefaultHttpClient(params);
 			final HttpRequestBase httpRequest;
-			if (request.PostData !=  null) {
+			if (request.PostData != null) {
 				httpRequest = new HttpPost(request.URL);
 				((HttpPost)httpRequest).setEntity(new StringEntity(request.PostData, "utf-8"));
 				/*
@@ -149,7 +299,7 @@ public class ZLNetworkManager {
 						Integer.toString(request.PostData.getBytes().length)
 					);
 					httpConnection.setRequestProperty(
-						"Content-Type", 
+						"Content-Type",
 						"application/x-www-form-urlencoded"
 					);
 				*/
@@ -167,14 +317,23 @@ public class ZLNetworkManager {
 			httpRequest.setHeader("User-Agent", ZLNetworkUtil.getUserAgent());
 			httpRequest.setHeader("Accept-Encoding", "gzip");
 			httpRequest.setHeader("Accept-Language", Locale.getDefault().getLanguage());
-			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest));
+			httpClient.setCredentialsProvider(new MyCredentialsProvider(httpRequest, request.isQuiet()));
 			HttpResponse response = null;
 			IOException lastException = null;
 			for (int retryCounter = 0; retryCounter < 3 && entity == null; ++retryCounter) {
 				try {
-					response = httpClient.execute(httpRequest, myHttpContext);
+					response = httpClient.execute(httpRequest, httpContext);
 					entity = response.getEntity();
 					lastException = null;
+					if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+						final AuthState state = (AuthState)httpContext.getAttribute(ClientContext.TARGET_AUTH_STATE);
+						if (state != null) {
+							final AuthScopeKey key = new AuthScopeKey(state.getAuthScope());
+							if (myCredentialsCreator.removeCredentials(key)) {
+								entity = null;
+							}
+						}
+					}
 				} catch (IOException e) {
 					lastException = e;
 				}
@@ -218,6 +377,9 @@ public class ZLNetworkManager {
 				code = ZLNetworkException.ERROR_CONNECT_TO_HOST;
 			}
 			throw new ZLNetworkException(code, ZLNetworkUtil.hostFromUrl(request.URL), e);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ZLNetworkException(true, e.getMessage(), e);
 		} finally {
 			request.doAfter(success);
 			if (httpClient != null) {

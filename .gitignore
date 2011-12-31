@@ -5,8 +5,8 @@ bin/
 gen/
 res/drawable/
 res/raw/
-libs/
 obj/
 .classpath
 .settings
+*.so
 *~

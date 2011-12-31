@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,8 @@ class VolumeKeyTurnPageAction extends FBAction {
 		myForward = forward;
 	}
 
-	public void run() {
+	@Override
+	public void run(Object ... params) {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		Reader.getViewWidget().startAnimatedScrolling(
 			myForward ? FBView.PageIndex.next : FBView.PageIndex.previous,

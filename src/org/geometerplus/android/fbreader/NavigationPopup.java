@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ final class NavigationPopup extends PopupPanel {
 	}
 
 	public void runNavigation() {
-		if (myWindow.getVisibility() == View.GONE) {
+		if (myWindow != null && myWindow.getVisibility() == View.GONE) {
 			myIsInProgress = false;
 			initPosition();
 			Application.showPopup(ID);
@@ -73,7 +73,7 @@ final class NavigationPopup extends PopupPanel {
 
 	@Override
 	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
-		if (myWindow != null) {
+		if (myWindow != null && activity == myWindow.getActivity()) {
 			return;
 		}
 
@@ -144,13 +144,12 @@ final class NavigationPopup extends PopupPanel {
 		final TextView text = (TextView)panel.findViewById(R.id.book_position_text);
 
 		final ZLTextView textView = getReader().getTextView();
-		final int page = textView.computeCurrentPage();
-		final int pagesNumber = textView.computePageNumber();
+		final ZLTextView.PagePosition pagePosition = textView.pagePosition();
 
-		if (slider.getMax() != pagesNumber - 1 || slider.getProgress() != page - 1) {
-			slider.setMax(pagesNumber - 1);
-			slider.setProgress(page - 1);
-			text.setText(makeProgressText(page, pagesNumber));
+		if (slider.getMax() != pagePosition.Total - 1 || slider.getProgress() != pagePosition.Current - 1) {
+			slider.setMax(pagePosition.Total - 1);
+			slider.setProgress(pagePosition.Current - 1);
+			text.setText(makeProgressText(pagePosition.Current, pagePosition.Total));
 		}
 	}
 

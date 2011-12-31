@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -121,25 +122,23 @@ public abstract class ZLApplication {
 
 	public final boolean isActionVisible(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
-		return (action != null) && action.isVisible();
+		return action != null && action.isVisible();
 	}
 
 	public final boolean isActionEnabled(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
-		return (action != null) && action.isEnabled();
+		return action != null && action.isEnabled();
 	}
 
-	public final void doAction(String actionId) {
+	public final ZLBoolean3 isActionChecked(String actionId) {
+		final ZLAction action = myIdToActionMap.get(actionId);
+		return action != null ? action.isChecked() : ZLBoolean3.B3_UNDEFINED;
+	}
+
+	public final void doAction(String actionId, Object ... params) {
 		final ZLAction action = myIdToActionMap.get(actionId);
 		if (action != null) {
-			action.checkAndRun();
-		}
-	}
-
-	public final void doActionWithCoordinates(String actionId, int x, int y) {
-		final ZLAction action = myIdToActionMap.get(actionId);
-		if (action != null && action.isEnabled()) {
-			action.runWithCoordinates(x, y);
+			action.checkAndRun(params);
 		}
 	}
 
@@ -156,19 +155,6 @@ public abstract class ZLApplication {
 		if (actionId != null) {
 			final ZLAction action = myIdToActionMap.get(actionId);
 			return action != null && action.checkAndRun();
-		}
-		return false;
-	}
-
-	public void rotateScreen() {
-		if (myWindow != null) {
-			myWindow.rotate();
-		}
-	}
-
-	public boolean canRotateScreen() {
-		if (myWindow != null) {
-			return myWindow.canRotate();
 		}
 		return false;
 	}
@@ -196,19 +182,19 @@ public abstract class ZLApplication {
 			return isVisible();
 		}
 
-		public final boolean checkAndRun() {
+		public ZLBoolean3 isChecked() {
+			return ZLBoolean3.B3_UNDEFINED;
+		}
+
+		public final boolean checkAndRun(Object ... params) {
 			if (isEnabled()) {
-				run();
+				run(params);
 				return true;
 			}
 			return false;
 		}
 
-		abstract protected void run();
-
-		protected void runWithCoordinates(int x, int y) {
-			run();
-		}
+		abstract protected void run(Object ... params);
 	}
 
 	public static abstract class PopupPanel {

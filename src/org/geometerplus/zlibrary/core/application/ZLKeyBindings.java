@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,11 @@ public final class ZLKeyBindings {
 		myName = name;
 		final Set<String> keys = new TreeSet<String>();
 		new Reader(keys).read(ZLFile.createFileByPath("default/keymap.xml"));
+		try {
+			new Reader(keys).read(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
+		} catch (Exception e) {
+			// ignore
+		}
 		try {
 			new Reader(keys).read(ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue() + "/keymap.xml"));
 		} catch (Exception e) {

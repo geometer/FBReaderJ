@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,5 +46,9 @@ public abstract class Paths {
 
 	public static String networkCacheDirectory() {
 		return cacheDirectory() + "/cache";
+	}
+
+	public static String systemShareDirectory() {
+		return "/system/usr/share/FBReader";
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,8 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
+	static volatile boolean ourToBeKilled = false;
+
 	public static final String SELECTED_BOOK_PATH_KEY = "SelectedBookPath";
 
 	private BooksDatabase myDatabase;
@@ -82,6 +84,12 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	@Override
 	protected FBTree getTreeByKey(FBTree.Key key) {
 		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.getRootTree();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		ourToBeKilled = true;
 	}
 
 	@Override

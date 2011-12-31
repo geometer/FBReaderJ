@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,18 +25,21 @@ import org.geometerplus.fbreader.network.SearchItem;
 public class SearchCatalogTree extends NetworkCatalogTree {
 	public SearchCatalogTree(RootTree parent, SearchItem item, int position) {
 		super(parent, null, item, position);
-		setCover(null);
 		item.setPattern(null);
 	}
 
 	public SearchCatalogTree(NetworkCatalogTree parent, SearchItem item, int position) {
 		super(parent, item, position);
-		setCover(null);
 		item.setPattern(null);
 	}
 
 	public void setPattern(String pattern) {
 		((SearchItem)Item).setPattern(pattern);
+	}
+
+	@Override
+	protected boolean canUseParentCover() {
+		return false;
 	}
 
 	@Override

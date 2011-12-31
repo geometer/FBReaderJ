@@ -36,13 +36,13 @@
 		<condition property="native.libraries.are.uptodate" value="true">
 			<and>
 				<!-- Check if libDeflatingDecompressor exists and is up to date -->
-				<available file="./libs/armeabi/libDeflatingDecompressor.so" />
-				<uptodate targetfile="libs/armeabi/libDeflatingDecompressor.so">
+				<available file="./libs/armeabi/libDeflatingDecompressor-v2.so" />
+				<uptodate targetfile="libs/armeabi/libDeflatingDecompressor-v2.so">
 					<srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp"/>
 				</uptodate>
 				<!-- Check if libLineBreak exists and is up to date -->
-				<available file="./libs/armeabi/libLineBreak.so" />
-				<uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak.so">
+				<available file="./libs/armeabi/libLineBreak-v2.so" />
+				<uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak-v2.so">
 					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
 				</uptodate>
 			</and>
@@ -87,7 +87,8 @@
 	<target name="distclean" depends="clean">
 		<echo message="Deleting native libraries..." />
 		<delete dir="libs/armeabi" />
-		<delete dir="libs/armeabi-v7" />
+		<delete dir="libs/armeabi-v7a" />
+		<delete dir="libs/x86" />
 		<echo message="DONE (Deleting native libraries)" />
 	</target>
 

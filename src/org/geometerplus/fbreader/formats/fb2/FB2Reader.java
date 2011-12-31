@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -375,9 +375,11 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 					} catch (NumberFormatException e) {
 					}
 					imgRef = imgRef.substring(1);
-					if (!imgRef.equals(myCoverImageReference) ||
-							myParagraphsBeforeBodyNumber != myBookReader.Model.BookTextModel.getParagraphsNumber()) {
-						myBookReader.addImageReference(imgRef, offset);
+					final boolean isCoverImage =
+						myParagraphsBeforeBodyNumber ==
+						myBookReader.Model.BookTextModel.getParagraphsNumber();
+					if (!imgRef.equals(myCoverImageReference) || !isCoverImage) {
+						myBookReader.addImageReference(imgRef, offset, myInsideCoverpage || isCoverImage);
 					}
 					if (myInsideCoverpage) {
 						myCoverImageReference = imgRef;

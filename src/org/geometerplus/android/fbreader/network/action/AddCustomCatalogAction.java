@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.RootTree;
 import org.geometerplus.fbreader.network.tree.AddCustomCatalogItemTree;
 
-import org.geometerplus.android.fbreader.network.AddCustomCatalogActivity;
+import org.geometerplus.android.fbreader.network.AddCatalogMenuActivity;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -42,6 +42,6 @@ public class AddCustomCatalogAction extends Action {
 
 	@Override
 	public void run(NetworkTree tree) {
-		myActivity.startActivity(new Intent(myActivity, AddCustomCatalogActivity.class));
+		myActivity.startActivity(new Intent(myActivity, AddCatalogMenuActivity.class));
 	}
 }

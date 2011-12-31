@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ public class EditCustomCatalogAction extends CatalogAction {
 	public void run(NetworkTree tree) {
 		final Intent intent = new Intent(myActivity, AddCustomCatalogActivity.class);
 		Util.intentByLink(intent, tree.getLink());
-		intent.putExtra(AddCustomCatalogActivity.EDIT_KEY, true);
+		intent.setAction(Util.EDIT_CATALOG_ACTION);
 		myActivity.startActivity(intent);
 	}
 }

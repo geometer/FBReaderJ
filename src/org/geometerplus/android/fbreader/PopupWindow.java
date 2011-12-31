@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,10 @@ public class PopupWindow extends LinearLayout {
 		root.addView(this, p);
 
 		setVisibility(View.GONE);
+	}
+
+	Activity getActivity() {
+		return myActivity;
 	}
 
 	@Override

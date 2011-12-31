@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,10 +55,10 @@ public abstract class ZLTextHyphenator {
 		final char[] data = word.Data;
 		pattern[0] = ' ';
 		for (int i = 0, j = word.Offset; i < len; ++i, ++j) {
-			char symbol = data[j];
-			if (ZLCharacterUtil.isLetter(symbol)) {
+			char character = data[j];
+			if (ZLCharacterUtil.isLetter(character)) {
 				isLetter[i] = true;
-				pattern[i + 1] = Character.toLowerCase(symbol);
+				pattern[i + 1] = Character.toLowerCase(character);
 			} else {
 				pattern[i + 1] = ' ';
 			}
@@ -71,18 +71,26 @@ public abstract class ZLTextHyphenator {
 		for (int i = 0, j = word.Offset - 1; i <= len; ++i, ++j) {
 			if ((i < 2) || (i > len - 2)) {
 				mask[i] = false;
-			} else if (data[j] == '-') {
-				mask[i] = (i >= 3)
-					&& isLetter[i - 3] 
-					&& isLetter[i - 2] 
-					&& isLetter[i] 
-					&& isLetter[i + 1];
 			} else {
-				mask[i] = mask[i] 
-					&& isLetter[i - 2] 
-					&& isLetter[i - 1] 
-					&& isLetter[i] 
-					&& isLetter[i + 1];
+				switch (data[j]) {
+					case (char)0xAD: // soft hyphen
+						mask[i] = true;
+						break;
+					case '-':
+						mask[i] = (i >= 3)
+							&& isLetter[i - 3] 
+							&& isLetter[i - 2] 
+							&& isLetter[i] 
+							&& isLetter[i + 1];
+						break;
+					default:
+						mask[i] = mask[i] 
+							&& isLetter[i - 2] 
+							&& isLetter[i - 1] 
+							&& isLetter[i] 
+							&& isLetter[i + 1];
+						break;
+				}
 			}
 		}
 
