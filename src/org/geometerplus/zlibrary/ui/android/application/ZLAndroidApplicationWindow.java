@@ -68,7 +68,21 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
-			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+			final MenuItem menuItem = entry.getKey();
+			menuItem.setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+			switch (application.isActionChecked(actionId)) {
+				case B3_TRUE:
+					menuItem.setCheckable(true);
+					menuItem.setChecked(true);
+					break;
+				case B3_FALSE:
+					menuItem.setCheckable(true);
+					menuItem.setChecked(false);
+					break;
+				case B3_UNDEFINED:
+					menuItem.setCheckable(false);
+					break;
+			}
 		}
 	}
 	

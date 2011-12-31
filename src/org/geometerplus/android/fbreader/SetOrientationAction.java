@@ -23,6 +23,10 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class SetScreenOrientationAction extends FBAndroidAction {
@@ -48,8 +52,16 @@ class SetScreenOrientationAction extends FBAndroidAction {
 	}
 
 	@Override
+	public ZLBoolean3 isChecked() {
+		return myOptionValue.equals(ZLibrary.Instance().OrientationOption.getValue())
+			? ZLBoolean3.B3_TRUE : ZLBoolean3.B3_FALSE;
+	}
+
+	@Override
 	protected void run(Object ... params) {
 		setOrientation(BaseActivity, myOptionValue);
 		ZLibrary.Instance().OrientationOption.setValue(myOptionValue);
+		final ZLAndroidApplication application = (ZLAndroidApplication)BaseActivity.getApplication();
+		application.myMainWindow.refreshMenu();
 	}
 }
