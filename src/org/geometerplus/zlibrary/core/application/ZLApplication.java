@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.application;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -121,12 +122,17 @@ public abstract class ZLApplication {
 
 	public final boolean isActionVisible(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
-		return (action != null) && action.isVisible();
+		return action != null && action.isVisible();
 	}
 
 	public final boolean isActionEnabled(String actionId) {
 		final ZLAction action = myIdToActionMap.get(actionId);
-		return (action != null) && action.isEnabled();
+		return action != null && action.isEnabled();
+	}
+
+	public final ZLBoolean3 isActionChecked(String actionId) {
+		final ZLAction action = myIdToActionMap.get(actionId);
+		return action != null ? action.isChecked() : ZLBoolean3.B3_UNDEFINED;
 	}
 
 	public final void doAction(String actionId, Object ... params) {
@@ -174,6 +180,10 @@ public abstract class ZLApplication {
 
 		public boolean isEnabled() {
 			return isVisible();
+		}
+
+		public ZLBoolean3 isChecked() {
+			return ZLBoolean3.B3_UNDEFINED;
 		}
 
 		public final boolean checkAndRun(Object ... params) {
