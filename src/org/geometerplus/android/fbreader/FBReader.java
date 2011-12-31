@@ -25,8 +25,7 @@ import android.app.SearchManager;
 import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.RelativeLayout;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -170,6 +169,16 @@ public final class FBReader extends ZLAndroidActivity {
 			zlibrary.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		if (!zlibrary.ShowStatusBarOption.getValue() &&
+			zlibrary.ShowStatusBarWhenMenuIsActiveOption.getValue()) {
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
