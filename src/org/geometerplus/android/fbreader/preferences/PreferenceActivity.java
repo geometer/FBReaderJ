@@ -54,30 +54,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
 		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
 
-		final ZLPreferenceSet statusBarPreferences = new ZLPreferenceSet();
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
 			this, appearanceScreen.Resource, "screenOrientation",
 			androidLibrary.OrientationOption, androidLibrary.allOrientations()
 		));
-		appearanceScreen.addPreference(
-			new ZLBooleanPreference(
-				this, androidLibrary.ShowStatusBarOption, appearanceScreen.Resource, "showStatusBar"
-			) {
-				@Override
-				public void onClick() {
-					super.onClick();
-					statusBarPreferences.setEnabled(!isChecked());
-				}
-			}
-		);
-		statusBarPreferences.add(
-			appearanceScreen.addOption(
-				androidLibrary.ShowStatusBarWhenMenuIsActiveOption,
-				"showStatusBarWhenMenuIsActive"
-			)
-		);
-		statusBarPreferences.setEnabled(!androidLibrary.ShowStatusBarOption.getValue());
+		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
 
 		final Screen textScreen = createPreferenceScreen("text");
@@ -110,10 +92,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, textScreen.Resource, "alignment",
 			baseStyle.AlignmentOption, alignments
 		));
-		textScreen.addPreference(new ZLBooleanPreference(
-			this, baseStyle.AutoHyphenationOption,
-			textScreen.Resource, "autoHyphenations"
-		));
+		textScreen.addOption(baseStyle.AutoHyphenationOption, "autoHyphenations");
 
 		final Screen moreStylesScreen = textScreen.createPreferenceScreen("more");
 
