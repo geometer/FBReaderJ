@@ -32,7 +32,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
 	public static String SCREEN_KEY = "screen";
 
-	private final ArrayList<ZLPreference> myPreferences = new ArrayList<ZLPreference>();
 	private final HashMap<String,Screen> myScreenMap = new HashMap<String,Screen>();
 
 	protected class Screen {
@@ -58,7 +57,6 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 		public ZLPreference addPreference(ZLPreference preference) {
 			myScreen.addPreference((Preference)preference);
-			myPreferences.add(preference);
 			return preference;
 		}
 
@@ -103,7 +101,6 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 	public ZLPreference addPreference(ZLPreference preference) {
 		myScreen.addPreference((Preference)preference);
-		myPreferences.add(preference);
 		return preference;
 	}
 
@@ -111,7 +108,6 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		ZLBooleanPreference preference =
 			new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
 		myScreen.addPreference(preference);
-		myPreferences.add(preference);
 		return preference;
 	}
 
