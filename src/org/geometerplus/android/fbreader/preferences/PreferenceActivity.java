@@ -311,11 +311,12 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			displayScreen.Resource,
 			"allowScreenBrightnessAdjustment"
 		) {
-			public void onAccept() {
-				super.onAccept();
-				if (!isChecked()) {
-					androidLibrary.ScreenBrightnessLevelOption.setValue(0);
-				}
+			private final int myLevel = androidLibrary.ScreenBrightnessLevelOption.getValue();
+
+			@Override
+			protected void onClick() {
+				super.onClick();
+				androidLibrary.ScreenBrightnessLevelOption.setValue(isChecked() ? myLevel : 0);
 			}
 		});
 		displayScreen.addPreference(new BatteryLevelToTurnScreenOffPreference(
