@@ -54,18 +54,7 @@ public class TOCActivity extends ListActivity {
 		if (cursor.isEndOfParagraph()) {
 			++index;
 		}
-		TOCTree treeToSelect = null;
-		// TODO: process multi-model texts
-		for (TOCTree tree : root) {
-			final TOCTree.Reference reference = tree.getReference();
-			if (reference == null) {
-				continue;
-			}
-			if (reference.ParagraphIndex > index) {
-				break;
-			}
-			treeToSelect = tree;
-		}
+		TOCTree treeToSelect = fbreader.getCurrentTOCElement();
 		myAdapter.selectItem(treeToSelect);
 		mySelectedItem = treeToSelect;
 	}
@@ -110,7 +99,7 @@ public class TOCActivity extends ListActivity {
 			final View view = (convertView != null) ? convertView :
 				LayoutInflater.from(parent.getContext()).inflate(R.layout.toc_tree_item, parent, false);
 			final TOCTree tree = (TOCTree)getItem(position);
-			view.setBackgroundColor((tree == mySelectedItem) ? 0xff808080 : 0);
+			view.setBackgroundColor(tree == mySelectedItem ? 0xff808080 : 0);
 			setIcon((ImageView)view.findViewById(R.id.toc_tree_item_icon), tree);
 			((TextView)view.findViewById(R.id.toc_tree_item_text)).setText(tree.getText());
 			return view;
