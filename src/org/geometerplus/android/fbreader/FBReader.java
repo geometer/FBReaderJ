@@ -361,6 +361,11 @@ public final class FBReader extends ZLAndroidActivity {
 		((NavigationPopup)FBReaderApp.Instance().getPopupById(NavigationPopup.ID)).runNavigation();
 	}
 
+	private Menu addSubMenu(Menu menu, String id) {
+		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
+		return application.myMainWindow.addSubMenu(menu, id);
+	}
+
 	private void addMenuItem(Menu menu, String actionId, String name) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		application.myMainWindow.addMenuItem(menu, actionId, null, name);
@@ -388,9 +393,7 @@ public final class FBReader extends ZLAndroidActivity {
 		addMenuItem(menu, ActionCode.SEARCH, R.drawable.ic_menu_search);
 		addMenuItem(menu, ActionCode.SHOW_PREFERENCES);
 		addMenuItem(menu, ActionCode.SHOW_BOOK_INFO);
-		final Menu subMenu = menu.addSubMenu(
-			ZLResource.resource("menu").getResource("screenOrientation").getValue()
-		);
+		final Menu subMenu = addSubMenu(menu, "screenOrientation");
 		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_SYSTEM);
 		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT);
 		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE);
