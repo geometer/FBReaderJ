@@ -9,6 +9,7 @@
 * Full-screen cover images
 * An exception in *.mobi file reading has been fixed
 * New screen orientation option; keeps screen orientation between starts
+* New action bar + navigation bar behaviour in Android 3/4 (screen center tap runs both bars)
 
 ===== 1.2.6 (Dec 19, 2011) =====
 * Android 3.*, 4.*: bottom buttons are hidden during book reading
