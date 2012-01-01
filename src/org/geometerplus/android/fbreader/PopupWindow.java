@@ -21,20 +21,22 @@ package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class PopupWindow extends LinearLayout {
-	public static enum Location {
+	public static enum Type {
+		BottomFlat,
 		Bottom,
 		Floating
 	}
 
 	private final Activity myActivity;
 
-	public PopupWindow(Activity activity, RelativeLayout root, Location location, boolean fillWidth) {
+	public PopupWindow(Activity activity, RelativeLayout root, Type type) {
 		super(activity);
 		myActivity = activity;
 
@@ -42,17 +44,30 @@ public class PopupWindow extends LinearLayout {
 		
 		final LayoutInflater inflater =
 			(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(
-			location == Location.Bottom
-				? R.layout.control_panel_bottom : R.layout.control_panel_floating,
-			this,
-			true
-		);
+		final RelativeLayout.LayoutParams p;
+		switch (type) {
+			default:
+			case BottomFlat:
+				inflater.inflate(R.layout.control_panel_bottom_flat, this, true);
+				setBackgroundColor(Color.argb(0xAA, 0, 0, 0));
+				p = new RelativeLayout.LayoutParams(
+					ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+				);
+				break;
+			case Bottom:
+				inflater.inflate(R.layout.control_panel_bottom, this, true);
+				p = new RelativeLayout.LayoutParams(
+					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+				);
+				break;
+			case Floating:
+				inflater.inflate(R.layout.control_panel_floating, this, true);
+				p = new RelativeLayout.LayoutParams(
+					ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+				);
+				break;
+		}
 
-		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-			fillWidth ? ViewGroup.LayoutParams.FILL_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT,
-			RelativeLayout.LayoutParams.WRAP_CONTENT
-		);
 		p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		p.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		root.addView(this, p);

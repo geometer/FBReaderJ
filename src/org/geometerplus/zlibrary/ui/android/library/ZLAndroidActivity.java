@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.*;
 import android.os.PowerManager;
 
@@ -76,7 +78,9 @@ public abstract class ZLAndroidActivity extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_ACTION_BAR);
+		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(0xAA, 0, 0, 0)));
 		if (getLibrary().DisableButtonLightsOption.getValue()) {
 			disableButtonLight();
 		}

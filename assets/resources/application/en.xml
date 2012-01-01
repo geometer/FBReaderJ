@@ -282,6 +282,7 @@
 			<node name="authorize" value="Authorize"/>
 			<node name="rescan" value="Rescan" />
 			<node name="turnOn" value="Turn on" />
+			<node name="resetPosition" value="Reset position" />
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>
