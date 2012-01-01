@@ -136,12 +136,4 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		final Screen screen = myScreenMap.get(intent.getStringExtra(SCREEN_KEY));
 		setPreferenceScreen(screen != null ? screen.myScreen : myScreen);
 	}
-
-	@Override
-	protected void onPause() {
-		for (ZLPreference preference : myPreferences) {
-			preference.onAccept();
-		}
-		super.onPause();
-	}
 }

@@ -20,5 +20,4 @@
 package org.geometerplus.android.fbreader.preferences;
 
 interface ZLPreference {
-	void onAccept();
 }

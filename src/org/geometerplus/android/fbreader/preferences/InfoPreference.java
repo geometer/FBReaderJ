@@ -29,7 +29,4 @@ class InfoPreference extends Preference implements ZLPreference {
 		setSummary(value);
 		setEnabled(false);
 	}
-
-	public void onAccept() {
-	}
 }

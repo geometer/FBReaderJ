@@ -51,7 +51,4 @@ class ZLIntegerRangePreference extends ListPreference implements ZLPreference {
 			myOption.setValue(myOption.MinValue + findIndexOfValue(value));
 		}
 	}
-
-	public void onAccept() {
-	}
 }

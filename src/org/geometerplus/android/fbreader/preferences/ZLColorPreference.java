@@ -131,9 +131,6 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 	}
 	*/
 
-	public void onAccept() {
-	}
-
 	static class SeekBarDrawable extends Drawable {
 		private final SeekBar mySlider;
 		private final Drawable myBase;

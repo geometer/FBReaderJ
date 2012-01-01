@@ -69,9 +69,6 @@ class AnimationSpeedPreference extends DialogPreference implements ZLPreference 
 		}
 	}
 
-	public void onAccept() {
-	}
-
 	private class SeekBarDrawable extends Drawable {
 		private final Drawable myBase;
 		private final Paint myPaint;

@@ -34,7 +34,7 @@ abstract class ZLStringPreference extends EditTextPreference implements ZLPrefer
 		setTitle(resource.getValue());
 	}
 
-	protected final void setValue(String value) {
+	protected void setValue(String value) {
 		setSummary(value);
 		setText(value);
 		myValue = value;
@@ -50,8 +50,5 @@ abstract class ZLStringPreference extends EditTextPreference implements ZLPrefer
 			setValue(getEditText().getText().toString());
 		}
 		super.onDialogClosed(result);
-	}
-
-	public void onAccept() {
 	}
 }
