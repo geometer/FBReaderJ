@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Keresés"/>
 		<node name="rotate" value="Kijelző elforgatása"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Nagyítás" />
 		<node name="decreaseFont" value="Kicsinyítés" />
 		<node name="toggleFullscreen" value="Teljes kijelző"/>
@@ -295,6 +301,13 @@
 			</node>
 			<node name="appearance" value="Megjelenés">
 				<node name="summary" value="Elforgatás, állapotsor"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Automatikus elforgatás">
 					<node name="summaryOn" value="A kijelző elfordul a készülék mozgatásakor"/>
 					<node name="summaryOff" value="A kijelző nem fordul el a készülés mozgatásakor"/>

@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Cauta"/>
 		<node name="rotate" value="Rotire ecran"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Mareste"/>
 		<node name="decreaseFont" value="Micsoreaza"/>
 		<node name="toggleFullscreen" value="Pe intreg ecranul"/>
@@ -295,6 +301,13 @@
 			</node>
 			<node name="appearance" value="Aspect">
 				<node name="summary" value="Rotire, bara de stare"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Rotire automata">
 					<node name="summaryOn" value="Ecranului se vor roti atunci când utilizatorul misca aparatul"/>
 					<node name="summaryOff" value="Ecranului nu se vor roti atunci când utilizatorul va misca aparatul"/>
