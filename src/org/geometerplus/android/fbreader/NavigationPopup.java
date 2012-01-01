@@ -159,7 +159,7 @@ final class NavigationPopup extends PopupPanel {
 		builder.append(page);
 		builder.append("/");
 		builder.append(pagesNumber);
-		final TOCTree tocElement = myFBReader.getCurrentTOCElement();
+		final TOCTree tocElement = getReader().getCurrentTOCElement();
 		if (tocElement != null) {
 			builder.append(" (");
 			builder.append(tocElement.getText());
