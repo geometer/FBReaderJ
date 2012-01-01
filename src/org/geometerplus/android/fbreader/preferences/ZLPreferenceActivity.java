@@ -32,7 +32,6 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
 	public static String SCREEN_KEY = "screen";
 
-	private final ArrayList<ZLPreference> myPreferences = new ArrayList<ZLPreference>();
 	private final HashMap<String,Screen> myScreenMap = new HashMap<String,Screen>();
 
 	protected class Screen {
@@ -56,31 +55,30 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			return screen;
 		}
 
-		public ZLPreference addPreference(ZLPreference preference) {
-			myScreen.addPreference((Preference)preference);
-			myPreferences.add(preference);
+		public Preference addPreference(Preference preference) {
+			myScreen.addPreference(preference);
 			return preference;
 		}
 
-		public ZLPreference addOption(ZLBooleanOption option, String resourceKey) {
+		public Preference addOption(ZLBooleanOption option, String resourceKey) {
 			return addPreference(
 				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
 			);
 		}
 
-		public ZLPreference addOption(ZLStringOption option, String resourceKey) {
+		public Preference addOption(ZLStringOption option, String resourceKey) {
 			return addPreference(
 				new ZLStringOptionPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
 			);
 		}
 
-		public ZLPreference addOption(ZLColorOption option, String resourceKey) {
+		public Preference addOption(ZLColorOption option, String resourceKey) {
 			return addPreference(
 				new ZLColorPreference(ZLPreferenceActivity.this, Resource, resourceKey, option)
 			);
 		}
 
-		public <T extends Enum<T>> ZLPreference addOption(ZLEnumOption<T> option, String resourceKey) {
+		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String resourceKey) {
 			return addPreference(
 				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource, resourceKey)
 			);
@@ -101,17 +99,15 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		return screen;
 	}
 
-	public ZLPreference addPreference(ZLPreference preference) {
+	public Preference addPreference(Preference preference) {
 		myScreen.addPreference((Preference)preference);
-		myPreferences.add(preference);
 		return preference;
 	}
 
-	public ZLPreference addOption(ZLBooleanOption option, String resourceKey) {
+	public Preference addOption(ZLBooleanOption option, String resourceKey) {
 		ZLBooleanPreference preference =
 			new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
 		myScreen.addPreference(preference);
-		myPreferences.add(preference);
 		return preference;
 	}
 
@@ -135,13 +131,5 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		init(intent);
 		final Screen screen = myScreenMap.get(intent.getStringExtra(SCREEN_KEY));
 		setPreferenceScreen(screen != null ? screen.myScreen : myScreen);
-	}
-
-	@Override
-	protected void onPause() {
-		for (ZLPreference preference : myPreferences) {
-			preference.onAccept();
-		}
-		super.onPause();
 	}
 }

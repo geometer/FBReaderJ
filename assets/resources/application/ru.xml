@@ -263,6 +263,12 @@
 		</node>
 		<node name="search" value="Поиск"/>
 		<node name="rotate" value="Повернуть"/>
+		<node name="screenOrientation" value="Ориентация экрана"/>
+		<node name="screenOrientationSystem" value="системная"/>
+		<node name="screenOrientationPortrait" value="вертикальная"/>
+		<node name="screenOrientationLandscape" value="горизонтальная"/>
+		<node name="screenOrientationReversePortrait" value="перевёрнутая вертикальная"/>
+		<node name="screenOrientationReverseLandscape" value="перевёрнутая горизонтальная"/>
 		<node name="increaseFont" value="Увеличить шрифт"/>
 		<node name="decreaseFont" value="Уменьшить шрифт"/>
 		<node name="toggleFullscreen" value="На весь экран"/>
@@ -285,7 +291,7 @@
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
 			<node name="authorize" value="Авторизоваться"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="rescan" value="Искать"/>
 			<node name="turnOn" value="Включить"/>
 		</node>
 		<node name="plugin">
@@ -312,6 +318,13 @@
 			</node>
 			<node name="appearance" value="Внешний вид">
 				<node name="summary" value="Поворот, строка состояния"/>
+				<node name="screenOrientation" value="Ориентация экрана">
+					<node name="system" value="системная"/>
+					<node name="portrait" value="вертикальная"/>
+					<node name="landscape" value="горизонтальная"/>
+					<node name="reversePortrait" value="перевёрнутая вертикальная"/>
+					<node name="reverseLandscape" value="перевёрнутая горизонтальная"/>
+				</node>
 				<node name="autoOrientation" value="Автоматический поворот">
 					<node name="summaryOn" value="Изображение поворачивается при повороте устройства"/>
 					<node name="summaryOff" value="Изображение не поворачивается при повороте устройства"/>

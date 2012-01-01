@@ -26,18 +26,26 @@ import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 public class ZLStringListOption extends ZLOption {
 	private final List<String> myDefaultValue;
 	private List<String> myValue;
+	private final String myDelimiter;
 
-	public ZLStringListOption(String group, String optionName, List<String> defaultValue) {
+	public ZLStringListOption(String group, String optionName, List<String> defaultValue, String delimiter) {
 		super(group, optionName);
 		myDefaultValue = (defaultValue != null) ? defaultValue : Collections.<String>emptyList();
 		myValue = myDefaultValue;
+		myDelimiter = delimiter;
 	}
+
+	/*
+	public ZLStringListOption(String group, String optionName, List<String> defaultValue) {
+		this(group, optionName, defaultValue, "\000");
+	}
+	*/
 
 	public List<String> getValue() {
 		if (!myIsSynchronized) {
-			final String value = getConfigValue(ZLMiscUtil.listToString(myDefaultValue));
+			final String value = getConfigValue(ZLMiscUtil.listToString(myDefaultValue, myDelimiter));
 			if (value != null) {
-				myValue = ZLMiscUtil.stringToList(value);
+				myValue = ZLMiscUtil.stringToList(value, myDelimiter);
 			}
 			myIsSynchronized = true;
 		}
@@ -55,7 +63,7 @@ public class ZLStringListOption extends ZLOption {
 		if (value.equals(myDefaultValue)) {
 			unsetConfigValue();
 		} else {
-			setConfigValue(ZLMiscUtil.listToString(value));
+			setConfigValue(ZLMiscUtil.listToString(value, myDelimiter));
 		}
 		myIsSynchronized = true;
 	}

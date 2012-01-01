@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Zoeken"/>
 		<node name="rotate" value="Scherm draaien"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Inzoomen" />
 		<node name="decreaseFont" value="Uitzoomen" />
 		<node name="toggleFullscreen" value="Volledig scherm"/>
@@ -295,6 +301,13 @@
 			</node>
 			<node name="appearance" value="Weergave">
 				<node name="summary" value="Draaien, statusbalk"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Automatisch draaien">
 					<node name="summaryOn" value="Het scherm zal draaien als het apparaat gedraaid wordt"/>
 					<node name="summaryOff" value="Het scherm zal niet draaien als het apparaat gedraaid wordt"/>
