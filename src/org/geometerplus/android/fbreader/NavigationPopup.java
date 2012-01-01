@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
+import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 final class NavigationPopup extends PopupPanel {
@@ -153,7 +154,17 @@ final class NavigationPopup extends PopupPanel {
 		}
 	}
 
-	private static String makeProgressText(int page, int pagesNumber) {
-		return page + " / " + pagesNumber;
+	private String makeProgressText(int page, int pagesNumber) {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(page);
+		builder.append("/");
+		builder.append(pagesNumber);
+		final TOCTree tocElement = getReader().getCurrentTOCElement();
+		if (tocElement != null) {
+			builder.append(" (");
+			builder.append(tocElement.getText());
+			builder.append(")");
+		}
+		return builder.toString();
 	}
 }
