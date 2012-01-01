@@ -24,6 +24,8 @@ import java.util.*;
 import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.*;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
@@ -57,7 +59,7 @@ public final class FBReader extends ZLAndroidActivity {
 	final static int REPAINT_CODE = 1;
 	final static int CANCEL_CODE = 2;
 
-	private int myFullScreenFlag;
+	private boolean myFullScreenFlag;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -102,10 +104,13 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		myFullScreenFlag =
-			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+		myFullScreenFlag = !zlibrary.ShowStatusBarOption.getValue();
+
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
+
 		getWindow().setFlags(
-			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
+			WindowManager.LayoutParams.FLAG_FULLSCREEN,
+			WindowManager.LayoutParams.FLAG_FULLSCREEN
 		);
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
@@ -190,8 +195,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 
-		final int fullScreenFlag =
-			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+		final boolean fullScreenFlag = !zlibrary.ShowStatusBarOption.getValue();
 		if (fullScreenFlag != myFullScreenFlag) {
 			finish();
 			startActivity(new Intent(this, getClass()));
@@ -247,8 +251,6 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
 
-		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		hideBars();
 
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
@@ -392,15 +394,21 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private NavigationPopup myNavigationPopup;
 
+	boolean barsAreShown() {
+		return myNavigationPopup != null;
+	}
+
 	void hideBars() {
 		if (myNavigationPopup != null) {
 			myNavigationPopup.stopNavigation();
 			myNavigationPopup = null;
 		}
 
-		getActionBar().hide();
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		if (!zlibrary.ShowStatusBarOption.getValue()) {
+			getActionBar().hide();
+		}
 
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		if (zlibrary.DisableButtonLightsOption.getValue()) {
 			findViewById(R.id.root_view).setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
 		}
@@ -408,18 +416,18 @@ public final class FBReader extends ZLAndroidActivity {
 
 	void showBars() {
 		final ActionBar bar = getActionBar();
-		System.err.println("VIEW = " + bar.getCustomView());
-		if (bar.isShowing()) {
-			return;
+		if (!bar.isShowing()) {
+			bar.show();
 		}
 
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
 		root.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-		bar.show();
 
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		fbreader.hideActivePopup();
-		myNavigationPopup = new NavigationPopup(fbreader);
-		myNavigationPopup.runNavigation(this, root);
+		if (myNavigationPopup == null) {
+			final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
+			fbreader.hideActivePopup();
+			myNavigationPopup = new NavigationPopup(fbreader);
+			myNavigationPopup.runNavigation(this, root);
+		}
 	}
 }

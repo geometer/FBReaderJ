@@ -26,8 +26,6 @@ import android.os.Bundle;
 import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.*;
 import android.os.PowerManager;
 
@@ -78,10 +76,12 @@ public abstract class ZLAndroidActivity extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
+		final ZLAndroidLibrary zlibrary = getLibrary();
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);
-		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
-		if (getLibrary().DisableButtonLightsOption.getValue()) {
+		if (!zlibrary.ShowStatusBarOption.getValue()) {
+			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+		}
+		if (zlibrary.DisableButtonLightsOption.getValue()) {
 			disableButtonLight();
 		}
 		setContentView(R.layout.main);

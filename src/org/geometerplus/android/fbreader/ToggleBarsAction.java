@@ -19,8 +19,6 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.app.ActionBar;
-
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 class ToggleBarsAction extends FBAndroidAction {
@@ -30,8 +28,7 @@ class ToggleBarsAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		final ActionBar bar = BaseActivity.getActionBar();
-		if (bar.isShowing()) {
+		if (BaseActivity.barsAreShown()) {
 			BaseActivity.hideBars();
 		} else {
 			BaseActivity.showBars();
