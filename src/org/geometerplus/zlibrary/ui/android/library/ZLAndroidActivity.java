@@ -80,7 +80,7 @@ public abstract class ZLAndroidActivity extends Activity {
 
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(0xAA, 0, 0, 0)));
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
 		if (getLibrary().DisableButtonLightsOption.getValue()) {
 			disableButtonLight();
 		}

@@ -49,7 +49,7 @@ public class PopupWindow extends LinearLayout {
 			default:
 			case BottomFlat:
 				inflater.inflate(R.layout.control_panel_bottom_flat, this, true);
-				setBackgroundColor(Color.argb(0xAA, 0, 0, 0));
+				setBackgroundColor(Color.DKGRAY);
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
