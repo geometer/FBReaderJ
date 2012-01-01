@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -103,17 +104,31 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myFullScreenFlag = !zlibrary.ShowStatusBarOption.getValue();
 
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
+		final ActionBar bar = getActionBar();
+		bar.setDisplayOptions(
+			ActionBar.DISPLAY_SHOW_CUSTOM,
+			ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
+		);
+		final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
+		titleView.setText(getTitle());
+		titleView.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				fbReader.runAction(ActionCode.SHOW_BOOK_INFO);
+			}
+		});
+		bar.setCustomView(titleView);
+		bar.setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
 
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
 			WindowManager.LayoutParams.FLAG_FULLSCREEN
 		);
 
-		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if (fbReader.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(fbReader);
 		}
@@ -428,6 +443,15 @@ public final class FBReader extends ZLAndroidActivity {
 			fbreader.hideActivePopup();
 			myNavigationPopup = new NavigationPopup(fbreader);
 			myNavigationPopup.runNavigation(this, root);
+		}
+	}
+
+	@Override
+	public void setTitle(CharSequence title) {
+		super.setTitle(title);
+		final TextView view = (TextView)getActionBar().getCustomView();
+		if (view != null) {
+			view.setText(title);
 		}
 	}
 }
