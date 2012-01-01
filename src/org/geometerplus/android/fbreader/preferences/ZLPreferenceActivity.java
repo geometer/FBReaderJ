@@ -55,30 +55,30 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 			return screen;
 		}
 
-		public ZLPreference addPreference(ZLPreference preference) {
-			myScreen.addPreference((Preference)preference);
+		public Preference addPreference(Preference preference) {
+			myScreen.addPreference(preference);
 			return preference;
 		}
 
-		public ZLPreference addOption(ZLBooleanOption option, String resourceKey) {
+		public Preference addOption(ZLBooleanOption option, String resourceKey) {
 			return addPreference(
 				new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
 			);
 		}
 
-		public ZLPreference addOption(ZLStringOption option, String resourceKey) {
+		public Preference addOption(ZLStringOption option, String resourceKey) {
 			return addPreference(
 				new ZLStringOptionPreference(ZLPreferenceActivity.this, option, Resource, resourceKey)
 			);
 		}
 
-		public ZLPreference addOption(ZLColorOption option, String resourceKey) {
+		public Preference addOption(ZLColorOption option, String resourceKey) {
 			return addPreference(
 				new ZLColorPreference(ZLPreferenceActivity.this, Resource, resourceKey, option)
 			);
 		}
 
-		public <T extends Enum<T>> ZLPreference addOption(ZLEnumOption<T> option, String resourceKey) {
+		public <T extends Enum<T>> Preference addOption(ZLEnumOption<T> option, String resourceKey) {
 			return addPreference(
 				new ZLEnumPreference<T>(ZLPreferenceActivity.this, option, Resource, resourceKey)
 			);
@@ -99,12 +99,12 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		return screen;
 	}
 
-	public ZLPreference addPreference(ZLPreference preference) {
+	public Preference addPreference(Preference preference) {
 		myScreen.addPreference((Preference)preference);
 		return preference;
 	}
 
-	public ZLPreference addOption(ZLBooleanOption option, String resourceKey) {
+	public Preference addOption(ZLBooleanOption option, String resourceKey) {
 		ZLBooleanPreference preference =
 			new ZLBooleanPreference(ZLPreferenceActivity.this, option, Resource, resourceKey);
 		myScreen.addPreference(preference);

@@ -34,7 +34,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
-class ZLColorPreference extends DialogPreference implements ZLPreference {
+class ZLColorPreference extends DialogPreference {
 	private final ZLColorOption myOption;
 
 	private SeekBar myRedSlider;

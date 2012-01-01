@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-class AnimationSpeedPreference extends DialogPreference implements ZLPreference {
+class AnimationSpeedPreference extends DialogPreference {
 	private final ZLIntegerRangeOption myOption;
 	private final ZLResource myResource;
 

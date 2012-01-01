@@ -24,7 +24,7 @@ import android.preference.EditTextPreference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-abstract class ZLStringPreference extends EditTextPreference implements ZLPreference {
+abstract class ZLStringPreference extends EditTextPreference {
 	private String myValue;
 
 	ZLStringPreference(Context context, ZLResource rootResource, String resourceKey) {
