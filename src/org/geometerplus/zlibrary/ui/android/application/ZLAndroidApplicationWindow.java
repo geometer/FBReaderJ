@@ -50,6 +50,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		super(application);
 	}
 
+	public Menu addSubMenu(Menu menu, String id) {
+		return menu.addSubMenu(ZLResource.resource("menu").getResource(id).getValue());
+	}
+
 	public void addMenuItem(Menu menu, String actionId, Integer iconId, String name) {
 		if (name == null) {
 			name = ZLResource.resource("menu").getResource(actionId).getValue();
