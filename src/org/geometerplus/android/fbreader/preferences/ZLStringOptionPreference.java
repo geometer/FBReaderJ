@@ -30,12 +30,12 @@ class ZLStringOptionPreference extends ZLStringPreference {
 	ZLStringOptionPreference(Context context, ZLStringOption option, ZLResource rootResource, String resourceKey) {
 		super(context, rootResource, resourceKey);
 		myOption = option;
-		setValue(myOption.getValue());
+		super.setValue(myOption.getValue());
 	}
 
 	@Override
-	protected void onDialogClosed(boolean result) {
-		super.onDialogClosed(result);
-		myOption.setValue(getValue());
+	protected void setValue(String value) {
+		super.setValue(value);
+		myOption.setValue(value);
 	}
 }

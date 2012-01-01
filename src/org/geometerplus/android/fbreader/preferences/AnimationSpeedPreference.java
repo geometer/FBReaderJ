@@ -32,7 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-class AnimationSpeedPreference extends DialogPreference implements ZLPreference {
+class AnimationSpeedPreference extends DialogPreference {
 	private final ZLIntegerRangeOption myOption;
 	private final ZLResource myResource;
 
@@ -67,9 +67,6 @@ class AnimationSpeedPreference extends DialogPreference implements ZLPreference 
 		if (which == DialogInterface.BUTTON_POSITIVE) {
 			myOption.setValue(myOption.MinValue + mySlider.getProgress());
 		}
-	}
-
-	public void onAccept() {
 	}
 
 	private class SeekBarDrawable extends Drawable {

@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Hledat"/>
 		<node name="rotate" value="Otočit obrazovku"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Zvětšit"/>
 		<node name="decreaseFont" value="Zmenšit"/>
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
@@ -295,6 +301,13 @@
 			</node>
 			<node name="appearance" value="Vzhled">
 				<node name="summary" value="Otáčení, stavový řádek"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Automatické otáčení">
 					<node name="summaryOn" value="Displej se otočí pokud uživatel pohne zařízením"/>
 					<node name="summaryOff" value="Displej se neotočí pokud uživatel pohne zařízením"/>

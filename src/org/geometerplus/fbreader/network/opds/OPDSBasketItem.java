@@ -53,7 +53,7 @@ class OPDSBasketItem extends BasketItem {
 		if (url == null) {
 			return;
 		}
-		url = url.replace("{ids}", ZLMiscUtil.listToString(ids));
+		url = url.replace("{ids}", ZLMiscUtil.listToString(ids, ","));
 
 		final OPDSCatalogItem.State state = opdsLink.createOperationData(loader);
 		doLoadChildren(state, opdsLink.createNetworkData(null, url, state));
