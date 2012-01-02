@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
-import java.lang.reflect.*;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.*;
