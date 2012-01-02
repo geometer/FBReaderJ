@@ -55,6 +55,8 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FBReader extends ZLAndroidActivity {
+	static final int ACTION_BAR_COLOR = Color.DKGRAY;
+
 	public static final String BOOK_PATH_KEY = "BookPath";
 
 	final static int REPAINT_CODE = 1;
@@ -122,7 +124,7 @@ public final class FBReader extends ZLAndroidActivity {
 			}
 		});
 		bar.setCustomView(titleView);
-		bar.setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
+		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
 
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -430,10 +432,7 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	void showBars() {
-		final ActionBar bar = getActionBar();
-		if (!bar.isShowing()) {
-			bar.show();
-		}
+		getActionBar().show();
 
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
 		root.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);

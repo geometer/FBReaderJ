@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.*;
 import android.widget.*;
 
@@ -49,7 +48,7 @@ public class PopupWindow extends LinearLayout {
 			default:
 			case BottomFlat:
 				inflater.inflate(R.layout.control_panel_bottom_flat, this, true);
-				setBackgroundColor(Color.DKGRAY);
+				setBackgroundColor(FBReader.ACTION_BAR_COLOR);
 				p = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
 				);
