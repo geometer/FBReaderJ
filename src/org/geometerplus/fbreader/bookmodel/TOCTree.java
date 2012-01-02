@@ -40,7 +40,11 @@ public class TOCTree extends ZLTree<TOCTree> {
 	}
 
 	public final void setText(String text) {
-		myText = text;
+		if (text != null) {
+			myText = text.trim().replaceAll("[\t ]+", " ");
+		} else {
+			myText = null;
+		}
 	}
 	
 	public Reference getReference() {
