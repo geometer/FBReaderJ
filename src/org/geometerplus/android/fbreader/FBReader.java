@@ -452,6 +452,7 @@ public final class FBReader extends ZLAndroidActivity {
 		final TextView view = (TextView)getActionBar().getCustomView();
 		if (view != null) {
 			view.setText(title);
+			view.postInvalidate();
 		}
 	}
 }
