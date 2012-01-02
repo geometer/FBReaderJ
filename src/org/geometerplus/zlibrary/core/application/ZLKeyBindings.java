@@ -55,7 +55,7 @@ public final class ZLKeyBindings {
 		} catch (Exception e) {
 			// ignore
 		}
- 		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys));
+ 		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
 
 		// this code is for migration from FBReader versions <= 1.1.2
 		ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");

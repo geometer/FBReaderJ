@@ -25,7 +25,7 @@ import android.preference.ListPreference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
-class ZLIntegerRangePreference extends ListPreference implements ZLPreference {
+class ZLIntegerRangePreference extends ListPreference {
 	private final ZLIntegerRangeOption myOption;
 
 	ZLIntegerRangePreference(Context context, ZLResource resource, ZLIntegerRangeOption option) {
@@ -50,8 +50,5 @@ class ZLIntegerRangePreference extends ListPreference implements ZLPreference {
 			setSummary(value);
 			myOption.setValue(myOption.MinValue + findIndexOfValue(value));
 		}
-	}
-
-	public void onAccept() {
 	}
 }

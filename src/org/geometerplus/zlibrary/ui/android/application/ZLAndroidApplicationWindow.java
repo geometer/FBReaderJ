@@ -50,6 +50,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		super(application);
 	}
 
+	public Menu addSubMenu(Menu menu, String id) {
+		return menu.addSubMenu(ZLResource.resource("menu").getResource(id).getValue());
+	}
+
 	public void addMenuItem(Menu menu, String actionId, Integer iconId, String name) {
 		if (name == null) {
 			name = ZLResource.resource("menu").getResource(actionId).getValue();
@@ -67,7 +71,21 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
-			entry.getKey().setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+			final MenuItem menuItem = entry.getKey();
+			menuItem.setVisible(application.isActionVisible(actionId) && application.isActionEnabled(actionId));
+			switch (application.isActionChecked(actionId)) {
+				case B3_TRUE:
+					menuItem.setCheckable(true);
+					menuItem.setChecked(true);
+					break;
+				case B3_FALSE:
+					menuItem.setCheckable(true);
+					menuItem.setChecked(false);
+					break;
+				case B3_UNDEFINED:
+					menuItem.setCheckable(false);
+					break;
+			}
 		}
 	}
 	
@@ -97,16 +115,6 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 
 	protected ZLViewWidget getViewWidget() {
 		return ((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getWidget();
-	}
-
-	@Override
-	public void rotate() {
-		((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).rotateScreen();
-	}
-
-	public boolean canRotate() {
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
-		return zlibrary.AutoOrientationOption.getValue();
 	}
 
 	public void close() {
