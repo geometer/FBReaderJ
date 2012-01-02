@@ -307,7 +307,7 @@
 				<node name="wallpapers" value="Wallpapers directory"/>
 			</node>
 			<node name="appearance" value="Appearance">
-				<node name="summary" value="Rotation, status bar"/>
+				<node name="summary" value="Display settings, status bar, button lights"/>
 				<node name="screenOrientation" value="Screen orientation">
 					<node name="system" value="System"/>
 					<node name="portrait" value="Portrait"/>
@@ -330,6 +330,20 @@
 				<node name="disableButtonLights" value="Disable buttons light during reading">
 					<node name="summaryOn" value="Disable button lights (does not work for some devices)"/>
 					<node name="summaryOff" value="Don't try to disable button lights"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
+					<node name="summaryOff" value="Disabled"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
+					<node name="0" value="Always"/>
+					<node name="25" value="While battery level is greater than 25 percent"/>
+					<node name="50" value="While battery level is greater than 50 percent"/>
+					<node name="100" value="Never"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode"/>
 				</node>
 			</node>
 			<node name="text" value="Text">
@@ -533,23 +547,6 @@
 					<node name="summaryOff" value="Don't show clock in footer"/>
 				</node>
 				<node name="font" value="Font family"/>
-			</node>
-			<node name="display" value="Display">
-				<node name="summary" value="Brightness control, preventing from sleep"/>
-				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
-					<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
-					<node name="summaryOff" value="Disabled"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Prevent screen from sleeping">
-					<node name="0" value="Always"/>
-					<node name="25" value="While battery level is greater than 25 percent"/>
-					<node name="50" value="While battery level is greater than 50 percent"/>
-					<node name="100" value="Never"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging">
-					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode"/>
-					<node name="summaryOff" value="Switch screen off even if device is in charging mode"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Page turning">
 				<node name="summary" value="How to turn pages"/>

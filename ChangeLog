@@ -10,6 +10,8 @@
 * An exception in *.mobi file reading has been fixed
 * New screen orientation option; keeps screen orientation between starts
 * New action bar + navigation bar behaviour in Android 3/4 (screen center tap runs both bars)
+* Quick access to book info in Android 3/4
+* TOC item name in navigation window
 
 ===== 1.2.6 (Dec 19, 2011) =====
 * Android 3.*, 4.*: bottom buttons are hidden during book reading

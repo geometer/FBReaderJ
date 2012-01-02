@@ -276,6 +276,7 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Installer plugin" />
@@ -323,6 +324,20 @@
 				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
+					<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
+					<node name="summaryOff" value="Contrôle désactivé"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Empêcher l'écran de s'éteindre">
+					<node name="0" value="Toujours"/>
+					<node name="25" value="Tant que le niveau de batterie est supérieur à 25 pourcent"/>
+					<node name="50" value="Tant que le niveau de batterie est supérieur à 50 pourcent"/>
+					<node name="100" value="Jamais"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Empêcher l'écran de se mettre en veille pendant le chargement">
+					<node name="summaryOn" value="Pas de mise en veille lorsque la batterie est en charge"/>
+					<node name="summaryOff" value="Éteindre l'écran lorsque la batterie se recharge"/>
 				</node>
 			</node>
 			<node name="text" value="Texte">
@@ -526,23 +541,6 @@
 					<node name="summaryOff" value="N'affiche pas l'horloge dans le pied de page"/>
 				</node>
 				<node name="font" value="Famille de police"/>
-			</node>
-			<node name="display" value="Affichage">
-				<node name="summary" value="Contrôle de la luminosité, mise en veille de l'écran"/>
-				<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
-					<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
-					<node name="summaryOff" value="Contrôle désactivé"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Empêcher l'écran de s'éteindre">
-					<node name="0" value="Toujours"/>
-					<node name="25" value="Tant que le niveau de batterie est supérieur à 25 pourcent"/>
-					<node name="50" value="Tant que le niveau de batterie est supérieur à 50 pourcent"/>
-					<node name="100" value="Jamais"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Empêcher l'écran de se mettre en veille pendant le chargement">
-					<node name="summaryOn" value="Pas de mise en veille lorsque la batterie est en charge"/>
-					<node name="summaryOff" value="Éteindre l'écran lorsque la batterie se recharge"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Navigation">
 				<node name="summary" value="Modalités de défilement du texte"/>
