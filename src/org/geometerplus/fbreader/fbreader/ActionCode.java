@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,14 +48,18 @@ public interface ActionCode {
 
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
 	String VOLUME_KEY_SCROLL_BACK = "volumeKeyScrollBackward";
-	String SHOW_MENU = "menu";
-	String SHOW_NAVIGATION = "navigate";
+	String TOGGLE_BARS = "toggleBars";
 
 	String GO_BACK = "goBack";
 	String EXIT = "exit";
 	String SHOW_CANCEL_MENU = "cancelMenu";
 
-	String ROTATE = "rotate";
+	String SET_SCREEN_ORIENTATION_SYSTEM = "screenOrientationSystem";
+	String SET_SCREEN_ORIENTATION_PORTRAIT = "screenOrientationPortrait";
+	String SET_SCREEN_ORIENTATION_LANDSCAPE = "screenOrientationLandscape";
+	String SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT = "screenOrientationReversePortrait";
+	String SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE = "screenOrientationReverseLandscape";
+
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
 

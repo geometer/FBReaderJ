@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,5 +91,5 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 		}
 	}
 
-	public abstract void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location);
+	public abstract void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Type type);
 }

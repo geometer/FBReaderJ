@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,40 +95,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			setupAnnotation(book);
 			setupFileInfo(book);
 		}
-
-		/*
-		if (myHideOpenButton) {
-			findButton(R.id.book_info_button_open).setVisibility(View.GONE);
-		} else {
-			setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
-				public void onClick(View view) {
-					startActivity(
-						new Intent(getApplicationContext(), FBReader.class)
-							.setAction(Intent.ACTION_VIEW)
-							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
-							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-					);
-				}
-			});
-		}
-		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
-			public void onClick(View view) {
-				startActivityForResult(
-					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
-					1
-				);
-			}
-		});
-		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
-			public void onClick(View view) {
-				if (book != null) {
-					book.reloadInfoFromFile();
-					setupBookInfo(book);
-				}
-			}
-		});
-		*/
 
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
@@ -287,7 +253,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		}
 		final int kilo = 1024;
 		if (size < kilo) { // less than 1 kilobyte
-			return myResource.getResource("sizeInBytes").getValue().replaceAll("%s", String.valueOf(size));
+			return myResource.getResource("sizeInBytes").getValue((int)size).replaceAll("%s", String.valueOf(size));
 		}
 		final String value;
 		if (size < kilo * kilo) { // less than 1 megabyte

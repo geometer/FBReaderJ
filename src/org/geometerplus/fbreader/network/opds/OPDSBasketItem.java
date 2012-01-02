@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ class OPDSBasketItem extends BasketItem {
 		if (url == null) {
 			return;
 		}
-		url = url.replace("{ids}", ZLMiscUtil.listToString(ids));
+		url = url.replace("{ids}", ZLMiscUtil.listToString(ids, ","));
 
 		final OPDSCatalogItem.State state = opdsLink.createOperationData(loader);
 		doLoadChildren(state, opdsLink.createNetworkData(null, url, state));

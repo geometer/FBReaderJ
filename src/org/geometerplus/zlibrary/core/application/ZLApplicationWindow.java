@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,9 +39,6 @@ abstract public class ZLApplicationWindow {
 	abstract protected void refreshMenu();
 	
 	abstract protected ZLViewWidget getViewWidget();
-
-	abstract protected void rotate();
-	abstract protected boolean canRotate();
 
 	abstract protected void close();
 

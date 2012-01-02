@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,11 @@ public class TOCTree extends ZLTree<TOCTree> {
 	}
 
 	public final void setText(String text) {
-		myText = text;
+		if (text != null) {
+			myText = text.trim().replaceAll("[\t ]+", " ");
+		} else {
+			myText = null;
+		}
 	}
 	
 	public Reference getReference() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import android.preference.CheckBoxPreference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-abstract class ZLCheckBoxPreference extends CheckBoxPreference implements ZLPreference {
+abstract class ZLCheckBoxPreference extends CheckBoxPreference {
 	ZLCheckBoxPreference(Context context, ZLResource rootResource, String resourceKey) {
 		super(context);
 
@@ -32,8 +32,5 @@ abstract class ZLCheckBoxPreference extends CheckBoxPreference implements ZLPref
 		setTitle(resource.getValue());
 		setSummaryOn(resource.getResource("summaryOn").getValue());
 		setSummaryOff(resource.getResource("summaryOff").getValue());
-	}
-
-	public void onAccept() {
 	}
 }

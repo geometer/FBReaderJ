@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.library.*;
 
 public final class FBReaderApp extends ZLApplication {
@@ -109,7 +110,6 @@ public final class FBReaderApp extends ZLApplication {
 
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
-		addAction(ActionCode.ROTATE, new RotateAction(this));
 
 		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
 		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
@@ -438,5 +438,29 @@ public final class FBReaderApp extends ZLApplication {
 			maxLength,
 			visible
 		);
+	}
+
+	public TOCTree getCurrentTOCElement() {
+		final ZLTextWordCursor cursor = BookTextView.getStartCursor();
+		if (Model == null || cursor == null) {
+			return null;
+		}
+
+		int index = cursor.getParagraphIndex();	
+		if (cursor.isEndOfParagraph()) {
+			++index;
+		}
+		TOCTree treeToSelect = null;
+		for (TOCTree tree : Model.TOCTree) {
+			final TOCTree.Reference reference = tree.getReference();
+			if (reference == null) {
+				continue;
+			}
+			if (reference.ParagraphIndex > index) {
+				break;
+			}
+			treeToSelect = tree;
+		}
+		return treeToSelect;
 	}
 }

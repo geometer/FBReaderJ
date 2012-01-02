@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,12 +30,12 @@ class ZLStringOptionPreference extends ZLStringPreference {
 	ZLStringOptionPreference(Context context, ZLStringOption option, ZLResource rootResource, String resourceKey) {
 		super(context, rootResource, resourceKey);
 		myOption = option;
-		setValue(myOption.getValue());
+		super.setValue(myOption.getValue());
 	}
 
 	@Override
-	protected void onDialogClosed(boolean result) {
-		super.onDialogClosed(result);
-		myOption.setValue(getValue());
+	protected void setValue(String value) {
+		super.setValue(value);
+		myOption.setValue(value);
 	}
 }

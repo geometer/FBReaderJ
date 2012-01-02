@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,13 @@ public final class ZLImageEntry {
 	private final ZLImageMap myImageMap;
 	public final String Id;
 	public final short VOffset;
+	public final boolean IsCover;
 
-	ZLImageEntry(ZLImageMap imageMap, String id, short vOffset) {
+	ZLImageEntry(ZLImageMap imageMap, String id, short vOffset, boolean isCover) {
 		myImageMap = imageMap;
 		Id = id;
 		VOffset = vOffset;
+		IsCover = isCover;
 	}
 	
 	public ZLImage getImage() {

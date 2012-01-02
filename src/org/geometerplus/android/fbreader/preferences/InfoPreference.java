@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,14 +22,11 @@ package org.geometerplus.android.fbreader.preferences;
 import android.content.Context;
 import android.preference.Preference;
 
-class InfoPreference extends Preference implements ZLPreference {
+class InfoPreference extends Preference {
 	InfoPreference(Context context, String title, String value) {
 		super(context);
 		setTitle(title);
 		setSummary(value);
 		setEnabled(false);
-	}
-
-	public void onAccept() {
 	}
 }

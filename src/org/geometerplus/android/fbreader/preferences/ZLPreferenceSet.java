@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@ import java.util.LinkedList;
 import android.preference.Preference;
 
 class ZLPreferenceSet {
-	private final LinkedList<ZLPreference> myPreferences = new LinkedList<ZLPreference>();
+	private final LinkedList<Preference> myPreferences = new LinkedList<Preference>();
 
-	final void add(ZLPreference preference) {
+	final void add(Preference preference) {
 		myPreferences.add(preference);
 	}
 
 	final void setEnabled(boolean enable) {
-		for (ZLPreference preference : myPreferences) {
-			((Preference)preference).setEnabled(enable);
+		for (Preference preference : myPreferences) {
+			preference.setEnabled(enable);
 		}
 	}
 }

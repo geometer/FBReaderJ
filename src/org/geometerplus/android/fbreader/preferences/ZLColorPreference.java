@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
-class ZLColorPreference extends DialogPreference implements ZLPreference {
+class ZLColorPreference extends DialogPreference {
 	private final ZLColorOption myOption;
 
 	private SeekBar myRedSlider;
@@ -130,9 +130,6 @@ class ZLColorPreference extends DialogPreference implements ZLPreference {
 		super.onBindView(view);
 	}
 	*/
-
-	public void onAccept() {
-	}
 
 	static class SeekBarDrawable extends Drawable {
 		private final SeekBar mySlider;

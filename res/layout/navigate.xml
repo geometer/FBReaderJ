@@ -7,16 +7,17 @@
 	android:paddingRight="9dip"
 >
 	<TextView
-		android:id="@+id/book_position_text"
+		android:id="@+id/navigation_text"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
 		android:singleLine="true"
 		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:ellipsize="end"
 		android:paddingTop="4px"
 	/>
 	<SeekBar
-		android:id="@+id/book_position_slider"
+		android:id="@+id/navigation_slider"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:paddingTop="4px"
@@ -26,26 +27,25 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:weightSum="1.0"
-		android:layout_below="@id/book_position_slider"
+		android:layout_below="@id/navigation_slider"
 		android:layout_alignParentBottom="true"
 		android:paddingTop="4px"
 	>
-		<Button
-			android:id="@android:id/button1"
+		<LinearLayout
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_weight="0.45"
+			android:layout_weight="0.25"
+		/>
+		<Button
+			android:id="@+id/navigation_reset_button"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
 		/>
 		<LinearLayout
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_weight="0.1"
-		/>
-		<Button
-			android:id="@android:id/button3"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="0.45"
+			android:layout_weight="0.25"
 		/>
 	</LinearLayout>
 </LinearLayout>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ import android.preference.ListPreference;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
-class ZLIntegerRangePreference extends ListPreference implements ZLPreference {
+class ZLIntegerRangePreference extends ListPreference {
 	private final ZLIntegerRangeOption myOption;
 
 	ZLIntegerRangePreference(Context context, ZLResource resource, ZLIntegerRangeOption option) {
@@ -50,8 +50,5 @@ class ZLIntegerRangePreference extends ListPreference implements ZLPreference {
 			setSummary(value);
 			myOption.setValue(myOption.MinValue + findIndexOfValue(value));
 		}
-	}
-
-	public void onAccept() {
 	}
 }

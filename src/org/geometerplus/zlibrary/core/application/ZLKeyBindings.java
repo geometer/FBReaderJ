@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ public final class ZLKeyBindings {
 		} catch (Exception e) {
 			// ignore
 		}
- 		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys));
+ 		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
 
 		// this code is for migration from FBReader versions <= 1.1.2
 		ZLStringOption oldBackKeyOption = new ZLStringOption(myName + ":" + ACTION, "<Back>", "");
