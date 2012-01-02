@@ -59,6 +59,34 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, appearanceScreen.Resource, "screenOrientation",
 			androidLibrary.OrientationOption, androidLibrary.allOrientations()
 		));
+		appearanceScreen.addPreference(new ZLBooleanPreference(
+			this,
+			fbReader.AllowScreenBrightnessAdjustmentOption,
+			appearanceScreen.Resource,
+			"allowScreenBrightnessAdjustment"
+		) {
+			private final int myLevel = androidLibrary.ScreenBrightnessLevelOption.getValue();
+
+			@Override
+			protected void onClick() {
+				super.onClick();
+				androidLibrary.ScreenBrightnessLevelOption.setValue(isChecked() ? myLevel : 0);
+			}
+		});
+		appearanceScreen.addPreference(new BatteryLevelToTurnScreenOffPreference(
+			this,
+			androidLibrary.BatteryLevelToTurnScreenOffOption,
+			appearanceScreen.Resource,
+			"dontTurnScreenOff"
+		));
+		/*
+		appearanceScreen.addPreference(new ZLBooleanPreference(
+			this,
+			androidLibrary.DontTurnScreenOffDuringChargingOption,
+			appearanceScreen.Resource,
+			"dontTurnScreenOffDuringCharging"
+		));
+		*/
 		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
 
@@ -280,36 +308,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		footerPreferences.setEnabled(
 			fbReader.ScrollbarTypeOption.getValue() == FBView.SCROLLBAR_SHOW_AS_FOOTER
 		);
-
-		final Screen displayScreen = createPreferenceScreen("display");
-		displayScreen.addPreference(new ZLBooleanPreference(
-			this,
-			fbReader.AllowScreenBrightnessAdjustmentOption,
-			displayScreen.Resource,
-			"allowScreenBrightnessAdjustment"
-		) {
-			private final int myLevel = androidLibrary.ScreenBrightnessLevelOption.getValue();
-
-			@Override
-			protected void onClick() {
-				super.onClick();
-				androidLibrary.ScreenBrightnessLevelOption.setValue(isChecked() ? myLevel : 0);
-			}
-		});
-		displayScreen.addPreference(new BatteryLevelToTurnScreenOffPreference(
-			this,
-			androidLibrary.BatteryLevelToTurnScreenOffOption,
-			displayScreen.Resource,
-			"dontTurnScreenOff"
-		));
-		/*
-		displayScreen.addPreference(new ZLBooleanPreference(
-			this,
-			androidLibrary.DontTurnScreenOffDuringChargingOption,
-			displayScreen.Resource,
-			"dontTurnScreenOffDuringCharging"
-		));
-		*/
 
 		/*
 		final Screen colorProfileScreen = createPreferenceScreen("colorProfile");
