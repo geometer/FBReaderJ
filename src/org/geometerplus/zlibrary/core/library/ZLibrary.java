@@ -22,6 +22,7 @@ package org.geometerplus.zlibrary.core.library;
 import java.util.Collection;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public abstract class ZLibrary {
 	public static ZLibrary Instance() {
@@ -29,6 +30,14 @@ public abstract class ZLibrary {
 	}
 		
 	private static ZLibrary ourImplementation;
+
+	public static final String SCREEN_ORIENTATION_SYSTEM = "system";
+	public static final String SCREEN_ORIENTATION_PORTRAIT = "portrait";
+	public static final String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
+	public static final String SCREEN_ORIENTATION_REVERSE_PORTRAIT = "reversePortrait";
+	public static final String SCREEN_ORIENTATION_REVERSE_LANDSCAPE = "reverseLandscape";
+
+	public final ZLStringOption OrientationOption = new ZLStringOption("LookNFeel", "Orientation", "auto");
 
 	protected ZLibrary() {
 		ourImplementation = this;
@@ -43,4 +52,21 @@ public abstract class ZLibrary {
 	abstract public int getScreenBrightness();
 	abstract public int getDisplayDPI();
 	abstract public Collection<String> defaultLanguageCodes();
+
+	abstract public boolean supportsAllOrientations();
+	public String[] allOrientations() {
+		return supportsAllOrientations()
+			? new String[] {
+				SCREEN_ORIENTATION_SYSTEM,
+				SCREEN_ORIENTATION_PORTRAIT,
+				SCREEN_ORIENTATION_LANDSCAPE,
+				SCREEN_ORIENTATION_REVERSE_PORTRAIT,
+				SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+			}
+			: new String[] {
+				SCREEN_ORIENTATION_SYSTEM,
+				SCREEN_ORIENTATION_PORTRAIT,
+				SCREEN_ORIENTATION_LANDSCAPE
+			};
+	}
 }

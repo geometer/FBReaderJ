@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Cauta"/>
 		<node name="rotate" value="Rotire ecran"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Mareste"/>
 		<node name="decreaseFont" value="Micsoreaza"/>
 		<node name="toggleFullscreen" value="Pe intreg ecranul"/>
@@ -270,6 +276,7 @@
 			<node name="authorize" value="Autorizeaza"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -295,6 +302,13 @@
 			</node>
 			<node name="appearance" value="Aspect">
 				<node name="summary" value="Rotire, bara de stare"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Rotire automata">
 					<node name="summaryOn" value="Ecranului se vor roti atunci când utilizatorul misca aparatul"/>
 					<node name="summaryOff" value="Ecranului nu se vor roti atunci când utilizatorul va misca aparatul"/>
@@ -310,6 +324,20 @@
 				<node name="disableButtonLights" value="Dezactiveaza lumina butoanelor hardware în timpul lecturii">
 					<node name="summaryOn" value="Dezactiveaza lumina butonului (nu functioneaza pentru unele dispozitive)"/>
 					<node name="summaryOff" value="Nu dezactivati lumina butonului"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
+					<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
+					<node name="summaryOff" value="Dezactivat"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Împiedicati modul stand-by">
+					<node name="0" value="Mereu"/>
+					<node name="25" value="În timp ce nivelul bateriei este mai mare de 25 la suta"/>
+					<node name="50" value="În timp ce nivelul bateriei este mai mare de 50 la suta"/>
+					<node name="100" value="Niciodata"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Împiedicati modul stand-by în timpul încarcarii">
+					<node name="summaryOn" value="Împiedicati modul stand-by, daca aparatul este în modul de încarcare"/>
+					<node name="summaryOff" value="Inchide ecran, chiar daca aparatul este în modul de încarcare"/>
 				</node>
 			</node>
 			<node name="text" value="Text">
@@ -513,23 +541,6 @@
 					<node name="summaryOff" value="Nu se arata ceasul în subsol"/>
 				</node>
 				<node name="font" value="Familia de fonturi"/>
-			</node>
-			<node name="display" value="Afisaj">
-				<node name="summary" value="Control luminozitate, previne modul stand-by"/>
-				<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
-					<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
-					<node name="summaryOff" value="Dezactivat"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Împiedicati modul stand-by">
-					<node name="0" value="Mereu"/>
-					<node name="25" value="În timp ce nivelul bateriei este mai mare de 25 la suta"/>
-					<node name="50" value="În timp ce nivelul bateriei este mai mare de 50 la suta"/>
-					<node name="100" value="Niciodata"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Împiedicati modul stand-by în timpul încarcarii">
-					<node name="summaryOn" value="Împiedicati modul stand-by, daca aparatul este în modul de încarcare"/>
-					<node name="summaryOff" value="Inchide ecran, chiar daca aparatul este în modul de încarcare"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Defilare">
 				<node name="summary" value="Cum se face defilarea textului"/>

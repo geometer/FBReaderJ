@@ -41,13 +41,6 @@ public abstract class ZLAndroidActivity extends Activity {
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
 
-	@Override
-	protected void onSaveInstanceState(Bundle state) {
-		super.onSaveInstanceState(state);
-		state.putInt(REQUESTED_ORIENTATION_KEY, myOrientation);
-		state.putInt(ORIENTATION_CHANGE_COUNTER_KEY, myChangeCounter);
-	}
-
 	private void setScreenBrightnessAuto() {
 		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
 		attrs.screenBrightness = -1.0f;
@@ -89,12 +82,8 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	public void onCreate(Bundle state) {
 		super.onCreate(state);
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
-		if (state != null) {
-			myOrientation = state.getInt(REQUESTED_ORIENTATION_KEY, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-			myChangeCounter = state.getInt(ORIENTATION_CHANGE_COUNTER_KEY);
-		}
+		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		if (getLibrary().DisableButtonLightsOption.getValue()) {
@@ -115,28 +104,6 @@ public abstract class ZLAndroidActivity extends Activity {
 			ZLApplication.Instance().openFile(fileToOpen);
 		}
 		ZLApplication.Instance().getViewWidget().repaint();
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-
-		if (getLibrary().AutoOrientationOption.getValue()) {
-			setAutoRotationMode();
-		} else {
-			switch (myOrientation) {
-				case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-				case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-					if (getRequestedOrientation() != myOrientation) {
-						setRequestedOrientation(myOrientation);
-						myChangeCounter = 0;
-					}
-					break;
-				default:
-					setAutoRotationMode();
-					break;
-			}
-		}
 	}
 
 	private PowerManager.WakeLock myWakeLock;
@@ -232,61 +199,6 @@ public abstract class ZLAndroidActivity extends Activity {
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		View view = findViewById(R.id.main_view);
 		return ((view != null) && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
-	}
-
-	private int myChangeCounter;
-	private int myOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
-	private void setAutoRotationMode() {
-		myOrientation = getLibrary().AutoOrientationOption.getValue() ?
-			ActivityInfo.SCREEN_ORIENTATION_SENSOR : ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
-		setRequestedOrientation(myOrientation);
-		myChangeCounter = 0;
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration config) {
-		super.onConfigurationChanged(config);
-
-		switch (getRequestedOrientation()) {
-			default:
-				break;
-			case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-				if (config.orientation != Configuration.ORIENTATION_PORTRAIT) {
-					myChangeCounter = 0;
-				} else if (myChangeCounter++ > 0) {
-					setAutoRotationMode();
-				}
-				break;
-			case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-				if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
-					myChangeCounter = 0;
-				} else if (myChangeCounter++ > 0) {
-					setAutoRotationMode();
-				}
-				break;
-		}
-	}
-
-	void rotate() {
-		View view = findViewById(R.id.main_view);
-		if (view != null) {
-			switch (getRequestedOrientation()) {
-				case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-					myOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-					break;
-				case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-					myOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-					break;
-				default:
-					if (view.getWidth() > view.getHeight()) {
-						myOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-					} else {
-						myOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-					}
-			}
-			setRequestedOrientation(myOrientation);
-			myChangeCounter = 0;
-		}
 	}
 
 	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {

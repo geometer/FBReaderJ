@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Пошук"/>
 		<node name="rotate" value="Повернути"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Збільшити шрифт" />
 		<node name="decreaseFont" value="Зменшити шрифт" />
 		<node name="toggleFullscreen" value="На весь екран"/>
@@ -270,6 +276,7 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin" toBeTranslated="true" />
@@ -295,6 +302,13 @@
 			</node>
 			<node name="appearance" value="Зовнішній вигляд">
 				<node name="summary" value="Rotation, status bar" toBeTranslated="true"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Автоматичний поворот">
 					<node name="summaryOn" value="Зображення повертається при повороті пристрою"/>
 					<node name="summaryOff" value="Зображення не повертається при повороті пристрою"/>
@@ -310,6 +324,20 @@
 				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
+					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
+					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Verhindert das der Bildschirm sich ausschaltet">
+					<node name="0" value="Always" toBeTranslated="true"/>
+					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
+					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
+					<node name="100" value="Never" toBeTranslated="true"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
+					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="text" value="Text" toBeTranslated="true">
@@ -513,23 +541,6 @@
 					<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
 				</node>
 				<node name="font" value="Font family" toBeTranslated="true"/>
-			</node>
-			<node name="display" value="Display" toBeTranslated="true">
-				<node name="summary" value="Brightness control, preventing from sleep" toBeTranslated="true"/>
-				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment" toBeTranslated="true">
-					<node name="summaryOn" value="By dragging finger up/down along left side of the screen" toBeTranslated="true"/>
-					<node name="summaryOff" value="Disabled" toBeTranslated="true"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Verhindert das der Bildschirm sich ausschaltet">
-					<node name="0" value="Always" toBeTranslated="true"/>
-					<node name="25" value="While battery level is greater than 25 percent" toBeTranslated="true"/>
-					<node name="50" value="While battery level is greater than 50 percent" toBeTranslated="true"/>
-					<node name="100" value="Never" toBeTranslated="true"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Prevent screen from sleeping during charging" toBeTranslated="true">
-					<node name="summaryOn" value="Prevent screen from sleeping if device is in charging mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Switch screen off even if device is in charging mode" toBeTranslated="true"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Перегортання сторінок">
 				<node name="summary" value="How to scroll text" toBeTranslated="true"/>

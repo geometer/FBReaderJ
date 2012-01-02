@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Hledat"/>
 		<node name="rotate" value="Otočit obrazovku"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Zvětšit"/>
 		<node name="decreaseFont" value="Zmenšit"/>
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
@@ -270,6 +276,7 @@
 			<node name="authorize" value="Authorizovat"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>
@@ -295,6 +302,13 @@
 			</node>
 			<node name="appearance" value="Vzhled">
 				<node name="summary" value="Otáčení, stavový řádek"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Automatické otáčení">
 					<node name="summaryOn" value="Displej se otočí pokud uživatel pohne zařízením"/>
 					<node name="summaryOff" value="Displej se neotočí pokud uživatel pohne zařízením"/>
@@ -310,6 +324,20 @@
 				<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
 					<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
 					<node name="summaryOff" value="Nezakazovat tlačítka osvětlení"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
+					<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
+					<node name="summaryOff" value="Zakázáno"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Zabránit usínání displeje">
+					<node name="0" value="Vždy"/>
+					<node name="25" value="Pokud je úroveň baterie větší než 25 procent"/>
+					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
+					<node name="100" value="Nikdy"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Zabránit usínání displeje během nabíjení">
+					<node name="summaryOn" value="Zabránit usínání displeje pokud je zařízení v režimu nabíjení"/>
+					<node name="summaryOff" value="Vypínat displej i když je zařízení v režimu nabíjení"/>
 				</node>
 			</node>
 			<node name="text" value="Text">
@@ -513,23 +541,6 @@
 					<node name="summaryOff" value="Nezobrazovat hodiny v patičce"/>
 				</node>
 				<node name="font" value="Rodina písem"/>
-			</node>
-			<node name="display" value="Displej">
-				<node name="summary" value="Ovládání jasu, zabránění usínání"/>
-				<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
-					<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
-					<node name="summaryOff" value="Zakázáno"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Zabránit usínání displeje">
-					<node name="0" value="Vždy"/>
-					<node name="25" value="Pokud je úroveň baterie větší než 25 procent"/>
-					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
-					<node name="100" value="Nikdy"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Zabránit usínání displeje během nabíjení">
-					<node name="summaryOn" value="Zabránit usínání displeje pokud je zařízení v režimu nabíjení"/>
-					<node name="summaryOff" value="Vypínat displej i když je zařízení v režimu nabíjení"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Posouvání">
 				<node name="summary" value="Jak posouvat text"/>
