@@ -276,6 +276,7 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plug-in installeren"/>
@@ -323,6 +324,20 @@
 				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
+					<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
+					<node name="summaryOff" value="Uitgeschakeld"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Voorkom uitschakelen scherm">
+					<node name="0" value="Altijd"/>
+					<node name="25" value="Zolang batterijniveau hoger is dan 25 procent"/>
+					<node name="50" value="Zolang batterijniveau hoger is dan 50 procent"/>
+					<node name="100" value="Nooit"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Voorkom uitschakelen scherm tijdens opladen">
+					<node name="summaryOn" value="Voorkom uitschakelen scherm tijdens het opladen"/>
+					<node name="summaryOff" value="Schakel scherm uit, zelfs tijdens het opladen"/>
 				</node>
 			</node>
 			<node name="text" value="Tekst">
@@ -526,23 +541,6 @@
 					<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
 				</node>
 				<node name="font" value="Lettertype"/>
-			</node>
-			<node name="display" value="Scherm">
-				<node name="summary" value="Helderheid, Voorkom uitschakelen scherm"/>
-				<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
-					<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
-					<node name="summaryOff" value="Uitgeschakeld"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Voorkom uitschakelen scherm">
-					<node name="0" value="Altijd"/>
-					<node name="25" value="Zolang batterijniveau hoger is dan 25 procent"/>
-					<node name="50" value="Zolang batterijniveau hoger is dan 50 procent"/>
-					<node name="100" value="Nooit"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Voorkom uitschakelen scherm tijdens opladen">
-					<node name="summaryOn" value="Voorkom uitschakelen scherm tijdens het opladen"/>
-					<node name="summaryOff" value="Schakel scherm uit, zelfs tijdens het opladen"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Omslaan">
 				<node name="summary" value="Hoe sla je de bladzijdes om"/>

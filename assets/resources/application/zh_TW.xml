@@ -276,6 +276,7 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安裝插件"/>
@@ -323,6 +324,25 @@
 				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="調整屏幕亮度">
+					<node name="summaryOn" value="通過於屏幕左方上下拉動調整"/>
+					<node name="summaryOff" value="關閉"/>
+				</node>
+				<node name="dontTurnScreenOff" value="防止進入待機狀態">
+					<node name="0" value="必然"/>
+					<!-- Percent sign (%) could not be used in resource strings
+								because there is a bug in Cyanogen Mod firmware that
+								crashes the program with such resources
+					<node name="25" value="當電量大於25%"/>
+					<node name="50" value="當電量大於50%"/>-->
+					<node name="25" value="While battery level is greater than 25 percent"/>
+					<node name="50" value="While battery level is greater than 50 percent"/>
+					<node name="100" value="永不"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="充電時防止關閉屏幕">
+					<node name="summaryOn" value="裝置充電時防止關閉屏幕"/>
+					<node name="summaryOff" value="即使裝置充電時亦會關閉屏幕"/>
 				</node>
 			</node>
 			<node name="text" value="文字">
@@ -526,28 +546,6 @@
 					<node name="summaryOff" value="不要在頁尾顯示時間"/>
 				</node>
 				<node name="font" value="字體"/>
-			</node>
-			<node name="display" value="顯示">
-				<node name="summary" value="亮度控制，防止關閉屏幕"/>
-				<node name="allowScreenBrightnessAdjustment" value="調整屏幕亮度">
-					<node name="summaryOn" value="通過於屏幕左方上下拉動調整"/>
-					<node name="summaryOff" value="關閉"/>
-				</node>
-				<node name="dontTurnScreenOff" value="防止進入待機狀態">
-					<node name="0" value="必然"/>
-					<!-- Percent sign (%) could not be used in resource strings
-								because there is a bug in Cyanogen Mod firmware that
-								crashes the program with such resources
-					<node name="25" value="當電量大於25%"/>
-					<node name="50" value="當電量大於50%"/>-->
-					<node name="25" value="While battery level is greater than 25 percent"/>
-					<node name="50" value="While battery level is greater than 50 percent"/>
-					<node name="100" value="永不"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="充電時防止關閉屏幕">
-					<node name="summaryOn" value="裝置充電時防止關閉屏幕"/>
-					<node name="summaryOff" value="即使裝置充電時亦會關閉屏幕"/>
-				</node>
 			</node>
 			<node name="scrolling" value="翻頁">
 				<node name="summary" value="如何翻頁"/>
