@@ -279,6 +279,7 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin installieren"/>
@@ -326,6 +327,20 @@
 				<node name="disableButtonLights" value="Beleuchtung der Hardware-Tasten während des lesens abschalten">
 					<node name="summaryOn" value="Tastenbeleuchtung abschalten (Funktioniert auf einigen Geräten nicht)"/>
 					<node name="summaryOff" value="Tastenbeleuchtung nicht abschalten"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung">
+					<node name="summaryOn" value="Mit den Finger durch hoch/runter-schieben am linken Bildschirmrand."/>
+					<node name="summaryOff" value="Abgeschaltet."/>
+				</node>
+				<node name="dontTurnScreenOff" value="Ausschalten des Bildschirms verhindern">
+					<node name="0" value="Immer"/>
+					<node name="25" value="Wenn der Akkuladezustand größer 25 Prozent ist."/>
+					<node name="50" value="Wenn der Akkuladezustand größer 50 Prozent ist."/>
+					<node name="100" value="Nie"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Ausschalten des Bildschirms beim Laden verhindern">
+					<node name="summaryOn" value="Bildschirm nicht abschalten auch wenn das Geräte aufgeladen wird."/>
+					<node name="summaryOff" value="Bildschirm abschalten auch wenn das Geräte aufgeladen wird."/>
 				</node>
 			</node>
 			<node name="text" value="Text Darstellung">
@@ -529,23 +544,6 @@
 					<node name="summaryOff" value="Keine Uhr in der Fußleiste anzeigen."/>
 				</node>
 				<node name="font" value="Schriftart"/>
-			</node>
-			<node name="display" value="Bildschirm">
-				<node name="summary" value="Helligkeit &amp; automatische Abschaltung."/>
-				<node name="allowScreenBrightnessAdjustment" value="Helligkeitsanpassung">
-					<node name="summaryOn" value="Mit den Finger durch hoch/runter-schieben am linken Bildschirmrand."/>
-					<node name="summaryOff" value="Abgeschaltet."/>
-				</node>
-				<node name="dontTurnScreenOff" value="Ausschalten des Bildschirms verhindern">
-					<node name="0" value="Immer"/>
-					<node name="25" value="Wenn der Akkuladezustand größer 25 Prozent ist."/>
-					<node name="50" value="Wenn der Akkuladezustand größer 50 Prozent ist."/>
-					<node name="100" value="Nie"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Ausschalten des Bildschirms beim Laden verhindern">
-					<node name="summaryOn" value="Bildschirm nicht abschalten auch wenn das Geräte aufgeladen wird."/>
-					<node name="summaryOff" value="Bildschirm abschalten auch wenn das Geräte aufgeladen wird."/>
-				</node>
 			</node>
 			<node name="scrolling" value="Blättern">
 				<node name="summary" value="Die Art des Umblätterns festlegen."/>

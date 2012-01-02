@@ -331,7 +331,6 @@
 					<node name="summaryOn" value="Disable button lights (does not work for some devices)"/>
 					<node name="summaryOff" value="Don't try to disable button lights"/>
 				</node>
-				<node name="summary" value="Brightness control, preventing from sleep"/>
 				<node name="allowScreenBrightnessAdjustment" value="Screen brightness adjustment">
 					<node name="summaryOn" value="By dragging finger up/down along left side of the screen"/>
 					<node name="summaryOff" value="Disabled"/>

@@ -276,6 +276,7 @@
 			<node name="authorize" value="授权" />
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件" />
@@ -323,6 +324,20 @@
 				<node name="disableButtonLights" value="阅读时禁用系统按键发亮" >
 					<node name="summaryOn" value="禁用设备系统按键发亮 (对某些设备无效)" />
 					<node name="summaryOff" value="不要尝试禁用系统按键发亮" />
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="屏幕亮度调整">
+					<node name="summaryOn" value="通过在屏幕左侧上下滑动手指来调整"/>
+					<node name="summaryOff" value="禁用屏幕亮度调整"/>
+				</node>
+				<node name="dontTurnScreenOff" value="禁止屏幕睡眠">
+					<node name="0" value="总是"/>
+					<node name="25" value="当电量大于百分之25"/>
+					<node name="50" value="当电量大于百分之50"/>
+					<node name="100" value="从不"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="在充电时防止屏幕进入睡眠状态">
+					<node name="summaryOn" value="如果设备处于充电模式则禁止屏幕进入睡眠状态"/>
+					<node name="summaryOff" value="如果设备处于充电模式则关闭屏幕"/>
 				</node>
 			</node>
 			<node name="text" value="文字">
@@ -526,23 +541,6 @@
 					<node name="summaryOff" value="不在页脚处显示时间"/>
 				</node>
 				<node name="font" value="字体"/>
-			</node>
-			<node name="display" value="显示">
-				<node name="summary" value="亮度控制，防止进入睡眠状态"/>
-				<node name="allowScreenBrightnessAdjustment" value="屏幕亮度调整">
-					<node name="summaryOn" value="通过在屏幕左侧上下滑动手指来调整"/>
-					<node name="summaryOff" value="禁用屏幕亮度调整"/>
-				</node>
-				<node name="dontTurnScreenOff" value="禁止屏幕睡眠">
-					<node name="0" value="总是"/>
-					<node name="25" value="当电量大于百分之25"/>
-					<node name="50" value="当电量大于百分之50"/>
-					<node name="100" value="从不"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="在充电时防止屏幕进入睡眠状态">
-					<node name="summaryOn" value="如果设备处于充电模式则禁止屏幕进入睡眠状态"/>
-					<node name="summaryOff" value="如果设备处于充电模式则关闭屏幕"/>
-				</node>
 			</node>
 			<node name="scrolling" value="翻阅操作">
 				<node name="summary" value="如何翻阅文字内容"/>
