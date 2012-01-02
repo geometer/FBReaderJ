@@ -276,6 +276,7 @@
 			<node name="authorize" value="Autoryzuj"/>
 			<node name="rescan" value="Rescan"/>
 			<node name="turnOn" value="Włącz"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Zainstaluj plugin"/>
@@ -323,6 +324,20 @@
 				<node name="disableButtonLights" value="Wyłącz podświetlenie przycisków podczas czytania">
 					<node name="summaryOn" value="Wyłącz podświetlenie przycisków (nie wszystkie urządzenia respektują to ustawienie)"/>
 					<node name="summaryOff" value="Nie próbuj wyłączyć podświetlenia przycisków"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Dostosowywanie jasności">
+					<node name="summaryOn" value="Przesuwając palcem w górę/dół wzdłuż lewej krawędzi ekranu"/>
+					<node name="summaryOff" value="Wyłączone"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Zapobiegaj wygaszaniu ekranu">
+					<node name="0" value="Zawsze"/>
+					<node name="25" value="Gdy poziom baterii większy niż 25 procent"/>
+					<node name="50" value="Gdy poziom baterii większy niż 50 procent"/>
+					<node name="100" value="Nigdy"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Zapobiegaj wygaszaniu ekranu podczas ładowania">
+					<node name="summaryOn" value="Zapobiegaj wygaszaniu ekranu gdy urządzenie jest w trybie ładowania"/>
+					<node name="summaryOff" value="Wyłączaj ekran gdy urządznie jest w trybie ładowania"/>
 				</node>
 			</node>
 			<node name="text" value="Tekst">
@@ -526,23 +541,6 @@
 					<node name="summaryOff" value="Nie pokazuj zegara w stopce"/>
 				</node>
 				<node name="font" value="Rodzina czcionek"/>
-			</node>
-			<node name="display" value="Wyświetlacz">
-				<node name="summary" value="Ustawienia jasności, zapobieganie wygaszaniu"/>
-				<node name="allowScreenBrightnessAdjustment" value="Dostosowywanie jasności">
-					<node name="summaryOn" value="Przesuwając palcem w górę/dół wzdłuż lewej krawędzi ekranu"/>
-					<node name="summaryOff" value="Wyłączone"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Zapobiegaj wygaszaniu ekranu">
-					<node name="0" value="Zawsze"/>
-					<node name="25" value="Gdy poziom baterii większy niż 25 procent"/>
-					<node name="50" value="Gdy poziom baterii większy niż 50 procent"/>
-					<node name="100" value="Nigdy"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Zapobiegaj wygaszaniu ekranu podczas ładowania">
-					<node name="summaryOn" value="Zapobiegaj wygaszaniu ekranu gdy urządzenie jest w trybie ładowania"/>
-					<node name="summaryOff" value="Wyłączaj ekran gdy urządznie jest w trybie ładowania"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Przewijanie">
 				<node name="summary" value="Metoda przewijania tekstu"/>
