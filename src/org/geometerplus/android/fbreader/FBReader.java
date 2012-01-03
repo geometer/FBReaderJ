@@ -188,6 +188,7 @@ public final class FBReader extends ZLAndroidActivity {
 						runOnUiThread(new Runnable() {
 							public void run() {
 								fbReader.showPopup(popup.getId());
+								hideBars();
 							}
 						});
 					} else {
@@ -290,7 +291,6 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public boolean onSearchRequested() {
-		hideBars();
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final FBReaderApp.PopupPanel popup = fbreader.getActivePopup();
 		fbreader.hideActivePopup();
@@ -308,12 +308,12 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	public void showSelectionPanel() {
-		hideBars();
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLTextView view = fbReader.getTextView();
 		((SelectionPopup)fbReader.getPopupById(SelectionPopup.ID))
 			.move(view.getSelectionStartY(), view.getSelectionEndY());
 		fbReader.showPopup(SelectionPopup.ID);
+		hideBars();
 	}
 
 	public void hideSelectionPanel() {
