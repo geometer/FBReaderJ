@@ -717,7 +717,7 @@
 		</node>
 		<node name="tips">
 			<node name="title" value="Astuce du jour"/>
-			<node name="initializationText" value="Voulez-vous afficher les conseils et astuces de FBReader ? Les nouvelles astuces seront téléchargéés depuis le site de FBReader; cela représente un traffic hebdomadaire d'environ 2 kB.&#10;&#10;Activer les astuces ?"/>
+			<node name="initializationText" value="Voulez-vous afficher les conseils et astuces de FBReader ? Les nouvelles astuces seront téléchargées depuis le site de FBReader; cela représente un traffic hebdomadaire d'environ 2 kB.&#10;&#10;Activer les astuces ?"/>
 			<node name="dontShowAgain" value="Ne plus afficher"/>
 			<node name="more" value="Astuce suivante"/>
 		</node>
