@@ -86,6 +86,9 @@ public final class FBReader extends ZLAndroidActivity {
 							new RunPluginAction(FBReader.this, fbReader, info.getId())
 						);
 					}
+					if (!myPluginActions.isEmpty()) {
+						invalidateOptionsMenu();
+					}
 				}
 			}
 		}
@@ -227,11 +230,14 @@ public final class FBReader extends ZLAndroidActivity {
 		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Type.Floating);
 
 		synchronized (myPluginActions) {
-			int index = 0;
-			while (index < myPluginActions.size()) {
-				fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
+			if (!myPluginActions.isEmpty()) {
+				int index = 0;
+				while (index < myPluginActions.size()) {
+					fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
+				}
+				myPluginActions.clear();
+				invalidateOptionsMenu();
 			}
-			myPluginActions.clear();
 		}
 
 		sendOrderedBroadcast(
