@@ -55,7 +55,12 @@ public interface ActionCode {
 	String EXIT = "exit";
 	String SHOW_CANCEL_MENU = "cancelMenu";
 
-	String ROTATE = "rotate";
+	String SET_SCREEN_ORIENTATION_SYSTEM = "screenOrientationSystem";
+	String SET_SCREEN_ORIENTATION_PORTRAIT = "screenOrientationPortrait";
+	String SET_SCREEN_ORIENTATION_LANDSCAPE = "screenOrientationLandscape";
+	String SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT = "screenOrientationReversePortrait";
+	String SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE = "screenOrientationReverseLandscape";
+
 	String INCREASE_FONT = "increaseFont";
 	String DECREASE_FONT = "decreaseFont";
 

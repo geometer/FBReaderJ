@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Keresés"/>
 		<node name="rotate" value="Kijelző elforgatása"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Nagyítás" />
 		<node name="decreaseFont" value="Kicsinyítés" />
 		<node name="toggleFullscreen" value="Teljes kijelző"/>
@@ -270,6 +276,7 @@
 			<node name="authorize" value="Hitelesítés"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Plugin telepítése" />
@@ -295,6 +302,13 @@
 			</node>
 			<node name="appearance" value="Megjelenés">
 				<node name="summary" value="Elforgatás, állapotsor"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Automatikus elforgatás">
 					<node name="summaryOn" value="A kijelző elfordul a készülék mozgatásakor"/>
 					<node name="summaryOff" value="A kijelző nem fordul el a készülés mozgatásakor"/>
@@ -310,6 +324,20 @@
 				<node name="disableButtonLights" value="Gombok megvilágításának kikapcsolása">
 					<node name="summaryOn" value="Megvilágítás kikapcsolása olvasás közben (nem minden eszköznél működik)"/>
 					<node name="summaryOff" value="Ne próbálja kikapcsolni a gombok háttérvilágítását"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Fényerő beállítása">
+					<node name="summaryOn" value="Felfelé/lefelé csúsztatás a képernyő bal oldalán"/>
+					<node name="summaryOff" value="Kikapcsolva"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Kijelző kikapcsolása">
+					<node name="0" value="Soha"/>
+					<node name="25" value="25 százalék akku töltöttség alatt" />
+					<node name="50" value="50 százalék akku töltöttség alatt" />
+					<node name="100" value="Mindig (automatikusan)" />
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Kijelző kikapcsolása töltéskor">
+					<node name="summaryOn" value="Ne kapcsoljon ki a kijelző az akkumulátor töltésekor"/>
+					<node name="summaryOff" value="A kijelző automatikusan kikapcsol az akkumulátor töltésekor is"/>
 				</node>
 			</node>
 			<node name="text" value="Szöveg">
@@ -513,23 +541,6 @@
 					<node name="summaryOff" value="Ne mutassa a pontos időt a láblécben"/>
 				</node>
 				<node name="font" value="Lábléc betűtípusa"/>
-			</node>
-			<node name="display" value="Kijelző">
-				<node name="summary" value="Fényerő, automatikus kikapcsolás"/>
-				<node name="allowScreenBrightnessAdjustment" value="Fényerő beállítása">
-					<node name="summaryOn" value="Felfelé/lefelé csúsztatás a képernyő bal oldalán"/>
-					<node name="summaryOff" value="Kikapcsolva"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Kijelző kikapcsolása">
-					<node name="0" value="Soha"/>
-					<node name="25" value="25 százalék akku töltöttség alatt" />
-					<node name="50" value="50 százalék akku töltöttség alatt" />
-					<node name="100" value="Mindig (automatikusan)" />
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Kijelző kikapcsolása töltéskor">
-					<node name="summaryOn" value="Ne kapcsoljon ki a kijelző az akkumulátor töltésekor"/>
-					<node name="summaryOff" value="A kijelző automatikusan kikapcsol az akkumulátor töltésekor is"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Lapozás">
 				<node name="summary" value="Szöveg görgetésének beállításai"/>

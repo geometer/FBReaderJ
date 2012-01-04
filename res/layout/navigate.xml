@@ -13,6 +13,7 @@
 		android:gravity="center_horizontal"
 		android:singleLine="true"
 		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:ellipsize="end"
 		android:paddingTop="4px"
 	/>
 	<SeekBar

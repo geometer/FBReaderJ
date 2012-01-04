@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="Tìm"/>
 		<node name="rotate" value="Quay màn hình"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Phóng to" />
 		<node name="decreaseFont" value="Thu nhỏ" />
 		<node name="toggleFullscreen" value="Toàn Màn hình "/>
@@ -270,6 +276,7 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Cài phần bổ trợ" />
@@ -295,6 +302,13 @@
 			</node>
 			<node name="appearance" value="Giao diện">
 				<node name="summary" value="Xoay, thanh trạng thái"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Tự xoay">
 					<node name="summaryOn" value="Màn hình sẽ xoay khi bạn quay thiết bị"/>
 					<node name="summaryOff" value="Màn hình sẽ không xoay khi bạn quay thiết bị"/>
@@ -310,6 +324,20 @@
 				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
+					<node name="summaryOn" value="Bằng việc rê ngón tay lên/xuống dọc cạnh trái màn hình"/>
+					<node name="summaryOff" value="Tắt"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Không cho màn hình tắt">
+					<node name="0" value="Luôn luôn"/>
+					<node name="25" value="Khi thời lượng pin lớn hơn 25%"/>
+					<node name="50" value="Khi thời lượng pin lớn hơn 50%"/>
+					<node name="100" value="Không bao giờ"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Ngăn màn hình tắt trong khi sạc">
+					<node name="summaryOn" value="Ngăn màn hình tắt nếu máy đang sạc"/>
+					<node name="summaryOff" value="Tắt màn hình ngay cả khi máy đang sạc"/>
 				</node>
 			</node>
 			<node name="text" value="Văn bản">
@@ -513,23 +541,6 @@
 					<node name="summaryOff" value="Đừng hiện đồng hồ ở dòng cuối"/>
 				</node>
 				<node name="font" value="Họ phông"/>
-			</node>
-			<node name="display" value="Hiển thị">
-				<node name="summary" value="Điều khiển độ sáng, chống máy sleep"/>
-				<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
-					<node name="summaryOn" value="Bằng việc rê ngón tay lên/xuống dọc cạnh trái màn hình"/>
-					<node name="summaryOff" value="Tắt"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Không cho màn hình tắt">
-					<node name="0" value="Luôn luôn"/>
-					<node name="25" value="Khi thời lượng pin lớn hơn 25%"/>
-					<node name="50" value="Khi thời lượng pin lớn hơn 50%"/>
-					<node name="100" value="Không bao giờ"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Ngăn màn hình tắt trong khi sạc">
-					<node name="summaryOn" value="Ngăn màn hình tắt nếu máy đang sạc"/>
-					<node name="summaryOff" value="Tắt màn hình ngay cả khi máy đang sạc"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Cuộn">
 				<node name="summary" value="Cách để cuộn văn bản"/>

@@ -24,15 +24,15 @@ import java.util.LinkedList;
 import android.preference.Preference;
 
 class ZLPreferenceSet {
-	private final LinkedList<ZLPreference> myPreferences = new LinkedList<ZLPreference>();
+	private final LinkedList<Preference> myPreferences = new LinkedList<Preference>();
 
-	final void add(ZLPreference preference) {
+	final void add(Preference preference) {
 		myPreferences.add(preference);
 	}
 
 	final void setEnabled(boolean enable) {
-		for (ZLPreference preference : myPreferences) {
-			((Preference)preference).setEnabled(enable);
+		for (Preference preference : myPreferences) {
+			preference.setEnabled(enable);
 		}
 	}
 }

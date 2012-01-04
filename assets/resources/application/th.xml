@@ -246,6 +246,12 @@
 		</node>
 		<node name="search" value="ค้นหา"/>
 		<node name="rotate" value="หมุนหน้าจอ"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="ซูมเข้า"/>
 		<node name="decreaseFont" value="ซูมออก"/>
 		<node name="toggleFullscreen" value="เต็มจอ"/>
@@ -270,6 +276,7 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="ติดตั้งปลั๊กอิน"/>
@@ -295,6 +302,13 @@
 			</node>
 			<node name="appearance" value="ลักษณะการแสดงผล">
 				<node name="summary" value="การหมุนหน้าจอ, แถบสถานะ"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="หมุนหน้าจออัตโนมัติ">
 					<node name="summaryOn" value="หมุนหน้าจอเมื่อหมุนตัวเครื่อง"/>
 					<node name="summaryOff" value="ไม่หมุนหน้าจอเมื่อหมุนตัวเครื่อง"/>
@@ -310,6 +324,20 @@
 				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="การปรับความสว่างหน้าจอ">
+					<node name="summaryOn" value="ลากนิ้วขึ้นลงด้านซ้ายของหน้าจอ"/>
+					<node name="summaryOff" value="ปิดการใช้งาน"/>
+				</node>
+				<node name="dontTurnScreenOff" value="การป้องกันการพักหน้าจอ">
+					<node name="0" value="ตลอดเวลา"/>
+					<node name="25" value="ขณะที่ระดับแบตเตอรี่มากกว่า 25% "/>
+					<node name="50" value="ขณะที่ระดับแบตเตอรี่มากกว่า 50% "/>
+					<node name="100" value="ไม่มีการพักหน้าจอ"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="ป้องกันการพักหน้าจอระหว่างการชาร์ต">
+					<node name="summaryOn" value="ป้องกันการพักหน้าจอขณะชาร์ต"/>
+					<node name="summaryOff" value="พักหน้าจอขณะชาร์ต"/>
 				</node>
 			</node>
 			<node name="text" value="ข้อความ">
@@ -513,23 +541,6 @@
 					<node name="summaryOff" value="ไม่แสดงนาฬิกาที่ท้ายหน้า"/>
 				</node>
 				<node name="font" value="รูปแบบอักษร"/>
-			</node>
-			<node name="display" value="การแสดงผล">
-				<node name="summary" value="ระดับความสว่าง, การป้องกันการพักหน้าจอ"/>
-				<node name="allowScreenBrightnessAdjustment" value="การปรับความสว่างหน้าจอ">
-					<node name="summaryOn" value="ลากนิ้วขึ้นลงด้านซ้ายของหน้าจอ"/>
-					<node name="summaryOff" value="ปิดการใช้งาน"/>
-				</node>
-				<node name="dontTurnScreenOff" value="การป้องกันการพักหน้าจอ">
-					<node name="0" value="ตลอดเวลา"/>
-					<node name="25" value="ขณะที่ระดับแบตเตอรี่มากกว่า 25% "/>
-					<node name="50" value="ขณะที่ระดับแบตเตอรี่มากกว่า 50% "/>
-					<node name="100" value="ไม่มีการพักหน้าจอ"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="ป้องกันการพักหน้าจอระหว่างการชาร์ต">
-					<node name="summaryOn" value="ป้องกันการพักหน้าจอขณะชาร์ต"/>
-					<node name="summaryOff" value="พักหน้าจอขณะชาร์ต"/>
-				</node>
 			</node>
 			<node name="scrolling" value="การเลื่อนหน้า">
 				<node name="summary" value="การเลื่อนข้อความ"/>

@@ -263,6 +263,12 @@
 		</node>
 		<node name="search" value="Поиск"/>
 		<node name="rotate" value="Повернуть"/>
+		<node name="screenOrientation" value="Ориентация экрана"/>
+		<node name="screenOrientationSystem" value="системная"/>
+		<node name="screenOrientationPortrait" value="вертикальная"/>
+		<node name="screenOrientationLandscape" value="горизонтальная"/>
+		<node name="screenOrientationReversePortrait" value="перевёрнутая вертикальная"/>
+		<node name="screenOrientationReverseLandscape" value="перевёрнутая горизонтальная"/>
 		<node name="increaseFont" value="Увеличить шрифт"/>
 		<node name="decreaseFont" value="Уменьшить шрифт"/>
 		<node name="toggleFullscreen" value="На весь экран"/>
@@ -285,8 +291,9 @@
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
 			<node name="authorize" value="Авторизоваться"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
+			<node name="rescan" value="Искать"/>
 			<node name="turnOn" value="Включить"/>
+			<node name="resetPosition" value="К исходной позиции"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
@@ -311,7 +318,14 @@
 				<node name="wallpapers" value="Каталог с обоями"/>
 			</node>
 			<node name="appearance" value="Внешний вид">
-				<node name="summary" value="Поворот, строка состояния"/>
+				<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>
+				<node name="screenOrientation" value="Ориентация экрана">
+					<node name="system" value="системная"/>
+					<node name="portrait" value="вертикальная"/>
+					<node name="landscape" value="горизонтальная"/>
+					<node name="reversePortrait" value="перевёрнутая вертикальная"/>
+					<node name="reverseLandscape" value="перевёрнутая горизонтальная"/>
+				</node>
 				<node name="autoOrientation" value="Автоматический поворот">
 					<node name="summaryOn" value="Изображение поворачивается при повороте устройства"/>
 					<node name="summaryOff" value="Изображение не поворачивается при повороте устройства"/>
@@ -327,6 +341,20 @@
 				<node name="disableButtonLights" value="Выключать подсветку кнопок во время чтения">
 					<node name="summaryOn" value="Выключать подсветку (работает не на всех устройствах)"/>
 					<node name="summaryOff" value="Не пытаться выключать подсветку"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
+					<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
+					<node name="summaryOff" value="Выключена"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
+					<node name="0" value="Никогда не выключать"/>
+					<node name="25" value="Пока батарея заряжена хотя бы на четверть"/>
+					<node name="50" value="Пока батарея заряжена хотя бы на половину"/>
+					<node name="100" value="Всегда выключать"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Не выключать экран, если батарея заряжается">
+					<node name="summaryOn" value="Никогда не выключать экран, если чтение происходит в режиме зарядки"/>
+					<node name="summaryOff" value="Выключать экран даже в режиме зарядки"/>
 				</node>
 			</node>
 			<node name="text" value="Текст">
@@ -530,23 +558,6 @@
 					<node name="summaryOff" value="Не показывать часы в подвале"/>
 				</node>
 				<node name="font" value="Шрифт"/>
-			</node>
-			<node name="display" value="Экран">
-				<node name="summary" value="Яркость, защита от выключения"/>
-				<node name="allowScreenBrightnessAdjustment" value="Регулировка яркости экрана">
-					<node name="summaryOn" value="Движением пальца вверх/вниз по левому краю экрана"/>
-					<node name="summaryOff" value="Выключена"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Не выключать экран во время чтения">
-					<node name="0" value="Никогда не выключать"/>
-					<node name="25" value="Пока батарея заряжена хотя бы на четверть"/>
-					<node name="50" value="Пока батарея заряжена хотя бы на половину"/>
-					<node name="100" value="Всегда выключать"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Не выключать экран, если батарея заряжается">
-					<node name="summaryOn" value="Никогда не выключать экран, если чтение происходит в режиме зарядки"/>
-					<node name="summaryOff" value="Выключать экран даже в режиме зарядки"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Перелистывание страниц">
 				<node name="summary" value="Как листать страницы"/>
