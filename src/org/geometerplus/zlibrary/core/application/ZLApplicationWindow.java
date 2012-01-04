@@ -40,9 +40,6 @@ abstract public class ZLApplicationWindow {
 	
 	abstract protected ZLViewWidget getViewWidget();
 
-	abstract protected void rotate();
-	abstract protected boolean canRotate();
-
 	abstract protected void close();
 
 	abstract protected int getBatteryLevel();

@@ -251,6 +251,12 @@
 		</node>
 		<node name="search" value="Buscar"/>
 		<node name="rotate" value="Rotar la pantalla"/>
+		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
+		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
+		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
+		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
 		<node name="increaseFont" value="Aumentar" />
 		<node name="decreaseFont" value="Disminuír" />
 		<node name="toggleFullscreen" value="Pantalla completa"/>
@@ -275,6 +281,7 @@
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="rescan" value="Rescan" toBeTranslated="true"/>
 			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
+			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar complemento"/>
@@ -300,6 +307,13 @@
 			</node>
 			<node name="appearance" value="Apariencia">
 				<node name="summary" value="Rotación, barra de estado"/>
+				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="portrait" value="Portrait" toBeTranslated="true"/>
+					<node name="landscape" value="Landscape" toBeTranslated="true"/>
+					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				</node>
 				<node name="autoOrientation" value="Rotación automática">
 					<node name="summaryOn" value="La pantalla rotará cuando el usuario mueva el dispositivo"/>
 					<node name="summaryOff" value="La pantalla no rotará cuando el usuario mueva el dispositivo"/>
@@ -315,6 +329,20 @@
 				<node name="disableButtonLights" value="Deshabilitar luz de botones físicos durante la lectura">
 					<node name="summaryOn" value="Deshabilitar luz de botones físicos (no funciona para algunos dispositivos)"/>
 					<node name="summaryOff" value="No deshabilitar luz de botones físicos"/>
+				</node>
+				<node name="allowScreenBrightnessAdjustment" value="Ajuste de brillo de la pantalla">
+					<node name="summaryOn" value="Al arrastrar el dedo arriba/abajo en el borde izquierdo de la pantalla"/>
+					<node name="summaryOff" value="Desactivado"/>
+				</node>
+				<node name="dontTurnScreenOff" value="Impedir que la pantalla entre en modo de suspensión">
+					<node name="0" value="Siempre"/>
+					<node name="25" value="Cuando la carga de la batería supere el 25 por ciento"/>
+					<node name="50" value="Cuando la carga de la batería supere el 50 por ciento"/>
+					<node name="100" value="Nunca"/>
+				</node>
+				<node name="dontTurnScreenOffDuringCharging" value="Impedir que la pantalla entre en modo de suspensión durante la carga">
+					<node name="summaryOn" value="Impedir que la pantalla entre en modo de suspensión si el dispositivo está cargando"/>
+					<node name="summaryOff" value="Apagar la pantalla incluso si el dispositivo está cargando"/>
 				</node>
 			</node>
 			<node name="text" value="Texto">
@@ -518,23 +546,6 @@
 					<node name="summaryOff" value="No mostrar reloj en la barra de progreso"/>
 				</node>
 				<node name="font" value="Tipo de letra"/>
-			</node>
-			<node name="display" value="Pantalla">
-				<node name="summary" value="Control de brillo, evitar la suspensión"/>
-				<node name="allowScreenBrightnessAdjustment" value="Ajuste de brillo de la pantalla">
-					<node name="summaryOn" value="Al arrastrar el dedo arriba/abajo en el borde izquierdo de la pantalla"/>
-					<node name="summaryOff" value="Desactivado"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Impedir que la pantalla entre en modo de suspensión">
-					<node name="0" value="Siempre"/>
-					<node name="25" value="Cuando la carga de la batería supere el 25 por ciento"/>
-					<node name="50" value="Cuando la carga de la batería supere el 50 por ciento"/>
-					<node name="100" value="Nunca"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Impedir que la pantalla entre en modo de suspensión durante la carga">
-					<node name="summaryOn" value="Impedir que la pantalla entre en modo de suspensión si el dispositivo está cargando"/>
-					<node name="summaryOff" value="Apagar la pantalla incluso si el dispositivo está cargando"/>
-				</node>
 			</node>
 			<node name="scrolling" value="Desplazamiento">
 				<node name="summary" value="Cómo desplazar el texto"/>

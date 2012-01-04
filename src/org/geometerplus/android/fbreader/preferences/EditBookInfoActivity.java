@@ -41,11 +41,13 @@ class BookTitlePreference extends ZLStringPreference {
 	BookTitlePreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context, rootResource, resourceKey);
 		myBook = book;
-		setValue(book.getTitle());
+		super.setValue(book.getTitle());
 	}
 
-	public void onAccept() {
-		myBook.setTitle(getValue());
+	@Override
+	protected void setValue(String value) {
+		super.setValue(value);
+		myBook.setTitle(value);
 	}
 }
 
@@ -78,9 +80,13 @@ class LanguagePreference extends ZLStringListPreference {
 		}
 	}
 
-	public void onAccept() {
-		final String value = getValue();
-		myBook.setLanguage((value.length() != 0) ? value : null);
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
+		if (result) {
+			final String value = getValue();
+			myBook.setLanguage(value.length() > 0 ? value : null);
+		}
 	}
 }
 
