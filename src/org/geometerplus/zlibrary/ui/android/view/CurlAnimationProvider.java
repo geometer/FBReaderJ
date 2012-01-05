@@ -48,8 +48,23 @@ class CurlAnimationProvider extends AnimationProvider {
 		myEdgePaint.setShadowLayer(15, 0, 0, 0xC0000000);
 	}
 
+	private Bitmap myBuffer;
+
 	@Override
 	protected void drawInternal(Canvas canvas) {
+		// +++ This is a hack that disables hardware acceleration +++
+		//   1) for GLES20Canvas we got an UnsupportedOperationException in clipPath
+		//   2) View.setLayerType(LAYER_TYPE_SOFTWARE) does not work properly in some cases
+		final Canvas originalCanvas = canvas;
+		if (canvas.isHardwareAccelerated()) {
+			if (myBuffer == null ||
+				myBuffer.getWidth() != myWidth ||
+				myBuffer.getHeight() != myHeight) {
+				myBuffer = Bitmap.createBitmap(myWidth, myHeight, getBitmapTo().getConfig());
+			}
+			canvas = new Canvas(myBuffer);
+		}
+		// --- This is a hack that disables hardware acceleration ---
 		canvas.drawBitmap(getBitmapTo(), 0, 0, myPaint);
 		final Bitmap fgBitmap = getBitmapFrom();
 
@@ -177,6 +192,12 @@ class CurlAnimationProvider extends AnimationProvider {
 		m.postRotate(angle, x, y);
 		canvas.drawBitmap(fgBitmap, m, myBackPaint);
 		canvas.restore();
+
+		// +++ This is a hack that disables hardware acceleration +++
+		if (canvas != originalCanvas) {
+			originalCanvas.drawBitmap(myBuffer, 0, 0, myPaint);
+		}
+		// --- This is a hack that disables hardware acceleration ---
 	}
 
 	@Override
