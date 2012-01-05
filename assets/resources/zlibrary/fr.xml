@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French zlibrary resources, by Pierre Senellart (update by Sébastien Rodriguez)-->
+<!-- 
+    French zlibrary resources, by Pierre Senellart 
+    Updated by Sébastien Rodriguez
+    Current maintainer: Mathias Monnerville <mathias@monnerville.com>
+-->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -56,7 +60,7 @@
 		<node name="es" value="Espagnol"/>
 		<node name="fi" value="Finnois"/>
 		<node name="fr" value="Français"/>
-		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="gl" value="Galique"/>
 		<node name="he" value="Hébreu"/>
 		<node name="hu" value="Hongrois" />
 		<node name="id" value="Indonésien"/>
@@ -64,18 +68,18 @@
 		<node name="lt" value="Lithuanien"/>
 		<node name="nl" value="Néerlandais"/>
 		<node name="no" value="Norvégien"/>
-		<node name="pl" toBeTranslated="true" value="Polish" />
+		<node name="pl" value="Polonais" />
 		<node name="pt" value="Portugais"/>
-		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ro" value="Roumain"/>
 		<node name="ru" value="Russe"/>
 		<node name="sv" value="Suédois"/>
-		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="th" value="Thailandais"/>
 		<node name="tr" value="Turc"/>
 		<node name="uk" value="Ukrainien"/>
 		<node name="vi" value="Vietnamien" />
 		<node name="zh" value="Chinois"/>
 		<node name="other" value="Autre"/>
-		<node name="multi" value="Multilanguage" toBeTranslated="true" />
+		<node name="multi" value="Multi-langage"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="activé"/>
