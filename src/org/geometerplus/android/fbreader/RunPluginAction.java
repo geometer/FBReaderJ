@@ -35,6 +35,7 @@ class RunPluginAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
+		BaseActivity.hideBars();
 		try {
 			BaseActivity.startActivity(new Intent("android.fbreader.action.plugin.RUN", myUri));
 		} catch (ActivityNotFoundException e) {
