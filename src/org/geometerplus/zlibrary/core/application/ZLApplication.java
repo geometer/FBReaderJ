@@ -37,6 +37,7 @@ public abstract class ZLApplication {
 
 	private ZLApplicationWindow myWindow;
 	private ZLView myView;
+	private String myTitle;
 
 	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
 
@@ -69,9 +70,14 @@ public abstract class ZLApplication {
 	}
 
 	protected void setTitle(String title) {
+		myTitle = title;
 		if (myWindow != null) {
 			myWindow.setTitle(title);
 		}
+	}
+
+	public String getTitle() {
+		return myTitle;
 	}
 
 	protected void wait(String key, Runnable runnable) {

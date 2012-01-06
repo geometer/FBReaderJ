@@ -60,6 +60,8 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Net
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		getActionBar().setDisplayShowTitleEnabled(false);
+
 		AuthenticationActivity.initCredentialsCreator(this);
 
 		SQLiteCookieDatabase.init(this);

@@ -54,6 +54,8 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		getActionBar().setDisplayShowTitleEnabled(false);
+
 		myDatabase = SQLiteBooksDatabase.Instance();
 		if (myDatabase == null) {
 			myDatabase = new SQLiteBooksDatabase(this, "LIBRARY");
@@ -241,15 +243,14 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		addMenuItem(menu, 1, "localSearch", R.drawable.ic_menu_search);
+		addMenuItem(menu, 1, "localSearch");
 		return true;
 	}
 
-	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+	private MenuItem addMenuItem(Menu menu, int index, String resourceKey) {
 		final String label = Library.resource().getResource("menu").getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, index, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
-		item.setIcon(iconId);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return item;
 	}
