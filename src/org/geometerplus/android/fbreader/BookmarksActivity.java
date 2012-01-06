@@ -68,7 +68,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
@@ -140,7 +139,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			myResource.getResource("menu").getResource("search").getValue()
 		);
 		item.setOnMenuItemClickListener(this);
-		item.setIcon(R.drawable.ic_menu_search);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
@@ -223,7 +221,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		bookmark.onOpen();
 		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
 		final long bookId = bookmark.getBookId();
-		if ((fbreader.Model == null) || (fbreader.Model.Book.getId() != bookId)) {
+		if (fbreader.Model == null || fbreader.Model.Book.getId() != bookId) {
 			final Book book = Book.getById(bookId);
 			if (book != null) {
 				finish();

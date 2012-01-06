@@ -75,7 +75,6 @@ public abstract class ZLAndroidActivity extends Activity {
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		final ZLAndroidLibrary zlibrary = getLibrary();
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		if (!zlibrary.ShowStatusBarOption.getValue()) {
 			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		}

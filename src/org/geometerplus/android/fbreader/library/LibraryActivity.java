@@ -54,8 +54,6 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		getActionBar().setDisplayShowTitleEnabled(false);
-
 		myDatabase = SQLiteBooksDatabase.Instance();
 		if (myDatabase == null) {
 			myDatabase = new SQLiteBooksDatabase(this, "LIBRARY");

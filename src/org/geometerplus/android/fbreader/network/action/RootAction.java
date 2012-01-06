@@ -25,8 +25,8 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.RootTree;
 
 public abstract class RootAction extends Action {
-	protected RootAction(Activity activity, int code, String resourceKey, int iconId) {
-		super(activity, code, resourceKey, iconId);
+	protected RootAction(Activity activity, int code, String resourceKey, boolean showAsAction) {
+		super(activity, code, resourceKey, showAsAction);
 	}
 
 	@Override

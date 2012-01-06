@@ -77,7 +77,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		setContentView(R.layout.book_info);
 

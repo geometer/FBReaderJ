@@ -26,8 +26,8 @@ import org.geometerplus.fbreader.network.NetworkTree;
 import org.geometerplus.fbreader.network.tree.NetworkBookTree;
 
 abstract class BookAction extends Action {
-	protected BookAction(Activity activity, int code, String resourceKey, int iconId) {
-		super(activity, code, resourceKey, iconId);
+	protected BookAction(Activity activity, int code, String resourceKey, boolean showAsIcon) {
+		super(activity, code, resourceKey, showAsIcon);
 	}
 
 	@Override

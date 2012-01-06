@@ -33,7 +33,7 @@ import org.geometerplus.android.util.UIUtil;
 
 public class ShowBookInfoAction extends BookAction {
 	public ShowBookInfoAction(Activity activity) {
-		super(activity, ActionCode.SHOW_BOOK_ACTIVITY, "bookInfo", -1);
+		super(activity, ActionCode.SHOW_BOOK_ACTIVITY, "bookInfo", false);
 	}
 
 	@Override

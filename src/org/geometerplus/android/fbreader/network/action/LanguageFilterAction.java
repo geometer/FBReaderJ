@@ -28,14 +28,12 @@ import android.content.DialogInterface;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.fbreader.network.NetworkLibrary;
 import org.geometerplus.fbreader.network.NetworkTree;
 
 public class LanguageFilterAction extends RootAction {
 	public LanguageFilterAction(Activity activity) {
-		super(activity, ActionCode.LANGUAGE_FILTER, "languages", R.drawable.ic_menu_languages);
+		super(activity, ActionCode.LANGUAGE_FILTER, "languages", true);
 	}
 
 	@Override
