@@ -54,12 +54,12 @@ public class BookInfoActivity extends Activity {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
-	public static final String HIDE_OPEN_BUTTON_KEY = "hideOpenButton";
+	public static final String FROM_READING_MODE_KEY = "fromReadingMode";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private ZLFile myFile;
 	private ZLImage myImage;
-	private boolean myHideOpenButton;
+	private boolean myDontReloadBook;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -69,7 +69,7 @@ public class BookInfoActivity extends Activity {
 		);
 
 		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
-		myHideOpenButton = getIntent().getBooleanExtra(HIDE_OPEN_BUTTON_KEY, false);
+		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myFile = ZLFile.createFileByPath(path);
 
 		myImage = Library.getCover(myFile);
@@ -97,11 +97,11 @@ public class BookInfoActivity extends Activity {
 			setupFileInfo(book);
 		}
 
-		if (myHideOpenButton) {
-			findButton(R.id.book_info_button_open).setVisibility(View.GONE);
-		} else {
-			setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
-				public void onClick(View view) {
+		setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
+			public void onClick(View view) {
+				if (myDontReloadBook) {
+					finish();
+				} else {
 					startActivity(
 						new Intent(getApplicationContext(), FBReader.class)
 							.setAction(Intent.ACTION_VIEW)
@@ -109,8 +109,8 @@ public class BookInfoActivity extends Activity {
 							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 					);
 				}
-			});
-		}
+			}
+		});
 		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
 			public void onClick(View view) {
 				startActivityForResult(
@@ -125,6 +125,7 @@ public class BookInfoActivity extends Activity {
 				if (book != null) {
 					book.reloadInfoFromFile();
 					setupBookInfo(book);
+					myDontReloadBook = false;
 				}
 			}
 		});
@@ -139,6 +140,7 @@ public class BookInfoActivity extends Activity {
 		final Book book = Book.getByFile(myFile);
 		if (book != null) {
 			setupBookInfo(book);
+			myDontReloadBook = false;
 		}
 	}
 

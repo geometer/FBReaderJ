@@ -39,7 +39,7 @@
 			<node name="summary" value="FBReader books directory"/>
 		</node>
 		<node name="menu">
-			<node name="localSearch" value="Local search"/>
+			<node name="localSearch" value="Search"/>
 		</node>
 		<node name="openBook" value="Open book"/>
 		<node name="showBookInfo" value="Book info"/>
@@ -131,7 +131,7 @@
 			<node name="turnWiFiOn" value="Please, turn WiFi on and try again"/>
 		</node>
 		<node name="menu">
-			<node name="networkSearch" value="Network search"/>
+			<node name="networkSearch" value="Search"/>
 			<node name="reload" value="Reload"/>
 			<node name="signIn" value="Sign in"/>
 			<node name="signUp" value="Sign up"/>
