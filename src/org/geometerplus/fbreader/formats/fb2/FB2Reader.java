@@ -52,6 +52,8 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 	private byte[] myTagStack = new byte[10];
 	private int myTagStackSize = 0;
 
+	private int myFootnoteIdDepth;
+
 	public FB2Reader(BookModel model) {
  		myBookReader = new BookReader(model);
 	}
@@ -96,6 +98,9 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 	}
 
 	public boolean endElementHandler(String tagName) {
+		if (myFootnoteIdDepth > 0) {
+			--myFootnoteIdDepth;
+		}
 		final byte tag = myTagStack[--myTagStackSize];
 		switch (tag) {
 			case FB2Tag.P:
@@ -209,9 +214,13 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
 		String id = attributes.getValue("id");
+		if (myFootnoteIdDepth > 0) {
+			++myFootnoteIdDepth;
+		}
 		if (id != null) {
-			if (!myReadMainText) {
+			if (!myReadMainText && myFootnoteIdDepth == 0) {
 				myBookReader.setFootnoteTextModel(id);
+				myFootnoteIdDepth = 1;
 			}
 			myBookReader.addHyperlinkLabel(id);
 		}
