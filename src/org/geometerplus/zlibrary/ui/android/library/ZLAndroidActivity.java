@@ -62,8 +62,10 @@ public abstract class ZLAndroidActivity extends Activity {
 		return (level >= 0) ? level : 50;
 	}
 
-	private void disableButtonLight() {
-		getWindow().getAttributes().buttonBrightness = 0f;
+	private void setButtonLight(boolean enabled) {
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.buttonBrightness = enabled ? -1.0f : 0.0f;
+		getWindow().setAttributes(attrs);
 	}
 
 	protected abstract ZLFile fileFromIntent(Intent intent);
@@ -78,13 +80,10 @@ public abstract class ZLAndroidActivity extends Activity {
 		if (!zlibrary.ShowStatusBarOption.getValue()) {
 			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		}
-		if (zlibrary.DisableButtonLightsOption.getValue()) {
-			disableButtonLight();
-		}
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		getLibrary().setActivity(this);
+		zlibrary.setActivity(this);
 
 		final ZLFile fileToOpen = fileFromIntent(getIntent());
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
@@ -152,6 +151,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		} else {
 			setScreenBrightnessAuto();
 		}
+		if (getLibrary().DisableButtonLightsOption.getValue()) {
+			setButtonLight(false);
+		}
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
@@ -161,6 +163,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		unregisterReceiver(myBatteryInfoReceiver);
 		ZLApplication.Instance().stopTimer();
 		switchWakeLock(false);
+		if (getLibrary().DisableButtonLightsOption.getValue()) {
+			setButtonLight(true);
+		}
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
 	}
