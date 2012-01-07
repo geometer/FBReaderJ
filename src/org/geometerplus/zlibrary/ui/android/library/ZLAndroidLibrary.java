@@ -56,6 +56,17 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			"PD_Novel".equals(Build.MODEL);
 	}
 
+	private Boolean myIsKindleFire = null;
+	public boolean isKindleFire() {
+		if (myIsKindleFire == null) {
+			final String KINDLE_MODEL_REGEXP = ".*kindle(\\s+)fire.*";
+			myIsKindleFire =
+				Build.MODEL != null &&
+				Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
+		}
+		return myIsKindleFire;
+	}
+
 	private ZLAndroidActivity myActivity;
 	private final Application myApplication;
 	private ZLAndroidWidget myWidget;
