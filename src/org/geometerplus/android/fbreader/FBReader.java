@@ -172,7 +172,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		if (!zlibrary.ShowStatusBarOption.getValue()) {
+		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 		return super.onOptionsItemSelected(item);
