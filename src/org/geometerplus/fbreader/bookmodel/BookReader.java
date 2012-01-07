@@ -172,14 +172,14 @@ public class BookReader {
 	}
 	
 	public final void setMainTextModel() {
-		if ((myCurrentTextModel != null) && (myCurrentTextModel != Model.BookTextModel)) {
+		if (myCurrentTextModel != null && myCurrentTextModel != Model.BookTextModel) {
 			myCurrentTextModel.stopReading();
 		}
 		myCurrentTextModel = (ZLTextWritableModel)Model.BookTextModel;
 	}
 	
 	public final void setFootnoteTextModel(String id) {
-		if ((myCurrentTextModel != null) && (myCurrentTextModel != Model.BookTextModel)) {
+		if (myCurrentTextModel != null && myCurrentTextModel != Model.BookTextModel) {
 			myCurrentTextModel.stopReading();
 		}
 		myCurrentTextModel = (ZLTextWritableModel)Model.getFootnoteModel(id);
@@ -205,7 +205,7 @@ public class BookReader {
 
 		myTextParagraphIsNonEmpty = true;
 
-		if (direct && (myTextBufferLength == 0) && !myInsideTitle) {
+		if (direct && myTextBufferLength == 0 && !myInsideTitle) {
 			myCurrentTextModel.addText(data, offset, length);
 		} else {
 			final int oldLength = myTextBufferLength;
