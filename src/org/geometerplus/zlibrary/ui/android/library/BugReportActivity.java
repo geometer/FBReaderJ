@@ -47,7 +47,6 @@ public class BugReportActivity extends Activity {
 		reportText.append("Model:").append(Build.MODEL).append("\n");
 		reportText.append("Device:").append(Build.DEVICE).append("\n");
 		reportText.append("Product:").append(Build.PRODUCT).append("\n");
-		reportText.append("Manufacturer:").append(Build.MANUFACTURER).append("\n");
 		reportText.append("Version:").append(Build.VERSION.RELEASE).append("\n");
 		reportText.append(getIntent().getStringExtra(STACKTRACE));
 
