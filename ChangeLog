@@ -2,7 +2,6 @@
 * Tips subsystem has been implemented
 * FBReader can listen for Bonjour (zeroconf) OPDS announcement. JmDNS (http://jmdns.sourceforge.net/) is used.
 * Plugin API works on devices with Android 3/4
-* Updated Polish localization (by Tomasz Długosz)
 * Option for disabling button lights in Android 3/4 has been introduced
 * Plural forms support in resources has been implemented
 * Image in image view can be scaled using pinch (Android 2+)
@@ -15,6 +14,9 @@
 * Versions for Honeycomb (Android 3.0) and Ice Cream Sandwich (Android 4.0) are megred into the same APK
 * Kindle menu issue has been fixed
 * FB2 footnote parsing issue has been fixed
+* Updated Polish localization (by Tomasz Długosz)
+* Updated French translation (by Mathias Monnerville)
+* Updated Czech localization (by Marek Pavelka)
 
 ===== 1.2.6 (Dec 19, 2011) =====
 * Android 3.*, 4.*: bottom buttons are hidden during book reading
