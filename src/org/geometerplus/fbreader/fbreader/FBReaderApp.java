@@ -56,7 +56,7 @@ public final class FBReaderApp extends ZLApplication {
 		new ZLEnumOption<WordTappingAction>("Options", "WordTappingAction", WordTappingAction.startSelecting);
 
 	public final ZLColorOption ImageViewBackgroundOption =
-		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(127, 127, 127));
+		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
 	public static enum ImageTappingAction {
 		doNothing, selectImage, openImageView
 	}
