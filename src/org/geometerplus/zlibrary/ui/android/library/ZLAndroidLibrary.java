@@ -46,7 +46,7 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	public final ZLIntegerRangeOption BatteryLevelToTurnScreenOffOption = new ZLIntegerRangeOption("LookNFeel", "BatteryLevelToTurnScreenOff", 0, 100, 50);
 	public final ZLBooleanOption DontTurnScreenOffDuringChargingOption = new ZLBooleanOption("LookNFeel", "DontTurnScreenOffDuringCharging", true);
 	public final ZLIntegerRangeOption ScreenBrightnessLevelOption = new ZLIntegerRangeOption("LookNFeel", "ScreenBrightnessLevel", 0, 100, 0);
-	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", true);
+	public final ZLBooleanOption DisableButtonLightsOption = new ZLBooleanOption("LookNFeel", "DisableButtonLights", !hasButtonLightsBug());
 
 	private Boolean myIsKindleFire = null;
 	public boolean isKindleFire() {
@@ -57,6 +57,10 @@ public final class ZLAndroidLibrary extends ZLibrary {
 				Build.MODEL.toLowerCase().matches(KINDLE_MODEL_REGEXP);
 		}
 		return myIsKindleFire;
+	}
+
+	public boolean hasButtonLightsBug() {
+		return "GT-S5830".equals(Build.MODEL);
 	}
 
 	private ZLAndroidActivity myActivity;
