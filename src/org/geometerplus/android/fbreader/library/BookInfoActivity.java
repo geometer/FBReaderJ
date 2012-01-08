@@ -24,6 +24,7 @@ import java.text.DateFormat;
 import java.util.*;
 
 import android.app.Activity;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -67,8 +68,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
 		);
 
-		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
-		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
+		final Intent intent = getIntent();
+		final String path = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
+		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myFile = ZLFile.createFileByPath(path);
 
 		myImage = Library.getCover(myFile);
@@ -77,10 +79,13 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
-		getActionBar().setDisplayShowTitleEnabled(false);
+		final ActionBar bar = getActionBar();
+		if (bar != null) {
+			bar.setDisplayShowTitleEnabled(false);
+		}
 		setContentView(R.layout.book_info);
 
-		setResult(1, getIntent());
+		setResult(1, intent);
 	}
 
 	@Override

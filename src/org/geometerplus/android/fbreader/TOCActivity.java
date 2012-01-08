@@ -48,13 +48,15 @@ public class TOCActivity extends ListActivity {
 		final FBReaderApp fbreader = (FBReaderApp)ZLApplication.Instance();
 
 		final ActionBar bar = getActionBar();
-		bar.setDisplayOptions(
-			ActionBar.DISPLAY_SHOW_CUSTOM,
-			ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
-		);
-		final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
-		titleView.setText(fbreader.getTitle());
-		bar.setCustomView(titleView);
+		if (bar != null) {
+			bar.setDisplayOptions(
+				ActionBar.DISPLAY_SHOW_CUSTOM,
+				ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
+			);
+			final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
+			titleView.setText(fbreader.getTitle());
+			bar.setCustomView(titleView);
+		}
 
 		final TOCTree root = fbreader.Model.TOCTree;
 		myAdapter = new TOCAdapter(root);
