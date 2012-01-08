@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.ui.android.library;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -42,7 +43,14 @@ public class BugReportActivity extends Activity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.bug_report_view);
-		final String stackTrace = getIntent().getStringExtra(STACKTRACE);
+		final StringBuilder reportText = new StringBuilder();
+		reportText.append("Model:").append(Build.MODEL).append("\n");
+		reportText.append("Device:").append(Build.DEVICE).append("\n");
+		reportText.append("Product:").append(Build.PRODUCT).append("\n");
+		reportText.append("Manufacturer:").append(Build.MANUFACTURER).append("\n");
+		reportText.append("Version:").append(Build.VERSION.RELEASE).append("\n");
+		reportText.append(getIntent().getStringExtra(STACKTRACE));
+
 		final TextView reportTextView = (TextView)findViewById(R.id.report_text);
 		reportTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
 		reportTextView.setClickable(false);
@@ -50,14 +58,14 @@ public class BugReportActivity extends Activity {
 
 		final String versionName = getVersionName();
 		reportTextView.append("FBReader " + versionName + " has been crached, sorry. You can help to fix this bug by sending the report below to FBReader developers. The report will be sent by e-mail. Thank you in advance!\n\n");
-		reportTextView.append(stackTrace);
+		reportTextView.append(reportText);
 
 		findViewById(R.id.send_report).setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
 					Intent sendIntent = new Intent(Intent.ACTION_SEND);
 					sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "exception@geometerplus.com" });
-					sendIntent.putExtra(Intent.EXTRA_TEXT, stackTrace);
+					sendIntent.putExtra(Intent.EXTRA_TEXT, reportText.toString());
 					sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + versionName + " exception report");
 					sendIntent.setType("message/rfc822");
 					startActivity(sendIntent);
