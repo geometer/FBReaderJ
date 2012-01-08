@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.ui.android.library;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -34,7 +35,8 @@ public class BugReportActivity extends Activity {
 
 	private String getVersionName() {
 		try {
-			return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+			final PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+			return info.versionName + " (" + info.versionCode + ")";
 		} catch (Exception e) {
 			return "";
 		}
@@ -44,6 +46,7 @@ public class BugReportActivity extends Activity {
 		super.onCreate(icicle);
 		setContentView(R.layout.bug_report_view);
 		final StringBuilder reportText = new StringBuilder();
+
 		reportText.append("Model:").append(Build.MODEL).append("\n");
 		reportText.append("Device:").append(Build.DEVICE).append("\n");
 		reportText.append("Product:").append(Build.PRODUCT).append("\n");
