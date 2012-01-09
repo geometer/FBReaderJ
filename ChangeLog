@@ -1,3 +1,7 @@
+===== 1.3.1 (Jan 9, 2012) =====
+* Persistent tip prompt issue has been fixed
+* Galaxy Tab specific Book info issue has been fixed
+
 ===== 1.3 (Jan 8, 2012) =====
 * Tips subsystem has been implemented
 * FBReader can listen for Bonjour (zeroconf) OPDS announcement. JmDNS (http://jmdns.sourceforge.net/) is used.
