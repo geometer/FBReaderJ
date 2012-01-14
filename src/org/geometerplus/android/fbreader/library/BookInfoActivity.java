@@ -28,6 +28,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -82,6 +83,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		final ActionBar bar = getActionBar();
 		if (bar != null) {
 			bar.setDisplayShowTitleEnabled(false);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+				bar.setLogo(R.drawable.fbreader);
+			}
 		}
 		setContentView(R.layout.book_info);
 

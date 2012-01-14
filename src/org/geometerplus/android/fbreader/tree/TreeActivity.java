@@ -23,10 +23,13 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 
 import org.geometerplus.android.util.UIUtil;
+
+import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
@@ -49,6 +52,10 @@ public abstract class TreeActivity extends ListActivity {
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			getActionBar().setLogo(R.drawable.fbreader);
+		}
 	}
 
 	@Override

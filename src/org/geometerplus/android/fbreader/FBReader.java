@@ -27,6 +27,7 @@ import android.content.*;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.RelativeLayout;
@@ -121,6 +122,9 @@ public final class FBReader extends ZLAndroidActivity {
 			ActionBar.DISPLAY_SHOW_CUSTOM,
 			ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
 		);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			bar.setLogo(R.drawable.fbreader);
+		}
 		final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
 		titleView.setText(getTitle());
 		titleView.setOnClickListener(new View.OnClickListener() {

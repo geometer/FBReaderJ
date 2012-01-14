@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Intent;
 import android.view.KeyEvent;
+import android.os.Build;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
@@ -87,7 +88,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			"dontTurnScreenOffDuringCharging"
 		));
 		*/
-		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
+		}
 		appearanceScreen.addOption(androidLibrary.ShowActionBarOption, "showActionBar");
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
 
