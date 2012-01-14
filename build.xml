@@ -89,6 +89,9 @@
 		<delete dir="libs/armeabi" />
 		<delete dir="libs/armeabi-v7a" />
 		<delete dir="libs/x86" />
+		<delete dir="libs/mips" />
+		<delete dir="libs/mips-r2" />
+		<delete dir="libs/mips-r2-sf" />
 		<echo message="DONE (Deleting native libraries)" />
 	</target>
 
