@@ -1,4 +1,5 @@
 ===== 1.3.2 (Jan ??, 2012) =====
+* MIPS processor architectures are supported (with NDK from http://developer.mips.com/android/download-android-ndk/)
 * ExceptionInInitializerError processing has been fixed
 * Menu button shows action/navigation bars on old devices with ICS installed
 * Hardware acceleration is used for 3d animation if possible (Android 3/4)
