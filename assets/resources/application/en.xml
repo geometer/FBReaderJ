@@ -323,6 +323,10 @@
 					<node name="summaryOn" value="Show status bar in reading mode"/>
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
 				</node>
+				<node name="showActionBar" value="Show action bar">
+					<node name="summaryOn" value="Show action bar in reading mode"/>
+					<node name="summaryOff" value="Hide action bar in reading mode"/>
+				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active">
 					<node name="summaryOn" value="Show status bar when menu becomes active"/>
 					<node name="summaryOff" value="Don't show status bar when menu becomes active"/>
