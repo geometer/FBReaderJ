@@ -21,7 +21,7 @@
 			<intent-filter>
 				<action android:name="android.fbreader.action.CRASH" />
 				<category android:name="android.intent.category.DEFAULT" />
-				<data android:scheme="ExceptionInInitializer" />
+				<data android:scheme="ExceptionInInitializerError" />
 			</intent-filter>
 		</activity>
 		<service android:name="org.geometerplus.android.fbreader.api.ApiService">
