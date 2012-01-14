@@ -126,7 +126,6 @@ public final class FBReader extends ZLAndroidActivity {
 			bar.setLogo(R.drawable.fbreader);
 		}
 		final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
-		titleView.setText(getTitle());
 		titleView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				fbReader.runAction(ActionCode.SHOW_BOOK_INFO);
@@ -134,6 +133,8 @@ public final class FBReader extends ZLAndroidActivity {
 		});
 		bar.setCustomView(titleView);
 		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
+
+		setTitle(fbReader.getTitle());
 
 		if (fbReader.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(fbReader);
