@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.money;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Locale;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
@@ -131,15 +132,15 @@ public class Money implements Comparable<Money>, Serializable {
 		if (Currency == null) {
 			return Amount.toString();
 		} else if ("RUB".equals(Currency)) {
-			return Amount + " \u0440.";
+			return String.format(Locale.getDefault(), "%.2f \u0440.", Amount.floatValue());
 		} else if ("USD".equals(Currency)) {
-			return "$" + Amount;
+			return String.format(Locale.getDefault(), "$%.2f", Amount.floatValue());
 		} else if ("GBP".equals(Currency)) {
-			return "\u00A3" + Amount;
+			return String.format(Locale.getDefault(), "\u00A3%.2f", Amount.floatValue());
 		} else if ("EUR".equals(Currency)) {
-			return "\u20AC" + Amount;
+			return String.format(Locale.getDefault(), "\u20AC%.2f", Amount.floatValue());
 		} else if ("JPY".equals(Currency)) {
-			return "\u00A5" + Amount;
+			return String.format(Locale.getDefault(), "\u00A5%.2f", Amount.floatValue());
 		}
 		return Currency + " " + Amount;
 	}
