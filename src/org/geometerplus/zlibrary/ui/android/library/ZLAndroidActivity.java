@@ -77,7 +77,11 @@ public abstract class ZLAndroidActivity extends Activity {
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		final ZLAndroidLibrary zlibrary = getLibrary();
-		if (!zlibrary.ShowStatusBarOption.getValue()) {
+		getWindow().setFlags(
+			WindowManager.LayoutParams.FLAG_FULLSCREEN,
+			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
+		);
+		if (!zlibrary.ShowActionBarOption.getValue()) {
 			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		}
 		setContentView(R.layout.main);

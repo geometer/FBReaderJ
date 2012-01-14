@@ -62,7 +62,8 @@ public final class FBReader extends ZLAndroidActivity {
 	final static int REPAINT_CODE = 1;
 	final static int CANCEL_CODE = 2;
 
-	private boolean myFullScreenFlag;
+	private boolean myShowStatusBarFlag;
+	private boolean myShowActionBarFlag;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -112,7 +113,8 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		myFullScreenFlag = !zlibrary.ShowStatusBarOption.getValue();
+		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
+		myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
 
 		final ActionBar bar = getActionBar();
 		bar.setDisplayOptions(
@@ -128,11 +130,6 @@ public final class FBReader extends ZLAndroidActivity {
 		});
 		bar.setCustomView(titleView);
 		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
-
-		getWindow().setFlags(
-			WindowManager.LayoutParams.FLAG_FULLSCREEN,
-			WindowManager.LayoutParams.FLAG_FULLSCREEN
-		);
 
 		if (fbReader.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(fbReader);
@@ -216,8 +213,8 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 
-		final boolean fullScreenFlag = !zlibrary.ShowStatusBarOption.getValue();
-		if (fullScreenFlag != myFullScreenFlag) {
+		if (zlibrary.ShowStatusBarOption.getValue() != myShowStatusBarFlag ||
+			zlibrary.ShowActionBarOption.getValue() != myShowActionBarFlag) {
 			finish();
 			startActivity(new Intent(this, getClass()));
 		}
@@ -428,7 +425,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		if (!zlibrary.ShowStatusBarOption.getValue()) {
+		if (!zlibrary.ShowActionBarOption.getValue()) {
 			getActionBar().hide();
 		}
 
