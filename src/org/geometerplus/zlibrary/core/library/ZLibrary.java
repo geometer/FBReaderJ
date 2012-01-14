@@ -32,6 +32,7 @@ public abstract class ZLibrary {
 	private static ZLibrary ourImplementation;
 
 	public static final String SCREEN_ORIENTATION_SYSTEM = "system";
+	public static final String SCREEN_ORIENTATION_SENSOR = "sensor";
 	public static final String SCREEN_ORIENTATION_PORTRAIT = "portrait";
 	public static final String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
 	public static final String SCREEN_ORIENTATION_REVERSE_PORTRAIT = "reversePortrait";
@@ -58,6 +59,7 @@ public abstract class ZLibrary {
 		return supportsAllOrientations()
 			? new String[] {
 				SCREEN_ORIENTATION_SYSTEM,
+				SCREEN_ORIENTATION_SENSOR,
 				SCREEN_ORIENTATION_PORTRAIT,
 				SCREEN_ORIENTATION_LANDSCAPE,
 				SCREEN_ORIENTATION_REVERSE_PORTRAIT,
@@ -65,6 +67,7 @@ public abstract class ZLibrary {
 			}
 			: new String[] {
 				SCREEN_ORIENTATION_SYSTEM,
+				SCREEN_ORIENTATION_SENSOR,
 				SCREEN_ORIENTATION_PORTRAIT,
 				SCREEN_ORIENTATION_LANDSCAPE
 			};
