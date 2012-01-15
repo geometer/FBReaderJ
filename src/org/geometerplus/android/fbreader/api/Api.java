@@ -16,6 +16,11 @@ public interface Api {
 	String getOptionValue(String group, String name) throws ApiException;
 	void setOptionValue(String group, String name, String value) throws ApiException;
 
+	List<String> getActionCodes() throws ApiException;
+	List<String> getActionNames() throws ApiException;
+	String getActionCodeForKey(int keyCode) throws ApiException;
+	void setActionCodeForKey(int keyCode, String actionCode) throws ApiException;
+
 	// book information
 	String getBookLanguage() throws ApiException;
 	String getBookTitle() throws ApiException;

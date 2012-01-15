@@ -167,6 +167,25 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		// TODO: implement
 	}
 
+	public List<String> getActionCodes() {
+		// TODO: implement
+		return null;
+	}
+
+	public List<String> getActionNames() {
+		// TODO: implement
+		return null;
+	}
+
+	public String getActionCodeForKey(int keyCode) {
+		// TODO: implement
+		return null;
+	}
+
+	public void setActionCodeForKey(int keyCode, String actionCode) {
+		// TODO: implement
+	}
+
 	public String getBookLanguage() {
 		return myReader.Model.Book.getLanguage();
 	}

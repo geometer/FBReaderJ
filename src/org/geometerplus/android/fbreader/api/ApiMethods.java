@@ -20,6 +20,11 @@ interface ApiMethods {
 	int GET_OPTION_VALUE = 403;
 	int SET_OPTION_VALUE = 404;
 
+	int GET_ACTION_CODES = 405;
+	int GET_ACTION_NAMES = 406;
+	int GET_BINDING_FOR_KEY = 407;
+	int SET_BINDING_FOR_KEY = 408;
+
 	// book information
 	int GET_BOOK_LANGUAGE = 501;
 	int GET_BOOK_TITLE = 502;
