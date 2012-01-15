@@ -490,7 +490,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Barvy a tapety">
+			<node name="colors" value="Barvy a pozadí">
 				<node name="summary" value="Nastavení barev"/>
 				<node name="background" value="Pozadí">
 					<node name="solidColor" value="Plná barva"/>
@@ -748,7 +748,7 @@
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problém FBReaderu"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
+			<node name="text" value="FBReader nemůže načíst místní knihovnu. Možná není správně nainstalován. Pokud problém přetrvává, zkuste znovu nainstalovat FBReader."/>
 		</node>
 	</node>
 </resources>
