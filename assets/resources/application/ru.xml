@@ -265,6 +265,7 @@
 		<node name="rotate" value="Повернуть"/>
 		<node name="screenOrientation" value="Ориентация экрана"/>
 		<node name="screenOrientationSystem" value="системная"/>
+		<node name="screenOrientationSensor" value="зависит от ориентации устройства"/>
 		<node name="screenOrientationPortrait" value="вертикальная"/>
 		<node name="screenOrientationLandscape" value="горизонтальная"/>
 		<node name="screenOrientationReversePortrait" value="перевёрнутая вертикальная"/>
@@ -321,6 +322,7 @@
 				<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>
 				<node name="screenOrientation" value="Ориентация экрана">
 					<node name="system" value="системная"/>
+					<node name="sensor" value="зависит от ориентации устройства"/>
 					<node name="portrait" value="вертикальная"/>
 					<node name="landscape" value="горизонтальная"/>
 					<node name="reversePortrait" value="перевёрнутая вертикальная"/>
@@ -333,6 +335,10 @@
 				<node name="showStatusBar" value="Показывать строку состояния">
 					<node name="summaryOn" value="Строка состояния видна во время чтения"/>
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
+				</node>
+				<node name="showActionBar" value="Показывать строку меню">
+					<node name="summaryOn" value="Строка меню видна во время чтения"/>
+					<node name="summaryOff" value="Строка меню не видна во время чтения"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Показывать строку состояния при активации меню">
 					<node name="summaryOn" value="Показывать строку состояния, когда меню появляется на экране"/>
