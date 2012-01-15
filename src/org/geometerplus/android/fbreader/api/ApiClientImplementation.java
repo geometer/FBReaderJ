@@ -209,14 +209,16 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestStringList(GET_ACTION_NAMES, EMPTY_PARAMETERS);
 	}
 
-	public String getActionCodeForKey(int keyCode) throws ApiException {
-		return requestString(GET_BINDING_FOR_KEY, envelope(keyCode));
+	public String getActionCodeForKey(int keyCode, boolean longPress) throws ApiException {
+		return requestString(
+			GET_BINDING_FOR_KEY,
+			new ApiObject[] { ApiObject.envelope(keyCode), ApiObject.envelope(longPress) });
 	}
 
-	public void setActionCodeForKey(int keyCode, String actionCode) throws ApiException {
+	public void setActionCodeForKey(int keyCode, boolean longPress, String actionCode) throws ApiException {
 		request(
 			SET_BINDING_FOR_KEY,
-			new ApiObject[] { ApiObject.envelope(keyCode), ApiObject.envelope(actionCode) }
+			new ApiObject[] { ApiObject.envelope(keyCode), ApiObject.envelope(longPress), ApiObject.envelope(actionCode) }
 		);
 	}
 

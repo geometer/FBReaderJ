@@ -66,6 +66,18 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 						((ApiObject.String)parameters[2]).Value
 					);
 					return ApiObject.Void.Instance;
+				case GET_BINDING_FOR_KEY:
+					return ApiObject.envelope(getActionCodeForKey(
+						((ApiObject.Integer)parameters[0]).Value,
+						((ApiObject.Boolean)parameters[1]).Value
+					));
+				case SET_BINDING_FOR_KEY:
+					setActionCodeForKey(
+						((ApiObject.Integer)parameters[0]).Value,
+						((ApiObject.Boolean)parameters[1]).Value,
+						((ApiObject.String)parameters[2]).Value
+					);
+					return ApiObject.Void.Instance;
 				case GET_BOOK_LANGUAGE:
 					return ApiObject.envelope(getBookLanguage());
 				case GET_BOOK_TITLE:
@@ -120,6 +132,10 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelope(getOptionNames(
 						((ApiObject.String)parameters[0]).Value
 					));
+				case GET_ACTION_CODES:
+					return ApiObject.envelope(getActionCodes());
+				case GET_ACTION_NAMES:
+					return ApiObject.envelope(getActionNames());
 				case GET_BOOK_TAGS:
 					return ApiObject.envelope(getBookTags());
 				default:
@@ -177,13 +193,12 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return null;
 	}
 
-	public String getActionCodeForKey(int keyCode) {
-		// TODO: implement
-		return null;
+	public String getActionCodeForKey(int keyCode, boolean longPress) {
+		return myReader.keyBindings().getBinding(keyCode, longPress);
 	}
 
-	public void setActionCodeForKey(int keyCode, String actionCode) {
-		// TODO: implement
+	public void setActionCodeForKey(int keyCode, boolean longPress, String actionCode) {
+		myReader.keyBindings().bindKey(keyCode, longPress, actionCode);
 	}
 
 	public String getBookLanguage() {

@@ -18,8 +18,8 @@ public interface Api {
 
 	List<String> getActionCodes() throws ApiException;
 	List<String> getActionNames() throws ApiException;
-	String getActionCodeForKey(int keyCode) throws ApiException;
-	void setActionCodeForKey(int keyCode, String actionCode) throws ApiException;
+	String getActionCodeForKey(int keyCode, boolean longPress) throws ApiException;
+	void setActionCodeForKey(int keyCode, boolean longPress, String actionCode) throws ApiException;
 
 	// book information
 	String getBookLanguage() throws ApiException;
