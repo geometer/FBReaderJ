@@ -202,19 +202,22 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public List<String> getActionCodes() throws ApiException {
-		throw new ApiException("Not implemented yet");
+		return requestStringList(GET_ACTION_CODES, EMPTY_PARAMETERS);
 	}
 
 	public List<String> getActionNames() throws ApiException {
-		throw new ApiException("Not implemented yet");
+		return requestStringList(GET_ACTION_NAMES, EMPTY_PARAMETERS);
 	}
 
 	public String getActionCodeForKey(int keyCode) throws ApiException {
-		throw new ApiException("Not implemented yet");
+		return requestString(GET_BINDING_FOR_KEY, envelope(keyCode));
 	}
 
 	public void setActionCodeForKey(int keyCode, String actionCode) throws ApiException {
-		throw new ApiException("Not implemented yet");
+		request(
+			SET_BINDING_FOR_KEY,
+			new ApiObject[] { ApiObject.envelope(keyCode), ApiObject.envelope(actionCode) }
+		);
 	}
 
 	public String getBookLanguage() throws ApiException {
