@@ -146,7 +146,13 @@ public class Money implements Comparable<Money>, Serializable {
 		if (Currency == null) {
 			return Amount.toString();
 		} else if ("RUB".equals(Currency)) {
-			return String.format(Locale.getDefault(), "%.2f \u0440.", Amount.floatValue());
+			final int roubles = Amount.intValue();
+			final int kopek = Amount.movePointRight(2).intValue() % 100;
+			if (kopek != 0) {
+				return String.format(Locale.getDefault(), "%d руб. %d коп.", roubles, kopek);
+			} else {
+				return String.format(Locale.getDefault(), "%d руб.", roubles);
+			}
 		} else if ("USD".equals(Currency)) {
 			return String.format(Locale.getDefault(), "$%.2f", Amount.floatValue());
 		} else if ("GBP".equals(Currency)) {
