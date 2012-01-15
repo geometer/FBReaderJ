@@ -254,6 +254,7 @@
 		<node name="rotate" value="Rotate screen"/>
 		<node name="screenOrientation" value="Screen orientation"/>
 		<node name="screenOrientationSystem" value="System"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive"/>
 		<node name="screenOrientationPortrait" value="Portrait"/>
 		<node name="screenOrientationLandscape" value="Landscape"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait"/>
@@ -310,6 +311,7 @@
 				<node name="summary" value="Display settings, status bar, button lights"/>
 				<node name="screenOrientation" value="Screen orientation">
 					<node name="system" value="System"/>
+					<node name="sensor" value="Device orientation sensitive"/>
 					<node name="portrait" value="Portrait"/>
 					<node name="landscape" value="Landscape"/>
 					<node name="reversePortrait" value="Reverse portrait"/>
@@ -322,6 +324,10 @@
 				<node name="showStatusBar" value="Show status bar">
 					<node name="summaryOn" value="Show status bar in reading mode"/>
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
+				</node>
+				<node name="showActionBar" value="Show action bar">
+					<node name="summaryOn" value="Show action bar in reading mode"/>
+					<node name="summaryOff" value="Hide action bar in reading mode"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active">
 					<node name="summaryOn" value="Show status bar when menu becomes active"/>

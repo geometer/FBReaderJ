@@ -21,6 +21,7 @@ package org.geometerplus.zlibrary.core.money;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Locale;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
@@ -52,16 +53,30 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 
 	public Money(String text) {
-		text = text.trim();
+		text = text.trim().toLowerCase();
+
 		if (text.startsWith("$")) {
 			Amount = new BigDecimal(text.substring(1).trim());
 			Currency = "USD";
-		} else if (text.endsWith("$")) {
+			return;
+		}
+
+		if (text.endsWith("$")) {
 			Amount = new BigDecimal(text.substring(0, text.length() - 1).trim());
 			Currency = "USD";
-		} else {
-			throw new MoneyException("Unknown money format: '" + text + "'");
+			return;
 		}
+
+		final String[] roubles = { "p.", "р.", "руб.", "р", "руб" };
+		for (String c : roubles) {
+			if (text.endsWith(c)) {
+				Amount = new BigDecimal(text.substring(0, text.length() - c.length()).trim());
+				Currency = "RUB";
+				return;
+			}
+		}
+
+		throw new MoneyException("Unknown money format: '" + text + "'");
 	}
 
 	public Money add(Money m) {
@@ -131,15 +146,21 @@ public class Money implements Comparable<Money>, Serializable {
 		if (Currency == null) {
 			return Amount.toString();
 		} else if ("RUB".equals(Currency)) {
-			return Amount + " \u0440.";
+			final int roubles = Amount.intValue();
+			final int kopek = Amount.movePointRight(2).intValue() % 100;
+			if (kopek != 0) {
+				return String.format(Locale.getDefault(), "%d руб. %d коп.", roubles, kopek);
+			} else {
+				return String.format(Locale.getDefault(), "%d руб.", roubles);
+			}
 		} else if ("USD".equals(Currency)) {
-			return "$" + Amount;
+			return String.format(Locale.getDefault(), "$%.2f", Amount.floatValue());
 		} else if ("GBP".equals(Currency)) {
-			return "\u00A3" + Amount;
+			return String.format(Locale.getDefault(), "\u00A3%.2f", Amount.floatValue());
 		} else if ("EUR".equals(Currency)) {
-			return "\u20AC" + Amount;
+			return String.format(Locale.getDefault(), "\u20AC%.2f", Amount.floatValue());
 		} else if ("JPY".equals(Currency)) {
-			return "\u00A5" + Amount;
+			return String.format(Locale.getDefault(), "\u00A5%.2f", Amount.floatValue());
 		}
 		return Currency + " " + Amount;
 	}

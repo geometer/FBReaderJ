@@ -1,3 +1,18 @@
+===== 1.3.2 (Jan ??, 2012) =====
+* MIPS processor architectures are supported (with NDK from http://developer.mips.com/android/download-android-ndk/)
+* ExceptionInInitializerError processing has been fixed
+* Menu button shows action/navigation bars on old devices with ICS installed
+* Hardware acceleration is used for 3d animation if possible (Android 3/4)
+* Fixed an issue for ePub files with incorrect cover label
+* Better money amount formatting
+* Grayscale Android 3.* logo is back
+* Android 4: separate options for status bar & action bar
+* Android 3/4: always show book title in the action bar
+
+===== 1.3.1 (Jan 9, 2012) =====
+* Persistent tip prompt issue has been fixed
+* Galaxy Tab specific Book info issue has been fixed
+
 ===== 1.3 (Jan 8, 2012) =====
 * Tips subsystem has been implemented
 * FBReader can listen for Bonjour (zeroconf) OPDS announcement. JmDNS (http://jmdns.sourceforge.net/) is used.
