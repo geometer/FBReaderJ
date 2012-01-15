@@ -53,16 +53,30 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 
 	public Money(String text) {
-		text = text.trim();
+		text = text.trim().toLowerCase();
+
 		if (text.startsWith("$")) {
 			Amount = new BigDecimal(text.substring(1).trim());
 			Currency = "USD";
-		} else if (text.endsWith("$")) {
+			return;
+		}
+
+		if (text.endsWith("$")) {
 			Amount = new BigDecimal(text.substring(0, text.length() - 1).trim());
 			Currency = "USD";
-		} else {
-			throw new MoneyException("Unknown money format: '" + text + "'");
+			return;
 		}
+
+		final String[] roubles = { "p.", "р.", "руб.", "р", "руб" };
+		for (String c : roubles) {
+			if (text.endsWith(c)) {
+				Amount = new BigDecimal(text.substring(0, text.length() - c.length()).trim());
+				Currency = "RUB";
+				return;
+			}
+		}
+
+		throw new MoneyException("Unknown money format: '" + text + "'");
 	}
 
 	public Money add(Money m) {
