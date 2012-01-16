@@ -101,7 +101,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
 
-	public BookModel Model;
+	public volatile BookModel Model;
 
 	private final String myArg0;
 
@@ -219,7 +219,7 @@ public final class FBReaderApp extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 
-	void openBookInternal(Book book, Bookmark bookmark) {
+	synchronized void openBookInternal(Book book, Bookmark bookmark) {
 		if (book != null) {
 			onViewChanged();
 
@@ -390,8 +390,8 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	private void updateInvisibleBookmarksList(Bookmark b) {
-		if (Model.Book != null && b != null) {
+	private synchronized void updateInvisibleBookmarksList(Bookmark b) {
+		if (Model != null && Model.Book != null && b != null) {
 			for (Bookmark bm : Bookmark.invisibleBookmarks(Model.Book)) {
 				if (b.equals(bm)) {
 					bm.delete();
