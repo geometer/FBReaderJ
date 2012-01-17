@@ -251,6 +251,7 @@
 		<node name="rotate" value="Orienter l'écran"/>
 		<node name="screenOrientation" value="Orientation de l'écran"/>
 		<node name="screenOrientationSystem" value="Système"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
 		<node name="screenOrientationPortrait" value="Portrait"/>
 		<node name="screenOrientationLandscape" value="Paysage"/>
 		<node name="screenOrientationReversePortrait" value="Portrait inversé"/>
@@ -307,6 +308,7 @@
 				<node name="summary" value="Rotation, barre de statut"/>
 				<node name="screenOrientation" value="Orientation de l'écran">
 					<node name="system" value="Système"/>
+					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
 					<node name="portrait" value="Portrait"/>
 					<node name="landscape" value="Paysage"/>
 					<node name="reversePortrait" value="Portrait inversé"/>
@@ -319,6 +321,10 @@
 				<node name="showStatusBar" value="Barre de statut">
 					<node name="summaryOn" value="Afficher la barre de statut en mode lecture"/>
 					<node name="summaryOff" value="Cacher la barre de statut en mode lecture"/>
+				</node>
+				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Afficher la barre de statut lorsque le menu est actif">
 					<node name="summaryOn" value="Afficher la barre  de statut lorsque le menu devient actif"/>
