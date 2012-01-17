@@ -101,7 +101,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
 					break;
 				case curl:
-					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
+					myAnimationProvider = new CurlAnimationProvider(this, myBitmapManager);
 					break;
 				case slide:
 					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);

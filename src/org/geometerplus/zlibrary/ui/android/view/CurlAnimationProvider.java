@@ -21,12 +21,15 @@ package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.*;
 import android.util.FloatMath;
+import android.view.View;
 
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 class CurlAnimationProvider extends AnimationProvider {
+	private final View myView;
+
 	private final Paint myPaint = new Paint();
 	private final Paint myBackPaint = new Paint();
 	private final Paint myEdgePaint = new Paint();
@@ -37,8 +40,10 @@ class CurlAnimationProvider extends AnimationProvider {
 
 	private float mySpeedFactor = 1;
 
-	CurlAnimationProvider(BitmapManager bitmapManager) {
+	CurlAnimationProvider(View view, BitmapManager bitmapManager) {
 		super(bitmapManager);
+
+		myView = view;
 
 		myBackPaint.setAntiAlias(true);
 		myBackPaint.setAlpha(0x40);
@@ -62,6 +67,9 @@ class CurlAnimationProvider extends AnimationProvider {
 				myBuffer.getHeight() != myHeight) {
 				myBuffer = Bitmap.createBitmap(myWidth, myHeight, getBitmapTo().getConfig());
 			}
+			myView.setLayerType(View.LAYER_TYPE_SOFTWARE, myPaint);
+			myView.setLayerType(View.LAYER_TYPE_SOFTWARE, myEdgePaint);
+			myView.setLayerType(View.LAYER_TYPE_SOFTWARE, myBackPaint);
 			final Canvas softCanvas = new Canvas(myBuffer);
 			drawInternalNoHack(softCanvas);
 			canvas.drawBitmap(myBuffer, 0, 0, myPaint);
