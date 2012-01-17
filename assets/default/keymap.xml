@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <keymap>
 	<binding key="4" action="cancelMenu"/>
-	<binding key="82" action="toggleBars"/>
 	<binding key="19" action="moveCursorUp"/>
 	<binding key="20" action="moveCursorDown"/>
 	<binding key="21" action="moveCursorLeft"/>
