@@ -248,6 +248,7 @@
 		<node name="rotate" value="Rotire ecran"/>
 		<node name="screenOrientation" value="Orientarea ecranului"/>
 		<node name="screenOrientationSystem" value="Sistem"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
 		<node name="screenOrientationPortrait" value="Portret"/>
 		<node name="screenOrientationLandscape" value="Orizontal (Peisaj)"/>
 		<node name="screenOrientationReversePortrait" value="Portret inversat"/>
@@ -304,6 +305,7 @@
 				<node name="summary" value="Rotire, bara de stare"/>
 				<node name="screenOrientation" value="Orientarea ecranului">
 					<node name="system" value="Sistem"/>
+					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
 					<node name="portrait" value="Portret"/>
 					<node name="landscape" value="Orizontal (Peisaj)"/>
 					<node name="reversePortrait" value="Portret inversat"/>
@@ -316,6 +318,10 @@
 				<node name="showStatusBar" value="Arata bara de stare">
 					<node name="summaryOn" value="Afiseaza bara de stare arata în modul de citire"/>
 					<node name="summaryOff" value="Ascunde bara de stare în modul de citire"/>
+				</node>
+				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Arata bara de stare atunci când meniul este activ">
 					<node name="summaryOn" value="Arata bara de stare atunci când meniu devine activ"/>
