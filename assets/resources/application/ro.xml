@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Romanian FBReaderJ resources -->
+<!-- Romanian FBReaderJ resources maryhit -->
 <resources>
-	<node name="library" value="Biblioteca FBReader">
+	<node name="library" value="Biblioteca">
 		<node name="unknownAuthor" value="Autor necunoscut"/>
 		<node name="booksWithNoTags" value="Carti fara etichete"/>
 		<node name="demo" value="esantion"/>
@@ -26,7 +26,7 @@
 		<node name="found" value="S-au gasit">
 			<node name="summary" value="Rezultatele cautarii pentru: %s"/>
 		</node>
-		<node name="fileTree" value="Listare copac a fisierelor">
+		<node name="fileTree" value="Listare sistem de fisiere">
 			<node name="summary" value="Cauta in sistemul de fisiere"/>
 		</node>
 		<node name="fileTreeRoot" value="Dispozitiv">
@@ -35,8 +35,8 @@
 		<node name="fileTreeCard" value="Cardul de memorie">
 			<node name="summary" value="Cardul de memorie introdus în aparat"/>
 		</node>
-		<node name="fileTreeLibrary" value="Biblioteca FBReader">
-			<node name="summary" value="Carti din directorul FBReader"/>
+		<node name="fileTreeLibrary" value="Biblioteca">
+			<node name="summary" value="Carti din directorul aplicatiei"/>
 		</node>
 		<node name="menu">
 			<node name="localSearch" value="Cautare locala"/>
@@ -47,7 +47,7 @@
 		<node name="addToFavorites" value="Adauga la favorite"/>
 		<node name="removeFromFavorites" value="Sterge din favorite"/>
 	</node>
-	<node name="networkLibrary" value="Reteaua de biblioteci FBReader">
+	<node name="networkLibrary" value="Reteaua de biblioteci Online">
 		<node name="byAuthor" value="Dupa autor">
 			<node name="summary" value="Carti sortate dupa autor"/>
 		</node>
@@ -117,14 +117,14 @@
 		<node name="downloadingCatalogs" value="Descarcare cataloage"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Cauta pentru carti în retea"/> <!-- used as notification title -->
 		<node name="addCatalog">
-			<node name="title" value="Add catalog" toBeTranslated="true"/>
-			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
-			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
-			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
-			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
-			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
-			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
-			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
+			<node name="title" value="Adauga Catalog"/>
+			<node name="editUrl" value="Editeaza URL manual"/>
+			<node name="scanLocalNetwork" value="Cauta in reteaua locala"/>
+			<node name="localCatalogs" value="Cataloage OPDS localte"/>
+			<node name="noCatalogsFound" value="Ne pare rau, nu s-a gasit niciun catalog"/>
+			<node name="noLocalConnection" value="Dispozitivul dumneavoastra nu este conectat la o retea locala"/>
+			<node name="wifiIsTurnedOff" value="WiFi-ul este inchis"/>
+			<node name="turnWiFiOn" value="Va rugam porniti WiFi si reincercati"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Reteaua de cautare"/>
@@ -194,8 +194,8 @@
 		<node name="cannotCreateFile" value="Nu se poate crea fisierul%s"/>
 	</node>
 	<node name="tocView">
-		<node name="expandTree" value="Expand copac"/>
-		<node name="collapseTree" value="Reducere copac"/>
+		<node name="expandTree" value="Deschide arbore"/>
+		<node name="collapseTree" value="Inchide arbore"/>
 		<node name="readText" value="Cititi textul cartii"/>
 	</node>
 	<node name="bookmarksView">
@@ -215,7 +215,7 @@
 		<node name="returnTo" value="Înapoi la&#8230;"/>
 		<node name="back" value="Înapoi"/>
 		<node name="forward" value="Înainte"/>
-		<node name="close" value="Inchide FBReader"/>
+		<node name="close" value="Inchide Aplicatia"/>
 	</node>
 	<node name="selection" value="Selectie">
 		<node name="copyToClipboard" value="Copiati în clipboard"/>
@@ -230,8 +230,8 @@
 		<node name="bookInfo" value="Informatii despre carte"/>
 		<node name="library" value="Biblioteca"/>
 		<node name="toc" value="Cuprins"/>
-		<node name="day" value="Zi"/>
-		<node name="night" value="Noapte"/>
+		<node name="day" value="Mod Zi"/>
+		<node name="night" value="Mod Noapte"/>
 		<node name="networkLibrary" value="Biblioteca din retea"/>
 		<node name="navigate" value="Navigati">
 			<node name="toc" value="Cuprins"/>
@@ -246,12 +246,13 @@
 		</node>
 		<node name="search" value="Cauta"/>
 		<node name="rotate" value="Rotire ecran"/>
-		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
-		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
-		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
-		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
-		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+		<node name="screenOrientation" value="Orientarea ecranului"/>
+		<node name="screenOrientationSystem" value="Sistem"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Portret"/>
+		<node name="screenOrientationLandscape" value="Orizontal (Peisaj)"/>
+		<node name="screenOrientationReversePortrait" value="Portret inversat"/>
+		<node name="screenOrientationReverseLandscape" value="Orizontal (Peisaj) inversat"/>
 		<node name="increaseFont" value="Mareste"/>
 		<node name="decreaseFont" value="Micsoreaza"/>
 		<node name="toggleFullscreen" value="Pe intreg ecranul"/>
@@ -274,9 +275,9 @@
 			<node name="pay" value="Plateste"/>
 			<node name="refresh" value="Actualizare"/>
 			<node name="authorize" value="Autorizeaza"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
-			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="rescan" value="Rescaneaza"/>
+			<node name="turnOn" value="Porneste"/>
+			<node name="resetPosition" value="Reseteaza pozitia"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -302,12 +303,13 @@
 			</node>
 			<node name="appearance" value="Aspect">
 				<node name="summary" value="Rotire, bara de stare"/>
-				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
-					<node name="system" value="System" toBeTranslated="true"/>
-					<node name="portrait" value="Portrait" toBeTranslated="true"/>
-					<node name="landscape" value="Landscape" toBeTranslated="true"/>
-					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				<node name="screenOrientation" value="Orientarea ecranului">
+					<node name="system" value="Sistem"/>
+					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
+					<node name="portrait" value="Portret"/>
+					<node name="landscape" value="Orizontal (Peisaj)"/>
+					<node name="reversePortrait" value="Portret inversat"/>
+					<node name="reverseLandscape" value="Orizontal (Peisaj) inversat"/>
 				</node>
 				<node name="autoOrientation" value="Rotire automata">
 					<node name="summaryOn" value="Ecranului se vor roti atunci când utilizatorul misca aparatul"/>
@@ -316,6 +318,10 @@
 				<node name="showStatusBar" value="Arata bara de stare">
 					<node name="summaryOn" value="Afiseaza bara de stare arata în modul de citire"/>
 					<node name="summaryOff" value="Ascunde bara de stare în modul de citire"/>
+				</node>
+				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Arata bara de stare atunci când meniul este activ">
 					<node name="summaryOn" value="Arata bara de stare atunci când meniu devine activ"/>
@@ -621,22 +627,22 @@
 					<node name="summaryOff" value="Nu afisa elementele pentru ultimele 3 pozitii în carte"/>
 				</node>
 				<node name="backKeyAction" value="Actiunea tastei inapoi">
-					<node name="exit" value="Inchide FBReader"/>
+					<node name="exit" value="Inchide Aplicatia"/>
 					<node name="goBack" value="Navigati înapoi"/>
 					<node name="cancelMenu" value="Arata  meniul de anulare"/>
 				</node>
 				<node name="backKeyLongPressAction" value="Actiune pentru apasarea lunga a tastei inapoi">
-					<node name="exit" value="Inchide FBReader"/>
+					<node name="exit" value="Inchide Aplicatia"/>
 					<node name="goBack" value="Navigati înapoi"/>
 					<node name="cancelMenu" value="Arata meniul de anulare"/>
 					<node name="none" value="Nicio actiune"/>
 				</node>
 			</node>
-			<node name="tips" value="Tips" toBeTranslated="true">
-				<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
-				<node name="showTips" value="Show tips" toBeTranslated="true">
-					<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
-					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
+			<node name="tips" value="Sfaturi">
+				<node name="summary" value="Setari sfaturi zilnice"/>
+				<node name="showTips" value="Afiseaza sfaturi">
+					<node name="summaryOn" value="Afiseaza sfaturi zilnice"/>
+					<node name="summaryOff" value="Nu afisa"/>
 				</node>
 			</node>
 		</node>
@@ -654,25 +660,25 @@
 			<node name="message" value="Fisierul cartii va fi sters ireversibil. Sunteti sigur?"/>
 		</node>
 		<node name="redownloadFileBox">
-			<node name="message" value="Fisierul exista deja. Redownload?"/>
+			<node name="message" value="Fisierul exista deja. Doriti reincarcarea lui?"/>
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Descarcare carte%s"/>
-			<node name="search" value="Cautarea a inceput. Va rugam, asteptati&#8230;"/>
-			<node name="loadInfo" value="Se incarca informatii. Va rugam, asteptati&#8230;"/>
-			<node name="loadingBook" value="Deschiderea carte. Va rugam, asteptati&#8230;"/>
-			<node name="loadingBookList" value="Deschiderea biblioteca. Va rugam, asteptati&#8230;"/>
-			<node name="creatingBooksDatabase" value="Crearea bazei de date de carti. Va rugam, asteptati&#8230;"/>
-			<node name="updatingBooksDatabase" value="Actualizarea bazei de date carti. Va rugam, asteptati&#8230;"/>
-			<node name="loadingNetworkLibrary" value="Se deschide biblioteca. Va rugam, asteptati&#8230;"/>
-			<node name="authentication" value="Autentificare. Va rugam, asteptati&#8230;"/>
-			<node name="signOut" value="Iesire. Va rugam, asteptati&#8230;"/>
-			<node name="purchaseBook" value="Se cumpara cartea. Va rugam, asteptati&#8230;"/>
+			<node name="search" value="Cautarea a inceput. Va rugam asteptati&#8230;"/>
+			<node name="loadInfo" value="Se incarca informatiile necesare. Va rugam asteptati&#8230;"/>
+			<node name="loadingBook" value="Se deschide cartea. Va rugam asteptati&#8230;"/>
+			<node name="loadingBookList" value="Deschiderea biblioteca. Va rugam asteptati&#8230;"/>
+			<node name="creatingBooksDatabase" value="Crearea bazei de date de carti. Va rugam asteptati&#8230;"/>
+			<node name="updatingBooksDatabase" value="Actualizarea bazei de date carti. Va rugam asteptati&#8230;"/>
+			<node name="loadingNetworkLibrary" value="Se deschide biblioteca. Va rugam asteptati&#8230;"/>
+			<node name="authentication" value="Autentificare. Va rugam asteptati&#8230;"/>
+			<node name="signOut" value="Iesire. Va rugam asteptati&#8230;"/>
+			<node name="purchaseBook" value="Se cumpara cartea. Va rugam asteptati&#8230;"/>
 			<node name="loadingCatalogInfo" value="Se incarca informatii despre catalog. Va rugam asteptati&#8230;"/>
 			<node name="loadingNetworkBookInfo" value="Se incarca informatii despre carte. Va rugam asteptati &#8230;"/>
 			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati&#8230;"/>
 			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati&#8230;"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
+			<node name="scanningLocalNetwork" value="Se scaneaza reteaua locala.Va rugam asteptati&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>
@@ -696,7 +702,7 @@
 			<node name="register" value="Înscrieti-va"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: adauga catalog personalizat"/>
+			<node name="title" value="Aplicatie: adauga catalog personalizat"/>
 			<node name="catalogTitle" value="Titlu"/>
 			<node name="catalogUrl" value="URL-ul"/>
 			<node name="catalogSummary" value="Rezumat"/>
@@ -713,14 +719,14 @@
 			<node name="title" value="Filtreaza limba"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" toBeTranslated="true" />
-			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
-			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
-			<node name="more" value="Next tip" toBeTranslated="true"/>
+			<node name="title" value="Sfatul zilei"/>
+			<node name="initializationText" value="Doriti sa cititi zilnic sfaturi despre folosirea aplicatiei? Noile sfaturi sunt descarcate de pe site-ul aplicatiei. Se estimeaza un trafic de 1-2 kilobytes pe saptamana.&#10;&#10;Sa activeaz sfaturile?"/>
+			<node name="dontShowAgain" value="Nu-l mai repeta"/>
+			<node name="more" value="Urmatorul sfat"/>
 		</node>
 	</node>
 	<node name="errorMessage">
-		<node name="cannotRunAndroidMarket" value="Nu pot accesa Android Market. Va rugam, instalati%s manual"/>
+		<node name="cannotRunAndroidMarket" value="Nu pot accesa Android Market. Va rugam instalati%s manual"/>
 		<node name="textNotFound" value="Nu exista nici un text adecvat în carte, imi pare rau"/>
 		<node name="bookNotFound" value="Nu exista carti adecvate în biblioteca, îmi pare rau"/>
 		<node name="bookmarkNotFound" value="Nu exista marcaje adecvate, imi pare rau"/>
@@ -743,12 +749,12 @@
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="Directorul de cache pentru FBReader nu este accesibil pentru scriere. Poate ati uitat sa inserati sau montati cartela de memorie. Va rugam sa corectati aceasta problema sau introduceti un alt nume de director de mai jos."/>
+			<node name="title" value="Eroare in aplicatie"/>
+			<node name="text" value="Directorul de cache nu este accesibil pentru scriere. Poate ati uitat sa inserati sau montati cartela de memorie. Va rugam sa corectati aceasta problema sau introduceti un alt nume de director de mai jos."/>
 		</node>
 		<node name="missingNativeLibrary">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
+			<node name="title" value="Problema in aplicatie"/>
+			<node name="text" value="Aplicatia nu gaseste librariile native. Poate nu a fost instalata corect. Daca erorare persista, va rugam reinstalati aplicatia"/>
 		</node>
 	</node>
 </resources>
