@@ -248,6 +248,7 @@
 		<node name="rotate" value="Otočit obrazovku"/>
 		<node name="screenOrientation" value="Orientace obrazovky"/>
 		<node name="screenOrientationSystem" value="Systém"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
 		<node name="screenOrientationPortrait" value="Na výšku"/>
 		<node name="screenOrientationLandscape" value="Na šířku"/>
 		<node name="screenOrientationReversePortrait" value="Převráceně na výšku"/>
@@ -304,6 +305,7 @@
 				<node name="summary" value="Otáčení, stavový řádek"/>
 				<node name="screenOrientation" value="Orientace obrazovky">
 					<node name="system" value="Systém"/>
+					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
 					<node name="portrait" value="Na výšku"/>
 					<node name="landscape" value="Na šířku"/>
 					<node name="reversePortrait" value="Převráceně na výšku"/>
@@ -316,6 +318,10 @@
 				<node name="showStatusBar" value="Zobrazit stavový řádek">
 					<node name="summaryOn" value="Zobrazit stavový řádek v režimu čtení"/>
 					<node name="summaryOff" value="Skrýt stavový řádek v režimu čtení"/>
+				</node>
+				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Zobrazit stavový řádek, když je menu aktivní">
 					<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
@@ -490,7 +496,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Barvy a tapety">
+			<node name="colors" value="Barvy a pozadí">
 				<node name="summary" value="Nastavení barev"/>
 				<node name="background" value="Pozadí">
 					<node name="solidColor" value="Plná barva"/>
@@ -748,7 +754,7 @@
 		</node>
 		<node name="missingNativeLibrary">
 			<node name="title" value="Problém FBReaderu"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
+			<node name="text" value="FBReader nemůže načíst místní knihovnu. Možná není správně nainstalován. Pokud problém přetrvává, zkuste znovu nainstalovat FBReader."/>
 		</node>
 	</node>
 </resources>
