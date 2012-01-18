@@ -143,6 +143,7 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_CANCEL_MENU, new ShowCancelMenuAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_SYSTEM, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_SYSTEM));
+		fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_SENSOR, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_SENSOR));
 		fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_PORTRAIT));
 		fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_LANDSCAPE));
 		if (ZLibrary.Instance().supportsAllOrientations()) {
@@ -154,7 +155,7 @@ public final class FBReader extends ZLAndroidActivity {
  	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		if (!zlibrary.ShowStatusBarOption.getValue()) {
+		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 		return super.onPrepareOptionsMenu(menu);
@@ -164,7 +165,7 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onOptionsMenuClosed(Menu menu) {
 		super.onOptionsMenuClosed(menu);
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		if (!zlibrary.ShowStatusBarOption.getValue()) {
+		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 	}
@@ -172,7 +173,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		if (!zlibrary.ShowStatusBarOption.getValue()) {
+		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 		return super.onOptionsItemSelected(item);
@@ -392,6 +393,7 @@ public final class FBReader extends ZLAndroidActivity {
 		addMenuItem(menu, ActionCode.SHOW_BOOK_INFO);
 		final Menu subMenu = addSubMenu(menu, "screenOrientation");
 		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_SYSTEM);
+		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_SENSOR);
 		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_PORTRAIT);
 		addMenuItem(subMenu, ActionCode.SET_SCREEN_ORIENTATION_LANDSCAPE);
 		if (ZLibrary.Instance().supportsAllOrientations()) {

@@ -248,6 +248,7 @@
 		<node name="rotate" value="Kijelző elforgatása"/>
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
 		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
 		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
 		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
@@ -304,6 +305,7 @@
 				<node name="summary" value="Elforgatás, állapotsor"/>
 				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
 					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
 					<node name="portrait" value="Portrait" toBeTranslated="true"/>
 					<node name="landscape" value="Landscape" toBeTranslated="true"/>
 					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
@@ -316,6 +318,10 @@
 				<node name="showStatusBar" value="Állapotsor látható">
 					<node name="summaryOn" value="Az állapotsor látszik olvasás közben"/>
 					<node name="summaryOff" value="Az állapotsor nem látszik olvasás közben"/>
+				</node>
+				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Állapotsor látható a menüben">
 					<node name="summaryOn" value="Az állapotsor látszik a menübe belépéskor"/>

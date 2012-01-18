@@ -39,18 +39,20 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 	private boolean myReadMainText = false;
 	private int mySectionDepth = 0;
 	private boolean mySectionStarted = false;
-	
+
 	private byte myHyperlinkType;
-	
+
 	private Base64EncodedImage myCurrentImage;
 	private boolean myInsideCoverpage = false;
 	private String myCoverImageReference;
 	private int myParagraphsBeforeBodyNumber = Integer.MAX_VALUE;
 
-	private final char[] SPACE = { ' ' }; 
+	private final char[] SPACE = { ' ' };
 
 	private byte[] myTagStack = new byte[10];
 	private int myTagStackSize = 0;
+
+	private int myFootnoteIdDepth;
 
 	public FB2Reader(BookModel model) {
  		myBookReader = new BookReader(model);
@@ -80,7 +82,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 			image.addData(ch, start, length);
 		} else {
 			myBookReader.addData(ch, start, length, false);
-		}		
+		}
 	}
 
 	public void characterDataHandlerFinal(char[] ch, int start, int length) {
@@ -92,14 +94,17 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 			image.addData(ch, start, length);
 		} else {
 			myBookReader.addData(ch, start, length, true);
-		}		
+		}
 	}
 
 	public boolean endElementHandler(String tagName) {
+		if (myFootnoteIdDepth > 0) {
+			--myFootnoteIdDepth;
+		}
 		final byte tag = myTagStack[--myTagStackSize];
 		switch (tag) {
 			case FB2Tag.P:
-				myBookReader.endParagraph();		
+				myBookReader.endParagraph();
 				break;
 			case FB2Tag.SUB:
 				myBookReader.addControl(FBTextKind.SUB, false);
@@ -119,24 +124,24 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 			case FB2Tag.STRIKETHROUGH:
 				myBookReader.addControl(FBTextKind.STRIKETHROUGH, false);
 				break;
-			
+
 			case FB2Tag.V:
 			case FB2Tag.SUBTITLE:
 			case FB2Tag.TEXT_AUTHOR:
 			case FB2Tag.DATE:
 				myBookReader.popKind();
 				myBookReader.endParagraph();
-				break;	
-			
+				break;
+
 			case FB2Tag.CITE:
 			case FB2Tag.EPIGRAPH:
 				myBookReader.popKind();
-				break;	
-			
+				break;
+
 			case FB2Tag.POEM:
 				myInsidePoem = false;
 				break;
-			
+
 			case FB2Tag.STANZA:
 				myBookReader.beginParagraph(ZLTextParagraph.Kind.AFTER_SKIP_PARAGRAPH);
 				myBookReader.endParagraph();
@@ -144,7 +149,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 				myBookReader.endParagraph();
 				myBookReader.popKind();
 				break;
-				
+
 			case FB2Tag.SECTION:
 				if (myReadMainText) {
 					myBookReader.endContentsParagraph();
@@ -154,7 +159,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 					myBookReader.unsetCurrentTextModel();
 				}
 				break;
-			
+
 			case FB2Tag.ANNOTATION:
 				myBookReader.popKind();
 				if (myBodyCounter == 0) {
@@ -162,13 +167,13 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 					myBookReader.unsetCurrentTextModel();
 				}
 				break;
-			
+
 			case FB2Tag.TITLE:
 				myBookReader.popKind();
 				myBookReader.exitTitle();
 				myInsideTitle = false;
 				break;
-				
+
 			case FB2Tag.BODY:
 				myBookReader.popKind();
 				myReadMainText = false;
@@ -181,37 +186,41 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 				}
 				myBookReader.unsetCurrentTextModel();
 				break;
-			
+
 			case FB2Tag.A:
 				myBookReader.addControl(myHyperlinkType, false);
 				break;
-			
+
 			case FB2Tag.COVERPAGE:
 				if (myBodyCounter == 0) {
 					myInsideCoverpage = false;
 					myBookReader.insertEndOfSectionParagraph();
 					myBookReader.unsetCurrentTextModel();
 				}
-				break;	
-			
+				break;
+
 			case FB2Tag.BINARY:
 				if (myCurrentImage != null) {
 					myCurrentImage.close();
 					myCurrentImage = null;
 				}
-				break;	
-				
+				break;
+
 			default:
 				break;
-		}		
+		}
 		return false;
 	}
 
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
 		String id = attributes.getValue("id");
+		if (myFootnoteIdDepth > 0) {
+			++myFootnoteIdDepth;
+		}
 		if (id != null) {
-			if (!myReadMainText) {
+			if (!myReadMainText && myFootnoteIdDepth == 0) {
 				myBookReader.setFootnoteTextModel(id);
+				myFootnoteIdDepth = 1;
 			}
 			myBookReader.addHyperlinkLabel(id);
 		}
@@ -231,7 +240,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 				}
 				myBookReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
-			
+
 			case FB2Tag.SUB:
 				myBookReader.addControl(FBTextKind.SUB, true);
 				break;
@@ -250,17 +259,17 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 			case FB2Tag.STRIKETHROUGH:
 				myBookReader.addControl(FBTextKind.STRIKETHROUGH, true);
 				break;
-			
+
 			case FB2Tag.V:
 				myBookReader.pushKind(FBTextKind.VERSE);
 				myBookReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
-				
+
 			case FB2Tag.TEXT_AUTHOR:
 				myBookReader.pushKind(FBTextKind.AUTHOR);
 				myBookReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
-				
+
 			case FB2Tag.SUBTITLE:
 				myBookReader.pushKind(FBTextKind.SUBTITLE);
 				myBookReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
@@ -269,29 +278,29 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 				myBookReader.pushKind(FBTextKind.DATE);
 				myBookReader.beginParagraph(ZLTextParagraph.Kind.TEXT_PARAGRAPH);
 				break;
-			
+
 			case FB2Tag.EMPTY_LINE:
 				myBookReader.beginParagraph(ZLTextParagraph.Kind.EMPTY_LINE_PARAGRAPH);
 				myBookReader.endParagraph();
 				break;
-			
+
 			case FB2Tag.CITE:
 				myBookReader.pushKind(FBTextKind.CITE);
 				break;
 			case FB2Tag.EPIGRAPH:
 				myBookReader.pushKind(FBTextKind.EPIGRAPH);
 				break;
-			
+
 			case FB2Tag.POEM:
 				myInsidePoem = true;
-				break;	
-			
+				break;
+
 			case FB2Tag.STANZA:
 				myBookReader.pushKind(FBTextKind.STANZA);
 				myBookReader.beginParagraph(ZLTextParagraph.Kind.BEFORE_SKIP_PARAGRAPH);
 				myBookReader.endParagraph();
 				break;
-				
+
 			case FB2Tag.SECTION:
 				if (myReadMainText) {
 					myBookReader.insertEndOfSectionParagraph();
@@ -300,14 +309,14 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 					mySectionStarted = true;
 				}
 				break;
-			
+
 			case FB2Tag.ANNOTATION:
 				if (myBodyCounter == 0) {
 					myBookReader.setMainTextModel();
 				}
 				myBookReader.pushKind(FBTextKind.ANNOTATION);
 				break;
-			
+
 			case FB2Tag.TITLE:
 				if (myInsidePoem) {
 					myBookReader.pushKind(FBTextKind.POEM_TITLE);
@@ -322,7 +331,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 					}
 				}
 				break;
-				
+
 			case FB2Tag.BODY:
 				++myBodyCounter;
 				myParagraphsBeforeBodyNumber = myBookReader.Model.BookTextModel.getParagraphsNumber();
@@ -338,7 +347,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 				}
 				myBookReader.pushKind(FBTextKind.REGULAR);
 				break;
-			
+
 			case FB2Tag.A:
 			{
 				String ref = getAttributeValue(attributes, XMLNamespaces.XLink, "href");
@@ -362,7 +371,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 					myInsideCoverpage = true;
 					myBookReader.setMainTextModel();
 				}
-				break;	
+				break;
 
 			case FB2Tag.IMAGE:
 			{
@@ -387,14 +396,14 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 				}
 				break;
 			}
-			case FB2Tag.BINARY:			
+			case FB2Tag.BINARY:
 				final String contentType = attributes.getValue("content-type");
 				final String imgId = attributes.getValue("id");
 				if (contentType != null && id != null) {
 					myCurrentImage = new Base64EncodedImage(MimeType.get(contentType));
 					myBookReader.addImage(imgId, myCurrentImage);
 				}
-				break;	
+				break;
 
 			default:
 				break;
