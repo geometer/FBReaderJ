@@ -29,8 +29,6 @@ import android.view.*;
 
 import org.geometerplus.android.util.UIUtil;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
 import org.geometerplus.fbreader.tree.FBTree;
 
 public abstract class TreeActivity extends ListActivity {
@@ -54,7 +52,7 @@ public abstract class TreeActivity extends ListActivity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			getActionBar().setLogo(R.drawable.fbreader);
+			getActionBar().setDisplayUseLogoEnabled(false);
 		}
 	}
 

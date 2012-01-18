@@ -30,8 +30,6 @@ import android.content.Intent;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.zlibrary.ui.android.R;
-
 abstract class ZLPreferenceActivity extends android.preference.PreferenceActivity {
 	public static String SCREEN_KEY = "screen";
 
@@ -129,7 +127,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			getActionBar().setLogo(R.drawable.fbreader);
+			getActionBar().setDisplayUseLogoEnabled(false);
 		}
 
 		myScreen = getPreferenceManager().createPreferenceScreen(this);

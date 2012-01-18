@@ -84,7 +84,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		if (bar != null) {
 			bar.setDisplayShowTitleEnabled(false);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				bar.setLogo(R.drawable.fbreader);
+				bar.setDisplayUseLogoEnabled(false);
 			}
 		}
 		setContentView(R.layout.book_info);
