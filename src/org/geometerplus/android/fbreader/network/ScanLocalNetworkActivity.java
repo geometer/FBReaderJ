@@ -80,6 +80,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			errorView.setVisibility(View.VISIBLE);
 			errorView.setText(myResource.getResource("turnWiFiOn").getValue());
 
+			/*
 			final Button turnOnButton = (Button)buttonView.findViewById(R.id.ok_button);
 			turnOnButton.setText(buttonResource.getResource("turnOn").getValue());
 			turnOnButton.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +89,9 @@ public class ScanLocalNetworkActivity extends ListActivity {
 					finish();
 				}
 			});
+			*/
+			buttonView.findViewById(R.id.ok_button).setVisibility(View.GONE);
+			cancelButton.setText(buttonResource.getResource("ok").getValue());
 
 			myLock = null;
 		} else {
