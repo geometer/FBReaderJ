@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
 import android.content.res.AssetFileDescriptor;
 import android.os.Build;
 import android.telephony.TelephonyManager;
@@ -114,7 +115,20 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	@Override
 	public String getVersionName() {
 		try {
-			return myApplication.getPackageManager().getPackageInfo(myApplication.getPackageName(), 0).versionName;
+			final PackageInfo info =
+				myApplication.getPackageManager().getPackageInfo(myApplication.getPackageName(), 0);
+			return info.versionName;
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	@Override
+	public String getFullVersionName() {
+		try {
+			final PackageInfo info =
+				myApplication.getPackageManager().getPackageInfo(myApplication.getPackageName(), 0);
+			return info.versionName + " (" + info.versionCode + ")";
 		} catch (Exception e) {
 			return "";
 		}

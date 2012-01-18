@@ -48,6 +48,7 @@ public abstract class ZLibrary {
 	abstract public ZLResourceFile createResourceFile(ZLResourceFile parent, String name);
 
 	abstract public String getVersionName();
+	abstract public String getFullVersionName();
 	abstract public String getCurrentTimeString();
 	abstract public void setScreenBrightness(int percent);
 	abstract public int getScreenBrightness();

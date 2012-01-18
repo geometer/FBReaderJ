@@ -651,6 +651,19 @@
 					<node name="summaryOff" value="Do not show"/>
 				</node>
 			</node>
+			<node name="about" value="About FBReader">
+				<node name="summary" value="Version info, contacts"/>
+				<node name="version" value="Version"/>
+				<node name="site" value="Visit our website">
+					<node name="url" value="http://www.fbreader.org/"/>
+				</node>
+				<node name="email" value="Send us an e-mail">
+					<node name="url" value="mailto:contact@geometerplus.com"/>
+				</node>
+				<node name="twitter" value="Follow us at twitter">
+					<node name="url" value="http://twitter.com/fbreader"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
