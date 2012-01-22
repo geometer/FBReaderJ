@@ -3,7 +3,7 @@
 <resources>
 	<node name="dialog">
 		<node name="button">
-			<node name="ok" value="Ok" />
+			<node name="ok" value="OK" />
 			<node name="cancel" value="Zrušit" />
 			<node name="yes" value="Ano" />
 			<node name="no" value="Ne" />
@@ -21,7 +21,7 @@
 			<node name="couldntResolveHostMessage" value="Nelze rozlišit hostitele&#10;%s" />
 			<node name="authenticationFailed" value="Selhalo ověření" />
 			<node name="unsupportedProtocol" value="Nepodporovaný protokol" />
-			<node name="invalidURL" value="Neplatná URL" />
+			<node name="invalidURL" value="Neplatná adresa" />
 			<node name="hostCantBeReached" value="Hostitel %s&#10;nemůže být dosažen" />
 			<node name="connectionRefused" value="Spojení bylo odmítnuto:&#10;%s" />
 		</node>
@@ -56,7 +56,7 @@
 		<node name="es" value="Španělsky" />
 		<node name="fi" value="Finsky" />
 		<node name="fr" value="Francouzsky" />
-		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="gl" value="Haličsky"/>
 		<node name="he" value="Hebrejsky" />
 		<node name="hu" value="Maďarsky" />
 		<node name="id" value="Indonésky" />
@@ -66,7 +66,7 @@
 		<node name="no" value="Norsky" />
 		<node name="pl" value="Polsky" />
 		<node name="pt" value="Portugalsky" />
-		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ro" value="Rumunsky"/>
 		<node name="ru" value="Rusky" />
 		<node name="sv" value="Švédsky" />
 		<node name="th" value="Thajsky"/>

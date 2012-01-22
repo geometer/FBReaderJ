@@ -56,6 +56,7 @@ public interface ActionCode {
 	String SHOW_CANCEL_MENU = "cancelMenu";
 
 	String SET_SCREEN_ORIENTATION_SYSTEM = "screenOrientationSystem";
+	String SET_SCREEN_ORIENTATION_SENSOR = "screenOrientationSensor";
 	String SET_SCREEN_ORIENTATION_PORTRAIT = "screenOrientationPortrait";
 	String SET_SCREEN_ORIENTATION_LANDSCAPE = "screenOrientationLandscape";
 	String SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT = "screenOrientationReversePortrait";
