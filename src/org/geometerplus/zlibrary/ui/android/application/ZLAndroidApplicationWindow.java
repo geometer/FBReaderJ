@@ -61,6 +61,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		final MenuItem menuItem = menu.add(name);
 		if (iconId != null) {
 			menuItem.setIcon(iconId);
+			menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		}
 		menuItem.setOnMenuItemClickListener(myMenuListener);
 		myMenuItemMap.put(menuItem, actionId);

@@ -59,12 +59,12 @@ public abstract class NetworkBookActions {
 		private final int myId;
 		private final String myArg;
 
-		public NBAction(Activity activity, int id, String key) {
-			this(activity, id, key, null);
+		public NBAction(Activity activity, int id, String key, boolean showAsAction) {
+			this(activity, id, key, null, showAsAction);
 		}
 
-		public NBAction(Activity activity, int id, String key, String arg) {
-			super(activity, id, key);
+		public NBAction(Activity activity, int id, String key, String arg, boolean showAsAction) {
+			super(activity, id, key, showAsAction);
 			myId = id;
 			myArg = arg;
 		}
@@ -105,49 +105,55 @@ public abstract class NetworkBookActions {
 	}
 
 	public static List<NBAction> getContextMenuActions(Activity activity, NetworkBookTree tree, BookDownloaderServiceConnection connection) {
+		if (tree == null) {
+			throw new IllegalArgumentException("tree == null");
+		}
 		final NetworkBookItem book = tree.Book;
+		if (book == null) {
+			throw new IllegalArgumentException("book == null");
+		}
 		List<NBAction> actions = new LinkedList<NBAction>();
 		if (useFullReferences(book)) {
 			final BookUrlInfo reference = book.reference(UrlInfo.Type.Book);
 			if (reference != null
 					&& connection != null && connection.isBeingDownloaded(reference.Url)) {
-				actions.add(new NBAction(activity, ActionCode.TREE_NO_ACTION, "alreadyDownloading"));
+				actions.add(new NBAction(activity, ActionCode.TREE_NO_ACTION, "alreadyDownloading", false));
 			} else if (book.localCopyFileName() != null) {
-				actions.add(new NBAction(activity, ActionCode.READ_BOOK, "read"));
-				actions.add(new NBAction(activity, ActionCode.DELETE_BOOK, "delete"));
+				actions.add(new NBAction(activity, ActionCode.READ_BOOK, "read", true));
+				actions.add(new NBAction(activity, ActionCode.DELETE_BOOK, "delete", false));
 			} else if (reference != null) {
-				actions.add(new NBAction(activity, ActionCode.DOWNLOAD_BOOK, "download"));
-			}
-		}
-		if (useDemoReferences(book)) {
-			final BookUrlInfo reference = book.reference(UrlInfo.Type.BookDemo);
-			if (connection != null && connection.isBeingDownloaded(reference.Url)) {
-				actions.add(new NBAction(activity, ActionCode.TREE_NO_ACTION, "alreadyDownloadingDemo"));
-			} else if (reference.localCopyFileName(UrlInfo.Type.BookDemo) != null) {
-				actions.add(new NBAction(activity, ActionCode.READ_DEMO, "readDemo"));
-				actions.add(new NBAction(activity, ActionCode.DELETE_DEMO, "deleteDemo"));
-			} else {
-				actions.add(new NBAction(activity, ActionCode.DOWNLOAD_DEMO, "downloadDemo"));
+				actions.add(new NBAction(activity, ActionCode.DOWNLOAD_BOOK, "download", true));
 			}
 		}
 		if (book.getStatus() == NetworkBookItem.Status.CanBePurchased) {
 			final BookBuyUrlInfo reference = book.buyInfo();
 			final int id = reference.InfoType == UrlInfo.Type.BookBuy
 				? ActionCode.BUY_DIRECTLY : ActionCode.BUY_IN_BROWSER;
-			final String priceString = reference.Price != null ? reference.Price.toString() : "";
-			actions.add(new NBAction(activity, id, "buy", priceString));
+			final String priceString = reference.Price != null ? String.valueOf(reference.Price) : "";
+			actions.add(new NBAction(activity, id, "buy", priceString, true));
 			final BasketItem basketItem = book.Link.getBasketItem();
 			if (basketItem != null) {
 				if (basketItem.contains(book)) {
 					if (tree.Parent instanceof BasketCatalogTree ||
 						activity instanceof NetworkLibraryActivity) {
-						actions.add(new NBAction(activity, ActionCode.REMOVE_BOOK_FROM_BASKET, "removeFromBasket"));
+						actions.add(new NBAction(activity, ActionCode.REMOVE_BOOK_FROM_BASKET, "removeFromBasket", true));
 					} else {
-						actions.add(new NBAction(activity, ActionCode.OPEN_BASKET, "openBasket"));
+						actions.add(new NBAction(activity, ActionCode.OPEN_BASKET, "openBasket", true));
 					}
 				} else {
-					actions.add(new NBAction(activity, ActionCode.ADD_BOOK_TO_BASKET, "addToBasket"));
+					actions.add(new NBAction(activity, ActionCode.ADD_BOOK_TO_BASKET, "addToBasket", true));
 				}
+			}
+		}
+		if (useDemoReferences(book)) {
+			final BookUrlInfo reference = book.reference(UrlInfo.Type.BookDemo);
+			if (connection != null && connection.isBeingDownloaded(reference.Url)) {
+				actions.add(new NBAction(activity, ActionCode.TREE_NO_ACTION, "alreadyDownloadingDemo", false));
+			} else if (reference.localCopyFileName(UrlInfo.Type.BookDemo) != null) {
+				actions.add(new NBAction(activity, ActionCode.READ_DEMO, "readDemo", true));
+				actions.add(new NBAction(activity, ActionCode.DELETE_DEMO, "deleteDemo", false));
+			} else {
+				actions.add(new NBAction(activity, ActionCode.DOWNLOAD_DEMO, "downloadDemo", true));
 			}
 		}
 		return actions;

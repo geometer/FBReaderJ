@@ -91,5 +91,5 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 		}
 	}
 
-	public abstract void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location);
+	public abstract void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Type type);
 }

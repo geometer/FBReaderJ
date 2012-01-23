@@ -24,14 +24,15 @@ import java.text.DateFormat;
 import java.util.*;
 
 import android.app.Activity;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.Window;
+import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -50,7 +51,7 @@ import org.geometerplus.fbreader.network.HtmlUtil;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
-public class BookInfoActivity extends Activity {
+public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener {
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
@@ -69,8 +70,9 @@ public class BookInfoActivity extends Activity {
 			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
 		);
 
-		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
-		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
+		final Intent intent = getIntent();
+		final String path = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
+		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myFile = ZLFile.createFileByPath(path);
 
 		myImage = Library.getCover(myFile);
@@ -79,10 +81,16 @@ public class BookInfoActivity extends Activity {
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		final ActionBar bar = getActionBar();
+		if (bar != null) {
+			bar.setDisplayShowTitleEnabled(false);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+				bar.setDisplayUseLogoEnabled(false);
+			}
+		}
 		setContentView(R.layout.book_info);
 
-		setResult(myResult);
+		setResult(myResult, intent);
 	}
 
 	@Override
@@ -99,39 +107,6 @@ public class BookInfoActivity extends Activity {
 			setupAnnotation(book);
 			setupFileInfo(book);
 		}
-
-		setupButton(R.id.book_info_button_open, "openBook", new View.OnClickListener() {
-			public void onClick(View view) {
-				if (myDontReloadBook) {
-					finish();
-				} else {
-					startActivity(
-						new Intent(getApplicationContext(), FBReader.class)
-							.setAction(Intent.ACTION_VIEW)
-							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
-							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-					);
-				}
-			}
-		});
-		setupButton(R.id.book_info_button_edit, "editInfo", new View.OnClickListener() {
-			public void onClick(View view) {
-				startActivityForResult(
-					new Intent(getApplicationContext(), EditBookInfoActivity.class)
-						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
-					1
-				);
-			}
-		});
-		setupButton(R.id.book_info_button_reload, "reloadInfo", new View.OnClickListener() {
-			public void onClick(View view) {
-				if (book != null) {
-					book.reloadInfoFromFile();
-					setupBookInfo(book);
-					myDontReloadBook = false;
-				}
-			}
-		});
 
 		final View root = findViewById(R.id.book_info_root);
 		root.invalidate();
@@ -153,13 +128,6 @@ public class BookInfoActivity extends Activity {
 
 	private Button findButton(int buttonId) {
 		return (Button)findViewById(buttonId);
-	}
-
-	private void setupButton(int buttonId, String resourceKey, View.OnClickListener listener) {
-		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final Button button = findButton(buttonId);
-		button.setText(buttonResource.getResource(resourceKey).getValue());
-		button.setOnClickListener(listener);
 	}
 
 	private void setupInfoPair(int id, String key, CharSequence value) {
@@ -279,7 +247,7 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.file_name, "name", book.File.getPath());
 		if (ENABLE_EXTENDED_FILE_INFO) {
 			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
-        
+
 			final ZLFile physFile = book.File.getPhysicalFile();
 			final File file = physFile == null ? null : new File(physFile.getPath());
 			if (file != null && file.exists() && file.isFile()) {
@@ -318,5 +286,63 @@ public class BookInfoActivity extends Activity {
 			return null;
 		}
 		return DateFormat.getDateTimeInstance().format(new Date(date));
+	}
+
+	private static final int OPEN_BOOK = 1;
+	private static final int EDIT_INFO = 2;
+	private static final int RELOAD_INFO = 3;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		addMenuItem(menu, OPEN_BOOK, "openBook", true);
+		addMenuItem(menu, EDIT_INFO, "editInfo", true);
+		addMenuItem(menu, RELOAD_INFO, "reloadInfo", false);
+		return true;
+	}
+
+	private void addMenuItem(Menu menu, int index, String resourceKey, boolean showAsAction) {
+		final String label =
+			ZLResource.resource("dialog").getResource("button").getResource(resourceKey).getValue();
+		final MenuItem item = menu.add(0, index, Menu.NONE, label);
+		item.setShowAsAction(
+			showAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
+		);
+		item.setOnMenuItemClickListener(this);
+	}
+
+	public boolean onMenuItemClick(MenuItem item) {
+		switch (item.getItemId()) {
+			case OPEN_BOOK:
+				if (myDontReloadBook) {
+					finish();
+				} else {
+					startActivity(
+						new Intent(getApplicationContext(), FBReader.class)
+							.setAction(Intent.ACTION_VIEW)
+							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
+							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+					);
+				}
+				return true;
+			case EDIT_INFO:
+				startActivityForResult(
+					new Intent(getApplicationContext(), EditBookInfoActivity.class)
+						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
+					1
+				);
+				return true;
+			case RELOAD_INFO:
+			{
+				final Book book = Book.getByFile(myFile);
+				if (book != null) {
+					book.reloadInfoFromFile();
+					setupBookInfo(book);
+				}
+				return true;
+			}
+			default:
+				return true;
+		}
 	}
 }

@@ -48,8 +48,34 @@ class CurlAnimationProvider extends AnimationProvider {
 		myEdgePaint.setShadowLayer(15, 0, 0, 0xC0000000);
 	}
 
+	private Bitmap myBuffer;
+	private volatile boolean myUseCanvasHack = false;
+
 	@Override
 	protected void drawInternal(Canvas canvas) {
+		if (myUseCanvasHack) {
+			// This is a hack that disables hardware acceleration
+			//   1) for GLES20Canvas we got an UnsupportedOperationException in clipPath
+			//   2) View.setLayerType(LAYER_TYPE_SOFTWARE) does not work properly in some cases
+			if (myBuffer == null ||
+				myBuffer.getWidth() != myWidth ||
+				myBuffer.getHeight() != myHeight) {
+				myBuffer = Bitmap.createBitmap(myWidth, myHeight, getBitmapTo().getConfig());
+			}
+			final Canvas softCanvas = new Canvas(myBuffer);
+			drawInternalNoHack(softCanvas);
+			canvas.drawBitmap(myBuffer, 0, 0, myPaint);
+		} else {
+			try {
+				drawInternalNoHack(canvas);
+			} catch (UnsupportedOperationException e) {
+				myUseCanvasHack = true;
+				drawInternal(canvas);
+			}
+		}
+	}
+
+	private void drawInternalNoHack(Canvas canvas) {
 		canvas.drawBitmap(getBitmapTo(), 0, 0, myPaint);
 		final Bitmap fgBitmap = getBitmapFrom();
 

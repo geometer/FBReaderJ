@@ -19,25 +19,19 @@
 
 package org.geometerplus.android.fbreader;
 
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
-import org.geometerplus.zlibrary.text.view.ZLTextView;
-
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-class ShowNavigationAction extends FBAndroidAction {
-	ShowNavigationAction(FBReader baseActivity, FBReaderApp fbreader) {
+class ToggleBarsAction extends FBAndroidAction {
+	ToggleBarsAction(FBReader baseActivity, FBReaderApp fbreader) {
 		super(baseActivity, fbreader);
 	}
 
 	@Override
-	public boolean isVisible() {
-		final ZLTextView view = (ZLTextView)Reader.getCurrentView();
-		final ZLTextModel textModel = view.getModel();
-		return textModel != null && textModel.getParagraphsNumber() != 0;
-	}
-
-	@Override
 	protected void run(Object ... params) {
-		BaseActivity.navigate();
+		if (BaseActivity.barsAreShown()) {
+			BaseActivity.hideBars();
+		} else {
+			BaseActivity.showBars();
+		}
 	}
 }

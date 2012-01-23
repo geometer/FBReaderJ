@@ -22,9 +22,6 @@ package org.geometerplus.android.fbreader.network;
 import java.util.*;
 import java.net.*;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -124,19 +121,10 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 	private List<InetAddress> getLocalIpAddresses() {
 		final List<InetAddress> addresses = new LinkedList<InetAddress>();
-		Method testPtoPMethod = null;
-		try {
-			testPtoPMethod = NetworkInterface.class.getMethod("isPointToPoint");
-		} catch (NoSuchMethodException e) {
-		}
 		try {
 			for (NetworkInterface iface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
-				try {
-					if (testPtoPMethod != null && (Boolean)testPtoPMethod.invoke(iface)) {
-						continue;
-					}
-				} catch (IllegalAccessException e) {
-				} catch (InvocationTargetException e) {
+				if (iface.isPointToPoint()) {
+					continue;
 				}
 				for (InetAddress addr : Collections.list(iface.getInetAddresses())) {
 					if (!addr.isLoopbackAddress() && addr instanceof Inet4Address) {

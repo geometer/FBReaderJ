@@ -29,7 +29,7 @@ import org.geometerplus.android.fbreader.network.Util;
 
 public class SignInAction extends Action {
 	public SignInAction(Activity activity) {
-		super(activity, ActionCode.SIGNIN, "signIn", -1);
+		super(activity, ActionCode.SIGNIN, "signIn", false);
 	}
 
 	@Override

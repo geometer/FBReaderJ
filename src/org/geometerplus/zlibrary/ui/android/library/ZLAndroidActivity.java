@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
-import java.lang.reflect.*;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.*;
@@ -65,17 +63,9 @@ public abstract class ZLAndroidActivity extends Activity {
 	}
 
 	private void setButtonLight(boolean enabled) {
-		try {
-			final WindowManager.LayoutParams attrs = getWindow().getAttributes();
-			final Class<?> cls = attrs.getClass();
-			final Field fld = cls.getField("buttonBrightness");
-			if (fld != null && "float".equals(fld.getType().toString())) {
-				fld.setFloat(attrs, enabled ? -1.0f : 0.0f);
-				getWindow().setAttributes(attrs);
-			}
-		} catch (NoSuchFieldException e) {
-		} catch (IllegalAccessException e) {
-		}
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.buttonBrightness = enabled ? -1.0f : 0.0f;
+		getWindow().setAttributes(attrs);
 	}
 
 	protected abstract ZLFile fileFromIntent(Intent intent);
@@ -86,11 +76,18 @@ public abstract class ZLAndroidActivity extends Activity {
 
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		final ZLAndroidLibrary zlibrary = getLibrary();
+		getWindow().setFlags(
+			WindowManager.LayoutParams.FLAG_FULLSCREEN,
+			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
+		);
+		if (!zlibrary.ShowActionBarOption.getValue()) {
+			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+		}
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		getLibrary().setActivity(this);
+		zlibrary.setActivity(this);
 
 		final ZLFile fileToOpen = fileFromIntent(getIntent());
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();

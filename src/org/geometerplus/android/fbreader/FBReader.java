@@ -21,12 +21,17 @@ package org.geometerplus.android.fbreader;
 
 import java.util.*;
 
+import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.*;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -35,9 +40,7 @@ import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.zlibrary.ui.android.R;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.library.*;
 
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -53,6 +56,8 @@ import org.geometerplus.android.fbreader.tips.TipsActivity;
 import org.geometerplus.android.util.UIUtil;
 
 public final class FBReader extends ZLAndroidActivity {
+	static final int ACTION_BAR_COLOR = Color.DKGRAY;
+
 	public static final String BOOK_PATH_KEY = "BookPath";
 
 	public static final int REQUEST_PREFERENCES = 1;
@@ -63,7 +68,8 @@ public final class FBReader extends ZLAndroidActivity {
 	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
 	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
-	private int myFullScreenFlag;
+	private boolean myShowStatusBarFlag;
+	private boolean myShowActionBarFlag;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -87,6 +93,9 @@ public final class FBReader extends ZLAndroidActivity {
 							new RunPluginAction(FBReader.this, fbReader, info.getId())
 						);
 					}
+					if (!myPluginActions.isEmpty()) {
+						invalidateOptionsMenu();
+					}
 				}
 			}
 		}
@@ -107,19 +116,33 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		myFullScreenFlag =
-			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
-		getWindow().setFlags(
-			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
-		);
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
+		myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
+
+		final ActionBar bar = getActionBar();
+		bar.setDisplayOptions(
+			ActionBar.DISPLAY_SHOW_CUSTOM,
+			ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
+		);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			bar.setDisplayUseLogoEnabled(false);
+		}
+		final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
+		titleView.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				fbReader.runAction(ActionCode.SHOW_BOOK_INFO);
+			}
+		});
+		bar.setCustomView(titleView);
+		bar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
+
+		setTitle(fbReader.getTitle());
+
 		if (fbReader.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(fbReader);
-		}
-		if (fbReader.getPopupById(NavigationPopup.ID) == null) {
-			new NavigationPopup(fbReader);
 		}
 		if (fbReader.getPopupById(SelectionPopup.ID) == null) {
 			new SelectionPopup(fbReader);
@@ -132,8 +155,7 @@ public final class FBReader extends ZLAndroidActivity {
 		fbReader.addAction(ActionCode.SHOW_BOOKMARKS, new ShowBookmarksAction(this, fbReader));
 		fbReader.addAction(ActionCode.SHOW_NETWORK_LIBRARY, new ShowNetworkLibraryAction(this, fbReader));
 		
-		fbReader.addAction(ActionCode.SHOW_MENU, new ShowMenuAction(this, fbReader));
-		fbReader.addAction(ActionCode.SHOW_NAVIGATION, new ShowNavigationAction(this, fbReader));
+		fbReader.addAction(ActionCode.TOGGLE_BARS, new ToggleBarsAction(this, fbReader));
 		fbReader.addAction(ActionCode.SEARCH, new SearchAction(this, fbReader));
 
 		fbReader.addAction(ActionCode.SELECTION_SHOW_PANEL, new SelectionShowPanelAction(this, fbReader));
@@ -157,33 +179,6 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
- 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		}
-		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
-	public void onOptionsMenuClosed(Menu menu) {
-		super.onOptionsMenuClosed(menu);
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
-		if (!zlibrary.isKindleFire() && !zlibrary.ShowStatusBarOption.getValue()) {
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 	@Override
 	protected void onNewIntent(Intent intent) {
 		final Uri data = intent.getData();
@@ -204,6 +199,7 @@ public final class FBReader extends ZLAndroidActivity {
 						runOnUiThread(new Runnable() {
 							public void run() {
 								fbReader.showPopup(popup.getId());
+								hideBars();
 							}
 						});
 					} else {
@@ -225,11 +221,11 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
+
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 
-		final int fullScreenFlag =
-			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
-		if (fullScreenFlag != myFullScreenFlag) {
+		if (zlibrary.ShowStatusBarOption.getValue() != myShowStatusBarFlag ||
+			zlibrary.ShowActionBarOption.getValue() != myShowActionBarFlag) {
 			finish();
 			startActivity(new Intent(this, getClass()));
 		}
@@ -238,20 +234,22 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
-		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
-		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
+		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).createControlPanel(this, root, PopupWindow.Type.Bottom);
+		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Type.Floating);
 
 		synchronized (myPluginActions) {
-			int index = 0;
-			while (index < myPluginActions.size()) {
-				fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
+			if (!myPluginActions.isEmpty()) {
+				int index = 0;
+				while (index < myPluginActions.size()) {
+					fbReader.removeAction(PLUGIN_ACTION_PREFIX + index++);
+				}
+				myPluginActions.clear();
+				invalidateOptionsMenu();
 			}
-			myPluginActions.clear();
 		}
 
 		sendOrderedBroadcast(
-			new Intent(PluginApi.ACTION_REGISTER),
+			new Intent(PluginApi.ACTION_REGISTER).addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES),
 			null,
 			myPluginInfoReceiver,
 			null,
@@ -284,6 +282,9 @@ public final class FBReader extends ZLAndroidActivity {
 		} catch (Throwable t) {
 		}
 		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
+
+		hideBars();
+
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
 	}
 
@@ -326,6 +327,7 @@ public final class FBReader extends ZLAndroidActivity {
 		((SelectionPopup)fbReader.getPopupById(SelectionPopup.ID))
 			.move(view.getSelectionStartY(), view.getSelectionEndY());
 		fbReader.showPopup(SelectionPopup.ID);
+		hideBars();
 	}
 
 	public void hideSelectionPanel() {
@@ -379,10 +381,6 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 	}
 
-	public void navigate() {
-		((NavigationPopup)FBReaderApp.Instance().getPopupById(NavigationPopup.ID)).runNavigation();
-	}
-
 	private Menu addSubMenu(Menu menu, String id) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
 		return application.myMainWindow.addSubMenu(menu, id);
@@ -426,7 +424,6 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 		addMenuItem(menu, ActionCode.INCREASE_FONT);
 		addMenuItem(menu, ActionCode.DECREASE_FONT);
-		addMenuItem(menu, ActionCode.SHOW_NAVIGATION);
 		synchronized (myPluginActions) {
 			int index = 0;
 			for (PluginApi.ActionInfo info : myPluginActions) {
@@ -444,5 +441,51 @@ public final class FBReader extends ZLAndroidActivity {
 		application.myMainWindow.refreshMenu();
 
 		return true;
+	}
+
+	private NavigationPopup myNavigationPopup;
+
+	boolean barsAreShown() {
+		return myNavigationPopup != null;
+	}
+
+	void hideBars() {
+		if (myNavigationPopup != null) {
+			myNavigationPopup.stopNavigation();
+			myNavigationPopup = null;
+		}
+
+		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		if (!zlibrary.ShowActionBarOption.getValue()) {
+			getActionBar().hide();
+		}
+
+		if (zlibrary.DisableButtonLightsOption.getValue()) {
+			findViewById(R.id.root_view).setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+		}
+	}
+
+	void showBars() {
+		getActionBar().show();
+
+		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
+		root.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
+		if (myNavigationPopup == null) {
+			final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
+			fbreader.hideActivePopup();
+			myNavigationPopup = new NavigationPopup(fbreader);
+			myNavigationPopup.runNavigation(this, root);
+		}
+	}
+
+	@Override
+	public void setTitle(CharSequence title) {
+		super.setTitle(title);
+		final TextView view = (TextView)getActionBar().getCustomView();
+		if (view != null) {
+			view.setText(title);
+			view.postInvalidate();
+		}
 	}
 }

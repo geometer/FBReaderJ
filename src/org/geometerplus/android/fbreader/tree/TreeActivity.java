@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 
@@ -47,7 +48,12 @@ public abstract class TreeActivity extends ListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			getActionBar().setDisplayUseLogoEnabled(false);
+		}
 	}
 
 	@Override

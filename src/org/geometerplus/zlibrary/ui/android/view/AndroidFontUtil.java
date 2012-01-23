@@ -22,8 +22,6 @@ package org.geometerplus.zlibrary.ui.android.view;
 import java.util.*;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
 
 import android.graphics.Typeface;
 
@@ -32,32 +30,6 @@ import org.geometerplus.zlibrary.core.util.ZLTTFInfoDetector;
 import org.geometerplus.fbreader.Paths;
 
 public final class AndroidFontUtil {
-	private static Method ourFontCreationMethod;
-	static {
-		try {
-			ourFontCreationMethod = Typeface.class.getMethod("createFromFile", File.class);
-		} catch (NoSuchMethodException e) {
-			ourFontCreationMethod = null;
-		}
-	}
-
-	public static boolean areExternalFontsSupported() {
-		return ourFontCreationMethod != null;
-	}
-
-	public static Typeface createFontFromFile(File file) {
-		if (ourFontCreationMethod == null) {
-			return null;
-		}
-		try {
-			return (Typeface)ourFontCreationMethod.invoke(null, file);
-		} catch (IllegalAccessException e) {
-			return null;
-		} catch (InvocationTargetException e) {
-			return null;
-		}
-	}
-
 	private static Map<String,File[]> ourFontMap;
 	private static File[] ourFileList;
 	private static long myTimeStamp;
@@ -69,35 +41,29 @@ public final class AndroidFontUtil {
 		myTimeStamp = timeStamp;
 		if (ourFontMap == null || forceReload) {
 			boolean rebuildMap = ourFontMap == null;
-			if (ourFontCreationMethod == null) {
-				if (rebuildMap) {
-					ourFontMap = new HashMap<String,File[]>();
-				}
-			} else {
-				final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
-					new FilenameFilter() {
-						public boolean accept(File dir, String name) {
-							if (name.startsWith(".")) {
-								return false;
-							}
-							final String lcName = name.toLowerCase();
-							return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
+			final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
+				new FilenameFilter() {
+					public boolean accept(File dir, String name) {
+						if (name.startsWith(".")) {
+							return false;
 						}
-					}
-				);
-				if (fileList == null) {
-					if (ourFileList != null) {
-						ourFileList = null;
-						rebuildMap = true;
+						final String lcName = name.toLowerCase();
+						return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 					}
 				}
-				if (fileList != null && !fileList.equals(ourFileList)) {
-					ourFileList = fileList;
+			);
+			if (fileList == null) {
+				if (ourFileList != null) {
+					ourFileList = null;
 					rebuildMap = true;
 				}
-				if (rebuildMap) {
-					ourFontMap = new ZLTTFInfoDetector().collectFonts(fileList);
-				}
+			}
+			if (fileList != null && !fileList.equals(ourFileList)) {
+				ourFileList = fileList;
+				rebuildMap = true;
+			}
+			if (rebuildMap) {
+				ourFontMap = new ZLTTFInfoDetector().collectFonts(fileList);
 			}
 		}
 		return ourFontMap;

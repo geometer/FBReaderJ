@@ -192,12 +192,12 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			if (files != null) {
 				try {
 					if (files[style] != null) {
-						tf = AndroidFontUtil.createFontFromFile(files[style]);
+						tf = Typeface.createFromFile(files[style]);
 					} else {
 						for (int i = 0; i < 4; ++i) {
 							if (files[i] != null) {
 								tf = (typefaces[i] != null) ?
-									typefaces[i] : AndroidFontUtil.createFontFromFile(files[i]);
+									typefaces[i] : Typeface.createFromFile(files[i]);
 								typefaces[i] = tf;
 								break;
 							}

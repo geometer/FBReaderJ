@@ -40,7 +40,7 @@ public class ScrollingPreferences {
 	public final ZLEnumOption<ZLView.Animation> AnimationOption =
 		new ZLEnumOption<ZLView.Animation>("Scrolling", "Animation", ZLView.Animation.slide);
 	public final ZLIntegerRangeOption AnimationSpeedOption =
-		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, 4);
+		new ZLIntegerRangeOption("Scrolling", "AnimationSpeed", 1, 10, 8);
 
 	public final ZLBooleanOption HorizontalOption =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);

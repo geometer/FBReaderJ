@@ -22,6 +22,7 @@ package org.geometerplus.android.fbreader.preferences;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.*;
 import android.content.Intent;
@@ -124,6 +125,10 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 		super.onCreate(bundle);
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			getActionBar().setDisplayUseLogoEnabled(false);
+		}
 
 		myScreen = getPreferenceManager().createPreferenceScreen(this);
 
