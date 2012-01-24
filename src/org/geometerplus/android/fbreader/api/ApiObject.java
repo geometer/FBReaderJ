@@ -17,6 +17,7 @@ public abstract class ApiObject implements Parcelable {
 		int INT = 1;
 		int STRING = 2;
 		int BOOLEAN = 3;
+		int DATE = 4;
 		int TEXT_POSITION = 10;
 	}
 
@@ -70,6 +71,25 @@ public abstract class ApiObject implements Parcelable {
 		}
 	}
 
+	static class Date extends ApiObject {
+		final java.util.Date Value;
+
+		Date(java.util.Date value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.DATE;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeLong(Value.getTime());
+		}
+	}
+
 	static class String extends ApiObject {
 		final java.lang.String Value;
 
@@ -120,6 +140,10 @@ public abstract class ApiObject implements Parcelable {
 		return new String(value);
 	}
 
+	static ApiObject envelope(java.util.Date value) {
+		return new Date(value);
+	}
+
 	static List<ApiObject> envelope(List<java.lang.String> values) {
 		final ArrayList<ApiObject> objects = new ArrayList<ApiObject>(values.size());
 		for (java.lang.String v : values) {
@@ -153,6 +177,8 @@ public abstract class ApiObject implements Parcelable {
 						return new Integer(parcel.readInt());
 					case Type.BOOLEAN:
 						return new Boolean(parcel.readByte() == 1);
+					case Type.DATE:
+						return new Date(new java.util.Date(parcel.readLong()));
 					case Type.STRING:
 						return new String(parcel.readString());
 					case Type.TEXT_POSITION:

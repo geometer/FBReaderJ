@@ -70,10 +70,14 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelope(getBookLanguage());
 				case GET_BOOK_TITLE:
 					return ApiObject.envelope(getBookTitle());
-				case GET_BOOK_FILE_NAME:
-					return ApiObject.envelope(getBookFileName());
+				case GET_BOOK_FILE_PATH:
+					return ApiObject.envelope(getBookFilePath());
 				case GET_BOOK_HASH:
 					return ApiObject.envelope(getBookHash());
+				case GET_BOOK_ID:
+					return ApiObject.envelope(getBookId());
+				case GET_BOOK_LAST_TURNING_TIME:
+					return ApiObject.envelope(getBookLastTurningTime());
 				case GET_PARAGRAPHS_NUMBER:
 					return ApiObject.envelope(getParagraphsNumber());
 				case GET_ELEMENTS_NUMBER:
@@ -180,12 +184,22 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return Collections.emptyList();
 	}
 
-	public String getBookFileName() {
+	public String getBookFilePath() {
 		return myReader.Model.Book.File.getPath();
 	}
 
 	public String getBookHash() {
 		return myReader.Model.Book.getContentHashCode();
+	}
+
+	public String getBookId() {
+		// TODO: implement
+		return null;
+	}
+
+	public Date getBookLastTurningTime() {
+		// TODO: implement
+		return null;
 	}
 
 	// page information

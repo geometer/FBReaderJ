@@ -5,6 +5,7 @@
 package org.geometerplus.android.fbreader.api;
 
 import java.util.List;
+import java.util.Date;
 
 public interface Api {
 	// information about fbreader
@@ -21,8 +22,10 @@ public interface Api {
 	String getBookTitle() throws ApiException;
 	//List<String> getBookAuthors() throws ApiException;
 	List<String> getBookTags() throws ApiException;
-	String getBookFileName() throws ApiException;
+	String getBookFilePath() throws ApiException;
 	String getBookHash() throws ApiException;
+	String getBookId() throws ApiException;
+	Date getBookLastTurningTime() throws ApiException;
 
 	// text information
 	int getParagraphsNumber() throws ApiException;
