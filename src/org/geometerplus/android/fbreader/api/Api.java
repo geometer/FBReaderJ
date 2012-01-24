@@ -37,6 +37,9 @@ public interface Api {
 	String getBookUniqueId(long id) throws ApiException;
 	Date getBookLastTurningTime(long id) throws ApiException;
 
+	//long findBookIdByUniqueId(String uniqueId) throws ApiException;
+	//long findBookIdByFilePath(String uniqueId) throws ApiException;
+
 	// text information
 	int getParagraphsNumber() throws ApiException;
 	int getElementsNumber(int paragraphIndex) throws ApiException;
