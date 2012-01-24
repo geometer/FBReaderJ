@@ -1,6 +1,7 @@
 ===== 1.3.4 (??? ??, 2012) =====
 * About section in the preferences dialog
 * CHANGE_WIFI_STATE permission is not required more
+* getBookFileName() API method has been implemented
 
 ===== 1.3.3 (Jan 18, 2012) =====
 * Proguard -dontoptimize option, looks like these optimizations are buggy :(
