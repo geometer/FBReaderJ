@@ -181,8 +181,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getBookFileName() {
-		// TODO: implement
-		return null;
+		return myReader.Model.Book.File.getPath();
 	}
 
 	public String getBookHash() {
