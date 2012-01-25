@@ -87,16 +87,10 @@
 			</intent-filter>
 			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
 		</activity>
-<<<<<<< HEAD
 		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize"/>
 		<activity android:name="org.geometerplus.android.fbreader.image.ImageViewActivity" android:process=":imageView" android:configChanges="orientation|keyboardHidden|screenSize"/>
-		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":library"/>
-=======
-		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden"/>
-		<activity android:name="org.geometerplus.android.fbreader.image.ImageViewActivity" android:process=":imageView" android:configChanges="orientation|keyboardHidden"/>
 		<service android:name="org.geometerplus.android.fbreader.libraryService.LibraryService" android:launchMode="singleTask" android:process=":libraryService"/>
-		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:configChanges="orientation|keyboardHidden" android:process=":library"/>
->>>>>>> master
+		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":library"/>
 		<receiver android:name="org.geometerplus.android.fbreader.library.KillerCallback" android:process=":library" />
 		<activity android:name="org.geometerplus.android.fbreader.library.LibrarySearchActivity" android:process=":library" android:theme="@android:style/Theme.NoDisplay">
 			<intent-filter>
