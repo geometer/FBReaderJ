@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2010-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.library;
+package org.geometerplus.android.fbreader.libraryService;
 
-import android.app.Application;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 
-import org.geometerplus.zlibrary.core.sqliteconfig.ZLSQLiteConfig;
-
-import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-
-public abstract class ZLAndroidApplication extends Application {
-	public ZLAndroidApplicationWindow myMainWindow;
+public class LibraryService extends Service {
+	@Override
+	public void onStart(Intent intent, int startId) {
+		onStartCommand(intent, 0, startId);
+	}
 
 	@Override
-	public void onCreate() {
-		super.onCreate();
-		new ZLSQLiteConfig(this);
-		new ZLAndroidImageManager();
-		new ZLAndroidLibrary(this);
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		System.err.println("LibraryService started for intent " + intent);
+		return START_STICKY;
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		System.err.println("LibraryService binded for intent " + intent);
+		return null;
 	}
 }
