@@ -74,7 +74,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myFile = ZLFile.createFileByPath(path);
 
-		myImage = Library.getCover(myFile);
+		myImage = LibraryUtil.getCover(myFile);
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
@@ -221,7 +221,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void setupAnnotation(Book book) {
 		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
 		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
-		final String annotation = Library.getAnnotation(book.File);	
+		final String annotation = LibraryUtil.getAnnotation(book.File);	
 		if (annotation == null) {
 			titleView.setVisibility(View.GONE);
 			bodyView.setVisibility(View.GONE);
