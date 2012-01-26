@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import android.os.RemoteException;
+
 import org.geometerplus.fbreader.library.*;
 
 public class LibraryShadow extends AbstractLibrary {
@@ -30,7 +32,11 @@ public class LibraryShadow extends AbstractLibrary {
 
 	@Override
 	public boolean isUpToDate() {
-		return myInterface.isUpToDate();
+		try {
+			return myInterface.isUpToDate();
+		} catch (RemoteException e) {
+			return false;
+		}
 	}
 
 	@Override
