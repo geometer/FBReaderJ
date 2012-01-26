@@ -188,7 +188,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
 		}
-		if ((myLibrary.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+		if (myLibrary.canRemoveBookFile(book)) {
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
 		}
 	}
