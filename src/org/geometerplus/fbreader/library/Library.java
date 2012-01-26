@@ -288,7 +288,19 @@ public final class Library extends AbstractLibrary {
 			savedBooksByBookId.put(b.getId(), b);
 		}
 
-		// Step 1: add "existing" books recent and favorites lists
+		// Step 1: set myDoGroupTitlesByFirstLetter value,
+        // add "existing" books into recent and favorites lists
+		if (savedBooksByFileId.size() > 10) {
+			final HashSet<String> letterSet = new HashSet<String>();
+			for (Book book : savedBooksByFileId.values()) {
+				final String letter = TitleTree.firstTitleLetter(book);
+				if (letter != null) {
+					letterSet.add(letter);
+				}
+			}
+			myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
+		}
+
 		for (long id : db.loadRecentBookIds()) {
 			Book book = savedBooksByBookId.get(id);
 			if (book == null) {
@@ -321,17 +333,6 @@ public final class Library extends AbstractLibrary {
 		//         add books to library if yes (and reload book info if needed);
 		//         remove from recent/favorites list if no;
 		//         collect newly "orphaned" books
-		if (savedBooksByFileId.size() > 10) {
-			final HashSet<String> letterSet = new HashSet<String>();
-			for (Book book : savedBooksByFileId.values()) {
-				final String letter = TitleTree.firstTitleLetter(book);
-				if (letter != null) {
-					letterSet.add(letter);
-				}
-			}
-			myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
-		}
-
 		final Set<Book> orphanedBooks = new HashSet<Book>();
 		int count = 0;
 		for (Book book : savedBooksByFileId.values()) {
