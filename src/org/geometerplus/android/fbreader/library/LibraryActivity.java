@@ -20,8 +20,7 @@
 package org.geometerplus.android.fbreader.library;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.DialogInterface;
+import android.content.*;
 import android.view.*;
 import android.os.Bundle;
 import android.widget.AdapterView;
