@@ -50,6 +50,20 @@ public class LibraryShadow extends AbstractLibrary {
 		// TODO: implement
 	}
 
+	public Book getRecentBook() {
+		// TODO: implement
+		return null;
+	}
+
+	public Book getPreviousBook() {
+		// TODO: implement
+		return null;
+	}
+
+	public void addBookToRecentList(Book book) {
+		// TODO: implement
+	}
+
 	@Override
 	public boolean isBookInFavorites(Book book) {
 		// TODO: implement

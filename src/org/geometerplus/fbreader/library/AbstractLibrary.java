@@ -61,6 +61,10 @@ public abstract class AbstractLibrary {
 	public abstract boolean canRemoveBookFile(Book book);
 	public abstract void removeBook(Book book, int removeMode);
 
+	public abstract Book getRecentBook();
+	public abstract Book getPreviousBook();
+	public abstract void addBookToRecentList(Book book);
+
 	public abstract boolean isBookInFavorites(Book book);
 	public abstract void addBookToFavorites(Book book);
 	public abstract void removeBookFromFavorites(Book book);
