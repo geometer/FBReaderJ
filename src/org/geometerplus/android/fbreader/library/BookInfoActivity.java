@@ -58,7 +58,6 @@ public class BookInfoActivity extends Activity {
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private ZLFile myFile;
-	private ZLImage myImage;
 	private boolean myDontReloadBook;
 
 	@Override
@@ -71,8 +70,6 @@ public class BookInfoActivity extends Activity {
 		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
 		myDontReloadBook = getIntent().getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myFile = ZLFile.createFileByPath(path);
-
-		myImage = LibraryUtil.getCover(myFile);
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
@@ -178,18 +175,20 @@ public class BookInfoActivity extends Activity {
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		if (myImage == null) {
+		final ZLImage image = LibraryUtil.getCover(book);
+
+		if (image == null) {
 			return;
 		}
 
-		if (myImage instanceof ZLLoadableImage) {
-			final ZLLoadableImage loadableImage = (ZLLoadableImage)myImage;
+		if (image instanceof ZLLoadableImage) {
+			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
 			if (!loadableImage.isSynchronized()) {
 				loadableImage.synchronize();
 			}
 		}
 		final ZLAndroidImageData data =
-			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(myImage);
+			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
 		if (data == null) {
 			return;
 		}

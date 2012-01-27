@@ -19,52 +19,19 @@
 
 package org.geometerplus.fbreader.library;
 
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.formats.FormatPlugin;
-import org.geometerplus.fbreader.formats.PluginCollection;
+import org.geometerplus.fbreader.formats.*;
 
 public abstract class LibraryUtil {
-	private static final HashMap<String,WeakReference<ZLImage>> ourCoverMap =
-		new HashMap<String,WeakReference<ZLImage>>();
-	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
-
 	public static ZLResource resource() {
 		return ZLResource.resource("library");
 	}
 
-	public static ZLImage getCover(ZLFile file) {
-		if (file == null) {
-			return null;
-		}
-		synchronized (ourCoverMap) {
-			final String path = file.getPath();
-			final WeakReference<ZLImage> ref = ourCoverMap.get(path);
-			if (ref == NULL_IMAGE) {
-				return null;
-			} else if (ref != null) {
-				final ZLImage image = ref.get();
-				if (image != null) {
-					return image;
-				}
-			}
-			ZLImage image = null;
-			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
-			if (plugin != null) {
-				image = plugin.readCover(file);
-			}
-			if (image == null) {
-				ourCoverMap.put(path, NULL_IMAGE);
-			} else {
-				ourCoverMap.put(path, new WeakReference<ZLImage>(image));
-			}
-			return image;
-		}
+	public static ZLImage getCover(Book book) {
+		return book != null ? book.getCover() : null;
 	}
 
 	public static String getAnnotation(ZLFile file) {
