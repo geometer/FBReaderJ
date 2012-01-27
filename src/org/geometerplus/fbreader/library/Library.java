@@ -427,11 +427,13 @@ public final class Library extends AbstractLibrary {
 		return myStatusMask == 0;
 	}
 
+	@Override
 	public Book getRecentBook() {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > 0 ? Book.getById(recentIds.get(0)) : null;
 	}
 
+	@Override
 	public Book getPreviousBook() {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > 1 ? Book.getById(recentIds.get(1)) : null;
@@ -492,6 +494,7 @@ public final class Library extends AbstractLibrary {
 		}
 	}
 
+	@Override
 	public void addBookToRecentList(Book book) {
 		final List<Long> ids = myDatabase.loadRecentBookIds();
 		final Long bookId = book.getId();
