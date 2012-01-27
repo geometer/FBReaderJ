@@ -40,10 +40,12 @@ public final class Library extends AbstractLibrary {
 	private static Library ourInstance;
 	public static Library Instance() {
 		if (ourInstance == null) {
-			ourInstance = new Library();
+			ourInstance = new Library(BooksDatabase.Instance());
 		}
 		return ourInstance;
 	}
+
+	private final BooksDatabase myDatabase;
 
 	private final List<Book> myBooks = Collections.synchronizedList(new LinkedList<Book>());
 	private final RootTree myRootTree = new RootTree();
@@ -58,7 +60,9 @@ public final class Library extends AbstractLibrary {
 		fireModelChangedEvent(ChangeListener.Code.StatusChanged);
 	}
 
-	private Library() {
+	public Library(BooksDatabase db) {
+		myDatabase = db;
+
 		new FavoritesTree(myRootTree, ROOT_FAVORITES);
 		new FirstLevelTree(myRootTree, ROOT_RECENT);
 		new FirstLevelTree(myRootTree, ROOT_BY_AUTHOR);
@@ -269,11 +273,9 @@ public final class Library extends AbstractLibrary {
 	}
 
 	private void build() {
-		final BooksDatabase db = BooksDatabase.Instance();
-
 		// Step 0: get database books marked as "existing"
 		final FileInfoSet fileInfos = new FileInfoSet();
-		final Map<Long,Book> savedBooksByFileId = db.loadBooks(fileInfos, true);
+		final Map<Long,Book> savedBooksByFileId = myDatabase.loadBooks(fileInfos, true);
 		final Map<Long,Book> savedBooksByBookId = new HashMap<Long,Book>();
 		for (Book b : savedBooksByFileId.values()) {
 			savedBooksByBookId.put(b.getId(), b);
@@ -292,7 +294,7 @@ public final class Library extends AbstractLibrary {
 			myDoGroupTitlesByFirstLetter = savedBooksByFileId.values().size() > letterSet.size() * 5 / 4;
 		}
 
-		for (long id : db.loadRecentBookIds()) {
+		for (long id : myDatabase.loadRecentBookIds()) {
 			Book book = savedBooksByBookId.get(id);
 			if (book == null) {
 				book = Book.getById(id);
@@ -305,7 +307,7 @@ public final class Library extends AbstractLibrary {
 			}
 		}
 
-		for (long id : db.loadFavoritesIds()) {
+		for (long id : myDatabase.loadFavoritesIds()) {
 			Book book = savedBooksByBookId.get(id);
 			if (book == null) {
 				book = Book.getById(id);
@@ -356,11 +358,11 @@ public final class Library extends AbstractLibrary {
 			}
 		}
 		fireModelChangedEvent(ChangeListener.Code.BookAdded);
-		db.setExistingFlag(orphanedBooks, false);
+		myDatabase.setExistingFlag(orphanedBooks, false);
 
 		// Step 3: collect books from physical files; add new, update already added,
 		//         unmark orphaned as existing again, collect newly added
-		final Map<Long,Book> orphanedBooksByFileId = db.loadBooks(fileInfos, false);
+		final Map<Long,Book> orphanedBooksByFileId = myDatabase.loadBooks(fileInfos, false);
 		final Set<Book> newBooks = new HashSet<Book>();
 
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
@@ -387,14 +389,14 @@ public final class Library extends AbstractLibrary {
 		// Step 5: save changes into database
 		fileInfos.save();
 
-		db.executeAsATransaction(new Runnable() {
+		myDatabase.executeAsATransaction(new Runnable() {
 			public void run() {
 				for (Book book : newBooks) {
 					book.save();
 				}
 			}
 		});
-		db.setExistingFlag(newBooks, true);
+		myDatabase.setExistingFlag(newBooks, true);
 	}
 
 	private volatile boolean myBuildStarted = false;
@@ -425,13 +427,13 @@ public final class Library extends AbstractLibrary {
 		return myStatusMask == 0;
 	}
 
-	public static Book getRecentBook() {
-		List<Long> recentIds = BooksDatabase.Instance().loadRecentBookIds();
+	public Book getRecentBook() {
+		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > 0 ? Book.getById(recentIds.get(0)) : null;
 	}
 
-	public static Book getPreviousBook() {
-		List<Long> recentIds = BooksDatabase.Instance().loadRecentBookIds();
+	public Book getPreviousBook() {
+		List<Long> recentIds = myDatabase.loadRecentBookIds();
 		return recentIds.size() > 1 ? Book.getById(recentIds.get(1)) : null;
 	}
 
@@ -490,16 +492,15 @@ public final class Library extends AbstractLibrary {
 		}
 	}
 
-	public static void addBookToRecentList(Book book) {
-		final BooksDatabase db = BooksDatabase.Instance();
-		final List<Long> ids = db.loadRecentBookIds();
+	public void addBookToRecentList(Book book) {
+		final List<Long> ids = myDatabase.loadRecentBookIds();
 		final Long bookId = book.getId();
 		ids.remove(bookId);
 		ids.add(0, bookId);
 		if (ids.size() > 12) {
 			ids.remove(12);
 		}
-		db.saveRecentBookIds(ids);
+		myDatabase.saveRecentBookIds(ids);
 	}
 
 	@Override
@@ -523,13 +524,13 @@ public final class Library extends AbstractLibrary {
 		}
 		final LibraryTree rootFavorites = getFirstLevelTree(ROOT_FAVORITES);
 		rootFavorites.getBookSubTree(book, true);
-		BooksDatabase.Instance().addToFavorites(book.getId());
+		myDatabase.addToFavorites(book.getId());
 	}
 
 	@Override
 	public void removeBookFromFavorites(Book book) {
 		if (getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false)) {
-			BooksDatabase.Instance().removeFromFavorites(book.getId());
+			myDatabase.removeFromFavorites(book.getId());
 			fireModelChangedEvent(ChangeListener.Code.BookRemoved);
 		}
 	}
@@ -556,15 +557,14 @@ public final class Library extends AbstractLibrary {
 		}
 		myBooks.remove(book);
 		if (getFirstLevelTree(ROOT_RECENT).removeBook(book, false)) {
-			final BooksDatabase db = BooksDatabase.Instance();
-			final List<Long> ids = db.loadRecentBookIds();
+			final List<Long> ids = myDatabase.loadRecentBookIds();
 			ids.remove(book.getId());
-			db.saveRecentBookIds(ids);
+			myDatabase.saveRecentBookIds(ids);
 		}
 		getFirstLevelTree(ROOT_FAVORITES).removeBook(book, false);
 		myRootTree.removeBook(book, true);
 
-		BooksDatabase.Instance().deleteFromBookList(book.getId());
+		myDatabase.deleteFromBookList(book.getId());
 		if ((removeMode & REMOVE_FROM_DISK) != 0) {
 			book.File.getPhysicalFile().delete();
 		}
