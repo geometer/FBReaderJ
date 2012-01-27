@@ -29,14 +29,23 @@ import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 
 public class LibraryService extends Service implements Library.ChangeListener {
 	public final class LibraryImplementation extends LibraryInterface.Stub {
+		private final AbstractLibrary myBaseLibrary;
+
+		LibraryImplementation() {
+			BooksDatabase database = SQLiteBooksDatabase.Instance();
+			if (database == null) {
+				database = new SQLiteBooksDatabase(LibraryService.this, "LIBRARY SERVICE");
+			}
+			myBaseLibrary = new Library(database);
+			((Library)myBaseLibrary).startBuild();
+		}
+
 		public boolean isUpToDate() {
-			return myLibrary.isUpToDate();
+			return myBaseLibrary.isUpToDate();
 		}
 	}
 
-	private LibraryImplementation myImplementation;
-	private BooksDatabase myDatabase;
-	private AbstractLibrary myLibrary;
+	private LibraryImplementation myLibrary;
 
 	@Override
 	public void onStart(Intent intent, int startId) {
@@ -53,29 +62,21 @@ public class LibraryService extends Service implements Library.ChangeListener {
 	@Override
 	public IBinder onBind(Intent intent) {
 		System.err.println("LibraryService binded for intent " + intent);
-		return myImplementation;
+		return myLibrary;
 	}
 
 	@Override
 	public void onCreate() {
 		System.err.println("LibraryService.onCreate()");
 		super.onCreate();
-		myDatabase = SQLiteBooksDatabase.Instance();
-		if (myDatabase == null) {
-			myDatabase = new SQLiteBooksDatabase(this, "LIBRARY SERVICE");
-		}
-		if (myLibrary == null) {
-			myLibrary = Library.Instance();
-			myLibrary.addChangeListener(this);
-			((Library)myLibrary).startBuild();
-		}
-		myImplementation = new LibraryImplementation();
+		myLibrary = new LibraryImplementation();
+		myLibrary.myBaseLibrary.addChangeListener(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		System.err.println("LibraryService.onDestroy()");
-		myLibrary.removeChangeListener(this);
+		myLibrary.myBaseLibrary.removeChangeListener(this);
 		myLibrary = null;
 		super.onDestroy();
 	}
