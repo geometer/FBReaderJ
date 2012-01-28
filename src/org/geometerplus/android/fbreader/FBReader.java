@@ -112,6 +112,8 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		DictionaryUtil.init(this);
+
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
