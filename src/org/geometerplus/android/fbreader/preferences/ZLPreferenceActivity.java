@@ -126,10 +126,6 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			getActionBar().setDisplayUseLogoEnabled(false);
-		}
-
 		myScreen = getPreferenceManager().createPreferenceScreen(this);
 
 		final Intent intent = getIntent();
