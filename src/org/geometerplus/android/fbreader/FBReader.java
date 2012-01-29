@@ -430,7 +430,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.refreshMenu();
+		application.myMainWindow.refresh();
 
 		return true;
 	}
@@ -468,6 +468,13 @@ public final class FBReader extends ZLAndroidActivity {
 			fbreader.hideActivePopup();
 			myNavigationPopup = new NavigationPopup(fbreader);
 			myNavigationPopup.runNavigation(this, root);
+		}
+	}
+
+	@Override
+	public void refresh() {
+		if (myNavigationPopup != null) {
+			myNavigationPopup.update();
 		}
 	}
 

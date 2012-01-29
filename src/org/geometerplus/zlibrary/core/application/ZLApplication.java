@@ -92,7 +92,7 @@ public abstract class ZLApplication {
 
 	public final void onRepaintFinished() {
 		if (myWindow != null) {
-			myWindow.refreshMenu();
+			myWindow.refresh();
 		}
 		for (PopupPanel popup : popupPanels()) {
 			popup.update();
