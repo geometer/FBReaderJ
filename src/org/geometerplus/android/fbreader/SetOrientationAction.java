@@ -63,7 +63,6 @@ class SetScreenOrientationAction extends FBAndroidAction {
 	protected void run(Object ... params) {
 		setOrientation(BaseActivity, myOptionValue);
 		ZLibrary.Instance().OrientationOption.setValue(myOptionValue);
-		final ZLAndroidApplication application = (ZLAndroidApplication)BaseActivity.getApplication();
-		application.myMainWindow.refreshMenu();
+		Reader.onRepaintFinished();
 	}
 }
