@@ -65,7 +65,7 @@ public abstract class ZLApplication {
 		myWindow = window;
 	}
 
-	public void initWindow() {
+	public final void initWindow() {
 		setView(myView);
 	}
 
@@ -80,9 +80,9 @@ public abstract class ZLApplication {
 		return myTitle;
 	}
 
-	protected void wait(String key, Runnable runnable) {
+	protected void runWithMessage(String key, Runnable runnable) {
 		if (myWindow != null) {
-			myWindow.wait(key, runnable);
+			myWindow.runWithMessage(key, runnable);
 		}
 	}
 
