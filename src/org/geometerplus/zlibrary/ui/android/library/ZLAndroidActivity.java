@@ -82,47 +82,31 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle state) {
-		System.err.println("+onCreate");
 		super.onCreate(state);
 
-		System.err.println("onCreate 1");
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
-		System.err.println("onCreate 2");
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		System.err.println("onCreate 5");
 		setContentView(R.layout.main);
-		System.err.println("onCreate 6");
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-		System.err.println("onCreate 7");
 
 		getLibrary().setActivity(this);
-		System.err.println("onCreate 8");
 
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
-		System.err.println("onCreate 9");
 		if (androidApplication.myMainWindow == null) {
 			final ZLApplication application = createApplication();
-		System.err.println("onCreate 10");
 			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(application);
-		System.err.println("onCreate 11");
 			application.initWindow();
-		System.err.println("onCreate 12");
 		}
-		System.err.println("onCreate 13");
 
 		new Thread() {
 			public void run() {
-				System.err.println("+openFile");
 				ZLApplication.Instance().openFile(fileFromIntent(getIntent()));
 				ZLApplication.Instance().getViewWidget().repaint();
-				System.err.println("-openFile");
 			}
 		}.start();
 
-		System.err.println("onCreate 14");
 		ZLApplication.Instance().getViewWidget().repaint();
-		System.err.println("-onCreate");
 	}
 
 	private PowerManager.WakeLock myWakeLock;
@@ -166,7 +150,6 @@ public abstract class ZLAndroidActivity extends Activity {
 
 	@Override
 	public void onResume() {
-		System.err.println("+onResume");
 		super.onResume();
 		switchWakeLock(
 			getLibrary().BatteryLevelToTurnScreenOffOption.getValue() <
@@ -185,7 +168,6 @@ public abstract class ZLAndroidActivity extends Activity {
 		}
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-		System.err.println("-onResume");
 	}
 
 	@Override
