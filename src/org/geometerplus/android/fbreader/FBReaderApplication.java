@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.android.fbreader;
 
-class RootTree extends LibraryTree {
-	RootTree() {
-	}
+import android.content.Intent;
 
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication;
+import org.geometerplus.android.fbreader.libraryService.LibraryService;
+
+public class FBReaderApplication extends ZLAndroidApplication {
 	@Override
-	public String getName() {
-		return LibraryUtil.resource().getValue();
-	}
-
-	@Override
-	protected String getStringId() {
-		return "@FBReaderLibraryRoot";
+	public void onCreate() {
+		super.onCreate();
+		//bindService(new Intent(this, LibraryService.class), null, LibraryService.BIND_AUTO_CREATE);
 	}
 }

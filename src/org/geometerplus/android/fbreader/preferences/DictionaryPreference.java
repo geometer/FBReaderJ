@@ -26,17 +26,15 @@ import android.content.Context;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.android.fbreader.DictionaryUtil;
 import org.geometerplus.android.fbreader.PackageInfo;
 
 class DictionaryPreference extends ZLStringListPreference {
 	private final ZLStringOption myOption;
 
-	DictionaryPreference(Context context, ZLResource resource, String resourceKey, ZLStringOption dictionaryOption) {
+	DictionaryPreference(Context context, ZLResource resource, String resourceKey, ZLStringOption dictionaryOption, List<PackageInfo> infos) {
 		super(context, resource, resourceKey);
 
 		myOption = dictionaryOption;
-		final List<PackageInfo> infos = DictionaryUtil.dictionaryInfos(context);
 		
 		final String[] values = new String[infos.size()];
 		final String[] texts = new String[infos.size()];
