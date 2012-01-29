@@ -224,6 +224,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 		System.err.println("++FBReader.onStart");
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		System.err.println("FBReader.onStart 1");
 
 		System.err.println("FBReader.onStart 1");
 		if (zlibrary.ShowStatusBarOption.getValue() != myShowStatusBarFlag ||
@@ -246,6 +247,7 @@ public final class FBReader extends ZLAndroidActivity {
 		);
 		System.err.println("FBReader.onStart 4");
 
+		System.err.println("FBReader.onStart 4");
 		synchronized (myPluginActions) {
 			if (!myPluginActions.isEmpty()) {
 				int index = 0;
