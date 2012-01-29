@@ -103,6 +103,7 @@ public final class FBReader extends ZLAndroidActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		System.err.println("+FBReader.onCreate");
 		DictionaryUtil.init(this);
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
@@ -153,6 +154,7 @@ public final class FBReader extends ZLAndroidActivity {
 			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_PORTRAIT, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_PORTRAIT));
 			fbReader.addAction(ActionCode.SET_SCREEN_ORIENTATION_REVERSE_LANDSCAPE, new SetScreenOrientationAction(this, fbReader, ZLibrary.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
 		}
+		System.err.println("-FBReader.onCreate");
 	}
 
  	@Override
@@ -222,8 +224,12 @@ public final class FBReader extends ZLAndroidActivity {
 
 	@Override
 	public void onStart() {
+		System.err.println("+FBReader.onStart");
 		super.onStart();
+
+		System.err.println("++FBReader.onStart");
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
+		System.err.println("FBReader.onStart 1");
 
 		final int fullScreenFlag =
 			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -231,8 +237,10 @@ public final class FBReader extends ZLAndroidActivity {
 			finish();
 			startActivity(new Intent(this, getClass()));
 		}
+		System.err.println("FBReader.onStart 2");
 
 		SetScreenOrientationAction.setOrientation(this, zlibrary.OrientationOption.getValue());
+		System.err.println("FBReader.onStart 3");
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
@@ -240,6 +248,7 @@ public final class FBReader extends ZLAndroidActivity {
 		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
 		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
 
+		System.err.println("FBReader.onStart 4");
 		synchronized (myPluginActions) {
 			int index = 0;
 			while (index < myPluginActions.size()) {
@@ -247,6 +256,7 @@ public final class FBReader extends ZLAndroidActivity {
 			}
 			myPluginActions.clear();
 		}
+		System.err.println("FBReader.onStart 5");
 
 		sendOrderedBroadcast(
 			new Intent(PluginApi.ACTION_REGISTER),
@@ -257,32 +267,52 @@ public final class FBReader extends ZLAndroidActivity {
 			null,
 			null
 		);
+		System.err.println("FBReader.onStart 6");
 
-		final TipsManager manager = TipsManager.Instance();
-		switch (manager.requiredAction()) {
-			case Initialize:
-				startActivity(new Intent(TipsActivity.INITIALIZE_ACTION, null, this, TipsActivity.class));
-				break;
-			case Show:
-				startActivity(new Intent(TipsActivity.SHOW_TIP_ACTION, null, this, TipsActivity.class));
-				break;
-			case Download:
-				manager.startDownloading();
-				break;
-			case None:
-				break;
+		System.err.println("FBReader.onStart 7");
+		new TipRunner().start();
+		System.err.println("FBReader.onStart 8");
+		System.err.println("-FBReader.onStart");
+	}
+
+	private class TipRunner extends Thread {
+		TipRunner() {
+			setPriority(MIN_PRIORITY);
+		}
+
+		public void run() {
+			final TipsManager manager = TipsManager.Instance();
+			switch (manager.requiredAction()) {
+				case Initialize:
+					startActivity(new Intent(
+						TipsActivity.INITIALIZE_ACTION, null, FBReader.this, TipsActivity.class
+					));
+					break;
+				case Show:
+					startActivity(new Intent(
+						TipsActivity.SHOW_TIP_ACTION, null, FBReader.this, TipsActivity.class
+					));
+					break;
+				case Download:
+					manager.startDownloading();
+					break;
+				case None:
+					break;
+			}
 		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		System.err.println("+FBReader.onResume");
 		try {
 			sendBroadcast(new Intent(getApplicationContext(), KillerCallback.class));
 		} catch (Throwable t) {
 		}
 		PopupPanel.restoreVisibilities(FBReaderApp.Instance());
 		ApiServerImplementation.sendEvent(this, ApiListener.EVENT_READ_MODE_OPENED);
+		System.err.println("-FBReader.onResume");
 	}
 
 	@Override
@@ -293,11 +323,11 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	protected FBReaderApp createApplication(ZLFile file) {
+	protected FBReaderApp createApplication() {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "READER");
 		}
-		return new FBReaderApp(file != null ? file.getPath() : null);
+		return new FBReaderApp();
 	}
 
 	@Override

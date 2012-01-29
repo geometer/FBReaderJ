@@ -103,11 +103,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	public volatile BookModel Model;
 
-	private final String myArg0;
-
-	public FBReaderApp(String arg) {
-		myArg0 = arg;
-
+	public FBReaderApp() {
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
 		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
 
@@ -139,34 +135,27 @@ public final class FBReaderApp extends ZLApplication {
 		setView(BookTextView);
 	}
 
-	public void initWindow() {
-		super.initWindow();
-		wait("loadingBook", new Runnable() {
-			public void run() {
-				Book book = createBookForFile(ZLFile.createFileByPath(myArg0));
-				if (book == null) {
-					book = Library.Instance().getRecentBook();
-				}
-				if ((book == null) || !book.File.exists()) {
+	public void openBook(Book book, final Bookmark bookmark) {
+		if (book == null) {
+			if (Model == null) {
+				book = Library.Instance().getRecentBook();
+				if (book == null || !book.File.exists()) {
 					book = Book.getByFile(Library.getHelpFile());
 				}
-				openBookInternal(book, null);
 			}
-		});
-	}
-
-	public void openBook(final Book book, final Bookmark bookmark) {
-		if (book == null) {
-			return;
+			if (book == null) {
+				return;
+			}
 		}
 		if (Model != null) {
 			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
 				return;
 			}
 		}
-		wait("loadingBook", new Runnable() {
+		final Book bookToOpen = book;
+		runWithMessage("loadingBook", new Runnable() {
 			public void run() {
-				openBookInternal(book, bookmark);
+				openBookInternal(bookToOpen, bookmark);
 			}
 		});
 	}
@@ -301,10 +290,7 @@ public final class FBReaderApp extends ZLApplication {
 
 	@Override
 	public void openFile(ZLFile file) {
-		final Book book = createBookForFile(file);
-		if (book != null) {
-			openBook(book, null);
-		}
+		openBook(createBookForFile(file), null);
 	}
 
 	public void onWindowClosing() {

@@ -124,7 +124,8 @@ public abstract class TreeActivity extends ListActivity {
 							public void run() {
 								openTreeInternal(tree, treeToSelect, storeInHistory);
 							}
-						}
+						},
+						true
 					);
 				} else {
 					tree.waitForOpening();
