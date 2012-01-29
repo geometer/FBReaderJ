@@ -127,6 +127,14 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return ((ApiObject.String)object).Value;
 	}
 
+	private Date requestDate(int method, ApiObject[] params) throws ApiException {
+		final ApiObject object = request(method, params);
+		if (!(object instanceof ApiObject.Date)) {
+			throw new ApiException("Cannot cast return type of method " + method + " to Date");
+		}
+		return ((ApiObject.Date)object).Value;
+	}
+
 	private int requestInt(int method, ApiObject[] params) throws ApiException {
 		final ApiObject object = request(method, params);
 		if (!(object instanceof ApiObject.Integer)) {
@@ -213,12 +221,48 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestStringList(GET_BOOK_TAGS, EMPTY_PARAMETERS);
 	}
 
-	public String getBookFileName() throws ApiException {
-		return requestString(GET_BOOK_FILE_NAME, EMPTY_PARAMETERS);
+	public String getBookFilePath() throws ApiException {
+		return requestString(GET_BOOK_FILE_PATH, EMPTY_PARAMETERS);
 	}
 
 	public String getBookHash() throws ApiException {
 		return requestString(GET_BOOK_HASH, EMPTY_PARAMETERS);
+	}
+
+	public String getBookUniqueId() throws ApiException {
+		return requestString(GET_BOOK_UNIQUE_ID, EMPTY_PARAMETERS);
+	}
+
+	public Date getBookLastTurningTime() throws ApiException {
+		return requestDate(GET_BOOK_LAST_TURNING_TIME, EMPTY_PARAMETERS);
+	}
+
+	public String getBookLanguage(long id) throws ApiException {
+		return requestString(GET_BOOK_LANGUAGE, EMPTY_PARAMETERS);
+	}
+
+	public String getBookTitle(long id) throws ApiException {
+		return requestString(GET_BOOK_TITLE, EMPTY_PARAMETERS);
+	}
+
+	public List<String> getBookTags(long id) throws ApiException {
+		return requestStringList(GET_BOOK_TAGS, EMPTY_PARAMETERS);
+	}
+
+	public String getBookFilePath(long id) throws ApiException {
+		return requestString(GET_BOOK_FILE_PATH, EMPTY_PARAMETERS);
+	}
+
+	public String getBookHash(long id) throws ApiException {
+		return requestString(GET_BOOK_HASH, EMPTY_PARAMETERS);
+	}
+
+	public String getBookUniqueId(long id) throws ApiException {
+		return requestString(GET_BOOK_UNIQUE_ID, EMPTY_PARAMETERS);
+	}
+
+	public Date getBookLastTurningTime(long id) throws ApiException {
+		return requestDate(GET_BOOK_LAST_TURNING_TIME, EMPTY_PARAMETERS);
 	}
 
 	public TextPosition getPageStart() throws ApiException {

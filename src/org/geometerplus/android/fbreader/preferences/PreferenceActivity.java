@@ -393,13 +393,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this,
 			dictionaryScreen.Resource,
 			"dictionary",
-			DictionaryUtil.singleWordTranslatorOption()
+			DictionaryUtil.singleWordTranslatorOption(),
+			DictionaryUtil.dictionaryInfos(this, true)
 		));
 		dictionaryScreen.addPreference(new DictionaryPreference(
 			this,
 			dictionaryScreen.Resource,
 			"translator",
-			DictionaryUtil.multiWordTranslatorOption()
+			DictionaryUtil.multiWordTranslatorOption(),
+			DictionaryUtil.dictionaryInfos(this, false)
 		));
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
 			this,

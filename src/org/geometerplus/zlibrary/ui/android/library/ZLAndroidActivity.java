@@ -34,7 +34,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
 public abstract class ZLAndroidActivity extends Activity {
-	protected abstract ZLApplication createApplication(ZLFile file);
+	protected abstract ZLApplication createApplication();
 
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
@@ -89,15 +89,20 @@ public abstract class ZLAndroidActivity extends Activity {
 
 		zlibrary.setActivity(this);
 
-		final ZLFile fileToOpen = fileFromIntent(getIntent());
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
 		if (androidApplication.myMainWindow == null) {
-			final ZLApplication application = createApplication(fileToOpen);
+			final ZLApplication application = createApplication();
 			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
-		} else {
-			ZLApplication.Instance().openFile(fileToOpen);
 		}
+
+		new Thread() {
+			public void run() {
+				ZLApplication.Instance().openFile(fileFromIntent(getIntent()));
+				ZLApplication.Instance().getViewWidget().repaint();
+			}
+		}.start();
+
 		ZLApplication.Instance().getViewWidget().repaint();
 	}
 

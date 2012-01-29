@@ -17,6 +17,8 @@ public abstract class ApiObject implements Parcelable {
 		int INT = 1;
 		int STRING = 2;
 		int BOOLEAN = 3;
+		int DATE = 4;
+		int LONG = 5;
 		int TEXT_POSITION = 10;
 	}
 
@@ -51,6 +53,25 @@ public abstract class ApiObject implements Parcelable {
 		}
 	}
 
+	static class Long extends ApiObject {
+		final long Value;
+
+		Long(long value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.LONG;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeLong(Value);
+		}
+	}
+
 	static class Boolean extends ApiObject {
 		final boolean Value;
 
@@ -67,6 +88,25 @@ public abstract class ApiObject implements Parcelable {
 		public void writeToParcel(Parcel parcel, int flags) {
 			super.writeToParcel(parcel, flags);
 			parcel.writeByte((byte)(Value ? 1 : 0));
+		}
+	}
+
+	static class Date extends ApiObject {
+		final java.util.Date Value;
+
+		Date(java.util.Date value) {
+			Value = value;
+		}
+
+		@Override
+		protected int type() {
+			return Type.DATE;
+		}
+
+		@Override
+		public void writeToParcel(Parcel parcel, int flags) {
+			super.writeToParcel(parcel, flags);
+			parcel.writeLong(Value.getTime());
 		}
 	}
 
@@ -120,6 +160,10 @@ public abstract class ApiObject implements Parcelable {
 		return new String(value);
 	}
 
+	static ApiObject envelope(java.util.Date value) {
+		return new Date(value);
+	}
+
 	static List<ApiObject> envelope(List<java.lang.String> values) {
 		final ArrayList<ApiObject> objects = new ArrayList<ApiObject>(values.size());
 		for (java.lang.String v : values) {
@@ -151,8 +195,12 @@ public abstract class ApiObject implements Parcelable {
 						return Void.Instance;
 					case Type.INT:
 						return new Integer(parcel.readInt());
+					case Type.LONG:
+						return new Long(parcel.readLong());
 					case Type.BOOLEAN:
 						return new Boolean(parcel.readByte() == 1);
+					case Type.DATE:
+						return new Date(new java.util.Date(parcel.readLong()));
 					case Type.STRING:
 						return new String(parcel.readString());
 					case Type.TEXT_POSITION:
