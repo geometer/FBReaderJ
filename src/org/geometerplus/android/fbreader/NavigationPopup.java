@@ -52,6 +52,12 @@ final class NavigationPopup {
 		setupNavigation();
 	}
 
+	public void update() {
+		if (myWindow != null) {
+			setupNavigation();
+		}
+	}
+
 	public void stopNavigation() {
 		if (myWindow == null) {
 			return;
@@ -87,10 +93,6 @@ final class NavigationPopup {
 				}
 				myFBReader.getViewWidget().reset();
 				myFBReader.getViewWidget().repaint();
-				myResetButton.setEnabled(
-					myStartPosition != null &&
-					!myStartPosition.equals(myFBReader.getTextView().getStartCursor())
-				);
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar) {
@@ -139,7 +141,10 @@ final class NavigationPopup {
 			text.setText(makeProgressText(pagePosition.Current, pagePosition.Total));
 		}
 
-		myResetButton.setEnabled(false);
+		myResetButton.setEnabled(
+			myStartPosition != null &&
+			!myStartPosition.equals(myFBReader.getTextView().getStartCursor())
+		);
 	}
 
 	private String makeProgressText(int page, int pagesNumber) {

@@ -32,6 +32,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
+import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -68,7 +69,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	public void refreshMenu() {
+	public void refresh() {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
@@ -88,6 +89,9 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 					break;
 			}
 		}
+		final ZLAndroidActivity activity = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+		activity.refresh();
 	}
 	
 	@Override

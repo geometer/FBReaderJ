@@ -207,6 +207,8 @@ public abstract class ZLAndroidActivity extends Activity {
 		return ((view != null) && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
 	}
 
+	public abstract void refresh();
+
 	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			final int level = intent.getIntExtra("level", 100);
