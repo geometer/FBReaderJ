@@ -115,6 +115,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			public void run() {
 				System.err.println("+openFile");
 				ZLApplication.Instance().openFile(fileFromIntent(getIntent()));
+				ZLApplication.Instance().getViewWidget().repaint();
 				System.err.println("-openFile");
 			}
 		}.start();
