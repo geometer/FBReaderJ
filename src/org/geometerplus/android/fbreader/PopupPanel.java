@@ -32,7 +32,9 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 abstract class PopupPanel extends ZLApplication.PopupPanel {
 	public ZLTextWordCursor StartPosition;
 
-	protected PopupWindow myWindow;
+	protected volatile PopupWindow myWindow;
+	private volatile FBReader myActivity;
+	private volatile RelativeLayout myRoot;
 
 	PopupPanel(FBReaderApp fbReader) {
 		super(fbReader);
@@ -44,6 +46,9 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 
 	@Override
 	protected void show_() {
+		if (myActivity != null) {
+			createControlPanel(myActivity, myRoot);
+		}
 		if (myWindow != null) {
 			myWindow.show();
 		}
@@ -91,5 +96,10 @@ abstract class PopupPanel extends ZLApplication.PopupPanel {
 		}
 	}
 
-	public abstract void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location);
+	public void setPanelInfo(FBReader activity, RelativeLayout root) {
+		myActivity = activity;
+		myRoot = root;
+	}
+
+	public abstract void createControlPanel(FBReader activity, RelativeLayout root);
 }
