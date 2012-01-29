@@ -5,6 +5,7 @@
 package org.geometerplus.android.fbreader.api;
 
 import java.util.List;
+import java.util.Date;
 
 public interface Api {
 	// information about fbreader
@@ -16,13 +17,28 @@ public interface Api {
 	String getOptionValue(String group, String name) throws ApiException;
 	void setOptionValue(String group, String name, String value) throws ApiException;
 
-	// book information
+	// book information for current book
 	String getBookLanguage() throws ApiException;
 	String getBookTitle() throws ApiException;
 	//List<String> getBookAuthors() throws ApiException;
 	List<String> getBookTags() throws ApiException;
-	String getBookFileName() throws ApiException;
+	String getBookFilePath() throws ApiException;
 	String getBookHash() throws ApiException;
+	String getBookUniqueId() throws ApiException;
+	Date getBookLastTurningTime() throws ApiException;
+
+	// book information for book defined by id
+	String getBookLanguage(long id) throws ApiException;
+	String getBookTitle(long id) throws ApiException;
+	//List<String> getBookAuthors(long id) throws ApiException;
+	List<String> getBookTags(long id) throws ApiException;
+	String getBookFilePath(long id) throws ApiException;
+	String getBookHash(long id) throws ApiException;
+	String getBookUniqueId(long id) throws ApiException;
+	Date getBookLastTurningTime(long id) throws ApiException;
+
+	//long findBookIdByUniqueId(String uniqueId) throws ApiException;
+	//long findBookIdByFilePath(String uniqueId) throws ApiException;
 
 	// text information
 	int getParagraphsNumber() throws ApiException;

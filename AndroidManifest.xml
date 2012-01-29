@@ -7,7 +7,7 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-	<application android:name="org.geometerplus.zlibrary.ui.android.library.ZLAndroidApplication" android:icon="@drawable/fbreader" android:label="FBReader">
+	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:label="FBReader">
 		<activity android:name=".library.BugReportActivity" android:label="FBReader crash" android:configChanges="orientation|keyboardHidden" android:process=":crash" />
 		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" android:process=":crash">
 			<intent-filter>
@@ -89,6 +89,7 @@
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.CancelActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden"/>
 		<activity android:name="org.geometerplus.android.fbreader.image.ImageViewActivity" android:process=":imageView" android:configChanges="orientation|keyboardHidden"/>
+		<service android:name="org.geometerplus.android.fbreader.libraryService.LibraryService" android:launchMode="singleTask" android:process=":libraryService"/>
 		<activity android:name="org.geometerplus.android.fbreader.library.BookInfoActivity" android:configChanges="orientation|keyboardHidden" android:process=":library"/>
 		<receiver android:name="org.geometerplus.android.fbreader.library.KillerCallback" android:process=":library" />
 		<activity android:name="org.geometerplus.android.fbreader.library.LibrarySearchActivity" android:process=":library" android:theme="@android:style/Theme.NoDisplay">

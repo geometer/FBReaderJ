@@ -102,6 +102,10 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		DictionaryUtil.init(this);
+
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myFullScreenFlag =
 			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -109,7 +113,6 @@ public final class FBReader extends ZLAndroidActivity {
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
 
-		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if (fbReader.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(fbReader);
 		}

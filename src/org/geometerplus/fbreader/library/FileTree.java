@@ -98,7 +98,7 @@ public class FileTree extends LibraryTree {
 
 	@Override
 	public ZLImage createCover() {
-		return Library.getCover(myFile);
+		return LibraryUtil.getCover(getBook());
 	}
 
 	public ZLFile getFile() {
