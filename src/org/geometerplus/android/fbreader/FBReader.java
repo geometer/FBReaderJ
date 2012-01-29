@@ -231,12 +231,8 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).createControlPanel(
-			FBReader.this, root, PopupWindow.Type.Bottom
-		);
-		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(
-			FBReader.this, root, PopupWindow.Type.Floating
-		);
+		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, root);
+		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).setPanelInfo(this, root);
 
 		synchronized (myPluginActions) {
 			if (!myPluginActions.isEmpty()) {
