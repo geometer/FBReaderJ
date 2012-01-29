@@ -435,7 +435,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.refreshMenu();
+		application.myMainWindow.refresh();
 
 		return true;
 	}
