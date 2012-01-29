@@ -71,9 +71,6 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		final ActionBar bar = getActionBar();
 		if (bar != null) {
 			bar.setDisplayShowTitleEnabled(false);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				bar.setDisplayUseLogoEnabled(false);
-			}
 		}
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 

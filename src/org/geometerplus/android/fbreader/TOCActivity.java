@@ -54,9 +54,6 @@ public class TOCActivity extends ListActivity {
 				ActionBar.DISPLAY_SHOW_CUSTOM,
 				ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE
 			);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				bar.setDisplayUseLogoEnabled(false);
-			}
 			final TextView titleView = (TextView)getLayoutInflater().inflate(R.layout.title_view, null);
 			titleView.setText(fbreader.getTitle());
 			bar.setCustomView(titleView);

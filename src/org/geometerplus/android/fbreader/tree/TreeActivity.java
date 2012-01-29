@@ -50,10 +50,6 @@ public abstract class TreeActivity extends ListActivity {
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			getActionBar().setDisplayUseLogoEnabled(false);
-		}
 	}
 
 	@Override
