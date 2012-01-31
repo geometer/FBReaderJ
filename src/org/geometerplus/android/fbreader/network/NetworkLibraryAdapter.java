@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.network;
 
+import java.util.*;
+
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,11 +49,45 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	private int myCoverWidth = -1;
 	private int myCoverHeight = -1;
 
-	private final Runnable myInvalidateViewsRunnable = new Runnable() {
-		public void run() {
-			((NetworkLibraryActivity)getActivity()).getListView().invalidateViews();
+	private Map<ImageView,InvalidateViewRunnable> myImageViews =
+		Collections.synchronizedMap(new HashMap<ImageView,InvalidateViewRunnable>());
+
+	private final class InvalidateViewRunnable implements Runnable {
+		private final ImageView myView;
+		private final ZLLoadableImage myImage;
+		private final int myWidth;
+		private final int myHeight;
+
+		InvalidateViewRunnable(ImageView view, ZLLoadableImage image, int width, int height) {
+			myView = view;
+			myImage = image;
+			myWidth = width;
+			myHeight = height;
+			myImageViews.put(view, this);
 		}
-	};
+
+		public void run() {
+			synchronized (myImageViews) {
+				if (myImageViews.remove(myView) != this) {
+					return;
+				}
+				if (!myImage.isSynchronized()) {
+					return;
+				}
+				final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+				final ZLAndroidImageData data = mgr.getImageData(myImage);
+				if (data == null) {
+					return;
+				}
+				final Bitmap coverBitmap = data.getBitmap(2 * myWidth, 2 * myHeight);
+				if (coverBitmap == null) {
+					return;
+				}
+				myView.setImageBitmap(coverBitmap);
+				myView.postInvalidate();
+			}
+		}
+	}
 
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
@@ -97,6 +133,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	}
 
 	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
+		myImageViews.remove(coverView);
 		Bitmap coverBitmap = null;
 		final ZLImage cover = tree.getCover();
 		if (cover != null) {
@@ -107,7 +144,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				if (img.isSynchronized()) {
 					data = mgr.getImageData(img);
 				} else {
-					img.startSynchronization(myInvalidateViewsRunnable);
+					img.startSynchronization(new InvalidateViewRunnable(coverView, img, width, height));
 				}
 			} else {
 				data = mgr.getImageData(cover);

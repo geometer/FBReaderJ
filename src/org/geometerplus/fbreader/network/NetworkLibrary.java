@@ -20,9 +20,12 @@
 package org.geometerplus.fbreader.network;
 
 import java.util.*;
+import java.lang.ref.WeakReference;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
@@ -82,6 +85,9 @@ public class NetworkLibrary {
 		Collections.synchronizedSet(new HashSet<ChangeListener>());
 	private final Map<NetworkTree,NetworkItemsLoader> myLoaders =
 		Collections.synchronizedMap(new HashMap<NetworkTree,NetworkItemsLoader>());
+
+	private final Map<String,WeakReference<ZLImage>> myImageMap =
+		Collections.synchronizedMap(new HashMap<String,WeakReference<ZLImage>>());
 
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
@@ -511,5 +517,20 @@ public class NetworkLibrary {
 
 	public final void removeStoredLoader(NetworkTree tree) {
 		myLoaders.remove(tree);
+	}
+
+	public ZLImage getImageByUrl(String url, MimeType mimeType) {
+		synchronized (myImageMap) {
+			WeakReference<ZLImage> ref = myImageMap.get(url);
+			if (ref != null) {
+				final ZLImage image = ref.get();
+				if (image != null) {
+					return image;
+				}
+			}
+			final ZLImage image = new NetworkImage(url, mimeType);
+			myImageMap.put(url, new WeakReference<ZLImage>(image));
+			return image;
+		}
 	}
 }
