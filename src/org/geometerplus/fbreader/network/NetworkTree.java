@@ -62,7 +62,7 @@ public abstract class NetworkTree extends FBTree {
 			mimeType = MimeType.IMAGE_AUTO;
 		}
 		if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://")) {
-			return new NetworkImage(url, mimeType);
+			return NetworkLibrary.Instance().getImageByUrl(url, mimeType);
 		} else if (url.startsWith(DATA_PREFIX)) {
 			int commaIndex = url.indexOf(',');
 			if (commaIndex == -1) {
