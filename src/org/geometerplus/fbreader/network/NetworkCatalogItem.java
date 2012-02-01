@@ -141,12 +141,9 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	 * @throws ZLNetworkException when network operation couldn't be completed
 	 */
 	protected final void doLoadChildren(NetworkOperationData data, ZLNetworkRequest networkRequest) throws ZLNetworkException {
-		while (networkRequest != null) {
+		if (networkRequest != null) {
 			ZLNetworkManager.Instance().perform(networkRequest);
-			if (data.Loader.confirmInterruption()) {
-				return;
-			}
-			networkRequest = data.resume();
+			data.Loader.confirmInterruption();
 		}
 	}
 }

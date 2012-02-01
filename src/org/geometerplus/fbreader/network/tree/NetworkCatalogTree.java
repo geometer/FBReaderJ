@@ -34,6 +34,7 @@ public class NetworkCatalogTree extends NetworkTree {
 	public final NetworkCatalogItem Item;
 	protected final ArrayList<NetworkCatalogItem> myChildrenItems =
 		new ArrayList<NetworkCatalogItem>();
+	private volatile int myLastTotalChildren = -1;
 
 	private long myLoadedTime = -1;
 
@@ -224,6 +225,7 @@ public class NetworkCatalogTree extends NetworkTree {
 
 	public synchronized void clearCatalog() {
 		myChildrenItems.clear();
+		myLastTotalChildren = -1;
 		clear();
 		addSpecialTrees();
 		NetworkLibrary.Instance().fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
@@ -239,6 +241,16 @@ public class NetworkCatalogTree extends NetworkTree {
 	public final void removeUnconfirmedItems() {
 		synchronized (myUnconfirmedTrees) {
 			removeTrees(myUnconfirmedTrees);
+		}
+	}
+
+	public synchronized void loadMoreChildren(int currentTotal) {
+		if (myLastTotalChildren >= currentTotal) {
+			return;
+		}
+		if (NetworkLibrary.Instance().getStoredLoader(this) == null) {
+			myLastTotalChildren = currentTotal;
+			startItemsLoader(false, true);
 		}
 	}
 }
