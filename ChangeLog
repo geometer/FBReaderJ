@@ -1,4 +1,4 @@
-===== 1.3.5 (??? ??, 2012) =====
+===== 1.3.5 (Feb 2, 2012) =====
 * About section in the preferences dialog
 * Better SlovoEd dictionary integration (780 dictionaries are supported)
 * CHANGE_WIFI_STATE permission is not required more
@@ -6,6 +6,7 @@
 * Application start speed-up
 * Network library: don't repaint all the views on image downloading
 * Network library: select previous opened tree on back key pressing
+* Network library: on-demand (on-scroll) catalog parts loading
 
 ===== 1.3.3 (Jan 18, 2012) =====
 * Proguard -dontoptimize option, looks like these optimizations are buggy :(
