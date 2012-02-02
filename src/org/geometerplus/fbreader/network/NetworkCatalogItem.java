@@ -87,7 +87,6 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	}
 
 	public void resumeLoading(NetworkItemsLoader loader) throws ZLNetworkException {
-		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 	public int getFlags() {
