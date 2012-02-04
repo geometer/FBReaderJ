@@ -67,4 +67,12 @@
 		dataKey="query"
 		pattern="%s"
 	/>
+	<dictionary
+		id="LEO Dictionary"
+		package="org.leo.android.dict"
+		class=".LeoDict"
+		action="android.intent.action.SEARCH"
+		dataKey="query"
+		pattern="%s"
+	/>
 </dictionaries>
