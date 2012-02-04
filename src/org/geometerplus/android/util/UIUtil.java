@@ -120,7 +120,11 @@ public abstract class UIUtil {
 						action.run();
 						activity.runOnUiThread(new Runnable() {
 							public void run() {
-								progress.dismiss();
+								try {
+									progress.dismiss();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 								if (postAction != null) {
 									postAction.run();
 								}
