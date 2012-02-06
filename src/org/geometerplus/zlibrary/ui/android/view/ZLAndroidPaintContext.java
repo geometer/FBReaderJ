@@ -28,11 +28,18 @@ import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
+	public static ZLBooleanOption AntiAliasOption = new ZLBooleanOption("Fonts", "AntiAlias", true);
+	public static ZLBooleanOption DeviceKerningOption = new ZLBooleanOption("Fonts", "DeviceKerning", false);
+	public static ZLBooleanOption DitheringOption = new ZLBooleanOption("Fonts", "Dithering", false);
+	public static ZLBooleanOption HintingOption = new ZLBooleanOption("Fonts", "Hinting", false);
+	public static ZLBooleanOption SubpixelOption = new ZLBooleanOption("Fonts", "Subpixel", false);
+
 	private final Canvas myCanvas;
 	private final Paint myTextPaint = new Paint();
 	private final Paint myLinePaint = new Paint();
@@ -54,8 +61,15 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myScrollbarWidth = scrollbarWidth;
 
 		myTextPaint.setLinearText(false);
-		myTextPaint.setAntiAlias(true);
-		myTextPaint.setSubpixelText(false);
+		myTextPaint.setAntiAlias(AntiAliasOption.getValue());
+		if (DeviceKerningOption.getValue()) {
+			myTextPaint.setFlags(myTextPaint.getFlags() | Paint.DEV_KERN_TEXT_FLAG);
+		} else {
+			myTextPaint.setFlags(myTextPaint.getFlags() & ~Paint.DEV_KERN_TEXT_FLAG);
+		}
+		myTextPaint.setDither(DitheringOption.getValue());
+		myTextPaint.setHinting(HintingOption.getValue() ? Paint.HINTING_ON : Paint.HINTING_OFF);
+		myTextPaint.setSubpixelText(SubpixelOption.getValue());
 
 		myLinePaint.setStyle(Paint.Style.STROKE);
 

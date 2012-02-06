@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.text.view.style.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
@@ -93,6 +94,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
 
 		final Screen textScreen = createPreferenceScreen("text");
+
+		final Screen fontPropertiesScreen = textScreen.createPreferenceScreen("fontProperties");
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.AntiAliasOption, "antiAlias");
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DeviceKerningOption, "deviceKerning");
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DitheringOption, "dithering");
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.HintingOption, "hinting");
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.SubpixelOption, "subpixel");
+
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 		textScreen.addPreference(new FontOption(
