@@ -37,7 +37,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public static ZLBooleanOption AntiAliasOption = new ZLBooleanOption("Fonts", "AntiAlias", true);
 	public static ZLBooleanOption DeviceKerningOption = new ZLBooleanOption("Fonts", "DeviceKerning", false);
 	public static ZLBooleanOption DitheringOption = new ZLBooleanOption("Fonts", "Dithering", false);
-	public static ZLBooleanOption HintingOption = new ZLBooleanOption("Fonts", "Hinting", false);
 	public static ZLBooleanOption SubpixelOption = new ZLBooleanOption("Fonts", "Subpixel", false);
 
 	private final Canvas myCanvas;
@@ -68,7 +67,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			myTextPaint.setFlags(myTextPaint.getFlags() & ~Paint.DEV_KERN_TEXT_FLAG);
 		}
 		myTextPaint.setDither(DitheringOption.getValue());
-		myTextPaint.setHinting(HintingOption.getValue() ? Paint.HINTING_ON : Paint.HINTING_OFF);
 		myTextPaint.setSubpixelText(SubpixelOption.getValue());
 
 		myLinePaint.setStyle(Paint.Style.STROKE);
