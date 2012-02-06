@@ -324,13 +324,14 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 	}
 
 	private void updateLoadingProgress() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		final NetworkTree lTree = getLoadableNetworkTree(tree);
 		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
 		setProgressBarIndeterminateVisibility(
-			NetworkLibrary.Instance().isUpdateInProgress() ||
-			NetworkLibrary.Instance().getStoredLoader(lTree) != null ||
-			NetworkLibrary.Instance().getStoredLoader(sTree) != null
+			library.isUpdateInProgress() ||
+			library.isLoadingInProgress(lTree) ||
+			library.isLoadingInProgress(sTree)
 		);
 	}
 

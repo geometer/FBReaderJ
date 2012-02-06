@@ -515,6 +515,27 @@ public class NetworkLibrary {
 		return myUpdateInProgress;
 	}
 
+	public final void startLoading(NetworkCatalogItem item) {
+		if (item != null) {
+			item.UpdatingInProgress = true;
+			fireModelChangedEvent(ChangeListener.Code.SomeCode);
+		}
+	}
+
+	public final void stopLoading(NetworkCatalogItem item) {
+		if (item != null) {
+			item.UpdatingInProgress = false;
+			fireModelChangedEvent(ChangeListener.Code.SomeCode);
+		}
+	}
+
+	public boolean isLoadingInProgress(NetworkTree tree) {
+		return
+			(tree instanceof NetworkCatalogTree &&
+				((NetworkCatalogTree)tree).Item.UpdatingInProgress) ||
+			getStoredLoader(tree) != null;
+	}
+
 	public final void removeStoredLoader(NetworkTree tree) {
 		myLoaders.remove(tree);
 	}
