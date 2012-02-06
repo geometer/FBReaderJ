@@ -57,6 +57,8 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	private final Accessibility myAccessibility;
 	private int myFlags;
 
+	public boolean UpdatingInProgress;
+
 	/**
 	 * Creates new NetworkCatalogItem instance with specified accessibility and type.
 	 *

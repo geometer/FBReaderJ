@@ -83,10 +83,13 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 		NotChecked
 	*/
 
-	ZLNetworkRequest createNetworkData(final OPDSCatalogItem catalog, String url, final OPDSCatalogItem.State result) {
+	ZLNetworkRequest createNetworkData(String url, final OPDSCatalogItem.State result) {
 		if (url == null) {
 			return null;
 		}
+		final NetworkLibrary library = NetworkLibrary.Instance();
+		final NetworkCatalogItem catalogItem = result.Loader.getTree().Item;
+		library.startLoading(catalogItem);
 		url = rewriteUrl(url, false);
 		return new ZLNetworkRequest(url) {
 			@Override
@@ -96,7 +99,7 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 				}
 
 				new OPDSXMLReader(
-					new OPDSFeedHandler(catalog, getURL(), result), false
+					new OPDSFeedHandler(getURL(), result), false
 				).read(inputStream);
 
 				if (result.Loader.confirmInterruption() && result.LastLoadedId != null) {
@@ -105,6 +108,11 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 				} else {
 					result.Loader.getTree().confirmAllItems();
 				}
+			}
+
+			@Override
+			public void doAfter(boolean success) {
+				library.stopLoading(catalogItem);
 			}
 		};
 	}
@@ -123,11 +131,11 @@ public abstract class OPDSNetworkLink extends AbstractNetworkLink {
 			pattern = URLEncoder.encode(pattern, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 		}
-		return createNetworkData(null, url.replace("%s", pattern), (OPDSCatalogItem.State)data);
+		return createNetworkData(url.replace("%s", pattern), (OPDSCatalogItem.State)data);
 	}
 
 	public ZLNetworkRequest resume(NetworkOperationData data) {
-		return createNetworkData(null, data.ResumeURI, (OPDSCatalogItem.State)data);
+		return createNetworkData(data.ResumeURI, (OPDSCatalogItem.State)data);
 	}
 
 	public NetworkCatalogItem libraryItem() {
