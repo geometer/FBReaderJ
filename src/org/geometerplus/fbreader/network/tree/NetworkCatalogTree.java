@@ -245,10 +245,9 @@ public class NetworkCatalogTree extends NetworkTree {
 	}
 
 	public synchronized void loadMoreChildren(int currentTotal) {
-		if (myLastTotalChildren >= currentTotal) {
-			return;
-		}
-		if (NetworkLibrary.Instance().getStoredLoader(this) == null) {
+		if (currentTotal == subTrees().size()
+			&& myLastTotalChildren < currentTotal
+			&& !NetworkLibrary.Instance().isLoadingInProgress(this)) {
 			myLastTotalChildren = currentTotal;
 			startItemsLoader(false, true);
 		}
