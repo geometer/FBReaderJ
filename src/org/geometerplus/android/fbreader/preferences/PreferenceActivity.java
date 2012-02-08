@@ -101,6 +101,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.AntiAliasOption, "antiAlias");
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DeviceKerningOption, "deviceKerning");
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DitheringOption, "dithering");
+		if (ZLAndroidPaintContext.usesHintingOption()) {
+			fontPropertiesScreen.addOption(ZLAndroidPaintContext.HintingOption, "hinting");
+		}
 		fontPropertiesScreen.addOption(ZLAndroidPaintContext.SubpixelOption, "subpixel");
 
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
