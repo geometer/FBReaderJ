@@ -40,6 +40,18 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	public static ZLBooleanOption HintingOption = new ZLBooleanOption("Fonts", "Hinting", false);
 	public static ZLBooleanOption SubpixelOption = new ZLBooleanOption("Fonts", "Subpixel", false);
 
+	private static Boolean ourUsesHintingOption;
+	public static boolean usesHintingOption() {
+		if (ourUsesHintingOption == null) {
+			try {
+				ourUsesHintingOption = Paint.class.getMethod("setHinting", int.class) != null;
+			} catch (NoSuchMethodException e) {
+				ourUsesHintingOption = false;
+			}
+		}
+		return ourUsesHintingOption;
+	}
+
 	private final Canvas myCanvas;
 	private final Paint myTextPaint = new Paint();
 	private final Paint myLinePaint = new Paint();
@@ -68,7 +80,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			myTextPaint.setFlags(myTextPaint.getFlags() & ~Paint.DEV_KERN_TEXT_FLAG);
 		}
 		myTextPaint.setDither(DitheringOption.getValue());
-		myTextPaint.setHinting(HintingOption.getValue() ? Paint.HINTING_ON : Paint.HINTING_OFF);
+		if (usesHintingOption()) {
+			myTextPaint.setHinting(HintingOption.getValue() ? Paint.HINTING_ON : Paint.HINTING_OFF);
+		}
 		myTextPaint.setSubpixelText(SubpixelOption.getValue());
 
 		myLinePaint.setStyle(Paint.Style.STROKE);
