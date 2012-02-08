@@ -89,7 +89,8 @@ final class ZLTreeResource extends ZLResource {
 		return null;
 	}
 
-	static ZLTreeResource ourRoot;
+	static volatile ZLTreeResource ourRoot;
+	private static final Object ourLock = new Object();
 
     private static long ourTimeStamp = 0;
     private static String ourLanguage = null;
@@ -100,19 +101,21 @@ final class ZLTreeResource extends ZLResource {
 	private HashMap<String,ZLTreeResource> myChildren;
 	private LinkedHashMap<Condition,String> myConditionalValues;
 	
-	public static void buildTree() {
-		if (ourRoot == null) {
-			ourRoot = new ZLTreeResource("", null);
-			ourLanguage = "en";
-			ourCountry = "UK";
-			loadData();
+	static void buildTree() {
+		synchronized (ourLock) {
+			if (ourRoot == null) {
+				ourRoot = new ZLTreeResource("", null);
+				ourLanguage = "en";
+				ourCountry = "UK";
+				loadData();
+			}
 		}
 	}
 
     private static void updateLanguage() {
         final long timeStamp = System.currentTimeMillis();
         if (timeStamp > ourTimeStamp + 1000) {
-            synchronized (ourRoot) { 
+            synchronized (ourLock) {
                 if (timeStamp > ourTimeStamp + 1000) {
 					ourTimeStamp = timeStamp;
         			final String language = Locale.getDefault().getLanguage();
