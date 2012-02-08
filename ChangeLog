@@ -1,6 +1,7 @@
 ===== 1.3.7 (Feb 9, 2012) =====
-* Font smoothing settings (Preferences dialog -> Text -> Font properties)
+* Font smoothing settings (Settings -> Text -> Font properties)
 * Fixed 'question symbols in menu' issue
+* Android 3.*/4.0: Action bar is shown by default (Settings -> Appearance -> Show action bar)
 
 ===== 1.3.6 (Feb 6, 2012) =====
 * Updated Ukrainian translation (by Nazariy Makarenko)
