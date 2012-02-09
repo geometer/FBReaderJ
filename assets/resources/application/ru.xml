@@ -400,14 +400,24 @@
 					<node name="boldItalic" value="жирный курсив"/>
 				</node>
 				<node name="bold" value="Жирный шрифт">
-					<node name="on" value="использовать жирное начертание"/>
-					<node name="off" value="использовать нормальное начертание"/>
-					<node name="unchanged" value="&lt;не менять&gt;"/>
+					<node name="summaryOn" value="использовать жирное начертание"/>
+					<node name="summaryOff" value="использовать нормальное начертание"/>
+					<node name="unchanged" value="не менять"/>
 				</node>
 				<node name="italic" value="Курсив">
-					<node name="on" value="использовать курсивное начертание"/>
-					<node name="off" value="использовать нормальное начертание"/>
-					<node name="unchanged" value="&lt;не менять&gt;"/>
+					<node name="summaryOn" value="использовать курсивное начертание"/>
+					<node name="summaryOff" value="использовать нормальное начертание"/>
+					<node name="unchanged" value="не менять"/>
+				</node>
+				<node name="underlined" value="Подчёркнутый">
+					<node name="summaryOn" value="включить"/>
+					<node name="summaryOff" value="выключить"/>
+					<node name="unchanged" value="не менять"/>
+				</node>
+				<node name="strikedThrough" value="Зачёркнутый">
+					<node name="summaryOn" value="включить"/>
+					<node name="summaryOff" value="выключить"/>
+					<node name="unchanged" value="не менять"/>
 				</node>
 				<node name="lineSpacing" value="Интервал">
 					<node name="unchanged" value="&lt;не менять&gt;"/>
@@ -424,8 +434,8 @@
 					<node name="summaryOff" value="Не расставлять переносы"/>
 				</node>
 				<node name="allowHyphenations" value="Переносы">
-					<node name="on" value="разрешить переносы"/>
-					<node name="off" value="запретить переносы"/>
+					<node name="summaryOn" value="разрешить переносы"/>
+					<node name="summaryOff" value="запретить переносы"/>
 					<node name="unchanged" value="&lt;не менять&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Красная строка"/>

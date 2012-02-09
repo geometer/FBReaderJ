@@ -360,13 +360,13 @@
 					<node name="boldItalic" value="Đậm nghiêng"/>
 				</node>
 				<node name="bold" value="Đậm">
-					<node name="on" value="đậm"/>
-					<node name="off" value="thường"/>
+					<node name="summaryOn" value="đậm"/>
+					<node name="summaryOff" value="thường"/>
 					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
 				</node>
 				<node name="italic" value="Nghiêng">
-					<node name="on" value="nghiêng"/>
-					<node name="off" value="thường"/>
+					<node name="summaryOn" value="nghiêng"/>
+					<node name="summaryOff" value="thường"/>
 					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Cách dòng">
@@ -384,8 +384,8 @@
 					<node name="summaryOff" value="Không tách từ một cách tự động"/>
 				</node>
 				<node name="allowHyphenations" value="Cho phép Tách từ">
-					<node name="on" value="tách từ"/>
-					<node name="off" value="không tách từ"/>
+					<node name="summaryOn" value="tách từ"/>
+					<node name="summaryOff" value="không tách từ"/>
 					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Lùi Dòng Đầu"/>

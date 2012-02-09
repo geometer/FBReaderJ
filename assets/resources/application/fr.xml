@@ -363,13 +363,13 @@
 					<node name="boldItalic" value="Gras italique"/>
 				</node>
 				<node name="bold" value="Gras">
-					<node name="on" value="gras"/>
-					<node name="off" value="normale"/>
+					<node name="summaryOn" value="gras"/>
+					<node name="summaryOff" value="normale"/>
 					<node name="unchanged" value="&lt;inchangé&gt;"/>
 				</node>
 				<node name="italic" value="Italique">
-					<node name="on" value="italique"/>
-					<node name="off" value="normale"/>
+					<node name="summaryOn" value="italique"/>
+					<node name="summaryOff" value="normale"/>
 					<node name="unchanged" value="&lt;inchangé&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Espacement de lignes">
@@ -387,8 +387,8 @@
 					<node name="summaryOff" value="Ne pas appliquer les césures automatiquement"/>
 				</node>
 				<node name="allowHyphenations" value="Autoriser les césures">
-					<node name="on" value="couper les mots"/>
-					<node name="off" value="ne pas couper les mots"/>
+					<node name="summaryOn" value="couper les mots"/>
+					<node name="summaryOff" value="ne pas couper les mots"/>
 					<node name="unchanged" value="&lt;inchangé&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Indentation de la première ligne"/>

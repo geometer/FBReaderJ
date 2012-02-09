@@ -360,13 +360,13 @@
 					<node name="boldItalic" value="Жирний курсив"/>
 				</node>
 				<node name="bold" value="Жирний">
-					<node name="on" value="жирний"/>
-					<node name="off" value="звичайний"/>
+					<node name="summaryOn" value="жирний"/>
+					<node name="summaryOff" value="звичайний"/>
 					<node name="unchanged" value="&lt;не міняти&gt;"/>
 				</node>
 				<node name="italic" value="Курсив">
-					<node name="on" value="курсив"/>
-					<node name="off" value="звичайний"/>
+					<node name="summaryOn" value="курсив"/>
+					<node name="summaryOff" value="звичайний"/>
 					<node name="unchanged" value="&lt;не міняти&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Інтервал">
@@ -384,8 +384,8 @@
 					<node name="summaryOff" value="Не переносити слова автоматично"/>
 				</node>
 				<node name="allowHyphenations" value="Перенесення">
-					<node name="on" value="переносити слова"/>
-					<node name="off" value="не переносити слова"/>
+					<node name="summaryOn" value="переносити слова"/>
+					<node name="summaryOff" value="не переносити слова"/>
 					<node name="unchanged" value="&lt;не міняти&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Червона стрічка"/>

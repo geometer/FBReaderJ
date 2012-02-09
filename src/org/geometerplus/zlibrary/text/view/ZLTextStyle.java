@@ -34,6 +34,7 @@ public abstract class ZLTextStyle {
 	public abstract boolean isBold();
 	public abstract boolean isItalic();
 	public abstract boolean isUnderline();
+	public abstract boolean isStrikeThrough();
 
 	public abstract int getLeftIndent();
 	public abstract int getRightIndent();
