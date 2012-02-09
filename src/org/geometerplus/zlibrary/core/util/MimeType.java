@@ -59,11 +59,12 @@ public final class MimeType {
 	}
 
 	// MIME types / application
-	public static final MimeType APP_FB2ZIP = get("application/fb2+zip");
 	public static final MimeType APP_EPUB = get("application/epub+zip");
 	public static final MimeType APP_MOBI = get("application/x-mobipocket-ebook");
 	public static final MimeType APP_PDF = get("application/pdf");
 	public static final MimeType APP_ATOM = get("application/atom+xml");
+    // used in data.fbreader.org LitRes catalog
+	public static final MimeType APP_FB2ZIP = get("application/fb2+zip");
 
 	// MIME type for Opensearch Description XML document
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
@@ -75,6 +76,8 @@ public final class MimeType {
 	public static final MimeType TEXT_HTML = get("text/html");
 	public static final MimeType TEXT_XHTML = get("text/xhtml");
 	public static final MimeType TEXT_PLAIN = get("text/plain");
+	// used in Calibre server
+	public static final MimeType TEXT_FB2 = get("text/fb2+xml");
 
 	// MIME images
 	public static final String IMAGE_PREFIX = "image/";
