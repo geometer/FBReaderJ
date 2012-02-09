@@ -389,13 +389,23 @@
 					<node name="boldItalic" value="Bold Italic"/>
 				</node>
 				<node name="bold" value="Bold">
-					<node name="on" value="bold"/>
-					<node name="off" value="regular"/>
+					<node name="summaryOn" value="bold"/>
+					<node name="summaryOff" value="regular"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="italic" value="Italic">
-					<node name="on" value="italic"/>
-					<node name="off" value="regular"/>
+					<node name="summaryOn" value="italic"/>
+					<node name="summaryOff" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined">
+					<node name="summaryOn" value="underlined"/>
+					<node name="summaryOff" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="strikedThrough" value="Striked through">
+					<node name="summaryOn" value="striked through"/>
+					<node name="summaryOff" value="regular"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Line Spacing">
@@ -413,8 +423,8 @@
 					<node name="summaryOff" value="Do not hyphenate words automatically"/>
 				</node>
 				<node name="allowHyphenations" value="Allow Hyphenations">
-					<node name="on" value="hyphenate words"/>
-					<node name="off" value="don't hyphenate words"/>
+					<node name="summaryOn" value="hyphenate words"/>
+					<node name="summaryOff" value="don't hyphenate words"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="First Line Indent"/>

@@ -363,13 +363,13 @@
 					<node name="boldItalic" value="Fett &amp; Kursiv"/>
 				</node>
 				<node name="bold" value="Fett">
-					<node name="on" value="Fett"/>
-					<node name="off" value="Normal"/>
+					<node name="summaryOn" value="Fett"/>
+					<node name="summaryOff" value="Normal"/>
 					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
 				<node name="italic" value="Kursiv">
-					<node name="on" value="Kursiv"/>
-					<node name="off" value="Normal"/>
+					<node name="summaryOn" value="Kursiv"/>
+					<node name="summaryOff" value="Normal"/>
 					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Zeilenabstand">
@@ -387,8 +387,8 @@
 					<node name="summaryOff" value="Keine automatische Silbentrennung."/>
 				</node>
 				<node name="allowHyphenations" value="Trennen erlauben">
-					<node name="on" value="Wörter trennen"/>
-					<node name="off" value="Wörter nicht trennen"/>
+					<node name="summaryOn" value="Wörter trennen"/>
+					<node name="summaryOff" value="Wörter nicht trennen"/>
 					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Einzug erste Zeile"/>

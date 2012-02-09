@@ -365,13 +365,13 @@
 					<node name="boldItalic" value="粗斜體"/>
 				</node>
 				<node name="bold" value="粗體">
-					<node name="on" value="粗體"/>
-					<node name="off" value="正常"/>
+					<node name="summaryOn" value="粗體"/>
+					<node name="summaryOff" value="正常"/>
 					<node name="unchanged" value="&lt;不變&gt;"/>
 				</node>
 				<node name="italic" value="斜體">
-					<node name="on" value="斜體"/>
-					<node name="off" value="正常"/>
+					<node name="summaryOn" value="斜體"/>
+					<node name="summaryOff" value="正常"/>
 					<node name="unchanged" value="&lt;不變&gt;"/>
 				</node>
 				<node name="lineSpacing" value="行距">
@@ -389,8 +389,8 @@
 					<node name="summaryOff" value="不要自動斷字"/>
 				</node>
 				<node name="allowHyphenations" value="允許斷字">
-					<node name="on" value="斷字"/>
-					<node name="off" value="不要斷字"/>
+					<node name="summaryOn" value="斷字"/>
+					<node name="summaryOff" value="不要斷字"/>
 					<node name="unchanged" value="&lt;不變&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="首行縮進"/>

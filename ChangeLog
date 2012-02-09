@@ -1,3 +1,6 @@
+===== 1.3.8 (Feb ??, 2012) =====
+* striked through/underlined text support
+
 ===== 1.3.7 (Feb 9, 2012) =====
 * Font smoothing settings (Settings -> Text -> Font properties)
 * Fixed 'question symbols in menu' issue

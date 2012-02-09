@@ -360,13 +360,13 @@
 					<node name="boldItalic" value="加粗并倾斜"/>
 				</node>
 				<node name="bold" value="加粗">
-					<node name="on" value="加粗"/>
-					<node name="off" value="正常"/>
+					<node name="summaryOn" value="加粗"/>
+					<node name="summaryOff" value="正常"/>
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="italic" value="倾斜">
-					<node name="on" value="倾斜"/>
-					<node name="off" value="规则"/>
+					<node name="summaryOn" value="倾斜"/>
+					<node name="summaryOff" value="规则"/>
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="lineSpacing" value="行间距">
@@ -384,8 +384,8 @@
 					<node name="summaryOff" value="禁止自动断字"/>
 				</node>
 				<node name="allowHyphenations" value="允许断字">
-					<node name="on" value="断字"/>
-					<node name="off" value="禁止断字"/>
+					<node name="summaryOn" value="断字"/>
+					<node name="summaryOff" value="禁止断字"/>
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="firstLineIndent" value="首行缩进" />
