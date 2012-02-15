@@ -201,7 +201,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		}
 
 		public void serviceResolved(ServiceEvent event) {
-			addInfo(event.getInfo());
+			// TODO
 		}
 
 		private void addInfo(final ServiceInfo info) {
