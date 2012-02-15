@@ -229,7 +229,11 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 			runOnUiThread(new Runnable() {
 				public void run() {
-					getListAdapter().addServiceItem(info.getName(), urls[0]);
+					getListAdapter().addServiceItem(
+						info.getName(),
+						urls[0],
+						R.drawable.ic_list_library_calibre
+					);
 				}
 			});
 		}
@@ -323,9 +327,9 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			return false;
 		}
 
-		synchronized void addServiceItem(String name, String url) {
+		synchronized void addServiceItem(String name, String url, int iconId) {
 			try {
-				final ServiceInfoItem item = new ServiceInfoItem(name, Uri.parse(url));
+				final ServiceInfoItem item = new ServiceInfoItem(name, Uri.parse(url), iconId);
 				if (!myItems.contains(item)) {
 					myItems.add(item);
 					notifyDataSetChanged();
@@ -366,7 +370,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 			if (item instanceof ServiceInfoItem) {
 				iconView.setVisibility(View.VISIBLE);
 				progress.setVisibility(View.GONE);
-				iconView.setImageResource(R.drawable.ic_list_library_calibre);
+				iconView.setImageResource(((ServiceInfoItem)item).IconId);
 			} else /* item instanceof WaitItem */ {
 				iconView.setVisibility(View.GONE);
 				progress.setVisibility(View.VISIBLE);
@@ -386,10 +390,12 @@ public class ScanLocalNetworkActivity extends ListActivity {
 
 	private static class ServiceInfoItem extends Item {
 		public final Uri URI;
+		public final int IconId;
 
-		public ServiceInfoItem(String name, Uri uri) {
+		public ServiceInfoItem(String name, Uri uri, int iconId) {
 			super(name);
 			URI = uri;
+			IconId = iconId;
 		}
 
 		@Override
