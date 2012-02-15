@@ -189,7 +189,6 @@ public class ScanLocalNetworkActivity extends ListActivity {
 							}
 						}
 					});
-					System.err.println("Cancelling JmDNS");
 					try {
 						myMCDNS.close();
 					} catch (IOException e) {
@@ -209,7 +208,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 		}
 
 		public void serviceRemoved(ServiceEvent event) {
-			System.err.println("removing: " + event);
+			// TODO
 		}
 
 		public void serviceResolved(ServiceEvent event) {
