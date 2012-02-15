@@ -206,7 +206,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myOutlinePaint);
 	}
 
-	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
+	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
 		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = myTypefaces.get(family);
@@ -242,6 +242,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myTextPaint.setTypeface(tf);
 		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
+		myTextPaint.setStrikeThruText(strikeThrought);
 	}
 
 	@Override

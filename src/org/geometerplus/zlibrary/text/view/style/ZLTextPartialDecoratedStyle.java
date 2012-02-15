@@ -78,6 +78,18 @@ class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
+	protected boolean isStrikeThroughInternal() {
+		switch (myDecoration.StrikeThroughOption.getValue()) {
+			case B3_TRUE:
+				return true;
+			case B3_FALSE:
+				return false;
+			default:
+				return Base.isStrikeThrough();
+		}
+	}
+
+	@Override
 	public int getLeftIndent() {
 		return Base.getLeftIndent();
 	}

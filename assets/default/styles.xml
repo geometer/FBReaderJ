@@ -30,7 +30,7 @@
 	<style id="19" partial="true" name="Subscript" fontSizeDelta="-4" vShift="-4" allowHyphenations="false"/>
 	<style id="20" partial="true" name="Superscript" fontSizeDelta="-4" vShift="10" allowHyphenations="false"/>
 	<style id="21" partial="true" name="Code" italic="true" allowHyphenations="false"/>
-	<style id="22" partial="true" name="StrikeThrough"/>
+	<style id="22" partial="true" name="StrikeThrough" strikeThrough="true"/>
 	<style id="27" partial="true" name="Italic" italic="true"/>
 	<style id="28" partial="true" name="Bold" bold="true"/>
 	<style id="29" partial="true" name="Definition" italic="true"/>

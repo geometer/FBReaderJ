@@ -365,13 +365,13 @@
 					<node name="boldItalic" value="Negrita cursiva"/>
 				</node>
 				<node name="bold" value="Negrita">
-					<node name="on" value="negrita"/>
-					<node name="off" value="normal"/>
+					<node name="summaryOn" value="negrita"/>
+					<node name="summaryOff" value="normal"/>
 					<node name="unchanged" value="&lt;sin cambios&gt;"/>
 				</node>
 				<node name="italic" value="Cursiva">
-					<node name="on" value="cursiva"/>
-					<node name="off" value="normal"/>
+					<node name="summaryOn" value="cursiva"/>
+					<node name="summaryOff" value="normal"/>
 					<node name="unchanged" value="&lt;sin cambios&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Interlineado">
@@ -389,8 +389,8 @@
 					<node name="summaryOff" value="No dividirpalabras automáticamente"/>
 				</node>
 				<node name="allowHyphenations" value="Permitir división de palabras">
-					<node name="on" value="dividir palabras"/>
-					<node name="off" value="no dividir palabras"/>
+					<node name="summaryOn" value="dividir palabras"/>
+					<node name="summaryOff" value="no dividir palabras"/>
 					<node name="unchanged" value="&lt;sin cambios&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Sangrar la primera linea"/>

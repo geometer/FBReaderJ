@@ -361,13 +361,13 @@
 					<node name="boldItalic" value="Grassetto corsivo"/>
 				</node>
 				<node name="bold" value="Grassetto">
-					<node name="on" value="grassetto"/>
-					<node name="off" value="normale"/>
+					<node name="summaryOn" value="grassetto"/>
+					<node name="summaryOff" value="normale"/>
 					<node name="unchanged" value="&lt;non cambiare&gt;"/>
 				</node>
 				<node name="italic" value="Corsivo">
-					<node name="on" value="corsivo"/>
-					<node name="off" value="normale"/>
+					<node name="summaryOn" value="corsivo"/>
+					<node name="summaryOff" value="normale"/>
 					<node name="unchanged" value="&lt;non cambiare&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Interlinea">
@@ -385,8 +385,8 @@
 					<node name="summaryOff" value="Non sillabare le parole automaticamente"/>
 				</node>
 				<node name="allowHyphenations" value="Permetti divisione in sillabe">
-					<node name="on" value="sillabare le parole"/>
-					<node name="off" value="Non sillabare le parole"/>
+					<node name="summaryOn" value="sillabare le parole"/>
+					<node name="summaryOff" value="Non sillabare le parole"/>
 					<node name="unchanged" value="&lt;non cambiare&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Rientro alla prima riga"/>
