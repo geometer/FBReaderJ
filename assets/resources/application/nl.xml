@@ -360,13 +360,13 @@
 					<node name="boldItalic" value="Vet Cursief"/>
 				</node>
 				<node name="bold" value="Vet">
-					<node name="on" value="vet"/>
-					<node name="off" value="normaal"/>
+					<node name="summaryOn" value="vet"/>
+					<node name="summaryOff" value="normaal"/>
 					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
 				</node>
 				<node name="italic" value="Cursief">
-					<node name="on" value="cursief"/>
-					<node name="off" value="normaal"/>
+					<node name="summaryOn" value="cursief"/>
+					<node name="summaryOff" value="normaal"/>
 					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Regelafstand">
@@ -384,8 +384,8 @@
 					<node name="summaryOff" value="Woorden niet automatisch afbreken"/>
 				</node>
 				<node name="allowHyphenations" value="Afbreken">
-					<node name="on" value="woorden afbreken"/>
-					<node name="off" value="woorden niet afbreken"/>
+					<node name="summaryOn" value="woorden afbreken"/>
+					<node name="summaryOff" value="woorden niet afbreken"/>
 					<node name="unchanged" value="&lt;ongewijzigd&gt;" />
 				</node>
 				<node name="firstLineIndent" value="Eerste regel inspringen" />

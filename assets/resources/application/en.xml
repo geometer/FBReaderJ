@@ -129,6 +129,7 @@
 			<node name="noLocalConnection" value="Your device is not connected to a local network"/>
 			<node name="wifiIsTurnedOff" value="WiFi is turned off"/>
 			<node name="turnWiFiOn" value="Please, turn WiFi on and try again"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Search"/>
@@ -389,13 +390,23 @@
 					<node name="boldItalic" value="Bold Italic"/>
 				</node>
 				<node name="bold" value="Bold">
-					<node name="on" value="bold"/>
-					<node name="off" value="regular"/>
+					<node name="summaryOn" value="bold"/>
+					<node name="summaryOff" value="regular"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="italic" value="Italic">
-					<node name="on" value="italic"/>
-					<node name="off" value="regular"/>
+					<node name="summaryOn" value="italic"/>
+					<node name="summaryOff" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined">
+					<node name="summaryOn" value="underlined"/>
+					<node name="summaryOff" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="strikedThrough" value="Striked through">
+					<node name="summaryOn" value="striked through"/>
+					<node name="summaryOff" value="regular"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Line Spacing">
@@ -413,8 +424,8 @@
 					<node name="summaryOff" value="Do not hyphenate words automatically"/>
 				</node>
 				<node name="allowHyphenations" value="Allow Hyphenations">
-					<node name="on" value="hyphenate words"/>
-					<node name="off" value="don't hyphenate words"/>
+					<node name="summaryOn" value="hyphenate words"/>
+					<node name="summaryOff" value="don't hyphenate words"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="First Line Indent"/>
@@ -720,7 +731,6 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>

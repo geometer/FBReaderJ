@@ -360,13 +360,13 @@
 					<node name="boldItalic" value="Félkövér és dőlt"/>
 				</node>
 				<node name="bold" value="Félkövér">
-					<node name="on" value="félkövér"/>
-					<node name="off" value="normál"/>
+					<node name="summaryOn" value="félkövér"/>
+					<node name="summaryOff" value="normál"/>
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="italic" value="Dőlt">
-					<node name="on" value="dőlt"/>
-					<node name="off" value="normál"/>
+					<node name="summaryOn" value="dőlt"/>
+					<node name="summaryOff" value="normál"/>
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Sorköz">
@@ -384,8 +384,8 @@
 					<node name="summaryOff" value="Automatikus elválasztás kikapcsolva"/>
 				</node>
 				<node name="allowHyphenations" value="Elválasztás engedélyezése">
-					<node name="on" value="válassza el a szavakat"/>
-					<node name="off" value="ne válassza el a szavakat"/>
+					<node name="summaryOn" value="válassza el a szavakat"/>
+					<node name="summaryOff" value="ne válassza el a szavakat"/>
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Első sor behúzása"/>

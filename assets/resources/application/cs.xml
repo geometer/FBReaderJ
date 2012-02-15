@@ -383,13 +383,13 @@
 					<node name="boldItalic" value="Tučná kurzíva"/>
 				</node>
 				<node name="bold" value="Tučně">
-					<node name="on" value="tučně"/>
-					<node name="off" value="obyčejné"/>
+					<node name="summaryOn" value="tučně"/>
+					<node name="summaryOff" value="obyčejné"/>
 					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="italic" value="Kurzíva">
-					<node name="on" value="kurzíva"/>
-					<node name="off" value="obyčejné"/>
+					<node name="summaryOn" value="kurzíva"/>
+					<node name="summaryOff" value="obyčejné"/>
 					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Řádkování">
@@ -407,8 +407,8 @@
 					<node name="summaryOff" value="Nedělit slova automaticky"/>
 				</node>
 				<node name="allowHyphenations" value="Povolit dělení slov">
-					<node name="on" value="dělit slova"/>
-					<node name="off" value="nedělit slova"/>
+					<node name="summaryOn" value="dělit slova"/>
+					<node name="summaryOff" value="nedělit slova"/>
 					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Odsazení prvního řádku"/>

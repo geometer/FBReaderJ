@@ -39,6 +39,8 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		new ZLBooleanOption(GROUP, "Base:italic", false);
 	public final ZLBooleanOption UnderlineOption =
 		new ZLBooleanOption(GROUP, "Base:underline", false);
+	public final ZLBooleanOption StrikeThroughOption =
+		new ZLBooleanOption(GROUP, "Base:strikeThrough", false);
 	public final ZLIntegerRangeOption AlignmentOption =
 		new ZLIntegerRangeOption(GROUP, "Base:alignment", 1, 4, ZLTextAlignmentType.ALIGN_JUSTIFY);
 	public final ZLIntegerRangeOption LineSpaceOption =
@@ -77,6 +79,11 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	@Override
 	public boolean isUnderline() {
 		return UnderlineOption.getValue();
+	}
+
+	@Override
+	public boolean isStrikeThrough() {
+		return StrikeThroughOption.getValue();
 	}
 
 	@Override

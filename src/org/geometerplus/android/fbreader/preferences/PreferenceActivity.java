@@ -115,6 +115,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, textScreen.Resource, "fontStyle",
 			baseStyle.BoldOption, baseStyle.ItalicOption
 		));
+		textScreen.addOption(baseStyle.UnderlineOption, "underlined");
+		textScreen.addOption(baseStyle.StrikeThroughOption, "strikedThrough");
 		final ZLIntegerRangeOption spaceOption = baseStyle.LineSpaceOption;
 		final String[] spacings = new String[spaceOption.MaxValue - spaceOption.MinValue + 1];
 		for (int i = 0; i < spacings.length; ++i) {
@@ -189,6 +191,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			formatScreen.addPreference(new ZLBoolean3Preference(
 				this, textScreen.Resource, "italic",
 				decoration.ItalicOption
+			));
+			formatScreen.addPreference(new ZLBoolean3Preference(
+				this, textScreen.Resource, "underlined",
+				decoration.UnderlineOption
+			));
+			formatScreen.addPreference(new ZLBoolean3Preference(
+				this, textScreen.Resource, "strikedThrough",
+				decoration.StrikeThroughOption
 			));
 			if (fullDecoration != null) {
 				final String[] allAlignments = { "unchanged", "left", "right", "center", "justify" };
