@@ -360,13 +360,13 @@
 					<node name="boldItalic" value="Pogrubiony pochyły"/>
 				</node>
 				<node name="bold" value="Pogrubienie">
-					<node name="on" value="pogrubienie"/>
-					<node name="off" value="zwykłe"/>
+					<node name="summaryOn" value="pogrubienie"/>
+					<node name="summaryOff" value="zwykłe"/>
 					<node name="unchanged" value="&lt;bez zmian&gt;"/>
 				</node>
 				<node name="italic" value="Kursywa">
-					<node name="on" value="kursywa"/>
-					<node name="off" value="zwykłe"/>
+					<node name="summaryOn" value="kursywa"/>
+					<node name="summaryOff" value="zwykłe"/>
 					<node name="unchanged" value="&lt;bez zmian&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Interlinia">
@@ -384,8 +384,8 @@
 					<node name="summaryOff" value="nie dziel wyrazów automatycznie"/>
 				</node>
 				<node name="allowHyphenations" value="Zezwalaj na dzielenie wyrazów">
-					<node name="on" value="dziel wyrazy"/>
-					<node name="off" value="nie dziel wyrazów"/>
+					<node name="summaryOn" value="dziel wyrazy"/>
+					<node name="summaryOff" value="nie dziel wyrazów"/>
 					<node name="unchanged" value="&lt;bez zmian&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Wcięcie pierwszego wiersza"/>

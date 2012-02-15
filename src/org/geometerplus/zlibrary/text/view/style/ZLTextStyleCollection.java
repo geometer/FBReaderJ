@@ -101,11 +101,12 @@ public class ZLTextStyleCollection {
 					ZLBoolean3 bold = b3Value(attributes, "bold");
 					ZLBoolean3 italic = b3Value(attributes, "italic");
 					ZLBoolean3 underline = b3Value(attributes, "underline");
+					ZLBoolean3 strikeThrough = b3Value(attributes, "strikeThrough");
 					int verticalShift = intValue(attributes, "vShift", 0);
 					ZLBoolean3 allowHyphenations = b3Value(attributes, "allowHyphenations");
 
 					if (booleanValue(attributes, "partial")) {
-						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, underline, verticalShift, allowHyphenations);
+						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, underline, strikeThrough, verticalShift, allowHyphenations);
 					} else {
 						int spaceBefore = intValue(attributes, "spaceBefore", 0);
 						int spaceAfter = intValue(attributes, "spaceAfter", 0);
@@ -128,7 +129,7 @@ public class ZLTextStyleCollection {
 						}
 						final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
 
-						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, underline, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
+						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, underline, strikeThrough, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
 
 					String fontFamily = attributes.getValue("family");

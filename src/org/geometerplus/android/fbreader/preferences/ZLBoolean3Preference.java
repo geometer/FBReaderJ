@@ -26,8 +26,8 @@ import org.geometerplus.zlibrary.core.options.ZLBoolean3Option;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 class ZLBoolean3Preference extends ZLStringListPreference {
-	private static final String ON = "on";
-	private static final String OFF = "off";
+	private static final String ON = "summaryOn";
+	private static final String OFF = "summaryOff";
 	private static final String UNCHANGED = "unchanged";
 
 	private final ZLBoolean3Option myOption;

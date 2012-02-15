@@ -360,13 +360,13 @@
 					<node name="boldItalic" value="ตัวหนาและเอียง"/>
 				</node>
 				<node name="bold" value="ตัวหนา">
-					<node name="on" value="ตัวหนา"/>
-					<node name="off" value="ปกติ"/>
+					<node name="summaryOn" value="ตัวหนา"/>
+					<node name="summaryOff" value="ปกติ"/>
 					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
 				</node>
 				<node name="italic" value="ตัวเอียง">
-					<node name="on" value="ตัวเอียง"/>
-					<node name="off" value="ปกติ"/>
+					<node name="summaryOn" value="ตัวเอียง"/>
+					<node name="summaryOff" value="ปกติ"/>
 					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
 				</node>
 				<node name="lineSpacing" value="ระยะห่างระหว่างบรรทัด">
@@ -384,8 +384,8 @@
 					<node name="summaryOff" value="ไม่เพิ่มยัติภังค์อัตโนมัติ"/>
 				</node>
 				<node name="allowHyphenations" value="อนุญาตให้ใช้ยัติภังค์">
-					<node name="on" value="คำยัติภังค์"/>
-					<node name="off" value="ไม่ใช้คำยัติภังค์"/>
+					<node name="summaryOn" value="คำยัติภังค์"/>
+					<node name="summaryOff" value="ไม่ใช้คำยัติภังค์"/>
 					<node name="unchanged" value="&lt;ยกเลิก&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="การเยื้องบรรทัดแรกของย่อหน้า"/>
