@@ -55,7 +55,7 @@ class OPDSCatalogInfoHandler extends AbstractOPDSFeedHandler {
 			if ("search".equals(rel)) {
 				if (MimeType.APP_OPENSEARCHDESCRIPTION.equals(type)) {
 					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
-				} else if (MimeType.APP_ATOM.equals(type)) {
+				} else if (MimeType.APP_ATOM.weakEquals(type)) {
 					final String template = ZLNetworkUtil.url(myBaseURL, link.getHref());
 					final OpenSearchDescription descr = OpenSearchDescription.createDefault(template);
 					if (descr.isValid()) {
