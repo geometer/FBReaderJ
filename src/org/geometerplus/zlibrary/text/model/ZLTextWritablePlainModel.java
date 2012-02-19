@@ -97,7 +97,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myTextSizes[myParagraphsNumber - 1] += length;
 	}
 	
-	public void addControl(ZLTextForcedControlEntry entry) {
+	public void addControl(ZLTextStyleEntry entry) {
 		int len = 2;
 		for (int mask = entry.getMask(); mask != 0; mask >>= 1) {
 			len += mask & 1;
