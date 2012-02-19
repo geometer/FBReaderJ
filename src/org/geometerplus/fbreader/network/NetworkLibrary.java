@@ -295,7 +295,7 @@ public class NetworkLibrary {
 			// we create this copy to prevent long operations on synchronized list
 			final List<INetworkLink> linksCopy = new ArrayList<INetworkLink>(myLinks);
 			for (INetworkLink link : linksCopy) {
-				if (link instanceof ICustomNetworkLink) {
+				if (link.getType() == INetworkLink.Type.Custom) {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
 						try {

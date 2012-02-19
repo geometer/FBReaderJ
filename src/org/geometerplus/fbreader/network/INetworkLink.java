@@ -29,6 +29,27 @@ import org.geometerplus.fbreader.network.urlInfo.UrlInfoWithDate;
 import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public interface INetworkLink extends Comparable<INetworkLink> {
+	public enum Type {
+		Predefined(0),
+		Custom(1),
+		Local(2);
+
+		public final int Index;
+
+		Type(int index) {
+			Index = index;
+		}
+
+		public static Type byIndex(int index) {
+			for (Type t : Type.values()) {
+				if (t.Index == index) {
+					return t;
+				}
+			}
+			return Custom;
+		}
+	};
+
 	public enum AccountStatus {
 		NotSupported,
 		NoUserName,
@@ -57,6 +78,8 @@ public interface INetworkLink extends Comparable<INetworkLink> {
 	 *       that will take some time and can return NotChecked (if network is not available)
      */
 	//AccountStatus getAccountStatus(boolean force);
+
+	Type getType();
 
 	/**
 	 * @return 2-letters language code or special token "multi"
