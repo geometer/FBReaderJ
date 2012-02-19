@@ -90,13 +90,13 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
 		block[blockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
-		block[blockOffset++] = (char)(length >> 16);
 		block[blockOffset++] = (char)length;
+		block[blockOffset++] = (char)(length >> 16);
 		System.arraycopy(text, offset, block, blockOffset, length);
 		myBlockOffset = blockOffset + length;
 		myTextSizes[myParagraphsNumber - 1] += length;
 	}
-	
+
 	public void addControl(ZLTextStyleEntry entry) {
 		int len = 2;
 		for (int mask = entry.getMask(); mask != 0; mask >>= 1) {
@@ -116,7 +116,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 			block[myBlockOffset++] = (char)entry.getAlignmentType();
 		}
 	}
-	
+
 	public void addHyperlinkControl(byte textKind, byte hyperlinkType, String label) {
 		final short labelLength = (short)label.length();
 		final char[] block = getDataBlock(3 + labelLength);
@@ -128,7 +128,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		label.getChars(0, labelLength, block, blockOffset);
 		myBlockOffset = blockOffset + labelLength;
 	}
-	
+
 	public void addImage(String id, short vOffset, boolean isCover) {
 		final int len = id.length();
 		final char[] block = getDataBlock(4 + len);
@@ -142,13 +142,18 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[blockOffset++] = (char)(isCover ? 1 : 0);
 		myBlockOffset = blockOffset;
 	}
-	
+
 	public void addFixedHSpace(short length) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
 		block[myBlockOffset++] = (char)length;
 	}	
+
+	public void addBidiReset() {
+		final char[] block = getDataBlock(1);
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.RESET_BIDI;
+	}
 
 	public void stopReading() {
 		/*
