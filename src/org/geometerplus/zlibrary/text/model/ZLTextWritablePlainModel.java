@@ -125,6 +125,26 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myBlockOffset = blockOffset + labelLength;
 	}
 
+	public void addStyleEntry(ZLTextStyleEntry entry) {
+		int len = 2;
+		for (int mask = entry.getMask(); mask != 0; mask >>= 1) {
+			len += mask & 1;
+		}
+		final char[] block = getDataBlock(len);
+		++myParagraphLengths[myParagraphsNumber - 1];
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.STYLE;
+		block[myBlockOffset++] = (char)entry.getMask();
+		if (entry.isLeftIndentSupported()) {
+			block[myBlockOffset++] = (char)entry.getLeftIndent();
+		}
+		if (entry.isRightIndentSupported()) {
+			block[myBlockOffset++] = (char)entry.getRightIndent();
+		}
+		if (entry.isAlignmentTypeSupported()) {
+			block[myBlockOffset++] = (char)entry.getAlignmentType();
+		}
+	}
+
 	public void addFixedHSpace(short length) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
