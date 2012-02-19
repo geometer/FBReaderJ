@@ -155,17 +155,17 @@ public class ZLTextPlainModel implements ZLTextModel {
 				{
 					short kind = (short)data[dataOffset++];
 					myControlKind = (byte)kind;
-					myControlIsStart = (kind & 0x0100) != 0;
+					myControlIsStart = (kind & 0x0100) == 0x0100;
 					myHyperlinkType = 0;
 					break;
 				}
 				case ZLTextParagraph.Entry.HYPERLINK_CONTROL:
 				{
 					short kind = (short)data[dataOffset++];
-					short labelLength = (short)data[dataOffset++];
 					myControlKind = (byte)kind;
 					myControlIsStart = true;
 					myHyperlinkType = (byte)(kind >> 8);
+					short labelLength = (short)data[dataOffset++];
 					myHyperlinkId = new String(data, dataOffset, labelLength);
 					dataOffset += labelLength;
 					break;
