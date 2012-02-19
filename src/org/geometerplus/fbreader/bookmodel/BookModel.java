@@ -72,6 +72,10 @@ public final class BookModel {
 		//}
 	}
 
+	public ZLTextModel getTextModel() {
+		return BookTextModel;
+	}
+
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
