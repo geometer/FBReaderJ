@@ -169,7 +169,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					myFixedHSpaceLength = (short)data[dataOffset++];
 					break;
-				case ZLTextParagraph.Entry.FORCED_CONTROL:
+				case ZLTextParagraph.Entry.STYLE:
 				{
 					final int mask = (int)data[dataOffset++];
 					final ZLTextForcedControlEntry entry = new ZLTextForcedControlEntry();

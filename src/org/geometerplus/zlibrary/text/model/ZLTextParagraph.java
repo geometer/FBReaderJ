@@ -24,8 +24,10 @@ public interface ZLTextParagraph {
 		byte TEXT = 1;
 		byte IMAGE = 2;
 		byte CONTROL = 3;
-		byte FORCED_CONTROL = 4;
-		byte FIXED_HSPACE = 5;
+		byte HYPERLINK_CONTROL = 4;
+		byte STYLE = 5;
+		byte FIXED_HSPACE = 6;
+		byte RESET_BIDI = 7;
 	}
 
 	interface EntryIterator {

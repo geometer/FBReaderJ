@@ -104,7 +104,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		}
 		final char[] block = getDataBlock(len);
 		++myParagraphLengths[myParagraphsNumber - 1];
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FORCED_CONTROL;
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.STYLE;
 		block[myBlockOffset++] = (char)entry.getMask();
 		if (entry.isLeftIndentSupported()) {
 			block[myBlockOffset++] = (char)entry.getLeftIndent();
