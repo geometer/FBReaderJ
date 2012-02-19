@@ -99,7 +99,7 @@ public final class ZLTextParagraphCursor {
 							}
 						}
 						break;
-					case ZLTextParagraph.Entry.FORCED_CONTROL:
+					case ZLTextParagraph.Entry.STYLE:
 						// TODO: implement
 						break;
 					case ZLTextParagraph.Entry.FIXED_HSPACE:
