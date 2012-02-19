@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.model.*;
 
 public class BookReader {
-	public final BookModel Model;
+	public final JavaBookModel Model;
 
 	private ZLTextWritableModel myCurrentTextModel = null;
 	
@@ -54,7 +54,7 @@ public class BookReader {
 	private CharsetDecoder myByteDecoder;
 
 	public BookReader(BookModel model) {
-		Model = model;
+		Model = (JavaBookModel)model;
 		myCurrentContentsTree = model.TOCTree;
 	}
 
