@@ -193,6 +193,9 @@ public class ZLTextPlainModel implements ZLTextModel {
 					}
 					myStyleEntry = entry;
 				}
+				case ZLTextParagraph.Entry.RESET_BIDI:
+					// No data => skip
+					break;
 			}
 			++myCounter;
 			myDataOffset = dataOffset;
