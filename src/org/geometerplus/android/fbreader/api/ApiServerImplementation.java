@@ -314,7 +314,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public int getParagraphsNumber() {
-		return myReader.Model.BookTextModel.getParagraphsNumber();
+		return myReader.Model.getTextModel().getParagraphsNumber();
 	}
 
 	public int getElementsNumber(int paragraphIndex) {
