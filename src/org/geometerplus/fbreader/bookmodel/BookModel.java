@@ -47,7 +47,7 @@ public abstract class BookModel {
 				});
 			}
 		} else {
-			model = new PlainBookModel(book);
+			model = new JavaBookModel(book);
 		}
 		if (plugin.readModel(model)) {
 			return model;
