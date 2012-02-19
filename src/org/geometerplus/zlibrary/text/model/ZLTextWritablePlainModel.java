@@ -70,6 +70,36 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		return block;
 	}
 
+	public void addText(char[] text) {
+		addText(text, 0, text.length);
+	}
+
+	public void addText(char[] text, int offset, int length) {
+		char[] block = getDataBlock(3 + length);
+		++myParagraphLengths[myParagraphsNumber - 1];
+		int blockOffset = myBlockOffset;
+		block[blockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
+		block[blockOffset++] = (char)length;
+		block[blockOffset++] = (char)(length >> 16);
+		System.arraycopy(text, offset, block, blockOffset, length);
+		myBlockOffset = blockOffset + length;
+		myTextSizes[myParagraphsNumber - 1] += length;
+	}
+
+	public void addImage(String id, short vOffset, boolean isCover) {
+		final int len = id.length();
+		final char[] block = getDataBlock(4 + len);
+		++myParagraphLengths[myParagraphsNumber - 1];
+		int blockOffset = myBlockOffset;
+		block[blockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
+		block[blockOffset++] = (char)vOffset;
+		block[blockOffset++] = (char)len;
+		id.getChars(0, len, block, blockOffset);
+		blockOffset += len;
+		block[blockOffset++] = (char)(isCover ? 1 : 0);
+		myBlockOffset = blockOffset;
+	}
+
 	public void addControl(byte textKind, boolean isStart) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -81,23 +111,19 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[myBlockOffset++] = (char)kind;
 	}
 
-	public void addText(char[] text) {
-		addText(text, 0, text.length);
-	}
-
-	public void addText(char[] text, int offset, int length) {
-		char[] block = getDataBlock(3 + length);
+	public void addHyperlinkControl(byte textKind, byte hyperlinkType, String label) {
+		final short labelLength = (short)label.length();
+		final char[] block = getDataBlock(3 + labelLength);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
-		block[blockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
-		block[blockOffset++] = (char)(length >> 16);
-		block[blockOffset++] = (char)length;
-		System.arraycopy(text, offset, block, blockOffset, length);
-		myBlockOffset = blockOffset + length;
-		myTextSizes[myParagraphsNumber - 1] += length;
+		block[blockOffset++] = (char)ZLTextParagraph.Entry.HYPERLINK_CONTROL;
+		block[blockOffset++] = (char)((hyperlinkType << 8) + textKind);
+		block[blockOffset++] = (char)labelLength;
+		label.getChars(0, labelLength, block, blockOffset);
+		myBlockOffset = blockOffset + labelLength;
 	}
-	
-	public void addControl(ZLTextStyleEntry entry) {
+
+	public void addStyleEntry(ZLTextStyleEntry entry) {
 		int len = 2;
 		for (int mask = entry.getMask(); mask != 0; mask >>= 1) {
 			len += mask & 1;
@@ -116,39 +142,19 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 			block[myBlockOffset++] = (char)entry.getAlignmentType();
 		}
 	}
-	
-	public void addHyperlinkControl(byte textKind, byte hyperlinkType, String label) {
-		final short labelLength = (short)label.length();
-		final char[] block = getDataBlock(3 + labelLength);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		int blockOffset = myBlockOffset;
-		block[blockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
-		block[blockOffset++] = (char)((hyperlinkType << 9) + 0x0100 + textKind);
-		block[blockOffset++] = (char)labelLength;
-		label.getChars(0, labelLength, block, blockOffset);
-		myBlockOffset = blockOffset + labelLength;
-	}
-	
-	public void addImage(String id, short vOffset, boolean isCover) {
-		final int len = id.length();
-		final char[] block = getDataBlock(4 + len);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		int blockOffset = myBlockOffset;
-		block[blockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
-		block[blockOffset++] = (char)vOffset;
-		block[blockOffset++] = (char)len;
-		id.getChars(0, len, block, blockOffset);
-		blockOffset += len;
-		block[blockOffset++] = (char)(isCover ? 1 : 0);
-		myBlockOffset = blockOffset;
-	}
-	
+
 	public void addFixedHSpace(short length) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
 		block[myBlockOffset++] = (char)length;
 	}	
+
+	public void addBidiReset() {
+		final char[] block = getDataBlock(1);
+		++myParagraphLengths[myParagraphsNumber - 1];
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.RESET_BIDI;
+	}
 
 	public void stopReading() {
 		/*

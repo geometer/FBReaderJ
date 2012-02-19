@@ -29,13 +29,13 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.Paths;
 
-public final class BookModel {
+public abstract class BookModel {
 	public static BookModel createModel(Book book) {
 		FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 		if (plugin == null) {
 			return null;
 		}
-		BookModel model = new BookModel(book);
+		BookModel model = new JavaBookModel(book);
 		if (plugin.readModel(model)) {
 			return model;
 		}
@@ -64,12 +64,16 @@ public final class BookModel {
 	//	return Constants.CACHE_DIRECTORY + "/links" + index + ".cache";
 	//}
 
-	private BookModel(Book book) {
+	protected BookModel(Book book) {
 		Book = book;
 		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
 		//for (int i = 0; i < 50; ++i) {
 		//	new File(linksFileName(i)).delete();
 		//}
+	}
+
+	public ZLTextModel getTextModel() {
+		return BookTextModel;
 	}
 
 	public ZLTextModel getFootnoteModel(String id) {
@@ -109,8 +113,8 @@ public final class BookModel {
 			modelId.getChars(0, idLength, block, offset);
 			offset += idLength;
 		}
-		block[offset++] = (char)(paragraphNumber >> 16);
 		block[offset++] = (char)paragraphNumber;
+		block[offset++] = (char)(paragraphNumber >> 16);
 		myCurrentLinkBlockOffset = offset;
 	}
 
@@ -155,7 +159,7 @@ public final class BookModel {
 				offset += labelLength + 1;
 				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
 				offset += idLength;
-				final int paragraphNumber = (((int)block[offset++]) << 16) + (int)block[offset];
+				final int paragraphNumber = (int)block[offset] + (((int)block[offset++]) << 16);
 				return new Label(modelId, paragraphNumber);
 			}
 		}

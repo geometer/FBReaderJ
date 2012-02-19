@@ -267,20 +267,50 @@ public final class ZLAndroidLibrary extends ZLibrary {
 			return false;
 		}
 
+		private long mySize = -1;
 		@Override
 		public long size() {
+			if (mySize == -1) {
+				mySize = sizeInternal();
+			}
+			return mySize;
+		}
+
+		private long sizeInternal() {
 			try {
-				// TODO: for some files (archives, crt) descriptor cannot be opened
 				AssetFileDescriptor descriptor = myApplication.getAssets().openFd(getPath());
+				// for some files (archives, crt) descriptor cannot be opened
 				if (descriptor == null) {
-					return 0;
+					return sizeSlow();
 				}
 				long length = descriptor.getLength();
 				descriptor.close();
 				return length;
 			} catch (IOException e) {
-				return 0;
+				return sizeSlow();
 			} 
+		}
+
+		private long sizeSlow() {
+			try {
+				final InputStream stream = getInputStream();
+				if (stream == null) {
+					return 0;
+				}
+				long size = 0;
+				final long step = 1024 * 1024;
+				while (true) {
+					// TODO: does skip work as expected for these files?
+					long offset = stream.skip(step);
+					size += offset;
+					if (offset < step) {
+						break;
+					}
+				}
+				return size;
+			} catch (IOException e) {
+				return 0;
+			}
 		}
 
 		@Override

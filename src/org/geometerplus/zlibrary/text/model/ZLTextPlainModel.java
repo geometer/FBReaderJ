@@ -137,8 +137,8 @@ public class ZLTextPlainModel implements ZLTextModel {
 			switch (type) {
 				case ZLTextParagraph.Entry.TEXT:
 					myTextLength =
-						((int)data[dataOffset++] << 16) +
-						(int)data[dataOffset++];
+						(int)data[dataOffset++] +
+						(((int)data[dataOffset++]) << 16);
 					myTextData = data;
 					myTextOffset = dataOffset;
 					dataOffset += myTextLength;
@@ -148,12 +148,18 @@ public class ZLTextPlainModel implements ZLTextModel {
 					short kind = (short)data[dataOffset++];
 					myControlKind = (byte)kind;
 					myControlIsStart = (kind & 0x0100) == 0x0100;
-					myHyperlinkType = (byte)(kind >> 9);
-					if (myHyperlinkType != 0) {
-						short labelLength = (short)data[dataOffset++];
-						myHyperlinkId = new String(data, dataOffset, labelLength);
-						dataOffset += labelLength;
-					}
+					myHyperlinkType = 0;
+					break;
+				}
+				case ZLTextParagraph.Entry.HYPERLINK_CONTROL:
+				{
+					short kind = (short)data[dataOffset++];
+					myControlKind = (byte)kind;
+					myControlIsStart = true;
+					myHyperlinkType = (byte)(kind >> 8);
+					short labelLength = (short)data[dataOffset++];
+					myHyperlinkId = new String(data, dataOffset, labelLength);
+					dataOffset += labelLength;
 					break;
 				}
 				case ZLTextParagraph.Entry.IMAGE:
@@ -187,6 +193,9 @@ public class ZLTextPlainModel implements ZLTextModel {
 					}
 					myStyleEntry = entry;
 				}
+				case ZLTextParagraph.Entry.RESET_BIDI:
+					// No data => skip
+					break;
 			}
 			++myCounter;
 			myDataOffset = dataOffset;
@@ -258,7 +267,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks = new ArrayList<ZLTextMark>();
 		if (startIndex > myParagraphsNumber) {
-                	startIndex = myParagraphsNumber;				
+			startIndex = myParagraphsNumber;				
 		}
 		if (endIndex > myParagraphsNumber) {
 			endIndex = myParagraphsNumber;
