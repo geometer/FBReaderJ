@@ -28,14 +28,13 @@ import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.Paths;
 
-public class PlainBookModel extends BookModel {
-
+public class JavaBookModel extends BookModel {
 	private final ZLPlainImageMap myImageMap = new ZLPlainImageMap(); 
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
 	public final ZLTextModel BookTextModel;
 
-	PlainBookModel(Book book) {
+	JavaBookModel(Book book) {
 		super(book);
 		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
 	}

@@ -146,7 +146,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 				case ZLTextParagraph.Entry.TEXT:
 					myTextLength =
 						(int)data[dataOffset++] +
-						((int)data[dataOffset++] << 16);
+						(((int)data[dataOffset++]) << 16);
 					myTextData = data;
 					myTextOffset = dataOffset;
 					dataOffset += myTextLength;

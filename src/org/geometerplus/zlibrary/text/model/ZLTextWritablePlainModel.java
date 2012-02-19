@@ -88,13 +88,6 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myTextSizes[myParagraphsNumber - 1] += length;
 	}
 
-	public void addFixedHSpace(short length) {
-		final char[] block = getDataBlock(2);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
-		block[myBlockOffset++] = (char)length;
-	}	
-
 	public void addControl(byte textKind, boolean isStart) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -131,6 +124,13 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[blockOffset++] = (char)(isCover ? 1 : 0);
 		myBlockOffset = blockOffset;
 	}
+
+	public void addFixedHSpace(short length) {
+		final char[] block = getDataBlock(2);
+		++myParagraphLengths[myParagraphsNumber - 1];
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
+		block[myBlockOffset++] = (char)length;
+	}	
 
 	public void addBidiReset() {
 		final char[] block = getDataBlock(1);
