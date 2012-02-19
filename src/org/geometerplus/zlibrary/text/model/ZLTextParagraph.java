@@ -25,7 +25,7 @@ public interface ZLTextParagraph {
 		byte IMAGE = 2;
 		byte CONTROL = 3;
 		byte HYPERLINK_CONTROL = 4;
-		//byte STYLE = 5; // FIXME: isn't used
+		byte STYLE = 5;
 		byte FIXED_HSPACE = 6;
 		byte RESET_BIDI = 7;
 	}
