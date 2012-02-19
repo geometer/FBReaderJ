@@ -90,8 +90,8 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
 		block[blockOffset++] = (char)ZLTextParagraph.Entry.TEXT;
-		block[blockOffset++] = (char)(length >> 16);
 		block[blockOffset++] = (char)length;
+		block[blockOffset++] = (char)(length >> 16);
 		System.arraycopy(text, offset, block, blockOffset, length);
 		myBlockOffset = blockOffset + length;
 		myTextSizes[myParagraphsNumber - 1] += length;
