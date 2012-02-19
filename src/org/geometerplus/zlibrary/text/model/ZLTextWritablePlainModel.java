@@ -122,8 +122,8 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		final char[] block = getDataBlock(3 + labelLength);
 		++myParagraphLengths[myParagraphsNumber - 1];
 		int blockOffset = myBlockOffset;
-		block[blockOffset++] = (char)ZLTextParagraph.Entry.CONTROL;
-		block[blockOffset++] = (char)((hyperlinkType << 9) + 0x0100 + textKind);
+		block[blockOffset++] = (char)ZLTextParagraph.Entry.HYPERLINK_CONTROL;
+		block[blockOffset++] = (char)((hyperlinkType << 8) + textKind);
 		block[blockOffset++] = (char)labelLength;
 		label.getChars(0, labelLength, block, blockOffset);
 		myBlockOffset = blockOffset + labelLength;
