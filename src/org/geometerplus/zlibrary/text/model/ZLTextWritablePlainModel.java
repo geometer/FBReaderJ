@@ -88,6 +88,20 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myTextSizes[myParagraphsNumber - 1] += length;
 	}
 
+	public void addImage(String id, short vOffset, boolean isCover) {
+		final int len = id.length();
+		final char[] block = getDataBlock(4 + len);
+		++myParagraphLengths[myParagraphsNumber - 1];
+		int blockOffset = myBlockOffset;
+		block[blockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
+		block[blockOffset++] = (char)vOffset;
+		block[blockOffset++] = (char)len;
+		id.getChars(0, len, block, blockOffset);
+		blockOffset += len;
+		block[blockOffset++] = (char)(isCover ? 1 : 0);
+		myBlockOffset = blockOffset;
+	}
+
 	public void addControl(byte textKind, boolean isStart) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -109,20 +123,6 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		block[blockOffset++] = (char)labelLength;
 		label.getChars(0, labelLength, block, blockOffset);
 		myBlockOffset = blockOffset + labelLength;
-	}
-
-	public void addImage(String id, short vOffset, boolean isCover) {
-		final int len = id.length();
-		final char[] block = getDataBlock(4 + len);
-		++myParagraphLengths[myParagraphsNumber - 1];
-		int blockOffset = myBlockOffset;
-		block[blockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
-		block[blockOffset++] = (char)vOffset;
-		block[blockOffset++] = (char)len;
-		id.getChars(0, len, block, blockOffset);
-		blockOffset += len;
-		block[blockOffset++] = (char)(isCover ? 1 : 0);
-		myBlockOffset = blockOffset;
 	}
 
 	public void addFixedHSpace(short length) {
