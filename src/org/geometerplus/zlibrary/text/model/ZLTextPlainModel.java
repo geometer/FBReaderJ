@@ -176,8 +176,24 @@ public class ZLTextPlainModel implements ZLTextModel {
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					myFixedHSpaceLength = (short)data[dataOffset++];
 					break;
-				/*case ZLTextParagraph.Entry.STYLE:
-					break;*/
+				case ZLTextParagraph.Entry.STYLE:
+				{
+					final int mask = (int)data[dataOffset++];
+					final ZLTextForcedControlEntry entry = new ZLTextForcedControlEntry();
+					if ((mask & ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) ==
+								ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) {
+						entry.setLeftIndent((short)data[dataOffset++]);
+					}
+					if ((mask & ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) ==
+								ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) {
+						entry.setRightIndent((short)data[dataOffset++]);
+					}
+					if ((mask & ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) ==
+								ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) {
+						entry.setAlignmentType((byte)data[dataOffset++]);
+					}
+					myForcedControlEntry = entry;
+				}
 				case ZLTextParagraph.Entry.RESET_BIDI:
 					// No data => skip
 					break;
