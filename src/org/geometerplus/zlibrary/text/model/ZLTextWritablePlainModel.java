@@ -97,14 +97,14 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myTextSizes[myParagraphsNumber - 1] += length;
 	}
 	
-	public void addControl(ZLTextForcedControlEntry entry) {
+	public void addControl(ZLTextStyleEntry entry) {
 		int len = 2;
 		for (int mask = entry.getMask(); mask != 0; mask >>= 1) {
 			len += mask & 1;
 		}
 		final char[] block = getDataBlock(len);
 		++myParagraphLengths[myParagraphsNumber - 1];
-		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FORCED_CONTROL;
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.STYLE;
 		block[myBlockOffset++] = (char)entry.getMask();
 		if (entry.isLeftIndentSupported()) {
 			block[myBlockOffset++] = (char)entry.getLeftIndent();

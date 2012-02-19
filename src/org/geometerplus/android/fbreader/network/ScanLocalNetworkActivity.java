@@ -37,6 +37,7 @@ import javax.jmdns.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.network.NetworkLibrary;
+import org.geometerplus.fbreader.network.INetworkLink;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -425,7 +426,7 @@ public class ScanLocalNetworkActivity extends ListActivity {
 					((ServiceInfoItem)item).URI,
 					getApplicationContext(),
 					AddCustomCatalogActivity.class
-				));
+				).putExtra(AddCustomCatalogActivity.TYPE, INetworkLink.Type.Local));
 				finish();
 			} catch (ActivityNotFoundException e) {
 			}

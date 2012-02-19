@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Vaše zařízení není připojeno k místní síti"/>
 			<node name="wifiIsTurnedOff" value="WiFi je vypnuto"/>
 			<node name="turnWiFiOn" value="Zapněte WiFi a zkuste to znovu"/>
+			<node name="scanningLocalNetwork" value="Prohledávání místní sítě. Čekejte&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Prohledávání sítě"/>
@@ -714,7 +715,6 @@
 			<node name="loadingNetworkBookInfo" value="Načítání informací o knize. Čekejte&#8230;" />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte&#8230;"/>
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte&#8230;"/>
-			<node name="scanningLocalNetwork" value="Prohledávání místní sítě. Čekejte&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>

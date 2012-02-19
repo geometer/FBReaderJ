@@ -59,7 +59,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		private String myHyperlinkId;
 
 		private ZLImageEntry myImageEntry;
-		private ZLTextForcedControlEntry myForcedControlEntry;
+		private ZLTextStyleEntry myStyleEntry;
 
 		private short myFixedHSpaceLength;
 
@@ -107,8 +107,8 @@ public class ZLTextPlainModel implements ZLTextModel {
 			return myImageEntry;
 		}
 
-		public ZLTextForcedControlEntry getForcedControlEntry() {
-			return myForcedControlEntry;
+		public ZLTextStyleEntry getStyleEntry() {
+			return myStyleEntry;
 		}
 
 		public short getFixedHSpaceLength() {
@@ -169,23 +169,23 @@ public class ZLTextPlainModel implements ZLTextModel {
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					myFixedHSpaceLength = (short)data[dataOffset++];
 					break;
-				case ZLTextParagraph.Entry.FORCED_CONTROL:
+				case ZLTextParagraph.Entry.STYLE:
 				{
 					final int mask = (int)data[dataOffset++];
-					final ZLTextForcedControlEntry entry = new ZLTextForcedControlEntry();
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) ==
-								ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) {
+					final ZLTextStyleEntry entry = new ZLTextStyleEntry();
+					if ((mask & ZLTextStyleEntry.SUPPORTS_LEFT_INDENT) ==
+								ZLTextStyleEntry.SUPPORTS_LEFT_INDENT) {
 						entry.setLeftIndent((short)data[dataOffset++]);
 					}
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) ==
-								ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) {
+					if ((mask & ZLTextStyleEntry.SUPPORTS_RIGHT_INDENT) ==
+								ZLTextStyleEntry.SUPPORTS_RIGHT_INDENT) {
 						entry.setRightIndent((short)data[dataOffset++]);
 					}
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) ==
-								ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) {
+					if ((mask & ZLTextStyleEntry.SUPPORTS_ALIGNMENT_TYPE) ==
+								ZLTextStyleEntry.SUPPORTS_ALIGNMENT_TYPE) {
 						entry.setAlignmentType((byte)data[dataOffset++]);
 					}
-					myForcedControlEntry = entry;
+					myStyleEntry = entry;
 				}
 			}
 			++myCounter;

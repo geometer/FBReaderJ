@@ -83,7 +83,7 @@ public class BookReader {
 	}
 	
 	/*
-	public final void addControl(ZLTextForcedControlEntry entry) {
+	public final void addControl(ZLTextStyleEntry entry) {
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
 			myCurrentTextModel.addControl(entry);
