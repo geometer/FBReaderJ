@@ -137,6 +137,7 @@
 			<node name="noLocalConnection" value="Устройство не подключено к локальной сети"/>
 			<node name="wifiIsTurnedOff" value="WiFi выключен"/>
 			<node name="turnWiFiOn" value="Включите WiFi и попробуйте ещё раз"/>
+			<node name="scanningLocalNetwork" value="Ищем в локальной сети. Подождите, пожалуйста&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>
@@ -741,7 +742,6 @@
 			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста&#8230;"/>
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста&#8230;"/>
 			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста&#8230;"/>
-			<node name="scanningLocalNetwork" value="Ищем в локальной сети. Подождите, пожалуйста&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера"/>

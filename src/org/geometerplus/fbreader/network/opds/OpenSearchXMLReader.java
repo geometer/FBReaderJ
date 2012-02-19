@@ -105,7 +105,7 @@ class OpenSearchXMLReader extends ZLXMLReaderAdapter {
 			if (tagPrefix == myOpenSearchNamespaceId && tag == TAG_URL) {
 				final MimeType type = MimeType.get(attributes.getValue("type"));
 				final String rel = attributes.getValue("rel");
-				if (MimeType.APP_ATOM.equals(type)
+				if (MimeType.APP_ATOM.weakEquals(type)
 						&& (rel == null || rel == "results")) {
 					final String template = ZLNetworkUtil.url(myBaseURL, attributes.getValue("template"));
 					final int indexOffset = parseInt(attributes.getValue("indexOffset"));

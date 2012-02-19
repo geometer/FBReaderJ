@@ -65,6 +65,9 @@ public class ZLTextPlainModel implements ZLTextModel {
 		// ImageEntry
 		private ZLImageEntry myImageEntry;
 
+		// StyleEntry
+		private ZLTextStyleEntry myStyleEntry;
+
 		// ZLTextFixedHSpaceEntry
 		private short myFixedHSpaceLength;
 
@@ -110,6 +113,10 @@ public class ZLTextPlainModel implements ZLTextModel {
 
 		public ZLImageEntry getImageEntry() {
 			return myImageEntry;
+		}
+
+		public ZLTextStyleEntry getStyleEntry() {
+			return myStyleEntry;
 		}
 
 		public short getFixedHSpaceLength() {
@@ -176,8 +183,24 @@ public class ZLTextPlainModel implements ZLTextModel {
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					myFixedHSpaceLength = (short)data[dataOffset++];
 					break;
-				/*case ZLTextParagraph.Entry.STYLE:
-					break;*/
+				case ZLTextParagraph.Entry.STYLE:
+				{
+					final int mask = (int)data[dataOffset++];
+					final ZLTextStyleEntry entry = new ZLTextStyleEntry();
+					if ((mask & ZLTextStyleEntry.SUPPORTS_LEFT_INDENT) ==
+								ZLTextStyleEntry.SUPPORTS_LEFT_INDENT) {
+						entry.setLeftIndent((short)data[dataOffset++]);
+					}
+					if ((mask & ZLTextStyleEntry.SUPPORTS_RIGHT_INDENT) ==
+								ZLTextStyleEntry.SUPPORTS_RIGHT_INDENT) {
+						entry.setRightIndent((short)data[dataOffset++]);
+					}
+					if ((mask & ZLTextStyleEntry.SUPPORTS_ALIGNMENT_TYPE) ==
+								ZLTextStyleEntry.SUPPORTS_ALIGNMENT_TYPE) {
+						entry.setAlignmentType((byte)data[dataOffset++]);
+					}
+					myStyleEntry = entry;
+				}
 				case ZLTextParagraph.Entry.RESET_BIDI:
 					// No data => skip
 					break;
