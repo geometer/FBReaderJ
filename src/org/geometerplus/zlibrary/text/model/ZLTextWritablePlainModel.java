@@ -88,6 +88,20 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myTextSizes[myParagraphsNumber - 1] += length;
 	}
 
+	public void addImage(String id, short vOffset, boolean isCover) {
+		final int len = id.length();
+		final char[] block = getDataBlock(4 + len);
+		++myParagraphLengths[myParagraphsNumber - 1];
+		int blockOffset = myBlockOffset;
+		block[blockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
+		block[blockOffset++] = (char)vOffset;
+		block[blockOffset++] = (char)len;
+		id.getChars(0, len, block, blockOffset);
+		blockOffset += len;
+		block[blockOffset++] = (char)(isCover ? 1 : 0);
+		myBlockOffset = blockOffset;
+	}
+
 	public void addControl(byte textKind, boolean isStart) {
 		final char[] block = getDataBlock(2);
 		++myParagraphLengths[myParagraphsNumber - 1];
@@ -111,18 +125,24 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		myBlockOffset = blockOffset + labelLength;
 	}
 
-	public void addImage(String id, short vOffset, boolean isCover) {
-		final int len = id.length();
-		final char[] block = getDataBlock(4 + len);
+	public void addStyleEntry(ZLTextStyleEntry entry) {
+		int len = 2;
+		for (int mask = entry.getMask(); mask != 0; mask >>= 1) {
+			len += mask & 1;
+		}
+		final char[] block = getDataBlock(len);
 		++myParagraphLengths[myParagraphsNumber - 1];
-		int blockOffset = myBlockOffset;
-		block[blockOffset++] = (char)ZLTextParagraph.Entry.IMAGE;
-		block[blockOffset++] = (char)vOffset;
-		block[blockOffset++] = (char)len;
-		id.getChars(0, len, block, blockOffset);
-		blockOffset += len;
-		block[blockOffset++] = (char)(isCover ? 1 : 0);
-		myBlockOffset = blockOffset;
+		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.STYLE;
+		block[myBlockOffset++] = (char)entry.getMask();
+		if (entry.isLeftIndentSupported()) {
+			block[myBlockOffset++] = (char)entry.getLeftIndent();
+		}
+		if (entry.isRightIndentSupported()) {
+			block[myBlockOffset++] = (char)entry.getRightIndent();
+		}
+		if (entry.isAlignmentTypeSupported()) {
+			block[myBlockOffset++] = (char)entry.getAlignmentType();
+		}
 	}
 
 	public void addFixedHSpace(short length) {
