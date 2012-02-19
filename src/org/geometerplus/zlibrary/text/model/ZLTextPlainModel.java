@@ -277,7 +277,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks = new ArrayList<ZLTextMark>();
 		if (startIndex > myParagraphsNumber) {
-                	startIndex = myParagraphsNumber;
+			startIndex = myParagraphsNumber;				
 		}
 		if (endIndex > myParagraphsNumber) {
 			endIndex = myParagraphsNumber;
