@@ -415,7 +415,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 		return true;
 	}
 
-	public void addExternalEntities(HashMap<String,char[]> entityMap) {
+	public void collectExternalEntities(HashMap<String,char[]> entityMap) {
 		entityMap.put("FBReaderVersion", ZLibrary.Instance().getVersionName().toCharArray());
 	}
 

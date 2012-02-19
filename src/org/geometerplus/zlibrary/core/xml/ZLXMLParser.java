@@ -203,7 +203,7 @@ final class ZLXMLParser {
 	void doIt() throws IOException {
 		final ZLXMLReader xmlReader = myXMLReader;
 		final HashMap<String,char[]> entityMap = getDTDMap(xmlReader.externalDTDs());
-		xmlReader.addExternalEntities(entityMap);
+		xmlReader.collectExternalEntities(entityMap);
 		final InputStreamReader streamReader = myStreamReader;
 		final boolean processNamespaces = myProcessNamespaces;
 		HashMap<String,String> oldNamespaceMap = processNamespaces ? new HashMap<String,String>() : null;

@@ -46,6 +46,7 @@ public interface FBTextKind {
 	//byte CONTENTS_TABLE_ENTRY = 23;
 	//byte LIBRARY_AUTHOR_ENTRY = 24;
 	//byte LIBRARY_BOOK_ENTRY = 25;
+	//byte LIBRARY_ENTRY = 25;
 	//byte RECENT_BOOK_LIST = 26;
 	byte ITALIC = 27;
 	byte BOLD = 28;
@@ -58,4 +59,5 @@ public interface FBTextKind {
 	byte H5 = 35;
 	byte H6 = 36;
 	byte EXTERNAL_HYPERLINK = 37;
+	//byte BOOK_HYPERLINK = 38;
 };
