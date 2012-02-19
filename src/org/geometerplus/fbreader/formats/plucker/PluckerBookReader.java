@@ -42,7 +42,7 @@ public class PluckerBookReader extends BookReader {
 	private	String myConvertedTextBuffer;
 	private	boolean myParagraphStarted = false;
 	private	boolean myBufferIsEmpty;
-	//private	ZLTextForcedControlEntry myForcedEntry;
+	//private	ZLTextStyleEntry myForcedEntry;
 	private	final ArrayList/*<std::pair<FBTextKind,bool> >*/ myDelayedControls = new ArrayList();
 	private	final ArrayList/*<std::string> */myDelayedHyperlinks = new ArrayList();
 	private	short myCompressionVersion;
@@ -346,7 +346,7 @@ public class PluckerBookReader extends BookReader {
 				case 0x22:
 					if (!myParagraphStarted) {
 						//if (myForcedEntry == null) {
-						//	myForcedEntry = new ZLTextForcedControlEntry();
+						//	myForcedEntry = new ZLTextStyleEntry();
 						//}
 						//myForcedEntry.setLeftIndent((short)ptr[cur + 1]);
 						//myForcedEntry.setRightIndent((short)ptr[cur + 2]);
@@ -355,7 +355,7 @@ public class PluckerBookReader extends BookReader {
 				case 0x29:
 					if (!myParagraphStarted) {
 						//if (myForcedEntry == null) {
-						//	myForcedEntry = new ZLTextForcedControlEntry();
+						//	myForcedEntry = new ZLTextStyleEntry();
 						//}
 						//switch (ptr[cur + 1]) {
 						//	case 0: myForcedEntry.setAlignmentType(ZLTextAlignmentType.ALIGN_LEFT); break;
