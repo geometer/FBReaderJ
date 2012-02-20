@@ -80,7 +80,7 @@ public class BookInfoActivity extends Activity {
 		setContentView(R.layout.book_info);
 
 		myResult = FBReader.RESULT_DO_NOTHING;
-		setResult(myResult);
+		setResult(myResult, getIntent());
 	}
 
 	@Override
