@@ -159,7 +159,7 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		});
 	}
-
+ 
 	public void reloadBook() {
 		if (Model != null && Model.Book != null) {
 			Model.Book.reloadInfoFromDatabase();
