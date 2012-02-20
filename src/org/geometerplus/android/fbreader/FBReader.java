@@ -355,13 +355,13 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	private void onPreferencesUpdate(int resultCode) {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		switch (resultCode) {
 			case RESULT_DO_NOTHING:
 				break;
 			case RESULT_REPAINT:
 			{
-				final BookModel model = fbreader.Model;
+				final BookModel model = fbReader.Model;
 				if (model != null) {
 					final Book book = model.Book;
 					if (book != null) {
@@ -369,12 +369,12 @@ public final class FBReader extends ZLAndroidActivity {
 						ZLTextHyphenator.Instance().load(book.getLanguage());
 					}
 				}
-				fbreader.clearTextCaches();
-				fbreader.getViewWidget().repaint();
+				fbReader.clearTextCaches();
+				fbReader.getViewWidget().repaint();
 				break;
 			}
 			case RESULT_RELOAD_BOOK:
-				fbreader.reloadBook();
+				fbReader.reloadBook();
 				break;
 		}
 	}
