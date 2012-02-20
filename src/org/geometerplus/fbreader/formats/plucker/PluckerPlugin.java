@@ -52,11 +52,6 @@ public class PluckerPlugin extends PdbPlugin {
 	}
 	
 	@Override
-	public boolean readLanguageAndEncoding(Book book) {
-		return true;
-	}
-
-	@Override
 	public boolean readModel(BookModel model)  {
 		return new PluckerBookReader(model.Book.File, model, model.Book.getEncoding()).readDocument();
 	}
