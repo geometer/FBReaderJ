@@ -369,6 +369,7 @@ public final class FBReader extends ZLAndroidActivity {
 				}
 				fbReader.clearTextCaches();
 				fbReader.getViewWidget().repaint();
+				break;
 			}
 		}
 	}
