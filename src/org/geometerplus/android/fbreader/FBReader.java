@@ -391,7 +391,6 @@ public final class FBReader extends ZLAndroidActivity {
 			case REQUEST_CANCEL_MENU:
 				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);
 				break;
-			}
 		}
 	}
 
