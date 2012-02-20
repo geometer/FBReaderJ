@@ -111,7 +111,6 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		final Book book = Book.getByFile(myFile);
-		
 		if (book != null) {
 			setupBookInfo(book);
 			myDontReloadBook = false;
