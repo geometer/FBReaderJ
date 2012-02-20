@@ -25,4 +25,8 @@ public abstract class JavaFormatPlugin extends FormatPlugin {
 	public boolean readLanguageAndEncoding(Book book) {
 		return true;
 	}
+
+	public Type type() {
+		return Type.JAVA;
+	}
 }
