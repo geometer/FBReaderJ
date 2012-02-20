@@ -359,18 +359,20 @@ public class BookReader {
 		myCurrentContentsTree = tree.Parent;
 	}
 
-	/*public final void setReference(int contentsParagraphNumber, int referenceNumber) {
+	/*
+	public final void setReference(int contentsParagraphNumber, int referenceNumber) {
 		setReference(contentsParagraphNumber, myCurrentTextModel, referenceNumber);
-	}*/
+	}
 
-	/*public final void setReference(int contentsParagraphNumber, ZLTextWritableModel textModel, int referenceNumber) {
+	public final void setReference(int contentsParagraphNumber, ZLTextWritableModel textModel, int referenceNumber) {
 		final TOCTree contentsTree = Model.TOCTree;
 		if (contentsParagraphNumber < contentsTree.getSize()) {
 			contentsTree.getTreeByParagraphNumber(contentsParagraphNumber).setReference(
 				textModel, referenceNumber
 			);
 		}
-	}*/
+	}
+	*/
 
 	public final boolean paragraphIsOpen() {
 		return myTextParagraphExists;
