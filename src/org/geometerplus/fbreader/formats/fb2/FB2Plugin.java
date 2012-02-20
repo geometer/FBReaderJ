@@ -30,12 +30,12 @@ public class FB2Plugin extends JavaFormatPlugin {
 	public boolean acceptsFile(ZLFile file) {
 		return "fb2".equals(file.getExtension());
 	}
-	
+
 	@Override
 	public boolean readMetaInfo(Book book) {
 		return new FB2MetaInfoReader(book).readMetaInfo();
 	}
-	
+
 	@Override
 	public boolean readModel(BookModel model) {
 		return new FB2Reader(model).readBook();
