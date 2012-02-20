@@ -60,16 +60,9 @@ public abstract class BookModel {
 		}
 	}
 	
-	//private static String linksFileName(int index) {
-	//	return Constants.CACHE_DIRECTORY + "/links" + index + ".cache";
-	//}
-
 	protected BookModel(Book book) {
 		Book = book;
 		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
-		//for (int i = 0; i < 50; ++i) {
-		//	new File(linksFileName(i)).delete();
-		//}
 	}
 
 	public ZLTextModel getTextModel() {
