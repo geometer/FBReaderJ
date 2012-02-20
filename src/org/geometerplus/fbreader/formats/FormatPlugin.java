@@ -31,4 +31,11 @@ public abstract class FormatPlugin {
 	public abstract boolean readModel(BookModel model);
 	public abstract ZLImage readCover(ZLFile file);
 	public abstract String readAnnotation(ZLFile file);
+
+	public enum Type {
+		JAVA,
+		NATIVE,
+		EXTERNAL
+	};
+	public abstract Type type();
 }
