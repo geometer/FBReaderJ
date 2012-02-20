@@ -49,18 +49,25 @@ public class ZLTextPlainModel implements ZLTextModel {
 		int myDataIndex;
 		int myDataOffset;
 
+		// TextEntry data
 		private char[] myTextData;
 		private int myTextOffset;
 		private int myTextLength;
 
+		// ControlEntry data
 		private byte myControlKind;
 		private boolean myControlIsStart;
+		// HyperlinkControlEntry data
 		private byte myHyperlinkType;
 		private String myHyperlinkId;
 
+		// ImageEntry
 		private ZLImageEntry myImageEntry;
+
+		// StyleEntry
 		private ZLTextStyleEntry myStyleEntry;
 
+		// FixedHSpaceEntry data
 		private short myFixedHSpaceLength;
 
 		EntryIteratorImpl(int index) {
