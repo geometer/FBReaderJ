@@ -49,15 +49,15 @@ public class ZLTextPlainModel implements ZLTextModel {
 		int myDataIndex;
 		int myDataOffset;
 
-		// ZLTextEntry parameters
+		// TextEntry data
 		private char[] myTextData;
 		private int myTextOffset;
 		private int myTextLength;
 
-		// ZLTextControlEntry
-		// ZLTextHyperlinkControlEntry
+		// ControlEntry data
 		private byte myControlKind;
 		private boolean myControlIsStart;
+		// HyperlinkControlEntry data
 		private byte myHyperlinkType;
 		private String myHyperlinkId;
 
@@ -67,7 +67,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		// StyleEntry
 		private ZLTextStyleEntry myStyleEntry;
 
-		// ZLTextFixedHSpaceEntry
+		// FixedHSpaceEntry data
 		private short myFixedHSpaceLength;
 
 		EntryIteratorImpl(int index) {
