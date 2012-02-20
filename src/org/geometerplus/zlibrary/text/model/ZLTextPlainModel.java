@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public class ZLTextPlainModel implements ZLTextModel {
-	protected final String myId;
+	private final String myId;
 	private final String myLanguage;
 
 	protected int[] myStartEntryIndices;
@@ -37,9 +37,9 @@ public class ZLTextPlainModel implements ZLTextModel {
 	protected int myParagraphsNumber;
 
 	protected final CharStorage myStorage;
-	private ArrayList<ZLTextMark> myMarks;
-
 	protected final ZLImageMap myImageMap;
+
+	private ArrayList<ZLTextMark> myMarks;
 
 	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
 		private int myCounter;
