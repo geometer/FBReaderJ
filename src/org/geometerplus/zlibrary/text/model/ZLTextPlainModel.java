@@ -41,7 +41,6 @@ public class ZLTextPlainModel implements ZLTextModel {
 
 	private ArrayList<ZLTextMark> myMarks;
 
-
 	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
 		private int myCounter;
 		private int myLength;
