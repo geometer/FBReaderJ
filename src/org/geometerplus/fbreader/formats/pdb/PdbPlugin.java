@@ -25,9 +25,9 @@ import java.io.InputStream;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
-public abstract class PdbPlugin extends FormatPlugin {
+public abstract class PdbPlugin extends JavaFormatPlugin {
 	@Override
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension();
