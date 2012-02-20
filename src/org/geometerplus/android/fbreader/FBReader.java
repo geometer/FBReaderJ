@@ -350,18 +350,18 @@ public final class FBReader extends ZLAndroidActivity {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final FBReaderApp.PopupPanel popup = fbReader.getActivePopup();
 		if (popup != null && popup.getId() == SelectionPopup.ID) {
-			FBReaderApp.Instance().hideActivePopup();
+			fbReader.hideActivePopup();
 		}
 	}
 
-	private void onBookInfoResult(int resultCode) {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
+	private void onPreferencesUpdate(int resultCode) {
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		switch (resultCode) {
 			case RESULT_DO_NOTHING:
 				break;
 			case RESULT_REPAINT:
 			{
-				final BookModel model = fbreader.Model;
+				final BookModel model = fbReader.Model;
 				if (model != null) {
 					final Book book = model.Book;
 					if (book != null) {
@@ -369,12 +369,12 @@ public final class FBReader extends ZLAndroidActivity {
 						ZLTextHyphenator.Instance().load(book.getLanguage());
 					}
 				}
-				fbreader.clearTextCaches();
-				fbreader.getViewWidget().repaint();
+				fbReader.clearTextCaches();
+				fbReader.getViewWidget().repaint();
 				break;
 			}
 			case RESULT_RELOAD_BOOK:
-				fbreader.reloadBook();
+				fbReader.reloadBook();
 				break;
 		}
 	}
@@ -383,15 +383,13 @@ public final class FBReader extends ZLAndroidActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
-				onBookInfoResult(RESULT_REPAINT);
+				onPreferencesUpdate(RESULT_REPAINT);
 				break;
 			case REQUEST_BOOK_INFO:
-				onBookInfoResult(resultCode);
+				onPreferencesUpdate(resultCode);
 				break;
 			case REQUEST_CANCEL_MENU:
-			{
-				final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-				fbreader.runCancelAction(resultCode - 1);
+				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);
 				break;
 			}
 		}
