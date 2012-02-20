@@ -124,7 +124,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 
 		public boolean hasNext() {
 			return myCounter < myLength;
-		}	
+		}
 
 		public void next() {
 			int dataOffset = myDataOffset;
@@ -232,7 +232,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 	public final ZLTextMark getFirstMark() {
 		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(0);
 	}
-	
+
 	public final ZLTextMark getLastMark() {
 		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
 	}
@@ -274,11 +274,11 @@ public class ZLTextPlainModel implements ZLTextModel {
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks = new ArrayList<ZLTextMark>();
 		if (startIndex > myParagraphsNumber) {
-			startIndex = myParagraphsNumber;				
+			startIndex = myParagraphsNumber;
 		}
 		if (endIndex > myParagraphsNumber) {
 			endIndex = myParagraphsNumber;
-		}				
+		}
 		int index = startIndex;
 		for (EntryIteratorImpl it = new EntryIteratorImpl(index); index < endIndex; it.reset(++index)) {
 			int offset = 0;
@@ -288,21 +288,21 @@ public class ZLTextPlainModel implements ZLTextModel {
 					char[] textData = it.getTextData();
 					int textOffset = it.getTextOffset();
 					int textLength = it.getTextLength();
-					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1; 
+					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1;
 						pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern, pos + 1)) {
 						myMarks.add(new ZLTextMark(index, offset + pos, pattern.getLength()));
 						++count;
 					}
-					offset += textLength;						
-				}				
-			} 
+					offset += textLength;
+				}
+			}
 		}
 		return count;
 	}
 
 	public final List<ZLTextMark> getMarks() {
 		return (myMarks != null) ? myMarks : Collections.<ZLTextMark>emptyList();
-	}	
+	}
 
 	public final void removeAllMarks() {
 		myMarks = null;
