@@ -152,6 +152,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 
 	public void addBidiReset() {
 		final char[] block = getDataBlock(1);
+		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.RESET_BIDI;
 	}
 
