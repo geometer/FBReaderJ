@@ -111,8 +111,4 @@ public final class CachedCharStorage implements CharStorage {
 			}
 		}
 	}
-
-	public void clear() {
-		myArray.clear();
-	}
 }
