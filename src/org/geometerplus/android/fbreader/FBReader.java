@@ -383,8 +383,6 @@ public final class FBReader extends ZLAndroidActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 			case REQUEST_PREFERENCES:
-				onPreferencesUpdate(RESULT_REPAINT);
-				break;
 			case REQUEST_BOOK_INFO:
 				onPreferencesUpdate(resultCode);
 				break;
