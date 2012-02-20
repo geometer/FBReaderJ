@@ -124,7 +124,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 
 		public boolean hasNext() {
 			return myCounter < myLength;
-		}	
+		}
 
 		public void next() {
 			int dataOffset = myDataOffset;
@@ -234,7 +234,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 	public final ZLTextMark getFirstMark() {
 		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(0);
 	}
-	
+
 	public final ZLTextMark getLastMark() {
 		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
 	}
@@ -276,7 +276,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks = new ArrayList<ZLTextMark>();
 		if (startIndex > myParagraphsNumber) {
-			startIndex = myParagraphsNumber;				
+			startIndex = myParagraphsNumber;
 		}
 		if (endIndex > myParagraphsNumber) {
 			endIndex = myParagraphsNumber;
@@ -309,7 +309,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 
 	public final List<ZLTextMark> getMarks() {
 		return (myMarks != null) ? myMarks : Collections.<ZLTextMark>emptyList();
-	}	
+	}
 
 	public final void removeAllMarks() {
 		myMarks = null;

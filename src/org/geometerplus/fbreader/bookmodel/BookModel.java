@@ -61,7 +61,7 @@ public abstract class BookModel {
 	public static final class Label {
 		public final String ModelId;
 		public final int ParagraphIndex;
-		
+
 		public Label(String modelId, int paragraphIndex) {
 			ModelId = modelId;
 			ParagraphIndex = paragraphIndex;
