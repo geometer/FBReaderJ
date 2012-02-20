@@ -125,11 +125,6 @@ public class MobipocketPlugin extends PdbPlugin {
 	}
 
 	@Override
-	public boolean readLanguageAndEncoding(Book book) {
-		return true;
-	}
-
-	@Override
 	public boolean readModel(BookModel model) {
 		try {
 			return new MobipocketHtmlBookReader(model).readBook();

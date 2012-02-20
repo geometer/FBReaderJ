@@ -64,11 +64,6 @@ public class OEBPlugin extends JavaFormatPlugin {
 	}
 	
 	@Override
-	public boolean readLanguageAndEncoding(Book book) {
-		return true;
-	}
-
-	@Override
 	public boolean readModel(BookModel model) {
 		model.Book.File.setCached(true);
 		final ZLFile opfFile = getOpfFile(model.Book.File);
