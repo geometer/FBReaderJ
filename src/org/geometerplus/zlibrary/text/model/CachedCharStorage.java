@@ -96,7 +96,7 @@ public final class CachedCharStorage implements CharStorage {
 		if (index >= 0) {
 			char[] block = myArray.get(index).get();
 			if (block == null) {
-				throw new CachedCharStorageException("Block reference is null during freeze");
+				throw new CachedCharStorageException("Block reference in null during freeze");
 			}
 			try {
 				final OutputStreamWriter writer =
