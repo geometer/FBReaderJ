@@ -356,16 +356,21 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private void onPreferencesUpdate(int resultCode) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
-		final BookModel model = fbReader.Model;
-		if (model != null) {
-			final Book book = model.Book;
-			if (book != null) {
-				book.reloadInfoFromDatabase();
-				ZLTextHyphenator.Instance().load(book.getLanguage());
+		switch (resultCode) {
+			default:
+			{
+				final BookModel model = fbReader.Model;
+				if (model != null) {
+					final Book book = model.Book;
+					if (book != null) {
+						book.reloadInfoFromDatabase();
+						ZLTextHyphenator.Instance().load(book.getLanguage());
+					}
+				}
+				fbReader.clearTextCaches();
+				fbReader.getViewWidget().repaint();
 			}
 		}
-		fbReader.clearTextCaches();
-		fbReader.getViewWidget().repaint();
 	}
 
 	@Override
