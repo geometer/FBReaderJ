@@ -17,37 +17,12 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.fb2;
+package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.JavaFormatPlugin;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
 
-public class FB2Plugin extends JavaFormatPlugin {
-	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return "fb2".equals(file.getExtension());
-	}
-	
-	@Override
-	public boolean readMetaInfo(Book book) {
-		return new FB2MetaInfoReader(book).readMetaInfo();
-	}
-	
-	@Override
-	public boolean readModel(BookModel model) {
-		return new FB2Reader(model).readBook();
-	}
-
-	@Override
-	public ZLImage readCover(ZLFile file) {
-		return new FB2CoverReader().readCover(file);
-	}
-
-	@Override
-	public String readAnnotation(ZLFile file) {
-		return new FB2AnnotationReader().readAnnotation(file);
+public abstract class JavaFormatPlugin extends FormatPlugin {
+	public boolean readLanguageAndEncoding(Book book) {
+		return true;
 	}
 }
