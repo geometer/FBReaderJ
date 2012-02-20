@@ -19,14 +19,15 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageProxy;
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.util.MimeType;
+
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.library.Book;
 
 final class NativeFormatPluginException extends RuntimeException {
 	private static final long serialVersionUID = 8641852378027454752L;
@@ -37,7 +38,6 @@ final class NativeFormatPluginException extends RuntimeException {
 }
 
 public class NativeFormatPlugin extends FormatPlugin {
-
 	// Stores native C++ pointer value
 	// No free method because all plugins' instances are freed by 
 	//   PluginCollection::deleteInstance method (C++)
