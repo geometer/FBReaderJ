@@ -58,7 +58,7 @@ public class BookInfoActivity extends Activity {
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private ZLFile myFile;
-	private int myResult = FBReader.RESULT_DO_NOTHING;
+	private int myResult;
 	private boolean myDontReloadBook;
 
 	@Override
@@ -79,6 +79,7 @@ public class BookInfoActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.book_info);
 
+		myResult = FBReader.RESULT_DO_NOTHING;
 		setResult(myResult);
 	}
 
