@@ -101,4 +101,9 @@ public class NativeFormatPlugin extends FormatPlugin {
 		}
 		return null;
 	}
+
+	@Override
+	public Type type() {
+		return Type.NATIVE;
+	}
 }
