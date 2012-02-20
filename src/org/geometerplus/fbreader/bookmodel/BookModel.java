@@ -42,8 +42,8 @@ public abstract class BookModel {
 		return null;
 	}
 
-	private final ZLImageMap myImageMap = new ZLImageMap(); 
-	
+	private final ZLImageMap myImageMap = new ZLImageMap();
+
 	public final Book Book;
 	public final ZLTextModel BookTextModel;
 	public final TOCTree TOCTree = new TOCTree();
@@ -53,13 +53,13 @@ public abstract class BookModel {
 	public static final class Label {
 		public final String ModelId;
 		public final int ParagraphIndex;
-		
+
 		public Label(String modelId, int paragraphIndex) {
 			ModelId = modelId;
 			ParagraphIndex = paragraphIndex;
 		}
 	}
-	
+
 	protected BookModel(Book book) {
 		Book = book;
 		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
@@ -72,12 +72,12 @@ public abstract class BookModel {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap); 
-			myFootnotes.put(id, model); 
+			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap);
+			myFootnotes.put(id, model);
 		}
 		return model;
 	}
-	
+
 	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 	private char[] myCurrentLinkBlock;
 	private int myCurrentLinkBlockOffset;
@@ -158,7 +158,7 @@ public abstract class BookModel {
 		}
 		return null;
 	}
-	
+
 	void addImage(String id, ZLImage image) {
 		myImageMap.put(id, image);
 	}
