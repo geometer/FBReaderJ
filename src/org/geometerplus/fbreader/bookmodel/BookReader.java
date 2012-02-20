@@ -359,6 +359,7 @@ public class BookReader {
 		myCurrentContentsTree = tree.Parent;
 	}
 
+	/*
 	public final void setReference(int contentsParagraphNumber, int referenceNumber) {
 		setReference(contentsParagraphNumber, myCurrentTextModel, referenceNumber);
 	}
@@ -371,6 +372,7 @@ public class BookReader {
 			);
 		}
 	}
+	*/
 	
 	public final boolean paragraphIsOpen() {
 		return myTextParagraphExists;
