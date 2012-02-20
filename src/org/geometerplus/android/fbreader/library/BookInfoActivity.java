@@ -113,6 +113,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			setupBookInfo(book);
 			myDontReloadBook = false;
 		}
+
+		myResult = Math.max(myResult, resultCode);
+		setResult(myResult);
 	}
 
 	private Button findButton(int buttonId) {
