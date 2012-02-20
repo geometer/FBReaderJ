@@ -357,7 +357,9 @@ public final class FBReader extends ZLAndroidActivity {
 	private void onPreferencesUpdate(int resultCode) {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		switch (resultCode) {
-			default:
+			case RESULT_DO_NOTHING:
+				break;
+			case RESULT_REPAINT:
 			{
 				final BookModel model = fbReader.Model;
 				if (model != null) {
@@ -371,6 +373,9 @@ public final class FBReader extends ZLAndroidActivity {
 				fbReader.getViewWidget().repaint();
 				break;
 			}
+			case RESULT_RELOAD_BOOK:
+				// TODO: implement
+				break;
 		}
 	}
 
