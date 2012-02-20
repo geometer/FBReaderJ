@@ -55,8 +55,13 @@ import org.geometerplus.android.util.UIUtil;
 public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
-	final static int REPAINT_CODE = 1;
-	final static int CANCEL_CODE = 2;
+	public static final int REQUEST_PREFERENCES = 1;
+	public static final int REQUEST_BOOK_INFO = 2;
+	public static final int REQUEST_CANCEL_MENU = 3;
+
+	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
+	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
+	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	private int myFullScreenFlag;
 
@@ -345,17 +350,16 @@ public final class FBReader extends ZLAndroidActivity {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final FBReaderApp.PopupPanel popup = fbReader.getActivePopup();
 		if (popup != null && popup.getId() == SelectionPopup.ID) {
-			FBReaderApp.Instance().hideActivePopup();
+			fbReader.hideActivePopup();
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		switch (requestCode) {
-			case REPAINT_CODE:
+	private void onPreferencesUpdate(int resultCode) {
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		switch (resultCode) {
+			default:
 			{
-				final BookModel model = fbreader.Model;
+				final BookModel model = fbReader.Model;
 				if (model != null) {
 					final Book book = model.Book;
 					if (book != null) {
@@ -363,12 +367,22 @@ public final class FBReader extends ZLAndroidActivity {
 						ZLTextHyphenator.Instance().load(book.getLanguage());
 					}
 				}
-				fbreader.clearTextCaches();
-				fbreader.getViewWidget().repaint();
+				fbReader.clearTextCaches();
+				fbReader.getViewWidget().repaint();
 				break;
 			}
-			case CANCEL_CODE:
-				fbreader.runCancelAction(resultCode - 1);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case REQUEST_PREFERENCES:
+			case REQUEST_BOOK_INFO:
+				onPreferencesUpdate(resultCode);
+				break;
+			case REQUEST_CANCEL_MENU:
+				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);
 				break;
 		}
 	}
