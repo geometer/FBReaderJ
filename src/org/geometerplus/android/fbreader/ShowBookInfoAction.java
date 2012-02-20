@@ -41,7 +41,7 @@ class ShowBookInfoAction extends FBAndroidAction {
 			new Intent(BaseActivity.getApplicationContext(), BookInfoActivity.class)
 				.putExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY, Reader.Model.Book.File.getPath())
 				.putExtra(BookInfoActivity.FROM_READING_MODE_KEY, true),
-			FBReader.REPAINT_CODE
+			FBReader.REQUEST_BOOK_INFO
 		);
 	}
 }
