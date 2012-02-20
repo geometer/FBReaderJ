@@ -23,11 +23,11 @@ import java.io.IOException;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-public class HtmlPlugin extends FormatPlugin {
+public class HtmlPlugin extends JavaFormatPlugin {
 	
 	@Override
 	public boolean acceptsFile(ZLFile file) {

@@ -21,11 +21,11 @@ package org.geometerplus.fbreader.formats.oeb;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-public class OEBPlugin extends FormatPlugin {
+public class OEBPlugin extends JavaFormatPlugin {
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension();
 		return
