@@ -91,7 +91,6 @@ public class NativeBookModel extends BookModel {
 		}
 	}
 
-
 	public ZLTextModel createTextModel(String id, String language,
 			int paragraphsNumber, int[] entryIndices, int[] entryOffsets,
 			int[] paragraphLenghts, int[] textSizes, byte[] paragraphKinds,
