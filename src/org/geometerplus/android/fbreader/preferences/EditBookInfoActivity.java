@@ -22,7 +22,6 @@ package org.geometerplus.android.fbreader.preferences;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -96,10 +95,10 @@ class LanguagePreference extends ZLStringListPreference {
 }
 
 class EncodingPreference extends ZLStringListPreference {
-	private final Activity myActivity;
+	private final EditBookInfoActivity myActivity;
 	private final Book myBook;
 
-	EncodingPreference(Activity activity, ZLResource rootResource, String resourceKey, Book book) {
+	EncodingPreference(EditBookInfoActivity activity, ZLResource rootResource, String resourceKey, Book book) {
 		super(activity, rootResource, resourceKey);
 		myActivity = activity;
 		myBook = book;
