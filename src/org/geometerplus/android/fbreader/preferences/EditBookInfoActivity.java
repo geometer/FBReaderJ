@@ -143,9 +143,6 @@ class EncodingPreference extends ZLStringListPreference {
 			}
 		}
 	}
-
-	public void onAccept() {
-	}
 }
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
