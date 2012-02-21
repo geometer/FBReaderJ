@@ -49,6 +49,9 @@ public class JavaBookModel extends BookModelImpl {
 		return model;
 	}
 
+	private char[] myCurrentLinkBlock;
+	private int myCurrentLinkBlockOffset;
+
 	void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) {
 		final String modelId = model.getId();
 		final int labelLength = label.length();

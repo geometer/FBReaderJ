@@ -73,9 +73,6 @@ public abstract class BookModel {
 	public abstract ZLTextModel getFootnoteModel(String id);
 	protected abstract Label getLabelInternal(String id);
 
-	protected char[] myCurrentLinkBlock;
-	protected int myCurrentLinkBlockOffset;
-
 	public interface LabelResolver {
 		List<String> getCandidates(String id);
 	}
