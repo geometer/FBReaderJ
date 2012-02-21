@@ -280,7 +280,8 @@ public class ZLTextPlainModel implements ZLTextModel {
 			endIndex = myParagraphsNumber;
 		}
 		int index = startIndex;
-		for (EntryIteratorImpl it = new EntryIteratorImpl(index); index < endIndex; it.reset(++index)) {
+		final EntryIteratorImpl it = new EntryIteratorImpl(index);
+		while (true) {
 			int offset = 0;
 			while (it.hasNext()) {
 				it.next();
@@ -296,6 +297,10 @@ public class ZLTextPlainModel implements ZLTextModel {
 					offset += textLength;
 				}
 			}
+			if (++index >= endIndex) {
+				break;
+			}
+			it.reset(index);
 		}
 		return count;
 	}
