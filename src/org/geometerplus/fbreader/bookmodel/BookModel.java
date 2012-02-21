@@ -27,7 +27,6 @@ import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.Paths;
 
 public abstract class BookModel {
 	public static BookModel createModel(Book book) {
@@ -72,8 +71,8 @@ public abstract class BookModel {
 
 	public abstract ZLTextModel getTextModel();
 	public abstract ZLTextModel getFootnoteModel(String id);
+	protected abstract Label getLabelInternal(String id);
 
-	protected final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 	protected char[] myCurrentLinkBlock;
 	protected int myCurrentLinkBlockOffset;
 
@@ -98,30 +97,5 @@ public abstract class BookModel {
 			}
 		}
 		return label;
-	}
-
-	private Label getLabelInternal(String id) {
-		final int len = id.length();
-		final int size = myInternalHyperlinks.size();
-		for (int i = 0; i < size; ++i) {
-			final char[] block = myInternalHyperlinks.block(i);
-			for (int offset = 0; offset < block.length; ) {
-				final int labelLength = (int)block[offset++];
-				if (labelLength == 0) {
-					break;
-				}
-				final int idLength = (int)block[offset + labelLength];
-				if ((labelLength != len) || !id.equals(new String(block, offset, labelLength))) {
-					offset += labelLength + idLength + 3;
-					continue;
-				}
-				offset += labelLength + 1;
-				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
-				offset += idLength;
-				final int paragraphNumber = (int)block[offset] + (((int)block[offset + 1]) << 16);
-				return new Label(modelId, paragraphNumber);
-			}
-		}
-		return null;
 	}
 }

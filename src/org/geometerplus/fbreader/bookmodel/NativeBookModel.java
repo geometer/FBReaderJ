@@ -23,7 +23,7 @@ import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
 
-public class NativeBookModel extends BookModel {
+public class NativeBookModel extends BookModelImpl {
 	private ZLTextModel myBookTextModel;
 
 	NativeBookModel(Book book) {
