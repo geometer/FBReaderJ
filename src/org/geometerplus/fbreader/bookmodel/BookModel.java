@@ -28,12 +28,12 @@ import org.geometerplus.fbreader.formats.*;
 
 public abstract class BookModel {
 	public static BookModel createModel(Book book) {
-		FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 		if (plugin == null) {
 			return null;
 		}
 		final BookModel model;
-		if (plugin instanceof NativeFormatPlugin) {
+		if (plugin.type() == FormatPlugin.Type.NATIVE) {
 			model = new NativeBookModel(book);
 			// TODO: a hack; should be moved into plugin code
 			if ("epub".equalsIgnoreCase(book.File.getExtension())) {
