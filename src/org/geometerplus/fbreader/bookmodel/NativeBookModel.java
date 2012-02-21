@@ -20,9 +20,6 @@
 package org.geometerplus.fbreader.bookmodel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 import org.geometerplus.zlibrary.text.model.*;
 
