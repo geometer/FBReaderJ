@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
+
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
 
 public class NativeBookModel extends BookModel {
-
 	private ZLImageMap myImageMap;
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
@@ -102,7 +102,6 @@ public class NativeBookModel extends BookModel {
 		return new ZLTextNativeModel(id, language, paragraphsNumber, entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds, directoryName, fileExtension, blocksNumber, myImageMap);
 	}
 
-
 	public void setBookTextModel(ZLTextModel model) {
 		myBookTextModel = model;
 	}
@@ -110,7 +109,6 @@ public class NativeBookModel extends BookModel {
 	public void setFootnoteModel(ZLTextModel model) {
 		myFootnotes.put(model.getId(), model);
 	}
-
 
 	@Override
 	public ZLTextModel getTextModel() {
