@@ -21,12 +21,15 @@ package org.geometerplus.fbreader.bookmodel;
 
 import java.util.HashMap;
 
+import org.geometerplus.zlibrary.core.image.*;
+
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
 
 abstract class BookModelImpl extends BookModel {
 	protected CharStorage myInternalHyperlinks;
+	protected final ZLImageMap myImageMap = new ZLImageMap();
 	protected final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
 	BookModelImpl(Book book) {

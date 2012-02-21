@@ -21,8 +21,6 @@ package org.geometerplus.fbreader.bookmodel;
 
 import java.util.List;
 
-import org.geometerplus.zlibrary.core.image.*;
-
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
@@ -47,8 +45,6 @@ public abstract class BookModel {
 		}
 		return null;
 	}
-
-	protected final ZLImageMap myImageMap = new ZLImageMap();
 
 	public final Book Book;
 	public final TOCTree TOCTree = new TOCTree();
