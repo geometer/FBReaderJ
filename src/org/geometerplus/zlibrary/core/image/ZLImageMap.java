@@ -19,6 +19,6 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-public interface ZLImageMap  {
+public interface ZLImageMap {
 	ZLImage getImage(String id);
 }
