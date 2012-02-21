@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.Paths;
 
 public class JavaBookModel extends BookModel {
-	private final ZLPlainImageMap myImageMap = new ZLPlainImageMap(); 
+	private final ZLPlainImageMap myImageMap = new ZLPlainImageMap();
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
 	public final ZLTextModel BookTextModel;
@@ -48,8 +48,8 @@ public class JavaBookModel extends BookModel {
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
 		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap); 
-			myFootnotes.put(id, model); 
+			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap);
+			myFootnotes.put(id, model);
 		}
 		return model;
 	}
