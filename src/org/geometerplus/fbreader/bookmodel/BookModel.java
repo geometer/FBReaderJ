@@ -38,9 +38,9 @@ public abstract class BookModel {
 
 		final BookModel model;
 		if (plugin.type() == FormatPlugin.Type.NATIVE) {
-			model = new JavaBookModel(book);
-		} else {
 			model = new NativeBookModel(book);
+		} else {
+			model = new JavaBookModel(book);
 		}
 
 		if (plugin.readModel(model)) {
