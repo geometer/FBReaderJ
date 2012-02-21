@@ -53,7 +53,7 @@ public class JavaBookModel extends BookModel {
 		}
 		return model;
 	}
-	
+
 	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 	private char[] myCurrentLinkBlock;
 	private int myCurrentLinkBlockOffset;
