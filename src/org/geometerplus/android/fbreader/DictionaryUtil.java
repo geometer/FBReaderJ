@@ -83,11 +83,11 @@ public abstract class DictionaryUtil {
 		}
 	}
 
-	private static class SlovoEdInfoReader extends ZLXMLReaderAdapter {
+	private static class ParagonInfoReader extends ZLXMLReaderAdapter {
 		private final Context myContext;
 		private int myCounter;
 
-		SlovoEdInfoReader(Context context) {
+		ParagonInfoReader(Context context) {
 			myContext = context;
 		}
 	
@@ -137,7 +137,7 @@ public abstract class DictionaryUtil {
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
 					new InfoReader().read(ZLFile.createFileByPath("dictionaries/main.xml"));
-					new SlovoEdInfoReader(context).read(ZLFile.createFileByPath("dictionaries/slovoEd.xml"));
+					new ParagonInfoReader(context).read(ZLFile.createFileByPath("dictionaries/paragon.xml"));
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);
