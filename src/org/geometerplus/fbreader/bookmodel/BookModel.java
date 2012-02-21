@@ -31,11 +31,18 @@ import org.geometerplus.fbreader.Paths;
 
 public abstract class BookModel {
 	public static BookModel createModel(Book book) {
-		FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 		if (plugin == null) {
 			return null;
 		}
-		BookModel model = new JavaBookModel(book);
+
+		final BookModel model;
+		if (plugin.type() == FormatPlugin.Type.NATIVE) {
+			model = new JavaBookModel(book);
+		} else {
+			model = new NativeBookModel(book);
+		}
+
 		if (plugin.readModel(model)) {
 			return model;
 		}
