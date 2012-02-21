@@ -53,8 +53,6 @@ public abstract class BookModel {
 	public final Book Book;
 	public final TOCTree TOCTree = new TOCTree();
 
-	protected final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
-
 	public static final class Label {
 		public final String ModelId;
 		public final int ParagraphIndex;
