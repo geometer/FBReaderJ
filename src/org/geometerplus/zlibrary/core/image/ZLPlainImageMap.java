@@ -19,6 +19,12 @@
 
 package org.geometerplus.zlibrary.core.image;
 
-public interface ZLImageMap {
-	ZLImage getImage(String id);
+import java.util.HashMap;
+
+public final class ZLPlainImageMap extends HashMap<String,ZLImage> implements ZLImageMap {
+	private static final long serialVersionUID = -4488377408233803199L;
+
+	public ZLImage getImage(String id) {
+		return (ZLImage)super.get(id);
+	}
 }
