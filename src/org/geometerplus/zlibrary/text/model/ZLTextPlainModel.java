@@ -282,7 +282,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 			endIndex = myParagraphsNumber;
 		}
 		int index = startIndex;
-		EntryIteratorImpl it = new EntryIteratorImpl(index);
+		final EntryIteratorImpl it = new EntryIteratorImpl(index);
 		while (true) {
 			int offset = 0;
 			while (it.hasNext()) {
