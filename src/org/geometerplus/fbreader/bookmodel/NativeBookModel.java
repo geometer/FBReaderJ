@@ -139,7 +139,7 @@ public class NativeBookModel extends BookModel {
 				offset += labelLength + 1;
 				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
 				offset += idLength;
-				final int paragraphNumber = (int)block[offset] + ((int)block[offset + 1] << 16);
+				final int paragraphNumber = (int)block[offset] + (((int)block[offset + 1]) << 16);
 				return new Label(modelId, paragraphNumber);
 			}
 		}
