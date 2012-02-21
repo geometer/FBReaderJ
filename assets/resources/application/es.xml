@@ -401,10 +401,12 @@
 				<node name="underlined" value="Underlined" toBeTranslated="true">
 					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
 					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;sin cambios&gt;"/>
 				</node>
 				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
 					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
 					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;sin cambios&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Interlineado">
 					<node name="unchanged" value="&lt;sin cambios&gt;"/>
