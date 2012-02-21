@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
-import java.util.*;
+import java.util.List;
 
 import org.geometerplus.zlibrary.core.image.*;
 
