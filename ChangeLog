@@ -2,6 +2,7 @@
 * striked through/underlined text support
 * asynchronous bonjour scanning: user can select any found network even if scanning is still in progress
 * better support for "related" catalogs in book descriptions
+* Updated Hungarian localization (by Szabó Lajos Balázs)
 
 ===== 1.3.7 (Feb 9, 2012) =====
 * Font smoothing settings (Settings -> Text -> Font properties)
