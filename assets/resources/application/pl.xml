@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Twoje urządzenie nie jest podłączone do sieci lokalnej"/>
 			<node name="wifiIsTurnedOff" value="WiFi jest wyłączone"/>
 			<node name="turnWiFiOn" value="Proszę włączyć WiFi i spróbować ponownie"/>
+			<node name="scanningLocalNetwork" value="Przeszukiwanie sieci lokalnej. Proszę czekać&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Wyszukiwanie sieciowe"/>
@@ -348,6 +349,29 @@
 			</node>
 			<node name="text" value="Tekst">
 				<node name="summary" value="Czcionka, dzielenie wyrazów itp."/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="Rodzina czcionek">
 					<node name="unchanged" value="&lt;bez zmian&gt;"/>
 				</node>
@@ -368,6 +392,14 @@
 					<node name="summaryOn" value="kursywa"/>
 					<node name="summaryOff" value="zwykłe"/>
 					<node name="unchanged" value="&lt;bez zmian&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 				</node>
 				<node name="lineSpacing" value="Interlinia">
 					<node name="unchanged" value="&lt;bez zmian&gt;"/>
@@ -691,7 +723,6 @@
 			<node name="loadingNetworkBookInfo" value="Ładowanie informacji o książce. Proszę, czekać&#8230;"/>
 			<node name="updatingCatalogsList" value="Aktualizacja listy katalogów. Proszę czekać&#8230;"/>
 			<node name="updatingAccountInformation" value="Aktualizacja informacji o koncie. Proszę czekać&#8230;"/>
-			<node name="scanningLocalNetwork" value="Przeszukiwanie sieci lokalnej. Proszę czekać&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Wenętrzny błąd serwera" />

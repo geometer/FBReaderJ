@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
 			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
 			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="网络搜索" />
@@ -348,6 +349,29 @@
 			</node>
 			<node name="text" value="文字">
 				<node name="summary" value="字体, 断字等等。"/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="字体">
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
@@ -367,6 +391,16 @@
 				<node name="italic" value="倾斜">
 					<node name="summaryOn" value="倾斜"/>
 					<node name="summaryOff" value="规则"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="lineSpacing" value="行间距">
@@ -691,7 +725,6 @@
 			<node name="loadingNetworkBookInfo" value="书籍信息加载中，请等待&#8230;"  />
 			<node name="updatingCatalogsList" value="更新书库列表中，请稍待..."/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待&#8230;" />
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错" />
