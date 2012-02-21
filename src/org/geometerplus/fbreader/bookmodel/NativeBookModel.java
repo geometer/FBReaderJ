@@ -30,7 +30,7 @@ public class NativeBookModel extends BookModel {
 		super(book);
 	}
 
-	public void setTextModel(ZLTextModel model) {
+	public void setBookTextModel(ZLTextModel model) {
 		myBookTextModel = model;
 	}
 
