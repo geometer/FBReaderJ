@@ -128,6 +128,7 @@
 			<node name="noLocalConnection" value="Votre périphérique n'est pas connecté à un réseau local"/>
 			<node name="wifiIsTurnedOff" value="Le Wi-Fi est désactivé"/>
 			<node name="turnWiFiOn" value="Veuillez activer le Wi-Fi et essayer à nouveau"/>
+			<node name="scanningLocalNetwork" value="Recherche sur réseau local, veuillez patienter&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Recherche sur le réseau"/>
@@ -717,7 +718,6 @@
 			<node name="loadingNetworkBookInfo" value="Chargement des informations du livre, veuillez patienter&#8230;"/>
 			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier..."/>
 			<node name="updatingAccountInformation" value="Mise à jour des informations du compte, veuillez patienter&#8230;"/>
-			<node name="scanningLocalNetwork" value="Recherche sur réseau local, veuillez patienter&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>
