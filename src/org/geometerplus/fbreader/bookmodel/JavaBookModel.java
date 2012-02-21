@@ -19,10 +19,27 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
+import org.geometerplus.zlibrary.core.image.*;
+
+import org.geometerplus.zlibrary.text.model.*;
+
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.Paths;
 
 public class JavaBookModel extends BookModel {
+	public final ZLTextModel BookTextModel;
+
 	JavaBookModel(Book book) {
 		super(book);
+		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
+	}
+
+	@Override
+	public ZLTextModel getTextModel() {
+		return BookTextModel;
+	}
+
+	void addImage(String id, ZLImage image) {
+		myImageMap.put(id, image);
 	}
 }

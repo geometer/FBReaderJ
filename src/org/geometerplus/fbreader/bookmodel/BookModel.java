@@ -49,10 +49,9 @@ public abstract class BookModel {
 		return null;
 	}
 
-	private final ZLImageMap myImageMap = new ZLImageMap();
+	protected final ZLImageMap myImageMap = new ZLImageMap();
 
 	public final Book Book;
-	public final ZLTextModel BookTextModel;
 	public final TOCTree TOCTree = new TOCTree();
 
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
@@ -69,12 +68,9 @@ public abstract class BookModel {
 
 	protected BookModel(Book book) {
 		Book = book;
-		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
 	}
 
-	public ZLTextModel getTextModel() {
-		return BookTextModel;
-	}
+	public abstract ZLTextModel getTextModel();
 
 	public ZLTextModel getFootnoteModel(String id) {
 		ZLTextModel model = myFootnotes.get(id);
@@ -164,9 +160,5 @@ public abstract class BookModel {
 			}
 		}
 		return null;
-	}
-
-	void addImage(String id, ZLImage image) {
-		myImageMap.put(id, image);
 	}
 }

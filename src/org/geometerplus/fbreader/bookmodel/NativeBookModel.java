@@ -19,10 +19,23 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
+import org.geometerplus.zlibrary.text.model.*;
+
 import org.geometerplus.fbreader.library.Book;
 
 public class NativeBookModel extends BookModel {
+	private ZLTextModel myBookTextModel;
+
 	NativeBookModel(Book book) {
 		super(book);
+	}
+
+	public void setTextModel(ZLTextModel model) {
+		myBookTextModel = model;
+	}
+
+	@Override
+	public ZLTextModel getTextModel() {
+		return myBookTextModel;
 	}
 }
