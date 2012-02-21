@@ -393,6 +393,16 @@
 					<node name="summaryOff" value="规则"/>
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
 				<node name="lineSpacing" value="行间距">
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
