@@ -32,6 +32,7 @@ public abstract class BookModel {
 		if (plugin == null) {
 			return null;
 		}
+
 		final BookModel model;
 		if (plugin.type() == FormatPlugin.Type.NATIVE) {
 			model = new NativeBookModel(book);
@@ -49,6 +50,7 @@ public abstract class BookModel {
 		} else {
 			model = new JavaBookModel(book);
 		}
+
 		if (plugin.readModel(model)) {
 			return model;
 		}
