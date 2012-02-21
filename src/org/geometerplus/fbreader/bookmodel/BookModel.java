@@ -54,7 +54,7 @@ public abstract class BookModel {
 	public final Book Book;
 	public final TOCTree TOCTree = new TOCTree();
 
-	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
+	protected final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
 	public static final class Label {
 		public final String ModelId;
@@ -71,15 +71,7 @@ public abstract class BookModel {
 	}
 
 	public abstract ZLTextModel getTextModel();
-
-	public ZLTextModel getFootnoteModel(String id) {
-		ZLTextModel model = myFootnotes.get(id);
-		if (model == null) {
-			model = new ZLTextWritablePlainModel(id, Book.getLanguage(), 8, 512, Paths.cacheDirectory(), "cache" + myFootnotes.size(), myImageMap);
-			myFootnotes.put(id, model);
-		}
-		return model;
-	}
+	public abstract ZLTextModel getFootnoteModel(String id);
 
 	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 	private char[] myCurrentLinkBlock;

@@ -38,4 +38,9 @@ public class NativeBookModel extends BookModel {
 	public ZLTextModel getTextModel() {
 		return myBookTextModel;
 	}
+
+	@Override
+	public ZLTextModel getFootnoteModel(String id) {
+		return myFootnotes.get(id);
+	}
 }
