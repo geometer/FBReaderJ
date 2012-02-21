@@ -29,13 +29,12 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.Paths;
 
 public class JavaBookModel extends BookModelImpl {
-	private final ZLPlainImageMap myImageMap = new ZLPlainImageMap();
-
 	public final ZLTextModel BookTextModel;
 
 	JavaBookModel(Book book) {
 		super(book);
 		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
+		myImageMap = new ZLPlainImageMap();
 		myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 	}
 
@@ -87,6 +86,6 @@ public class JavaBookModel extends BookModelImpl {
 	}
 
 	void addImage(String id, ZLImage image) {
-		myImageMap.put(id, image);
+		((ZLPlainImageMap)myImageMap).put(id, image);
 	}
 }
