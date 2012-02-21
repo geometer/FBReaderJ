@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLSingleImage implements ZLImage {
 	private final MimeType myMimeType;
-	
+
 	public ZLSingleImage(final MimeType mimeType) {
 		myMimeType = mimeType;
 	}
