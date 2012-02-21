@@ -20,21 +20,13 @@
 package org.geometerplus.fbreader.bookmodel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
 import org.geometerplus.zlibrary.text.model.*;
 
 import org.geometerplus.fbreader.library.Book;
 
-public class NativeBookModel extends BookModel {
-
-	private ZLImageMap myImageMap;
-	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
-
+public class NativeBookModel extends BookModelImpl {
 	private ZLTextModel myBookTextModel;
-
-	private CharStorage myInternalHyperlinks;
 
 	NativeBookModel(Book book) {
 		super(book);
@@ -91,7 +83,6 @@ public class NativeBookModel extends BookModel {
 		}
 	}
 
-
 	public ZLTextModel createTextModel(String id, String language,
 			int paragraphsNumber, int[] entryIndices, int[] entryOffsets,
 			int[] paragraphLenghts, int[] textSizes, byte[] paragraphKinds,
@@ -102,7 +93,6 @@ public class NativeBookModel extends BookModel {
 		return new ZLTextNativeModel(id, language, paragraphsNumber, entryIndices, entryOffsets, paragraphLenghts, textSizes, paragraphKinds, directoryName, fileExtension, blocksNumber, myImageMap);
 	}
 
-
 	public void setBookTextModel(ZLTextModel model) {
 		myBookTextModel = model;
 	}
@@ -110,7 +100,6 @@ public class NativeBookModel extends BookModel {
 	public void setFootnoteModel(ZLTextModel model) {
 		myFootnotes.put(model.getId(), model);
 	}
-
 
 	@Override
 	public ZLTextModel getTextModel() {
@@ -120,32 +109,5 @@ public class NativeBookModel extends BookModel {
 	@Override
 	public ZLTextModel getFootnoteModel(String id) {
 		return myFootnotes.get(id);
-	}
-
-	@Override
-	protected Label getLabelInternal(String id) {
-		final int len = id.length();
-		final int size = myInternalHyperlinks.size();
-
-		for (int i = 0; i < size; ++i) {
-			final char[] block = myInternalHyperlinks.block(i);
-			for (int offset = 0; offset < block.length; ) {
-				final int labelLength = (int)block[offset++];
-				if (labelLength == 0) {
-					break;
-				}
-				final int idLength = (int)block[offset + labelLength];
-				if ((labelLength != len) || !id.equals(new String(block, offset, labelLength))) {
-					offset += labelLength + idLength + 3;
-					continue;
-				}
-				offset += labelLength + 1;
-				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
-				offset += idLength;
-				final int paragraphNumber = (int)block[offset++] + ((int)block[offset++] << 16);
-				return new Label(modelId, paragraphNumber);
-			}
-		}
-		return null;
 	}
 }
