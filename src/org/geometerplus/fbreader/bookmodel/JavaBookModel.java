@@ -82,8 +82,8 @@ public class JavaBookModel extends BookModel {
 			modelId.getChars(0, idLength, block, offset);
 			offset += idLength;
 		}
-		block[offset++] = (char)(paragraphNumber >> 16);
 		block[offset++] = (char)paragraphNumber;
+		block[offset++] = (char)(paragraphNumber >> 16);
 		myCurrentLinkBlockOffset = offset;
 	}
 
@@ -107,7 +107,7 @@ public class JavaBookModel extends BookModel {
 				offset += labelLength + 1;
 				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
 				offset += idLength;
-				final int paragraphNumber = (((int)block[offset++]) << 16) + (int)block[offset];
+				final int paragraphNumber = (int)block[offset] + (((int)block[offset + 1]) << 16);
 				return new Label(modelId, paragraphNumber);
 			}
 		}
