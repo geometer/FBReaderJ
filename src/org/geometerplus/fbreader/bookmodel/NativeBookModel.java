@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.library.Book;
 
 public class NativeBookModel extends BookModelImpl {
 	private ZLImageMap myImageMap;
-	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
 	private ZLTextModel myBookTextModel;
 

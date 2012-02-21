@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.bookmodel;
 
 import java.util.List;
+import java.util.Collections;
 
 import org.geometerplus.zlibrary.text.model.*;
 

@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.Paths;
 
 public class JavaBookModel extends BookModelImpl {
 	private final ZLPlainImageMap myImageMap = new ZLPlainImageMap();
-	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
 	public final ZLTextModel BookTextModel;
 
