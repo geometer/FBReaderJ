@@ -28,7 +28,7 @@ import org.geometerplus.zlibrary.text.model.*;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.Paths;
 
-public class JavaBookModel extends BookModel {
+public class JavaBookModel extends BookModelImpl {
 	private final ZLPlainImageMap myImageMap = new ZLPlainImageMap();
 	private final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
@@ -37,6 +37,7 @@ public class JavaBookModel extends BookModel {
 	JavaBookModel(Book book) {
 		super(book);
 		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
+		myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 	}
 
 	@Override
@@ -54,7 +55,6 @@ public class JavaBookModel extends BookModel {
 		return model;
 	}
 
-	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 	private char[] myCurrentLinkBlock;
 	private int myCurrentLinkBlockOffset;
 
@@ -85,33 +85,6 @@ public class JavaBookModel extends BookModel {
 		block[offset++] = (char)paragraphNumber;
 		block[offset++] = (char)(paragraphNumber >> 16);
 		myCurrentLinkBlockOffset = offset;
-	}
-
-	@Override
-	protected Label getLabelInternal(String id) {
-		final int len = id.length();
-		final int size = myInternalHyperlinks.size();
-
-		for (int i = 0; i < size; ++i) {
-			final char[] block = myInternalHyperlinks.block(i);
-			for (int offset = 0; offset < block.length; ) {
-				final int labelLength = (int)block[offset++];
-				if (labelLength == 0) {
-					break;
-				}
-				final int idLength = (int)block[offset + labelLength];
-				if ((labelLength != len) || !id.equals(new String(block, offset, labelLength))) {
-					offset += labelLength + idLength + 3;
-					continue;
-				}
-				offset += labelLength + 1;
-				final String modelId = (idLength > 0) ? new String(block, offset, idLength) : null;
-				offset += idLength;
-				final int paragraphNumber = (int)block[offset] + (((int)block[offset + 1]) << 16);
-				return new Label(modelId, paragraphNumber);
-			}
-		}
-		return null;
 	}
 
 	void addImage(String id, ZLImage image) {

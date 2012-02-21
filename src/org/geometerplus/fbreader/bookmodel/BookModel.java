@@ -76,14 +76,7 @@ public abstract class BookModel {
 
 	public abstract ZLTextModel getTextModel();
 	public abstract ZLTextModel getFootnoteModel(String id);
-<<<<<<< HEAD
 	protected abstract Label getLabelInternal(String id);
-=======
-
-	protected final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
-	protected char[] myCurrentLinkBlock;
-	protected int myCurrentLinkBlockOffset;
->>>>>>> master
 
 	public interface LabelResolver {
 		List<String> getCandidates(String id);
