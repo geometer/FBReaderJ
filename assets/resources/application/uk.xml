@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Ваш пристрій не підключено до локалької мережі"/>
 			<node name="wifiIsTurnedOff" value="WiFi вимкнено"/>
 			<node name="turnWiFiOn" value="Будь-ласка, ввімкніть WiFi і спробуйте знову"/>
+			<node name="scanningLocalNetwork" value="Сканування локальної мережі. Зачекайте, будь ласка...&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Пошук в мережі"/>
@@ -714,7 +715,6 @@
 			<node name="loadingNetworkBookInfo" value="Завантаження інформації про книгу. Зачекайте, будь ласка...&#8230;" />
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
 			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка...&#8230;"/>
-			<node name="scanningLocalNetwork" value="Сканування локальної мережі. Зачекайте, будь ласка...&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутрішня помилка сервера" />

@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Twoje urządzenie nie jest podłączone do sieci lokalnej"/>
 			<node name="wifiIsTurnedOff" value="WiFi jest wyłączone"/>
 			<node name="turnWiFiOn" value="Proszę włączyć WiFi i spróbować ponownie"/>
+			<node name="scanningLocalNetwork" value="Przeszukiwanie sieci lokalnej. Proszę czekać&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Wyszukiwanie sieciowe"/>
@@ -714,7 +715,6 @@
 			<node name="loadingNetworkBookInfo" value="Ładowanie informacji o książce. Proszę, czekać&#8230;"/>
 			<node name="updatingCatalogsList" value="Aktualizacja listy katalogów. Proszę czekać&#8230;"/>
 			<node name="updatingAccountInformation" value="Aktualizacja informacji o koncie. Proszę czekać&#8230;"/>
-			<node name="scanningLocalNetwork" value="Przeszukiwanie sieci lokalnej. Proszę czekać&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Wenętrzny błąd serwera" />

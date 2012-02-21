@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Dispozitivul dumneavoastra nu este conectat la o retea locala"/>
 			<node name="wifiIsTurnedOff" value="WiFi-ul este inchis"/>
 			<node name="turnWiFiOn" value="Va rugam porniti WiFi si reincercati"/>
+			<node name="scanningLocalNetwork" value="Se scaneaza reteaua locala.Va rugam asteptati&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Reteaua de cautare"/>
@@ -714,7 +715,6 @@
 			<node name="loadingNetworkBookInfo" value="Se incarca informatii despre carte. Va rugam asteptati &#8230;"/>
 			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati&#8230;"/>
 			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati&#8230;"/>
-			<node name="scanningLocalNetwork" value="Se scaneaza reteaua locala.Va rugam asteptati&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>

@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
 			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
 			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
+			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="網絡搜尋"/>
@@ -719,7 +720,6 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="伺服器出錯" />
