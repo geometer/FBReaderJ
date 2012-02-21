@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Ваш пристрій не підключено до локалької мережі"/>
 			<node name="wifiIsTurnedOff" value="WiFi вимкнено"/>
 			<node name="turnWiFiOn" value="Будь-ласка, ввімкніть WiFi і спробуйте знову"/>
+			<node name="scanningLocalNetwork" value="Сканування локальної мережі. Зачекайте, будь ласка...&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Пошук в мережі"/>
@@ -348,6 +349,29 @@
 			</node>
 			<node name="text" value="Текст">
 				<node name="summary" value="Шрифти, переноси, etc."/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="Родина шрифту">
 					<node name="unchanged" value="&lt;не міняти&gt;"/>
 				</node>
@@ -367,6 +391,16 @@
 				<node name="italic" value="Курсив">
 					<node name="summaryOn" value="курсив"/>
 					<node name="summaryOff" value="звичайний"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;не міняти&gt;"/>
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 					<node name="unchanged" value="&lt;не міняти&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Інтервал">
@@ -691,7 +725,6 @@
 			<node name="loadingNetworkBookInfo" value="Завантаження інформації про книгу. Зачекайте, будь ласка...&#8230;" />
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
 			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка...&#8230;"/>
-			<node name="scanningLocalNetwork" value="Сканування локальної мережі. Зачекайте, будь ласка...&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутрішня помилка сервера" />
