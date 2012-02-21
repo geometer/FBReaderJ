@@ -1,137 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dictionaries>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Russian"
+		title="Slovoed Compact Swedish-&gt;Russian"
 		package="com.slovoed.noreg.russian_swedish.compact"
 		pattern="%s/808465729"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Swedish"
+		title="Slovoed Compact Russian-&gt;Swedish"
 		package="com.slovoed.noreg.russian_swedish.compact"
 		pattern="%s/808465730"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;French"
+		title="Slovoed Compact Greek-&gt;French"
 		package="com.slovoed.noreg.greek_french.compact"
 		pattern="%s/808469808"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Greek"
+		title="Slovoed Compact French-&gt;Greek"
 		package="com.slovoed.noreg.greek_french.compact"
 		pattern="%s/808469809"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;German"
+		title="Slovoed Compact Greek-&gt;German"
 		package="com.slovoed.noreg.german_greek.compact"
 		pattern="%s/808469810"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;Greek"
+		title="Slovoed Compact German-&gt;Greek"
 		package="com.slovoed.noreg.german_greek.compact"
 		pattern="%s/808469811"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Italian"
+		title="Slovoed Compact Greek-&gt;Italian"
 		package="com.slovoed.noreg.greek_italian.compact"
 		pattern="%s/808469812"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Dutch"
+		title="Slovoed Compact Greek-&gt;Dutch"
 		package="com.slovoed.noreg.greek_dutch.compact"
 		pattern="%s/808469572"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;English"
+		title="Slovoed Compact Greek-&gt;English"
 		package="com.slovoed.noreg.english_greek.compact"
 		pattern="%s/808469573"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Greek"
+		title="Slovoed Compact English-&gt;Greek"
 		package="com.slovoed.noreg.english_greek.compact"
 		pattern="%s/808469574"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;English"
+		title="Slovoed Compact Swedish-&gt;English"
 		package="com.slovoed.noreg.english_swedish.compact"
 		pattern="%s/808465721"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Swedish"
+		title="Slovoed Compact English-&gt;Swedish"
 		package="com.slovoed.noreg.english_swedish.compact"
 		pattern="%s/808465720"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;French"
+		title="Slovoed Classic German-&gt;French"
 		package="com.slovoed.noreg.french_german.classic"
 		pattern="%s/808465973"
 	/>
 	<dictionary
-		title="SlovoEd Classic French-&gt;German"
+		title="Slovoed Classic French-&gt;German"
 		package="com.slovoed.noreg.french_german.classic"
 		pattern="%s/808465972"
 	/>
 	<dictionary
-		title="SlovoEd Classic Portuguese-&gt;English"
+		title="Slovoed Classic Portuguese-&gt;English"
 		package="com.slovoed.noreg.english_portuguese.classic"
 		pattern="%s/808465971"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Portuguese"
+		title="Slovoed Classic English-&gt;Portuguese"
 		package="com.slovoed.noreg.english_portuguese.classic"
 		pattern="%s/808465970"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Greek"
+		title="Slovoed Compact Russian-&gt;Greek"
 		package="com.slovoed.noreg.greek_russian.compact"
 		pattern="%s/808469826"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Russian"
+		title="Slovoed Compact Greek-&gt;Russian"
 		package="com.slovoed.noreg.greek_russian.compact"
 		pattern="%s/808469825"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;Greek"
+		title="Slovoed Compact Spanish-&gt;Greek"
 		package="com.slovoed.noreg.greek_spanish.compact"
 		pattern="%s/808469828"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Spanish"
+		title="Slovoed Compact Greek-&gt;Spanish"
 		package="com.slovoed.noreg.greek_spanish.compact"
 		pattern="%s/808469827"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Polish"
+		title="Slovoed Compact Greek-&gt;Polish"
 		package="com.slovoed.noreg.greek_polish.compact"
 		pattern="%s/808469814"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Greek"
+		title="Slovoed Compact Italian-&gt;Greek"
 		package="com.slovoed.noreg.greek_italian.compact"
 		pattern="%s/808469813"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Portuguese"
+		title="Slovoed Compact Greek-&gt;Portuguese"
 		package="com.slovoed.noreg.greek_portuguese.compact"
 		pattern="%s/808469816"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;Greek"
+		title="Slovoed Compact Polish-&gt;Greek"
 		package="com.slovoed.noreg.greek_polish.compact"
 		pattern="%s/808469815"
 	/>
 	<dictionary
-		title="SlovoEd Compact Portuguese-&gt;Greek"
+		title="Slovoed Compact Portuguese-&gt;Greek"
 		package="com.slovoed.noreg.greek_portuguese.compact"
 		pattern="%s/808469817"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;English"
+		title="Slovoed Compact Russian-&gt;English"
 		package="com.slovoed.noreg.english_russian.compact"
 		pattern="%s/808465473"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Russian"
+		title="Slovoed Compact English-&gt;Russian"
 		package="com.slovoed.noreg.english_russian.compact"
 		pattern="%s/808465474"
 	/>
@@ -151,22 +151,22 @@
 		pattern="%s/808470069"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;Italian"
+		title="Slovoed Compact Polish-&gt;Italian"
 		package="com.slovoed.noreg.italian_polish.compact"
 		pattern="%s/808470066"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Polish"
+		title="Slovoed Compact Italian-&gt;Polish"
 		package="com.slovoed.noreg.italian_polish.compact"
 		pattern="%s/808470067"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;French"
+		title="Slovoed Compact Polish-&gt;French"
 		package="com.slovoed.noreg.french_polish.compact"
 		pattern="%s/808469829"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Polish"
+		title="Slovoed Compact French-&gt;Polish"
 		package="com.slovoed.noreg.french_polish.compact"
 		pattern="%s/808469830"
 	/>
@@ -181,27 +181,27 @@
 		pattern="%s/808465715"
 	/>
 	<dictionary
-		title="SlovoEd Classic English explanatory"
+		title="Slovoed Classic English explanatory"
 		package="com.slovoed.noreg.english_english.classic"
 		pattern="%s/808470082"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;Polish"
+		title="Slovoed Compact Spanish-&gt;Polish"
 		package="com.slovoed.noreg.polish_spanish.compact"
 		pattern="%s/808470073"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;Spanish"
+		title="Slovoed Compact Polish-&gt;Spanish"
 		package="com.slovoed.noreg.polish_spanish.compact"
 		pattern="%s/808470072"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Polish"
+		title="Slovoed Compact Russian-&gt;Polish"
 		package="com.slovoed.noreg.polish_russian.compact"
 		pattern="%s/808470071"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;Russian"
+		title="Slovoed Compact Polish-&gt;Russian"
 		package="com.slovoed.noreg.polish_russian.compact"
 		pattern="%s/808470070"
 	/>
@@ -221,67 +221,67 @@
 		pattern="%s/808465478"
 	/>
 	<dictionary
-		title="SlovoEd Compact Ukrainian-&gt;Russian"
+		title="Slovoed Compact Ukrainian-&gt;Russian"
 		package="com.slovoed.noreg.russian_ukrainian.compact"
 		pattern="%s/808466245"
 	/>
 	<dictionary
-		title="SlovoEd Compact Serbian-&gt;English"
+		title="Slovoed Compact Serbian-&gt;English"
 		package="com.slovoed.noreg.english_serbian.compact"
 		pattern="%s/808466246"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Ukrainian"
+		title="Slovoed Compact Russian-&gt;Ukrainian"
 		package="com.slovoed.noreg.russian_ukrainian.compact"
 		pattern="%s/808466244"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Serbian"
+		title="Slovoed Compact English-&gt;Serbian"
 		package="com.slovoed.noreg.english_serbian.compact"
 		pattern="%s/808466480"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;Italian"
+		title="Slovoed Deluxe German-&gt;Italian"
 		package="com.slovoed.noreg.german_italian.deluxe"
 		pattern="%s/808465985"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Italian-&gt;German"
+		title="Slovoed Deluxe Italian-&gt;German"
 		package="com.slovoed.noreg.german_italian.deluxe"
 		pattern="%s/808465986"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;Spanish"
+		title="Slovoed Classic German-&gt;Spanish"
 		package="com.slovoed.noreg.german_spanish.classic"
 		pattern="%s/808465987"
 	/>
 	<dictionary
-		title="SlovoEd Classic Spanish-&gt;German"
+		title="Slovoed Classic Spanish-&gt;German"
 		package="com.slovoed.noreg.german_spanish.classic"
 		pattern="%s/808465988"
 	/>
 	<dictionary
-		title="SlovoEd Classic Spanish-&gt;Italian"
+		title="Slovoed Classic Spanish-&gt;Italian"
 		package="com.slovoed.noreg.italian_spanish.classic"
 		pattern="%s/808465989"
 	/>
 	<dictionary
-		title="SlovoEd Classic French-&gt;Italian"
+		title="Slovoed Classic French-&gt;Italian"
 		package="com.slovoed.noreg.french_italian.classic"
 		pattern="%s/808465974"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;French"
+		title="Slovoed Classic Italian-&gt;French"
 		package="com.slovoed.noreg.french_italian.classic"
 		pattern="%s/808465975"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Spanish"
+		title="Slovoed Compact French-&gt;Spanish"
 		package="com.slovoed.noreg.french_spanish.compact"
 		pattern="%s/808465976"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;French"
+		title="Slovoed Compact Spanish-&gt;French"
 		package="com.slovoed.noreg.french_spanish.compact"
 		pattern="%s/808465977"
 	/>
@@ -296,7 +296,7 @@
 		pattern="%s/808466225"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;Spanish"
+		title="Slovoed Classic Italian-&gt;Spanish"
 		package="com.slovoed.noreg.italian_spanish.classic"
 		pattern="%s/808465990"
 	/>
@@ -311,72 +311,72 @@
 		pattern="%s/808596273"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Turkish-&gt;English"
+		title="Slovoed Deluxe Turkish-&gt;English"
 		package="com.slovoed.noreg.english_turkish.deluxe"
 		pattern="%s/808596293"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Czech"
+		title="Slovoed Deluxe English-&gt;Czech"
 		package="com.slovoed.noreg.czech_english.deluxe"
 		pattern="%s/808468786"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Czech-&gt;English"
+		title="Slovoed Deluxe Czech-&gt;English"
 		package="com.slovoed.noreg.czech_english.deluxe"
 		pattern="%s/808468787"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;Czech"
+		title="Slovoed Deluxe German-&gt;Czech"
 		package="com.slovoed.noreg.czech_german.deluxe"
 		pattern="%s/808468788"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;Czech"
+		title="Slovoed Classic Italian-&gt;Czech"
 		package="com.slovoed.noreg.czech_italian.classic"
 		pattern="%s/808534326"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Czech-&gt;German"
+		title="Slovoed Deluxe Czech-&gt;German"
 		package="com.slovoed.noreg.czech_german.deluxe"
 		pattern="%s/808468789"
 	/>
 	<dictionary
-		title="SlovoEd Classic Czech-&gt;Italian"
+		title="Slovoed Classic Czech-&gt;Italian"
 		package="com.slovoed.noreg.czech_italian.classic"
 		pattern="%s/808534327"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe French-&gt;Czech"
+		title="Slovoed Deluxe French-&gt;Czech"
 		package="com.slovoed.noreg.czech_french.deluxe"
 		pattern="%s/808468790"
 	/>
 	<dictionary
-		title="SlovoEd DeLuxe Czech-&gt;French"
+		title="Slovoed DeLuxe Czech-&gt;French"
 		package="com.slovoed.noreg.czech_french.deluxe"
 		pattern="%s/808468791"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Croatian"
+		title="Slovoed Deluxe English-&gt;Croatian"
 		package="com.slovoed.noreg.croatian_english.deluxe"
 		pattern="%s/808534324"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Croatian-&gt;English"
+		title="Slovoed Deluxe Croatian-&gt;English"
 		package="com.slovoed.noreg.croatian_english.deluxe"
 		pattern="%s/808534325"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Turkish"
+		title="Slovoed Deluxe English-&gt;Turkish"
 		package="com.slovoed.noreg.english_turkish.deluxe"
 		pattern="%s/808596292"
 	/>
 	<dictionary
-		title="SlovoEd Compact Hebrew-&gt;Russian"
+		title="Slovoed Compact Hebrew-&gt;Russian"
 		package="com.slovoed.noreg.slovoed.base_00b1.hebrew_russian"
 		pattern="%s/808469041"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;English"
+		title="Slovoed Classic German-&gt;English"
 		package="com.slovoed.noreg.english_german.classic"
 		pattern="%s/808469044"
 	/>
@@ -386,22 +386,22 @@
 		pattern="%s/808469045"
 	/>
 	<dictionary
-		title="SlovoEd Compact English explanatory"
+		title="Slovoed Compact English explanatory"
 		package="com.slovoed.noreg.english_english.compact"
 		pattern="%s/808534578"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Hebrew"
+		title="Slovoed Compact Russian-&gt;Hebrew"
 		package="com.slovoed.noreg.slovoed.base_00b1.hebrew_russian"
 		pattern="%s/808469042"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;German"
+		title="Slovoed Classic English-&gt;German"
 		package="com.slovoed.noreg.english_german.classic"
 		pattern="%s/808469043"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;English"
+		title="Slovoed Compact Spanish-&gt;English"
 		package="com.slovoed.noreg.english_spanish.compact"
 		pattern="%s/808469048"
 	/>
@@ -421,7 +421,7 @@
 		pattern="%s/808534583"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Spanish"
+		title="Slovoed Compact English-&gt;Spanish"
 		package="com.slovoed.noreg.english_spanish.compact"
 		pattern="%s/808469047"
 	/>
@@ -446,22 +446,22 @@
 		pattern="%s/null"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Danish"
+		title="Slovoed Compact Swedish-&gt;Danish"
 		package="com.slovoed.noreg.danish_swedish.compact"
 		pattern="%s/808469062"
 	/>
 	<dictionary
-		title="SlovoEd Compact Czech-&gt;Swedish"
+		title="Slovoed Compact Czech-&gt;Swedish"
 		package="com.slovoed.noreg.czech_swedish.compact"
 		pattern="%s/808469059"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Czech"
+		title="Slovoed Compact Swedish-&gt;Czech"
 		package="com.slovoed.noreg.czech_swedish.compact"
 		pattern="%s/808469058"
 	/>
 	<dictionary
-		title="SlovoEd Compact Romanian-&gt;Swedish"
+		title="Slovoed Compact Romanian-&gt;Swedish"
 		package="com.slovoed.noreg.romanian_swedish.compact"
 		pattern="%s/808469061"
 	/>
@@ -471,12 +471,12 @@
 		pattern="%s/null"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Romanian"
+		title="Slovoed Compact Swedish-&gt;Romanian"
 		package="com.slovoed.noreg.romanian_swedish.compact"
 		pattern="%s/808469060"
 	/>
 	<dictionary
-		title="SlovoEd Compact Danish-&gt;Swedish"
+		title="Slovoed Compact Danish-&gt;Swedish"
 		package="com.slovoed.noreg.danish_swedish.compact"
 		pattern="%s/808469296"
 	/>
@@ -491,7 +491,7 @@
 		pattern="%s/808469304"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;French"
+		title="Slovoed Compact Swedish-&gt;French"
 		package="com.slovoed.noreg.french_swedish.compact"
 		pattern="%s/808469305"
 	/>
@@ -506,22 +506,22 @@
 		pattern="%s/808469302"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Swedish"
+		title="Slovoed Compact French-&gt;Swedish"
 		package="com.slovoed.noreg.french_swedish.compact"
 		pattern="%s/808469313"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Hungarian"
+		title="Slovoed Deluxe English-&gt;Hungarian"
 		package="com.slovoed.noreg.english_hungarian.deluxe"
 		pattern="%s/808595505"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;German"
+		title="Slovoed Deluxe English-&gt;German"
 		package="com.slovoed.noreg.english_german.deluxe"
 		pattern="%s/808464949"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Spanish"
+		title="Slovoed Compact Swedish-&gt;Spanish"
 		package="com.slovoed.noreg.spanish_swedish.compact"
 		pattern="%s/808469318"
 	/>
@@ -531,7 +531,7 @@
 		pattern="%s/808469317"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;English"
+		title="Slovoed Deluxe German-&gt;English"
 		package="com.slovoed.noreg.english_german.deluxe"
 		pattern="%s/808464950"
 	/>
@@ -541,57 +541,57 @@
 		pattern="%s/808469316"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Italian"
+		title="Slovoed Classic English-&gt;Italian"
 		package="com.slovoed.noreg.english_italian.classic"
 		pattern="%s/808464953"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Hungarian-&gt;English"
+		title="Slovoed Deluxe Hungarian-&gt;English"
 		package="com.slovoed.noreg.english_hungarian.deluxe"
 		pattern="%s/808595506"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;German"
+		title="Slovoed Compact French-&gt;German"
 		package="com.slovoed.noreg.french_german.compact"
 		pattern="%s/808469555"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;English"
+		title="Slovoed Compact German-&gt;English"
 		package="com.slovoed.noreg.english_german.compact"
 		pattern="%s/808469554"
 	/>
 	<dictionary
-		title="SlovoEd Classic French-&gt;English"
+		title="Slovoed Classic French-&gt;English"
 		package="com.slovoed.noreg.english_french.classic"
 		pattern="%s/808595512"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;German"
+		title="Slovoed Compact English-&gt;German"
 		package="com.slovoed.noreg.english_german.compact"
 		pattern="%s/808469553"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;French"
+		title="Slovoed Classic English-&gt;French"
 		package="com.slovoed.noreg.english_french.classic"
 		pattern="%s/808595511"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;Swedish"
+		title="Slovoed Compact Spanish-&gt;Swedish"
 		package="com.slovoed.noreg.spanish_swedish.compact"
 		pattern="%s/808469552"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;English"
+		title="Slovoed Classic Italian-&gt;English"
 		package="com.slovoed.noreg.english_italian.classic"
 		pattern="%s/808464961"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Spanish"
+		title="Slovoed Classic English-&gt;Spanish"
 		package="com.slovoed.noreg.english_spanish.classic"
 		pattern="%s/808595521"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;Latin"
+		title="Slovoed Compact German-&gt;Latin"
 		package="com.slovoed.noreg.german_latin.compact"
 		pattern="%s/808469560"
 	/>
@@ -601,62 +601,62 @@
 		pattern="%s/808469561"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English explanatory"
+		title="Slovoed Deluxe English explanatory"
 		package="com.slovoed.noreg.english_english.deluxe"
 		pattern="%s/808595524"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;Italian"
+		title="Slovoed Classic German-&gt;Italian"
 		package="com.slovoed.noreg.german_italian.classic"
 		pattern="%s/808469558"
 	/>
 	<dictionary
-		title="SlovoEd Compact Latin-&gt;German"
+		title="Slovoed Compact Latin-&gt;German"
 		package="com.slovoed.noreg.german_latin.compact"
 		pattern="%s/808469559"
 	/>
 	<dictionary
-		title="SlovoEd Classic Spanish-&gt;English"
+		title="Slovoed Classic Spanish-&gt;English"
 		package="com.slovoed.noreg.english_spanish.classic"
 		pattern="%s/808595522"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;French"
+		title="Slovoed Compact German-&gt;French"
 		package="com.slovoed.noreg.french_german.compact"
 		pattern="%s/808469556"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;German"
+		title="Slovoed Classic Italian-&gt;German"
 		package="com.slovoed.noreg.german_italian.classic"
 		pattern="%s/808469557"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Dutch"
+		title="Slovoed Compact Swedish-&gt;Dutch"
 		package="com.slovoed.noreg.dutch_swedish.compact"
 		pattern="%s/808469570"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Slovak"
+		title="Slovoed Compact English-&gt;Slovak"
 		package="com.slovoed.noreg.english_slovak.compact"
 		pattern="%s/808600626"
 	/>
 	<dictionary
-		title="SlovoEd Compact Dutch-&gt;Swedish"
+		title="Slovoed Compact Dutch-&gt;Swedish"
 		package="com.slovoed.noreg.dutch_swedish.compact"
 		pattern="%s/808469571"
 	/>
 	<dictionary
-		title="SlovoEd Compact Slovak-&gt;English"
+		title="Slovoed Compact Slovak-&gt;English"
 		package="com.slovoed.noreg.english_slovak.compact"
 		pattern="%s/808600627"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;Slovak"
+		title="Slovoed Compact German-&gt;Slovak"
 		package="com.slovoed.noreg.german_slovak.compact"
 		pattern="%s/808600628"
 	/>
 	<dictionary
-		title="SlovoEd Compact Slovak-&gt;German"
+		title="Slovoed Compact Slovak-&gt;German"
 		package="com.slovoed.noreg.german_slovak.compact"
 		pattern="%s/808600629"
 	/>
@@ -666,67 +666,67 @@
 		pattern="%s/808469569"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;Polish"
+		title="Slovoed Classic German-&gt;Polish"
 		package="com.slovoed.noreg.german_polish.classic"
 		pattern="%s/808596784"
 	/>
 	<dictionary
-		title="SlovoEd Classic Polish-&gt;German"
+		title="Slovoed Classic Polish-&gt;German"
 		package="com.slovoed.noreg.german_polish.classic"
 		pattern="%s/808596785"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;Greek"
+		title="Slovoed Deluxe German-&gt;Greek"
 		package="com.slovoed.noreg.german_greek.deluxe"
 		pattern="%s/808596534"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Greek-&gt;German"
+		title="Slovoed Deluxe Greek-&gt;German"
 		package="com.slovoed.noreg.german_greek.deluxe"
 		pattern="%s/808596535"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe French-&gt;German"
+		title="Slovoed Deluxe French-&gt;German"
 		package="com.slovoed.noreg.french_german.deluxe"
 		pattern="%s/808596536"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;French"
+		title="Slovoed Deluxe German-&gt;French"
 		package="com.slovoed.noreg.french_german.deluxe"
 		pattern="%s/808596537"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;Spanish"
+		title="Slovoed Deluxe German-&gt;Spanish"
 		package="com.slovoed.noreg.german_spanish.deluxe"
 		pattern="%s/808596530"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish-&gt;German"
+		title="Slovoed Deluxe Spanish-&gt;German"
 		package="com.slovoed.noreg.german_spanish.deluxe"
 		pattern="%s/808596531"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Uzbek"
+		title="Slovoed Classic English-&gt;Uzbek"
 		package="com.slovoed.noreg.english_uzbek.classic"
 		pattern="%s/808600889"
 	/>
 	<dictionary
-		title="SlovoEd Classic Uzbek-&gt;English"
+		title="Slovoed Classic Uzbek-&gt;English"
 		package="com.slovoed.noreg.english_uzbek.classic"
 		pattern="%s/808600897"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;Turkish"
+		title="Slovoed Classic German-&gt;Turkish"
 		package="com.slovoed.noreg.german_turkish.classic"
 		pattern="%s/808596787"
 	/>
 	<dictionary
-		title="SlovoEd Classic Turkish-&gt;German"
+		title="Slovoed Classic Turkish-&gt;German"
 		package="com.slovoed.noreg.german_turkish.classic"
 		pattern="%s/808596788"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Catalan-&gt;Spanish"
+		title="Slovoed Deluxe Catalan-&gt;Spanish"
 		package="com.slovoed.noreg.catalan_spanish.deluxe"
 		pattern="%s/808535093"
 	/>
@@ -736,67 +736,67 @@
 		pattern="%s/null"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish-&gt;Catalan"
+		title="Slovoed Deluxe Spanish-&gt;Catalan"
 		package="com.slovoed.noreg.catalan_spanish.deluxe"
 		pattern="%s/808535092"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Latvian"
+		title="Slovoed Classic English-&gt;Latvian"
 		package="com.slovoed.noreg.english_latvian.classic"
 		pattern="%s/808535096"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish-&gt;Italian"
+		title="Slovoed Deluxe Spanish-&gt;Italian"
 		package="com.slovoed.noreg.italian_spanish.deluxe"
 		pattern="%s/808535089"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Italian-&gt;Spanish"
+		title="Slovoed Deluxe Italian-&gt;Spanish"
 		package="com.slovoed.noreg.italian_spanish.deluxe"
 		pattern="%s/808535088"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Swedish"
+		title="Slovoed Compact Italian-&gt;Swedish"
 		package="com.slovoed.noreg.italian_swedish.compact"
 		pattern="%s/808534850"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Italian"
+		title="Slovoed Compact Swedish-&gt;Italian"
 		package="com.slovoed.noreg.italian_swedish.compact"
 		pattern="%s/808534851"
 	/>
 	<dictionary
-		title="SlovoEd Compact Turkish-&gt;Italian"
+		title="Slovoed Compact Turkish-&gt;Italian"
 		package="com.slovoed.noreg.italian_turkish.compact"
 		pattern="%s/808534849"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Dutch"
+		title="Slovoed Compact Italian-&gt;Dutch"
 		package="com.slovoed.noreg.dutch_italian.compact"
 		pattern="%s/808534835"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;French"
+		title="Slovoed Compact Italian-&gt;French"
 		package="com.slovoed.noreg.french_italian.compact"
 		pattern="%s/808534837"
 	/>
 	<dictionary
-		title="SlovoEd Compact Dutch-&gt;Italian"
+		title="Slovoed Compact Dutch-&gt;Italian"
 		package="com.slovoed.noreg.dutch_italian.compact"
 		pattern="%s/808534836"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Russian"
+		title="Slovoed Compact Italian-&gt;Russian"
 		package="com.slovoed.noreg.italian_russian.compact"
 		pattern="%s/808534839"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Turkish"
+		title="Slovoed Classic English-&gt;Turkish"
 		package="com.slovoed.noreg.english_turkish.classic"
 		pattern="%s/808530756"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Italian"
+		title="Slovoed Compact French-&gt;Italian"
 		package="com.slovoed.noreg.french_italian.compact"
 		pattern="%s/808534838"
 	/>
@@ -806,12 +806,12 @@
 		pattern="%s/null"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Turkish"
+		title="Slovoed Compact Italian-&gt;Turkish"
 		package="com.slovoed.noreg.italian_turkish.compact"
 		pattern="%s/808534841"
 	/>
 	<dictionary
-		title="SlovoEd Classic Turkish-&gt;English"
+		title="Slovoed Classic Turkish-&gt;English"
 		package="com.slovoed.noreg.english_turkish.classic"
 		pattern="%s/808530755"
 	/>
@@ -821,57 +821,57 @@
 		pattern="%s/808597554"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Italian"
+		title="Slovoed Compact Russian-&gt;Italian"
 		package="com.slovoed.noreg.italian_russian.compact"
 		pattern="%s/808534840"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Hebrew"
+		title="Slovoed Classic English-&gt;Hebrew"
 		package="com.slovoed.noreg.slovoed.base_013a.hebrew_english"
 		pattern="%s/808530754"
 	/>
 	<dictionary
-		title="SlovoEd Classic Hebrew-&gt;English"
+		title="Slovoed Classic Hebrew-&gt;English"
 		package="com.slovoed.noreg.slovoed.base_013a.hebrew_english"
 		pattern="%s/808530753"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish Italian"
+		title="Slovoed Compact Spanish Italian"
 		package="com.slovoed.noreg.italian_spanish.compact"
 		pattern="%s/808534832"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Lithuanian"
+		title="Slovoed Compact Italian-&gt;Lithuanian"
 		package="com.slovoed.noreg.italian_lithuanian.compact"
 		pattern="%s/808534594"
 	/>
 	<dictionary
-		title="SlovoEd Compact Lithuanian-&gt;Italian"
+		title="Slovoed Compact Lithuanian-&gt;Italian"
 		package="com.slovoed.noreg.italian_lithuanian.compact"
 		pattern="%s/808534595"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Spanish"
+		title="Slovoed Compact Italian-&gt;Spanish"
 		package="com.slovoed.noreg.italian_spanish.compact"
 		pattern="%s/808534598"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Italian"
+		title="Slovoed Compact English-&gt;Italian"
 		package="com.slovoed.noreg.english_italian.compact"
 		pattern="%s/808532272"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;English"
+		title="Slovoed Compact Italian-&gt;English"
 		package="com.slovoed.noreg.english_italian.compact"
 		pattern="%s/808532273"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Latin"
+		title="Slovoed Classic English-&gt;Latin"
 		package="com.slovoed.noreg.english_latin.classic"
 		pattern="%s/808532274"
 	/>
 	<dictionary
-		title="SlovoEd Classic Latin-&gt;English"
+		title="Slovoed Classic Latin-&gt;English"
 		package="com.slovoed.noreg.english_latin.classic"
 		pattern="%s/808532275"
 	/>
@@ -886,62 +886,62 @@
 		pattern="%s/808532279"
 	/>
 	<dictionary
-		title="SlovoEd Classic Spanish-&gt;French"
+		title="Slovoed Classic Spanish-&gt;French"
 		package="com.slovoed.noreg.french_spanish.classic"
 		pattern="%s/808532281"
 	/>
 	<dictionary
-		title="SlovoEd Classic French-&gt;Spanish"
+		title="Slovoed Classic French-&gt;Spanish"
 		package="com.slovoed.noreg.french_spanish.classic"
 		pattern="%s/808532280"
 	/>
 	<dictionary
-		title="SlovoEd Classic Arabic-&gt;English"
+		title="Slovoed Classic Arabic-&gt;English"
 		package="com.slovoed.noreg.slovoed.base_019c.arabic_english"
 		pattern="%s/808532291"
 	/>
 	<dictionary
-		title="SlovoEd Classic Polish-&gt;English"
+		title="Slovoed Classic Polish-&gt;English"
 		package="com.slovoed.noreg.english_polish.classic"
 		pattern="%s/808466502"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe French explanatory"
+		title="Slovoed Deluxe French explanatory"
 		package="com.slovoed.noreg.french_french.deluxe"
 		pattern="%s/808532290"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Polish"
+		title="Slovoed Classic English-&gt;Polish"
 		package="com.slovoed.noreg.english_polish.classic"
 		pattern="%s/808466501"
 	/>
 	<dictionary
-		title="SlovoEd Compact Ukrainian-&gt;English"
+		title="Slovoed Compact Ukrainian-&gt;English"
 		package="com.slovoed.noreg.english_ukrainian.compact"
 		pattern="%s/808466500"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Ukrainian"
+		title="Slovoed Compact English-&gt;Ukrainian"
 		package="com.slovoed.noreg.english_ukrainian.compact"
 		pattern="%s/808466499"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Arabic"
+		title="Slovoed Classic English-&gt;Arabic"
 		package="com.slovoed.noreg.slovoed.base_019c.arabic_english"
 		pattern="%s/808532292"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Arabic"
+		title="Slovoed Compact Russian-&gt;Arabic"
 		package="com.slovoed.noreg.slovoed.base_0169.arabic_russian"
 		pattern="%s/808531760"
 	/>
 	<dictionary
-		title="SlovoEd Compact Arabic-&gt;Russian"
+		title="Slovoed Compact Arabic-&gt;Russian"
 		package="com.slovoed.noreg.slovoed.base_0169.arabic_russian"
 		pattern="%s/808531513"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish explanatory"
+		title="Slovoed Deluxe Spanish explanatory"
 		package="com.slovoed.noreg.spanish_spanish.deluxe"
 		pattern="%s/808531782"
 	/>
@@ -956,147 +956,147 @@
 		pattern="%s/808532018"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish-&gt;English"
+		title="Slovoed Deluxe Spanish-&gt;English"
 		package="com.slovoed.noreg.english_spanish.deluxe"
 		pattern="%s/808531781"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Spanish"
+		title="Slovoed Deluxe English-&gt;Spanish"
 		package="com.slovoed.noreg.english_spanish.deluxe"
 		pattern="%s/808531780"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Russian"
+		title="Slovoed Compact Swedish-&gt;Russian"
 		package="com.slovoed.russian_swedish.compact"
 		pattern="%s/808465729"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Swedish"
+		title="Slovoed Compact Russian-&gt;Swedish"
 		package="com.slovoed.russian_swedish.compact"
 		pattern="%s/808465730"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;French"
+		title="Slovoed Compact Greek-&gt;French"
 		package="com.slovoed.greek_french.compact"
 		pattern="%s/808469808"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Greek"
+		title="Slovoed Compact French-&gt;Greek"
 		package="com.slovoed.greek_french.compact"
 		pattern="%s/808469809"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;German"
+		title="Slovoed Compact Greek-&gt;German"
 		package="com.slovoed.german_greek.compact"
 		pattern="%s/808469810"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;Greek"
+		title="Slovoed Compact German-&gt;Greek"
 		package="com.slovoed.german_greek.compact"
 		pattern="%s/808469811"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Italian"
+		title="Slovoed Compact Greek-&gt;Italian"
 		package="com.slovoed.greek_italian.compact"
 		pattern="%s/808469812"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Dutch"
+		title="Slovoed Compact Greek-&gt;Dutch"
 		package="com.slovoed.greek_dutch.compact"
 		pattern="%s/808469572"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;English"
+		title="Slovoed Compact Greek-&gt;English"
 		package="com.slovoed.english_greek.compact"
 		pattern="%s/808469573"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Greek"
+		title="Slovoed Compact English-&gt;Greek"
 		package="com.slovoed.english_greek.compact"
 		pattern="%s/808469574"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;English"
+		title="Slovoed Compact Swedish-&gt;English"
 		package="com.slovoed.english_swedish.compact"
 		pattern="%s/808465721"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Swedish"
+		title="Slovoed Compact English-&gt;Swedish"
 		package="com.slovoed.english_swedish.compact"
 		pattern="%s/808465720"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;French"
+		title="Slovoed Classic German-&gt;French"
 		package="com.slovoed.french_german.classic"
 		pattern="%s/808465973"
 	/>
 	<dictionary
-		title="SlovoEd Classic French-&gt;German"
+		title="Slovoed Classic French-&gt;German"
 		package="com.slovoed.french_german.classic"
 		pattern="%s/808465972"
 	/>
 	<dictionary
-		title="SlovoEd Classic Portuguese-&gt;English"
+		title="Slovoed Classic Portuguese-&gt;English"
 		package="com.slovoed.english_portuguese.classic"
 		pattern="%s/808465971"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Portuguese"
+		title="Slovoed Classic English-&gt;Portuguese"
 		package="com.slovoed.english_portuguese.classic"
 		pattern="%s/808465970"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Greek"
+		title="Slovoed Compact Russian-&gt;Greek"
 		package="com.slovoed.greek_russian.compact"
 		pattern="%s/808469826"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Russian"
+		title="Slovoed Compact Greek-&gt;Russian"
 		package="com.slovoed.greek_russian.compact"
 		pattern="%s/808469825"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;Greek"
+		title="Slovoed Compact Spanish-&gt;Greek"
 		package="com.slovoed.greek_spanish.compact"
 		pattern="%s/808469828"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Spanish"
+		title="Slovoed Compact Greek-&gt;Spanish"
 		package="com.slovoed.greek_spanish.compact"
 		pattern="%s/808469827"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Polish"
+		title="Slovoed Compact Greek-&gt;Polish"
 		package="com.slovoed.greek_polish.compact"
 		pattern="%s/808469814"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Greek"
+		title="Slovoed Compact Italian-&gt;Greek"
 		package="com.slovoed.greek_italian.compact"
 		pattern="%s/808469813"
 	/>
 	<dictionary
-		title="SlovoEd Compact Greek-&gt;Portuguese"
+		title="Slovoed Compact Greek-&gt;Portuguese"
 		package="com.slovoed.greek_portuguese.compact"
 		pattern="%s/808469816"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;Greek"
+		title="Slovoed Compact Polish-&gt;Greek"
 		package="com.slovoed.greek_polish.compact"
 		pattern="%s/808469815"
 	/>
 	<dictionary
-		title="SlovoEd Compact Portuguese-&gt;Greek"
+		title="Slovoed Compact Portuguese-&gt;Greek"
 		package="com.slovoed.greek_portuguese.compact"
 		pattern="%s/808469817"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;English"
+		title="Slovoed Compact Russian-&gt;English"
 		package="com.slovoed.english_russian.compact"
 		pattern="%s/808465473"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Russian"
+		title="Slovoed Compact English-&gt;Russian"
 		package="com.slovoed.english_russian.compact"
 		pattern="%s/808465474"
 	/>
@@ -1116,22 +1116,22 @@
 		pattern="%s/808470069"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;Italian"
+		title="Slovoed Compact Polish-&gt;Italian"
 		package="com.slovoed.italian_polish.compact"
 		pattern="%s/808470066"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Polish"
+		title="Slovoed Compact Italian-&gt;Polish"
 		package="com.slovoed.italian_polish.compact"
 		pattern="%s/808470067"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;French"
+		title="Slovoed Compact Polish-&gt;French"
 		package="com.slovoed.french_polish.compact"
 		pattern="%s/808469829"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Polish"
+		title="Slovoed Compact French-&gt;Polish"
 		package="com.slovoed.french_polish.compact"
 		pattern="%s/808469830"
 	/>
@@ -1146,27 +1146,27 @@
 		pattern="%s/808465715"
 	/>
 	<dictionary
-		title="SlovoEd Classic English explanatory"
+		title="Slovoed Classic English explanatory"
 		package="com.slovoed.english_english.classic"
 		pattern="%s/808470082"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;Polish"
+		title="Slovoed Compact Spanish-&gt;Polish"
 		package="com.slovoed.polish_spanish.compact"
 		pattern="%s/808470073"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;Spanish"
+		title="Slovoed Compact Polish-&gt;Spanish"
 		package="com.slovoed.polish_spanish.compact"
 		pattern="%s/808470072"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Polish"
+		title="Slovoed Compact Russian-&gt;Polish"
 		package="com.slovoed.polish_russian.compact"
 		pattern="%s/808470071"
 	/>
 	<dictionary
-		title="SlovoEd Compact Polish-&gt;Russian"
+		title="Slovoed Compact Polish-&gt;Russian"
 		package="com.slovoed.polish_russian.compact"
 		pattern="%s/808470070"
 	/>
@@ -1186,67 +1186,67 @@
 		pattern="%s/808465478"
 	/>
 	<dictionary
-		title="SlovoEd Compact Ukrainian-&gt;Russian"
+		title="Slovoed Compact Ukrainian-&gt;Russian"
 		package="com.slovoed.russian_ukrainian.compact"
 		pattern="%s/808466245"
 	/>
 	<dictionary
-		title="SlovoEd Compact Serbian-&gt;English"
+		title="Slovoed Compact Serbian-&gt;English"
 		package="com.slovoed.english_serbian.compact"
 		pattern="%s/808466246"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Ukrainian"
+		title="Slovoed Compact Russian-&gt;Ukrainian"
 		package="com.slovoed.russian_ukrainian.compact"
 		pattern="%s/808466244"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Serbian"
+		title="Slovoed Compact English-&gt;Serbian"
 		package="com.slovoed.english_serbian.compact"
 		pattern="%s/808466480"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;Italian"
+		title="Slovoed Deluxe German-&gt;Italian"
 		package="com.slovoed.german_italian.deluxe"
 		pattern="%s/808465985"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Italian-&gt;German"
+		title="Slovoed Deluxe Italian-&gt;German"
 		package="com.slovoed.german_italian.deluxe"
 		pattern="%s/808465986"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;Spanish"
+		title="Slovoed Classic German-&gt;Spanish"
 		package="com.slovoed.german_spanish.classic"
 		pattern="%s/808465987"
 	/>
 	<dictionary
-		title="SlovoEd Classic Spanish-&gt;German"
+		title="Slovoed Classic Spanish-&gt;German"
 		package="com.slovoed.german_spanish.classic"
 		pattern="%s/808465988"
 	/>
 	<dictionary
-		title="SlovoEd Classic Spanish-&gt;Italian"
+		title="Slovoed Classic Spanish-&gt;Italian"
 		package="com.slovoed.italian_spanish.classic"
 		pattern="%s/808465989"
 	/>
 	<dictionary
-		title="SlovoEd Classic French-&gt;Italian"
+		title="Slovoed Classic French-&gt;Italian"
 		package="com.slovoed.french_italian.classic"
 		pattern="%s/808465974"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;French"
+		title="Slovoed Classic Italian-&gt;French"
 		package="com.slovoed.french_italian.classic"
 		pattern="%s/808465975"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Spanish"
+		title="Slovoed Compact French-&gt;Spanish"
 		package="com.slovoed.french_spanish.compact"
 		pattern="%s/808465976"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;French"
+		title="Slovoed Compact Spanish-&gt;French"
 		package="com.slovoed.french_spanish.compact"
 		pattern="%s/808465977"
 	/>
@@ -1261,7 +1261,7 @@
 		pattern="%s/808466225"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;Spanish"
+		title="Slovoed Classic Italian-&gt;Spanish"
 		package="com.slovoed.italian_spanish.classic"
 		pattern="%s/808465990"
 	/>
@@ -1276,72 +1276,72 @@
 		pattern="%s/808596273"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Turkish-&gt;English"
+		title="Slovoed Deluxe Turkish-&gt;English"
 		package="com.slovoed.english_turkish.deluxe"
 		pattern="%s/808596293"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Czech"
+		title="Slovoed Deluxe English-&gt;Czech"
 		package="com.slovoed.czech_english.deluxe"
 		pattern="%s/808468786"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Czech-&gt;English"
+		title="Slovoed Deluxe Czech-&gt;English"
 		package="com.slovoed.czech_english.deluxe"
 		pattern="%s/808468787"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;Czech"
+		title="Slovoed Deluxe German-&gt;Czech"
 		package="com.slovoed.czech_german.deluxe"
 		pattern="%s/808468788"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;Czech"
+		title="Slovoed Classic Italian-&gt;Czech"
 		package="com.slovoed.czech_italian.classic"
 		pattern="%s/808534326"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Czech-&gt;German"
+		title="Slovoed Deluxe Czech-&gt;German"
 		package="com.slovoed.czech_german.deluxe"
 		pattern="%s/808468789"
 	/>
 	<dictionary
-		title="SlovoEd Classic Czech-&gt;Italian"
+		title="Slovoed Classic Czech-&gt;Italian"
 		package="com.slovoed.czech_italian.classic"
 		pattern="%s/808534327"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe French-&gt;Czech"
+		title="Slovoed Deluxe French-&gt;Czech"
 		package="com.slovoed.czech_french.deluxe"
 		pattern="%s/808468790"
 	/>
 	<dictionary
-		title="SlovoEd DeLuxe Czech-&gt;French"
+		title="Slovoed DeLuxe Czech-&gt;French"
 		package="com.slovoed.czech_french.deluxe"
 		pattern="%s/808468791"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Croatian"
+		title="Slovoed Deluxe English-&gt;Croatian"
 		package="com.slovoed.croatian_english.deluxe"
 		pattern="%s/808534324"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Croatian-&gt;English"
+		title="Slovoed Deluxe Croatian-&gt;English"
 		package="com.slovoed.croatian_english.deluxe"
 		pattern="%s/808534325"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Turkish"
+		title="Slovoed Deluxe English-&gt;Turkish"
 		package="com.slovoed.english_turkish.deluxe"
 		pattern="%s/808596292"
 	/>
 	<dictionary
-		title="SlovoEd Compact Hebrew-&gt;Russian"
+		title="Slovoed Compact Hebrew-&gt;Russian"
 		package="com.slovoed.slovoed.base_00b1.hebrew_russian"
 		pattern="%s/808469041"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;English"
+		title="Slovoed Classic German-&gt;English"
 		package="com.slovoed.english_german.classic"
 		pattern="%s/808469044"
 	/>
@@ -1351,22 +1351,22 @@
 		pattern="%s/808469045"
 	/>
 	<dictionary
-		title="SlovoEd Compact English explanatory"
+		title="Slovoed Compact English explanatory"
 		package="com.slovoed.english_english.compact"
 		pattern="%s/808534578"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Hebrew"
+		title="Slovoed Compact Russian-&gt;Hebrew"
 		package="com.slovoed.slovoed.base_00b1.hebrew_russian"
 		pattern="%s/808469042"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;German"
+		title="Slovoed Classic English-&gt;German"
 		package="com.slovoed.english_german.classic"
 		pattern="%s/808469043"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;English"
+		title="Slovoed Compact Spanish-&gt;English"
 		package="com.slovoed.english_spanish.compact"
 		pattern="%s/808469048"
 	/>
@@ -1386,7 +1386,7 @@
 		pattern="%s/808534583"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Spanish"
+		title="Slovoed Compact English-&gt;Spanish"
 		package="com.slovoed.english_spanish.compact"
 		pattern="%s/808469047"
 	/>
@@ -1411,22 +1411,22 @@
 		pattern="%s/null"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Danish"
+		title="Slovoed Compact Swedish-&gt;Danish"
 		package="com.slovoed.danish_swedish.compact"
 		pattern="%s/808469062"
 	/>
 	<dictionary
-		title="SlovoEd Compact Czech-&gt;Swedish"
+		title="Slovoed Compact Czech-&gt;Swedish"
 		package="com.slovoed.czech_swedish.compact"
 		pattern="%s/808469059"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Czech"
+		title="Slovoed Compact Swedish-&gt;Czech"
 		package="com.slovoed.czech_swedish.compact"
 		pattern="%s/808469058"
 	/>
 	<dictionary
-		title="SlovoEd Compact Romanian-&gt;Swedish"
+		title="Slovoed Compact Romanian-&gt;Swedish"
 		package="com.slovoed.romanian_swedish.compact"
 		pattern="%s/808469061"
 	/>
@@ -1436,12 +1436,12 @@
 		pattern="%s/null"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Romanian"
+		title="Slovoed Compact Swedish-&gt;Romanian"
 		package="com.slovoed.romanian_swedish.compact"
 		pattern="%s/808469060"
 	/>
 	<dictionary
-		title="SlovoEd Compact Danish-&gt;Swedish"
+		title="Slovoed Compact Danish-&gt;Swedish"
 		package="com.slovoed.danish_swedish.compact"
 		pattern="%s/808469296"
 	/>
@@ -1456,7 +1456,7 @@
 		pattern="%s/808469304"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;French"
+		title="Slovoed Compact Swedish-&gt;French"
 		package="com.slovoed.french_swedish.compact"
 		pattern="%s/808469305"
 	/>
@@ -1471,22 +1471,22 @@
 		pattern="%s/808469302"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Swedish"
+		title="Slovoed Compact French-&gt;Swedish"
 		package="com.slovoed.french_swedish.compact"
 		pattern="%s/808469313"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Hungarian"
+		title="Slovoed Deluxe English-&gt;Hungarian"
 		package="com.slovoed.english_hungarian.deluxe"
 		pattern="%s/808595505"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;German"
+		title="Slovoed Deluxe English-&gt;German"
 		package="com.slovoed.english_german.deluxe"
 		pattern="%s/808464949"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Spanish"
+		title="Slovoed Compact Swedish-&gt;Spanish"
 		package="com.slovoed.spanish_swedish.compact"
 		pattern="%s/808469318"
 	/>
@@ -1496,7 +1496,7 @@
 		pattern="%s/808469317"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;English"
+		title="Slovoed Deluxe German-&gt;English"
 		package="com.slovoed.english_german.deluxe"
 		pattern="%s/808464950"
 	/>
@@ -1506,57 +1506,57 @@
 		pattern="%s/808469316"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Italian"
+		title="Slovoed Classic English-&gt;Italian"
 		package="com.slovoed.english_italian.classic"
 		pattern="%s/808464953"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Hungarian-&gt;English"
+		title="Slovoed Deluxe Hungarian-&gt;English"
 		package="com.slovoed.english_hungarian.deluxe"
 		pattern="%s/808595506"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;German"
+		title="Slovoed Compact French-&gt;German"
 		package="com.slovoed.french_german.compact"
 		pattern="%s/808469555"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;English"
+		title="Slovoed Compact German-&gt;English"
 		package="com.slovoed.english_german.compact"
 		pattern="%s/808469554"
 	/>
 	<dictionary
-		title="SlovoEd Classic French-&gt;English"
+		title="Slovoed Classic French-&gt;English"
 		package="com.slovoed.english_french.classic"
 		pattern="%s/808595512"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;German"
+		title="Slovoed Compact English-&gt;German"
 		package="com.slovoed.english_german.compact"
 		pattern="%s/808469553"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;French"
+		title="Slovoed Classic English-&gt;French"
 		package="com.slovoed.english_french.classic"
 		pattern="%s/808595511"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish-&gt;Swedish"
+		title="Slovoed Compact Spanish-&gt;Swedish"
 		package="com.slovoed.spanish_swedish.compact"
 		pattern="%s/808469552"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;English"
+		title="Slovoed Classic Italian-&gt;English"
 		package="com.slovoed.english_italian.classic"
 		pattern="%s/808464961"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Spanish"
+		title="Slovoed Classic English-&gt;Spanish"
 		package="com.slovoed.english_spanish.classic"
 		pattern="%s/808595521"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;Latin"
+		title="Slovoed Compact German-&gt;Latin"
 		package="com.slovoed.german_latin.compact"
 		pattern="%s/808469560"
 	/>
@@ -1566,62 +1566,62 @@
 		pattern="%s/808469561"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English explanatory"
+		title="Slovoed Deluxe English explanatory"
 		package="com.slovoed.english_english.deluxe"
 		pattern="%s/808595524"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;Italian"
+		title="Slovoed Classic German-&gt;Italian"
 		package="com.slovoed.german_italian.classic"
 		pattern="%s/808469558"
 	/>
 	<dictionary
-		title="SlovoEd Compact Latin-&gt;German"
+		title="Slovoed Compact Latin-&gt;German"
 		package="com.slovoed.german_latin.compact"
 		pattern="%s/808469559"
 	/>
 	<dictionary
-		title="SlovoEd Classic Spanish-&gt;English"
+		title="Slovoed Classic Spanish-&gt;English"
 		package="com.slovoed.english_spanish.classic"
 		pattern="%s/808595522"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;French"
+		title="Slovoed Compact German-&gt;French"
 		package="com.slovoed.french_german.compact"
 		pattern="%s/808469556"
 	/>
 	<dictionary
-		title="SlovoEd Classic Italian-&gt;German"
+		title="Slovoed Classic Italian-&gt;German"
 		package="com.slovoed.german_italian.classic"
 		pattern="%s/808469557"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Dutch"
+		title="Slovoed Compact Swedish-&gt;Dutch"
 		package="com.slovoed.dutch_swedish.compact"
 		pattern="%s/808469570"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Slovak"
+		title="Slovoed Compact English-&gt;Slovak"
 		package="com.slovoed.english_slovak.compact"
 		pattern="%s/808600626"
 	/>
 	<dictionary
-		title="SlovoEd Compact Dutch-&gt;Swedish"
+		title="Slovoed Compact Dutch-&gt;Swedish"
 		package="com.slovoed.dutch_swedish.compact"
 		pattern="%s/808469571"
 	/>
 	<dictionary
-		title="SlovoEd Compact Slovak-&gt;English"
+		title="Slovoed Compact Slovak-&gt;English"
 		package="com.slovoed.english_slovak.compact"
 		pattern="%s/808600627"
 	/>
 	<dictionary
-		title="SlovoEd Compact German-&gt;Slovak"
+		title="Slovoed Compact German-&gt;Slovak"
 		package="com.slovoed.german_slovak.compact"
 		pattern="%s/808600628"
 	/>
 	<dictionary
-		title="SlovoEd Compact Slovak-&gt;German"
+		title="Slovoed Compact Slovak-&gt;German"
 		package="com.slovoed.german_slovak.compact"
 		pattern="%s/808600629"
 	/>
@@ -1631,67 +1631,67 @@
 		pattern="%s/808469569"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;Polish"
+		title="Slovoed Classic German-&gt;Polish"
 		package="com.slovoed.german_polish.classic"
 		pattern="%s/808596784"
 	/>
 	<dictionary
-		title="SlovoEd Classic Polish-&gt;German"
+		title="Slovoed Classic Polish-&gt;German"
 		package="com.slovoed.german_polish.classic"
 		pattern="%s/808596785"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;Greek"
+		title="Slovoed Deluxe German-&gt;Greek"
 		package="com.slovoed.german_greek.deluxe"
 		pattern="%s/808596534"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Greek-&gt;German"
+		title="Slovoed Deluxe Greek-&gt;German"
 		package="com.slovoed.german_greek.deluxe"
 		pattern="%s/808596535"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe French-&gt;German"
+		title="Slovoed Deluxe French-&gt;German"
 		package="com.slovoed.french_german.deluxe"
 		pattern="%s/808596536"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;French"
+		title="Slovoed Deluxe German-&gt;French"
 		package="com.slovoed.french_german.deluxe"
 		pattern="%s/808596537"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe German-&gt;Spanish"
+		title="Slovoed Deluxe German-&gt;Spanish"
 		package="com.slovoed.german_spanish.deluxe"
 		pattern="%s/808596530"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish-&gt;German"
+		title="Slovoed Deluxe Spanish-&gt;German"
 		package="com.slovoed.german_spanish.deluxe"
 		pattern="%s/808596531"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Uzbek"
+		title="Slovoed Classic English-&gt;Uzbek"
 		package="com.slovoed.english_uzbek.classic"
 		pattern="%s/808600889"
 	/>
 	<dictionary
-		title="SlovoEd Classic Uzbek-&gt;English"
+		title="Slovoed Classic Uzbek-&gt;English"
 		package="com.slovoed.english_uzbek.classic"
 		pattern="%s/808600897"
 	/>
 	<dictionary
-		title="SlovoEd Classic German-&gt;Turkish"
+		title="Slovoed Classic German-&gt;Turkish"
 		package="com.slovoed.german_turkish.classic"
 		pattern="%s/808596787"
 	/>
 	<dictionary
-		title="SlovoEd Classic Turkish-&gt;German"
+		title="Slovoed Classic Turkish-&gt;German"
 		package="com.slovoed.german_turkish.classic"
 		pattern="%s/808596788"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Catalan-&gt;Spanish"
+		title="Slovoed Deluxe Catalan-&gt;Spanish"
 		package="com.slovoed.catalan_spanish.deluxe"
 		pattern="%s/808535093"
 	/>
@@ -1701,67 +1701,67 @@
 		pattern="%s/null"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish-&gt;Catalan"
+		title="Slovoed Deluxe Spanish-&gt;Catalan"
 		package="com.slovoed.catalan_spanish.deluxe"
 		pattern="%s/808535092"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Latvian"
+		title="Slovoed Classic English-&gt;Latvian"
 		package="com.slovoed.english_latvian.classic"
 		pattern="%s/808535096"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish-&gt;Italian"
+		title="Slovoed Deluxe Spanish-&gt;Italian"
 		package="com.slovoed.italian_spanish.deluxe"
 		pattern="%s/808535089"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Italian-&gt;Spanish"
+		title="Slovoed Deluxe Italian-&gt;Spanish"
 		package="com.slovoed.italian_spanish.deluxe"
 		pattern="%s/808535088"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Swedish"
+		title="Slovoed Compact Italian-&gt;Swedish"
 		package="com.slovoed.italian_swedish.compact"
 		pattern="%s/808534850"
 	/>
 	<dictionary
-		title="SlovoEd Compact Swedish-&gt;Italian"
+		title="Slovoed Compact Swedish-&gt;Italian"
 		package="com.slovoed.italian_swedish.compact"
 		pattern="%s/808534851"
 	/>
 	<dictionary
-		title="SlovoEd Compact Turkish-&gt;Italian"
+		title="Slovoed Compact Turkish-&gt;Italian"
 		package="com.slovoed.italian_turkish.compact"
 		pattern="%s/808534849"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Dutch"
+		title="Slovoed Compact Italian-&gt;Dutch"
 		package="com.slovoed.dutch_italian.compact"
 		pattern="%s/808534835"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;French"
+		title="Slovoed Compact Italian-&gt;French"
 		package="com.slovoed.french_italian.compact"
 		pattern="%s/808534837"
 	/>
 	<dictionary
-		title="SlovoEd Compact Dutch-&gt;Italian"
+		title="Slovoed Compact Dutch-&gt;Italian"
 		package="com.slovoed.dutch_italian.compact"
 		pattern="%s/808534836"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Russian"
+		title="Slovoed Compact Italian-&gt;Russian"
 		package="com.slovoed.italian_russian.compact"
 		pattern="%s/808534839"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Turkish"
+		title="Slovoed Classic English-&gt;Turkish"
 		package="com.slovoed.english_turkish.classic"
 		pattern="%s/808530756"
 	/>
 	<dictionary
-		title="SlovoEd Compact French-&gt;Italian"
+		title="Slovoed Compact French-&gt;Italian"
 		package="com.slovoed.french_italian.compact"
 		pattern="%s/808534838"
 	/>
@@ -1771,12 +1771,12 @@
 		pattern="%s/null"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Turkish"
+		title="Slovoed Compact Italian-&gt;Turkish"
 		package="com.slovoed.italian_turkish.compact"
 		pattern="%s/808534841"
 	/>
 	<dictionary
-		title="SlovoEd Classic Turkish-&gt;English"
+		title="Slovoed Classic Turkish-&gt;English"
 		package="com.slovoed.english_turkish.classic"
 		pattern="%s/808530755"
 	/>
@@ -1786,57 +1786,57 @@
 		pattern="%s/808597554"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Italian"
+		title="Slovoed Compact Russian-&gt;Italian"
 		package="com.slovoed.italian_russian.compact"
 		pattern="%s/808534840"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Hebrew"
+		title="Slovoed Classic English-&gt;Hebrew"
 		package="com.slovoed.slovoed.base_013a.hebrew_english"
 		pattern="%s/808530754"
 	/>
 	<dictionary
-		title="SlovoEd Classic Hebrew-&gt;English"
+		title="Slovoed Classic Hebrew-&gt;English"
 		package="com.slovoed.slovoed.base_013a.hebrew_english"
 		pattern="%s/808530753"
 	/>
 	<dictionary
-		title="SlovoEd Compact Spanish Italian"
+		title="Slovoed Compact Spanish Italian"
 		package="com.slovoed.italian_spanish.compact"
 		pattern="%s/808534832"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Lithuanian"
+		title="Slovoed Compact Italian-&gt;Lithuanian"
 		package="com.slovoed.italian_lithuanian.compact"
 		pattern="%s/808534594"
 	/>
 	<dictionary
-		title="SlovoEd Compact Lithuanian-&gt;Italian"
+		title="Slovoed Compact Lithuanian-&gt;Italian"
 		package="com.slovoed.italian_lithuanian.compact"
 		pattern="%s/808534595"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;Spanish"
+		title="Slovoed Compact Italian-&gt;Spanish"
 		package="com.slovoed.italian_spanish.compact"
 		pattern="%s/808534598"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Italian"
+		title="Slovoed Compact English-&gt;Italian"
 		package="com.slovoed.english_italian.compact"
 		pattern="%s/808532272"
 	/>
 	<dictionary
-		title="SlovoEd Compact Italian-&gt;English"
+		title="Slovoed Compact Italian-&gt;English"
 		package="com.slovoed.english_italian.compact"
 		pattern="%s/808532273"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Latin"
+		title="Slovoed Classic English-&gt;Latin"
 		package="com.slovoed.english_latin.classic"
 		pattern="%s/808532274"
 	/>
 	<dictionary
-		title="SlovoEd Classic Latin-&gt;English"
+		title="Slovoed Classic Latin-&gt;English"
 		package="com.slovoed.english_latin.classic"
 		pattern="%s/808532275"
 	/>
@@ -1851,62 +1851,62 @@
 		pattern="%s/808532279"
 	/>
 	<dictionary
-		title="SlovoEd Classic Spanish-&gt;French"
+		title="Slovoed Classic Spanish-&gt;French"
 		package="com.slovoed.french_spanish.classic"
 		pattern="%s/808532281"
 	/>
 	<dictionary
-		title="SlovoEd Classic French-&gt;Spanish"
+		title="Slovoed Classic French-&gt;Spanish"
 		package="com.slovoed.french_spanish.classic"
 		pattern="%s/808532280"
 	/>
 	<dictionary
-		title="SlovoEd Classic Arabic-&gt;English"
+		title="Slovoed Classic Arabic-&gt;English"
 		package="com.slovoed.slovoed.base_019c.arabic_english"
 		pattern="%s/808532291"
 	/>
 	<dictionary
-		title="SlovoEd Classic Polish-&gt;English"
+		title="Slovoed Classic Polish-&gt;English"
 		package="com.slovoed.english_polish.classic"
 		pattern="%s/808466502"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe French explanatory"
+		title="Slovoed Deluxe French explanatory"
 		package="com.slovoed.french_french.deluxe"
 		pattern="%s/808532290"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Polish"
+		title="Slovoed Classic English-&gt;Polish"
 		package="com.slovoed.english_polish.classic"
 		pattern="%s/808466501"
 	/>
 	<dictionary
-		title="SlovoEd Compact Ukrainian-&gt;English"
+		title="Slovoed Compact Ukrainian-&gt;English"
 		package="com.slovoed.english_ukrainian.compact"
 		pattern="%s/808466500"
 	/>
 	<dictionary
-		title="SlovoEd Compact English-&gt;Ukrainian"
+		title="Slovoed Compact English-&gt;Ukrainian"
 		package="com.slovoed.english_ukrainian.compact"
 		pattern="%s/808466499"
 	/>
 	<dictionary
-		title="SlovoEd Classic English-&gt;Arabic"
+		title="Slovoed Classic English-&gt;Arabic"
 		package="com.slovoed.slovoed.base_019c.arabic_english"
 		pattern="%s/808532292"
 	/>
 	<dictionary
-		title="SlovoEd Compact Russian-&gt;Arabic"
+		title="Slovoed Compact Russian-&gt;Arabic"
 		package="com.slovoed.slovoed.base_0169.arabic_russian"
 		pattern="%s/808531760"
 	/>
 	<dictionary
-		title="SlovoEd Compact Arabic-&gt;Russian"
+		title="Slovoed Compact Arabic-&gt;Russian"
 		package="com.slovoed.slovoed.base_0169.arabic_russian"
 		pattern="%s/808531513"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish explanatory"
+		title="Slovoed Deluxe Spanish explanatory"
 		package="com.slovoed.spanish_spanish.deluxe"
 		pattern="%s/808531782"
 	/>
@@ -1921,12 +1921,12 @@
 		pattern="%s/808532018"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe Spanish-&gt;English"
+		title="Slovoed Deluxe Spanish-&gt;English"
 		package="com.slovoed.english_spanish.deluxe"
 		pattern="%s/808531781"
 	/>
 	<dictionary
-		title="SlovoEd Deluxe English-&gt;Spanish"
+		title="Slovoed Deluxe English-&gt;Spanish"
 		package="com.slovoed.english_spanish.deluxe"
 		pattern="%s/808531780"
 	/>

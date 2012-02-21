@@ -123,8 +123,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, textScreen.Resource, "fontStyle",
 			baseStyle.BoldOption, baseStyle.ItalicOption
 		));
-		textScreen.addOption(baseStyle.UnderlineOption, "underlined");
-		textScreen.addOption(baseStyle.StrikeThroughOption, "strikedThrough");
 		final ZLIntegerRangeOption spaceOption = baseStyle.LineSpaceOption;
 		final String[] spacings = new String[spaceOption.MaxValue - spaceOption.MinValue + 1];
 		for (int i = 0; i < spacings.length; ++i) {

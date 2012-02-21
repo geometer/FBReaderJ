@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="A készülék nem csatlakozik helyi hálózathoz"/>
 			<node name="wifiIsTurnedOff" value="A wifi nincs bekapcsolva"/>
 			<node name="turnWiFiOn" value="Kérem, kapcsolja be a wifit és próbálja újra"/>
+			<node name="scanningLocalNetwork" value="Helyi hálózat vizsgálata. Egy kis türelmet&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Internetes keresés"/>
@@ -348,6 +349,29 @@
 			</node>
 			<node name="text" value="Szöveg">
 				<node name="summary" value="Betűtípus, elválasztás stb."/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="Betűtípus">
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
@@ -367,6 +391,16 @@
 				<node name="italic" value="Dőlt">
 					<node name="summaryOn" value="dőlt"/>
 					<node name="summaryOff" value="normál"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Sorköz">
@@ -691,7 +725,6 @@
 			<node name="loadingNetworkBookInfo" value="Könyv információinak letöltése. Egy kis türelmet&#8230;" />
 			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
 			<node name="updatingAccountInformation" value="Fiókadatok frissítése. Egy kis türelmet&#8230;" />
-			<node name="scanningLocalNetwork" value="Helyi hálózat vizsgálata. Egy kis türelmet&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba" />

@@ -125,6 +125,7 @@
 			<node name="noLocalConnection" value="Dispozitivul dumneavoastra nu este conectat la o retea locala"/>
 			<node name="wifiIsTurnedOff" value="WiFi-ul este inchis"/>
 			<node name="turnWiFiOn" value="Va rugam porniti WiFi si reincercati"/>
+			<node name="scanningLocalNetwork" value="Se scaneaza reteaua locala.Va rugam asteptati&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Reteaua de cautare"/>
@@ -348,6 +349,29 @@
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Font, hyphenations, etc."/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="Familia de fonturi">
 					<node name="unchanged" value="&lt;neschimbat&gt;"/>
 				</node>
@@ -368,6 +392,14 @@
 					<node name="summaryOn" value="cursiv"/>
 					<node name="summaryOff" value="normal"/>
 					<node name="unchanged" value="&lt;neschimbat&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 				</node>
 				<node name="lineSpacing" value="Spatiere linii">
 					<node name="unchanged" value="&lt;neschimbat&gt;"/>
@@ -691,7 +723,6 @@
 			<node name="loadingNetworkBookInfo" value="Se incarca informatii despre carte. Va rugam asteptati &#8230;"/>
 			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati&#8230;"/>
 			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati&#8230;"/>
-			<node name="scanningLocalNetwork" value="Se scaneaza reteaua locala.Va rugam asteptati&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>
