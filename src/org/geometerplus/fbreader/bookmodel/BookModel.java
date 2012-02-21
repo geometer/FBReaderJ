@@ -73,38 +73,9 @@ public abstract class BookModel {
 	public abstract ZLTextModel getTextModel();
 	public abstract ZLTextModel getFootnoteModel(String id);
 
-	private final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
-	private char[] myCurrentLinkBlock;
-	private int myCurrentLinkBlockOffset;
-
-	void addHyperlinkLabel(String label, ZLTextModel model, int paragraphNumber) {
-		final String modelId = model.getId();
-		final int labelLength = label.length();
-		final int idLength = (modelId != null) ? modelId.length() : 0;
-		final int len = 4 + labelLength + idLength;
-
-		char[] block = myCurrentLinkBlock;
-		int offset = myCurrentLinkBlockOffset;
-		if ((block == null) || (offset + len > block.length)) {
-			if (block != null) {
-				myInternalHyperlinks.freezeLastBlock();
-			}
-			block = myInternalHyperlinks.createNewBlock(len);
-			myCurrentLinkBlock = block;
-			offset = 0;
-		}
-		block[offset++] = (char)labelLength;
-		label.getChars(0, labelLength, block, offset);
-		offset += labelLength;
-		block[offset++] = (char)idLength;
-		if (idLength > 0) {
-			modelId.getChars(0, idLength, block, offset);
-			offset += idLength;
-		}
-		block[offset++] = (char)paragraphNumber;
-		block[offset++] = (char)(paragraphNumber >> 16);
-		myCurrentLinkBlockOffset = offset;
-	}
+	protected final CharStorage myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
+	protected char[] myCurrentLinkBlock;
+	protected int myCurrentLinkBlockOffset;
 
 	public interface LabelResolver {
 		List<String> getCandidates(String id);
