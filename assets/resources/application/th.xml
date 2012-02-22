@@ -119,13 +119,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
-			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
-			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
-			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
-			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
-			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
-			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="ค้นหาในระบบเครือข่าย"/>
@@ -276,8 +269,6 @@
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">

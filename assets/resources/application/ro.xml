@@ -119,13 +119,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Adauga Catalog"/>
 			<node name="editUrl" value="Editeaza URL manual"/>
-			<node name="scanLocalNetwork" value="Cauta in reteaua locala"/>
-			<node name="localCatalogs" value="Cataloage OPDS localte"/>
-			<node name="noCatalogsFound" value="Ne pare rau, nu s-a gasit niciun catalog"/>
-			<node name="noLocalConnection" value="Dispozitivul dumneavoastra nu este conectat la o retea locala"/>
-			<node name="wifiIsTurnedOff" value="WiFi-ul este inchis"/>
-			<node name="turnWiFiOn" value="Va rugam porniti WiFi si reincercati"/>
-			<node name="scanningLocalNetwork" value="Se scaneaza reteaua locala.Va rugam asteptati&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Reteaua de cautare"/>
@@ -276,8 +269,6 @@
 			<node name="pay" value="Plateste"/>
 			<node name="refresh" value="Actualizare"/>
 			<node name="authorize" value="Autorizeaza"/>
-			<node name="rescan" value="Rescaneaza"/>
-			<node name="turnOn" value="Porneste"/>
 			<node name="resetPosition" value="Reseteaza pozitia"/>
 		</node>
 		<node name="plugin">

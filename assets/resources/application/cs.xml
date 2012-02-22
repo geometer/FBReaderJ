@@ -119,13 +119,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Přidat katalog"/>
 			<node name="editUrl" value="Zadat adresu ručně"/>
-			<node name="scanLocalNetwork" value="Prohledat místní síť"/>
-			<node name="localCatalogs" value="Místní OPDS katalogy"/>
-			<node name="noCatalogsFound" value="Nebyly bohužel nalezeny žádné katalogy"/>
-			<node name="noLocalConnection" value="Vaše zařízení není připojeno k místní síti"/>
-			<node name="wifiIsTurnedOff" value="WiFi je vypnuto"/>
-			<node name="turnWiFiOn" value="Zapněte WiFi a zkuste to znovu"/>
-			<node name="scanningLocalNetwork" value="Prohledávání místní sítě. Čekejte&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Prohledávání sítě"/>
@@ -276,8 +269,6 @@
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
 			<node name="authorize" value="Authorizovat"/>
-			<node name="rescan" value="Znovu prohledat"/>
-			<node name="turnOn" value="Zapnout"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
 		</node>
 		<node name="plugin">
