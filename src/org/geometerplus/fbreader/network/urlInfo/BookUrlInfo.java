@@ -32,8 +32,9 @@ public class BookUrlInfo extends UrlInfo {
 	public interface Format {
 		int NONE = 0;
 		int MOBIPOCKET = 1;
-		int FB2_ZIP = 2;
-		int EPUB = 3;
+		int FB2 = 2;
+		int FB2_ZIP = 3;
+		int EPUB = 4;
 	}
 
 	public final int BookFormat;
@@ -92,6 +93,9 @@ public class BookUrlInfo extends UrlInfo {
 				break;
 			case Format.MOBIPOCKET:
 				ext = ".mobi";
+				break;
+			case Format.FB2:
+				ext = ".fb2";
 				break;
 			case Format.FB2_ZIP:
 				ext = ".fb2.zip";

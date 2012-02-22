@@ -468,7 +468,7 @@ public final class FBView extends ZLTextView {
 			context.setFont(
 				reader.FooterFontOption.getValue(),
 				height <= 10 ? height + 3 : height + 1,
-				height > 10, false, false
+				height > 10, false, false, false
 			);
 
 			final PagePosition pagePosition = FBView.this.pagePosition();

@@ -40,9 +40,12 @@ import org.geometerplus.fbreader.network.urlInfo.*;
 import org.geometerplus.android.util.UIUtil;
 
 public class AddCustomCatalogActivity extends Activity {
+	static final String TYPE = "type";
+
 	private ZLResource myResource;
 	private volatile ICustomNetworkLink myLink;
 	private boolean myEditNotAdd;
+	private INetworkLink.Type myType = INetworkLink.Type.Custom;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -91,7 +94,9 @@ public class AddCustomCatalogActivity extends Activity {
 		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(action);
 		myLink = null;
 		Uri uri = null;
-		if (myEditNotAdd || Intent.ACTION_VIEW.equals(action)) {
+		if (myEditNotAdd ||
+			Intent.ACTION_VIEW.equals(action) ||
+			Util.ADD_CATALOG_URL_ACTION.equals(action)) {
 			uri = intent.getData();
 			if (uri != null) {
 				if ("opds".equals(uri.getScheme())) {
@@ -102,6 +107,8 @@ public class AddCustomCatalogActivity extends Activity {
 					myLink = (ICustomNetworkLink)link;
 				}
 			}
+
+			myType = INetworkLink.Type.byIndex(intent.getIntExtra(TYPE, myType.Index));
 		}
 
 		if (myLink != null) {
@@ -236,7 +243,7 @@ public class AddCustomCatalogActivity extends Activity {
 		final UrlInfoCollection<UrlInfoWithDate> infos = new UrlInfoCollection<UrlInfoWithDate>();
 		infos.addInfo(new UrlInfoWithDate(UrlInfo.Type.Catalog, textUrl));
 		myLink = new OPDSCustomNetworkLink(
-			ICustomNetworkLink.INVALID_ID, siteName, null, null, null, infos
+			ICustomNetworkLink.INVALID_ID, myType, siteName, null, null, null, infos
 		);
 
 		final Runnable loadInfoRunnable = new Runnable() {

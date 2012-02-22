@@ -400,7 +400,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 				final String contentType = attributes.getValue("content-type");
 				final String imgId = attributes.getValue("id");
 				if (contentType != null && id != null) {
-					myCurrentImage = new Base64EncodedImage(MimeType.get(contentType));
+					myCurrentImage = new Base64EncodedImage(MimeType.get(contentType), "");
 					myBookReader.addImage(imgId, myCurrentImage);
 				}
 				break;
@@ -415,7 +415,7 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 		return true;
 	}
 
-	public void addExternalEntities(HashMap<String,char[]> entityMap) {
+	public void collectExternalEntities(HashMap<String,char[]> entityMap) {
 		entityMap.put("FBReaderVersion", ZLibrary.Instance().getVersionName().toCharArray());
 	}
 

@@ -123,7 +123,8 @@ public abstract class TreeActivity extends ListActivity {
 							public void run() {
 								openTreeInternal(tree, treeToSelect, storeInHistory);
 							}
-						}
+						},
+						true
 					);
 				} else {
 					tree.waitForOpening();
@@ -148,7 +149,15 @@ public abstract class TreeActivity extends ListActivity {
 		setTitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
 			selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();
-		setSelection(adapter.getIndex(selectedTree));
+		final int index = adapter.getIndex(selectedTree);
+		if (index != -1) {
+			setSelection(index);
+			getListView().post(new Runnable() {
+				public void run() {
+					setSelection(index);
+				}
+			});
+		}
 
 		myHistory = (ArrayList<FBTree.Key>)intent.getSerializableExtra(HISTORY_KEY);
 		if (myHistory == null) {

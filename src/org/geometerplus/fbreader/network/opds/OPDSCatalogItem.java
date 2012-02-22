@@ -80,7 +80,7 @@ public class OPDSCatalogItem extends NetworkURLCatalogItem {
 		myLoadingState = opdsLink.createOperationData(loader);
 
 		doLoadChildren(
-			opdsLink.createNetworkData(this, getCatalogUrl(), myLoadingState)
+			opdsLink.createNetworkData(getCatalogUrl(), myLoadingState)
 		);
 	}
 

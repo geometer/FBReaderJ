@@ -28,11 +28,17 @@ import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
+	public static ZLBooleanOption AntiAliasOption = new ZLBooleanOption("Fonts", "AntiAlias", true);
+	public static ZLBooleanOption DeviceKerningOption = new ZLBooleanOption("Fonts", "DeviceKerning", false);
+	public static ZLBooleanOption DitheringOption = new ZLBooleanOption("Fonts", "Dithering", false);
+	public static ZLBooleanOption SubpixelOption = new ZLBooleanOption("Fonts", "Subpixel", false);
+
 	private final Canvas myCanvas;
 	private final Paint myTextPaint = new Paint();
 	private final Paint myLinePaint = new Paint();
@@ -54,8 +60,14 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myScrollbarWidth = scrollbarWidth;
 
 		myTextPaint.setLinearText(false);
-		myTextPaint.setAntiAlias(true);
-		myTextPaint.setSubpixelText(false);
+		myTextPaint.setAntiAlias(AntiAliasOption.getValue());
+		if (DeviceKerningOption.getValue()) {
+			myTextPaint.setFlags(myTextPaint.getFlags() | Paint.DEV_KERN_TEXT_FLAG);
+		} else {
+			myTextPaint.setFlags(myTextPaint.getFlags() & ~Paint.DEV_KERN_TEXT_FLAG);
+		}
+		myTextPaint.setDither(DitheringOption.getValue());
+		myTextPaint.setSubpixelText(SubpixelOption.getValue());
 
 		myLinePaint.setStyle(Paint.Style.STROKE);
 
@@ -178,7 +190,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myOutlinePaint);
 	}
 
-	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
+	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
 		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = myTypefaces.get(family);
@@ -214,6 +226,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myTextPaint.setTypeface(tf);
 		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
+		myTextPaint.setStrikeThruText(strikeThrought);
 	}
 
 	@Override

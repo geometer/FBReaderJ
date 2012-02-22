@@ -21,64 +21,14 @@ package org.geometerplus.zlibrary.text.model;
 
 import java.lang.ref.WeakReference;
 import java.io.*;
-import java.util.*;
 
-final class CachedCharStorageException extends RuntimeException {
-	private static final long serialVersionUID = -6373408730045821053L;
-
-	public CachedCharStorageException(String message) {
-		super(message);
-	}
-}
-
-public final class CachedCharStorage implements CharStorage {
+public final class CachedCharStorage extends CachedCharStorageBase {
 	private final int myBlockSize;
-	private final ArrayList<WeakReference<char[]>> myArray = new ArrayList<WeakReference<char[]>>();
-	private final String myDirectoryName;
-	private final String myFileExtension;
-
-	private String fileName(int index) {
-		return myDirectoryName + index + myFileExtension;
-	}
 
 	public CachedCharStorage(int blockSize, String directoryName, String fileExtension) {
+		super(directoryName, fileExtension);
 		myBlockSize = blockSize;
-		myDirectoryName = directoryName + '/';
-		myFileExtension = '.' + fileExtension;
 		new File(directoryName).mkdirs();
-	}
-
-	public int size() {
-		return myArray.size();
-	}
-
-	public char[] block(int index) {
-		char[] block = myArray.get(index).get();
-		if (block == null) {
-			try {
-				File file = new File(fileName(index));
-				int size = (int)file.length();
-				if (size < 0) {
-					throw new CachedCharStorageException("Error during reading " + fileName(index));
-				}
-				block = new char[size / 2];
-				InputStreamReader reader =
-					new InputStreamReader(
-						new FileInputStream(file),
-						"UTF-16LE"
-					);
-				if (reader.read(block) != block.length) {
-					throw new CachedCharStorageException("Error during reading " + fileName(index));
-				}
-				reader.close();
-			} catch (FileNotFoundException e) {
-				throw new CachedCharStorageException("Error during reading " + fileName(index));
-			} catch (IOException e) {
-				throw new CachedCharStorageException("Error during reading " + fileName(index));
-			}
-			myArray.set(index, new WeakReference<char[]>(block));
-		}
-		return block;
 	}
 
 	public char[] createNewBlock(int minimumLength) {
@@ -110,9 +60,5 @@ public final class CachedCharStorage implements CharStorage {
 				throw new CachedCharStorageException("Error during writing " + fileName(index));
 			}
 		}
-	}
-
-	public void clear() {
-		myArray.clear();
 	}
 }

@@ -1,4 +1,40 @@
-===== 1.3.2 (Jan ??, 2012) =====
+===== 1.3.8 (Feb ??, 2012) =====
+* Striked through/underlined text support
+* Asynchronous bonjour scanning: user can select any found network even if scanning is still in progress
+* Better support for "related" catalogs in book descriptions
+* Updated Hungarian localization (by Szabó Lajos Balázs)
+* Local network scanning has been moved to a separate plugin; WiFi permissions are not required more
+
+===== 1.3.7 (Feb 9, 2012) =====
+* Font smoothing settings (Settings -> Text -> Font properties)
+* Fixed 'question symbols in menu' issue
+* Android 3.*/4.0: Action bar is shown by default (Settings -> Appearance -> Show action bar)
+
+===== 1.3.6 (Feb 6, 2012) =====
+* Updated Ukrainian translation (by Nazariy Makarenko)
+* LEO dictionary integration
+* No conflicts between book images and covers
+* No black screen for a long time at start: synchronization issue has been fixed
+* OPDS optimization
+
+===== 1.3.5 (Feb 2, 2012) =====
+* About section in the preferences dialog
+* Better SlovoEd dictionary integration (780 dictionaries are supported)
+* CHANGE_WIFI_STATE permission is not required more
+* getBookFileName() API method has been implemented
+* Application start speed-up
+* Network library: don't repaint all the views on image downloading
+* Network library: select previous opened tree on back key pressing
+* Network library: on-demand (on-scroll) catalog parts loading
+
+===== 1.3.3 (Jan 18, 2012) =====
+* Proguard -dontoptimize option, looks like these optimizations are buggy :(
+* 3d page turning hardware optimization has been fixed
+
+===== 1.3.2a (Jan 17, 2012) =====
+* Fixed menu issue on old devices with ICS installed
+
+===== 1.3.2 (Jan 17, 2012) =====
 * MIPS processor architectures are supported (with NDK from http://developer.mips.com/android/download-android-ndk/)
 * ExceptionInInitializerError processing has been fixed
 * Menu button shows action/navigation bars on old devices with ICS installed
@@ -8,6 +44,8 @@
 * Grayscale Android 3.* logo is back
 * Android 4: separate options for status bar & action bar
 * Android 3/4: always show book title in the action bar
+* Updated Czech localization (by Marek Pavelka)
+* Updated Romanian localization (by Mary Hit)
 
 ===== 1.3.1 (Jan 9, 2012) =====
 * Persistent tip prompt issue has been fixed

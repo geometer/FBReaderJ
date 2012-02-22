@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.lang.ref.WeakReference;
 import java.util.*;
 import java.io.InputStream;
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
@@ -105,6 +107,9 @@ public class Book {
 
 	private boolean myIsSaved;
 
+	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
+	private WeakReference<ZLImage> myCover;
+
 	Book(long id, ZLFile file, String title, String encoding, String language) {
 		myId = id;
 		File = file;
@@ -155,7 +160,7 @@ public class Book {
 		}
 		final String demoPathPrefix = Paths.BooksDirectoryOption().getValue() + java.io.File.separator + "Demos" + java.io.File.separator;
 		if (File.getPath().startsWith(demoPathPrefix)) {
-			final String demoTag = Library.resource().getResource("demo").getValue();
+			final String demoTag = LibraryUtil.resource().getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");
 			addTag(demoTag);
 		}
@@ -452,6 +457,24 @@ public class Book {
 				}
 			}
 		}
+	}
+
+	synchronized ZLImage getCover() {
+		if (myCover == NULL_IMAGE) {
+			return null;
+		} else if (myCover != null) {
+			final ZLImage image = myCover.get();
+			if (image != null) {
+				return image;
+			}
+		}
+		ZLImage image = null;
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
+		if (plugin != null) {
+			image = plugin.readCover(File);
+		}
+		myCover = image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE;
+		return image;
 	}
 
 	@Override

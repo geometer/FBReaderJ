@@ -67,7 +67,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 
 	@Override
-	public void refreshMenu() {
+	public void refresh() {
 		for (Map.Entry<MenuItem,String> entry : myMenuItemMap.entrySet()) {
 			final String actionId = entry.getValue();
 			final ZLApplication application = getApplication();
@@ -90,11 +90,11 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 	
 	@Override
-	public void wait(String key, Runnable action) {
+	public void runWithMessage(String key, Runnable action) {
 		final Activity activity = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		if (activity != null) {
-			UIUtil.wait(key, action, activity);
+			UIUtil.runWithMessage(activity, key, action, null, false);
 		} else {
 			action.run();
 		}

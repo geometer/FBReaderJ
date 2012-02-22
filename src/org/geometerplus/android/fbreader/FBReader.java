@@ -55,8 +55,13 @@ import org.geometerplus.android.util.UIUtil;
 public final class FBReader extends ZLAndroidActivity {
 	public static final String BOOK_PATH_KEY = "BookPath";
 
-	final static int REPAINT_CODE = 1;
-	final static int CANCEL_CODE = 2;
+	public static final int REQUEST_PREFERENCES = 1;
+	public static final int REQUEST_BOOK_INFO = 2;
+	public static final int REQUEST_CANCEL_MENU = 3;
+
+	public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
+	public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
+	public static final int RESULT_RELOAD_BOOK = RESULT_FIRST_USER + 2;
 
 	private int myFullScreenFlag;
 
@@ -102,6 +107,10 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
+		DictionaryUtil.init(this);
+
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myFullScreenFlag =
 			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -109,7 +118,6 @@ public final class FBReader extends ZLAndroidActivity {
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, myFullScreenFlag
 		);
 
-		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		if (fbReader.getPopupById(TextSearchPopup.ID) == null) {
 			new TextSearchPopup(fbReader);
 		}
@@ -220,6 +228,7 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
+
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 
 		final int fullScreenFlag =
@@ -233,9 +242,9 @@ public final class FBReader extends ZLAndroidActivity {
 
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
-		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
-		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Bottom);
-		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).createControlPanel(this, root, PopupWindow.Location.Floating);
+		((PopupPanel)fbReader.getPopupById(TextSearchPopup.ID)).setPanelInfo(this, root);
+		((PopupPanel)fbReader.getPopupById(NavigationPopup.ID)).setPanelInfo(this, root);
+		((PopupPanel)fbReader.getPopupById(SelectionPopup.ID)).setPanelInfo(this, root);
 
 		synchronized (myPluginActions) {
 			int index = 0;
@@ -255,19 +264,33 @@ public final class FBReader extends ZLAndroidActivity {
 			null
 		);
 
-		final TipsManager manager = TipsManager.Instance();
-		switch (manager.requiredAction()) {
-			case Initialize:
-				startActivity(new Intent(TipsActivity.INITIALIZE_ACTION, null, this, TipsActivity.class));
-				break;
-			case Show:
-				startActivity(new Intent(TipsActivity.SHOW_TIP_ACTION, null, this, TipsActivity.class));
-				break;
-			case Download:
-				manager.startDownloading();
-				break;
-			case None:
-				break;
+		new TipRunner().start();
+	}
+
+	private class TipRunner extends Thread {
+		TipRunner() {
+			setPriority(MIN_PRIORITY);
+		}
+
+		public void run() {
+			final TipsManager manager = TipsManager.Instance();
+			switch (manager.requiredAction()) {
+				case Initialize:
+					startActivity(new Intent(
+						TipsActivity.INITIALIZE_ACTION, null, FBReader.this, TipsActivity.class
+					));
+					break;
+				case Show:
+					startActivity(new Intent(
+						TipsActivity.SHOW_TIP_ACTION, null, FBReader.this, TipsActivity.class
+					));
+					break;
+				case Download:
+					manager.startDownloading();
+					break;
+				case None:
+					break;
+			}
 		}
 	}
 
@@ -290,11 +313,11 @@ public final class FBReader extends ZLAndroidActivity {
 	}
 
 	@Override
-	protected FBReaderApp createApplication(ZLFile file) {
+	protected FBReaderApp createApplication() {
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "READER");
 		}
-		return new FBReaderApp(file != null ? file.getPath() : null);
+		return new FBReaderApp();
 	}
 
 	@Override
@@ -327,17 +350,18 @@ public final class FBReader extends ZLAndroidActivity {
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final FBReaderApp.PopupPanel popup = fbReader.getActivePopup();
 		if (popup != null && popup.getId() == SelectionPopup.ID) {
-			FBReaderApp.Instance().hideActivePopup();
+			fbReader.hideActivePopup();
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		final FBReaderApp fbreader = (FBReaderApp)FBReaderApp.Instance();
-		switch (requestCode) {
-			case REPAINT_CODE:
+	private void onPreferencesUpdate(int resultCode) {
+		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
+		switch (resultCode) {
+			case RESULT_DO_NOTHING:
+				break;
+			case RESULT_REPAINT:
 			{
-				final BookModel model = fbreader.Model;
+				final BookModel model = fbReader.Model;
 				if (model != null) {
 					final Book book = model.Book;
 					if (book != null) {
@@ -345,12 +369,25 @@ public final class FBReader extends ZLAndroidActivity {
 						ZLTextHyphenator.Instance().load(book.getLanguage());
 					}
 				}
-				fbreader.clearTextCaches();
-				fbreader.getViewWidget().repaint();
+				fbReader.clearTextCaches();
+				fbReader.getViewWidget().repaint();
 				break;
 			}
-			case CANCEL_CODE:
-				fbreader.runCancelAction(resultCode - 1);
+			case RESULT_RELOAD_BOOK:
+				fbReader.reloadBook();
+				break;
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case REQUEST_PREFERENCES:
+			case REQUEST_BOOK_INFO:
+				onPreferencesUpdate(resultCode);
+				break;
+			case REQUEST_CANCEL_MENU:
+				((FBReaderApp)FBReaderApp.Instance()).runCancelAction(resultCode - 1);
 				break;
 		}
 	}
@@ -417,7 +454,7 @@ public final class FBReader extends ZLAndroidActivity {
 		}
 
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.refreshMenu();
+		application.myMainWindow.refresh();
 
 		return true;
 	}

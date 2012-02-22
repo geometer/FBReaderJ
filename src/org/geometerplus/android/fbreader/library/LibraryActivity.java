@@ -20,8 +20,7 @@
 package org.geometerplus.android.fbreader.library;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.DialogInterface;
+import android.content.*;
 import android.view.*;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -179,7 +178,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	}
 
 	private void createBookContextMenu(ContextMenu menu, Book book) {
-		final ZLResource resource = Library.resource();
+		final ZLResource resource = LibraryUtil.resource();
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
 		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
@@ -188,7 +187,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		} else {
 			menu.add(0, ADD_TO_FAVORITES_ITEM_ID, 0, resource.getResource("addToFavorites").getValue());
 		}
-		if ((myLibrary.getRemoveBookMode(book) & Library.REMOVE_FROM_DISK) != 0) {
+		if (myLibrary.canRemoveBookFile(book)) {
 			menu.add(0, DELETE_BOOK_ITEM_ID, 0, resource.getResource("deleteBook").getValue());
 		}
 	}
@@ -246,7 +245,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	}
 
 	private MenuItem addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
-		final String label = Library.resource().getResource("menu").getResource(resourceKey).getValue();
+		final String label = LibraryUtil.resource().getResource("menu").getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, index, Menu.NONE, label);
 		item.setOnMenuItemClickListener(this);
 		item.setIcon(iconId);

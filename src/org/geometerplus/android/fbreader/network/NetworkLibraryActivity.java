@@ -27,8 +27,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.*;
 
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -45,7 +44,7 @@ import org.geometerplus.android.fbreader.network.action.*;
 
 import org.geometerplus.android.util.UIUtil;
 
-public abstract class NetworkLibraryActivity extends TreeActivity implements NetworkLibrary.ChangeListener {
+public abstract class NetworkLibraryActivity extends TreeActivity implements ListView.OnScrollListener, NetworkLibrary.ChangeListener {
 	static final String OPEN_CATALOG_ACTION = "android.fbreader.action.OPEN_NETWORK_CATALOG";
 
 	BookDownloaderServiceConnection Connection;
@@ -88,6 +87,8 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Net
 				openTreeByIntent(intent);
 			}
 		}
+
+		getListView().setOnScrollListener(this);
 	}
 
 	@Override
@@ -171,7 +172,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Net
 	}
 
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			final NetworkItemsLoader loader =
 				NetworkLibrary.Instance().getStoredLoader((NetworkTree)getCurrentTree());
@@ -324,13 +325,14 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Net
 	}
 
 	private void updateLoadingProgress() {
+		final NetworkLibrary library = NetworkLibrary.Instance();
 		final NetworkTree tree = (NetworkTree)getCurrentTree();
 		final NetworkTree lTree = getLoadableNetworkTree(tree);
 		final NetworkTree sTree = RunSearchAction.getSearchTree(tree);
 		setProgressBarIndeterminateVisibility(
-			NetworkLibrary.Instance().isUpdateInProgress() ||
-			NetworkLibrary.Instance().getStoredLoader(lTree) != null ||
-			NetworkLibrary.Instance().getStoredLoader(sTree) != null
+			library.isUpdateInProgress() ||
+			library.isLoadingInProgress(lTree) ||
+			library.isLoadingInProgress(sTree)
 		);
 	}
 
@@ -440,5 +442,17 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Net
 		} else {
 			action.run(tree);
 		}
+	}
+
+	public void onScroll(AbsListView view, int firstVisible, int visibleCount, int totalCount) {
+		if (firstVisible + visibleCount + 1 >= totalCount) {
+			final FBTree tree = getCurrentTree();
+			if (tree instanceof NetworkCatalogTree) {
+				((NetworkCatalogTree)tree).loadMoreChildren(totalCount);
+			}
+		}
+	}
+
+	public void onScrollStateChanged(AbsListView view, int state) {
 	}
 }
