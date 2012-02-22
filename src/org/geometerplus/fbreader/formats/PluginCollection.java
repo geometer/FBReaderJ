@@ -40,18 +40,8 @@ public class PluginCollection {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
 			ourInstance.myPlugins.add(new FB2Plugin());
-			//ourInstance.myPlugins.add(new PluckerPlugin());
-			//ourInstance->myPlugins.push_back(new DocBookPlugin());
-			//ourInstance.myPlugins.add(new HtmlPlugin());
-			//ourInstance.myPlugins.add(new TxtPlugin());
-			//ourInstance.myPlugins.add(new PalmDocPlugin());
 			ourInstance.myPlugins.add(new MobipocketPlugin());
-			//ourInstance.myPlugins.add(new ZTXTPlugin());
-			//ourInstance.myPlugins.add(new TcrPlugin());
-			//ourInstance.myPlugins.add(new CHMPlugin());
 			ourInstance.myPlugins.add(new OEBPlugin());
-			//ourInstance.myPlugins.add(new RtfPlugin());
-			//ourInstance.myPlugins.add(new OpenReaderPlugin());
 		}
 		return ourInstance;
 	}
