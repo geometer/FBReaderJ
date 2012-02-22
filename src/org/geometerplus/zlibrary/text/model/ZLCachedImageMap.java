@@ -25,7 +25,6 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public class ZLCachedImageMap implements ZLImageMap {
-
 	private final HashMap<String, ZLImage> myImagesMap = new HashMap<String, ZLImage>();
 	private final HashMap<String, Integer> myIdsMap = new HashMap<String, Integer>();
 	private final int[] myIndices;
@@ -55,5 +54,4 @@ public class ZLCachedImageMap implements ZLImageMap {
 		myImagesMap.put(id, res);
 		return res;
 	}
-
 }
