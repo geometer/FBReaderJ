@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +19,10 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
+final class CachedCharStorageException extends RuntimeException {
+	private static final long serialVersionUID = -6373408730045821053L;
 
-public class ZLTextNativeModel extends ZLTextPlainModel {
-	public ZLTextNativeModel(String id, String language,
-			int paragraphsNumber, int[] entryIndices, int[] entryOffsets,
-			int[] paragraphLengths, int[] textSizes, byte[] paragraphKinds,
-			String directoryName, String fileExtension, int blocksNumber,
-			ZLImageMap imageMap) {
-		super(id, language,
-			entryIndices, entryOffsets, paragraphLengths, textSizes, paragraphKinds,
-			new CachedCharStorageRO(directoryName, fileExtension, blocksNumber),
-			imageMap);
-		myParagraphsNumber = paragraphsNumber;
+	public CachedCharStorageException(String message) {
+		super(message);
 	}
 }

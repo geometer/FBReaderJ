@@ -26,11 +26,10 @@ import org.geometerplus.zlibrary.core.image.ZLSingleImage;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 class ZLImageMapReader {
-
-	private final CachedInputCharStorage myStorage;
+	private final CachedCharStorageRO myStorage;
 
 	public ZLImageMapReader(String directoryName, String fileExtension, int blocksNumber) {
-		myStorage = new CachedInputCharStorage(directoryName, fileExtension, blocksNumber);
+		myStorage = new CachedCharStorageRO(directoryName, fileExtension, blocksNumber);
 	}
 
 	public ZLImage readImage(int index, int offset) {
