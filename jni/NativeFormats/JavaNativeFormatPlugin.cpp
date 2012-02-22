@@ -170,7 +170,7 @@ static bool initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
 	jstring imageDirectoryName = env->NewStringUTF(imageMapWriter->allocator().directoryName().c_str());
 	jstring imageFileExtension = env->NewStringUTF(imageMapWriter->allocator().fileExtension().c_str());
 	jint imageBlocksNumber = imageMapWriter->allocator().blocksNumber();
-	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initBookModel,
+	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initImageMap,
 			ids, indices, offsets, imageDirectoryName, imageFileExtension, imageBlocksNumber);
 	env->PopLocalFrame(0);
 	return !env->ExceptionCheck();
