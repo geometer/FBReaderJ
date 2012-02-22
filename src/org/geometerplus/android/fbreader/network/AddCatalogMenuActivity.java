@@ -45,7 +45,7 @@ public class AddCatalogMenuActivity extends MenuActivity {
 	protected void init() {
 		setTitle(myResource.getResource("title").getValue());
 		addItem("editUrl", 1);
-		addItem("scanLocalNetwork", 2);
+		//addItem("scanLocalNetwork", 2);
 	}
 
 	@Override
