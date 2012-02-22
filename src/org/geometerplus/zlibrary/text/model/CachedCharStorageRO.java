@@ -23,12 +23,12 @@ import java.lang.ref.WeakReference;
 import java.io.*;
 import java.util.*;
 
-public final class CachedInputCharStorage implements CharStorage {
+public final class CachedCharStorageRO implements CharStorage {
 	private final ArrayList<WeakReference<char[]>> myArray = new ArrayList<WeakReference<char[]>>();
 	private final String myDirectoryName;
 	private final String myFileExtension;
 
-	public CachedInputCharStorage(String directoryName, String fileExtension, int blocksNumber) {
+	public CachedCharStorageRO(String directoryName, String fileExtension, int blocksNumber) {
 		myDirectoryName = directoryName + '/';
 		myFileExtension = '.' + fileExtension;
 		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));
@@ -72,7 +72,7 @@ public final class CachedInputCharStorage implements CharStorage {
 	}
 
 	public char[] createNewBlock(int minimumLength) {
-		throw new UnsupportedOperationException("CachedInputCharStorage is immutable storage.");
+		throw new UnsupportedOperationException("CachedCharStorageRO is is read-only storage.");
 	}
 
 	public void freezeLastBlock() {

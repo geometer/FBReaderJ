@@ -29,7 +29,7 @@ public class ZLTextNativeModel extends ZLTextPlainModel {
 			ZLImageMap imageMap) {
 		super(id, language,
 			entryIndices, entryOffsets, paragraphLengths, textSizes, paragraphKinds,
-			new CachedInputCharStorage(directoryName, fileExtension, blocksNumber),
+			new CachedCharStorageRO(directoryName, fileExtension, blocksNumber),
 			imageMap);
 		myParagraphsNumber = paragraphsNumber;
 	}
