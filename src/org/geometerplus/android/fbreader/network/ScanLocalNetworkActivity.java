@@ -44,8 +44,6 @@ import org.geometerplus.fbreader.network.INetworkLink;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-import org.geometerplus.android.util.UIUtil;
-
 public class ScanLocalNetworkActivity extends ListActivity {
 	private final ZLResource myResource =
 		NetworkLibrary.Instance().resource().getResource("addCatalog");
