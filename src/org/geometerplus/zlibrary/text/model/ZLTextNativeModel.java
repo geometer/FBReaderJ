@@ -22,15 +22,20 @@ package org.geometerplus.zlibrary.text.model;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public class ZLTextNativeModel extends ZLTextPlainModel {
-	public ZLTextNativeModel(String id, String language,
-			int paragraphsNumber, int[] entryIndices, int[] entryOffsets,
-			int[] paragraphLengths, int[] textSizes, byte[] paragraphKinds,
-			String directoryName, String fileExtension, int blocksNumber,
-			ZLImageMap imageMap) {
-		super(id, language,
+	public ZLTextNativeModel(
+		String id, String language, int paragraphsNumber,
+		int[] entryIndices, int[] entryOffsets,
+		int[] paragraphLengths, int[] textSizes,
+		byte[] paragraphKinds,
+		String directoryName, String fileExtension, int blocksNumber,
+		ZLImageMap imageMap
+	) {
+		super(
+			id, language,
 			entryIndices, entryOffsets, paragraphLengths, textSizes, paragraphKinds,
 			new CachedCharStorageRO(directoryName, fileExtension, blocksNumber),
-			imageMap);
+			imageMap
+		);
 		myParagraphsNumber = paragraphsNumber;
 	}
 }
