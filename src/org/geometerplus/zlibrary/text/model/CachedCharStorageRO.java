@@ -20,45 +20,18 @@
 package org.geometerplus.zlibrary.text.model;
 
 import java.lang.ref.WeakReference;
-import java.io.*;
+import java.util.Collections;
 
-public final class CachedCharStorage extends CachedCharStorageBase {
-	private final int myBlockSize;
-
-	public CachedCharStorage(int blockSize, String directoryName, String fileExtension) {
+public final class CachedCharStorageRO extends CachedCharStorageBase {
+	public CachedCharStorageRO(String directoryName, String fileExtension, int blocksNumber) {
 		super(directoryName, fileExtension);
-		myBlockSize = blockSize;
-		new File(directoryName).mkdirs();
+		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));
 	}
 
 	public char[] createNewBlock(int minimumLength) {
-		int blockSize = myBlockSize;
-		if (minimumLength > blockSize) {
-			blockSize = minimumLength;
-		}
-		char[] block = new char[blockSize];
-		myArray.add(new WeakReference<char[]>(block));
-		return block;
+		throw new UnsupportedOperationException("CachedCharStorageRO is a read-only storage.");
 	}
 
 	public void freezeLastBlock() {
-		int index = myArray.size() - 1;
-		if (index >= 0) {
-			char[] block = myArray.get(index).get();
-			if (block == null) {
-				throw new CachedCharStorageException("Block reference in null during freeze");
-			}
-			try {
-				final OutputStreamWriter writer =
-					new OutputStreamWriter(
-						new FileOutputStream(fileName(index)),
-						"UTF-16LE"
-					);
-				writer.write(block);
-				writer.close();
-			} catch (IOException e) {
-				throw new CachedCharStorageException("Error during writing " + fileName(index));
-			}
-		}
 	}
 }
