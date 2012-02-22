@@ -40,7 +40,7 @@ public abstract class NativeFormatPlugin extends FormatPlugin {
 	@Override
 	public native boolean readModel(BookModel model);
 
- 	@Override
+	@Override
 	public ZLImage readCover(final ZLFile file) {
 		return new ZLImageProxy() {
 			@Override
