@@ -113,7 +113,7 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 		return null;
 	}
 
-	public void addExternalEntities(HashMap<String,char[]> entityMap) {
+	public void collectExternalEntities(HashMap<String,char[]> entityMap) {
 	}
 
 	public List<String> externalDTDs() {

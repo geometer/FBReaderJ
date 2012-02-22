@@ -39,12 +39,12 @@ class SelectionPopup extends ButtonsPopupPanel {
 	}
 
 	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
+	public void createControlPanel(FBReader activity, RelativeLayout root) {
 		if (myWindow != null && activity == myWindow.getActivity()) {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, location, false);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Floating, false);
 
         addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
         addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);

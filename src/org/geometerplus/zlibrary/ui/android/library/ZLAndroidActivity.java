@@ -36,7 +36,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
 public abstract class ZLAndroidActivity extends Activity {
-	protected abstract ZLApplication createApplication(ZLFile file);
+	protected abstract ZLApplication createApplication();
 
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
@@ -64,13 +64,14 @@ public abstract class ZLAndroidActivity extends Activity {
 		return (level >= 0) ? level : 50;
 	}
 
-	private void disableButtonLight() {
+	private void setButtonLight(boolean enabled) {
 		try {
 			final WindowManager.LayoutParams attrs = getWindow().getAttributes();
 			final Class<?> cls = attrs.getClass();
 			final Field fld = cls.getField("buttonBrightness");
 			if (fld != null && "float".equals(fld.getType().toString())) {
-				fld.setFloat(attrs, 0);
+				fld.setFloat(attrs, enabled ? -1.0f : 0.0f);
+				getWindow().setAttributes(attrs);
 			}
 		} catch (NoSuchFieldException e) {
 		} catch (IllegalAccessException e) {
@@ -86,23 +87,25 @@ public abstract class ZLAndroidActivity extends Activity {
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		if (getLibrary().DisableButtonLightsOption.getValue()) {
-			disableButtonLight();
-		}
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
 		getLibrary().setActivity(this);
 
-		final ZLFile fileToOpen = fileFromIntent(getIntent());
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
 		if (androidApplication.myMainWindow == null) {
-			final ZLApplication application = createApplication(fileToOpen);
+			final ZLApplication application = createApplication();
 			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
-		} else {
-			ZLApplication.Instance().openFile(fileToOpen);
 		}
+
+		new Thread() {
+			public void run() {
+				ZLApplication.Instance().openFile(fileFromIntent(getIntent()));
+				ZLApplication.Instance().getViewWidget().repaint();
+			}
+		}.start();
+
 		ZLApplication.Instance().getViewWidget().repaint();
 	}
 
@@ -160,6 +163,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		} else {
 			setScreenBrightnessAuto();
 		}
+		if (getLibrary().DisableButtonLightsOption.getValue()) {
+			setButtonLight(false);
+		}
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
@@ -169,6 +175,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		unregisterReceiver(myBatteryInfoReceiver);
 		ZLApplication.Instance().stopTimer();
 		switchWakeLock(false);
+		if (getLibrary().DisableButtonLightsOption.getValue()) {
+			setButtonLight(true);
+		}
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
 	}

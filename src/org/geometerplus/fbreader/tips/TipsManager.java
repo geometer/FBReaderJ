@@ -42,7 +42,7 @@ public class TipsManager {
 	}
 
 	public ZLBooleanOption TipsAreInitializedOption =
-		new ZLBooleanOption("tips", "showTips", false);
+		new ZLBooleanOption("tips", "tipsAreInitialized", false);
 	public ZLBooleanOption ShowTipsOption =
 		new ZLBooleanOption("tips", "showTips", false);
 
@@ -130,9 +130,6 @@ public class TipsManager {
 	}
 
 	public Action requiredAction() {
-		if (!TipsAreInitializedOption.getValue()) {
-			return Action.Initialize;
-		}
 		if (ShowTipsOption.getValue()) {
 			if (hasNextTip()) {
 				return myLastShownOption.getValue() + DELAY < currentTime()
@@ -141,6 +138,8 @@ public class TipsManager {
 				return myDownloadInProgress
 					? Action.None : Action.Download;
 			}
+		} else if (!TipsAreInitializedOption.getValue()) {
+			return Action.Initialize;
 		}
 		return Action.None;
 	}

@@ -35,8 +35,8 @@ public abstract class ZLApplication {
 
 	public static final String NoAction = "none";
 
-	private ZLApplicationWindow myWindow;
-	private ZLView myView;
+	private volatile ZLApplicationWindow myWindow;
+	private volatile ZLView myView;
 
 	private final HashMap<String,ZLAction> myIdToActionMap = new HashMap<String,ZLAction>();
 
@@ -64,7 +64,7 @@ public abstract class ZLApplication {
 		myWindow = window;
 	}
 
-	public void initWindow() {
+	public final void initWindow() {
 		setView(myView);
 	}
 
@@ -74,9 +74,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-	protected void wait(String key, Runnable runnable) {
+	protected void runWithMessage(String key, Runnable runnable) {
 		if (myWindow != null) {
-			myWindow.wait(key, runnable);
+			myWindow.runWithMessage(key, runnable);
 		}
 	}
 
@@ -86,7 +86,7 @@ public abstract class ZLApplication {
 
 	public final void onRepaintFinished() {
 		if (myWindow != null) {
-			myWindow.refreshMenu();
+			myWindow.refresh();
 		}
 		for (PopupPanel popup : popupPanels()) {
 			popup.update();
@@ -227,7 +227,7 @@ public abstract class ZLApplication {
 		return (myWindow != null) ? myWindow.getBatteryLevel() : 0;
 	}
 
-	private Timer myTimer;
+	private volatile Timer myTimer;
 	private final HashMap<Runnable,Long> myTimerTaskPeriods = new HashMap<Runnable,Long>();
 	private final HashMap<Runnable,TimerTask> myTimerTasks = new HashMap<Runnable,TimerTask>();
 	private static class MyTimerTask extends TimerTask {
@@ -248,37 +248,46 @@ public abstract class ZLApplication {
 		myTimerTasks.put(runnable, task);
 	}
 
-	public final synchronized void startTimer() {
-		if (myTimer == null) {
-			myTimer = new Timer();
-			for (Map.Entry<Runnable,Long> entry : myTimerTaskPeriods.entrySet()) {
-				addTimerTaskInternal(entry.getKey(), entry.getValue());
-			} 
+	private final Object myTimerLock = new Object();
+	public final void startTimer() {
+		synchronized (myTimerLock) {
+			if (myTimer == null) {
+				myTimer = new Timer();
+				for (Map.Entry<Runnable,Long> entry : myTimerTaskPeriods.entrySet()) {
+					addTimerTaskInternal(entry.getKey(), entry.getValue());
+				}
+			}
 		}
 	}
 
-	public final synchronized void stopTimer() {
-		if (myTimer != null) {
-			myTimer.cancel();
-			myTimer = null;
-			myTimerTasks.clear();
+	public final void stopTimer() {
+		synchronized (myTimerLock) {
+			if (myTimer != null) {
+				myTimer.cancel();
+				myTimer = null;
+				myTimerTasks.clear();
+			}
 		}
 	}
 
-	public final synchronized void addTimerTask(Runnable runnable, long periodMilliseconds) {
-		removeTimerTask(runnable);
-		myTimerTaskPeriods.put(runnable, periodMilliseconds);
-		if (myTimer != null) {
-			addTimerTaskInternal(runnable, periodMilliseconds);
+	public final void addTimerTask(Runnable runnable, long periodMilliseconds) {
+		synchronized (myTimerLock) {
+			removeTimerTask(runnable);
+			myTimerTaskPeriods.put(runnable, periodMilliseconds);
+			if (myTimer != null) {
+				addTimerTaskInternal(runnable, periodMilliseconds);
+			}
 		}
 	}	
 
-	public final synchronized void removeTimerTask(Runnable runnable) {
-		TimerTask task = myTimerTasks.get(runnable);
-		if (task != null) {
-			task.cancel();
-			myTimerTasks.remove(runnable);
+	public final void removeTimerTask(Runnable runnable) {
+		synchronized (myTimerLock) {
+			TimerTask task = myTimerTasks.get(runnable);
+			if (task != null) {
+				task.cancel();
+				myTimerTasks.remove(runnable);
+			}
+			myTimerTaskPeriods.remove(runnable);
 		}
-		myTimerTaskPeriods.remove(runnable);
 	}
 }

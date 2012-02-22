@@ -49,7 +49,7 @@ class ShowCancelMenuAction extends FBAndroidAction {
 					intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
 					++index;
 				}
-				BaseActivity.startActivityForResult(intent, FBReader.CANCEL_CODE);
+				BaseActivity.startActivityForResult(intent, FBReader.REQUEST_CANCEL_MENU);
 			}
 		}
 	}

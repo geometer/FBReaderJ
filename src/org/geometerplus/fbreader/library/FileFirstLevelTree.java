@@ -35,7 +35,7 @@ public class FileFirstLevelTree extends FirstLevelTree {
 	private void addChild(String path, String resourceKey) {
 		final ZLFile file = ZLFile.createFileByPath(path);
 		if (file != null) {
-			final ZLResource resource = Library.resource().getResource(resourceKey);
+			final ZLResource resource = LibraryUtil.resource().getResource(resourceKey);
 			new FileTree(
 				this,
 				file,

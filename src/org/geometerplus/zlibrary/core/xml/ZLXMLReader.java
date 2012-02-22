@@ -36,6 +36,6 @@ public interface ZLXMLReader {
 	boolean processNamespaces();
 	void namespaceMapChangedHandler(Map<String,String> namespaces);
 
-	void addExternalEntities(HashMap<String,char[]> entityMap);
+	void collectExternalEntities(HashMap<String,char[]> entityMap);
 	List<String> externalDTDs();
 }

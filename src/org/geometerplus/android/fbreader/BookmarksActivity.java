@@ -251,10 +251,9 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			final int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 			if (getItem(position) != null) {
 				menu.setHeaderTitle(getItem(position).getText());
-				final ZLResource resource = ZLResource.resource("bookmarksView");
-				menu.add(0, OPEN_ITEM_ID, 0, resource.getResource("open").getValue());
-				//menu.add(0, EDIT_ITEM_ID, 0, resource.getResource("edit").getValue());
-				menu.add(0, DELETE_ITEM_ID, 0, resource.getResource("delete").getValue());
+				menu.add(0, OPEN_ITEM_ID, 0, myResource.getResource("open").getValue());
+				//menu.add(0, EDIT_ITEM_ID, 0, myResource.getResource("edit").getValue());
+				menu.add(0, DELETE_ITEM_ID, 0, myResource.getResource("delete").getValue());
 			}
 		}
 
@@ -269,7 +268,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 			if (bookmark == null) {
 				imageView.setVisibility(View.VISIBLE);
 				imageView.setImageResource(R.drawable.ic_list_plus);
-				textView.setText(ZLResource.resource("bookmarksView").getResource("new").getValue());
+				textView.setText(myResource.getResource("new").getValue());
 				bookTitleView.setVisibility(View.GONE);
 			} else {
 				imageView.setVisibility(View.GONE);

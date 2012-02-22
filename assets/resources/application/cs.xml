@@ -117,14 +117,8 @@
 		<node name="downloadingCatalogs" value="Stahování katalogů"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Vyhledávání knih v síti"/> <!-- used as notification title -->
 		<node name="addCatalog">
-			<node name="title" value="Add catalog" toBeTranslated="true"/>
-			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
-			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
-			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
-			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
-			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
-			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
-			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
+			<node name="title" value="Přidat katalog"/>
+			<node name="editUrl" value="Zadat adresu ručně"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Prohledávání sítě"/>
@@ -246,12 +240,13 @@
 		</node>
 		<node name="search" value="Hledat"/>
 		<node name="rotate" value="Otočit obrazovku"/>
-		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
-		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
-		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
-		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
-		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+		<node name="screenOrientation" value="Orientace obrazovky"/>
+		<node name="screenOrientationSystem" value="Systém"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
+		<node name="screenOrientationPortrait" value="Na výšku"/>
+		<node name="screenOrientationLandscape" value="Na šířku"/>
+		<node name="screenOrientationReversePortrait" value="Převráceně na výšku"/>
+		<node name="screenOrientationReverseLandscape" value="Převráceně na šířku"/>
 		<node name="increaseFont" value="Zvětšit"/>
 		<node name="decreaseFont" value="Zmenšit"/>
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
@@ -265,7 +260,7 @@
 			<node name="buy" value="Zakoupit"/>
 			<node name="buyAndDownload" value="Zakoupit a stáhnout"/>
 			<node name="continue" value="Pokračovat"/>
-			<node name="editUrl" value="Upravit URL"/>
+			<node name="editUrl" value="Upravit adresu"/>
 			<node name="tryAgain" value="Zkusit znovu"/>
 			<node name="openBook" value="Číst"/>
 			<node name="editInfo" value="Upravit"/>
@@ -274,9 +269,7 @@
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
 			<node name="authorize" value="Authorizovat"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
-			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="resetPosition" value="Obnovit pozici"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>
@@ -302,12 +295,13 @@
 			</node>
 			<node name="appearance" value="Vzhled">
 				<node name="summary" value="Otáčení, stavový řádek"/>
-				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
-					<node name="system" value="System" toBeTranslated="true"/>
-					<node name="portrait" value="Portrait" toBeTranslated="true"/>
-					<node name="landscape" value="Landscape" toBeTranslated="true"/>
-					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				<node name="screenOrientation" value="Orientace obrazovky">
+					<node name="system" value="Systém"/>
+					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
+					<node name="portrait" value="Na výšku"/>
+					<node name="landscape" value="Na šířku"/>
+					<node name="reversePortrait" value="Převráceně na výšku"/>
+					<node name="reverseLandscape" value="Převráceně na šířku"/>
 				</node>
 				<node name="autoOrientation" value="Automatické otáčení">
 					<node name="summaryOn" value="Displej se otočí pokud uživatel pohne zařízením"/>
@@ -316,6 +310,10 @@
 				<node name="showStatusBar" value="Zobrazit stavový řádek">
 					<node name="summaryOn" value="Zobrazit stavový řádek v režimu čtení"/>
 					<node name="summaryOff" value="Skrýt stavový řádek v režimu čtení"/>
+				</node>
+				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Zobrazit stavový řádek, když je menu aktivní">
 					<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
@@ -342,6 +340,29 @@
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Písmo, dělení slov atd."/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="Rodina písem">
 					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
@@ -354,13 +375,23 @@
 					<node name="boldItalic" value="Tučná kurzíva"/>
 				</node>
 				<node name="bold" value="Tučně">
-					<node name="on" value="tučně"/>
-					<node name="off" value="obyčejné"/>
+					<node name="summaryOn" value="tučně"/>
+					<node name="summaryOff" value="obyčejné"/>
 					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="italic" value="Kurzíva">
-					<node name="on" value="kurzíva"/>
-					<node name="off" value="obyčejné"/>
+					<node name="summaryOn" value="kurzíva"/>
+					<node name="summaryOff" value="obyčejné"/>
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;nezměněno&gt;"/>
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Řádkování">
@@ -378,8 +409,8 @@
 					<node name="summaryOff" value="Nedělit slova automaticky"/>
 				</node>
 				<node name="allowHyphenations" value="Povolit dělení slov">
-					<node name="on" value="dělit slova"/>
-					<node name="off" value="nedělit slova"/>
+					<node name="summaryOn" value="dělit slova"/>
+					<node name="summaryOff" value="nedělit slova"/>
 					<node name="unchanged" value="&lt;nezměněno&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Odsazení prvního řádku"/>
@@ -490,7 +521,7 @@
 					</node>
 				</node>
 			</node>
-			<node name="colors" value="Barvy a tapety">
+			<node name="colors" value="Barvy a pozadí">
 				<node name="summary" value="Nastavení barev"/>
 				<node name="background" value="Pozadí">
 					<node name="solidColor" value="Plná barva"/>
@@ -639,6 +670,19 @@
 					<node name="summaryOff" value="Nezobrazovat"/>
 				</node>
 			</node>
+			<node name="about" value="About FBReader" toBeTranslated="true">
+				<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
+				<node name="version" value="Version" toBeTranslated="true"/>
+				<node name="site" value="Visit our website" toBeTranslated="true">
+					<node name="url" value="http://www.fbreader.org/"/>
+				</node>
+				<node name="email" value="Send us an e-mail" toBeTranslated="true">
+					<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+				</node>
+				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+					<node name="url" value="http://twitter.com/fbreader"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -672,7 +716,6 @@
 			<node name="loadingNetworkBookInfo" value="Načítání informací o knize. Čekejte&#8230;" />
 			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte&#8230;"/>
 			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte&#8230;"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
@@ -698,14 +741,14 @@
 		<node name="CustomCatalogDialog">
 			<node name="title" value="FBReader: přidat vlastní katalog"/>
 			<node name="catalogTitle" value="Název"/>
-			<node name="catalogUrl" value="URL"/>
+			<node name="catalogUrl" value="Adresa"/>
 			<node name="catalogSummary" value="Stručný obsah"/>
 			<node name="catalogTitleExample" value="Např.: Katalog Projekt Gutenberg"/>
 			<node name="catalogUrlExample" value="Např.: http://m.gutenberg.org/"/>
 			<node name="catalogSummaryExample" value="Např.: Veřejné knihy"/>
 			<node name="titleIsEmpty" value="Název by neměl být prázdný"/>
-			<node name="urlIsEmpty" value="URL by neměla být prázdná"/>
-			<node name="invalidUrl" value="Neplatná URL"/>
+			<node name="urlIsEmpty" value="Adresa by neměla být prázdná"/>
+			<node name="invalidUrl" value="Neplatná adresa"/>
 			<node name="titleAlreadyExists" value="Zadaný název se již používá"/>
 			<node name="siteAlreadyExists" value="Zadaná stránka se již používá"/>
 		</node>
@@ -713,8 +756,8 @@
 			<node name="title" value="Filtr jazyků"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" />
-			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
+			<node name="title" value="Denní tip" />
+			<node name="initializationText" value="Chtěli byste číst denní tipy FBReaderu? Nové tipy by byly stahovány ze stránky FBReaderu. Předpokládaný provoz v síti je 1–2 kilobajty týdně.&#10;&#10;Povolit tipy?"/>
 			<node name="dontShowAgain" value="Znovu nezobrazovat" />
 			<node name="more" value="Další tip" />
 		</node>
@@ -743,12 +786,12 @@
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="title" value="Problém FBReaderu"/>
 			<node name="text" value="Adresář vyrovnávací paměti FBReaderu není přístupný pro zápis. Možná jste zapomněli vložit nebo odpojit paměťovou kartu. Opravte tento problém nebo níže vyberte jiný název adresáře."/>
 		</node>
 		<node name="missingNativeLibrary">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
+			<node name="title" value="Problém FBReaderu"/>
+			<node name="text" value="FBReader nemůže načíst místní knihovnu. Možná není správně nainstalován. Pokud problém přetrvává, zkuste znovu nainstalovat FBReader."/>
 		</node>
 	</node>
 </resources>

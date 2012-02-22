@@ -45,7 +45,7 @@ final class NavigationPopup extends PopupPanel {
 	}
 
 	public void runNavigation() {
-		if (myWindow != null && myWindow.getVisibility() == View.GONE) {
+		if (myWindow == null || myWindow.getVisibility() == View.GONE) {
 			myIsInProgress = false;
 			initPosition();
 			Application.showPopup(ID);
@@ -73,12 +73,12 @@ final class NavigationPopup extends PopupPanel {
 	}
 
 	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Location location) {
+	public void createControlPanel(FBReader activity, RelativeLayout root) {
 		if (myWindow != null && activity == myWindow.getActivity()) {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, location, true);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Bottom, true);
 
 		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
 
@@ -161,9 +161,8 @@ final class NavigationPopup extends PopupPanel {
 		builder.append(pagesNumber);
 		final TOCTree tocElement = getReader().getCurrentTOCElement();
 		if (tocElement != null) {
-			builder.append(" (");
+			builder.append("  ");
 			builder.append(tocElement.getText());
-			builder.append(")");
 		}
 		return builder.toString();
 	}

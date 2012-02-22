@@ -42,11 +42,16 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 public abstract class DictionaryUtil {
-	// Map: dictionary info -> hide if package is not installed
-	private static LinkedHashMap<PackageInfo,Boolean> ourDictionaryInfos =
-		new LinkedHashMap<PackageInfo,Boolean>();
+	private static int FLAG_INSTALLED_ONLY = 1;
+	private static int FLAG_SHOW_AS_DICTIONARY = 2;
+	private static int FLAG_SHOW_AS_TRANSLATOR = 4;
+
 	private static ZLStringOption ourSingleWordTranslatorOption;
 	private static ZLStringOption ourMultiWordTranslatorOption;
+
+	// Map: dictionary info -> mode if package is not installed
+	private static Map<PackageInfo,Integer> ourInfos =
+		Collections.synchronizedMap(new LinkedHashMap<PackageInfo,Integer>());
 
 	private static class InfoReader extends ZLXMLReaderAdapter {
 		@Override
@@ -59,7 +64,12 @@ public abstract class DictionaryUtil {
 			if ("dictionary".equals(tag)) {
 				final String id = attributes.getValue("id");
 				final String title = attributes.getValue("title");
-				ourDictionaryInfos.put(new PackageInfo(
+
+				int flags = FLAG_SHOW_AS_DICTIONARY | FLAG_SHOW_AS_TRANSLATOR;
+				if (!"always".equals(attributes.getValue("list"))) {
+					flags |= FLAG_INSTALLED_ONLY;
+				}
+				ourInfos.put(new PackageInfo(
 					id,
 					attributes.getValue("package"),
 					attributes.getValue("class"),
@@ -67,7 +77,43 @@ public abstract class DictionaryUtil {
 					attributes.getValue("action"),
 					attributes.getValue("dataKey"),
 					attributes.getValue("pattern")
-				), !"always".equals(attributes.getValue("list")));
+				), flags);
+			}
+			return false;
+		}
+	}
+
+	private static class ParagonInfoReader extends ZLXMLReaderAdapter {
+		private final Context myContext;
+		private int myCounter;
+
+		ParagonInfoReader(Context context) {
+			myContext = context;
+		}
+	
+		@Override
+		public boolean dontCacheAttributeValues() {
+			return true;
+		}
+
+		@Override
+		public boolean startElementHandler(String tag, ZLStringMap attributes) {
+			if ("dictionary".equals(tag)) {
+				final String id = attributes.getValue("id");
+				final String title = attributes.getValue("title");
+
+				final PackageInfo info = new PackageInfo(
+					String.valueOf(++myCounter),
+					attributes.getValue("package"),
+					".Start",
+					attributes.getValue("title"),
+					Intent.ACTION_VIEW,
+					null,
+					attributes.getValue("pattern")
+				);
+				if (PackageUtil.canBeStarted(myContext, getDictionaryIntent(info, "test"), false)) {
+					ourInfos.put(info, FLAG_SHOW_AS_DICTIONARY | FLAG_INSTALLED_ONLY);
+				}
 			}
 			return false;
 		}
@@ -86,29 +132,58 @@ public abstract class DictionaryUtil {
 		String FULLSCREEN = "EXTRA_FULLSCREEN";
 	}
 
-	private static Map<PackageInfo,Boolean> infos() {
-		if (ourDictionaryInfos.isEmpty()) {
-			new InfoReader().read(ZLFile.createFileByPath("dictionaries.xml"));
+	public static void init(final Context context) {
+		if (ourInfos.isEmpty()) {
+			final Thread initThread = new Thread(new Runnable() {
+				public void run() {
+					new InfoReader().read(ZLFile.createFileByPath("dictionaries/main.xml"));
+					new ParagonInfoReader(context).read(ZLFile.createFileByPath("dictionaries/paragon.xml"));
+				}
+			});
+			initThread.setPriority(Thread.MIN_PRIORITY);
+			initThread.start();
 		}
-		return ourDictionaryInfos;
 	}
 
-	public static List<PackageInfo> dictionaryInfos(Context context) {
+	public static List<PackageInfo> dictionaryInfos(Context context, boolean dictionaryNotTranslator) {
 		final LinkedList<PackageInfo> list = new LinkedList<PackageInfo>();
-		for (Map.Entry<PackageInfo,Boolean> entry : infos().entrySet()) {
-			final PackageInfo info = entry.getKey();
-			if (!entry.getValue() ||
-				PackageUtil.canBeStarted(context, getDictionaryIntent(info, "test"), false)) {
-				list.add(info);
+		final HashSet<String> installedPackages = new HashSet<String>();
+		final HashSet<String> notInstalledPackages = new HashSet<String>();
+		synchronized (ourInfos) {
+			for (Map.Entry<PackageInfo,Integer> entry : ourInfos.entrySet()) {
+				final PackageInfo info = entry.getKey();
+				final int flags = entry.getValue();
+				if (dictionaryNotTranslator) {
+					if ((flags & FLAG_SHOW_AS_DICTIONARY) == 0) {
+						continue;
+					}
+				} else {
+					if ((flags & FLAG_SHOW_AS_TRANSLATOR) == 0) {
+						continue;
+					}
+				}
+				if (((flags & FLAG_INSTALLED_ONLY) == 0) ||
+					installedPackages.contains(info.PackageName)) {
+					list.add(info);
+				} else if (!notInstalledPackages.contains(info.PackageName)) {
+					if (PackageUtil.canBeStarted(context, getDictionaryIntent(info, "test"), false)) {
+						list.add(info);
+						installedPackages.add(info.PackageName);
+					} else {
+						notInstalledPackages.add(info.PackageName);
+					}
+				}
 			}
 		}
 		return list;
 	}
 
 	private static PackageInfo firstInfo() {
-		for (Map.Entry<PackageInfo,Boolean> entry : infos().entrySet()) {
-			if (!entry.getValue()) {
-				return entry.getKey();
+		synchronized (ourInfos) {
+			for (Map.Entry<PackageInfo,Integer> entry : ourInfos.entrySet()) {
+				if ((entry.getValue() & FLAG_INSTALLED_ONLY) == 0) {
+					return entry.getKey();
+				}
 			}
 		}
 		throw new RuntimeException("There are no available dictionary infos");
@@ -132,9 +207,11 @@ public abstract class DictionaryUtil {
 		final ZLStringOption option = singleWord
 			? singleWordTranslatorOption() : multiWordTranslatorOption();
 		final String id = option.getValue();
-		for (PackageInfo info : infos().keySet()) {
-			if (info.Id.equals(id)) {
-				return info;
+		synchronized (ourInfos) {
+			for (PackageInfo info : ourInfos.keySet()) {
+				if (info.Id.equals(id)) {
+					return info;
+				}
 			}
 		}
 		return firstInfo();

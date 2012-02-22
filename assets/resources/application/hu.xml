@@ -117,14 +117,8 @@
 		<node name="downloadingCatalogs" value="Katalógusok letöltése"/> <!-- used as notification title -->
 		<node name="searchingNetwork" value="Könyv keresése az interneten"/> <!-- used as notification title -->
 		<node name="addCatalog">
-			<node name="title" value="Add catalog" toBeTranslated="true"/>
-			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
-			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
-			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
-			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
-			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
-			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
-			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
+			<node name="title" value="Új katalógus"/>
+			<node name="editUrl" value="URL megadása"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Internetes keresés"/>
@@ -246,12 +240,13 @@
 		</node>
 		<node name="search" value="Keresés"/>
 		<node name="rotate" value="Kijelző elforgatása"/>
-		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
-		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
-		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
-		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
-		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+		<node name="screenOrientation" value="Kijelző iránya"/>
+		<node name="screenOrientationSystem" value="Rendszerbeállítás"/>
+		<node name="screenOrientationSensor" value="Készülék irányától függ"/>
+		<node name="screenOrientationPortrait" value="Álló"/>
+		<node name="screenOrientationLandscape" value="Fekvő"/>
+		<node name="screenOrientationReversePortrait" value="Fordított álló"/>
+		<node name="screenOrientationReverseLandscape" value="Fordított fekvő"/>
 		<node name="increaseFont" value="Nagyítás" />
 		<node name="decreaseFont" value="Kicsinyítés" />
 		<node name="toggleFullscreen" value="Teljes kijelző"/>
@@ -274,13 +269,11 @@
 			<node name="pay" value="Fizetés"/>
 			<node name="refresh" value="Frissítés"/>
 			<node name="authorize" value="Hitelesítés"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
-			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="resetPosition" value="Pozíció nullázása"/>
 		</node>
 		<node name="plugin">
-			<node name="installTitle" value="Plugin telepítése" />
-			<node name="updateTitle" value="Plugin frissítése" />
+			<node name="installTitle" value="Bővítmény telepítése" />
+			<node name="updateTitle" value="Bővítmény frissítése" />
 			<node name="dontAskAgain" value="Ne kérdezze megint" />
 		</node>
 		<node name="installDictionary">
@@ -302,12 +295,13 @@
 			</node>
 			<node name="appearance" value="Megjelenés">
 				<node name="summary" value="Elforgatás, állapotsor"/>
-				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
-					<node name="system" value="System" toBeTranslated="true"/>
-					<node name="portrait" value="Portrait" toBeTranslated="true"/>
-					<node name="landscape" value="Landscape" toBeTranslated="true"/>
-					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+				<node name="screenOrientation" value="Kijelző iránya">
+					<node name="system" value="Rendszerbeállítás"/>
+					<node name="sensor" value="A készülék irányától függ"/>
+					<node name="portrait" value="Álló"/>
+					<node name="landscape" value="Fekvő"/>
+					<node name="reversePortrait" value="Fordított álló"/>
+					<node name="reverseLandscape" value="Fordított fekvő"/>
 				</node>
 				<node name="autoOrientation" value="Automatikus elforgatás">
 					<node name="summaryOn" value="A kijelző elfordul a készülék mozgatásakor"/>
@@ -316,6 +310,10 @@
 				<node name="showStatusBar" value="Állapotsor látható">
 					<node name="summaryOn" value="Az állapotsor látszik olvasás közben"/>
 					<node name="summaryOff" value="Az állapotsor nem látszik olvasás közben"/>
+				</node>
+				<node name="showActionBar" value="Akciósáv látható">
+					<node name="summaryOn" value="Akciósáv látható olvasás közben"/>
+					<node name="summaryOff" value="Akciósáv elrejtése olvasás közben"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Állapotsor látható a menüben">
 					<node name="summaryOn" value="Az állapotsor látszik a menübe belépéskor"/>
@@ -342,6 +340,29 @@
 			</node>
 			<node name="text" value="Szöveg">
 				<node name="summary" value="Betűtípus, elválasztás stb."/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="Betűtípus">
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
@@ -354,13 +375,23 @@
 					<node name="boldItalic" value="Félkövér és dőlt"/>
 				</node>
 				<node name="bold" value="Félkövér">
-					<node name="on" value="félkövér"/>
-					<node name="off" value="normál"/>
+					<node name="summaryOn" value="félkövér"/>
+					<node name="summaryOff" value="normál"/>
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="italic" value="Dőlt">
-					<node name="on" value="dőlt"/>
-					<node name="off" value="normál"/>
+					<node name="summaryOn" value="dőlt"/>
+					<node name="summaryOff" value="normál"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;változatlan&gt;"/>
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Sorköz">
@@ -378,8 +409,8 @@
 					<node name="summaryOff" value="Automatikus elválasztás kikapcsolva"/>
 				</node>
 				<node name="allowHyphenations" value="Elválasztás engedélyezése">
-					<node name="on" value="válassza el a szavakat"/>
-					<node name="off" value="ne válassza el a szavakat"/>
+					<node name="summaryOn" value="válassza el a szavakat"/>
+					<node name="summaryOff" value="ne válassza el a szavakat"/>
 					<node name="unchanged" value="&lt;változatlan&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Első sor behúzása"/>
@@ -632,11 +663,24 @@
 					<node name="none" value="Semmit ne tegyen"/>
 				</node>
 			</node>
-			<node name="tips" value="Tips" toBeTranslated="true">
-				<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
-				<node name="showTips" value="Show tips" toBeTranslated="true">
-					<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
-					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
+			<node name="tips" value="Tippek">
+				<node name="summary" value="Napi tippek beállításai"/>
+				<node name="showTips" value="Napi tippek">
+					<node name="summaryOn" value="Mutasson tippeket"/>
+					<node name="summaryOff" value="Ne mutasson"/>
+				</node>
+			</node>
+			<node name="about" value="Az FBReader névjegye">
+				<node name="summary" value="Verziószám, kapcsolat"/>
+				<node name="version" value="Verzió"/>
+				<node name="site" value="Ugrás a weboldalunkra">
+					<node name="url" value="http://www.fbreader.org/"/>
+				</node>
+				<node name="email" value="E-mail küldése">
+					<node name="url" value="mailto:contact@geometerplus.com"/>
+				</node>
+				<node name="twitter" value="Kövessen Twitteren">
+					<node name="url" value="http://twitter.com/fbreader"/>
 				</node>
 			</node>
 		</node>
@@ -669,10 +713,9 @@
 			<node name="signOut" value="Kijelentkezés. Egy kis türelmet..." />
 			<node name="purchaseBook" value="Könyv vásárlása. Egy kis türelmet..." />
 			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..." />
-			<node name="loadingNetworkBookInfo" value="Könyv információinak letöltése.Egy kis türelmet&#8230;" />
+			<node name="loadingNetworkBookInfo" value="Könyv információinak letöltése. Egy kis türelmet&#8230;" />
 			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
 			<node name="updatingAccountInformation" value="Fiókadatok frissítése. Egy kis türelmet&#8230;" />
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Belső szerverhiba" />
@@ -713,10 +756,10 @@
 			<node name="title" value="Nyelvi szűrő"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" toBeTranslated="true" />
-			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
-			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
-			<node name="more" value="Next tip" toBeTranslated="true"/>
+			<node name="title" value="A nap tippje" />
+			<node name="initializationText" value="Szeretne naponta tippeket kapni az FBReaderről? Az új tippek az FBReader webhelyéről töltődnek le. A várható hálózati forgalom 1-2 kilobyte hetente.&#10;&#10;Bekapcsolja a tippeket?"/>
+			<node name="dontShowAgain" value="Ne mutassa többet"/>
+			<node name="more" value="Következő"/>
 		</node>
 	</node>
 	<node name="errorMessage">
@@ -743,12 +786,12 @@
 	</node>
 	<node name="crash">
 		<node name="fixBooksDirectory">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="title" value="FBReader probléma"/>
 			<node name="text" value="Az FBReader gyorsítótár mappája nem írható. Valószínűleg elfelejtette behelyezni vagy leválasztani a memóriakártyát. Kérem, javítsa a problémát, vagy válasszon egy másik mappát."/>
 		</node>
 		<node name="missingNativeLibrary">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
-			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
+			<node name="title" value="FBReader probléma"/>
+			<node name="text" value="Az FBReader nem tudta betölteni a helyi könyvtárat. Lehet, hogy nincs megfelelően telepítve. Ha a probléma nem szűnik meg, próbálja meg újratelepíteni az FBReadert."/>
 		</node>
 	</node>
 </resources>

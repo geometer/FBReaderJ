@@ -85,7 +85,7 @@ class FB2CoverImage extends ZLImageProxy {
 					final String contentType = attributes.getValue("content-type");
 					if (id != null && contentType != null && myImageReference.equals(id)) {
 						// FIXME: make different Base64EncodedImage constructor to use another cache for covers
-						myImage = new Base64EncodedImage(contentType != null ? MimeType.get(contentType) : MimeType.IMAGE_AUTO);
+						myImage = new Base64EncodedImage(contentType != null ? MimeType.get(contentType) : MimeType.IMAGE_AUTO, "-cover");
 					}
 				}
 				break;

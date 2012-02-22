@@ -29,6 +29,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	private boolean myIsItalic;
 	private boolean myIsBold;
 	private boolean myIsUnderline;
+	private boolean myIsStrikeThrough;
 	private int myVerticalShift;
 
 	private boolean myIsNotCached = true;
@@ -43,6 +44,7 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		myIsItalic = isItalicInternal();
 		myIsBold = isBoldInternal();
 		myIsUnderline = isUnderlineInternal();
+		myIsStrikeThrough = isStrikeThroughInternal();
 		myVerticalShift = getVerticalShiftInternal();
 
 		myIsNotCached = false;
@@ -92,6 +94,15 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		return myIsUnderline;
 	}
 	protected abstract boolean isUnderlineInternal();
+
+	@Override
+	public final boolean isStrikeThrough() {
+		if (myIsNotCached) {
+			initCache();
+		}
+		return myIsStrikeThrough;
+	}
+	protected abstract boolean isStrikeThroughInternal();
 
 	@Override
 	public final int getVerticalShift() {

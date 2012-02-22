@@ -35,14 +35,16 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 
 	private final String myDirName;
 	private final int myFileNumber;
+	private final String myNamePostfix;
 	private OutputStreamWriter myStreamWriter;
 	
-	public Base64EncodedImage(MimeType mimeType) {
+	public Base64EncodedImage(MimeType mimeType, String namePostfix) {
 		// TODO: use contentType
 		super(mimeType);
 		myDirName = Paths.cacheDirectory();
 		new File(myDirName).mkdirs();
 		myFileNumber = ourCounter++;
+		myNamePostfix = namePostfix;
 		try {
 			myStreamWriter = new OutputStreamWriter(new FileOutputStream(encodedFileName()), "UTF-8");
 		} catch (IOException e) {
@@ -51,12 +53,12 @@ final class Base64EncodedImage extends ZLBase64EncodedImage {
 
 	@Override
 	protected String encodedFileName() {
-		return myDirName + "/image" + myFileNumber;
+		return myDirName + "/image" + myNamePostfix + myFileNumber;
 	}
 
 	@Override
 	protected String decodedFileName() {
-		return myDirName + "/dimage" + myFileNumber;
+		return myDirName + "/dimage" + myNamePostfix + myFileNumber;
 	}
 
 	void addData(char[] data, int offset, int length) {

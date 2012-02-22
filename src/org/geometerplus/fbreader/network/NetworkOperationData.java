@@ -25,8 +25,8 @@ import org.geometerplus.fbreader.network.tree.NetworkItemsLoader;
 
 public class NetworkOperationData {
 	public final INetworkLink Link;
-	public NetworkItemsLoader Loader;
-	public String ResumeURI;
+	public volatile NetworkItemsLoader Loader;
+	public volatile String ResumeURI;
 
 	public NetworkOperationData(INetworkLink link, NetworkItemsLoader loader) {
 		Link = link;

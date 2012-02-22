@@ -51,8 +51,9 @@ abstract public class ZLPaintContext {
 	private boolean myFontIsBold;
 	private boolean myFontIsItalic;
 	private boolean myFontIsUnderlined;
+	private boolean myFontIsStrikedThrough;
 
-	public final void setFont(String family, int size, boolean bold, boolean italic, boolean underline) {
+	public final void setFont(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrough) {
 		if ((family != null) && !myFontFamily.equals(family)) {
 			myFontFamily = family;
 			myResetFont = true;
@@ -73,16 +74,20 @@ abstract public class ZLPaintContext {
 			myFontIsUnderlined = underline;
 			myResetFont = true;
 		}
+		if (myFontIsStrikedThrough != strikeThrough) {
+			myFontIsStrikedThrough = strikeThrough;
+			myResetFont = true;
+		}
 		if (myResetFont) {
 			myResetFont = false;
-			setFontInternal(myFontFamily, size, bold, italic, underline);
+			setFontInternal(myFontFamily, size, bold, italic, underline, strikeThrough);
 			mySpaceWidth = -1;
 			myStringHeight = -1;
 			myDescent = -1;
 		}
 	}
 
-	abstract protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline);
+	abstract protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrough);
 
 	abstract public void setTextColor(ZLColor color);
 	final public void setLineColor(ZLColor color) {

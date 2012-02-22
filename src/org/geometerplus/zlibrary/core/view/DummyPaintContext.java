@@ -43,7 +43,7 @@ final class DummyPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
+	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
 	}
 
 	@Override

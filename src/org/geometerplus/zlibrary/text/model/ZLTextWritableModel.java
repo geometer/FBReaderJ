@@ -22,14 +22,14 @@ package org.geometerplus.zlibrary.text.model;
 public interface ZLTextWritableModel extends ZLTextModel {
 	void createParagraph(byte kind);
 
-	void addControl(byte textKind, boolean isStart);
 	void addText(char[] text);
 	void addText(char[] text, int offset, int length);
-
-	//void addControl(ZLTextForcedControlEntry entry);
-	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
 	void addImage(String id, short vOffset, boolean isCover);
+	void addControl(byte textKind, boolean isStart);
+	void addHyperlinkControl(byte textKind, byte hyperlinkType, String id);
+	void addStyleEntry(ZLTextStyleEntry entry);
 	void addFixedHSpace(short length);
+	void addBidiReset();
 
 	void stopReading();
 }
