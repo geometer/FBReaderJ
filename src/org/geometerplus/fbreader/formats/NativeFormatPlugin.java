@@ -20,11 +20,14 @@
 package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.image.*;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 
 public abstract class NativeFormatPlugin extends FormatPlugin {
+	private static Object ourCoversLock = new Object();
+
 	@Override
 	public native boolean acceptsFile(ZLFile file);
 
@@ -36,6 +39,31 @@ public abstract class NativeFormatPlugin extends FormatPlugin {
 
 	@Override
 	public native boolean readModel(BookModel model);
+
+	@Override
+	public ZLImage readCover(final ZLFile file) {
+		return new ZLImageProxy() {
+			@Override
+			public int sourceType() {
+				return SourceType.DISK;
+			}
+
+			@Override
+			public String getId() {
+				return file.getPath();
+			}
+
+			@Override
+			public ZLSingleImage getRealImage() {
+				// Synchronized block is needed because of use of temporary storage files;
+				synchronized (ourCoversLock) {
+					return (ZLSingleImage)readCoverInternal(file);
+				}
+			}
+		};
+	}
+
+	protected native ZLImage readCoverInternal(ZLFile file);
 
 	@Override
 	public Type type() {
