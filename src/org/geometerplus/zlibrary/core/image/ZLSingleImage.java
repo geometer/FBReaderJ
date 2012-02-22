@@ -32,12 +32,6 @@ public abstract class ZLSingleImage implements ZLImage {
 
 	private final MimeType myMimeType;
 
-	public interface Kind {
-		byte REGULAR_IMAGE = 1;
-		byte FILE_IMAGE = 2;
-		byte BASE64_ENCODED_IMAGE = 3;
-	};
-
 	public ZLSingleImage(final MimeType mimeType) {
 		myMimeType = mimeType;
 	}
