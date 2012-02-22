@@ -1,8 +1,9 @@
 ===== 1.3.8 (Feb ??, 2012) =====
-* striked through/underlined text support
-* asynchronous bonjour scanning: user can select any found network even if scanning is still in progress
-* better support for "related" catalogs in book descriptions
+* Striked through/underlined text support
+* Asynchronous bonjour scanning: user can select any found network even if scanning is still in progress
+* Better support for "related" catalogs in book descriptions
 * Updated Hungarian localization (by Szabó Lajos Balázs)
+* Local network scanning has been moved to a separate plugin; WiFi permissions are not required more
 
 ===== 1.3.7 (Feb 9, 2012) =====
 * Font smoothing settings (Settings -> Text -> Font properties)
