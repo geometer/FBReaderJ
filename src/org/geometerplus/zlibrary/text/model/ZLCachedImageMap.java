@@ -32,12 +32,14 @@ public class ZLCachedImageMap implements ZLImageMap {
 
 	private final ZLImageMapReader myReader;
 
-	public ZLCachedImageMap(String[] ids, int[] indices, int[] offsets,
-			String directoryName, String fileExtension, int blocksNumber) {
+	public ZLCachedImageMap(
+		String[] ids, int[] indices, int[] offsets,
+		String directoryName, String fileExtension, int blocksNumber
+	) {
 		myIndices = indices;
 		myOffsets = offsets;
 		for (int i = 0; i < ids.length; ++i) {
-			Integer before = myIdsMap.put(ids[i], i);
+			final Integer before = myIdsMap.put(ids[i], i);
 			if (before != null) {
 				System.err.println("FBREADER: more than one image with id=\"" + ids[i] + "\" -- number " + before + " and number " + i);
 			}
@@ -46,12 +48,14 @@ public class ZLCachedImageMap implements ZLImageMap {
 	}
 
 	public ZLImage getImage(String id) {
-		if (myImagesMap.containsKey(id)) {
-			return myImagesMap.get(id);
+		ZLImage image = myImagesMap.get(id);
+		if (image == null) {
+			final Integer pos = myIdsMap.get(id);
+			if (pos != null) {
+				image = myReader.readImage(myIndices[pos], myOffsets[pos]);
+				myImagesMap.put(id, image);
+			}
 		}
-		final int pos = myIdsMap.get(id);
-		final ZLImage res = myReader.readImage(myIndices[pos], myOffsets[pos]);
-		myImagesMap.put(id, res);
-		return res;
+		return image;
 	}
 }
