@@ -24,6 +24,12 @@ import java.io.InputStream;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class ZLSingleImage implements ZLImage {
+	public interface Kind {
+		byte REGULAR_IMAGE = 1;
+		byte FILE_IMAGE = 2;
+		byte BASE64_ENCODED_IMAGE = 3;
+	};
+
 	private final MimeType myMimeType;
 
 	public ZLSingleImage(final MimeType mimeType) {
