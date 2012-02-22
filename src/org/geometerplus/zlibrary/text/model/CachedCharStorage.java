@@ -23,14 +23,6 @@ import java.lang.ref.WeakReference;
 import java.io.*;
 import java.util.*;
 
-final class CachedCharStorageException extends RuntimeException {
-	private static final long serialVersionUID = -6373408730045821053L;
-
-	public CachedCharStorageException(String message) {
-		super(message);
-	}
-}
-
 public final class CachedCharStorage implements CharStorage {
 	private final int myBlockSize;
 	private final ArrayList<WeakReference<char[]>> myArray = new ArrayList<WeakReference<char[]>>();
