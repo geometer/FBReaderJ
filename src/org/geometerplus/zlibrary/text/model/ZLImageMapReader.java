@@ -61,26 +61,25 @@ class ZLImageMapReader {
 			case ZLSingleImage.Kind.BASE64_ENCODED_IMAGE:
 			case ZLSingleImage.Kind.REGULAR_IMAGE:
 			{
-				final int dataSize =
-					(int)data[offset++] +
-					((int)data[offset++] << 16);
-				final String fileName = myStorage.fileName(index);
-				return new ZLFileImage(MimeType.get(mime),
-						ZLFile.createFileByPath(fileName), offset * 2, dataSize * 2);
+				final int dataSize = (int)data[offset] + (((int)data[offset + 1]) << 16);
+				offset += 2;
+				final String path = myStorage.fileName(index);
+				return new ZLFileImage(
+					MimeType.get(mime), ZLFile.createFileByPath(path), offset * 2, dataSize * 2
+				);
 			}
 			case ZLSingleImage.Kind.FILE_IMAGE:
 			{
-				final int fileOffset =
-					(int)data[offset++] +
-					((int)data[offset++] << 16);
-				final int fileSize =
-					(int)data[offset++] +
-					((int)data[offset++] << 16);
+				final int fileOffset = (int)data[offset] + (((int)data[offset + 1]) << 16);
+				offset += 2;
+				final int fileSize = (int)data[offset] + (((int)data[offset + 1]) << 16);
+				offset += 2;
 				final short pathLength = (short)data[offset++];
 				final String path = new String(data, offset, pathLength);
 				offset += pathLength;
-				return new ZLFileImage(MimeType.get(mime),
-						ZLFile.createFileByPath(path), fileOffset, fileSize);
+				return new ZLFileImage(
+					MimeType.get(mime), ZLFile.createFileByPath(path), fileOffset, fileSize
+				);
 			}
 		}
 
