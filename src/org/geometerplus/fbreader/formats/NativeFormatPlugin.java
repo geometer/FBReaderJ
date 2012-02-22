@@ -20,10 +20,7 @@
 package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLImageProxy;
-import org.geometerplus.zlibrary.core.image.ZLSingleImage;
+import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -38,6 +35,8 @@ final class NativeFormatPluginException extends RuntimeException {
 }
 
 public class NativeFormatPlugin extends FormatPlugin {
+	private static Object ourCoversLock = new Object();
+
 	// Stores native C++ pointer value
 	// No free method because all plugins' instances are freed by 
 	//   PluginCollection::deleteInstance method (C++)
@@ -46,9 +45,6 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public NativeFormatPlugin(long ptr) {
 		myNativePointer = ptr;
 	}
-
-
-	private static Object ourCoversLock = new Object();
 
 	@Override
 	public native boolean acceptsFile(ZLFile file);
@@ -65,7 +61,6 @@ public class NativeFormatPlugin extends FormatPlugin {
 	@Override
 	public ZLImage readCover(final ZLFile file) {
 		return new ZLImageProxy() {
-
 			@Override
 			public int sourceType() {
 				return SourceType.DISK;
@@ -80,7 +75,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 			public ZLSingleImage getRealImage() {
 				// Synchronized block is needed because of use of temporary storage files;
 				synchronized (ourCoversLock) {
-					return (ZLSingleImage) readCoverInternal(file);
+					return (ZLSingleImage)readCoverInternal(file);
 				}
 			}
 		};
