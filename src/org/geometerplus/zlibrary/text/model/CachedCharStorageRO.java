@@ -29,7 +29,7 @@ public final class CachedCharStorageRO extends CachedCharStorageBase {
 	}
 
 	public char[] createNewBlock(int minimumLength) {
-		throw new UnsupportedOperationException("CachedCharStorageRO is is read-only storage.");
+		throw new UnsupportedOperationException("CachedCharStorageRO is a read-only storage.");
 	}
 
 	public void freezeLastBlock() {
