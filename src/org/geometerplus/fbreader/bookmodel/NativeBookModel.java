@@ -46,9 +46,9 @@ public class NativeBookModel extends BookModelImpl {
 	}
 
 	public void initTOC(ZLTextModel contentsModel, int[] childrenNumbers, int[] referenceNumbers) {
-		StringBuilder buffer = new StringBuilder();
+		final StringBuilder buffer = new StringBuilder();
 
-		ArrayList<Integer> positions = new ArrayList<Integer>();
+		final ArrayList<Integer> positions = new ArrayList<Integer>();
 		TOCTree tree = TOCTree;
 
 		final int size = contentsModel.getParagraphsNumber();
