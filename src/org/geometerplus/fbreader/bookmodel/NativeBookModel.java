@@ -43,6 +43,23 @@ public class NativeBookModel extends BookModelImpl {
 		myInternalHyperlinks = new CachedCharStorageRO(directoryName, fileExtension, blocksNumber);
 	}
 
+	public ZLTextModel createTextModel(
+		String id, String language, int paragraphsNumber,
+		int[] entryIndices, int[] entryOffsets,
+		int[] paragraphLenghts, int[] textSizes, byte[] paragraphKinds,
+		String directoryName, String fileExtension, int blocksNumber
+	) {
+		if (myImageMap == null) {
+			throw new RuntimeException("NativeBookModel should be initialized with initImageMap method");
+		}
+		return new ZLTextNativeModel(
+			id, language, paragraphsNumber,
+			entryIndices, entryOffsets,
+			paragraphLenghts, textSizes, paragraphKinds,
+			directoryName, fileExtension, blocksNumber, myImageMap
+		);
+	}
+
 	public void setBookTextModel(ZLTextModel model) {
 		myBookTextModel = model;
 	}
