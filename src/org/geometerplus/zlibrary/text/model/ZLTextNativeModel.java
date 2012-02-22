@@ -19,6 +19,6 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-public abstract class ZLTextNativeModel extends ZLTextPlainModel {
+public class ZLTextNativeModel /*extends ZLTextPlainModel*/ {
 
 }
