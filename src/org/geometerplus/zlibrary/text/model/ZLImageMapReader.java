@@ -49,7 +49,36 @@ class ZLImageMapReader {
 	}
 
 	private ZLImage readSingleImage(int index, int offset, char[] data, byte kind) {
-		// TODO: implement
+		final short mimeLength = (short)data[offset++];
+		final String mime = new String(data, offset, mimeLength);
+		offset += mimeLength;
+
+		switch (kind) {
+			case ZLSingleImage.Kind.BASE64_ENCODED_IMAGE:
+			case ZLSingleImage.Kind.REGULAR_IMAGE:
+			{
+				final int dataSize = (int)data[offset] + (((int)data[offset + 1]) << 16);
+				offset += 2;
+				final String path = myStorage.fileName(index);
+				return new ZLFileImage(
+					MimeType.get(mime), ZLFile.createFileByPath(path), offset * 2, dataSize * 2
+				);
+			}
+			case ZLSingleImage.Kind.FILE_IMAGE:
+			{
+				final int fileOffset = (int)data[offset] + (((int)data[offset + 1]) << 16);
+				offset += 2;
+				final int fileSize = (int)data[offset] + (((int)data[offset + 1]) << 16);
+				offset += 2;
+				final short pathLength = (short)data[offset++];
+				final String path = new String(data, offset, pathLength);
+				offset += pathLength;
+				return new ZLFileImage(
+					MimeType.get(mime), ZLFile.createFileByPath(path), fileOffset, fileSize
+				);
+			}
+		}
+
 		return null;
 	}
 }
