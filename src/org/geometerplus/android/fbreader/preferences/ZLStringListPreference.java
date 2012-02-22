@@ -50,25 +50,21 @@ abstract class ZLStringListPreference extends ListPreference {
 	}
 
 	protected final boolean setInitialValue(String value) {
-		if (value == null) {
-			return false;
-		}
-		// throws NPE in some cases (?)
-		//final int index = findIndexOfValue(value);
-		int index = -1;
+		int index = 0;
+		boolean found = false;;
 		final CharSequence[] entryValues = getEntryValues();
-		for (int i = 0; i < entryValues.length; ++i) {
-			if (value.equals(entryValues[i])) {
-				index = i;
-				break;
+		if (value != null) {
+			for (int i = 0; i < entryValues.length; ++i) {
+				if (value.equals(entryValues[i])) {
+					index = i;
+					found = true;
+					break;
+				}
 			}
 		}
-		if (index >= 0) {
-			setValueIndex(index);
-			setSummary(getEntry());
-			return true;
-		}
-		return false;
+		setValueIndex(index);
+		setSummary(getEntry());
+		return found;
 	}
 
 	@Override

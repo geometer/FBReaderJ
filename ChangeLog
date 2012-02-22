@@ -1,8 +1,60 @@
-===== 1.3 (Jan ??, 2012) =====
+===== 1.3.8 (Feb ??, 2012) =====
+* Striked through/underlined text support
+* Asynchronous bonjour scanning: user can select any found network even if scanning is still in progress
+* Better support for "related" catalogs in book descriptions
+* Updated Hungarian localization (by Szabó Lajos Balázs)
+* Local network scanning has been moved to a separate plugin; WiFi permissions are not required more
+
+===== 1.3.7 (Feb 9, 2012) =====
+* Font smoothing settings (Settings -> Text -> Font properties)
+* Fixed 'question symbols in menu' issue
+* Android 3.*/4.0: Action bar is shown by default (Settings -> Appearance -> Show action bar)
+
+===== 1.3.6 (Feb 6, 2012) =====
+* Updated Ukrainian translation (by Nazariy Makarenko)
+* LEO dictionary integration
+* No conflicts between book images and covers
+* No black screen for a long time at start: synchronization issue has been fixed
+* OPDS optimization
+
+===== 1.3.5 (Feb 2, 2012) =====
+* About section in the preferences dialog
+* Better SlovoEd dictionary integration (780 dictionaries are supported)
+* CHANGE_WIFI_STATE permission is not required more
+* getBookFileName() API method has been implemented
+* Application start speed-up
+* Network library: don't repaint all the views on image downloading
+* Network library: select previous opened tree on back key pressing
+* Network library: on-demand (on-scroll) catalog parts loading
+
+===== 1.3.3 (Jan 18, 2012) =====
+* Proguard -dontoptimize option, looks like these optimizations are buggy :(
+* 3d page turning hardware optimization has been fixed
+
+===== 1.3.2a (Jan 17, 2012) =====
+* Fixed menu issue on old devices with ICS installed
+
+===== 1.3.2 (Jan 17, 2012) =====
+* MIPS processor architectures are supported (with NDK from http://developer.mips.com/android/download-android-ndk/)
+* ExceptionInInitializerError processing has been fixed
+* Menu button shows action/navigation bars on old devices with ICS installed
+* Hardware acceleration is used for 3d animation if possible (Android 3/4)
+* Fixed an issue for ePub files with incorrect cover label
+* Better money amount formatting
+* Grayscale Android 3.* logo is back
+* Android 4: separate options for status bar & action bar
+* Android 3/4: always show book title in the action bar
+* Updated Czech localization (by Marek Pavelka)
+* Updated Romanian localization (by Mary Hit)
+
+===== 1.3.1 (Jan 9, 2012) =====
+* Persistent tip prompt issue has been fixed
+* Galaxy Tab specific Book info issue has been fixed
+
+===== 1.3 (Jan 8, 2012) =====
 * Tips subsystem has been implemented
 * FBReader can listen for Bonjour (zeroconf) OPDS announcement. JmDNS (http://jmdns.sourceforge.net/) is used.
 * Plugin API works on devices with Android 3/4
-* Updated Polish localization (by Tomasz Długosz)
 * Option for disabling button lights in Android 3/4 has been introduced
 * Plural forms support in resources has been implemented
 * Image in image view can be scaled using pinch (Android 2+)
@@ -10,8 +62,14 @@
 * An exception in *.mobi file reading has been fixed
 * New screen orientation option; keeps screen orientation between starts
 * New action bar + navigation bar behaviour in Android 3/4 (screen center tap runs both bars)
-* Quick access to book info in Android 3/4
-* TOC item name in navigation window
+* Quick access to book info in Android 3/4 (by tap on book title in action bar)
+* TOC item name is shown in navigation window
+* Versions for Honeycomb (Android 3.0) and Ice Cream Sandwich (Android 4.0) are megred into the same APK
+* Kindle menu issue has been fixed
+* FB2 footnote parsing issue has been fixed
+* Updated Polish localization (by Tomasz Długosz)
+* Updated French translation (by Mathias Monnerville)
+* Updated Czech localization (by Marek Pavelka)
 
 ===== 1.2.6 (Dec 19, 2011) =====
 * Android 3.*, 4.*: bottom buttons are hidden during book reading

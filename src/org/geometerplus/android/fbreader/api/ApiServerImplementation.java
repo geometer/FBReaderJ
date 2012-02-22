@@ -67,13 +67,41 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					);
 					return ApiObject.Void.Instance;
 				case GET_BOOK_LANGUAGE:
-					return ApiObject.envelope(getBookLanguage());
+					if (parameters.length == 0) {
+						return ApiObject.envelope(getBookLanguage());
+					} else {
+						return ApiObject.envelope(getBookLanguage(((ApiObject.Long)parameters[0]).Value));
+					}
 				case GET_BOOK_TITLE:
-					return ApiObject.envelope(getBookTitle());
-				case GET_BOOK_FILE_NAME:
-					return ApiObject.envelope(getBookFileName());
+					if (parameters.length == 0) {
+						return ApiObject.envelope(getBookTitle());
+					} else {
+						return ApiObject.envelope(getBookTitle(((ApiObject.Long)parameters[0]).Value));
+					}
+				case GET_BOOK_FILE_PATH:
+					if (parameters.length == 0) {
+						return ApiObject.envelope(getBookFilePath());
+					} else {
+						return ApiObject.envelope(getBookFilePath(((ApiObject.Long)parameters[0]).Value));
+					}
 				case GET_BOOK_HASH:
-					return ApiObject.envelope(getBookHash());
+					if (parameters.length == 0) {
+						return ApiObject.envelope(getBookHash());
+					} else {
+						return ApiObject.envelope(getBookHash(((ApiObject.Long)parameters[0]).Value));
+					}
+				case GET_BOOK_UNIQUE_ID:
+					if (parameters.length == 0) {
+						return ApiObject.envelope(getBookUniqueId());
+					} else {
+						return ApiObject.envelope(getBookUniqueId(((ApiObject.Long)parameters[0]).Value));
+					}
+				case GET_BOOK_LAST_TURNING_TIME:
+					if (parameters.length == 0) {
+						return ApiObject.envelope(getBookLastTurningTime());
+					} else {
+						return ApiObject.envelope(getBookLastTurningTime(((ApiObject.Long)parameters[0]).Value));
+					}
 				case GET_PARAGRAPHS_NUMBER:
 					return ApiObject.envelope(getParagraphsNumber());
 				case GET_ELEMENTS_NUMBER:
@@ -180,13 +208,57 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return Collections.emptyList();
 	}
 
-	public String getBookFileName() {
-		// TODO: implement
-		return null;
+	public String getBookFilePath() {
+		return myReader.Model.Book.File.getPath();
 	}
 
 	public String getBookHash() {
 		return myReader.Model.Book.getContentHashCode();
+	}
+
+	public String getBookUniqueId() {
+		// TODO: implement
+		return null;
+	}
+
+	public Date getBookLastTurningTime() {
+		// TODO: implement
+		return null;
+	}
+
+	public String getBookLanguage(long id) {
+		// TODO: implement
+		return null;
+	}
+
+	public String getBookTitle(long id) {
+		// TODO: implement
+		return null;
+	}
+
+	public List<String> getBookTags(long id) {
+		// TODO: implement
+		return Collections.emptyList();
+	}
+
+	public String getBookFilePath(long id) {
+		// TODO: implement
+		return null;
+	}
+
+	public String getBookHash(long id) {
+		// TODO: implement
+		return null;
+	}
+
+	public String getBookUniqueId(long id) {
+		// TODO: implement
+		return null;
+	}
+
+	public Date getBookLastTurningTime(long id) {
+		// TODO: implement
+		return null;
 	}
 
 	// page information
@@ -242,7 +314,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public int getParagraphsNumber() {
-		return myReader.Model.BookTextModel.getParagraphsNumber();
+		return myReader.Model.getTextModel().getParagraphsNumber();
 	}
 
 	public int getElementsNumber(int paragraphIndex) {

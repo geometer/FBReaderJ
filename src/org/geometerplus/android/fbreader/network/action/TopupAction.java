@@ -33,7 +33,7 @@ import org.geometerplus.android.fbreader.network.TopupMenuActivity;
 
 public class TopupAction extends Action {
 	public TopupAction(Activity activity) {
-		super(activity, ActionCode.TOPUP, "topup", -1);
+		super(activity, ActionCode.TOPUP, "topup", false);
 	}
 
 	@Override

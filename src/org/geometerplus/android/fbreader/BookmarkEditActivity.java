@@ -55,7 +55,6 @@ public class BookmarkEditActivity extends Activity {
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		final SimpleContainer container = new SimpleContainer(this);
 		setContentView(container);
 	}

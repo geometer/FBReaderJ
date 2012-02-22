@@ -46,10 +46,16 @@ final class NavigationPopup {
 	}
 
 	public void runNavigation(FBReader activity, RelativeLayout root) {
-		createControlPanel(activity, root, PopupWindow.Type.BottomFlat);
+		createControlPanel(activity, root);
 		myStartPosition = new ZLTextWordCursor(myFBReader.getTextView().getStartCursor());
 		myWindow.show();
 		setupNavigation();
+	}
+
+	public void update() {
+		if (myWindow != null) {
+			setupNavigation();
+		}
 	}
 
 	public void stopNavigation() {
@@ -65,12 +71,12 @@ final class NavigationPopup {
 		myWindow = null;
 	}
 
-	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Type type) {
+	public void createControlPanel(FBReader activity, RelativeLayout root) {
 		if (myWindow != null && activity == myWindow.getActivity()) {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, type);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Type.BottomFlat);
 
 		final View layout = activity.getLayoutInflater().inflate(R.layout.navigate, myWindow, false);
 
@@ -87,10 +93,6 @@ final class NavigationPopup {
 				}
 				myFBReader.getViewWidget().reset();
 				myFBReader.getViewWidget().repaint();
-				myResetButton.setEnabled(
-					myStartPosition != null &&
-					!myStartPosition.equals(myFBReader.getTextView().getStartCursor())
-				);
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar) {
@@ -139,7 +141,10 @@ final class NavigationPopup {
 			text.setText(makeProgressText(pagePosition.Current, pagePosition.Total));
 		}
 
-		myResetButton.setEnabled(false);
+		myResetButton.setEnabled(
+			myStartPosition != null &&
+			!myStartPosition.equals(myFBReader.getTextView().getStartCursor())
+		);
 	}
 
 	private String makeProgressText(int page, int pagesNumber) {
@@ -149,9 +154,8 @@ final class NavigationPopup {
 		builder.append(pagesNumber);
 		final TOCTree tocElement = myFBReader.getCurrentTOCElement();
 		if (tocElement != null) {
-			builder.append(" (");
+			builder.append("  ");
 			builder.append(tocElement.getText());
-			builder.append(")");
 		}
 		return builder.toString();
 	}

@@ -45,12 +45,12 @@ final class TextSearchPopup extends ButtonsPopupPanel {
 	}
 
 	@Override
-	public void createControlPanel(FBReader activity, RelativeLayout root, PopupWindow.Type type) {
+	public void createControlPanel(FBReader activity, RelativeLayout root) {
 		if (myWindow != null && activity == myWindow.getActivity()) {
 			return;
 		}
 
-		myWindow = new PopupWindow(activity, root, type);
+		myWindow = new PopupWindow(activity, root, PopupWindow.Type.Bottom);
 
 		addButton(ActionCode.FIND_PREVIOUS, false, R.drawable.text_search_previous);
 		addButton(ActionCode.CLEAR_FIND_RESULTS, true, R.drawable.text_search_close);

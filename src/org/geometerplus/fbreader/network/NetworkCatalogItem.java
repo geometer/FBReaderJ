@@ -57,6 +57,8 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	private final Accessibility myAccessibility;
 	private int myFlags;
 
+	public boolean UpdatingInProgress;
+
 	/**
 	 * Creates new NetworkCatalogItem instance with specified accessibility and type.
 	 *
@@ -87,7 +89,6 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	}
 
 	public void resumeLoading(NetworkItemsLoader loader) throws ZLNetworkException {
-		throw new ZLNetworkException(NetworkException.ERROR_UNSUPPORTED_OPERATION);
 	}
 
 	public int getFlags() {
@@ -141,12 +142,9 @@ public abstract class NetworkCatalogItem extends NetworkItem {
 	 * @throws ZLNetworkException when network operation couldn't be completed
 	 */
 	protected final void doLoadChildren(NetworkOperationData data, ZLNetworkRequest networkRequest) throws ZLNetworkException {
-		while (networkRequest != null) {
+		if (networkRequest != null) {
 			ZLNetworkManager.Instance().perform(networkRequest);
-			if (data.Loader.confirmInterruption()) {
-				return;
-			}
-			networkRequest = data.resume();
+			data.Loader.confirmInterruption();
 		}
 	}
 }

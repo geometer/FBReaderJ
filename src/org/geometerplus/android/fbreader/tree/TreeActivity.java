@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 
@@ -48,7 +49,6 @@ public abstract class TreeActivity extends ListActivity {
 		super.onCreate(icicle);
 		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 	}
 
@@ -125,7 +125,8 @@ public abstract class TreeActivity extends ListActivity {
 							public void run() {
 								openTreeInternal(tree, treeToSelect, storeInHistory);
 							}
-						}
+						},
+						true
 					);
 				} else {
 					tree.waitForOpening();
@@ -150,7 +151,15 @@ public abstract class TreeActivity extends ListActivity {
 		setTitle(myCurrentTree.getTreeTitle());
 		final FBTree selectedTree =
 			selectedKey != null ? getTreeByKey(selectedKey) : adapter.getFirstSelectedItem();
-		setSelection(adapter.getIndex(selectedTree));
+		final int index = adapter.getIndex(selectedTree);
+		if (index != -1) {
+			setSelection(index);
+			getListView().post(new Runnable() {
+				public void run() {
+					setSelection(index);
+				}
+			});
+		}
 
 		myHistory = (ArrayList<FBTree.Key>)intent.getSerializableExtra(HISTORY_KEY);
 		if (myHistory == null) {

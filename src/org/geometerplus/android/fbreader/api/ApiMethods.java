@@ -25,8 +25,10 @@ interface ApiMethods {
 	int GET_BOOK_TITLE = 502;
 	int GET_BOOK_AUTHORS = 503;
 	int GET_BOOK_TAGS = 504;
-	int GET_BOOK_FILE_NAME = 505;
+	int GET_BOOK_FILE_PATH = 505;
 	int GET_BOOK_HASH = 506;
+	int GET_BOOK_UNIQUE_ID = 507;
+	int GET_BOOK_LAST_TURNING_TIME = 508;
 
 	// text information
 	int GET_PARAGRAPHS_NUMBER = 601;

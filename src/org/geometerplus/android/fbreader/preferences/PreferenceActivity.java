@@ -21,6 +21,7 @@ package org.geometerplus.android.fbreader.preferences;
 
 import android.content.Intent;
 import android.view.KeyEvent;
+import android.os.Build;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
@@ -30,12 +31,14 @@ import org.geometerplus.zlibrary.text.view.style.*;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
+import org.geometerplus.zlibrary.ui.android.view.ZLAndroidPaintContext;
 
 import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.tips.TipsManager;
 
+import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
@@ -45,6 +48,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 	@Override
 	protected void init(Intent intent) {
+		setResult(FBReader.RESULT_REPAINT);
+
 		final FBReaderApp fbReader = (FBReaderApp)FBReaderApp.Instance();
 		final ZLAndroidLibrary androidLibrary = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		final ColorProfile profile = fbReader.getColorProfile();
@@ -87,10 +92,23 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			"dontTurnScreenOffDuringCharging"
 		));
 		*/
-		appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			appearanceScreen.addOption(androidLibrary.ShowStatusBarOption, "showStatusBar");
+		}
+		appearanceScreen.addOption(androidLibrary.ShowActionBarOption, "showActionBar");
 		appearanceScreen.addOption(androidLibrary.DisableButtonLightsOption, "disableButtonLights");
 
 		final Screen textScreen = createPreferenceScreen("text");
+
+		final Screen fontPropertiesScreen = textScreen.createPreferenceScreen("fontProperties");
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.AntiAliasOption, "antiAlias");
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DeviceKerningOption, "deviceKerning");
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.DitheringOption, "dithering");
+		if (ZLAndroidPaintContext.usesHintingOption()) {
+			fontPropertiesScreen.addOption(ZLAndroidPaintContext.HintingOption, "hinting");
+		}
+		fontPropertiesScreen.addOption(ZLAndroidPaintContext.SubpixelOption, "subpixel");
+
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
 		textScreen.addPreference(new FontOption(
@@ -179,6 +197,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			formatScreen.addPreference(new ZLBoolean3Preference(
 				this, textScreen.Resource, "italic",
 				decoration.ItalicOption
+			));
+			formatScreen.addPreference(new ZLBoolean3Preference(
+				this, textScreen.Resource, "underlined",
+				decoration.UnderlineOption
+			));
+			formatScreen.addPreference(new ZLBoolean3Preference(
+				this, textScreen.Resource, "strikedThrough",
+				decoration.StrikeThroughOption
 			));
 			if (fullDecoration != null) {
 				final String[] allAlignments = { "unchanged", "left", "right", "center", "justify" };
@@ -389,13 +415,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this,
 			dictionaryScreen.Resource,
 			"dictionary",
-			DictionaryUtil.singleWordTranslatorOption()
+			DictionaryUtil.singleWordTranslatorOption(),
+			DictionaryUtil.dictionaryInfos(this, true)
 		));
 		dictionaryScreen.addPreference(new DictionaryPreference(
 			this,
 			dictionaryScreen.Resource,
 			"translator",
-			DictionaryUtil.multiWordTranslatorOption()
+			DictionaryUtil.multiWordTranslatorOption(),
+			DictionaryUtil.dictionaryInfos(this, false)
 		));
 		dictionaryScreen.addPreference(new ZLBooleanPreference(
 			this,
@@ -427,5 +455,15 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
 		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
+
+		final Screen aboutScreen = createPreferenceScreen("about");
+		aboutScreen.addPreference(new InfoPreference(
+			this,
+			aboutScreen.Resource.getResource("version").getValue(),
+			androidLibrary.getFullVersionName()
+		));
+		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "site"));
+		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "email"));
+		aboutScreen.addPreference(new UrlPreference(this, aboutScreen.Resource, "twitter"));
 	}
 }

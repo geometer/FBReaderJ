@@ -122,12 +122,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
-			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
-			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
-			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
-			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
-			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
-			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Netzwerksuche"/>
@@ -251,6 +245,7 @@
 		<node name="rotate" value="Ansicht drehen"/>
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
 		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
 		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
 		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
@@ -277,8 +272,6 @@
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
@@ -307,6 +300,7 @@
 				<node name="summary" value="Ausrichtung, Statuszeile"/>
 				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
 					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
 					<node name="portrait" value="Portrait" toBeTranslated="true"/>
 					<node name="landscape" value="Landscape" toBeTranslated="true"/>
 					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
@@ -319,6 +313,10 @@
 				<node name="showStatusBar" value="Statusbar anzeigen">
 					<node name="summaryOn" value="Statuszeile im Lesemodus anzeigen."/>
 					<node name="summaryOff" value="Statuszeile im Lesemodus verstecken."/>
+				</node>
+				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Statuszeile anzeigen wenn das Menü aktiv ist">
 					<node name="summaryOn" value="Statuszeile anzeigen wenn das Menü aktiviert wird."/>
@@ -345,6 +343,29 @@
 			</node>
 			<node name="text" value="Text Darstellung">
 				<node name="summary" value="Zeichensatz, Silbentrennung, etc."/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="Schriftart">
 					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
@@ -357,13 +378,23 @@
 					<node name="boldItalic" value="Fett &amp; Kursiv"/>
 				</node>
 				<node name="bold" value="Fett">
-					<node name="on" value="Fett"/>
-					<node name="off" value="Normal"/>
+					<node name="summaryOn" value="Fett"/>
+					<node name="summaryOff" value="Normal"/>
 					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
 				<node name="italic" value="Kursiv">
-					<node name="on" value="Kursiv"/>
-					<node name="off" value="Normal"/>
+					<node name="summaryOn" value="Kursiv"/>
+					<node name="summaryOff" value="Normal"/>
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;unverändert&gt;"/>
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Zeilenabstand">
@@ -381,8 +412,8 @@
 					<node name="summaryOff" value="Keine automatische Silbentrennung."/>
 				</node>
 				<node name="allowHyphenations" value="Trennen erlauben">
-					<node name="on" value="Wörter trennen"/>
-					<node name="off" value="Wörter nicht trennen"/>
+					<node name="summaryOn" value="Wörter trennen"/>
+					<node name="summaryOff" value="Wörter nicht trennen"/>
 					<node name="unchanged" value="&lt;unverändert&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Einzug erste Zeile"/>
@@ -642,6 +673,19 @@
 					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
 				</node>
 			</node>
+			<node name="about" value="About FBReader" toBeTranslated="true">
+				<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
+				<node name="version" value="Version" toBeTranslated="true"/>
+				<node name="site" value="Visit our website" toBeTranslated="true">
+					<node name="url" value="http://www.fbreader.org/"/>
+				</node>
+				<node name="email" value="Send us an e-mail" toBeTranslated="true">
+					<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+				</node>
+				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+					<node name="url" value="http://twitter.com/fbreader"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -675,7 +719,6 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler."/>

@@ -20,19 +20,12 @@
 package org.geometerplus.fbreader.library;
 
 class RootTree extends LibraryTree {
-	private final Library myLibrary;
-
-	RootTree(Library library) {
-		myLibrary = library;
-	}
-
-	Library getLibrary() {
-		return myLibrary;
+	RootTree() {
 	}
 
 	@Override
 	public String getName() {
-		return Library.resource().getValue();
+		return LibraryUtil.resource().getValue();
 	}
 
 	@Override

@@ -19,8 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.library;
 
-import java.lang.reflect.*;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.*;
@@ -36,7 +34,7 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
 public abstract class ZLAndroidActivity extends Activity {
-	protected abstract ZLApplication createApplication(ZLFile file);
+	protected abstract ZLApplication createApplication();
 
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
@@ -64,8 +62,10 @@ public abstract class ZLAndroidActivity extends Activity {
 		return (level >= 0) ? level : 50;
 	}
 
-	private void disableButtonLight() {
-		getWindow().getAttributes().buttonBrightness = 0f;
+	private void setButtonLight(boolean enabled) {
+		final WindowManager.LayoutParams attrs = getWindow().getAttributes();
+		attrs.buttonBrightness = enabled ? -1.0f : 0.0f;
+		getWindow().setAttributes(attrs);
 	}
 
 	protected abstract ZLFile fileFromIntent(Intent intent);
@@ -77,27 +77,32 @@ public abstract class ZLAndroidActivity extends Activity {
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 
 		final ZLAndroidLibrary zlibrary = getLibrary();
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
-		if (!zlibrary.ShowStatusBarOption.getValue()) {
+		getWindow().setFlags(
+			WindowManager.LayoutParams.FLAG_FULLSCREEN,
+			zlibrary.ShowStatusBarOption.getValue() ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN
+		);
+		if (!zlibrary.ShowActionBarOption.getValue()) {
 			requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-		}
-		if (zlibrary.DisableButtonLightsOption.getValue()) {
-			disableButtonLight();
 		}
 		setContentView(R.layout.main);
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
-		getLibrary().setActivity(this);
+		zlibrary.setActivity(this);
 
-		final ZLFile fileToOpen = fileFromIntent(getIntent());
 		final ZLAndroidApplication androidApplication = (ZLAndroidApplication)getApplication();
 		if (androidApplication.myMainWindow == null) {
-			final ZLApplication application = createApplication(fileToOpen);
+			final ZLApplication application = createApplication();
 			androidApplication.myMainWindow = new ZLAndroidApplicationWindow(application);
 			application.initWindow();
-		} else {
-			ZLApplication.Instance().openFile(fileToOpen);
 		}
+
+		new Thread() {
+			public void run() {
+				ZLApplication.Instance().openFile(fileFromIntent(getIntent()));
+				ZLApplication.Instance().getViewWidget().repaint();
+			}
+		}.start();
+
 		ZLApplication.Instance().getViewWidget().repaint();
 	}
 
@@ -155,6 +160,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		} else {
 			setScreenBrightnessAuto();
 		}
+		if (getLibrary().DisableButtonLightsOption.getValue()) {
+			setButtonLight(false);
+		}
 
 		registerReceiver(myBatteryInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
@@ -164,6 +172,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		unregisterReceiver(myBatteryInfoReceiver);
 		ZLApplication.Instance().stopTimer();
 		switchWakeLock(false);
+		if (getLibrary().DisableButtonLightsOption.getValue()) {
+			setButtonLight(true);
+		}
 		ZLApplication.Instance().onWindowClosing();
 		super.onPause();
 	}
@@ -195,6 +206,8 @@ public abstract class ZLAndroidActivity extends Activity {
 		View view = findViewById(R.id.main_view);
 		return ((view != null) && view.onKeyUp(keyCode, event)) || super.onKeyUp(keyCode, event);
 	}
+
+	public abstract void refresh();
 
 	BroadcastReceiver myBatteryInfoReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {

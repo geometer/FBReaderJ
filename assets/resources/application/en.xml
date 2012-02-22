@@ -39,7 +39,7 @@
 			<node name="summary" value="FBReader books directory"/>
 		</node>
 		<node name="menu">
-			<node name="localSearch" value="Local search"/>
+			<node name="localSearch" value="Search"/>
 		</node>
 		<node name="openBook" value="Open book"/>
 		<node name="showBookInfo" value="Book info"/>
@@ -123,15 +123,9 @@
 		<node name="addCatalog">
 			<node name="title" value="Add catalog"/>
 			<node name="editUrl" value="Enter URL manually"/>
-			<node name="scanLocalNetwork" value="Scan local network"/>
-			<node name="localCatalogs" value="Local OPDS catalogs"/>
-			<node name="noCatalogsFound" value="No catalogs found, sorry"/>
-			<node name="noLocalConnection" value="Your device is not connected to a local network"/>
-			<node name="wifiIsTurnedOff" value="WiFi is turned off"/>
-			<node name="turnWiFiOn" value="Please, turn WiFi on and try again"/>
 		</node>
 		<node name="menu">
-			<node name="networkSearch" value="Network search"/>
+			<node name="networkSearch" value="Search"/>
 			<node name="reload" value="Reload"/>
 			<node name="signIn" value="Sign in"/>
 			<node name="signUp" value="Sign up"/>
@@ -254,6 +248,7 @@
 		<node name="rotate" value="Rotate screen"/>
 		<node name="screenOrientation" value="Screen orientation"/>
 		<node name="screenOrientationSystem" value="System"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive"/>
 		<node name="screenOrientationPortrait" value="Portrait"/>
 		<node name="screenOrientationLandscape" value="Landscape"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait"/>
@@ -280,8 +275,6 @@
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
 			<node name="authorize" value="Authorize"/>
-			<node name="rescan" value="Rescan" />
-			<node name="turnOn" value="Turn on" />
 			<node name="resetPosition" value="Reset position" />
 		</node>
 		<node name="plugin">
@@ -310,6 +303,7 @@
 				<node name="summary" value="Display settings, status bar, button lights"/>
 				<node name="screenOrientation" value="Screen orientation">
 					<node name="system" value="System"/>
+					<node name="sensor" value="Device orientation sensitive"/>
 					<node name="portrait" value="Portrait"/>
 					<node name="landscape" value="Landscape"/>
 					<node name="reversePortrait" value="Reverse portrait"/>
@@ -322,6 +316,10 @@
 				<node name="showStatusBar" value="Show status bar">
 					<node name="summaryOn" value="Show status bar in reading mode"/>
 					<node name="summaryOff" value="Hide status bar in reading mode"/>
+				</node>
+				<node name="showActionBar" value="Show action bar">
+					<node name="summaryOn" value="Show action bar in reading mode"/>
+					<node name="summaryOff" value="Hide action bar in reading mode"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active">
 					<node name="summaryOn" value="Show status bar when menu becomes active"/>
@@ -348,6 +346,29 @@
 			</node>
 			<node name="text" value="Text">
 				<node name="summary" value="Font, hyphenations, etc."/>
+				<node name="fontProperties" value="Font properties">
+					<node name="summary" value="Font smoothing options"/>
+					<node name="antiAlias" value="Antialiasing">
+						<node name="summaryOn" value="Antialiasing is enabled"/>
+						<node name="summaryOff" value="Antialiasing is disabled"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning">
+						<node name="summaryOn" value="Device kerning is enabled"/>
+						<node name="summaryOff" value="Device kerning is disabled"/>
+					</node>
+					<node name="dithering" value="Dithering">
+						<node name="summaryOn" value="Color dithering is enabled"/>
+						<node name="summaryOff" value="Color dithering is disabled"/>
+					</node>
+					<node name="hinting" value="Hinting">
+						<node name="summaryOn" value="Font hinting is enabled"/>
+						<node name="summaryOff" value="Font hinting is disabled"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing">
+						<node name="summaryOn" value="Subpixel smoothing is enabled"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled"/>
+					</node>
+				</node>
 				<node name="font" value="Font family">
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
@@ -360,13 +381,23 @@
 					<node name="boldItalic" value="Bold Italic"/>
 				</node>
 				<node name="bold" value="Bold">
-					<node name="on" value="bold"/>
-					<node name="off" value="regular"/>
+					<node name="summaryOn" value="bold"/>
+					<node name="summaryOff" value="regular"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="italic" value="Italic">
-					<node name="on" value="italic"/>
-					<node name="off" value="regular"/>
+					<node name="summaryOn" value="italic"/>
+					<node name="summaryOff" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="underlined" value="Underlined">
+					<node name="summaryOn" value="underlined"/>
+					<node name="summaryOff" value="regular"/>
+					<node name="unchanged" value="&lt;unchanged&gt;"/>
+				</node>
+				<node name="strikedThrough" value="Striked through">
+					<node name="summaryOn" value="striked through"/>
+					<node name="summaryOff" value="regular"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="lineSpacing" value="Line Spacing">
@@ -384,8 +415,8 @@
 					<node name="summaryOff" value="Do not hyphenate words automatically"/>
 				</node>
 				<node name="allowHyphenations" value="Allow Hyphenations">
-					<node name="on" value="hyphenate words"/>
-					<node name="off" value="don't hyphenate words"/>
+					<node name="summaryOn" value="hyphenate words"/>
+					<node name="summaryOff" value="don't hyphenate words"/>
 					<node name="unchanged" value="&lt;unchanged&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="First Line Indent"/>
@@ -645,6 +676,19 @@
 					<node name="summaryOff" value="Do not show"/>
 				</node>
 			</node>
+			<node name="about" value="About FBReader">
+				<node name="summary" value="Version info, contacts"/>
+				<node name="version" value="Version"/>
+				<node name="site" value="Visit our website">
+					<node name="url" value="http://www.fbreader.org/"/>
+				</node>
+				<node name="email" value="Send us an e-mail">
+					<node name="url" value="mailto:contact@geometerplus.com"/>
+				</node>
+				<node name="twitter" value="Follow us at twitter">
+					<node name="url" value="http://twitter.com/fbreader"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -678,7 +722,6 @@
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>

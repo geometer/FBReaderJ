@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.network.authentication.litres.LitResRecommendat
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
-	private final OPDSCatalogItem myCatalog;
+	private final NetworkCatalogItem myCatalog;
 	private final String myBaseURL;
 	private final OPDSCatalogItem.State myData;
 
@@ -48,8 +48,8 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 	 * @param result     network results buffer. Must be created using OPDSNetworkLink corresponding to the OPDS feed, 
 	 *                   that will be read using this instance of the reader.
 	 */
-	OPDSFeedHandler(OPDSCatalogItem catalog, String baseURL, OPDSCatalogItem.State result) {
-		myCatalog = catalog;
+	OPDSFeedHandler(String baseURL, OPDSCatalogItem.State result) {
+		myCatalog = result.Loader.getTree().Item;
 		myBaseURL = baseURL;
 		myData = result;
 		mySkipUntilId = myData.LastLoadedId;
@@ -73,12 +73,10 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 					myItemsToLoad = len;
 				}
 			}
-			if (myCatalog != null) {
-				if ("series".equals(feed.ViewType)) {
-					myCatalog.setFlags(myCatalog.getFlags() & ~OPDSCatalogItem.FLAGS_GROUP);
-				} else if ("authors".equals(feed.ViewType)) {
-					myCatalog.setFlags(myCatalog.getFlags() & ~OPDSCatalogItem.FLAG_SHOW_AUTHOR);
-				}
+			if ("series".equals(feed.ViewType)) {
+				myCatalog.setFlags(myCatalog.getFlags() & ~OPDSCatalogItem.FLAGS_GROUP);
+			} else if ("authors".equals(feed.ViewType)) {
+				myCatalog.setFlags(myCatalog.getFlags() & ~OPDSCatalogItem.FLAG_SHOW_AUTHOR);
 			}
 		} else {
 			final OPDSNetworkLink opdsLink = (OPDSNetworkLink)myData.Link;

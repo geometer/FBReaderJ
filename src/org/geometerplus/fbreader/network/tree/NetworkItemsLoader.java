@@ -50,7 +50,13 @@ public abstract class NetworkItemsLoader implements Runnable {
 		final NetworkLibrary library = NetworkLibrary.Instance();
 
 		try {
-			library.storeLoader(getTree(), this);
+			synchronized (library) {
+				final NetworkCatalogTree tree = getTree();
+				if (library.isLoadingInProgress(tree)) {
+					return;
+				}
+				library.storeLoader(tree, this);
+			}
 			library.fireModelChangedEvent(NetworkLibrary.ChangeListener.Code.SomeCode);
 
 			try {

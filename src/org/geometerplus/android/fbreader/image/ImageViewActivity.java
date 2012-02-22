@@ -46,7 +46,6 @@ public class ImageViewActivity extends Activity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		final ZLAndroidLibrary library = (ZLAndroidLibrary)ZLAndroidLibrary.Instance();
 		final boolean showStatusBar = library.ShowStatusBarOption.getValue();
 		getWindow().setFlags(

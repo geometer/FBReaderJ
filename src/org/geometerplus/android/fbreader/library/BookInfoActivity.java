@@ -24,9 +24,11 @@ import java.text.DateFormat;
 import java.util.*;
 
 import android.app.Activity;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -53,12 +55,12 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private static final boolean ENABLE_EXTENDED_FILE_INFO = false;
 
 	public static final String CURRENT_BOOK_PATH_KEY = "CurrentBookPath";
-	public static final String HIDE_OPEN_BUTTON_KEY = "hideOpenButton";
+	public static final String FROM_READING_MODE_KEY = "fromReadingMode";
 
 	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private ZLFile myFile;
-	private ZLImage myImage;
-	private boolean myHideOpenButton;
+	private int myResult;
+	private boolean myDontReloadBook;
 
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -67,20 +69,23 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 			new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this)
 		);
 
-		final String path = getIntent().getStringExtra(CURRENT_BOOK_PATH_KEY);
-		myHideOpenButton = getIntent().getBooleanExtra(HIDE_OPEN_BUTTON_KEY, false);
+		final Intent intent = getIntent();
+		final String path = intent.getStringExtra(CURRENT_BOOK_PATH_KEY);
+		myDontReloadBook = intent.getBooleanExtra(FROM_READING_MODE_KEY, false);
 		myFile = ZLFile.createFileByPath(path);
-
-		myImage = Library.getCover(myFile);
 
 		if (SQLiteBooksDatabase.Instance() == null) {
 			new SQLiteBooksDatabase(this, "LIBRARY");
 		}
 
-		requestWindowFeature(Window.FEATURE_ACTION_BAR);
+		final ActionBar bar = getActionBar();
+		if (bar != null) {
+			bar.setDisplayShowTitleEnabled(false);
+		}
 		setContentView(R.layout.book_info);
 
-		setResult(1, getIntent());
+		myResult = FBReader.RESULT_DO_NOTHING;
+		setResult(myResult, intent);
 	}
 
 	@Override
@@ -106,7 +111,11 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		final Book book = Book.getByFile(myFile);
 		if (book != null) {
 			setupBookInfo(book);
+			myDontReloadBook = false;
 		}
+
+		myResult = Math.max(myResult, resultCode);
+		setResult(myResult);
 	}
 
 	private Button findButton(int buttonId) {
@@ -136,18 +145,20 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		coverView.setVisibility(View.GONE);
 		coverView.setImageDrawable(null);
 
-		if (myImage == null) {
+		final ZLImage image = LibraryUtil.getCover(book);
+
+		if (image == null) {
 			return;
 		}
 
-		if (myImage instanceof ZLLoadableImage) {
-			final ZLLoadableImage loadableImage = (ZLLoadableImage)myImage;
+		if (image instanceof ZLLoadableImage) {
+			final ZLLoadableImage loadableImage = (ZLLoadableImage)image;
 			if (!loadableImage.isSynchronized()) {
 				loadableImage.synchronize();
 			}
 		}
 		final ZLAndroidImageData data =
-			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(myImage);
+			((ZLAndroidImageManager)ZLAndroidImageManager.Instance()).getImageData(image);
 		if (data == null) {
 			return;
 		}
@@ -178,8 +189,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		setupInfoPair(R.id.book_authors, "authors", buffer);
 
 		final SeriesInfo series = book.getSeriesInfo();
-		setupInfoPair(R.id.book_series, "series",
-				(series == null) ? null : series.Name);
+		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Name);
 		String seriesIndexString = null;
 		if (series != null && series.Index > 0) {
 			if (Math.abs(series.Index - Math.round(series.Index)) < 0.01) {
@@ -212,7 +222,7 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	private void setupAnnotation(Book book) {
 		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
 		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
-		final String annotation = Library.getAnnotation(book.File);	
+		final String annotation = LibraryUtil.getAnnotation(book.File);	
 		if (annotation == null) {
 			titleView.setVisibility(View.GONE);
 			bodyView.setVisibility(View.GONE);
@@ -278,32 +288,35 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		if (!myHideOpenButton) {
-			addMenuItem(menu, OPEN_BOOK, "openBook", R.drawable.ic_menu_read_book);
-		}
-		addMenuItem(menu, EDIT_INFO, "editInfo", R.drawable.ic_menu_edit);
-		addMenuItem(menu, RELOAD_INFO, "reloadInfo", R.drawable.ic_menu_refresh);
+		addMenuItem(menu, OPEN_BOOK, "openBook", true);
+		addMenuItem(menu, EDIT_INFO, "editInfo", true);
+		addMenuItem(menu, RELOAD_INFO, "reloadInfo", false);
 		return true;
 	}
 
-	private void addMenuItem(Menu menu, int index, String resourceKey, int iconId) {
+	private void addMenuItem(Menu menu, int index, String resourceKey, boolean showAsAction) {
 		final String label =
 			ZLResource.resource("dialog").getResource("button").getResource(resourceKey).getValue();
 		final MenuItem item = menu.add(0, index, Menu.NONE, label);
-		item.setIcon(iconId);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		item.setShowAsAction(
+			showAsAction ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER
+		);
 		item.setOnMenuItemClickListener(this);
 	}
 
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
 			case OPEN_BOOK:
-				startActivity(
-					new Intent(getApplicationContext(), FBReader.class)
-						.setAction(Intent.ACTION_VIEW)
-						.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
-						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-				);
+				if (myDontReloadBook) {
+					finish();
+				} else {
+					startActivity(
+						new Intent(getApplicationContext(), FBReader.class)
+							.setAction(Intent.ACTION_VIEW)
+							.putExtra(FBReader.BOOK_PATH_KEY, myFile.getPath())
+							.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+					);
+				}
 				return true;
 			case EDIT_INFO:
 				startActivityForResult(

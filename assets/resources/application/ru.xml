@@ -131,12 +131,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Добавление каталога"/>
 			<node name="editUrl" value="Ввести адрес вручную"/>
-			<node name="scanLocalNetwork" value="Поискать в локальной сети"/>
-			<node name="localCatalogs" value="Локальные библиотеки"/>
-			<node name="noCatalogsFound" value="Не нашлось ни одного каталога"/>
-			<node name="noLocalConnection" value="Устройство не подключено к локальной сети"/>
-			<node name="wifiIsTurnedOff" value="WiFi выключен"/>
-			<node name="turnWiFiOn" value="Включите WiFi и попробуйте ещё раз"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>
@@ -265,6 +259,7 @@
 		<node name="rotate" value="Повернуть"/>
 		<node name="screenOrientation" value="Ориентация экрана"/>
 		<node name="screenOrientationSystem" value="системная"/>
+		<node name="screenOrientationSensor" value="зависит от ориентации устройства"/>
 		<node name="screenOrientationPortrait" value="вертикальная"/>
 		<node name="screenOrientationLandscape" value="горизонтальная"/>
 		<node name="screenOrientationReversePortrait" value="перевёрнутая вертикальная"/>
@@ -291,8 +286,6 @@
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
 			<node name="authorize" value="Авторизоваться"/>
-			<node name="rescan" value="Искать"/>
-			<node name="turnOn" value="Включить"/>
 			<node name="resetPosition" value="К исходной позиции"/>
 		</node>
 		<node name="plugin">
@@ -321,6 +314,7 @@
 				<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>
 				<node name="screenOrientation" value="Ориентация экрана">
 					<node name="system" value="системная"/>
+					<node name="sensor" value="зависит от ориентации устройства"/>
 					<node name="portrait" value="вертикальная"/>
 					<node name="landscape" value="горизонтальная"/>
 					<node name="reversePortrait" value="перевёрнутая вертикальная"/>
@@ -333,6 +327,10 @@
 				<node name="showStatusBar" value="Показывать строку состояния">
 					<node name="summaryOn" value="Строка состояния видна во время чтения"/>
 					<node name="summaryOff" value="Строка состояния не видна во время чтения"/>
+				</node>
+				<node name="showActionBar" value="Показывать строку меню">
+					<node name="summaryOn" value="Строка меню видна во время чтения"/>
+					<node name="summaryOff" value="Строка меню не видна во время чтения"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="Показывать строку состояния при активации меню">
 					<node name="summaryOn" value="Показывать строку состояния, когда меню появляется на экране"/>
@@ -359,6 +357,29 @@
 			</node>
 			<node name="text" value="Текст">
 				<node name="summary" value="Шрифты, переносы и т.д."/>
+				<node name="fontProperties" value="Свойства шрифтов">
+					<node name="summary" value="Настройки сглаживания шрифтов"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="Шрифт">
 					<node name="unchanged" value="&lt;не менять&gt;"/>
 				</node>
@@ -371,14 +392,24 @@
 					<node name="boldItalic" value="жирный курсив"/>
 				</node>
 				<node name="bold" value="Жирный шрифт">
-					<node name="on" value="использовать жирное начертание"/>
-					<node name="off" value="использовать нормальное начертание"/>
-					<node name="unchanged" value="&lt;не менять&gt;"/>
+					<node name="summaryOn" value="использовать жирное начертание"/>
+					<node name="summaryOff" value="использовать нормальное начертание"/>
+					<node name="unchanged" value="не менять"/>
 				</node>
 				<node name="italic" value="Курсив">
-					<node name="on" value="использовать курсивное начертание"/>
-					<node name="off" value="использовать нормальное начертание"/>
-					<node name="unchanged" value="&lt;не менять&gt;"/>
+					<node name="summaryOn" value="использовать курсивное начертание"/>
+					<node name="summaryOff" value="использовать нормальное начертание"/>
+					<node name="unchanged" value="не менять"/>
+				</node>
+				<node name="underlined" value="Подчёркнутый">
+					<node name="summaryOn" value="включить"/>
+					<node name="summaryOff" value="выключить"/>
+					<node name="unchanged" value="не менять"/>
+				</node>
+				<node name="strikedThrough" value="Зачёркнутый">
+					<node name="summaryOn" value="включить"/>
+					<node name="summaryOff" value="выключить"/>
+					<node name="unchanged" value="не менять"/>
 				</node>
 				<node name="lineSpacing" value="Интервал">
 					<node name="unchanged" value="&lt;не менять&gt;"/>
@@ -395,8 +426,8 @@
 					<node name="summaryOff" value="Не расставлять переносы"/>
 				</node>
 				<node name="allowHyphenations" value="Переносы">
-					<node name="on" value="разрешить переносы"/>
-					<node name="off" value="запретить переносы"/>
+					<node name="summaryOn" value="разрешить переносы"/>
+					<node name="summaryOff" value="запретить переносы"/>
 					<node name="unchanged" value="&lt;не менять&gt;"/>
 				</node>
 				<node name="firstLineIndent" value="Красная строка"/>
@@ -656,6 +687,19 @@
 					<node name="summaryOff" value="Не показывать"/>
 				</node>
 			</node>
+			<node name="about" value="О программе FBReader">
+				<node name="summary" value="Версия, контакты"/>
+				<node name="version" value="Версия"/>
+				<node name="site" value="Наш веб-сайт">
+					<node name="url" value="http://www.fbreader.ru/"/>
+				</node>
+				<node name="email" value="Отправьте нам письмо">
+					<node name="url" value="mailto:contact@geometerplus.com"/>
+				</node>
+				<node name="twitter" value="Читайте нас в твиттере">
+					<node name="url" value="http://twitter.com/fbreader_ru"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -689,7 +733,6 @@
 			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста&#8230;"/>
 			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста&#8230;"/>
 			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста&#8230;"/>
-			<node name="scanningLocalNetwork" value="Ищем в локальной сети. Подождите, пожалуйста&#8230;"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера"/>

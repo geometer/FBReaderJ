@@ -119,12 +119,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
-			<node name="scanLocalNetwork" value="Scan local network" toBeTranslated="true"/>
-			<node name="localCatalogs" value="Local OPDS catalogs" toBeTranslated="true"/>
-			<node name="noCatalogsFound" value="No catalogs found, sorry" toBeTranslated="true"/>
-			<node name="noLocalConnection" value="Your device is not connected to a local network" toBeTranslated="true"/>
-			<node name="wifiIsTurnedOff" value="WiFi is turned off" toBeTranslated="true"/>
-			<node name="turnWiFiOn" value="Please, turn WiFi on and try again" toBeTranslated="true"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="网络搜索" />
@@ -248,6 +242,7 @@
 		<node name="rotate" value="翻转屏幕" />
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
 		<node name="screenOrientationSystem" value="System" toBeTranslated="true"/>
+		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
 		<node name="screenOrientationPortrait" value="Portrait" toBeTranslated="true"/>
 		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
@@ -274,8 +269,6 @@
 			<node name="pay" value="支付" />
 			<node name="refresh" value="刷新" />
 			<node name="authorize" value="授权" />
-			<node name="rescan" value="Rescan" toBeTranslated="true"/>
-			<node name="turnOn" value="Turn on" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
@@ -304,6 +297,7 @@
 				<node name="summary" value="旋转，状态工具条"/>
 				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
 					<node name="system" value="System" toBeTranslated="true"/>
+					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
 					<node name="portrait" value="Portrait" toBeTranslated="true"/>
 					<node name="landscape" value="Landscape" toBeTranslated="true"/>
 					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
@@ -316,6 +310,10 @@
 				<node name="showStatusBar" value="显示状态栏">
 					<node name="summaryOn" value="阅读模式下显示状态栏" />
 					<node name="summaryOff" value="阅读模式下隐藏状态栏" />
+				</node>
+				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="菜单激活时显示状态栏" >
 					<node name="summaryOn" value="菜单处于激活状态时显示状态栏" />
@@ -342,6 +340,29 @@
 			</node>
 			<node name="text" value="文字">
 				<node name="summary" value="字体, 断字等等。"/>
+				<node name="fontProperties" value="Font properties" toBeTranslated="true">
+					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="dithering" value="Dithering" toBeTranslated="true">
+						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="hinting" value="Hinting" toBeTranslated="true">
+						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+					</node>
+					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+					</node>
+				</node>
 				<node name="font" value="字体">
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
@@ -354,13 +375,23 @@
 					<node name="boldItalic" value="加粗并倾斜"/>
 				</node>
 				<node name="bold" value="加粗">
-					<node name="on" value="加粗"/>
-					<node name="off" value="正常"/>
+					<node name="summaryOn" value="加粗"/>
+					<node name="summaryOff" value="正常"/>
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="italic" value="倾斜">
-					<node name="on" value="倾斜"/>
-					<node name="off" value="规则"/>
+					<node name="summaryOn" value="倾斜"/>
+					<node name="summaryOff" value="规则"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
+				<node name="underlined" value="Underlined" toBeTranslated="true">
+					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
+					<node name="unchanged" value="&lt;不变&gt;" />
+				</node>
+				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+					<node name="summaryOff" value="regular" toBeTranslated="true"/>
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="lineSpacing" value="行间距">
@@ -378,8 +409,8 @@
 					<node name="summaryOff" value="禁止自动断字"/>
 				</node>
 				<node name="allowHyphenations" value="允许断字">
-					<node name="on" value="断字"/>
-					<node name="off" value="禁止断字"/>
+					<node name="summaryOn" value="断字"/>
+					<node name="summaryOff" value="禁止断字"/>
 					<node name="unchanged" value="&lt;不变&gt;" />
 				</node>
 				<node name="firstLineIndent" value="首行缩进" />
@@ -639,6 +670,19 @@
 					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
 				</node>
 			</node>
+			<node name="about" value="About FBReader" toBeTranslated="true">
+				<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
+				<node name="version" value="Version" toBeTranslated="true"/>
+				<node name="site" value="Visit our website" toBeTranslated="true">
+					<node name="url" value="http://www.fbreader.org/"/>
+				</node>
+				<node name="email" value="Send us an e-mail" toBeTranslated="true">
+					<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+				</node>
+				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+					<node name="url" value="http://twitter.com/fbreader"/>
+				</node>
+			</node>
 		</node>
 		<node name="OptionsDialog">
 			<node name="tab">
@@ -672,7 +716,6 @@
 			<node name="loadingNetworkBookInfo" value="书籍信息加载中，请等待&#8230;"  />
 			<node name="updatingCatalogsList" value="更新书库列表中，请稍待..."/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待&#8230;" />
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="内部服务器出错" />

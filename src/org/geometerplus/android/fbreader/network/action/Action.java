@@ -29,16 +29,16 @@ import org.geometerplus.android.fbreader.network.Util;
 
 public abstract class Action {
 	public final int Code;
-	public final int IconId;
+	public final boolean ShowAsAction;
 
 	protected final Activity myActivity;
 	private final String myResourceKey;
 
-	protected Action(Activity activity, int code, String resourceKey, int iconId) {
+	protected Action(Activity activity, int code, String resourceKey, boolean showAsAction) {
 		myActivity = activity;
 		Code = code;
 		myResourceKey = resourceKey;
-		IconId = iconId;
+		ShowAsAction = showAsAction;
 	}
 
 	public abstract boolean isVisible(NetworkTree tree);
