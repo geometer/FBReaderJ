@@ -34,7 +34,7 @@ class ZLImageMapReader {
 
 	public ZLImage readImage(int index, int offset) {
 		char[] data = myStorage.block(index);
-		while (offset == data.length || data[offset] == '\0') {
+		while (offset == data.length || data[offset] == '\000') {
 			data = myStorage.block(++index);
 			offset = 0;
 		}
@@ -48,6 +48,7 @@ class ZLImageMapReader {
 	}
 
 	private ZLImage readMultiImage(int index, int offset, char[] data) {
+		// TODO: implement
 		return null;
 	}
 
