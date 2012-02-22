@@ -96,7 +96,7 @@ public:
 
 	static jfieldID FID_BookModel_Book;
 
-	static jmethodID MID_NativeBookModel_initBookModel;
+	static jmethodID MID_NativeBookModel_initImageMap;
 	static jmethodID MID_NativeBookModel_initInternalHyperlinks;
 	static jmethodID MID_NativeBookModel_initTOC;
 	static jmethodID MID_NativeBookModel_createTextModel;

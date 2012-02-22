@@ -87,7 +87,7 @@ jmethodID AndroidUtil::SMID_Tag_getTag;
 
 jfieldID AndroidUtil::FID_BookModel_Book;
 
-jmethodID AndroidUtil::MID_NativeBookModel_initBookModel;
+jmethodID AndroidUtil::MID_NativeBookModel_initImageMap;
 jmethodID AndroidUtil::MID_NativeBookModel_initInternalHyperlinks;
 jmethodID AndroidUtil::MID_NativeBookModel_initTOC;
 jmethodID AndroidUtil::MID_NativeBookModel_createTextModel;
@@ -177,7 +177,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_NativeBookModel) );
-	CHECK_NULL( MID_NativeBookModel_initBookModel = env->GetMethodID(cls, "initBookModel", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V") );
+	CHECK_NULL( MID_NativeBookModel_initImageMap = env->GetMethodID(cls, "initImageMap", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V") );
 	CHECK_NULL( MID_NativeBookModel_initInternalHyperlinks = env->GetMethodID(cls, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)V") );
 	CHECK_NULL( MID_NativeBookModel_initTOC = env->GetMethodID(cls, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)V") );
 	CHECK_NULL( MID_NativeBookModel_createTextModel = env->GetMethodID(cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)Lorg/geometerplus/zlibrary/text/model/ZLTextModel;") );

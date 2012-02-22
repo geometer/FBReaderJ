@@ -32,9 +32,13 @@ public class NativeBookModel extends BookModelImpl {
 		super(book);
 	}
 
-	public void initBookModel(String[] imageIds, int[] imageIndices, int[] imageOffsets,
-			String imageDirectoryName, String imageFileExtension, int imageBlocksNumber) {
-		myImageMap = new ZLCachedImageMap(imageIds, imageIndices, imageOffsets, imageDirectoryName, imageFileExtension, imageBlocksNumber);
+	public void initImageMap(
+		String[] ids, int[] indices, int[] offsets,
+		String directoryName, String fileExtension, int blocksNumber
+	) {
+		myImageMap = new ZLCachedImageMap(
+			ids, indices, offsets, directoryName, fileExtension, blocksNumber
+		);
 	}
 
 	public void initInternalHyperlinks(String directoryName, String fileExtension, int blocksNumber) {
