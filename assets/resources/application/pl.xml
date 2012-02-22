@@ -119,13 +119,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Dodaj katalog"/>
 			<node name="editUrl" value="Wpisz adres URL"/>
-			<node name="scanLocalNetwork" value="Przeszukaj sieć lokalną"/>
-			<node name="localCatalogs" value="Lokalne katalogi OPDS"/>
-			<node name="noCatalogsFound" value="Niestety nie znaleziono katalogów"/>
-			<node name="noLocalConnection" value="Twoje urządzenie nie jest podłączone do sieci lokalnej"/>
-			<node name="wifiIsTurnedOff" value="WiFi jest wyłączone"/>
-			<node name="turnWiFiOn" value="Proszę włączyć WiFi i spróbować ponownie"/>
-			<node name="scanningLocalNetwork" value="Przeszukiwanie sieci lokalnej. Proszę czekać&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Wyszukiwanie sieciowe"/>
@@ -276,8 +269,6 @@
 			<node name="pay" value="Zapłać"/>
 			<node name="refresh" value="Odśwież"/>
 			<node name="authorize" value="Autoryzuj"/>
-			<node name="rescan" value="Rescan"/>
-			<node name="turnOn" value="Włącz"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
