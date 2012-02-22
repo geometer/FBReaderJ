@@ -73,7 +73,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 			@Override
 			public ZLSingleImage getRealImage() {
-				// Synchronized block is needed because of use of temporary storage files;
+				// Synchronized block is needed because we use temporary storage files
 				synchronized (ourCoversLock) {
 					return (ZLSingleImage)readCoverInternal(file);
 				}
