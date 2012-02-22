@@ -119,13 +119,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Új katalógus"/>
 			<node name="editUrl" value="URL megadása"/>
-			<node name="scanLocalNetwork" value="Helyi hálózat vizsgálata"/>
-			<node name="localCatalogs" value="Helyi OPDS katalógusok"/>
-			<node name="noCatalogsFound" value="Nem található katalógus"/>
-			<node name="noLocalConnection" value="A készülék nem csatlakozik helyi hálózathoz"/>
-			<node name="wifiIsTurnedOff" value="A wifi nincs bekapcsolva"/>
-			<node name="turnWiFiOn" value="Kérem, kapcsolja be a wifit és próbálja újra"/>
-			<node name="scanningLocalNetwork" value="Helyi hálózat vizsgálata. Egy kis türelmet&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Internetes keresés"/>
@@ -276,8 +269,6 @@
 			<node name="pay" value="Fizetés"/>
 			<node name="refresh" value="Frissítés"/>
 			<node name="authorize" value="Hitelesítés"/>
-			<node name="rescan" value="Új vizsgálat"/>
-			<node name="turnOn" value="Bekapcsol"/>
 			<node name="resetPosition" value="Pozíció nullázása"/>
 		</node>
 		<node name="plugin">
