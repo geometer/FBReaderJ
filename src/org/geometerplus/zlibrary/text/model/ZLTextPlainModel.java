@@ -209,15 +209,25 @@ public class ZLTextPlainModel implements ZLTextModel {
 		}
 	}
 
-	protected ZLTextPlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
+	protected ZLTextPlainModel(
+		String id,
+		String language,
+		int[] entryIndices,
+		int[] entryOffsets,
+		int[] paragraphLenghts,
+		int[] textSizes,
+		byte[] paragraphKinds,
+		CharStorage storage,
+		ZLImageMap imageMap
+	) {
 		myId = id;
 		myLanguage = language;
-		myStartEntryIndices = new int[arraySize];
-		myStartEntryOffsets = new int[arraySize];
-		myParagraphLengths = new int[arraySize];
-		myTextSizes = new int[arraySize];
-		myParagraphKinds = new byte[arraySize];
-		myStorage = new CachedCharStorage(dataBlockSize, directoryName, extension);
+		myStartEntryIndices = entryIndices;
+		myStartEntryOffsets = entryOffsets;
+		myParagraphLengths = paragraphLenghts;
+		myTextSizes = textSizes;
+		myParagraphKinds = paragraphKinds;
+		myStorage = storage;
 		myImageMap = imageMap;
 	}
 
