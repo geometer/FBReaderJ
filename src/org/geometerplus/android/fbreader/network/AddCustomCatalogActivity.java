@@ -94,7 +94,9 @@ public class AddCustomCatalogActivity extends Activity {
 		myEditNotAdd = Util.EDIT_CATALOG_ACTION.equals(action);
 		myLink = null;
 		Uri uri = null;
-		if (myEditNotAdd || Intent.ACTION_VIEW.equals(action)) {
+		if (myEditNotAdd ||
+			Intent.ACTION_VIEW.equals(action) ||
+			Util.ADD_CATALOG_URL_ACTION.equals(action)) {
 			uri = intent.getData();
 			if (uri != null) {
 				if ("opds".equals(uri.getScheme())) {
@@ -106,10 +108,7 @@ public class AddCustomCatalogActivity extends Activity {
 				}
 			}
 
-			final INetworkLink.Type type = (INetworkLink.Type)intent.getSerializableExtra(TYPE);
-			if (type != null) {
-				myType = type;
-			}
+			myType = INetworkLink.Type.byIndex(intent.getIntExtra(TYPE, myType.Index));
 		}
 
 		if (myLink != null) {

@@ -5,8 +5,6 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:label="FBReader">
 		<activity android:name=".library.BugReportActivity" android:label="FBReader crash" android:configChanges="orientation|keyboardHidden" android:process=":crash" />
 		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden" android:process=":crash">
@@ -187,12 +185,15 @@
 				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:host="*" android:scheme="opds" />
 			</intent-filter>
-		</activity>
-		<activity android:name="org.geometerplus.android.fbreader.network.ScanLocalNetworkActivity" android:process=":networkLibrary" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden">
 			<intent-filter>
-				<action android:name="android.fbreader.action.ADD_OPDS_CATALOG" />
+				<action android:name="android.fbreader.action.ADD_OPDS_CATALOG_URL" />
 				<category android:name="android.intent.category.DEFAULT" />
-				<data android:host="data.fbreader.org" android:scheme="http" android:path="/add_catalog/scanLocalNetwork"/>
+				<data android:host="*" android:scheme="http" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.fbreader.action.ADD_OPDS_CATALOG_URL" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:host="*" android:scheme="https" />
 			</intent-filter>
 		</activity>
 		<activity android:name="org.geometerplus.android.fbreader.network.AuthorizationMenuActivity" android:process=":networkLibrary" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation|keyboardHidden"/>

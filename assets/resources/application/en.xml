@@ -123,13 +123,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Add catalog"/>
 			<node name="editUrl" value="Enter URL manually"/>
-			<node name="scanLocalNetwork" value="Scan local network"/>
-			<node name="localCatalogs" value="Local OPDS catalogs"/>
-			<node name="noCatalogsFound" value="No catalogs found, sorry"/>
-			<node name="noLocalConnection" value="Your device is not connected to a local network"/>
-			<node name="wifiIsTurnedOff" value="WiFi is turned off"/>
-			<node name="turnWiFiOn" value="Please, turn WiFi on and try again"/>
-			<node name="scanningLocalNetwork" value="Scanning local network. Please, wait&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Search"/>
@@ -282,8 +275,6 @@
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
 			<node name="authorize" value="Authorize"/>
-			<node name="rescan" value="Rescan" />
-			<node name="turnOn" value="Turn on" />
 			<node name="resetPosition" value="Reset position" />
 		</node>
 		<node name="plugin">
