@@ -131,13 +131,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Добавление каталога"/>
 			<node name="editUrl" value="Ввести адрес вручную"/>
-			<node name="scanLocalNetwork" value="Поискать в локальной сети"/>
-			<node name="localCatalogs" value="Локальные библиотеки"/>
-			<node name="noCatalogsFound" value="Не нашлось ни одного каталога"/>
-			<node name="noLocalConnection" value="Устройство не подключено к локальной сети"/>
-			<node name="wifiIsTurnedOff" value="WiFi выключен"/>
-			<node name="turnWiFiOn" value="Включите WiFi и попробуйте ещё раз"/>
-			<node name="scanningLocalNetwork" value="Ищем в локальной сети. Подождите, пожалуйста&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Искать в сети"/>
@@ -293,8 +286,6 @@
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
 			<node name="authorize" value="Авторизоваться"/>
-			<node name="rescan" value="Искать"/>
-			<node name="turnOn" value="Включить"/>
 			<node name="resetPosition" value="К исходной позиции"/>
 		</node>
 		<node name="plugin">

@@ -119,13 +119,6 @@
 		<node name="addCatalog">
 			<node name="title" value="Додати каталог"/>
 			<node name="editUrl" value="Ввести URL вручну"/>
-			<node name="scanLocalNetwork" value="Сканувати локальну мережу"/>
-			<node name="localCatalogs" value="Локальні OPDS каталоги"/>
-			<node name="noCatalogsFound" value="На жаль каталогів не знайдено"/>
-			<node name="noLocalConnection" value="Ваш пристрій не підключено до локалької мережі"/>
-			<node name="wifiIsTurnedOff" value="WiFi вимкнено"/>
-			<node name="turnWiFiOn" value="Будь-ласка, ввімкніть WiFi і спробуйте знову"/>
-			<node name="scanningLocalNetwork" value="Сканування локальної мережі. Зачекайте, будь ласка...&#8230;"/>
 		</node>
 		<node name="menu">
 			<node name="networkSearch" value="Пошук в мережі"/>
@@ -276,8 +269,6 @@
 			<node name="pay" value="Заплатити"/>
 			<node name="refresh" value="Оновити"/>
 			<node name="authorize" value="Авторизуватись"/>
-			<node name="rescan" value="Сканувати знову"/>
-			<node name="turnOn" value="Ввімкнути"/>
 			<node name="resetPosition" value="Скинути позицію"/>
 		</node>
 		<node name="plugin">
