@@ -30,6 +30,10 @@ import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
 import org.geometerplus.fbreader.filetype.*;
 
 public class PluginCollection {
+	static {
+		System.loadLibrary("NativeFormats-v1");
+	}
+
 	private static PluginCollection ourInstance;
 
 	private final Map<FormatPlugin.Type,List<FormatPlugin>> myPlugins =
