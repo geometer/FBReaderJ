@@ -19,9 +19,7 @@
 
 #include "AndroidUtil.h"
 
-
 JavaVM *AndroidUtil::ourJavaVM = 0;
-
 
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
 const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
