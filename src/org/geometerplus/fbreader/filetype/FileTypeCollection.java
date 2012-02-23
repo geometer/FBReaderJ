@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.filetype;
 
 import java.util.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 public class FileTypeCollection {
@@ -48,5 +49,14 @@ public class FileTypeCollection {
 
 	public FileType typeById(String id) {
 		return myTypes.get(id.toLowerCase());
+	}
+
+	public FileType typeForFile(ZLFile file) {
+		for (FileType type : types()) {
+			if (type.acceptsFile(file)) {
+				return type;
+			}
+		}
+		return null;
 	}
 }
