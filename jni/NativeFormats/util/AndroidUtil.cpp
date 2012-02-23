@@ -18,3 +18,5 @@
  */
 
 #include "AndroidUtil.h"
+
+const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";

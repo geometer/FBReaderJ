@@ -18,6 +18,6 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE                  := NativeFormats-v1
-LOCAL_SRC_FILES               := NativeFormats/*.cpp
+LOCAL_SRC_FILES               := $(wildcard NativeFormats/*.cpp) $(wildcard NativeFormats/util/*.cpp)
 
 include $(BUILD_SHARED_LIBRARY)

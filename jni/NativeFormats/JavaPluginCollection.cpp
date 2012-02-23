@@ -16,3 +16,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
+
+#include <jni.h>
+
+#include <AndroidUtil.h>
+
+extern "C"
+JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_nativePlugins(JNIEnv* env, jobject thiz) {
+	//const std::vector<shared_ptr<FormatPlugin> > plugins = PluginCollection::Instance().plugins();
+	const size_t size = 0;//plugins.size();
+	jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPlugin);
+	jobjectArray javaPlugins = env->NewObjectArray(size, cls, NULL);
+
+	/*
+	for (size_t i = 0; i < size; ++i) {
+		jstring fileType = AndroidUtil::createJavaString(env, plugins[i]->supportedFileType());
+		env->SetObjectArrayElement(
+			javaPlugins, i,
+			env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, fileType)
+		);
+	}
+	*/
+	return javaPlugins;
+}

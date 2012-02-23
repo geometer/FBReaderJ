@@ -20,6 +20,10 @@
 #ifndef __ANDROIDUTIL_H__
 #define __ANDROIDUTIL_H__
 
+class AndroidUtil {
 
+public:
+	static const char * const Class_NativeFormatPlugin;
+};
 
 #endif /* __ANDROIDUTIL_H__ */
