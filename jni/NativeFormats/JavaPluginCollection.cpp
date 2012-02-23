@@ -26,13 +26,11 @@
 #define JNICALL
 #endif /* _JNI_H */
 
-
 #include <AndroidUtil.h>
 
 #include <ZLFile.h>
 
 #include "fbreader/src/formats/FormatPlugin.h"
-
 
 extern "C"
 JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_nativePlugins(JNIEnv* env, jobject thiz) {

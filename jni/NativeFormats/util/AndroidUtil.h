@@ -25,7 +25,6 @@
 #include <string>
 #include <vector>
 
-
 class AndroidUtil {
 
 private:
