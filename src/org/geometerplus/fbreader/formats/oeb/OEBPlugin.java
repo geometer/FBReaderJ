@@ -26,9 +26,8 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class OEBPlugin extends JavaFormatPlugin {
-	@Override
-	public String supportedFileType() {
-		return "ePub";
+	public OEBPlugin() {
+		super("ePub");
 	}
 
 	private ZLFile getOpfFile(ZLFile oebFile) {
