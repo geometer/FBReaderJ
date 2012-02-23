@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.filetype.*;
 
 public class PluginCollection {
 	static {
-		System.loadLibrary("NativeFormats");
+		System.loadLibrary("NativeFormats-v1");
 	}
 
 	private static PluginCollection ourInstance;

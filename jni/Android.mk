@@ -33,7 +33,7 @@ include $(CLEAR_VARS)
 
 SHAREDIR_MACRO := nativeShare
 
-LOCAL_MODULE := NativeFormats
+LOCAL_MODULE := NativeFormats-v1
 LOCAL_LDLIBS := -lz
 LOCAL_CFLAGS := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
 LOCAL_STATIC_LIBRARIES := expat
