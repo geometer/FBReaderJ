@@ -26,7 +26,16 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 
 public abstract class FormatPlugin {
-	public abstract String supportedFileType();
+	private final String myFileType;
+
+	protected FormatPlugin(String fileType) {
+		myFileType = fileType;
+	}
+
+	public final String supportedFileType() {
+		return myFileType;
+	}
+
 	public abstract boolean readMetaInfo(Book book);
 	public abstract boolean readLanguageAndEncoding(Book book);
 	public abstract boolean readModel(BookModel model);

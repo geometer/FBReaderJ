@@ -33,9 +33,8 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
 public class MobipocketPlugin extends JavaFormatPlugin {
-	@Override
-	public String supportedFileType() {
-		return "Mobipocket";
+	public MobipocketPlugin() {
+		super("Mobipocket");
 	}
 
 	@Override
