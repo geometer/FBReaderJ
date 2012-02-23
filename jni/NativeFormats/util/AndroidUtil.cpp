@@ -271,6 +271,6 @@ jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::
 }
 
 void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
-		jclass cls = env->FindClass("java/lang/RuntimeException");
-		env->ThrowNew(cls, message.c_str());
+	jclass cls = env->FindClass("java/lang/RuntimeException");
+	env->ThrowNew(cls, message.c_str());
 }
