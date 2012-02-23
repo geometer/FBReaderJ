@@ -45,14 +45,6 @@ public class PluginCollection {
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
-			ourInstance.addPlugin(new FB2Plugin());
-			ourInstance.addPlugin(new MobipocketPlugin());
-			ourInstance.addPlugin(new OEBPlugin());
-
-			for (FormatPlugin p : ourInstance.nativePlugins()) {
-				ourInstance.addPlugin(p);
-			}
-
 			ourInstance.runTests();
 		}
 		return ourInstance;
@@ -68,6 +60,14 @@ public class PluginCollection {
 		LanguageAutoDetectOption = new ZLBooleanOption("Format", "AutoDetect", true);
 		DefaultLanguageOption = new ZLStringOption("Format", "DefaultLanguage", "en");
 		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
+
+		addPlugin(new FB2Plugin());
+		addPlugin(new MobipocketPlugin());
+		addPlugin(new OEBPlugin());
+
+		for (FormatPlugin p : nativePlugins()) {
+			addPlugin(p);
+		}
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
