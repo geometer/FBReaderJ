@@ -133,9 +133,7 @@ public class PluginCollection {
 	}
 
 	protected void finalize() throws Throwable {
-		deleteInstance();
-		myPlugins.clear();
 		free();
 		super.finalize();
-	};
+	}
 }
