@@ -34,8 +34,8 @@ bool TxtPlugin::providesMetaInfo() const {
 	return false;
 }
 
-bool TxtPlugin::acceptsFile(const ZLFile &file) const {
-	return file.extension() == "txt";
+const std::string TxtPlugin::supportedFileType() const {
+	return "plain text";
 }
 
 bool TxtPlugin::readMetaInfo(Book &book) const {

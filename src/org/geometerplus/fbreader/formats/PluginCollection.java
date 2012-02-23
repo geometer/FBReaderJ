@@ -48,6 +48,9 @@ public class PluginCollection {
 			ourInstance.myJavaPlugins.add(new MobipocketPlugin());
 			ourInstance.myJavaPlugins.add(new OEBPlugin());
 
+			for (FormatPlugin p : nativePlugins()) {
+				ourInstance.myPlugins.add(p);
+			}
 //			ourInstance.myPlugins.addAll(ourInstance.myJavaPlugins);
 
 			ourInstance.runTests();
@@ -74,11 +77,7 @@ public class PluginCollection {
 			}
 		}
 
-		final FormatPlugin plugin = getNativePlugin(file.getPath());
-		if (plugin != null) {
-			myPlugins.add(plugin);
-		}
-		return plugin;
+		return null;
 	}
 
 	/* package */ FormatPlugin getJavaPlugin(ZLFile file) {
@@ -90,7 +89,7 @@ public class PluginCollection {
 		return null;
 	}
 
-	private native FormatPlugin getNativePlugin(String path);
+	private native FormatPlugin[] nativePlugins();
 	private native void free();
 
 	// called from native code

@@ -35,20 +35,20 @@
 
 
 extern "C"
-JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_getNativePlugin(JNIEnv* env, jobject thiz, jstring javaPath) {
-	const char *pathData = env->GetStringUTFChars(javaPath, 0);
-	std::string path(pathData);
-	env->ReleaseStringUTFChars(javaPath, pathData);
-
-	ZLFile file(path);
-	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(file, false);
-	if (plugin.isNull()) {
-		return 0;
-	}
-
-	FormatPlugin *ptr = &*plugin;
+JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_nativePlugins(JNIEnv* env, jobject thiz) {
+	const std::vector<shared_ptr<FormatPlugin> > plugins = PluginCollection::Instance().plugins();
+	const size_t size = plugins.size();
 	jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPlugin);
-	return env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, (jlong)ptr);
+	jobjectArray javaPlugins = env->NewObjectArray(size, cls, NULL);
+
+	for (size_t i = 0; i < size; ++i) {
+		FormatPlugin *ptr = &*(plugins[i]);
+		env->SetObjectArrayElement(
+			javaPlugins, i,
+			env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, (jlong)ptr)
+		);
+	}
+	return javaPlugins;
 }
 
 extern "C"

@@ -55,6 +55,7 @@ shared_ptr<Book> Book::createBook(
 	return book;
 }
 
+/*
 shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(file, false);
 	if (plugin.isNull()) {
@@ -80,7 +81,7 @@ shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 
 	return book;
 }
-
+*/
 
 shared_ptr<Book> Book::loadFromJavaBook(JNIEnv *env, jobject javaBook) {
 	jstring javaString;

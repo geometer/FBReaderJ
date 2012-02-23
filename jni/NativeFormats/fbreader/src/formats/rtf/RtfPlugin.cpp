@@ -33,8 +33,8 @@ bool RtfPlugin::providesMetaInfo() const {
 	return false;
 }
 
-bool RtfPlugin::acceptsFile(const ZLFile &file) const {
-	return file.extension() == "rtf";
+const std::string RtfPlugin::supportedFileType() const {
+	return "rtf";
 }
 
 bool RtfPlugin::readMetaInfo(Book &book) const {
