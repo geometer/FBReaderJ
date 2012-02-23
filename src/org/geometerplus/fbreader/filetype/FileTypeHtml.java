@@ -19,34 +19,27 @@
 
 package org.geometerplus.fbreader.filetype;
 
-import java.util.*;
-
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-public class FileTypeCollection {
-	public static final FileTypeCollection Instance = new FileTypeCollection();
-
-	private final TreeMap<String,FileType> myTypes = new TreeMap<String,FileType>();
-
-	private FileTypeCollection() {
-		addType(new FileTypeByExtension("fb2", "fb2", MimeType.TEXT_FB2));
-		addType(new FileTypeEpub());
-		addType(new FileTypeMobipocket());
-		addType(new FileTypeHtml());
-		addType(new FileTypeByExtension("plain text", "txt", MimeType.TEXT_PLAIN));
-		// TODO: change mime type
-		addType(new FileTypeByExtension("RTF", "rtf", MimeType.TEXT_PLAIN));
+class FileTypeHtml extends FileType {
+	FileTypeHtml() {
+		super("HTML");
 	}
 
-	private void addType(FileType type) {
-		myTypes.put(type.Id.toLowerCase(), type);
+	@Override
+	public boolean acceptsFile(ZLFile file) {
+		final String extension = file.getExtension().toLowerCase();
+		return extension.endsWith("html") || "htm".equals(extension);
 	}
 
-	public Collection<FileType> types() {
-		return myTypes.values();
+	@Override
+	public String extension() {
+		return "html";
 	}
 
-	public FileType typeById(String id) {
-		return myTypes.get(id.toLowerCase());
+	@Override
+	public MimeType mimeType() {
+		return MimeType.TEXT_HTML;
 	}
 }
