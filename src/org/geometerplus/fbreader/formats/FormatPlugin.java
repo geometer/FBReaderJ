@@ -24,14 +24,8 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.filetype.*;
 
 public abstract class FormatPlugin {
-	public final boolean acceptsFile(ZLFile file) {
-		final FileType fileType = FileTypeCollection.Instance.typeById(supportedFileType());
-		return fileType != null && fileType.acceptsFile(file);
-	}
-
 	public abstract String supportedFileType();
 	public abstract boolean readMetaInfo(Book book);
 	public abstract boolean readLanguageAndEncoding(Book book);
