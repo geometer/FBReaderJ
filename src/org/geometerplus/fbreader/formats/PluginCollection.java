@@ -115,4 +115,10 @@ public class PluginCollection {
 	}
 
 	private native NativeFormatPlugin[] nativePlugins();
+	private native void free();
+
+	protected void finalize() throws Throwable {
+		free();
+		super.finalize();
+	}
 }
