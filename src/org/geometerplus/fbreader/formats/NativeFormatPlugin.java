@@ -90,7 +90,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	// FIXME: temporary implementation; implement as a native code
 	@Override
 	public String readAnnotation(ZLFile file) {
-		final FormatPlugin plugin = PluginCollection.Instance().getJavaPlugin(file);
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file, FormatPlugin.Type.JAVA);
 		if (plugin != null) {
 			return plugin.readAnnotation(file);
 		}

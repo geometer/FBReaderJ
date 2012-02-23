@@ -35,8 +35,8 @@ public class PluginCollection {
 
 	private static PluginCollection ourInstance;
 
-	private final ArrayList<FormatPlugin> myPlugins = new ArrayList<FormatPlugin>();
-	private final ArrayList<FormatPlugin> myJavaPlugins = new ArrayList<FormatPlugin>();
+	private final Map<FormatPlugin.Type,List<FormatPlugin>> myPlugins =
+		new HashMap<FormatPlugin.Type,List<FormatPlugin>>();
 	public ZLStringOption DefaultLanguageOption;
 	public ZLStringOption DefaultEncodingOption;
 	public ZLBooleanOption LanguageAutoDetectOption;
@@ -44,14 +44,13 @@ public class PluginCollection {
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
-			ourInstance.myJavaPlugins.add(new FB2Plugin());
-			ourInstance.myJavaPlugins.add(new MobipocketPlugin());
-			ourInstance.myJavaPlugins.add(new OEBPlugin());
+			ourInstance.addPlugin(new FB2Plugin());
+			ourInstance.addPlugin(new MobipocketPlugin());
+			ourInstance.addPlugin(new OEBPlugin());
 
 			for (FormatPlugin p : ourInstance.nativePlugins()) {
-				ourInstance.myPlugins.add(p);
+				ourInstance.addPlugin(p);
 			}
-//			ourInstance.myPlugins.addAll(ourInstance.myJavaPlugins);
 
 			ourInstance.runTests();
 		}
@@ -70,23 +69,39 @@ public class PluginCollection {
 		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
 	}
 
-	public FormatPlugin getPlugin(ZLFile file) {
-		for (FormatPlugin plugin : myPlugins) {
-			if (plugin.acceptsFile(file)) {
-				return plugin;
-			}
+	private void addPlugin(FormatPlugin plugin) {
+		final FormatPlugin.Type type = plugin.type();
+		List<FormatPlugin> list = myPlugins.get(type);
+		if (list == null) {
+			list = new ArrayList<FormatPlugin>();
+			myPlugins.put(type, list);
 		}
-
-		return null;
+		list.add(plugin);
 	}
 
-	/* package */ FormatPlugin getJavaPlugin(ZLFile file) {
-		for (FormatPlugin plugin : myJavaPlugins) {
-			if (plugin.acceptsFile(file)) {
-				return plugin;
+	public FormatPlugin getPlugin(ZLFile file) {
+		return getPlugin(file, FormatPlugin.Type.ANY);
+	}
+
+	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
+		if (formatType == FormatPlugin.Type.ANY) {
+			FormatPlugin p = getPlugin(file, FormatPlugin.Type.NATIVE);
+			if (p == null) {
+				p = getPlugin(file, FormatPlugin.Type.JAVA);
 			}
+			return p;
+		} else {
+			final List<FormatPlugin> list = myPlugins.get(formatType);
+			if (list == null) {
+				return null;
+			}
+			for (FormatPlugin p : list) {
+				if (p.acceptsFile(file)) {
+					return p;
+				}
+			}
+			return null;
 		}
-		return null;
 	}
 
 	private native FormatPlugin[] nativePlugins();
@@ -110,7 +125,6 @@ public class PluginCollection {
 	protected void finalize() throws Throwable {
 		deleteInstance();
 		myPlugins.clear();
-		myJavaPlugins.clear();
 		free();
 		super.finalize();
 	};
