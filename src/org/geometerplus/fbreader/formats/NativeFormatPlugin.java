@@ -37,17 +37,12 @@ final class NativeFormatPluginException extends RuntimeException {
 public class NativeFormatPlugin extends FormatPlugin {
 	private static Object ourCoversLock = new Object();
 
-	// Stores native C++ pointer value
 	// No free method because all plugins' instances are freed by 
 	//   PluginCollection::deleteInstance method (C++)
-	protected final long myNativePointer;
 
-	public NativeFormatPlugin(long ptr) {
-		myNativePointer = ptr;
+	public NativeFormatPlugin(String fileType) {
+		super(fileType);
 	}
-
-	@Override
-	public native String supportedFileType();
 
 	@Override
 	public native boolean readMetaInfo(Book book);
