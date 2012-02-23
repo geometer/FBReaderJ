@@ -50,8 +50,6 @@ public class PluginCollection {
 			for (NativeFormatPlugin p : ourInstance.nativePlugins()) {
 				ourInstance.addPlugin(p);
 			}
-
-			ourInstance.runTests();
 		}
 		return ourInstance;
 	}
@@ -140,6 +138,4 @@ public class PluginCollection {
 		free();
 		super.finalize();
 	};
-
-	private native void runTests();
 }
