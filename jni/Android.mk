@@ -147,7 +147,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaInputStream.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
-	NativeFormats/zlibrary/ui/src/android/library/ZLAndroidLibraryImplementation.cpp \
+	NativeFormats/zlibrary/ui/src/android/library/ZLAndroidLibraryImplementation.cpp
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/NativeFormats/util \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/application \
