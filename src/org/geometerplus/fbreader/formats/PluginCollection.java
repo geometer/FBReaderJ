@@ -48,7 +48,7 @@ public class PluginCollection {
 			ourInstance.myJavaPlugins.add(new MobipocketPlugin());
 			ourInstance.myJavaPlugins.add(new OEBPlugin());
 
-			for (FormatPlugin p : nativePlugins()) {
+			for (FormatPlugin p : ourInstance.nativePlugins()) {
 				ourInstance.myPlugins.add(p);
 			}
 //			ourInstance.myPlugins.addAll(ourInstance.myJavaPlugins);
