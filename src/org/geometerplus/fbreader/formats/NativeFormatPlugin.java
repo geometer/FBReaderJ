@@ -47,7 +47,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public native boolean acceptsFile(ZLFile file);
+	public native String supportedFileType();
 
 	@Override
 	public native boolean readMetaInfo(Book book);
@@ -90,7 +90,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	// FIXME: temporary implementation; implement as a native code
 	@Override
 	public String readAnnotation(ZLFile file) {
-		FormatPlugin plugin = PluginCollection.Instance().getJavaPlugin(file);
+		final FormatPlugin plugin = PluginCollection.Instance().getJavaPlugin(file);
 		if (plugin != null) {
 			return plugin.readAnnotation(file);
 		}

@@ -35,21 +35,26 @@ public abstract class BookModel {
 		}
 
 		final BookModel model;
-		if (plugin.type() == FormatPlugin.Type.NATIVE) {
-			model = new NativeBookModel(book);
-			// TODO: a hack; should be moved into plugin code
-			if ("epub".equalsIgnoreCase(book.File.getExtension())) {
-				model.setLabelResolver(new LabelResolver() {
-					public List<String> getCandidates(String id) {
-						final int index = id.indexOf("#");
-						return index > 0
-							? Collections.<String>singletonList(id.substring(0, index))
-							: Collections.<String>emptyList();
-					}
-				});
-			}
-		} else {
-			model = new JavaBookModel(book);
+		switch (plugin.type()) {
+			case NATIVE:
+				model = new NativeBookModel(book);
+				// TODO: a hack; should be moved into plugin code
+				if ("epub".equalsIgnoreCase(book.File.getExtension())) {
+					model.setLabelResolver(new LabelResolver() {
+						public List<String> getCandidates(String id) {
+							final int index = id.indexOf("#");
+							return index > 0
+								? Collections.<String>singletonList(id.substring(0, index))
+								: Collections.<String>emptyList();
+						}
+					});
+				}
+				break;
+			case JAVA:
+				model = new JavaBookModel(book);
+				break;
+			default:
+				return null;
 		}
 
 		if (plugin.readModel(model)) {
