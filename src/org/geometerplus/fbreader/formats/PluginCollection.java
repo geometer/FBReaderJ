@@ -47,7 +47,7 @@ public class PluginCollection {
 			ourInstance = new PluginCollection();
 
 			// This code can not be moved to constructor because nativePlugins() is a native method
-			for (FormatPlugin p : ourInstance.nativePlugins()) {
+			for (NativeFormatPlugin p : ourInstance.nativePlugins()) {
 				ourInstance.addPlugin(p);
 			}
 		}
@@ -114,5 +114,5 @@ public class PluginCollection {
 		}
 	}
 
-	private native FormatPlugin[] nativePlugins();
+	private native NativeFormatPlugin[] nativePlugins();
 }

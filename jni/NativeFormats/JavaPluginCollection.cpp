@@ -19,6 +19,8 @@
 
 #include <jni.h>
 
+#include <vector>
+
 #include <AndroidUtil.h>
 
 extern "C"
@@ -26,7 +28,7 @@ JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginColl
 	//const std::vector<shared_ptr<FormatPlugin> > plugins = PluginCollection::Instance().plugins();
 	const size_t size = 0;//plugins.size();
 	jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPlugin);
-	jobjectArray javaPlugins = env->NewObjectArray(size, cls, NULL);
+	jobjectArray javaPlugins = env->NewObjectArray(size, cls, 0);
 
 	/*
 	for (size_t i = 0; i < size; ++i) {
