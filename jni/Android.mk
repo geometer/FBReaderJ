@@ -18,6 +18,11 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE                  := NativeFormats-v1
-LOCAL_SRC_FILES               := NativeFormats/*.cpp
+LOCAL_SRC_FILES               := \
+	NativeFormats/JavaNativeFormatPlugin.cpp \
+	NativeFormats/JavaPluginCollection.cpp \
+	NativeFormats/util/AndroidUtil.cpp
+LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH)/NativeFormats/util
 
 include $(BUILD_SHARED_LIBRARY)
