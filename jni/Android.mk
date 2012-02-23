@@ -17,7 +17,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 
-EXPAT_DIR := expat-2.0.1
+EXPAT_DIR                     := expat-2.0.1
 
 LOCAL_MODULE                  := expat
 LOCAL_SRC_FILES               := $(EXPAT_DIR)/lib/xmlparse.c $(EXPAT_DIR)/lib/xmlrole.c $(EXPAT_DIR)/lib/xmltok.c
@@ -29,14 +29,13 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-SHAREDIR_MACRO := nativeShare
+SHAREDIR_MACRO                := nativeShare
 
-LOCAL_MODULE := NativeFormats-v1
-LOCAL_LDLIBS := -lz
-LOCAL_CFLAGS := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
-LOCAL_STATIC_LIBRARIES := expat
-
-LOCAL_SRC_FILES := \
+LOCAL_MODULE                  := NativeFormats-v1
+LOCAL_LDLIBS                  := -lz
+LOCAL_CFLAGS                  := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
+LOCAL_STATIC_LIBRARIES        := expat
+LOCAL_SRC_FILES               := \
 	NativeFormats/extensions.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookModel.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
@@ -173,7 +172,6 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/view \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml \
-	\
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/model \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/area \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/view \
