@@ -30,7 +30,6 @@ const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
-const char * const AndroidUtil::Class_NativeFormatPluginException = "org/geometerplus/fbreader/formats/NativeFormatPluginException";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
 const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
@@ -269,4 +268,9 @@ jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::
 		}
 	}
 	return array;
+}
+
+void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
+		jclass cls = env->FindClass("java/lang/RuntimeException");
+		env->ThrowNew(cls, message.c_str());
 }

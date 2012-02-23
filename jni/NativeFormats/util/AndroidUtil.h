@@ -39,7 +39,6 @@ public:
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
-	static const char * const Class_NativeFormatPluginException;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Paths;
 	static const char * const Class_Book;
@@ -117,6 +116,8 @@ public:
 	static jintArray createIntArray(JNIEnv *env, const std::vector<jint> &data);
 	static jbyteArray createByteArray(JNIEnv *env, const std::vector<jbyte> &data);
 	static jobjectArray createStringArray(JNIEnv *env, const std::vector<std::string> &data);
+
+	static void throwRuntimeException(JNIEnv *env, const std::string &message);
 };
 
 #endif /* __ANDROIDUTIL_H__ */

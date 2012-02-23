@@ -47,8 +47,7 @@
 static inline FormatPlugin *extractPointer(JNIEnv *env, jobject base) {
 	jlong ptr = env->GetLongField(base, AndroidUtil::FID_NativeFormatPlugin_NativePointer);
 	if (ptr == 0) {
-		jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPluginException);
-		env->ThrowNew(cls, "Native FormatPlugin instance is NULL.");
+		AndroidUtil::throwRuntimeException(env, "Native FormatPlugin instance is NULL for type " + fileTypeCpp);
 	}
 	return (FormatPlugin *)ptr;
 }
