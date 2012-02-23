@@ -14,3 +14,10 @@ LOCAL_MODULE                  := LineBreak-v2
 LOCAL_SRC_FILES               := LineBreak/LineBreaker.cpp LineBreak/liblinebreak-2.0/linebreak.c LineBreak/liblinebreak-2.0/linebreakdata.c LineBreak/liblinebreak-2.0/linebreakdef.c
 
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE                  := NativeFormats-v1
+LOCAL_SRC_FILES               := NativeFormats/*.cpp
+
+include $(BUILD_SHARED_LIBRARY)
