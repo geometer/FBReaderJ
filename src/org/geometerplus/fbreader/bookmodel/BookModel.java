@@ -34,10 +34,15 @@ public abstract class BookModel {
 		}
 
 		final BookModel model;
-		if (plugin.type() == FormatPlugin.Type.NATIVE) {
-			model = new NativeBookModel(book);
-		} else {
-			model = new JavaBookModel(book);
+		switch (plugin.type()) {
+			case NATIVE:
+				model = new NativeBookModel(book);
+				break;
+			case JAVA:
+				model = new JavaBookModel(book);
+				break;
+			default:
+				return null;
 		}
 
 		if (plugin.readModel(model)) {

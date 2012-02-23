@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,37 +17,33 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.fb2;
+package org.geometerplus.fbreader.filetype;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
-public class FB2Plugin extends JavaFormatPlugin {
-	@Override
-	public String supportedFileType() {
-		return "fb2";
+class FileTypeByExtension extends FileType {
+	private final String myExtension;
+	private final MimeType myMimeType;
+
+	FileTypeByExtension(String id, String extension, MimeType mimeType) {
+		super(id);
+		myExtension = extension;
+		myMimeType = mimeType;
 	}
 
 	@Override
-	public boolean readMetaInfo(Book book) {
-		return new FB2MetaInfoReader(book).readMetaInfo();
+	public boolean acceptsFile(ZLFile file) {
+		return myExtension.equalsIgnoreCase(file.getExtension());
 	}
 
 	@Override
-	public boolean readModel(BookModel model) {
-		return new FB2Reader(model).readBook();
+	public String extension() {
+		return myExtension;
 	}
 
 	@Override
-	public ZLImage readCover(ZLFile file) {
-		return new FB2CoverReader().readCover(file);
-	}
-
-	@Override
-	public String readAnnotation(ZLFile file) {
-		return new FB2AnnotationReader().readAnnotation(file);
+	public MimeType mimeType() {
+		return myMimeType;
 	}
 }
