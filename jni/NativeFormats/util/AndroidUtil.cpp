@@ -138,8 +138,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
-	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(J)V") );
-	CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "(J)V") );
+	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "()Ljava/lang/String;") );
 	CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
 	env->DeleteLocalRef(cls);
 
@@ -271,6 +271,6 @@ jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::
 }
 
 void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
-		jclass cls = env->FindClass("java/lang/RuntimeException");
-		env->ThrowNew(cls, message.c_str());
+	jclass cls = env->FindClass("java/lang/RuntimeException");
+	env->ThrowNew(cls, message.c_str());
 }

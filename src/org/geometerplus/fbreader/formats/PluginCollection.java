@@ -45,6 +45,12 @@ public class PluginCollection {
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
+
+			// This code can not be moved to constructor because nativePlugins() is a native method
+			for (FormatPlugin p : ourInstance.nativePlugins()) {
+				ourInstance.addPlugin(p);
+			}
+
 			ourInstance.runTests();
 		}
 		return ourInstance;
@@ -64,10 +70,6 @@ public class PluginCollection {
 		addPlugin(new FB2Plugin());
 		addPlugin(new MobipocketPlugin());
 		addPlugin(new OEBPlugin());
-
-		for (FormatPlugin p : nativePlugins()) {
-			addPlugin(p);
-		}
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
