@@ -53,7 +53,7 @@ public:
 	virtual ~FormatPlugin();
 
 	virtual bool providesMetaInfo() const = 0;
-	virtual bool acceptsFile(const ZLFile &file) const = 0;
+	virtual const std::string supportedFileType() const = 0;
 	//virtual FormatInfoPage *createInfoPage(ZLOptionsDialog &dialog, const ZLFile &file);
 
 	virtual const std::string &tryOpen(const ZLFile &file) const;
@@ -80,8 +80,7 @@ public:
 	~PluginCollection();
 
 public:
-	shared_ptr<FormatPlugin> plugin(const ZLFile &file, bool strong);
-	shared_ptr<FormatPlugin> plugin(const Book &book);
+	std::vector<shared_ptr<FormatPlugin> > plugins() const;
 
 	bool isLanguageAutoDetectEnabled();
 	std::string defaultLanguage();
@@ -100,5 +99,9 @@ private:
 inline FormatPlugin::FormatPlugin() {}
 inline FormatPlugin::~FormatPlugin() {}
 //inline FormatInfoPage *FormatPlugin::createInfoPage(ZLOptionsDialog&, const ZLFile&) { return 0; }
+
+inline std::vector<shared_ptr<FormatPlugin> > PluginCollection::plugins() const {
+	return myPlugins;
+}
 
 #endif /* __FORMATPLUGIN_H__ */

@@ -32,6 +32,10 @@ public class FileTypeCollection {
 		addType(new FileTypeByExtension("fb2", "fb2", MimeType.TEXT_FB2));
 		addType(new FileTypeEpub());
 		addType(new FileTypeMobipocket());
+		addType(new FileTypeHtml());
+		addType(new FileTypeByExtension("plain text", "txt", MimeType.TEXT_PLAIN));
+		// TODO: change mime type
+		addType(new FileTypeByExtension("RTF", "rtf", MimeType.TEXT_PLAIN));
 	}
 
 	private void addType(FileType type) {

@@ -83,19 +83,6 @@ PluginCollection::~PluginCollection() {
 	env->DeleteGlobalRef(myJavaInstance);
 }
 
-shared_ptr<FormatPlugin> PluginCollection::plugin(const Book &book) {
-	return plugin(book.file(), false);
-}
-
-shared_ptr<FormatPlugin> PluginCollection::plugin(const ZLFile &file, bool strong) {
-	for (std::vector<shared_ptr<FormatPlugin> >::const_iterator it = myPlugins.begin(); it != myPlugins.end(); ++it) {
-		if ((!strong || (*it)->providesMetaInfo()) && (*it)->acceptsFile(file)) {
-			return *it;
-		}
-	}
-	return 0;
-}
-
 bool PluginCollection::isLanguageAutoDetectEnabled() {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jboolean res = env->CallBooleanMethod(myJavaInstance, AndroidUtil::MID_PluginCollection_isLanguageAutoDetectEnabled);

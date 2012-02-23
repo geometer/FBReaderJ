@@ -42,7 +42,7 @@
 
 
 void extension1();
-void extension2();
+//void extension2();
 
 extern "C"
 JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_runTests(JNIEnv* env, jobject thiz) {
@@ -116,6 +116,7 @@ void TestXMLReader::startElementHandler(const char *tag, const char **attributes
 }
 
 
+/*
 void extension2() {
 	AndroidLog log;
 	log.w("FBREADER", "extension 2 start");
@@ -143,4 +144,4 @@ void extension2() {
 	}
 
 	log.w("FBREADER", "extension 2 end");
-}
+}*/

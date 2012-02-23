@@ -30,9 +30,8 @@
 #include "../../library/Book.h"
 #include "../../bookmodel/BookModel.h"
 
-bool HtmlPlugin::acceptsFile(const ZLFile &file) const {
-	const std::string &extension = file.extension();
-	return ZLStringUtil::stringEndsWith(extension, "html") || (extension == "htm");
+const std::string HtmlPlugin::supportedFileType() const {
+	return "HTML";
 }
 
 bool HtmlPlugin::readMetaInfo(Book &book) const {

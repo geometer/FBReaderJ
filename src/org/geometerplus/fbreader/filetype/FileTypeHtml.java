@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,29 @@
  * 02110-1301, USA.
  */
 
-#include <ZLFile.h>
-#include <ZLImage.h>
+package org.geometerplus.fbreader.filetype;
 
-#include "FB2Plugin.h"
-#include "FB2MetaInfoReader.h"
-#include "FB2BookReader.h"
-#include "FB2CoverReader.h"
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
-const std::string FB2Plugin::supportedFileType() const {
-	return "fb2";
-}
+class FileTypeHtml extends FileType {
+	FileTypeHtml() {
+		super("HTML");
+	}
 
-bool FB2Plugin::readMetaInfo(Book &book) const {
-	return FB2MetaInfoReader(book).readMetaInfo();
-}
+	@Override
+	public boolean acceptsFile(ZLFile file) {
+		final String extension = file.getExtension().toLowerCase();
+		return extension.endsWith("html") || "htm".equals(extension);
+	}
 
-bool FB2Plugin::readModel(BookModel &model) const {
-	return FB2BookReader(model).readBook();
-}
+	@Override
+	public String extension() {
+		return "html";
+	}
 
-shared_ptr<ZLImage> FB2Plugin::coverImage(const ZLFile &file) const {
-	return FB2CoverReader(file).readCover();
-}
-
-bool FB2Plugin::readLanguageAndEncoding(Book &book) const {
-	return true;
+	@Override
+	public MimeType mimeType() {
+		return MimeType.TEXT_HTML;
+	}
 }

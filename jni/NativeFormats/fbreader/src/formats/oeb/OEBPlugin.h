@@ -30,7 +30,7 @@ public:
 public:
 	~OEBPlugin();
 	bool providesMetaInfo() const;
-	bool acceptsFile(const ZLFile &file) const;
+	const std::string supportedFileType() const;
 	bool readMetaInfo(Book &book) const;
 	bool readLanguageAndEncoding(Book &book) const;
 	bool readModel(BookModel &model) const;

@@ -56,16 +56,12 @@ static inline FormatPlugin *extractPointer(JNIEnv *env, jobject base) {
 
 
 extern "C"
-JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_acceptsFile(JNIEnv* env, jobject thiz, jobject file) {
+JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_supportedFileType(JNIEnv* env, jobject thiz) {
 	FormatPlugin *plugin = extractPointer(env, thiz);
 	if (plugin == 0) {
-		return JNI_FALSE;
+		return NULL;
 	}
-	std::string path;
-	jstring javaPath = (jstring) env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
-	AndroidUtil::extractJavaString(env, javaPath, path);
-	env->DeleteLocalRef(javaPath);
-	return plugin->acceptsFile(ZLFile(path)) ? JNI_TRUE : JNI_FALSE;
+	return env->NewStringUTF(plugin->supportedFileType().c_str());
 }
 
 

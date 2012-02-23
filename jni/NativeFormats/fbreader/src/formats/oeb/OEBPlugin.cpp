@@ -44,16 +44,8 @@ bool OEBPlugin::providesMetaInfo() const {
 	return true;
 }
 
-bool OEBPlugin::acceptsFile(const ZLFile &file) const {
-	const std::string &mimeType = file.mimeType();
-	const std::string &extension = file.extension();
-	if (!mimeType.empty()) {
-		return 
-			mimeType == ZLMimeType::APPLICATION_EPUB_ZIP ||
-			(mimeType == ZLMimeType::APPLICATION_XML && extension == OPF) ||
-			(mimeType == ZLMimeType::APPLICATION_ZIP && extension == OEBZIP);
-	}
-	return extension == OPF || extension == OEBZIP || extension == EPUB;
+const std::string OEBPlugin::supportedFileType() const {
+	return "ePub";
 }
 
 ZLFile OEBPlugin::opfFile(const ZLFile &oebFile) {
