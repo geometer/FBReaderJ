@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
 import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
+import org.geometerplus.fbreader.filetype.*;
 
 public class PluginCollection {
 	static {
@@ -84,10 +85,19 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
+		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
+		return getPlugin(fileType, formatType);
+	}
+
+	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
+		if (fileType == null) {
+			return null;
+		}
+
 		if (formatType == FormatPlugin.Type.ANY) {
-			FormatPlugin p = getPlugin(file, FormatPlugin.Type.NATIVE);
+			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 			if (p == null) {
-				p = getPlugin(file, FormatPlugin.Type.JAVA);
+				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 			}
 			return p;
 		} else {
@@ -96,7 +106,7 @@ public class PluginCollection {
 				return null;
 			}
 			for (FormatPlugin p : list) {
-				if (p.acceptsFile(file)) {
+				if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
 					return p;
 				}
 			}
