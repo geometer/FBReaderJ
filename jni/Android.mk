@@ -15,7 +15,6 @@ LOCAL_SRC_FILES               := LineBreak/LineBreaker.cpp LineBreak/liblinebrea
 
 include $(BUILD_SHARED_LIBRARY)
 
-
 include $(CLEAR_VARS)
 
 EXPAT_DIR := expat-2.0.1
@@ -27,7 +26,6 @@ LOCAL_C_INCLUDES              := $(LOCAL_PATH)/$(EXPAT_DIR)
 LOCAL_EXPORT_C_INCLUDES       := $(LOCAL_PATH)/$(EXPAT_DIR)/lib
 
 include $(BUILD_STATIC_LIBRARY)
-
 
 include $(CLEAR_VARS)
 
@@ -184,6 +182,5 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/style \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/styleOptions \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/hyphenation \
-
 
 include $(BUILD_SHARED_LIBRARY)

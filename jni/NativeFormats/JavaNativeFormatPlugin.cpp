@@ -26,7 +26,6 @@
 #define JNICALL
 #endif /* _JNI_H */
 
-
 #include <AndroidLog.h>
 #include <AndroidUtil.h>
 #include <CoversWriter.h>
