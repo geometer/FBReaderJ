@@ -34,6 +34,8 @@ public abstract class BookModel {
 			return null;
 		}
 
+		System.err.println("using plugin: " + plugin.supportedFileType() + "/" + plugin.type());
+
 		final BookModel model;
 		switch (plugin.type()) {
 			case NATIVE:
