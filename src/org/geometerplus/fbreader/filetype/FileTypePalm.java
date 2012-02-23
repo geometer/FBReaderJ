@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,17 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats.pdb;
+package org.geometerplus.fbreader.filetype;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
-import org.geometerplus.fbreader.formats.JavaFormatPlugin;
-
-public abstract class PdbPlugin extends JavaFormatPlugin {
-	@Override
-	public boolean acceptsFile(ZLFile file) {
-		final String extension = file.getExtension();
-		return (extension == "prc") || (extension == "pdb") || (extension == "mobi");
-	}
-
-	protected static String fileType(final ZLFile file) {
+abstract class FileTypePalm extends FileType {
+	private static String fileType(final ZLFile file) {
 		// TODO: use database instead of option (?)
-		ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");
+		final ZLStringOption palmTypeOption = new ZLStringOption(file.getPath(), "PalmType", "");
 		String palmType = palmTypeOption.getValue();
 		if (palmType.length() != 8) {
 			byte[] id = new byte[8];
@@ -54,5 +45,25 @@ public abstract class PdbPlugin extends JavaFormatPlugin {
 			palmTypeOption.setValue(palmType);
 		}
 		return palmType.intern();
+	}
+
+	private final String myPalmId;
+
+	FileTypePalm(String id, String palmId) {
+		super(id);
+		myPalmId = id;
+	}
+
+	@Override
+	public boolean acceptsFile(ZLFile file) {
+		final String extension = file.getExtension();
+		return
+			("pdb".equalsIgnoreCase(extension) || "prc".equalsIgnoreCase(extension)) &&
+			myPalmId.equals(fileType(file));
+	}
+
+	@Override
+	public String extension() {
+		return "pdb";
 	}
 }
