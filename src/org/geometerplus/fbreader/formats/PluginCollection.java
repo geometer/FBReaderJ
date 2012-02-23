@@ -27,10 +27,11 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
 import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
+import org.geometerplus.fbreader.filetype.*;
 
 public class PluginCollection {
 	static {
-		System.loadLibrary("NativeFormats");
+		System.loadLibrary("NativeFormats-v1");
 	}
 
 	private static PluginCollection ourInstance;
