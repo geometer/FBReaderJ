@@ -27,8 +27,8 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class FB2Plugin extends JavaFormatPlugin {
 	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return "fb2".equals(file.getExtension());
+	public String supportedFileType() {
+		return "fb2";
 	}
 
 	@Override

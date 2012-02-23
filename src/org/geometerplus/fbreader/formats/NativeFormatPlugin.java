@@ -39,7 +39,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public native boolean acceptsFile(ZLFile file);
+	public native String supportedFileType();
 
 	@Override
 	public native boolean readMetaInfo(Book book);

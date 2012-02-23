@@ -31,10 +31,11 @@ public class FileTypeCollection {
 	private FileTypeCollection() {
 		addType(new FileTypeByExtension("fb2", "fb2", MimeType.TEXT_FB2));
 		addType(new FileTypeEpub());
+		addType(new FileTypeMobipocket());
 	}
 
 	private void addType(FileType type) {
-		myTypes.put(type.Id, type);
+		myTypes.put(type.Id.toLowerCase(), type);
 	}
 
 	public Collection<FileType> types() {
@@ -42,6 +43,6 @@ public class FileTypeCollection {
 	}
 
 	public FileType typeById(String id) {
-		return myTypes.get(id);
+		return myTypes.get(id.toLowerCase());
 	}
 }
