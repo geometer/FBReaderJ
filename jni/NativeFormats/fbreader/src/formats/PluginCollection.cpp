@@ -83,6 +83,15 @@ PluginCollection::~PluginCollection() {
 	env->DeleteGlobalRef(myJavaInstance);
 }
 
+shared_ptr<FormatPlugin> PluginCollection::pluginByType(const std::string &fileType) const {
+	for (std::vector<shared_ptr<FormatPlugin> >::const_iterator it = myPlugins.begin(); it != myPlugins.end(); ++it) {
+		if (fileType == (*it)->supportedFileType()) {
+			return *it;
+		}
+	}
+	return 0;
+}
+
 bool PluginCollection::isLanguageAutoDetectEnabled() {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jboolean res = env->CallBooleanMethod(myJavaInstance, AndroidUtil::MID_PluginCollection_isLanguageAutoDetectEnabled);

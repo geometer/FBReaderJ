@@ -69,8 +69,8 @@ public:
 	static jmethodID SMID_java_util_Locale_getDefault;
 	static jmethodID MID_java_util_Locale_getLanguage;
 
-	static jfieldID FID_NativeFormatPlugin_NativePointer;
 	static jmethodID MID_NativeFormatPlugin_init;
+	static jmethodID MID_NativeFormatPlugin_supportedFileType;
 	static jmethodID SMID_NativeFormatPlugin_createImage;
 
 	static jmethodID SMID_PluginCollection_Instance;

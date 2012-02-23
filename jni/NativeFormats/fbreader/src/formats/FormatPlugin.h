@@ -81,6 +81,7 @@ public:
 
 public:
 	std::vector<shared_ptr<FormatPlugin> > plugins() const;
+	shared_ptr<FormatPlugin> pluginByType(const std::string &fileType) const;
 
 	bool isLanguageAutoDetectEnabled();
 	std::string defaultLanguage();

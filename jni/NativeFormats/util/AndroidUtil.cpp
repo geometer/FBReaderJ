@@ -60,8 +60,8 @@ jmethodID AndroidUtil::MID_java_util_Map_put;
 jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
 jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
 
-jfieldID AndroidUtil::FID_NativeFormatPlugin_NativePointer;
 jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
+jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
 jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
@@ -138,8 +138,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
-	CHECK_NULL( FID_NativeFormatPlugin_NativePointer = env->GetFieldID(cls, "myNativePointer", "J") );
-	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(J)V") );
+	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "()Ljava/lang/String;") );
 	CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
 	env->DeleteLocalRef(cls);
 

@@ -45,10 +45,8 @@ public class PluginCollection {
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
-			ourInstance.addPlugin(new FB2Plugin());
-			ourInstance.addPlugin(new MobipocketPlugin());
-			ourInstance.addPlugin(new OEBPlugin());
 
+			// This code can not be moved to constructor because nativePlugins() is a native method
 			for (FormatPlugin p : ourInstance.nativePlugins()) {
 				ourInstance.addPlugin(p);
 			}
@@ -68,6 +66,10 @@ public class PluginCollection {
 		LanguageAutoDetectOption = new ZLBooleanOption("Format", "AutoDetect", true);
 		DefaultLanguageOption = new ZLStringOption("Format", "DefaultLanguage", "en");
 		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
+
+		addPlugin(new FB2Plugin());
+		addPlugin(new MobipocketPlugin());
+		addPlugin(new OEBPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
@@ -85,10 +87,19 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
+		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
+		return getPlugin(fileType, formatType);
+	}
+
+	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
+		if (fileType == null) {
+			return null;
+		}
+
 		if (formatType == FormatPlugin.Type.ANY) {
-			FormatPlugin p = getPlugin(file, FormatPlugin.Type.NATIVE);
+			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 			if (p == null) {
-				p = getPlugin(file, FormatPlugin.Type.JAVA);
+				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 			}
 			return p;
 		} else {
@@ -97,7 +108,7 @@ public class PluginCollection {
 				return null;
 			}
 			for (FormatPlugin p : list) {
-				if (p.acceptsFile(file)) {
+				if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
 					return p;
 				}
 			}
