@@ -19,13 +19,20 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.filetype.*;
+
 public abstract class FormatPlugin {
-	public abstract boolean acceptsFile(ZLFile file);
+	public final boolean acceptsFile(ZLFile file) {
+		final FileType fileType = FileTypeCollection.Instance.typeById(supportedFileType());
+		return fileType != null && fileType.acceptsFile(file);
+	}
+
+	public abstract String supportedFileType();
 	public abstract boolean readMetaInfo(Book book);
 	public abstract boolean readLanguageAndEncoding(Book book);
 	public abstract boolean readModel(BookModel model);
@@ -33,9 +40,11 @@ public abstract class FormatPlugin {
 	public abstract String readAnnotation(ZLFile file);
 
 	public enum Type {
+		ANY,
 		JAVA,
 		NATIVE,
-		EXTERNAL
+		EXTERNAL,
+		NONE
 	};
 	public abstract Type type();
 }

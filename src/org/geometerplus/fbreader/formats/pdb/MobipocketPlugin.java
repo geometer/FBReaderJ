@@ -30,11 +30,12 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
-public class MobipocketPlugin extends PdbPlugin {
+public class MobipocketPlugin extends JavaFormatPlugin {
 	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return super.acceptsFile(file) && (fileType(file) == "BOOKMOBI");
+	public String supportedFileType() {
+		return "Mobipocket";
 	}
 
 	@Override
