@@ -44,25 +44,16 @@
 #include "fbreader/src/library/Tag.h"
 
 
-static inline FormatPlugin *extractPointer(JNIEnv *env, jobject base) {
-	jlong ptr = env->GetLongField(base, AndroidUtil::FID_NativeFormatPlugin_NativePointer);
-	if (ptr == 0) {
-		jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPluginException);
-		env->ThrowNew(cls, "Native FormatPlugin instance is NULL.");
+static shared_ptr<FormatPlugin> extractCppPlugin(JNIEnv *env, jobject base) {
+	jstring fileTypeJava = (jstring)env->CallObjectMethod(base, AndroidUtil::MID_NativeFormatPlugin_supportedFileType);
+	std::string fileTypeCpp;
+	AndroidUtil::extractJavaString(env, fileTypeJava, fileTypeCpp);
+	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().pluginByType(fileTypeCpp);
+	if (plugin.isNull()) {
+		AndroidUtil::throwRuntimeException(env, "Native FormatPlugin instance is NULL for type " + fileTypeCpp);
 	}
-	return (FormatPlugin *)ptr;
+	return plugin;
 }
-
-
-extern "C"
-JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_supportedFileType(JNIEnv* env, jobject thiz) {
-	FormatPlugin *plugin = extractPointer(env, thiz);
-	if (plugin == 0) {
-		return NULL;
-	}
-	return env->NewStringUTF(plugin->supportedFileType().c_str());
-}
-
 
 void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	jstring javaString;
@@ -124,8 +115,8 @@ void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
 
 extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfo(JNIEnv* env, jobject thiz, jobject javaBook) {
-	FormatPlugin *plugin = extractPointer(env, thiz);
-	if (plugin == 0) {
+	shared_ptr<FormatPlugin> plugin = extractCppPlugin(env, thiz);
+	if (plugin.isNull()) {
 		return JNI_FALSE;
 	}
 
@@ -140,8 +131,8 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 
 extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readLanguageAndEncoding(JNIEnv* env, jobject thiz, jobject javaBook) {
-	FormatPlugin *plugin = extractPointer(env, thiz);
-	if (plugin == 0) {
+	shared_ptr<FormatPlugin> plugin = extractCppPlugin(env, thiz);
+	if (plugin.isNull()) {
 		return JNI_FALSE;
 	}
 
@@ -282,8 +273,8 @@ static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 
 extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModel(JNIEnv* env, jobject thiz, jobject javaModel) {
-	FormatPlugin *plugin = extractPointer(env, thiz);
-	if (plugin == 0) {
+	shared_ptr<FormatPlugin> plugin = extractCppPlugin(env, thiz);
+	if (plugin.isNull()) {
 		return JNI_FALSE;
 	}
 	CoversWriter::Instance().resetCounter();
@@ -335,8 +326,8 @@ JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlu
 	AndroidLog log;
 	log.wf("FBREADER", "LOAD COVER...");
 
-	FormatPlugin *plugin = extractPointer(env, thiz);
-	if (plugin == 0) {
+	shared_ptr<FormatPlugin> plugin = extractCppPlugin(env, thiz);
+	if (plugin.isNull()) {
 		return 0;
 	}
 	std::string path;
@@ -360,8 +351,8 @@ JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlu
 
 /*extern "C"
 JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readAnnotation(JNIEnv* env, jobject thiz, jobject file) {
-	FormatPlugin *plugin = extractPointer(env, thiz);
-	if (plugin == 0) {
+	shared_ptr<FormatPlugin> plugin = extractCppPlugin(env, thiz);
+	if (plugin.isNull()) {
 		return 0;
 	}
 	return 0;

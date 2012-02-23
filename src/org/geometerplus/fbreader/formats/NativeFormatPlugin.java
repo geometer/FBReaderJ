@@ -26,14 +26,6 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.library.Book;
 
-final class NativeFormatPluginException extends RuntimeException {
-	private static final long serialVersionUID = 8641852378027454752L;
-
-	public NativeFormatPluginException(String message) {
-		super(message);
-	}
-}
-
 public class NativeFormatPlugin extends FormatPlugin {
 	private static Object ourCoversLock = new Object();
 

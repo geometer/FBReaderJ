@@ -30,7 +30,6 @@ const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
-const char * const AndroidUtil::Class_NativeFormatPluginException = "org/geometerplus/fbreader/formats/NativeFormatPluginException";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
 const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
@@ -61,8 +60,8 @@ jmethodID AndroidUtil::MID_java_util_Map_put;
 jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
 jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
 
-jfieldID AndroidUtil::FID_NativeFormatPlugin_NativePointer;
 jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
+jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
 jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
@@ -139,8 +138,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
-	CHECK_NULL( FID_NativeFormatPlugin_NativePointer = env->GetFieldID(cls, "myNativePointer", "J") );
 	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(J)V") );
+	CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "(J)V") );
 	CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
 	env->DeleteLocalRef(cls);
 
@@ -269,4 +268,9 @@ jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::
 		}
 	}
 	return array;
+}
+
+void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
+		jclass cls = env->FindClass("java/lang/RuntimeException");
+		env->ThrowNew(cls, message.c_str());
 }

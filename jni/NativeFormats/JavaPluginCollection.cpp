@@ -42,10 +42,10 @@ JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginColl
 	jobjectArray javaPlugins = env->NewObjectArray(size, cls, NULL);
 
 	for (size_t i = 0; i < size; ++i) {
-		FormatPlugin *ptr = &*(plugins[i]);
+		jstring fileType = AndroidUtil::createJavaString(env, plugins[i]->supportedFileType());
 		env->SetObjectArrayElement(
 			javaPlugins, i,
-			env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, (jlong)ptr)
+			env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, fileType)
 		);
 	}
 	return javaPlugins;
