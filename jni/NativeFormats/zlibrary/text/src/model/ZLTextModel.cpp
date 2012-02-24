@@ -22,7 +22,7 @@
 #include <algorithm>
 
 #include <ZLibrary.h>
-#include <ZLSearchUtil.h>
+//#include <ZLSearchUtil.h>
 #include <ZLLanguageUtil.h>
 #include <ZLUnicodeUtil.h>
 
@@ -47,6 +47,7 @@ bool ZLTextModel::isRtl() const {
 	return ZLLanguageUtil::isRTLLanguage(myLanguage);
 }
 
+/*
 void ZLTextModel::search(const std::string &text, size_t startIndex, size_t endIndex, bool ignoreCase) const {
 	ZLSearchPattern pattern(text, ignoreCase);
 	myMarks.clear();
@@ -106,6 +107,7 @@ ZLTextMark ZLTextModel::previousMark(ZLTextMark position) const {
 	}
 	return *it;
 }
+*/
 
 void ZLTextModel::addParagraphInternal(ZLTextParagraph *paragraph) {
 	checkUtf8Text();
@@ -143,6 +145,7 @@ ZLTextTreeParagraph *ZLTextTreeModel::createParagraph(ZLTextTreeParagraph *paren
 	return tp;
 }
 
+/*
 void ZLTextTreeModel::search(const std::string &text, size_t startIndex, size_t endIndex, bool ignoreCase) const {
 	ZLTextModel::search(text, startIndex, endIndex, ignoreCase);
 	for (std::vector<ZLTextMark>::const_iterator it = marks().begin(); it != marks().end(); ++it) {
@@ -156,6 +159,7 @@ void ZLTextTreeModel::selectParagraph(size_t index) const {
 		((ZLTextTreeParagraph*)(*this)[index])->openTree();
 	}
 }
+*/
 
 ZLTextPlainModel::ZLTextPlainModel(const std::string &id, const std::string &language, const size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension) :
