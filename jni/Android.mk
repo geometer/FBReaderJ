@@ -109,8 +109,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLBase64EncodedImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLFileImage.cpp \
-	NativeFormats/zlibrary/core/src/image/ZLImage.cpp \
-	NativeFormats/zlibrary/core/src/image/ZLImageManager.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLStreamImage.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
@@ -122,8 +120,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/library/ZLibrary.cpp \
 	NativeFormats/zlibrary/core/src/logger/ZLLogger.cpp \
-	NativeFormats/zlibrary/core/src/runnable/ZLExecutionData.cpp \
-	NativeFormats/zlibrary/core/src/runnable/ZLRunnable.cpp \
 	NativeFormats/zlibrary/core/src/typeId/ZLTypeId.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
@@ -166,7 +162,6 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/optionEntries \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/options \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/resources \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/runnable \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/time \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/typeId \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
