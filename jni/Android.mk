@@ -120,7 +120,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/library/ZLibrary.cpp \
 	NativeFormats/zlibrary/core/src/logger/ZLLogger.cpp \
-	NativeFormats/zlibrary/core/src/typeId/ZLTypeId.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSDir.cpp \
@@ -163,7 +162,6 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/options \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/resources \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/time \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/typeId \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/view \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml \
@@ -172,6 +170,6 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/view \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/style \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/styleOptions \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/hyphenation \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/hyphenation
 
 include $(BUILD_SHARED_LIBRARY)
