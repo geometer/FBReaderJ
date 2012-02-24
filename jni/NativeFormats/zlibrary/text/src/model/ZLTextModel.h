@@ -29,7 +29,7 @@
 #include <ZLHyperlinkType.h>
 #include <ZLTextParagraph.h>
 #include <ZLTextKind.h>
-#include <ZLTextMark.h>
+//#include <ZLTextMark.h>
 #include <ZLCachedMemoryAllocator.h>
 
 class ZLTextParagraph;
@@ -58,6 +58,7 @@ public:
 	size_t paragraphsNumber() const;
 	ZLTextParagraph *operator [] (size_t index);
 	const ZLTextParagraph *operator [] (size_t index) const;
+/*
 	const std::vector<ZLTextMark> &marks() const;
 
 	virtual void search(const std::string &text, size_t startIndex, size_t endIndex, bool ignoreCase) const;
@@ -68,7 +69,7 @@ public:
 	ZLTextMark lastMark() const;
 	ZLTextMark nextMark(ZLTextMark position) const;
 	ZLTextMark previousMark(ZLTextMark position) const;
-
+*/
 	void addControl(ZLTextKind textKind, bool isStart);
 	void addControl(const ZLTextStyleEntry &entry);
 	void addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label);
@@ -97,7 +98,7 @@ private:
 	const std::string myId;
 	const std::string myLanguage;
 	std::vector<ZLTextParagraph*> myParagraphs;
-	mutable std::vector<ZLTextMark> myMarks;
+	//mutable std::vector<ZLTextMark> myMarks;
 	mutable ZLCachedMemoryAllocator myAllocator;
 
 	char *myLastEntryStart;
@@ -142,8 +143,8 @@ private:
 inline const std::string &ZLTextModel::id() const { return myId; }
 inline const std::string &ZLTextModel::language() const { return myLanguage; }
 inline size_t ZLTextModel::paragraphsNumber() const { return myParagraphs.size(); }
-inline const std::vector<ZLTextMark> &ZLTextModel::marks() const { return myMarks; }
-inline void ZLTextModel::removeAllMarks() { myMarks.clear(); }
+//inline const std::vector<ZLTextMark> &ZLTextModel::marks() const { return myMarks; }
+//inline void ZLTextModel::removeAllMarks() { myMarks.clear(); }
 inline const ZLCachedMemoryAllocator &ZLTextModel::allocator() const { return myAllocator; }
 inline const std::vector<jint> &ZLTextModel::startEntryIndices() const { return myStartEntryIndices; }
 inline const std::vector<jint> &ZLTextModel::startEntryOffsets() const { return myStartEntryOffsets; }

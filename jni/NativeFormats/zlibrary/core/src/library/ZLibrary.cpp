@@ -19,7 +19,7 @@
 
 //#include <ZLTimeManager.h>
 //#include <ZLDialogManager.h>
-#include <ZLImageManager.h>
+//#include <ZLImageManager.h>
 //#include <ZLMessage.h>
 #include <ZLUnicodeUtil.h>
 #include <ZLLogger.h>
