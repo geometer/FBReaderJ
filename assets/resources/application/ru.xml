@@ -286,7 +286,7 @@
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
 			<node name="authorize" value="Авторизоваться"/>
-			<node name="resetPosition" value="К исходной позиции"/>
+			<node name="resetPosition" value="Назад"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
