@@ -24,8 +24,6 @@
 
 #include <shared_ptr.h>
 
-class ZLExecutionData;
-
 class ZLImage {
 
 protected:
