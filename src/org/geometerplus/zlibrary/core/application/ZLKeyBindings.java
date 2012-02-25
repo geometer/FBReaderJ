@@ -44,17 +44,10 @@ public final class ZLKeyBindings {
 	public ZLKeyBindings(String name) {
 		myName = name;
 		final Set<String> keys = new TreeSet<String>();
-		new Reader(keys).read(ZLFile.createFileByPath("default/keymap.xml"));
-		try {
-			new Reader(keys).read(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
-		} catch (Exception e) {
-			// ignore
-		}
-		try {
-			new Reader(keys).read(ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue() + "/keymap.xml"));
-		} catch (Exception e) {
-			// ignore
-		}
+		readKeys(keys, "default/keymap.xml");
+		readKeys(keys, Paths.systemShareDirectory() + "/keymap.xml");
+		readKeys(keys, Paths.BooksDirectoryOption().getValue() + "/keymap.xml");
+
  		myKeysOption = new ZLStringListOption(name, "KeyList", new ArrayList<String>(keys), ",");
 
 		// this code is for migration from FBReader versions <= 1.1.2
@@ -83,6 +76,14 @@ public final class ZLKeyBindings {
 		volumeKeysOption.setValue(true);
 		invertVolumeKeysOption.setValue(false);
 		// end of migration code
+	}
+
+	private void readKeys(Set<String> keys, String filePath) {
+		try {
+			new Reader(keys).read(ZLFile.createFileByPath(filePath));
+		} catch (Exception e) {
+			// ignore
+		}
 	}
 
 	private ZLStringOption createOption(int key, boolean longPress, String defaultValue) {

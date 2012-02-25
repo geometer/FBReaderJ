@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
+import java.io.IOException;
+
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
@@ -47,7 +49,11 @@ class XHTMLImageFinder extends ZLXMLReaderAdapter {
 	ZLFileImage readImage(ZLFile file) {
 		myXHTMLPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
 		myImage = null;
-		read(file);
+		try {
+			read(file);
+		} catch (IOException e) {
+			return null;
+		}
 		return myImage;
 	}
 

@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
+import java.io.IOException;
+
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
@@ -36,7 +38,11 @@ class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespac
 		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
 		myReadGuide = false;
 		myImage = null;
-		read(file);
+		try {
+			read(file);
+		} catch (IOException e) {
+			return null;
+		}
 		return myImage;
 	}
 

@@ -103,7 +103,7 @@ public class OPDSLinkReader {
 		try {
 			xmlReader.read(new FileInputStream(catalogsFile));
 			return xmlReader.links();
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			return Collections.emptyList();
 		}
 	}

@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import java.io.IOException;
+
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
@@ -31,7 +33,11 @@ public class ZLTextStyleCollection {
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
 	private ZLTextStyleCollection() {
-		new TextStyleReader(this).read(ZLResourceFile.createResourceFile("default/styles.xml"));
+		try {
+			new TextStyleReader(this).read(ZLResourceFile.createResourceFile("default/styles.xml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static ZLTextStyleCollection Instance() {

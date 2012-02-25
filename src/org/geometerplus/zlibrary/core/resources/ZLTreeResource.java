@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.core.resources;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
@@ -132,8 +133,11 @@ final class ZLTreeResource extends ZLResource {
     }
 	
 	private static void loadData(ResourceTreeReader reader, String fileName) {
-		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/zlibrary/" + fileName));
-		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/" + fileName));
+		try {
+			reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/zlibrary/" + fileName));
+			reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/" + fileName));
+		} catch (IOException e) {
+		}
 	}
 
 	private static void loadData() {
@@ -192,7 +196,7 @@ final class ZLTreeResource extends ZLResource {
 		private static final String NODE = "node"; 
 		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
 		
-		public void readDocument(ZLTreeResource root, ZLFile file) {
+		public void readDocument(ZLTreeResource root, ZLFile file) throws IOException {
 			myStack.clear();
 			myStack.add(root);
 			read(file);

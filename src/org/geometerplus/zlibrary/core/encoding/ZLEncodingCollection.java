@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.core.encoding;
 
 import java.util.HashMap;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -38,9 +39,12 @@ public final class ZLEncodingCollection {
 	private final HashMap<String,String> myEncodingByAlias = new HashMap<String,String>();
 
 	private ZLEncodingCollection() {
-		new ZLEncodingCollectionReader().read(
-			ZLResourceFile.createResourceFile("encodings/Encodings.xml")
-		);
+		try {
+			new ZLEncodingCollectionReader().read(
+				ZLResourceFile.createResourceFile("encodings/Encodings.xml")
+			);
+		} catch (IOException e) {
+		}
 	}
 	
 	public String getEncodingName(String alias) {

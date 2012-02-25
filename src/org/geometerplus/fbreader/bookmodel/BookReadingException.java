@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
+import java.io.IOException;
+
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 public final class BookReadingException extends Exception {
@@ -34,7 +36,7 @@ public final class BookReadingException extends Exception {
 		super(getResourceText(resourceId).replace("%s", param));
 	}
 
-	public BookReadingException(Throwable t) {
-		super(t.getMessage(), t);
+	public BookReadingException(IOException e) {
+		super(e.getMessage(), e);
 	}
 }

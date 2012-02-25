@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.fbreader;
 
 import java.util.HashMap;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
@@ -46,7 +47,10 @@ public class TapZoneMap {
 		final ZLFile mapFile = ZLFile.createFileByPath(
 			"default/tapzones/" + name.toLowerCase() + ".xml"
 		);
-		new Reader().read(mapFile);
+		try {
+			new Reader().read(mapFile);
+		} catch (IOException e) {
+		}
 	}
 
 	public String getActionByCoordinates(int x, int y, int width, int height, Tap tap) {

@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.fb2;
 
+import java.io.IOException;
+
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLSingleImage;
@@ -56,7 +58,11 @@ class FB2CoverImage extends ZLImageProxy {
 		Base64EncodedImage readCover(ZLFile file) {
 			myReadCoverPage = false;
 			myImageReference = null;
-			read(file);
+			try {
+				read(file);
+			} catch (IOException e) {
+				return null;
+			}
 			return myImage;
 		}
 

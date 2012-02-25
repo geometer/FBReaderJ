@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
+import java.io.IOException;
+
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
@@ -31,7 +33,7 @@ public class OEBPlugin extends JavaFormatPlugin {
 		super("ePub");
 	}
 
-	private ZLFile getOpfFile(ZLFile oebFile) {
+	private ZLFile getOpfFile(ZLFile oebFile) throws BookReadingException {
 		if ("opf".equals(oebFile.getExtension())) {
 			return oebFile;
 		}
@@ -39,7 +41,11 @@ public class OEBPlugin extends JavaFormatPlugin {
 		final ZLFile containerInfoFile = ZLFile.createFile(oebFile, "META-INF/container.xml");
 		if (containerInfoFile.exists()) {
 			final ContainerFileReader reader = new ContainerFileReader();
-			reader.read(containerInfoFile);
+			try {
+				reader.read(containerInfoFile);
+			} catch (IOException e) {
+				throw new BookReadingException(e);
+			}
 			final String opfPath = reader.getRootPath();
 			if (opfPath != null) {
 				return ZLFile.createFile(oebFile, opfPath);
@@ -51,34 +57,39 @@ public class OEBPlugin extends JavaFormatPlugin {
 				return child;
 			}
 		}
-		return null;
+		throw new BookReadingException("opfNotFound", oebFile.getPath());
 	}
 
 	@Override
 	public boolean readMetaInfo(Book book) {
-		final ZLFile opfFile = getOpfFile(book.File);
-		return (opfFile != null) ? new OEBMetaInfoReader(book).readMetaInfo(opfFile) : false;
+		try {
+			return new OEBMetaInfoReader(book).readMetaInfo(getOpfFile(book.File));
+		} catch (BookReadingException e) {
+			return false;
+		}
 	}
 	
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
 		model.Book.File.setCached(true);
-		final ZLFile opfFile = getOpfFile(model.Book.File);
-		if (opfFile == null) {
-			throw new BookReadingException("opfNotFound", model.Book.File.getPath());
-		}
-		new OEBBookReader(model).readBook(opfFile);
+		new OEBBookReader(model).readBook(getOpfFile(model.Book.File));
 	}
 
 	@Override
 	public ZLImage readCover(ZLFile file) {
-		final ZLFile opfFile = getOpfFile(file);
-		return (opfFile != null) ? new OEBCoverReader().readCover(opfFile) : null;
+		try {
+			return new OEBCoverReader().readCover(getOpfFile(file));
+		} catch (BookReadingException e) {
+			return null;
+		}
 	}
 
 	@Override
 	public String readAnnotation(ZLFile file) {
-		final ZLFile opfFile = getOpfFile(file);
-		return (opfFile != null) ? new OEBAnnotationReader().readAnnotation(opfFile) : null;
+		try {
+			return new OEBAnnotationReader().readAnnotation(getOpfFile(file));
+		} catch (BookReadingException e) {
+			return null;
+		}
 	}
 }

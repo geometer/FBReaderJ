@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.fb2;
 
+import java.io.IOException;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
@@ -39,7 +41,8 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 	public String readAnnotation(ZLFile file) {
 		myReadState = READ_NOTHING;
 		myBuffer.delete(0, myBuffer.length());
-		if (readDocument(file)) {
+		try {
+			readDocument(file);
 			final int len = myBuffer.length();
 			if (len > 1) {
 				if (myBuffer.charAt(len - 1) == '\n') {
@@ -47,6 +50,8 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 				}
 				return myBuffer.toString();
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -92,7 +97,7 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 		}
 	}
 
-	public boolean readDocument(ZLFile file) {
-		return ZLXMLProcessor.read(this, file, 512);
+	public void readDocument(ZLFile file) throws IOException {
+		ZLXMLProcessor.read(this, file, 512);
 	}
 }

@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader;
 
 import java.util.*;
+import java.io.IOException;
 
 import android.app.*;
 import android.content.*;
@@ -134,12 +135,16 @@ public abstract class DictionaryUtil {
 
 	public static void init(final Context context) {
 		if (ourInfos.isEmpty()) {
-			final Thread initThread = new Thread(new Runnable() {
+			final Thread initThread = new Thread() {
 				public void run() {
-					new InfoReader().read(ZLFile.createFileByPath("dictionaries/main.xml"));
-					new ParagonInfoReader(context).read(ZLFile.createFileByPath("dictionaries/paragon.xml"));
+					try {
+						new InfoReader().read(ZLFile.createFileByPath("dictionaries/main.xml"));
+						new ParagonInfoReader(context).read(ZLFile.createFileByPath("dictionaries/paragon.xml"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			});
+			};
 			initThread.setPriority(Thread.MIN_PRIORITY);
 			initThread.start();
 		}

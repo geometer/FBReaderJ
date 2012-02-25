@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.tips;
 
 import java.util.*;
 import java.io.File;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
@@ -72,7 +73,11 @@ public class TipsManager {
 			final ZLFile file = ZLFile.createFileByPath(getLocalFilePath());
 			if (file.exists()) {
 				final TipsFeedHandler handler = new TipsFeedHandler();
-				new ATOMXMLReader(handler, false).read(file);
+				try {
+					new ATOMXMLReader(handler, false).read(file);
+				} catch (IOException e) {
+					return null;
+				}
 				final List<Tip> tips = Collections.unmodifiableList(handler.Tips);
 				if (tips.size() > 0) {
 					myTips = tips;

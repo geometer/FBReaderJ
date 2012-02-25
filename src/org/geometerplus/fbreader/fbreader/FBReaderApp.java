@@ -233,7 +233,9 @@ public final class FBReaderApp extends ZLApplication {
 			System.gc();
 			System.gc();
 			try {
+				System.err.println("openBookInternal 0");
 				Model = BookModel.createModel(book);
+				System.err.println("openBookInternal 1");
 
 				ZLTextHyphenator.Instance().load(book.getLanguage());
 				BookTextView.setModel(Model.getTextModel());
@@ -255,7 +257,9 @@ public final class FBReaderApp extends ZLApplication {
 					title.append(")");
 				}
 				setTitle(title.toString());
+				System.err.println("openBookInternal 2");
 			} catch (BookReadingException e) {
+				e.printStackTrace();
 				// TODO: process exception
 			}
 		}

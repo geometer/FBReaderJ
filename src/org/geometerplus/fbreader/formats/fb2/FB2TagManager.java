@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.fb2;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.xml.*;
@@ -31,9 +32,12 @@ abstract class FB2TagManager {
 
 	static ArrayList<Tag> humanReadableTags(String id) {
 		if (ourMap.isEmpty()) {
-			new FB2TagInfoReader().read(
-				ZLResourceFile.createResourceFile("formats/fb2/fb2genres.xml")
-			);
+			try {
+				new FB2TagInfoReader().read(
+					ZLResourceFile.createResourceFile("formats/fb2/fb2genres.xml")
+				);
+			} catch (IOException e) {
+			}
 		}
 		return ourMap.get(id);
 	}

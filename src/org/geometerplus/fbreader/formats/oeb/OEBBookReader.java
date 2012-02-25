@@ -105,7 +105,11 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 
 			myModelReader.addHyperlinkLabel(referenceName);
 			myTOCLabels.put(referenceName, myModelReader.Model.BookTextModel.getParagraphsNumber());
-			reader.readFile(xhtmlFile, referenceName + '#');
+			try {
+				reader.readFile(xhtmlFile, referenceName + '#');
+			} catch (IOException e) {
+				throw new BookReadingException(e);
+			}
 			myModelReader.insertEndOfSectionParagraph();
 		}
 
@@ -132,7 +136,8 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private void generateTOC() {
 		if (myNCXTOCFileName != null) {
 			final NCXReader ncxReader = new NCXReader(myModelReader);
-			if (ncxReader.readFile(myFilePrefix + myNCXTOCFileName)) {
+			try {
+				ncxReader.readFile(myFilePrefix + myNCXTOCFileName);
 				final Map<Integer,NCXReader.NavPoint> navigationMap = ncxReader.navigationMap();
 				if (!navigationMap.isEmpty()) {
 					int level = 0;
@@ -156,6 +161,8 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 					}
 					return;
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 
