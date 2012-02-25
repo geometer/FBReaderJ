@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
 public class MobipocketPlugin extends JavaFormatPlugin {
@@ -125,12 +126,11 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public boolean readModel(BookModel model) {
+	public void readModel(BookModel model) throws BookReadingException {
 		try {
-			return new MobipocketHtmlBookReader(model).readBook();
+			new MobipocketHtmlBookReader(model).readBook();
 		} catch (IOException e) {
-			//e.printStackTrace();
-			return false;
+			throw new BookReadingException(e);
 		}
 	}
 

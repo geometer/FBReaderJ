@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
 
 public class NativeFormatPlugin extends FormatPlugin {
@@ -43,7 +44,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public native boolean readLanguageAndEncoding(Book book);
 
 	@Override
-	public native boolean readModel(BookModel model);
+	public native void readModel(BookModel model) throws BookReadingException;
 
 	@Override
 	public ZLImage readCover(final ZLFile file) {

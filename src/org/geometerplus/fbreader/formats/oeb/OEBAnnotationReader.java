@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -38,14 +39,17 @@ class OEBAnnotationReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myReadState = READ_NONE;
 		myBuffer.delete(0, myBuffer.length());
 
-		if (ZLXMLProcessor.read(this, file, 512)) {
-			final int len = myBuffer.length();
-			if (len > 1) {
-				if (myBuffer.charAt(len - 1) == '\n') {
-					myBuffer.delete(len - 1, len);
-				}
-				return myBuffer.toString();
+		try {
+			ZLXMLProcessor.read(this, file, 512);
+		} catch (IOException e) {
+			return null;
+		}
+		final int len = myBuffer.length();
+		if (len > 1) {
+			if (myBuffer.charAt(len - 1) == '\n') {
+				myBuffer.delete(len - 1, len);
 			}
+			return myBuffer.toString();
 		}
 		return null;
 	}

@@ -23,15 +23,10 @@ import java.io.InputStream;
 import java.io.IOException;
 
 public abstract class ZLHtmlProcessor {
-	public static boolean read(ZLHtmlReader reader, InputStream stream) {
-		try {
-			ZLHtmlParser parser = new ZLHtmlParser(reader, stream);
-			reader.startDocumentHandler();
-			parser.doIt();
-			reader.endDocumentHandler();
-		} catch (IOException e) {
-			return false;
-		}
-		return true;
+	public static void read(ZLHtmlReader reader, InputStream stream) throws IOException {
+		ZLHtmlParser parser = new ZLHtmlParser(reader, stream);
+		reader.startDocumentHandler();
+		parser.doIt();
+		reader.endDocumentHandler();
 	}
 }

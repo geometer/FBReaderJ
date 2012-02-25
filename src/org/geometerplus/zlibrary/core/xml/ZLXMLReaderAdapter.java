@@ -21,18 +21,19 @@ package org.geometerplus.zlibrary.core.xml;
 
 import java.util.*;
 import java.io.InputStream;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 	private Map<String,String> myNamespaceMap = Collections.emptyMap();
 
- 	public boolean read(ZLFile file) {
-		return ZLXMLProcessor.read(this, file);
+ 	public void read(ZLFile file) throws IOException {
+		ZLXMLProcessor.read(this, file);
 	}
 	
-	public boolean read(InputStream stream) {
-		return ZLXMLProcessor.read(this, stream, 65536);
+	public void read(InputStream stream) throws IOException {
+		ZLXMLProcessor.read(this, stream, 65536);
 	}
 	
 	public boolean dontCacheAttributeValues() {

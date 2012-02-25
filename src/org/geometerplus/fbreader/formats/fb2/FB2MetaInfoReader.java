@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.fb2;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
@@ -54,13 +55,13 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		return true;
 	}
 	
-	public boolean readMetaInfo() {
+	public void readMetaInfo() throws IOException {
 		myReadState = READ_NOTHING;
 		myAuthorNames[0] = "";
 		myAuthorNames[1] = "";
 		myAuthorNames[2] = "";
 		myBuffer.delete(0, myBuffer.length());
-		return readDocument(myBook.File);
+		readDocument(myBook.File);
 	}
 
 	public boolean startElementHandler(String tagName, ZLStringMap attributes) {
@@ -223,7 +224,7 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		}
 	}
 
-	public boolean readDocument(ZLFile file) {
-		return ZLXMLProcessor.read(this, file, 512);
+	public void readDocument(ZLFile file) throws IOException {
+		ZLXMLProcessor.read(this, file, 512);
 	}
 }

@@ -31,8 +31,7 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.TOCTree;
+import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.library.*;
 
 public final class FBReaderApp extends ZLApplication {
@@ -233,8 +232,9 @@ public final class FBReaderApp extends ZLApplication {
 			Model = null;
 			System.gc();
 			System.gc();
-			Model = BookModel.createModel(book);
-			if (Model != null) {
+			try {
+				Model = BookModel.createModel(book);
+
 				ZLTextHyphenator.Instance().load(book.getLanguage());
 				BookTextView.setModel(Model.getTextModel());
 				BookTextView.gotoPosition(book.getStoredPosition());
@@ -255,6 +255,8 @@ public final class FBReaderApp extends ZLApplication {
 					title.append(")");
 				}
 				setTitle(title.toString());
+			} catch (BookReadingException e) {
+				// TODO: process exception
 			}
 		}
 		getViewWidget().repaint();

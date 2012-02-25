@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.fb2;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -58,9 +59,13 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
  		myBookReader = new BookReader(model);
 	}
 
-	boolean readBook() {
+	void readBook() throws BookReadingException {
 		Base64EncodedImage.resetCounter();
-		return ZLXMLProcessor.read(this, myBookReader.Model.Book.File);
+		try {
+			ZLXMLProcessor.read(this, myBookReader.Model.Book.File);
+		} catch (IOException e) {
+			throw new BookReadingException(e);
+		}
 	}
 
 	public void startDocumentHandler() {

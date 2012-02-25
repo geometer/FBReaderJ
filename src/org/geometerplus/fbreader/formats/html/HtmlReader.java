@@ -85,8 +85,8 @@ public class HtmlReader extends BookReader implements ZLHtmlReader {
 			.onUnmappableCharacter(CodingErrorAction.REPLACE);
 	}
 
-	public boolean readBook() throws IOException {
-		return ZLHtmlProcessor.read(this, getInputStream());
+	public void readBook() throws IOException {
+		ZLHtmlProcessor.read(this, getInputStream());
 	}
 
 	public InputStream getInputStream() throws IOException {

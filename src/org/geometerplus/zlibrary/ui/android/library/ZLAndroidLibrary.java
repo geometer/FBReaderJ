@@ -308,7 +308,11 @@ public final class ZLAndroidLibrary extends ZLibrary {
 
 		@Override
 		public InputStream getInputStream() throws IOException {
-			return myApplication.getAssets().open(getPath());
+			final InputStream stream = myApplication.getAssets().open(getPath());
+			if (stream == null) {
+				throw new IOException("File " + getPath() + " not found");
+			}
+			return stream;
 		}
 
 		@Override

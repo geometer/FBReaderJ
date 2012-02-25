@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -70,7 +71,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private TreeMap<String,Integer> myFileNumbers = new TreeMap<String,Integer>();
 	private TreeMap<String,Integer> myTOCLabels = new TreeMap<String,Integer>();
 
-	boolean readBook(ZLFile file) {
+	void readBook(ZLFile file) throws BookReadingException {
 		myFilePrefix = MiscUtil.htmlDirectoryPrefix(file);
 
 		myIdToHref.clear();
@@ -80,8 +81,10 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myGuideTOC.clear();
 		myState = READ_NONE;
 
-		if (!read(file)) {
-			return false;
+		try {
+			read(file);
+		} catch (IOException e) {
+			throw new BookReadingException(e);
 		}
 
 		myModelReader.setMainTextModel();
@@ -92,7 +95,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 			final ZLFile xhtmlFile = ZLFile.createFileByPath(myFilePrefix + name);
 			if (xhtmlFile == null) {
 				// NPE fix: null for bad attributes in .opf XML file
-				return false;
+				throw new BookReadingException("fileDoesNotExist", myFilePrefix + name);
 			}
 			if (count++ == 0 && xhtmlFile.getPath().equals(myCoverFileName)) {
 				continue;
@@ -107,8 +110,6 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		}
 
 		generateTOC();
-
-		return true;
 	}
 
 	private BookModel.Label getTOCLabel(String id) {

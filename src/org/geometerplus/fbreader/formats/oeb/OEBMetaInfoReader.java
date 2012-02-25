@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -56,7 +57,9 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myReadMetaData = false;
 		myReadState = READ_NONE;
 
-		if (!ZLXMLProcessor.read(this, file, 512)) {
+		try {
+			ZLXMLProcessor.read(this, file, 512);
+		} catch (IOException e) {
 			return false;
 		}
 
