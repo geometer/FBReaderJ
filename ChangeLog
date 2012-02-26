@@ -4,6 +4,7 @@
 * Better support for "related" catalogs in book descriptions
 * Updated Hungarian localization (by Szabó Lajos Balázs)
 * Local network scanning has been moved to a separate plugin; WiFi permissions are not required more
+* "Old" package works on new devices
 
 ===== 1.3.7 (Feb 9, 2012) =====
 * Font smoothing settings (Settings -> Text -> Font properties)
