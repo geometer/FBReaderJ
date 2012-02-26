@@ -101,13 +101,15 @@ public abstract class ZLAndroidActivity extends Activity {
 
 		new Thread() {
 			public void run() {
-				ZLApplication.Instance().openFile(fileFromIntent(getIntent()));
+				ZLApplication.Instance().openFile(fileFromIntent(getIntent()), getPostponedInitAction());
 				ZLApplication.Instance().getViewWidget().repaint();
 			}
 		}.start();
 
 		ZLApplication.Instance().getViewWidget().repaint();
 	}
+
+	protected abstract Runnable getPostponedInitAction();
 
 	private PowerManager.WakeLock myWakeLock;
 	private boolean myWakeLockToCreate;
@@ -191,7 +193,7 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		ZLApplication.Instance().openFile(fileFromIntent(intent));
+		ZLApplication.Instance().openFile(fileFromIntent(intent), null);
 	}
 
 	private static ZLAndroidLibrary getLibrary() {
