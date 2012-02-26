@@ -74,9 +74,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-	protected void runWithMessage(String key, Runnable runnable) {
+	protected void runWithMessage(String key, Runnable runnable, Runnable postAction) {
 		if (myWindow != null) {
-			myWindow.runWithMessage(key, runnable);
+			myWindow.runWithMessage(key, runnable, postAction);
 		}
 	}
 

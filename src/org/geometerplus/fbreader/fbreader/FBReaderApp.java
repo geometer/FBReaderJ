@@ -155,9 +155,9 @@ public final class FBReaderApp extends ZLApplication {
 		final Book bookToOpen = book;
 		runWithMessage("loadingBook", new Runnable() {
 			public void run() {
-				openBookInternal(bookToOpen, bookmark, postAction);
+				openBookInternal(bookToOpen, bookmark);
 			}
-		});
+		}, postAction);
 	}
  
 	public void reloadBook() {
@@ -165,9 +165,9 @@ public final class FBReaderApp extends ZLApplication {
 			Model.Book.reloadInfoFromDatabase();
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
-					openBookInternal(Model.Book, null, null);
+					openBookInternal(Model.Book, null);
 				}
-			});
+			}, null);
 		}
 	}
 
@@ -219,7 +219,7 @@ public final class FBReaderApp extends ZLApplication {
 		FootnoteView.clearCaches();
 	}
 
-	synchronized void openBookInternal(Book book, Bookmark bookmark, Runnable postAction) {
+	synchronized void openBookInternal(Book book, Bookmark bookmark) {
 		if (book != null) {
 			onViewChanged();
 
