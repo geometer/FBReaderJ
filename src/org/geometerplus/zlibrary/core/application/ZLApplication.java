@@ -74,9 +74,9 @@ public abstract class ZLApplication {
 		}
 	}
 
-	protected void runWithMessage(String key, Runnable runnable) {
+	protected void runWithMessage(String key, Runnable runnable, Runnable postAction) {
 		if (myWindow != null) {
-			myWindow.runWithMessage(key, runnable);
+			myWindow.runWithMessage(key, runnable, postAction);
 		}
 	}
 
@@ -170,7 +170,7 @@ public abstract class ZLApplication {
 	public void onWindowClosing() {
 	}
 
-	public abstract void openFile(ZLFile file);
+	public abstract void openFile(ZLFile file, Runnable postAction);
 
 	//Action
 	static abstract public class ZLAction {
