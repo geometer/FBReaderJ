@@ -55,7 +55,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	private int myCoverWidth = -1;
 	private int myCoverHeight = -1;
 
-	private int numViewHolders = 0;
+	private volatile int numViewHolders = 0;
 	private final static class ViewHolder
 	{
 		private Key key;
