@@ -34,23 +34,29 @@ class ShowCancelMenuAction extends FBAndroidAction {
 	protected void run(Object ... params) {
 		if (Reader.getCurrentView() != Reader.BookTextView) {
 			Reader.showBookTextView();
+			return;
+		}
+
+		if (Reader.canJumpBack()) {
+			Reader.jumpBack();
+			return;
+		}
+
+		final List<FBReaderApp.CancelActionDescription> descriptionList =
+			Reader.getCancelActionsList();
+		if (descriptionList.size() == 1) {
+			Reader.closeWindow();
 		} else {
-			final List<FBReaderApp.CancelActionDescription> descriptionList =
-				Reader.getCancelActionsList();
-			if (descriptionList.size() == 1) {
-				Reader.closeWindow();
-			} else {
-				final Intent intent = new Intent();
-				intent.setClass(BaseActivity, CancelActivity.class);
-				intent.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
-				int index = 0;
-				for (FBReaderApp.CancelActionDescription description : descriptionList) {
-					intent.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
-					intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
-					++index;
-				}
-				BaseActivity.startActivityForResult(intent, FBReader.REQUEST_CANCEL_MENU);
+			final Intent intent = new Intent();
+			intent.setClass(BaseActivity, CancelActivity.class);
+			intent.putExtra(CancelActivity.LIST_SIZE, descriptionList.size());
+			int index = 0;
+			for (FBReaderApp.CancelActionDescription description : descriptionList) {
+				intent.putExtra(CancelActivity.ITEM_TITLE + index, description.Title);
+				intent.putExtra(CancelActivity.ITEM_SUMMARY + index, description.Summary);
+				++index;
 			}
+			BaseActivity.startActivityForResult(intent, FBReader.REQUEST_CANCEL_MENU);
 		}
 	}
 }

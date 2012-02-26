@@ -98,6 +98,8 @@ public final class FBReaderApp extends ZLApplication {
 
 	private final ZLKeyBindings myBindings = new ZLKeyBindings("Keys");
 
+	private ZLTextWordCursor myAfterFootnoteJumpCursor;
+
 	public final FBView BookTextView;
 	public final FBView FootnoteView;
 
@@ -201,15 +203,34 @@ public final class FBReaderApp extends ZLApplication {
 		if (Model != null) {
 			BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
-				addInvisibleBookmark();
 				if (label.ModelId == null) {
+					addInvisibleBookmark();
 					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
+					myAfterFootnoteJumpCursor = new ZLTextWordCursor(BookTextView.getStartCursor());
 				} else {
 					FootnoteView.setModel(Model.getFootnoteModel(label.ModelId));
 					setView(FootnoteView);
 					FootnoteView.gotoPosition(label.ParagraphIndex, 0, 0);
 				}
 				getViewWidget().repaint();
+			}
+		}
+	}
+
+	public boolean canJumpBack() {
+		return
+			myAfterFootnoteJumpCursor != null &&
+			myAfterFootnoteJumpCursor.equals(BookTextView.getStartCursor());
+	}
+
+	public void jumpBack() {
+		if (myAfterFootnoteJumpCursor != null) {
+			myAfterFootnoteJumpCursor = null;
+			final List<Bookmark> bookmarks = Bookmark.invisibleBookmarks(Model.Book);
+			if (!bookmarks.isEmpty()) {
+				final Bookmark b = bookmarks.get(0);
+				b.delete();
+				gotoBookmark(b);
 			}
 		}
 	}
