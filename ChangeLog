@@ -1,4 +1,4 @@
-===== 1.3.8 (Feb ??, 2012) =====
+===== 1.3.8 (Feb 26, 2012) =====
 * Striked through/underlined text support
 * Asynchronous bonjour scanning: user can select any found network even if scanning is still in progress
 * Better support for "related" catalogs in book descriptions
