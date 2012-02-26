@@ -67,8 +67,8 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		});
 	}
 
-	private TreeMap<String,Integer> myFileNumbers = new TreeMap<String,Integer>();
-	private TreeMap<String,Integer> myTOCLabels = new TreeMap<String,Integer>();
+	private HashMap<String,String> myFileNumbers = new HashMap<String,String>();
+	private HashMap<String,Integer> myTOCLabels = new HashMap<String,Integer>();
 
 	boolean readBook(ZLFile file) {
 		myFilePrefix = MiscUtil.htmlDirectoryPrefix(file);
@@ -114,12 +114,12 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private BookModel.Label getTOCLabel(String id) {
 		final int index = id.indexOf('#');
 		final String path = (index >= 0) ? id.substring(0, index) : id;
-		Integer num = myFileNumbers.get(path);
+		final String num = myFileNumbers.get(path);
 		if (num == null) {
 			return null;
 		}
 		if (index == -1) {
-			final Integer para = myTOCLabels.get(num.toString());
+			final Integer para = myTOCLabels.get(num);
 			if (para == null) {
 				return null;
 			}
