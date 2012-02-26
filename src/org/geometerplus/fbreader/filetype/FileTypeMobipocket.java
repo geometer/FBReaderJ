@@ -29,7 +29,7 @@ class FileTypeMobipocket extends FileTypePalm {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return "mobi".equals(file.getExtension()) || super.acceptsFile(file);
+		return "mobi".equalsIgnoreCase(file.getExtension()) || super.acceptsFile(file);
 	}
 
 	@Override
