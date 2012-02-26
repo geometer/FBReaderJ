@@ -1,3 +1,6 @@
+===== 1.3.9 (Feb 26, 2012) =====
+* FBReader reads Mobipocket files with PDB/PRC extensions
+
 ===== 1.3.8 (Feb 26, 2012) =====
 * Striked through/underlined text support
 * Asynchronous bonjour scanning: user can select any found network even if scanning is still in progress
