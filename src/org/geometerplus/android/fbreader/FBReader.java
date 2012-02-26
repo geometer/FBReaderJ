@@ -108,9 +108,13 @@ public final class FBReader extends ZLAndroidActivity {
 	protected Runnable getPostponedInitAction() {
 		return new Runnable() {
 			public void run() {
-				initPluginActions();
-				new TipRunner().start();
-				DictionaryUtil.init(FBReader.this);
+				runOnUiThread(new Runnable() {
+					public void run() {
+						initPluginActions();
+						new TipRunner().start();
+						DictionaryUtil.init(FBReader.this);
+					}
+				});
 			}
 		};
 	}

@@ -29,12 +29,21 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 	private int myHyperlinkStackSize;
 
 	private static boolean isReference(String text) {
-		return
-			text.startsWith("fbreader-action://") ||
-			text.startsWith("http://") ||
-			text.startsWith("https://") ||
-			text.startsWith("mailto:") ||
-			text.startsWith("ftp://");
+		switch (text.charAt(0)) {
+			default:
+				return false;
+			case 'f':
+				return
+					text.startsWith("fbreader-action://") ||
+					text.startsWith("ftp://");
+			case 'h':
+				return
+					text.startsWith("http://") ||
+					text.startsWith("https://");
+			case 'm':
+				return
+					text.startsWith("mailto:");
+		}
 	}
 
 	protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {
@@ -43,7 +52,7 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 		if (myHyperlinkStackSize == myHyperlinkStack.length) {
 			myHyperlinkStack = ZLArrayUtils.createCopy(myHyperlinkStack, myHyperlinkStackSize, 2 * myHyperlinkStackSize);
 		}
-		if ((href != null) && (href.length() > 0)) {
+		if (href != null && href.length() > 0) {
 			String link = href;
 			final byte hyperlinkType;
 			if (isReference(link)) {
@@ -52,11 +61,17 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 				hyperlinkType = FBTextKind.INTERNAL_HYPERLINK;
 				final int index = href.indexOf('#');
 				if (index == 0) {
-					link = reader.myReferencePrefix + href.substring(1);
+					link =
+						new StringBuilder(reader.myReferencePrefix)
+							.append(href, 1, href.length())
+							.toString();
 				} else if (index > 0) {
-					link = reader.getFileAlias(reader.myLocalPathPrefix + href.substring(0, index)) + href.substring(index);
+					link =
+						new StringBuilder(reader.getLocalFileAlias(href.substring(0, index)))
+							.append(href, index, href.length())
+							.toString();
 				} else {
-					link = reader.getFileAlias(reader.myLocalPathPrefix + href);
+					link = reader.getLocalFileAlias(href);
 				}
 			}
 			myHyperlinkStack[myHyperlinkStackSize++] = hyperlinkType;
