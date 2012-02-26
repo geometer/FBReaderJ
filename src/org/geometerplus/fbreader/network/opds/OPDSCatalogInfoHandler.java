@@ -45,7 +45,7 @@ class OPDSCatalogInfoHandler extends AbstractOPDSFeedHandler {
 	}
 
 	public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
-		Icon = (feed.Icon != null) ? feed.Icon.Uri : null;
+		Icon = (feed.Icon != null) ? ZLNetworkUtil.url(myBaseURL, feed.Icon.Uri) : null;
 		Title = feed.Title;
 		Summary = feed.Subtitle;
 

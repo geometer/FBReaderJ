@@ -94,10 +94,7 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 		final Activity activity = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		if (activity != null) {
-			UIUtil.runWithMessage(activity, key, action, null, false);
-			if (postAction != null) {
-				activity.runOnUiThread(postAction);
-			}
+			UIUtil.runWithMessage(activity, key, action, postAction, false);
 		} else {
 			action.run();
 		}

@@ -94,15 +94,20 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 					final int w = fileBitmap.getWidth();
 					final int h = fileBitmap.getHeight();
 					final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
-					for (int i = 0; i < w; ++i) {
-						for (int j = 0; j < h; ++j) {
-							int color = fileBitmap.getPixel(i, j);
-							wallpaper.setPixel(i, j, color);
-							wallpaper.setPixel(i, 2 * h - j - 1, color);
-							wallpaper.setPixel(2 * w - i - 1, j, color);
-							wallpaper.setPixel(2 * w - i - 1, 2 * h - j - 1, color);
-						}
-					}
+					final Canvas wallpaperCanvas = new Canvas(wallpaper);
+					final Paint wallpaperPaint = new Paint();
+
+					Matrix m = new Matrix();
+					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+					m.preScale(-1, 1);
+					m.postTranslate(2 * w, 0);
+					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+					m.preScale(1, -1);
+					m.postTranslate(0, 2 * h);
+					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+					m.preScale(-1, 1);
+					m.postTranslate(- 2 * w, 0);
+					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
 					ourWallpaper = wallpaper;
 				} else {
 					ourWallpaper = fileBitmap;
