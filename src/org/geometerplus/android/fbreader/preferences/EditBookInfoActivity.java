@@ -95,12 +95,10 @@ class LanguagePreference extends ZLStringListPreference {
 }
 
 class EncodingPreference extends ZLStringListPreference {
-	private final EditBookInfoActivity myActivity;
 	private final Book myBook;
 
 	EncodingPreference(EditBookInfoActivity activity, ZLResource rootResource, String resourceKey, Book book) {
 		super(activity, rootResource, resourceKey);
-		myActivity = activity;
 		myBook = book;
 		String encoding = myBook.getEncoding();
 		if (encoding == null) {
@@ -139,7 +137,7 @@ class EncodingPreference extends ZLStringListPreference {
 			final String value = getValue();
 			if (!"auto".equals(value) && !value.equalsIgnoreCase(myBook.getEncoding())) {
 				myBook.setEncoding(value);
-				myActivity.setResult(FBReader.RESULT_RELOAD_BOOK);
+				((EditBookInfoActivity)getContext()).setResult(FBReader.RESULT_RELOAD_BOOK);
 			}
 		}
 	}
