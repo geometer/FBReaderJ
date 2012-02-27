@@ -98,6 +98,9 @@ class EncodingPreference extends ZLStringListPreference {
 
 	@Override
 	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
+		if (result) {
+		}
 	}
 }
 
