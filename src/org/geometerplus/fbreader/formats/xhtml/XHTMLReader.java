@@ -32,9 +32,13 @@ import org.geometerplus.fbreader.formats.util.MiscUtil;
 
 public class XHTMLReader extends ZLXMLReaderAdapter {
 	private static final HashMap<String,XHTMLTagAction> ourTagActions = new HashMap<String,XHTMLTagAction>();
+	private static XHTMLTagAction ourNullAction = new XHTMLTagAction() {
+		protected void doAtStart(XHTMLReader reader, ZLStringMap xmlattributes) {}
+		protected void doAtEnd(XHTMLReader reader) {}
+	};
 
 	public static XHTMLTagAction addAction(String tag, XHTMLTagAction action) {
-		XHTMLTagAction old = (XHTMLTagAction)ourTagActions.get(tag);
+		XHTMLTagAction old = ourTagActions.get(tag);
 		ourTagActions.put(tag, action);
 		return old;
 	}
@@ -120,13 +124,14 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 
 	private final BookReader myModelReader;
 	String myPathPrefix;
-	String myLocalPathPrefix;
+	private String myLocalPathPrefix;
 	String myReferencePrefix;
 	boolean myPreformatted;
 	boolean myInsideBody;
-	private final Map<String,Integer> myFileNumbers;
+	private final Map<String,String> myFileNumbers;
+	private final Map<String,String> myLocalFileNumbers = new HashMap<String,String>();
 
-	public XHTMLReader(BookReader modelReader, Map<String,Integer> fileNumbers) {
+	public XHTMLReader(BookReader modelReader, Map<String,String> fileNumbers) {
 		myModelReader = modelReader;
 		myFileNumbers = fileNumbers;
 	}
@@ -135,15 +140,27 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return myModelReader;
 	}
 
+	final String getLocalFileAlias(String fileName) {
+		String alias = myLocalFileNumbers.get(fileName);
+		if (alias == null) {
+			alias = getFileAlias(myLocalPathPrefix + fileName);
+			myLocalFileNumbers.put(fileName, alias);
+		}
+		return alias;
+	}
+
 	public final String getFileAlias(String fileName) {
-		fileName = MiscUtil.decodeHtmlReference(fileName);
-		fileName = ZLArchiveEntryFile.normalizeEntryName(fileName);
-		Integer num = myFileNumbers.get(fileName);
+		String num = myFileNumbers.get(fileName);
 		if (num == null) {
-			num = myFileNumbers.size();
+			fileName = MiscUtil.decodeHtmlReference(fileName);
+			fileName = ZLArchiveEntryFile.normalizeEntryName(fileName);
+			num = myFileNumbers.get(fileName);
+		}
+		if (num == null) {
+			num = String.valueOf(myFileNumbers.size());
 			myFileNumbers.put(fileName, num);
 		}
-		return num.toString();
+		return num;
 	}
 
 	public void readFile(ZLFile file, String referencePrefix) throws IOException {
@@ -152,12 +169,29 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		myReferencePrefix = referencePrefix;
 
 		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
-		myLocalPathPrefix = MiscUtil.archiveEntryName(myPathPrefix);
+		final String localPrefix = MiscUtil.archiveEntryName(myPathPrefix);
+		if (!localPrefix.equals(myLocalPathPrefix)) {
+			myLocalPathPrefix = localPrefix;
+			myLocalFileNumbers.clear();
+		}
 
 		myPreformatted = false;
 		myInsideBody = false;
 
 		read(file);
+	}
+
+	private final HashMap<String,XHTMLTagAction> myActions = new HashMap<String,XHTMLTagAction>();
+	private XHTMLTagAction getTagAction(String tag) {
+		XHTMLTagAction action = myActions.get(tag);
+		if (action == null) {
+			action = ourTagActions.get(tag.toLowerCase());
+			if (action == null) {
+				action = ourNullAction;
+			}
+			myActions.put(tag, action);
+		}
+		return action == ourNullAction ? null : action;
 	}
 
 	@Override
@@ -167,7 +201,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 			myModelReader.addHyperlinkLabel(myReferencePrefix + id);
 		}
 
-		XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
+		final XHTMLTagAction action = getTagAction(tag);
 		if (action != null) {
 			action.doAtStart(this, attributes);
 		}
@@ -176,7 +210,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 
 	@Override
 	public boolean endElementHandler(String tag) {
-		XHTMLTagAction action = (XHTMLTagAction)ourTagActions.get(tag.toLowerCase());
+		final XHTMLTagAction action = getTagAction(tag);
 		if (action != null) {
 			action.doAtEnd(this);
 		}

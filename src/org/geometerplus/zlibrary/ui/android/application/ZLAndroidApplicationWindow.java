@@ -95,11 +95,11 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 	}
 	
 	@Override
-	public void runWithMessage(String key, Runnable action) {
+	public void runWithMessage(String key, Runnable action, Runnable postAction) {
 		final Activity activity = 
 			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
 		if (activity != null) {
-			UIUtil.runWithMessage(activity, key, action, null, false);
+			UIUtil.runWithMessage(activity, key, action, postAction, false);
 		} else {
 			action.run();
 		}
