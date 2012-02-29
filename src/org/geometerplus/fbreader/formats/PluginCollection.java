@@ -38,9 +38,6 @@ public class PluginCollection {
 
 	private final Map<FormatPlugin.Type,List<FormatPlugin>> myPlugins =
 		new HashMap<FormatPlugin.Type,List<FormatPlugin>>();
-	public ZLStringOption DefaultLanguageOption;
-	public ZLStringOption DefaultEncodingOption;
-	public ZLBooleanOption LanguageAutoDetectOption;
 
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
@@ -61,7 +58,6 @@ public class PluginCollection {
 	}
 
 	private PluginCollection() {
-		LanguageAutoDetectOption = new ZLBooleanOption("Format", "AutoDetect", true);
 		DefaultLanguageOption = new ZLStringOption("Format", "DefaultLanguage", "en");
 		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
 
