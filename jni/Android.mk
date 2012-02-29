@@ -45,7 +45,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsGenerator.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsItem.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
-	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLWriter.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp
 
