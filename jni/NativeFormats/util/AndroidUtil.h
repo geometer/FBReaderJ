@@ -73,9 +73,6 @@ public:
 	static jmethodID SMID_NativeFormatPlugin_createImage;
 
 	static jmethodID SMID_PluginCollection_Instance;
-	static jmethodID MID_PluginCollection_getDefaultLanguage;
-	static jmethodID MID_PluginCollection_getDefaultEncoding;
-	static jmethodID MID_PluginCollection_isLanguageAutoDetectEnabled;
 
 	static jmethodID SMID_Paths_cacheDirectory;
 
