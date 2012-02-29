@@ -19,4 +19,15 @@
 
 #include "AndroidUtil.h"
 
+JavaVM *AndroidUtil::ourJavaVM = 0;
+
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
+const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
+
+jmethodID AndroidUtil::SMID_PluginCollection_Instance;
+
+JNIEnv *AndroidUtil::getEnv() {
+	JNIEnv *env;
+	ourJavaVM->GetEnv((void **)&env, JNI_VERSION_1_2);
+	return env;
+}

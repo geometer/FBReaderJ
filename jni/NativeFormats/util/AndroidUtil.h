@@ -24,8 +24,14 @@
 
 class AndroidUtil {
 
+private:
+	static JavaVM *ourJavaVM;
+
 public:
 	static const char * const Class_NativeFormatPlugin;
+	static const char * const Class_PluginCollection;
+
+	static jmethodID SMID_PluginCollection_Instance;
 
 public:
 	static JNIEnv *getEnv();
