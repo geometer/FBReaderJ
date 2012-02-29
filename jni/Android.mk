@@ -37,6 +37,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp
 
