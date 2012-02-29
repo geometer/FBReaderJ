@@ -63,9 +63,6 @@ jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
 jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
-jmethodID AndroidUtil::MID_PluginCollection_getDefaultLanguage;
-jmethodID AndroidUtil::MID_PluginCollection_getDefaultEncoding;
-jmethodID AndroidUtil::MID_PluginCollection_isLanguageAutoDetectEnabled;
 
 jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
 
@@ -143,9 +140,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	CHECK_NULL( cls = env->FindClass(Class_PluginCollection) );
 	CHECK_NULL( SMID_PluginCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/PluginCollection;") );
-	CHECK_NULL( MID_PluginCollection_getDefaultLanguage = env->GetMethodID(cls, "getDefaultLanguage", "()Ljava/lang/String;") );
-	CHECK_NULL( MID_PluginCollection_getDefaultEncoding = env->GetMethodID(cls, "getDefaultEncoding", "()Ljava/lang/String;") );
-	CHECK_NULL( MID_PluginCollection_isLanguageAutoDetectEnabled = env->GetMethodID(cls, "isLanguageAutoDetectEnabled", "()Z") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Paths) );

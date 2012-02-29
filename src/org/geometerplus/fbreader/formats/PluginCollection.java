@@ -38,9 +38,6 @@ public class PluginCollection {
 
 	private final Map<FormatPlugin.Type,List<FormatPlugin>> myPlugins =
 		new HashMap<FormatPlugin.Type,List<FormatPlugin>>();
-	public ZLStringOption DefaultLanguageOption;
-	public ZLStringOption DefaultEncodingOption;
-	public ZLBooleanOption LanguageAutoDetectOption;
 
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
@@ -61,7 +58,6 @@ public class PluginCollection {
 	}
 
 	private PluginCollection() {
-		LanguageAutoDetectOption = new ZLBooleanOption("Format", "AutoDetect", true);
 		DefaultLanguageOption = new ZLStringOption("Format", "DefaultLanguage", "en");
 		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
 
@@ -116,21 +112,6 @@ public class PluginCollection {
 
 	private native NativeFormatPlugin[] nativePlugins();
 	private native void free();
-
-	// called from native code
-	public String getDefaultLanguage() {
-		return DefaultLanguageOption.getValue();
-	}
-
-	// called from native code
-	public String getDefaultEncoding() {
-		return DefaultEncodingOption.getValue();
-	}
-
-	// called from native code
-	public boolean isLanguageAutoDetectEnabled() {
-		return LanguageAutoDetectOption.getValue();
-	}
 
 	protected void finalize() throws Throwable {
 		free();
