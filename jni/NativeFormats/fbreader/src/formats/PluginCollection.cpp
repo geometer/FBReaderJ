@@ -93,27 +93,13 @@ shared_ptr<FormatPlugin> PluginCollection::pluginByType(const std::string &fileT
 }
 
 bool PluginCollection::isLanguageAutoDetectEnabled() {
-	JNIEnv *env = AndroidUtil::getEnv();
-	jboolean res = env->CallBooleanMethod(myJavaInstance, AndroidUtil::MID_PluginCollection_isLanguageAutoDetectEnabled);
-	return res != 0;
+	return true;
 }
 
 std::string PluginCollection::defaultLanguage() {
-	JNIEnv *env = AndroidUtil::getEnv();
-	jstring res = (jstring)env->CallObjectMethod(myJavaInstance, AndroidUtil::MID_PluginCollection_getDefaultLanguage);
-	const char *data = env->GetStringUTFChars(res, 0);
-	std::string str(data);
-	env->ReleaseStringUTFChars(res, data);
-	env->DeleteLocalRef(res);
-	return str;
+	return "en";
 }
 
 std::string PluginCollection::defaultEncoding() {
-	JNIEnv *env = AndroidUtil::getEnv();
-	jstring res = (jstring)env->CallObjectMethod(myJavaInstance, AndroidUtil::MID_PluginCollection_getDefaultEncoding);
-	const char *data = env->GetStringUTFChars(res, 0);
-	std::string str(data);
-	env->ReleaseStringUTFChars(res, data);
-	env->DeleteLocalRef(res);
-	return str;
+	return "windows-1252";
 }
