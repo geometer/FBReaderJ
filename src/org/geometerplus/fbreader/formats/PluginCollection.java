@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.formats;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
@@ -58,9 +57,6 @@ public class PluginCollection {
 	}
 
 	private PluginCollection() {
-		DefaultLanguageOption = new ZLStringOption("Format", "DefaultLanguage", "en");
-		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
-
 		addPlugin(new FB2Plugin());
 		addPlugin(new MobipocketPlugin());
 		addPlugin(new OEBPlugin());
