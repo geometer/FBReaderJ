@@ -37,16 +37,25 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLLanguageMatcher.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLStatistics.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLStatisticsGenerator.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLStatisticsItem.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
+	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLWriter.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/filesystem \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/image \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/language \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/library \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/filesystem
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml
 
 include $(BUILD_SHARED_LIBRARY)
