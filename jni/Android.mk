@@ -37,6 +37,9 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
@@ -45,6 +48,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsGenerator.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsItem.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
+	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp
 
