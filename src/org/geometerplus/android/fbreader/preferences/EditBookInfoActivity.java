@@ -91,6 +91,19 @@ class LanguagePreference extends ZLStringListPreference {
 	}
 }
 
+class EncodingPreference extends ZLStringListPreference {
+	EncodingPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context, rootResource, resourceKey);
+	}
+
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
+		if (result) {
+		}
+	}
+}
+
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private Book myBook;
 
