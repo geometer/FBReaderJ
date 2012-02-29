@@ -32,11 +32,20 @@ include $(CLEAR_VARS)
 LOCAL_MODULE                  := NativeFormats-v1
 LOCAL_LDLIBS                  := -lz
 LOCAL_STATIC_LIBRARIES        := expat
+
 LOCAL_SRC_FILES               := \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
-	NativeFormats/util/AndroidUtil.cpp
+	NativeFormats/util/AndroidUtil.cpp \
+	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
+	NativeFormats/fbreader/src/formats/PluginCollection.cpp
+
 LOCAL_C_INCLUDES              := \
-	$(LOCAL_PATH)/NativeFormats/util
+	$(LOCAL_PATH)/NativeFormats/util \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/image \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/language \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/library \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/filesystem
 
 include $(BUILD_SHARED_LIBRARY)

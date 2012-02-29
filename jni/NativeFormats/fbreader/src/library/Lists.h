@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,23 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ANDROIDUTIL_H__
-#define __ANDROIDUTIL_H__
+#ifndef __LISTS_H__
+#define __LISTS_H__
 
-#include <jni.h>
+#include <vector>
+#include <set>
 
-class AndroidUtil {
+#include <shared_ptr.h>
 
-public:
-	static const char * const Class_NativeFormatPlugin;
+class Book;
+class Author;
+class Tag;
+class BookByFileNameComparator;
 
-public:
-	static JNIEnv *getEnv();
-};
+typedef std::vector<shared_ptr<Book> > BookList;
+typedef std::set<shared_ptr<Book>,BookByFileNameComparator> BookSet;
+typedef std::vector<shared_ptr<Author> > AuthorList;
+typedef std::vector<shared_ptr<Tag> > TagList;
+typedef std::set<shared_ptr<Tag> > TagSet;
 
-#endif /* __ANDROIDUTIL_H__ */
+#endif /* __LISTS_H__ */

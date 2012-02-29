@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,34 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ANDROIDUTIL_H__
-#define __ANDROIDUTIL_H__
+#ifndef __ZLLANGUAGEDETECTOR_H__
+#define __ZLLANGUAGEDETECTOR_H__
 
-#include <jni.h>
+#include <vector>
+#include <string>
 
-class AndroidUtil {
+//#include <shared_ptr.h>
+
+class ZLStatisticsBasedMatcher;
+
+class ZLLanguageDetector {
 
 public:
-	static const char * const Class_NativeFormatPlugin;
+	struct LanguageInfo {
+		LanguageInfo(const std::string &language, const std::string &encoding);
+		const std::string Language;
+		const std::string Encoding;
+	};
 
 public:
-	static JNIEnv *getEnv();
+	ZLLanguageDetector();
+	~ZLLanguageDetector();
+
+	shared_ptr<LanguageInfo> findInfo(const char *buffer, size_t length, int matchingCriterion = 0);
+
+private:
+	typedef std::vector<shared_ptr<ZLStatisticsBasedMatcher> > SBVector;
+	SBVector myMatchers;
 };
 
-#endif /* __ANDROIDUTIL_H__ */
+#endif /* __ZLLANGUAGEDETECTOR_H__ */

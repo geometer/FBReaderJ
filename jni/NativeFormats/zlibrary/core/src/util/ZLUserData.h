@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,32 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ANDROIDUTIL_H__
-#define __ANDROIDUTIL_H__
+#ifndef __ZLUSERDATA_H__
+#define __ZLUSERDATA_H__
 
-#include <jni.h>
+#include <map>
+#include <string>
 
-class AndroidUtil {
+#include <shared_ptr.h>
+
+class ZLUserData {
 
 public:
-	static const char * const Class_NativeFormatPlugin;
-
-public:
-	static JNIEnv *getEnv();
+	virtual ~ZLUserData();
 };
 
-#endif /* __ANDROIDUTIL_H__ */
+class ZLUserDataHolder {
+
+protected:
+	virtual ~ZLUserDataHolder();
+
+public:
+	void addUserData(const std::string &key, shared_ptr<ZLUserData> data);
+	void removeUserData(const std::string &key);
+	shared_ptr<ZLUserData> getUserData(const std::string &key) const;
+
+private:
+	std::map<std::string,shared_ptr<ZLUserData> > myDataMap;
+};
+
+#endif /* __ZLUSERDATA_H__ */

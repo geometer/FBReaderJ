@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,18 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ANDROIDUTIL_H__
-#define __ANDROIDUTIL_H__
+#ifndef __ZLFILEINFO_H__
+#define __ZLFILEINFO_H__
 
-#include <jni.h>
+struct ZLFileInfo {
+	bool Exists;
+	bool IsDirectory;
+	size_t Size;
 
-class AndroidUtil {
-
-public:
-	static const char * const Class_NativeFormatPlugin;
-
-public:
-	static JNIEnv *getEnv();
+	ZLFileInfo();
 };
 
-#endif /* __ANDROIDUTIL_H__ */
+inline ZLFileInfo::ZLFileInfo() : Exists(false), IsDirectory(false), Size(0) {
+}
+
+#endif /* __ZLFILEINFO_H__ */
