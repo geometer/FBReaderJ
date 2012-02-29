@@ -30,7 +30,6 @@
 #include <string>
 
 #include <AndroidUtil.h>
-#include <AndroidLog.h>
 
 #include <ZLEncodingConverter.h>
 
