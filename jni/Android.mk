@@ -39,11 +39,20 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/EncodingCollectionReader.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/ZLEncodingSet.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/zip/ZLGzipInputStream.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZDecompressor.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipDir.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipEntryCache.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipHeader.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipInputStream.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
@@ -54,13 +63,17 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/library/ZLibrary.cpp \
 	NativeFormats/zlibrary/core/src/logger/ZLLogger.cpp \
+	NativeFormats/zlibrary/core/src/util/ZLFileUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLStringUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
+	NativeFormats/zlibrary/core/src/util/ZLUserData.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSDir.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSManager.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaInputStream.cpp \

@@ -21,7 +21,9 @@
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
+const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
+const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
@@ -29,18 +31,27 @@ const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/f
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 
+jmethodID AndroidUtil::MID_java_util_Collection_toArray;
+
 jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
 jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
+
+jmethodID AndroidUtil::MID_java_io_InputStream_close;
+jmethodID AndroidUtil::MID_java_io_InputStream_read;
+jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 
 jmethodID AndroidUtil::SMID_ZLibrary_Instance;
 jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
-jmethodID AndroidUtil::MID_ZLFile_size;
+jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
+jmethodID AndroidUtil::MID_ZLFile_children;
 jmethodID AndroidUtil::MID_ZLFile_exists;
-jmethodID AndroidUtil::MID_ZLFile_isDirectory;
+jmethodID AndroidUtil::MID_ZLFile_getInputStream;
 jmethodID AndroidUtil::MID_ZLFile_getPath;
+jmethodID AndroidUtil::MID_ZLFile_isDirectory;
+jmethodID AndroidUtil::MID_ZLFile_size;
 
 jfieldID AndroidUtil::FID_Book_File;
 jfieldID AndroidUtil::FID_Book_Title;
@@ -63,9 +74,20 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	JNIEnv *env = getEnv();
 	jclass cls;
 
+	CHECK_NULL( cls = env->FindClass(Class_java_util_Collection) );
+	CHECK_NULL( MID_java_util_Collection_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;") );
+	//CHECK_NULL( MID_java_util_Collection_add = env->GetMethodID(cls, "add", "(Ljava/lang/Object;)Z") );
+	env->DeleteLocalRef(cls);
+
 	CHECK_NULL( cls = env->FindClass(Class_java_util_Locale) );
 	CHECK_NULL( SMID_java_util_Locale_getDefault = env->GetStaticMethodID(cls, "getDefault", "()Ljava/util/Locale;") );
 	CHECK_NULL( MID_java_util_Locale_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_java_io_InputStream) );
+	CHECK_NULL( MID_java_io_InputStream_close = env->GetMethodID(cls, "close", "()V") );
+	CHECK_NULL( MID_java_io_InputStream_read = env->GetMethodID(cls, "read", "([BII)I") );
+	CHECK_NULL( MID_java_io_InputStream_skip = env->GetMethodID(cls, "skip", "(J)J") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLibrary) );
@@ -116,4 +138,25 @@ jstring AndroidUtil::createJavaString(JNIEnv* env, const std::string &str) {
 		return 0;
 	}
 	return env->NewStringUTF(str.c_str());
+}
+
+std::string AndroidUtil::convertNonUtfString(const std::string &str) {
+	const int len = str.length();
+	if (len == 0) {
+		return str;
+	}
+
+	JNIEnv *env = getEnv();
+
+	std::string result;
+	jchar *chars = new jchar[len];
+	for (int i = 0; i < len; ++i) {
+		chars[i] = str[i];
+	}
+	jstring javaString = env->NewString(chars, len);
+	extractJavaString(env, javaString, result);
+	env->DeleteLocalRef(javaString);
+	delete[] chars;
+
+	return result;
 }

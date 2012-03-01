@@ -32,6 +32,7 @@ private:
 public:
 	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Locale;
+	static const char * const Class_java_io_InputStream;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
@@ -44,15 +45,20 @@ public:
 	static jmethodID SMID_java_util_Locale_getDefault;
 	static jmethodID MID_java_util_Locale_getLanguage;
 
+	static jmethodID MID_java_io_InputStream_close;
+	static jmethodID MID_java_io_InputStream_read;
+	static jmethodID MID_java_io_InputStream_skip;
+
 	static jmethodID SMID_ZLibrary_Instance;
 	static jmethodID MID_ZLibrary_getVersionName;
 
 	static jmethodID SMID_ZLFile_createFileByPath;
 	static jmethodID MID_ZLFile_children;
-	static jmethodID MID_ZLFile_size;
 	static jmethodID MID_ZLFile_exists;
-	static jmethodID MID_ZLFile_isDirectory;
+	static jmethodID MID_ZLFile_getInputStream;
 	static jmethodID MID_ZLFile_getPath;
+	static jmethodID MID_ZLFile_isDirectory;
+	static jmethodID MID_ZLFile_size;
 
 	static jmethodID SMID_PluginCollection_Instance;
 
@@ -70,6 +76,7 @@ public:
 	static jobject createZLFile(JNIEnv *env, const std::string &path);
 	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
+	static std::string convertNonUtfString(const std::string &str);
 };
 
 #endif /* __ANDROIDUTIL_H__ */
