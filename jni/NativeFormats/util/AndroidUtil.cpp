@@ -54,9 +54,9 @@ jmethodID AndroidUtil::MID_ZLFile_isDirectory;
 jmethodID AndroidUtil::MID_ZLFile_size;
 
 jfieldID AndroidUtil::FID_Book_File;
-jfieldID AndroidUtil::FID_Book_Title;
-jfieldID AndroidUtil::FID_Book_Language;
-jfieldID AndroidUtil::FID_Book_Encoding;
+jmethodID AndroidUtil::MID_Book_getTitle;
+jmethodID AndroidUtil::MID_Book_getLanguage;
+jmethodID AndroidUtil::MID_Book_getEncoding;
 
 jmethodID AndroidUtil::SMID_Tag_getTag;
 
@@ -111,9 +111,9 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	CHECK_NULL( cls = env->FindClass(Class_Book) );
 	CHECK_NULL( FID_Book_File = env->GetFieldID(cls, "File", "Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;") );
-	CHECK_NULL( FID_Book_Title = env->GetFieldID(cls, "myTitle", "Ljava/lang/String;") );
-	CHECK_NULL( FID_Book_Language = env->GetFieldID(cls, "myLanguage", "Ljava/lang/String;") );
-	CHECK_NULL( FID_Book_Encoding = env->GetFieldID(cls, "myEncoding", "Ljava/lang/String;") );
+	CHECK_NULL( MID_Book_getTitle = env->GetMethodID(cls, "getTitle", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_Book_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_Book_getEncoding = env->GetMethodID(cls, "getEncoding", "()Ljava/lang/String;") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Tag) );
