@@ -21,34 +21,19 @@
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
-const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
 const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
 const char * const AndroidUtil::Class_java_util_Map = "java/util/Map";
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
+const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
-const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
 const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
+const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 const char * const AndroidUtil::Class_BookModel = "org/geometerplus/fbreader/bookmodel/BookModel";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
-
-jmethodID AndroidUtil::SMID_ZLibrary_Instance;
-jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
-
-jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
-jmethodID AndroidUtil::MID_ZLFile_size;
-jmethodID AndroidUtil::MID_ZLFile_exists;
-jmethodID AndroidUtil::MID_ZLFile_isDirectory;
-jmethodID AndroidUtil::MID_ZLFile_getInputStream;
-jmethodID AndroidUtil::MID_ZLFile_children;
-jmethodID AndroidUtil::MID_ZLFile_getPath;
-
-jmethodID AndroidUtil::MID_java_io_InputStream_close;
-jmethodID AndroidUtil::MID_java_io_InputStream_read;
-jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 
 jmethodID AndroidUtil::MID_java_util_Collection_toArray;
 jmethodID AndroidUtil::MID_java_util_Collection_add;
@@ -58,11 +43,26 @@ jmethodID AndroidUtil::MID_java_util_Map_put;
 jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
 jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
 
+jmethodID AndroidUtil::MID_java_io_InputStream_close;
+jmethodID AndroidUtil::MID_java_io_InputStream_read;
+jmethodID AndroidUtil::MID_java_io_InputStream_skip;
+
+jmethodID AndroidUtil::SMID_ZLibrary_Instance;
+jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
+
+jmethodID AndroidUtil::SMID_PluginCollection_Instance;
+
+jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
+jmethodID AndroidUtil::MID_ZLFile_children;
+jmethodID AndroidUtil::MID_ZLFile_exists;
+jmethodID AndroidUtil::MID_ZLFile_getInputStream;
+jmethodID AndroidUtil::MID_ZLFile_getPath;
+jmethodID AndroidUtil::MID_ZLFile_isDirectory;
+jmethodID AndroidUtil::MID_ZLFile_size;
+
 jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
 jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
 jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
-
-jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
 jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
 
@@ -88,6 +88,11 @@ jmethodID AndroidUtil::MID_NativeBookModel_createTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setBookTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setFootnoteModel;
 
+JNIEnv *AndroidUtil::getEnv() {
+	JNIEnv *env;
+	ourJavaVM->GetEnv((void **)&env, JNI_VERSION_1_2);
+	return env;
+}
 
 #define CHECK_NULL(value) if ((value) == 0) { return false; }
 
@@ -177,13 +182,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	return true;
-}
-
-
-JNIEnv *AndroidUtil::getEnv() {
-	JNIEnv *env;
-	ourJavaVM->GetEnv((void **)&env, JNI_VERSION_1_2);
-	return env;
 }
 
 jobject AndroidUtil::createZLFile(JNIEnv *env, const std::string &path) {
