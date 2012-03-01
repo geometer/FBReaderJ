@@ -297,7 +297,8 @@ public class Book {
 //			System.err.println("FBREADER: Reading language on demand...");
 //			System.err.println("FBREADER: ... book: " + File.getPath());
 //			Thread.dumpStack();
-			readLanguageAndEncoding();
+			myLanguage = "en";
+			//readLanguageAndEncoding();
 		}
 		return myLanguage;
 	}
@@ -314,7 +315,8 @@ public class Book {
 //			System.err.println("FBREADER: Reading encoding on demand...");
 //			System.err.println("FBREADER: ... book: " + File.getPath());
 //			Thread.dumpStack();
-			readLanguageAndEncoding();
+			myEncoding = "windows-1252";
+			//readLanguageAndEncoding();
 		}
 		return myEncoding;
 	}
