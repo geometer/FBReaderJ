@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.filetype;
+package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
-class FileTypeMobipocket extends FileTypePalm {
-	FileTypeMobipocket() {
-		super("mobipocket", "BOOKMOBI");
-	}
-
-	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return "mobi".equalsIgnoreCase(file.getExtension()) || super.acceptsFile(file);
-	}
-
-	@Override
-	public String extension() {
-		return "mobi";
-	}
-
-	@Override
-	public MimeType mimeType() {
-		return MimeType.APP_MOBI;
-	}
+public interface InfoReader {
+	boolean readMetaInfo(Book book);
+	ZLImage readCover(ZLFile file);
+	String readAnnotation(ZLFile file);
 }

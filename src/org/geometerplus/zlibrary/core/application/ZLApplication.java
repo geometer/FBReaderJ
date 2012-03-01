@@ -31,6 +31,20 @@ public abstract class ZLApplication {
 		return ourInstance;
 	}
 
+	public interface ExternalFileOpener {
+		public void openFile(ZLFile f, String appData);
+	}
+
+	protected ExternalFileOpener myFileOpener;
+
+	public void setFileOpener(ExternalFileOpener o) {
+		myFileOpener = o;
+	}
+
+	public boolean fileOpenerIsSet() {
+		return myFileOpener != null;
+	}
+
 	private static ZLApplication ourInstance;
 
 	public static final String NoAction = "none";

@@ -669,6 +669,15 @@
 					<node name="none" value="No action"/>
 				</node>
 			</node>
+			<node name="externalFormats" value="Formats">
+				<node name="summary" value="Manage file formats"/>
+				<node name="format" value="">
+					<node name="appNotSet" value="Not chosen"/>
+					<node name="java" value="FBReader (java)"/>
+					<node name="native" value="FBReader (native)"/>
+					<node name="delete" value="remove this format"/>
+				</node>
+			</node>
 			<node name="tips" value="Tips">
 				<node name="summary" value="Daily tips settings"/>
 				<node name="showTips" value="Show tips">

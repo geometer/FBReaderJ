@@ -89,6 +89,24 @@ public class PluginCollection {
 		return getPlugin(fileType, formatType);
 	}
 
+	private FormatPlugin getOrCreateExternalPlugin(FileType fileType) {
+		FormatPlugin plugin = getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
+
+		if (plugin == null) {
+			FormatPlugin builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
+			if (builtInPlugin == null) {
+				builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+			}
+			if (builtInPlugin != null) {
+				plugin = new ExternalFormatPlugin(fileType.Id, (InfoReader)builtInPlugin);
+			} else {
+				plugin = new ExternalFormatPlugin(fileType.Id);
+			}
+			addPlugin(plugin);
+		}
+		return plugin;
+	}
+
 	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
 		if (fileType == null) {
 			return null;

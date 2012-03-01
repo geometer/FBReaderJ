@@ -36,6 +36,7 @@ import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.tips.TipsManager;
+import org.geometerplus.fbreader.formats.Formats;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
@@ -54,6 +55,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
+		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
 		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
 		if (AndroidFontUtil.areExternalFontsSupported()) {
 			directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
@@ -447,6 +449,11 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
+
+		final Screen formatScreen = createPreferenceScreen("externalFormats");
+		for (String format:Formats.getJavaFormats()) {
+			formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
+		}
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
 		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");

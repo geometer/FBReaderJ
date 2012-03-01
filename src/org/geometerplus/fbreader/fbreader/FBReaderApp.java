@@ -34,6 +34,8 @@ import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.filetype.*;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -153,6 +155,12 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		}
 		final Book bookToOpen = book;
+		if (Formats.getStatus(FileTypeCollection.Instance.typeForFile(book.File).Id) == FormatPlugin.Type.EXTERNAL) {
+			
+			myFileOpener.openFile(book.File, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(book.File).Id).getValue());
+			return;
+		}
+
 		runWithMessage("loadingBook", new Runnable() {
 			public void run() {
 				openBookInternal(bookToOpen, bookmark);

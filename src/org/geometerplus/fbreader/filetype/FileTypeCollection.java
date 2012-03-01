@@ -34,9 +34,9 @@ public class FileTypeCollection {
 		addType(new FileTypeEpub());
 		addType(new FileTypeMobipocket());
 		addType(new FileTypeHtml());
-		addType(new FileTypeByExtension("plain text", "txt", MimeType.TEXT_PLAIN));
+		addType(new FileTypeByExtension("plain_text", "txt", MimeType.TEXT_PLAIN));
 		// TODO: change mime type
-		addType(new FileTypeByExtension("RTF", "rtf", MimeType.TEXT_PLAIN));
+		addType(new FileTypeByExtension("rtf", "rtf", MimeType.TEXT_PLAIN));
 	}
 
 	private void addType(FileType type) {
@@ -56,6 +56,9 @@ public class FileTypeCollection {
 			if (type.acceptsFile(file)) {
 				return type;
 			}
+		}
+		if (file.getExtension() != "") {
+			return new FileTypeByExtension(file.getExtension(), file.getExtension(), MimeType.TEXT_PLAIN);//FIXME
 		}
 		return null;
 	}

@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeHtml extends FileType {
 	FileTypeHtml() {
-		super("HTML");
+		super("html");
 	}
 
 	@Override
