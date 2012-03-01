@@ -77,9 +77,9 @@ public:
 	static jmethodID SMID_Paths_cacheDirectory;
 
 	static jfieldID FID_Book_File;
-	static jfieldID FID_Book_Title;
-	static jfieldID FID_Book_Language;
-	static jfieldID FID_Book_Encoding;
+	static jmethodID MID_Book_getTitle;
+	static jmethodID MID_Book_getLanguage;
+	static jmethodID MID_Book_getEncoding;
 	static jmethodID MID_Book_setTitle;
 	static jmethodID MID_Book_setSeriesInfo;
 	static jmethodID MID_Book_setLanguage;

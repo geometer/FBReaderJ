@@ -94,17 +94,17 @@ shared_ptr<Book> Book::loadFromJavaBook(JNIEnv *env, jobject javaBook) {
 	env->DeleteLocalRef(javaFile);
 
 	std::string title;
-	javaString = (jstring) env->GetObjectField(javaBook, AndroidUtil::FID_Book_Title);
+	javaString = (jstring) env->CallObjectMethod(javaBook, AndroidUtil::MID_Book_getTitle);
 	AndroidUtil::extractJavaString(env, javaString, title);
 	env->DeleteLocalRef(javaString);
 
 	std::string language;
-	javaString = (jstring) env->GetObjectField(javaBook, AndroidUtil::FID_Book_Language);
+	javaString = (jstring) env->CallObjectMethod(javaBook, AndroidUtil::MID_Book_getLanguage);
 	AndroidUtil::extractJavaString(env, javaString, language);
 	env->DeleteLocalRef(javaString);
 
 	std::string encoding;
-	javaString = (jstring) env->GetObjectField(javaBook, AndroidUtil::FID_Book_Encoding);
+	javaString = (jstring) env->CallObjectMethod(javaBook, AndroidUtil::MID_Book_getEncoding);
 	AndroidUtil::extractJavaString(env, javaString, encoding);
 	env->DeleteLocalRef(javaString);
 
