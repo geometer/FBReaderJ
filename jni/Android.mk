@@ -74,20 +74,20 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/library/ZLibrary.cpp \
 	NativeFormats/zlibrary/core/src/logger/ZLLogger.cpp \
-	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
-	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
-	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSDir.cpp \
-	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSManager.cpp \
-	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLFileUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLLanguageUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLStringUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUserData.cpp \
-	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLPlainAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
+	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSDir.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSManager.cpp \
+	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLCachedMemoryAllocator.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLImageMapWriter.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
