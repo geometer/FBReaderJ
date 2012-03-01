@@ -66,7 +66,7 @@ JNIEnv *AndroidUtil::getEnv() {
 	return env;
 }
 
-#define CHECK_NULL(value) if ((value) == 0) { return false; }
+#define CHECK_NULL(value) if ((value) == 0) { throwRuntimeException(env, #value); }
 
 bool AndroidUtil::init(JavaVM* jvm) {
 	ourJavaVM = jvm;
@@ -166,4 +166,9 @@ std::string AndroidUtil::convertNonUtfString(const std::string &str) {
 	delete[] chars;
 
 	return result;
+}
+
+void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
+	jclass cls = env->FindClass("java/lang/RuntimeException");
+	env->ThrowNew(cls, message.c_str());
 }

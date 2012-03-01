@@ -77,6 +77,8 @@ public:
 	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
 	static std::string convertNonUtfString(const std::string &str);
+
+	static void throwRuntimeException(JNIEnv *env, const std::string &message);
 };
 
 #endif /* __ANDROIDUTIL_H__ */
