@@ -51,10 +51,15 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/library/ZLibrary.cpp \
 	NativeFormats/zlibrary/core/src/logger/ZLLogger.cpp \
+	NativeFormats/zlibrary/core/src/util/ZLStringUtil.cpp \
+	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
-	NativeFormats/fbreader/src/library/Book.cpp
+	NativeFormats/fbreader/src/library/Author.cpp \
+	NativeFormats/fbreader/src/library/Book.cpp \
+	NativeFormats/fbreader/src/library/Comparators.cpp \
+	NativeFormats/fbreader/src/library/Tag.cpp
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \

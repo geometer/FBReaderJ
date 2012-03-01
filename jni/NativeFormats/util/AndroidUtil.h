@@ -22,19 +22,37 @@
 
 #include <jni.h>
 
+#include <string>
+
 class AndroidUtil {
 
 private:
 	static JavaVM *ourJavaVM;
 
 public:
+	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
+	static const char * const Class_Book;
+	static const char * const Class_Tag;
+
+	static jmethodID MID_ZLFile_getPath;
 
 	static jmethodID SMID_PluginCollection_Instance;
 
+	static jfieldID FID_Book_File;
+	static jfieldID FID_Book_Title;
+	static jfieldID FID_Book_Language;
+	static jfieldID FID_Book_Encoding;
+
+	static jmethodID SMID_Tag_getTag;
+
 public:
+	static bool init(JavaVM* jvm);
 	static JNIEnv *getEnv();
+
+	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
+	static jstring createJavaString(JNIEnv* env, const std::string &str);
 };
 
 #endif /* __ANDROIDUTIL_H__ */
