@@ -21,11 +21,19 @@
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
+const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
+const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
+
+jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
+jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
+
+jmethodID AndroidUtil::SMID_ZLibrary_Instance;
+jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
@@ -51,6 +59,16 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	JNIEnv *env = getEnv();
 	jclass cls;
+
+	CHECK_NULL( cls = env->FindClass(Class_java_util_Locale) );
+	CHECK_NULL( SMID_java_util_Locale_getDefault = env->GetStaticMethodID(cls, "getDefault", "()Ljava/util/Locale;") );
+	CHECK_NULL( MID_java_util_Locale_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_ZLibrary) );
+	CHECK_NULL( SMID_ZLibrary_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/library/ZLibrary;") );
+	CHECK_NULL( MID_ZLibrary_getVersionName = env->GetMethodID(cls, "getVersionName", "()Ljava/lang/String;") );
+	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
 	CHECK_NULL( MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;") );

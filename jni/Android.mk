@@ -38,6 +38,8 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
+	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
+	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
@@ -53,7 +55,12 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/logger/ZLLogger.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLStringUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
+	NativeFormats/zlibrary/core/src/xml/ZLAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
+	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
+	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
+	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
+	NativeFormats/zlibrary/ui/src/android/library/ZLAndroidLibraryImplementation.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
 	NativeFormats/fbreader/src/library/Author.cpp \
@@ -63,6 +70,7 @@ LOCAL_SRC_FILES               := \
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/encoding \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/filesystem \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/image \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/language \

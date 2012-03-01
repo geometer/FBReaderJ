@@ -30,11 +30,19 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
+	static const char * const Class_java_util_Locale;
+	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
+
+	static jmethodID SMID_java_util_Locale_getDefault;
+	static jmethodID MID_java_util_Locale_getLanguage;
+
+	static jmethodID SMID_ZLibrary_Instance;
+	static jmethodID MID_ZLibrary_getVersionName;
 
 	static jmethodID MID_ZLFile_getPath;
 
