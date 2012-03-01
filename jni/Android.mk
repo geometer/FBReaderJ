@@ -76,15 +76,27 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLCachedMemoryAllocator.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLImageMapWriter.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
+	NativeFormats/zlibrary/text/src/model/ZLTextParagraph.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaInputStream.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/ZLAndroidFSManager.cpp \
 	NativeFormats/zlibrary/ui/src/android/library/ZLAndroidLibraryImplementation.cpp \
+	NativeFormats/fbreader/src/bookmodel/BookModel.cpp \
+	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
+	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
+	NativeFormats/fbreader/src/formats/txt/PlainTextFormat.cpp \
+	NativeFormats/fbreader/src/formats/txt/TxtBookReader.cpp \
+	NativeFormats/fbreader/src/formats/txt/TxtPlugin.cpp \
+	NativeFormats/fbreader/src/formats/txt/TxtReader.cpp \
 	NativeFormats/fbreader/src/library/Author.cpp \
 	NativeFormats/fbreader/src/library/Book.cpp \
 	NativeFormats/fbreader/src/library/Comparators.cpp \
+	NativeFormats/fbreader/src/library/Library.cpp \
 	NativeFormats/fbreader/src/library/Tag.cpp
 
 LOCAL_C_INCLUDES              := \
@@ -96,6 +108,7 @@ LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/library \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/logger \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/model
 
 include $(BUILD_SHARED_LIBRARY)
