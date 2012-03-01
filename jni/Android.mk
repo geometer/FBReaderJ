@@ -30,6 +30,7 @@ include $(BUILD_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE                  := NativeFormats-v1
+LOCAL_CFLAGS                  := -DBASEDIR=\"nativeShare\"
 LOCAL_LDLIBS                  := -lz
 LOCAL_STATIC_LIBRARIES        := expat
 
@@ -48,10 +49,12 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsGenerator.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsItem.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLStatisticsXMLReader.cpp \
-	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/library/ZLibrary.cpp \
+	NativeFormats/zlibrary/core/src/logger/ZLLogger.cpp \
+	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
-	NativeFormats/fbreader/src/formats/PluginCollection.cpp
+	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
+	NativeFormats/fbreader/src/library/Book.cpp
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \
@@ -59,6 +62,7 @@ LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/image \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/language \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/library \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/logger \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml
 
