@@ -30,6 +30,7 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
+	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Locale;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
@@ -38,12 +39,19 @@ public:
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
 
+	static jmethodID MID_java_util_Collection_toArray;
+
 	static jmethodID SMID_java_util_Locale_getDefault;
 	static jmethodID MID_java_util_Locale_getLanguage;
 
 	static jmethodID SMID_ZLibrary_Instance;
 	static jmethodID MID_ZLibrary_getVersionName;
 
+	static jmethodID SMID_ZLFile_createFileByPath;
+	static jmethodID MID_ZLFile_children;
+	static jmethodID MID_ZLFile_size;
+	static jmethodID MID_ZLFile_exists;
+	static jmethodID MID_ZLFile_isDirectory;
 	static jmethodID MID_ZLFile_getPath;
 
 	static jmethodID SMID_PluginCollection_Instance;
@@ -59,6 +67,7 @@ public:
 	static bool init(JavaVM* jvm);
 	static JNIEnv *getEnv();
 
+	static jobject createZLFile(JNIEnv *env, const std::string &path);
 	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
 };

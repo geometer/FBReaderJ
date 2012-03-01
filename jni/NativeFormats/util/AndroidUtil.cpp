@@ -37,6 +37,9 @@ jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
+jmethodID AndroidUtil::MID_ZLFile_size;
+jmethodID AndroidUtil::MID_ZLFile_exists;
+jmethodID AndroidUtil::MID_ZLFile_isDirectory;
 jmethodID AndroidUtil::MID_ZLFile_getPath;
 
 jfieldID AndroidUtil::FID_Book_File;
@@ -71,6 +74,9 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
+	CHECK_NULL( MID_ZLFile_size = env->GetMethodID(cls, "size", "()J") );
+	CHECK_NULL( MID_ZLFile_exists = env->GetMethodID(cls, "exists", "()Z") );
+	CHECK_NULL( MID_ZLFile_isDirectory = env->GetMethodID(cls, "isDirectory", "()Z") );
 	CHECK_NULL( MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;") );
 	env->DeleteLocalRef(cls);
 
@@ -84,6 +90,15 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( cls = env->FindClass(Class_Tag) );
 	CHECK_NULL( SMID_Tag_getTag = env->GetStaticMethodID(cls, "getTag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)Lorg/geometerplus/fbreader/library/Tag;") );
 	env->DeleteLocalRef(cls);
+}
+
+jobject AndroidUtil::createZLFile(JNIEnv *env, const std::string &path) {
+	jstring javaPath = env->NewStringUTF(path.c_str());
+	jclass cls = env->FindClass(Class_ZLFile);
+	jobject javaFile = env->CallStaticObjectMethod(cls, SMID_ZLFile_createFileByPath, javaPath);
+	env->DeleteLocalRef(cls);
+	env->DeleteLocalRef(javaPath);
+	return javaFile;
 }
 
 bool AndroidUtil::extractJavaString(JNIEnv *env, jstring from, std::string &to) {
