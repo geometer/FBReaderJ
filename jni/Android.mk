@@ -58,8 +58,8 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipHeader.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipInputStream.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLBase64EncodedImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLFileImage.cpp \
