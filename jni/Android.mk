@@ -35,11 +35,12 @@ LOCAL_MODULE                  := NativeFormats-v1
 LOCAL_LDLIBS                  := -lz
 LOCAL_CFLAGS                  := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
 LOCAL_STATIC_LIBRARIES        := expat
+
 LOCAL_SRC_FILES               := \
+	NativeFormats/main.cpp \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaNativeUtil.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
-	NativeFormats/main.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
 	NativeFormats/util/CoversWriter.cpp \
 	NativeFormats/extensions.cpp \

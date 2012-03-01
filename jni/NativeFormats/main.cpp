@@ -30,9 +30,6 @@
 
 #include <ZLibrary.h>
 
-
-JavaVM *ourGlobalJavaVM;
-
 extern "C"
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
 	const jint version = JNI_VERSION_1_2;
