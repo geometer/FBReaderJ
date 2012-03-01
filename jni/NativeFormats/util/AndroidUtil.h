@@ -31,10 +31,10 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
-	static const char * const Class_java_io_InputStream;
 	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Map;
 	static const char * const Class_java_util_Locale;
+	static const char * const Class_java_io_InputStream;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
@@ -45,21 +45,6 @@ public:
 	static const char * const Class_BookModel;
 	static const char * const Class_NativeBookModel;
 
-	static jmethodID SMID_ZLibrary_Instance;
-	static jmethodID MID_ZLibrary_getVersionName;
-
-	static jmethodID SMID_ZLFile_createFileByPath;
-	static jmethodID MID_ZLFile_size;
-	static jmethodID MID_ZLFile_exists;
-	static jmethodID MID_ZLFile_isDirectory;
-	static jmethodID MID_ZLFile_getInputStream;
-	static jmethodID MID_ZLFile_children;
-	static jmethodID MID_ZLFile_getPath;
-
-	static jmethodID MID_java_io_InputStream_close;
-	static jmethodID MID_java_io_InputStream_read;
-	static jmethodID MID_java_io_InputStream_skip;
-
 	static jmethodID MID_java_util_Collection_toArray;
 	static jmethodID MID_java_util_Collection_add;
 
@@ -67,6 +52,21 @@ public:
 
 	static jmethodID SMID_java_util_Locale_getDefault;
 	static jmethodID MID_java_util_Locale_getLanguage;
+
+	static jmethodID MID_java_io_InputStream_close;
+	static jmethodID MID_java_io_InputStream_read;
+	static jmethodID MID_java_io_InputStream_skip;
+
+	static jmethodID SMID_ZLibrary_Instance;
+	static jmethodID MID_ZLibrary_getVersionName;
+
+	static jmethodID SMID_ZLFile_createFileByPath;
+	static jmethodID MID_ZLFile_children;
+	static jmethodID MID_ZLFile_exists;
+	static jmethodID MID_ZLFile_getInputStream;
+	static jmethodID MID_ZLFile_getPath;
+	static jmethodID MID_ZLFile_isDirectory;
+	static jmethodID MID_ZLFile_size;
 
 	static jmethodID MID_NativeFormatPlugin_init;
 	static jmethodID MID_NativeFormatPlugin_supportedFileType;
