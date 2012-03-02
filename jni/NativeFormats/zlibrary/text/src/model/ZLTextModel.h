@@ -53,7 +53,7 @@ public:
 
 	const std::string &id() const;
 	const std::string &language() const;
-	bool isRtl() const;
+	//bool isRtl() const;
 
 	size_t paragraphsNumber() const;
 	ZLTextParagraph *operator [] (size_t index);
