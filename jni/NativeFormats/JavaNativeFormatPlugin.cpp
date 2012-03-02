@@ -94,3 +94,18 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	fillMetaInfo(env, javaBook, *book);
 	return JNI_TRUE;
 }
+
+extern "C"
+JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readLanguageAndEncoding(JNIEnv* env, jobject thiz, jobject javaBook) {
+	return JNI_FALSE;
+}
+
+extern "C"
+JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModel(JNIEnv* env, jobject thiz, jobject javaModel) {
+	return JNI_FALSE;
+}
+
+extern "C"
+JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readCoverInternal(JNIEnv* env, jobject thiz, jobject file) {
+	return 0;
+}
