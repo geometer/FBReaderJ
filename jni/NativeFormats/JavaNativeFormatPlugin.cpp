@@ -86,6 +86,8 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 		return JNI_FALSE;
 	}
 
+	return JNI_FALSE;
+
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
 	if (!plugin->readMetaInfo(*book)) {
 		return JNI_FALSE;
