@@ -64,7 +64,7 @@ class FormatPreference extends ListPreference {
 		myResource = resource.getResource(resourceKey);
 		final String emptySummary = myResource.getResource("appNotSet").getValue();
 
-		if (myOption.getValue() != "" && (myOption.getValue() != Formats.JAVA_OPTION || !myIsJava) && (myOption.getValue() != Formats.NATIVE_OPTION || !myIsNative)) {
+		if (!myOption.getValue().equals("") && (!myOption.getValue().equals(Formats.JAVA_OPTION) || !myIsJava) && (!myOption.getValue().equals(Formats.NATIVE_OPTION) || !myIsNative)) {
 			final PackageManager pm = getContext().getPackageManager();
 			try {
 				ApplicationInfo info = pm.getApplicationInfo(myOption.getValue(), 0);
@@ -73,9 +73,9 @@ class FormatPreference extends ListPreference {
 				myOption.setValue("");
 				setSummary(emptySummary);
 			}
-		} else if (myOption.getValue() == Formats.JAVA_OPTION) {
+		} else if (myOption.getValue().equals(Formats.JAVA_OPTION)) {
 			setSummary(myResource.getResource("java").getValue());
-		} else if (myOption.getValue() == Formats.NATIVE_OPTION) {
+		} else if (myOption.getValue().equals(Formats.NATIVE_OPTION)) {
 			setSummary(myResource.getResource("native").getValue());
 		} else {
 			setSummary(emptySummary);
@@ -145,7 +145,7 @@ class FormatPreference extends ListPreference {
 		}
 		setEntries(names.toArray(new String[names.size()]));
 		setEntryValues(values.toArray(new String[values.size()]));
-		if (myOption.getValue() != "") {
+		if (!myOption.getValue().equals("")) {
 			setValue(myOption.getValue());
 		}
 		return foundSomething;

@@ -82,7 +82,11 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(ZLFile file) {
-		return getPlugin(file, FormatPlugin.Type.ANY);
+		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
+		if (fileType == null) {
+			return null;
+		}
+		return getPlugin(fileType, Formats.getStatus(fileType.Id));
 	}
 
 	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
@@ -91,20 +95,30 @@ public class PluginCollection {
 	}
 
 	private FormatPlugin getOrCreateExternalPlugin(FileType fileType) {
-		FormatPlugin plugin = getPlugin(fileType, FormatPlugin.Type.EXTERNAL);
-
-		if (plugin == null) {
-			FormatPlugin builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
-			if (builtInPlugin == null) {
-				builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
-			}
-			if (builtInPlugin != null) {
-				plugin = new ExternalFormatPlugin(fileType.Id, (InfoReader)builtInPlugin);
-			} else {
-				plugin = new ExternalFormatPlugin(fileType.Id);
-			}
-			addPlugin(plugin);
+		boolean exists = true;
+		final List<FormatPlugin> list = myPlugins.get(FormatPlugin.Type.EXTERNAL);
+		if (list == null) {
+			exists = false;
 		}
+		if (exists) {
+			for (FormatPlugin p : list) {
+				if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
+					return p;
+				}
+			}
+		}
+
+		FormatPlugin plugin;
+		FormatPlugin builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
+		if (builtInPlugin == null) {
+			builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+		}
+		if (builtInPlugin != null) {
+			plugin = new ExternalFormatPlugin(fileType.Id, (InfoReader)builtInPlugin);
+		} else {
+			plugin = new ExternalFormatPlugin(fileType.Id);
+		}
+		addPlugin(plugin);
 		return plugin;
 	}
 
@@ -113,7 +127,9 @@ public class PluginCollection {
 			return null;
 		}
 
-		if (formatType == FormatPlugin.Type.ANY) {
+		if (formatType == FormatPlugin.Type.EXTERNAL) {
+			return getOrCreateExternalPlugin(fileType);
+		} else if (formatType == FormatPlugin.Type.ANY) {
 			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 			if (p == null) {
 				p = getPlugin(fileType, FormatPlugin.Type.NATIVE);

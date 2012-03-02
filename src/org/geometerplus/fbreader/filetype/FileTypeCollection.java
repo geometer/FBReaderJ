@@ -62,9 +62,9 @@ public class FileTypeCollection {
 				return type;
 			}
 		}
-		if (file.getExtension() != "") {
-			addType(new FileTypeByExtension(file.getExtension(), file.getExtension(), MimeType.TEXT_PLAIN));
-			return myTypes.get(file.getExtension());
+		if (!file.getExtension().equals("") && !file.getExtension().contains("/")) {
+			addType(new FileTypeByExtension(file.getExtension().toLowerCase(), file.getExtension().toLowerCase(), MimeType.TEXT_PLAIN));
+			return myTypes.get(file.getExtension().toLowerCase());
 		}
 		return null;
 	}

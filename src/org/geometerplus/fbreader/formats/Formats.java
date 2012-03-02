@@ -69,6 +69,7 @@ public abstract class Formats {
 
 	private static boolean isValid(String filetype) {
 		if (filetype.equals("")) return false;
+		if (filetype.equals("fbreaderhelp")) return false;
 		if (filetype.contains(";")) return false;
 		if (filetype.contains(" ")) return false;
 		if (filetype.contains(".")) return false;
@@ -146,6 +147,9 @@ public abstract class Formats {
 
 	public static ZLStringOption filetypeOption(String filetype) {
 		filetype = filetype.toLowerCase();
+		if (filetype.equals("fbreaderhelp")) {
+			return new ZLStringOption("Formats", filetypeToOption(filetype), JAVA_OPTION);
+		}
 		if (getJavaFormats().contains(filetype)) {
 			return new ZLStringOption("Formats", filetypeToOption(filetype), JAVA_OPTION);
 		} else if (getNativeFormats().contains(filetype)) {
