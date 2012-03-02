@@ -45,6 +45,7 @@ jmethodID AndroidUtil::SMID_ZLibrary_Instance;
 jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
 
 jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
+jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
@@ -62,6 +63,12 @@ jfieldID AndroidUtil::FID_Book_File;
 jmethodID AndroidUtil::MID_Book_getTitle;
 jmethodID AndroidUtil::MID_Book_getLanguage;
 jmethodID AndroidUtil::MID_Book_getEncoding;
+jmethodID AndroidUtil::MID_Book_setTitle;
+jmethodID AndroidUtil::MID_Book_setSeriesInfo;
+jmethodID AndroidUtil::MID_Book_setLanguage;
+jmethodID AndroidUtil::MID_Book_setEncoding;
+jmethodID AndroidUtil::MID_Book_addAuthor;
+jmethodID AndroidUtil::MID_Book_addTag;
 
 jmethodID AndroidUtil::SMID_Tag_getTag;
 
@@ -102,7 +109,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
 	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V") );
-	//CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "()Ljava/lang/String;") );
 	//CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
 	env->DeleteLocalRef(cls);
 
@@ -129,6 +136,12 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_Book_getTitle = env->GetMethodID(cls, "getTitle", "()Ljava/lang/String;") );
 	CHECK_NULL( MID_Book_getLanguage = env->GetMethodID(cls, "getLanguage", "()Ljava/lang/String;") );
 	CHECK_NULL( MID_Book_getEncoding = env->GetMethodID(cls, "getEncoding", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_Book_setTitle = env->GetMethodID(cls, "setTitle", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_Book_setSeriesInfo = env->GetMethodID(cls, "setSeriesInfo", "(Ljava/lang/String;F)V") );
+	CHECK_NULL( MID_Book_setLanguage = env->GetMethodID(cls, "setLanguage", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_Book_setEncoding = env->GetMethodID(cls, "setEncoding", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_Book_addAuthor = env->GetMethodID(cls, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)V") );
+	CHECK_NULL( MID_Book_addTag = env->GetMethodID(cls, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)V") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Tag) );
