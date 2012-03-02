@@ -29,7 +29,7 @@
 //#include "fb2/FB2Plugin.h"
 ////#include "docbook/DocBookPlugin.h"
 //#include "html/HtmlPlugin.h"
-//#include "txt/TxtPlugin.h"
+#include "txt/TxtPlugin.h"
 //#include "pdb/PdbPlugin.h"
 //#include "tcr/TcrPlugin.h"
 //#include "oeb/OEBPlugin.h"
@@ -46,7 +46,7 @@ PluginCollection &PluginCollection::Instance() {
 		//ourInstance->myPlugins.push_back(new FB2Plugin());
 //		//ourInstance->myPlugins.push_back(new DocBookPlugin());
 		//ourInstance->myPlugins.push_back(new HtmlPlugin());
-		//ourInstance->myPlugins.push_back(new TxtPlugin());
+		ourInstance->myPlugins.push_back(new TxtPlugin());
 //		ourInstance->myPlugins.push_back(new PluckerPlugin());
 //		ourInstance->myPlugins.push_back(new PalmDocPlugin());
 //		ourInstance->myPlugins.push_back(new MobipocketPlugin());
