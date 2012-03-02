@@ -84,10 +84,10 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/xml/ZLPlainAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
-	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
-	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSDir.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSManager.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileInputStream.cpp \
+	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLCachedMemoryAllocator.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLImageMapWriter.cpp \
