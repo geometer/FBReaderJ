@@ -44,6 +44,8 @@ jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 jmethodID AndroidUtil::SMID_ZLibrary_Instance;
 jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
 
+jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
+
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
@@ -96,6 +98,12 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( cls = env->FindClass(Class_ZLibrary) );
 	CHECK_NULL( SMID_ZLibrary_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/library/ZLibrary;") );
 	CHECK_NULL( MID_ZLibrary_getVersionName = env->GetMethodID(cls, "getVersionName", "()Ljava/lang/String;") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
+	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V") );
+	//CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "()Ljava/lang/String;") );
+	//CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_PluginCollection) );
