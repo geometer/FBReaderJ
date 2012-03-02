@@ -52,16 +52,16 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingSet.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
+	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLGzipInputStream.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZDecompressor.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipDir.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipEntryCache.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipHeader.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipInputStream.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLFSManager.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLFile.cpp \
-	NativeFormats/zlibrary/core/src/filesystem/ZLInputStreamDecorator.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLBase64EncodedImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLFileImage.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLStreamImage.cpp \
