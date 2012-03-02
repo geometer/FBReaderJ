@@ -50,9 +50,9 @@ jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 jmethodID AndroidUtil::SMID_ZLibrary_Instance;
 jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
 
+jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
 jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
 jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
-jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
