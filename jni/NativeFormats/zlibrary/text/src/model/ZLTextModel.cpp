@@ -23,7 +23,7 @@
 
 #include <ZLibrary.h>
 //#include <ZLSearchUtil.h>
-#include <ZLLanguageUtil.h>
+//#include <ZLLanguageUtil.h>
 #include <ZLUnicodeUtil.h>
 
 #include "ZLTextModel.h"
@@ -43,11 +43,11 @@ ZLTextModel::~ZLTextModel() {
 	}
 }
 
+/*
 bool ZLTextModel::isRtl() const {
 	return ZLLanguageUtil::isRTLLanguage(myLanguage);
 }
 
-/*
 void ZLTextModel::search(const std::string &text, size_t startIndex, size_t endIndex, bool ignoreCase) const {
 	ZLSearchPattern pattern(text, ignoreCase);
 	myMarks.clear();

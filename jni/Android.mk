@@ -99,16 +99,16 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/ui/src/android/library/ZLAndroidLibraryImplementation.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookModel.cpp \
 	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
-	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
-	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
+	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2BookReader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2CoverReader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2MetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2Plugin.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
-	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
+	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
+	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlBookReader.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlDescriptionReader.cpp \
 	NativeFormats/fbreader/src/formats/html/HtmlEntityCollection.cpp \
