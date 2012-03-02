@@ -22,16 +22,28 @@ package org.geometerplus.fbreader.filetype;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-public abstract class FileType {
-	public final String Id;
-
-	protected FileType(String id) {
-		Id = id;
+class FileTypePdf extends FileType {
+	FileTypePdf() {
+		super("pdf");
 	}
 
-	public abstract boolean acceptsFile(ZLFile file);
-	public abstract boolean acceptsExtension(String ext);
+	@Override
+	public boolean acceptsFile(ZLFile file) {
+		return acceptsExtension(file.getExtension());
+	}
 
-	public abstract String extension();
-	public abstract MimeType mimeType();
+	@Override
+	public boolean acceptsExtension(String ext) {
+		return "pdf".equals(ext.toLowerCase());
+	}
+
+	@Override
+	public String extension() {
+		return "pdf";
+	}
+
+	@Override
+	public MimeType mimeType() {
+		return MimeType.APP_PDF;
+	}
 }

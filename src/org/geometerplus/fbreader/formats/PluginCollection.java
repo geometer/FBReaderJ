@@ -66,6 +66,7 @@ public class PluginCollection {
 		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
 
 		addPlugin(new FB2Plugin());
+		addPlugin(new FB2Plugin("fbreaderhelp"));
 		addPlugin(new MobipocketPlugin());
 		addPlugin(new OEBPlugin());
 	}

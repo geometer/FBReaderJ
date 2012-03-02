@@ -48,6 +48,7 @@ class FormatPreference extends ListPreference {
 	private final String myFormat;
 	private final boolean myIsJava;
 	private final boolean myIsNative;
+	private final boolean myIsPredefined;
 	private final ZLResource myResource;
 
 	FormatPreference(Context context, String formatName, Screen scr, ZLResource resource, String resourceKey) {
@@ -59,6 +60,7 @@ class FormatPreference extends ListPreference {
 		myFormat = formatName;
 		myIsNative = Formats.getNativeFormats().contains(formatName);
 		myIsJava = Formats.getJavaFormats().contains(formatName);
+		myIsPredefined = Formats.getPredefinedExternalFormats().contains(formatName);
 		myResource = resource.getResource(resourceKey);
 		final String emptySummary = myResource.getResource("appNotSet").getValue();
 
@@ -132,10 +134,14 @@ class FormatPreference extends ListPreference {
 		}
 		boolean foundSomething = (values.size() > 0);
 		myPaths.clear();
-		if (!myIsNative && !myIsJava) {
+		if (!myIsNative && !myIsJava && !myIsPredefined) {
 			final String deleteItem = myResource.getResource("delete").getValue();
 			values.add("DELETE");
 			names.add(deleteItem);
+		}
+		if (myIsPredefined) {
+			values.add("");
+			names.add(myResource.getResource("appNotSet").getValue());
 		}
 		setEntries(names.toArray(new String[names.size()]));
 		setEntryValues(values.toArray(new String[values.size()]));

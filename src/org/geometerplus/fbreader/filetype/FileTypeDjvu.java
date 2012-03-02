@@ -22,16 +22,28 @@ package org.geometerplus.fbreader.filetype;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-public abstract class FileType {
-	public final String Id;
-
-	protected FileType(String id) {
-		Id = id;
+class FileTypeDjvu extends FileType {
+	FileTypeDjvu() {
+		super("djvu");
 	}
 
-	public abstract boolean acceptsFile(ZLFile file);
-	public abstract boolean acceptsExtension(String ext);
+	@Override
+	public boolean acceptsFile(ZLFile file) {
+		return acceptsExtension(file.getExtension());
+	}
 
-	public abstract String extension();
-	public abstract MimeType mimeType();
+	@Override
+	public boolean acceptsExtension(String ext) {
+		return "djvu".equals(ext.toLowerCase()) || "djv".equals(ext.toLowerCase());
+	}
+
+	@Override
+	public String extension() {
+		return "djvu";
+	}
+
+	@Override
+	public MimeType mimeType() {
+		return null;//FIXME
+	}
 }

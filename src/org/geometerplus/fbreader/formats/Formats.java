@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.fbreader.filetype.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -27,6 +28,8 @@ public abstract class Formats {
 
 	private static String JAVA_FILETYPES = "fb2;epub;mobipocket";
 	private static String NATIVE_FILETYPES = "";//TODO
+
+	private static String PREDEFINED_FILETYPES = "html;pdf;djvu";
 
 	public static String JAVA_OPTION = "fbreader_java";
 	public static String NATIVE_OPTION = "fbreader_native";
@@ -40,8 +43,12 @@ public abstract class Formats {
 		return option.replace("FILETYPE_", "");
 	}
 
-	public static ArrayList<String> getExternalFormats() {
+	public static ArrayList<String> getCustomExternalFormats() {
 		return listFromString(new ZLStringOption("Formats", "ExternalFormats", "").getValue());
+	}
+
+	public static ArrayList<String> getPredefinedExternalFormats() {
+		return listFromString(PREDEFINED_FILETYPES);
 	}
 
 	public static ArrayList<String> getJavaFormats() {
@@ -62,11 +69,38 @@ public abstract class Formats {
 
 	private static boolean isValid(String filetype) {
 		if (filetype.equals("")) return false;
-		if (filetype.equals("opf")) return false;
 		if (filetype.contains(";")) return false;
 		if (filetype.contains(" ")) return false;
 		if (filetype.contains(".")) return false;
 		return true;
+	}
+
+	public static FileType getExistingFileType(String extension) {
+		for (String s : getJavaFormats()) {
+			FileType type = FileTypeCollection.Instance.typeById(s);
+			if (type.acceptsExtension(extension)) {
+				return type;
+			}
+		}
+		for (String s : getNativeFormats()) {
+			FileType type = FileTypeCollection.Instance.typeById(s);
+			if (type.acceptsExtension(extension)) {
+				return type;
+			}
+		}
+		for (String s : getPredefinedExternalFormats()) {
+			FileType type = FileTypeCollection.Instance.typeById(s);
+			if (type.acceptsExtension(extension)) {
+				return type;
+			}
+		}
+		for (String s : getCustomExternalFormats()) {
+			FileType type = FileTypeCollection.Instance.typeById(s);
+			if (type.acceptsExtension(extension)) {
+				return type;
+			}
+		}
+		return null;
 	}
 
 	public static boolean addFormat(String filetype) {
@@ -74,10 +108,10 @@ public abstract class Formats {
 		if (!isValid(filetype)) {
 			return false;
 		}
-		ZLStringOption formats = new ZLStringOption("Formats", "ExternalFormats", "");
-		if (getExternalFormats().contains(filetype) || getJavaFormats().contains(filetype) || getNativeFormats().contains(filetype)) {
+		if (getExistingFileType(filetype) != null) {
 			return false;
 		}
+		ZLStringOption formats = new ZLStringOption("Formats", "ExternalFormats", "");
 		if (formats.getValue().equals("")) {
 			formats.setValue(filetype);
 			return true;

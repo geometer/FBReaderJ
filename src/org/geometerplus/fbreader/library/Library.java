@@ -94,20 +94,20 @@ public final class Library extends AbstractLibrary {
 		final Locale locale = Locale.getDefault();
 
 		ZLResourceFile file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + "_" + locale.getCountry() + ".fb2"
+			"data/help/MiniHelp." + locale.getLanguage() + "_" + locale.getCountry() + ".fbreaderhelp"
 		);
 		if (file.exists()) {
 			return file;
 		}
 
 		file = ZLResourceFile.createResourceFile(
-			"data/help/MiniHelp." + locale.getLanguage() + ".fb2"
+			"data/help/MiniHelp." + locale.getLanguage() + ".fbreaderhelp"
 		);
 		if (file.exists()) {
 			return file;
 		}
 
-		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fb2");
+		return ZLResourceFile.createResourceFile("data/help/MiniHelp.en.fbreaderhelp");
 	}
 
 	private void collectBooks(

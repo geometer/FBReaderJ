@@ -30,6 +30,10 @@ public class FB2Plugin extends JavaFormatPlugin {
 		super("fb2");
 	}
 
+	public FB2Plugin(String extension) {
+		super(extension);
+	}
+
 	@Override
 	public boolean readMetaInfo(Book book) {
 		return new FB2MetaInfoReader(book).readMetaInfo();

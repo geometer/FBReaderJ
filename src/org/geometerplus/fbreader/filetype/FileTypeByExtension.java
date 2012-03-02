@@ -34,7 +34,12 @@ class FileTypeByExtension extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return myExtension.equalsIgnoreCase(file.getExtension());
+		return acceptsExtension(file.getExtension());
+	}
+
+	@Override
+	public boolean acceptsExtension(String ext) {
+		return myExtension.equalsIgnoreCase(ext);
 	}
 
 	@Override

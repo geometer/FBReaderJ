@@ -57,9 +57,12 @@ abstract class FileTypePalm extends FileType {
 	@Override
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension();
-		return
-			("pdb".equalsIgnoreCase(extension) || "prc".equalsIgnoreCase(extension)) &&
-			myPalmId.equals(palmFileType(file));
+		return acceptsExtension(extension) && myPalmId.equals(palmFileType(file));
+	}
+
+	@Override
+	public boolean acceptsExtension(String ext) {
+		return ("pdb".equalsIgnoreCase(ext) || "prc".equalsIgnoreCase(ext));
 	}
 
 	@Override
