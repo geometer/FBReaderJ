@@ -147,6 +147,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( cls = env->FindClass(Class_Tag) );
 	CHECK_NULL( SMID_Tag_getTag = env->GetStaticMethodID(cls, "getTag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)Lorg/geometerplus/fbreader/library/Tag;") );
 	env->DeleteLocalRef(cls);
+
+	return true;
 }
 
 jobject AndroidUtil::createZLFile(JNIEnv *env, const std::string &path) {
