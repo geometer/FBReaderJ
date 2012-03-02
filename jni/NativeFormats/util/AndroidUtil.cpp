@@ -27,6 +27,7 @@ const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
+const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
@@ -52,6 +53,8 @@ jmethodID AndroidUtil::MID_ZLFile_getInputStream;
 jmethodID AndroidUtil::MID_ZLFile_getPath;
 jmethodID AndroidUtil::MID_ZLFile_isDirectory;
 jmethodID AndroidUtil::MID_ZLFile_size;
+
+jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
 
 jfieldID AndroidUtil::FID_Book_File;
 jmethodID AndroidUtil::MID_Book_getTitle;
@@ -107,6 +110,10 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_ZLFile_getInputStream = env->GetMethodID(cls, "getInputStream", "()Ljava/io/InputStream;") );
 	CHECK_NULL( MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;") );
 	CHECK_NULL( MID_ZLFile_size = env->GetMethodID(cls, "size", "()J") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_Paths) );
+	CHECK_NULL( SMID_Paths_cacheDirectory = env->GetStaticMethodID(cls, "cacheDirectory", "()Ljava/lang/String;") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Book) );
