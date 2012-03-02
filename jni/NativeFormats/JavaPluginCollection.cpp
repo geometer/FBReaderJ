@@ -28,8 +28,6 @@
 
 #include <AndroidUtil.h>
 
-#include <ZLFile.h>
-
 #include "fbreader/src/formats/FormatPlugin.h"
 
 extern "C"

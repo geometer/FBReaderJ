@@ -50,6 +50,10 @@ jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 jmethodID AndroidUtil::SMID_ZLibrary_Instance;
 jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
 
+jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
+jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
+jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
+
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
@@ -59,10 +63,6 @@ jmethodID AndroidUtil::MID_ZLFile_getInputStream;
 jmethodID AndroidUtil::MID_ZLFile_getPath;
 jmethodID AndroidUtil::MID_ZLFile_isDirectory;
 jmethodID AndroidUtil::MID_ZLFile_size;
-
-jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
-jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
-jmethodID AndroidUtil::SMID_NativeFormatPlugin_createImage;
 
 jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
 
@@ -127,6 +127,12 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_ZLibrary_getVersionName = env->GetMethodID(cls, "getVersionName", "()Ljava/lang/String;") );
 	env->DeleteLocalRef(cls);
 
+	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
+	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V") );
+	CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "()Ljava/lang/String;") );
+	CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
+	env->DeleteLocalRef(cls);
+
 	CHECK_NULL( cls = env->FindClass(Class_PluginCollection) );
 	CHECK_NULL( SMID_PluginCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/PluginCollection;") );
 	env->DeleteLocalRef(cls);
@@ -139,12 +145,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_ZLFile_getInputStream = env->GetMethodID(cls, "getInputStream", "()Ljava/io/InputStream;") );
 	CHECK_NULL( MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;") );
 	CHECK_NULL( MID_ZLFile_size = env->GetMethodID(cls, "size", "()J") );
-	env->DeleteLocalRef(cls);
-
-	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
-	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V") );
-	CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "()Ljava/lang/String;") );
-	CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Paths) );
