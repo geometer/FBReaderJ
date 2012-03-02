@@ -62,6 +62,7 @@ public:
 	static jmethodID MID_ZLFile_size;
 
 	static jmethodID MID_NativeFormatPlugin_init;
+	static jmethodID MID_NativeFormatPlugin_supportedFileType;
 
 	static jmethodID SMID_PluginCollection_Instance;
 
@@ -71,6 +72,12 @@ public:
 	static jmethodID MID_Book_getTitle;
 	static jmethodID MID_Book_getLanguage;
 	static jmethodID MID_Book_getEncoding;
+	static jmethodID MID_Book_setTitle;
+	static jmethodID MID_Book_setSeriesInfo;
+	static jmethodID MID_Book_setLanguage;
+	static jmethodID MID_Book_setEncoding;
+	static jmethodID MID_Book_addAuthor;
+	static jmethodID MID_Book_addTag;
 
 	static jmethodID SMID_Tag_getTag;
 
