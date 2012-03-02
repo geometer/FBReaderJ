@@ -68,9 +68,9 @@ public:
 	static jmethodID MID_ZLFile_isDirectory;
 	static jmethodID MID_ZLFile_size;
 
+	static jmethodID SMID_NativeFormatPlugin_createImage;
 	static jmethodID MID_NativeFormatPlugin_init;
 	static jmethodID MID_NativeFormatPlugin_supportedFileType;
-	static jmethodID SMID_NativeFormatPlugin_createImage;
 
 	static jmethodID SMID_PluginCollection_Instance;
 
