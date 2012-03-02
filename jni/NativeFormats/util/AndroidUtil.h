@@ -61,6 +61,8 @@ public:
 	static jmethodID MID_ZLFile_isDirectory;
 	static jmethodID MID_ZLFile_size;
 
+	static jmethodID MID_NativeFormatPlugin_init;
+
 	static jmethodID SMID_PluginCollection_Instance;
 
 	static jmethodID SMID_Paths_cacheDirectory;
