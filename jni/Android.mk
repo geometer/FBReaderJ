@@ -54,6 +54,8 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipEntryCache.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipHeader.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipInputStream.cpp \
+	NativeFormats/zlibrary/core/src/image/ZLFileImage.cpp \
+	NativeFormats/zlibrary/core/src/image/ZLStreamImage.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
