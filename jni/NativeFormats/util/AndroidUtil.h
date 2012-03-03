@@ -31,10 +31,12 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
+	static const char * const Class_java_lang_System;
 	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Map;
 	static const char * const Class_java_util_Locale;
 	static const char * const Class_java_io_InputStream;
+	static const char * const Class_java_io_PrintStream;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
@@ -44,6 +46,8 @@ public:
 	static const char * const Class_Tag;
 	static const char * const Class_BookModel;
 	static const char * const Class_NativeBookModel;
+
+	static jobject OBJECT_java_lang_System_err;
 
 	static jmethodID MID_java_util_Collection_toArray;
 	static jmethodID MID_java_util_Collection_add;
@@ -56,6 +60,8 @@ public:
 	static jmethodID MID_java_io_InputStream_close;
 	static jmethodID MID_java_io_InputStream_read;
 	static jmethodID MID_java_io_InputStream_skip;
+
+	static jmethodID MID_java_io_PrintStream_println;
 
 	static jmethodID SMID_ZLibrary_Instance;
 	static jmethodID MID_ZLibrary_getVersionName;
