@@ -38,6 +38,7 @@ JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginColl
 			javaPlugins, i,
 			env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, fileType)
 		);
+		env->DeleteLocalRef(fileType);
 	}
 	return javaPlugins;
 }
