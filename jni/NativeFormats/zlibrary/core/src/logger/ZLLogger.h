@@ -20,6 +20,8 @@
 #ifndef __ZLLOGGER_H__
 #define __ZLLOGGER_H__
 
+#include <jni.h>
+
 #include <string>
 #include <set>
 
@@ -35,6 +37,8 @@ private:
 
 private:
 	ZLLogger();
+	~ZLLogger();
+	void printInternal(const std::string &message) const;
 
 public:
 	void registerClass(const std::string &className);
@@ -43,6 +47,10 @@ public:
 
 private:
 	std::set<std::string> myRegisteredClasses;
+
+	JNIEnv *myEnv;
+	mutable jobject mySystemErr;
+	mutable jclass myPrintStreamClass;
 };
 
 #endif /* __ZLLOGGER_H__ */

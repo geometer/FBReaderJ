@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-#include <iostream>
+#include <AndroidUtil.h>
 
 #include "ZLLogger.h"
 
@@ -33,6 +33,14 @@ ZLLogger &ZLLogger::Instance() {
 }
 
 ZLLogger::ZLLogger() {
+	myEnv = AndroidUtil::getEnv();
+	mySystemErr = 0;
+	myPrintStreamClass = 0;
+}
+
+ZLLogger::~ZLLogger() {
+	myEnv->DeleteLocalRef(mySystemErr);
+	myEnv->DeleteLocalRef(myPrintStreamClass);
 }
 
 void ZLLogger::registerClass(const std::string &className) {
@@ -41,17 +49,34 @@ void ZLLogger::registerClass(const std::string &className) {
 
 void ZLLogger::print(const std::string &className, const std::string &message) const {
 	if (className == DEFAULT_CLASS) {
-		std::cerr << message;
+		printInternal(message);
 	} else {
 		std::set<std::string>::const_iterator it =
 			myRegisteredClasses.find(className);
 
 		if (it != myRegisteredClasses.end()) {
-			std::cerr << className << ": " << message;
+			printInternal(className + ": " + message);
 		}
 	}
 }
 
 void ZLLogger::println(const std::string &className, const std::string &message) const {
-	print(className, message + '\n');
+	print(className, message);
+}
+
+void ZLLogger::printInternal(const std::string &message) const {
+	if (mySystemErr == 0) {
+		jclass systemClass = myEnv->FindClass("java/lang/System");
+		jfieldID systemErr = myEnv->GetStaticFieldID(systemClass, "err", "Ljava/io/PrintStream;");
+		mySystemErr = myEnv->GetStaticObjectField(systemClass, systemErr);
+		myEnv->DeleteLocalRef(systemClass);
+	}
+	if (myPrintStreamClass == 0) {
+		myPrintStreamClass = myEnv->FindClass("java/io/PrintStream");
+	}
+
+	jmethodID println = myEnv->GetMethodID(myPrintStreamClass, "print", "(Ljava/lang/String;)V");
+	jstring javaMessage = myEnv->NewStringUTF(message.c_str());
+	myEnv->CallVoidMethod(mySystemErr, println, javaMessage);
+	myEnv->DeleteLocalRef(javaMessage);
 }
