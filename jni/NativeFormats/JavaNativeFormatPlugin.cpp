@@ -32,8 +32,8 @@
 #include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
 #include "fbreader/src/library/Library.h"
-#include "fbreader/src/library/Book.h"
 #include "fbreader/src/library/Author.h"
+#include "fbreader/src/library/Book.h"
 #include "fbreader/src/library/Tag.h"
 
 
@@ -233,7 +233,6 @@ static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &mode
 	return env->PopLocalFrame(textModel);
 }
 
-
 static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 	ContentsModel &contentsModel = (ContentsModel&)*model.contentsModel();
 
@@ -264,16 +263,16 @@ static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 	return !env->ExceptionCheck();
 }
 
-
 extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModel(JNIEnv* env, jobject thiz, jobject javaModel) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
 	if (plugin.isNull()) {
 		return JNI_FALSE;
 	}
+
 	CoversWriter::Instance().resetCounter();
 
-	jobject javaBook = env->GetObjectField(javaModel, AndroidUtil::FID_BookModel_Book);
+	jobject javaBook = env->GetObjectField(javaModel, AndroidUtil::FID_NativeBookModel_Book);
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
 	shared_ptr<BookModel> model = new BookModel(book);
@@ -282,9 +281,9 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	}
 	model->flush();
 
-	if (!initBookModel(env, javaModel, *model)
-			|| !initInternalHyperlinks(env, javaModel, *model)
-			|| !initTOC(env, javaModel, *model)) {
+	if (!initBookModel(env, javaModel, *model) ||
+			!initInternalHyperlinks(env, javaModel, *model) ||
+			!initTOC(env, javaModel, *model)) {
 		return JNI_FALSE;
 	}
 

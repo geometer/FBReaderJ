@@ -34,7 +34,6 @@ const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
-const char * const AndroidUtil::Class_BookModel = "org/geometerplus/fbreader/bookmodel/BookModel";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
 
 jobject AndroidUtil::OBJECT_java_lang_System_err;
@@ -85,8 +84,7 @@ jmethodID AndroidUtil::MID_Book_addTag;
 
 jmethodID AndroidUtil::SMID_Tag_getTag;
 
-jfieldID AndroidUtil::FID_BookModel_Book;
-
+jfieldID AndroidUtil::FID_NativeBookModel_Book;
 jmethodID AndroidUtil::MID_NativeBookModel_initImageMap;
 jmethodID AndroidUtil::MID_NativeBookModel_initInternalHyperlinks;
 jmethodID AndroidUtil::MID_NativeBookModel_initTOC;
@@ -184,11 +182,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( SMID_Tag_getTag = env->GetStaticMethodID(cls, "getTag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)Lorg/geometerplus/fbreader/library/Tag;") );
 	env->DeleteLocalRef(cls);
 
-	CHECK_NULL( cls = env->FindClass(Class_BookModel) );
-	CHECK_NULL( FID_BookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;") );
-	env->DeleteLocalRef(cls);
-
 	CHECK_NULL( cls = env->FindClass(Class_NativeBookModel) );
+	CHECK_NULL( FID_NativeBookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;") );
 	CHECK_NULL( MID_NativeBookModel_initImageMap = env->GetMethodID(cls, "initImageMap", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V") );
 	CHECK_NULL( MID_NativeBookModel_initInternalHyperlinks = env->GetMethodID(cls, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)V") );
 	CHECK_NULL( MID_NativeBookModel_initTOC = env->GetMethodID(cls, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)V") );
