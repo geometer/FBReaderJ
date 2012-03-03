@@ -43,7 +43,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
 	NativeFormats/util/CoversWriter.cpp \
-	NativeFormats/zlibrary/core/src/constants/ZLMimeType.cpp \
 	NativeFormats/zlibrary/core/src/constants/ZLXMLNamespace.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/EncodingCollectionReader.cpp \
@@ -145,31 +144,15 @@ LOCAL_SRC_FILES               := \
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/application \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/blockTreeView \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/constants \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/dialogs \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/encoding \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/filesystem \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/filesystem/zip \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/image \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/language \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/library \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/logger \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/message \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/network \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/optionEntries \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/options \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/resources \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/time \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/util \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/view \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/xml \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/model \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/area \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/view \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/style \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/styleOptions \
-	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/hyphenation
+	$(LOCAL_PATH)/NativeFormats/zlibrary/text/src/model
 
 include $(BUILD_SHARED_LIBRARY)
