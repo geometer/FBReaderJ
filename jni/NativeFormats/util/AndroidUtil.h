@@ -44,7 +44,6 @@ public:
 	static const char * const Class_Paths;
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
-	static const char * const Class_BookModel;
 	static const char * const Class_NativeBookModel;
 
 	static jobject OBJECT_java_lang_System_err;
@@ -95,8 +94,7 @@ public:
 
 	static jmethodID SMID_Tag_getTag;
 
-	static jfieldID FID_BookModel_Book;
-
+	static jfieldID FID_NativeBookModel_Book;
 	static jmethodID MID_NativeBookModel_initImageMap;
 	static jmethodID MID_NativeBookModel_initInternalHyperlinks;
 	static jmethodID MID_NativeBookModel_initTOC;
