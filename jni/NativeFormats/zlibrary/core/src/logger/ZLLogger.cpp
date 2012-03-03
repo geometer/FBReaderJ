@@ -25,6 +25,17 @@ const std::string ZLLogger::DEFAULT_CLASS;
 
 ZLLogger *ZLLogger::ourInstance = 0;
 
+static void printInternal(const std::string &message) {
+	JNIEnv *env = AndroidUtil::getEnv();
+	jstring javaMessage = AndroidUtil::createJavaString(env, message);
+	env->CallVoidMethod(
+		AndroidUtil::OBJECT_java_lang_System_err,
+		AndroidUtil::MID_java_io_PrintStream_println,
+		javaMessage
+	);
+	env->DeleteLocalRef(javaMessage);
+}
+
 ZLLogger &ZLLogger::Instance() {
 	if (ourInstance == 0) {
 		ourInstance = new ZLLogger();
@@ -62,21 +73,4 @@ void ZLLogger::print(const std::string &className, const std::string &message) c
 
 void ZLLogger::println(const std::string &className, const std::string &message) const {
 	print(className, message);
-}
-
-void ZLLogger::printInternal(const std::string &message) const {
-	if (mySystemErr == 0) {
-		jclass systemClass = myEnv->FindClass("java/lang/System");
-		jfieldID systemErr = myEnv->GetStaticFieldID(systemClass, "err", "Ljava/io/PrintStream;");
-		mySystemErr = myEnv->GetStaticObjectField(systemClass, systemErr);
-		myEnv->DeleteLocalRef(systemClass);
-	}
-	if (myPrintStreamClass == 0) {
-		myPrintStreamClass = myEnv->FindClass("java/io/PrintStream");
-	}
-
-	jmethodID println = myEnv->GetMethodID(myPrintStreamClass, "print", "(Ljava/lang/String;)V");
-	jstring javaMessage = myEnv->NewStringUTF(message.c_str());
-	myEnv->CallVoidMethod(mySystemErr, println, javaMessage);
-	myEnv->DeleteLocalRef(javaMessage);
 }
