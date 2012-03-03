@@ -191,6 +191,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		}.start();
 
 		ZLApplication.Instance().getViewWidget().repaint();
+		if (!ZLApplication.Instance().fileOpenerIsSet()) {
+			ZLApplication.Instance().setFileOpener(new FileOpener(this));
+		}
 	}
 
 	protected abstract Runnable getPostponedInitAction();
@@ -277,9 +280,6 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		if (!ZLApplication.Instance().fileOpenerIsSet()) {
-			ZLApplication.Instance().setFileOpener(new FileOpener(this));
-		}
 		ZLApplication.Instance().openFile(fileFromIntent(intent), null);
 	}
 

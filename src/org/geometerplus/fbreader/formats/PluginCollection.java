@@ -149,6 +149,28 @@ public class PluginCollection {
 		}
 	}
 
+	public String ExtForMimeType(String type) {//FIXME: formats can have several extensions(?)
+		for (String ext : Formats.getPredefinedExternalFormats()) {
+			if (BigMimeTypeMap.getTypes(ext) != null) {
+				for (String mtype : BigMimeTypeMap.getTypes(ext)) {
+					if (mtype.equals(type)) {
+						return ext;
+					}
+				}
+			}
+		}
+		for (String ext : Formats.getCustomExternalFormats()) {
+			if (BigMimeTypeMap.getTypes(ext) != null) {
+				for (String mtype : BigMimeTypeMap.getTypes(ext)) {
+					if (mtype.equals(type)) {
+						return ext;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 	private native NativeFormatPlugin[] nativePlugins();
 	private native void free();
 

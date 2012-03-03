@@ -155,7 +155,6 @@ public abstract class Formats {
 		} else if (getNativeFormats().contains(filetype)) {
 			return new ZLStringOption("Formats", filetypeToOption(filetype), NATIVE_OPTION);
 		} else {
-			ZLStringOption opt = new ZLStringOption("Formats", filetypeToOption(filetype), "");
 			return new ZLStringOption("Formats", filetypeToOption(filetype), "");
 		}
 	}
