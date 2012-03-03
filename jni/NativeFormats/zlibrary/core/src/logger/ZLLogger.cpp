@@ -17,13 +17,24 @@
  * 02110-1301, USA.
  */
 
-#include <iostream>
+#include <AndroidUtil.h>
 
 #include "ZLLogger.h"
 
 const std::string ZLLogger::DEFAULT_CLASS;
 
 ZLLogger *ZLLogger::ourInstance = 0;
+
+static void printInternal(const std::string &message) {
+	JNIEnv *env = AndroidUtil::getEnv();
+	jstring javaMessage = AndroidUtil::createJavaString(env, message);
+	env->CallVoidMethod(
+		AndroidUtil::OBJECT_java_lang_System_err,
+		AndroidUtil::MID_java_io_PrintStream_println,
+		javaMessage
+	);
+	env->DeleteLocalRef(javaMessage);
+}
 
 ZLLogger &ZLLogger::Instance() {
 	if (ourInstance == 0) {
@@ -41,17 +52,17 @@ void ZLLogger::registerClass(const std::string &className) {
 
 void ZLLogger::print(const std::string &className, const std::string &message) const {
 	if (className == DEFAULT_CLASS) {
-		std::cerr << message;
+		printInternal(message);
 	} else {
 		std::set<std::string>::const_iterator it =
 			myRegisteredClasses.find(className);
 
 		if (it != myRegisteredClasses.end()) {
-			std::cerr << className << ": " << message;
+			printInternal(className + ": " + message);
 		}
 	}
 }
 
 void ZLLogger::println(const std::string &className, const std::string &message) const {
-	print(className, message + '\n');
+	print(className, message);
 }
