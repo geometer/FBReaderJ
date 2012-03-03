@@ -143,7 +143,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/library/Library.cpp \
 	NativeFormats/fbreader/src/library/Tag.cpp
 
-LOCAL_C_INCLUDES := \
+LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/application \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/blockTreeView \
