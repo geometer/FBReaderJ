@@ -21,9 +21,11 @@
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
+const char * const AndroidUtil::Class_java_lang_System = "java/lang/System";
 const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
+const char * const AndroidUtil::Class_java_io_PrintStream = "java/io/PrintStream";
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
@@ -31,6 +33,8 @@ const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
+
+jobject AndroidUtil::OBJECT_java_lang_System_err;
 
 jmethodID AndroidUtil::MID_java_util_Collection_toArray;
 
@@ -40,6 +44,8 @@ jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
 jmethodID AndroidUtil::MID_java_io_InputStream_close;
 jmethodID AndroidUtil::MID_java_io_InputStream_read;
 jmethodID AndroidUtil::MID_java_io_InputStream_skip;
+
+jmethodID AndroidUtil::MID_java_io_PrintStream_println;
 
 jmethodID AndroidUtil::SMID_ZLibrary_Instance;
 jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
@@ -86,6 +92,12 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	JNIEnv *env = getEnv();
 	jclass cls;
 
+	CHECK_NULL( cls = env->FindClass(Class_java_lang_System) );
+	jfieldID field;
+	CHECK_NULL( field = env->GetStaticFieldID(cls, "err", "Ljava/io/PrintStream;") );
+	CHECK_NULL( OBJECT_java_lang_System_err = env->GetStaticObjectField(cls, field) );
+	env->DeleteLocalRef(cls);
+
 	CHECK_NULL( cls = env->FindClass(Class_java_util_Collection) );
 	CHECK_NULL( MID_java_util_Collection_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;") );
 	//CHECK_NULL( MID_java_util_Collection_add = env->GetMethodID(cls, "add", "(Ljava/lang/Object;)Z") );
@@ -100,6 +112,10 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_java_io_InputStream_close = env->GetMethodID(cls, "close", "()V") );
 	CHECK_NULL( MID_java_io_InputStream_read = env->GetMethodID(cls, "read", "([BII)I") );
 	CHECK_NULL( MID_java_io_InputStream_skip = env->GetMethodID(cls, "skip", "(J)J") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_java_io_PrintStream) );
+	CHECK_NULL( MID_java_io_PrintStream_println = env->GetMethodID(cls, "println", "(Ljava/lang/String;)V") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLibrary) );
