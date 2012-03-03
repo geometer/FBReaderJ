@@ -23,7 +23,7 @@
 #include <ZLDir.h>
 #include <ZLInputStream.h>
 #include <ZLLogger.h>
-#include <ZLMimeType.h>
+//#include <ZLMimeType.h>
 
 #include "OEBPlugin.h"
 #include "OEBMetaInfoReader.h"

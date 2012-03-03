@@ -19,13 +19,6 @@
 
 #include <jni.h>
 
-// This code is temporary: it makes eclipse not complain
-#ifndef _JNI_H
-#define JNIIMPORT
-#define JNIEXPORT
-#define JNICALL
-#endif /* _JNI_H */
-
 #include <AndroidUtil.h>
 #include <CoversWriter.h>
 
