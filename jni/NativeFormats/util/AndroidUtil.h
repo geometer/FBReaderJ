@@ -23,6 +23,7 @@
 #include <jni.h>
 
 #include <string>
+#include <vector>
 
 class AndroidUtil {
 
@@ -42,6 +43,7 @@ public:
 	static const char * const Class_Paths;
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
+	static const char * const Class_NativeBookModel;
 
 	static jobject OBJECT_java_lang_System_err;
 
@@ -87,6 +89,14 @@ public:
 
 	static jmethodID SMID_Tag_getTag;
 
+	static jfieldID FID_NativeBookModel_Book;
+	static jmethodID MID_NativeBookModel_initImageMap;
+	static jmethodID MID_NativeBookModel_initInternalHyperlinks;
+	static jmethodID MID_NativeBookModel_initTOC;
+	static jmethodID MID_NativeBookModel_createTextModel;
+	static jmethodID MID_NativeBookModel_setBookTextModel;
+	static jmethodID MID_NativeBookModel_setFootnoteModel;
+
 public:
 	static bool init(JavaVM* jvm);
 	static JNIEnv *getEnv();
@@ -95,6 +105,10 @@ public:
 	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
 	static std::string convertNonUtfString(const std::string &str);
+
+	static jintArray createIntArray(JNIEnv *env, const std::vector<jint> &data);
+	static jbyteArray createByteArray(JNIEnv *env, const std::vector<jbyte> &data);
+	static jobjectArray createStringArray(JNIEnv *env, const std::vector<std::string> &data);
 
 	static void throwRuntimeException(JNIEnv *env, const std::string &message);
 };
