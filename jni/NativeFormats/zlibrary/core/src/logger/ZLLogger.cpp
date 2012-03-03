@@ -44,14 +44,6 @@ ZLLogger &ZLLogger::Instance() {
 }
 
 ZLLogger::ZLLogger() {
-	myEnv = AndroidUtil::getEnv();
-	mySystemErr = 0;
-	myPrintStreamClass = 0;
-}
-
-ZLLogger::~ZLLogger() {
-	myEnv->DeleteLocalRef(mySystemErr);
-	myEnv->DeleteLocalRef(myPrintStreamClass);
 }
 
 void ZLLogger::registerClass(const std::string &className) {

@@ -43,7 +43,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
 	NativeFormats/util/CoversWriter.cpp \
-	NativeFormats/extensions.cpp \
 	NativeFormats/zlibrary/core/src/constants/ZLMimeType.cpp \
 	NativeFormats/zlibrary/core/src/constants/ZLXMLNamespace.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
