@@ -33,6 +33,7 @@ const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
+const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
 
 jobject AndroidUtil::OBJECT_java_lang_System_err;
 
@@ -77,6 +78,14 @@ jmethodID AndroidUtil::MID_Book_addAuthor;
 jmethodID AndroidUtil::MID_Book_addTag;
 
 jmethodID AndroidUtil::SMID_Tag_getTag;
+
+jfieldID AndroidUtil::FID_NativeBookModel_Book;
+jmethodID AndroidUtil::MID_NativeBookModel_initImageMap;
+jmethodID AndroidUtil::MID_NativeBookModel_initInternalHyperlinks;
+jmethodID AndroidUtil::MID_NativeBookModel_initTOC;
+jmethodID AndroidUtil::MID_NativeBookModel_createTextModel;
+jmethodID AndroidUtil::MID_NativeBookModel_setBookTextModel;
+jmethodID AndroidUtil::MID_NativeBookModel_setFootnoteModel;
 
 JNIEnv *AndroidUtil::getEnv() {
 	JNIEnv *env;
@@ -164,6 +173,16 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( SMID_Tag_getTag = env->GetStaticMethodID(cls, "getTag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)Lorg/geometerplus/fbreader/library/Tag;") );
 	env->DeleteLocalRef(cls);
 
+	CHECK_NULL( cls = env->FindClass(Class_NativeBookModel) );
+	CHECK_NULL( FID_NativeBookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;") );
+	CHECK_NULL( MID_NativeBookModel_initImageMap = env->GetMethodID(cls, "initImageMap", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V") );
+	CHECK_NULL( MID_NativeBookModel_initInternalHyperlinks = env->GetMethodID(cls, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)V") );
+	CHECK_NULL( MID_NativeBookModel_initTOC = env->GetMethodID(cls, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)V") );
+	CHECK_NULL( MID_NativeBookModel_createTextModel = env->GetMethodID(cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)Lorg/geometerplus/zlibrary/text/model/ZLTextModel;") );
+	CHECK_NULL( MID_NativeBookModel_setBookTextModel = env->GetMethodID(cls, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
+	CHECK_NULL( MID_NativeBookModel_setFootnoteModel = env->GetMethodID(cls, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
+	env->DeleteLocalRef(cls);
+
 	return true;
 }
 
@@ -212,6 +231,35 @@ std::string AndroidUtil::convertNonUtfString(const std::string &str) {
 	delete[] chars;
 
 	return result;
+}
+
+jintArray AndroidUtil::createIntArray(JNIEnv *env, const std::vector<jint> &data) {
+	size_t size = data.size();
+	jintArray array = env->NewIntArray(size);
+	env->SetIntArrayRegion(array, 0, size, &data.front());
+	return array;
+}
+
+jbyteArray AndroidUtil::createByteArray(JNIEnv *env, const std::vector<jbyte> &data) {
+	size_t size = data.size();
+	jbyteArray array = env->NewByteArray(size);
+	env->SetByteArrayRegion(array, 0, size, &data.front());
+	return array;
+}
+
+jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::string> &data) {
+	size_t size = data.size();
+	jclass cls = env->FindClass("java/lang/String");
+	jobjectArray array = env->NewObjectArray(size, cls, 0);
+	for (size_t i = 0; i < size; ++i) {
+		const std::string &str = data[i];
+		if (str.length() > 0) {
+			jstring javaStr = env->NewStringUTF(str.c_str());
+			env->SetObjectArrayElement(array, i, javaStr);
+			env->DeleteLocalRef(javaStr);
+		}
+	}
+	return array;
 }
 
 void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
