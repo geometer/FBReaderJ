@@ -32,9 +32,7 @@ class ShowCancelMenuAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		if (Reader.getCurrentView() != Reader.BookTextView) {
-			Reader.showBookTextView();
-		} else {
+		if (!Reader.jumpBack()) {
 			final List<FBReaderApp.CancelActionDescription> descriptionList =
 				Reader.getCancelActionsList();
 			if (descriptionList.size() == 1) {
