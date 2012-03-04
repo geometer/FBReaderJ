@@ -1,6 +1,6 @@
 ===== 1.4 (Mar ??, 2012) =====
 * Experimental *.txt support
-* "Back" button behaviour has been changed: FBReader tries to jump back before showing Cancel menu
+* Changed "Back" button behaviour: FBReader tries to jump back before showing Cancel menu
 * Updated Czech localization (by Marek Pavelka)
 
 ===== 1.3.9 (Feb 26, 2012) =====
