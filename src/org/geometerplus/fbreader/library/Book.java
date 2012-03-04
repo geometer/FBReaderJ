@@ -155,7 +155,7 @@ public class Book {
 		}
 		if (myTitle == null || myTitle.length() == 0) {
 			final String fileName = File.getShortName();
-			final int index = fileName.lastIndexOf('.');
+			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL ? -1 : fileName.lastIndexOf('.'));
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
 		final String demoPathPrefix = Paths.BooksDirectoryOption().getValue() + java.io.File.separator + "Demos" + java.io.File.separator;
