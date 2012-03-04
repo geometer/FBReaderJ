@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
-import org.geometerplus.zlibrary.text.view.ZLTextWordCursor;
+import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
@@ -102,6 +102,9 @@ public final class FBReaderApp extends ZLApplication {
 	public final FBView FootnoteView;
 
 	public volatile BookModel Model;
+
+	private ZLTextPosition myJumpEndPosition;
+	private Date myJumpTimeStamp;
 
 	public FBReaderApp() {
 		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
@@ -199,11 +202,18 @@ public final class FBReaderApp extends ZLApplication {
 
 	public void tryOpenFootnote(String id) {
 		if (Model != null) {
+			myJumpEndPosition = null;
+			myJumpTimeStamp = null;
 			BookModel.Label label = Model.getLabel(id);
 			if (label != null) {
-				addInvisibleBookmark();
 				if (label.ModelId == null) {
+					if (getTextView() == BookTextView) {
+						addInvisibleBookmark();
+						myJumpEndPosition = new ZLTextFixedPosition(label.ParagraphIndex, 0, 0);
+						myJumpTimeStamp = new Date();
+					}
 					BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
+					setView(BookTextView);
 				} else {
 					FootnoteView.setModel(Model.getFootnoteModel(label.ModelId));
 					setView(FootnoteView);
@@ -260,10 +270,49 @@ public final class FBReaderApp extends ZLApplication {
 		getViewWidget().repaint();
 	}
 
+	public boolean jumpBack() {
+		System.err.println("jump back");
+		try {
+			if (getTextView() != BookTextView) {
+				showBookTextView();
+				System.err.println("jump back T1");
+				return true;
+			}
+
+			if (myJumpEndPosition == null || myJumpTimeStamp == null) {
+				System.err.println("jump back F2");
+				return false;
+			}
+			// more than 2 minutes ago
+			if (myJumpTimeStamp.getTime() + 2 * 60 * 1000 < new Date().getTime()) {
+				System.err.println("jump back F3");
+				return false;
+			}
+			if (!myJumpEndPosition.equals(BookTextView.getStartCursor())) {
+				System.err.println("jump back F4");
+				return false;
+			}
+
+			final List<Bookmark> bookmarks = Bookmark.invisibleBookmarks(Model.Book);
+			if (bookmarks.isEmpty()) {
+				System.err.println("jump back F5");
+				return false;
+			}
+			final Bookmark b = bookmarks.get(0);
+			b.delete();
+			gotoBookmark(b);
+			System.err.println("jump back T6");
+			return true;
+		} finally {
+			myJumpEndPosition = null;
+			myJumpTimeStamp = null;
+		}
+	}
+
 	public void gotoBookmark(Bookmark bookmark) {
-		addInvisibleBookmark();
 		final String modelId = bookmark.ModelId;
 		if (modelId == null) {
+			addInvisibleBookmark();
 			BookTextView.gotoPosition(bookmark);
 			setView(BookTextView);
 		} else {
