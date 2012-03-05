@@ -52,7 +52,7 @@ public class OEBPlugin extends JavaFormatPlugin {
 				return child;
 			}
 		}
-		throw new BookReadingException("opfFileNotFound");
+		throw new BookReadingException("opfFileNotFound", oebFile);
 	}
 
 	@Override
