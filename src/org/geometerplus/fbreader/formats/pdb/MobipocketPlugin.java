@@ -46,7 +46,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			final PdbHeader header = new PdbHeader(stream);
 			PdbUtil.skip(stream, header.Offsets[0] + 16 - header.length());
 			if (PdbUtil.readInt(stream) != 0x4D4F4249) /* "MOBI" */ {
-				throw new BookReadingException("unsupportedFileFormat");
+				throw new BookReadingException("unsupportedFileFormat", book.File);
 			}
 			final int length = (int)PdbUtil.readInt(stream);
 			PdbUtil.skip(stream, 4);

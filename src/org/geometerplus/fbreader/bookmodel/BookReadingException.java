@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.bookmodel;
 
 import java.io.IOException;
 
+import org.amse.ys.zip.ZipException;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
@@ -29,15 +31,22 @@ public final class BookReadingException extends Exception {
 		return ZLResource.resource("bookReadingException").getResource(resourceId).getValue();
 	}
 
-	public BookReadingException(String resourceId) {
-		super(getResourceText(resourceId));
+	public final ZLFile File;
+
+	public BookReadingException(String resourceId, String param, ZLFile file) {
+		super(getResourceText(resourceId).replace("%s", param));
+		File = file;
 	}
 
-	public BookReadingException(String resourceId, String param) {
-		super(getResourceText(resourceId).replace("%s", param));
+	public BookReadingException(String resourceId, ZLFile file) {
+		super(getResourceText(resourceId).replace("%s", file.getPath()));
+		File = file;
 	}
 
 	public BookReadingException(IOException e, ZLFile file) {
-		super(e.getMessage(), e);
+		super(getResourceText(
+			e instanceof ZipException ? "errorReadingZip" : "errorReadingFile"
+		).replace("%s", file.getPath()), e);
+		File = file;
 	}
 }

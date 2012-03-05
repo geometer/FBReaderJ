@@ -31,7 +31,7 @@ public abstract class BookModel {
 	public static BookModel createModel(Book book) throws BookReadingException {
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 		if (plugin == null) {
-			throw new BookReadingException("pluginNotFound");
+			throw new BookReadingException("pluginNotFound", book.File);
 		}
 
 		System.err.println("using plugin: " + plugin.supportedFileType() + "/" + plugin.type());
@@ -56,7 +56,7 @@ public abstract class BookModel {
 				model = new JavaBookModel(book);
 				break;
 			default:
-				throw new BookReadingException("unknownPluginType", plugin.type().toString());
+				throw new BookReadingException("unknownPluginType", plugin.type().toString(), null);
 		}
 
 		plugin.readModel(model);
