@@ -72,7 +72,7 @@ public class TipsManager {
 			final ZLFile file = ZLFile.createFileByPath(getLocalFilePath());
 			if (file.exists()) {
 				final TipsFeedHandler handler = new TipsFeedHandler();
-				new ATOMXMLReader(handler, false).read(file);
+				new ATOMXMLReader(handler, false).readQuietly(file);
 				final List<Tip> tips = Collections.unmodifiableList(handler.Tips);
 				if (tips.size() > 0) {
 					myTips = tips;

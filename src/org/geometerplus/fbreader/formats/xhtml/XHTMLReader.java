@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.xhtml;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -162,7 +163,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		return num;
 	}
 
-	public boolean readFile(ZLFile file, String referencePrefix) {
+	public void readFile(ZLFile file, String referencePrefix) throws IOException {
 		fillTagTable();
 
 		myReferencePrefix = referencePrefix;
@@ -177,7 +178,7 @@ public class XHTMLReader extends ZLXMLReaderAdapter {
 		myPreformatted = false;
 		myInsideBody = false;
 
-		return read(file);
+		read(file);
 	}
 
 	private final HashMap<String,XHTMLTagAction> myActions = new HashMap<String,XHTMLTagAction>();

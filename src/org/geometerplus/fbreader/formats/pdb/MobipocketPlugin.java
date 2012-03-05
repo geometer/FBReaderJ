@@ -30,6 +30,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
 public class MobipocketPlugin extends JavaFormatPlugin {
@@ -38,14 +39,14 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public boolean readMetaInfo(Book book) {
+	public void readMetaInfo(Book book) throws BookReadingException {
 		InputStream stream = null;
 		try {
 			stream = book.File.getInputStream();
 			final PdbHeader header = new PdbHeader(stream);
 			PdbUtil.skip(stream, header.Offsets[0] + 16 - header.length());
 			if (PdbUtil.readInt(stream) != 0x4D4F4249) /* "MOBI" */ {
-				return false;
+				throw new BookReadingException("unsupportedFileFormat");
 			}
 			final int length = (int)PdbUtil.readInt(stream);
 			PdbUtil.skip(stream, 4);
@@ -111,9 +112,8 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			final byte[] titleBuffer = new byte[fullNameLength];
 			stream.read(titleBuffer);
 			book.setTitle(new String(titleBuffer, encodingName));
-			return true;
 		} catch (IOException e) {
-			return false;
+			throw new BookReadingException(e, book.File);
 		} finally {
 			if (stream != null) {
 				try {
@@ -125,12 +125,11 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public boolean readModel(BookModel model) {
+	public void readModel(BookModel model) throws BookReadingException {
 		try {
-			return new MobipocketHtmlBookReader(model).readBook();
+			new MobipocketHtmlBookReader(model).readBook();
 		} catch (IOException e) {
-			//e.printStackTrace();
-			return false;
+			throw new BookReadingException(e, model.Book.File);
 		}
 	}
 
