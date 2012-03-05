@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.network.opds;
 import java.util.*;
 import java.io.*;
 
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.network.ZLNetworkManager;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.network.ZLNetworkRequest;
@@ -101,9 +102,9 @@ public class OPDSLinkReader {
 		}
 
 		try {
-			xmlReader.read(new FileInputStream(catalogsFile));
+			xmlReader.read(new ZLPhysicalFile(catalogsFile));
 			return xmlReader.links();
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			return Collections.emptyList();
 		}
 	}

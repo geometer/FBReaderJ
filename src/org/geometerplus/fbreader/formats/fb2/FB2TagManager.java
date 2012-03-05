@@ -31,7 +31,7 @@ abstract class FB2TagManager {
 
 	static ArrayList<Tag> humanReadableTags(String id) {
 		if (ourMap.isEmpty()) {
-			new FB2TagInfoReader().read(
+			new FB2TagInfoReader().readQuietly(
 				ZLResourceFile.createResourceFile("formats/fb2/fb2genres.xml")
 			);
 		}
