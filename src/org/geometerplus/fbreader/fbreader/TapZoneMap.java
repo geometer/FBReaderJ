@@ -46,7 +46,7 @@ public class TapZoneMap {
 		final ZLFile mapFile = ZLFile.createFileByPath(
 			"default/tapzones/" + name.toLowerCase() + ".xml"
 		);
-		new Reader().read(mapFile);
+		new Reader().readQuietly(mapFile);
 	}
 
 	public String getActionByCoordinates(int x, int y, int width, int height, Tap tap) {

@@ -47,7 +47,7 @@ class XHTMLImageFinder extends ZLXMLReaderAdapter {
 	ZLFileImage readImage(ZLFile file) {
 		myXHTMLPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
 		myImage = null;
-		read(file);
+		readQuietly(file);
 		return myImage;
 	}
 

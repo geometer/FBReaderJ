@@ -107,7 +107,7 @@ void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
 }
 
 extern "C"
-JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfo(JNIEnv* env, jobject thiz, jobject javaBook) {
+JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfoNative(JNIEnv* env, jobject thiz, jobject javaBook) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
 	if (plugin.isNull()) {
 		return JNI_FALSE;
@@ -264,7 +264,7 @@ static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 }
 
 extern "C"
-JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModel(JNIEnv* env, jobject thiz, jobject javaModel) {
+JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readModelNative(JNIEnv* env, jobject thiz, jobject javaModel) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
 	if (plugin.isNull()) {
 		return JNI_FALSE;

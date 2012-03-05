@@ -195,7 +195,7 @@ final class ZLTreeResource extends ZLResource {
 		public void readDocument(ZLTreeResource root, ZLFile file) {
 			myStack.clear();
 			myStack.add(root);
-			read(file);
+			readQuietly(file);
 		}
 
 		@Override

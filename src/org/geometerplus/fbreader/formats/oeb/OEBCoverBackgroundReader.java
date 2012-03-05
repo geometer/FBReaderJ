@@ -36,7 +36,7 @@ class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespac
 		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
 		myReadGuide = false;
 		myImage = null;
-		read(file);
+		readQuietly(file);
 		return myImage;
 	}
 

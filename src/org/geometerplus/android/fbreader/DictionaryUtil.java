@@ -136,8 +136,8 @@ public abstract class DictionaryUtil {
 		if (ourInfos.isEmpty()) {
 			final Thread initThread = new Thread(new Runnable() {
 				public void run() {
-					new InfoReader().read(ZLFile.createFileByPath("dictionaries/main.xml"));
-					new ParagonInfoReader(context).read(ZLFile.createFileByPath("dictionaries/paragon.xml"));
+					new InfoReader().readQuietly(ZLFile.createFileByPath("dictionaries/main.xml"));
+					new ParagonInfoReader(context).readQuietly(ZLFile.createFileByPath("dictionaries/paragon.xml"));
 				}
 			});
 			initThread.setPriority(Thread.MIN_PRIORITY);

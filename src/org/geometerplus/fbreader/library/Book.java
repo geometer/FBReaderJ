@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.text.view.ZLTextPosition;
 
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 import org.geometerplus.fbreader.Paths;
 
@@ -175,7 +176,12 @@ public class Book {
 		myIsSaved = false;
 
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
-		if (plugin == null || !plugin.readMetaInfo(this)) {
+		if (plugin == null) {
+			return false;
+		}
+		try {
+			plugin.readMetaInfo(this);
+		} catch (BookReadingException e) {
 			return false;
 		}
 		if (myTitle == null || myTitle.length() == 0) {
