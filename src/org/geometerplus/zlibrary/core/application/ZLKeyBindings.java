@@ -44,14 +44,14 @@ public final class ZLKeyBindings {
 	public ZLKeyBindings(String name) {
 		myName = name;
 		final Set<String> keys = new TreeSet<String>();
-		new Reader(keys).read(ZLFile.createFileByPath("default/keymap.xml"));
+		new Reader(keys).readQuietly(ZLFile.createFileByPath("default/keymap.xml"));
 		try {
-			new Reader(keys).read(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
+			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.systemShareDirectory() + "/keymap.xml"));
 		} catch (Exception e) {
 			// ignore
 		}
 		try {
-			new Reader(keys).read(ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue() + "/keymap.xml"));
+			new Reader(keys).readQuietly(ZLFile.createFileByPath(Paths.BooksDirectoryOption().getValue() + "/keymap.xml"));
 		} catch (Exception e) {
 			// ignore
 		}

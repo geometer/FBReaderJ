@@ -38,7 +38,7 @@ public final class ZLEncodingCollection {
 	private final HashMap<String,String> myEncodingByAlias = new HashMap<String,String>();
 
 	private ZLEncodingCollection() {
-		new ZLEncodingCollectionReader().read(
+		new ZLEncodingCollectionReader().readQuietly(
 			ZLResourceFile.createResourceFile("encodings/Encodings.xml")
 		);
 	}

@@ -28,10 +28,10 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
 
 public abstract class BookModel {
-	public static BookModel createModel(Book book) {
+	public static BookModel createModel(Book book) throws BookReadingException {
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 		if (plugin == null) {
-			return null;
+			throw new BookReadingException("pluginNotFound");
 		}
 
 		System.err.println("using plugin: " + plugin.supportedFileType() + "/" + plugin.type());
@@ -56,13 +56,11 @@ public abstract class BookModel {
 				model = new JavaBookModel(book);
 				break;
 			default:
-				return null;
+				throw new BookReadingException("unknownPluginType", plugin.type().toString());
 		}
 
-		if (plugin.readModel(model)) {
-			return model;
-		}
-		return null;
+		plugin.readModel(model);
+		return model;
 	}
 
 	public final Book Book;
