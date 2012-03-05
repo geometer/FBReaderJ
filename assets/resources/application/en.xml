@@ -800,4 +800,13 @@
 			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader."/>
 		</node>
 	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Error occured during reading '%s'"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'"/>
+		<node name="pluginNotFound" value="No plugin for '%s'"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s"/>
+		<node name="fileNotFound" value="File is not found: %s"/>
+		<node name="opfFileNotFound" value="OPF is not foind in %s"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
+	<node>
 </resources>

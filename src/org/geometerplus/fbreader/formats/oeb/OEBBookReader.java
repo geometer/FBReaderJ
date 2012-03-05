@@ -95,7 +95,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 			final ZLFile xhtmlFile = ZLFile.createFileByPath(myFilePrefix + name);
 			if (xhtmlFile == null) {
 				// NPE fix: null for bad attributes in .opf XML file
-				throw new BookReadingException("fileNotFound", myFilePrefix + name);
+				throw new BookReadingException("fileNotFound", myFilePrefix + name, file);
 			}
 			if (count++ == 0 && xhtmlFile.getPath().equals(myCoverFileName)) {
 				continue;
