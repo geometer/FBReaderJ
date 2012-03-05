@@ -40,7 +40,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	@Override
 	public void readMetaInfo(Book book) throws BookReadingException {
 		if (!readMetaInfoNative(book)) {
-			throw new BookReadingException("errorReadingFile", book.File.getPath());
+			throw new BookReadingException("errorReadingFile", book.File);
 		}
 	}
 
@@ -52,7 +52,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
 		if (!readModelNative(model)) {
-			throw new BookReadingException("errorReadingFile", model.Book.File.getPath());
+			throw new BookReadingException("errorReadingFile", model.Book.File);
 		}
 	}
 

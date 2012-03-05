@@ -31,21 +31,22 @@ public final class BookReadingException extends Exception {
 		return ZLResource.resource("bookReadingException").getResource(resourceId).getValue();
 	}
 
-	public BookReadingException(String resourceId) {
-		super(getResourceText(resourceId));
-	}
+	public final ZLFile File;
 
-	public BookReadingException(String resourceId, String param) {
+	public BookReadingException(String resourceId, String param, ZLFile file) {
 		super(getResourceText(resourceId).replace("%s", param));
+		File = file;
 	}
 
 	public BookReadingException(String resourceId, ZLFile file) {
 		super(getResourceText(resourceId).replace("%s", file.getPath()));
+		File = file;
 	}
 
 	public BookReadingException(IOException e, ZLFile file) {
 		super(getResourceText(
 			e instanceof ZipException ? "errorReadingZip" : "errorReadingFile"
 		).replace("%s", file.getPath()), e);
+		File = file;
 	}
 }
