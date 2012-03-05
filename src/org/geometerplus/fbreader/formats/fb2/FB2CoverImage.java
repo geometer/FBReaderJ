@@ -56,7 +56,7 @@ class FB2CoverImage extends ZLImageProxy {
 		Base64EncodedImage readCover(ZLFile file) {
 			myReadCoverPage = false;
 			myImageReference = null;
-			read(file);
+			readQuietly(file);
 			return myImage;
 		}
 
