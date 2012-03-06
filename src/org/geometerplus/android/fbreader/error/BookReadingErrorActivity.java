@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.error;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +29,10 @@ import android.widget.TextView;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
+import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
+import org.geometerplus.zlibrary.ui.android.error.ErrorUtil;
 
-public class BookReadingErrorActivity extends Activity {
+public class BookReadingErrorActivity extends Activity implements ErrorKeys {
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -39,7 +42,7 @@ public class BookReadingErrorActivity extends Activity {
 		setTitle(resource.getResource("title").getValue());
 
 		final TextView textView = (TextView)findViewById(R.id.error_book_reading_text);
-		textView.setText(getIntent().getStringExtra("message"));
+		textView.setText(getIntent().getStringExtra(MESSAGE));
 
 		final View buttonView = findViewById(R.id.error_book_reading_buttons);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
@@ -48,6 +51,12 @@ public class BookReadingErrorActivity extends Activity {
 		okButton.setText(buttonResource.getResource("sendReport").getValue());
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
+				final Intent sendIntent = new Intent(Intent.ACTION_SEND);
+				sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "issues@geometerplus.com" });
+				sendIntent.putExtra(Intent.EXTRA_TEXT, getIntent().getStringExtra(STACKTRACE));
+				sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + new ErrorUtil(BookReadingErrorActivity.this).getVersionName() + " book reading issue report");
+				sendIntent.setType("message/rfc822");
+				startActivity(sendIntent);
 				finish();
 			}
 		});

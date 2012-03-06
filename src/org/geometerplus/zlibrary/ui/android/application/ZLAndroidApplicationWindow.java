@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.application;
 
 import java.util.*;
+import java.io.*;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -36,6 +37,7 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.library.ZLAndroidActivity;
+import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
 
 import org.geometerplus.android.util.UIUtil;
 
@@ -118,7 +120,10 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			"android.fbreader.action.ERROR",
 			new Uri.Builder().scheme(exception.getClass().getSimpleName()).build()
 		);
-		intent.putExtra("message", exception.getMessage());
+		intent.putExtra(ErrorKeys.MESSAGE, exception.getMessage());
+		final StringWriter stackTrace = new StringWriter();
+		exception.printStackTrace(new PrintWriter(stackTrace));
+		intent.putExtra(ErrorKeys.STACKTRACE, stackTrace.toString());
 		/*
 		if (exception instanceof BookReadingException) {
 			final ZLFile file = ((BookReadingException)exception).File;
