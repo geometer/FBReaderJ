@@ -52,7 +52,7 @@ class DeflatingDecompressor extends Decompressor {
 
 		myInflatorId = startInflating();
 		if (myInflatorId == -1) {
-			throw new IOException("cannot start inflating");
+			throw new ZipException("cannot start inflating");
 		}
 	}
 
@@ -75,7 +75,7 @@ class DeflatingDecompressor extends Decompressor {
 			}
 			if (myOutBufferLength == 0) {
 				if (myInflatorId != -1) {
-					throw new IOException("cannot read from zip");
+					throw new ZipException("cannot read from zip");
 				} else {
 					len -= toFill;
 					break;
@@ -108,7 +108,7 @@ class DeflatingDecompressor extends Decompressor {
 		}
 		if (myOutBufferLength == 0) {
 			if (myInflatorId != -1) {
-				throw new IOException("cannot read from zip");
+				throw new ZipException("cannot read from zip");
 			} else {
 				myAvailable = 0;
 				return -1;
@@ -140,7 +140,7 @@ class DeflatingDecompressor extends Decompressor {
 			}
 			final long result = inflate(myInflatorId, myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
 			if (result <= 0) {
-				throw new IOException("Cannot inflate zip-compressed block, code = " + result);
+				throw new ZipException("Cannot inflate zip-compressed block, code = " + result);
 			}
 			final int in = (int)(result >> 16) & 0xFFFF;
 			final int out = (int)result & 0xFFFF;

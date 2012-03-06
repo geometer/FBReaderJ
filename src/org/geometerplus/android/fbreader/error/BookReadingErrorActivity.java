@@ -52,7 +52,7 @@ public class BookReadingErrorActivity extends Activity implements ErrorKeys {
 		okButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				final Intent sendIntent = new Intent(Intent.ACTION_SEND);
-				sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "issues@geometerplus.com" });
+				sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "issues@fbreader.org" });
 				sendIntent.putExtra(Intent.EXTRA_TEXT, getIntent().getStringExtra(STACKTRACE));
 				sendIntent.putExtra(Intent.EXTRA_SUBJECT, "FBReader " + new ErrorUtil(BookReadingErrorActivity.this).getVersionName() + " book reading issue report");
 				sendIntent.setType("message/rfc822");
