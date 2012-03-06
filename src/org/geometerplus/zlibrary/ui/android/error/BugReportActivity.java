@@ -17,11 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.ui.android.library;
+package org.geometerplus.zlibrary.ui.android.error;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -30,18 +29,7 @@ import android.text.method.ScrollingMovementMethod;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
-public class BugReportActivity extends Activity {
-	static final String STACKTRACE = "fbreader.stacktrace";
-
-	private String getVersionName() {
-		try {
-			final PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
-			return info.versionName + " (" + info.versionCode + ")";
-		} catch (Exception e) {
-			return "";
-		}
-	}
-
+public class BugReportActivity extends Activity implements ErrorKeys {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.bug_report_view);
@@ -59,7 +47,7 @@ public class BugReportActivity extends Activity {
 		reportTextView.setClickable(false);
 		reportTextView.setLongClickable(false);
 
-		final String versionName = getVersionName();
+		final String versionName = new ErrorUtil(this).getVersionName();
 		reportTextView.append("FBReader " + versionName + " has been crached, sorry. You can help to fix this bug by sending the report below to FBReader developers. The report will be sent by e-mail. Thank you in advance!\n\n");
 		reportTextView.append(reportText);
 
