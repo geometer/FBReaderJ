@@ -22,12 +22,15 @@ package org.geometerplus.zlibrary.ui.android.application;
 import java.util.*;
 
 import android.app.Activity;
-
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
@@ -102,6 +105,33 @@ public final class ZLAndroidApplicationWindow extends ZLApplicationWindow {
 			UIUtil.runWithMessage(activity, key, action, postAction, false);
 		} else {
 			action.run();
+		}
+	}
+
+	@Override
+	protected void processException(Exception exception) {
+		exception.printStackTrace();
+
+		final Activity activity = 
+			((ZLAndroidLibrary)ZLAndroidLibrary.Instance()).getActivity();
+		final Intent intent = new Intent(
+			"android.fbreader.action.ERROR",
+			new Uri.Builder().scheme(exception.getClass().getSimpleName()).build()
+		);
+		intent.putExtra("message", exception.getMessage());
+		/*
+		if (exception instanceof BookReadingException) {
+			final ZLFile file = ((BookReadingException)exception).File;
+			if (file != null) {
+				intent.putExtra("file", file.getPath());
+			}
+		}
+		*/
+		try {
+			activity.startActivity(intent);
+		} catch (ActivityNotFoundException e) {
+			// ignore
+			e.printStackTrace();
 		}
 	}
 

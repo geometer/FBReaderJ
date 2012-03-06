@@ -276,6 +276,7 @@
 			<node name="refresh" value="Refresh"/>
 			<node name="authorize" value="Authorize"/>
 			<node name="resetPosition" value="Reset position" />
+			<node name="sendReport" value="Send report" />
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>
@@ -798,6 +799,11 @@
 		<node name="missingNativeLibrary">
 			<node name="title" value="FBReader issue"/>
 			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader issue"/>
 		</node>
 	</node>
 	<node name="bookReadingException">
