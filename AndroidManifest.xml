@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="109072" android:versionName="2.0 beta 7" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="104001" android:versionName="1.4" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="11" />
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<application android:name="org.geometerplus.android.fbreader.FBReaderApplication" android:icon="@drawable/fbreader" android:logo="@drawable/fbreader_bw" android:label="FBReader">
+		<activity android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":error">
+			<intent-filter>
+				<action android:name="android.fbreader.action.ERROR" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="BookReadingException" />
+			</intent-filter>
+		</activity>
 		<activity android:name=".library.BugReportActivity" android:label="FBReader crash" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":crash" />
 		<activity android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity" android:theme="@android:style/Theme.Holo.Dialog" android:configChanges="orientation|keyboardHidden|screenSize" android:process=":crash">
 			<intent-filter>

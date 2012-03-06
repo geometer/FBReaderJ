@@ -269,9 +269,10 @@ public final class FBReaderApp extends ZLApplication {
 				}
 				setTitle(title.toString());
 			} catch (BookReadingException e) {
-				e.printStackTrace();
+				processException(e);
 			}
 		}
+		getViewWidget().reset();
 		getViewWidget().repaint();
 	}
 
