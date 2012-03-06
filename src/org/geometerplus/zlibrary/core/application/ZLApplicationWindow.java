@@ -35,6 +35,7 @@ abstract public class ZLApplicationWindow {
 
 	abstract protected void setTitle(String title);
 	abstract protected void runWithMessage(String key, Runnable runnable, Runnable postAction);
+	abstract protected void processException(Exception e);
 
 	abstract protected void refresh();
 	
