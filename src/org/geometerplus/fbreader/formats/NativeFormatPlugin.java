@@ -101,4 +101,10 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public Type type() {
 		return Type.NATIVE;
 	}
+
+	@Override
+	public EncodingCollection supportedEncodings() {
+		// TODO: implement
+		return new JavaEncodingCollection();
+	}
 }

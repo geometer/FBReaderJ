@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.JavaFormatPlugin;
+import org.geometerplus.fbreader.formats.*;
 
 public class OEBPlugin extends JavaFormatPlugin {
 	public OEBPlugin() {
@@ -82,5 +82,10 @@ public class OEBPlugin extends JavaFormatPlugin {
 		} catch (BookReadingException e) {
 			return null;
 		} 
+	}
+
+	@Override
+	public EncodingCollection supportedEncodings() {
+		return new AutoEncodingCollection();
 	}
 }

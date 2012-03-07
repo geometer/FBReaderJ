@@ -30,8 +30,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.formats.JavaFormatPlugin;
-import org.geometerplus.fbreader.formats.EncodingCollection;
+import org.geometerplus.fbreader.formats.*;
 
 public class MobipocketPlugin extends JavaFormatPlugin {
 	public MobipocketPlugin() {
@@ -51,10 +50,8 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			final int length = (int)PdbUtil.readInt(stream);
 			PdbUtil.skip(stream, 4);
 			final int encodingCode = (int)PdbUtil.readInt(stream);
-			String encodingName = EncodingCollection.Instance().getEncodingName(encodingCode);
-			if (encodingName == null) {
-				encodingName = "utf-8";
-			}
+			final Encoding encoding = supportedEncodings().getEncoding(encodingCode);
+			final String encodingName = encoding != null ? encoding.Name : "utf-8";
 			book.setEncoding(encodingName);
 			PdbUtil.skip(stream, 52);
 			final int fullNameOffset = (int)PdbUtil.readInt(stream);
@@ -227,5 +224,10 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	@Override
 	public String readAnnotation(ZLFile file) {
 		return null;
+	}
+
+	@Override
+	public EncodingCollection supportedEncodings() {
+		return new JavaEncodingCollection();
 	}
 }
