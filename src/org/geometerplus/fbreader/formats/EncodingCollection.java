@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.encoding;
+package org.geometerplus.fbreader.formats;
 
 import java.util.HashMap;
 
@@ -25,20 +25,20 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 
-public final class ZLEncodingCollection {
-	private static ZLEncodingCollection ourInstance;
+public final class EncodingCollection {
+	private static EncodingCollection ourInstance;
 	
-	public static ZLEncodingCollection Instance() {
+	public static EncodingCollection Instance() {
 		if (ourInstance == null) {
-			ourInstance = new ZLEncodingCollection();
+			ourInstance = new EncodingCollection();
 		}
 		return ourInstance;
 	}
 
 	private final HashMap<String,String> myEncodingByAlias = new HashMap<String,String>();
 
-	private ZLEncodingCollection() {
-		new ZLEncodingCollectionReader().readQuietly(
+	private EncodingCollection() {
+		new EncodingCollectionReader().readQuietly(
 			ZLResourceFile.createResourceFile("encodings/Encodings.xml")
 		);
 	}
@@ -52,11 +52,8 @@ public final class ZLEncodingCollection {
 		return myEncodingByAlias.get("" + code);
 	}
 
-	private class ZLEncodingCollectionReader extends ZLXMLReaderAdapter {
+	private class EncodingCollectionReader extends ZLXMLReaderAdapter {
 		private String myCurrentEncodingName;
-
-		public ZLEncodingCollectionReader() {
-		}
 
 		public boolean dontCacheAttributeValues() {
 			return true;
