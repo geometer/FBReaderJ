@@ -21,7 +21,6 @@ package org.geometerplus.fbreader.formats.pdb;
 
 import java.io.*;
 
-import org.geometerplus.zlibrary.core.encoding.ZLEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
 import org.geometerplus.zlibrary.core.image.ZLImage;
@@ -32,6 +31,7 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.JavaFormatPlugin;
+import org.geometerplus.fbreader.formats.EncodingCollection;
 
 public class MobipocketPlugin extends JavaFormatPlugin {
 	public MobipocketPlugin() {
@@ -51,7 +51,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			final int length = (int)PdbUtil.readInt(stream);
 			PdbUtil.skip(stream, 4);
 			final int encodingCode = (int)PdbUtil.readInt(stream);
-			String encodingName = ZLEncodingCollection.Instance().getEncodingName(encodingCode);
+			String encodingName = EncodingCollection.Instance().getEncodingName(encodingCode);
 			if (encodingName == null) {
 				encodingName = "utf-8";
 			}
