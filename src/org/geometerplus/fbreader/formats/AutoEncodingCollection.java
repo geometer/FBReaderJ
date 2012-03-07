@@ -20,9 +20,20 @@
 package org.geometerplus.fbreader.formats;
 
 import java.util.List;
+import java.util.Collections;
 
-public abstract class EncodingCollection {
-	public abstract List<Encoding> encodings();
-	public abstract Encoding getEncoding(String alias);
-	public abstract Encoding getEncoding(int code);
+public final class AutoEncodingCollection extends EncodingCollection {
+	private final Encoding myEncoding = new Encoding(null, "auto", "auto");
+
+	public List<Encoding> encodings() {
+		return Collections.singletonList(myEncoding);
+	}
+
+	public Encoding getEncoding(String alias) {
+		return myEncoding;
+	}
+
+	public Encoding getEncoding(int code) {
+		return myEncoding;
+	}
 }
