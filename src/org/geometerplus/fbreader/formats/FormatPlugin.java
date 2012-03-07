@@ -51,4 +51,6 @@ public abstract class FormatPlugin {
 		NONE
 	};
 	public abstract Type type();
+
+	public abstract EncodingCollection supportedEncodings();
 }
