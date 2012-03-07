@@ -151,7 +151,7 @@ public class NetworkBookItem extends NetworkItem {
 				continue;
 			}
 			final BookUrlInfo br = (BookUrlInfo)r;
-			if (reference == null || br.BookFormat > reference.BookFormat) {
+			if (reference == null || BookUrlInfo.getPriority(br.BookFormat) > BookUrlInfo.getPriority(reference.BookFormat)) {
 				reference = br;
 			}
 		}
@@ -207,7 +207,7 @@ public class NetworkBookItem extends NetworkItem {
 			if ((type == UrlInfo.Type.Book ||
 				 type == UrlInfo.Type.BookConditional ||
 				 (!hasBuyReference && type == UrlInfo.Type.BookFullOrDemo)) &&
-				(reference == null || br.BookFormat > reference.BookFormat)) {
+				(reference == null || BookUrlInfo.getPriority(br.BookFormat) > BookUrlInfo.getPriority(reference.BookFormat))) {
 				String name = br.localCopyFileName(UrlInfo.Type.Book);
 				if (name != null) {
 					reference = br;

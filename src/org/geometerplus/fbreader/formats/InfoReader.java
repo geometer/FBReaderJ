@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,14 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.filetype;
+package org.geometerplus.fbreader.formats;
 
+import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
-public abstract class FileType {
-	public final String Id;
-
-	protected FileType(String id) {
-		Id = id;
-	}
-
-	public abstract boolean acceptsFile(ZLFile file);
-	public abstract boolean acceptsExtension(String ext);
-
-	public abstract String extension();
-	public abstract MimeType mimeType();
+public interface InfoReader {
+	boolean readMetaInfo(Book book);
+	ZLImage readCover(ZLFile file);
+	String readAnnotation(ZLFile file);
 }

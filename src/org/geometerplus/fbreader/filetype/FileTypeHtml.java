@@ -24,13 +24,17 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeHtml extends FileType {
 	FileTypeHtml() {
-		super("HTML");
+		super("html");
 	}
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		final String extension = file.getExtension().toLowerCase();
-		return extension.endsWith("html") || "htm".equals(extension);
+		return acceptsExtension(file.getExtension());
+	}
+
+	@Override
+	public boolean acceptsExtension(String ext) {
+		return (ext.toLowerCase()).endsWith("html") || "htm".equals(ext.toLowerCase());
 	}
 
 	@Override

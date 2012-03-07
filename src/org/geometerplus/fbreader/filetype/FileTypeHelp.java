@@ -22,16 +22,29 @@ package org.geometerplus.fbreader.filetype;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-public abstract class FileType {
-	public final String Id;
+class FileTypeHelp extends FileType {
 
-	protected FileType(String id) {
-		Id = id;
+	FileTypeHelp() {
+		super("fbreaderhelp");
 	}
 
-	public abstract boolean acceptsFile(ZLFile file);
-	public abstract boolean acceptsExtension(String ext);
+	@Override
+	public boolean acceptsFile(ZLFile file) {
+		return acceptsExtension(file.getExtension());
+	}
 
-	public abstract String extension();
-	public abstract MimeType mimeType();
+	@Override
+	public boolean acceptsExtension(String ext) {
+		return "fbreaderhelp".equalsIgnoreCase(ext);
+	}
+
+	@Override
+	public String extension() {
+		return "fb2";
+	}
+
+	@Override
+	public MimeType mimeType() {
+		return MimeType.TEXT_FB2;
+	}
 }

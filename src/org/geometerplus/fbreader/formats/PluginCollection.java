@@ -59,6 +59,7 @@ public class PluginCollection {
 
 	private PluginCollection() {
 		addPlugin(new FB2Plugin());
+		addPlugin(new FB2Plugin("fbreaderhelp"));
 		addPlugin(new MobipocketPlugin());
 		addPlugin(new OEBPlugin());
 	}
@@ -74,7 +75,11 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(ZLFile file) {
-		return getPlugin(file, FormatPlugin.Type.ANY);
+		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
+		if (fileType == null) {
+			return null;
+		}
+		return getPlugin(fileType, Formats.getStatus(fileType.Id));
 	}
 
 	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
@@ -82,12 +87,42 @@ public class PluginCollection {
 		return getPlugin(fileType, formatType);
 	}
 
+	private FormatPlugin getOrCreateExternalPlugin(FileType fileType) {
+		boolean exists = true;
+		final List<FormatPlugin> list = myPlugins.get(FormatPlugin.Type.EXTERNAL);
+		if (list == null) {
+			exists = false;
+		}
+		if (exists) {
+			for (FormatPlugin p : list) {
+				if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
+					return p;
+				}
+			}
+		}
+
+		FormatPlugin plugin;
+		FormatPlugin builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
+		if (builtInPlugin == null) {
+			builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+		}
+		if (builtInPlugin != null) {
+			plugin = new ExternalFormatPlugin(fileType.Id, (InfoReader)builtInPlugin);
+		} else {
+			plugin = new ExternalFormatPlugin(fileType.Id);
+		}
+		addPlugin(plugin);
+		return plugin;
+	}
+
 	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
 		if (fileType == null) {
 			return null;
 		}
 
-		if (formatType == FormatPlugin.Type.ANY) {
+		if (formatType == FormatPlugin.Type.EXTERNAL) {
+			return getOrCreateExternalPlugin(fileType);
+		} else if (formatType == FormatPlugin.Type.ANY) {
 			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 			if (p == null) {
 				p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
@@ -105,6 +140,28 @@ public class PluginCollection {
 			}
 			return null;
 		}
+	}
+
+	public String ExtForMimeType(String type) {//FIXME: formats can have several extensions(?)
+		for (String ext : Formats.getPredefinedExternalFormats()) {
+			if (BigMimeTypeMap.getTypes(ext) != null) {
+				for (String mtype : BigMimeTypeMap.getTypes(ext)) {
+					if (mtype.equals(type)) {
+						return ext;
+					}
+				}
+			}
+		}
+		for (String ext : Formats.getCustomExternalFormats()) {
+			if (BigMimeTypeMap.getTypes(ext) != null) {
+				for (String mtype : BigMimeTypeMap.getTypes(ext)) {
+					if (mtype.equals(type)) {
+						return ext;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private native NativeFormatPlugin[] nativePlugins();

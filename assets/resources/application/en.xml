@@ -297,6 +297,7 @@
 			<node name="directories" value="Directories">
 				<node name="summary" value="Directories to seek for files"/>
 				<node name="books" value="Books directory"/>
+				<node name="temp" value="Temp files directory"/>
 				<node name="fonts" value="Fonts directory"/>
 				<node name="wallpapers" value="Wallpapers directory"/>
 			</node>
@@ -670,6 +671,16 @@
 					<node name="none" value="No action"/>
 				</node>
 			</node>
+			<node name="externalFormats" value="Formats">
+				<node name="summary" value="Manage file formats"/>
+				<node name="format" value="">
+					<node name="appNotSet" value="Not chosen"/>
+					<node name="java" value="FBReader (java)"/>
+					<node name="native" value="FBReader (native)"/>
+					<node name="delete" value="remove this format"/>
+					<node name="addNewFormat" value="add new format"/>
+				</node>
+			</node>
 			<node name="tips" value="Tips">
 				<node name="summary" value="Daily tips settings"/>
 				<node name="showTips" value="Show tips">
@@ -781,6 +792,11 @@
 		<node name="emptyCatalog" value="Catalog is empty, sorry"/>
 		<node name="emptyBasket" value="Your basket is empty, sorry"/>
 		<node name="emptyNetworkSearchResults" value="No books found, sorry"/>
+		<node name="externalNotFound" value="Cannot open external application"/>
+		<node name="appNotFound" value="No suitable application found"/>
+		<node name="invalidFormat" value="Format is invalid"/>
+		<node name="formatExists" value="Extension already supported by %s"/>
+		<node name="unzipFailed" value="Failed to unzip book for external use"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Browser"/>

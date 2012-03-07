@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.fbreader.library.Book;
 
-public abstract class JavaFormatPlugin extends FormatPlugin {
+public abstract class JavaFormatPlugin extends FormatPlugin implements InfoReader {
 	protected JavaFormatPlugin(String fileType) {
 		super(fileType);
 	}

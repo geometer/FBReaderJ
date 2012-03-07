@@ -32,6 +32,8 @@ import org.geometerplus.fbreader.network.NetworkBookItem;
 import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
+import org.geometerplus.fbreader.formats.*;
+
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	public static OPDSBookItem create(INetworkLink link, String url) {
 		if (link == null || url == null) {
@@ -152,8 +154,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			} else if (referenceType == UrlInfo.Type.TOC) {
 				urls.addInfo(new UrlInfo(referenceType, href));
 			} else if (referenceType != null) {
-				final int format = formatByMimeType(type);
-				if (format != BookUrlInfo.Format.NONE) {
+				final String format = formatByMimeType(type);
+				if (!format.equals(BookUrlInfo.Format.NONE)) {
 					urls.addInfo(new BookUrlInfo(referenceType, format, href));
 				}
 			}
@@ -193,8 +195,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	) {
 		boolean added = false;
 		for (String mime : opdsLink.Formats) {
-			final int format = formatByMimeType(MimeType.get(mime));
-			if (format != BookUrlInfo.Format.NONE) {
+			final String format = formatByMimeType(MimeType.get(mime));
+			if (!format.equals(BookUrlInfo.Format.NONE)) {
 				urls.addInfo(new BookBuyUrlInfo(type, format, href, price));
 				added = true;
 			}
@@ -204,7 +206,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		}
 	}
 
-	static int formatByMimeType(MimeType type) {
+	static String formatByMimeType(MimeType type) {
 		if (MimeType.TEXT_FB2.equals(type)) {
 			return BookUrlInfo.Format.FB2;
 		} else if (MimeType.APP_FB2ZIP.equals(type)) {
@@ -213,6 +215,8 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			return BookUrlInfo.Format.EPUB;
 		} else if (MimeType.APP_MOBI.equals(type)) {
 			return BookUrlInfo.Format.MOBIPOCKET;
+		} else if (PluginCollection.Instance().ExtForMimeType(type.Name) != null) {
+			return "." + PluginCollection.Instance().ExtForMimeType(type.Name);
 		}
 		return BookUrlInfo.Format.NONE;
 	}

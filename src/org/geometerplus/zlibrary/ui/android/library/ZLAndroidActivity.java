@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.ui.android.library;
 
 import java.lang.reflect.*;
+import java.io.*;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -28,15 +29,98 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.view.*;
 import android.os.PowerManager;
+import android.net.Uri;
+import android.app.AlertDialog;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
+import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.formats.*;
+
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication();
+
+	private static class FileOpener implements ZLApplication.ExternalFileOpener {
+		private final Activity myActivity;
+
+		public FileOpener(Activity activity) {
+			myActivity = activity;
+		}
+
+		private void showErrorDialog(final String errName) {
+			myActivity.runOnUiThread(new Runnable() {
+				public void run() {
+					final String title = ZLResource.resource("errorMessage").getResource(errName).getValue();
+					new AlertDialog.Builder(myActivity)
+						.setTitle(title)
+						.setIcon(0)
+						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						})
+						.create().show();
+					}
+			});
+		}
+
+		public void openFile(ZLFile f, String appData) {
+			Uri uri = null;
+			String extension = f.getExtension();
+			if (f.getPath().contains(":")) {
+				try {
+					String filepath = f.getPath();
+					int p1 = filepath.lastIndexOf(":");
+					String filename = filepath.substring(p1 + 1);
+					final File dirFile = new File(Paths.TempDirectoryOption().getValue());
+					dirFile.mkdirs();
+					String path = Paths.TempDirectoryOption().getValue() + "/" + filename;
+					OutputStream out = new FileOutputStream(Paths.TempDirectoryOption().getValue() + "/" + filename);
+
+					int read = 0;
+					byte[] bytes = new byte[1024];
+					InputStream inp = f.getInputStream();
+
+					while ((read = inp.read(bytes)) > 0) {
+						out.write(bytes, 0, read);
+					}
+					out.flush();
+					out.close();
+					uri = Uri.parse("file://" + path);
+				} catch (IOException e) {
+					showErrorDialog("unzipFailed");
+					return;
+				}
+			} else {
+				uri = Uri.parse("file://" + f.getPath());
+			}
+			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
+			LaunchIntent.setPackage(appData);
+			LaunchIntent.setData(uri);
+			if (BigMimeTypeMap.getTypes(extension) != null) {
+				for (String type : BigMimeTypeMap.getTypes(extension)) {
+					LaunchIntent.setDataAndType(uri, type);
+					try {
+						myActivity.startActivity(LaunchIntent);
+						return;
+					} catch (ActivityNotFoundException e) {
+					}
+				}
+				showErrorDialog("externalNotFound");
+				return;
+			}
+			try {
+				myActivity.startActivity(LaunchIntent);
+			} catch (ActivityNotFoundException e) {
+				showErrorDialog("externalNotFound");
+			}
+			return;
+		}
+	}
 
 	private static final String REQUESTED_ORIENTATION_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.RequestedOrientation";
 	private static final String ORIENTATION_CHANGE_COUNTER_KEY = "org.geometerplus.zlibrary.ui.android.library.androidActiviy.ChangeCounter";
@@ -107,6 +191,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		}.start();
 
 		ZLApplication.Instance().getViewWidget().repaint();
+		if (!ZLApplication.Instance().fileOpenerIsSet()) {
+			ZLApplication.Instance().setFileOpener(new FileOpener(this));
+		}
 	}
 
 	protected abstract Runnable getPostponedInitAction();

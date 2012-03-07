@@ -36,6 +36,7 @@ import org.geometerplus.fbreader.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.bookmodel.FBTextKind;
 import org.geometerplus.fbreader.tips.TipsManager;
+import org.geometerplus.fbreader.formats.Formats;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
@@ -55,6 +56,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
+		directoriesScreen.addOption(Paths.TempDirectoryOption(), "temp");
 		if (AndroidFontUtil.areExternalFontsSupported()) {
 			directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
 		}
@@ -447,6 +449,27 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, cancelMenuScreen.Resource, "backKeyLongPressAction",
 			keyBindings.getOption(KeyEvent.KEYCODE_BACK, true), backKeyLongPressActions
 		));
+
+		final Screen formatScreen = createPreferenceScreen("externalFormats");
+		for (String format : Formats.getJavaFormats()) {
+			formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
+		}
+		for (String format : Formats.getNativeFormats()) {
+			if (!Formats.getJavaFormats().contains(format)) {
+				formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
+			}
+		}
+		for (String format : Formats.getPredefinedExternalFormats()) {
+			if (!Formats.getJavaFormats().contains(format) && !Formats.getNativeFormats().contains(format)) {
+				formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
+			}
+		}
+		for (String format : Formats.getCustomExternalFormats()) {
+			if (!Formats.getJavaFormats().contains(format) && !Formats.getNativeFormats().contains(format) && !Formats.getPredefinedExternalFormats().contains(format)) {
+				formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
+			}
+		}
+		formatScreen.addPreference(new AddFormatPreference(this, formatScreen, formatScreen.Resource, "format"));
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
 		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");
