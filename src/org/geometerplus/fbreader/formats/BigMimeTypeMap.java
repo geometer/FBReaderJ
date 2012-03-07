@@ -55,6 +55,6 @@ public abstract class BigMimeTypeMap {
 	}
 
 	static {
-		new MimeTypeReader().read(ZLFile.createFileByPath("mimetypes/mimetypes.xml"));
+		new MimeTypeReader().readQuietly(ZLFile.createFileByPath("mimetypes/mimetypes.xml"));
 	}
 }
