@@ -236,11 +236,6 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		}
 	}
 
-	private static class ImageDataProcessor implements ZLAndroidImageManager.DataProcessor {
-		public void process(ZLAndroidImageData data) {
-		}
-	}
-
 	private void setSubviewText(View view, int resourceId, String text) {
 		((TextView)view.findViewById(resourceId)).setText(text);
 	}
