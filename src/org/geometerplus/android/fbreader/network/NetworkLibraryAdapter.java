@@ -53,22 +53,22 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		Collections.synchronizedMap(new HashMap<ImageView,InvalidateViewRunnable>());
 
 	private final class InvalidateViewRunnable implements Runnable {
-		private final ImageView myView;
+		public final ImageView CoverView;
 		private final ZLLoadableImage myImage;
-		private final int myWidth;
-		private final int myHeight;
+		public final int Width;
+		public final int Height;
 
 		InvalidateViewRunnable(ImageView view, ZLLoadableImage image, int width, int height) {
-			myView = view;
+			CoverView = view;
 			myImage = image;
-			myWidth = width;
-			myHeight = height;
+			Width = width;
+			Height = height;
 			myImageViews.put(view, this);
 		}
 
 		public void run() {
 			synchronized (myImageViews) {
-				if (myImageViews.remove(myView) != this) {
+				if (myImageViews.remove(CoverView) != this) {
 					return;
 				}
 				if (!myImage.isSynchronized()) {
@@ -79,12 +79,12 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				if (data == null) {
 					return;
 				}
-				final Bitmap coverBitmap = data.getBitmap(2 * myWidth, 2 * myHeight);
+				final Bitmap coverBitmap = data.getBitmap(2 * Width, 2 * Height);
 				if (coverBitmap == null) {
 					return;
 				}
-				myView.setImageBitmap(coverBitmap);
-				myView.postInvalidate();
+				CoverView.setImageBitmap(coverBitmap);
+				CoverView.postInvalidate();
 			}
 		}
 	}
