@@ -32,7 +32,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 public final class CoverHolder {
 	private final CoverManager myManager;
 	public final ImageView CoverView;
-	public FBTree.Key Key;
+	public volatile FBTree.Key Key;
 
 	private CoverSyncRunnable coverSyncRunnable;
 	Future<?> coverBitmapTask;
@@ -133,7 +133,6 @@ public final class CoverHolder {
 					// We have been cancelled
 					return;
 				}
-				/*
 				synchronized (CoverHolder.this) {
 					// I'm not sure why, but cover bitmaps disappear all the time
 					// So if by the time bitmap is generated holder has switched
@@ -142,7 +141,6 @@ public final class CoverHolder {
 						return;
 					}
 				}
-				*/
 				myManager.CachedBitmaps.put(myKey, coverBitmap);
 				myManager.runOnUiThread(new Runnable() {
 					@Override
