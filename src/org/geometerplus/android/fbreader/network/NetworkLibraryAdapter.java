@@ -62,18 +62,24 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		public final int Height;
 		public FBTree.Key Key;
 
-		CoverHolder(View view, int width, int height) {
-			CoverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-			CoverView.getLayoutParams().width = width;
-			CoverView.getLayoutParams().height = height;
-			CoverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			CoverView.requestLayout();
-
+		CoverHolder(ImageView coverView, int width, int height, FBTree.Key key) {
+			CoverView = coverView;
 			Width = width;
 			Height = height;
+			Key = key;
 
-			view.setTag(this);
 			numCoverHolders++;
+		}
+
+		synchronized void setKey(FBTree.Key key) {
+			if (!Key.equals(key)) {
+				if (coverBitmapTask != null) {
+					coverBitmapTask.cancel(true);
+					coverBitmapTask = null;
+				}
+				coverBitmapRunnable = null;
+			}
+			Key = key;
 		}
 
 		private CoverSyncRunnable coverSyncRunnable;
@@ -250,21 +256,16 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				myCoverWidth = myCoverHeight * 15 / 32;
 				view.requestLayout();
 			}
-			holder = new CoverHolder(view, myCoverWidth, myCoverHeight);
+			final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
+			coverView.getLayoutParams().width = myCoverWidth;
+			coverView.getLayoutParams().height = myCoverHeight;
+			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+			coverView.requestLayout();
+			holder = new CoverHolder(coverView, myCoverWidth, myCoverHeight, tree.getUniqueKey());
+			view.setTag(this);
 		} else {
 			holder = (CoverHolder)view.getTag();
-		}
-
-		synchronized(holder) {
-			final FBTree.Key key = tree.getUniqueKey();
-			if (!holder.Key.equals(key)) {
-				if (holder.coverBitmapTask != null) {
-					holder.coverBitmapTask.cancel(true);
-					holder.coverBitmapTask = null;
-				}
-				holder.coverBitmapRunnable = null;
-			}
-			holder.Key = key;
+			holder.setKey(tree.getUniqueKey());
 		}
 
 		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
