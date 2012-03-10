@@ -58,6 +58,8 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	private volatile int numCoverHolders = 0;
 	private final class CoverHolder {
 		public final ImageView CoverView;
+		public final int Width;
+		public final int Height;
 		public FBTree.Key Key;
 
 		CoverHolder(View view, int width, int height) {
@@ -67,13 +69,134 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			CoverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			CoverView.requestLayout();
 
+			Width = width;
+			Height = height;
+
 			view.setTag(this);
 			numCoverHolders++;
 		}
 
-		private Runnable coverSyncRunnable;
+		private CoverSyncRunnable coverSyncRunnable;
 		private Future<?> coverBitmapTask;
 		private Runnable coverBitmapRunnable;
+
+		private class CoverSyncRunnable implements Runnable {
+			private final ZLLoadableImage myImage;
+			private final FBTree.Key myKey;
+
+			CoverSyncRunnable(ZLLoadableImage image) {
+				myImage = image;
+				synchronized (CoverHolder.this) {
+					myKey = Key;
+					coverSyncRunnable = this;
+				}
+			}
+
+			public void run() {
+				synchronized (CoverHolder.this) {
+					try {
+						if (coverSyncRunnable != this) {
+							return;
+						}
+						if (!Key.equals(myKey)) {
+							return;
+						}
+						if (!myImage.isSynchronized()) {
+							return;
+						}
+						if (myCachedBitmaps.containsKey(Key)) {
+							return;
+						}
+						final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+						final ZLAndroidImageData data = mgr.getImageData(myImage);
+						if (data == null) {
+							return;
+						}
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								synchronized (CoverHolder.this) {
+									if (Key.equals(myKey)) {
+										startUpdateCover(CoverHolder.this, myImage);
+									}
+								}
+							}
+						});
+					} finally {
+						if (coverSyncRunnable == this) {
+							coverSyncRunnable = null;
+						}
+					}
+				}
+			}
+		}
+
+		private class CoverBitmapRunnable implements Runnable {
+			private final ZLLoadableImage myImage;
+			private final FBTree.Key myKey;
+
+			CoverBitmapRunnable(ZLLoadableImage image) {
+				myImage = image;
+				synchronized (CoverHolder.this) {
+					myKey = Key;
+					coverBitmapRunnable = this;
+				}
+			}
+
+			public void run() {
+				synchronized (CoverHolder.this) {
+					if (coverBitmapRunnable != this) {
+						return;
+					}
+				}
+				try {
+					if (!myImage.isSynchronized()) {
+						return;
+					}
+					final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
+					final ZLAndroidImageData data = mgr.getImageData(myImage);
+					if (data == null) {
+						return;
+					}
+					final Bitmap coverBitmap = data.getBitmap(2 * Width, 2 * Height);
+					if (coverBitmap == null) {
+						// If bitmap is null, then there's no image
+						// and CoverView already has a stock image
+						return;
+					}
+					if (Thread.currentThread().isInterrupted()) {
+						// We have been cancelled
+						return;
+					}
+					synchronized (CoverHolder.this) {
+						// I'm not sure why, but cover bitmaps disappear all the time
+						// So if by the time bitmap is generated holder has switched
+						// to another key/tree, just scrap it, will retry later
+						if (!Key.equals(myKey)) {
+							return;
+						}
+					}
+					myCachedBitmaps.put(myKey, coverBitmap);
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							synchronized (CoverHolder.this) {
+								if (Key.equals(myKey)) {
+									CoverView.setImageBitmap(coverBitmap);
+								}
+							}
+						}
+					});
+				} finally {
+					synchronized (CoverHolder.this) {
+						if (coverBitmapRunnable == this) {
+							coverBitmapRunnable = null;
+							coverBitmapTask = null;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@SuppressWarnings("serial")
@@ -98,143 +221,13 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	private static final int IMAGE_RESIZE_THREADS_NUMBER = 1; // TODO: how many threads ???
 	private final ExecutorService myPool = Executors.newFixedThreadPool(IMAGE_RESIZE_THREADS_NUMBER, new MinPriorityThreadFactory());
 
-	private final class CoverBitmapRunnable implements Runnable {
-		private final CoverHolder myHolder;
-		private final ZLLoadableImage myImage;
-		private final int myWidth;
-		private final int myHeight;
-		private final FBTree.Key myKey;
-
-		CoverBitmapRunnable(CoverHolder holder, ZLLoadableImage image, int width, int height) {
-			myHolder = holder;
-			myImage = image;
-			myWidth = width;
-			myHeight = height;
-			synchronized (holder) {
-				myKey = holder.Key;
-				holder.coverBitmapRunnable = this;
-			}
-		}
-
-		public void run() {
-			synchronized(myHolder) {
-				if (myHolder.coverBitmapRunnable != this) {
-					return;
-				}
-			}
-			try {
-				if (!myImage.isSynchronized()) {
-					return;
-				}
-				final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-				final ZLAndroidImageData data = mgr.getImageData(myImage);
-				if (data == null) {
-					return;
-				}
-				final Bitmap coverBitmap = data.getBitmap(2 * myWidth, 2 * myHeight);
-				if (coverBitmap == null) {
-					// If bitmap is null, then there's no image
-					// and CoverView already has a stock image
-					return;
-				}
-				if (Thread.currentThread().isInterrupted()) {
-					// We have been cancelled
-					return;
-				}
-				synchronized (myHolder) {
-					// I'm not sure why, but cover bitmaps disappear all the time
-					// So if by the time bitmap is generated holder has switched
-					// to another key/tree, just scrap it, will retry later
-					if (!myHolder.Key.equals(myKey)) {
-						return;
-					}
-				}
-				myCachedBitmaps.put(myKey, coverBitmap);
-				getActivity().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						synchronized (myHolder) {
-							if (myHolder.Key.equals(myKey)) {
-								myHolder.CoverView.setImageBitmap(coverBitmap);
-							}
-						}
-					}
-				});
-			} finally {
-				synchronized(myHolder) {
-					if (myHolder.coverBitmapRunnable == this) {
-						myHolder.coverBitmapRunnable = null;
-						myHolder.coverBitmapTask = null;
-					}
-				}
-			}
-		}
-	}
-
-	private void startUpdateCover(CoverHolder holder, ZLLoadableImage image, int width, int height) {
+	private void startUpdateCover(CoverHolder holder, ZLLoadableImage image) {
 		synchronized (holder) {
 			final Bitmap coverBitmap = myCachedBitmaps.get(holder.Key);
 			if (coverBitmap != null) {
 				holder.CoverView.setImageBitmap(coverBitmap);
 			} else if (holder.coverBitmapTask == null) {
-				holder.coverBitmapTask = myPool.submit(new CoverBitmapRunnable(holder, image, width, height));
-			}
-		}
-	}
-
-	private final class CoverSyncRunnable implements Runnable {
-		private final CoverHolder myHolder;
-		private final ZLLoadableImage myImage;
-		private final int myWidth;
-		private final int myHeight;
-		private final FBTree.Key myKey;
-
-		CoverSyncRunnable(CoverHolder holder, ZLLoadableImage image, int width, int height) {
-			myHolder = holder;
-			myImage = image;
-			myWidth = width;
-			myHeight = height;
-			synchronized (holder) {
-				myKey = holder.Key;
-				holder.coverSyncRunnable = this;
-			}
-		}
-
-		public void run() {
-			synchronized (myHolder) {
-				try {
-					if (myHolder.coverSyncRunnable != this) {
-						return;
-					}
-					if (!myHolder.Key.equals(myKey)) {
-						return;
-					}
-					if (!myImage.isSynchronized()) {
-						return;
-					}
-					if (myCachedBitmaps.containsKey(myHolder.Key)) {
-						return;
-					}
-					final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-					final ZLAndroidImageData data = mgr.getImageData(myImage);
-					if (data == null) {
-						return;
-					}
-					getActivity().runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							synchronized(myHolder) {
-								if (myHolder.Key.equals(myKey)) {
-									startUpdateCover(myHolder, myImage, myWidth, myHeight);
-								}
-							}
-						}
-					});
-				} finally {
-					if (myHolder.coverSyncRunnable == this) {
-						myHolder.coverSyncRunnable = null;
-					}
-				}
+				holder.coverBitmapTask = myPool.submit(holder.new CoverBitmapRunnable(image));
 			}
 		}
 	}
@@ -277,7 +270,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
 		setSubviewText(view, R.id.network_tree_item_childrenlist, tree.getSummary());
 
-		setupCover(holder, tree, myCoverWidth, myCoverWidth);
+		setupCover(holder, tree);
 
 		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
 		final int status = (tree instanceof NetworkBookTree)
@@ -297,7 +290,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		return view;
 	}
 
-	private void setupCover(final CoverHolder holder, NetworkTree tree, int width, int height) {
+	private void setupCover(final CoverHolder holder, NetworkTree tree) {
 		Bitmap coverBitmap = myCachedBitmaps.get(holder.Key);
 		final ZLImage cover = tree.getCover();
 		if (coverBitmap == null && cover != null) {
@@ -309,15 +302,15 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				if (img.isSynchronized()) {
 					data = mgr.getImageData(img);
 					if (data != null) {
-						startUpdateCover(holder, img, width, height);
+						startUpdateCover(holder, img);
 					}
 				} else {
-					img.startSynchronization(new CoverSyncRunnable(holder, img, width, height));
+					img.startSynchronization(holder.new CoverSyncRunnable(img));
 				}
 			} else {
 				data = mgr.getImageData(cover);
 				if (data != null) {
-					coverBitmap = data.getBitmap(2 * width, 2 * height);
+					coverBitmap = data.getBitmap(2 * holder.Width, 2 * holder.Height);
 				}
 			}
 		}
