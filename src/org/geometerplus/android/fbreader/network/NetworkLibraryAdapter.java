@@ -58,7 +58,6 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	private volatile int numViewHolders = 0;
 	private final class ViewHolder {
 		public final ImageView CoverView;
-		public final ImageView StatusView;
 
 		ViewHolder(View view, int width, int height) {
 			CoverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
@@ -66,7 +65,6 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			CoverView.getLayoutParams().height = height;
 			CoverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			CoverView.requestLayout();
-			StatusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
 
 			view.setTag(this);
 			numViewHolders++;
@@ -282,6 +280,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 
 		setupCover(holder, tree, myCoverWidth, myCoverWidth);
 
+		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
 		final int status = (tree instanceof NetworkBookTree)
 			? NetworkBookActions.getBookStatus(
 				((NetworkBookTree)tree).Book,
@@ -289,12 +288,12 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			  )
 			: 0;
 		if (status != 0) {
-			holder.StatusView.setVisibility(View.VISIBLE);
-			holder.StatusView.setImageResource(status);
+			statusView.setVisibility(View.VISIBLE);
+			statusView.setImageResource(status);
 		} else {
-			holder.StatusView.setVisibility(View.GONE);
+			statusView.setVisibility(View.GONE);
 		}
-		holder.StatusView.requestLayout();
+		statusView.requestLayout();
 
 		return view;
 	}
