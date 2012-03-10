@@ -20,11 +20,6 @@
 package org.geometerplus.android.fbreader.network;
 
 import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
 
 import android.view.*;
 import android.widget.ImageView;
@@ -41,9 +36,10 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
+import org.geometerplus.android.fbreader.covers.CoverManager;
+import org.geometerplus.android.fbreader.covers.CoverHolder;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
@@ -52,191 +48,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		super(activity);
 	}
 
-	private int myCoverWidth = -1;
-	private int myCoverHeight = -1;
-
-	private volatile int numCoverHolders = 0;
-	private final class CoverHolder {
-		public final ImageView CoverView;
-		public final int Width;
-		public final int Height;
-		public FBTree.Key Key;
-
-		CoverHolder(ImageView coverView, int width, int height, FBTree.Key key) {
-			CoverView = coverView;
-			Width = width;
-			Height = height;
-			Key = key;
-
-			numCoverHolders++;
-		}
-
-		synchronized void setKey(FBTree.Key key) {
-			if (!Key.equals(key)) {
-				if (coverBitmapTask != null) {
-					coverBitmapTask.cancel(true);
-					coverBitmapTask = null;
-				}
-				coverBitmapRunnable = null;
-			}
-			Key = key;
-		}
-
-		private CoverSyncRunnable coverSyncRunnable;
-		private Future<?> coverBitmapTask;
-		private Runnable coverBitmapRunnable;
-
-		private class CoverSyncRunnable implements Runnable {
-			private final ZLLoadableImage myImage;
-			private final FBTree.Key myKey;
-
-			CoverSyncRunnable(ZLLoadableImage image) {
-				myImage = image;
-				synchronized (CoverHolder.this) {
-					myKey = Key;
-					coverSyncRunnable = this;
-				}
-			}
-
-			public void run() {
-				synchronized (CoverHolder.this) {
-					try {
-						if (coverSyncRunnable != this) {
-							return;
-						}
-						if (!Key.equals(myKey)) {
-							return;
-						}
-						if (!myImage.isSynchronized()) {
-							return;
-						}
-						if (myCachedBitmaps.containsKey(Key)) {
-							return;
-						}
-						final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-						final ZLAndroidImageData data = mgr.getImageData(myImage);
-						if (data == null) {
-							return;
-						}
-						getActivity().runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								synchronized (CoverHolder.this) {
-									if (Key.equals(myKey)) {
-										startUpdateCover(CoverHolder.this, myImage);
-									}
-								}
-							}
-						});
-					} finally {
-						if (coverSyncRunnable == this) {
-							coverSyncRunnable = null;
-						}
-					}
-				}
-			}
-		}
-
-		private class CoverBitmapRunnable implements Runnable {
-			private final ZLLoadableImage myImage;
-			private final FBTree.Key myKey;
-
-			CoverBitmapRunnable(ZLLoadableImage image) {
-				myImage = image;
-				synchronized (CoverHolder.this) {
-					myKey = Key;
-					coverBitmapRunnable = this;
-				}
-			}
-
-			public void run() {
-				synchronized (CoverHolder.this) {
-					if (coverBitmapRunnable != this) {
-						return;
-					}
-				}
-				try {
-					if (!myImage.isSynchronized()) {
-						return;
-					}
-					final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-					final ZLAndroidImageData data = mgr.getImageData(myImage);
-					if (data == null) {
-						return;
-					}
-					final Bitmap coverBitmap = data.getBitmap(2 * Width, 2 * Height);
-					if (coverBitmap == null) {
-						// If bitmap is null, then there's no image
-						// and CoverView already has a stock image
-						return;
-					}
-					if (Thread.currentThread().isInterrupted()) {
-						// We have been cancelled
-						return;
-					}
-					synchronized (CoverHolder.this) {
-						// I'm not sure why, but cover bitmaps disappear all the time
-						// So if by the time bitmap is generated holder has switched
-						// to another key/tree, just scrap it, will retry later
-						if (!Key.equals(myKey)) {
-							return;
-						}
-					}
-					myCachedBitmaps.put(myKey, coverBitmap);
-					getActivity().runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							synchronized (CoverHolder.this) {
-								if (Key.equals(myKey)) {
-									CoverView.setImageBitmap(coverBitmap);
-								}
-							}
-						}
-					});
-				} finally {
-					synchronized (CoverHolder.this) {
-						if (coverBitmapRunnable == this) {
-							coverBitmapRunnable = null;
-							coverBitmapTask = null;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	@SuppressWarnings("serial")
-	private final Map<FBTree.Key, Bitmap> myCachedBitmaps =
-			Collections.synchronizedMap(new LinkedHashMap<FBTree.Key, Bitmap>(10, 0.75f, true) {
-				@Override
-				protected boolean removeEldestEntry(Entry<FBTree.Key, Bitmap> eldest) {
-					return size() > numCoverHolders;
-				}
-			});
-
-	// Copied from ZLAndroidImageLoader
-	private static class MinPriorityThreadFactory implements ThreadFactory {
-		private final ThreadFactory myDefaultThreadFactory = Executors.defaultThreadFactory();
-
-		public Thread newThread(Runnable r) {
-			final Thread th = myDefaultThreadFactory.newThread(r);
-			th.setPriority(Thread.MIN_PRIORITY);
-			return th;
-		}
-	}
-	private static final int IMAGE_RESIZE_THREADS_NUMBER = 1; // TODO: how many threads ???
-	private final ExecutorService myPool = Executors.newFixedThreadPool(IMAGE_RESIZE_THREADS_NUMBER, new MinPriorityThreadFactory());
-
-	private void startUpdateCover(CoverHolder holder, ZLLoadableImage image) {
-		synchronized (holder) {
-			final Bitmap coverBitmap = myCachedBitmaps.get(holder.Key);
-			if (coverBitmap != null) {
-				holder.CoverView.setImageBitmap(coverBitmap);
-			} else if (holder.coverBitmapTask == null) {
-				holder.coverBitmapTask = myPool.submit(holder.new CoverBitmapRunnable(image));
-			}
-		}
-	}
+	private CoverManager myCoverManager;
 
 	private void setSubviewText(View view, int resourceId, String text) {
 		((TextView)view.findViewById(resourceId)).setText(text);
@@ -250,18 +62,14 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		final CoverHolder holder;
 		if (view == null) {
 			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
-			if (myCoverWidth == -1) {
+			if (myCoverManager == null) {
 				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-				myCoverHeight = view.getMeasuredHeight();
-				myCoverWidth = myCoverHeight * 15 / 32;
+				final int coverHeight = view.getMeasuredHeight();
+				myCoverManager = new CoverManager(getActivity(), coverHeight * 15 / 32, coverHeight);
 				view.requestLayout();
 			}
 			final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-			coverView.getLayoutParams().width = myCoverWidth;
-			coverView.getLayoutParams().height = myCoverHeight;
-			coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			coverView.requestLayout();
-			holder = new CoverHolder(coverView, myCoverWidth, myCoverHeight, tree.getUniqueKey());
+			holder = new CoverHolder(myCoverManager, coverView, tree.getUniqueKey());
 			view.setTag(this);
 		} else {
 			holder = (CoverHolder)view.getTag();
@@ -292,32 +100,11 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	}
 
 	private void setupCover(final CoverHolder holder, NetworkTree tree) {
-		Bitmap coverBitmap = myCachedBitmaps.get(holder.Key);
-		final ZLImage cover = tree.getCover();
-		if (coverBitmap == null && cover != null) {
-			ZLLoadableImage img = null;
-			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (cover instanceof ZLLoadableImage) {
-				img = (ZLLoadableImage)cover;
-				if (img.isSynchronized()) {
-					data = mgr.getImageData(img);
-					if (data != null) {
-						startUpdateCover(holder, img);
-					}
-				} else {
-					img.startSynchronization(holder.new CoverSyncRunnable(img));
-				}
-			} else {
-				data = mgr.getImageData(cover);
-				if (data != null) {
-					coverBitmap = data.getBitmap(2 * holder.Width, 2 * holder.Height);
-				}
-			}
+		if (myCoverManager.trySetCoverImage(holder, tree)) {
+			return;
 		}
-		if (coverBitmap != null) {
-			holder.CoverView.setImageBitmap(coverBitmap);
-		} else if (tree instanceof NetworkBookTree) {
+
+		if (tree instanceof NetworkBookTree) {
 			holder.CoverView.setImageResource(R.drawable.ic_list_library_book);
 		} else if (tree instanceof SearchCatalogTree) {
 			holder.CoverView.setImageResource(R.drawable.ic_list_library_search);
