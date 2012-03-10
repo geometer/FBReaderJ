@@ -318,8 +318,9 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				}
 			} else {
 				data = mgr.getImageData(cover);
-				if (data != null)
+				if (data != null) {
 					coverBitmap = data.getBitmap(2 * width, 2 * height);
+				}
 			}
 		}
 		if (coverBitmap != null) {
