@@ -19,12 +19,9 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
