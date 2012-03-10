@@ -94,6 +94,10 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		}
 	}
 
+	private void setSubviewText(View view, int resourceId, String text) {
+		((TextView)view.findViewById(resourceId)).setText(text);
+	}
+
 	public View getView(int position, View view, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		if (tree == null) {
@@ -103,8 +107,8 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
 		}
 
-		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSummary());
+		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
+		setSubviewText(view, R.id.network_tree_item_childrenlist, tree.getSummary());
 
 		if (myCoverWidth == -1) {
 			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
