@@ -127,12 +127,14 @@ class NetworkLibraryAdapter extends TreeAdapter {
 
 		public void run() {
 			synchronized(myHolder) {
-				if (myHolder.coverBitmapRunnable != this)
+				if (myHolder.coverBitmapRunnable != this) {
 					return;
+				}
 			}
 			try {
-				if (!myImage.isSynchronized())
+				if (!myImage.isSynchronized()) {
 					return;
+				}
 				final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 				final ZLAndroidImageData data = mgr.getImageData(myImage);
 				if (data == null) {
@@ -308,8 +310,9 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				img = (ZLLoadableImage)cover;
 				if (img.isSynchronized()) {
 					data = mgr.getImageData(img);
-					if (data != null)
+					if (data != null) {
 						startUpdateCover(holder, img, width, height);
+					}
 				} else {
 					img.startSynchronization(new CoverSyncRunnable(holder, img, width, height));
 				}
