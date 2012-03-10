@@ -37,18 +37,6 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 		}
 	}
 
-	public static interface DataProcessor {
-		void process(ZLAndroidImageData data);
-	}
-
-	public Runnable imageDataRetriever(final ZLImage image, final DataProcessor processor) {
-		return new Runnable() {
-			public void run() {
-				processor.process(getImageData(image));
-			}
-		};
-	}
-
 	private ZLAndroidImageLoader myLoader;
 
 	@Override
