@@ -41,7 +41,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
-import org.geometerplus.fbreader.tree.FBTree.Key;
+import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 
@@ -76,18 +76,17 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			numViewHolders++;
 		}
 
-		private Key key;
-		private NetworkTree tree;
+		private FBTree.Key key;
 		private Runnable coverSyncRunnable;
 		private Future<?> coverBitmapTask;
 		private Runnable coverBitmapRunnable;
 	}
 
 	@SuppressWarnings("serial")
-	private final Map<Key, Bitmap> myCachedBitmaps =
-			Collections.synchronizedMap(new LinkedHashMap<Key, Bitmap>(10, 0.75f, true) {
+	private final Map<FBTree.Key, Bitmap> myCachedBitmaps =
+			Collections.synchronizedMap(new LinkedHashMap<FBTree.Key, Bitmap>(10, 0.75f, true) {
 				@Override
-				protected boolean removeEldestEntry(Entry<Key, Bitmap> eldest) {
+				protected boolean removeEldestEntry(Entry<FBTree.Key, Bitmap> eldest) {
 					return size() > numViewHolders;
 				}
 			});
@@ -110,8 +109,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		private final ZLLoadableImage myImage;
 		private final int myWidth;
 		private final int myHeight;
-		private final Key myKey;
-		private final NetworkTree myTree;
+		private final FBTree.Key myKey;
 
 		CoverBitmapRunnable(ViewHolder holder, ZLLoadableImage image, int width, int height) {
 			myHolder = holder;
@@ -120,7 +118,6 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			myHeight = height;
 			synchronized(holder) {
 				myKey = holder.key;
-				myTree = holder.tree;
 				holder.coverBitmapRunnable = this;
 			}
 		}
@@ -154,7 +151,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 					// I'm not sure why, but cover bitmaps disappear all the time
 					// So if by the time bitmap is generated holder has switched
 					// to another key/tree, just scrap it, will retry later
-					if (myHolder.key != myKey || myHolder.tree != myTree) {
+					if (!myHolder.key.equals(myKey)) {
 						return;
 					}
 				}
@@ -163,7 +160,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 					@Override
 					public void run() {
 						synchronized (myHolder) {
-							if (myHolder.key == myKey && myHolder.tree == myTree) {
+							if (myHolder.key.equals(myKey)) {
 								myHolder.CoverView.setImageBitmap(coverBitmap);
 							}
 						}
@@ -198,8 +195,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		private final ZLLoadableImage myImage;
 		private final int myWidth;
 		private final int myHeight;
-		private final Key myKey;
-		private final NetworkTree myTree;
+		private final FBTree.Key myKey;
 
 		CoverSyncRunnable(ViewHolder holder, ZLLoadableImage image, int width, int height) {
 			myHolder = holder;
@@ -208,7 +204,6 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			myHeight = height;
 			synchronized(holder) {
 				myKey = holder.key;
-				myTree = holder.tree;
 				holder.coverSyncRunnable = this;
 			}
 		}
@@ -218,7 +213,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				try {
 					if (myHolder.coverSyncRunnable != this)
 						return;
-					if (myHolder.key != myKey || myHolder.tree != myTree)
+					if (!myHolder.key.equals(myKey))
 						return;
 					if (!myImage.isSynchronized())
 						return;
@@ -232,7 +227,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 						@Override
 						public void run() {
 							synchronized(myHolder) {
-								if (myHolder.key != myKey || myHolder.tree != myTree)
+								if (!myHolder.key.equals(myKey))
 									return;
 								startUpdateCover(myHolder, myImage, myWidth, myHeight);
 							}
@@ -271,15 +266,15 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		}
 
 		synchronized(holder) {
-			if (holder.tree != tree) {
+			final FBTree.Key key = tree.getUniqueKey();
+			if (!holder.key.equals(key)) {
 				if (holder.coverBitmapTask != null) {
 					holder.coverBitmapTask.cancel(true);
 					holder.coverBitmapTask = null;
 				}
 				holder.coverBitmapRunnable = null;
 			}
-			holder.key = tree.getUniqueKey();
-			holder.tree = tree;
+			holder.key = key;
 		}
 
 		holder.NameView.setText(tree.getName());
