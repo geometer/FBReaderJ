@@ -172,13 +172,11 @@ class NetworkLibraryAdapter extends TreeAdapter {
 	}
 
 	private void startUpdateCover(ViewHolder holder, ZLLoadableImage image, int width, int height) {
-		synchronized(holder) {
-			Bitmap coverBitmap = myCachedBitmaps.get(holder.key);
+		synchronized (holder) {
+			final Bitmap coverBitmap = myCachedBitmaps.get(holder.key);
 			if (coverBitmap != null) {
 				holder.CoverView.setImageBitmap(coverBitmap);
-				return;
-			}
-			if (holder.coverBitmapTask == null) {
+			} else if (holder.coverBitmapTask == null) {
 				holder.coverBitmapTask = myPool.submit(new CoverBitmapRunnable(holder, image, width, height));
 			}
 		}
@@ -205,25 +203,30 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		public void run() {
 			synchronized (myHolder) {
 				try {
-					if (myHolder.coverSyncRunnable != this)
+					if (myHolder.coverSyncRunnable != this) {
 						return;
-					if (!myHolder.key.equals(myKey))
+					}
+					if (!myHolder.key.equals(myKey)) {
 						return;
-					if (!myImage.isSynchronized())
+					}
+					if (!myImage.isSynchronized()) {
 						return;
-					if (myCachedBitmaps.containsKey(myHolder.key))
+					}
+					if (myCachedBitmaps.containsKey(myHolder.key)) {
 						return;
+					}
 					final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
 					final ZLAndroidImageData data = mgr.getImageData(myImage);
-					if (data == null)
+					if (data == null) {
 						return;
+					}
 					getActivity().runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
 							synchronized(myHolder) {
-								if (!myHolder.key.equals(myKey))
-									return;
-								startUpdateCover(myHolder, myImage, myWidth, myHeight);
+								if (myHolder.key.equals(myKey)) {
+									startUpdateCover(myHolder, myImage, myWidth, myHeight);
+								}
 							}
 						}
 					});
