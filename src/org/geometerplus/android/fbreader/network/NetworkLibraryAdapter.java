@@ -246,6 +246,11 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		}
 	}
 
+	private static class ImageDataProcessor implements ZLAndroidImageManager.DataProcessor {
+		public void process(ZLAndroidImageData data) {
+		}
+	}
+
 	public View getView(int position, View view, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		if (tree == null) {
