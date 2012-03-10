@@ -196,7 +196,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			myImage = image;
 			myWidth = width;
 			myHeight = height;
-			synchronized(holder) {
+			synchronized (holder) {
 				myKey = holder.key;
 				holder.coverSyncRunnable = this;
 			}
@@ -228,8 +228,9 @@ class NetworkLibraryAdapter extends TreeAdapter {
 						}
 					});
 				} finally {
-					if (myHolder.coverSyncRunnable == this)
+					if (myHolder.coverSyncRunnable == this) {
 						myHolder.coverSyncRunnable = null;
+					}
 				}
 			}
 		}
