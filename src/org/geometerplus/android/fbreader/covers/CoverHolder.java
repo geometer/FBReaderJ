@@ -68,6 +68,7 @@ public final class CoverHolder {
 				myKey = Key;
 				coverSyncRunnable = this;
 			}
+			System.err.println("+ CoverSyncRunnable for " + myKey);
 		}
 
 		public void run() {
@@ -111,6 +112,7 @@ public final class CoverHolder {
 				myKey = Key;
 				coverBitmapRunnable = this;
 			}
+			System.err.println("+ CoverBitmapRunnable for " + myKey);
 		}
 
 		public void run() {
@@ -127,6 +129,7 @@ public final class CoverHolder {
 				if (coverBitmap == null) {
 					// If bitmap is null, then there's no image
 					// and CoverView already has a stock image
+					myManager.CachedBitmaps.put(myKey, CoverManager.NULL_BITMAP);
 					return;
 				}
 				if (Thread.currentThread().isInterrupted()) {

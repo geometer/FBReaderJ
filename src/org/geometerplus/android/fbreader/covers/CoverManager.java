@@ -37,12 +37,14 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class CoverManager {
+	static final Object NULL_BITMAP = new Object();
+
 	@SuppressWarnings("serial")
-	final Map<FBTree.Key,Bitmap> CachedBitmaps =
-		Collections.synchronizedMap(new LinkedHashMap<FBTree.Key,Bitmap>(10, 0.75f, true) {
+	final Map<FBTree.Key,Object> CachedBitmaps =
+		Collections.synchronizedMap(new LinkedHashMap<FBTree.Key,Object>(10, 0.75f, true) {
 			@Override
-			protected boolean removeEldestEntry(Map.Entry<FBTree.Key,Bitmap> eldest) {
-				return size() > HoldersCounter;
+			protected boolean removeEldestEntry(Map.Entry<FBTree.Key,Object> eldest) {
+				return size() > 3 * HoldersCounter;
 			}
 		});
 
@@ -93,9 +95,11 @@ public class CoverManager {
 
 	void setCoverForView(CoverHolder holder, ZLLoadableImage image) {
 		synchronized (holder) {
-			final Bitmap coverBitmap = CachedBitmaps.get(holder.Key);
-			if (coverBitmap != null) {
-				holder.CoverView.setImageBitmap(coverBitmap);
+			final Object coverBitmap = CachedBitmaps.get(holder.Key);
+			if (coverBitmap == NULL_BITMAP) {
+				return;
+			} else if (coverBitmap != null) {
+				holder.CoverView.setImageBitmap((Bitmap)coverBitmap);
 			} else if (holder.coverBitmapTask == null) {
 				holder.coverBitmapTask = myPool.submit(holder.new CoverBitmapRunnable(image));
 			}
@@ -103,7 +107,11 @@ public class CoverManager {
 	}
 
 	public boolean trySetCoverImage(CoverHolder holder, FBTree tree) {
-		Bitmap coverBitmap = CachedBitmaps.get(holder.Key);
+		Object coverBitmap = CachedBitmaps.get(holder.Key);
+		if (coverBitmap == NULL_BITMAP) {
+			return false;
+		}
+
 		if (coverBitmap == null) {
 			final ZLImage cover = tree.getCover();
 			if (cover instanceof ZLLoadableImage) {
@@ -118,7 +126,7 @@ public class CoverManager {
 			}
 		}
 		if (coverBitmap != null) {
-			holder.CoverView.setImageBitmap(coverBitmap);
+			holder.CoverView.setImageBitmap((Bitmap)coverBitmap);
 			return true;
 		}
 		return false;
