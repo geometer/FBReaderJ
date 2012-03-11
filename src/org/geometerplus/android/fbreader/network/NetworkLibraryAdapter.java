@@ -61,7 +61,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 			}
 			final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
 			holder = new CoverHolder(myCoverManager, coverView, tree.getUniqueKey());
-			view.setTag(this);
+			view.setTag(holder);
 		} else {
 			holder = (CoverHolder)view.getTag();
 			holder.setKey(tree.getUniqueKey());
