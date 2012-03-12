@@ -37,7 +37,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class CoverManager {
-	public final CoverCache Cache = new CoverCache();
+	final CoverCache Cache = new CoverCache();
 
 	// Copied from ZLAndroidImageLoader
 	private static class MinPriorityThreadFactory implements ThreadFactory {

@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-public final class CoverHolder {
+public class CoverHolder {
 	private final CoverManager myManager;
 	public final ImageView CoverView;
 	public volatile FBTree.Key Key;
