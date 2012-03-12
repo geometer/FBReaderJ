@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -70,7 +71,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private HashMap<String,String> myFileNumbers = new HashMap<String,String>();
 	private HashMap<String,Integer> myTOCLabels = new HashMap<String,Integer>();
 
-	boolean readBook(ZLFile file) {
+	void readBook(ZLFile file) throws BookReadingException {
 		myFilePrefix = MiscUtil.htmlDirectoryPrefix(file);
 
 		myIdToHref.clear();
@@ -80,8 +81,10 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myGuideTOC.clear();
 		myState = READ_NONE;
 
-		if (!read(file)) {
-			return false;
+		try {
+			read(file);
+		} catch (IOException e) {
+			throw new BookReadingException(e, file);
 		}
 
 		myModelReader.setMainTextModel();
@@ -92,7 +95,7 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 			final ZLFile xhtmlFile = ZLFile.createFileByPath(myFilePrefix + name);
 			if (xhtmlFile == null) {
 				// NPE fix: null for bad attributes in .opf XML file
-				return false;
+				throw new BookReadingException("fileNotFound", myFilePrefix + name, file);
 			}
 			if (count++ == 0 && xhtmlFile.getPath().equals(myCoverFileName)) {
 				continue;
@@ -102,13 +105,16 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 
 			myModelReader.addHyperlinkLabel(referenceName);
 			myTOCLabels.put(referenceName, myModelReader.Model.BookTextModel.getParagraphsNumber());
-			reader.readFile(xhtmlFile, referenceName + '#');
+			try {
+				reader.readFile(xhtmlFile, referenceName + '#');
+			} catch (IOException e) {
+				// skip
+				e.printStackTrace();
+			}
 			myModelReader.insertEndOfSectionParagraph();
 		}
 
 		generateTOC();
-
-		return true;
 	}
 
 	private BookModel.Label getTOCLabel(String id) {
@@ -128,33 +134,32 @@ class OEBBookReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		return myModelReader.Model.getLabel(num + id.substring(index));
 	}
 
-	private void generateTOC() {
+	private void generateTOC() throws BookReadingException {
 		if (myNCXTOCFileName != null) {
 			final NCXReader ncxReader = new NCXReader(myModelReader);
-			if (ncxReader.readFile(myFilePrefix + myNCXTOCFileName)) {
-				final Map<Integer,NCXReader.NavPoint> navigationMap = ncxReader.navigationMap();
-				if (!navigationMap.isEmpty()) {
-					int level = 0;
-					for (NCXReader.NavPoint point : navigationMap.values()) {
-						final BookModel.Label label = getTOCLabel(point.ContentHRef);
-						int index = (label != null) ? label.ParagraphIndex : -1;
-						while (level > point.Level) {
-							myModelReader.endContentsParagraph();
-							--level;
-						}
-						while (++level <= point.Level) {
-							myModelReader.beginContentsParagraph(-2);
-							myModelReader.addContentsData(Dots);
-						}
-						myModelReader.beginContentsParagraph(index);
-						myModelReader.addContentsData(point.Text.toCharArray());
-					}
-					while (level > 0) {
+			ncxReader.readFile(myFilePrefix + myNCXTOCFileName);
+			final Map<Integer,NCXReader.NavPoint> navigationMap = ncxReader.navigationMap();
+			if (!navigationMap.isEmpty()) {
+				int level = 0;
+				for (NCXReader.NavPoint point : navigationMap.values()) {
+					final BookModel.Label label = getTOCLabel(point.ContentHRef);
+					int index = (label != null) ? label.ParagraphIndex : -1;
+					while (level > point.Level) {
 						myModelReader.endContentsParagraph();
 						--level;
 					}
-					return;
+					while (++level <= point.Level) {
+						myModelReader.beginContentsParagraph(-2);
+						myModelReader.addContentsData(Dots);
+					}
+					myModelReader.beginContentsParagraph(index);
+					myModelReader.addContentsData(point.Text.toCharArray());
 				}
+				while (level > 0) {
+					myModelReader.endContentsParagraph();
+					--level;
+				}
+				return;
 			}
 		}
 

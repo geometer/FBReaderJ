@@ -446,6 +446,13 @@ public final class FBView extends ZLTextView {
 		}
 
 		public synchronized void paint(ZLPaintContext context) {
+			final ZLFile wallpaper = getWallpaperFile();
+			if (wallpaper != null) {
+				context.clear(wallpaper, wallpaper instanceof ZLResourceFile);
+			} else {
+				context.clear(getBackgroundColor());
+			}
+
 			final FBReaderApp reader = myReader;
 			if (reader == null) {
 				return;
@@ -495,12 +502,6 @@ public final class FBView extends ZLTextView {
 			final String infoString = info.toString();
 
 			final int infoWidth = context.getStringWidth(infoString);
-			final ZLFile wallpaper = getWallpaperFile();
-			if (wallpaper != null) {
-				context.clear(wallpaper, wallpaper instanceof ZLResourceFile);
-			} else {
-				context.clear(getBackgroundColor());
-			}
 
 			// draw info text
 			context.setTextColor(fgColor);

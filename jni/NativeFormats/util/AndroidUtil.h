@@ -20,10 +20,97 @@
 #ifndef __ANDROIDUTIL_H__
 #define __ANDROIDUTIL_H__
 
+#include <jni.h>
+
+#include <string>
+#include <vector>
+
 class AndroidUtil {
 
+private:
+	static JavaVM *ourJavaVM;
+
 public:
+	static const char * const Class_java_lang_System;
+	static const char * const Class_java_util_Collection;
+	static const char * const Class_java_util_Locale;
+	static const char * const Class_java_io_InputStream;
+	static const char * const Class_java_io_PrintStream;
+	static const char * const Class_ZLibrary;
+	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
+	static const char * const Class_PluginCollection;
+	static const char * const Class_Paths;
+	static const char * const Class_Book;
+	static const char * const Class_Tag;
+	static const char * const Class_NativeBookModel;
+
+	static jobject OBJECT_java_lang_System_err;
+
+	static jmethodID MID_java_util_Collection_toArray;
+
+	static jmethodID SMID_java_util_Locale_getDefault;
+	static jmethodID MID_java_util_Locale_getLanguage;
+
+	static jmethodID MID_java_io_InputStream_close;
+	static jmethodID MID_java_io_InputStream_read;
+	static jmethodID MID_java_io_InputStream_skip;
+
+	static jmethodID MID_java_io_PrintStream_println;
+
+	static jmethodID SMID_ZLibrary_Instance;
+	static jmethodID MID_ZLibrary_getVersionName;
+
+	static jmethodID SMID_ZLFile_createFileByPath;
+	static jmethodID MID_ZLFile_children;
+	static jmethodID MID_ZLFile_exists;
+	static jmethodID MID_ZLFile_getInputStream;
+	static jmethodID MID_ZLFile_getPath;
+	static jmethodID MID_ZLFile_isDirectory;
+	static jmethodID MID_ZLFile_size;
+
+	static jmethodID MID_NativeFormatPlugin_init;
+	static jmethodID MID_NativeFormatPlugin_supportedFileType;
+
+	static jmethodID SMID_PluginCollection_Instance;
+
+	static jmethodID SMID_Paths_cacheDirectory;
+
+	static jfieldID FID_Book_File;
+	static jmethodID MID_Book_getTitle;
+	static jmethodID MID_Book_getLanguage;
+	static jmethodID MID_Book_getEncoding;
+	static jmethodID MID_Book_setTitle;
+	static jmethodID MID_Book_setSeriesInfo;
+	static jmethodID MID_Book_setLanguage;
+	static jmethodID MID_Book_setEncoding;
+	static jmethodID MID_Book_addAuthor;
+	static jmethodID MID_Book_addTag;
+
+	static jmethodID SMID_Tag_getTag;
+
+	static jfieldID FID_NativeBookModel_Book;
+	static jmethodID MID_NativeBookModel_initImageMap;
+	static jmethodID MID_NativeBookModel_initInternalHyperlinks;
+	static jmethodID MID_NativeBookModel_initTOC;
+	static jmethodID MID_NativeBookModel_createTextModel;
+	static jmethodID MID_NativeBookModel_setBookTextModel;
+	static jmethodID MID_NativeBookModel_setFootnoteModel;
+
+public:
+	static bool init(JavaVM* jvm);
+	static JNIEnv *getEnv();
+
+	static jobject createZLFile(JNIEnv *env, const std::string &path);
+	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
+	static jstring createJavaString(JNIEnv* env, const std::string &str);
+	static std::string convertNonUtfString(const std::string &str);
+
+	static jintArray createIntArray(JNIEnv *env, const std::vector<jint> &data);
+	static jbyteArray createByteArray(JNIEnv *env, const std::vector<jbyte> &data);
+	static jobjectArray createStringArray(JNIEnv *env, const std::vector<std::string> &data);
+
+	static void throwRuntimeException(JNIEnv *env, const std::string &message);
 };
 
 #endif /* __ANDROIDUTIL_H__ */

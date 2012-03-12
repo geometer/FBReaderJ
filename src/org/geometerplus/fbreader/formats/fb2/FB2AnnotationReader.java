@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.formats.fb2;
 
+import java.io.IOException;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
@@ -92,7 +94,12 @@ public class FB2AnnotationReader extends ZLXMLReaderAdapter {
 		}
 	}
 
-	public boolean readDocument(ZLFile file) {
-		return ZLXMLProcessor.read(this, file, 512);
+	private boolean readDocument(ZLFile file) {
+		try {
+			ZLXMLProcessor.read(this, file, 512);
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
 	}
 }

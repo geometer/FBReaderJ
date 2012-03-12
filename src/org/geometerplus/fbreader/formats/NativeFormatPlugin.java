@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
 
 public class NativeFormatPlugin extends FormatPlugin implements InfoReader {
@@ -37,13 +38,25 @@ public class NativeFormatPlugin extends FormatPlugin implements InfoReader {
 	}
 
 	@Override
-	public native boolean readMetaInfo(Book book);
+	public void readMetaInfo(Book book) throws BookReadingException {
+		if (!readMetaInfoNative(book)) {
+			throw new BookReadingException("errorReadingFile", book.File);
+		}
+	}
+
+	private native boolean readMetaInfoNative(Book book);
 
 	@Override
 	public native boolean readLanguageAndEncoding(Book book);
 
 	@Override
-	public native boolean readModel(BookModel model);
+	public void readModel(BookModel model) throws BookReadingException {
+		if (!readModelNative(model)) {
+			throw new BookReadingException("errorReadingFile", model.Book.File);
+		}
+	}
+
+	private native boolean readModelNative(BookModel model);
 
 	@Override
 	public ZLImage readCover(final ZLFile file) {
@@ -87,5 +100,11 @@ public class NativeFormatPlugin extends FormatPlugin implements InfoReader {
 	@Override
 	public Type type() {
 		return Type.NATIVE;
+	}
+
+	@Override
+	public EncodingCollection supportedEncodings() {
+		// TODO: implement
+		return new JavaEncodingCollection();
 	}
 }
