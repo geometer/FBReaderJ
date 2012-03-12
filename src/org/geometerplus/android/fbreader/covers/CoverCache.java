@@ -19,6 +19,6 @@
 
 package org.geometerplus.android.fbreader.covers;
 
-public class CoverCache {
+class CoverCache {
 
 }

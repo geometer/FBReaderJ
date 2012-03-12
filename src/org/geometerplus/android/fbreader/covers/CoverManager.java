@@ -20,5 +20,5 @@
 package org.geometerplus.android.fbreader.covers;
 
 public class CoverManager {
-
+	final CoverCache Cache = new CoverCache();
 }
