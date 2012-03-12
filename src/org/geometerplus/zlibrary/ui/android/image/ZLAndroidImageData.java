@@ -45,7 +45,7 @@ public abstract class ZLAndroidImageData implements ZLImageData {
 		return getBitmap(new ZLPaintContext.Size(maxWidth, maxHeight), ZLPaintContext.ScalingType.FitMaximum);
 	}
 
-	public Bitmap getBitmap(ZLPaintContext.Size maxSize, ZLPaintContext.ScalingType scaling) {
+	public synchronized Bitmap getBitmap(ZLPaintContext.Size maxSize, ZLPaintContext.ScalingType scaling) {
 		if (scaling != ZLPaintContext.ScalingType.OriginalSize) {
 			if (maxSize == null || maxSize.Width <= 0 || maxSize.Height <= 0) {
 				return null;
