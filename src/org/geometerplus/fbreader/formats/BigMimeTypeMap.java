@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.formats;
 import java.util.*;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import java.io.*;
 
 public abstract class BigMimeTypeMap {
 	private static HashMap<String, HashSet<String> > ourMap = new HashMap<String, HashSet<String> >();
@@ -55,6 +56,9 @@ public abstract class BigMimeTypeMap {
 	}
 
 	static {
-		new MimeTypeReader().read(ZLFile.createFileByPath("mimetypes/mimetypes.xml"));
+		try {
+			new MimeTypeReader().read(ZLFile.createFileByPath("mimetypes/mimetypes.xml"));
+		} catch (IOException e){
+		}
 	}
 }
