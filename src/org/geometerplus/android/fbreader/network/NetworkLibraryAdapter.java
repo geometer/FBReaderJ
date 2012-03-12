@@ -53,22 +53,22 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		Collections.synchronizedMap(new HashMap<ImageView,InvalidateViewRunnable>());
 
 	private final class InvalidateViewRunnable implements Runnable {
-		private final ImageView myView;
+		public final ImageView CoverView;
 		private final ZLLoadableImage myImage;
-		private final int myWidth;
-		private final int myHeight;
+		public final int Width;
+		public final int Height;
 
 		InvalidateViewRunnable(ImageView view, ZLLoadableImage image, int width, int height) {
-			myView = view;
+			CoverView = view;
 			myImage = image;
-			myWidth = width;
-			myHeight = height;
+			Width = width;
+			Height = height;
 			myImageViews.put(view, this);
 		}
 
 		public void run() {
 			synchronized (myImageViews) {
-				if (myImageViews.remove(myView) != this) {
+				if (myImageViews.remove(CoverView) != this) {
 					return;
 				}
 				if (!myImage.isSynchronized()) {
@@ -79,26 +79,31 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				if (data == null) {
 					return;
 				}
-				final Bitmap coverBitmap = data.getBitmap(2 * myWidth, 2 * myHeight);
+				final Bitmap coverBitmap = data.getBitmap(2 * Width, 2 * Height);
 				if (coverBitmap == null) {
 					return;
 				}
-				myView.setImageBitmap(coverBitmap);
-				myView.postInvalidate();
+				CoverView.setImageBitmap(coverBitmap);
+				CoverView.postInvalidate();
 			}
 		}
 	}
 
-	public View getView(int position, View convertView, final ViewGroup parent) {
+	private void setSubviewText(View view, int resourceId, String text) {
+		((TextView)view.findViewById(resourceId)).setText(text);
+	}
+
+	public View getView(int position, View view, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		if (tree == null) {
 			throw new IllegalArgumentException("tree == null");
 		}
-		final View view = (convertView != null) ? convertView :
-			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
+		if (view == null) {
+			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
+		}
 
-		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSummary());
+		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
+		setSubviewText(view, R.id.network_tree_item_childrenlist, tree.getSummary());
 
 		if (myCoverWidth == -1) {
 			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
