@@ -44,7 +44,7 @@ public final class CoverHolder {
 		CoverView = coverView;
 		Key = key;
 
-		myManager.HoldersCounter++;
+		myManager.Cache.HoldersCounter++;
 	}
 
 	public synchronized void setKey(FBTree.Key key) {
@@ -129,13 +129,14 @@ public final class CoverHolder {
 				if (coverBitmap == null) {
 					// If bitmap is null, then there's no image
 					// and CoverView already has a stock image
-					myManager.CachedBitmaps.put(myKey, CoverManager.NULL_BITMAP);
+					myManager.Cache.putBitmap(myKey, null);
 					return;
 				}
 				if (Thread.currentThread().isInterrupted()) {
 					// We have been cancelled
 					return;
 				}
+				/*
 				synchronized (CoverHolder.this) {
 					// I'm not sure why, but cover bitmaps disappear all the time
 					// So if by the time bitmap is generated holder has switched
@@ -144,7 +145,8 @@ public final class CoverHolder {
 						return;
 					}
 				}
-				myManager.CachedBitmaps.put(myKey, coverBitmap);
+				*/
+				myManager.Cache.putBitmap(myKey, coverBitmap);
 				myManager.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {

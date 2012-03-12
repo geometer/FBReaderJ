@@ -37,16 +37,7 @@ import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.fbreader.tree.FBTree;
 
 public class CoverManager {
-	static final Object NULL_BITMAP = new Object();
-
-	@SuppressWarnings("serial")
-	final Map<FBTree.Key,Object> CachedBitmaps =
-		Collections.synchronizedMap(new LinkedHashMap<FBTree.Key,Object>(10, 0.75f, true) {
-			@Override
-			protected boolean removeEldestEntry(Map.Entry<FBTree.Key,Object> eldest) {
-				return size() > 3 * HoldersCounter;
-			}
-		});
+	public final CoverCache Cache = new CoverCache();
 
 	// Copied from ZLAndroidImageLoader
 	private static class MinPriorityThreadFactory implements ThreadFactory {
@@ -64,8 +55,6 @@ public class CoverManager {
 	private final Activity myActivity;
 	private final int myCoverWidth;
 	private final int myCoverHeight;
-
-	volatile int HoldersCounter = 0;
 
 	public CoverManager(Activity activity, int coverWidth, int coverHeight) {
 		myActivity = activity;
@@ -95,20 +84,23 @@ public class CoverManager {
 
 	void setCoverForView(CoverHolder holder, ZLLoadableImage image) {
 		synchronized (holder) {
-			final Object coverBitmap = CachedBitmaps.get(holder.Key);
-			if (coverBitmap == NULL_BITMAP) {
-				return;
-			} else if (coverBitmap != null) {
-				holder.CoverView.setImageBitmap((Bitmap)coverBitmap);
-			} else if (holder.coverBitmapTask == null) {
-				holder.coverBitmapTask = myPool.submit(holder.new CoverBitmapRunnable(image));
+			try {
+				final Bitmap coverBitmap = Cache.getBitmap(holder.Key);
+				if (coverBitmap != null) {
+					holder.CoverView.setImageBitmap(coverBitmap);
+				} else if (holder.coverBitmapTask == null) {
+					holder.coverBitmapTask = myPool.submit(holder.new CoverBitmapRunnable(image));
+				}
+			} catch (CoverCache.NullObjectException e) {
 			}
 		}
 	}
 
 	public boolean trySetCoverImage(CoverHolder holder, FBTree tree) {
-		Object coverBitmap = CachedBitmaps.get(holder.Key);
-		if (coverBitmap == NULL_BITMAP) {
+		Bitmap coverBitmap;
+		try {
+			coverBitmap = Cache.getBitmap(holder.Key);
+		} catch (CoverCache.NullObjectException e) {
 			return false;
 		}
 
@@ -126,7 +118,7 @@ public class CoverManager {
 			}
 		}
 		if (coverBitmap != null) {
-			holder.CoverView.setImageBitmap((Bitmap)coverBitmap);
+			holder.CoverView.setImageBitmap(coverBitmap);
 			return true;
 		}
 		return false;
