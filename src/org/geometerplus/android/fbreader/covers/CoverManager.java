@@ -19,6 +19,22 @@
 
 package org.geometerplus.android.fbreader.covers;
 
+import android.app.Activity;
+
 public class CoverManager {
 	final CoverCache Cache = new CoverCache();
+
+	private final Activity myActivity;
+	private final int myCoverWidth;
+	private final int myCoverHeight;
+
+	public CoverManager(Activity activity, int coverWidth, int coverHeight) {
+		myActivity = activity;
+		myCoverWidth = coverWidth;
+		myCoverHeight = coverHeight;
+	}
+
+	void runOnUiThread(Runnable runnable) {
+		myActivity.runOnUiThread(runnable);
+	}
 }
