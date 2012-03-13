@@ -39,7 +39,6 @@ import org.geometerplus.fbreader.tree.FBTree;
 public class CoverManager {
 	final CoverCache Cache = new CoverCache();
 
-	// Copied from ZLAndroidImageLoader
 	private static class MinPriorityThreadFactory implements ThreadFactory {
 		private final ThreadFactory myDefaultThreadFactory = Executors.defaultThreadFactory();
 
@@ -49,8 +48,7 @@ public class CoverManager {
 			return th;
 		}
 	}
-	private static final int IMAGE_RESIZE_THREADS_NUMBER = 1; // TODO: how many threads ???
-	private final ExecutorService myPool = Executors.newFixedThreadPool(IMAGE_RESIZE_THREADS_NUMBER, new MinPriorityThreadFactory());
+	private final ExecutorService myPool = Executors.newFixedThreadPool(1, new MinPriorityThreadFactory());
 
 	private final Activity myActivity;
 	private final int myCoverWidth;
