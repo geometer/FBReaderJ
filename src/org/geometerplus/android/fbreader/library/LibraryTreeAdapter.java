@@ -35,7 +35,6 @@ import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 import org.geometerplus.android.fbreader.covers.CoverManager;
-import org.geometerplus.android.fbreader.covers.CoverHolder;
 
 class LibraryTreeAdapter extends TreeAdapter {
 	private CoverManager myCoverManager;
