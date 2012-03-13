@@ -19,20 +19,11 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
@@ -47,49 +38,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		super(activity);
 	}
 
-	private int myCoverWidth = -1;
-	private int myCoverHeight = -1;
 	private CoverManager myCoverManager;
-
-	private Map<ImageView,InvalidateViewRunnable> myImageViews =
-		Collections.synchronizedMap(new HashMap<ImageView,InvalidateViewRunnable>());
-
-	private final class InvalidateViewRunnable implements Runnable {
-		public final ImageView CoverView;
-		private final ZLLoadableImage myImage;
-		public final int Width;
-		public final int Height;
-
-		InvalidateViewRunnable(ImageView view, ZLLoadableImage image, int width, int height) {
-			CoverView = view;
-			myImage = image;
-			Width = width;
-			Height = height;
-			myImageViews.put(view, this);
-		}
-
-		public void run() {
-			synchronized (myImageViews) {
-				if (myImageViews.remove(CoverView) != this) {
-					return;
-				}
-				if (!myImage.isSynchronized()) {
-					return;
-				}
-				final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-				final ZLAndroidImageData data = mgr.getImageData(myImage);
-				if (data == null) {
-					return;
-				}
-				final Bitmap coverBitmap = data.getBitmap(2 * Width, 2 * Height);
-				if (coverBitmap == null) {
-					return;
-				}
-				CoverView.setImageBitmap(coverBitmap);
-				CoverView.postInvalidate();
-			}
-		}
-	}
 
 	private void setSubviewText(View view, int resourceId, String text) {
 		((TextView)view.findViewById(resourceId)).setText(text);
@@ -112,20 +61,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 
 		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
 		setSubviewText(view, R.id.network_tree_item_childrenlist, tree.getSummary());
-
-		if (myCoverWidth == -1) {
-			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			myCoverHeight = view.getMeasuredHeight();
-			myCoverWidth = myCoverHeight * 15 / 32;
-			view.requestLayout();
-		}
-
-		final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-		coverView.getLayoutParams().width = myCoverWidth;
-		coverView.getLayoutParams().height = myCoverHeight;
-		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		coverView.requestLayout();
-		setupCover(coverView, tree, myCoverWidth, myCoverWidth);
+		setupCover((ImageView)view.findViewById(R.id.network_tree_item_icon), tree);
 
 		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
 		final int status = (tree instanceof NetworkBookTree)
@@ -145,30 +81,12 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		return view;
 	}
 
-	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
-		myImageViews.remove(coverView);
-		Bitmap coverBitmap = null;
-		final ZLImage cover = tree.getCover();
-		if (cover != null) {
-			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (cover instanceof ZLLoadableImage) {
-				final ZLLoadableImage img = (ZLLoadableImage)cover;
-				if (img.isSynchronized()) {
-					data = mgr.getImageData(img);
-				} else {
-					img.startSynchronization(new InvalidateViewRunnable(coverView, img, width, height));
-				}
-			} else {
-				data = mgr.getImageData(cover);
-			}
-			if (data != null) {
-				coverBitmap = data.getBitmap(2 * width, 2 * height);
-			}
+	private void setupCover(final ImageView coverView, NetworkTree tree) {
+		if (myCoverManager.trySetCoverImage(coverView, tree)) {
+			return;
 		}
-		if (coverBitmap != null) {
-			coverView.setImageBitmap(coverBitmap);
-		} else if (tree instanceof NetworkBookTree) {
+
+		if (tree instanceof NetworkBookTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else if (tree instanceof SearchCatalogTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_search);
