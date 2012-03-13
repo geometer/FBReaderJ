@@ -34,8 +34,12 @@ import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
+import org.geometerplus.android.fbreader.covers.CoverManager;
+import org.geometerplus.android.fbreader.covers.CoverHolder;
 
 class LibraryTreeAdapter extends TreeAdapter {
+	private CoverManager myCoverManager;
+
 	LibraryTreeAdapter(LibraryActivity activity) {
 		super(activity);
 	}
@@ -100,6 +104,13 @@ class LibraryTreeAdapter extends TreeAdapter {
 			view.setBackgroundColor(0xff555555);
 		} else {
 			view.setBackgroundColor(0);
+		}
+
+		if (myCoverManager == null) {
+			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			final int coverHeight = view.getMeasuredHeight();
+			myCoverManager = new CoverManager(getActivity(), coverHeight * 15 / 32, coverHeight);
+			view.requestLayout();
 		}
 
 		final ImageView coverView = getCoverView(view);
