@@ -38,6 +38,8 @@ import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
+import org.geometerplus.android.fbreader.covers.CoverManager;
+import org.geometerplus.android.fbreader.covers.CoverHolder;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
@@ -48,6 +50,7 @@ class NetworkLibraryAdapter extends TreeAdapter {
 
 	private int myCoverWidth = -1;
 	private int myCoverHeight = -1;
+	private CoverManager myCoverManager;
 
 	private Map<ImageView,InvalidateViewRunnable> myImageViews =
 		Collections.synchronizedMap(new HashMap<ImageView,InvalidateViewRunnable>());
@@ -100,6 +103,12 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		}
 		if (view == null) {
 			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
+			if (myCoverManager == null) {
+				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+				int coverHeight = view.getMeasuredHeight();
+				myCoverManager = new CoverManager(getActivity(), coverHeight * 15 / 32, coverHeight);
+				view.requestLayout();
+			}
 		}
 
 		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
