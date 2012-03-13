@@ -23,12 +23,8 @@ import android.graphics.Bitmap;
 import android.view.*;
 import android.widget.*;
 
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
@@ -41,50 +37,6 @@ class LibraryTreeAdapter extends TreeAdapter {
 
 	LibraryTreeAdapter(LibraryActivity activity) {
 		super(activity);
-	}
-
-	private Bitmap getCoverBitmap(ZLImage cover) {
-		if (cover == null) {
-			return null;
-		}
-
-		ZLAndroidImageData data = null;
-		final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-		if (cover instanceof ZLLoadableImage) {
-			final ZLLoadableImage img = (ZLLoadableImage)cover;
-			if (img.isSynchronized()) {
-				data = mgr.getImageData(img);
-			} else {
-				img.startSynchronization(myInvalidateViewsRunnable);
-			}
-		} else {
-			data = mgr.getImageData(cover);
-		}
-		return data != null ? data.getBitmap(2 * myCoverWidth, 2 * myCoverHeight) : null;
-	}
-
-	private int myCoverWidth = -1;
-	private int myCoverHeight = -1;
-	private final Runnable myInvalidateViewsRunnable = new Runnable() {
-		public void run() {
-			getActivity().getListView().invalidateViews();
-		}
-	};
-
-	private ImageView getCoverView(View parent) {
-		if (myCoverWidth == -1) {
-			parent.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			myCoverHeight = parent.getMeasuredHeight();
-			myCoverWidth = myCoverHeight * 15 / 32;
-			parent.requestLayout();
-		}
-
-		final ImageView coverView = (ImageView)parent.findViewById(R.id.library_tree_item_icon);
-		coverView.getLayoutParams().width = myCoverWidth;
-		coverView.getLayoutParams().height = myCoverHeight;
-		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		coverView.requestLayout();
-		return coverView;
 	}
 
 	private View createView(View convertView, ViewGroup parent, LibraryTree tree) {
@@ -112,11 +64,8 @@ class LibraryTreeAdapter extends TreeAdapter {
 			view.requestLayout();
 		}
 
-		final ImageView coverView = getCoverView(view);
-		final Bitmap coverBitmap = getCoverBitmap(tree.getCover());
-		if (coverBitmap != null) {
-			coverView.setImageBitmap(coverBitmap);
-		} else {
+		final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
+		if (!myCoverManager.trySetCoverImage(coverView, tree)) {
 			coverView.setImageResource(getCoverResourceId(tree));
 		}
 
