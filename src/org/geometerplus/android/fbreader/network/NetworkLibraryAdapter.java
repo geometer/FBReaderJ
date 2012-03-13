@@ -39,7 +39,6 @@ import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 import org.geometerplus.android.fbreader.covers.CoverManager;
-import org.geometerplus.android.fbreader.covers.CoverHolder;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
