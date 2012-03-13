@@ -68,7 +68,6 @@ class CoverHolder {
 				myKey = Key;
 				coverSyncRunnable = this;
 			}
-			System.err.println("+ CoverSyncRunnable for " + myKey);
 		}
 
 		public void run() {
@@ -112,7 +111,6 @@ class CoverHolder {
 				myKey = Key;
 				coverBitmapRunnable = this;
 			}
-			System.err.println("+ CoverBitmapRunnable for " + myKey);
 		}
 
 		public void run() {
