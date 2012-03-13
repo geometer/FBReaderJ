@@ -30,7 +30,6 @@ import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 import org.geometerplus.android.fbreader.covers.CoverManager;
-import org.geometerplus.android.fbreader.covers.CoverHolder;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
@@ -50,7 +49,6 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		if (tree == null) {
 			throw new IllegalArgumentException("tree == null");
 		}
-		final CoverHolder holder;
 		if (view == null) {
 			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
 			if (myCoverManager == null) {
@@ -59,18 +57,11 @@ class NetworkLibraryAdapter extends TreeAdapter {
 				myCoverManager = new CoverManager(getActivity(), coverHeight * 15 / 32, coverHeight);
 				view.requestLayout();
 			}
-			final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-			holder = new CoverHolder(myCoverManager, coverView, tree.getUniqueKey());
-			view.setTag(holder);
-		} else {
-			holder = (CoverHolder)view.getTag();
-			holder.setKey(tree.getUniqueKey());
 		}
 
 		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
 		setSubviewText(view, R.id.network_tree_item_childrenlist, tree.getSummary());
-
-		setupCover(holder, tree);
+		setupCover((ImageView)view.findViewById(R.id.network_tree_item_icon), tree);
 
 		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
 		final int status = (tree instanceof NetworkBookTree)
@@ -90,21 +81,21 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		return view;
 	}
 
-	private void setupCover(final CoverHolder holder, NetworkTree tree) {
-		if (myCoverManager.trySetCoverImage(holder, tree)) {
+	private void setupCover(final ImageView coverView, NetworkTree tree) {
+		if (myCoverManager.trySetCoverImage(coverView, tree)) {
 			return;
 		}
 
 		if (tree instanceof NetworkBookTree) {
-			holder.CoverView.setImageResource(R.drawable.ic_list_library_book);
+			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else if (tree instanceof SearchCatalogTree) {
-			holder.CoverView.setImageResource(R.drawable.ic_list_library_search);
+			coverView.setImageResource(R.drawable.ic_list_library_search);
 		} else if (tree instanceof BasketCatalogTree) {
-			holder.CoverView.setImageResource(R.drawable.ic_list_library_basket);
+			coverView.setImageResource(R.drawable.ic_list_library_basket);
 		} else if (tree instanceof AddCustomCatalogItemTree) {
-			holder.CoverView.setImageResource(R.drawable.ic_list_plus);
+			coverView.setImageResource(R.drawable.ic_list_plus);
 		} else {
-			holder.CoverView.setImageResource(R.drawable.ic_list_library_books);
+			coverView.setImageResource(R.drawable.ic_list_library_books);
 		}
 	}
 }

@@ -31,7 +31,6 @@ import org.geometerplus.fbreader.library.*;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
 import org.geometerplus.android.fbreader.covers.CoverManager;
-import org.geometerplus.android.fbreader.covers.CoverHolder;
 
 class LibraryTreeAdapter extends TreeAdapter {
 	private CoverManager myCoverManager;
@@ -65,16 +64,9 @@ class LibraryTreeAdapter extends TreeAdapter {
 			view.requestLayout();
 		}
 
-		CoverHolder holder = (CoverHolder)view.getTag();
-		if (holder == null) {
-			final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
-			holder = new CoverHolder(myCoverManager, coverView, tree.getUniqueKey());
-			view.setTag(holder);
-		} else {
-			holder.setKey(tree.getUniqueKey());
-		}
-		if (!myCoverManager.trySetCoverImage(holder, tree)) {
-			holder.CoverView.setImageResource(getCoverResourceId(tree));
+		final ImageView coverView = (ImageView)view.findViewById(R.id.library_tree_item_icon);
+		if (!myCoverManager.trySetCoverImage(coverView, tree)) {
+			coverView.setImageResource(getCoverResourceId(tree));
 		}
 
 		return view;

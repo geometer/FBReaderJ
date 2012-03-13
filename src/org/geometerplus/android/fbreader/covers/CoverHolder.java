@@ -29,16 +29,16 @@ import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-public class CoverHolder {
+class CoverHolder {
 	private final CoverManager myManager;
-	public final ImageView CoverView;
-	public volatile FBTree.Key Key;
+	final ImageView CoverView;
+	volatile FBTree.Key Key;
 
 	private CoverSyncRunnable coverSyncRunnable;
 	Future<?> coverBitmapTask;
 	private Runnable coverBitmapRunnable;
 
-	public CoverHolder(CoverManager manager, ImageView coverView, FBTree.Key key) {
+	CoverHolder(CoverManager manager, ImageView coverView, FBTree.Key key) {
 		myManager = manager;
 		manager.setupCoverView(coverView);
 		CoverView = coverView;
@@ -47,7 +47,7 @@ public class CoverHolder {
 		myManager.Cache.HoldersCounter++;
 	}
 
-	public synchronized void setKey(FBTree.Key key) {
+	synchronized void setKey(FBTree.Key key) {
 		if (!Key.equals(key)) {
 			if (coverBitmapTask != null) {
 				coverBitmapTask.cancel(true);

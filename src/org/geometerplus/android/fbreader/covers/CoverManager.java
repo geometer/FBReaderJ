@@ -96,7 +96,20 @@ public class CoverManager {
 		}
 	}
 
-	public boolean trySetCoverImage(CoverHolder holder, FBTree tree) {
+	private CoverHolder getHolder(ImageView coverView, FBTree tree) {
+		CoverHolder holder = (CoverHolder)coverView.getTag();
+		if (holder == null) {
+			holder = new CoverHolder(this, coverView, tree.getUniqueKey());
+			coverView.setTag(holder);
+		} else {
+			holder.setKey(tree.getUniqueKey());
+		}
+		return holder;
+	}
+
+	public boolean trySetCoverImage(ImageView coverView, FBTree tree) {
+		final CoverHolder holder = getHolder(coverView, tree);
+
 		Bitmap coverBitmap;
 		try {
 			coverBitmap = Cache.getBitmap(holder.Key);
