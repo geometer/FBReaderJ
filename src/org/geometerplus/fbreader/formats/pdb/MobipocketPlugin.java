@@ -22,8 +22,7 @@ package org.geometerplus.fbreader.formats.pdb;
 import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -131,7 +130,26 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public ZLImage readCover(ZLFile file) {
+	public ZLImage readCover(final ZLFile file) {
+		return new ZLImageProxy() {
+			@Override
+			public String getId() {
+				return file.getPath();
+			}
+
+			@Override
+			public int sourceType() {
+				return SourceType.DISK;
+			}
+
+			@Override
+			public ZLSingleImage getRealImage() {
+				return readCoverInternal(file);
+			}
+		};
+	}
+
+	private ZLSingleImage readCoverInternal(ZLFile file) {
 		InputStream stream = null;
 		try {
 			stream = file.getInputStream();
