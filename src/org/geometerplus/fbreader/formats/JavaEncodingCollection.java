@@ -19,62 +19,18 @@
 
 package org.geometerplus.fbreader.formats;
 
-import java.util.*;
+import java.nio.charset.Charset;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
-import org.geometerplus.zlibrary.core.xml.ZLStringMap;
-import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
-
-public final class JavaEncodingCollection extends EncodingCollection {
-	private final List<Encoding> myEncodings = new ArrayList<Encoding>();
-	private final Map<String,Encoding> myEncodingByAlias = new HashMap<String,Encoding>();
-
+public final class JavaEncodingCollection extends FilteredEncodingCollection {
 	public JavaEncodingCollection() {
-		new EncodingCollectionReader().readQuietly(
-			ZLResourceFile.createResourceFile("encodings/Encodings.xml")
-		);
-	}
-	
-	@Override
-	public List<Encoding> encodings() {
-		return Collections.unmodifiableList(myEncodings);
+		super();
 	}
 
 	@Override
-	public Encoding getEncoding(String alias) {
-		final Encoding e = myEncodingByAlias.get(alias);
-		return e != null ? e : new Encoding(null, alias, alias);
-	}
-
-	@Override
-	public Encoding getEncoding(int code) {
-		return getEncoding(String.valueOf(code));
-	}
-
-	private class EncodingCollectionReader extends ZLXMLReaderAdapter {
-		private String myCurrentFamilyName;
-		private Encoding myCurrentEncoding;
-
-		public boolean dontCacheAttributeValues() {
-			return true;
-		}
-
-		public boolean startElementHandler(String tag, ZLStringMap attributes) {
-			if ("group".equals(tag)) {
-				myCurrentFamilyName = attributes.getValue("name");
-			} else if ("encoding".equals(tag)) {
-				final String name = attributes.getValue("name");
-				final String region = attributes.getValue("region");
-				myCurrentEncoding = new Encoding(
-					myCurrentFamilyName, name, name + " (" + region + ")"
-				);
-				myEncodings.add(myCurrentEncoding);
-				myEncodingByAlias.put(name, myCurrentEncoding);
-			} else if ("code".equals(tag)) {
-				myEncodingByAlias.put(attributes.getValue("number"), myCurrentEncoding);
-			} else if ("alias".equals(tag)) {
-				myEncodingByAlias.put(attributes.getValue("name"), myCurrentEncoding);
-			}
+	protected boolean isEncodingSupported(String name) {
+		try {
+			return Charset.forName(name) != null;
+		} catch (Exception e) {
 			return false;
 		}
 	}
