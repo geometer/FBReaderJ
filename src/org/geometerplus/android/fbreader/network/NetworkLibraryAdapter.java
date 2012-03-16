@@ -19,25 +19,17 @@
 
 package org.geometerplus.android.fbreader.network;
 
-import java.util.*;
-
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.graphics.Bitmap;
 
 import org.geometerplus.zlibrary.ui.android.R;
-
-import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
-
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
-import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 import org.geometerplus.fbreader.network.*;
 import org.geometerplus.fbreader.network.tree.*;
 
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
+import org.geometerplus.android.fbreader.covers.CoverManager;
 
 import org.geometerplus.android.fbreader.network.action.NetworkBookActions;
 
@@ -46,73 +38,30 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		super(activity);
 	}
 
-	private int myCoverWidth = -1;
-	private int myCoverHeight = -1;
+	private CoverManager myCoverManager;
 
-	private Map<ImageView,InvalidateViewRunnable> myImageViews =
-		Collections.synchronizedMap(new HashMap<ImageView,InvalidateViewRunnable>());
-
-	private final class InvalidateViewRunnable implements Runnable {
-		private final ImageView myView;
-		private final ZLLoadableImage myImage;
-		private final int myWidth;
-		private final int myHeight;
-
-		InvalidateViewRunnable(ImageView view, ZLLoadableImage image, int width, int height) {
-			myView = view;
-			myImage = image;
-			myWidth = width;
-			myHeight = height;
-			myImageViews.put(view, this);
-		}
-
-		public void run() {
-			synchronized (myImageViews) {
-				if (myImageViews.remove(myView) != this) {
-					return;
-				}
-				if (!myImage.isSynchronized()) {
-					return;
-				}
-				final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-				final ZLAndroidImageData data = mgr.getImageData(myImage);
-				if (data == null) {
-					return;
-				}
-				final Bitmap coverBitmap = data.getBitmap(2 * myWidth, 2 * myHeight);
-				if (coverBitmap == null) {
-					return;
-				}
-				myView.setImageBitmap(coverBitmap);
-				myView.postInvalidate();
-			}
-		}
+	private void setSubviewText(View view, int resourceId, String text) {
+		((TextView)view.findViewById(resourceId)).setText(text);
 	}
 
-	public View getView(int position, View convertView, final ViewGroup parent) {
+	public View getView(int position, View view, final ViewGroup parent) {
 		final NetworkTree tree = (NetworkTree)getItem(position);
 		if (tree == null) {
 			throw new IllegalArgumentException("tree == null");
 		}
-		final View view = (convertView != null) ? convertView :
-			LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
-
-		((TextView)view.findViewById(R.id.network_tree_item_name)).setText(tree.getName());
-		((TextView)view.findViewById(R.id.network_tree_item_childrenlist)).setText(tree.getSummary());
-
-		if (myCoverWidth == -1) {
-			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			myCoverHeight = view.getMeasuredHeight();
-			myCoverWidth = myCoverHeight * 15 / 32;
-			view.requestLayout();
+		if (view == null) {
+			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.network_tree_item, parent, false);
+			if (myCoverManager == null) {
+				view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+				final int coverHeight = view.getMeasuredHeight();
+				myCoverManager = new CoverManager(getActivity(), coverHeight * 15 / 32, coverHeight);
+				view.requestLayout();
+			}
 		}
 
-		final ImageView coverView = (ImageView)view.findViewById(R.id.network_tree_item_icon);
-		coverView.getLayoutParams().width = myCoverWidth;
-		coverView.getLayoutParams().height = myCoverHeight;
-		coverView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		coverView.requestLayout();
-		setupCover(coverView, tree, myCoverWidth, myCoverWidth);
+		setSubviewText(view, R.id.network_tree_item_name, tree.getName());
+		setSubviewText(view, R.id.network_tree_item_childrenlist, tree.getSummary());
+		setupCover((ImageView)view.findViewById(R.id.network_tree_item_icon), tree);
 
 		final ImageView statusView = (ImageView)view.findViewById(R.id.network_tree_item_status);
 		final int status = (tree instanceof NetworkBookTree)
@@ -132,30 +81,12 @@ class NetworkLibraryAdapter extends TreeAdapter {
 		return view;
 	}
 
-	private void setupCover(final ImageView coverView, NetworkTree tree, int width, int height) {
-		myImageViews.remove(coverView);
-		Bitmap coverBitmap = null;
-		final ZLImage cover = tree.getCover();
-		if (cover != null) {
-			ZLAndroidImageData data = null;
-			final ZLAndroidImageManager mgr = (ZLAndroidImageManager)ZLAndroidImageManager.Instance();
-			if (cover instanceof ZLLoadableImage) {
-				final ZLLoadableImage img = (ZLLoadableImage)cover;
-				if (img.isSynchronized()) {
-					data = mgr.getImageData(img);
-				} else {
-					img.startSynchronization(new InvalidateViewRunnable(coverView, img, width, height));
-				}
-			} else {
-				data = mgr.getImageData(cover);
-			}
-			if (data != null) {
-				coverBitmap = data.getBitmap(2 * width, 2 * height);
-			}
+	private void setupCover(final ImageView coverView, NetworkTree tree) {
+		if (myCoverManager.trySetCoverImage(coverView, tree)) {
+			return;
 		}
-		if (coverBitmap != null) {
-			coverView.setImageBitmap(coverBitmap);
-		} else if (tree instanceof NetworkBookTree) {
+
+		if (tree instanceof NetworkBookTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_book);
 		} else if (tree instanceof SearchCatalogTree) {
 			coverView.setImageResource(R.drawable.ic_list_library_search);

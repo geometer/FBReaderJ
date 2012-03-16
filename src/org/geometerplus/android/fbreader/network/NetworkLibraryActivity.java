@@ -344,7 +344,7 @@ public abstract class NetworkLibraryActivity extends TreeActivity implements Lis
 					default:
 						updateLoadingProgress();
 						getListAdapter().replaceAll(getCurrentTree().subTrees());
-						getListView().invalidateViews();
+						//getListView().invalidateViews();
 						break;
 					case InitializationFailed:
 						showInitLibraryDialog((String)params[0]);
