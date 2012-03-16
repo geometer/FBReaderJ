@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.formats.util.NativeUtil;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
 
@@ -99,6 +98,7 @@ class EncodingPreference extends ZLStringListPreference {
 
 	EncodingPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context, rootResource, resourceKey);
+		myBook = book;
 
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 		if (plugin != null) {
