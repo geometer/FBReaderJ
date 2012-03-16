@@ -22,6 +22,7 @@
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
 const char * const AndroidUtil::Class_java_lang_System = "java/lang/System";
+const char * const AndroidUtil::Class_java_lang_String = "java/lang/String";
 const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
 const char * const AndroidUtil::Class_java_util_Map = "java/util/Map";
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
@@ -37,6 +38,9 @@ const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/T
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
 
 jobject AndroidUtil::OBJECT_java_lang_System_err;
+
+jmethodID AndroidUtil::MID_java_lang_String_toLowerCase;
+jmethodID AndroidUtil::MID_java_lang_String_toUpperCase;
 
 jmethodID AndroidUtil::MID_java_util_Collection_toArray;
 jmethodID AndroidUtil::MID_java_util_Collection_add;
@@ -110,6 +114,11 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	jfieldID field;
 	CHECK_NULL( field = env->GetStaticFieldID(cls, "err", "Ljava/io/PrintStream;") );
 	CHECK_NULL( OBJECT_java_lang_System_err = env->GetStaticObjectField(cls, field) );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_java_lang_String) );
+	CHECK_NULL( MID_java_lang_String_toLowerCase = env->GetMethodID(cls, "toLowerCase", "()Ljava/lang/String;") );
+	CHECK_NULL( MID_java_lang_String_toUpperCase = env->GetMethodID(cls, "toUpperCase", "()Ljava/lang/String;") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_java_util_Collection) );
@@ -204,14 +213,11 @@ jobject AndroidUtil::createZLFile(JNIEnv *env, const std::string &path) {
 	return javaFile;
 }
 
-bool AndroidUtil::extractJavaString(JNIEnv *env, jstring from, std::string &to) {
-	if (from == 0) {
-		return false;
-	}
+std::string AndroidUtil::fromJavaString(JNIEnv *env, jstring from) {
 	const char *data = env->GetStringUTFChars(from, 0);
-	to.assign(data);
+	const std::string result(data);
 	env->ReleaseStringUTFChars(from, data);
-	return true;
+	return result;
 }
 
 jstring AndroidUtil::createJavaString(JNIEnv* env, const std::string &str) {
@@ -229,13 +235,12 @@ std::string AndroidUtil::convertNonUtfString(const std::string &str) {
 
 	JNIEnv *env = getEnv();
 
-	std::string result;
 	jchar *chars = new jchar[len];
 	for (int i = 0; i < len; ++i) {
 		chars[i] = str[i];
 	}
 	jstring javaString = env->NewString(chars, len);
-	extractJavaString(env, javaString, result);
+	const std::string result = fromJavaString(env, javaString);
 	env->DeleteLocalRef(javaString);
 	delete[] chars;
 

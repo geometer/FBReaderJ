@@ -32,6 +32,7 @@ private:
 
 public:
 	static const char * const Class_java_lang_System;
+	static const char * const Class_java_lang_String;
 	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Map;
 	static const char * const Class_java_util_Locale;
@@ -47,6 +48,9 @@ public:
 	static const char * const Class_NativeBookModel;
 
 	static jobject OBJECT_java_lang_System_err;
+
+	static jmethodID MID_java_lang_String_toLowerCase;
+	static jmethodID MID_java_lang_String_toUpperCase;
 
 	static jmethodID MID_java_util_Collection_toArray;
 	static jmethodID MID_java_util_Collection_add;
@@ -109,7 +113,7 @@ public:
 	static JNIEnv *getEnv();
 
 	static jobject createZLFile(JNIEnv *env, const std::string &path);
-	static bool extractJavaString(JNIEnv *env, jstring from, std::string &to);
+	static std::string fromJavaString(JNIEnv *env, jstring from);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
 	static std::string convertNonUtfString(const std::string &str);
 
