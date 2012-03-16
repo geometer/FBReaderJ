@@ -19,7 +19,7 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.TreeSet;
+import java.util.*;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.formats.*;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
@@ -94,6 +95,31 @@ class LanguagePreference extends ZLStringListPreference {
 class EncodingPreference extends ZLStringListPreference {
 	EncodingPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context, rootResource, resourceKey);
+
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
+		if (plugin != null) {
+			final List<Encoding> encodings =
+				new ArrayList<Encoding>(plugin.supportedEncodings().encodings());
+			Collections.sort(encodings, new Comparator<Encoding>() {
+				public int compare(Encoding e1, Encoding e2) {
+					return e1.DisplayName.compareTo(e2.DisplayName);
+				}
+			});
+			final String[] codes = new String[encodings.size()];
+			final String[] names = new String[encodings.size()];
+			int index = 0;
+			for (Encoding e : encodings) {
+				//addItem(e.Family, e.Name, e.DisplayName);
+				codes[index] = e.Name;
+				names[index] = e.DisplayName;
+				++index;
+			}
+			setLists(codes, names);
+			if (encodings.size() == 1) {
+				setInitialValue(codes[0]);
+				setEnabled(false);
+			}
+		}
 	}
 
 	@Override
@@ -129,6 +155,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
+		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
 	}
 
 	@Override
