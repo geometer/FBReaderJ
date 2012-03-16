@@ -26,7 +26,7 @@ import java.util.Arrays;
 
 public abstract class Formats {
 
-	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;HTML;RTF;PDF;plain_text;DjVu";
+	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;PDF;DjVu";
 
 	public static String JAVA_OPTION = "fbreader_java";
 	public static String NATIVE_OPTION = "fbreader_native";
@@ -127,7 +127,7 @@ public abstract class Formats {
 		if (filetype.equals("fbreaderhelp")) {
 			return new ZLStringOption("Formats", filetypeToOption(filetype), JAVA_OPTION);
 		}
-		if (getPredefinedFormats().contains(filetype)) {//TODO
+		if (getPredefinedFormats().contains(filetype)) {
 			FormatPlugin p = PluginCollection.Instance().getPlugin(FileTypeCollection.Instance.typeById(filetype), FormatPlugin.Type.ANY);
 			if (p instanceof JavaFormatPlugin) {
 				return new ZLStringOption("Formats", filetypeToOption(filetype), JAVA_OPTION);
