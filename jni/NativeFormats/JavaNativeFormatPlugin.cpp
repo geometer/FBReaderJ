@@ -324,9 +324,8 @@ JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlu
 	if (plugin.isNull()) {
 		return 0;
 	}
-	std::string path;
 	jstring javaPath = (jstring) env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
-	AndroidUtil::extractJavaString(env, javaPath, path);
+	const std::string path = AndroidUtil::fromJavaString(env, javaPath);
 	env->DeleteLocalRef(javaPath);
 
 	logger.println("FBREADER", "... FOR PATH: " + path);
