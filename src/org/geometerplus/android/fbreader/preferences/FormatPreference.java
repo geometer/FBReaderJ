@@ -134,7 +134,7 @@ class FormatPreference extends ListPreference {
 		}
 		boolean foundSomething = (values.size() > 0);
 		myPaths.clear();
-		if (!myIsNative && !myIsJava && !myIsPredefined) {
+		if (!myIsPredefined) {
 			final String deleteItem = myResource.getResource("delete").getValue();
 			values.add("DELETE");
 			names.add(deleteItem);
@@ -145,7 +145,7 @@ class FormatPreference extends ListPreference {
 		}
 		setEntries(names.toArray(new String[names.size()]));
 		setEntryValues(values.toArray(new String[values.size()]));
-		if (!myOption.getValue().equals("")) {
+		if (!myOption.getValue().equals("") || myIsPredefined) {
 			setValue(myOption.getValue());
 		}
 		return foundSomething;
