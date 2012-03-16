@@ -58,17 +58,17 @@ public:
 	static int ucs4ToUtf8(char *to, Ucs4Char ch);
 	static void ucs2ToUtf8(std::string &to, const Ucs2String &from, int toLength = -1);
 	static int ucs2ToUtf8(char *to, Ucs2Char ch);
-	static bool isLetter(Ucs4Char ch);
+	//static bool isLetter(Ucs4Char ch);
 	static bool isSpace(Ucs4Char ch);
 	static bool isNBSpace(Ucs4Char ch);
 	static Breakable isBreakable(Ucs4Char ch);
 
-	static Ucs4Char toLower(Ucs4Char ch);
-	static void toLower(Ucs4String &str);
+	//static Ucs4Char toLower(Ucs4Char ch);
+	//static void toLower(Ucs4String &str);
 	static std::string toLower(const std::string &utf8String);
 
-	static Ucs4Char toUpper(Ucs4Char ch);
-	static void toUpper(Ucs4String &str);
+	//static Ucs4Char toUpper(Ucs4Char ch);
+	//static void toUpper(Ucs4String &str);
 	static std::string toUpper(const std::string &utf8String);
 };
 
