@@ -277,37 +277,30 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public boolean jumpBack() {
-		System.err.println("jump back");
 		try {
 			if (getTextView() != BookTextView) {
 				showBookTextView();
-				System.err.println("jump back T1");
 				return true;
 			}
 
 			if (myJumpEndPosition == null || myJumpTimeStamp == null) {
-				System.err.println("jump back F2");
 				return false;
 			}
 			// more than 2 minutes ago
 			if (myJumpTimeStamp.getTime() + 2 * 60 * 1000 < new Date().getTime()) {
-				System.err.println("jump back F3");
 				return false;
 			}
 			if (!myJumpEndPosition.equals(BookTextView.getStartCursor())) {
-				System.err.println("jump back F4");
 				return false;
 			}
 
 			final List<Bookmark> bookmarks = Bookmark.invisibleBookmarks(Model.Book);
 			if (bookmarks.isEmpty()) {
-				System.err.println("jump back F5");
 				return false;
 			}
 			final Bookmark b = bookmarks.get(0);
 			b.delete();
 			gotoBookmark(b);
-			System.err.println("jump back T6");
 			return true;
 		} finally {
 			myJumpEndPosition = null;

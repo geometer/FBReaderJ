@@ -28,8 +28,6 @@
 
 #include "ZLCachedMemoryAllocator.h"
 
-
-
 ZLCachedMemoryAllocator::ZLCachedMemoryAllocator(const size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension) :
 	myRowSize(rowSize),
