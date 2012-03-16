@@ -451,25 +451,10 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		));
 
 		final Screen formatScreen = createPreferenceScreen("externalFormats");
-		for (String format : Formats.getJavaFormats()) {
+		for (String format : Formats.getPredefinedFormats()) {
 			formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
 		}
-		for (String format : Formats.getNativeFormats()) {
-			if (!Formats.getJavaFormats().contains(format)) {
-				formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
-			}
-		}
-		for (String format : Formats.getPredefinedExternalFormats()) {
-			if (!Formats.getJavaFormats().contains(format) && !Formats.getNativeFormats().contains(format)) {
-				formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
-			}
-		}
-		for (String format : Formats.getCustomExternalFormats()) {
-			if (!Formats.getJavaFormats().contains(format) && !Formats.getNativeFormats().contains(format) && !Formats.getPredefinedExternalFormats().contains(format)) {
-				formatScreen.addPreference(new FormatPreference(this, format, formatScreen, formatScreen.Resource, "format"));
-			}
-		}
-		formatScreen.addPreference(new AddFormatPreference(this, formatScreen, formatScreen.Resource, "format"));
+//		formatScreen.addPreference(new AddFormatPreference(this, formatScreen, formatScreen.Resource, "format"));
 
 		final Screen tipsScreen = createPreferenceScreen("tips");
 		tipsScreen.addOption(TipsManager.Instance().ShowTipsOption, "showTips");

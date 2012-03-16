@@ -31,14 +31,15 @@ public class FileTypeCollection {
 
 	private FileTypeCollection() {
 		addType(new FileTypeByExtension("fb2", "fb2", MimeType.TEXT_FB2));
+		addType(new FileTypeByExtension("fbreaderhelp", "fbreaderhelp", MimeType.TEXT_FB2));
 		addType(new FileTypeEpub());
 		addType(new FileTypeMobipocket());
 		addType(new FileTypeHtml());
-		addType(new FileTypePdf());
-		addType(new FileTypeDjvu());
-		addType(new FileTypeByExtension("txt", "txt", MimeType.TEXT_PLAIN));
+		addType(new FileTypeByExtension("plain_text", "txt", MimeType.TEXT_PLAIN));
 		// TODO: change mime type
-		addType(new FileTypeByExtension("rtf", "rtf", MimeType.TEXT_PLAIN));
+		addType(new FileTypeByExtension("RTF", "rtf", MimeType.TEXT_PLAIN));
+		addType(new FileTypeByExtension("PDF", "pdf", MimeType.APP_PDF));
+		addType(new FileTypeDjvu());
 	}
 
 	private void addType(FileType type) {
@@ -50,9 +51,9 @@ public class FileTypeCollection {
 	}
 
 	public FileType typeById(String id) {
-		if (myTypes.get(id.toLowerCase()) == null) {
-			addType(new FileTypeByExtension(id.toLowerCase(), id.toLowerCase(), MimeType.TEXT_PLAIN));
-		}
+//		if (myTypes.get(id.toLowerCase()) == null) {
+//			addType(new FileTypeByExtension(id.toLowerCase(), id.toLowerCase(), MimeType.TEXT_PLAIN));
+//		}
 		return myTypes.get(id.toLowerCase());
 	}
 
@@ -62,10 +63,10 @@ public class FileTypeCollection {
 				return type;
 			}
 		}
-		if (!file.getExtension().equals("") && !file.getExtension().contains("/")) {
-			addType(new FileTypeByExtension(file.getExtension().toLowerCase(), file.getExtension().toLowerCase(), MimeType.TEXT_PLAIN));
-			return myTypes.get(file.getExtension().toLowerCase());
-		}
+//		if (!file.getExtension().equals("") && !file.getExtension().contains("/")) {
+//			addType(new FileTypeByExtension(file.getExtension().toLowerCase(), file.getExtension().toLowerCase(), MimeType.TEXT_PLAIN));
+//			return myTypes.get(file.getExtension().toLowerCase());
+//		}
 		return null;
 	}
 }

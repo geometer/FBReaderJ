@@ -143,7 +143,7 @@ public class PluginCollection {
 	}
 
 	public String ExtForMimeType(String type) {//FIXME: formats can have several extensions(?)
-		for (String ext : Formats.getPredefinedExternalFormats()) {
+		for (String ext : Formats.getPredefinedFormats()) {
 			if (BigMimeTypeMap.getTypes(ext) != null) {
 				for (String mtype : BigMimeTypeMap.getTypes(ext)) {
 					if (mtype.equals(type)) {
@@ -152,7 +152,7 @@ public class PluginCollection {
 				}
 			}
 		}
-		for (String ext : Formats.getCustomExternalFormats()) {
+		for (String ext : Formats.getCustomFormats()) {
 			if (BigMimeTypeMap.getTypes(ext) != null) {
 				for (String mtype : BigMimeTypeMap.getTypes(ext)) {
 					if (mtype.equals(type)) {
