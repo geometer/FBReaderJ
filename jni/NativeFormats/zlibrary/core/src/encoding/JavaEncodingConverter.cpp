@@ -40,6 +40,9 @@ friend class JavaEncodingConverterProvider;
 };
 
 bool JavaEncodingConverterProvider::providesConverter(const std::string &encoding) {
+	if (encoding.empty()) {
+		return false;
+	}
 	JNIEnv *env = AndroidUtil::getEnv();
 	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
 	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
@@ -54,9 +57,20 @@ shared_ptr<ZLEncodingConverter> JavaEncodingConverterProvider::createConverter(c
 }
 
 JavaEncodingConverter::JavaEncodingConverter(const std::string &encoding) {
+	JNIEnv *env = AndroidUtil::getEnv();
+	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
+	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
+	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
+	jobject javaEncoding = env->CallObjectMethod(collection, AndroidUtil::MID_JavaEncodingCollection_getEncoding_String, encodingName);
+	myJavaConverter = env->CallObjectMethod(javaEncoding, AndroidUtil::MID_Encoding_createConverter);
+	env->DeleteLocalRef(javaEncoding);
+	env->DeleteLocalRef(encodingName);
+	env->DeleteLocalRef(collection);
+	env->DeleteLocalRef(cls);
 }
 
 JavaEncodingConverter::~JavaEncodingConverter() {
+	AndroidUtil::getEnv()->DeleteLocalRef(myJavaConverter);
 }
 
 void JavaEncodingConverter::convert(std::string &dst, const char *srcStart, const char *srcEnd) {

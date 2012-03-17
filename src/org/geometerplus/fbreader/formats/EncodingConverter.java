@@ -35,7 +35,7 @@ public class EncodingConverter {
 
 	// we assume out is large enough for this conversion
 	// returns number of filled bytes in out buffer
-	int convert(byte[] in, int inOffset, int inLength, byte[] out, int outOffset) {
+	public int convert(byte[] in, int inOffset, int inLength, byte[] out, int outOffset) {
 		final ByteBuffer inBuffer = ByteBuffer.wrap(in, inOffset, inLength);
 		final ByteBuffer outBuffer = ByteBuffer.wrap(out, outOffset, out.length - outOffset);
 		try {
@@ -47,7 +47,7 @@ public class EncodingConverter {
 		}
 	}
 
-	void reset() {
+	public void reset() {
 		myDecoder.reset();
 		myEncoder.reset();
 	}

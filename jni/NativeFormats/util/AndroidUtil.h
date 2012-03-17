@@ -40,6 +40,8 @@ public:
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
+	static const char * const Class_Encoding;
+	static const char * const Class_EncodingConverter;
 	static const char * const Class_JavaEncodingCollection;
 	static const char * const Class_Paths;
 	static const char * const Class_Book;
@@ -75,6 +77,11 @@ public:
 	static jmethodID MID_NativeFormatPlugin_supportedFileType;
 
 	static jmethodID SMID_PluginCollection_Instance;
+
+	static jmethodID MID_Encoding_createConverter;
+
+	static jmethodID MID_EncodingConverter_convert;
+	static jmethodID MID_EncodingConverter_reset;
 
 	static jmethodID SMID_JavaEncodingCollection_Instance;
 	static jmethodID MID_JavaEncodingCollection_getEncoding_String;
