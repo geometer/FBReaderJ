@@ -97,16 +97,16 @@ public class Book {
 
 	public final ZLFile File;
 
-	private long myId;
+	private volatile long myId;
 
-	private String myEncoding;
-	private String myLanguage;
-	private String myTitle;
-	private List<Author> myAuthors;
-	private List<Tag> myTags;
-	private SeriesInfo mySeriesInfo;
+	private volatile String myEncoding;
+	private volatile String myLanguage;
+	private volatile String myTitle;
+	private volatile List<Author> myAuthors;
+	private volatile List<Tag> myTags;
+	private volatile SeriesInfo mySeriesInfo;
 
-	private boolean myIsSaved;
+	private volatile boolean myIsSaved;
 
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
 	private WeakReference<ZLImage> myCover;
@@ -126,7 +126,7 @@ public class Book {
 	}
 
 	public void reloadInfoFromFile() {
-		if (readMetaInfo() && readLanguageAndEncoding()) {
+		if (readMetaInfo()) {
 			save();
 		} else {
 			// TODO: handle error situation???
@@ -140,29 +140,6 @@ public class Book {
 		myTags = database.loadTags(myId);
 		mySeriesInfo = database.loadSeriesInfo(myId);
 		myIsSaved = true;
-	}
-
-	public boolean loadLanguageAndEncoding() {
-		System.err.println("FBREADER: loadLanguageAndEncoding() start");
-		if (myEncoding != null && myLanguage != null) {
-			System.err.println("FBREADER: loadLanguageAndEncoding() ok");
-			return true;
-		}
-		if (readLanguageAndEncoding()) {
-			save();
-			System.err.println("FBREADER: loadLanguageAndEncoding() done");
-			return true;
-		}
-		System.err.println("FBREADER: loadLanguageAndEncoding() failed");
-		return false;
-	}
-
-	private boolean readLanguageAndEncoding() {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
-		if (plugin == null) {
-			return false;
-		}
-		return plugin.readLanguageAndEncoding(this);
 	}
 
 	boolean readMetaInfo() {
@@ -299,13 +276,6 @@ public class Book {
 	}
 
 	public String getLanguage() {
-		if (myLanguage == null) {
-//			System.err.println("FBREADER: Reading language on demand...");
-//			System.err.println("FBREADER: ... book: " + File.getPath());
-//			Thread.dumpStack();
-			myLanguage = "en";
-			//readLanguageAndEncoding();
-		}
 		return myLanguage;
 	}
 
@@ -318,12 +288,22 @@ public class Book {
 
 	public String getEncoding() {
 		if (myEncoding == null) {
-//			System.err.println("FBREADER: Reading encoding on demand...");
-//			System.err.println("FBREADER: ... book: " + File.getPath());
-//			Thread.dumpStack();
-			myEncoding = "windows-1252";
-			//readLanguageAndEncoding();
+			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
+				if (plugin != null) {
+				try {
+					System.err.println("do encoding detection");
+					plugin.detectLanguageAndEncoding(this);
+				} catch (BookReadingException e) {
+				}
+				if (myEncoding == null) {
+					//setEncoding("utf-8");
+				}
+			}
 		}
+		return myEncoding;
+	}
+
+	public String getEncodingNoDetection() {
 		return myEncoding;
 	}
 

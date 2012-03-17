@@ -100,7 +100,7 @@ shared_ptr<Book> Book::loadFromJavaBook(JNIEnv *env, jobject javaBook) {
 	const std::string language = AndroidUtil::fromJavaString(env, javaString);
 	env->DeleteLocalRef(javaString);
 
-	javaString = (jstring) env->CallObjectMethod(javaBook, AndroidUtil::MID_Book_getEncoding);
+	javaString = (jstring) env->CallObjectMethod(javaBook, AndroidUtil::MID_Book_getEncodingNoDetection);
 	const std::string encoding = AndroidUtil::fromJavaString(env, javaString);
 	env->DeleteLocalRef(javaString);
 
