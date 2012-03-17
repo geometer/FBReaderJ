@@ -467,6 +467,10 @@ std::string ZLUnicodeUtil::toLower(const std::string &utf8String) {
 	ucs4ToUtf8(result, ucs4String, utf8String.length());
 	return result;
 	*/
+	if (utf8String.empty()) {
+		return utf8String;
+	}
+
 	JNIEnv *env = AndroidUtil::getEnv();
 	jstring javaString = AndroidUtil::createJavaString(env, utf8String);
 	jstring lowerCased = (jstring)env->CallObjectMethod(javaString, AndroidUtil::MID_java_lang_String_toLowerCase);
@@ -507,6 +511,10 @@ std::string ZLUnicodeUtil::toUpper(const std::string &utf8String) {
 	ucs4ToUtf8(result, ucs4String, utf8String.length());
 	return result;
 	*/
+	if (utf8String.empty()) {
+		return utf8String;
+	}
+
 	JNIEnv *env = AndroidUtil::getEnv();
 	jstring javaString = AndroidUtil::createJavaString(env, utf8String);
 	jstring upperCased = (jstring)env->CallObjectMethod(javaString, AndroidUtil::MID_java_lang_String_toUpperCase);

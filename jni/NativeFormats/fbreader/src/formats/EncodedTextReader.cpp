@@ -21,8 +21,10 @@
 
 EncodedTextReader::EncodedTextReader(const std::string &encoding) {
 	ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
-	ZLEncodingConverterInfoPtr info = collection.info(encoding);
-	myConverter = (!info.isNull()) ? info->createConverter() : collection.defaultConverter();
+	myConverter = collection.converter(encoding);
+	if (myConverter.isNull()) {
+		myConverter = collection.defaultConverter();
+	}
 }
 
 EncodedTextReader::~EncodedTextReader() {
