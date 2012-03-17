@@ -21,7 +21,6 @@
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
-const char * const AndroidUtil::Class_java_lang_System = "java/lang/System";
 const char * const AndroidUtil::Class_java_lang_String = "java/lang/String";
 const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
 const char * const AndroidUtil::Class_java_util_Map = "java/util/Map";
@@ -36,8 +35,6 @@ const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/f
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
-
-jobject AndroidUtil::OBJECT_java_lang_System_err;
 
 jmethodID AndroidUtil::MID_java_lang_String_toLowerCase;
 jmethodID AndroidUtil::MID_java_lang_String_toUpperCase;
@@ -109,12 +106,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	JNIEnv *env = getEnv();
 	jclass cls;
-
-	CHECK_NULL( cls = env->FindClass(Class_java_lang_System) );
-	jfieldID field;
-	CHECK_NULL( field = env->GetStaticFieldID(cls, "err", "Ljava/io/PrintStream;") );
-	CHECK_NULL( OBJECT_java_lang_System_err = env->GetStaticObjectField(cls, field) );
-	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_java_lang_String) );
 	CHECK_NULL( MID_java_lang_String_toLowerCase = env->GetMethodID(cls, "toLowerCase", "()Ljava/lang/String;") );

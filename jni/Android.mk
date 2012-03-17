@@ -33,7 +33,7 @@ SHAREDIR_MACRO                := nativeShare
 
 LOCAL_MODULE                  := NativeFormats-v1
 LOCAL_CFLAGS                  := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
-LOCAL_LDLIBS                  := -lz
+LOCAL_LDLIBS                  := -lz -llog
 LOCAL_STATIC_LIBRARIES        := expat
 
 LOCAL_SRC_FILES               := \
@@ -44,6 +44,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/util/CoversWriter.cpp \
 	NativeFormats/zlibrary/core/src/constants/ZLXMLNamespace.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/JavaEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/MyEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
