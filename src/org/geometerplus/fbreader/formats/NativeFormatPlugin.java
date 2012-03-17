@@ -105,6 +105,6 @@ public class NativeFormatPlugin extends FormatPlugin implements InfoReader {
 	@Override
 	public EncodingCollection supportedEncodings() {
 		// TODO: implement
-		return new JavaEncodingCollection();
+		return JavaEncodingCollection.Instance();
 	}
 }
