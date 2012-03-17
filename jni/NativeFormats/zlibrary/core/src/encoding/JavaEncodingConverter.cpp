@@ -17,6 +17,7 @@
  * 02110-1301, USA.
  */
 
+#include <AndroidUtil.h>
 #include <ZLUnicodeUtil.h>
 
 #include "JavaEncodingConverter.h"
@@ -32,12 +33,20 @@ public:
 	void reset();
 	bool fillTable(int *map);
 
+private:
+	jobject myJavaConverter;
+
 friend class JavaEncodingConverterProvider;
 };
 
 bool JavaEncodingConverterProvider::providesConverter(const std::string &encoding) {
-	// TODO: implement
-	return false;
+	JNIEnv *env = AndroidUtil::getEnv();
+	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
+	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
+	jboolean result = env->CallBooleanMethod(collection, AndroidUtil::MID_JavaEncodingCollection_isEncodingSupported);
+	env->DeleteLocalRef(collection);
+	env->DeleteLocalRef(cls);
+	return result != 0;
 }
 
 shared_ptr<ZLEncodingConverter> JavaEncodingConverterProvider::createConverter(const std::string &encoding) {
