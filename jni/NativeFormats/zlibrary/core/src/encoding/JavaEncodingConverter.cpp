@@ -35,6 +35,7 @@ public:
 
 private:
 	jobject myJavaConverter;
+	int myBufferLength;
 	jbyteArray myInBuffer;
 	jbyteArray myOutBuffer;
 
@@ -48,7 +49,9 @@ bool JavaEncodingConverterProvider::providesConverter(const std::string &encodin
 	JNIEnv *env = AndroidUtil::getEnv();
 	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
 	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
-	jboolean result = env->CallBooleanMethod(collection, AndroidUtil::MID_JavaEncodingCollection_isEncodingSupported);
+	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
+	jboolean result = env->CallBooleanMethod(collection, AndroidUtil::MID_JavaEncodingCollection_isEncodingSupported, encodingName);
+	env->DeleteLocalRef(encodingName);
 	env->DeleteLocalRef(collection);
 	env->DeleteLocalRef(cls);
 	return result != 0;
@@ -70,8 +73,9 @@ JavaEncodingConverter::JavaEncodingConverter(const std::string &encoding) {
 	env->DeleteLocalRef(collection);
 	env->DeleteLocalRef(cls);
 
-	myInBuffer = env->NewByteArray(32768);
-	myOutBuffer = env->NewByteArray(65536);
+	myBufferLength = 32768;
+	myInBuffer = env->NewByteArray(myBufferLength);
+	myOutBuffer = env->NewByteArray(2 * myBufferLength);
 }
 
 JavaEncodingConverter::~JavaEncodingConverter() {
@@ -84,6 +88,14 @@ JavaEncodingConverter::~JavaEncodingConverter() {
 void JavaEncodingConverter::convert(std::string &dst, const char *srcStart, const char *srcEnd) {
 	JNIEnv *env = AndroidUtil::getEnv();
 	const int srcLen = srcEnd - srcStart;
+	if (srcLen > myBufferLength) {
+		env->DeleteLocalRef(myOutBuffer);
+		env->DeleteLocalRef(myInBuffer);
+		myBufferLength = srcLen;
+		myInBuffer = env->NewByteArray(myBufferLength);
+		myOutBuffer = env->NewByteArray(2 * myBufferLength);
+	}
+
 	env->SetByteArrayRegion(myInBuffer, 0, srcLen, (jbyte*)srcStart);
 	const jint dstLen = env->CallIntMethod(myJavaConverter, AndroidUtil::MID_EncodingConverter_convert, myInBuffer, 0, srcLen, myOutBuffer, 0);
 	const int origLen = dst.size();

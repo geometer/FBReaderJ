@@ -41,10 +41,10 @@ public class EncodingConverter {
 		try {
 			final CharBuffer charBuffer = myDecoder.decode(inBuffer);
 			myEncoder.encode(charBuffer, outBuffer, true);
-			return charBuffer.length();
 		} catch (CharacterCodingException e) {
-			return 0;
+			e.printStackTrace();
 		}
+		return outBuffer.position();
 	}
 
 	public void reset() {
