@@ -124,19 +124,19 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 }
 
 extern "C"
-JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readLanguageAndEncoding(JNIEnv* env, jobject thiz, jobject javaBook) {
+JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_detectLanguageAndEncoding(JNIEnv* env, jobject thiz, jobject javaBook) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
 	if (plugin.isNull()) {
-		return JNI_FALSE;
+		return;
 	}
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
 	if (!plugin->readLanguageAndEncoding(*book)) {
-		return JNI_FALSE;
+		return;
 	}
 
 	fillLanguageAndEncoding(env, javaBook, *book);
-	return JNI_TRUE;
+	return;
 }
 
 static bool initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
