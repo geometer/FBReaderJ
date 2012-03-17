@@ -42,6 +42,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/JavaEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
