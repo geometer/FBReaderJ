@@ -43,47 +43,6 @@ private:
 	ZLEncodingConverter &operator = (const ZLEncodingConverter&);
 };
 
-class ZLEncodingConverterInfo {
-
-public:
-	ZLEncodingConverterInfo(const std::string &name, const std::string &region);
-	void addAlias(const std::string &alias);
-
-	const std::string &name() const;
-	const std::string &visibleName() const;
-	shared_ptr<ZLEncodingConverter> createConverter() const;
-	bool canCreateConverter() const;
-
-private:
-	const std::string myName;
-	const std::string myVisibleName;
-	std::vector<std::string> myAliases;
-
-private:
-	ZLEncodingConverterInfo(const ZLEncodingConverterInfo&);
-	ZLEncodingConverterInfo &operator = (const ZLEncodingConverterInfo&);
-};
-
-typedef shared_ptr<ZLEncodingConverterInfo> ZLEncodingConverterInfoPtr;
-
-class ZLEncodingSet {
-
-public:
-	ZLEncodingSet(const std::string &name);
-	void addInfo(ZLEncodingConverterInfoPtr info);
-
-	const std::string &name() const;
-	const std::vector<ZLEncodingConverterInfoPtr> &infos() const;
-
-private:
-	const std::string myName;
-	std::vector<ZLEncodingConverterInfoPtr> myInfos;
-
-private:
-	ZLEncodingSet(const ZLEncodingSet&);
-	ZLEncodingSet &operator = (const ZLEncodingSet&);
-};
-
 class ZLEncodingConverterProvider;
 
 class ZLEncodingCollection {
@@ -96,28 +55,16 @@ private:
 	static ZLEncodingCollection *ourInstance;
 
 public:
-	const std::vector<shared_ptr<ZLEncodingSet> > &sets();
-	ZLEncodingConverterInfoPtr info(const std::string &name);
-	ZLEncodingConverterInfoPtr info(int code);
-	shared_ptr<ZLEncodingConverter> defaultConverter();
+	shared_ptr<ZLEncodingConverter> converter(const std::string &name) const;
+	shared_ptr<ZLEncodingConverter> defaultConverter() const;
 	void registerProvider(shared_ptr<ZLEncodingConverterProvider> provider);
 
 private:
-	void addInfo(ZLEncodingConverterInfoPtr info);
-	const std::vector<shared_ptr<ZLEncodingConverterProvider> > &providers() const;
-
-private:
-	std::vector<shared_ptr<ZLEncodingSet> > mySets;
-	std::map<std::string,ZLEncodingConverterInfoPtr> myInfosByName;
 	std::vector<shared_ptr<ZLEncodingConverterProvider> > myProviders;
 
 private:
 	ZLEncodingCollection();
 	~ZLEncodingCollection();
-	void init();
-
-friend class ZLEncodingConverterInfo;
-friend class ZLEncodingCollectionReader;
 };
 
 #endif /* __ZLENCODINGCONVERTER_H__ */
