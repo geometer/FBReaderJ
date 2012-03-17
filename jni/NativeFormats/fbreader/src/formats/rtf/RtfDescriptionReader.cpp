@@ -30,13 +30,14 @@ RtfDescriptionReader::RtfDescriptionReader(Book &book) : RtfReader(book.encoding
 
 void RtfDescriptionReader::setEncoding(int code) {
 	ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
-	ZLEncodingConverterInfoPtr info = collection.info(code);
-	if (!info.isNull()) {
-		myConverter = info->createConverter();
+	/*
+	myConverter = collection.converter(code);
+	if (!myConverter.isNull()) {
 		myBook.setEncoding(info->name());
 	} else {
 		myConverter = collection.defaultConverter();
 	}
+	*/
 }
 
 bool RtfDescriptionReader::readDocument(const ZLFile &file) {
