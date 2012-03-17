@@ -152,7 +152,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( SMID_JavaEncodingCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/JavaEncodingCollection;") );
 	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_String = env->GetMethodID(cls, "getEncoding", "(Ljava/lang/String;)Lorg/geometerplus/fbreader/formats/Encoding;") );
 	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_int = env->GetMethodID(cls, "getEncoding", "(I)Lorg/geometerplus/fbreader/formats/Encoding;") );
-	CHECK_NULL( MID_JavaEncodingCollection_isEncodingSupported = env->GetMethodID(cls, "isEncodingSupported", "()Z") );
+	CHECK_NULL( MID_JavaEncodingCollection_isEncodingSupported = env->GetMethodID(cls, "isEncodingSupported", "(Ljava/lang/String;)Z") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
