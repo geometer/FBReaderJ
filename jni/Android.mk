@@ -33,7 +33,7 @@ SHAREDIR_MACRO                := nativeShare
 
 LOCAL_MODULE                  := NativeFormats-v1
 LOCAL_CFLAGS                  := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
-LOCAL_LDLIBS                  := -lz
+LOCAL_LDLIBS                  := -lz -llog
 LOCAL_STATIC_LIBRARIES        := expat
 
 LOCAL_SRC_FILES               := \
