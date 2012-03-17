@@ -128,8 +128,6 @@ public class Book {
 	public void reloadInfoFromFile() {
 		if (readMetaInfo()) {
 			save();
-		} else {
-			// TODO: handle error situation???
 		}
 	}
 
