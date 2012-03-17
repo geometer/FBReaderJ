@@ -45,7 +45,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/constants/ZLXMLNamespace.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/JavaEncodingConverter.cpp \
-	NativeFormats/zlibrary/core/src/encoding/MyEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \
