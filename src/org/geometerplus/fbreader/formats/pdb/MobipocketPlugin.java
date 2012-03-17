@@ -246,6 +246,6 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 
 	@Override
 	public EncodingCollection supportedEncodings() {
-		return new JavaEncodingCollection();
+		return JavaEncodingCollection.Instance();
 	}
 }

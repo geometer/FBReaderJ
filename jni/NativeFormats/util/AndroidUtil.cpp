@@ -29,6 +29,9 @@ const char * const AndroidUtil::Class_java_io_PrintStream = "java/io/PrintStream
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
+const char * const AndroidUtil::Class_Encoding = "org/geometerplus/fbreader/formats/Encoding";
+const char * const AndroidUtil::Class_EncodingConverter = "org/geometerplus/fbreader/formats/EncodingConverter";
+const char * const AndroidUtil::Class_JavaEncodingCollection = "org/geometerplus/fbreader/formats/JavaEncodingCollection";
 const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
@@ -56,6 +59,16 @@ jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
 jmethodID AndroidUtil::MID_NativeFormatPlugin_supportedFileType;
 
 jmethodID AndroidUtil::SMID_PluginCollection_Instance;
+
+jmethodID AndroidUtil::MID_Encoding_createConverter;
+
+jmethodID AndroidUtil::MID_EncodingConverter_convert;
+jmethodID AndroidUtil::MID_EncodingConverter_reset;
+
+jmethodID AndroidUtil::SMID_JavaEncodingCollection_Instance;
+jmethodID AndroidUtil::MID_JavaEncodingCollection_getEncoding_int;
+jmethodID AndroidUtil::MID_JavaEncodingCollection_getEncoding_String;
+jmethodID AndroidUtil::MID_JavaEncodingCollection_isEncodingSupported;
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
 jmethodID AndroidUtil::MID_ZLFile_children;
@@ -140,6 +153,22 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	CHECK_NULL( cls = env->FindClass(Class_PluginCollection) );
 	CHECK_NULL( SMID_PluginCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/PluginCollection;") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_Encoding) );
+	CHECK_NULL( MID_Encoding_createConverter = env->GetMethodID(cls, "createConverter", "()Lorg/geometerplus/fbreader/formats/EncodingConverter;") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_EncodingConverter) );
+	CHECK_NULL( MID_EncodingConverter_convert = env->GetMethodID(cls, "convert", "([BII[BI)I") );
+	CHECK_NULL( MID_EncodingConverter_reset = env->GetMethodID(cls, "reset", "()V") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_JavaEncodingCollection) );
+	CHECK_NULL( SMID_JavaEncodingCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/JavaEncodingCollection;") );
+	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_String = env->GetMethodID(cls, "getEncoding", "(Ljava/lang/String;)Lorg/geometerplus/fbreader/formats/Encoding;") );
+	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_int = env->GetMethodID(cls, "getEncoding", "(I)Lorg/geometerplus/fbreader/formats/Encoding;") );
+	CHECK_NULL( MID_JavaEncodingCollection_isEncodingSupported = env->GetMethodID(cls, "isEncodingSupported", "(Ljava/lang/String;)Z") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
