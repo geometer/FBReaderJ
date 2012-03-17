@@ -22,12 +22,21 @@ package org.geometerplus.fbreader.formats;
 import java.nio.charset.Charset;
 
 public final class JavaEncodingCollection extends FilteredEncodingCollection {
-	public JavaEncodingCollection() {
+	private volatile static JavaEncodingCollection ourInstance;
+
+	public static JavaEncodingCollection Instance() {
+		if (ourInstance == null) {
+			ourInstance = new JavaEncodingCollection();
+		}
+		return ourInstance;
+	}
+
+	private JavaEncodingCollection() {
 		super();
 	}
 
 	@Override
-	protected boolean isEncodingSupported(String name) {
+	public boolean isEncodingSupported(String name) {
 		try {
 			return Charset.forName(name) != null;
 		} catch (Exception e) {

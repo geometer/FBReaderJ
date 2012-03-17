@@ -35,7 +35,7 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 		);
 	}
 	
-	protected abstract boolean isEncodingSupported(String name);
+	public abstract boolean isEncodingSupported(String name);
 
 	@Override
 	public List<Encoding> encodings() {
