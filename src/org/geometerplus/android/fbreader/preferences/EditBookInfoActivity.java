@@ -122,6 +122,11 @@ class EncodingPreference extends ZLStringListPreference {
 			if (encodings.size() == 1) {
 				setInitialValue(codes[0]);
 				setEnabled(false);
+			} else {
+				final String bookEncoding = book.getEncoding();
+				if (bookEncoding != null) {
+					setInitialValue(bookEncoding.toLowerCase());
+				}
 			}
 		}
 	}
@@ -131,7 +136,7 @@ class EncodingPreference extends ZLStringListPreference {
 		super.onDialogClosed(result);
 		if (result) {
 			final String value = getValue();
-			if (!"auto".equals(value) && !value.equalsIgnoreCase(myBook.getEncoding())) {
+			if (!value.equalsIgnoreCase(myBook.getEncoding())) {
 				myBook.setEncoding(value);
 				((EditBookInfoActivity)getContext()).setResult(FBReader.RESULT_RELOAD_BOOK);
 			}

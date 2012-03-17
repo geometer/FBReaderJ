@@ -39,4 +39,8 @@ public final class Encoding {
 	public int hashCode() {
 		return Name.hashCode();
 	}
+
+	public EncodingConverter createConverter() {
+		return new EncodingConverter(Name);
+	}
 }
