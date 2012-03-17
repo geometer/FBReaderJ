@@ -93,8 +93,11 @@ class LanguagePreference extends ZLStringListPreference {
 }
 
 class EncodingPreference extends ZLStringListPreference {
+	private final Book myBook;
+
 	EncodingPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
 		super(context, rootResource, resourceKey);
+		myBook = book;
 
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
 		if (plugin != null) {
@@ -118,6 +121,11 @@ class EncodingPreference extends ZLStringListPreference {
 			if (encodings.size() == 1) {
 				setInitialValue(codes[0]);
 				setEnabled(false);
+			} else {
+				final String bookEncoding = book.getEncoding();
+				if (bookEncoding != null) {
+					setInitialValue(bookEncoding.toLowerCase());
+				}
 			}
 		}
 	}
@@ -126,6 +134,11 @@ class EncodingPreference extends ZLStringListPreference {
 	protected void onDialogClosed(boolean result) {
 		super.onDialogClosed(result);
 		if (result) {
+			final String value = getValue();
+			if (!value.equalsIgnoreCase(myBook.getEncoding())) {
+				myBook.setEncoding(value);
+				((EditBookInfoActivity)getContext()).setResult(FBReader.RESULT_RELOAD_BOOK);
+			}
 		}
 	}
 }
