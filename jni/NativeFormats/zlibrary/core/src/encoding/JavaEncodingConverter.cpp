@@ -35,6 +35,8 @@ public:
 
 private:
 	jobject myJavaConverter;
+	jbyteArray myInBuffer;
+	jbyteArray myOutBuffer;
 
 friend class JavaEncodingConverterProvider;
 };
@@ -67,18 +69,30 @@ JavaEncodingConverter::JavaEncodingConverter(const std::string &encoding) {
 	env->DeleteLocalRef(encodingName);
 	env->DeleteLocalRef(collection);
 	env->DeleteLocalRef(cls);
+
+	myInBuffer = env->NewByteArray(32768);
+	myOutBuffer = env->NewByteArray(65536);
 }
 
 JavaEncodingConverter::~JavaEncodingConverter() {
-	AndroidUtil::getEnv()->DeleteLocalRef(myJavaConverter);
+	JNIEnv *env = AndroidUtil::getEnv();
+	env->DeleteLocalRef(myOutBuffer);
+	env->DeleteLocalRef(myInBuffer);
+	env->DeleteLocalRef(myJavaConverter);
 }
 
 void JavaEncodingConverter::convert(std::string &dst, const char *srcStart, const char *srcEnd) {
-	// TODO: implement
+	JNIEnv *env = AndroidUtil::getEnv();
+	const int srcLen = srcEnd - srcStart;
+	env->SetByteArrayRegion(myInBuffer, 0, srcLen, (jbyte*)srcStart);
+	const jint dstLen = env->CallIntMethod(myJavaConverter, AndroidUtil::MID_EncodingConverter_convert, myInBuffer, 0, srcLen, myOutBuffer, 0);
+	const int origLen = dst.size();
+	dst.append(dstLen, '\0');
+	env->GetByteArrayRegion(myOutBuffer, 0, dstLen, (jbyte*)dst.data() + origLen);
 }
 
 void JavaEncodingConverter::reset() {
-	// TODO: implement
+	AndroidUtil::getEnv()->CallVoidMethod(myJavaConverter, AndroidUtil::MID_EncodingConverter_reset);
 }
 
 bool JavaEncodingConverter::fillTable(int *map) {
