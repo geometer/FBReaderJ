@@ -31,7 +31,6 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
-	static const char * const Class_java_lang_System;
 	static const char * const Class_java_lang_String;
 	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Locale;
@@ -45,8 +44,6 @@ public:
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
 	static const char * const Class_NativeBookModel;
-
-	static jobject OBJECT_java_lang_System_err;
 
 	static jmethodID MID_java_lang_String_toLowerCase;
 	static jmethodID MID_java_lang_String_toUpperCase;
