@@ -67,11 +67,6 @@ public class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public boolean readLanguageAndEncoding(Book book) {
-		return true;
-	}
-
-	@Override
 	public void readModel(BookModel model) throws BookReadingException {
 		// TODO: throw an "unsupported operation" exception
 	}
@@ -89,5 +84,9 @@ public class ExternalFormatPlugin extends FormatPlugin {
 	@Override
 	public EncodingCollection supportedEncodings() {
 		return new AutoEncodingCollection();
+	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) {
 	}
 }
