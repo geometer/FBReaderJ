@@ -244,8 +244,6 @@ public final class FBReaderApp extends ZLApplication {
 			Model = null;
 			System.gc();
 			System.gc();
-
-			book.loadLanguageAndEncoding();
 			try {
 				Model = BookModel.createModel(book);
 				ZLTextHyphenator.Instance().load(book.getLanguage());

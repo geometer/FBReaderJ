@@ -36,7 +36,6 @@ import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
-import org.geometerplus.android.fbreader.FBReader;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -166,8 +165,6 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			finish();
 			return;
 		}
-
-		myBook.loadLanguageAndEncoding();
 
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));

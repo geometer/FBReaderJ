@@ -248,4 +248,37 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	public EncodingCollection supportedEncodings() {
 		return JavaEncodingCollection.Instance();
 	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) throws BookReadingException {
+		InputStream stream = null;
+		try {
+			stream = book.File.getInputStream();
+			final PdbHeader header = new PdbHeader(stream);
+			PdbUtil.skip(stream, header.Offsets[0] + 16 - header.length());
+			if (PdbUtil.readInt(stream) != 0x4D4F4249) /* "MOBI" */ {
+				throw new BookReadingException("unsupportedFileFormat", book.File);
+			}
+			final int length = (int)PdbUtil.readInt(stream);
+			PdbUtil.skip(stream, 4);
+			final int encodingCode = (int)PdbUtil.readInt(stream);
+			final Encoding encoding = supportedEncodings().getEncoding(encodingCode);
+			final String encodingName = encoding != null ? encoding.Name : "utf-8";
+			book.setEncoding(encodingName);
+			PdbUtil.skip(stream, 52);
+			final int fullNameOffset = (int)PdbUtil.readInt(stream);
+			final int fullNameLength = (int)PdbUtil.readInt(stream);
+			final int languageCode = (int)PdbUtil.readInt(stream);
+			book.setLanguage(ZLLanguageUtil.languageByIntCode(languageCode & 0xFF, (languageCode >> 8) & 0xFF));
+		} catch (IOException e) {
+			throw new BookReadingException(e, book.File);
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+	}
 }
