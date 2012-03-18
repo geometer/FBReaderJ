@@ -95,11 +95,3 @@ shared_ptr<FormatPlugin> PluginCollection::pluginByType(const std::string &fileT
 bool PluginCollection::isLanguageAutoDetectEnabled() {
 	return true;
 }
-
-std::string PluginCollection::defaultLanguage() {
-	return "en";
-}
-
-std::string PluginCollection::defaultEncoding() {
-	return "windows-1252";
-}
