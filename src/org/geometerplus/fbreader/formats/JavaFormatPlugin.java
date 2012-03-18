@@ -27,11 +27,6 @@ public abstract class JavaFormatPlugin extends FormatPlugin implements InfoReade
 	}
 
 	@Override
-	public boolean readLanguageAndEncoding(Book book) {
-		return true;
-	}
-
-	@Override
 	public Type type() {
 		return Type.JAVA;
 	}

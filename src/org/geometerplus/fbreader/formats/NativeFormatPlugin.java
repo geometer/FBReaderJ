@@ -47,7 +47,7 @@ public class NativeFormatPlugin extends FormatPlugin implements InfoReader {
 	private native boolean readMetaInfoNative(Book book);
 
 	@Override
-	public native boolean readLanguageAndEncoding(Book book);
+	public native void detectLanguageAndEncoding(Book book);
 
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
@@ -105,6 +105,6 @@ public class NativeFormatPlugin extends FormatPlugin implements InfoReader {
 	@Override
 	public EncodingCollection supportedEncodings() {
 		// TODO: implement
-		return new JavaEncodingCollection();
+		return JavaEncodingCollection.Instance();
 	}
 }

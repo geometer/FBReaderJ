@@ -31,7 +31,6 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
-	static const char * const Class_java_lang_System;
 	static const char * const Class_java_lang_String;
 	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Locale;
@@ -41,12 +40,13 @@ public:
 	static const char * const Class_ZLFile;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
+	static const char * const Class_Encoding;
+	static const char * const Class_EncodingConverter;
+	static const char * const Class_JavaEncodingCollection;
 	static const char * const Class_Paths;
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
 	static const char * const Class_NativeBookModel;
-
-	static jobject OBJECT_java_lang_System_err;
 
 	static jmethodID MID_java_lang_String_toLowerCase;
 	static jmethodID MID_java_lang_String_toUpperCase;
@@ -78,18 +78,29 @@ public:
 
 	static jmethodID SMID_PluginCollection_Instance;
 
+	static jmethodID MID_Encoding_createConverter;
+
+	static jmethodID MID_EncodingConverter_convert;
+	static jmethodID MID_EncodingConverter_reset;
+
+	static jmethodID SMID_JavaEncodingCollection_Instance;
+	static jmethodID MID_JavaEncodingCollection_getEncoding_String;
+	static jmethodID MID_JavaEncodingCollection_getEncoding_int;
+	static jmethodID MID_JavaEncodingCollection_isEncodingSupported;
+
 	static jmethodID SMID_Paths_cacheDirectory;
 
 	static jfieldID FID_Book_File;
 	static jmethodID MID_Book_getTitle;
 	static jmethodID MID_Book_getLanguage;
-	static jmethodID MID_Book_getEncoding;
+	static jmethodID MID_Book_getEncodingNoDetection;
 	static jmethodID MID_Book_setTitle;
 	static jmethodID MID_Book_setSeriesInfo;
 	static jmethodID MID_Book_setLanguage;
 	static jmethodID MID_Book_setEncoding;
 	static jmethodID MID_Book_addAuthor;
 	static jmethodID MID_Book_addTag;
+	static jmethodID MID_Book_save;
 
 	static jmethodID SMID_Tag_getTag;
 

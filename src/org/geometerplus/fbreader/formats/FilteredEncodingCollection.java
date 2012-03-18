@@ -35,7 +35,7 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 		);
 	}
 	
-	protected abstract boolean isEncodingSupported(String name);
+	public abstract boolean isEncodingSupported(String name);
 
 	@Override
 	public List<Encoding> encodings() {
@@ -70,7 +70,7 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 			if ("group".equals(tag)) {
 				myCurrentFamilyName = attributes.getValue("name");
 			} else if ("encoding".equals(tag)) {
-				final String name = attributes.getValue("name");
+				final String name = attributes.getValue("name").toLowerCase();
 				final String region = attributes.getValue("region");
 				if (isEncodingSupported(name)) {
 					myCurrentEncoding = new Encoding(
@@ -87,7 +87,7 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 				}
 			} else if ("alias".equals(tag)) {
 				if (myCurrentEncoding != null) {
-					myEncodingByAlias.put(attributes.getValue("name"), myCurrentEncoding);
+					myEncodingByAlias.put(attributes.getValue("name").toLowerCase(), myCurrentEncoding);
 				}
 			}
 			return false;

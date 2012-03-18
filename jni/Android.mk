@@ -29,11 +29,11 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-SHAREDIR_MACRO                := nativeShare
+SHAREDIR_MACRO                := share
 
 LOCAL_MODULE                  := NativeFormats-v1
 LOCAL_CFLAGS                  := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
-LOCAL_LDLIBS                  := -lz
+LOCAL_LDLIBS                  := -lz -llog
 LOCAL_STATIC_LIBRARIES        := expat
 
 LOCAL_SRC_FILES               := \
@@ -42,6 +42,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/JavaEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/ZLDir.cpp \

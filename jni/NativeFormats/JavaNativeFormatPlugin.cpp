@@ -81,6 +81,24 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	}
 }
 
+void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
+	jstring javaString;
+
+	javaString = AndroidUtil::createJavaString(env, book.language());
+	if (javaString != 0) {
+		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setLanguage, javaString);
+		env->DeleteLocalRef(javaString);
+	}
+
+	javaString = AndroidUtil::createJavaString(env, book.encoding());
+	if (javaString != 0) {
+		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setEncoding, javaString);
+		env->DeleteLocalRef(javaString);
+	}
+
+	env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_save);
+}
+
 extern "C"
 JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readMetaInfoNative(JNIEnv* env, jobject thiz, jobject javaBook) {
 	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
@@ -99,8 +117,18 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 }
 
 extern "C"
-JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readLanguageAndEncoding(JNIEnv* env, jobject thiz, jobject javaBook) {
-	return JNI_FALSE;
+JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_detectLanguageAndEncoding(JNIEnv* env, jobject thiz, jobject javaBook) {
+	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
+	if (plugin.isNull()) {
+		return;
+	}
+
+	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
+	if (!plugin->readLanguageAndEncoding(*book)) {
+		return;
+	}
+
+	fillLanguageAndEncoding(env, javaBook, *book);
 }
 
 static bool initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
