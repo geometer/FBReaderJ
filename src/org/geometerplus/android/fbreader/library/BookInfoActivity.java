@@ -95,6 +95,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		final Book book = Book.getByFile(myFile);
 
 		if (book != null) {
+			// we do force language & encoding detection
+			book.getEncoding();
+
 			setupCover(book);
 			setupBookInfo(book);
 			setupAnnotation(book);

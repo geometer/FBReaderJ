@@ -88,4 +88,9 @@ public class OEBPlugin extends JavaFormatPlugin {
 	public EncodingCollection supportedEncodings() {
 		return new AutoEncodingCollection();
 	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) {
+		book.setEncoding("auto");
+	}
 }
