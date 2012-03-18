@@ -31,24 +31,20 @@ void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) 
 	std::string language = book.language();
 	std::string encoding = book.encoding();
 
-	if (!encoding.empty() && !language.empty()) {
+	if (!encoding.empty()) {
 		return;
 	}
 
 	PluginCollection &collection = PluginCollection::Instance();
-	if (language.empty()) {
-		language = collection.defaultLanguage();
-	}
 	if (encoding.empty()) {
-		encoding = collection.defaultEncoding();
+		encoding = "utf-8";
 	}
 	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
 		const size_t size = stream.read(buffer, BUFSIZE);
 		stream.close();
-		shared_ptr<ZLLanguageDetector::LanguageInfo> info =
-			ZLLanguageDetector().findInfo(buffer, size);
+		shared_ptr<ZLLanguageDetector::LanguageInfo> info = ZLLanguageDetector().findInfo(buffer, size);
 		delete[] buffer;
 		if (!info.isNull()) {
 			if (!info->Language.empty()) {
@@ -71,9 +67,6 @@ void FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream) {
 	}
 
 	PluginCollection &collection = PluginCollection::Instance();
-	if (language.empty()) {
-		language = collection.defaultLanguage();
-	}
 	if (collection.isLanguageAutoDetectEnabled() && stream.open()) {
 		static const int BUFSIZE = 65536;
 		char *buffer = new char[BUFSIZE];
