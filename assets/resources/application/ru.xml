@@ -287,6 +287,7 @@
 			<node name="refresh" value="Обновить"/>
 			<node name="authorize" value="Авторизоваться"/>
 			<node name="resetPosition" value="Назад"/>
+			<node name="sendReport" value="Отправить сообщение" />
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
@@ -810,5 +811,19 @@
 			<node name="title" value="Проблема у FBReader"/>
 			<node name="text" value="Не удаётся загрузить нативную библиотеку. Возможно, FBReader неправильно установлен. Если это сообщение повторяется при каждой попытке запуска, попробуйте переустановить FBReader."/>
 		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="Проблема у FBReader"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Ошибка при чтении '%s'"/>
+		<node name="errorReadingZip" value="Ошибка при разархивировании '%s'"/>
+		<node name="pluginNotFound" value="Нет плагина для '%s'"/>
+		<node name="unknownPluginType" value="Неизвестный тип плагина: %s"/>
+		<node name="fileNotFound" value="Не найти файл: %s"/>
+		<node name="opfFileNotFound" value="Не удалось найти OPF в %s"/>
+		<node name="unsupportedFileFormat" value="Не поддерживается формат файла '%s'"/>
 	</node>
 </resources>
