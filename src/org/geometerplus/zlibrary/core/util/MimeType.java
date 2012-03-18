@@ -62,6 +62,7 @@ public final class MimeType {
 	public static final MimeType APP_EPUB = get("application/epub+zip");
 	public static final MimeType APP_MOBI = get("application/x-mobipocket-ebook");
 	public static final MimeType APP_PDF = get("application/pdf");
+	public static final MimeType APP_RTF = get("application/rtf");
 	public static final MimeType APP_ATOM = get("application/atom+xml");
     // used in data.fbreader.org LitRes catalog
 	public static final MimeType APP_FB2ZIP = get("application/fb2+zip");
@@ -76,6 +77,7 @@ public final class MimeType {
 	public static final MimeType TEXT_HTML = get("text/html");
 	public static final MimeType TEXT_XHTML = get("text/xhtml");
 	public static final MimeType TEXT_PLAIN = get("text/plain");
+	public static final MimeType TEXT_RTF = get("text/rtf");
 	// used in Calibre server
 	public static final MimeType TEXT_FB2 = get("text/fb2+xml");
 
