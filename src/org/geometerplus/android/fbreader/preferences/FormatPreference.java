@@ -31,9 +31,8 @@ import android.net.Uri;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.fbreader.formats.Formats;
-import org.geometerplus.fbreader.formats.BigMimeTypeMap;
-import org.geometerplus.fbreader.filetype.FileTypeCollection;
+import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.filetype.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
 
@@ -55,12 +54,13 @@ class FormatPreference extends ListPreference {
 		super(context);
 
 		myOption = Formats.filetypeOption(formatName);
-		setTitle(formatName);
-		myScreen = scr;
 		myFormat = formatName;
-		myIsNative = Formats.getNativeFormats().contains(formatName);
-		myIsJava = Formats.getJavaFormats().contains(formatName);
-		myIsPredefined = Formats.getPredefinedExternalFormats().contains(formatName);
+		FileType ft = FileTypeCollection.Instance.typeById(myFormat);
+		setTitle(ft.Id);
+		myScreen = scr;
+		myIsJava = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.JAVA) != null;
+		myIsNative = PluginCollection.Instance().getPlugin(ft, FormatPlugin.Type.NATIVE) != null;
+		myIsPredefined = Formats.getPredefinedFormats().contains(formatName);
 		myResource = resource.getResource(resourceKey);
 		final String emptySummary = myResource.getResource("appNotSet").getValue();
 
@@ -134,7 +134,7 @@ class FormatPreference extends ListPreference {
 		}
 		boolean foundSomething = (values.size() > 0);
 		myPaths.clear();
-		if (!myIsNative && !myIsJava && !myIsPredefined) {
+		if (!myIsPredefined) {
 			final String deleteItem = myResource.getResource("delete").getValue();
 			values.add("DELETE");
 			names.add(deleteItem);
@@ -145,7 +145,7 @@ class FormatPreference extends ListPreference {
 		}
 		setEntries(names.toArray(new String[names.size()]));
 		setEntryValues(values.toArray(new String[values.size()]));
-		if (!myOption.getValue().equals("")) {
+		if (!myOption.getValue().equals("") || myIsPredefined) {
 			setValue(myOption.getValue());
 		}
 		return foundSomething;

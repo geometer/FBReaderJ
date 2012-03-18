@@ -88,6 +88,6 @@ public class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public EncodingCollection supportedEncodings() {
-		return null;
+		return new AutoEncodingCollection();
 	}
 }

@@ -26,10 +26,7 @@ import java.util.Arrays;
 
 public abstract class Formats {
 
-	private static String JAVA_FILETYPES = "fb2;epub;mobipocket";
-	private static String NATIVE_FILETYPES = "";//TODO
-
-	private static String PREDEFINED_FILETYPES = "html;pdf;djvu";
+	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;PDF;DjVu";
 
 	public static String JAVA_OPTION = "fbreader_java";
 	public static String NATIVE_OPTION = "fbreader_native";
@@ -43,20 +40,12 @@ public abstract class Formats {
 		return option.replace("FILETYPE_", "");
 	}
 
-	public static ArrayList<String> getCustomExternalFormats() {
+	public static ArrayList<String> getCustomFormats() {
 		return listFromString(new ZLStringOption("Formats", "ExternalFormats", "").getValue());
 	}
 
-	public static ArrayList<String> getPredefinedExternalFormats() {
-		return listFromString(PREDEFINED_FILETYPES);
-	}
-
-	public static ArrayList<String> getJavaFormats() {
-		return listFromString(JAVA_FILETYPES);
-	}
-
-	public static ArrayList<String> getNativeFormats() {
-		return listFromString(NATIVE_FILETYPES);
+	public static ArrayList<String> getPredefinedFormats() {
+		return listFromString(PREDEFINED_FILETYPES.toLowerCase());
 	}
 
 	private static ArrayList<String> listFromString(String s) {
@@ -77,27 +66,15 @@ public abstract class Formats {
 	}
 
 	public static FileType getExistingFileType(String extension) {
-		for (String s : getJavaFormats()) {
+		for (String s : getPredefinedFormats()) {
 			FileType type = FileTypeCollection.Instance.typeById(s);
-			if (type.acceptsExtension(extension)) {
+			if (type.acceptsExtension(extension) || s.equals(type.Id)) {
 				return type;
 			}
 		}
-		for (String s : getNativeFormats()) {
+		for (String s : getCustomFormats()) {
 			FileType type = FileTypeCollection.Instance.typeById(s);
-			if (type.acceptsExtension(extension)) {
-				return type;
-			}
-		}
-		for (String s : getPredefinedExternalFormats()) {
-			FileType type = FileTypeCollection.Instance.typeById(s);
-			if (type.acceptsExtension(extension)) {
-				return type;
-			}
-		}
-		for (String s : getCustomExternalFormats()) {
-			FileType type = FileTypeCollection.Instance.typeById(s);
-			if (type.acceptsExtension(extension)) {
+			if (type.acceptsExtension(extension) || s.equals(type.Id)) {
 				return type;
 			}
 		}
@@ -150,12 +127,19 @@ public abstract class Formats {
 		if (filetype.equals("fbreaderhelp")) {
 			return new ZLStringOption("Formats", filetypeToOption(filetype), JAVA_OPTION);
 		}
-		if (getJavaFormats().contains(filetype)) {
-			return new ZLStringOption("Formats", filetypeToOption(filetype), JAVA_OPTION);
-		} else if (getNativeFormats().contains(filetype)) {
-			return new ZLStringOption("Formats", filetypeToOption(filetype), NATIVE_OPTION);
-		} else {
+		if (getPredefinedFormats().contains(filetype)) {
+			FormatPlugin p = PluginCollection.Instance().getPlugin(FileTypeCollection.Instance.typeById(filetype), FormatPlugin.Type.ANY);
+			if (p instanceof JavaFormatPlugin) {
+				return new ZLStringOption("Formats", filetypeToOption(filetype), JAVA_OPTION);
+			}
+			if (p instanceof NativeFormatPlugin) {
+				return new ZLStringOption("Formats", filetypeToOption(filetype), NATIVE_OPTION);
+			}
 			return new ZLStringOption("Formats", filetypeToOption(filetype), "");
+		} else if (getCustomFormats().contains(filetype)) {
+			return new ZLStringOption("Formats", filetypeToOption(filetype), "");
+		} else {
+			return null;
 		}
 	}
 

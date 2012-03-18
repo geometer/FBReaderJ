@@ -155,7 +155,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				urls.addInfo(new UrlInfo(referenceType, href));
 			} else if (referenceType != null) {
 				final String format = formatByMimeType(type);
-				if (!format.equals(BookUrlInfo.Format.NONE)) {
+				if (format != null && !format.equals(BookUrlInfo.Format.NONE)) {
 					urls.addInfo(new BookUrlInfo(referenceType, format, href));
 				}
 			}
