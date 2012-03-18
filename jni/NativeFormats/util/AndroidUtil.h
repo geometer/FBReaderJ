@@ -100,6 +100,7 @@ public:
 	static jmethodID MID_Book_setEncoding;
 	static jmethodID MID_Book_addAuthor;
 	static jmethodID MID_Book_addTag;
+	static jmethodID MID_Book_save;
 
 	static jmethodID SMID_Tag_getTag;
 

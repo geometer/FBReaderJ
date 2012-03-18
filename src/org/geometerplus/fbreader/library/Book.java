@@ -289,12 +289,11 @@ public class Book {
 			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
 				if (plugin != null) {
 				try {
-					System.err.println("do encoding detection");
 					plugin.detectLanguageAndEncoding(this);
 				} catch (BookReadingException e) {
 				}
 				if (myEncoding == null) {
-					//setEncoding("utf-8");
+					setEncoding("utf-8");
 				}
 			}
 		}
