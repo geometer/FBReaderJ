@@ -29,7 +29,7 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-SHAREDIR_MACRO                := nativeShare
+SHAREDIR_MACRO                := share
 
 LOCAL_MODULE                  := NativeFormats-v1
 LOCAL_CFLAGS                  := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
