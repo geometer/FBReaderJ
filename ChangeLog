@@ -1,8 +1,9 @@
 ===== 1.4 (Mar ??, 2012) =====
-* Experimental *.txt support
+* *.txt support
 * Changed "Back" button behaviour: FBReader tries to jump back before showing Cancel menu
 * Updated Czech localization (by Marek Pavelka)
 * Smoother scrolling in local and network libraries
+* Uses current device language for hyphenations if book language is not set
 
 ===== 1.3.9 (Feb 26, 2012) =====
 * FBReader reads Mobipocket files with PDB/PRC extensions
