@@ -43,7 +43,7 @@ bool TxtPlugin::readMetaInfo(Book &book) const {
 }
 
 bool TxtPlugin::readModel(BookModel &model) const {
-	const Book &book = *model.book();
+	Book &book = *model.book();
 	const ZLFile &file = book.file();
 	shared_ptr<ZLInputStream> stream = file.inputStream();
 	if (stream.isNull()) {
@@ -56,6 +56,7 @@ bool TxtPlugin::readModel(BookModel &model) const {
 		detector.detect(*stream, format);
 	}
 
+	readLanguageAndEncoding(book);
 	TxtBookReader(model, format, book.encoding()).readDocument(*stream);
 	return true;
 }
