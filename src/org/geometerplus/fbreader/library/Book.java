@@ -97,16 +97,16 @@ public class Book {
 
 	public final ZLFile File;
 
-	private long myId;
+	private volatile long myId;
 
-	private String myEncoding;
-	private String myLanguage;
-	private String myTitle;
-	private List<Author> myAuthors;
-	private List<Tag> myTags;
-	private SeriesInfo mySeriesInfo;
+	private volatile String myEncoding;
+	private volatile String myLanguage;
+	private volatile String myTitle;
+	private volatile List<Author> myAuthors;
+	private volatile List<Tag> myTags;
+	private volatile SeriesInfo mySeriesInfo;
 
-	private boolean myIsSaved;
+	private volatile boolean myIsSaved;
 
 	private static final WeakReference<ZLImage> NULL_IMAGE = new WeakReference<ZLImage>(null);
 	private WeakReference<ZLImage> myCover;
@@ -285,6 +285,23 @@ public class Book {
 	}
 
 	public String getEncoding() {
+		if (myEncoding == null) {
+			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
+				if (plugin != null) {
+				try {
+					System.err.println("do encoding detection");
+					plugin.detectLanguageAndEncoding(this);
+				} catch (BookReadingException e) {
+				}
+				if (myEncoding == null) {
+					//setEncoding("utf-8");
+				}
+			}
+		}
+		return myEncoding;
+	}
+
+	public String getEncodingNoDetection() {
 		return myEncoding;
 	}
 

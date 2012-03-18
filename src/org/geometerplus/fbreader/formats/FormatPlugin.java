@@ -39,7 +39,7 @@ public abstract class FormatPlugin {
 
 	public abstract void readMetaInfo(Book book) throws BookReadingException;
 	public abstract void readModel(BookModel model) throws BookReadingException;
-	public abstract boolean readLanguageAndEncoding(Book book);
+	public abstract void detectLanguageAndEncoding(Book book) throws BookReadingException;
 	public abstract ZLImage readCover(ZLFile file);
 	public abstract String readAnnotation(ZLFile file);
 
