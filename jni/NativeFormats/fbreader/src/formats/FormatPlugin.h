@@ -84,8 +84,6 @@ public:
 	shared_ptr<FormatPlugin> pluginByType(const std::string &fileType) const;
 
 	bool isLanguageAutoDetectEnabled();
-	std::string defaultLanguage();
-	std::string defaultEncoding();
 
 private:
 	static PluginCollection *ourInstance;

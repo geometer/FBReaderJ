@@ -136,7 +136,6 @@ JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 	}
 
 	fillLanguageAndEncoding(env, javaBook, *book);
-	return;
 }
 
 static bool initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
