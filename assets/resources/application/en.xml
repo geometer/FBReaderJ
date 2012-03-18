@@ -814,5 +814,5 @@
 		<node name="fileNotFound" value="File is not found: %s"/>
 		<node name="opfFileNotFound" value="OPF is not foind in %s"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
-	<node>
+	</node>
 </resources>
