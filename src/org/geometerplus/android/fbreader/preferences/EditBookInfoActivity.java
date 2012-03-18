@@ -73,11 +73,8 @@ class LanguagePreference extends ZLStringListPreference {
 			++index;
 		}
 		setLists(codes, names);
-		String language = myBook.getLanguage();
-		if (language == null) {
-			language = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
-		}
-		if (!setInitialValue(language)) {
+		final String language = myBook.getLanguage();
+		if (language == null || !setInitialValue(language)) {
 			setInitialValue(ZLLanguageUtil.OTHER_LANGUAGE_CODE);
 		}
 	}

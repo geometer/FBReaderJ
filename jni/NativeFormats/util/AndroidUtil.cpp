@@ -90,6 +90,7 @@ jmethodID AndroidUtil::MID_Book_setLanguage;
 jmethodID AndroidUtil::MID_Book_setEncoding;
 jmethodID AndroidUtil::MID_Book_addAuthor;
 jmethodID AndroidUtil::MID_Book_addTag;
+jmethodID AndroidUtil::MID_Book_save;
 
 jmethodID AndroidUtil::SMID_Tag_getTag;
 
@@ -196,6 +197,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_Book_setEncoding = env->GetMethodID(cls, "setEncoding", "(Ljava/lang/String;)V") );
 	CHECK_NULL( MID_Book_addAuthor = env->GetMethodID(cls, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)V") );
 	CHECK_NULL( MID_Book_addTag = env->GetMethodID(cls, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)V") );
+	CHECK_NULL( MID_Book_save = env->GetMethodID(cls, "save", "()Z") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Tag) );
