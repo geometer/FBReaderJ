@@ -65,8 +65,7 @@ public class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public boolean readLanguageAndEncoding(Book book) {
-		return true;
+	public void detectLanguageAndEncoding(Book book) {
 	}
 
 	@Override

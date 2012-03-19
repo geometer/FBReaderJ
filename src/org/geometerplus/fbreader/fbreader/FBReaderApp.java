@@ -159,8 +159,9 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		}
 		final Book bookToOpen = book;
-		if (FileTypeCollection.Instance.typeForFile(book.File) == null) return;
-		if (Formats.getStatus(FileTypeCollection.Instance.typeForFile(book.File).Id) == FormatPlugin.Type.EXTERNAL) {
+		FormatPlugin p = PluginCollection.Instance().getPlugin(book.File);
+		if (p == null) return;
+		if (p.type() == FormatPlugin.Type.EXTERNAL) {
 			Library.Instance().addBookToRecentList(book);
 			myFileOpener.openFile(book.File, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(book.File).Id).getValue());
 			return;

@@ -24,12 +24,10 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeByExtension extends FileType {
 	private final String myExtension;
-	private final MimeType myMimeType;
 
-	FileTypeByExtension(String id, String extension, MimeType mimeType) {
-		super(id);
+	FileTypeByExtension(String id, String extension, MimeType[] mimetypes) {
+		super(id, mimetypes);
 		myExtension = extension;
-		myMimeType = mimeType;
 	}
 
 	@Override
@@ -47,8 +45,4 @@ class FileTypeByExtension extends FileType {
 		return myExtension;
 	}
 
-	@Override
-	public MimeType mimeType() {
-		return myMimeType;
-	}
 }

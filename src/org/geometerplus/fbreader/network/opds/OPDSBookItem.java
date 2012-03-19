@@ -33,6 +33,7 @@ import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.filetype.*;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	public static OPDSBookItem create(INetworkLink link, String url) {
@@ -207,16 +208,21 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	static String formatByMimeType(MimeType type) {
-		if (MimeType.TEXT_FB2.equals(type)) {
-			return BookUrlInfo.Format.FB2;
-		} else if (MimeType.APP_FB2ZIP.equals(type)) {
-			return BookUrlInfo.Format.FB2_ZIP;
-		} else if (MimeType.APP_EPUB.equals(type)) {
-			return BookUrlInfo.Format.EPUB;
-		} else if (MimeType.APP_MOBI.equals(type)) {
-			return BookUrlInfo.Format.MOBIPOCKET;
-		} else if (PluginCollection.Instance().ExtForMimeType(type.Name) != null) {
-			return "." + PluginCollection.Instance().ExtForMimeType(type.Name);
+		if (MimeType.APP_FB2ZIP.equals(type)) {
+			if (Formats.getStatus("fb2") != FormatPlugin.Type.NONE) {
+				return BookUrlInfo.Format.FB2_ZIP;
+			}
+		} else {
+			for (String format : Formats.getPredefinedFormats()) {
+				if (Formats.getStatus(format) != FormatPlugin.Type.NONE) {
+					FileType ft = FileTypeCollection.Instance.typeById(format);
+					for (MimeType type1 : ft.mimeTypes()) {
+						if (type1.equals(type)) {
+							return "." + ft.extension();
+						}
+					}
+				}
+			}
 		}
 		return BookUrlInfo.Format.NONE;
 	}

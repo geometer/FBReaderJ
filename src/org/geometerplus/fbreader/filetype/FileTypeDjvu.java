@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeDjvu extends FileType {
 	FileTypeDjvu() {
-		super("DjVu");
+		super("DjVu", MimeType.MIMES_DJVU);
 	}
 
 	@Override
@@ -40,10 +40,5 @@ class FileTypeDjvu extends FileType {
 	@Override
 	public String extension() {
 		return "djvu";
-	}
-
-	@Override
-	public MimeType mimeType() {
-		return null;//FIXME
 	}
 }

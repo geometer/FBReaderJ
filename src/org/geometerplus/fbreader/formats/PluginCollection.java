@@ -21,7 +21,7 @@ package org.geometerplus.fbreader.formats;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.*;
 
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
 import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
@@ -59,7 +59,6 @@ public class PluginCollection {
 
 	private PluginCollection() {
 		addPlugin(new FB2Plugin());
-		addPlugin(new FB2Plugin("fbreaderhelp"));
 		addPlugin(new MobipocketPlugin());
 		addPlugin(new OEBPlugin());
 	}
@@ -79,12 +78,10 @@ public class PluginCollection {
 		if (fileType == null) {
 			return null;
 		}
+		if (file instanceof ZLResourceFile) {
+			return getPlugin(fileType, FormatPlugin.Type.JAVA);
+		}
 		return getPlugin(fileType, Formats.getStatus(fileType.Id));
-	}
-
-	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
-		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
-		return getPlugin(fileType, formatType);
 	}
 
 	private FormatPlugin getOrCreateExternalPlugin(FileType fileType) {
@@ -140,28 +137,6 @@ public class PluginCollection {
 			}
 			return null;
 		}
-	}
-
-	public String ExtForMimeType(String type) {//FIXME: formats can have several extensions(?)
-		for (String ext : Formats.getPredefinedFormats()) {
-			if (BigMimeTypeMap.getTypes(ext) != null) {
-				for (String mtype : BigMimeTypeMap.getTypes(ext)) {
-					if (mtype.equals(type)) {
-						return ext;
-					}
-				}
-			}
-		}
-		for (String ext : Formats.getCustomFormats()) {
-			if (BigMimeTypeMap.getTypes(ext) != null) {
-				for (String mtype : BigMimeTypeMap.getTypes(ext)) {
-					if (mtype.equals(type)) {
-						return ext;
-					}
-				}
-			}
-		}
-		return null;
 	}
 
 	private native NativeFormatPlugin[] nativePlugins();

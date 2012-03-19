@@ -24,14 +24,18 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 public abstract class FileType {
 	public final String Id;
+	private final MimeType[] myMimeTypes;
 
-	protected FileType(String id) {
+	protected FileType(String id, MimeType[] mimetypes) {
 		Id = id;
+		myMimeTypes = mimetypes;
 	}
 
 	public abstract boolean acceptsFile(ZLFile file);
 	public abstract boolean acceptsExtension(String ext);
 
 	public abstract String extension();
-	public abstract MimeType mimeType();
+	public MimeType[] mimeTypes() {
+		return myMimeTypes;
+	}
 }

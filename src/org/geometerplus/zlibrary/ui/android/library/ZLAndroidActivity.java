@@ -35,12 +35,14 @@ import android.app.AlertDialog;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.filetype.*;
 
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication();
@@ -101,23 +103,16 @@ public abstract class ZLAndroidActivity extends Activity {
 			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
 			LaunchIntent.setPackage(appData);
 			LaunchIntent.setData(uri);
-			if (BigMimeTypeMap.getTypes(extension) != null) {
-				for (String type : BigMimeTypeMap.getTypes(extension)) {
-					LaunchIntent.setDataAndType(uri, type);
-					try {
-						myActivity.startActivity(LaunchIntent);
-						return;
-					} catch (ActivityNotFoundException e) {
-					}
+			FileType ft = FileTypeCollection.Instance.typeForFile(f);
+			for (MimeType type : ft.mimeTypes()) {
+				LaunchIntent.setDataAndType(uri, type.Name);
+				try {
+					myActivity.startActivity(LaunchIntent);
+					return;
+				} catch (ActivityNotFoundException e) {
 				}
-				showErrorDialog("externalNotFound");
-				return;
 			}
-			try {
-				myActivity.startActivity(LaunchIntent);
-			} catch (ActivityNotFoundException e) {
-				showErrorDialog("externalNotFound");
-			}
+			showErrorDialog("externalNotFound");
 			return;
 		}
 	}

@@ -34,6 +34,7 @@ import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.filetype.*;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.android.fbreader.preferences.ZLPreferenceActivity.Screen;
 
 import android.app.AlertDialog;
@@ -64,14 +65,22 @@ class FormatPreference extends ListPreference {
 		myResource = resource.getResource(resourceKey);
 		final String emptySummary = myResource.getResource("appNotSet").getValue();
 
-		if (!myOption.getValue().equals("") && (!myOption.getValue().equals(Formats.JAVA_OPTION) || !myIsJava) && (!myOption.getValue().equals(Formats.NATIVE_OPTION) || !myIsNative)) {
+		if (!myOption.getValue().equals("") && (!myOption.getValue().equals(Formats.JAVA_OPTION)) && (!myOption.getValue().equals(Formats.NATIVE_OPTION))) {
 			final PackageManager pm = getContext().getPackageManager();
 			try {
 				ApplicationInfo info = pm.getApplicationInfo(myOption.getValue(), 0);
 				setSummary(info.loadLabel(pm).toString());
 			} catch (PackageManager.NameNotFoundException e) {
-				myOption.setValue("");
-				setSummary(emptySummary);
+				if (myIsJava) {
+					myOption.setValue(Formats.JAVA_OPTION);
+					setSummary(myResource.getResource("java").getValue());
+				} else if (myIsNative) {
+					myOption.setValue(Formats.NATIVE_OPTION);
+					setSummary(myResource.getResource("native").getValue());
+				} else {
+					myOption.setValue("");
+					setSummary(emptySummary);
+				}
 			}
 		} else if (myOption.getValue().equals(Formats.JAVA_OPTION)) {
 			setSummary(myResource.getResource("java").getValue());
@@ -112,18 +121,9 @@ class FormatPreference extends ListPreference {
 			values.add(Formats.NATIVE_OPTION);
 			names.add(myResource.getResource("native").getValue());
 		}
-		if (BigMimeTypeMap.getTypes(extension) != null) {
-			for (String type : BigMimeTypeMap.getTypes(extension)) {
-				intent.setDataAndType(Uri.parse("file:///sdcard/fgsfds." + extension), type);
-				for (ResolveInfo packageInfo : pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)) {
-					if (!myPaths.contains(packageInfo.activityInfo.applicationInfo.packageName)) {
-						values.add(packageInfo.activityInfo.applicationInfo.packageName);
-						names.add(packageInfo.activityInfo.applicationInfo.loadLabel(pm).toString());
-						myPaths.add(packageInfo.activityInfo.applicationInfo.packageName);
-					}
-				}
-			}
-		} else {
+		FileType ft = FileTypeCollection.Instance.typeById(myFormat);
+		for (MimeType type : ft.mimeTypes()) {
+			intent.setDataAndType(Uri.parse("file:///sdcard/fgsfds." + extension), type.Name);
 			for (ResolveInfo packageInfo : pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)) {
 				if (!myPaths.contains(packageInfo.activityInfo.applicationInfo.packageName)) {
 					values.add(packageInfo.activityInfo.applicationInfo.packageName);
@@ -139,7 +139,7 @@ class FormatPreference extends ListPreference {
 			values.add("DELETE");
 			names.add(deleteItem);
 		}
-		if (myIsPredefined) {
+		if (myIsPredefined && !myIsJava && !myIsNative) {
 			values.add("");
 			names.add(myResource.getResource("appNotSet").getValue());
 		}

@@ -30,15 +30,15 @@ public class FileTypeCollection {
 	private final TreeMap<String,FileType> myTypes = new TreeMap<String,FileType>();
 
 	private FileTypeCollection() {
-		addType(new FileTypeByExtension("fb2", "fb2", MimeType.TEXT_FB2));
-		addType(new FileTypeByExtension("fbreaderhelp", "fbreaderhelp", MimeType.TEXT_FB2));
+		addType(new FileTypeByExtension("fb2", "fb2", MimeType.MIMES_FB2));
 		addType(new FileTypeEpub());
 		addType(new FileTypeMobipocket());
 		addType(new FileTypeHtml());
-		addType(new FileTypeByExtension("plain text", "txt", MimeType.TEXT_PLAIN));
+		addType(new FileTypeByExtension("plain text", "txt", MimeType.MIMES_TXT));
 		// TODO: change mime type
-		addType(new FileTypeByExtension("RTF", "rtf", MimeType.TEXT_PLAIN));
-		addType(new FileTypeByExtension("PDF", "pdf", MimeType.APP_PDF));
+		addType(new FileTypeByExtension("RTF", "rtf", MimeType.MIMES_RTF));
+		addType(new FileTypeByExtension("doc", "doc", MimeType.MIMES_DOC));
+		addType(new FileTypeByExtension("PDF", "pdf", MimeType.MIMES_PDF));
 		addType(new FileTypeDjvu());
 	}
 

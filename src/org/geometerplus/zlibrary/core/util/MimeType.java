@@ -60,9 +60,21 @@ public final class MimeType {
 
 	// MIME types / application
 	public static final MimeType APP_EPUB = get("application/epub+zip");
+	public static final MimeType APP_EPUB_1 = get("application/epub");
 	public static final MimeType APP_MOBI = get("application/x-mobipocket-ebook");
+	public static final MimeType APP_MOBI_1 = get("application/mobi");
 	public static final MimeType APP_PDF = get("application/pdf");
+	public static final MimeType APP_XPDF = get("application/x-pdf");
 	public static final MimeType APP_ATOM = get("application/atom+xml");
+	public static final MimeType APP_FB2 = get("application/fb2");
+	public static final MimeType APP_FB2_1 = get("application/x-fictionbook");
+	public static final MimeType APP_FB2_2 = get("application/x-fictionbook+xml");
+	public static final MimeType APP_RTF = get("application/rtf");
+	public static final MimeType APP_TXT = get("application/txt");
+	public static final MimeType APP_DJVU = get("application/djvu");
+	public static final MimeType APP_HTML = get("application/html");
+	public static final MimeType APP_MSWORD = get("application/msword");
+	public static final MimeType APP_DOC = get("application/msword");
     // used in data.fbreader.org LitRes catalog
 	public static final MimeType APP_FB2ZIP = get("application/fb2+zip");
 
@@ -75,6 +87,7 @@ public final class MimeType {
 	// MIME types / text
 	public static final MimeType TEXT_HTML = get("text/html");
 	public static final MimeType TEXT_XHTML = get("text/xhtml");
+	public static final MimeType TEXT_RTF = get("text/rtf");
 	public static final MimeType TEXT_PLAIN = get("text/plain");
 	// used in Calibre server
 	public static final MimeType TEXT_FB2 = get("text/fb2+xml");
@@ -85,8 +98,20 @@ public final class MimeType {
 	public static final MimeType IMAGE_JPEG = get("image/jpeg");
 	public static final MimeType IMAGE_AUTO = get("image/auto");
 	public static final MimeType IMAGE_PALM = get("image/palm");
+	public static final MimeType IMAGE_DJVU = get("image/djvu");
 
 	public static final MimeType NULL = new MimeType(null, null);
+
+	//mime lists
+	public static final MimeType[] MIMES_FB2 = {APP_FB2, APP_FB2_1, APP_FB2_2, TEXT_FB2};
+	public static final MimeType[] MIMES_EPUB = {APP_EPUB, APP_EPUB_1};
+	public static final MimeType[] MIMES_MOBI = {APP_MOBI, APP_MOBI_1};
+	public static final MimeType[] MIMES_TXT = {APP_TXT, TEXT_PLAIN};
+	public static final MimeType[] MIMES_RTF = {APP_RTF, TEXT_RTF};
+	public static final MimeType[] MIMES_HTML = {APP_HTML, TEXT_HTML};
+	public static final MimeType[] MIMES_PDF = {APP_PDF, APP_XPDF};
+	public static final MimeType[] MIMES_DJVU = {APP_DJVU, IMAGE_DJVU};
+	public static final MimeType[] MIMES_DOC = {APP_DOC, APP_MSWORD};
 
 	public final String Name;
 
