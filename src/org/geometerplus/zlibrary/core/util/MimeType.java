@@ -59,16 +59,16 @@ public final class MimeType {
 	}
 
 	// MIME types / application
-	public static final MimeType APP_EPUB = get("application/epub+zip");
-	public static final MimeType APP_EPUB_1 = get("application/epub");
-	public static final MimeType APP_MOBI = get("application/x-mobipocket-ebook");
-	public static final MimeType APP_MOBI_1 = get("application/mobi");
+	public static final MimeType APP_EPUB_ZIP = get("application/epub+zip");
+	public static final MimeType APP_EPUB = get("application/epub");
+	public static final MimeType APP_MOBIPOCKET = get("application/x-mobipocket-ebook");
+	public static final MimeType APP_MOBI = get("application/mobi");
 	public static final MimeType APP_PDF = get("application/pdf");
 	public static final MimeType APP_XPDF = get("application/x-pdf");
 	public static final MimeType APP_ATOM = get("application/atom+xml");
 	public static final MimeType APP_FB2 = get("application/fb2");
-	public static final MimeType APP_FB2_1 = get("application/x-fictionbook");
-	public static final MimeType APP_FB2_2 = get("application/x-fictionbook+xml");
+	public static final MimeType APP_FICTIONBOOK = get("application/x-fictionbook");
+	public static final MimeType APP_FICTIONBOOK_XML = get("application/x-fictionbook+xml");
 	public static final MimeType APP_RTF = get("application/rtf");
 	public static final MimeType APP_TXT = get("application/txt");
 	public static final MimeType APP_DJVU = get("application/djvu");
@@ -103,9 +103,9 @@ public final class MimeType {
 	public static final MimeType NULL = new MimeType(null, null);
 
 	//mime lists
-	public static final MimeType[] MIMES_FB2 = {APP_FB2, APP_FB2_1, APP_FB2_2, TEXT_FB2};
-	public static final MimeType[] MIMES_EPUB = {APP_EPUB, APP_EPUB_1};
-	public static final MimeType[] MIMES_MOBI = {APP_MOBI, APP_MOBI_1};
+	public static final MimeType[] MIMES_FB2 = {APP_FB2, APP_FICTIONBOOK, APP_FICTIONBOOK_XML, TEXT_FB2};
+	public static final MimeType[] MIMES_EPUB = {APP_EPUB, APP_EPUB_ZIP};
+	public static final MimeType[] MIMES_MOBI = {APP_MOBI, APP_MOBIPOCKET};
 	public static final MimeType[] MIMES_TXT = {APP_TXT, TEXT_PLAIN};
 	public static final MimeType[] MIMES_RTF = {APP_RTF, TEXT_RTF};
 	public static final MimeType[] MIMES_HTML = {APP_HTML, TEXT_HTML};
