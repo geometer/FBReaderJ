@@ -112,7 +112,7 @@ public final class MimeType {
 	public static final MimeType[] MIMES_HTML = {TEXT_HTML, APP_HTML};
 	public static final MimeType[] MIMES_PDF = {APP_PDF, APP_XPDF};
 	public static final MimeType[] MIMES_DJVU = {IMAGE_VND_DJVU, APP_DJVU, IMAGE_XDJVU};
-	public static final MimeType[] MIMES_DOC = { APP_MSWORD, APP_DOC};
+	public static final MimeType[] MIMES_DOC = {APP_MSWORD, APP_DOC};
 
 	public final String Name;
 
