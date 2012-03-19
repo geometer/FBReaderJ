@@ -4,7 +4,7 @@ import java.io.*;
 
 class DeflatingDecompressor extends Decompressor {
 	static {
-		System.loadLibrary("DeflatingDecompressor-v2");
+		System.loadLibrary("DeflatingDecompressor-v3");
 	}
 
 	// common variables
