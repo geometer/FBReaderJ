@@ -70,4 +70,7 @@ public abstract class AbstractLibrary {
 	public abstract void removeBookFromFavorites(Book book);
 
 	public abstract void startBookSearch(final String pattern);
+
+	public abstract List<Bookmark> bookmarks();
+	public abstract List<Bookmark> invisibleBookmarks(Book book);
 }

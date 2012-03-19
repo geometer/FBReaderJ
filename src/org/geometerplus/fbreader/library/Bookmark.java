@@ -29,16 +29,6 @@ public final class Bookmark extends ZLTextFixedPosition {
 	public final static int ACCESS = 2;
 	public final static int LATEST = 3;
 
-	public static List<Bookmark> bookmarks() {
-		return BooksDatabase.Instance().loadAllVisibleBookmarks();
-	}
-
-	public static List<Bookmark> invisibleBookmarks(Book book) {
-		final List<Bookmark> list = BooksDatabase.Instance().loadBookmarks(book.getId(), false);
-		Collections.sort(list, new ByTimeComparator());
-		return list;
-	}
-
 	private long myId;
 	private final long myBookId;
 	private final String myBookTitle;
