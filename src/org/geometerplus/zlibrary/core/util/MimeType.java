@@ -87,8 +87,8 @@ public final class MimeType {
 	// MIME types / text
 	public static final MimeType TEXT_HTML = get("text/html");
 	public static final MimeType TEXT_XHTML = get("text/xhtml");
-	public static final MimeType TEXT_RTF = get("text/rtf");
 	public static final MimeType TEXT_PLAIN = get("text/plain");
+	public static final MimeType TEXT_RTF = get("text/rtf");
 	// used in Calibre server
 	public static final MimeType TEXT_FB2 = get("text/fb2+xml");
 

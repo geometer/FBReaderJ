@@ -593,4 +593,16 @@ public final class Library extends AbstractLibrary {
 			book.File.getPhysicalFile().delete();
 		}
 	}
+
+	@Override
+	public List<Bookmark> allBookmarks() {
+		return BooksDatabase.Instance().loadAllVisibleBookmarks();
+	}
+
+	@Override
+	public List<Bookmark> invisibleBookmarks(Book book) {
+		final List<Bookmark> list = BooksDatabase.Instance().loadBookmarks(book.getId(), false);
+		Collections.sort(list, new Bookmark.ByTimeComparator());
+		return list;
+	}
 }

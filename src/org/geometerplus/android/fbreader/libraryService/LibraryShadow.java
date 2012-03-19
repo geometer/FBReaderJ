@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.libraryService;
 
+import java.util.*;
+
 import android.os.RemoteException;
 
 import org.geometerplus.fbreader.library.*;
@@ -83,5 +85,17 @@ public class LibraryShadow extends AbstractLibrary {
 	@Override
 	public void startBookSearch(final String pattern) {
 		// TODO: implement
+	}
+
+	@Override
+	public List<Bookmark> allBookmarks() {
+		// TODO: implement
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<Bookmark> invisibleBookmarks(Book book) {
+		// TODO: implement
+		return Collections.emptyList();
 	}
 }

@@ -19,10 +19,11 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
+
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.library.Book;
 
 public interface InfoReader {
 	void readMetaInfo(Book book) throws BookReadingException;

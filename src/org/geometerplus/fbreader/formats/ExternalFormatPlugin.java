@@ -19,12 +19,14 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.EncodingCollection;
+import org.geometerplus.fbreader.library.Book;
 
 public class ExternalFormatPlugin extends FormatPlugin {
 	private static class DefaultInfoReader implements InfoReader {
@@ -60,16 +62,13 @@ public class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book)  throws BookReadingException {
+	public void readMetaInfo(Book book) throws BookReadingException {
 		myInfoReader.readMetaInfo(book);
 	}
 
 	@Override
-	public void detectLanguageAndEncoding(Book book) {
-	}
-
-	@Override
-	public void readModel(BookModel model) {
+	public void readModel(BookModel model) throws BookReadingException {
+		// TODO: throw an "unsupported operation" exception
 	}
 
 	@Override
@@ -85,5 +84,9 @@ public class ExternalFormatPlugin extends FormatPlugin {
 	@Override
 	public EncodingCollection supportedEncodings() {
 		return new AutoEncodingCollection();
+	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) {
 	}
 }
