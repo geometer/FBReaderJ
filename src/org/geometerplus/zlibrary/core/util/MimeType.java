@@ -98,7 +98,7 @@ public final class MimeType {
 	public static final MimeType IMAGE_JPEG = get("image/jpeg");
 	public static final MimeType IMAGE_AUTO = get("image/auto");
 	public static final MimeType IMAGE_PALM = get("image/palm");
-	public static final MimeType IMAGE_DJVU = get("image/djvu");
+	public static final MimeType IMAGE_DJVU = get("image/vnd.djvu");
 
 	public static final MimeType NULL = new MimeType(null, null);
 
