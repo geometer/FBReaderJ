@@ -98,20 +98,21 @@ public final class MimeType {
 	public static final MimeType IMAGE_JPEG = get("image/jpeg");
 	public static final MimeType IMAGE_AUTO = get("image/auto");
 	public static final MimeType IMAGE_PALM = get("image/palm");
-	public static final MimeType IMAGE_DJVU = get("image/vnd.djvu");
+	public static final MimeType IMAGE_VND_DJVU = get("image/vnd.djvu");
+	public static final MimeType IMAGE_XDJVU = get("image/x-djvu");
 
 	public static final MimeType NULL = new MimeType(null, null);
 
 	//mime lists
-	public static final MimeType[] MIMES_FB2 = {APP_FB2, APP_FICTIONBOOK, APP_FICTIONBOOK_XML, TEXT_FB2};
-	public static final MimeType[] MIMES_EPUB = {APP_EPUB, APP_EPUB_ZIP};
-	public static final MimeType[] MIMES_MOBI = {APP_MOBI, APP_MOBIPOCKET};
-	public static final MimeType[] MIMES_TXT = {APP_TXT, TEXT_PLAIN};
+	public static final MimeType[] MIMES_FB2 = {APP_FICTIONBOOK, APP_FB2, APP_FICTIONBOOK_XML, TEXT_FB2};
+	public static final MimeType[] MIMES_EPUB = {APP_EPUB_ZIP, APP_EPUB};
+	public static final MimeType[] MIMES_MOBI = {APP_MOBIPOCKET, APP_MOBI};
+	public static final MimeType[] MIMES_TXT = {TEXT_PLAIN, APP_TXT};
 	public static final MimeType[] MIMES_RTF = {APP_RTF, TEXT_RTF};
-	public static final MimeType[] MIMES_HTML = {APP_HTML, TEXT_HTML};
+	public static final MimeType[] MIMES_HTML = {TEXT_HTML, APP_HTML};
 	public static final MimeType[] MIMES_PDF = {APP_PDF, APP_XPDF};
-	public static final MimeType[] MIMES_DJVU = {APP_DJVU, IMAGE_DJVU};
-	public static final MimeType[] MIMES_DOC = {APP_DOC, APP_MSWORD};
+	public static final MimeType[] MIMES_DJVU = {IMAGE_VND_DJVU, APP_DJVU, IMAGE_XDJVU};
+	public static final MimeType[] MIMES_DOC = { APP_MSWORD, APP_DOC};
 
 	public final String Name;
 
