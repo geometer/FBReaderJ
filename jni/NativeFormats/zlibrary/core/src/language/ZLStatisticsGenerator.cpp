@@ -28,7 +28,7 @@
 #include "ZLStatistics.h"
 #include "ZLStatisticsGenerator.h"
 
-size_t ZLStatisticsGenerator::ourBufferSize = 2000000;
+size_t ZLStatisticsGenerator::ourBufferSize = 102400;
 
 ZLStatisticsGenerator::ZLStatisticsGenerator(const std::string &breakSymbols) {
 	myBreakSymbolsTable = new char[256];
