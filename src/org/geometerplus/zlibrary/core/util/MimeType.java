@@ -74,7 +74,7 @@ public final class MimeType {
 	public static final MimeType APP_DJVU = get("application/djvu");
 	public static final MimeType APP_HTML = get("application/html");
 	public static final MimeType APP_MSWORD = get("application/msword");
-	public static final MimeType APP_DOC = get("application/msword");
+	public static final MimeType APP_DOC = get("application/doc");
     // used in data.fbreader.org LitRes catalog
 	public static final MimeType APP_FB2ZIP = get("application/fb2+zip");
 
