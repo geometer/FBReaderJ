@@ -88,7 +88,7 @@ public class LibraryShadow extends AbstractLibrary {
 	}
 
 	@Override
-	public List<Bookmark> bookmarks() {
+	public List<Bookmark> allBookmarks() {
 		// TODO: implement
 		return Collections.emptyList();
 	}

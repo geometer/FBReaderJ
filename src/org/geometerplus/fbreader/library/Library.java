@@ -574,7 +574,7 @@ public final class Library extends AbstractLibrary {
 	}
 
 	@Override
-	public List<Bookmark> bookmarks() {
+	public List<Bookmark> allBookmarks() {
 		return BooksDatabase.Instance().loadAllVisibleBookmarks();
 	}
 
