@@ -72,8 +72,6 @@ public final class MimeType {
 	// ???
 	//public static final MimeType APP_XPDF = get("application/x-pdf");
 	// ???
-	public static final MimeType APP_ATOM = get("application/atom+xml");
-	// ???
 	public static final MimeType APP_FB2 = get("application/fb2");
 	// ???
 	public static final MimeType APP_FICTIONBOOK = get("application/x-fictionbook");
@@ -93,6 +91,8 @@ public final class MimeType {
 	public static final MimeType APP_DOC = get("application/doc");
     // unofficial, used in data.fbreader.org LitRes catalog
 	public static final MimeType APP_FB2_ZIP = get("application/fb2+zip");
+	// ???
+	public static final MimeType APP_ATOM = get("application/atom+xml");
 	// ???
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
     // unofficial, used in data.fbreader.org LitRes catalog
