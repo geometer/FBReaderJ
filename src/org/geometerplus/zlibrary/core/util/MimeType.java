@@ -74,7 +74,7 @@ public final class MimeType {
 	// ???
 	public static final MimeType APP_ATOM = get("application/atom+xml");
     // used in data.fbreader.org LitRes catalog
-	public static final MimeType APP_FB2ZIP = get("application/fb2+zip");
+	public static final MimeType APP_FB2_ZIP = get("application/fb2+zip");
 	// ???
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
     // used in data.fbreader.org LitRes catalog
@@ -118,6 +118,7 @@ public final class MimeType {
 	public static final List<MimeType> TYPES_PDF = Collections.unmodifiableList(Arrays.asList(APP_PDF, APP_XPDF));
 	public static final List<MimeType> TYPES_DJVU = Collections.unmodifiableList(Arrays.asList(IMAGE_VND_DJVU, APP_DJVU, IMAGE_XDJVU));
 	public static final List<MimeType> TYPES_DOC = Collections.unmodifiableList(Arrays.asList(APP_MSWORD, APP_DOC));
+	public static final List<MimeType> TYPES_FB2_ZIP = Collections.singletonList(APP_FB2_ZIP);
 
 	public final String Name;
 

@@ -207,7 +207,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	static int formatByMimeType(MimeType type) {
 		if (MimeType.TEXT_FB2.equals(type)) {
 			return BookUrlInfo.Format.FB2;
-		} else if (MimeType.APP_FB2ZIP.equals(type)) {
+		} else if (MimeType.APP_FB2_ZIP.equals(type)) {
 			return BookUrlInfo.Format.FB2_ZIP;
 		} else if (MimeType.APP_EPUB.equals(type)) {
 			return BookUrlInfo.Format.EPUB;
