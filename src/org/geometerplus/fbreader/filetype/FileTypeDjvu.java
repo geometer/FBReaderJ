@@ -35,8 +35,8 @@ class FileTypeDjvu extends FileType {
 	}
 
 	@Override
-	public boolean acceptsExtension(String ext) {
-		return "djvu".equals(ext.toLowerCase()) || "djv".equals(ext.toLowerCase());
+	public boolean acceptsExtension(String extension) {
+		return "djvu".equalsIgnoreCase(extension) || "djv".equalsIgnoreCase(extension);
 	}
 
 	@Override
