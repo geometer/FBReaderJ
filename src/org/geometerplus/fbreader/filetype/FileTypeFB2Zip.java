@@ -24,28 +24,24 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-class FileTypeDjvu extends FileType {
-	FileTypeDjvu() {
-		super("DjVu");
+class FileTypeFB2Zip extends FileType {
+	FileTypeFB2Zip() {
+		super("fb2.zip");
 	}
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return acceptsExtension(file.getExtension());
-	}
-
-	@Override
-	public boolean acceptsExtension(String extension) {
-		return "djvu".equalsIgnoreCase(extension) || "djv".equalsIgnoreCase(extension);
+		// TODO: implement
+		return false;
 	}
 
 	@Override
 	public String extension() {
-		return "djvu";
+		return "fb2.zip";
 	}
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_DJVU;
+		return MimeType.TYPES_FB2_ZIP;
 	}
 }
