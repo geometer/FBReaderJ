@@ -96,7 +96,7 @@ public class BookUrlInfo extends UrlInfo {
 			++index;
 		}
 
-		String ext = FileTypeCollection.Instance.typeById(format).extension();
+		String ext = "." + FileTypeCollection.Instance.typeById(format).extension();
 
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`

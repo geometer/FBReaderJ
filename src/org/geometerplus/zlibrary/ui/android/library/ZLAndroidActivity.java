@@ -42,6 +42,7 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.formats.fb2.FB2ZipPlugin;
 import org.geometerplus.fbreader.filetype.*;
 
 public abstract class ZLAndroidActivity extends Activity {
@@ -73,8 +74,9 @@ public abstract class ZLAndroidActivity extends Activity {
 		public void openFile(ZLFile f, String appData) {
 			Uri uri = null;
 			String extension = f.getExtension();
-			if (f.getPath().contains(":")) {
+			if (f.getShortName().toLowerCase().endsWith("fb2.zip")) {
 				try {
+					f = FB2ZipPlugin.getTrueFile(f);
 					String filepath = f.getPath();
 					int p1 = filepath.lastIndexOf(":");
 					String filename = filepath.substring(p1 + 1);

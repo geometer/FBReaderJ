@@ -48,6 +48,12 @@ public abstract class Formats {
 		return listFromString(PREDEFINED_FILETYPES.toLowerCase());
 	}
 
+	public static ArrayList<String> getAllFormats() {
+		ArrayList<String> l = listFromString(PREDEFINED_FILETYPES.toLowerCase());
+		l.add("fb2.zip");
+		return l;
+	}
+
 	private static ArrayList<String> listFromString(String s) {
 		if (!s.equals("")) {
 			return new ArrayList<String>(Arrays.asList(s.split(";")));
@@ -124,6 +130,9 @@ public abstract class Formats {
 
 	public static ZLStringOption filetypeOption(String filetype) {
 		filetype = filetype.toLowerCase();
+		if ("fb2.zip".equals(filetype)) {
+			return filetypeOption("fb2");
+		}
 		if (getPredefinedFormats().contains(filetype)) {
 			FormatPlugin p = PluginCollection.Instance().getPlugin(FileTypeCollection.Instance.typeById(filetype), FormatPlugin.Type.ANY);
 			if (p instanceof JavaFormatPlugin) {

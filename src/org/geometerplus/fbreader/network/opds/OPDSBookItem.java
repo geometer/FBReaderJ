@@ -208,7 +208,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	static String formatByMimeType(MimeType type) {
-		for (String format : Formats.getPredefinedFormats()) {
+		for (String format : Formats.getAllFormats()) {
 			if (Formats.getStatus(format) != FormatPlugin.Type.NONE) {
 				FileType ft = FileTypeCollection.Instance.typeById(format);
 				for (MimeType type1 : ft.mimeTypes()) {
