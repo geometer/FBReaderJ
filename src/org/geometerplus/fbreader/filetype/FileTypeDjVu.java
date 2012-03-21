@@ -24,8 +24,8 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-class FileTypeDjvu extends FileType {
-	FileTypeDjvu() {
+class FileTypeDjVu extends FileType {
+	FileTypeDjVu() {
 		super("DjVu");
 	}
 

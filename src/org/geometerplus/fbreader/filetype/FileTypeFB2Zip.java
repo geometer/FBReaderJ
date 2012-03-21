@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeFB2Zip extends FileType {
-	FileTypeDjvu() {
+	FileTypeFB2Zip() {
 		super("fb2.zip");
 	}
 
