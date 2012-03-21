@@ -36,6 +36,9 @@ public class FileTypeCollection {
 		addType(new FileTypeHtml());
 		addType(new SimpleFileType("plain text", "txt", MimeType.TYPES_TXT));
 		addType(new SimpleFileType("RTF", "rtf", MimeType.TYPES_RTF));
+		addType(new SimpleFileType("PDF", "pdf", MimeType.TYPES_PDF));
+		addType(new FileTypeDjVu());
+		addType(new FileTypeFB2Zip());
 	}
 
 	private void addType(FileType type) {
