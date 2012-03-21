@@ -57,6 +57,7 @@ public abstract class Formats {
 	}
 
 	private static boolean isValid(String filetype) {
+		if (filetype == null) return false;
 		if (filetype.equals("")) return false;
 		if (filetype.contains(";")) return false;
 		if (filetype.contains(" ")) return false;

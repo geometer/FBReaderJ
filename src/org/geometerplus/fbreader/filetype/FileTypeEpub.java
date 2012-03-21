@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeEpub extends FileType {
 	FileTypeEpub() {
-		super("ePub", MimeType.MIMES_EPUB);
+		super("ePub", MimeType.TYPES_EPUB);
 	}
 
 	@Override

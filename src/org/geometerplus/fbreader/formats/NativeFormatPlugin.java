@@ -28,7 +28,7 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.filetype.*;
 
-public class NativeFormatPlugin extends FormatPlugin implements InfoReader {
+public class NativeFormatPlugin extends FormatPlugin {
 	private static Object ourCoversLock = new Object();
 
 	// No free method because all plugins' instances are freed by 
