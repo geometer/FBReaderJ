@@ -19,12 +19,14 @@
 
 package org.geometerplus.fbreader.filetype;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeDjvu extends FileType {
 	FileTypeDjvu() {
-		super("DjVu", MimeType.TYPES_DJVU);
+		super("DjVu");
 	}
 
 	@Override
@@ -40,5 +42,10 @@ class FileTypeDjvu extends FileType {
 	@Override
 	public String extension() {
 		return "djvu";
+	}
+
+	@Override
+	public List<MimeType> mimeTypes() {
+		return MimeType.TYPES_DJVU;
 	}
 }

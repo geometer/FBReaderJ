@@ -27,9 +27,8 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 public abstract class FileType {
 	public final String Id;
 
-	protected FileType(String id, List<MimeType> mimetypes) {
+	protected FileType(String id) {
 		Id = id;
-		myMimeTypes = mimetypes;
 	}
 
 	public abstract boolean acceptsFile(ZLFile file);
