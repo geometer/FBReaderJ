@@ -19,31 +19,29 @@
 
 package org.geometerplus.fbreader.filetype;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-class FileTypeByExtension extends FileType {
-	private final String myExtension;
-	private final MimeType myMimeType;
-
-	FileTypeByExtension(String id, String extension, MimeType mimeType) {
-		super(id);
-		myExtension = extension;
-		myMimeType = mimeType;
+class FileTypeFB2Zip extends FileType {
+	FileTypeFB2Zip() {
+		super("fb2.zip");
 	}
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return myExtension.equalsIgnoreCase(file.getExtension());
+		// TODO: implement
+		return false;
 	}
 
 	@Override
 	public String extension() {
-		return myExtension;
+		return "fb2.zip";
 	}
 
 	@Override
-	public MimeType mimeType() {
-		return myMimeType;
+	public List<MimeType> mimeTypes() {
+		return MimeType.TYPES_FB2_ZIP;
 	}
 }
