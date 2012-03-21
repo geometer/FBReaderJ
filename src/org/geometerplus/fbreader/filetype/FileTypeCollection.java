@@ -35,7 +35,6 @@ public class FileTypeCollection {
 		addType(new FileTypeMobipocket());
 		addType(new FileTypeHtml());
 		addType(new SimpleFileType("plain text", "txt", MimeType.TYPES_TXT));
-		// TODO: change mime type
 		addType(new SimpleFileType("RTF", "rtf", MimeType.TYPES_RTF));
 		addType(new SimpleFileType("doc", "doc", MimeType.TYPES_DOC));
 		addType(new SimpleFileType("PDF", "pdf", MimeType.TYPES_PDF));

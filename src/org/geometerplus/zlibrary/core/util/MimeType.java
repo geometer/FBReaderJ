@@ -106,7 +106,7 @@ public final class MimeType {
 	//mime lists
 	public static final List<MimeType> TYPES_FB2 = Collections.unmodifiableList(Arrays.asList(APP_FICTIONBOOK, APP_FB2, APP_FICTIONBOOK_XML, TEXT_FB2));
 	public static final List<MimeType> TYPES_EPUB = Collections.unmodifiableList(Arrays.asList(APP_EPUB_ZIP, APP_EPUB));
-	public static final List<MimeType> TYPES_MOBI = Collections.unmodifiableList(Arrays.asList(APP_MOBIPOCKET, APP_MOBI));
+	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.unmodifiableList(Arrays.asList(APP_MOBIPOCKET, APP_MOBI));
 	public static final List<MimeType> TYPES_TXT = Collections.unmodifiableList(Arrays.asList(TEXT_PLAIN, APP_TXT));
 	public static final List<MimeType> TYPES_RTF = Collections.unmodifiableList(Arrays.asList(APP_RTF, TEXT_RTF));
 	public static final List<MimeType> TYPES_HTML = Collections.unmodifiableList(Arrays.asList(TEXT_HTML, APP_HTML));
