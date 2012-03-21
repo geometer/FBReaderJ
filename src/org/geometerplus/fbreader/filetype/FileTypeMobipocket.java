@@ -41,6 +41,6 @@ class FileTypeMobipocket extends FileTypePalm {
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.APP_MOBI;
+		return MimeType.TYPES_MOBIPOCKET;
 	}
 }

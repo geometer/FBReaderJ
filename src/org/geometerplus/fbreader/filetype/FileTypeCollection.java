@@ -30,13 +30,12 @@ public class FileTypeCollection {
 	private final TreeMap<String,FileType> myTypes = new TreeMap<String,FileType>();
 
 	private FileTypeCollection() {
-		addType(new SimpleFileType("fb2", "fb2", MimeType.TEXT_FB2));
+		addType(new SimpleFileType("fb2", "fb2", MimeType.TYPES_FB2));
 		addType(new FileTypeEpub());
 		addType(new FileTypeMobipocket());
 		addType(new FileTypeHtml());
-		addType(new SimpleFileType("plain text", "txt", MimeType.TEXT_PLAIN));
-		// TODO: change mime type
-		addType(new SimpleFileType("RTF", "rtf", MimeType.TEXT_PLAIN));
+		addType(new SimpleFileType("plain text", "txt", MimeType.TYPES_TXT));
+		addType(new SimpleFileType("RTF", "rtf", MimeType.TYPES_RTF));
 	}
 
 	private void addType(FileType type) {

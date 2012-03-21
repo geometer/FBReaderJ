@@ -42,6 +42,6 @@ class FileTypeHtml extends FileType {
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TEXT_HTML;
+		return MimeType.TYPES_HTML;
 	}
 }
