@@ -30,7 +30,7 @@ public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
 	public interface Format {
-		String NONE = null;
+		String NONE = "";
 		String MOBIPOCKET = ".mobi";
 		String FB2_ZIP = ".fb2.zip";
 		String FB2 = ".fb2";
@@ -38,11 +38,11 @@ public class BookUrlInfo extends UrlInfo {
 	}
 
 	public static int getPriority(String type) {
-		if (type.equals(Format.NONE)) return -1;
-		if (type.equals(Format.MOBIPOCKET)) return 1;
-		if (type.equals(Format.FB2)) return 2;
-		if (type.equals(Format.FB2_ZIP)) return 4;
-		if (type.equals(Format.EPUB)) return 3;
+		if (Format.NONE.equals(type)) return -1;
+		if (Format.MOBIPOCKET.equals(type)) return 1;
+		if (Format.FB2.equals(type)) return 2;
+		if (Format.EPUB.equals(type)) return 3;
+		if (Format.FB2_ZIP.equals(type)) return 4;
 		return 0;
 	}
 

@@ -24,7 +24,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 class FileTypeMobipocket extends FileTypePalm {
 	FileTypeMobipocket() {
-		super("Mobipocket", "BOOKMOBI", MimeType.MIMES_MOBI);
+		super("Mobipocket", "BOOKMOBI", MimeType.TYPES_MOBI);
 	}
 
 	@Override

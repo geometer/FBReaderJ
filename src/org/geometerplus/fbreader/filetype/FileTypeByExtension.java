@@ -21,11 +21,12 @@ package org.geometerplus.fbreader.filetype;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
+import java.util.List;
 
 class FileTypeByExtension extends FileType {
 	private final String myExtension;
 
-	FileTypeByExtension(String id, String extension, MimeType[] mimetypes) {
+	FileTypeByExtension(String id, String extension, List<MimeType> mimetypes) {
 		super(id, mimetypes);
 		myExtension = extension;
 	}
