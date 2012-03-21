@@ -63,15 +63,15 @@ public final class MimeType {
 	public static final MimeType APP_EPUB_ZIP = get("application/epub+zip");
 	// ???
 	public static final MimeType APP_MOBI = get("application/x-mobipocket-ebook");
-	// RFC 3778
+	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_PDF = get("application/pdf");
 	// ???
 	//public static final MimeType APP_XPDF = get("application/x-pdf");
-	// ???
+	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_RTF = get("application/rtf");
-	// ???
+	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_MSWORD = get("application/msword");
-	// ???
+	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_ATOM = get("application/atom+xml");
     // unofficial, used in data.fbreader.org LitRes catalog
 	public static final MimeType APP_FB2_ZIP = get("application/fb2+zip");
@@ -81,28 +81,28 @@ public final class MimeType {
 	public static final MimeType APP_LITRES = get("application/litres+xml");
 
 	// MIME types / text
-	// RFC 2854
+	// http://www.iana.org/assignments/media-types/text/index.html
 	public static final MimeType TEXT_HTML = get("text/html");
 	// ???
 	public static final MimeType TEXT_XHTML = get("text/xhtml");
-	// RFC 2046, RFC 3676
+	// http://www.iana.org/assignments/media-types/text/index.html
 	public static final MimeType TEXT_PLAIN = get("text/plain");
-	// ???
+	// http://www.iana.org/assignments/media-types/text/index.html
 	public static final MimeType TEXT_RTF = get("text/rtf");
 	// unofficial, used in Calibre OPDS server
 	public static final MimeType TEXT_FB2 = get("text/fb2+xml");
 
 	// MIME images
 	public static final String IMAGE_PREFIX = "image/";
-	// RFC 2083
+	// http://www.iana.org/assignments/media-types/image/index.html
 	public static final MimeType IMAGE_PNG = get("image/png");
-	// RFC 2045, RFC 2046
+	// http://www.iana.org/assignments/media-types/image/index.html
 	public static final MimeType IMAGE_JPEG = get("image/jpeg");
 	// ???
 	public static final MimeType IMAGE_AUTO = get("image/auto");
 	// ???
 	public static final MimeType IMAGE_PALM = get("image/palm");
-	// ???
+	// http://www.iana.org/assignments/media-types/image/index.html
 	public static final MimeType IMAGE_VND_DJVU = get("image/vnd.djvu");
 	// ???
 	public static final MimeType IMAGE_XDJVU = get("image/x-djvu");
