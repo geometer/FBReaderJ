@@ -209,7 +209,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 			return BookUrlInfo.Format.FB2;
 		} else if (MimeType.APP_FB2_ZIP.equals(type)) {
 			return BookUrlInfo.Format.FB2_ZIP;
-		} else if (MimeType.APP_EPUB.equals(type)) {
+		} else if (MimeType.APP_EPUB_ZIP.equals(type)) {
 			return BookUrlInfo.Format.EPUB;
 		} else if (MimeType.APP_MOBI.equals(type)) {
 			return BookUrlInfo.Format.MOBIPOCKET;
