@@ -125,7 +125,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 					urls.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
-			} else if (MimeType.APP_ATOM.weakEquals(type) &&
+			} else if (MimeType.APP_ATOM_XML.weakEquals(type) &&
 					   "entry".equals(type.getParameter("type"))) {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.SingleEntry, href));
 			} else if (UrlInfo.Type.BookBuy == referenceType) {
@@ -273,7 +273,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 
 	@Override
 	public OPDSCatalogItem createRelatedCatalogItem(RelatedUrlInfo info) {
-		if (MimeType.APP_ATOM.weakEquals(info.Mime)) {
+		if (MimeType.APP_ATOM_XML.weakEquals(info.Mime)) {
 			return new OPDSCatalogItem((OPDSNetworkLink)Link, info);
 		}
 		return null;

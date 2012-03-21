@@ -71,10 +71,10 @@ public final class MimeType {
 	public static final MimeType APP_RTF = get("application/rtf");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_MSWORD = get("application/msword");
-	// http://www.iana.org/assignments/media-types/application/index.html
-	public static final MimeType APP_ATOM = get("application/atom+xml");
     // unofficial, used in data.fbreader.org LitRes catalog
 	public static final MimeType APP_FB2_ZIP = get("application/fb2+zip");
+	// http://www.iana.org/assignments/media-types/application/index.html
+	public static final MimeType APP_ATOM_XML = get("application/atom+xml");
 	// ???
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
     // unofficial, used in data.fbreader.org LitRes catalog
