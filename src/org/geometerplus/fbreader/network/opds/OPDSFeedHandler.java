@@ -83,7 +83,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			for (ATOMLink link : feed.Links) {
 				final MimeType type = MimeType.get(link.getType());
 				final String rel = opdsLink.relation(link.getRel(), type);
-				if (MimeType.APP_ATOM.weakEquals(type) && "next".equals(rel)) {
+				if (MimeType.APP_ATOM_XML.weakEquals(type) && "next".equals(rel)) {
 					myNextURL = ZLNetworkUtil.url(myBaseURL, link.getHref());
 				}
 			}
@@ -121,7 +121,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 			final MimeType type = MimeType.get(link.getType());
 			final String rel = opdsLink.relation(link.getRel(), type);
 
-			if (rel == null && MimeType.APP_ATOM.weakEquals(type)) {
+			if (rel == null && MimeType.APP_ATOM_XML.weakEquals(type)) {
 				return ZLNetworkUtil.url(myBaseURL, link.getHref());
 			}
 			int relType = BookUrlInfo.Format.NONE;
@@ -207,7 +207,7 @@ class OPDSFeedHandler extends AbstractOPDSFeedHandler implements OPDSConstants {
 				} else if (REL_COVER.equals(rel) || (rel != null && rel.startsWith(REL_IMAGE_PREFIX))) {
 					urlMap.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
-			} else if (MimeType.APP_ATOM.weakEquals(type)) {
+			} else if (MimeType.APP_ATOM_XML.weakEquals(type)) {
 				final boolean hasCatalogUrl =
 					urlMap.getInfo(UrlInfo.Type.Catalog) != null;
 				if (REL_ALTERNATE.equals(rel)) {

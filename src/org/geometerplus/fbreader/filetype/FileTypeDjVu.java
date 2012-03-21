@@ -24,27 +24,24 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-class FileTypeEpub extends FileType {
-	FileTypeEpub() {
-		super("ePub");
+class FileTypeDjVu extends FileType {
+	FileTypeDjVu() {
+		super("DjVu");
 	}
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension();
-		return
-			"epub".equalsIgnoreCase(extension) ||
-			"oebzip".equalsIgnoreCase(extension) ||
-			"opf".equalsIgnoreCase(extension);
+		return "djvu".equalsIgnoreCase(extension) || "djv".equalsIgnoreCase(extension);
 	}
 
 	@Override
 	public String extension() {
-		return "epub";
+		return "djvu";
 	}
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_EPUB;
+		return MimeType.TYPES_DJVU;
 	}
 }

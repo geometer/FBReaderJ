@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.filetype;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -39,7 +41,7 @@ class FileTypeHtml extends FileType {
 	}
 
 	@Override
-	public MimeType mimeType() {
-		return MimeType.TEXT_HTML;
+	public List<MimeType> mimeTypes() {
+		return MimeType.TYPES_HTML;
 	}
 }
