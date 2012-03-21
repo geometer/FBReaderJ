@@ -104,7 +104,7 @@ public class PluginCollection {
 			builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 		}
 		if (builtInPlugin != null) {
-			plugin = new ExternalFormatPlugin(fileType.Id, (InfoReader)builtInPlugin);
+			plugin = new ExternalFormatPlugin(fileType.Id, builtInPlugin);
 		} else {
 			plugin = new ExternalFormatPlugin(fileType.Id);
 		}
