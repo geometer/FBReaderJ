@@ -109,15 +109,15 @@ public final class MimeType {
 
 	public static final MimeType NULL = new MimeType(null, null);
 
-	public static final List<MimeType> TYPES_FB2 = Collections.unmodifiableList(Arrays.asList(APP_FICTIONBOOK, APP_FB2, APP_FICTIONBOOK_XML, TEXT_FB2));
-	public static final List<MimeType> TYPES_EPUB = Collections.unmodifiableList(Arrays.asList(APP_EPUB_ZIP, APP_EPUB));
-	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.unmodifiableList(Arrays.asList(APP_MOBIPOCKET, APP_MOBI));
-	public static final List<MimeType> TYPES_TXT = Collections.unmodifiableList(Arrays.asList(TEXT_PLAIN, APP_TXT));
+	public static final List<MimeType> TYPES_FB2 = Collections.singletonList(TEXT_FB2);
+	public static final List<MimeType> TYPES_EPUB = Collections.singletonList(APP_EPUB);
+	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.singletonList(APP_MOBI);
+	public static final List<MimeType> TYPES_TXT = Collections.singletonList(TEXT_PLAIN);
 	public static final List<MimeType> TYPES_RTF = Collections.unmodifiableList(Arrays.asList(APP_RTF, TEXT_RTF));
-	public static final List<MimeType> TYPES_HTML = Collections.unmodifiableList(Arrays.asList(TEXT_HTML, APP_HTML));
+	public static final List<MimeType> TYPES_HTML = Collections.singletonList(TEXT_HTML);
 	public static final List<MimeType> TYPES_PDF = Collections.unmodifiableList(Arrays.asList(APP_PDF, APP_XPDF));
-	public static final List<MimeType> TYPES_DJVU = Collections.unmodifiableList(Arrays.asList(IMAGE_VND_DJVU, APP_DJVU, IMAGE_XDJVU));
-	public static final List<MimeType> TYPES_DOC = Collections.unmodifiableList(Arrays.asList(APP_MSWORD, APP_DOC));
+	public static final List<MimeType> TYPES_DJVU = Collections.unmodifiableList(Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU));
+	public static final List<MimeType> TYPES_DOC = Collections.singletonList(APP_MSWORD);
 	public static final List<MimeType> TYPES_FB2_ZIP = Collections.singletonList(APP_FB2_ZIP);
 
 	public final String Name;
