@@ -24,11 +24,11 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-class FileTypeByExtension extends FileType {
+class SimpleFileType extends FileType {
 	private final String myExtension;
 	private final List<MimeType> myMimeTypes;
 
-	FileTypeByExtension(String id, String extension, List<MimeType> mimeTypes) {
+	SimpleFileType(String id, String extension, List<MimeType> mimeTypes) {
 		super(id);
 		myExtension = extension;
 		myMimeTypes = mimeTypes;
