@@ -21,10 +21,11 @@ package org.geometerplus.fbreader.filetype;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
+import java.util.List;
 
 class FileTypeNull extends FileType {
 	FileTypeNull() {
-		super("null.type", MimeType.TYPES_NULL);
+		super("null.type");
 	}
 
 	@Override
@@ -40,5 +41,10 @@ class FileTypeNull extends FileType {
 	@Override
 	public String extension() {
 		return null;
+	}
+
+	@Override
+	public List<MimeType> mimeTypes() {
+		return MimeType.TYPES_NULL;
 	}
 }
