@@ -208,18 +208,12 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	static String formatByMimeType(MimeType type) {
-		if (MimeType.APP_FB2ZIP.equals(type)) {
-			if (Formats.getStatus("fb2") != FormatPlugin.Type.NONE) {
-				return BookUrlInfo.Format.FB2_ZIP;
-			}
-		} else {
-			for (String format : Formats.getPredefinedFormats()) {
-				if (Formats.getStatus(format) != FormatPlugin.Type.NONE) {
-					FileType ft = FileTypeCollection.Instance.typeById(format);
-					for (MimeType type1 : ft.mimeTypes()) {
-						if (type1.equals(type)) {
-							return "." + ft.extension();
-						}
+		for (String format : Formats.getPredefinedFormats()) {
+			if (Formats.getStatus(format) != FormatPlugin.Type.NONE) {
+				FileType ft = FileTypeCollection.Instance.typeById(format);
+				for (MimeType type1 : ft.mimeTypes()) {
+					if (type1.equals(type)) {
+						return ft.extension();
 					}
 				}
 			}

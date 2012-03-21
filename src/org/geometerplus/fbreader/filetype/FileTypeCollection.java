@@ -40,6 +40,7 @@ public class FileTypeCollection {
 		addType(new FileTypeByExtension("doc", "doc", MimeType.TYPES_DOC));
 		addType(new FileTypeByExtension("PDF", "pdf", MimeType.TYPES_PDF));
 		addType(new FileTypeDjvu());
+		addType(new FileTypeFb2Zip());
 	}
 
 	private void addType(FileType type) {

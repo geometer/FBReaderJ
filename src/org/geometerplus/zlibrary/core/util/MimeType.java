@@ -113,6 +113,8 @@ public final class MimeType {
 	public static final List<MimeType> TYPES_PDF = Collections.unmodifiableList(Arrays.asList(APP_PDF, APP_XPDF));
 	public static final List<MimeType> TYPES_DJVU = Collections.unmodifiableList(Arrays.asList(IMAGE_VND_DJVU, APP_DJVU, IMAGE_XDJVU));
 	public static final List<MimeType> TYPES_DOC = Collections.unmodifiableList(Arrays.asList(APP_MSWORD, APP_DOC));
+	public static final List<MimeType> TYPES_FB2ZIP = Collections.unmodifiableList(Arrays.asList(APP_FB2ZIP));
+	public static final List<MimeType> TYPES_NULL = Collections.emptyList();
 
 	public final String Name;
 

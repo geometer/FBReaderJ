@@ -23,6 +23,7 @@ import java.io.File;
 import java.net.URI;
 
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.filetype.*;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 
@@ -30,11 +31,11 @@ public class BookUrlInfo extends UrlInfo {
 	private static final long serialVersionUID = -893514485257788221L;
 
 	public interface Format {
-		String NONE = "";
-		String MOBIPOCKET = ".mobi";
-		String FB2_ZIP = ".fb2.zip";
-		String FB2 = ".fb2";
-		String EPUB = ".epub";
+		String NONE = "null.type";
+		String MOBIPOCKET = "Mobipocket";
+		String FB2_ZIP = "fb2.zip";
+		String FB2 = "fb2";
+		String EPUB = "ePub";
 	}
 
 	public static int getPriority(String type) {
@@ -95,7 +96,7 @@ public class BookUrlInfo extends UrlInfo {
 			++index;
 		}
 
-		String ext = format;
+		String ext = FileTypeCollection.Instance.typeById(format).extension();
 
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`

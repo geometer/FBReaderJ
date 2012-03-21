@@ -142,6 +142,9 @@ public abstract class Formats {
 
 	public static FormatPlugin.Type getStatus(String filetype) {
 		filetype = filetype.toLowerCase();
+		if ("fb2.zip".equals(filetype)) {
+			return getStatus("fb2");
+		}
 		String pkg = filetypeOption(filetype).getValue();
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
