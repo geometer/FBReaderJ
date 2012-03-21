@@ -30,15 +30,14 @@ public class FileTypeCollection {
 	private final TreeMap<String,FileType> myTypes = new TreeMap<String,FileType>();
 
 	private FileTypeCollection() {
-		addType(new FileTypeByExtension("fb2", "fb2", MimeType.TYPES_FB2));
+		addType(new SimpleFileType("fb2", "fb2", MimeType.TYPES_FB2));
 		addType(new FileTypeEpub());
 		addType(new FileTypeMobipocket());
 		addType(new FileTypeHtml());
-		addType(new FileTypeByExtension("plain text", "txt", MimeType.TYPES_TXT));
-		// TODO: change mime type
-		addType(new FileTypeByExtension("RTF", "rtf", MimeType.TYPES_RTF));
-		addType(new FileTypeByExtension("doc", "doc", MimeType.TYPES_DOC));
-		addType(new FileTypeByExtension("PDF", "pdf", MimeType.TYPES_PDF));
+		addType(new SimpleFileType("plain text", "txt", MimeType.TYPES_TXT));
+		addType(new SimpleFileType("RTF", "rtf", MimeType.TYPES_RTF));
+		addType(new SimpleFileType("doc", "doc", MimeType.TYPES_DOC));
+		addType(new SimpleFileType("PDF", "pdf", MimeType.TYPES_PDF));
 		addType(new FileTypeDjvu());
 		addType(new FileTypeFb2Zip());
 	}
@@ -53,7 +52,7 @@ public class FileTypeCollection {
 
 	public FileType typeById(String id) {
 //		if (myTypes.get(id.toLowerCase()) == null) {
-//			addType(new FileTypeByExtension(id.toLowerCase(), id.toLowerCase(), MimeType.TEXT_PLAIN));
+//			addType(new SimpleFileType(id.toLowerCase(), id.toLowerCase(), MimeType.TEXT_PLAIN));
 //		}
 		return myTypes.get(id.toLowerCase());
 	}
@@ -65,7 +64,7 @@ public class FileTypeCollection {
 			}
 		}
 //		if (!file.getExtension().equals("") && !file.getExtension().contains("/")) {
-//			addType(new FileTypeByExtension(file.getExtension().toLowerCase(), file.getExtension().toLowerCase(), MimeType.TEXT_PLAIN));
+//			addType(new SimpleFileType(file.getExtension().toLowerCase(), file.getExtension().toLowerCase(), MimeType.TEXT_PLAIN));
 //			return myTypes.get(file.getExtension().toLowerCase());
 //		}
 		return null;

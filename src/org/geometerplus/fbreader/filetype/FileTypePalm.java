@@ -24,7 +24,6 @@ import java.io.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import java.util.List;
 
 abstract class FileTypePalm extends FileType {
 	private static String palmFileType(final ZLFile file) {
@@ -51,8 +50,8 @@ abstract class FileTypePalm extends FileType {
 
 	private final String myPalmId;
 
-	FileTypePalm(String id, String palmId, List<MimeType> mimetypes) {
-		super(id, mimetypes);
+	FileTypePalm(String id, String palmId) {
+		super(id);
 		myPalmId = palmId;
 	}
 

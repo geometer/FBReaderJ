@@ -19,24 +19,21 @@
 
 package org.geometerplus.fbreader.filetype;
 
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
-import java.util.List;
 
 public abstract class FileType {
 	public final String Id;
-	private final List<MimeType> myMimeTypes;
 
-	protected FileType(String id, List<MimeType> mimetypes) {
+	protected FileType(String id) {
 		Id = id;
-		myMimeTypes = mimetypes;
 	}
 
 	public abstract boolean acceptsFile(ZLFile file);
 	public abstract boolean acceptsExtension(String ext);
 
 	public abstract String extension();
-	public List<MimeType> mimeTypes() {
-		return myMimeTypes;
-	}
+	public abstract List<MimeType> mimeTypes();
 }
