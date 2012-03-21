@@ -74,9 +74,11 @@ public abstract class ZLAndroidActivity extends Activity {
 		public void openFile(ZLFile f, String appData) {
 			Uri uri = null;
 			String extension = f.getExtension();
-			if (f.getShortName().toLowerCase().endsWith("fb2.zip")) {
+			if (f.getShortName().toLowerCase().endsWith(".fb2.zip")) {
+				f = FB2ZipPlugin.getTrueFile(f);
+			}
+			if (f.getPath().contains(":")) {
 				try {
-					f = FB2ZipPlugin.getTrueFile(f);
 					String filepath = f.getPath();
 					int p1 = filepath.lastIndexOf(":");
 					String filename = filepath.substring(p1 + 1);
