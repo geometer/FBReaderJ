@@ -28,10 +28,10 @@ class FileTypeByExtension extends FileType {
 	private final String myExtension;
 	private final List<MimeType> myMimeTypes;
 
-	FileTypeByExtension(String id, String extension, List<MimeType> mimetypes) {
+	FileTypeByExtension(String id, String extension, List<MimeType> mimeTypes) {
 		super(id);
 		myExtension = extension;
-		myMimeTypes = mimetypes;
+		myMimeTypes = mimeTypes;
 	}
 
 	@Override
