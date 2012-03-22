@@ -210,7 +210,8 @@ bool RtfReader::parseDocument() {
 		READ_BINARY_DATA,
 		READ_HEX_SYMBOL,
 		READ_KEYWORD,
-		READ_KEYWORD_PARAMETER
+		READ_KEYWORD_PARAMETER,
+		READ_END_OF_FILE
 	} parserState = READ_NORMAL_DATA;
 
 	std::string keyword;
@@ -228,6 +229,11 @@ bool RtfReader::parseDocument() {
 		bool readNextChar = true;
 		while (ptr != end) {
 			switch (parserState) {
+				case READ_END_OF_FILE:
+					if (*ptr != '}' && !isspace(*ptr)) {
+						return false;
+					}
+					break;
 				case READ_BINARY_DATA:
 					// TODO: optimize
 					processCharData(ptr, 1);
@@ -260,7 +266,8 @@ bool RtfReader::parseDocument() {
 							}
 
 							if (myStateStack.empty()) {
-								return false;
+								parserState = READ_END_OF_FILE;
+								break;
 							}
 							
 							if (myState.Destination != myStateStack.top().Destination) {
