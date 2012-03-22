@@ -23,10 +23,12 @@ import java.nio.*;
 import java.nio.charset.*;
 
 public class EncodingConverter {
+	public final String Name;
 	private CharsetDecoder myDecoder;
 	private CharsetEncoder myEncoder;
 
 	EncodingConverter(String encoding) {
+		Name = encoding;
 		myDecoder = Charset.forName(encoding).newDecoder()
 			.onMalformedInput(CodingErrorAction.REPLACE)
 			.onUnmappableCharacter(CodingErrorAction.REPLACE);

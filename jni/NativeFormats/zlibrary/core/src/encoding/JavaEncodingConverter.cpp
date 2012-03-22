@@ -29,6 +29,7 @@ private:
 
 public:
 	~JavaEncodingConverter();
+	std::string name() const;
 	void convert(std::string &dst, const char *srcStart, const char *srcEnd);
 	void reset();
 	bool fillTable(int *map);
@@ -83,6 +84,14 @@ JavaEncodingConverter::~JavaEncodingConverter() {
 	env->DeleteLocalRef(myOutBuffer);
 	env->DeleteLocalRef(myInBuffer);
 	env->DeleteLocalRef(myJavaConverter);
+}
+
+std::string JavaEncodingConverter::name() const {
+	JNIEnv *env = AndroidUtil::getEnv();
+	jstring javaName = (jstring)env->GetObjectField(myJavaConverter, AndroidUtil::FID_EncodingConverter_Name);
+	const std::string result = AndroidUtil::fromJavaString(env, javaName);
+	env->DeleteLocalRef(javaName);
+	return result;
 }
 
 void JavaEncodingConverter::convert(std::string &dst, const char *srcStart, const char *srcEnd) {
