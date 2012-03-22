@@ -51,7 +51,7 @@ void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) 
 				language = info->Language;
 			}
 			encoding = info->Encoding;
-			if ((encoding == "US-ASCII") || (encoding == "ISO-8859-1")) {
+			if ((encoding == "us-ascii") || (encoding == "iso-8859-1")) {
 				encoding = "windows-1252";
 			}
 		}
