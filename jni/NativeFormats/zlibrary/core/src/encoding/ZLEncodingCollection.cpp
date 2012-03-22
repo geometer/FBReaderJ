@@ -61,6 +61,12 @@ shared_ptr<ZLEncodingConverter> ZLEncodingCollection::converter(const std::strin
 	return 0;
 }
 
+shared_ptr<ZLEncodingConverter> ZLEncodingCollection::converter(int code) const {
+	std::string name;
+	ZLStringUtil::appendNumber(name, code);
+	return converter(name);
+}
+
 shared_ptr<ZLEncodingConverter> ZLEncodingCollection::defaultConverter() const {
-	return DummyEncodingConverterProvider().createConverter();
+	return DummyEncodingConverterProvider().createConverter("utf-8");
 }
