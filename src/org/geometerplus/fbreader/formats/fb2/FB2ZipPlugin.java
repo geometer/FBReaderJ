@@ -47,21 +47,33 @@ public class FB2ZipPlugin extends JavaFormatPlugin {
 
 	@Override
 	public void readMetaInfo(Book book) throws BookReadingException {
+		if (getTrueFile(book.File) == null) {
+			throw new BookReadingException("errorReadingFile", book.File);
+		}
 		new FB2MetaInfoReader(book, getTrueFile(book.File)).readMetaInfo();
 	}
 
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
+		if (getTrueFile(model.Book.File) == null) {
+			throw new BookReadingException("errorReadingFile", model.Book.File);
+		}
 		new FB2Reader(model, getTrueFile(model.Book.File)).readBook();
 	}
 
 	@Override
 	public ZLImage readCover(ZLFile file) {
+		if (getTrueFile(file) == null) {
+			return null;
+		}
 		return new FB2CoverReader().readCover(getTrueFile(file));
 	}
 
 	@Override
 	public String readAnnotation(ZLFile file) {
+		if (getTrueFile(file) == null) {
+			return null;
+		}
 		return new FB2AnnotationReader().readAnnotation(getTrueFile(file));
 	}
 
