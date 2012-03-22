@@ -27,7 +27,6 @@ class DummyEncodingConverterProvider : public ZLEncodingConverterProvider {
 
 public:
 	bool providesConverter(const std::string &encoding);
-	shared_ptr<ZLEncodingConverter> createConverter();
 	shared_ptr<ZLEncodingConverter> createConverter(const std::string &encoding);
 };
 

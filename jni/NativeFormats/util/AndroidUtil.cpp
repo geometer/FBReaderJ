@@ -67,6 +67,7 @@ jmethodID AndroidUtil::SMID_PluginCollection_Instance;
 
 jmethodID AndroidUtil::MID_Encoding_createConverter;
 
+jfieldID AndroidUtil::FID_EncodingConverter_Name;
 jmethodID AndroidUtil::MID_EncodingConverter_convert;
 jmethodID AndroidUtil::MID_EncodingConverter_reset;
 
@@ -170,6 +171,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_EncodingConverter) );
+	CHECK_NULL( FID_EncodingConverter_Name = env->GetFieldID(cls, "Name", "Ljava/lang/String;") );
 	CHECK_NULL( MID_EncodingConverter_convert = env->GetMethodID(cls, "convert", "([BII[BI)I") );
 	CHECK_NULL( MID_EncodingConverter_reset = env->GetMethodID(cls, "reset", "()V") );
 	env->DeleteLocalRef(cls);

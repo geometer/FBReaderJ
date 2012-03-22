@@ -30,21 +30,19 @@ RtfDescriptionReader::RtfDescriptionReader(Book &book) : RtfReader(book.encoding
 
 void RtfDescriptionReader::setEncoding(int code) {
 	ZLEncodingCollection &collection = ZLEncodingCollection::Instance();
-	/*
 	myConverter = collection.converter(code);
 	if (!myConverter.isNull()) {
-		myBook.setEncoding(info->name());
+		myBook.setEncoding(myConverter->name());
 	} else {
 		myConverter = collection.defaultConverter();
 	}
-	*/
 }
 
 bool RtfDescriptionReader::readDocument(const ZLFile &file) {
 	myDoRead = false;
 	bool code = RtfReader::readDocument(file);
 	if (myBook.encoding().empty()) {
-		myBook.setEncoding(PluginCollection::Instance().defaultEncoding());
+		myBook.setEncoding("utf-8");
 	}
 	return code;
 }

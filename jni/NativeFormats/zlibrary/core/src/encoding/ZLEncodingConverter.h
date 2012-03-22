@@ -33,6 +33,7 @@ protected:
 
 public:
 	virtual ~ZLEncodingConverter();
+	virtual std::string name() const = 0;
 	virtual void convert(std::string &dst, const char *srcStart, const char *srcEnd) = 0;
 	void convert(std::string &dst, const std::string &src);
 	virtual void reset() = 0;
@@ -56,6 +57,7 @@ private:
 
 public:
 	shared_ptr<ZLEncodingConverter> converter(const std::string &name) const;
+	shared_ptr<ZLEncodingConverter> converter(int code) const;
 	shared_ptr<ZLEncodingConverter> defaultConverter() const;
 	void registerProvider(shared_ptr<ZLEncodingConverterProvider> provider);
 
