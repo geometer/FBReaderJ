@@ -213,7 +213,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				FileType ft = FileTypeCollection.Instance.typeById(format);
 				for (MimeType type1 : ft.mimeTypes()) {
 					if (type1.equals(type)) {
-						return ft.extension();
+						return ft.Id;
 					}
 				}
 			}
