@@ -140,7 +140,15 @@ class DeflatingDecompressor extends Decompressor {
 			}
 			final long result = inflate(myInflatorId, myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
 			if (result <= 0) {
-				throw new ZipException("Cannot inflate zip-compressed block, code = " + result);
+				final StringBuffer extraInfo = new StringBuffer()
+					.append(myStream.offset()).append(":")
+					.append(myInBufferOffset).append(":")
+					.append(myInBufferLength).append(":")
+					.append(myOutBuffer.length).append(":");
+				for (int i = 0; i < Math.min(10, myInBufferLength); ++i) {
+					extraInfo.append(myInBuffer[myInBufferOffset + i]).append(",");
+				}
+				throw new ZipException("Cannot inflate zip-compressed block, code = " + result + ";extra info = " + extraInfo);
 			}
 			final int in = (int)(result >> 16) & 0xFFFF;
 			final int out = (int)result & 0xFFFF;
