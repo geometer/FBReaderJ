@@ -85,6 +85,7 @@ public:
 
 	static jmethodID MID_Encoding_createConverter;
 
+	static jfieldID FID_EncodingConverter_Name;
 	static jmethodID MID_EncodingConverter_convert;
 	static jmethodID MID_EncodingConverter_reset;
 

@@ -85,7 +85,7 @@ static std::string naiveEncodingDetection(const unsigned char *buffer, size_t le
 			return std::string();
 		}
 	}
-	return ascii ? "ascii" : "utf-8";
+	return ascii ? "us-ascii" : "utf-8";
 }
 
 shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfo(const char *buffer, size_t length, int matchingCriterion) {
