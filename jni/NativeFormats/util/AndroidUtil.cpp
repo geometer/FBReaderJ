@@ -298,3 +298,7 @@ void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message)
 	jclass cls = env->FindClass("java/lang/RuntimeException");
 	env->ThrowNew(cls, message.c_str());
 }
+
+void AndroidUtil::throwBookReadingException(JNIEnv *env, const std::string &resourceId, const std::string &filePath) {
+	// TODO: implement
+}

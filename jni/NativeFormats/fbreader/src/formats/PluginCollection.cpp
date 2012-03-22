@@ -34,7 +34,7 @@
 //#include "tcr/TcrPlugin.h"
 //#include "oeb/OEBPlugin.h"
 //#include "chm/CHMPlugin.h"
-//#include "rtf/RtfPlugin.h"
+#include "rtf/RtfPlugin.h"
 //#include "openreader/OpenReaderPlugin.h"
 ////#include "pdf/PdfPlugin.h"
 
@@ -55,7 +55,7 @@ PluginCollection &PluginCollection::Instance() {
 //		ourInstance->myPlugins.push_back(new TcrPlugin());
 //		ourInstance->myPlugins.push_back(new CHMPlugin());
 		//ourInstance->myPlugins.push_back(new OEBPlugin());
-		//ourInstance->myPlugins.push_back(new RtfPlugin());
+		ourInstance->myPlugins.push_back(new RtfPlugin());
 //		ourInstance->myPlugins.push_back(new OpenReaderPlugin());
 //		//ourInstance->myPlugins.push_back(new PdfPlugin());
 	}

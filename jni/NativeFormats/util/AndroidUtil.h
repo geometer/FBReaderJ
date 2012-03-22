@@ -127,6 +127,7 @@ public:
 	static jobjectArray createStringArray(JNIEnv *env, const std::vector<std::string> &data);
 
 	static void throwRuntimeException(JNIEnv *env, const std::string &message);
+	static void throwBookReadingException(JNIEnv *env, const std::string &resourceId, const std::string &filePath);
 };
 
 #endif /* __ANDROIDUTIL_H__ */
