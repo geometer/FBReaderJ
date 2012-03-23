@@ -1,4 +1,5 @@
 ===== 1.4.1 (Mar ??, 2012) =====
+* RTF support (images are not supported at this moment)
 * Fixed Dutch language detection
 
 ===== 1.4 (Mar 18, 2012) =====
