@@ -39,7 +39,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public void readMetaInfo(Book book) throws BookReadingException {
+	synchronized public void readMetaInfo(Book book) throws BookReadingException {
 		if (!readMetaInfoNative(book)) {
 			throw new BookReadingException("errorReadingFile", book.File);
 		}
@@ -51,7 +51,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	public native void detectLanguageAndEncoding(Book book);
 
 	@Override
-	public void readModel(BookModel model) throws BookReadingException {
+	synchronized public void readModel(BookModel model) throws BookReadingException {
 		if (!readModelNative(model)) {
 			throw new BookReadingException("errorReadingFile", model.Book.File);
 		}

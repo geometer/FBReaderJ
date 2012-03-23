@@ -31,7 +31,7 @@ include $(CLEAR_VARS)
 
 SHAREDIR_MACRO                := share
 
-LOCAL_MODULE                  := NativeFormats-v1
+LOCAL_MODULE                  := NativeFormats-v2
 LOCAL_CFLAGS                  := -Wall -DBASEDIR=\"$(SHAREDIR_MACRO)\"
 LOCAL_LDLIBS                  := -lz -llog
 LOCAL_STATIC_LIBRARIES        := expat
@@ -92,6 +92,12 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfImage.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfPlugin.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfReader.cpp \
+	NativeFormats/fbreader/src/formats/rtf/RtfReaderStream.cpp \
 	NativeFormats/fbreader/src/formats/txt/PlainTextFormat.cpp \
 	NativeFormats/fbreader/src/formats/txt/TxtBookReader.cpp \
 	NativeFormats/fbreader/src/formats/txt/TxtPlugin.cpp \
