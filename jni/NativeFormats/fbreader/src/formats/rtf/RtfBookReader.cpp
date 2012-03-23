@@ -121,7 +121,7 @@ void RtfBookReader::insertImage(const std::string &mimeType, const std::string &
 	std::string id;
 	ZLStringUtil::appendNumber(id, myImageIndex++);
 	myBookReader.addImageReference(id);	 
-	myBookReader.addImage(id, new RtfImage(mimeType, fileName, startOffset, size));
+	//myBookReader.addImage(id, new RtfImage(mimeType, fileName, startOffset, size));
 }
 
 bool RtfBookReader::characterDataHandler(std::string &str) {
