@@ -51,7 +51,7 @@ void FormatPlugin::detectEncodingAndLanguage(Book &book, ZLInputStream &stream) 
 				language = info->Language;
 			}
 			encoding = info->Encoding;
-			if ((encoding == "US-ASCII") || (encoding == "ISO-8859-1")) {
+			if ((encoding == "us-ascii") || (encoding == "iso-8859-1")) {
 				encoding = "windows-1252";
 			}
 		}
@@ -73,7 +73,7 @@ void FormatPlugin::detectLanguage(Book &book, ZLInputStream &stream) {
 		const size_t size = stream.read(buffer, BUFSIZE);
 		stream.close();
 		shared_ptr<ZLLanguageDetector::LanguageInfo> info =
-			ZLLanguageDetector().findInfo(buffer, size);
+			ZLLanguageDetector().findInfoForEncoding(book.encoding(), buffer, size, -20000);
 		delete[] buffer;
 		if (!info.isNull()) {
 			if (!info->Language.empty()) {

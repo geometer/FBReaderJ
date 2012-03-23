@@ -17,17 +17,39 @@
  * 02110-1301, USA.
  */
 
-#ifndef __DUMMYENCODINGCONVERTER_H__
-#define __DUMMYENCODINGCONVERTER_H__
+#ifndef __RTFDESCRIPTIONREADER_H__
+#define __RTFDESCRIPTIONREADER_H__
 
-#include "ZLEncodingConverter.h"
-#include "ZLEncodingConverterProvider.h"
+#include <string>
 
-class DummyEncodingConverterProvider : public ZLEncodingConverterProvider {
+#include "RtfReader.h"
+
+class Book;
+
+class RtfDescriptionReader : public RtfReader {
 
 public:
-	bool providesConverter(const std::string &encoding);
-	shared_ptr<ZLEncodingConverter> createConverter(const std::string &encoding);
+	RtfDescriptionReader(Book &book);
+	~RtfDescriptionReader();
+
+	bool readDocument(const ZLFile &file);
+
+	void setEncoding(int code);
+	void setAlignment();
+	void switchDestination(DestinationType destination, bool on);
+	void addCharData(const char *data, size_t len, bool convert);
+	void insertImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t size);
+
+	void setFontProperty(FontProperty property);
+	void newParagraph();
+
+private:
+	Book &myBook;
+
+	bool myDoRead;
+	std::string myBuffer;
 };
 
-#endif /* __DUMMYENCODINGCONVERTER_H__ */
+inline RtfDescriptionReader::~RtfDescriptionReader() {}
+
+#endif /* __RTFDESCRIPTIONREADER_H__ */

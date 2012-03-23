@@ -831,5 +831,6 @@
 		<node name="fileNotFound" value="File is not found: %s"/>
 		<node name="opfFileNotFound" value="OPF is not found in %s"/>
 		<node name="unsupportedFileFormat" value="File format is not supported for '%s'"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
 	</node>
 </resources>

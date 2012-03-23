@@ -25,6 +25,8 @@
 #include <string>
 #include <vector>
 
+class ZLFile;
+
 class AndroidUtil {
 
 private:
@@ -47,6 +49,7 @@ public:
 	static const char * const Class_Book;
 	static const char * const Class_Tag;
 	static const char * const Class_NativeBookModel;
+	static const char * const Class_BookReadingException;
 
 	static jmethodID MID_java_lang_String_toLowerCase;
 	static jmethodID MID_java_lang_String_toUpperCase;
@@ -80,13 +83,14 @@ public:
 
 	static jmethodID MID_Encoding_createConverter;
 
+	static jfieldID FID_EncodingConverter_Name;
 	static jmethodID MID_EncodingConverter_convert;
 	static jmethodID MID_EncodingConverter_reset;
 
 	static jmethodID SMID_JavaEncodingCollection_Instance;
 	static jmethodID MID_JavaEncodingCollection_getEncoding_String;
 	static jmethodID MID_JavaEncodingCollection_getEncoding_int;
-	static jmethodID MID_JavaEncodingCollection_isEncodingSupported;
+	static jmethodID MID_JavaEncodingCollection_providesConverterFor;
 
 	static jmethodID SMID_Paths_cacheDirectory;
 
@@ -112,6 +116,8 @@ public:
 	static jmethodID MID_NativeBookModel_setBookTextModel;
 	static jmethodID MID_NativeBookModel_setFootnoteModel;
 
+	static jmethodID SMID_BookReadingException_throwForFile;
+
 public:
 	static bool init(JavaVM* jvm);
 	static JNIEnv *getEnv();
@@ -126,6 +132,7 @@ public:
 	static jobjectArray createStringArray(JNIEnv *env, const std::vector<std::string> &data);
 
 	static void throwRuntimeException(JNIEnv *env, const std::string &message);
+	static void throwBookReadingException(const std::string &resourceId, const ZLFile &file);
 };
 
 #endif /* __ANDROIDUTIL_H__ */

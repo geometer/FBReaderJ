@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,34 @@
  * 02110-1301, USA.
  */
 
-#ifndef __DUMMYENCODINGCONVERTER_H__
-#define __DUMMYENCODINGCONVERTER_H__
+#ifndef __RTFREADERSTREAM_H__
+#define __RTFREADERSTREAM_H__
 
-#include "ZLEncodingConverter.h"
-#include "ZLEncodingConverterProvider.h"
+#include <string>
 
-class DummyEncodingConverterProvider : public ZLEncodingConverterProvider {
+#include <ZLFile.h>
+#include <ZLInputStream.h>
+
+class RtfReaderStream : public ZLInputStream {
 
 public:
-	bool providesConverter(const std::string &encoding);
-	shared_ptr<ZLEncodingConverter> createConverter(const std::string &encoding);
+	RtfReaderStream(const ZLFile& file, size_t maxSize);
+	~RtfReaderStream();
+
+private:
+	bool open();
+	size_t read(char *buffer, size_t maxSize);
+	void close();
+
+	void seek(int offset, bool absoluteOffset);
+	size_t offset() const;
+	size_t sizeOfOpened();
+
+private:
+	const ZLFile myFile;
+	char *myBuffer;
+	size_t mySize;
+	size_t myOffset;
 };
 
-#endif /* __DUMMYENCODINGCONVERTER_H__ */
+#endif /* __RTFREADERSTREAM_H__ */

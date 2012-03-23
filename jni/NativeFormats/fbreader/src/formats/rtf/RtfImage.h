@@ -17,17 +17,31 @@
  * 02110-1301, USA.
  */
 
-#ifndef __DUMMYENCODINGCONVERTER_H__
-#define __DUMMYENCODINGCONVERTER_H__
+#ifndef __RTFIMAGE_H__
+#define __RTFIMAGE_H__
 
-#include "ZLEncodingConverter.h"
-#include "ZLEncodingConverterProvider.h"
+#include <vector>
 
-class DummyEncodingConverterProvider : public ZLEncodingConverterProvider {
+#include <ZLImage.h>
+
+class RtfImage : public ZLSingleImage {
 
 public:
-	bool providesConverter(const std::string &encoding);
-	shared_ptr<ZLEncodingConverter> createConverter(const std::string &encoding);
+	RtfImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t length);
+	~RtfImage();
+	const shared_ptr<std::string> stringData() const;
+
+private:
+	void read() const;
+
+private:
+	std::string myFileName;
+	size_t myStartOffset;
+	size_t myLength;
+	mutable shared_ptr<std::string> myData;
 };
 
-#endif /* __DUMMYENCODINGCONVERTER_H__ */
+inline RtfImage::RtfImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t length) : ZLSingleImage(mimeType), myFileName(fileName), myStartOffset(startOffset), myLength(length) {}
+inline RtfImage::~RtfImage() {}
+
+#endif /* __RTFIMAGE_H__ */

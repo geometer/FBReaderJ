@@ -17,17 +17,19 @@
  * 02110-1301, USA.
  */
 
-#ifndef __DUMMYENCODINGCONVERTER_H__
-#define __DUMMYENCODINGCONVERTER_H__
+#ifndef __RTFPLUGIN_H__
+#define __RTFPLUGIN_H__
 
-#include "ZLEncodingConverter.h"
-#include "ZLEncodingConverterProvider.h"
+#include "../FormatPlugin.h"
 
-class DummyEncodingConverterProvider : public ZLEncodingConverterProvider {
+class RtfPlugin : public FormatPlugin {
 
 public:
-	bool providesConverter(const std::string &encoding);
-	shared_ptr<ZLEncodingConverter> createConverter(const std::string &encoding);
+	bool providesMetaInfo() const;
+	const std::string supportedFileType() const;
+	bool readMetaInfo(Book &book) const;
+	bool readLanguageAndEncoding(Book &book) const;
+	bool readModel(BookModel &model) const;
 };
 
-#endif /* __DUMMYENCODINGCONVERTER_H__ */
+#endif /* __RTFPLUGIN_H__ */

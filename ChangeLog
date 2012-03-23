@@ -1,3 +1,6 @@
+===== 1.4.1 (Mar ??, 2012) =====
+* Fixed Dutch language detection
+
 ===== 1.4 (Mar 18, 2012) =====
 * *.txt support
 * Changed "Back" button behaviour: FBReader tries to jump back before showing Cancel menu

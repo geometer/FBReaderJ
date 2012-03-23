@@ -85,12 +85,10 @@ static std::string naiveEncodingDetection(const unsigned char *buffer, size_t le
 			return std::string();
 		}
 	}
-	return ascii ? "ascii" : "utf-8";
+	return ascii ? "us-ascii" : "utf-8";
 }
 
 shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfo(const char *buffer, size_t length, int matchingCriterion) {
-	shared_ptr<LanguageInfo> info;
-	std::map<int,shared_ptr<ZLMapBasedStatistics> > statisticsMap;
 	std::string naive;
 	if ((unsigned char)buffer[0] == 0xFE &&
 			(unsigned char)buffer[1] == 0xFF) {
@@ -101,22 +99,30 @@ shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfo(const 
 	} else {
 		naive = naiveEncodingDetection((const unsigned char*)buffer, length);
 	}
+	return findInfoForEncoding(naive, buffer, length, matchingCriterion);
+}
+
+shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfoForEncoding(const std::string &encoding, const char *buffer, size_t length, int matchingCriterion) {
+	shared_ptr<LanguageInfo> info;
+	std::map<int,shared_ptr<ZLMapBasedStatistics> > statisticsMap;
 	for (SBVector::const_iterator it = myMatchers.begin(); it != myMatchers.end(); ++it) {
-		if (naive.empty() || (*it)->info()->Encoding == naive) {
-			const int charSequenceLength = (*it)->charSequenceLength();
-			shared_ptr<ZLMapBasedStatistics> stat = statisticsMap[charSequenceLength];
-			if (stat.isNull()) {
-				stat = new ZLMapBasedStatistics();
-				ZLStatisticsGenerator("\r\n ").generate(
-					buffer, length, charSequenceLength, *stat
-				);
-				statisticsMap[charSequenceLength] = stat;
-			}
-			const int criterion = (*it)->criterion(*stat);
-			if (criterion > matchingCriterion) {
-				info = (*it)->info();
-				matchingCriterion = criterion;
-			}
+		if (!encoding.empty() && (*it)->info()->Encoding != encoding) {
+			continue;
+		}
+
+		const int charSequenceLength = (*it)->charSequenceLength();
+		shared_ptr<ZLMapBasedStatistics> stat = statisticsMap[charSequenceLength];
+		if (stat.isNull()) {
+			stat = new ZLMapBasedStatistics();
+			ZLStatisticsGenerator("\r\n ").generate(
+				buffer, length, charSequenceLength, *stat
+			);
+			statisticsMap[charSequenceLength] = stat;
+		}
+		const int criterion = (*it)->criterion(*stat);
+		if (criterion > matchingCriterion) {
+			info = (*it)->info();
+			matchingCriterion = criterion;
 		}
 	}
 	return info;

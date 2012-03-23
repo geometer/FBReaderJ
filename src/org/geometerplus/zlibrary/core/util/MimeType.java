@@ -59,68 +59,68 @@ public final class MimeType {
 	}
 
 	// MIME types / application
-	// ???
+	// unofficial, http://en.wikipedia.org/wiki/EPUB
 	public static final MimeType APP_EPUB_ZIP = get("application/epub+zip");
 	// ???
-	public static final MimeType APP_EPUB = get("application/epub");
+	//public static final MimeType APP_EPUB = get("application/epub");
 	// ???
 	public static final MimeType APP_MOBIPOCKET = get("application/x-mobipocket-ebook");
 	// ???
-	public static final MimeType APP_MOBI = get("application/mobi");
-	// RFC 3778
-	public static final MimeType APP_PDF = get("application/pdf");
+	//public static final MimeType APP_MOBI = get("application/mobi");
 	// ???
-	public static final MimeType APP_XPDF = get("application/x-pdf");
-	// ???
-	public static final MimeType APP_ATOM = get("application/atom+xml");
-	// ???
-	public static final MimeType APP_FB2 = get("application/fb2");
+	//public static final MimeType APP_FB2 = get("application/fb2");
 	// ???
 	public static final MimeType APP_FICTIONBOOK = get("application/x-fictionbook");
 	// ???
 	public static final MimeType APP_FICTIONBOOK_XML = get("application/x-fictionbook+xml");
+	// http://www.iana.org/assignments/media-types/application/index.html
+	public static final MimeType APP_PDF = get("application/pdf");
 	// ???
+	//public static final MimeType APP_XPDF = get("application/x-pdf");
+	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_RTF = get("application/rtf");
 	// ???
-	public static final MimeType APP_TXT = get("application/txt");
+	//public static final MimeType APP_TXT = get("application/txt");
 	// ???
-	public static final MimeType APP_DJVU = get("application/djvu");
+	//public static final MimeType APP_DJVU = get("application/djvu");
 	// ???
-	public static final MimeType APP_HTML = get("application/html");
+	//public static final MimeType APP_HTML = get("application/html");
 	// ???
+	//public static final MimeType APP_DOC = get("application/doc");
+	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_MSWORD = get("application/msword");
-	// ???
-	public static final MimeType APP_DOC = get("application/doc");
-    // used in data.fbreader.org LitRes catalog
-	public static final MimeType APP_FB2ZIP = get("application/fb2+zip");
+    // unofficial, used in data.fbreader.org LitRes catalog
+	public static final MimeType APP_FB2_ZIP = get("application/fb2+zip");
+	// http://www.iana.org/assignments/media-types/application/index.html
+	public static final MimeType APP_ATOM_XML = get("application/atom+xml");
 	// ???
 	public static final MimeType APP_OPENSEARCHDESCRIPTION = get("application/opensearchdescription+xml");
-    // used in data.fbreader.org LitRes catalog
+    // unofficial, used in data.fbreader.org LitRes catalog
 	public static final MimeType APP_LITRES = get("application/litres+xml");
 
 	// MIME types / text
-	// RFC 2854
+	// http://www.iana.org/assignments/media-types/text/index.html
 	public static final MimeType TEXT_HTML = get("text/html");
 	// ???
 	public static final MimeType TEXT_XHTML = get("text/xhtml");
-	// RFC 2046, RFC 3676
+	// http://www.iana.org/assignments/media-types/text/index.html
 	public static final MimeType TEXT_PLAIN = get("text/plain");
-	// ???
+	// http://www.iana.org/assignments/media-types/text/index.html
 	public static final MimeType TEXT_RTF = get("text/rtf");
-	// used in Calibre server
+	// unofficial, used in Calibre OPDS server
 	public static final MimeType TEXT_FB2 = get("text/fb2+xml");
 
 	// MIME images
 	public static final String IMAGE_PREFIX = "image/";
-	// RFC 2083
+	// http://www.iana.org/assignments/media-types/image/index.html
 	public static final MimeType IMAGE_PNG = get("image/png");
-	// RFC 2045, RFC 2046
+	// http://www.iana.org/assignments/media-types/image/index.html
 	public static final MimeType IMAGE_JPEG = get("image/jpeg");
 	// ???
 	public static final MimeType IMAGE_AUTO = get("image/auto");
 	// ???
 	public static final MimeType IMAGE_PALM = get("image/palm");
-	// ???
+	// http://www.iana.org/assignments/media-types/image/index.html
 	public static final MimeType IMAGE_VND_DJVU = get("image/vnd.djvu");
 	// ???
 	public static final MimeType IMAGE_XDJVU = get("image/x-djvu");
@@ -128,16 +128,16 @@ public final class MimeType {
 	public static final MimeType NULL = new MimeType(null, null);
 
 	//mime lists
-	public static final List<MimeType> TYPES_FB2 = Collections.unmodifiableList(Arrays.asList(APP_FICTIONBOOK, APP_FB2, APP_FICTIONBOOK_XML, TEXT_FB2));
-	public static final List<MimeType> TYPES_EPUB = Collections.unmodifiableList(Arrays.asList(APP_EPUB_ZIP, APP_EPUB));
-	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.unmodifiableList(Arrays.asList(APP_MOBIPOCKET, APP_MOBI));
-	public static final List<MimeType> TYPES_TXT = Collections.unmodifiableList(Arrays.asList(TEXT_PLAIN, APP_TXT));
+	public static final List<MimeType> TYPES_FB2 = Collections.unmodifiableList(Arrays.asList(APP_FICTIONBOOK, APP_FICTIONBOOK_XML, TEXT_FB2));
+	public static final List<MimeType> TYPES_EPUB = Collections.singletonList(APP_EPUB_ZIP);
+	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.singletonList(APP_MOBIPOCKET);
+	public static final List<MimeType> TYPES_TXT = Collections.singletonList(TEXT_PLAIN);
 	public static final List<MimeType> TYPES_RTF = Collections.unmodifiableList(Arrays.asList(APP_RTF, TEXT_RTF));
-	public static final List<MimeType> TYPES_HTML = Collections.unmodifiableList(Arrays.asList(TEXT_HTML, APP_HTML));
-	public static final List<MimeType> TYPES_PDF = Collections.unmodifiableList(Arrays.asList(APP_PDF, APP_XPDF));
-	public static final List<MimeType> TYPES_DJVU = Collections.unmodifiableList(Arrays.asList(IMAGE_VND_DJVU, APP_DJVU, IMAGE_XDJVU));
-	public static final List<MimeType> TYPES_DOC = Collections.unmodifiableList(Arrays.asList(APP_MSWORD, APP_DOC));
-	public static final List<MimeType> TYPES_FB2ZIP = Collections.unmodifiableList(Arrays.asList(APP_FB2ZIP));
+	public static final List<MimeType> TYPES_HTML = Collections.singletonList(TEXT_HTML);
+	public static final List<MimeType> TYPES_PDF = Collections.singletonList(APP_PDF);
+	public static final List<MimeType> TYPES_DJVU = Collections.unmodifiableList(Arrays.asList(IMAGE_VND_DJVU, IMAGE_XDJVU));
+	public static final List<MimeType> TYPES_DOC = Collections.singletonList(APP_MSWORD);
+	public static final List<MimeType> TYPES_FB2_ZIP = Collections.singletonList(APP_FB2_ZIP);
 	public static final List<MimeType> TYPES_NULL = Collections.emptyList();
 
 	public final String Name;
