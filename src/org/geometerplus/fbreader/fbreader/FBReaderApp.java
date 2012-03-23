@@ -37,7 +37,6 @@ import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.filetype.*;
-import org.geometerplus.fbreader.formats.fb2.FB2ZipPlugin;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -164,10 +163,7 @@ public final class FBReaderApp extends ZLApplication {
 		if (p == null) return;
 		if (p.type() == FormatPlugin.Type.EXTERNAL) {
 			Library.Instance().addBookToRecentList(book);
-			ZLFile f = book.File;
-			if (f.getShortName().toLowerCase().endsWith(".fb2.zip")) {
-				f = FB2ZipPlugin.getTrueFile(f);
-			}
+			ZLFile f = ((ExternalFormatPlugin)p).prepareFile(book.File);
 			myFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(book.File).Id).getValue());
 			return;
 		}
