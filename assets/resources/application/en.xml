@@ -721,6 +721,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Downloading book %s"/>
 			<node name="search" value="Searching. Please, wait&#8230;"/>
+			<node name="extract" value="Extracting file. Please, wait&#8230;"/>
 			<node name="loadInfo" value="Loading information. Please, wait&#8230;"/>
 			<node name="loadingBook" value="Opening book. Please, wait&#8230;"/>
 			<node name="loadingBookList" value="Opening library. Please, wait&#8230;"/>

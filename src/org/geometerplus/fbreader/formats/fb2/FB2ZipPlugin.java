@@ -30,7 +30,7 @@ import java.util.*;
 
 public class FB2ZipPlugin extends JavaFormatPlugin {
 
-	public static ZLFile getTrueFile(ZLFile f) {
+	static ZLFile getTrueFile(ZLFile f) {
 		final List<ZLFile> children = f.children();
 		if (children.size() == 1) {
 			final ZLFile child = children.get(0);

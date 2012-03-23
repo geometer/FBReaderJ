@@ -39,6 +39,7 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWindow;
+import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.filetype.*;
 import org.geometerplus.fbreader.Paths;
@@ -69,7 +70,20 @@ public abstract class ZLAndroidActivity extends Activity {
 			});
 		}
 
-		public void openFile(ZLFile f, String appData) {
+		public void openFile(final ZLFile f, final String appData) {
+			final Runnable runnable = new Runnable() {
+				public void run() {
+					openFileInternal(f, appData);
+				}
+			};
+			UIUtil.wait("extract", runnable, myActivity);
+		}
+
+		private void openFileInternal(ZLFile f, String appData) {
+			if (f == null) {
+				showErrorDialog("unzipFailed");
+				return;
+			}
 			Uri uri = null;
 			String extension = f.getExtension();
 			if (f.getPath().contains(":")) {
@@ -80,7 +94,7 @@ public abstract class ZLAndroidActivity extends Activity {
 					final File dirFile = new File(Paths.TempDirectoryOption().getValue());
 					dirFile.mkdirs();
 					String path = Paths.TempDirectoryOption().getValue() + "/" + filename;
-					OutputStream out = new FileOutputStream(Paths.TempDirectoryOption().getValue() + "/" + filename);
+					OutputStream out = new FileOutputStream(path);
 
 					int read = 0;
 					byte[] bytes = new byte[1024];

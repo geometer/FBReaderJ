@@ -42,18 +42,22 @@ public class ExternalFormatPlugin extends FormatPlugin {
 
 	private InfoReader myInfoReader;
 
-	ExternalFormatPlugin(String fileType) {
+	public ExternalFormatPlugin(String fileType) {
 		super(fileType);
 		myInfoReader = new DefaultInfoReader();
 	}
 
-	ExternalFormatPlugin(String fileType, InfoReader ir) {
+	public ExternalFormatPlugin(String fileType, InfoReader ir) {
 		super(fileType);
 		myInfoReader = ir;
 	}
 
 	public String getPackage() {
 		return Formats.filetypeOption(supportedFileType()).getValue();
+	}
+
+	public ZLFile prepareFile(ZLFile f) {
+		return f;
 	}
 
 	@Override
