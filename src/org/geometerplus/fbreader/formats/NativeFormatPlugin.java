@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -105,7 +106,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public EncodingCollection supportedEncodings() {
+	public JavaEncodingCollection supportedEncodings() {
 		// TODO: implement
 		return JavaEncodingCollection.Instance();
 	}
