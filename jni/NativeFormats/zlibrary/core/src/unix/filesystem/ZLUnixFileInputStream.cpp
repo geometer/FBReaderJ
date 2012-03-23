@@ -24,10 +24,7 @@ ZLUnixFileInputStream::ZLUnixFileInputStream(const std::string &name) : myName(n
 }
 
 ZLUnixFileInputStream::~ZLUnixFileInputStream() {
-	//close();
-	if (myFile != 0) {
-		fclose(myFile);
-	}
+	close();
 }
 
 bool ZLUnixFileInputStream::open() {
@@ -62,10 +59,10 @@ size_t ZLUnixFileInputStream::read(char *buffer, size_t maxSize) {
 }
 
 void ZLUnixFileInputStream::close() {
-	//if (myFile != 0) {
-	//	fclose(myFile);
-	//	myFile = 0;
-	//}
+	if (myFile != 0) {
+		fclose(myFile);
+		myFile = 0;
+	}
 }
 
 size_t ZLUnixFileInputStream::sizeOfOpened() {

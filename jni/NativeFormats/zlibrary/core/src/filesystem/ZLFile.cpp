@@ -32,8 +32,6 @@
 
 const ZLFile ZLFile::NO_FILE;
 
-std::map<std::string,weak_ptr<ZLInputStream> > ZLFile::ourPlainStreamCache;
-
 ZLFile::ZLFile() : myMimeTypeIsUpToDate(true), myInfoIsFilled(true) {
 }
 
@@ -102,15 +100,11 @@ shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 	
 	int index = ZLFSManager::Instance().findArchiveFileNameDelimiter(myPath);
 	if (index == -1) {
-		stream = ourPlainStreamCache[myPath];
-		if (stream.isNull()) {
-			if (isDirectory()) {
-				return 0;
-			}
-			stream = ZLFSManager::Instance().createPlainInputStream(myPath);
-			stream = envelopeCompressedStream(stream);
-			ourPlainStreamCache[myPath] = stream;
+		if (isDirectory()) {
+			return 0;
 		}
+		stream = ZLFSManager::Instance().createPlainInputStream(myPath);
+		stream = envelopeCompressedStream(stream);
 	} else {
 		ZLFile baseFile(myPath.substr(0, index));
 		shared_ptr<ZLInputStream> base = baseFile.inputStream();
