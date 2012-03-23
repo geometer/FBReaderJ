@@ -90,7 +90,7 @@ public:
 	static jmethodID SMID_JavaEncodingCollection_Instance;
 	static jmethodID MID_JavaEncodingCollection_getEncoding_String;
 	static jmethodID MID_JavaEncodingCollection_getEncoding_int;
-	static jmethodID MID_JavaEncodingCollection_isEncodingSupported;
+	static jmethodID MID_JavaEncodingCollection_providesConverterFor;
 
 	static jmethodID SMID_Paths_cacheDirectory;
 
