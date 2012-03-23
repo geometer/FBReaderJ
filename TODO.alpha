@@ -1,13 +1,1 @@
-* Chinese txt
-DONE Better encoding choice option(s)
-* Encoding detection (very strange results)
-   * 2-char patterns for 1-byte encodings (like windows-1251)
-   DONE do not detect encoding for all files during library scannng
-   * slow detecting: decrease buffer size?
-   * lower-case letters for 1-byte encodings (?)
-DONE non-ascii entry names in zips
 * css support
-
-**** later
-* RTF
-* proguard
