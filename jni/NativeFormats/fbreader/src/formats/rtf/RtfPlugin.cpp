@@ -17,7 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <ZLStringUtil.h>
 #include <ZLFile.h>
 #include <ZLInputStream.h>
 
@@ -38,18 +37,19 @@ const std::string RtfPlugin::supportedFileType() const {
 }
 
 bool RtfPlugin::readMetaInfo(Book &book) const {
-	shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
-
-	if (stream.isNull()) {
-		return false;
-	}
-
-	detectEncodingAndLanguage(book, *stream);
-
 	if (!RtfDescriptionReader(book).readDocument(book.file())) {
 		return false;
 	}
-	
+
+	if (book.encoding().empty()) {
+		book.setEncoding("utf-8");
+	} else if (book.language().empty()) {
+		shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
+		if (!stream.isNull()) {
+			detectLanguage(book, *stream);
+		}
+	}
+
 	return true;
 }
 

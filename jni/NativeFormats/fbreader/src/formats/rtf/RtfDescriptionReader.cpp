@@ -40,11 +40,7 @@ void RtfDescriptionReader::setEncoding(int code) {
 
 bool RtfDescriptionReader::readDocument(const ZLFile &file) {
 	myDoRead = false;
-	bool code = RtfReader::readDocument(file);
-	if (myBook.encoding().empty()) {
-		myBook.setEncoding("utf-8");
-	}
-	return code;
+	return RtfReader::readDocument(file);
 }
 
 void RtfDescriptionReader::addCharData(const char *data, size_t len, bool convert) {

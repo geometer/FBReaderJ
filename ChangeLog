@@ -28,6 +28,7 @@
   ** CSS/ePub support
 
 ===== 1.4.1 (Mar ??, 2012) =====
+* Fixed Dutch language detection
 
 ===== 1.4 (Mar 18, 2012) =====
 * *.txt support
