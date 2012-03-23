@@ -60,7 +60,13 @@ class BitmapManager {
 		final int iIndex = getInternalIndex(index);
 		myIndexes[iIndex] = index;
 		if (myBitmaps[iIndex] == null) {
-			myBitmaps[iIndex] = Bitmap.createBitmap(myWidth, myHeight, Bitmap.Config.RGB_565);
+			try {
+				myBitmaps[iIndex] = Bitmap.createBitmap(myWidth, myHeight, Bitmap.Config.RGB_565);
+			} catch (OutOfMemoryError e) {
+				System.gc();
+				System.gc();
+				myBitmaps[iIndex] = Bitmap.createBitmap(myWidth, myHeight, Bitmap.Config.RGB_565);
+			}
 		}
 		myWidget.drawOnBitmap(myBitmaps[iIndex], index);
 		return myBitmaps[iIndex];
