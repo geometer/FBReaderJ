@@ -21,7 +21,6 @@
 #define __ZLFILE_H__
 
 #include <string>
-#include <map>
 
 #include <shared_ptr.h>
 #include <ZLFileInfo.h>
@@ -34,9 +33,6 @@ class ZLFile {
 
 public:
 	static const ZLFile NO_FILE;
-
-private:
-	static std::map<std::string,weak_ptr<ZLInputStream> > ourPlainStreamCache;
 
 public:
 	static std::string fileNameToUtf8(const std::string &fileName);

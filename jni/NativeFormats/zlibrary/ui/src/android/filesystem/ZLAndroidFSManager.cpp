@@ -104,7 +104,7 @@ std::string ZLAndroidFSManager::resolveSymlink(const std::string &path) const {
 	if (useNativeImplementation(path)) {
 		return ZLUnixFSManager::resolveSymlink(path);
 	}
-	return std::string();
+	return path;
 }
 
 ZLFSDir *ZLAndroidFSManager::createNewDirectory(const std::string &path) const {
