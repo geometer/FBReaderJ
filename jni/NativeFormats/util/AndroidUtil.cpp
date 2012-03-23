@@ -17,6 +17,8 @@
  * 02110-1301, USA.
  */
 
+#include <ZLFile.h>
+
 #include "AndroidUtil.h"
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
@@ -37,6 +39,7 @@ const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/f
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
+const char * const AndroidUtil::Class_BookReadingException = "org/geometerplus/fbreader/bookmodel/BookReadingException";
 
 jmethodID AndroidUtil::MID_java_lang_String_toLowerCase;
 jmethodID AndroidUtil::MID_java_lang_String_toUpperCase;
@@ -69,7 +72,7 @@ jmethodID AndroidUtil::MID_EncodingConverter_reset;
 jmethodID AndroidUtil::SMID_JavaEncodingCollection_Instance;
 jmethodID AndroidUtil::MID_JavaEncodingCollection_getEncoding_int;
 jmethodID AndroidUtil::MID_JavaEncodingCollection_getEncoding_String;
-jmethodID AndroidUtil::MID_JavaEncodingCollection_isEncodingSupported;
+jmethodID AndroidUtil::MID_JavaEncodingCollection_providesConverterFor;
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
 jmethodID AndroidUtil::MID_ZLFile_children;
@@ -102,6 +105,8 @@ jmethodID AndroidUtil::MID_NativeBookModel_initTOC;
 jmethodID AndroidUtil::MID_NativeBookModel_createTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setBookTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setFootnoteModel;
+
+jmethodID AndroidUtil::SMID_BookReadingException_throwForFile;
 
 JNIEnv *AndroidUtil::getEnv() {
 	JNIEnv *env;
@@ -171,7 +176,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( SMID_JavaEncodingCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/JavaEncodingCollection;") );
 	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_String = env->GetMethodID(cls, "getEncoding", "(Ljava/lang/String;)Lorg/geometerplus/fbreader/formats/Encoding;") );
 	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_int = env->GetMethodID(cls, "getEncoding", "(I)Lorg/geometerplus/fbreader/formats/Encoding;") );
-	CHECK_NULL( MID_JavaEncodingCollection_isEncodingSupported = env->GetMethodID(cls, "isEncodingSupported", "(Ljava/lang/String;)Z") );
+	CHECK_NULL( MID_JavaEncodingCollection_providesConverterFor = env->GetMethodID(cls, "providesConverterFor", "(Ljava/lang/String;)Z") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
@@ -214,6 +219,10 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_NativeBookModel_createTextModel = env->GetMethodID(cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)Lorg/geometerplus/zlibrary/text/model/ZLTextModel;") );
 	CHECK_NULL( MID_NativeBookModel_setBookTextModel = env->GetMethodID(cls, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
 	CHECK_NULL( MID_NativeBookModel_setFootnoteModel = env->GetMethodID(cls, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_BookReadingException) );
+	CHECK_NULL( SMID_BookReadingException_throwForFile = env->GetStaticMethodID(cls, "throwForFile", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;)V") );
 	env->DeleteLocalRef(cls);
 
 	return true;
@@ -297,4 +306,16 @@ jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::
 void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
 	jclass cls = env->FindClass("java/lang/RuntimeException");
 	env->ThrowNew(cls, message.c_str());
+}
+
+void AndroidUtil::throwBookReadingException(const std::string &resourceId, const ZLFile &file) {
+	JNIEnv *env = getEnv();
+	jclass cls = env->FindClass("org/geometerplus/fbreader/bookmodel/BookReadingException");
+	env->CallStaticVoidMethod(
+		cls,
+		SMID_BookReadingException_throwForFile,
+		AndroidUtil::createJavaString(env, resourceId),
+		AndroidUtil::createZLFile(env, file.path())
+	);
+	// TODO: clear cls & ZLFile object references
 }

@@ -58,6 +58,10 @@ abstract class FilteredEncodingCollection extends EncodingCollection {
 		return getEncoding(String.valueOf(code));
 	}
 
+	public boolean providesConverterFor(String alias) {
+		return myEncodingByAlias.containsKey(alias) || isEncodingSupported(alias);
+	}
+
 	private class EncodingCollectionReader extends ZLXMLReaderAdapter {
 		private String myCurrentFamilyName;
 		private Encoding myCurrentEncoding;
