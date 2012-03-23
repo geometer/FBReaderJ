@@ -23,13 +23,15 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.core.encodings.Encoding;
+import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
 public class MobipocketPlugin extends JavaFormatPlugin {
 	public MobipocketPlugin() {
@@ -245,7 +247,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public EncodingCollection supportedEncodings() {
+	public JavaEncodingCollection supportedEncodings() {
 		return JavaEncodingCollection.Instance();
 	}
 
