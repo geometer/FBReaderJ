@@ -43,12 +43,10 @@ bool RtfPlugin::readMetaInfo(Book &book) const {
 
 	if (book.encoding().empty()) {
 		book.setEncoding("utf-8");
-	}
-
-	if (book.language().empty()) {
+	} else if (book.language().empty()) {
 		shared_ptr<ZLInputStream> stream = new RtfReaderStream(book.file(), 50000);
 		if (!stream.isNull()) {
-			//detectLanguage(book, *stream);
+			detectLanguage(book, *stream);
 		}
 	}
 
