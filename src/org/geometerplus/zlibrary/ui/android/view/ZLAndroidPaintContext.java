@@ -323,7 +323,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			}
 		}
 		if (!containsSoftHyphen) {
-			myCanvas.drawText(string, offset, length, x, y, myTextPaint);
+			myCanvas.drawText(new String(string, offset, length), x, y, myTextPaint);
 		} else {
 			final char[] corrected = new char[length];
 			int len = 0;
@@ -333,7 +333,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 					corrected[len++] = chr;
 				}
 			}
-			myCanvas.drawText(corrected, 0, len, x, y, myTextPaint);
+			myCanvas.drawText(new String(corrected, 0, len), x, y, myTextPaint);
 		}
 	}
 
