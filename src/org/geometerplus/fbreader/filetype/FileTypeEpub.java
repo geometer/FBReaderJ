@@ -35,11 +35,11 @@ class FileTypeEpub extends FileType {
 	}
 
 	@Override
-	public boolean acceptsExtension(String ext) {
+	public boolean acceptsExtension(String extension) {
 		return
-			"epub".equalsIgnoreCase(ext) ||
-			"oebzip".equalsIgnoreCase(ext) ||
-			"opf".equalsIgnoreCase(ext);
+			"epub".equalsIgnoreCase(extension) ||
+			"oebzip".equalsIgnoreCase(extension) ||
+			"opf".equalsIgnoreCase(extension);
 	}
 
 	@Override
