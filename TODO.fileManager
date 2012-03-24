@@ -1,2 +1,0 @@
-NP:
-	* Crashes if /sdcard is removed while we browse files
