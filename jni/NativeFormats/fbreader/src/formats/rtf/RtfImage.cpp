@@ -43,6 +43,7 @@ void RtfImage::read() const {
 		stream->seek(myStartOffset, false);
 		const size_t bufferSize = 1024;
 		char *buffer = new char[bufferSize];
+		// TODO: skip whitespaces
 		for (unsigned int i = 0; i < myLength; i += bufferSize) {
 			size_t toRead = std::min(bufferSize, myLength - i);
 			if (stream->read(buffer, toRead) != toRead) {
