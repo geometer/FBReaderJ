@@ -120,7 +120,7 @@ void RtfBookReader::switchDestination(DestinationType destination, bool on) {
 void RtfBookReader::insertImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t size) {
 	std::string id;
 	ZLStringUtil::appendNumber(id, myImageIndex++);
-	myBookReader.addImageReference(id);	 
+	myBookReader.addImageReference(id, 0, false);	 
 	//myBookReader.addImage(id, new RtfImage(mimeType, fileName, startOffset, size));
 }
 

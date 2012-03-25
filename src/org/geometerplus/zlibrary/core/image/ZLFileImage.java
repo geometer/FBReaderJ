@@ -28,23 +28,44 @@ import org.geometerplus.zlibrary.core.util.SliceInputStream;
 public class ZLFileImage extends ZLSingleImage {
 	public static final String SCHEME = "imagefile";
 
+	public static final String ENCODING_NONE = "";
+	public static final String ENCODING_HEX = "hex";
+
+	public static ZLFileImage byUrlPath(String urlPath) {
+		try {
+			final String[] data = urlPath.split("\000");
+			return new ZLFileImage(
+				MimeType.IMAGE_AUTO,
+				ZLFile.createFileByPath(data[0]),
+				data[1],
+				Integer.parseInt(data[2]),
+				Integer.parseInt(data[3])
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	private final ZLFile myFile;
+	private final String myEncoding;
 	private final int myOffset;
 	private final int myLength;
 	
-	public ZLFileImage(MimeType mimeType, ZLFile file, int offset, int length) {
+	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int offset, int length) {
 		super(mimeType);
 		myFile = file;
+		myEncoding = encoding;
 		myOffset = offset;
 		myLength = length;
 	}
 
 	public ZLFileImage(MimeType mimeType, ZLFile file) {
-		this(mimeType, file, 0, (int)file.size());
+		this(mimeType, file, ENCODING_NONE, 0, (int)file.size());
 	}
 
 	public String getURI() {
-		return SCHEME + "://" + myFile.getPath() + "\000" + myOffset + "\000" + myLength;
+		return SCHEME + "://" + myFile.getPath() + "\000" + myEncoding + "\000" + myOffset + "\000" + myLength;
 	}
 
 	@Override
