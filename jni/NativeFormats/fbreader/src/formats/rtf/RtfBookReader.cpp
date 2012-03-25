@@ -20,10 +20,10 @@
 #include <cctype>
 
 #include <ZLStringUtil.h>
+#include <ZLFileImage.h>
 
 #include "RtfBookReader.h"
 #include "../../bookmodel/BookModel.h"
-#include "RtfImage.h"
 
 RtfBookReader::RtfBookReader(BookModel &model, const std::string &encoding) : RtfReader(encoding), myBookReader(model) {
 }
@@ -121,7 +121,8 @@ void RtfBookReader::insertImage(const std::string &mimeType, const std::string &
 	std::string id;
 	ZLStringUtil::appendNumber(id, myImageIndex++);
 	myBookReader.addImageReference(id, 0, false);	 
-	//myBookReader.addImage(id, new RtfImage(mimeType, fileName, startOffset, size));
+	const ZLFile file(fileName, mimeType);
+	myBookReader.addImage(id, new ZLFileImage(file, "hex", startOffset, size));
 }
 
 bool RtfBookReader::characterDataHandler(std::string &str) {

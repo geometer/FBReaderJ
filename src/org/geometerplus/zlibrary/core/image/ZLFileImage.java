@@ -58,6 +58,7 @@ public class ZLFileImage extends ZLSingleImage {
 		myEncoding = encoding;
 		myOffset = offset;
 		myLength = length;
+		System.err.println("++ ZLFileImage(" + file.getPath() + "," + encoding + ")");
 	}
 
 	public ZLFileImage(MimeType mimeType, ZLFile file) {
@@ -71,8 +72,16 @@ public class ZLFileImage extends ZLSingleImage {
 	@Override
 	public InputStream inputStream() {
 		try {
-			return new SliceInputStream(myFile.getInputStream(), myOffset, myLength);
+			final InputStream stream =
+				new SliceInputStream(myFile.getInputStream(), myOffset, myLength);
+			if (ENCODING_NONE.equals(myEncoding)) {
+				return stream;
+			} else {
+				System.err.println("unsupported encoding: " + myEncoding);
+				return null;
+			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
