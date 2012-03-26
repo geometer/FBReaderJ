@@ -50,12 +50,14 @@ public class HexInputStream extends InputStream {
 					++skipped;
 				}
 			}
-			fillBuffer();
-			available = myBufferLength;
-			if (available == -1) {
-				return skipped / 2;
+			if (skipped < 2 * n) {
+				fillBuffer();
+				available = myBufferLength;
+				if (available == -1) {
+					return skipped / 2;
+				}
+				offset = 0;
 			}
-			offset = 0;
 		}
 		myBufferLength = available;
 		myBufferOffset = offset;
@@ -103,12 +105,14 @@ public class HexInputStream extends InputStream {
 					}
 				}
 			}
-			fillBuffer();
-			available = myBufferLength;
-			if (available == -1) {
-				return ready == 0 ? -1 : ready;
+			if (ready < len) {
+				fillBuffer();
+				available = myBufferLength;
+				if (available == -1) {
+					return ready == 0 ? -1 : ready;
+				}
+				offset = 0;
 			}
-			offset = 0;
 		}
 		myBufferLength = available;
 		myBufferOffset = offset;
