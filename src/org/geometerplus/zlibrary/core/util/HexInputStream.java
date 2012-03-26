@@ -46,7 +46,7 @@ public class HexInputStream extends InputStream {
 		byte first = 0;
 		for (long skipped = 0; skipped < 2 * n;) {
 			while (skipped < 2 * n && available-- > 0) {
-				if (Character.isLetterOrDigit(myBuffer[offset++])) {
+				if (decode(myBuffer[offset++]) != -1) {
 					++skipped;
 				}
 			}
@@ -66,15 +66,15 @@ public class HexInputStream extends InputStream {
 
 	@Override
 	public int read() throws IOException {
-		byte first = 0;
+		int first = -1;
 		while (myBufferLength >= 0) {
 			while (myBufferLength-- > 0) {
-				byte digit = myBuffer[myBufferOffset++];
-				if (Character.isLetterOrDigit(digit)) {
-					if (first == 0) {
+				final int digit = decode(myBuffer[myBufferOffset++]);
+				if (digit != -1) {
+					if (first == -1) {
 						first = digit;
 					} else {
-						return (decode(first) << 4) + decode(digit);
+						return (first << 4) + digit;
 					}
 				}
 			}
@@ -92,16 +92,16 @@ public class HexInputStream extends InputStream {
 	public int read(byte[] b, int off, int len) throws IOException {
 		int offset = myBufferOffset;
 		int available = myBufferLength;
-		byte first = 0;
+		int first = -1;
 		for (int ready = 0; ready < len;) {
 			while (ready < len && available-- > 0) {
-				byte digit = myBuffer[offset++];
-				if (Character.isLetterOrDigit(digit)) {
-					if (first == 0) {
+				final int digit = decode(myBuffer[offset++]);
+				if (digit != -1) {
+					if (first == -1) {
 						first = digit;
 					} else {
-						b[off + ready++] = (byte)((decode(first) << 4) + decode(digit));
-						first = 0;
+						b[off + ready++] = (byte)((first << 4) + digit);
+						first = -1;
 					}
 				}
 			}
@@ -131,28 +131,39 @@ public class HexInputStream extends InputStream {
 		myBufferOffset = 0;
 	}
 
-	private static byte decode(byte b) {
+	private static int decode(byte b) {
 		switch (b) {
 			default:
-				return (byte)(b - '0');
+				return -1;
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				return b - '0';
 			case 'a':
 			case 'A':
-				return (byte)10;
+				return 10;
 			case 'b':
 			case 'B':
-				return (byte)11;
+				return 11;
 			case 'c':
 			case 'C':
-				return (byte)12;
+				return 12;
 			case 'd':
 			case 'D':
-				return (byte)13;
+				return 13;
 			case 'e':
 			case 'E':
-				return (byte)14;
+				return 14;
 			case 'f':
 			case 'F':
-				return (byte)15;
+				return 15;
 		}
 	}
 }
