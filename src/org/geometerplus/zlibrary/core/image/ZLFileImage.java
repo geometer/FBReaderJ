@@ -59,7 +59,6 @@ public class ZLFileImage extends ZLSingleImage {
 		myEncoding = encoding;
 		myOffset = offset;
 		myLength = length;
-		System.err.println("++ ZLFileImage(" + file.getPath() + "," + encoding + ")");
 	}
 
 	public ZLFileImage(MimeType mimeType, ZLFile file) {
