@@ -214,16 +214,16 @@ void BookReader::insertEndOfTextParagraph() {
 	insertEndParagraph(ZLTextParagraph::END_OF_TEXT_PARAGRAPH);
 }
 
-void BookReader::addImageReference(const std::string &id, short vOffset) {
+void BookReader::addImageReference(const std::string &id, short vOffset, bool isCover) {
 	if (myCurrentTextModel != 0) {
 		mySectionContainsRegularContents = true;
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
-			myCurrentTextModel->addImage(id, vOffset);
+			myCurrentTextModel->addImage(id, vOffset, isCover);
 		} else {
 			beginParagraph();
 			myCurrentTextModel->addControl(IMAGE, true);
-			myCurrentTextModel->addImage(id, vOffset);
+			myCurrentTextModel->addImage(id, vOffset, isCover);
 			myCurrentTextModel->addControl(IMAGE, false);
 			endParagraph();
 		}

@@ -58,8 +58,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipHeader.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipInputStream.cpp \
 	NativeFormats/zlibrary/core/src/image/ZLBase64EncodedImage.cpp \
-	NativeFormats/zlibrary/core/src/image/ZLFileImage.cpp \
-	NativeFormats/zlibrary/core/src/image/ZLStreamImage.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
@@ -119,7 +117,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
-	NativeFormats/fbreader/src/formats/rtf/RtfImage.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfPlugin.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfReaderStream.cpp \

@@ -75,7 +75,7 @@ public:
 	void addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label);
 	void addText(const std::string &text);
 	void addText(const std::vector<std::string> &text);
-	void addImage(const std::string &id, short vOffset);
+	void addImage(const std::string &id, short vOffset, bool isCover);
 	void addFixedHSpace(unsigned char length);
 	void addBidiReset();
 
