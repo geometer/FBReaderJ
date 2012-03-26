@@ -23,6 +23,7 @@ import java.io.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.util.HexInputStream;
 import org.geometerplus.zlibrary.core.util.SliceInputStream;
 
 public class ZLFileImage extends ZLSingleImage {
@@ -76,6 +77,8 @@ public class ZLFileImage extends ZLSingleImage {
 				new SliceInputStream(myFile.getInputStream(), myOffset, myLength);
 			if (ENCODING_NONE.equals(myEncoding)) {
 				return stream;
+			} else if (ENCODING_HEX.equals(myEncoding)) {
+				return new HexInputStream(stream);
 			} else {
 				System.err.println("unsupported encoding: " + myEncoding);
 				return null;
