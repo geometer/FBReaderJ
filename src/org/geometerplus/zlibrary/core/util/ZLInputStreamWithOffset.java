@@ -30,10 +30,12 @@ public class ZLInputStreamWithOffset extends InputStream {
 		myDecoratedStream = stream;
 	}
 	
+	@Override
 	public int available() throws IOException {
 		return myDecoratedStream.available();
 	}
 
+	@Override
 	public long skip(long n) throws IOException {
 		long shift = myDecoratedStream.skip(n);
 		if (shift > 0) {
@@ -45,6 +47,7 @@ public class ZLInputStreamWithOffset extends InputStream {
 		return shift;
 	}
 
+	@Override
 	public int read() throws IOException {
 		int result = myDecoratedStream.read();
 		if (result != -1) {
@@ -53,11 +56,13 @@ public class ZLInputStreamWithOffset extends InputStream {
 		return result;
 	}
 
+	@Override
 	public void close() throws IOException {
 		myOffset = 0;
 		myDecoratedStream.close();
 	}
 
+	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
 		final int shift = myDecoratedStream.read(b, off, len);
 		if (shift > 0) {
@@ -66,14 +71,7 @@ public class ZLInputStreamWithOffset extends InputStream {
 		return shift;
 	}
 
-	public int read(byte[] b) throws IOException {
-		final int shift = myDecoratedStream.read(b);
-		if (shift > 0) {
-			myOffset += shift;
-		}
-		return shift;
-	}
-
+	@Override
 	public void reset() throws IOException {
 		myOffset = 0;
 		myDecoratedStream.reset();

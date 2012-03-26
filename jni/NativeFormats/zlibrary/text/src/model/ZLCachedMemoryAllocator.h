@@ -22,6 +22,8 @@
 
 #include <vector>
 
+#include <ZLUnicodeUtil.h>
+
 class ZLCachedMemoryAllocator {
 
 public:
@@ -33,8 +35,9 @@ public:
 
 	void flush();
 
-	static void writeUInt16(char *ptr, uint16_t value);
-	static void writeUInt32(char *ptr, uint32_t value);
+	static char *writeUInt16(char *ptr, uint16_t value);
+	static char *writeUInt32(char *ptr, uint32_t value);
+	static char *writeString(char *ptr, const ZLUnicodeUtil::Ucs2String &str);
 	static uint16_t readUInt16(const char *ptr);
 	static uint32_t readUInt32(const char *ptr);
 
@@ -69,18 +72,28 @@ inline const std::string &ZLCachedMemoryAllocator::fileExtension() const { retur
 inline size_t ZLCachedMemoryAllocator::blocksNumber() const { return myPool.size(); }
 inline size_t ZLCachedMemoryAllocator::currentBytesOffset() const { return myOffset; }
 
-inline void ZLCachedMemoryAllocator::writeUInt16(char *ptr, uint16_t value) {
+inline char *ZLCachedMemoryAllocator::writeUInt16(char *ptr, uint16_t value) {
 	*ptr++ = value;
-	*ptr = value >> 8;
+	*ptr++ = value >> 8;
+	return ptr;
 }
-inline void ZLCachedMemoryAllocator::writeUInt32(char *ptr, uint32_t value) {
+inline char *ZLCachedMemoryAllocator::writeUInt32(char *ptr, uint32_t value) {
 	*ptr++ = value;
 	value >>= 8;
 	*ptr++ = value;
 	value >>= 8;
 	*ptr++ = value;
-	*ptr = value >> 8;
+	value >>= 8;
+	*ptr++ = value;
+	return ptr;
 }
+inline char *ZLCachedMemoryAllocator::writeString(char *ptr, const ZLUnicodeUtil::Ucs2String &str) {
+	const size_t size = str.size();
+	writeUInt16(ptr, size);
+	memcpy(ptr + 2, &str.front(), size * 2);
+	return ptr + size * 2 + 2;
+}
+
 inline uint16_t ZLCachedMemoryAllocator::readUInt16(const char *ptr) {
 	const uint8_t *tmp = (const uint8_t*)ptr;
 	return *tmp + ((uint16_t)*(tmp + 1) << 8);
