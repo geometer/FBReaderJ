@@ -225,7 +225,7 @@ public class MobipocketPlugin extends JavaFormatPlugin {
 			if (start >= 0) {
 				int len = myMobipocketStream.getImageLength(coverIndex);
 				if (len > 0) {
-					return new ZLFileImage(MimeType.IMAGE_AUTO, file, start, len);
+					return new ZLFileImage(MimeType.IMAGE_AUTO, file, ZLFileImage.ENCODING_NONE, start, len);
 				}
 			}
 			return null; 
