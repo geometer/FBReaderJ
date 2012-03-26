@@ -36,12 +36,14 @@ public:
 
 class ZLSingleImage : public ZLImage {
 
+/*
 public:
 	enum Kind {
 		REGULAR_IMAGE = 1,
 		FILE_IMAGE = 2,
 		BASE64_ENCODED_IMAGE = 3,
 	};
+*/
 
 protected:
 	ZLSingleImage(const std::string &mimeType);
@@ -50,9 +52,9 @@ protected:
 public:
 	bool isSingle() const { return true; }
 	const std::string &mimeType() const;
-	virtual const shared_ptr<std::string> stringData() const = 0;
+	//virtual const shared_ptr<std::string> stringData() const = 0;
 
-	virtual Kind kind() const;
+	//virtual Kind kind() const;
 
 private:
 	std::string myMimeType;
@@ -77,7 +79,7 @@ inline ZLImage::~ZLImage() {}
 inline ZLSingleImage::ZLSingleImage(const std::string &mimeType) : myMimeType(mimeType) {}
 inline ZLSingleImage::~ZLSingleImage() {}
 inline const std::string &ZLSingleImage::mimeType() const { return myMimeType; }
-inline ZLSingleImage::Kind ZLSingleImage::kind() const { return REGULAR_IMAGE; }
+//inline ZLSingleImage::Kind ZLSingleImage::kind() const { return REGULAR_IMAGE; }
 
 inline ZLMultiImage::ZLMultiImage() : ZLImage() {}
 inline ZLMultiImage::~ZLMultiImage() {}

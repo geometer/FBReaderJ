@@ -68,14 +68,12 @@ public class ImageViewActivity extends Activity {
 
 		final Uri uri = intent.getData();
 		if (ZLFileImage.SCHEME.equals(uri.getScheme())) {
+			final ZLFileImage image = ZLFileImage.byUrlPath(uri.getPath());
+			if (image == null) {
+				// TODO: error message (?)
+				finish();
+			}
 			try {
-				final String[] data = uri.getPath().split("\000");
-				final ZLFileImage image = new ZLFileImage(
-					MimeType.IMAGE_AUTO,
-					ZLFile.createFileByPath(data[0]),
-					Integer.parseInt(data[1]),
-					Integer.parseInt(data[2])
-				);
 				final ZLImageData imageData = ZLImageManager.Instance().getImageData(image);
 				myBitmap = ((ZLAndroidImageData)imageData).getFullSizeBitmap();
 			} catch (Exception e) {

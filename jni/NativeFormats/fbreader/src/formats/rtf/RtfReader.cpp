@@ -38,6 +38,9 @@ RtfReader::~RtfReader() {
 RtfCommand::~RtfCommand() {
 }
 
+void RtfDummyCommand::run(RtfReader&, int*) const {
+}
+
 void RtfNewParagraphCommand::run(RtfReader &reader, int*) const {
 	reader.newParagraph();
 }
@@ -96,6 +99,7 @@ void RtfDestinationCommand::run(RtfReader &reader, int*) const {
 	reader.myState.Destination = myDestination;
 	if (myDestination == RtfReader::DESTINATION_PICTURE) {
 		reader.myState.ReadDataAsHex = true;
+		reader.myNextImageMimeType.clear();
 	}
 	reader.switchDestination(myDestination, true);
 }
@@ -158,6 +162,7 @@ void RtfReader::fillKeywordMap() {
 		for (const char **i = keywordsToSkip; *i != 0; ++i) {
 			addAction(*i,	skipCommand);
 		}
+		addAction("shppict",	new RtfDummyCommand());
 		addAction("info",	new RtfDestinationCommand(RtfReader::DESTINATION_INFO));
 		addAction("title",	new RtfDestinationCommand(RtfReader::DESTINATION_TITLE));
 		addAction("author",	new RtfDestinationCommand(RtfReader::DESTINATION_AUTHOR));
@@ -260,8 +265,10 @@ bool RtfReader::parseDocument() {
 							dataStart = ptr + 1;
 
 							if (imageStartOffset >= 0) {
-								int imageSize = myStream->offset() + (ptr - end) - imageStartOffset;
-								insertImage(myNextImageMimeType, myFileName, imageStartOffset, imageSize);
+								if (!myNextImageMimeType.empty()) {
+									const int imageSize = myStream->offset() + (ptr - end) - imageStartOffset;
+									insertImage(myNextImageMimeType, myFileName, imageStartOffset, imageSize);
+								}
 								imageStartOffset = -1;
 							}
 
@@ -399,7 +406,7 @@ bool RtfReader::parseDocument() {
 }
 
 void RtfReader::processKeyword(const std::string &keyword, int *parameter) {
-	bool wasSpecialMode = mySpecialMode;
+	const bool wasSpecialMode = mySpecialMode;
 	mySpecialMode = false;
 	if (myState.Destination == RtfReader::DESTINATION_SKIP) {
 		return;
@@ -408,14 +415,14 @@ void RtfReader::processKeyword(const std::string &keyword, int *parameter) {
 	std::map<std::string, RtfCommand*>::const_iterator it = ourKeywordMap.find(keyword);
 	
 	if (it == ourKeywordMap.end()) {
-		if (wasSpecialMode)
+		if (wasSpecialMode) {
 			myState.Destination = RtfReader::DESTINATION_SKIP;
+		}
 		return;
 	}
 
 	it->second->run(*this, parameter);
 }
-
 
 void RtfReader::processCharData(const char *data, size_t len, bool convert) {
 	if (myState.Destination != RtfReader::DESTINATION_SKIP) {

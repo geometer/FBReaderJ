@@ -346,7 +346,7 @@ void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyper
 	++myParagraphLengths.back();
 }
 
-void ZLTextModel::addImage(const std::string &id, short vOffset) {
+void ZLTextModel::addImage(const std::string &id, short vOffset, bool isCover) {
 	checkUtf8Text();
 
 	ZLUnicodeUtil::Ucs2String ucs2id;
@@ -354,12 +354,13 @@ void ZLTextModel::addImage(const std::string &id, short vOffset) {
 
 	const size_t len = ucs2id.size() * 2;
 
-	myLastEntryStart = myAllocator.allocate(len + 6);
+	myLastEntryStart = myAllocator.allocate(len + 8);
 	*myLastEntryStart = ZLTextParagraphEntry::IMAGE_ENTRY;
 	*(myLastEntryStart + 1) = 0;
 	ZLCachedMemoryAllocator::writeUInt16(myLastEntryStart + 2, vOffset);
 	ZLCachedMemoryAllocator::writeUInt16(myLastEntryStart + 4, ucs2id.size());
 	memcpy(myLastEntryStart + 6, &ucs2id.front(), len);
+	ZLCachedMemoryAllocator::writeUInt16(myLastEntryStart + 6 + len, isCover ? 1 : 0);
 	myParagraphs.back()->addEntry(myLastEntryStart);
 	++myParagraphLengths.back();
 }
