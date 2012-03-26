@@ -27,20 +27,21 @@
 class ZLFileImage : public ZLStreamImage {
 
 public:
-	ZLFileImage(const ZLFile &file, size_t offset, size_t size = 0);
+	ZLFileImage(const ZLFile &file, const std::string &encoding, size_t offset, size_t size = 0);
 
-	Kind kind() const;
+	//Kind kind() const;
 	const ZLFile &file() const;
 
 protected:
-	shared_ptr<ZLInputStream> inputStream() const;
+	//shared_ptr<ZLInputStream> inputStream() const;
 
 private:
 	const ZLFile myFile;
 };
 
-inline ZLFileImage::ZLFileImage(const ZLFile &file, size_t offset, size_t size) : ZLStreamImage(file.mimeType(), offset, size), myFile(file) {}
-inline ZLSingleImage::Kind ZLFileImage::kind() const { return FILE_IMAGE; }
+inline ZLFileImage::ZLFileImage(const ZLFile &file, const std::string &encoding, size_t offset, size_t size) : ZLStreamImage(file.mimeType(), encoding, offset, size), myFile(file) {}
+//inline ZLSingleImage::Kind ZLFileImage::kind() const { return FILE_IMAGE; }
 inline const ZLFile &ZLFileImage::file() const { return myFile; }
+//inline shared_ptr<ZLInputStream> ZLFileImage::inputStream() const { return myFile.inputStream(); }
 
 #endif /* __ZLFILEIMAGE_H__ */

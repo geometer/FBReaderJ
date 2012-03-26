@@ -61,7 +61,7 @@ public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 		try {
 			decode();
 			final File file = new File(decodedFileName());
-			return ZLFileImage.SCHEME + "://" + decodedFileName() + "\0000\000" + (int)file.length();
+			return ZLFileImage.SCHEME + "://" + decodedFileName() + "\000\0000\000" + (int)file.length();
 		} catch (Exception e) {
 			return null;
 		}

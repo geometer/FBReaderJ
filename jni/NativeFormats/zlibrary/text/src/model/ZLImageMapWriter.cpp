@@ -38,72 +38,32 @@ void ZLImageMapWriter::addImage(const std::string &id, const ZLImage &image) {
 	myOffsets.push_back(bytesOffset / 2); // offset in words for future use in Java
 
 	if (image.isSingle()) {
-		addSingleImageEntry((const ZLSingleImage&)image);
+		addSingleImageEntry((const ZLFileImage&)image);
 	} else {
 		addMultiImageEntry((const ZLMultiImage&)image);
 	}
 }
 
-void ZLImageMapWriter::addSingleImageEntry(const ZLSingleImage &image) {
-	ZLUnicodeUtil::Ucs2String ucs2mime;
-	ZLUnicodeUtil::utf8ToUcs2(ucs2mime, image.mimeType());
-	const size_t mimeSize = ucs2mime.size() * 2;
+void ZLImageMapWriter::addSingleImageEntry(const ZLFileImage &image) {
+	ZLUnicodeUtil::Ucs2String mime;
+	ZLUnicodeUtil::utf8ToUcs2(mime, image.mimeType());
+	ZLUnicodeUtil::Ucs2String path;
+	ZLUnicodeUtil::utf8ToUcs2(path, image.file().path());
+	ZLUnicodeUtil::Ucs2String encoding;
+	ZLUnicodeUtil::utf8ToUcs2(encoding, image.encoding());
 
-	const size_t len = 4 + mimeSize;
-	char *address = myAllocator.allocate(len);
+	const size_t len = 16 + mime.size() * 2 + path.size() * 2 + encoding.size() * 2;
+	char *ptr = myAllocator.allocate(len);
 
-	char *ptr = address;
-	*ptr++ = image.kind();
+	*ptr++ = 1;//image.kind();
 	*ptr++ = 0; // multi ? 1 : 0
-	ZLCachedMemoryAllocator::writeUInt16(ptr, ucs2mime.size());
-	memcpy(ptr + 2, &ucs2mime.front(), mimeSize);
 
-	switch (image.kind()) {
-		case ZLSingleImage::BASE64_ENCODED_IMAGE:
-		case ZLSingleImage::REGULAR_IMAGE:
-		{
-			const shared_ptr<std::string> data = image.stringData();
-			size_t length = data.isNull() ? 0 : data->length();
-			size_t dataSize = (length + 1) / 2;
+	ptr = ZLCachedMemoryAllocator::writeString(ptr, mime);
+	ptr = ZLCachedMemoryAllocator::writeString(ptr, path);
+	ptr = ZLCachedMemoryAllocator::writeString(ptr, encoding);
 
-			const size_t newlen = len + 4 + dataSize * 2;
-			address = myAllocator.reallocateLast(address, newlen);
-			ptr = address + len;
-
-			ZLCachedMemoryAllocator::writeUInt32(ptr, dataSize);
-			ptr += 4;
-			if (length > 0) {
-				memcpy(ptr, data->data(), length);
-				ptr += length;
-				if (length % 2) {
-					*ptr++ = 0;
-				}
-			}
-			break;
-		}
-		case ZLSingleImage::FILE_IMAGE:
-		{
-			const ZLFileImage &fileImage = (const ZLFileImage&)image;
-
-			ZLUnicodeUtil::Ucs2String ucs2path;
-			ZLUnicodeUtil::utf8ToUcs2(ucs2path, fileImage.file().path());
-			const size_t pathSize = ucs2path.size() * 2;
-
-			const size_t newlen = len + 10 + pathSize;
-			address = myAllocator.reallocateLast(address, newlen);
-			ptr = address + len;
-
-			ZLCachedMemoryAllocator::writeUInt32(ptr, fileImage.offset());
-			ptr += 4;
-			ZLCachedMemoryAllocator::writeUInt32(ptr, fileImage.size());
-			ptr += 4;
-			ZLCachedMemoryAllocator::writeUInt16(ptr, ucs2path.size());
-			ptr += 2;
-			memcpy(ptr, &ucs2path.front(), pathSize);
-			ptr += pathSize;
-			break;
-		}
-	}
+	ptr = ZLCachedMemoryAllocator::writeUInt32(ptr, image.offset());
+	ptr = ZLCachedMemoryAllocator::writeUInt32(ptr, image.size());
 }
 
 void ZLImageMapWriter::addMultiImageEntry(const ZLMultiImage &image) {

@@ -28,21 +28,24 @@
 class ZLStreamImage : public ZLSingleImage {
 
 public:
-	ZLStreamImage(const std::string &mimeType, size_t offset, size_t size = 0);
-	const shared_ptr<std::string> stringData() const;
+	ZLStreamImage(const std::string &mimeType, const std::string &encoding, size_t offset, size_t size = 0);
+	//const shared_ptr<std::string> stringData() const;
 
+	const std::string &encoding() const;
 	size_t offset() const;
 	size_t size() const;
 
 private:
-	virtual shared_ptr<ZLInputStream> inputStream() const = 0;
+	//virtual shared_ptr<ZLInputStream> inputStream() const = 0;
 
 private:
+	const std::string myEncoding;
 	const size_t myOffset;
 	mutable size_t mySize;
 };
 
-inline ZLStreamImage::ZLStreamImage(const std::string &mimeType, size_t offset, size_t size) : ZLSingleImage(mimeType), myOffset(offset), mySize(size) {}
+inline ZLStreamImage::ZLStreamImage(const std::string &mimeType, const std::string &encoding, size_t offset, size_t size) : ZLSingleImage(mimeType), myEncoding(encoding), myOffset(offset), mySize(size) {}
+inline const std::string &ZLStreamImage::encoding() const { return myEncoding; }
 inline size_t ZLStreamImage::offset() const { return myOffset; }
 inline size_t ZLStreamImage::size() const { return mySize; }
 
