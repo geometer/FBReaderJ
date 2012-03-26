@@ -22,7 +22,7 @@
 
 #include <ZLInputStream.h>
 #include <ZLStringUtil.h>
-#include <ZLBase64EncodedImage.h>
+//#include <ZLBase64EncodedImage.h>
 
 #include <ZLTextParagraph.h>
 
@@ -37,7 +37,7 @@ FB2BookReader::FB2BookReader(BookModel &model) : myModelReader(model) {
 	mySectionDepth = 0;
 	myBodyCounter = 0;
 	myReadMainText = false;
-	myCurrentImage = 0;
+	//myCurrentImage = 0;
 	myProcessingImage = false;
 	mySectionStarted = false;
 	myInsideTitle = false;
@@ -189,7 +189,7 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 				++ref;
 				if ((myCoverImageReference != ref) ||
 						(myParagraphsBeforeBodyNumber != myModelReader.model().bookTextModel()->paragraphsNumber())) {
-					myModelReader.addImageReference(ref);
+					//myModelReader.addImageReference(ref);
 				}
 				if (myInsideCoverpage) {
 					myCoverImageReference = ref;
@@ -202,7 +202,7 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 			static const std::string STRANGE_MIME_TYPE = "text/xml";
 			const char *contentType = attributeValue(xmlattributes, "content-type");
 			if ((contentType != 0) && (id != 0) && (STRANGE_MIME_TYPE != contentType)) {
-				myCurrentImage = new ZLBase64EncodedImage(contentType);
+				//myCurrentImage = new ZLBase64EncodedImage(contentType);
 				myCurrentImageId.assign(id);
 				myProcessingImage = true;
 			}
@@ -302,12 +302,12 @@ void FB2BookReader::endElementHandler(int tag) {
 			myModelReader.addControl(myHyperlinkType, false);
 			break;
 		case _BINARY:
-			if (!myImageBuffer.empty() && !myCurrentImageId.empty() && myCurrentImage != 0) {
-				myCurrentImage->addData(myImageBuffer);
-				myModelReader.addImage(myCurrentImageId, myCurrentImage);
+			if (!myImageBuffer.empty() && !myCurrentImageId.empty() /*&& myCurrentImage != 0*/) {
+				//myCurrentImage->addData(myImageBuffer);
+				//myModelReader.addImage(myCurrentImageId, myCurrentImage);
 				myImageBuffer.clear();
 				myCurrentImageId.clear();
-				myCurrentImage = 0;
+				//myCurrentImage = 0;
 			}
 			myProcessingImage = false;
 			break;

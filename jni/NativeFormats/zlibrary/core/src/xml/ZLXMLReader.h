@@ -94,6 +94,7 @@ protected:
 	virtual void collectExternalEntities(std::map<std::string,std::string> &entityMap);
 
 	bool isInterrupted() const;
+	size_t getCurrentPosition() const;
 
 protected:
 	void interrupt();

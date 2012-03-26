@@ -90,6 +90,12 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2BookReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2CoverReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2MetaInfoReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2Plugin.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfPlugin.cpp \

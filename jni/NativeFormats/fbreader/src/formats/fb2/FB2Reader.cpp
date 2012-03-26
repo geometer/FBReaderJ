@@ -22,10 +22,10 @@
 #include <ZLibrary.h>
 
 #include <ZLStringUtil.h>
-#include <ZLXMLNamespace.h>
+//#include <ZLXMLNamespace.h>
 
 #include "FB2Reader.h"
-#include "../util/EntityFilesCollector.h"
+//#include "../util/EntityFilesCollector.h"
 
 void FB2Reader::startElementHandler(const char *t, const char **attributes) {
 	startElementHandler(tag(t), attributes);
@@ -88,10 +88,12 @@ bool FB2Reader::processNamespaces() const {
 void FB2Reader::namespaceListChangedHandler() {
 	const std::map<std::string,std::string> namespaceMap = namespaces();
 	for (std::map<std::string,std::string>::const_iterator it = namespaceMap.begin(); it != namespaceMap.end(); ++it) {
+/*
 		if (ZLStringUtil::stringStartsWith(it->second, ZLXMLNamespace::XLink)) {
 			myXLinkNamespace = it->first;
 			return;
 		}
+*/
 	}
 	myXLinkNamespace.erase();
 }

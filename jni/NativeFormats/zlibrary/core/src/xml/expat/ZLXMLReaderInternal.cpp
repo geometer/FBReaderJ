@@ -163,3 +163,7 @@ void ZLXMLReaderInternal::init(const char *encoding) {
 bool ZLXMLReaderInternal::parseBuffer(const char *buffer, size_t len) {
 	return XML_Parse(myParser, buffer, len, 0) != XML_STATUS_ERROR;
 }
+
+size_t ZLXMLReaderInternal::getCurrentPosition() const {
+	return XML_GetCurrentByteIndex(myParser);
+}
