@@ -120,6 +120,7 @@ bool JavaEncodingConverter::fillTable(int *map) {
 	char in;
 	std::string out;
 	for (int i = 0; i < 256; ++i) {
+		in = i;
 		convert(out, &in, (&in)+1);
 		reset();
 		if (out.size() != 0) {

@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-#include <string.h>
+#include <cstring>
 
 #include <ZLFile.h>
 #include <ZLInputStream.h>
