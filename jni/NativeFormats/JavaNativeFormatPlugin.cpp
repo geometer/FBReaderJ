@@ -131,23 +131,6 @@ JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 	fillLanguageAndEncoding(env, javaBook, *book);
 }
 
-static bool initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
-	shared_ptr<ZLImageMapWriter> imageMapWriter = model.imageMapWriter();
-
-	env->PushLocalFrame(16);
-
-	jobjectArray ids = AndroidUtil::createStringArray(env, imageMapWriter->identifiers());
-	jintArray indices = AndroidUtil::createIntArray(env, imageMapWriter->indices());
-	jintArray offsets = AndroidUtil::createIntArray(env, imageMapWriter->offsets());
-	jstring imageDirectoryName = env->NewStringUTF(imageMapWriter->allocator().directoryName().c_str());
-	jstring imageFileExtension = env->NewStringUTF(imageMapWriter->allocator().fileExtension().c_str());
-	jint imageBlocksNumber = imageMapWriter->allocator().blocksNumber();
-	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initImageMap,
-			ids, indices, offsets, imageDirectoryName, imageFileExtension, imageBlocksNumber);
-	env->PopLocalFrame(0);
-	return !env->ExceptionCheck();
-}
-
 static bool initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &model) {
 	ZLCachedMemoryAllocator allocator(131072, Library::Instance().cacheDirectory(), "nlinks");
 
@@ -265,14 +248,13 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	jobject javaBook = env->GetObjectField(javaModel, AndroidUtil::FID_NativeBookModel_Book);
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
-	shared_ptr<BookModel> model = new BookModel(book);
+	shared_ptr<BookModel> model = new BookModel(book, javaModel);
 	if (!plugin->readModel(*model)) {
 		return JNI_FALSE;
 	}
 	model->flush();
 
-	if (!initBookModel(env, javaModel, *model) ||
-			!initInternalHyperlinks(env, javaModel, *model) ||
+	if (!initInternalHyperlinks(env, javaModel, *model) ||
 			!initTOC(env, javaModel, *model)) {
 		return JNI_FALSE;
 	}
