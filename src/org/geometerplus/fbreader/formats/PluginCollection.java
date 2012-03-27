@@ -88,9 +88,9 @@ public class PluginCollection {
 		}
 
 		if (formatType == FormatPlugin.Type.ANY) {
-			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.JAVA);
+			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 			if (p == null) {
-				p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 			}
 			return p;
 		} else {
