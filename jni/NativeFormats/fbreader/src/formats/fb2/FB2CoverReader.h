@@ -20,11 +20,10 @@
 #ifndef __FB2COVERREADER_H__
 #define __FB2COVERREADER_H__
 
-#include "FB2Reader.h"
+#include <ZLFile.h>
+#include <ZLImage.h>
 
-class Book;
-class ZLFile;
-class ZLImage;
+#include "FB2Reader.h"
 
 class FB2CoverReader : public FB2Reader {
 
@@ -40,9 +39,10 @@ private:
 private:
 	const ZLFile myFile;
 	bool myReadCoverPage;
-	std::string myImageReference;
+	bool myLookForImage;
+	std::string myImageId;
+	int myImageStart;
 	shared_ptr<ZLImage> myImage;
-	std::vector<std::string> myImageBuffer;
 };
 
 #endif /* __FB2COVERREADER_H__ */

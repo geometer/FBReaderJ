@@ -202,25 +202,12 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 
 	JNIEnv *env = AndroidUtil::getEnv();
 
-	jstring javaMimeType = AndroidUtil::createJavaString(env, fileImage.mimeType());
-	jobject javaFile = AndroidUtil::createZLFile(env, fileImage.file().path());
-	jstring javaEncoding = AndroidUtil::createJavaString(env, fileImage.encoding());
-
-	jclass cls = env->FindClass(AndroidUtil::Class_ZLFileImage);
-	jobject javaImage = env->NewObject(
-		cls, AndroidUtil::MID_ZLFileImage_init,
-		javaMimeType, javaFile, javaEncoding,
-		fileImage.offset(), fileImage.size()
-	);
+	jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
 	jstring javaId = AndroidUtil::createJavaString(env, id);
 	env->CallObjectMethod(myModel.myJavaModel, AndroidUtil::MID_NativeBookModel_addImage, javaId, javaImage);
 
 	env->DeleteLocalRef(javaId);
-	env->DeleteLocalRef(cls);
 	env->DeleteLocalRef(javaImage);
-	env->DeleteLocalRef(javaEncoding);
-	env->DeleteLocalRef(javaFile);
-	env->DeleteLocalRef(javaMimeType);
 }
 
 void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {

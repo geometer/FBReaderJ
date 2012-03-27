@@ -20,6 +20,7 @@
 #include <jni.h>
 
 #include <AndroidUtil.h>
+#include <ZLFileImage.h>
 
 #include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
@@ -226,8 +227,8 @@ static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 		childrenNumbers.push_back(par->children().size());
 		referenceNumbers.push_back(contentsModel.reference(par));
 	}
-	jintArray javaChildrenNumbers = AndroidUtil::createIntArray(env, childrenNumbers);
-	jintArray javaReferenceNumbers = AndroidUtil::createIntArray(env, referenceNumbers);
+	jintArray javaChildrenNumbers = AndroidUtil::createJavaIntArray(env, childrenNumbers);
+	jintArray javaReferenceNumbers = AndroidUtil::createJavaIntArray(env, referenceNumbers);
 
 	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initTOC,
 			javaTextModel, javaChildrenNumbers, javaReferenceNumbers);
@@ -288,5 +289,19 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 
 extern "C"
 JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readCoverInternal(JNIEnv* env, jobject thiz, jobject file, jobjectArray box) {
-	// TODO: implement
+	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
+	if (plugin.isNull()) {
+		return;
+	}
+
+	jstring javaPath = (jstring)env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
+	const std::string path = AndroidUtil::fromJavaString(env, javaPath);
+	env->DeleteLocalRef(javaPath);
+
+	shared_ptr<ZLImage> image = plugin->coverImage(ZLFile(path));
+	if (!image.isNull()) {
+		jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
+		env->SetObjectArrayElement(box, 0, javaImage);
+		env->DeleteLocalRef(javaImage);
+	}
 }
