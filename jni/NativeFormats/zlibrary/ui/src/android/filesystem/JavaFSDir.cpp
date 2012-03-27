@@ -35,7 +35,7 @@ JavaFSDir::~JavaFSDir() {
 
 void JavaFSDir::initJavaFile(JNIEnv *env) {
 	if (myJavaFile == 0) {
-		jobject javaFile = AndroidUtil::createZLFile(env, path());
+		jobject javaFile = AndroidUtil::createJavaFile(env, path());
 		myJavaFile = env->NewGlobalRef(javaFile);
 		env->DeleteLocalRef(javaFile);
 	}
