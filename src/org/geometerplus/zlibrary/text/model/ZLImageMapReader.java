@@ -67,7 +67,6 @@ class ZLImageMapReader {
 		offset += 2;
 		final int fileSize = (int)data[offset] + (((int)data[offset + 1]) << 16);
 		offset += 2;
-		System.err.println("image: " + fileOffset + "::" + fileSize);
 
 		return new ZLFileImage(
 			MimeType.get(mime), ZLFile.createFileByPath(path), encoding, fileOffset, fileSize

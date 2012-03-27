@@ -117,6 +117,19 @@ void JavaEncodingConverter::reset() {
 }
 
 bool JavaEncodingConverter::fillTable(int *map) {
-	// TODO: implement
-	return false;
+	char in;
+	std::string out;
+	for (int i = 0; i < 256; ++i) {
+		convert(out, &in, (&in)+1);
+		reset();
+		if (out.size() != 0) {
+			ZLUnicodeUtil::Ucs4Char ch;
+			ZLUnicodeUtil::firstChar(ch, out.data());
+			map[i] = ch;
+			out.clear();
+		} else {
+			map[i] = i;
+		}
+	}
+	return true;
 }
