@@ -35,12 +35,13 @@ public class Base64InputStream extends InputStream {
 	
 	@Override
 	public int available() throws IOException {
-		// TODO: real value might be less than returned one
+		// TODO: implement
 		return (myBufferLength + myBaseStream.available()) / 2;
 	}
 
 	@Override
 	public long skip(long n) throws IOException {
+		// TODO: implement
 		int offset = myBufferOffset;
 		int available = myBufferLength;
 		byte first = 0;
@@ -66,6 +67,7 @@ public class Base64InputStream extends InputStream {
 
 	@Override
 	public int read() throws IOException {
+		// TODO: implement
 		int first = -1;
 		while (myBufferLength >= 0) {
 			while (myBufferLength-- > 0) {
@@ -90,6 +92,7 @@ public class Base64InputStream extends InputStream {
 
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
+		// TODO: implement
 		int offset = myBufferOffset;
 		int available = myBufferLength;
 		int first = -1;
@@ -135,35 +138,27 @@ public class Base64InputStream extends InputStream {
 		switch (b) {
 			default:
 				return -1;
-			case '0':
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-			case '7':
-			case '8':
-			case '9':
-				return b - '0';
-			case 'a':
-			case 'A':
-				return 10;
-			case 'b':
-			case 'B':
-				return 11;
-			case 'c':
-			case 'C':
-				return 12;
-			case 'd':
-			case 'D':
-				return 13;
-			case 'e':
-			case 'E':
-				return 14;
-			case 'f':
-			case 'F':
-				return 15;
+			case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+			case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
+			case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
+			case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
+			case 'Y': case 'Z':
+				return b - 'A';
+			case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+			case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
+			case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
+			case 's': case 't': case 'u': case 'v': case 'w': case 'x':
+			case 'y': case 'z':
+				return b - 'a' + 26;
+			case '0': case '1': case '2': case '3': case '4':
+			case '5': case '6': case '7': case '8': case '9':
+				return b - '0' + 52;
+			case '+':
+				return 62;
+			case '/':
+				return 63;
+			case '=':
+				return 64;
 		}
 	}
 }
