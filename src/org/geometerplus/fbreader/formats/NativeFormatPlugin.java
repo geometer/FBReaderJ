@@ -82,12 +82,6 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	protected native void readCoverInternal(ZLFile file, ZLImage[] box);
 
-	/*
-	public static ZLImage createImage(String mimeType, String fileName, int offset, int length) {
-		return new ZLFileImage(MimeType.get(mimeType), ZLFile.createFileByPath(fileName), offset, length);
-	}
-	*/
-
 	// FIXME: temporary implementation; implement as a native code
 	@Override
 	public String readAnnotation(ZLFile file) {
