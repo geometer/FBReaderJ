@@ -198,8 +198,6 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 		return;
 	}
 
-	const ZLFileImage &fileImage = (const ZLFileImage&)*image;
-
 	JNIEnv *env = AndroidUtil::getEnv();
 
 	jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
