@@ -188,9 +188,11 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 			char offset = (vOffset != 0) ? atoi(vOffset) : 0;
 			if ((ref != 0) && (*ref == '#')) {
 				++ref;
-				if ((myCoverImageReference != ref) ||
-						(myParagraphsBeforeBodyNumber != myModelReader.model().bookTextModel()->paragraphsNumber())) {
-					myModelReader.addImageReference(ref, offset, false);
+				const bool isCoverImage =
+					myParagraphsBeforeBodyNumber ==
+					myModelReader.model().bookTextModel()->paragraphsNumber();
+				if (myCoverImageReference != ref || !isCoverImage) {
+					myModelReader.addImageReference(ref, offset, myInsideCoverpage || isCoverImage);
 				}
 				if (myInsideCoverpage) {
 					myCoverImageReference = ref;
