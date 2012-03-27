@@ -79,7 +79,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLCachedMemoryAllocator.cpp \
-	NativeFormats/zlibrary/text/src/model/ZLImageMapWriter.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextParagraph.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
