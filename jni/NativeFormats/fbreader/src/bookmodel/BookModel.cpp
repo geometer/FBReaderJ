@@ -17,6 +17,8 @@
  * 02110-1301, USA.
  */
 
+#include <AndroidUtil.h>
+
 #include <ZLImage.h>
 #include <ZLFile.h>
 
@@ -27,7 +29,9 @@
 #include "../library/Book.h"
 #include "../library/Library.h"
 
-BookModel::BookModel(const shared_ptr<Book> book, jobject javaModel) : myBook(book), myJavaModel(javaModel) {
+BookModel::BookModel(const shared_ptr<Book> book, jobject javaModel) : myBook(book) {
+	myJavaModel = AndroidUtil::getEnv()->NewGlobalRef(javaModel);
+
 	const std::string cacheDirectory = Library::Instance().cacheDirectory();
 	myBookTextModel = new ZLTextPlainModel(std::string(), book->language(), 131072, cacheDirectory, "ncache");
 	myContentsModel = new ContentsModel(book->language(), cacheDirectory, "ncontents");
@@ -38,6 +42,7 @@ BookModel::BookModel(const shared_ptr<Book> book, jobject javaModel) : myBook(bo
 }
 
 BookModel::~BookModel() {
+	AndroidUtil::getEnv()->DeleteGlobalRef(myJavaModel);
 }
 
 void BookModel::setHyperlinkMatcher(shared_ptr<HyperlinkMatcher> matcher) {

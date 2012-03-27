@@ -18,6 +18,7 @@
  */
 
 #include <ZLFile.h>
+#include <ZLFileImage.h>
 
 #include "AndroidUtil.h"
 
@@ -235,13 +236,33 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	return true;
 }
 
-jobject AndroidUtil::createZLFile(JNIEnv *env, const std::string &path) {
+jobject AndroidUtil::createJavaFile(JNIEnv *env, const std::string &path) {
 	jstring javaPath = env->NewStringUTF(path.c_str());
 	jclass cls = env->FindClass(Class_ZLFile);
 	jobject javaFile = env->CallStaticObjectMethod(cls, SMID_ZLFile_createFileByPath, javaPath);
 	env->DeleteLocalRef(cls);
 	env->DeleteLocalRef(javaPath);
 	return javaFile;
+}
+
+jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
+	jstring javaMimeType = createJavaString(env, image.mimeType());
+	jobject javaFile = createJavaFile(env, image.file().path());
+	jstring javaEncoding = createJavaString(env, image.encoding());
+
+	jclass cls = env->FindClass(Class_ZLFileImage);
+	jobject javaImage = env->NewObject(
+		cls, MID_ZLFileImage_init,
+		javaMimeType, javaFile, javaEncoding,
+		image.offset(), image.size()
+	);
+
+	env->DeleteLocalRef(cls);
+	env->DeleteLocalRef(javaEncoding);
+	env->DeleteLocalRef(javaFile);
+	env->DeleteLocalRef(javaMimeType);
+
+	return javaImage;
 }
 
 std::string AndroidUtil::fromJavaString(JNIEnv *env, jstring from) {
@@ -281,24 +302,23 @@ std::string AndroidUtil::convertNonUtfString(const std::string &str) {
 	return result;
 }
 
-jintArray AndroidUtil::createIntArray(JNIEnv *env, const std::vector<jint> &data) {
+jintArray AndroidUtil::createJavaIntArray(JNIEnv *env, const std::vector<jint> &data) {
 	size_t size = data.size();
 	jintArray array = env->NewIntArray(size);
 	env->SetIntArrayRegion(array, 0, size, &data.front());
 	return array;
 }
 
-jbyteArray AndroidUtil::createByteArray(JNIEnv *env, const std::vector<jbyte> &data) {
+jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data) {
 	size_t size = data.size();
 	jbyteArray array = env->NewByteArray(size);
 	env->SetByteArrayRegion(array, 0, size, &data.front());
 	return array;
 }
 
-jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::string> &data) {
+jobjectArray AndroidUtil::createJavaStringArray(JNIEnv *env, const std::vector<std::string> &data) {
 	size_t size = data.size();
 	jclass cls = env->FindClass("java/lang/String");
-	// TODO: memory leak?
 	jobjectArray array = env->NewObjectArray(size, cls, 0);
 	for (size_t i = 0; i < size; ++i) {
 		const std::string &str = data[i];
@@ -308,10 +328,12 @@ jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::
 			env->DeleteLocalRef(javaStr);
 		}
 	}
+	env->DeleteLocalRef(cls);
 	return array;
 }
 
 void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
+	// TODO: possible memory leak
 	jclass cls = env->FindClass("java/lang/RuntimeException");
 	env->ThrowNew(cls, message.c_str());
 }
@@ -323,7 +345,8 @@ void AndroidUtil::throwBookReadingException(const std::string &resourceId, const
 		cls,
 		SMID_BookReadingException_throwForFile,
 		AndroidUtil::createJavaString(env, resourceId),
-		AndroidUtil::createZLFile(env, file.path())
+		AndroidUtil::createJavaFile(env, file.path())
 	);
+	// TODO: possible memory leak
 	// TODO: clear cls & ZLFile object references
 }

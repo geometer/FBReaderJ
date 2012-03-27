@@ -308,7 +308,7 @@ void FB2BookReader::endElementHandler(int tag) {
 					myModelReader.model().book()->file(),
 					"base64",
 					myCurrentImageStart,
-					getCurrentPosition()
+					getCurrentPosition() - myCurrentImageStart
 				));
 			}
 			myCurrentImageId.clear();
