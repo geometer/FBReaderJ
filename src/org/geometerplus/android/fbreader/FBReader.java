@@ -119,7 +119,6 @@ public final class FBReader extends ZLAndroidActivity {
 			public void run() {
 				runOnUiThread(new Runnable() {
 					public void run() {
-						initPluginActions();
 						new TipRunner().start();
 						DictionaryUtil.init(FBReader.this);
 					}
@@ -236,6 +235,8 @@ public final class FBReader extends ZLAndroidActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
+
+		initPluginActions();
 
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 
