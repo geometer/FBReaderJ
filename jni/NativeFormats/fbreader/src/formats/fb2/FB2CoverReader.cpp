@@ -18,7 +18,8 @@
  */
 
 #include <ZLFile.h>
-#include <ZLBase64EncodedImage.h>
+#include <ZLImage.h>
+//#include <ZLBase64EncodedImage.h>
 
 #include "FB2CoverReader.h"
 
@@ -53,7 +54,7 @@ void FB2CoverReader::startElementHandler(int tag, const char **attributes) {
 			const char *id = attributeValue(attributes, "id");
 			const char *contentType = attributeValue(attributes, "content-type");
 			if (id != 0 && contentType != 0 && myImageReference == id) {
-				myImage = new ZLBase64EncodedImage(contentType);
+				//myImage = new ZLBase64EncodedImage(contentType);
 			}
 		}
 	}
@@ -72,7 +73,7 @@ void FB2CoverReader::endElementHandler(int tag) {
 		case _BINARY:
 			if (!myImage.isNull()) {
 				if (!myImageBuffer.empty()) {
-					((ZLBase64EncodedImage&)*myImage).addData(myImageBuffer);
+					//((ZLBase64EncodedImage&)*myImage).addData(myImageBuffer);
 					myImageBuffer.clear();
 				} else {
 					myImage = 0;
