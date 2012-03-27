@@ -25,6 +25,7 @@ import java.io.InputStream;
 public class Base64InputStream extends InputStream {
 	private final InputStream myBaseStream;
 
+	private final int[] myDecodedBuffer = { -1, -1, -1 };
 	private final byte[] myBuffer = new byte[32768];
 	private int myBufferOffset;
 	private int myBufferLength;
@@ -36,51 +37,42 @@ public class Base64InputStream extends InputStream {
 	@Override
 	public int available() throws IOException {
 		// TODO: real value might be less than returned one
-		return (myBufferLength + myBaseStream.available()) / 2;
+		return (myBufferLength + myBaseStream.available()) * 3 / 4;
 	}
 
 	@Override
 	public long skip(long n) throws IOException {
-		int offset = myBufferOffset;
-		int available = myBufferLength;
-		byte first = 0;
-		for (long skipped = 0; skipped < 2 * n;) {
-			while (skipped < 2 * n && available-- > 0) {
-				if (decode(myBuffer[offset++]) != -1) {
-					++skipped;
-				}
-			}
-			if (skipped < 2 * n) {
-				fillBuffer();
-				available = myBufferLength;
-				if (available == -1) {
-					return skipped / 2;
-				}
-				offset = 0;
+		// TODO: optimize
+		for (long skipped = 0; skipped < n; ++skipped) {
+			if (read() == -1) {
+				return skipped;
 			}
 		}
-		myBufferLength = available;
-		myBufferOffset = offset;
 		return n;
 	}
 
 	@Override
 	public int read() throws IOException {
-		int first = -1;
-		while (myBufferLength >= 0) {
-			while (myBufferLength-- > 0) {
-				final int digit = decode(myBuffer[myBufferOffset++]);
-				if (digit != -1) {
-					if (first == -1) {
-						first = digit;
-					} else {
-						return (first << 4) + digit;
-					}
-				}
-			}
-			fillBuffer();
+		int result = myDecodedBuffer[0];
+		if (result != -1) {
+			myDecodedBuffer[0] = -1;
+			return result;
 		}
-		return -1;
+		result = myDecodedBuffer[1];
+		if (result != -1) {
+			myDecodedBuffer[1] = -1;
+			return result;
+		}
+		result = myDecodedBuffer[2];
+		if (result != -1) {
+			myDecodedBuffer[2] = -1;
+			return result;
+		}
+
+		fillDecodedBuffer();
+		result = myDecodedBuffer[0];
+		myDecodedBuffer[0] = -1;
+		return result;
 	}
 
 	@Override
@@ -90,32 +82,14 @@ public class Base64InputStream extends InputStream {
 
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
-		int offset = myBufferOffset;
-		int available = myBufferLength;
-		int first = -1;
-		for (int ready = 0; ready < len;) {
-			while (ready < len && available-- > 0) {
-				final int digit = decode(myBuffer[offset++]);
-				if (digit != -1) {
-					if (first == -1) {
-						first = digit;
-					} else {
-						b[off + ready++] = (byte)((first << 4) + digit);
-						first = -1;
-					}
-				}
+		// TODO: optimize
+		for (int ready = 0; ready < len; ++ready) {
+			final int num = read();
+			if (num == -1) {
+				return ready > 0 ? ready : -1;
 			}
-			if (ready < len) {
-				fillBuffer();
-				available = myBufferLength;
-				if (available == -1) {
-					return ready == 0 ? -1 : ready;
-				}
-				offset = 0;
-			}
+			b[off + ready] = (byte)num;
 		}
-		myBufferLength = available;
-		myBufferOffset = offset;
 		return len;
 	}
 
@@ -124,6 +98,40 @@ public class Base64InputStream extends InputStream {
 		myBaseStream.reset();
 		myBufferOffset = 0;
 		myBufferLength = 0;
+		myDecodedBuffer[0] = -1;
+		myDecodedBuffer[1] = -1;
+		myDecodedBuffer[2] = -1;
+	}
+
+	private void fillDecodedBuffer() throws IOException {
+		int first = -1;
+		int second = -1;
+		int third = -1;
+		int fourth = -1;
+main:
+		while (myBufferLength >= 0) {
+			while (myBufferLength-- > 0) {
+				final int digit = decode(myBuffer[myBufferOffset++]);
+				if (digit != -1) {
+					if (first == -1) {
+						first = digit;
+					} else if (second == -1) {
+						second = digit;
+					} else if (third == -1) {
+						third = digit;
+					} else {
+						fourth = digit;
+						break main;
+					}
+				}
+			}
+			fillBuffer();
+		}
+		if (first != -1) {
+			myDecodedBuffer[0] = (first << 2) | (second >> 4);
+			myDecodedBuffer[1] = 0xFF & ((second << 4) | (third >> 2));
+			myDecodedBuffer[2] = 0xFF & ((third << 6) | fourth);
+		}
 	}
 
 	private void fillBuffer() throws IOException {
@@ -135,35 +143,27 @@ public class Base64InputStream extends InputStream {
 		switch (b) {
 			default:
 				return -1;
-			case '0':
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-			case '7':
-			case '8':
-			case '9':
-				return b - '0';
-			case 'a':
-			case 'A':
-				return 10;
-			case 'b':
-			case 'B':
-				return 11;
-			case 'c':
-			case 'C':
-				return 12;
-			case 'd':
-			case 'D':
-				return 13;
-			case 'e':
-			case 'E':
-				return 14;
-			case 'f':
-			case 'F':
-				return 15;
+			case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+			case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
+			case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
+			case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
+			case 'Y': case 'Z':
+				return b - 'A';
+			case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+			case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
+			case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
+			case 's': case 't': case 'u': case 'v': case 'w': case 'x':
+			case 'y': case 'z':
+				return b - 'a' + 26;
+			case '0': case '1': case '2': case '3': case '4':
+			case '5': case '6': case '7': case '8': case '9':
+				return b - '0' + 52;
+			case '+':
+				return 62;
+			case '/':
+				return 63;
+			case '=':
+				return 64;
 		}
 	}
 }
