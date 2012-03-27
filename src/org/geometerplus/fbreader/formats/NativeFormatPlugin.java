@@ -30,8 +30,6 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.filetype.*;
 
 public class NativeFormatPlugin extends FormatPlugin {
-	private static Object ourCoversLock = new Object();
-
 	// No free method because all plugins' instances are freed by 
 	//   PluginCollection::deleteInstance method (C++)
 
@@ -75,15 +73,14 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 			@Override
 			public ZLSingleImage getRealImage() {
-				// Synchronized block is needed because we use temporary storage files
-				synchronized (ourCoversLock) {
-					return (ZLSingleImage)readCoverInternal(file);
-				}
+				final ZLImage[] box = new ZLImage[1];
+				readCoverInternal(file, box);
+				return (ZLSingleImage)box[0];
 			}
 		};
 	}
 
-	protected native ZLImage readCoverInternal(ZLFile file);
+	protected native void readCoverInternal(ZLFile file, ZLImage[] box);
 
 	/*
 	public static ZLImage createImage(String mimeType, String fileName, int offset, int length) {
