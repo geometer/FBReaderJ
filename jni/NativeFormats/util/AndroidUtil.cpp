@@ -36,6 +36,7 @@ const char * const AndroidUtil::Class_EncodingConverter = "org/geometerplus/zlib
 const char * const AndroidUtil::Class_JavaEncodingCollection = "org/geometerplus/zlibrary/core/encodings/JavaEncodingCollection";
 const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
+const char * const AndroidUtil::Class_ZLFileImage = "org/geometerplus/zlibrary/core/image/ZLFileImage";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
@@ -82,6 +83,8 @@ jmethodID AndroidUtil::MID_ZLFile_getPath;
 jmethodID AndroidUtil::MID_ZLFile_isDirectory;
 jmethodID AndroidUtil::MID_ZLFile_size;
 
+jmethodID AndroidUtil::MID_ZLFileImage_init;
+
 jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
 
 jfieldID AndroidUtil::FID_Book_File;
@@ -99,12 +102,12 @@ jmethodID AndroidUtil::MID_Book_save;
 jmethodID AndroidUtil::SMID_Tag_getTag;
 
 jfieldID AndroidUtil::FID_NativeBookModel_Book;
-jmethodID AndroidUtil::MID_NativeBookModel_initImageMap;
 jmethodID AndroidUtil::MID_NativeBookModel_initInternalHyperlinks;
 jmethodID AndroidUtil::MID_NativeBookModel_initTOC;
 jmethodID AndroidUtil::MID_NativeBookModel_createTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setBookTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setFootnoteModel;
+jmethodID AndroidUtil::MID_NativeBookModel_addImage;
 
 jmethodID AndroidUtil::SMID_BookReadingException_throwForFile;
 
@@ -189,6 +192,10 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_ZLFile_size = env->GetMethodID(cls, "size", "()J") );
 	env->DeleteLocalRef(cls);
 
+	CHECK_NULL( cls = env->FindClass(Class_ZLFileImage) );
+	CHECK_NULL( MID_ZLFileImage_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;II)V") );
+	env->DeleteLocalRef(cls);
+
 	CHECK_NULL( cls = env->FindClass(Class_Paths) );
 	CHECK_NULL( SMID_Paths_cacheDirectory = env->GetStaticMethodID(cls, "cacheDirectory", "()Ljava/lang/String;") );
 	env->DeleteLocalRef(cls);
@@ -213,12 +220,12 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	CHECK_NULL( cls = env->FindClass(Class_NativeBookModel) );
 	CHECK_NULL( FID_NativeBookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;") );
-	CHECK_NULL( MID_NativeBookModel_initImageMap = env->GetMethodID(cls, "initImageMap", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V") );
 	CHECK_NULL( MID_NativeBookModel_initInternalHyperlinks = env->GetMethodID(cls, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)V") );
 	CHECK_NULL( MID_NativeBookModel_initTOC = env->GetMethodID(cls, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)V") );
 	CHECK_NULL( MID_NativeBookModel_createTextModel = env->GetMethodID(cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)Lorg/geometerplus/zlibrary/text/model/ZLTextModel;") );
 	CHECK_NULL( MID_NativeBookModel_setBookTextModel = env->GetMethodID(cls, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
 	CHECK_NULL( MID_NativeBookModel_setFootnoteModel = env->GetMethodID(cls, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
+	CHECK_NULL( MID_NativeBookModel_addImage = env->GetMethodID(cls, "addImage", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/image/ZLImage;)V") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_BookReadingException) );
@@ -291,6 +298,7 @@ jbyteArray AndroidUtil::createByteArray(JNIEnv *env, const std::vector<jbyte> &d
 jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::string> &data) {
 	size_t size = data.size();
 	jclass cls = env->FindClass("java/lang/String");
+	// TODO: memory leak?
 	jobjectArray array = env->NewObjectArray(size, cls, 0);
 	for (size_t i = 0; i < size; ++i) {
 		const std::string &str = data[i];
