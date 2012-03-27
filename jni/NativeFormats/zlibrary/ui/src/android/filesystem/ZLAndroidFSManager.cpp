@@ -84,7 +84,7 @@ ZLFileInfo ZLAndroidFSManager::fileInfo(const std::string &path) const {
 	ZLFileInfo info;
 
 	JNIEnv *env = AndroidUtil::getEnv();
-	jobject javaFile = AndroidUtil::createZLFile(env, path);
+	jobject javaFile = AndroidUtil::createJavaFile(env, path);
 	if (javaFile == 0) {
 		return info;
 	}

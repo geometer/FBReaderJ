@@ -26,6 +26,7 @@
 #include <vector>
 
 class ZLFile;
+class ZLFileImage;
 
 class AndroidUtil {
 
@@ -132,14 +133,16 @@ public:
 public:
 	static JNIEnv *getEnv();
 
-	static jobject createZLFile(JNIEnv *env, const std::string &path);
 	static std::string fromJavaString(JNIEnv *env, jstring from);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
 	static std::string convertNonUtfString(const std::string &str);
 
-	static jintArray createIntArray(JNIEnv *env, const std::vector<jint> &data);
-	static jbyteArray createByteArray(JNIEnv *env, const std::vector<jbyte> &data);
-	static jobjectArray createStringArray(JNIEnv *env, const std::vector<std::string> &data);
+	static jobject createJavaFile(JNIEnv *env, const std::string &path);
+	static jobject createJavaImage(JNIEnv *env, const ZLFileImage &image);
+
+	static jintArray createJavaIntArray(JNIEnv *env, const std::vector<jint> &data);
+	static jbyteArray createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data);
+	static jobjectArray createJavaStringArray(JNIEnv *env, const std::vector<std::string> &data);
 
 	static void throwRuntimeException(JNIEnv *env, const std::string &message);
 	static void throwBookReadingException(const std::string &resourceId, const ZLFile &file);

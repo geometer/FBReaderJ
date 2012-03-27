@@ -44,7 +44,7 @@ JavaInputStream::~JavaInputStream() {
 
 void JavaInputStream::initStream(JNIEnv *env) {
 	if (myJavaFile == 0) {
-		jobject javaFile = AndroidUtil::createZLFile(env, myName);
+		jobject javaFile = AndroidUtil::createJavaFile(env, myName);
 		myJavaFile = env->NewGlobalRef(javaFile);
 		env->DeleteLocalRef(javaFile);
 		if (myJavaFile == 0) {
