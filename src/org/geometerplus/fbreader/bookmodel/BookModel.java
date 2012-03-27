@@ -33,6 +33,8 @@ public abstract class BookModel {
 			throw new BookReadingException("pluginNotFound", book.File);
 		}
 
+		System.err.println("using plugin: " + plugin.supportedFileType() + "/" + plugin.type());
+
 		final BookModel model;
 		switch (plugin.type()) {
 			case NATIVE:
