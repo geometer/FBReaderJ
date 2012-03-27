@@ -25,7 +25,9 @@ import java.io.InputStream;
 public class Base64InputStream extends InputStream {
 	private final InputStream myBaseStream;
 
-	private final int[] myDecodedBuffer = { -1, -1, -1 };
+	private int myDecoded0 = -1;
+	private int myDecoded1 = -1;
+	private int myDecoded2 = -1;
 	private final byte[] myBuffer = new byte[32768];
 	private int myBufferOffset;
 	private int myBufferLength;
@@ -53,25 +55,25 @@ public class Base64InputStream extends InputStream {
 
 	@Override
 	public int read() throws IOException {
-		int result = myDecodedBuffer[0];
+		int result = myDecoded0;
 		if (result != -1) {
-			myDecodedBuffer[0] = -1;
+			myDecoded0 = -1;
 			return result;
 		}
-		result = myDecodedBuffer[1];
+		result = myDecoded1;
 		if (result != -1) {
-			myDecodedBuffer[1] = -1;
+			myDecoded1 = -1;
 			return result;
 		}
-		result = myDecodedBuffer[2];
+		result = myDecoded2;
 		if (result != -1) {
-			myDecodedBuffer[2] = -1;
+			myDecoded2 = -1;
 			return result;
 		}
 
 		fillDecodedBuffer();
-		result = myDecodedBuffer[0];
-		myDecodedBuffer[0] = -1;
+		result = myDecoded0;
+		myDecoded0 = -1;
 		return result;
 	}
 
@@ -98,9 +100,9 @@ public class Base64InputStream extends InputStream {
 		myBaseStream.reset();
 		myBufferOffset = 0;
 		myBufferLength = 0;
-		myDecodedBuffer[0] = -1;
-		myDecodedBuffer[1] = -1;
-		myDecodedBuffer[2] = -1;
+		myDecoded0 = -1;
+		myDecoded1 = -1;
+		myDecoded2 = -1;
 	}
 
 	private void fillDecodedBuffer() throws IOException {
@@ -128,9 +130,9 @@ main:
 			fillBuffer();
 		}
 		if (first != -1) {
-			myDecodedBuffer[0] = (first << 2) | (second >> 4);
-			myDecodedBuffer[1] = 0xFF & ((second << 4) | (third >> 2));
-			myDecodedBuffer[2] = 0xFF & ((third << 6) | fourth);
+			myDecoded0 = (first << 2) | (second >> 4);
+			myDecoded1 = 0xFF & ((second << 4) | (third >> 2));
+			myDecoded2 = 0xFF & ((third << 6) | fourth);
 		}
 	}
 
