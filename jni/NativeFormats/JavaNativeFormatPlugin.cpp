@@ -22,19 +22,12 @@
 #include <AndroidUtil.h>
 #include <ZLFileImage.h>
 
-#include <ZLFile.h>
-#include <ZLImage.h>
-#include <ZLTextModel.h>
-
-#include <ZLCachedMemoryAllocator.h>
-
 #include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
 #include "fbreader/src/library/Library.h"
 #include "fbreader/src/library/Author.h"
 #include "fbreader/src/library/Book.h"
 #include "fbreader/src/library/Tag.h"
-
 
 static shared_ptr<FormatPlugin> findCppPlugin(JNIEnv *env, jobject base) {
 	jstring fileTypeJava = (jstring)env->CallObjectMethod(base, AndroidUtil::MID_NativeFormatPlugin_supportedFileType);
