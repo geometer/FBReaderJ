@@ -25,7 +25,6 @@
 #include <ZLXMLNamespace.h>
 
 #include "FB2Reader.h"
-//#include "../util/EntityFilesCollector.h"
 
 void FB2Reader::startElementHandler(const char *t, const char **attributes) {
 	startElementHandler(tag(t), attributes);
