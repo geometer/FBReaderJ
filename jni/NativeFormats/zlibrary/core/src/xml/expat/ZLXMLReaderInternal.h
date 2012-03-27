@@ -38,6 +38,7 @@ public:
 	~ZLXMLReaderInternal();
 	void init(const char *encoding = 0);
 	bool parseBuffer(const char *buffer, size_t len);
+	size_t getCurrentPosition() const;
 
 private:
 	void setupEntities();

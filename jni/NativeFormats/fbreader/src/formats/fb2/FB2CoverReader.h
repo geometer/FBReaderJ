@@ -23,7 +23,7 @@
 #include "FB2Reader.h"
 
 class Book;
-class ZLfile;
+class ZLFile;
 class ZLImage;
 
 class FB2CoverReader : public FB2Reader {

@@ -297,8 +297,8 @@ void XHTMLTagImageAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 		endParagraph(reader);
 	}
 	const std::string imageName = imageFile.name(false);
-	bookReader(reader).addImageReference(imageName);
-	bookReader(reader).addImage(imageName, new ZLFileImage(imageFile, 0));
+	bookReader(reader).addImageReference(imageName, 0, false);
+	bookReader(reader).addImage(imageName, new ZLFileImage(imageFile, "", 0));
 	if (flag) {
 		beginParagraph(reader);
 	}

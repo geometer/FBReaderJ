@@ -99,6 +99,7 @@ bool CoversWriter::fillSingleImageData(ImageData &imageData, const ZLSingleImage
 	ZLLogger &logger = ZLLogger::Instance();
 	logger.registerClass("FBREADER");
 	logger.println("FBREADER", "CoversWriter: NO CACHE DATA...");
+	/*
 	switch (image.kind()) {
 		case ZLSingleImage::BASE64_ENCODED_IMAGE:
 		case ZLSingleImage::REGULAR_IMAGE:
@@ -141,6 +142,7 @@ bool CoversWriter::fillSingleImageData(ImageData &imageData, const ZLSingleImage
 			logger.println("FBREADER", "CoversWriter: unknown image; return");
 			return false;
 	}
+	*/
 	logger.println("FBREADER", "CoversWriter: CACHE FILLED");
 	return true;
 }

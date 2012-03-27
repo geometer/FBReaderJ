@@ -46,7 +46,7 @@ void XHTMLImageFinder::startElementHandler(const char *tag, const char **attribu
 		const char *src = attributeValue(attributes, "src");
 		if (src != 0) {
 			myCoverReader.myImage =
-				new ZLFileImage(ZLFile(myCoverReader.myPathPrefix + src), 0);
+				new ZLFileImage(ZLFile(myCoverReader.myPathPrefix + src), "", 0);
 			interrupt();
 		}
 	}
@@ -66,7 +66,7 @@ shared_ptr<ZLImage> OEBCoverReader::readCover(const ZLFile &file) {
 		ZLFile coverFile(myCoverXHTML);
 		const std::string ext = coverFile.extension();
 		if (ext == "gif" || ext == "jpeg" || ext == "jpg") {
-			myImage = new ZLFileImage(ZLFile(myCoverXHTML), 0);
+			myImage = new ZLFileImage(ZLFile(myCoverXHTML), "", 0);
 		} else {
 			XHTMLImageFinder(*this).readDocument(coverFile);
 		}
@@ -94,7 +94,7 @@ void OEBCoverReader::startElementHandler(const char *tag, const char **attribute
 			} else if (COVER_IMAGE == type) {
 				const char *href = attributeValue(attributes, "href");
 				if (href != 0) {
-					myImage = new ZLFileImage(ZLFile(myPathPrefix + MiscUtil::decodeHtmlURL(href)), 0);
+					myImage = new ZLFileImage(ZLFile(myPathPrefix + MiscUtil::decodeHtmlURL(href)), "", 0);
 					interrupt();
 				}
 			}
