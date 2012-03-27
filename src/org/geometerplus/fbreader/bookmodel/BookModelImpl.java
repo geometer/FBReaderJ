@@ -29,7 +29,7 @@ import org.geometerplus.fbreader.library.Book;
 
 abstract class BookModelImpl extends BookModel {
 	protected CharStorage myInternalHyperlinks;
-	protected ZLImageMap myImageMap;
+	protected final ZLImageMap myImageMap = new ZLImageMap();
 	protected final HashMap<String,ZLTextModel> myFootnotes = new HashMap<String,ZLTextModel>();
 
 	BookModelImpl(Book book) {
@@ -61,5 +61,10 @@ abstract class BookModelImpl extends BookModel {
 			}
 		}
 		return null;
+	}
+
+	public void addImage(String id, ZLImage image) {
+		System.err.println(id + ":" + image);
+		myImageMap.put(id, image);
 	}
 }

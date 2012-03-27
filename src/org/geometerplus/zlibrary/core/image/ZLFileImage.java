@@ -52,6 +52,10 @@ public class ZLFileImage extends ZLSingleImage {
 	private final int myOffset;
 	private final int myLength;
 	
+	public ZLFileImage(String mimeType, ZLFile file, String encoding, int offset, int length) {
+		this(MimeType.get(mimeType), file, encoding, offset, length);
+	}
+
 	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int offset, int length) {
 		super(mimeType);
 		myFile = file;
