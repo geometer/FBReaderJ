@@ -176,8 +176,8 @@ void HtmlImageTagAction::run(const HtmlReader::HtmlTag &tag) {
 				const std::string fileName = MiscUtil::decodeHtmlURL(tag.Attributes[i].Value);
 				const ZLFile file(myReader.myBaseDirPath + fileName);
 				if (file.exists()) {
-					bookReader().addImageReference(fileName);
-					bookReader().addImage(fileName, new ZLFileImage(file, 0));
+					bookReader().addImageReference(fileName, 0, false);
+					bookReader().addImage(fileName, new ZLFileImage(file, "", 0));
 				}
 				break;
 			}

@@ -31,6 +31,7 @@ public class ZLFileImage extends ZLSingleImage {
 
 	public static final String ENCODING_NONE = "";
 	public static final String ENCODING_HEX = "hex";
+	public static final String ENCODING_BASE64 = "base64";
 
 	public static ZLFileImage byUrlPath(String urlPath) {
 		try {

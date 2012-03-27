@@ -57,7 +57,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipEntryCache.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipHeader.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipInputStream.cpp \
-	NativeFormats/zlibrary/core/src/image/ZLBase64EncodedImage.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
@@ -94,6 +93,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/bookmodel/BookReader.cpp \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
+	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2BookReader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2CoverReader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2MetaInfoReader.cpp \
@@ -114,7 +114,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/oeb/OEBMetaInfoReader.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBPlugin.cpp \
 	NativeFormats/fbreader/src/formats/oeb/OEBTextStream.cpp \
-	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfPlugin.cpp \

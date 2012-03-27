@@ -220,3 +220,7 @@ void ZLXMLReader::setErrorMessage(const std::string &message) {
 	myErrorMessage = message;
 	interrupt();
 }
+
+size_t ZLXMLReader::getCurrentPosition() const {
+	return myInternalReader != 0 ? myInternalReader->getCurrentPosition() : (size_t)-1;
+}
