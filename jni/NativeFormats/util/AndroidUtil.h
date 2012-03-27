@@ -41,6 +41,7 @@ public:
 	static const char * const Class_java_io_PrintStream;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
+	static const char * const Class_ZLFileImage;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Encoding;
@@ -80,6 +81,8 @@ public:
 	static jmethodID MID_ZLFile_isDirectory;
 	static jmethodID MID_ZLFile_size;
 
+	static jmethodID MID_ZLFileImage_init;
+
 	static jmethodID SMID_NativeFormatPlugin_createImage;
 	static jmethodID MID_NativeFormatPlugin_init;
 	static jmethodID MID_NativeFormatPlugin_supportedFileType;
@@ -114,12 +117,12 @@ public:
 	static jmethodID SMID_Tag_getTag;
 
 	static jfieldID FID_NativeBookModel_Book;
-	static jmethodID MID_NativeBookModel_initImageMap;
 	static jmethodID MID_NativeBookModel_initInternalHyperlinks;
 	static jmethodID MID_NativeBookModel_initTOC;
 	static jmethodID MID_NativeBookModel_createTextModel;
 	static jmethodID MID_NativeBookModel_setBookTextModel;
 	static jmethodID MID_NativeBookModel_setFootnoteModel;
+	static jmethodID MID_NativeBookModel_addImage;
 
 	static jmethodID SMID_BookReadingException_throwForFile;
 
