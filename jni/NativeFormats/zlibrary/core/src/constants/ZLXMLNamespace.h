@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,32 +17,27 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FB2COVERREADER_H__
-#define __FB2COVERREADER_H__
+#ifndef __ZLXMLNAMESPACE_H__
+#define __ZLXMLNAMESPACE_H__
 
-#include "FB2Reader.h"
+#include <string>
 
-class Book;
-class ZLFile;
-class ZLImage;
+class ZLXMLNamespace {
 
-class FB2CoverReader : public FB2Reader {
+private:
+	ZLXMLNamespace();
 
 public:
-	FB2CoverReader(const ZLFile &file);
-	shared_ptr<ZLImage> readCover();
-
-private:
-	void startElementHandler(int tag, const char **attributes);
-	void endElementHandler(int tag);
-	void characterDataHandler(const char *text, size_t len);
-
-private:
-	const ZLFile myFile;
-	bool myReadCoverPage;
-	std::string myImageReference;
-	shared_ptr<ZLImage> myImage;
-	std::vector<std::string> myImageBuffer;
+	static const std::string DublinCorePrefix;
+	static const std::string DublinCoreLegacyPrefix;
+	static const std::string DublinCoreTerms;
+	static const std::string XLink;
+	static const std::string OpenPackagingFormat;
+	static const std::string Atom;
+	static const std::string OpenSearch;
+	static const std::string CalibreMetadata;
+	static const std::string Opds;
+	static const std::string DaisyNCX;
 };
 
-#endif /* __FB2COVERREADER_H__ */
+#endif /* __ZLXMLNAMESPACE_H__ */
