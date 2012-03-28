@@ -20,29 +20,16 @@
 #include <jni.h>
 #include <AndroidUtil.h>
 
-//#include <ZLApplication.h>
 #include <ZLibrary.h>
-//#include <ZLLanguageUtil.h>
 
 #include "../../../../core/src/unix/library/ZLibraryImplementation.h"
 
 #include "../filesystem/ZLAndroidFSManager.h"
-//#include "../time/ZLGtkTime.h"
-//#include "../dialogs/ZLGtkDialogManager.h"
-//#include "../image/ZLGtkImageManager.h"
-//#include "../view/ZLGtkPaintContext.h"
-//#include "../../unix/message/ZLUnixMessage.h"
-//#include "../../../../core/src/util/ZLKeyUtil.h"
-//#include "../../../../core/src/unix/xmlconfig/XMLConfig.h"
-//#include "../../../../core/src/unix/iconv/IConvEncodingConverter.h"
-//#include "../../../../core/src/unix/curl/ZLCurlNetworkManager.h"
 
 class ZLAndroidLibraryImplementation : public ZLibraryImplementation {
 
 private:
 	void init(int &argc, char **&argv);
-//	ZLPaintContext *createContext();
-//	void run(ZLApplication *application);
 };
 
 void initLibrary() {
@@ -52,30 +39,8 @@ void initLibrary() {
 void ZLAndroidLibraryImplementation::init(int &argc, char **&argv) {
 	ZLibrary::parseArguments(argc, argv);
 
-//	XMLConfigManager::createInstance();
 	ZLAndroidFSManager::createInstance();
-//	ZLGtkTimeManager::createInstance();
-//	ZLGtkDialogManager::createInstance();
-//	ZLUnixCommunicationManager::createInstance();
-//	ZLGtkImageManager::createInstance();
-//	ZLEncodingCollection::Instance().registerProvider(new IConvEncodingConverterProvider());
-//	ZLCurlNetworkManager::createInstance();
-
-//	ZLKeyUtil::setKeyNamesFileName("keynames-gtk.xml");
 }
-
-/*ZLPaintContext *ZLAndroidLibraryImplementation::createContext() {
-	return new ZLGtkPaintContext();
-}*/
-
-/*void ZLAndroidLibraryImplementation::run(ZLApplication *application) {
-	ZLDialogManager::Instance().createApplicationWindow(application);
-	application->initWindow();
-	gtk_widget_set_default_direction(ZLLanguageUtil::isRTLLanguage(ZLibrary::Language()) ? GTK_TEXT_DIR_RTL : GTK_TEXT_DIR_LTR);
-	gtk_main();
-	delete application;
-}*/
-
 
 std::string ZLibrary::Language() {
 	JNIEnv *env = AndroidUtil::getEnv();

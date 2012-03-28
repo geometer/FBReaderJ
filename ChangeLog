@@ -1,4 +1,10 @@
-===== 1.4.1 (Mar ??, 2012) =====
+===== 1.4.2 (Mar 27, 2012) =====
+* Supported embedded images in RTF files
+* New fb2 engine
+* Fixed plugin items in main menu
+
+===== 1.4.1 (Mar 23, 2012) =====
+* RTF support (images are not supported at this moment)
 * Fixed Dutch language detection
 
 ===== 1.4 (Mar 18, 2012) =====

@@ -135,7 +135,7 @@ class DeflatingDecompressor extends Decompressor {
 					myCompressedAvailable -= toRead;
 				}
 			}
-			if (myInBufferLength == 0) {
+			if (myInBufferLength <= 0) {
 				break;
 			}
 			final long result = inflate(myInflatorId, myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
@@ -151,6 +151,9 @@ class DeflatingDecompressor extends Decompressor {
 				throw new ZipException("Cannot inflate zip-compressed block, code = " + result + ";extra info = " + extraInfo);
 			}
 			final int in = (int)(result >> 16) & 0xFFFF;
+			if (in > myInBufferLength) {
+				throw new ZipException("Invalid inflating result, code = " + result + "; buffer length = " + myInBufferLength);
+			}
 			final int out = (int)result & 0xFFFF;
 			myInBufferOffset += in;
 			myInBufferLength -= in;

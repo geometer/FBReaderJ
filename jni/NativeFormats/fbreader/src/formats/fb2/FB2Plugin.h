@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+#ifndef __FB2PLUGIN_H__
+#define __FB2PLUGIN_H__
 
-import java.nio.charset.Charset;
+#include "../FormatPlugin.h"
 
-public final class JavaEncodingCollection extends FilteredEncodingCollection {
-	private volatile static JavaEncodingCollection ourInstance;
+class FB2Plugin : public FormatPlugin {
 
-	public static JavaEncodingCollection Instance() {
-		if (ourInstance == null) {
-			ourInstance = new JavaEncodingCollection();
-		}
-		return ourInstance;
-	}
+public:
+	FB2Plugin();
+	~FB2Plugin();
+	bool providesMetaInfo() const;
+	const std::string supportedFileType() const;
+	bool readMetaInfo(Book &book) const;
+	bool readLanguageAndEncoding(Book &book) const;
+	bool readModel(BookModel &model) const;
+	shared_ptr<ZLImage> coverImage(const ZLFile &file) const;
+};
 
-	private JavaEncodingCollection() {
-		super();
-	}
+inline FB2Plugin::FB2Plugin() {}
+inline FB2Plugin::~FB2Plugin() {}
+inline bool FB2Plugin::providesMetaInfo() const { return true; }
 
-	@Override
-	public boolean isEncodingSupported(String name) {
-		try {
-			return Charset.forName(name) != null;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-}
+#endif /* __FB2PLUGIN_H__ */

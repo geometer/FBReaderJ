@@ -18,6 +18,7 @@
  */
 
 #include <ZLFile.h>
+#include <ZLFileImage.h>
 
 #include "AndroidUtil.h"
 
@@ -31,11 +32,12 @@ const char * const AndroidUtil::Class_java_io_PrintStream = "java/io/PrintStream
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
-const char * const AndroidUtil::Class_Encoding = "org/geometerplus/fbreader/formats/Encoding";
-const char * const AndroidUtil::Class_EncodingConverter = "org/geometerplus/fbreader/formats/EncodingConverter";
-const char * const AndroidUtil::Class_JavaEncodingCollection = "org/geometerplus/fbreader/formats/JavaEncodingCollection";
+const char * const AndroidUtil::Class_Encoding = "org/geometerplus/zlibrary/core/encodings/Encoding";
+const char * const AndroidUtil::Class_EncodingConverter = "org/geometerplus/zlibrary/core/encodings/EncodingConverter";
+const char * const AndroidUtil::Class_JavaEncodingCollection = "org/geometerplus/zlibrary/core/encodings/JavaEncodingCollection";
 const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
+const char * const AndroidUtil::Class_ZLFileImage = "org/geometerplus/zlibrary/core/image/ZLFileImage";
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
@@ -82,6 +84,8 @@ jmethodID AndroidUtil::MID_ZLFile_getPath;
 jmethodID AndroidUtil::MID_ZLFile_isDirectory;
 jmethodID AndroidUtil::MID_ZLFile_size;
 
+jmethodID AndroidUtil::MID_ZLFileImage_init;
+
 jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
 
 jfieldID AndroidUtil::FID_Book_File;
@@ -99,12 +103,12 @@ jmethodID AndroidUtil::MID_Book_save;
 jmethodID AndroidUtil::SMID_Tag_getTag;
 
 jfieldID AndroidUtil::FID_NativeBookModel_Book;
-jmethodID AndroidUtil::MID_NativeBookModel_initImageMap;
 jmethodID AndroidUtil::MID_NativeBookModel_initInternalHyperlinks;
 jmethodID AndroidUtil::MID_NativeBookModel_initTOC;
 jmethodID AndroidUtil::MID_NativeBookModel_createTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setBookTextModel;
 jmethodID AndroidUtil::MID_NativeBookModel_setFootnoteModel;
+jmethodID AndroidUtil::MID_NativeBookModel_addImage;
 
 jmethodID AndroidUtil::SMID_BookReadingException_throwForFile;
 
@@ -155,7 +159,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
 	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V") );
 	CHECK_NULL( MID_NativeFormatPlugin_supportedFileType = env->GetMethodID(cls, "supportedFileType", "()Ljava/lang/String;") );
-	//CHECK_NULL( SMID_NativeFormatPlugin_createImage = env->GetStaticMethodID(cls, "createImage", "(Ljava/lang/String;Ljava/lang/String;II)Lorg/geometerplus/zlibrary/core/image/ZLImage;") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_PluginCollection) );
@@ -163,7 +166,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Encoding) );
-	CHECK_NULL( MID_Encoding_createConverter = env->GetMethodID(cls, "createConverter", "()Lorg/geometerplus/fbreader/formats/EncodingConverter;") );
+	CHECK_NULL( MID_Encoding_createConverter = env->GetMethodID(cls, "createConverter", "()Lorg/geometerplus/zlibrary/core/encodings/EncodingConverter;") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_EncodingConverter) );
@@ -173,9 +176,9 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_JavaEncodingCollection) );
-	CHECK_NULL( SMID_JavaEncodingCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/JavaEncodingCollection;") );
-	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_String = env->GetMethodID(cls, "getEncoding", "(Ljava/lang/String;)Lorg/geometerplus/fbreader/formats/Encoding;") );
-	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_int = env->GetMethodID(cls, "getEncoding", "(I)Lorg/geometerplus/fbreader/formats/Encoding;") );
+	CHECK_NULL( SMID_JavaEncodingCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/encodings/JavaEncodingCollection;") );
+	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_String = env->GetMethodID(cls, "getEncoding", "(Ljava/lang/String;)Lorg/geometerplus/zlibrary/core/encodings/Encoding;") );
+	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_int = env->GetMethodID(cls, "getEncoding", "(I)Lorg/geometerplus/zlibrary/core/encodings/Encoding;") );
 	CHECK_NULL( MID_JavaEncodingCollection_providesConverterFor = env->GetMethodID(cls, "providesConverterFor", "(Ljava/lang/String;)Z") );
 	env->DeleteLocalRef(cls);
 
@@ -187,6 +190,10 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( MID_ZLFile_getInputStream = env->GetMethodID(cls, "getInputStream", "()Ljava/io/InputStream;") );
 	CHECK_NULL( MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;") );
 	CHECK_NULL( MID_ZLFile_size = env->GetMethodID(cls, "size", "()J") );
+	env->DeleteLocalRef(cls);
+
+	CHECK_NULL( cls = env->FindClass(Class_ZLFileImage) );
+	CHECK_NULL( MID_ZLFileImage_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;II)V") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Paths) );
@@ -213,12 +220,12 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	CHECK_NULL( cls = env->FindClass(Class_NativeBookModel) );
 	CHECK_NULL( FID_NativeBookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;") );
-	CHECK_NULL( MID_NativeBookModel_initImageMap = env->GetMethodID(cls, "initImageMap", "([Ljava/lang/String;[I[ILjava/lang/String;Ljava/lang/String;I)V") );
 	CHECK_NULL( MID_NativeBookModel_initInternalHyperlinks = env->GetMethodID(cls, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)V") );
 	CHECK_NULL( MID_NativeBookModel_initTOC = env->GetMethodID(cls, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)V") );
 	CHECK_NULL( MID_NativeBookModel_createTextModel = env->GetMethodID(cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)Lorg/geometerplus/zlibrary/text/model/ZLTextModel;") );
 	CHECK_NULL( MID_NativeBookModel_setBookTextModel = env->GetMethodID(cls, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
 	CHECK_NULL( MID_NativeBookModel_setFootnoteModel = env->GetMethodID(cls, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)V") );
+	CHECK_NULL( MID_NativeBookModel_addImage = env->GetMethodID(cls, "addImage", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/image/ZLImage;)V") );
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_BookReadingException) );
@@ -228,13 +235,33 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	return true;
 }
 
-jobject AndroidUtil::createZLFile(JNIEnv *env, const std::string &path) {
+jobject AndroidUtil::createJavaFile(JNIEnv *env, const std::string &path) {
 	jstring javaPath = env->NewStringUTF(path.c_str());
 	jclass cls = env->FindClass(Class_ZLFile);
 	jobject javaFile = env->CallStaticObjectMethod(cls, SMID_ZLFile_createFileByPath, javaPath);
 	env->DeleteLocalRef(cls);
 	env->DeleteLocalRef(javaPath);
 	return javaFile;
+}
+
+jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
+	jstring javaMimeType = createJavaString(env, image.mimeType());
+	jobject javaFile = createJavaFile(env, image.file().path());
+	jstring javaEncoding = createJavaString(env, image.encoding());
+
+	jclass cls = env->FindClass(Class_ZLFileImage);
+	jobject javaImage = env->NewObject(
+		cls, MID_ZLFileImage_init,
+		javaMimeType, javaFile, javaEncoding,
+		image.offset(), image.size()
+	);
+
+	env->DeleteLocalRef(cls);
+	env->DeleteLocalRef(javaEncoding);
+	env->DeleteLocalRef(javaFile);
+	env->DeleteLocalRef(javaMimeType);
+
+	return javaImage;
 }
 
 std::string AndroidUtil::fromJavaString(JNIEnv *env, jstring from) {
@@ -274,21 +301,21 @@ std::string AndroidUtil::convertNonUtfString(const std::string &str) {
 	return result;
 }
 
-jintArray AndroidUtil::createIntArray(JNIEnv *env, const std::vector<jint> &data) {
+jintArray AndroidUtil::createJavaIntArray(JNIEnv *env, const std::vector<jint> &data) {
 	size_t size = data.size();
 	jintArray array = env->NewIntArray(size);
 	env->SetIntArrayRegion(array, 0, size, &data.front());
 	return array;
 }
 
-jbyteArray AndroidUtil::createByteArray(JNIEnv *env, const std::vector<jbyte> &data) {
+jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data) {
 	size_t size = data.size();
 	jbyteArray array = env->NewByteArray(size);
 	env->SetByteArrayRegion(array, 0, size, &data.front());
 	return array;
 }
 
-jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::string> &data) {
+jobjectArray AndroidUtil::createJavaStringArray(JNIEnv *env, const std::vector<std::string> &data) {
 	size_t size = data.size();
 	jclass cls = env->FindClass("java/lang/String");
 	jobjectArray array = env->NewObjectArray(size, cls, 0);
@@ -300,10 +327,12 @@ jobjectArray AndroidUtil::createStringArray(JNIEnv *env, const std::vector<std::
 			env->DeleteLocalRef(javaStr);
 		}
 	}
+	env->DeleteLocalRef(cls);
 	return array;
 }
 
 void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
+	// TODO: possible memory leak
 	jclass cls = env->FindClass("java/lang/RuntimeException");
 	env->ThrowNew(cls, message.c_str());
 }
@@ -315,7 +344,8 @@ void AndroidUtil::throwBookReadingException(const std::string &resourceId, const
 		cls,
 		SMID_BookReadingException_throwForFile,
 		AndroidUtil::createJavaString(env, resourceId),
-		AndroidUtil::createZLFile(env, file.path())
+		AndroidUtil::createJavaFile(env, file.path())
 	);
+	// TODO: possible memory leak
 	// TODO: clear cls & ZLFile object references
 }

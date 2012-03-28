@@ -30,16 +30,17 @@ JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginColl
 	const std::vector<shared_ptr<FormatPlugin> > plugins = PluginCollection::Instance().plugins();
 	const size_t size = plugins.size();
 	jclass cls = env->FindClass(AndroidUtil::Class_NativeFormatPlugin);
+	// TODO: memory leak?
 	jobjectArray javaPlugins = env->NewObjectArray(size, cls, 0);
 
 	for (size_t i = 0; i < size; ++i) {
 		jstring fileType = AndroidUtil::createJavaString(env, plugins[i]->supportedFileType());
-		env->SetObjectArrayElement(
-			javaPlugins, i,
-			env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, fileType)
-		);
+		jobject p = env->NewObject(cls, AndroidUtil::MID_NativeFormatPlugin_init, fileType);
+		env->SetObjectArrayElement(javaPlugins, i, p);
+		env->DeleteLocalRef(p);
 		env->DeleteLocalRef(fileType);
 	}
+	env->DeleteLocalRef(cls);
 	return javaPlugins;
 }
 

@@ -26,6 +26,7 @@
 #include <vector>
 
 class ZLFile;
+class ZLFileImage;
 
 class AndroidUtil {
 
@@ -40,6 +41,7 @@ public:
 	static const char * const Class_java_io_PrintStream;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
+	static const char * const Class_ZLFileImage;
 	static const char * const Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Encoding;
@@ -76,6 +78,8 @@ public:
 	static jmethodID MID_ZLFile_isDirectory;
 	static jmethodID MID_ZLFile_size;
 
+	static jmethodID MID_ZLFileImage_init;
+
 	static jmethodID MID_NativeFormatPlugin_init;
 	static jmethodID MID_NativeFormatPlugin_supportedFileType;
 
@@ -109,12 +113,12 @@ public:
 	static jmethodID SMID_Tag_getTag;
 
 	static jfieldID FID_NativeBookModel_Book;
-	static jmethodID MID_NativeBookModel_initImageMap;
 	static jmethodID MID_NativeBookModel_initInternalHyperlinks;
 	static jmethodID MID_NativeBookModel_initTOC;
 	static jmethodID MID_NativeBookModel_createTextModel;
 	static jmethodID MID_NativeBookModel_setBookTextModel;
 	static jmethodID MID_NativeBookModel_setFootnoteModel;
+	static jmethodID MID_NativeBookModel_addImage;
 
 	static jmethodID SMID_BookReadingException_throwForFile;
 
@@ -122,14 +126,16 @@ public:
 	static bool init(JavaVM* jvm);
 	static JNIEnv *getEnv();
 
-	static jobject createZLFile(JNIEnv *env, const std::string &path);
 	static std::string fromJavaString(JNIEnv *env, jstring from);
 	static jstring createJavaString(JNIEnv* env, const std::string &str);
 	static std::string convertNonUtfString(const std::string &str);
 
-	static jintArray createIntArray(JNIEnv *env, const std::vector<jint> &data);
-	static jbyteArray createByteArray(JNIEnv *env, const std::vector<jbyte> &data);
-	static jobjectArray createStringArray(JNIEnv *env, const std::vector<std::string> &data);
+	static jobject createJavaFile(JNIEnv *env, const std::string &path);
+	static jobject createJavaImage(JNIEnv *env, const ZLFileImage &image);
+
+	static jintArray createJavaIntArray(JNIEnv *env, const std::vector<jint> &data);
+	static jbyteArray createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data);
+	static jobjectArray createJavaStringArray(JNIEnv *env, const std::vector<std::string> &data);
 
 	static void throwRuntimeException(JNIEnv *env, const std::string &message);
 	static void throwBookReadingException(const std::string &resourceId, const ZLFile &file);

@@ -17,7 +17,10 @@
  * 02110-1301, USA.
  */
 
+#include <AndroidUtil.h>
+
 #include <ZLImage.h>
+#include <ZLFileImage.h>
 #include <ZLLogger.h>
 
 #include "BookReader.h"
@@ -191,9 +194,18 @@ void BookReader::flushTextBufferToParagraph() {
 }
 
 void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image) {
-	if (!image.isNull()) {
-		myModel.myImagesWriter->addImage(id, *image);
+	if (image.isNull()) {
+		return;
 	}
+
+	JNIEnv *env = AndroidUtil::getEnv();
+
+	jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
+	jstring javaId = AndroidUtil::createJavaString(env, id);
+	env->CallObjectMethod(myModel.myJavaModel, AndroidUtil::MID_NativeBookModel_addImage, javaId, javaImage);
+
+	env->DeleteLocalRef(javaId);
+	env->DeleteLocalRef(javaImage);
 }
 
 void BookReader::insertEndParagraph(ZLTextParagraph::Kind kind) {
@@ -214,16 +226,16 @@ void BookReader::insertEndOfTextParagraph() {
 	insertEndParagraph(ZLTextParagraph::END_OF_TEXT_PARAGRAPH);
 }
 
-void BookReader::addImageReference(const std::string &id, short vOffset) {
+void BookReader::addImageReference(const std::string &id, short vOffset, bool isCover) {
 	if (myCurrentTextModel != 0) {
 		mySectionContainsRegularContents = true;
 		if (myTextParagraphExists) {
 			flushTextBufferToParagraph();
-			myCurrentTextModel->addImage(id, vOffset);
+			myCurrentTextModel->addImage(id, vOffset, isCover);
 		} else {
 			beginParagraph();
 			myCurrentTextModel->addControl(IMAGE, true);
-			myCurrentTextModel->addImage(id, vOffset);
+			myCurrentTextModel->addImage(id, vOffset, isCover);
 			myCurrentTextModel->addControl(IMAGE, false);
 			endParagraph();
 		}

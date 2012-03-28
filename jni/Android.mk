@@ -41,6 +41,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/JavaNativeFormatPlugin.cpp \
 	NativeFormats/JavaPluginCollection.cpp \
 	NativeFormats/util/AndroidUtil.cpp \
+	NativeFormats/zlibrary/core/src/constants/ZLXMLNamespace.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/JavaEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
@@ -55,8 +56,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipEntryCache.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipHeader.cpp \
 	NativeFormats/zlibrary/core/src/filesystem/zip/ZLZipInputStream.cpp \
-	NativeFormats/zlibrary/core/src/image/ZLFileImage.cpp \
-	NativeFormats/zlibrary/core/src/image/ZLStreamImage.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLCharSequence.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageDetector.cpp \
 	NativeFormats/zlibrary/core/src/language/ZLLanguageList.cpp \
@@ -80,7 +79,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFileOutputStream.cpp \
 	NativeFormats/zlibrary/core/src/unix/library/ZLUnixLibrary.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLCachedMemoryAllocator.cpp \
-	NativeFormats/zlibrary/text/src/model/ZLImageMapWriter.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextModel.cpp \
 	NativeFormats/zlibrary/text/src/model/ZLTextParagraph.cpp \
 	NativeFormats/zlibrary/ui/src/android/filesystem/JavaFSDir.cpp \
@@ -92,9 +90,14 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/EncodedTextReader.cpp \
 	NativeFormats/fbreader/src/formats/FormatPlugin.cpp \
 	NativeFormats/fbreader/src/formats/PluginCollection.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2BookReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2CoverReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2MetaInfoReader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2Plugin.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
+	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
-	NativeFormats/fbreader/src/formats/rtf/RtfImage.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfPlugin.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfReaderStream.cpp \
@@ -110,6 +113,7 @@ LOCAL_SRC_FILES               := \
 
 LOCAL_C_INCLUDES              := \
 	$(LOCAL_PATH)/NativeFormats/util \
+	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/constants \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/encoding \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/filesystem \
 	$(LOCAL_PATH)/NativeFormats/zlibrary/core/src/image \

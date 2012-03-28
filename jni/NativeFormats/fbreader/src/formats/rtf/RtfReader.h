@@ -130,6 +130,11 @@ public:
 	virtual void run(RtfReader &reader, int *parameter) const = 0;
 };
 
+class RtfDummyCommand : public RtfCommand {
+public:
+	void run(RtfReader &reader, int *parameter) const;
+};
+
 class RtfNewParagraphCommand : public RtfCommand {
 public:
 	void run(RtfReader &reader, int *parameter) const;

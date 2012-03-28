@@ -17,31 +17,32 @@
  * 02110-1301, USA.
  */
 
-#ifndef __RTFIMAGE_H__
-#define __RTFIMAGE_H__
+#ifndef __FB2COVERREADER_H__
+#define __FB2COVERREADER_H__
 
-#include <vector>
-
+#include <ZLFile.h>
 #include <ZLImage.h>
 
-class RtfImage : public ZLSingleImage {
+#include "FB2Reader.h"
+
+class FB2CoverReader : public FB2Reader {
 
 public:
-	RtfImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t length);
-	~RtfImage();
-	const shared_ptr<std::string> stringData() const;
+	FB2CoverReader(const ZLFile &file);
+	shared_ptr<ZLImage> readCover();
 
 private:
-	void read() const;
+	void startElementHandler(int tag, const char **attributes);
+	void endElementHandler(int tag);
+	void characterDataHandler(const char *text, size_t len);
 
 private:
-	std::string myFileName;
-	size_t myStartOffset;
-	size_t myLength;
-	mutable shared_ptr<std::string> myData;
+	const ZLFile myFile;
+	bool myReadCoverPage;
+	bool myLookForImage;
+	std::string myImageId;
+	int myImageStart;
+	shared_ptr<ZLImage> myImage;
 };
 
-inline RtfImage::RtfImage(const std::string &mimeType, const std::string &fileName, size_t startOffset, size_t length) : ZLSingleImage(mimeType), myFileName(fileName), myStartOffset(startOffset), myLength(length) {}
-inline RtfImage::~RtfImage() {}
-
-#endif /* __RTFIMAGE_H__ */
+#endif /* __FB2COVERREADER_H__ */

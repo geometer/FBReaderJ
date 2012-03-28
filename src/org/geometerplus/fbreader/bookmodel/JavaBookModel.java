@@ -31,7 +31,6 @@ public class JavaBookModel extends BookModelImpl {
 
 	JavaBookModel(Book book) {
 		super(book);
-		myImageMap = new ZLPlainImageMap();
 		myInternalHyperlinks = new CachedCharStorage(32768, Paths.cacheDirectory(), "links");
 		BookTextModel = new ZLTextWritablePlainModel(null, book.getLanguage(), 1024, 65536, Paths.cacheDirectory(), "cache", myImageMap);
 	}
@@ -81,9 +80,5 @@ public class JavaBookModel extends BookModelImpl {
 		block[offset++] = (char)paragraphNumber;
 		block[offset++] = (char)(paragraphNumber >> 16);
 		myCurrentLinkBlockOffset = offset;
-	}
-
-	void addImage(String id, ZLImage image) {
-		((ZLPlainImageMap)myImageMap).put(id, image);
 	}
 }

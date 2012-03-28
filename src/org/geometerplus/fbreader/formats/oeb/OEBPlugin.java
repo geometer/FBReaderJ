@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats.oeb;
 
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
@@ -85,7 +86,7 @@ public class OEBPlugin extends JavaFormatPlugin {
 	}
 
 	@Override
-	public EncodingCollection supportedEncodings() {
+	public AutoEncodingCollection supportedEncodings() {
 		return new AutoEncodingCollection();
 	}
 

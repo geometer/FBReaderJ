@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,12 @@
  * 02110-1301, USA.
  */
 
-#include <ZLFile.h>
-#include <ZLInputStream.h>
+package org.geometerplus.zlibrary.core.encodings;
 
-#include "ZLStreamImage.h"
+import java.util.List;
 
-const shared_ptr<std::string> ZLStreamImage::stringData() const {
-	shared_ptr<ZLInputStream> stream = inputStream();
-	if (stream.isNull() || !stream->open()) {
-		return 0;
-	}
-	if (mySize == 0) {
-		mySize = stream->sizeOfOpened();
-		if (mySize == 0) {
-			return 0;
-		}
-	}
-
-	shared_ptr<std::string> imageData = new std::string();
-
-	stream->seek(myOffset, false);
-	char *buffer = new char[mySize];
-	stream->read(buffer, mySize);
-	imageData->append(buffer, mySize);
-	delete[] buffer;
-
-	return imageData;
+public abstract class EncodingCollection {
+	public abstract List<Encoding> encodings();
+	public abstract Encoding getEncoding(String alias);
+	public abstract Encoding getEncoding(int code);
 }

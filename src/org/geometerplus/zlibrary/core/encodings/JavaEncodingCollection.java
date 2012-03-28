@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,30 @@
  * 02110-1301, USA.
  */
 
-#include <ZLFile.h>
-#include <ZLLogger.h>
+package org.geometerplus.zlibrary.core.encodings;
 
-#include "ZLFileImage.h"
+import java.nio.charset.Charset;
 
-shared_ptr<ZLInputStream> ZLFileImage::inputStream() const {
-	ZLLogger::Instance().println("image", "Reading image from file " + myFile.path());
-	return myFile.inputStream();
+public final class JavaEncodingCollection extends FilteredEncodingCollection {
+	private volatile static JavaEncodingCollection ourInstance;
+
+	public static JavaEncodingCollection Instance() {
+		if (ourInstance == null) {
+			ourInstance = new JavaEncodingCollection();
+		}
+		return ourInstance;
+	}
+
+	private JavaEncodingCollection() {
+		super();
+	}
+
+	@Override
+	public boolean isEncodingSupported(String name) {
+		try {
+			return Charset.forName(name) != null;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }

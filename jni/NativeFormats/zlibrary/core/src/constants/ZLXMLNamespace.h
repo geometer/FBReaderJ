@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2008-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.formats;
+#ifndef __ZLXMLNAMESPACE_H__
+#define __ZLXMLNAMESPACE_H__
 
-public final class Encoding {
-	public final String Family;
-	public final String Name;
-	public final String DisplayName;
+#include <string>
 
-	Encoding(String family, String name, String displayName) {
-		Family = family;
-		Name = name;
-		DisplayName = displayName;
-	}
+class ZLXMLNamespace {
 
-	@Override
-	public boolean equals(Object other) {
-		return other instanceof Encoding && Name.equals(((Encoding)other).Name);
-	}
+private:
+	ZLXMLNamespace();
 
-	@Override
-	public int hashCode() {
-		return Name.hashCode();
-	}
+public:
+	static const std::string DublinCorePrefix;
+	static const std::string DublinCoreLegacyPrefix;
+	static const std::string DublinCoreTerms;
+	static const std::string XLink;
+	static const std::string OpenPackagingFormat;
+	static const std::string Atom;
+	static const std::string OpenSearch;
+	static const std::string CalibreMetadata;
+	static const std::string Opds;
+	static const std::string DaisyNCX;
+};
 
-	public EncodingConverter createConverter() {
-		return new EncodingConverter(Name);
-	}
-}
+#endif /* __ZLXMLNAMESPACE_H__ */

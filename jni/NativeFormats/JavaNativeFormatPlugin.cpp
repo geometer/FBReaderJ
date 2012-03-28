@@ -20,6 +20,7 @@
 #include <jni.h>
 
 #include <AndroidUtil.h>
+#include <ZLFileImage.h>
 
 #include "fbreader/src/bookmodel/BookModel.h"
 #include "fbreader/src/formats/FormatPlugin.h"
@@ -131,23 +132,6 @@ JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 	fillLanguageAndEncoding(env, javaBook, *book);
 }
 
-static bool initBookModel(JNIEnv *env, jobject javaModel, BookModel &model) {
-	shared_ptr<ZLImageMapWriter> imageMapWriter = model.imageMapWriter();
-
-	env->PushLocalFrame(16);
-
-	jobjectArray ids = AndroidUtil::createStringArray(env, imageMapWriter->identifiers());
-	jintArray indices = AndroidUtil::createIntArray(env, imageMapWriter->indices());
-	jintArray offsets = AndroidUtil::createIntArray(env, imageMapWriter->offsets());
-	jstring imageDirectoryName = env->NewStringUTF(imageMapWriter->allocator().directoryName().c_str());
-	jstring imageFileExtension = env->NewStringUTF(imageMapWriter->allocator().fileExtension().c_str());
-	jint imageBlocksNumber = imageMapWriter->allocator().blocksNumber();
-	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initImageMap,
-			ids, indices, offsets, imageDirectoryName, imageFileExtension, imageBlocksNumber);
-	env->PopLocalFrame(0);
-	return !env->ExceptionCheck();
-}
-
 static bool initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &model) {
 	ZLCachedMemoryAllocator allocator(131072, Library::Instance().cacheDirectory(), "nlinks");
 
@@ -243,8 +227,8 @@ static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 		childrenNumbers.push_back(par->children().size());
 		referenceNumbers.push_back(contentsModel.reference(par));
 	}
-	jintArray javaChildrenNumbers = AndroidUtil::createIntArray(env, childrenNumbers);
-	jintArray javaReferenceNumbers = AndroidUtil::createIntArray(env, referenceNumbers);
+	jintArray javaChildrenNumbers = AndroidUtil::createJavaIntArray(env, childrenNumbers);
+	jintArray javaReferenceNumbers = AndroidUtil::createJavaIntArray(env, referenceNumbers);
 
 	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initTOC,
 			javaTextModel, javaChildrenNumbers, javaReferenceNumbers);
@@ -265,14 +249,13 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	jobject javaBook = env->GetObjectField(javaModel, AndroidUtil::FID_NativeBookModel_Book);
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
-	shared_ptr<BookModel> model = new BookModel(book);
+	shared_ptr<BookModel> model = new BookModel(book, javaModel);
 	if (!plugin->readModel(*model)) {
 		return JNI_FALSE;
 	}
 	model->flush();
 
-	if (!initBookModel(env, javaModel, *model) ||
-			!initInternalHyperlinks(env, javaModel, *model) ||
+	if (!initInternalHyperlinks(env, javaModel, *model) ||
 			!initTOC(env, javaModel, *model)) {
 		return JNI_FALSE;
 	}
@@ -305,6 +288,20 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 }
 
 extern "C"
-JNIEXPORT jobject JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readCoverInternal(JNIEnv* env, jobject thiz, jobject file) {
-	return 0;
+JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readCoverInternal(JNIEnv* env, jobject thiz, jobject file, jobjectArray box) {
+	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
+	if (plugin.isNull()) {
+		return;
+	}
+
+	jstring javaPath = (jstring)env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
+	const std::string path = AndroidUtil::fromJavaString(env, javaPath);
+	env->DeleteLocalRef(javaPath);
+
+	shared_ptr<ZLImage> image = plugin->coverImage(ZLFile(path));
+	if (!image.isNull()) {
+		jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
+		env->SetObjectArrayElement(box, 0, javaImage);
+		env->DeleteLocalRef(javaImage);
+	}
 }

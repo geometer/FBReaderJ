@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,30 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.image;
+#include <ZLFile.h>
+#include <ZLImage.h>
 
-import java.util.HashMap;
+#include "FB2Plugin.h"
+#include "FB2MetaInfoReader.h"
+#include "FB2BookReader.h"
+#include "FB2CoverReader.h"
 
-public final class ZLPlainImageMap extends HashMap<String,ZLImage> implements ZLImageMap {
-	private static final long serialVersionUID = -4488377408233803199L;
+const std::string FB2Plugin::supportedFileType() const {
+	return "fb2";
+}
 
-	public ZLImage getImage(String id) {
-		return (ZLImage)super.get(id);
-	}
+bool FB2Plugin::readMetaInfo(Book &book) const {
+	return FB2MetaInfoReader(book).readMetaInfo();
+}
+
+bool FB2Plugin::readModel(BookModel &model) const {
+	return FB2BookReader(model).readBook();
+}
+
+shared_ptr<ZLImage> FB2Plugin::coverImage(const ZLFile &file) const {
+	return FB2CoverReader(file).readCover();
+}
+
+bool FB2Plugin::readLanguageAndEncoding(Book &book) const {
+	return true;
 }
