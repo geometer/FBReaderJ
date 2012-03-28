@@ -34,6 +34,6 @@ public class FB2ZipExternalPlugin extends ExternalFormatPlugin {
 	}
 
 	public ZLFile prepareFile(ZLFile f) {
-		return FB2ZipPlugin.getTrueFile(f);
+		return super.prepareFile(FB2ZipPlugin.getTrueFile(f));
 	}
 }
