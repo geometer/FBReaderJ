@@ -41,6 +41,7 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 	private final static int READ_GENRE = 8;
 
 	private final Book myBook;
+	private final ZLFile myFile;
 	private int myReadState = READ_NOTHING;
 
 	private	final String[] myAuthorNames = new String[3];
@@ -48,6 +49,14 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 
 	public FB2MetaInfoReader(Book book) {
 		myBook = book;
+		myFile = book.File;
+		myBook.setTitle(null);
+		myBook.setLanguage(null);
+	}
+
+	public FB2MetaInfoReader(Book book, ZLFile file) {
+		myBook = book;
+		myFile = file;
 		myBook.setTitle(null);
 		myBook.setLanguage(null);
 	}
@@ -63,9 +72,9 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		myAuthorNames[2] = "";
 		myBuffer.delete(0, myBuffer.length());
 		try {
-			ZLXMLProcessor.read(this, myBook.File, 512);
+			ZLXMLProcessor.read(this, myFile, 512);
 		} catch (IOException e) {
-			throw new BookReadingException(e, myBook.File);
+			throw new BookReadingException(e, myFile);
 		}
 	}
 

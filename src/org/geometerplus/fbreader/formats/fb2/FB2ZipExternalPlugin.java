@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2007-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,35 +17,23 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.filetype;
-
-import java.util.List;
+package org.geometerplus.fbreader.formats.fb2;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
-class FileTypeMobipocket extends FileTypePalm {
-	FileTypeMobipocket() {
-		super("Mobipocket", "BOOKMOBI");
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.formats.*;
+
+public class FB2ZipExternalPlugin extends ExternalFormatPlugin {
+
+	public FB2ZipExternalPlugin() {
+		super("fb2.zip", new FB2ZipPlugin());
 	}
 
-	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return "mobi".equalsIgnoreCase(file.getExtension()) || super.acceptsFile(file);
-	}
-
-	@Override
-	public boolean acceptsExtension(String ext) {
-		return "mobi".equalsIgnoreCase(ext);
-	}
-
-	@Override
-	public String extension() {
-		return "mobi";
-	}
-
-	@Override
-	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_MOBIPOCKET;
+	public ZLFile prepareFile(ZLFile f) {
+		return super.prepareFile(FB2ZipPlugin.getTrueFile(f));
 	}
 }

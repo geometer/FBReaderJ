@@ -32,6 +32,10 @@ public abstract class Paths {
 		return new ZLStringOption("Files", "BooksDirectory", cardDirectory() + "/Books");
 	}
 
+	public static ZLStringOption TempDirectoryOption() {
+		return new ZLStringOption("Files", "TempDirectory", cardDirectory() + "/Temp");
+	}
+
 	public static ZLStringOption FontsDirectoryOption() {
 		return new ZLStringOption("Files", "FontsDirectory", cardDirectory() + "/Fonts");
 	}

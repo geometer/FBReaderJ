@@ -344,7 +344,7 @@ public class ZLNetworkManager {
 			final int responseCode = response.getStatusLine().getStatusCode();
 
 			InputStream stream = null;
-			if (entity != null && responseCode == HttpURLConnection.HTTP_OK) {
+			if (entity != null && (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_PARTIAL)) {
 				stream = entity.getContent();
 			}
 
