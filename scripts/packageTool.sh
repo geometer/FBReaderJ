@@ -13,17 +13,12 @@ if [ $# -ne 1 -a $# -ne 2 ]; then
 fi
 
 updateVersion() {
-	major=`echo $version | cut -d . -f 1`
-	minor=`echo $version | cut -d . -f 2`
-	micro=`echo $version | cut -d . -f 3`
-	case `git branch | grep "*" | cut -d " " -f 2` in
+	branch=`git branch | grep "*" | cut -d " " -f 2`
+	case $branch in
 		android-1.5)
 			variant=0
 			;;
-		ice-cream-sandwich)
-			variant=3
-			;;
-		honeycomb)
+		*-ics,ice-cream-sandwich)
 			variant=2
 			;;
 		*)
@@ -31,6 +26,16 @@ updateVersion() {
 			;;
 	esac
 		
+	if [ "$branch" == "beta-ics" -o "$branch" == "beta" ]; then
+		version=`cat VERSION-BETA`
+		major=1
+		minor=9
+		micro=`echo $version | cut -d " " -f 3`
+	else
+		major=`echo $version | cut -d . -f 1`
+		minor=`echo $version | cut -d . -f 2`
+		micro=`echo $version | cut -d . -f 3`
+	fi
 	
 	if [ "$micro" == "" ]; then
      micro=0
