@@ -35,6 +35,8 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.filetype.*;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -157,6 +159,19 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		}
 		final Book bookToOpen = book;
+		final FormatPlugin p = PluginCollection.Instance().getPlugin(book.File);
+		if (p == null) return;
+		if (p.type() == FormatPlugin.Type.EXTERNAL) {
+			Library.Instance().addBookToRecentList(book);
+			runWithMessage("extract", new Runnable() {
+				public void run() {
+					ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
+					myFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue());
+				}
+			}, postAction);
+			return;
+		}
+
 		runWithMessage("loadingBook", new Runnable() {
 			public void run() {
 				openBookInternal(bookToOpen, bookmark);
@@ -333,15 +348,15 @@ public final class FBReaderApp extends ZLApplication {
 			book.insertIntoBookList();
 			return book;
 		}
-		if (file.isArchive()) {
-			for (ZLFile child : file.children()) {
-				book = Book.getByFile(child);
-				if (book != null) {
-					book.insertIntoBookList();
-					return book;
-				}
-			}
-		}
+//		if (file.isArchive()) {
+//			for (ZLFile child : file.children()) {
+//				book = Book.getByFile(child);
+//				if (book != null) {
+//					book.insertIntoBookList();
+//					return book;
+//				}
+//			}
+//		}
 		return null;
 	}
 

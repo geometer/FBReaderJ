@@ -19,33 +19,32 @@
 
 package org.geometerplus.fbreader.filetype;
 
-import java.util.List;
-
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
+import java.util.List;
 
-class FileTypeMobipocket extends FileTypePalm {
-	FileTypeMobipocket() {
-		super("Mobipocket", "BOOKMOBI");
+class FileTypeNull extends FileType {
+	FileTypeNull() {
+		super("null.type");
 	}
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return "mobi".equalsIgnoreCase(file.getExtension()) || super.acceptsFile(file);
+		return false;
 	}
 
 	@Override
 	public boolean acceptsExtension(String ext) {
-		return "mobi".equalsIgnoreCase(ext);
+		return false;
 	}
 
 	@Override
 	public String extension() {
-		return "mobi";
+		return null;
 	}
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_MOBIPOCKET;
+		return MimeType.TYPES_NULL;
 	}
 }

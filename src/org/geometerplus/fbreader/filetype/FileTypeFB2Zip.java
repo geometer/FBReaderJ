@@ -31,7 +31,11 @@ class FileTypeFB2Zip extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		// TODO: implement
+		return file.getShortName().toLowerCase().endsWith(".fb2.zip");
+	}
+
+	@Override
+	public boolean acceptsExtension(String ext) {
 		return false;
 	}
 
