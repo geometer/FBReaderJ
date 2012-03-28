@@ -18,7 +18,10 @@ updateVersion() {
 		android-1.5)
 			variant=0
 			;;
-		*-ics,ice-cream-sandwich)
+		ice-cream-sandwich)
+			variant=2
+			;;
+		*-ics)
 			variant=2
 			;;
 		*)
