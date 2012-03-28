@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.ui.android.library;
 import java.lang.reflect.*;
 import java.io.*;
 
-import android.app.Activity;
+import android.app.*;
 import android.os.Bundle;
 import android.content.*;
 import android.content.pm.ActivityInfo;
@@ -30,7 +30,6 @@ import android.content.res.Configuration;
 import android.view.*;
 import android.os.PowerManager;
 import android.net.Uri;
-import android.app.AlertDialog;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -42,7 +41,6 @@ import org.geometerplus.zlibrary.ui.android.application.ZLAndroidApplicationWind
 import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.filetype.*;
-import org.geometerplus.fbreader.Paths;
 
 public abstract class ZLAndroidActivity extends Activity {
 	protected abstract ZLApplication createApplication();
@@ -84,35 +82,8 @@ public abstract class ZLAndroidActivity extends Activity {
 				showErrorDialog("unzipFailed");
 				return;
 			}
-			Uri uri = null;
 			String extension = f.getExtension();
-			if (f.getPath().contains(":")) {
-				try {
-					String filepath = f.getPath();
-					int p1 = filepath.lastIndexOf(":");
-					String filename = filepath.substring(p1 + 1);
-					final File dirFile = new File(Paths.TempDirectoryOption().getValue());
-					dirFile.mkdirs();
-					String path = Paths.TempDirectoryOption().getValue() + "/" + filename;
-					OutputStream out = new FileOutputStream(path);
-
-					int read = 0;
-					byte[] bytes = new byte[1024];
-					InputStream inp = f.getInputStream();
-
-					while ((read = inp.read(bytes)) > 0) {
-						out.write(bytes, 0, read);
-					}
-					out.flush();
-					out.close();
-					uri = Uri.parse("file://" + path);
-				} catch (IOException e) {
-					showErrorDialog("unzipFailed");
-					return;
-				}
-			} else {
-				uri = Uri.parse("file://" + f.getPath());
-			}
+			Uri uri = Uri.parse("file://" + f.getPath());
 			Intent LaunchIntent = new Intent(Intent.ACTION_VIEW);
 			LaunchIntent.setPackage(appData);
 			LaunchIntent.setData(uri);

@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
@@ -27,6 +27,10 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.EncodingCollection;
 import org.geometerplus.fbreader.library.Book;
+
+import org.geometerplus.fbreader.Paths;
+
+import java.io.*;
 
 public class ExternalFormatPlugin extends FormatPlugin {
 
@@ -46,6 +50,31 @@ public class ExternalFormatPlugin extends FormatPlugin {
 	}
 
 	public ZLFile prepareFile(ZLFile f) {
+		if (f.getPath().contains(":")) {
+			try {
+				String filepath = f.getPath();
+				int p1 = filepath.lastIndexOf(":");
+				String filename = filepath.substring(p1 + 1);
+				final File dirFile = new File(Paths.TempDirectoryOption().getValue());
+				dirFile.mkdirs();
+				String path = Paths.TempDirectoryOption().getValue() + "/" + filename;
+				OutputStream out = new FileOutputStream(path);
+
+				int read = 0;
+				byte[] bytes = new byte[1024];
+				InputStream inp = f.getInputStream();
+
+				while ((read = inp.read(bytes)) > 0) {
+					out.write(bytes, 0, read);
+				}
+
+				out.flush();
+				out.close();
+				f = new ZLPhysicalFile(new File(path));
+			} catch (IOException e) {
+				f = null;
+			}
+		}
 		return f;
 	}
 
