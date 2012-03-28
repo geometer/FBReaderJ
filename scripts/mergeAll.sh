@@ -13,9 +13,6 @@ git checkout beta-ics
 git merge beta
 git merge ice-cream-sandwich
 
-git checkout external-formats
-git merge master
-
 git checkout booksdb
 git merge master
 
