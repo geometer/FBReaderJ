@@ -26,7 +26,7 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
 
-public abstract class FormatPlugin implements InfoReader {
+public abstract class FormatPlugin {
 	private final String myFileType;
 
 	protected FormatPlugin(String fileType) {

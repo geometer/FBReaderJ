@@ -29,25 +29,14 @@ import org.geometerplus.fbreader.formats.EncodingCollection;
 import org.geometerplus.fbreader.library.Book;
 
 public class ExternalFormatPlugin extends FormatPlugin {
-	private static class DefaultInfoReader implements InfoReader {
-		public void readMetaInfo(Book book) {
-		}
-		public ZLImage readCover(ZLFile file) {
-			return null;
-		}
-		public String readAnnotation(ZLFile file) {
-			return null;
-		}
-	}
 
-	private InfoReader myInfoReader;
+	private FormatPlugin myInfoReader;
 
 	public ExternalFormatPlugin(String fileType) {
 		super(fileType);
-		myInfoReader = new DefaultInfoReader();
 	}
 
-	public ExternalFormatPlugin(String fileType, InfoReader ir) {
+	public ExternalFormatPlugin(String fileType, FormatPlugin ir) {
 		super(fileType);
 		myInfoReader = ir;
 	}
@@ -67,7 +56,9 @@ public class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public void readMetaInfo(Book book) throws BookReadingException {
-		myInfoReader.readMetaInfo(book);
+		if (myInfoReader != null) {
+			myInfoReader.readMetaInfo(book);
+		}
 	}
 
 	@Override
@@ -77,12 +68,18 @@ public class ExternalFormatPlugin extends FormatPlugin {
 
 	@Override
 	public ZLImage readCover(ZLFile file) {
-		return myInfoReader.readCover(file);
+		if (myInfoReader != null) {
+			return myInfoReader.readCover(file);
+		}
+		return null;
 	}
 
 	@Override
 	public String readAnnotation(ZLFile file) {
-		return myInfoReader.readAnnotation(file);
+		if (myInfoReader != null) {
+			return myInfoReader.readAnnotation(file);
+		}
+		return null;
 	}
 
 	@Override
