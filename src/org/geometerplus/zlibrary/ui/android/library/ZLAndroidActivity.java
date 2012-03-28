@@ -68,16 +68,7 @@ public abstract class ZLAndroidActivity extends Activity {
 			});
 		}
 
-		public void openFile(final ZLFile f, final String appData) {
-			final Runnable runnable = new Runnable() {
-				public void run() {
-					openFileInternal(f, appData);
-				}
-			};
-			UIUtil.wait("extract", runnable, myActivity);
-		}
-
-		private void openFileInternal(ZLFile f, String appData) {
+		public void openFile(ZLFile f, String appData) {
 			if (f == null) {
 				showErrorDialog("unzipFailed");
 				return;
