@@ -71,14 +71,14 @@ public class NativeBookModel extends BookModelImpl {
 					positions.remove(lastIndex);
 				}
 			}
+
+			if (tree != TOCTree || positions.size() > 0) {
+				throw new RuntimeException("Invalid state after TOC building:\n"
+					+ "tree.Level = " + tree.Level + "\n"
+					+ "positions.size() = " + positions.size());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
-		if (tree != TOCTree || positions.size() > 0) {
-			throw new RuntimeException("Invalid state after TOC building:\n"
-				+ "tree.Level = " + tree.Level + "\n"
-				+ "positions.size() = " + positions.size());
 		}
 	}
 
