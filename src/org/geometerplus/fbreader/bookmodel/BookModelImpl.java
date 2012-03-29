@@ -64,7 +64,6 @@ abstract class BookModelImpl extends BookModel {
 	}
 
 	public void addImage(String id, ZLImage image) {
-		System.err.println(id + ":" + image);
 		myImageMap.put(id, image);
 	}
 }
