@@ -25,6 +25,8 @@
 #include <string>
 #include <vector>
 
+#include "VoidMethod.h"
+
 class ZLFile;
 class ZLFileImage;
 
@@ -65,7 +67,7 @@ public:
 	static jmethodID MID_java_io_InputStream_read;
 	static jmethodID MID_java_io_InputStream_skip;
 
-	static jmethodID MID_java_io_PrintStream_println;
+	static VoidMethod MID_java_io_PrintStream_println;
 
 	static jmethodID SMID_ZLibrary_Instance;
 	static jmethodID MID_ZLibrary_getVersionName;

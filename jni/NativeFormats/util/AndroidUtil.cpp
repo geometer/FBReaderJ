@@ -55,7 +55,7 @@ jmethodID AndroidUtil::MID_java_io_InputStream_close;
 jmethodID AndroidUtil::MID_java_io_InputStream_read;
 jmethodID AndroidUtil::MID_java_io_InputStream_skip;
 
-jmethodID AndroidUtil::MID_java_io_PrintStream_println;
+VoidMethod AndroidUtil::MID_java_io_PrintStream_println;
 
 jmethodID AndroidUtil::SMID_ZLibrary_Instance;
 jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
@@ -119,6 +119,7 @@ JNIEnv *AndroidUtil::getEnv() {
 }
 
 #define CHECK_NULL(value) if ((value) == 0) { return false; }
+#define CHECK_METHOD(method) if (!(method).check()) { return false; }
 
 bool AndroidUtil::init(JavaVM* jvm) {
 	ourJavaVM = jvm;

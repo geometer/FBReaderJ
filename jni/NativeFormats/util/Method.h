@@ -17,16 +17,22 @@
  * 02110-1301, USA.
  */
 
-#ifndef __VOIDMETHOD_H__
-#define __VOIDMETHOD_H__
+#ifndef __METHOD_H__
+#define __METHOD_H__
 
-#include "Method.h"
+#include <jni.h>
 
-class VoidMethod : public Method {
+#include <string>
+
+class Method {
 
 public:
-	VoidMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
-	void call(jobject base, ...);
+	Method(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	bool check();
+
+protected:
+	JNIEnv *myEnv;
+	jmethodID myId;
 };
 
-#endif /* __VOIDMETHOD_H__ */
+#endif /* __METHOD_H__ */

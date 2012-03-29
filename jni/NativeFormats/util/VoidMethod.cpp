@@ -19,7 +19,12 @@
 
 #include "VoidMethod.h"
 
-void VoidMethod::call(JNIEnv *env, jobject base, ...) {
-	va_start(args);
-	env->CallVoidMethod(base, myId, va_list);
+VoidMethod::VoidMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "V") {
+}
+
+void VoidMethod::call(jobject base, ...) {
+	va_list lst;
+	va_start(lst, base);
+	myEnv->CallVoidMethod(base, myId, lst);
+	va_end(lst);
 }
