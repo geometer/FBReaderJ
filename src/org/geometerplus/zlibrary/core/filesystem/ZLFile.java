@@ -113,6 +113,9 @@ public abstract class ZLFile {
 		}
 
 		if (!path.startsWith("/")) {
+			while (path.startsWith("./")) {
+				path = path.substring(2);
+			}
 			return ZLResourceFile.createResourceFile(path);
 		}
 		int index = path.lastIndexOf(':');
