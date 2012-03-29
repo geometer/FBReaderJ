@@ -41,7 +41,7 @@ std::string ZLibrary::ourApplicationDirectory;
 //std::string ZLibrary::ourApplicationWritableDirectory;
 //std::string ZLibrary::ourDefaultFilesPathPrefix;
 
-const std::string ZLibrary::BaseDirectory = std::string(BASEDIR);
+//const std::string ZLibrary::BaseDirectory = std::string(BASEDIR);
 
 void ZLibrary::parseArguments(int &argc, char **&argv) {
 	static const std::string LANGUAGE_OPTION = "-lang";
@@ -71,7 +71,7 @@ void ZLibrary::parseArguments(int &argc, char **&argv) {
 		argc -= 2;
 		argv += 2;
 	}
-	ourZLibraryDirectory = BaseDirectory + FileNameDelimiter + "zlibrary";
+	ourZLibraryDirectory = ".";//BaseDirectory + FileNameDelimiter + "zlibrary";
 }
 
 void ZLibrary::shutdown() {
@@ -104,7 +104,7 @@ void ZLibrary::initApplication(const std::string &name) {
 	ourApplicationName = name;
 //	ourImageDirectory = replaceRegExps(IMAGEDIR);
 //	ourApplicationImageDirectory = replaceRegExps(APPIMAGEDIR);
-	ourApplicationDirectory = BaseDirectory + FileNameDelimiter + ourApplicationName;
+	ourApplicationDirectory = ".";//BaseDirectory + FileNameDelimiter + ourApplicationName;
 //	ourApplicationWritableDirectory =
 //#ifdef XMLCONFIGHOMEDIR
 //		XMLCONFIGHOMEDIR + FileNameDelimiter + "." + name;

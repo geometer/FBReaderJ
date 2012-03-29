@@ -36,7 +36,7 @@ public:
 
 	static std::string Version();
 
-	static const std::string BaseDirectory;
+//	static const std::string BaseDirectory;
 	static const std::string &ZLibraryDirectory();
 
 //	static const std::string &ImageDirectory();
