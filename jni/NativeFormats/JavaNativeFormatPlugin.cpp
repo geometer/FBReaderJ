@@ -255,8 +255,7 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	}
 	model->flush();
 
-	if (!initInternalHyperlinks(env, javaModel, *model) ||
-			!initTOC(env, javaModel, *model)) {
+	if (!initInternalHyperlinks(env, javaModel, *model) || !initTOC(env, javaModel, *model)) {
 		return JNI_FALSE;
 	}
 
