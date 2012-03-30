@@ -33,14 +33,20 @@ JavaClass::~JavaClass() {
 	myEnv->DeleteGlobalRef(myClass);
 }
 
-Constructor::Constructor(const JavaClass &cls, const std::string &signature) : myClass(cls) {
-	myId = cls.myEnv->GetMethodID(cls.j(), "<init>", signature.c_str());
+Member::Member(const JavaClass &cls) : myClass(cls) {
+}
+
+Member::~Member() {
+}
+
+Constructor::Constructor(const JavaClass &cls, const std::string &signature) : Member(cls) {
+	myId = env().GetMethodID(jClass(), "<init>", signature.c_str());
 }
 
 jobject Constructor::call(...) {
 	va_list lst;
 	va_start(lst, this);
-	jobject obj = myClass.myEnv->NewObjectV(myClass.j(), myId, lst);
+	jobject obj = env().NewObjectV(jClass(), myId, lst);
 	va_end(lst);
 	return obj;
 }

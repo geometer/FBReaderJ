@@ -40,23 +40,36 @@ private:
 	JNIEnv *myEnv;
 	jclass myClass;
 
+friend class Member;
 friend class Method;
 friend class StaticMethod;
-friend class Constructor;
 };
 
-class Constructor {
+class Member {
+
+protected:
+	Member(const JavaClass &cls);
+	JNIEnv &env() const;
+	jclass jClass() const;
+
+public:
+	virtual ~Member();
+
+private:
+	Member(const Member&);
+	const Member &operator = (const Member&);
+
+private:
+	const JavaClass &myClass;
+};
+
+class Constructor : public Member {
 
 public:
 	Constructor(const JavaClass &cls, const std::string &signature);
 	jobject call(...);
 
 private:
-	Constructor(const Constructor&);
-	const Constructor &operator = (const Constructor&);
-
-protected:
-	const JavaClass &myClass;
 	jmethodID myId;
 };
 
@@ -144,5 +157,8 @@ public:
 };
 
 inline jclass JavaClass::j() const { return myClass; }
+
+inline JNIEnv &Member::env() const { return *myClass.myEnv; }
+inline jclass Member::jClass() const { return myClass.myClass; }
 
 #endif /* __JNIENVELOPE_H__ */

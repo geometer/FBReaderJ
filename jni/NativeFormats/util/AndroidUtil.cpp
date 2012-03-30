@@ -297,14 +297,13 @@ void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message)
 /*
 void AndroidUtil::throwBookReadingException(const std::string &resourceId, const ZLFile &file) {
 	JNIEnv *env = getEnv();
-	jclass cls = env->FindClass("org/geometerplus/fbreader/bookmodel/BookReadingException");
 	env->CallStaticVoidMethod(
-		cls,
+		Class_BookReadingException->j(),
 		StaticMethod_BookReadingException_throwForFile,
 		AndroidUtil::createJavaString(env, resourceId),
 		AndroidUtil::createJavaFile(env, file.path())
 	);
 	// TODO: possible memory leak
-	// TODO: clear cls & ZLFile object references
+	// TODO: clear ZLFile object reference
 }
 */
