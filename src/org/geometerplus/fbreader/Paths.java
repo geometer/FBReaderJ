@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 import android.os.Environment;
 
@@ -32,8 +32,8 @@ public abstract class Paths {
 		return new ZLStringOption("Files", "BooksDirectory", cardDirectory() + "/Books");
 	}
 
-	public static ZLStringOption FontsDirectoryOption() {
-		return new ZLStringOption("Files", "FontsDirectory", cardDirectory() + "/Fonts");
+	public static ZLStringListOption FontsDirectoryOption() {
+		return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
 	}
 
 	public static ZLStringOption WallpapersDirectoryOption() {
