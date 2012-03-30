@@ -28,6 +28,7 @@
 #include <shared_ptr.h>
 
 class JavaClass;
+class Constructor;
 class VoidMethod;
 class IntMethod;
 class LongMethod;
@@ -51,8 +52,8 @@ public:
 	static const char * const Class_java_io_InputStream;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
-	static const char * const Class_ZLFileImage;
-	static const char * const Class_NativeFormatPlugin;
+	static shared_ptr<JavaClass> Class_ZLFileImage;
+	static shared_ptr<JavaClass> Class_NativeFormatPlugin;
 	static const char * const Class_PluginCollection;
 	static const char * const Class_Encoding;
 	static const char * const Class_EncodingConverter;
@@ -86,9 +87,9 @@ public:
 	static shared_ptr<BooleanMethod> Method_ZLFile_isDirectory;
 	static shared_ptr<LongMethod> Method_ZLFile_size;
 
-	static jmethodID MID_ZLFileImage_init;
+	static shared_ptr<Constructor> Constructor_ZLFileImage;
 
-	static jmethodID MID_NativeFormatPlugin_init;
+	static shared_ptr<Constructor> Constructor_NativeFormatPlugin;
 	static shared_ptr<StringMethod> Method_NativeFormatPlugin_supportedFileType;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_PluginCollection_Instance;

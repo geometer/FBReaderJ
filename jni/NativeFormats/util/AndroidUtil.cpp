@@ -30,14 +30,14 @@ const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collecti
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
-const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
+shared_ptr<JavaClass> AndroidUtil::Class_NativeFormatPlugin;
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
 const char * const AndroidUtil::Class_Encoding = "org/geometerplus/zlibrary/core/encodings/Encoding";
 const char * const AndroidUtil::Class_EncodingConverter = "org/geometerplus/zlibrary/core/encodings/EncodingConverter";
 const char * const AndroidUtil::Class_JavaEncodingCollection = "org/geometerplus/zlibrary/core/encodings/JavaEncodingCollection";
 const char * const AndroidUtil::Class_Paths = "org/geometerplus/fbreader/Paths";
 const char * const AndroidUtil::Class_ZLFile = "org/geometerplus/zlibrary/core/filesystem/ZLFile";
-const char * const AndroidUtil::Class_ZLFileImage = "org/geometerplus/zlibrary/core/image/ZLFileImage";
+shared_ptr<JavaClass> AndroidUtil::Class_ZLFileImage;
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
@@ -58,7 +58,7 @@ shared_ptr<LongMethod> AndroidUtil::Method_java_io_InputStream_skip;
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_ZLibrary_Instance;
 shared_ptr<StringMethod> AndroidUtil::Method_ZLibrary_getVersionName;
 
-jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
+shared_ptr<Constructor> AndroidUtil::Constructor_NativeFormatPlugin;
 shared_ptr<StringMethod> AndroidUtil::Method_NativeFormatPlugin_supportedFileType;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_PluginCollection_Instance;
@@ -82,7 +82,7 @@ shared_ptr<StringMethod> AndroidUtil::Method_ZLFile_getPath;
 shared_ptr<BooleanMethod> AndroidUtil::Method_ZLFile_isDirectory;
 shared_ptr<LongMethod> AndroidUtil::Method_ZLFile_size;
 
-jmethodID AndroidUtil::MID_ZLFileImage_init;
+shared_ptr<Constructor> AndroidUtil::Constructor_ZLFileImage;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Paths_cacheDirectory;
 
@@ -149,10 +149,9 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_ZLibrary_getVersionName = new StringMethod(env, cls, "getVersionName", "()");
 	env->DeleteLocalRef(cls);
 
-	CHECK_NULL( cls = env->FindClass(Class_NativeFormatPlugin) );
-	CHECK_NULL( MID_NativeFormatPlugin_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V") );
-	Method_NativeFormatPlugin_supportedFileType = new StringMethod(env, cls, "supportedFileType", "()");
-	env->DeleteLocalRef(cls);
+	Class_NativeFormatPlugin = new JavaClass(env, "org/geometerplus/fbreader/formats/NativeFormatPlugin");
+	Constructor_NativeFormatPlugin = new Constructor(*Class_NativeFormatPlugin, "(Ljava/lang/String;)V");
+	Method_NativeFormatPlugin_supportedFileType = new StringMethod(*Class_NativeFormatPlugin, "supportedFileType", "()");
 
 	CHECK_NULL( cls = env->FindClass(Class_PluginCollection) );
 	StaticMethod_PluginCollection_Instance = new StaticObjectMethod(env, cls, "Instance", "org/geometerplus/fbreader/formats/PluginCollection", "()");
@@ -185,9 +184,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_ZLFile_size = new LongMethod(env, cls, "size", "()");
 	env->DeleteLocalRef(cls);
 
-	CHECK_NULL( cls = env->FindClass(Class_ZLFileImage) );
-	CHECK_NULL( MID_ZLFileImage_init = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;II)V") );
-	env->DeleteLocalRef(cls);
+ 	Class_ZLFileImage = new JavaClass(env, "org/geometerplus/zlibrary/core/image/ZLFileImage");
+	Constructor_ZLFileImage = new Constructor(*Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;II)V");
 
 	CHECK_NULL( cls = env->FindClass(Class_Paths) );
 	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(env, cls, "cacheDirectory", "java/lang/String", "()");
@@ -244,14 +242,11 @@ jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
 	jobject javaFile = createJavaFile(env, image.file().path());
 	jstring javaEncoding = createJavaString(env, image.encoding());
 
-	jclass cls = env->FindClass(Class_ZLFileImage);
-	jobject javaImage = env->NewObject(
-		cls, MID_ZLFileImage_init,
+	jobject javaImage = Constructor_ZLFileImage->call(
 		javaMimeType, javaFile, javaEncoding,
 		image.offset(), image.size()
 	);
 
-	env->DeleteLocalRef(cls);
 	env->DeleteLocalRef(javaEncoding);
 	env->DeleteLocalRef(javaFile);
 	env->DeleteLocalRef(javaMimeType);

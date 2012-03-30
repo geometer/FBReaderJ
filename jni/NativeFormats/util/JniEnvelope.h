@@ -29,7 +29,7 @@ class JavaClass {
 public:
 	JavaClass(JNIEnv *env, const std::string &name);
 	~JavaClass();
-	jclass j();
+	jclass j() const;
 
 private:
 	JavaClass(const JavaClass&);
@@ -42,6 +42,22 @@ private:
 
 friend class Method;
 friend class StaticMethod;
+friend class Constructor;
+};
+
+class Constructor {
+
+public:
+	Constructor(const JavaClass &cls, const std::string &signature);
+	jobject call(...);
+
+private:
+	Constructor(const Constructor&);
+	const Constructor &operator = (const Constructor&);
+
+protected:
+	const JavaClass &myClass;
+	jmethodID myId;
 };
 
 class Method {
@@ -127,6 +143,6 @@ public:
 	jobject call(jclass cls, ...);
 };
 
-inline jclass JavaClass::j() { return myClass; }
+inline jclass JavaClass::j() const { return myClass; }
 
 #endif /* __JNIENVELOPE_H__ */

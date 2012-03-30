@@ -33,6 +33,18 @@ JavaClass::~JavaClass() {
 	myEnv->DeleteGlobalRef(myClass);
 }
 
+Constructor::Constructor(const JavaClass &cls, const std::string &signature) : myClass(cls) {
+	myId = cls.myEnv->GetMethodID(cls.j(), "<init>", signature.c_str());
+}
+
+jobject Constructor::call(...) {
+	va_list lst;
+	va_start(lst, this);
+	jobject obj = myClass.myEnv->NewObjectV(myClass.j(), myId, lst);
+	va_end(lst);
+	return obj;
+}
+
 Method::Method(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : myName(name) {
 	//ZLLogger::Instance().registerClass(JNI_LOGGER_CLASS);
 	myEnv = env;
