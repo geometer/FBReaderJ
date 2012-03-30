@@ -52,7 +52,7 @@ bool JavaEncodingConverterProvider::providesConverter(const std::string &encodin
 	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
 	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
 	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
-	jboolean result = env->CallBooleanMethod(collection, AndroidUtil::MID_JavaEncodingCollection_providesConverterFor, encodingName);
+	jboolean result = AndroidUtil::Method_JavaEncodingCollection_providesConverterFor->call(collection, encodingName);
 	env->DeleteLocalRef(encodingName);
 	env->DeleteLocalRef(collection);
 	env->DeleteLocalRef(cls);

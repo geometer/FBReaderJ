@@ -56,4 +56,11 @@ public:
 	jlong call(jobject base, ...);
 };
 
+class BooleanMethod : public Method {
+
+public:
+	BooleanMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	jboolean call(jobject base, ...);
+};
+
 #endif /* __JNIENVELOPE_H__ */

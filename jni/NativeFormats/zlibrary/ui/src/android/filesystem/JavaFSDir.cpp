@@ -85,9 +85,7 @@ void JavaFSDir::collectChildren(std::vector<std::string> &names, bool filesNotDi
 			if (index != std::string::npos) {
 				path.erase(index);
 				isdir = true;
-			} /*else {
-				isdir = env->CallBooleanMethod(file, AndroidUtil::MID_ZLFile_isDirectory) != 0;
-			}*/
+			}
 			if (isdir ^ filesNotDirs) {
 				names.push_back(path.substr(prefixLength));
 			}

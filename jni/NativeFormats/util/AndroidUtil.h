@@ -77,11 +77,11 @@ public:
 
 	static jmethodID SMID_ZLFile_createFileByPath;
 	static jmethodID MID_ZLFile_children;
-	static jmethodID MID_ZLFile_exists;
+	static shared_ptr<BooleanMethod> Method_ZLFile_exists;
 	static jmethodID MID_ZLFile_getInputStream;
 	static jmethodID MID_ZLFile_getPath;
-	static jmethodID MID_ZLFile_isDirectory;
-	static jmethodID MID_ZLFile_size;
+	static shared_ptr<BooleanMethod> Method_ZLFile_isDirectory;
+	static shared_ptr<LongMethod> Method_ZLFile_size;
 
 	static jmethodID MID_ZLFileImage_init;
 
@@ -99,7 +99,7 @@ public:
 	static jmethodID SMID_JavaEncodingCollection_Instance;
 	static jmethodID MID_JavaEncodingCollection_getEncoding_String;
 	static jmethodID MID_JavaEncodingCollection_getEncoding_int;
-	static jmethodID MID_JavaEncodingCollection_providesConverterFor;
+	static shared_ptr<BooleanMethod> Method_JavaEncodingCollection_providesConverterFor;
 
 	static jmethodID SMID_Paths_cacheDirectory;
 
@@ -113,7 +113,7 @@ public:
 	static shared_ptr<VoidMethod> Method_Book_setEncoding;
 	static shared_ptr<VoidMethod> Method_Book_addAuthor;
 	static shared_ptr<VoidMethod> Method_Book_addTag;
-	static jmethodID MID_Book_save;
+	static shared_ptr<BooleanMethod> Method_Book_save;
 
 	static jmethodID SMID_Tag_getTag;
 

@@ -72,15 +72,15 @@ shared_ptr<VoidMethod> AndroidUtil::Method_EncodingConverter_reset;
 jmethodID AndroidUtil::SMID_JavaEncodingCollection_Instance;
 jmethodID AndroidUtil::MID_JavaEncodingCollection_getEncoding_int;
 jmethodID AndroidUtil::MID_JavaEncodingCollection_getEncoding_String;
-jmethodID AndroidUtil::MID_JavaEncodingCollection_providesConverterFor;
+shared_ptr<BooleanMethod> AndroidUtil::Method_JavaEncodingCollection_providesConverterFor;
 
 jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
 jmethodID AndroidUtil::MID_ZLFile_children;
-jmethodID AndroidUtil::MID_ZLFile_exists;
+shared_ptr<BooleanMethod> AndroidUtil::Method_ZLFile_exists;
 jmethodID AndroidUtil::MID_ZLFile_getInputStream;
 jmethodID AndroidUtil::MID_ZLFile_getPath;
-jmethodID AndroidUtil::MID_ZLFile_isDirectory;
-jmethodID AndroidUtil::MID_ZLFile_size;
+shared_ptr<BooleanMethod> AndroidUtil::Method_ZLFile_isDirectory;
+shared_ptr<LongMethod> AndroidUtil::Method_ZLFile_size;
 
 jmethodID AndroidUtil::MID_ZLFileImage_init;
 
@@ -96,7 +96,7 @@ shared_ptr<VoidMethod> AndroidUtil::Method_Book_setLanguage;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_setEncoding;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_addAuthor;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_addTag;
-jmethodID AndroidUtil::MID_Book_save;
+shared_ptr<BooleanMethod> AndroidUtil::Method_Book_save;
 
 jmethodID AndroidUtil::SMID_Tag_getTag;
 
@@ -174,17 +174,17 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( SMID_JavaEncodingCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/encodings/JavaEncodingCollection;") );
 	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_String = env->GetMethodID(cls, "getEncoding", "(Ljava/lang/String;)Lorg/geometerplus/zlibrary/core/encodings/Encoding;") );
 	CHECK_NULL( MID_JavaEncodingCollection_getEncoding_int = env->GetMethodID(cls, "getEncoding", "(I)Lorg/geometerplus/zlibrary/core/encodings/Encoding;") );
-	CHECK_NULL( MID_JavaEncodingCollection_providesConverterFor = env->GetMethodID(cls, "providesConverterFor", "(Ljava/lang/String;)Z") );
+	Method_JavaEncodingCollection_providesConverterFor = new BooleanMethod(env, cls, "providesConverterFor", "(Ljava/lang/String;)");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
 	CHECK_NULL( SMID_ZLFile_createFileByPath = env->GetStaticMethodID(cls, "createFileByPath", "(Ljava/lang/String;)Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;") );
 	CHECK_NULL( MID_ZLFile_children = env->GetMethodID(cls, "children", "()Ljava/util/List;") );
-	CHECK_NULL( MID_ZLFile_exists = env->GetMethodID(cls, "exists", "()Z") );
-	CHECK_NULL( MID_ZLFile_isDirectory = env->GetMethodID(cls, "isDirectory", "()Z") );
+	Method_ZLFile_exists = new BooleanMethod(env, cls, "exists", "()");
+	Method_ZLFile_isDirectory = new BooleanMethod(env, cls, "isDirectory", "()");
 	CHECK_NULL( MID_ZLFile_getInputStream = env->GetMethodID(cls, "getInputStream", "()Ljava/io/InputStream;") );
 	CHECK_NULL( MID_ZLFile_getPath = env->GetMethodID(cls, "getPath", "()Ljava/lang/String;") );
-	CHECK_NULL( MID_ZLFile_size = env->GetMethodID(cls, "size", "()J") );
+	Method_ZLFile_size = new LongMethod(env, cls, "size", "()");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFileImage) );
@@ -206,7 +206,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Book_setEncoding = new VoidMethod(env, cls, "setEncoding", "(Ljava/lang/String;)");
 	Method_Book_addAuthor = new VoidMethod(env, cls, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
 	Method_Book_addTag = new VoidMethod(env, cls, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)");
-	CHECK_NULL( MID_Book_save = env->GetMethodID(cls, "save", "()Z") );
+	Method_Book_save = new BooleanMethod(env, cls, "save", "()");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Tag) );

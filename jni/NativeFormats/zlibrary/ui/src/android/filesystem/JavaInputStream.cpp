@@ -155,8 +155,7 @@ size_t JavaInputStream::sizeOfOpened() {
 	if (myJavaInputStream == 0 || myJavaFile == 0) {
 		return 0;
 	}
-	JNIEnv *env = AndroidUtil::getEnv();
-	return (size_t) env->CallLongMethod(myJavaFile, AndroidUtil::MID_ZLFile_size);
+	return (size_t)AndroidUtil::Method_ZLFile_size->call(myJavaFile);
 }
 
 void JavaInputStream::seek(int offset, bool absoluteOffset) {

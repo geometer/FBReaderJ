@@ -98,7 +98,7 @@ void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
 		env->DeleteLocalRef(javaString);
 	}
 
-	env->CallBooleanMethod(javaBook, AndroidUtil::MID_Book_save);
+	AndroidUtil::Method_Book_save->call(javaBook);
 }
 
 extern "C"

@@ -58,3 +58,14 @@ jlong LongMethod::call(jobject base, ...) {
 	va_end(lst);
 	return result;
 }
+
+BooleanMethod::BooleanMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "Z") {
+}
+
+jboolean BooleanMethod::call(jobject base, ...) {
+	va_list lst;
+	va_start(lst, base);
+	jboolean result = myEnv->CallBooleanMethod(base, myId, lst);
+	va_end(lst);
+	return result;
+}
