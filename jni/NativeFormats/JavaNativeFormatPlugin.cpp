@@ -20,6 +20,7 @@
 #include <jni.h>
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 #include <ZLFileImage.h>
 
 #include "fbreader/src/bookmodel/BookModel.h"
@@ -44,24 +45,24 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	jstring javaString;
 
 	javaString = AndroidUtil::createJavaString(env, book.title());
-	env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setTitle, javaString);
+	AndroidUtil::Method_Book_setTitle->call(javaBook, javaString);
 	env->DeleteLocalRef(javaString);
 
 	javaString = AndroidUtil::createJavaString(env, book.language());
 	if (javaString != 0) {
-		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setLanguage, javaString);
+		AndroidUtil::Method_Book_setLanguage->call(javaBook, javaString);
 		env->DeleteLocalRef(javaString);
 	}
 
 	javaString = AndroidUtil::createJavaString(env, book.encoding());
 	if (javaString != 0) {
-		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setEncoding, javaString);
+		AndroidUtil::Method_Book_setEncoding->call(javaBook, javaString);
 		env->DeleteLocalRef(javaString);
 	}
 
 	javaString = AndroidUtil::createJavaString(env, book.seriesTitle());
 	if (javaString != 0) {
-		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setSeriesInfo, javaString, (jfloat)book.indexInSeries());
+		AndroidUtil::Method_Book_setSeriesInfo->call(javaBook, javaString, (jfloat)book.indexInSeries());
 		env->DeleteLocalRef(javaString);
 	}
 
@@ -70,7 +71,7 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 		const Author &author = *authors[i];
 		javaString = env->NewStringUTF(author.name().c_str());
 		jstring key = env->NewStringUTF(author.sortKey().c_str());
-		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_addAuthor, javaString, key);
+		AndroidUtil::Method_Book_addAuthor->call(javaBook, javaString, key);
 		env->DeleteLocalRef(key);
 		env->DeleteLocalRef(javaString);
 	}
@@ -78,7 +79,7 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 	const TagList &tags = book.tags();
 	for (size_t i = 0; i < tags.size(); ++i) {
 		const Tag &tag = *tags[i];
-		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_addTag, tag.javaTag(env));
+		AndroidUtil::Method_Book_addTag->call(javaBook, tag.javaTag(env));
 	}
 }
 
@@ -87,13 +88,13 @@ void fillLanguageAndEncoding(JNIEnv* env, jobject javaBook, Book &book) {
 
 	javaString = AndroidUtil::createJavaString(env, book.language());
 	if (javaString != 0) {
-		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setLanguage, javaString);
+		AndroidUtil::Method_Book_setLanguage->call(javaBook, javaString);
 		env->DeleteLocalRef(javaString);
 	}
 
 	javaString = AndroidUtil::createJavaString(env, book.encoding());
 	if (javaString != 0) {
-		env->CallVoidMethod(javaBook, AndroidUtil::MID_Book_setEncoding, javaString);
+		AndroidUtil::Method_Book_setEncoding->call(javaBook, javaString);
 		env->DeleteLocalRef(javaString);
 	}
 
@@ -167,8 +168,7 @@ static bool initInternalHyperlinks(JNIEnv *env, jobject javaModel, BookModel &mo
 	jstring linksDirectoryName = env->NewStringUTF(allocator.directoryName().c_str());
 	jstring linksFileExtension = env->NewStringUTF(allocator.fileExtension().c_str());
 	jint linksBlocksNumber = allocator.blocksNumber();
-	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initInternalHyperlinks,
-			linksDirectoryName, linksFileExtension, linksBlocksNumber);
+	AndroidUtil::Method_NativeBookModel_initInternalHyperlinks->call(javaModel, linksDirectoryName, linksFileExtension, linksBlocksNumber);
 	env->DeleteLocalRef(linksDirectoryName);
 	env->DeleteLocalRef(linksFileExtension);
 	return !env->ExceptionCheck();
@@ -230,8 +230,7 @@ static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
 	jintArray javaChildrenNumbers = AndroidUtil::createJavaIntArray(env, childrenNumbers);
 	jintArray javaReferenceNumbers = AndroidUtil::createJavaIntArray(env, referenceNumbers);
 
-	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_initTOC,
-			javaTextModel, javaChildrenNumbers, javaReferenceNumbers);
+	AndroidUtil::Method_NativeBookModel_initTOC->call(javaModel, javaTextModel, javaChildrenNumbers, javaReferenceNumbers);
 
 	env->DeleteLocalRef(javaTextModel);
 	env->DeleteLocalRef(javaChildrenNumbers);
@@ -264,7 +263,7 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	if (javaTextModel == 0) {
 		return JNI_FALSE;
 	}
-	env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setBookTextModel, javaTextModel);
+	AndroidUtil::Method_NativeBookModel_setBookTextModel->call(javaModel, javaTextModel);
 	if (env->ExceptionCheck()) {
 		return JNI_FALSE;
 	}
@@ -277,7 +276,7 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 		if (javaFootnoteModel == 0) {
 			return JNI_FALSE;
 		}
-		env->CallVoidMethod(javaModel, AndroidUtil::MID_NativeBookModel_setFootnoteModel, javaFootnoteModel);
+		AndroidUtil::Method_NativeBookModel_setFootnoteModel->call(javaModel, javaFootnoteModel);
 		if (env->ExceptionCheck()) {
 			return JNI_FALSE;
 		}

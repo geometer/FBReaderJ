@@ -93,8 +93,8 @@ public:
 	static jmethodID MID_Encoding_createConverter;
 
 	static jfieldID FID_EncodingConverter_Name;
-	static jmethodID MID_EncodingConverter_convert;
-	static jmethodID MID_EncodingConverter_reset;
+	static shared_ptr<IntMethod> Method_EncodingConverter_convert;
+	static shared_ptr<VoidMethod> Method_EncodingConverter_reset;
 
 	static jmethodID SMID_JavaEncodingCollection_Instance;
 	static jmethodID MID_JavaEncodingCollection_getEncoding_String;
@@ -107,23 +107,23 @@ public:
 	static jmethodID MID_Book_getTitle;
 	static jmethodID MID_Book_getLanguage;
 	static jmethodID MID_Book_getEncodingNoDetection;
-	static jmethodID MID_Book_setTitle;
-	static jmethodID MID_Book_setSeriesInfo;
-	static jmethodID MID_Book_setLanguage;
-	static jmethodID MID_Book_setEncoding;
-	static jmethodID MID_Book_addAuthor;
-	static jmethodID MID_Book_addTag;
+	static shared_ptr<VoidMethod> Method_Book_setTitle;
+	static shared_ptr<VoidMethod> Method_Book_setSeriesInfo;
+	static shared_ptr<VoidMethod> Method_Book_setLanguage;
+	static shared_ptr<VoidMethod> Method_Book_setEncoding;
+	static shared_ptr<VoidMethod> Method_Book_addAuthor;
+	static shared_ptr<VoidMethod> Method_Book_addTag;
 	static jmethodID MID_Book_save;
 
 	static jmethodID SMID_Tag_getTag;
 
 	static jfieldID FID_NativeBookModel_Book;
-	static jmethodID MID_NativeBookModel_initInternalHyperlinks;
-	static jmethodID MID_NativeBookModel_initTOC;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_initInternalHyperlinks;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_initTOC;
 	static jmethodID MID_NativeBookModel_createTextModel;
-	static jmethodID MID_NativeBookModel_setBookTextModel;
-	static jmethodID MID_NativeBookModel_setFootnoteModel;
-	static jmethodID MID_NativeBookModel_addImage;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_setBookTextModel;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_setFootnoteModel;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_addImage;
 
 	static jmethodID SMID_BookReadingException_throwForFile;
 

@@ -18,6 +18,7 @@
  */
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 #include <ZLUnicodeUtil.h>
 
 #include "JavaEncodingConverter.h"
@@ -106,14 +107,14 @@ void JavaEncodingConverter::convert(std::string &dst, const char *srcStart, cons
 	}
 
 	env->SetByteArrayRegion(myInBuffer, 0, srcLen, (jbyte*)srcStart);
-	const jint dstLen = env->CallIntMethod(myJavaConverter, AndroidUtil::MID_EncodingConverter_convert, myInBuffer, 0, srcLen, myOutBuffer, 0);
+	const jint dstLen = AndroidUtil::Method_EncodingConverter_convert->call(myJavaConverter, myInBuffer, 0, srcLen, myOutBuffer, 0);
 	const int origLen = dst.size();
 	dst.append(dstLen, '\0');
 	env->GetByteArrayRegion(myOutBuffer, 0, dstLen, (jbyte*)dst.data() + origLen);
 }
 
 void JavaEncodingConverter::reset() {
-	AndroidUtil::getEnv()->CallVoidMethod(myJavaConverter, AndroidUtil::MID_EncodingConverter_reset);
+	AndroidUtil::Method_EncodingConverter_reset->call(myJavaConverter);
 }
 
 bool JavaEncodingConverter::fillTable(int *map) {
