@@ -160,7 +160,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Encoding) );
-	Method_Encoding_createConverter = new ObjectMethod(env, cls, "createConverter", "()", "org/geometerplus/zlibrary/core/encodings/EncodingConverter");
+	Method_Encoding_createConverter = new ObjectMethod(env, cls, "createConverter", "org/geometerplus/zlibrary/core/encodings/EncodingConverter", "()");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_EncodingConverter) );
@@ -171,17 +171,17 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	CHECK_NULL( cls = env->FindClass(Class_JavaEncodingCollection) );
 	CHECK_NULL( SMID_JavaEncodingCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/encodings/JavaEncodingCollection;") );
-	Method_JavaEncodingCollection_getEncoding_String = new ObjectMethod(env, cls, "getEncoding", "(Ljava/lang/String;)", "org/geometerplus/zlibrary/core/encodings/Encoding");
-	Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(env, cls, "getEncoding", "(I)", "org/geometerplus/zlibrary/core/encodings/Encoding");
+	Method_JavaEncodingCollection_getEncoding_String = new ObjectMethod(env, cls, "getEncoding", "org/geometerplus/zlibrary/core/encodings/Encoding", "(Ljava/lang/String;)");
+	Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(env, cls, "getEncoding", "org/geometerplus/zlibrary/core/encodings/Encoding", "(I)");
 	Method_JavaEncodingCollection_providesConverterFor = new BooleanMethod(env, cls, "providesConverterFor", "(Ljava/lang/String;)");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
 	CHECK_NULL( SMID_ZLFile_createFileByPath = env->GetStaticMethodID(cls, "createFileByPath", "(Ljava/lang/String;)Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;") );
-	Method_ZLFile_children = new ObjectMethod(env, cls, "children", "()", "java/util/List");
+	Method_ZLFile_children = new ObjectMethod(env, cls, "children", "java/util/List", "()");
 	Method_ZLFile_exists = new BooleanMethod(env, cls, "exists", "()");
 	Method_ZLFile_isDirectory = new BooleanMethod(env, cls, "isDirectory", "()");
-	Method_ZLFile_getInputStream = new ObjectMethod(env, cls, "getInputStream", "()", "java/io/InputStream");
+	Method_ZLFile_getInputStream = new ObjectMethod(env, cls, "getInputStream", "java/io/InputStream", "()");
 	Method_ZLFile_getPath = new StringMethod(env, cls, "getPath", "()");
 	Method_ZLFile_size = new LongMethod(env, cls, "size", "()");
 	env->DeleteLocalRef(cls);
@@ -216,7 +216,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	CHECK_NULL( FID_NativeBookModel_Book = env->GetFieldID(cls, "Book", "Lorg/geometerplus/fbreader/library/Book;") );
 	Method_NativeBookModel_initInternalHyperlinks = new VoidMethod(env, cls, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)");
 	Method_NativeBookModel_initTOC = new VoidMethod(env, cls, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)");
-	Method_NativeBookModel_createTextModel = new ObjectMethod(env, cls, "createTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)", "org/geometerplus/zlibrary/text/model/ZLTextModel");
+	Method_NativeBookModel_createTextModel = new ObjectMethod(env, cls, "createTextModel", "org/geometerplus/zlibrary/text/model/ZLTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)");
 	Method_NativeBookModel_setBookTextModel = new VoidMethod(env, cls, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");
 	Method_NativeBookModel_setFootnoteModel = new VoidMethod(env, cls, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");
 	Method_NativeBookModel_addImage = new VoidMethod(env, cls, "addImage", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/image/ZLImage;)");
