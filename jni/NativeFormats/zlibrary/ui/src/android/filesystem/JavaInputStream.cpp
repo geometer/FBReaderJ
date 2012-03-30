@@ -52,7 +52,7 @@ void JavaInputStream::initStream(JNIEnv *env) {
 		}
 	}
 
-	jobject stream = env->CallObjectMethod(myJavaFile, AndroidUtil::MID_ZLFile_getInputStream);
+	jobject stream = AndroidUtil::Method_ZLFile_getInputStream->call(myJavaFile);
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
 	} else {

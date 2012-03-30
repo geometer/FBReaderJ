@@ -17,8 +17,6 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
-
 #include <AndroidUtil.h>
 #include <JniEnvelope.h>
 #include <ZLFileImage.h>
@@ -31,7 +29,7 @@
 #include "fbreader/src/library/Tag.h"
 
 static shared_ptr<FormatPlugin> findCppPlugin(JNIEnv *env, jobject base) {
-	jstring fileTypeJava = (jstring)env->CallObjectMethod(base, AndroidUtil::MID_NativeFormatPlugin_supportedFileType);
+	jstring fileTypeJava = AndroidUtil::Method_NativeFormatPlugin_supportedFileType->call(base);
 	const std::string fileTypeCpp = AndroidUtil::fromJavaString(env, fileTypeJava);
 	env->DeleteLocalRef(fileTypeJava);
 	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().pluginByType(fileTypeCpp);
@@ -197,11 +195,11 @@ static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &mode
 	jstring fileExtension = env->NewStringUTF(model.allocator().fileExtension().c_str());
 	jint blocksNumber = (jint) model.allocator().blocksNumber();
 
-	jobject textModel = env->CallObjectMethod(javaModel, AndroidUtil::MID_NativeBookModel_createTextModel,
-			id, language,
-			paragraphsNumber, entryIndices, entryOffsets,
-			paragraphLenghts, textSizes, paragraphKinds,
-			directoryName, fileExtension, blocksNumber);
+	jobject textModel = AndroidUtil::Method_NativeBookModel_createTextModel->call(javaModel,
+		id, language,
+		paragraphsNumber, entryIndices, entryOffsets,
+		paragraphLenghts, textSizes, paragraphKinds,
+		directoryName, fileExtension, blocksNumber);
 
 	if (env->ExceptionCheck()) {
 		textModel = 0;
@@ -292,7 +290,7 @@ JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 		return;
 	}
 
-	jstring javaPath = (jstring)env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
+	jstring javaPath = AndroidUtil::Method_ZLFile_getPath->call(file);
 	const std::string path = AndroidUtil::fromJavaString(env, javaPath);
 	env->DeleteLocalRef(javaPath);
 

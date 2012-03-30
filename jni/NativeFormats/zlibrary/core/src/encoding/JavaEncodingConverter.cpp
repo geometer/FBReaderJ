@@ -68,8 +68,8 @@ JavaEncodingConverter::JavaEncodingConverter(const std::string &encoding) {
 	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
 	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
 	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
-	jobject javaEncoding = env->CallObjectMethod(collection, AndroidUtil::MID_JavaEncodingCollection_getEncoding_String, encodingName);
-	myJavaConverter = env->CallObjectMethod(javaEncoding, AndroidUtil::MID_Encoding_createConverter);
+	jobject javaEncoding = AndroidUtil::Method_JavaEncodingCollection_getEncoding_String->call(collection, encodingName);
+	myJavaConverter = AndroidUtil::Method_Encoding_createConverter->call(javaEncoding);
 	env->DeleteLocalRef(javaEncoding);
 	env->DeleteLocalRef(encodingName);
 	env->DeleteLocalRef(collection);

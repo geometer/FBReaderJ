@@ -69,3 +69,25 @@ jboolean BooleanMethod::call(jobject base, ...) {
 	va_end(lst);
 	return result;
 }
+
+StringMethod::StringMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "Ljava/lang/String;") {
+}
+
+jstring StringMethod::call(jobject base, ...) {
+	va_list lst;
+	va_start(lst, base);
+	jstring result = (jstring)myEnv->CallObjectMethod(base, myId, lst);
+	va_end(lst);
+	return result;
+}
+
+ObjectMethod::ObjectMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &returnType, const std::string &signature) : Method(env, cls, name, signature + "L" + returnType + ";") {
+}
+
+jobject ObjectMethod::call(jobject base, ...) {
+	va_list lst;
+	va_start(lst, base);
+	jobject result = myEnv->CallObjectMethod(base, myId, lst);
+	va_end(lst);
+	return result;
+}

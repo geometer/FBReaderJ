@@ -63,4 +63,18 @@ public:
 	jboolean call(jobject base, ...);
 };
 
+class StringMethod : public Method {
+
+public:
+	StringMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	jstring call(jobject base, ...);
+};
+
+class ObjectMethod : public Method {
+
+public:
+	ObjectMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &returnType, const std::string &signature);
+	jobject call(jobject base, ...);
+};
+
 #endif /* __JNIENVELOPE_H__ */
