@@ -31,6 +31,19 @@ public:
 	virtual ~Method();
 
 protected:
+	const std::string myName;
+	JNIEnv *myEnv;
+	jmethodID myId;
+};
+
+class StaticMethod {
+
+public:
+	StaticMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	virtual ~StaticMethod();
+
+protected:
+	const std::string myName;
 	JNIEnv *myEnv;
 	jmethodID myId;
 };
@@ -75,6 +88,13 @@ class ObjectMethod : public Method {
 public:
 	ObjectMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &returnType, const std::string &signature);
 	jobject call(jobject base, ...);
+};
+
+class StaticObjectMethod : public StaticMethod {
+
+public:
+	StaticObjectMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &returnType, const std::string &signature);
+	jobject call(jclass cls, ...);
 };
 
 #endif /* __JNIENVELOPE_H__ */

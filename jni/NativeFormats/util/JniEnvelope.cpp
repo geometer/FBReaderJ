@@ -17,9 +17,14 @@
  * 02110-1301, USA.
  */
 
+#include <ZLLogger.h>
+
 #include "JniEnvelope.h"
 
-Method::Method(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) {
+static const std::string JNI_LOGGER_CLASS = "JniLog";
+
+Method::Method(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : myName(name) {
+	//ZLLogger::Instance().registerClass(JNI_LOGGER_CLASS);
 	myEnv = env;
 	myId = env->GetMethodID(cls, name.c_str(), signature.c_str());
 }
@@ -27,24 +32,37 @@ Method::Method(JNIEnv *env, jclass cls, const std::string &name, const std::stri
 Method::~Method() {
 }
 
+StaticMethod::StaticMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : myName(name) {
+	//ZLLogger::Instance().registerClass(JNI_LOGGER_CLASS);
+	myEnv = env;
+	myId = env->GetStaticMethodID(cls, name.c_str(), signature.c_str());
+}
+
+StaticMethod::~StaticMethod() {
+}
+
 VoidMethod::VoidMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "V") {
 }
 
 void VoidMethod::call(jobject base, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling VoidMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	myEnv->CallVoidMethod(base, myId, lst);
+	myEnv->CallVoidMethodV(base, myId, lst);
 	va_end(lst);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished VoidMethod " + myName);
 }
 
 IntMethod::IntMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "I") {
 }
 
 jint IntMethod::call(jobject base, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling IntMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jint result = myEnv->CallIntMethod(base, myId, lst);
+	jint result = myEnv->CallIntMethodV(base, myId, lst);
 	va_end(lst);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished IntMethod " + myName);
 	return result;
 }
 
@@ -52,10 +70,12 @@ LongMethod::LongMethod(JNIEnv *env, jclass cls, const std::string &name, const s
 }
 
 jlong LongMethod::call(jobject base, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling LongMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jlong result = myEnv->CallLongMethod(base, myId, lst);
+	jlong result = myEnv->CallLongMethodV(base, myId, lst);
 	va_end(lst);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished LongMethod " + myName);
 	return result;
 }
 
@@ -63,10 +83,12 @@ BooleanMethod::BooleanMethod(JNIEnv *env, jclass cls, const std::string &name, c
 }
 
 jboolean BooleanMethod::call(jobject base, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling BooleanMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jboolean result = myEnv->CallBooleanMethod(base, myId, lst);
+	jboolean result = myEnv->CallBooleanMethodV(base, myId, lst);
 	va_end(lst);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished BooleanMethod " + myName);
 	return result;
 }
 
@@ -74,10 +96,12 @@ StringMethod::StringMethod(JNIEnv *env, jclass cls, const std::string &name, con
 }
 
 jstring StringMethod::call(jobject base, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StringMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jstring result = (jstring)myEnv->CallObjectMethod(base, myId, lst);
+	jstring result = (jstring)myEnv->CallObjectMethodV(base, myId, lst);
 	va_end(lst);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished StringMethod " + myName);
 	return result;
 }
 
@@ -85,9 +109,24 @@ ObjectMethod::ObjectMethod(JNIEnv *env, jclass cls, const std::string &name, con
 }
 
 jobject ObjectMethod::call(jobject base, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling ObjectMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jobject result = myEnv->CallObjectMethod(base, myId, lst);
+	jobject result = myEnv->CallObjectMethodV(base, myId, lst);
 	va_end(lst);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished ObjectMethod " + myName);
+	return result;
+}
+
+StaticObjectMethod::StaticObjectMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &returnType, const std::string &signature) : StaticMethod(env, cls, name, signature + "L" + returnType + ";") {
+}
+
+jobject StaticObjectMethod::call(jclass cls, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StaticObjectMethod " + myName);
+	va_list lst;
+	va_start(lst, cls);
+	jobject result = myEnv->CallStaticObjectMethodV(cls, myId, lst);
+	va_end(lst);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished StaticObjectMethod " + myName);
 	return result;
 }

@@ -50,7 +50,7 @@ bool JavaEncodingConverterProvider::providesConverter(const std::string &encodin
 	}
 	JNIEnv *env = AndroidUtil::getEnv();
 	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
-	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
+	jobject collection = AndroidUtil::StaticMethod_JavaEncodingCollection_Instance->call(cls);
 	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
 	jboolean result = AndroidUtil::Method_JavaEncodingCollection_providesConverterFor->call(collection, encodingName);
 	env->DeleteLocalRef(encodingName);
@@ -66,7 +66,7 @@ shared_ptr<ZLEncodingConverter> JavaEncodingConverterProvider::createConverter(c
 JavaEncodingConverter::JavaEncodingConverter(const std::string &encoding) {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
-	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
+	jobject collection = AndroidUtil::StaticMethod_JavaEncodingCollection_Instance->call(cls);
 	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
 	jobject javaEncoding = AndroidUtil::Method_JavaEncodingCollection_getEncoding_String->call(collection, encodingName);
 	myJavaConverter = AndroidUtil::Method_Encoding_createConverter->call(javaEncoding);

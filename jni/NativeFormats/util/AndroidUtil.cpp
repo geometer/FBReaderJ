@@ -41,27 +41,27 @@ const char * const AndroidUtil::Class_ZLFileImage = "org/geometerplus/zlibrary/c
 const char * const AndroidUtil::Class_Book = "org/geometerplus/fbreader/library/Book";
 const char * const AndroidUtil::Class_Tag = "org/geometerplus/fbreader/library/Tag";
 const char * const AndroidUtil::Class_NativeBookModel = "org/geometerplus/fbreader/bookmodel/NativeBookModel";
-const char * const AndroidUtil::Class_BookReadingException = "org/geometerplus/fbreader/bookmodel/BookReadingException";
+//const char * const AndroidUtil::Class_BookReadingException = "org/geometerplus/fbreader/bookmodel/BookReadingException";
 
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toLowerCase;
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toUpperCase;
 
 jmethodID AndroidUtil::MID_java_util_Collection_toArray;
 
-jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_java_util_Locale_getDefault;
 shared_ptr<StringMethod> AndroidUtil::Method_java_util_Locale_getLanguage;
 
 shared_ptr<VoidMethod> AndroidUtil::Method_java_io_InputStream_close;
 shared_ptr<IntMethod> AndroidUtil::Method_java_io_InputStream_read;
 shared_ptr<LongMethod> AndroidUtil::Method_java_io_InputStream_skip;
 
-jmethodID AndroidUtil::SMID_ZLibrary_Instance;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_ZLibrary_Instance;
 shared_ptr<StringMethod> AndroidUtil::Method_ZLibrary_getVersionName;
 
 jmethodID AndroidUtil::MID_NativeFormatPlugin_init;
 shared_ptr<StringMethod> AndroidUtil::Method_NativeFormatPlugin_supportedFileType;
 
-jmethodID AndroidUtil::SMID_PluginCollection_Instance;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_PluginCollection_Instance;
 
 shared_ptr<ObjectMethod> AndroidUtil::Method_Encoding_createConverter;
 
@@ -69,12 +69,12 @@ jfieldID AndroidUtil::FID_EncodingConverter_Name;
 shared_ptr<IntMethod> AndroidUtil::Method_EncodingConverter_convert;
 shared_ptr<VoidMethod> AndroidUtil::Method_EncodingConverter_reset;
 
-jmethodID AndroidUtil::SMID_JavaEncodingCollection_Instance;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_JavaEncodingCollection_Instance;
 shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding_int;
 shared_ptr<ObjectMethod> AndroidUtil::Method_JavaEncodingCollection_getEncoding_String;
 shared_ptr<BooleanMethod> AndroidUtil::Method_JavaEncodingCollection_providesConverterFor;
 
-jmethodID AndroidUtil::SMID_ZLFile_createFileByPath;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_ZLFile_createFileByPath;
 shared_ptr<ObjectMethod> AndroidUtil::Method_ZLFile_children;
 shared_ptr<BooleanMethod> AndroidUtil::Method_ZLFile_exists;
 shared_ptr<ObjectMethod> AndroidUtil::Method_ZLFile_getInputStream;
@@ -84,7 +84,7 @@ shared_ptr<LongMethod> AndroidUtil::Method_ZLFile_size;
 
 jmethodID AndroidUtil::MID_ZLFileImage_init;
 
-jmethodID AndroidUtil::SMID_Paths_cacheDirectory;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Paths_cacheDirectory;
 
 jfieldID AndroidUtil::FID_Book_File;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getTitle;
@@ -98,7 +98,7 @@ shared_ptr<VoidMethod> AndroidUtil::Method_Book_addAuthor;
 shared_ptr<VoidMethod> AndroidUtil::Method_Book_addTag;
 shared_ptr<BooleanMethod> AndroidUtil::Method_Book_save;
 
-jmethodID AndroidUtil::SMID_Tag_getTag;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Tag_getTag;
 
 jfieldID AndroidUtil::FID_NativeBookModel_Book;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_initInternalHyperlinks;
@@ -108,7 +108,7 @@ shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_setBookTextModel;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_setFootnoteModel;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_addImage;
 
-jmethodID AndroidUtil::SMID_BookReadingException_throwForFile;
+//shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_BookReadingException_throwForFile;
 
 JNIEnv *AndroidUtil::getEnv() {
 	JNIEnv *env;
@@ -135,7 +135,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_java_util_Locale) );
-	CHECK_NULL( SMID_java_util_Locale_getDefault = env->GetStaticMethodID(cls, "getDefault", "()Ljava/util/Locale;") );
+	StaticMethod_java_util_Locale_getDefault = new StaticObjectMethod(env, cls, "getDefault", "java/util/Locale", "()");
 	Method_java_util_Locale_getLanguage = new StringMethod(env, cls, "getLanguage", "()");
 	env->DeleteLocalRef(cls);
 
@@ -146,7 +146,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLibrary) );
-	CHECK_NULL( SMID_ZLibrary_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/library/ZLibrary;") );
+	StaticMethod_ZLibrary_Instance = new StaticObjectMethod(env, cls, "Instance", "org/geometerplus/zlibrary/core/library/ZLibrary", "()");
 	Method_ZLibrary_getVersionName = new StringMethod(env, cls, "getVersionName", "()");
 	env->DeleteLocalRef(cls);
 
@@ -156,7 +156,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_PluginCollection) );
-	CHECK_NULL( SMID_PluginCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/fbreader/formats/PluginCollection;") );
+	StaticMethod_PluginCollection_Instance = new StaticObjectMethod(env, cls, "Instance", "org/geometerplus/fbreader/formats/PluginCollection", "()");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Encoding) );
@@ -170,14 +170,14 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_JavaEncodingCollection) );
-	CHECK_NULL( SMID_JavaEncodingCollection_Instance = env->GetStaticMethodID(cls, "Instance", "()Lorg/geometerplus/zlibrary/core/encodings/JavaEncodingCollection;") );
+	StaticMethod_JavaEncodingCollection_Instance = new StaticObjectMethod(env, cls, "Instance", "org/geometerplus/zlibrary/core/encodings/JavaEncodingCollection", "()");
 	Method_JavaEncodingCollection_getEncoding_String = new ObjectMethod(env, cls, "getEncoding", "org/geometerplus/zlibrary/core/encodings/Encoding", "(Ljava/lang/String;)");
 	Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(env, cls, "getEncoding", "org/geometerplus/zlibrary/core/encodings/Encoding", "(I)");
 	Method_JavaEncodingCollection_providesConverterFor = new BooleanMethod(env, cls, "providesConverterFor", "(Ljava/lang/String;)");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLFile) );
-	CHECK_NULL( SMID_ZLFile_createFileByPath = env->GetStaticMethodID(cls, "createFileByPath", "(Ljava/lang/String;)Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;") );
+	StaticMethod_ZLFile_createFileByPath = new StaticObjectMethod(env, cls, "createFileByPath", "org/geometerplus/zlibrary/core/filesystem/ZLFile", "(Ljava/lang/String;)");
 	Method_ZLFile_children = new ObjectMethod(env, cls, "children", "java/util/List", "()");
 	Method_ZLFile_exists = new BooleanMethod(env, cls, "exists", "()");
 	Method_ZLFile_isDirectory = new BooleanMethod(env, cls, "isDirectory", "()");
@@ -191,7 +191,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Paths) );
-	CHECK_NULL( SMID_Paths_cacheDirectory = env->GetStaticMethodID(cls, "cacheDirectory", "()Ljava/lang/String;") );
+	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(env, cls, "cacheDirectory", "java/lang/String", "()");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Book) );
@@ -209,7 +209,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_Tag) );
-	CHECK_NULL( SMID_Tag_getTag = env->GetStaticMethodID(cls, "getTag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)Lorg/geometerplus/fbreader/library/Tag;") );
+	StaticMethod_Tag_getTag = new StaticObjectMethod(env, cls, "getTag", "org/geometerplus/fbreader/library/Tag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_NativeBookModel) );
@@ -222,9 +222,11 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_NativeBookModel_addImage = new VoidMethod(env, cls, "addImage", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/image/ZLImage;)");
 	env->DeleteLocalRef(cls);
 
+/*
 	CHECK_NULL( cls = env->FindClass(Class_BookReadingException) );
-	CHECK_NULL( SMID_BookReadingException_throwForFile = env->GetStaticMethodID(cls, "throwForFile", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;)V") );
+	CHECK_NULL( StaticMethod_BookReadingException_throwForFile = env->GetStaticMethodID(cls, "throwForFile", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;)V") );
 	env->DeleteLocalRef(cls);
+*/
 
 	return true;
 }
@@ -232,7 +234,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 jobject AndroidUtil::createJavaFile(JNIEnv *env, const std::string &path) {
 	jstring javaPath = env->NewStringUTF(path.c_str());
 	jclass cls = env->FindClass(Class_ZLFile);
-	jobject javaFile = env->CallStaticObjectMethod(cls, SMID_ZLFile_createFileByPath, javaPath);
+	jobject javaFile = StaticMethod_ZLFile_createFileByPath->call(cls, javaPath);
 	env->DeleteLocalRef(cls);
 	env->DeleteLocalRef(javaPath);
 	return javaFile;
@@ -331,15 +333,17 @@ void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message)
 	env->ThrowNew(cls, message.c_str());
 }
 
+/*
 void AndroidUtil::throwBookReadingException(const std::string &resourceId, const ZLFile &file) {
 	JNIEnv *env = getEnv();
 	jclass cls = env->FindClass("org/geometerplus/fbreader/bookmodel/BookReadingException");
 	env->CallStaticVoidMethod(
 		cls,
-		SMID_BookReadingException_throwForFile,
+		StaticMethod_BookReadingException_throwForFile,
 		AndroidUtil::createJavaString(env, resourceId),
 		AndroidUtil::createJavaFile(env, file.path())
 	);
 	// TODO: possible memory leak
 	// TODO: clear cls & ZLFile object references
 }
+*/

@@ -21,6 +21,7 @@
 #include <algorithm>
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include <ZLStringUtil.h>
 
@@ -138,7 +139,7 @@ jobject Tag::javaTag(JNIEnv *env) const {
 
 	jobject javaName = env->NewStringUTF(myName.c_str());
 	jclass cls = env->FindClass(AndroidUtil::Class_Tag);
-	jobject tag = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_Tag_getTag, parentTag, javaName);
+	jobject tag = AndroidUtil::StaticMethod_Tag_getTag->call(cls, parentTag, javaName);
 	myJavaTag = env->NewGlobalRef(tag);
 	env->DeleteLocalRef(tag);
 	env->DeleteLocalRef(cls);

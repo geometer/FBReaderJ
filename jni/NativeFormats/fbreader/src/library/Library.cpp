@@ -18,6 +18,7 @@
  */
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include "Library.h"
 
@@ -45,7 +46,7 @@ Library::~Library() {
 
 std::string Library::cacheDirectory() const {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jstring res = (jstring)env->CallStaticObjectMethod(myPathsClass, AndroidUtil::SMID_Paths_cacheDirectory);
+	jstring res = (jstring)AndroidUtil::StaticMethod_Paths_cacheDirectory->call(myPathsClass);
 	const char *data = env->GetStringUTFChars(res, 0);
 	std::string str(data);
 	env->ReleaseStringUTFChars(res, data);
