@@ -27,6 +27,7 @@
 
 #include <shared_ptr.h>
 
+class JavaClass;
 class VoidMethod;
 class IntMethod;
 class LongMethod;
@@ -44,7 +45,7 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
-	static const char * const Class_java_lang_String;
+	static shared_ptr<JavaClass> Class_java_lang_String;
 	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Locale;
 	static const char * const Class_java_io_InputStream;

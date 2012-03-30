@@ -25,7 +25,7 @@
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
-const char * const AndroidUtil::Class_java_lang_String = "java/lang/String";
+shared_ptr<JavaClass> AndroidUtil::Class_java_lang_String;
 const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
@@ -124,10 +124,9 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	JNIEnv *env = getEnv();
 	jclass cls;
 
-	CHECK_NULL( cls = env->FindClass(Class_java_lang_String) );
-	Method_java_lang_String_toLowerCase = new StringMethod(env, cls, "toLowerCase", "()");
-	Method_java_lang_String_toUpperCase = new StringMethod(env, cls, "toUpperCase", "()");
-	env->DeleteLocalRef(cls);
+	Class_java_lang_String = new JavaClass(env, "java/lang/String");
+	Method_java_lang_String_toLowerCase = new StringMethod(*Class_java_lang_String, "toLowerCase", "()");
+	Method_java_lang_String_toUpperCase = new StringMethod(*Class_java_lang_String, "toUpperCase", "()");
 
 	CHECK_NULL( cls = env->FindClass(Class_java_util_Collection) );
 	CHECK_NULL( MID_java_util_Collection_toArray = env->GetMethodID(cls, "toArray", "()[Ljava/lang/Object;") );
@@ -313,8 +312,7 @@ jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte
 
 jobjectArray AndroidUtil::createJavaStringArray(JNIEnv *env, const std::vector<std::string> &data) {
 	size_t size = data.size();
-	jclass cls = env->FindClass("java/lang/String");
-	jobjectArray array = env->NewObjectArray(size, cls, 0);
+	jobjectArray array = env->NewObjectArray(size, Class_java_lang_String->j(), 0);
 	for (size_t i = 0; i < size; ++i) {
 		const std::string &str = data[i];
 		if (str.length() > 0) {
@@ -323,7 +321,6 @@ jobjectArray AndroidUtil::createJavaStringArray(JNIEnv *env, const std::vector<s
 			env->DeleteLocalRef(javaStr);
 		}
 	}
-	env->DeleteLocalRef(cls);
 	return array;
 }
 

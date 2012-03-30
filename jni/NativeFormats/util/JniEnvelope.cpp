@@ -23,10 +23,26 @@
 
 static const std::string JNI_LOGGER_CLASS = "JniLog";
 
+JavaClass::JavaClass(JNIEnv *env, const std::string &name) : myName(name), myEnv(env) {
+	jclass ref = env->FindClass(name.c_str());
+	myClass = (jclass)env->NewGlobalRef(ref);
+	env->DeleteLocalRef(ref);
+}
+
+JavaClass::~JavaClass() {
+	myEnv->DeleteGlobalRef(myClass);
+}
+
 Method::Method(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : myName(name) {
 	//ZLLogger::Instance().registerClass(JNI_LOGGER_CLASS);
 	myEnv = env;
 	myId = env->GetMethodID(cls, name.c_str(), signature.c_str());
+}
+
+Method::Method(const JavaClass &cls, const std::string &name, const std::string &signature) : myName(name) {
+	//ZLLogger::Instance().registerClass(JNI_LOGGER_CLASS);
+	myEnv = cls.myEnv;
+	myId = myEnv->GetMethodID(cls.myClass, name.c_str(), signature.c_str());
 }
 
 Method::~Method() {
@@ -93,6 +109,9 @@ jboolean BooleanMethod::call(jobject base, ...) {
 }
 
 StringMethod::StringMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "Ljava/lang/String;") {
+}
+
+StringMethod::StringMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Method(cls, name, signature + "Ljava/lang/String;") {
 }
 
 jstring StringMethod::call(jobject base, ...) {
