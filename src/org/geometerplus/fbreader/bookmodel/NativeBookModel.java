@@ -37,44 +37,48 @@ public class NativeBookModel extends BookModelImpl {
 	}
 
 	public void initTOC(ZLTextModel contentsModel, int[] childrenNumbers, int[] referenceNumbers) {
-		final StringBuilder buffer = new StringBuilder();
-
-		final ArrayList<Integer> positions = new ArrayList<Integer>();
-		TOCTree tree = TOCTree;
-
-		final int size = contentsModel.getParagraphsNumber();
-		for (int pos = 0; pos < size; ++pos) {
-			positions.add(pos);
-			ZLTextParagraph par = contentsModel.getParagraph(pos);
-
-			buffer.delete(0, buffer.length());
-			ZLTextParagraph.EntryIterator it = par.iterator();
-			while (it.hasNext()) {
-				it.next();
-				if (it.getType() == ZLTextParagraph.Entry.TEXT) {
-					buffer.append(it.getTextData(), it.getTextOffset(), it.getTextLength());
+		try {
+			final StringBuilder buffer = new StringBuilder();
+        
+			final ArrayList<Integer> positions = new ArrayList<Integer>();
+			TOCTree tree = TOCTree;
+        
+			final int size = contentsModel.getParagraphsNumber();
+			for (int pos = 0; pos < size; ++pos) {
+				positions.add(pos);
+				ZLTextParagraph par = contentsModel.getParagraph(pos);
+        
+				buffer.delete(0, buffer.length());
+				ZLTextParagraph.EntryIterator it = par.iterator();
+				while (it.hasNext()) {
+					it.next();
+					if (it.getType() == ZLTextParagraph.Entry.TEXT) {
+						buffer.append(it.getTextData(), it.getTextOffset(), it.getTextLength());
+					}
+				}
+        
+				tree = new TOCTree(tree);
+				tree.setText(buffer.toString());
+				tree.setReference(myBookTextModel, referenceNumbers[pos]);
+        
+				while (positions.size() > 0 && tree != TOCTree) {
+					final int lastIndex = positions.size() - 1;
+					final int treePos = positions.get(lastIndex);
+					if (tree.subTrees().size() < childrenNumbers[treePos]) {
+						break;
+					}
+					tree = tree.Parent;
+					positions.remove(lastIndex);
 				}
 			}
 
-			tree = new TOCTree(tree);
-			tree.setText(buffer.toString());
-			tree.setReference(myBookTextModel, referenceNumbers[pos]);
-
-			while (positions.size() > 0 && tree != TOCTree) {
-				final int lastIndex = positions.size() - 1;
-				final int treePos = positions.get(lastIndex);
-				if (tree.subTrees().size() < childrenNumbers[treePos]) {
-					break;
-				}
-				tree = tree.Parent;
-				positions.remove(lastIndex);
+			if (tree != TOCTree || positions.size() > 0) {
+				throw new RuntimeException("Invalid state after TOC building:\n"
+					+ "tree.Level = " + tree.Level + "\n"
+					+ "positions.size() = " + positions.size());
 			}
-		}
-
-		if (tree != TOCTree || positions.size() > 0) {
-			throw new RuntimeException("Invalid state after TOC building:\n"
-				+ "tree.Level = " + tree.Level + "\n"
-				+ "positions.size() = " + positions.size());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
