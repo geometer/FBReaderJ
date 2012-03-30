@@ -243,7 +243,7 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 		return JNI_FALSE;
 	}
 
-	jobject javaBook = env->GetObjectField(javaModel, AndroidUtil::FID_NativeBookModel_Book);
+	jobject javaBook = AndroidUtil::Field_NativeBookModel_Book->value(javaModel);
 
 	shared_ptr<Book> book = Book::loadFromJavaBook(env, javaBook);
 	shared_ptr<BookModel> model = new BookModel(book, javaModel);

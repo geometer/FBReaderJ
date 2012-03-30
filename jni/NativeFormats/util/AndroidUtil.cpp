@@ -66,7 +66,7 @@ shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_PluginCollection_Instan
 
 shared_ptr<ObjectMethod> AndroidUtil::Method_Encoding_createConverter;
 
-jfieldID AndroidUtil::FID_EncodingConverter_Name;
+shared_ptr<ObjectField> AndroidUtil::Field_EncodingConverter_Name;
 shared_ptr<IntMethod> AndroidUtil::Method_EncodingConverter_convert;
 shared_ptr<VoidMethod> AndroidUtil::Method_EncodingConverter_reset;
 
@@ -87,7 +87,7 @@ shared_ptr<Constructor> AndroidUtil::Constructor_ZLFileImage;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Paths_cacheDirectory;
 
-jfieldID AndroidUtil::FID_Book_File;
+shared_ptr<ObjectField> AndroidUtil::Field_Book_File;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getTitle;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getLanguage;
 shared_ptr<StringMethod> AndroidUtil::Method_Book_getEncodingNoDetection;
@@ -101,7 +101,7 @@ shared_ptr<BooleanMethod> AndroidUtil::Method_Book_save;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Tag_getTag;
 
-jfieldID AndroidUtil::FID_NativeBookModel_Book;
+shared_ptr<ObjectField> AndroidUtil::Field_NativeBookModel_Book;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_initInternalHyperlinks;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_initTOC;
 shared_ptr<ObjectMethod> AndroidUtil::Method_NativeBookModel_createTextModel;
@@ -157,7 +157,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Encoding_createConverter = new ObjectMethod(*Class_Encoding, "createConverter", "org/geometerplus/zlibrary/core/encodings/EncodingConverter", "()");
 
 	Class_EncodingConverter = new JavaClass(env, "org/geometerplus/zlibrary/core/encodings/EncodingConverter");
-	CHECK_NULL( FID_EncodingConverter_Name = env->GetFieldID(Class_EncodingConverter->j(), "Name", "Ljava/lang/String;") );
+	Field_EncodingConverter_Name = new ObjectField(*Class_EncodingConverter, "Name", "java/lang/String");
 	Method_EncodingConverter_convert = new IntMethod(*Class_EncodingConverter, "convert", "([BII[BI)");
 	Method_EncodingConverter_reset = new VoidMethod(*Class_EncodingConverter, "reset", "()");
 
@@ -183,7 +183,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(*Class_Paths, "cacheDirectory", "java/lang/String", "()");
 
 	Class_Book = new JavaClass(env, "org/geometerplus/fbreader/library/Book");
-	CHECK_NULL( FID_Book_File = env->GetFieldID(Class_Book->j(), "File", "Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;") );
+	Field_Book_File = new ObjectField(*Class_Book, "File", "org/geometerplus/zlibrary/core/filesystem/ZLFile");
 	Method_Book_getTitle = new StringMethod(*Class_Book, "getTitle", "()");
 	Method_Book_getLanguage = new StringMethod(*Class_Book, "getLanguage", "()");
 	Method_Book_getEncodingNoDetection = new StringMethod(*Class_Book, "getEncodingNoDetection", "()");
@@ -199,7 +199,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	StaticMethod_Tag_getTag = new StaticObjectMethod(*Class_Tag, "getTag", "org/geometerplus/fbreader/library/Tag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)");
 
 	Class_NativeBookModel = new JavaClass(env, "org/geometerplus/fbreader/bookmodel/NativeBookModel");
-	CHECK_NULL( FID_NativeBookModel_Book = env->GetFieldID(Class_NativeBookModel->j(), "Book", "Lorg/geometerplus/fbreader/library/Book;") );
+	Field_NativeBookModel_Book = new ObjectField(*Class_NativeBookModel, "Book", "org/geometerplus/fbreader/library/Book");
 	Method_NativeBookModel_initInternalHyperlinks = new VoidMethod(*Class_NativeBookModel, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)");
 	Method_NativeBookModel_initTOC = new VoidMethod(*Class_NativeBookModel, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)");
 	Method_NativeBookModel_createTextModel = new ObjectMethod(*Class_NativeBookModel, "createTextModel", "org/geometerplus/zlibrary/text/model/ZLTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)");

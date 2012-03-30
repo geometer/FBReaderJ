@@ -41,7 +41,6 @@ private:
 	jclass myClass;
 
 friend class Member;
-friend class Method;
 };
 
 class Member {
@@ -72,6 +71,17 @@ private:
 	jmethodID myId;
 };
 
+class Field : public Member {
+
+public:
+	Field(const JavaClass &cls, const std::string &name, const std::string &type);
+	virtual ~Field();
+
+protected:
+	const std::string myName;
+	jfieldID myId;
+};
+
 class Method : public Member {
 
 public:
@@ -92,6 +102,13 @@ public:
 protected:
 	const std::string myName;
 	jmethodID myId;
+};
+
+class ObjectField : public Field {
+
+public:
+	ObjectField(const JavaClass &cls, const std::string &name, const std::string &type);
+	jobject value(jobject obj) const;
 };
 
 class VoidMethod : public Method {

@@ -87,7 +87,7 @@ shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 shared_ptr<Book> Book::loadFromJavaBook(JNIEnv *env, jobject javaBook) {
 	jstring javaString;
 
-	jobject javaFile = env->GetObjectField(javaBook, AndroidUtil::FID_Book_File);
+	jobject javaFile = AndroidUtil::Field_Book_File->value(javaBook);
 	javaString = AndroidUtil::Method_ZLFile_getPath->call(javaFile);
 	const std::string path = AndroidUtil::fromJavaString(env, javaString);
 	env->DeleteLocalRef(javaString);

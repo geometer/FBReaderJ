@@ -29,6 +29,7 @@
 
 class JavaClass;
 class Constructor;
+class ObjectField;
 class VoidMethod;
 class IntMethod;
 class LongMethod;
@@ -97,7 +98,7 @@ public:
 
 	static shared_ptr<ObjectMethod> Method_Encoding_createConverter;
 
-	static jfieldID FID_EncodingConverter_Name;
+	static shared_ptr<ObjectField> Field_EncodingConverter_Name;
 	static shared_ptr<IntMethod> Method_EncodingConverter_convert;
 	static shared_ptr<VoidMethod> Method_EncodingConverter_reset;
 
@@ -108,7 +109,7 @@ public:
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_Paths_cacheDirectory;
 
-	static jfieldID FID_Book_File;
+	static shared_ptr<ObjectField> Field_Book_File;
 	static shared_ptr<StringMethod> Method_Book_getTitle;
 	static shared_ptr<StringMethod> Method_Book_getLanguage;
 	static shared_ptr<StringMethod> Method_Book_getEncodingNoDetection;
@@ -122,7 +123,7 @@ public:
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_Tag_getTag;
 
-	static jfieldID FID_NativeBookModel_Book;
+	static shared_ptr<ObjectField> Field_NativeBookModel_Book;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_initInternalHyperlinks;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_initTOC;
 	static shared_ptr<ObjectMethod> Method_NativeBookModel_createTextModel;

@@ -85,7 +85,7 @@ JavaEncodingConverter::~JavaEncodingConverter() {
 
 std::string JavaEncodingConverter::name() const {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jstring javaName = (jstring)env->GetObjectField(myJavaConverter, AndroidUtil::FID_EncodingConverter_Name);
+	jstring javaName = (jstring)AndroidUtil::Field_EncodingConverter_Name->value(myJavaConverter);
 	const std::string result = AndroidUtil::fromJavaString(env, javaName);
 	env->DeleteLocalRef(javaName);
 	return result;

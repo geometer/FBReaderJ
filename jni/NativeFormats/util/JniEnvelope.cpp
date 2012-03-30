@@ -52,6 +52,13 @@ jobject Constructor::call(...) {
 	return obj;
 }
 
+Field::Field(const JavaClass &cls, const std::string &name, const std::string &type) : Member(cls), myName(name) {
+	myId = env().GetFieldID(jClass(), name.c_str(), type.c_str());
+}
+
+Field::~Field() {
+}
+
 Method::Method(const JavaClass &cls, const std::string &name, const std::string &signature) : Member(cls), myName(name) {
 	myId = env().GetMethodID(jClass(), name.c_str(), signature.c_str());
 }
@@ -64,6 +71,16 @@ StaticMethod::StaticMethod(const JavaClass &cls, const std::string &name, const 
 }
 
 StaticMethod::~StaticMethod() {
+}
+
+ObjectField::ObjectField(const JavaClass &cls, const std::string &name, const std::string &type) : Field(cls, name, "L" + type + ";") {
+}
+
+jobject ObjectField::value(jobject obj) const {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "getting value of ObjectField " + myName);
+	jobject val = env().GetObjectField(obj, myId);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "got value of ObjectField " + myName);
+	return val;
 }
 
 VoidMethod::VoidMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Method(cls, name, signature + "V") {
