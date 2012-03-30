@@ -72,20 +72,14 @@ private:
 	jmethodID myId;
 };
 
-class Method {
+class Method : public Member {
 
 public:
-	Method(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
 	Method(const JavaClass &cls, const std::string &name, const std::string &signature);
 	virtual ~Method();
 
-private:
-	Method(const Method&);
-	const Method &operator = (const Method&);
-
 protected:
 	const std::string myName;
-	JNIEnv *myEnv;
 	jmethodID myId;
 };
 
@@ -103,28 +97,28 @@ protected:
 class VoidMethod : public Method {
 
 public:
-	VoidMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	VoidMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
 	void call(jobject base, ...);
 };
 
 class IntMethod : public Method {
 
 public:
-	IntMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	IntMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
 	jint call(jobject base, ...);
 };
 
 class LongMethod : public Method {
 
 public:
-	LongMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	LongMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
 	jlong call(jobject base, ...);
 };
 
 class BooleanMethod : public Method {
 
 public:
-	BooleanMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	BooleanMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
 	jboolean call(jobject base, ...);
 };
 
@@ -132,14 +126,13 @@ class StringMethod : public Method {
 
 public:
 	StringMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
-	StringMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
 	jstring call(jobject base, ...);
 };
 
 class ObjectMethod : public Method {
 
 public:
-	ObjectMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &returnType, const std::string &signature);
+	ObjectMethod(const JavaClass &cls, const std::string &name, const std::string &returnType, const std::string &signature);
 	jobject call(jobject base, ...);
 };
 
