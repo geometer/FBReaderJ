@@ -34,6 +34,7 @@ JavaClass::~JavaClass() {
 }
 
 Member::Member(const JavaClass &cls) : myClass(cls) {
+	//ZLLogger::Instance().registerClass(JNI_LOGGER_CLASS);
 }
 
 Member::~Member() {
@@ -58,7 +59,6 @@ Method::Method(JNIEnv *env, jclass cls, const std::string &name, const std::stri
 }
 
 Method::Method(const JavaClass &cls, const std::string &name, const std::string &signature) : myName(name) {
-	//ZLLogger::Instance().registerClass(JNI_LOGGER_CLASS);
 	myEnv = cls.myEnv;
 	myId = myEnv->GetMethodID(cls.myClass, name.c_str(), signature.c_str());
 }
@@ -66,10 +66,8 @@ Method::Method(const JavaClass &cls, const std::string &name, const std::string 
 Method::~Method() {
 }
 
-StaticMethod::StaticMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : myName(name) {
-	//ZLLogger::Instance().registerClass(JNI_LOGGER_CLASS);
-	myEnv = env;
-	myId = env->GetStaticMethodID(cls, name.c_str(), signature.c_str());
+StaticMethod::StaticMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Member(cls), myName(name) {
+	myId = env().GetStaticMethodID(jClass(), name.c_str(), signature.c_str());
 }
 
 StaticMethod::~StaticMethod() {
@@ -155,14 +153,14 @@ jobject ObjectMethod::call(jobject base, ...) {
 	return result;
 }
 
-StaticObjectMethod::StaticObjectMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &returnType, const std::string &signature) : StaticMethod(env, cls, name, signature + "L" + returnType + ";") {
+StaticObjectMethod::StaticObjectMethod(const JavaClass &cls, const std::string &name, const std::string &returnType, const std::string &signature) : StaticMethod(cls, name, signature + "L" + returnType + ";") {
 }
 
-jobject StaticObjectMethod::call(jclass cls, ...) {
+jobject StaticObjectMethod::call(...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StaticObjectMethod " + myName);
 	va_list lst;
-	va_start(lst, cls);
-	jobject result = myEnv->CallStaticObjectMethodV(cls, myId, lst);
+	va_start(lst, this);
+	jobject result = env().CallStaticObjectMethodV(jClass(), myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished StaticObjectMethod " + myName);
 	return result;

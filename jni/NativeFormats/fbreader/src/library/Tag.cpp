@@ -138,7 +138,7 @@ jobject Tag::javaTag(JNIEnv *env) const {
 	}
 
 	jobject javaName = env->NewStringUTF(myName.c_str());
-	jobject tag = AndroidUtil::StaticMethod_Tag_getTag->call(AndroidUtil::Class_Tag->j(), parentTag, javaName);
+	jobject tag = AndroidUtil::StaticMethod_Tag_getTag->call(parentTag, javaName);
 	myJavaTag = env->NewGlobalRef(tag);
 	env->DeleteLocalRef(tag);
 	env->DeleteLocalRef(javaName);
