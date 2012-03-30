@@ -72,11 +72,11 @@ void PluginCollection::deleteInstance() {
 
 PluginCollection::PluginCollection() {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jclass cls = env->FindClass(AndroidUtil::Class_PluginCollection);
-	jobject instance = AndroidUtil::StaticMethod_PluginCollection_Instance->call(cls);
+	jobject instance = AndroidUtil::StaticMethod_PluginCollection_Instance->call(
+		AndroidUtil::Class_PluginCollection->j()
+	);
 	myJavaInstance = env->NewGlobalRef(instance);
 	env->DeleteLocalRef(instance);
-	env->DeleteLocalRef(cls);
 }
 
 PluginCollection::~PluginCollection() {

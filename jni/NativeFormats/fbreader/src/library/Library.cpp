@@ -22,7 +22,6 @@
 
 #include "Library.h"
 
-
 shared_ptr<Library> Library::ourInstance;
 
 Library &Library::Instance() {
@@ -33,20 +32,14 @@ Library &Library::Instance() {
 }
 
 Library::Library() {
-	JNIEnv *env = AndroidUtil::getEnv();
-	jclass paths = env->FindClass(AndroidUtil::Class_Paths);
-	myPathsClass = (jclass)env->NewGlobalRef(paths);
-	env->DeleteLocalRef(paths);
 }
 
 Library::~Library() {
-	JNIEnv *env = AndroidUtil::getEnv();
-	env->DeleteGlobalRef(myPathsClass);
 }
 
 std::string Library::cacheDirectory() const {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jstring res = (jstring)AndroidUtil::StaticMethod_Paths_cacheDirectory->call(myPathsClass);
+	jstring res = (jstring)AndroidUtil::StaticMethod_Paths_cacheDirectory->call(AndroidUtil::Class_Paths->j());
 	const char *data = env->GetStringUTFChars(res, 0);
 	std::string str(data);
 	env->ReleaseStringUTFChars(res, data);

@@ -46,23 +46,24 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
+	static shared_ptr<JavaClass> Class_java_lang_RuntimeException;
 	static shared_ptr<JavaClass> Class_java_lang_String;
-	static const char * const Class_java_util_Collection;
-	static const char * const Class_java_util_Locale;
-	static const char * const Class_java_io_InputStream;
-	static const char * const Class_ZLibrary;
-	static const char * const Class_ZLFile;
+	static shared_ptr<JavaClass> Class_java_util_Collection;
+	static shared_ptr<JavaClass> Class_java_util_Locale;
+	static shared_ptr<JavaClass> Class_java_io_InputStream;
+	static shared_ptr<JavaClass> Class_ZLibrary;
+	static shared_ptr<JavaClass> Class_ZLFile;
 	static shared_ptr<JavaClass> Class_ZLFileImage;
 	static shared_ptr<JavaClass> Class_NativeFormatPlugin;
-	static const char * const Class_PluginCollection;
-	static const char * const Class_Encoding;
-	static const char * const Class_EncodingConverter;
-	static const char * const Class_JavaEncodingCollection;
-	static const char * const Class_Paths;
-	static const char * const Class_Book;
-	static const char * const Class_Tag;
-	static const char * const Class_NativeBookModel;
-	//static const char * const Class_BookReadingException;
+	static shared_ptr<JavaClass> Class_PluginCollection;
+	static shared_ptr<JavaClass> Class_Encoding;
+	static shared_ptr<JavaClass> Class_EncodingConverter;
+	static shared_ptr<JavaClass> Class_JavaEncodingCollection;
+	static shared_ptr<JavaClass> Class_Paths;
+	static shared_ptr<JavaClass> Class_Book;
+	static shared_ptr<JavaClass> Class_Tag;
+	static shared_ptr<JavaClass> Class_NativeBookModel;
+	//static shared_ptr<JavaClass> Class_BookReadingException;
 
 	static shared_ptr<StringMethod> Method_java_lang_String_toLowerCase;
 	static shared_ptr<StringMethod> Method_java_lang_String_toUpperCase;
