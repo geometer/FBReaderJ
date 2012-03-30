@@ -310,20 +310,6 @@ jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte
 	return array;
 }
 
-jobjectArray AndroidUtil::createJavaStringArray(JNIEnv *env, const std::vector<std::string> &data) {
-	size_t size = data.size();
-	jobjectArray array = env->NewObjectArray(size, Class_java_lang_String->j(), 0);
-	for (size_t i = 0; i < size; ++i) {
-		const std::string &str = data[i];
-		if (str.length() > 0) {
-			jstring javaStr = env->NewStringUTF(str.c_str());
-			env->SetObjectArrayElement(array, i, javaStr);
-			env->DeleteLocalRef(javaStr);
-		}
-	}
-	return array;
-}
-
 void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
 	// TODO: possible memory leak
 	jclass cls = env->FindClass("java/lang/RuntimeException");

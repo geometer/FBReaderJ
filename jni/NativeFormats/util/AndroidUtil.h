@@ -143,7 +143,6 @@ public:
 
 	static jintArray createJavaIntArray(JNIEnv *env, const std::vector<jint> &data);
 	static jbyteArray createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data);
-	static jobjectArray createJavaStringArray(JNIEnv *env, const std::vector<std::string> &data);
 
 	static void throwRuntimeException(JNIEnv *env, const std::string &message);
 	//static void throwBookReadingException(const std::string &resourceId, const ZLFile &file);
