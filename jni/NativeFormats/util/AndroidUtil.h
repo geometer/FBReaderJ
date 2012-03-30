@@ -25,7 +25,13 @@
 #include <string>
 #include <vector>
 
-#include "VoidMethod.h"
+#include <shared_ptr.h>
+
+class VoidMethod;
+class IntMethod;
+class LongMethod;
+class BooleanMethod;
+class ObjectMethod;
 
 class ZLFile;
 class ZLFileImage;
@@ -40,7 +46,6 @@ public:
 	static const char * const Class_java_util_Collection;
 	static const char * const Class_java_util_Locale;
 	static const char * const Class_java_io_InputStream;
-	static const char * const Class_java_io_PrintStream;
 	static const char * const Class_ZLibrary;
 	static const char * const Class_ZLFile;
 	static const char * const Class_ZLFileImage;
@@ -63,11 +68,9 @@ public:
 	static jmethodID SMID_java_util_Locale_getDefault;
 	static jmethodID MID_java_util_Locale_getLanguage;
 
-	static jmethodID MID_java_io_InputStream_close;
-	static jmethodID MID_java_io_InputStream_read;
-	static jmethodID MID_java_io_InputStream_skip;
-
-	static VoidMethod MID_java_io_PrintStream_println;
+	static shared_ptr<VoidMethod> Method_java_io_InputStream_close;
+	static shared_ptr<IntMethod> Method_java_io_InputStream_read;
+	static shared_ptr<LongMethod> Method_java_io_InputStream_skip;
 
 	static jmethodID SMID_ZLibrary_Instance;
 	static jmethodID MID_ZLibrary_getVersionName;

@@ -17,13 +17,44 @@
  * 02110-1301, USA.
  */
 
-#include "Method.h"
+#include "JniEnvelope.h"
 
 Method::Method(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) {
 	myEnv = env;
 	myId = env->GetMethodID(cls, name.c_str(), signature.c_str());
 }
 
-bool Method::check() {
-	return myId != 0;
+Method::~Method() {
+}
+
+VoidMethod::VoidMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "V") {
+}
+
+void VoidMethod::call(jobject base, ...) {
+	va_list lst;
+	va_start(lst, base);
+	myEnv->CallVoidMethod(base, myId, lst);
+	va_end(lst);
+}
+
+IntMethod::IntMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "I") {
+}
+
+jint IntMethod::call(jobject base, ...) {
+	va_list lst;
+	va_start(lst, base);
+	jint result = myEnv->CallIntMethod(base, myId, lst);
+	va_end(lst);
+	return result;
+}
+
+LongMethod::LongMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature) : Method(env, cls, name, signature + "J") {
+}
+
+jlong LongMethod::call(jobject base, ...) {
+	va_list lst;
+	va_start(lst, base);
+	jlong result = myEnv->CallLongMethod(base, myId, lst);
+	va_end(lst);
+	return result;
 }

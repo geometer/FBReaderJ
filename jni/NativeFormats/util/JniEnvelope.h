@@ -17,10 +17,23 @@
  * 02110-1301, USA.
  */
 
-#ifndef __VOIDMETHOD_H__
-#define __VOIDMETHOD_H__
+#ifndef __JNIENVELOPE_H__
+#define __JNIENVELOPE_H__
 
-#include "Method.h"
+#include <jni.h>
+
+#include <string>
+
+class Method {
+
+public:
+	Method(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	virtual ~Method();
+
+protected:
+	JNIEnv *myEnv;
+	jmethodID myId;
+};
 
 class VoidMethod : public Method {
 
@@ -29,4 +42,18 @@ public:
 	void call(jobject base, ...);
 };
 
-#endif /* __VOIDMETHOD_H__ */
+class IntMethod : public Method {
+
+public:
+	IntMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	jint call(jobject base, ...);
+};
+
+class LongMethod : public Method {
+
+public:
+	LongMethod(JNIEnv *env, jclass cls, const std::string &name, const std::string &signature);
+	jlong call(jobject base, ...);
+};
+
+#endif /* __JNIENVELOPE_H__ */

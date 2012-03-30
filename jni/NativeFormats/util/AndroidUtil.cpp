@@ -21,6 +21,7 @@
 #include <ZLFileImage.h>
 
 #include "AndroidUtil.h"
+#include "JniEnvelope.h"
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
@@ -28,7 +29,6 @@ const char * const AndroidUtil::Class_java_lang_String = "java/lang/String";
 const char * const AndroidUtil::Class_java_util_Collection = "java/util/Collection";
 const char * const AndroidUtil::Class_java_util_Locale = "java/util/Locale";
 const char * const AndroidUtil::Class_java_io_InputStream = "java/io/InputStream";
-const char * const AndroidUtil::Class_java_io_PrintStream = "java/io/PrintStream";
 const char * const AndroidUtil::Class_ZLibrary = "org/geometerplus/zlibrary/core/library/ZLibrary";
 const char * const AndroidUtil::Class_NativeFormatPlugin = "org/geometerplus/fbreader/formats/NativeFormatPlugin";
 const char * const AndroidUtil::Class_PluginCollection = "org/geometerplus/fbreader/formats/PluginCollection";
@@ -51,11 +51,9 @@ jmethodID AndroidUtil::MID_java_util_Collection_toArray;
 jmethodID AndroidUtil::SMID_java_util_Locale_getDefault;
 jmethodID AndroidUtil::MID_java_util_Locale_getLanguage;
 
-jmethodID AndroidUtil::MID_java_io_InputStream_close;
-jmethodID AndroidUtil::MID_java_io_InputStream_read;
-jmethodID AndroidUtil::MID_java_io_InputStream_skip;
-
-VoidMethod AndroidUtil::MID_java_io_PrintStream_println;
+shared_ptr<VoidMethod> AndroidUtil::Method_java_io_InputStream_close;
+shared_ptr<IntMethod> AndroidUtil::Method_java_io_InputStream_read;
+shared_ptr<LongMethod> AndroidUtil::Method_java_io_InputStream_skip;
 
 jmethodID AndroidUtil::SMID_ZLibrary_Instance;
 jmethodID AndroidUtil::MID_ZLibrary_getVersionName;
@@ -143,13 +141,9 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_java_io_InputStream) );
-	CHECK_NULL( MID_java_io_InputStream_close = env->GetMethodID(cls, "close", "()V") );
-	CHECK_NULL( MID_java_io_InputStream_read = env->GetMethodID(cls, "read", "([BII)I") );
-	CHECK_NULL( MID_java_io_InputStream_skip = env->GetMethodID(cls, "skip", "(J)J") );
-	env->DeleteLocalRef(cls);
-
-	CHECK_NULL( cls = env->FindClass(Class_java_io_PrintStream) );
-	CHECK_NULL( MID_java_io_PrintStream_println = env->GetMethodID(cls, "println", "(Ljava/lang/String;)V") );
+	Method_java_io_InputStream_close = new VoidMethod(env, cls, "close", "()");
+	Method_java_io_InputStream_read = new IntMethod(env, cls, "read", "([BII)");
+	Method_java_io_InputStream_skip = new LongMethod(env, cls, "skip", "(J)");
 	env->DeleteLocalRef(cls);
 
 	CHECK_NULL( cls = env->FindClass(Class_ZLibrary) );
