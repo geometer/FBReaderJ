@@ -18,6 +18,7 @@
  */
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 #include <ZLUnicodeUtil.h>
 
 #include "JavaEncodingConverter.h"
@@ -48,13 +49,11 @@ bool JavaEncodingConverterProvider::providesConverter(const std::string &encodin
 		return false;
 	}
 	JNIEnv *env = AndroidUtil::getEnv();
-	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
-	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
+	jobject collection = AndroidUtil::StaticMethod_JavaEncodingCollection_Instance->call();
 	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
-	jboolean result = env->CallBooleanMethod(collection, AndroidUtil::MID_JavaEncodingCollection_providesConverterFor, encodingName);
+	jboolean result = AndroidUtil::Method_JavaEncodingCollection_providesConverterFor->call(collection, encodingName);
 	env->DeleteLocalRef(encodingName);
 	env->DeleteLocalRef(collection);
-	env->DeleteLocalRef(cls);
 	return result != 0;
 }
 
@@ -64,15 +63,13 @@ shared_ptr<ZLEncodingConverter> JavaEncodingConverterProvider::createConverter(c
 
 JavaEncodingConverter::JavaEncodingConverter(const std::string &encoding) {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jclass cls = env->FindClass(AndroidUtil::Class_JavaEncodingCollection);
-	jobject collection = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_JavaEncodingCollection_Instance);
+	jobject collection = AndroidUtil::StaticMethod_JavaEncodingCollection_Instance->call();
 	jstring encodingName = AndroidUtil::createJavaString(env, encoding);
-	jobject javaEncoding = env->CallObjectMethod(collection, AndroidUtil::MID_JavaEncodingCollection_getEncoding_String, encodingName);
-	myJavaConverter = env->CallObjectMethod(javaEncoding, AndroidUtil::MID_Encoding_createConverter);
+	jobject javaEncoding = AndroidUtil::Method_JavaEncodingCollection_getEncoding_String->call(collection, encodingName);
+	myJavaConverter = AndroidUtil::Method_Encoding_createConverter->call(javaEncoding);
 	env->DeleteLocalRef(javaEncoding);
 	env->DeleteLocalRef(encodingName);
 	env->DeleteLocalRef(collection);
-	env->DeleteLocalRef(cls);
 
 	myBufferLength = 32768;
 	myInBuffer = env->NewByteArray(myBufferLength);
@@ -88,7 +85,7 @@ JavaEncodingConverter::~JavaEncodingConverter() {
 
 std::string JavaEncodingConverter::name() const {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jstring javaName = (jstring)env->GetObjectField(myJavaConverter, AndroidUtil::FID_EncodingConverter_Name);
+	jstring javaName = (jstring)AndroidUtil::Field_EncodingConverter_Name->value(myJavaConverter);
 	const std::string result = AndroidUtil::fromJavaString(env, javaName);
 	env->DeleteLocalRef(javaName);
 	return result;
@@ -106,14 +103,14 @@ void JavaEncodingConverter::convert(std::string &dst, const char *srcStart, cons
 	}
 
 	env->SetByteArrayRegion(myInBuffer, 0, srcLen, (jbyte*)srcStart);
-	const jint dstLen = env->CallIntMethod(myJavaConverter, AndroidUtil::MID_EncodingConverter_convert, myInBuffer, 0, srcLen, myOutBuffer, 0);
+	const jint dstLen = AndroidUtil::Method_EncodingConverter_convert->call(myJavaConverter, myInBuffer, 0, srcLen, myOutBuffer, 0);
 	const int origLen = dst.size();
 	dst.append(dstLen, '\0');
 	env->GetByteArrayRegion(myOutBuffer, 0, dstLen, (jbyte*)dst.data() + origLen);
 }
 
 void JavaEncodingConverter::reset() {
-	AndroidUtil::getEnv()->CallVoidMethod(myJavaConverter, AndroidUtil::MID_EncodingConverter_reset);
+	AndroidUtil::Method_EncodingConverter_reset->call(myJavaConverter);
 }
 
 bool JavaEncodingConverter::fillTable(int *map) {
