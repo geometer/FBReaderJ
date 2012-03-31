@@ -20,6 +20,7 @@
 #include <set>
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include "JavaFSDir.h"
 
@@ -47,11 +48,11 @@ jobjectArray JavaFSDir::getFileChildren(JNIEnv *env) {
 		return 0;
 	}
 
-	jobject list = env->CallObjectMethod(myJavaFile, AndroidUtil::MID_ZLFile_children);
+	jobject list = AndroidUtil::Method_ZLFile_children->call(myJavaFile);
 	if (list == 0) {
 		return 0;
 	}
-	jobjectArray array = (jobjectArray)env->CallObjectMethod(list, AndroidUtil::MID_java_util_Collection_toArray);
+	jobjectArray array = AndroidUtil::Method_java_util_Collection_toArray->call(list);
 	env->DeleteLocalRef(list);
 	return array;
 }
@@ -73,7 +74,7 @@ void JavaFSDir::collectChildren(std::vector<std::string> &names, bool filesNotDi
 	for (jsize i = 0; i < size; ++i) {
 		jobject file = env->GetObjectArrayElement(array, i);
 
-		jstring javaPath = (jstring)env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
+		jstring javaPath = AndroidUtil::Method_ZLFile_getPath->call(file);
 		const char *chars = env->GetStringUTFChars(javaPath, 0);
 		std::string path(chars);
 		env->ReleaseStringUTFChars(javaPath, chars);
@@ -85,9 +86,7 @@ void JavaFSDir::collectChildren(std::vector<std::string> &names, bool filesNotDi
 			if (index != std::string::npos) {
 				path.erase(index);
 				isdir = true;
-			} /*else {
-				isdir = env->CallBooleanMethod(file, AndroidUtil::MID_ZLFile_isDirectory) != 0;
-			}*/
+			}
 			if (isdir ^ filesNotDirs) {
 				names.push_back(path.substr(prefixLength));
 			}
