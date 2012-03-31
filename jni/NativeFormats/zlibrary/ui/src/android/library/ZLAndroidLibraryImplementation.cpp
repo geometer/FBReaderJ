@@ -17,8 +17,8 @@
  * 02110-1301, USA.
  */
 
-#include <jni.h>
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include <ZLibrary.h>
 
@@ -44,28 +44,24 @@ void ZLAndroidLibraryImplementation::init(int &argc, char **&argv) {
 
 std::string ZLibrary::Language() {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jclass cls = env->FindClass(AndroidUtil::Class_java_util_Locale);
-	jobject locale = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_java_util_Locale_getDefault);
-	jstring javaLang = (jstring)env->CallObjectMethod(locale, AndroidUtil::MID_java_util_Locale_getLanguage);
+	jobject locale = AndroidUtil::StaticMethod_java_util_Locale_getDefault->call();
+	jstring javaLang = (jstring)AndroidUtil::Method_java_util_Locale_getLanguage->call(locale);
 	const char *langData = env->GetStringUTFChars(javaLang, 0);
 	std::string lang(langData);
 	env->ReleaseStringUTFChars(javaLang, langData);
 	env->DeleteLocalRef(javaLang);
 	env->DeleteLocalRef(locale);
-	env->DeleteLocalRef(cls);
 	return lang;
 }
 
 std::string ZLibrary::Version() {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jclass cls = env->FindClass(AndroidUtil::Class_ZLibrary);
-	jobject zlibrary = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_ZLibrary_Instance);
-	jstring javaVersion = (jstring)env->CallObjectMethod(zlibrary, AndroidUtil::MID_ZLibrary_getVersionName);
+	jobject zlibrary = AndroidUtil::StaticMethod_ZLibrary_Instance->call();
+	jstring javaVersion = (jstring)AndroidUtil::Method_ZLibrary_getVersionName->call(zlibrary);
 	const char *versionData = env->GetStringUTFChars(javaVersion, 0);
 	std::string version(versionData);
 	env->ReleaseStringUTFChars(javaVersion, versionData);
 	env->DeleteLocalRef(javaVersion);
 	env->DeleteLocalRef(zlibrary);
-	env->DeleteLocalRef(cls);
 	return version;
 }

@@ -21,6 +21,7 @@
 #include <map>
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include <ZLibrary.h>
 #include <ZLFile.h>
@@ -473,7 +474,7 @@ std::string ZLUnicodeUtil::toLower(const std::string &utf8String) {
 
 	JNIEnv *env = AndroidUtil::getEnv();
 	jstring javaString = AndroidUtil::createJavaString(env, utf8String);
-	jstring lowerCased = (jstring)env->CallObjectMethod(javaString, AndroidUtil::MID_java_lang_String_toLowerCase);
+	jstring lowerCased = AndroidUtil::Method_java_lang_String_toLowerCase->call(javaString);
 	if (javaString == lowerCased) {
 		env->DeleteLocalRef(lowerCased);
 		env->DeleteLocalRef(javaString);
@@ -517,7 +518,7 @@ std::string ZLUnicodeUtil::toUpper(const std::string &utf8String) {
 
 	JNIEnv *env = AndroidUtil::getEnv();
 	jstring javaString = AndroidUtil::createJavaString(env, utf8String);
-	jstring upperCased = (jstring)env->CallObjectMethod(javaString, AndroidUtil::MID_java_lang_String_toUpperCase);
+	jstring upperCased = AndroidUtil::Method_java_lang_String_toUpperCase->call(javaString);
 	if (javaString == upperCased) {
 		env->DeleteLocalRef(upperCased);
 		env->DeleteLocalRef(javaString);
