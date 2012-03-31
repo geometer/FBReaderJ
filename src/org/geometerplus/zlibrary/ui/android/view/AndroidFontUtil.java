@@ -61,6 +61,23 @@ public final class AndroidFontUtil {
 	private static Map<String,File[]> ourFontMap;
 	private static File[] ourFileList;
 	private static long myTimeStamp;
+
+	private static <T> T[] concat(T[] a, T[] b) {
+		final int alen = a != null ? a.length : 0;
+		final int blen = b != null ? b.length : 0;
+		if (alen == 0) {
+			return b;
+		}
+		if (blen == 0) {
+			return a;
+		}
+		final T[] result = (T[]) java.lang.reflect.Array.
+				newInstance(a.getClass().getComponentType(), alen + blen);
+		System.arraycopy(a, 0, result, 0, alen);
+		System.arraycopy(b, 0, result, alen, blen);
+		return result;
+	}
+
 	public static Map<String,File[]> getFontMap(boolean forceReload) {
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < myTimeStamp + 1000) {
@@ -74,17 +91,21 @@ public final class AndroidFontUtil {
 					ourFontMap = new HashMap<String,File[]>();
 				}
 			} else {
-				final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
-					new FilenameFilter() {
-						public boolean accept(File dir, String name) {
-							if (name.startsWith(".")) {
-								return false;
+				File[] fileList = new File[0];
+				for (String dir : Paths.DirectoryOption(Paths.FONTS_DIRECTORY).getValue()) {
+					final File[] tempList = new File(dir).listFiles(
+						new FilenameFilter() {
+							public boolean accept(File dir, String name) {
+								if (name.startsWith(".")) {
+									return false;
+								}
+								final String lcName = name.toLowerCase();
+								return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 							}
-							final String lcName = name.toLowerCase();
-							return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 						}
-					}
-				);
+					);
+					fileList = concat(fileList, tempList);
+				}
 				if (fileList == null) {
 					if (ourFileList != null) {
 						ourFileList = null;
