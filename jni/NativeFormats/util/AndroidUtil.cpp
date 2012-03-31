@@ -121,8 +121,6 @@ JNIEnv *AndroidUtil::getEnv() {
 	return env;
 }
 
-#define CHECK_NULL(value) if ((value) == 0) { return false; }
-
 bool AndroidUtil::init(JavaVM* jvm) {
 	ourJavaVM = jvm;
 
