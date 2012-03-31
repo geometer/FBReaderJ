@@ -34,6 +34,13 @@ JavaType::JavaType() {
 JavaType::~JavaType() {
 }
 
+JavaArray::JavaArray(const JavaType &base) : myBase(base) {
+}
+
+std::string JavaArray::code() const {
+	return "[" + myBase.code();
+}
+
 JavaClass::JavaClass(JNIEnv *env, const std::string &name) : myName(name), myEnv(env) {
 	myClass = 0;
 }
@@ -175,7 +182,7 @@ jstring StringMethod::call(jobject base, ...) {
 	return result;
 }
 
-ObjectMethod::ObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters) : Method(cls, name, returnType, parameters) {
+ObjectMethod::ObjectMethod(const JavaClass &cls, const std::string &name, const JavaClass &returnType, const std::string &parameters) : Method(cls, name, returnType, parameters) {
 }
 
 jobject ObjectMethod::call(jobject base, ...) {
@@ -188,7 +195,20 @@ jobject ObjectMethod::call(jobject base, ...) {
 	return result;
 }
 
-StaticObjectMethod::StaticObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters) : StaticMethod(cls, name, returnType, parameters) {
+ObjectArrayMethod::ObjectArrayMethod(const JavaClass &cls, const std::string &name, const JavaArray &returnType, const std::string &parameters) : Method(cls, name, returnType, parameters) {
+}
+
+jobjectArray ObjectArrayMethod::call(jobject base, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling ObjectArrayMethod " + myName);
+	va_list lst;
+	va_start(lst, base);
+	jobjectArray result = (jobjectArray)env().CallObjectMethodV(base, myId, lst);
+	va_end(lst);
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished ObjectArrayMethod " + myName);
+	return result;
+}
+
+StaticObjectMethod::StaticObjectMethod(const JavaClass &cls, const std::string &name, const JavaClass &returnType, const std::string &parameters) : StaticMethod(cls, name, returnType, parameters) {
 }
 
 jobject StaticObjectMethod::call(...) {

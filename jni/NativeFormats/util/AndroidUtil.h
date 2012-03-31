@@ -28,6 +28,7 @@
 #include <shared_ptr.h>
 
 class JavaClass;
+class JavaArray;
 class Constructor;
 class ObjectField;
 class VoidMethod;
@@ -36,6 +37,7 @@ class LongMethod;
 class BooleanMethod;
 class StringMethod;
 class ObjectMethod;
+class ObjectArrayMethod;
 class StaticObjectMethod;
 
 class ZLFile;
@@ -47,6 +49,8 @@ private:
 	static JavaVM *ourJavaVM;
 
 public:
+	static shared_ptr<JavaClass> Class_java_lang_Object;
+	static shared_ptr<JavaArray> Array_java_lang_Object;
 	static shared_ptr<JavaClass> Class_java_lang_RuntimeException;
 	static shared_ptr<JavaClass> Class_java_lang_String;
 	static shared_ptr<JavaClass> Class_java_util_Collection;
@@ -71,7 +75,7 @@ public:
 	static shared_ptr<StringMethod> Method_java_lang_String_toLowerCase;
 	static shared_ptr<StringMethod> Method_java_lang_String_toUpperCase;
 
-	static jmethodID MID_java_util_Collection_toArray;
+	static shared_ptr<ObjectArrayMethod> Method_java_util_Collection_toArray;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_java_util_Locale_getDefault;
 	static shared_ptr<StringMethod> Method_java_util_Locale_getLanguage;

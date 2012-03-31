@@ -25,6 +25,8 @@
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
+shared_ptr<JavaClass> AndroidUtil::Class_java_lang_Object;
+shared_ptr<JavaArray> AndroidUtil::Array_java_lang_Object;
 shared_ptr<JavaClass> AndroidUtil::Class_java_lang_RuntimeException;
 shared_ptr<JavaClass> AndroidUtil::Class_java_lang_String;
 shared_ptr<JavaClass> AndroidUtil::Class_java_util_Collection;
@@ -49,7 +51,7 @@ shared_ptr<JavaClass> AndroidUtil::Class_NativeBookModel;
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toLowerCase;
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toUpperCase;
 
-jmethodID AndroidUtil::MID_java_util_Collection_toArray;
+shared_ptr<ObjectArrayMethod> AndroidUtil::Method_java_util_Collection_toArray;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_java_util_Locale_getDefault;
 shared_ptr<StringMethod> AndroidUtil::Method_java_util_Locale_getLanguage;
@@ -126,6 +128,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	JNIEnv *env = getEnv();
 
+	Class_java_lang_Object = new JavaClass(env, "java/lang/Object");
+	Array_java_lang_Object = new JavaArray(*Class_java_lang_Object);
 	Class_java_lang_RuntimeException = new JavaClass(env, "java/lang/RuntimeException");
 	Class_java_lang_String = new JavaClass(env, "java/lang/String");
 	Class_java_util_Collection = new JavaClass(env, "java/util/Collection");
@@ -152,7 +156,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_java_lang_String_toLowerCase = new StringMethod(*Class_java_lang_String, "toLowerCase", "()");
 	Method_java_lang_String_toUpperCase = new StringMethod(*Class_java_lang_String, "toUpperCase", "()");
 
-	CHECK_NULL( MID_java_util_Collection_toArray = env->GetMethodID(Class_java_util_Collection->j(), "toArray", "()[Ljava/lang/Object;") );
+	Method_java_util_Collection_toArray = new ObjectArrayMethod(*Class_java_util_Collection, "toArray", *Array_java_lang_Object, "()");
 
 	StaticMethod_java_util_Locale_getDefault = new StaticObjectMethod(*Class_java_util_Locale, "getDefault", *Class_java_util_Locale, "()");
 	Method_java_util_Locale_getLanguage = new StringMethod(*Class_java_util_Locale, "getLanguage", "()");

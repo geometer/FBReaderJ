@@ -57,6 +57,16 @@ private:
 	const std::string myCode;
 };
 
+class JavaArray : public JavaType {
+
+public:
+	JavaArray(const JavaType &base);
+	std::string code() const;
+
+private:
+	const JavaType &myBase;
+};
+
 class JavaClass : public JavaType {
 
 public:
@@ -179,14 +189,21 @@ public:
 class ObjectMethod : public Method {
 
 public:
-	ObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters);
+	ObjectMethod(const JavaClass &cls, const std::string &name, const JavaClass &returnType, const std::string &parameters);
 	jobject call(jobject base, ...);
+};
+
+class ObjectArrayMethod : public Method {
+
+public:
+	ObjectArrayMethod(const JavaClass &cls, const std::string &name, const JavaArray &returnType, const std::string &parameters);
+	jobjectArray call(jobject base, ...);
 };
 
 class StaticObjectMethod : public StaticMethod {
 
 public:
-	StaticObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters);
+	StaticObjectMethod(const JavaClass &cls, const std::string &name, const JavaClass &returnType, const std::string &parameters);
 	jobject call(...);
 };
 
