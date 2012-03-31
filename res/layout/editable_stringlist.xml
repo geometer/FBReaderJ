@@ -1,40 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:fillViewport="true"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
 >
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<ListView
+		android:id="@android:id/list"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical"
-	>
-		<ListView
-			android:id="@android:id/list"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-		/>
-		<LinearLayout
-			android:id="@+id/bottom_bar"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
+		android:isScrollContainer="true"
+	/>
+</LinearLayout>
 
-			android:background="@android:drawable/bottom_bar"
-			android:gravity="center_vertical">
-			<Button
-				android:id="@+id/save_button"
-				android:layout_width="0dip"
-				android:layout_weight="1.0"
-				android:layout_height="wrap_content" 
-
-			/>
-			<Button
-				android:id="@+id/cancel_button"
-				android:layout_width="0dip"
-				android:layout_weight="1.0"
-				android:layout_height="wrap_content" 
-
-			/>
-		</LinearLayout>
-	</LinearLayout>
-</ScrollView>

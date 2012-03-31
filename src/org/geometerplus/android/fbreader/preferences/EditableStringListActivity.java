@@ -39,7 +39,21 @@ public class EditableStringListActivity extends ListActivity {
 	public static final String OPTION_NAME = "optionName";
 	public static final String TITLE = "title";
 
+	private static String[] rootpaths;
+
+	static {
+		rootpaths = new String[1];
+		rootpaths[0] = Paths.cardDirectory() + "/";
+	}
+
 	private ZLStringListOption myOption;
+	private ImageButton addButton;
+	private Button okButton;
+
+	private void enableButtons() {
+		if (addButton != null) addButton.setEnabled(!getListAdapter().hasEmpty());
+		if (okButton != null) okButton.setEnabled(!getListAdapter().hasEmpty());
+	}
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -47,7 +61,11 @@ public class EditableStringListActivity extends ListActivity {
 		setContentView(R.layout.editable_stringlist);
 		setTitle(getIntent().getStringExtra(TITLE));
 
-		myOption = Paths.FontsDirectoryOption();//FIXME!!!
+		myOption = Paths.DirectoryOption(getIntent().getStringExtra(OPTION_NAME));
+
+
+		final View bottomView = getLayoutInflater().inflate(R.layout.editable_stringlist_lastitem, null);
+		getListView().addFooterView(bottomView);
 
 		setListAdapter(new ItemAdapter());
 
@@ -57,9 +75,18 @@ public class EditableStringListActivity extends ListActivity {
 			getListAdapter().addDirectoryItem(i);
 		}
 
+		addButton = (ImageButton)bottomView.findViewById(R.id.editable_stringlist_addbutton);
+		addButton.setOnClickListener(
+			new View.OnClickListener() {
+				public void onClick(View view) {
+					EditableStringListActivity.this.getListAdapter().addDirectoryItem(new DirectoryItem());
+				}
+			}
+		);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final Button okButton = (Button)findViewById(R.id.save_button);
-		final Button cancelButton = (Button)findViewById(R.id.cancel_button);
+		final View buttonView = bottomView.findViewById(R.id.editable_stringlist_buttons);
+		okButton = (Button)buttonView.findViewById(R.id.ok_button);
+		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
 		okButton.setText(buttonResource.getResource("ok").getValue());
 
@@ -67,7 +94,7 @@ public class EditableStringListActivity extends ListActivity {
 			new View.OnClickListener() {
 				public void onClick(View view) {
 					ArrayList<String> paths = new ArrayList<String>();
-					for (int i = 0; i < EditableStringListActivity.this.getListAdapter().getCount() - 1; i++) {
+					for (int i = 0; i < EditableStringListActivity.this.getListAdapter().getCount(); i++) {
 						paths.add(EditableStringListActivity.this.getListAdapter().getItem(i).getPath());
 					}
 					EditableStringListActivity.this.myOption.setValue(paths);
@@ -76,6 +103,7 @@ public class EditableStringListActivity extends ListActivity {
 				}
 			}
 		);
+		enableButtons();
 
 		cancelButton.setOnClickListener(
 			new View.OnClickListener() {
@@ -104,7 +132,6 @@ public class EditableStringListActivity extends ListActivity {
 
 		@Override
 		public DirectoryItem getItem(int position) {
-			if (position >= myItems.size()) return null;
 			return myItems.get(position);
 		}
 
@@ -113,11 +140,19 @@ public class EditableStringListActivity extends ListActivity {
 			nextId = nextId + 1;
 			myItems.add(i);
 			notifyDataSetChanged();
+			EditableStringListActivity.this.enableButtons();
 		}
 
 		@Override
 		public synchronized int getCount() {
-			return myItems.size() + 1;
+			return myItems.size();
+		}
+
+		public boolean hasEmpty() {
+			for (DirectoryItem i : myItems) {
+				if ("".equals(i.getPath())) return true;
+			}
+			return false;
 		}
 
 		synchronized void removeDirectoryItem(int id) {
@@ -125,6 +160,7 @@ public class EditableStringListActivity extends ListActivity {
 				if (myItems.get(i).getId() == id) {
 					myItems.remove(i);
 					notifyDataSetChanged();
+					EditableStringListActivity.this.enableButtons();
 					return;
 				}
 			}
@@ -132,45 +168,36 @@ public class EditableStringListActivity extends ListActivity {
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			if (position == myItems.size()) {
-				final View view = LayoutInflater.from(EditableStringListActivity.this).inflate(R.layout.editable_stringlist_lastitem, parent, false);
-				final TextView text = (TextView)view.findViewById(R.id.editable_stringlist_addtext);
-				view.setClickable(true);
-				view.setOnClickListener(
-					new View.OnClickListener() {
-						public void onClick(View view) {
-							ItemAdapter.this.addDirectoryItem(new DirectoryItem());
-						}
-					}
-				);
-				return view;
-			}
 			final DirectoryItem item = getItem(position);
 			final View view = LayoutInflater.from(EditableStringListActivity.this).inflate(R.layout.editable_stringlist_item, parent, false);
 
-			final EditText text = (EditText)view.findViewById(R.id.editable_stringlist_text);
+			final AutoCompleteTextView text = (AutoCompleteTextView)view.findViewById(R.id.editable_stringlist_text);
 			text.setText(item.getPath());
 			text.addTextChangedListener(new TextWatcher(){
 				public void afterTextChanged(Editable s) {}
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					item.setPath(s.toString());
+					EditableStringListActivity.this.enableButtons();
 				}
-			}); 
-			final Button button = (Button)view.findViewById(R.id.editable_stringlist_deletebutton);
+			});
+			text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this, android.R.layout.simple_dropdown_item_1line, rootpaths));
+			final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
 			button.setOnClickListener(
 				new View.OnClickListener() {
 					public void onClick(View view) {
 						ItemAdapter.this.removeDirectoryItem(item.getId());
+						EditableStringListActivity.this.enableButtons();
 					}
 				}
 			);
+			button.setEnabled(ItemAdapter.this.getCount() > 1);
 			return view;
 		}
 	}
 
 	private static class DirectoryItem {
-		private String myPath;
+		private String myPath = "";
 		private int myId;
 
 		public String getPath() {

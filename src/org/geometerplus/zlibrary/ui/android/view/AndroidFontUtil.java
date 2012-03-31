@@ -92,7 +92,7 @@ public final class AndroidFontUtil {
 				}
 			} else {
 				File[] fileList = new File[0];
-				for (String dir : Paths.FontsDirectoryOption().getValue()) {
+				for (String dir : Paths.DirectoryOption(Paths.FONTS_DIRECTORY).getValue()) {
 					final File[] tempList = new File(dir).listFiles(
 						new FilenameFilter() {
 							public boolean accept(File dir, String name) {

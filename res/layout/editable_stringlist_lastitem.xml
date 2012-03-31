@@ -4,15 +4,15 @@
 	android:layout_height="wrap_content"
 	android:minHeight="?android:attr/listPreferredItemHeight"
 	android:paddingLeft="2dip"
-	android:orientation="horizontal"
+	android:orientation="vertical"
 >
-	<TextView
-		android:id="@+id/editable_stringlist_addtext"
+	<ImageButton
+		android:id="@+id/editable_stringlist_addbutton"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_weight="1"
-		android:singleLine="true"
 		android:gravity="center_horizontal"
-		android:text="+"
+		android:src="@android:drawable/ic_input_add"
 	/>
+	<include layout="@layout/ok_cancel_buttons" android:id="@+id/editable_stringlist_buttons" />
 </LinearLayout>

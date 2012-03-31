@@ -56,10 +56,9 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
 		if (AndroidFontUtil.areExternalFontsSupported()) {
-			directoriesScreen.addPreference(new ZLDirectoryPreference(this, "FontsDirectory", directoriesScreen.Resource, "fonts"));
-//			directoriesScreen.addOption(Paths.FontsDirectoryOption(), "fonts");
+			directoriesScreen.addPreference(new ZLDirectoryPreference(this, Paths.FONTS_DIRECTORY, directoriesScreen.Resource, "fonts"));
 		}
-		directoriesScreen.addOption(Paths.WallpapersDirectoryOption(), "wallpapers");
+		directoriesScreen.addPreference(new ZLDirectoryPreference(this, Paths.WALLPAPERS_DIRECTORY, directoriesScreen.Resource, "wallpapers"));
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
