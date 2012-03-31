@@ -18,6 +18,7 @@
  */
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include <ZLImage.h>
 #include <ZLFileImage.h>
@@ -202,7 +203,7 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 
 	jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
 	jstring javaId = AndroidUtil::createJavaString(env, id);
-	env->CallVoidMethod(myModel.myJavaModel, AndroidUtil::MID_NativeBookModel_addImage, javaId, javaImage);
+	AndroidUtil::Method_NativeBookModel_addImage->call(myModel.myJavaModel, javaId, javaImage);
 
 	env->DeleteLocalRef(javaId);
 	env->DeleteLocalRef(javaImage);
