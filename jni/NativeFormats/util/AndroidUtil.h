@@ -50,11 +50,13 @@ public:
 	static shared_ptr<JavaClass> Class_java_lang_RuntimeException;
 	static shared_ptr<JavaClass> Class_java_lang_String;
 	static shared_ptr<JavaClass> Class_java_util_Collection;
+	static shared_ptr<JavaClass> Class_java_util_List;
 	static shared_ptr<JavaClass> Class_java_util_Locale;
 	static shared_ptr<JavaClass> Class_java_io_InputStream;
 	static shared_ptr<JavaClass> Class_ZLibrary;
 	static shared_ptr<JavaClass> Class_ZLFile;
 	static shared_ptr<JavaClass> Class_ZLFileImage;
+	static shared_ptr<JavaClass> Class_ZLTextModel;
 	static shared_ptr<JavaClass> Class_NativeFormatPlugin;
 	static shared_ptr<JavaClass> Class_PluginCollection;
 	static shared_ptr<JavaClass> Class_Encoding;

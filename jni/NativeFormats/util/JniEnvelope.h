@@ -38,6 +38,25 @@ private:
 	const JavaType &operator = (const JavaType&);
 };
 
+class JavaPrimitiveType : public JavaType {
+
+public:
+	static const JavaPrimitiveType Void;
+	static const JavaPrimitiveType Int;
+	static const JavaPrimitiveType Long;
+	static const JavaPrimitiveType Boolean;
+
+//protected:
+public:
+	JavaPrimitiveType(const std::string &code);
+
+public:
+	std::string code() const;
+
+private:
+	const std::string myCode;
+};
+
 class JavaClass : public JavaType {
 
 public:
@@ -49,7 +68,7 @@ public:
 private:
 	const std::string myName;
 	JNIEnv *myEnv;
-	jclass myClass;
+	mutable jclass myClass;
 
 friend class Member;
 };
@@ -75,7 +94,7 @@ private:
 class Constructor : public Member {
 
 public:
-	Constructor(const JavaClass &cls, const std::string &signature);
+	Constructor(const JavaClass &cls, const std::string &parameters);
 	jobject call(...);
 
 private:
@@ -96,7 +115,7 @@ protected:
 class Method : public Member {
 
 public:
-	Method(const JavaClass &cls, const std::string &name, const std::string &signature);
+	Method(const JavaClass &cls, const std::string &name, const JavaType &type, const std::string &parameters);
 	virtual ~Method();
 
 protected:
@@ -107,7 +126,7 @@ protected:
 class StaticMethod : public Member {
 
 public:
-	StaticMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &signature);
+	StaticMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters);
 	virtual ~StaticMethod();
 
 protected:
@@ -125,55 +144,56 @@ public:
 class VoidMethod : public Method {
 
 public:
-	VoidMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
+	VoidMethod(const JavaClass &cls, const std::string &name, const std::string &parameters);
 	void call(jobject base, ...);
 };
 
 class IntMethod : public Method {
 
 public:
-	IntMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
+	IntMethod(const JavaClass &cls, const std::string &name, const std::string &parameters);
 	jint call(jobject base, ...);
 };
 
 class LongMethod : public Method {
 
 public:
-	LongMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
+	LongMethod(const JavaClass &cls, const std::string &name, const std::string &parameters);
 	jlong call(jobject base, ...);
 };
 
 class BooleanMethod : public Method {
 
 public:
-	BooleanMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
+	BooleanMethod(const JavaClass &cls, const std::string &name, const std::string &parameters);
 	jboolean call(jobject base, ...);
 };
 
 class StringMethod : public Method {
 
 public:
-	StringMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
+	StringMethod(const JavaClass &cls, const std::string &name, const std::string &parameters);
 	jstring call(jobject base, ...);
 };
 
 class ObjectMethod : public Method {
 
 public:
-	ObjectMethod(const JavaClass &cls, const std::string &name, const std::string &returnType, const std::string &signature);
+	ObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters);
 	jobject call(jobject base, ...);
 };
 
 class StaticObjectMethod : public StaticMethod {
 
 public:
-	StaticObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &signature);
+	StaticObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters);
 	jobject call(...);
 };
 
-inline jclass JavaClass::j() const { return myClass; }
-
 inline JNIEnv &Member::env() const { return *myClass.myEnv; }
-inline jclass Member::jClass() const { return myClass.myClass; }
+inline jclass Member::jClass() const { return myClass.j(); }
+
+inline JavaPrimitiveType::JavaPrimitiveType(const std::string &code) : myCode(code) {}
+inline std::string JavaPrimitiveType::code() const { return myCode; }
 
 #endif /* __JNIENVELOPE_H__ */
