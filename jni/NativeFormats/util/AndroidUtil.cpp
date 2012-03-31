@@ -157,7 +157,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Encoding_createConverter = new ObjectMethod(*Class_Encoding, "createConverter", "org/geometerplus/zlibrary/core/encodings/EncodingConverter", "()");
 
 	Class_EncodingConverter = new JavaClass(env, "org/geometerplus/zlibrary/core/encodings/EncodingConverter");
-	Field_EncodingConverter_Name = new ObjectField(*Class_EncodingConverter, "Name", "java/lang/String");
+	Field_EncodingConverter_Name = new ObjectField(*Class_EncodingConverter, "Name", *Class_java_lang_String);
 	Method_EncodingConverter_convert = new IntMethod(*Class_EncodingConverter, "convert", "([BII[BI)");
 	Method_EncodingConverter_reset = new VoidMethod(*Class_EncodingConverter, "reset", "()");
 
@@ -183,7 +183,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(*Class_Paths, "cacheDirectory", "java/lang/String", "()");
 
 	Class_Book = new JavaClass(env, "org/geometerplus/fbreader/library/Book");
-	Field_Book_File = new ObjectField(*Class_Book, "File", "org/geometerplus/zlibrary/core/filesystem/ZLFile");
+	Field_Book_File = new ObjectField(*Class_Book, "File", *Class_ZLFile);
 	Method_Book_getTitle = new StringMethod(*Class_Book, "getTitle", "()");
 	Method_Book_getLanguage = new StringMethod(*Class_Book, "getLanguage", "()");
 	Method_Book_getEncodingNoDetection = new StringMethod(*Class_Book, "getEncodingNoDetection", "()");
@@ -199,7 +199,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	StaticMethod_Tag_getTag = new StaticObjectMethod(*Class_Tag, "getTag", "org/geometerplus/fbreader/library/Tag", "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)");
 
 	Class_NativeBookModel = new JavaClass(env, "org/geometerplus/fbreader/bookmodel/NativeBookModel");
-	Field_NativeBookModel_Book = new ObjectField(*Class_NativeBookModel, "Book", "org/geometerplus/fbreader/library/Book");
+	Field_NativeBookModel_Book = new ObjectField(*Class_NativeBookModel, "Book", *Class_Book);
 	Method_NativeBookModel_initInternalHyperlinks = new VoidMethod(*Class_NativeBookModel, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)");
 	Method_NativeBookModel_initTOC = new VoidMethod(*Class_NativeBookModel, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)");
 	Method_NativeBookModel_createTextModel = new ObjectMethod(*Class_NativeBookModel, "createTextModel", "org/geometerplus/zlibrary/text/model/ZLTextModel", "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)");

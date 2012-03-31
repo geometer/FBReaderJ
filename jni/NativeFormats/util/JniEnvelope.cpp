@@ -23,6 +23,12 @@
 
 static const std::string JNI_LOGGER_CLASS = "JniLog";
 
+JavaType::JavaType() {
+}
+
+JavaType::~JavaType() {
+}
+
 JavaClass::JavaClass(JNIEnv *env, const std::string &name) : myName(name), myEnv(env) {
 	jclass ref = env->FindClass(name.c_str());
 	myClass = (jclass)env->NewGlobalRef(ref);
@@ -31,6 +37,10 @@ JavaClass::JavaClass(JNIEnv *env, const std::string &name) : myName(name), myEnv
 
 JavaClass::~JavaClass() {
 	myEnv->DeleteGlobalRef(myClass);
+}
+
+std::string JavaClass::code() const {
+	return "L" + myName + ";";
 }
 
 Member::Member(const JavaClass &cls) : myClass(cls) {
@@ -52,8 +62,8 @@ jobject Constructor::call(...) {
 	return obj;
 }
 
-Field::Field(const JavaClass &cls, const std::string &name, const std::string &type) : Member(cls), myName(name) {
-	myId = env().GetFieldID(jClass(), name.c_str(), type.c_str());
+Field::Field(const JavaClass &cls, const std::string &name, const JavaType &type) : Member(cls), myName(name) {
+	myId = env().GetFieldID(jClass(), name.c_str(), type.code().c_str());
 }
 
 Field::~Field() {
@@ -73,7 +83,7 @@ StaticMethod::StaticMethod(const JavaClass &cls, const std::string &name, const 
 StaticMethod::~StaticMethod() {
 }
 
-ObjectField::ObjectField(const JavaClass &cls, const std::string &name, const std::string &type) : Field(cls, name, "L" + type + ";") {
+ObjectField::ObjectField(const JavaClass &cls, const std::string &name, const JavaClass &type) : Field(cls, name, type) {
 }
 
 jobject ObjectField::value(jobject obj) const {

@@ -24,16 +24,27 @@
 
 #include <string>
 
-class JavaClass {
+class JavaType {
+
+protected:
+	JavaType();
+	virtual ~JavaType();
+
+public:
+	virtual std::string code() const = 0;
+
+private:
+	JavaType(const JavaType&);
+	const JavaType &operator = (const JavaType&);
+};
+
+class JavaClass : public JavaType {
 
 public:
 	JavaClass(JNIEnv *env, const std::string &name);
 	~JavaClass();
 	jclass j() const;
-
-private:
-	JavaClass(const JavaClass&);
-	const JavaClass &operator = (const JavaClass&);
+	std::string code() const;
 
 private:
 	const std::string myName;
@@ -74,7 +85,7 @@ private:
 class Field : public Member {
 
 public:
-	Field(const JavaClass &cls, const std::string &name, const std::string &type);
+	Field(const JavaClass &cls, const std::string &name, const JavaType &type);
 	virtual ~Field();
 
 protected:
@@ -107,7 +118,7 @@ protected:
 class ObjectField : public Field {
 
 public:
-	ObjectField(const JavaClass &cls, const std::string &name, const std::string &type);
+	ObjectField(const JavaClass &cls, const std::string &name, const JavaClass &type);
 	jobject value(jobject obj) const;
 };
 
