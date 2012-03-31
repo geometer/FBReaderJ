@@ -1,3 +1,6 @@
+===== 1.4.4 (Apr ??, 2012) =====
+* introduced jni C++ wrappers (this avoids incorrect method calls)
+
 ===== 1.4.3 (Mar 29, 2012) =====
 * fixed fb2 books opening issue
 * fixed fb2 genres detection issue
