@@ -50,8 +50,8 @@ Member::Member(const JavaClass &cls) : myClass(cls) {
 Member::~Member() {
 }
 
-Constructor::Constructor(const JavaClass &cls, const std::string &signature) : Member(cls) {
-	myId = env().GetMethodID(jClass(), "<init>", signature.c_str());
+Constructor::Constructor(const JavaClass &cls, const std::string &parameters) : Member(cls) {
+	myId = env().GetMethodID(jClass(), "<init>", parameters.c_str());
 }
 
 jobject Constructor::call(...) {
@@ -69,21 +69,22 @@ Field::Field(const JavaClass &cls, const std::string &name, const JavaType &type
 Field::~Field() {
 }
 
-Method::Method(const JavaClass &cls, const std::string &name, const std::string &signature) : Member(cls), myName(name) {
-	myId = env().GetMethodID(jClass(), name.c_str(), signature.c_str());
+Method::Method(const JavaClass &cls, const std::string &name, const std::string &parameters) : Member(cls), myName(name) {
+	myId = env().GetMethodID(jClass(), name.c_str(), parameters.c_str());
 }
 
 Method::~Method() {
 }
 
-StaticMethod::StaticMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Member(cls), myName(name) {
+StaticMethod::StaticMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters) : Member(cls), myName(name) {
+	const std::string signature = parameters + returnType.code();
 	myId = env().GetStaticMethodID(jClass(), name.c_str(), signature.c_str());
 }
 
 StaticMethod::~StaticMethod() {
 }
 
-ObjectField::ObjectField(const JavaClass &cls, const std::string &name, const JavaClass &type) : Field(cls, name, type) {
+ObjectField::ObjectField(const JavaClass &cls, const std::string &name, const JavaType &type) : Field(cls, name, type) {
 }
 
 jobject ObjectField::value(jobject obj) const {
@@ -93,7 +94,7 @@ jobject ObjectField::value(jobject obj) const {
 	return val;
 }
 
-VoidMethod::VoidMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Method(cls, name, signature + "V") {
+VoidMethod::VoidMethod(const JavaClass &cls, const std::string &name, const std::string &parameters) : Method(cls, name, parameters + "V") {
 }
 
 void VoidMethod::call(jobject base, ...) {
@@ -105,7 +106,7 @@ void VoidMethod::call(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished VoidMethod " + myName);
 }
 
-IntMethod::IntMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Method(cls, name, signature + "I") {
+IntMethod::IntMethod(const JavaClass &cls, const std::string &name, const std::string &parameters) : Method(cls, name, parameters + "I") {
 }
 
 jint IntMethod::call(jobject base, ...) {
@@ -118,7 +119,7 @@ jint IntMethod::call(jobject base, ...) {
 	return result;
 }
 
-LongMethod::LongMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Method(cls, name, signature + "J") {
+LongMethod::LongMethod(const JavaClass &cls, const std::string &name, const std::string &parameters) : Method(cls, name, parameters + "J") {
 }
 
 jlong LongMethod::call(jobject base, ...) {
@@ -131,7 +132,7 @@ jlong LongMethod::call(jobject base, ...) {
 	return result;
 }
 
-BooleanMethod::BooleanMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Method(cls, name, signature + "Z") {
+BooleanMethod::BooleanMethod(const JavaClass &cls, const std::string &name, const std::string &parameters) : Method(cls, name, parameters + "Z") {
 }
 
 jboolean BooleanMethod::call(jobject base, ...) {
@@ -144,7 +145,7 @@ jboolean BooleanMethod::call(jobject base, ...) {
 	return result;
 }
 
-StringMethod::StringMethod(const JavaClass &cls, const std::string &name, const std::string &signature) : Method(cls, name, signature + "Ljava/lang/String;") {
+StringMethod::StringMethod(const JavaClass &cls, const std::string &name, const std::string &parameters) : Method(cls, name, parameters + "Ljava/lang/String;") {
 }
 
 jstring StringMethod::call(jobject base, ...) {
@@ -157,7 +158,7 @@ jstring StringMethod::call(jobject base, ...) {
 	return result;
 }
 
-ObjectMethod::ObjectMethod(const JavaClass &cls, const std::string &name, const std::string &returnType, const std::string &signature) : Method(cls, name, signature + "L" + returnType + ";") {
+ObjectMethod::ObjectMethod(const JavaClass &cls, const std::string &name, const std::string &returnType, const std::string &parameters) : Method(cls, name, parameters + "L" + returnType + ";") {
 }
 
 jobject ObjectMethod::call(jobject base, ...) {
@@ -170,7 +171,7 @@ jobject ObjectMethod::call(jobject base, ...) {
 	return result;
 }
 
-StaticObjectMethod::StaticObjectMethod(const JavaClass &cls, const std::string &name, const std::string &returnType, const std::string &signature) : StaticMethod(cls, name, signature + "L" + returnType + ";") {
+StaticObjectMethod::StaticObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters) : StaticMethod(cls, name, returnType, parameters) {
 }
 
 jobject StaticObjectMethod::call(...) {

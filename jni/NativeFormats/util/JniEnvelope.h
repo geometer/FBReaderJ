@@ -107,7 +107,7 @@ protected:
 class StaticMethod : public Member {
 
 public:
-	StaticMethod(const JavaClass &cls, const std::string &name, const std::string &signature);
+	StaticMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &signature);
 	virtual ~StaticMethod();
 
 protected:
@@ -118,7 +118,7 @@ protected:
 class ObjectField : public Field {
 
 public:
-	ObjectField(const JavaClass &cls, const std::string &name, const JavaClass &type);
+	ObjectField(const JavaClass &cls, const std::string &name, const JavaType &type);
 	jobject value(jobject obj) const;
 };
 
@@ -167,7 +167,7 @@ public:
 class StaticObjectMethod : public StaticMethod {
 
 public:
-	StaticObjectMethod(const JavaClass &cls, const std::string &name, const std::string &returnType, const std::string &signature);
+	StaticObjectMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &signature);
 	jobject call(...);
 };
 
