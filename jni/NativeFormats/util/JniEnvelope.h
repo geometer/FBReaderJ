@@ -70,14 +70,13 @@ private:
 class JavaClass : public JavaType {
 
 public:
-	JavaClass(JNIEnv *env, const std::string &name);
+	JavaClass(const std::string &name);
 	~JavaClass();
 	jclass j() const;
 	std::string code() const;
 
 private:
 	const std::string myName;
-	JNIEnv *myEnv;
 	mutable jclass myClass;
 
 friend class Member;
@@ -87,7 +86,6 @@ class Member {
 
 protected:
 	Member(const JavaClass &cls);
-	JNIEnv &env() const;
 	jclass jClass() const;
 
 public:
@@ -207,7 +205,6 @@ public:
 	jobject call(...);
 };
 
-inline JNIEnv &Member::env() const { return *myClass.myEnv; }
 inline jclass Member::jClass() const { return myClass.j(); }
 
 inline JavaPrimitiveType::JavaPrimitiveType(const std::string &code) : myCode(code) {}

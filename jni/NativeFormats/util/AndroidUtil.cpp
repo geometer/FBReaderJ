@@ -25,28 +25,30 @@
 
 JavaVM *AndroidUtil::ourJavaVM = 0;
 
-shared_ptr<JavaClass> AndroidUtil::Class_java_lang_Object;
-shared_ptr<JavaArray> AndroidUtil::Array_java_lang_Object;
-shared_ptr<JavaClass> AndroidUtil::Class_java_lang_RuntimeException;
-shared_ptr<JavaClass> AndroidUtil::Class_java_lang_String;
-shared_ptr<JavaClass> AndroidUtil::Class_java_util_Collection;
-shared_ptr<JavaClass> AndroidUtil::Class_java_util_List;
-shared_ptr<JavaClass> AndroidUtil::Class_java_util_Locale;
-shared_ptr<JavaClass> AndroidUtil::Class_java_io_InputStream;
-shared_ptr<JavaClass> AndroidUtil::Class_ZLibrary;
-shared_ptr<JavaClass> AndroidUtil::Class_NativeFormatPlugin;
-shared_ptr<JavaClass> AndroidUtil::Class_PluginCollection;
-shared_ptr<JavaClass> AndroidUtil::Class_Encoding;
-shared_ptr<JavaClass> AndroidUtil::Class_EncodingConverter;
-shared_ptr<JavaClass> AndroidUtil::Class_JavaEncodingCollection;
-shared_ptr<JavaClass> AndroidUtil::Class_Paths;
-shared_ptr<JavaClass> AndroidUtil::Class_ZLFile;
-shared_ptr<JavaClass> AndroidUtil::Class_ZLFileImage;
-shared_ptr<JavaClass> AndroidUtil::Class_ZLTextModel;
-shared_ptr<JavaClass> AndroidUtil::Class_Book;
-shared_ptr<JavaClass> AndroidUtil::Class_Tag;
-shared_ptr<JavaClass> AndroidUtil::Class_NativeBookModel;
-//shared_ptr<JavaClass> AndroidUtil::Class_BookReadingException;
+JavaClass AndroidUtil::Class_java_lang_Object("java/lang/Object");
+JavaArray AndroidUtil::Array_java_lang_Object(Class_java_lang_Object);
+JavaClass AndroidUtil::Class_java_lang_RuntimeException("java/lang/RuntimeException");
+JavaClass AndroidUtil::Class_java_lang_String("java/lang/String");
+JavaClass AndroidUtil::Class_java_util_Collection("java/util/Collection");
+JavaClass AndroidUtil::Class_java_util_List("java/util/List");
+JavaClass AndroidUtil::Class_java_util_Locale("java/util/Locale");
+JavaClass AndroidUtil::Class_java_io_InputStream("java/io/InputStream");
+
+JavaClass AndroidUtil::Class_ZLibrary("org/geometerplus/zlibrary/core/library/ZLibrary");
+JavaClass AndroidUtil::Class_ZLFile("org/geometerplus/zlibrary/core/filesystem/ZLFile");
+JavaClass AndroidUtil::Class_ZLFileImage("org/geometerplus/zlibrary/core/image/ZLFileImage");
+JavaClass AndroidUtil::Class_ZLTextModel("org/geometerplus/zlibrary/text/model/ZLTextModel");
+
+JavaClass AndroidUtil::Class_Encoding("org/geometerplus/zlibrary/core/encodings/Encoding");
+JavaClass AndroidUtil::Class_EncodingConverter("org/geometerplus/zlibrary/core/encodings/EncodingConverter");
+JavaClass AndroidUtil::Class_JavaEncodingCollection("org/geometerplus/zlibrary/core/encodings/JavaEncodingCollection");
+
+JavaClass AndroidUtil::Class_NativeFormatPlugin("org/geometerplus/fbreader/formats/NativeFormatPlugin");
+JavaClass AndroidUtil::Class_PluginCollection("org/geometerplus/fbreader/formats/PluginCollection");
+JavaClass AndroidUtil::Class_Paths("org/geometerplus/fbreader/Paths");
+JavaClass AndroidUtil::Class_Book("org/geometerplus/fbreader/library/Book");
+JavaClass AndroidUtil::Class_Tag("org/geometerplus/fbreader/library/Tag");
+JavaClass AndroidUtil::Class_NativeBookModel("org/geometerplus/fbreader/bookmodel/NativeBookModel");
 
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toLowerCase;
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toUpperCase;
@@ -124,100 +126,73 @@ JNIEnv *AndroidUtil::getEnv() {
 bool AndroidUtil::init(JavaVM* jvm) {
 	ourJavaVM = jvm;
 
-	JNIEnv *env = getEnv();
+	Method_java_lang_String_toLowerCase = new StringMethod(Class_java_lang_String, "toLowerCase", "()");
+	Method_java_lang_String_toUpperCase = new StringMethod(Class_java_lang_String, "toUpperCase", "()");
 
-	Class_java_lang_Object = new JavaClass(env, "java/lang/Object");
-	Array_java_lang_Object = new JavaArray(*Class_java_lang_Object);
-	Class_java_lang_RuntimeException = new JavaClass(env, "java/lang/RuntimeException");
-	Class_java_lang_String = new JavaClass(env, "java/lang/String");
-	Class_java_util_Collection = new JavaClass(env, "java/util/Collection");
-	Class_java_util_List = new JavaClass(env, "java/util/List");
-	Class_java_util_Locale = new JavaClass(env, "java/util/Locale");
-	Class_java_io_InputStream = new JavaClass(env, "java/io/InputStream");
+	Method_java_util_Collection_toArray = new ObjectArrayMethod(Class_java_util_Collection, "toArray", Array_java_lang_Object, "()");
 
-	Class_ZLibrary = new JavaClass(env, "org/geometerplus/zlibrary/core/library/ZLibrary");
-	Class_ZLFile = new JavaClass(env, "org/geometerplus/zlibrary/core/filesystem/ZLFile");
- 	Class_ZLFileImage = new JavaClass(env, "org/geometerplus/zlibrary/core/image/ZLFileImage");
-	Class_ZLTextModel = new JavaClass(env, "org/geometerplus/zlibrary/text/model/ZLTextModel");
+	StaticMethod_java_util_Locale_getDefault = new StaticObjectMethod(Class_java_util_Locale, "getDefault", Class_java_util_Locale, "()");
+	Method_java_util_Locale_getLanguage = new StringMethod(Class_java_util_Locale, "getLanguage", "()");
 
-	Class_Encoding = new JavaClass(env, "org/geometerplus/zlibrary/core/encodings/Encoding");
-	Class_EncodingConverter = new JavaClass(env, "org/geometerplus/zlibrary/core/encodings/EncodingConverter");
-	Class_JavaEncodingCollection = new JavaClass(env, "org/geometerplus/zlibrary/core/encodings/JavaEncodingCollection");
+	Method_java_io_InputStream_close = new VoidMethod(Class_java_io_InputStream, "close", "()");
+	Method_java_io_InputStream_read = new IntMethod(Class_java_io_InputStream, "read", "([BII)");
+	Method_java_io_InputStream_skip = new LongMethod(Class_java_io_InputStream, "skip", "(J)");
 
-	Class_NativeFormatPlugin = new JavaClass(env, "org/geometerplus/fbreader/formats/NativeFormatPlugin");
-	Class_PluginCollection = new JavaClass(env, "org/geometerplus/fbreader/formats/PluginCollection");
-	Class_Paths = new JavaClass(env, "org/geometerplus/fbreader/Paths");
-	Class_Book = new JavaClass(env, "org/geometerplus/fbreader/library/Book");
-	Class_Tag = new JavaClass(env, "org/geometerplus/fbreader/library/Tag");
-	Class_NativeBookModel = new JavaClass(env, "org/geometerplus/fbreader/bookmodel/NativeBookModel");
+	StaticMethod_ZLibrary_Instance = new StaticObjectMethod(Class_ZLibrary, "Instance", Class_ZLibrary, "()");
+	Method_ZLibrary_getVersionName = new StringMethod(Class_ZLibrary, "getVersionName", "()");
 
-	Method_java_lang_String_toLowerCase = new StringMethod(*Class_java_lang_String, "toLowerCase", "()");
-	Method_java_lang_String_toUpperCase = new StringMethod(*Class_java_lang_String, "toUpperCase", "()");
+	Constructor_NativeFormatPlugin = new Constructor(Class_NativeFormatPlugin, "(Ljava/lang/String;)V");
+	Method_NativeFormatPlugin_supportedFileType = new StringMethod(Class_NativeFormatPlugin, "supportedFileType", "()");
 
-	Method_java_util_Collection_toArray = new ObjectArrayMethod(*Class_java_util_Collection, "toArray", *Array_java_lang_Object, "()");
+	StaticMethod_PluginCollection_Instance = new StaticObjectMethod(Class_PluginCollection, "Instance", Class_PluginCollection, "()");
 
-	StaticMethod_java_util_Locale_getDefault = new StaticObjectMethod(*Class_java_util_Locale, "getDefault", *Class_java_util_Locale, "()");
-	Method_java_util_Locale_getLanguage = new StringMethod(*Class_java_util_Locale, "getLanguage", "()");
+	Method_Encoding_createConverter = new ObjectMethod(Class_Encoding, "createConverter", Class_EncodingConverter, "()");
+	Field_EncodingConverter_Name = new ObjectField(Class_EncodingConverter, "Name", Class_java_lang_String);
+	Method_EncodingConverter_convert = new IntMethod(Class_EncodingConverter, "convert", "([BII[BI)");
+	Method_EncodingConverter_reset = new VoidMethod(Class_EncodingConverter, "reset", "()");
 
-	Method_java_io_InputStream_close = new VoidMethod(*Class_java_io_InputStream, "close", "()");
-	Method_java_io_InputStream_read = new IntMethod(*Class_java_io_InputStream, "read", "([BII)");
-	Method_java_io_InputStream_skip = new LongMethod(*Class_java_io_InputStream, "skip", "(J)");
+	StaticMethod_JavaEncodingCollection_Instance = new StaticObjectMethod(Class_JavaEncodingCollection, "Instance", Class_JavaEncodingCollection, "()");
+	Method_JavaEncodingCollection_getEncoding_String = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(Ljava/lang/String;)");
+	Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(Class_JavaEncodingCollection, "getEncoding", Class_Encoding, "(I)");
+	Method_JavaEncodingCollection_providesConverterFor = new BooleanMethod(Class_JavaEncodingCollection, "providesConverterFor", "(Ljava/lang/String;)");
 
-	StaticMethod_ZLibrary_Instance = new StaticObjectMethod(*Class_ZLibrary, "Instance", *Class_ZLibrary, "()");
-	Method_ZLibrary_getVersionName = new StringMethod(*Class_ZLibrary, "getVersionName", "()");
+	StaticMethod_ZLFile_createFileByPath = new StaticObjectMethod(Class_ZLFile, "createFileByPath", Class_ZLFile, "(Ljava/lang/String;)");
+	Method_ZLFile_children = new ObjectMethod(Class_ZLFile, "children", Class_java_util_List, "()");
+	Method_ZLFile_exists = new BooleanMethod(Class_ZLFile, "exists", "()");
+	Method_ZLFile_isDirectory = new BooleanMethod(Class_ZLFile, "isDirectory", "()");
+	Method_ZLFile_getInputStream = new ObjectMethod(Class_ZLFile, "getInputStream", Class_java_io_InputStream, "()");
+	Method_ZLFile_getPath = new StringMethod(Class_ZLFile, "getPath", "()");
+	Method_ZLFile_size = new LongMethod(Class_ZLFile, "size", "()");
 
-	Constructor_NativeFormatPlugin = new Constructor(*Class_NativeFormatPlugin, "(Ljava/lang/String;)V");
-	Method_NativeFormatPlugin_supportedFileType = new StringMethod(*Class_NativeFormatPlugin, "supportedFileType", "()");
+	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;II)V");
 
-	StaticMethod_PluginCollection_Instance = new StaticObjectMethod(*Class_PluginCollection, "Instance", *Class_PluginCollection, "()");
+	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(Class_Paths, "cacheDirectory", Class_java_lang_String, "()");
 
-	Method_Encoding_createConverter = new ObjectMethod(*Class_Encoding, "createConverter", *Class_EncodingConverter, "()");
-	Field_EncodingConverter_Name = new ObjectField(*Class_EncodingConverter, "Name", *Class_java_lang_String);
-	Method_EncodingConverter_convert = new IntMethod(*Class_EncodingConverter, "convert", "([BII[BI)");
-	Method_EncodingConverter_reset = new VoidMethod(*Class_EncodingConverter, "reset", "()");
+	Field_Book_File = new ObjectField(Class_Book, "File", Class_ZLFile);
+	Method_Book_getTitle = new StringMethod(Class_Book, "getTitle", "()");
+	Method_Book_getLanguage = new StringMethod(Class_Book, "getLanguage", "()");
+	Method_Book_getEncodingNoDetection = new StringMethod(Class_Book, "getEncodingNoDetection", "()");
+	Method_Book_setTitle = new VoidMethod(Class_Book, "setTitle", "(Ljava/lang/String;)");
+	Method_Book_setSeriesInfo = new VoidMethod(Class_Book, "setSeriesInfo", "(Ljava/lang/String;F)");
+	Method_Book_setLanguage = new VoidMethod(Class_Book, "setLanguage", "(Ljava/lang/String;)");
+	Method_Book_setEncoding = new VoidMethod(Class_Book, "setEncoding", "(Ljava/lang/String;)");
+	Method_Book_addAuthor = new VoidMethod(Class_Book, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
+	Method_Book_addTag = new VoidMethod(Class_Book, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)");
+	Method_Book_save = new BooleanMethod(Class_Book, "save", "()");
 
-	StaticMethod_JavaEncodingCollection_Instance = new StaticObjectMethod(*Class_JavaEncodingCollection, "Instance", *Class_JavaEncodingCollection, "()");
-	Method_JavaEncodingCollection_getEncoding_String = new ObjectMethod(*Class_JavaEncodingCollection, "getEncoding", *Class_Encoding, "(Ljava/lang/String;)");
-	Method_JavaEncodingCollection_getEncoding_int = new ObjectMethod(*Class_JavaEncodingCollection, "getEncoding", *Class_Encoding, "(I)");
-	Method_JavaEncodingCollection_providesConverterFor = new BooleanMethod(*Class_JavaEncodingCollection, "providesConverterFor", "(Ljava/lang/String;)");
+	StaticMethod_Tag_getTag = new StaticObjectMethod(Class_Tag, "getTag", Class_Tag, "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)");
 
-	StaticMethod_ZLFile_createFileByPath = new StaticObjectMethod(*Class_ZLFile, "createFileByPath", *Class_ZLFile, "(Ljava/lang/String;)");
-	Method_ZLFile_children = new ObjectMethod(*Class_ZLFile, "children", *Class_java_util_List, "()");
-	Method_ZLFile_exists = new BooleanMethod(*Class_ZLFile, "exists", "()");
-	Method_ZLFile_isDirectory = new BooleanMethod(*Class_ZLFile, "isDirectory", "()");
-	Method_ZLFile_getInputStream = new ObjectMethod(*Class_ZLFile, "getInputStream", *Class_java_io_InputStream, "()");
-	Method_ZLFile_getPath = new StringMethod(*Class_ZLFile, "getPath", "()");
-	Method_ZLFile_size = new LongMethod(*Class_ZLFile, "size", "()");
-
-	Constructor_ZLFileImage = new Constructor(*Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;II)V");
-
-	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(*Class_Paths, "cacheDirectory", *Class_java_lang_String, "()");
-
-	Field_Book_File = new ObjectField(*Class_Book, "File", *Class_ZLFile);
-	Method_Book_getTitle = new StringMethod(*Class_Book, "getTitle", "()");
-	Method_Book_getLanguage = new StringMethod(*Class_Book, "getLanguage", "()");
-	Method_Book_getEncodingNoDetection = new StringMethod(*Class_Book, "getEncodingNoDetection", "()");
-	Method_Book_setTitle = new VoidMethod(*Class_Book, "setTitle", "(Ljava/lang/String;)");
-	Method_Book_setSeriesInfo = new VoidMethod(*Class_Book, "setSeriesInfo", "(Ljava/lang/String;F)");
-	Method_Book_setLanguage = new VoidMethod(*Class_Book, "setLanguage", "(Ljava/lang/String;)");
-	Method_Book_setEncoding = new VoidMethod(*Class_Book, "setEncoding", "(Ljava/lang/String;)");
-	Method_Book_addAuthor = new VoidMethod(*Class_Book, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
-	Method_Book_addTag = new VoidMethod(*Class_Book, "addTag", "(Lorg/geometerplus/fbreader/library/Tag;)");
-	Method_Book_save = new BooleanMethod(*Class_Book, "save", "()");
-
-	StaticMethod_Tag_getTag = new StaticObjectMethod(*Class_Tag, "getTag", *Class_Tag, "(Lorg/geometerplus/fbreader/library/Tag;Ljava/lang/String;)");
-
-	Field_NativeBookModel_Book = new ObjectField(*Class_NativeBookModel, "Book", *Class_Book);
-	Method_NativeBookModel_initInternalHyperlinks = new VoidMethod(*Class_NativeBookModel, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)");
-	Method_NativeBookModel_initTOC = new VoidMethod(*Class_NativeBookModel, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)");
-	Method_NativeBookModel_createTextModel = new ObjectMethod(*Class_NativeBookModel, "createTextModel", *Class_ZLTextModel, "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)");
-	Method_NativeBookModel_setBookTextModel = new VoidMethod(*Class_NativeBookModel, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");
-	Method_NativeBookModel_setFootnoteModel = new VoidMethod(*Class_NativeBookModel, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");
-	Method_NativeBookModel_addImage = new VoidMethod(*Class_NativeBookModel, "addImage", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/image/ZLImage;)");
+	Field_NativeBookModel_Book = new ObjectField(Class_NativeBookModel, "Book", Class_Book);
+	Method_NativeBookModel_initInternalHyperlinks = new VoidMethod(Class_NativeBookModel, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)");
+	Method_NativeBookModel_initTOC = new VoidMethod(Class_NativeBookModel, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)");
+	Method_NativeBookModel_createTextModel = new ObjectMethod(Class_NativeBookModel, "createTextModel", Class_ZLTextModel, "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)");
+	Method_NativeBookModel_setBookTextModel = new VoidMethod(Class_NativeBookModel, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");
+	Method_NativeBookModel_setFootnoteModel = new VoidMethod(Class_NativeBookModel, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");
+	Method_NativeBookModel_addImage = new VoidMethod(Class_NativeBookModel, "addImage", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/image/ZLImage;)");
 
 /*
 	Class_BookReadingException = new JavaClass(env, "org/geometerplus/fbreader/bookmodel/BookReadingException");
-	StaticMethod_BookReadingException_throwForFile = new StaticVoidMethod(*Class_BookReadingException, "throwForFile", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;)V") );
+	StaticMethod_BookReadingException_throwForFile = new StaticVoidMethod(Class_BookReadingException, "throwForFile", "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;)V") );
 */
 
 	return true;
@@ -299,7 +274,7 @@ jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte
 }
 
 void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
-	env->ThrowNew(Class_java_lang_RuntimeException->j(), message.c_str());
+	env->ThrowNew(Class_java_lang_RuntimeException.j(), message.c_str());
 }
 
 /*

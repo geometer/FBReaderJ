@@ -1,5 +1,9 @@
-===== 1.4.4 (Apr ??, 2012) =====
+===== 1.4.4 (Apr 01, 2012) =====
 * introduced jni C++ wrappers (this avoids incorrect method calls)
+* fixed repeated book opening issue
+* max margin value changed to 100
+* first line indent depends on screen DPI
+* all footnotes in single file
 
 ===== 1.4.3 (Mar 29, 2012) =====
 * fixed fb2 books opening issue
