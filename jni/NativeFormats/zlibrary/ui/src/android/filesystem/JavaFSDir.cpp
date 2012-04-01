@@ -57,49 +57,28 @@ jobjectArray JavaFSDir::getFileChildren(JNIEnv *env) {
 	return array;
 }
 
-void JavaFSDir::collectChildren(std::vector<std::string> &names, bool filesNotDirs) {
+void JavaFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlinks) {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jobjectArray array = getFileChildren(env);
 	if (array == 0) {
 		return;
 	}
 
-	std::set<std::string> filesSet;
-
-	std::string prefix(path());
-	prefix.append("/");
-	size_t prefixLength = prefix.length();
-
 	const jsize size = env->GetArrayLength(array);
 	for (jsize i = 0; i < size; ++i) {
 		jobject file = env->GetObjectArrayElement(array, i);
-
 		jstring javaPath = AndroidUtil::Method_ZLFile_getPath->call(file);
+		env->DeleteLocalRef(file);
+
 		const char *chars = env->GetStringUTFChars(javaPath, 0);
 		std::string path(chars);
 		env->ReleaseStringUTFChars(javaPath, chars);
 		env->DeleteLocalRef(javaPath);
 
-		if (path.length() > prefixLength) {
-			size_t index = path.find('/', prefixLength);
-			bool isdir = false;
-			if (index != std::string::npos) {
-				path.erase(index);
-				isdir = true;
-			}
-			if (isdir ^ filesNotDirs) {
-				names.push_back(path.substr(prefixLength));
-			}
+		size_t index = path.rfind('/');
+		if (index != std::string::npos) {
+			path = path.substr(index + 1);
 		}
-
-		env->DeleteLocalRef(file);
+		names.push_back(path);
 	}
-}
-
-void JavaFSDir::collectSubDirs(std::vector<std::string> &names, bool includeSymlinks) {
-	collectChildren(names, false);
-}
-
-void JavaFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlinks) {
-	collectChildren(names, true);
 }

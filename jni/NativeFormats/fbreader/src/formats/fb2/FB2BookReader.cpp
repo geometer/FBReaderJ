@@ -60,7 +60,7 @@ void FB2BookReader::characterDataHandler(const char *text, size_t len) {
 
 void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 	const char *id = attributeValue(xmlattributes, "id");
-	if (id != 0) {
+	if (id != 0 && tag != _BINARY) {
 		if (!myReadMainText) {
 			myModelReader.setFootnoteTextModel(id);
 		}

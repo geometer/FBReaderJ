@@ -23,6 +23,7 @@
 
 #include "ZLUnixFSDir.h"
 
+/*
 void ZLUnixFSDir::collectSubDirs(std::vector<std::string> &names, bool includeSymlinks) {
 	DIR *dir = opendir(path().c_str());
 	if (dir != 0) {
@@ -48,6 +49,7 @@ void ZLUnixFSDir::collectSubDirs(std::vector<std::string> &names, bool includeSy
 		closedir(dir);
 	}
 }
+*/
 
 void ZLUnixFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlinks) {
 	DIR *dir = opendir(path().c_str());

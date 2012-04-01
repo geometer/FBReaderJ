@@ -41,7 +41,7 @@ public:
 	std::string itemPath(const std::string &name) const;
 	bool isRoot() const;
 
-	virtual void collectSubDirs(std::vector<std::string> &names, bool includeSymlinks) = 0;
+	//virtual void collectSubDirs(std::vector<std::string> &names, bool includeSymlinks) = 0;
 	virtual void collectFiles(std::vector<std::string> &names, bool includeSymlinks) = 0;
 
 protected:
