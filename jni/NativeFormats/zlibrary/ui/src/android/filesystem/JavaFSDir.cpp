@@ -64,12 +64,6 @@ void JavaFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlin
 		return;
 	}
 
-	std::set<std::string> filesSet;
-
-	std::string prefix(path());
-	prefix.append("/");
-	size_t prefixLength = prefix.length();
-
 	const jsize size = env->GetArrayLength(array);
 	for (jsize i = 0; i < size; ++i) {
 		jobject file = env->GetObjectArrayElement(array, i);
