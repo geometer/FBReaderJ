@@ -19,78 +19,39 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.library.Book;
+
 public abstract class FormatPlugin {
-	public abstract boolean acceptsFile(ZLFile file);
-	public abstract	boolean readMetaInfo(Book book);
-	public abstract boolean readModel(BookModel model);
+	private final String myFileType;
+
+	protected FormatPlugin(String fileType) {
+		myFileType = fileType;
+	}
+
+	public final String supportedFileType() {
+		return myFileType;
+	}
+
+	public abstract void readMetaInfo(Book book) throws BookReadingException;
+	public abstract void readModel(BookModel model) throws BookReadingException;
+	public abstract void detectLanguageAndEncoding(Book book) throws BookReadingException;
 	public abstract ZLImage readCover(ZLFile file);
 	public abstract String readAnnotation(ZLFile file);
 
-	/*
-	public static void detectEncodingAndLanguage(Book book, InputStream stream) throws IOException {	
-		String language = book.getLanguage();
-		String encoding = book.getEncoding();
-		if (encoding.length() == 0 || language.length() == 0) {
-			PluginCollection collection = PluginCollection.Instance();
-			if (language.length() == 0) {
-				language = collection.DefaultLanguageOption.getValue();
-			}
-			if (encoding.length() == 0) {
-				encoding = collection.DefaultEncodingOption.getValue();
-			}
-			if (collection.LanguageAutoDetectOption.getValue() && stream != null) {
-				int BUFSIZE = 65536;
-				byte[] buffer = new byte[BUFSIZE];
-				int size = stream.read(buffer, 0, BUFSIZE);
-				stream.close();
-				ZLLanguageDetector.LanguageInfo info =
-					new ZLLanguageDetector().findInfo(buffer, 0, size);
-				buffer = null;
-				if (info != null) {
-					language = info.Language;
-					encoding = info.Encoding;
-					if ((encoding == "US-ASCII") || (encoding == "ISO-8859-1")) {
-						encoding = "windows-1252";
-					}
-				}
-			}
-			book.setEncoding(encoding);
-			book.setLanguage(language);
-		}
-	}
-	//Last working version
-	public static void detectEncodingAndLanguage(Book book, InputStream stream) {	
-		String encoding = book.getEncoding();
-		if (encoding.length() == 0) {
-			encoding = EncodingDetector.detect(stream, PluginCollection.Instance().DefaultLanguageOption.getValue());
-			if (encoding == "unknown") {
-				encoding = "windows-1252";
-			}
-			book.setEncoding(encoding);
-		}
+	public enum Type {
+		ANY,
+		JAVA,
+		NATIVE,
+		EXTERNAL,
+		NONE
+	};
+	public abstract Type type();
 
-		if (book.getLanguage() == "") {
-			if ((encoding.equals("US-ASCII")) ||
-					(encoding.equals("ISO-8859-1"))) {
-				book.setLanguage("en");
-			} else if ((book.getEncoding().equals("KOI8-R")) ||
-					(encoding.equals("windows-1251")) ||
-					(encoding.equals("ISO-8859-5")) ||
-					(encoding.equals("IBM866"))) {
-				book.setLanguage("ru");
-			} /*else if (
-	                (PluginCollection.Instance().DefaultLanguageOption.getValue() == EncodingDetector.Language.CZECH) &&
-					((encoding == "windows-1250") ||
-					 (encoding == "ISO-8859-2") ||
-					 (encoding == "IBM852"))) {
-				book.setLanguage("cs");
-			}*/
-		/*}
-
-	}*/
+	public abstract EncodingCollection supportedEncodings();
 }

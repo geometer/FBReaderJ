@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Ukrainian zlibrary resources, by Dmytro Shevchenko -->
+<!-- Ukrainian zlibrary resources, by Dmytro Shevchenko, Nazariy Makarenko -->
 <resources>
 	<node name="dialog">
 		<node name="button">
@@ -56,7 +56,7 @@
 		<node name="es" value="іспанська" />
 		<node name="fi" value="фінська" />
 		<node name="fr" value="французька" />
-		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="gl" value="галицька"/>
 		<node name="he" value="іврит" />
 		<node name="hu" value="угорська" />
 		<node name="id" value="індонезійська" />
@@ -64,18 +64,18 @@
 		<node name="lt" value="литовська" />
 		<node name="nl" value="голландська" />
 		<node name="no" value="норвезька" />
-		<node name="pl" toBeTranslated="true" value="Polish" />
+		<node name="pl" value="польська" />
 		<node name="pt" value="португальська" />
-		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ro" value="румунська"/>
 		<node name="ru" value="російська" />
 		<node name="sv" value="шведська" />
-		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="th" value="тайська"/>
 		<node name="tr" value="турецька" />
 		<node name="uk" value="українська" />
 		<node name="vi" value="в’єтнамська" />
 		<node name="zh" value="китайська" />
 		<node name="other" value="інша" />
-		<node name="multi" value="Multilanguage" toBeTranslated="true" />
+		<node name="multi" value="Мультимовна" />
 	</node>
 	<node name="boolean3">
 		<node name="on" value="включити"/>

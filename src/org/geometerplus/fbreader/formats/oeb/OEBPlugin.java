@@ -19,22 +19,21 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.FormatPlugin;
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-public class OEBPlugin extends FormatPlugin {
-	public boolean acceptsFile(ZLFile file) {
-		final String extension = file.getExtension();
-		return
-			"oebzip".equals(extension) ||
-			"epub".equals(extension) ||
-			"opf".equals(extension);
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.formats.*;
+
+public class OEBPlugin extends JavaFormatPlugin {
+	public OEBPlugin() {
+		super("ePub");
 	}
 
-	private ZLFile getOpfFile(ZLFile oebFile) {
+	private ZLFile getOpfFile(ZLFile oebFile) throws BookReadingException {
 		if ("opf".equals(oebFile.getExtension())) {
 			return oebFile;
 		}
@@ -42,7 +41,7 @@ public class OEBPlugin extends FormatPlugin {
 		final ZLFile containerInfoFile = ZLFile.createFile(oebFile, "META-INF/container.xml");
 		if (containerInfoFile.exists()) {
 			final ContainerFileReader reader = new ContainerFileReader();
-			reader.read(containerInfoFile);
+			reader.readQuietly(containerInfoFile);
 			final String opfPath = reader.getRootPath();
 			if (opfPath != null) {
 				return ZLFile.createFile(oebFile, opfPath);
@@ -54,31 +53,45 @@ public class OEBPlugin extends FormatPlugin {
 				return child;
 			}
 		}
-		return null;
+		throw new BookReadingException("opfFileNotFound", oebFile);
 	}
 
 	@Override
-	public boolean readMetaInfo(Book book) {
-		final ZLFile opfFile = getOpfFile(book.File);
-		return (opfFile != null) ? new OEBMetaInfoReader(book).readMetaInfo(opfFile) : false;
+	public void readMetaInfo(Book book) throws BookReadingException {
+		new OEBMetaInfoReader(book).readMetaInfo(getOpfFile(book.File));
 	}
 	
 	@Override
-	public boolean readModel(BookModel model) {
+	public void readModel(BookModel model) throws BookReadingException {
 		model.Book.File.setCached(true);
-		final ZLFile opfFile = getOpfFile(model.Book.File);
-		return (opfFile != null) ? new OEBBookReader(model).readBook(opfFile) : false;
+		new OEBBookReader(model).readBook(getOpfFile(model.Book.File));
 	}
 
 	@Override
 	public ZLImage readCover(ZLFile file) {
-		final ZLFile opfFile = getOpfFile(file);
-		return (opfFile != null) ? new OEBCoverReader().readCover(opfFile) : null;
+		try {
+			return new OEBCoverReader().readCover(getOpfFile(file));
+		} catch (BookReadingException e) {
+			return null;
+		} 
 	}
 
 	@Override
 	public String readAnnotation(ZLFile file) {
-		final ZLFile opfFile = getOpfFile(file);
-		return (opfFile != null) ? new OEBAnnotationReader().readAnnotation(opfFile) : null;
+		try {
+			return new OEBAnnotationReader().readAnnotation(getOpfFile(file));
+		} catch (BookReadingException e) {
+			return null;
+		} 
+	}
+
+	@Override
+	public AutoEncodingCollection supportedEncodings() {
+		return new AutoEncodingCollection();
+	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) {
+		book.setEncoding("auto");
 	}
 }

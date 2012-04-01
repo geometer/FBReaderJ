@@ -26,6 +26,8 @@ import android.content.*;
 import android.os.Process;
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.ui.android.error.BugReportActivity;
+
 public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExceptionHandler {
 	private final Context myContext;
 
@@ -34,7 +36,7 @@ public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExcept
 	}
 
 	public void uncaughtException(Thread thread, Throwable exception) {
-		StringWriter stackTrace = new StringWriter();
+		final StringWriter stackTrace = new StringWriter();
 		exception.printStackTrace(new PrintWriter(stackTrace));
 		System.err.println(stackTrace);
 

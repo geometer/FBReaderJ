@@ -45,7 +45,7 @@ class OPDSCatalogInfoHandler extends AbstractOPDSFeedHandler {
 	}
 
 	public boolean processFeedMetadata(OPDSFeedMetadata feed, boolean beforeEntries) {
-		Icon = (feed.Icon != null) ? feed.Icon.Uri : null;
+		Icon = (feed.Icon != null) ? ZLNetworkUtil.url(myBaseURL, feed.Icon.Uri) : null;
 		Title = feed.Title;
 		Summary = feed.Subtitle;
 
@@ -55,7 +55,7 @@ class OPDSCatalogInfoHandler extends AbstractOPDSFeedHandler {
 			if ("search".equals(rel)) {
 				if (MimeType.APP_OPENSEARCHDESCRIPTION.equals(type)) {
 					myOpensearchDescriptionURLs.add(ZLNetworkUtil.url(myBaseURL, link.getHref()));
-				} else if (MimeType.APP_ATOM.equals(type)) {
+				} else if (MimeType.APP_ATOM_XML.weakEquals(type)) {
 					final String template = ZLNetworkUtil.url(myBaseURL, link.getHref());
 					final OpenSearchDescription descr = OpenSearchDescription.createDefault(template);
 					if (descr.isValid()) {

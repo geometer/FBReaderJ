@@ -21,39 +21,38 @@ package org.geometerplus.fbreader.formats.pdb;
 
 import java.io.*;
 
-import org.geometerplus.zlibrary.core.encoding.ZLEncodingCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.image.ZLFileImage;
-import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.image.*;
+import org.geometerplus.zlibrary.core.encodings.Encoding;
+import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
+import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
-public class MobipocketPlugin extends PdbPlugin {
-	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return super.acceptsFile(file) && (fileType(file) == "BOOKMOBI");
+public class MobipocketPlugin extends JavaFormatPlugin {
+	public MobipocketPlugin() {
+		super("Mobipocket");
 	}
 
 	@Override
-	public boolean readMetaInfo(Book book) {
+	public void readMetaInfo(Book book) throws BookReadingException {
 		InputStream stream = null;
 		try {
 			stream = book.File.getInputStream();
 			final PdbHeader header = new PdbHeader(stream);
 			PdbUtil.skip(stream, header.Offsets[0] + 16 - header.length());
 			if (PdbUtil.readInt(stream) != 0x4D4F4249) /* "MOBI" */ {
-				return false;
+				throw new BookReadingException("unsupportedFileFormat", book.File);
 			}
 			final int length = (int)PdbUtil.readInt(stream);
 			PdbUtil.skip(stream, 4);
 			final int encodingCode = (int)PdbUtil.readInt(stream);
-			String encodingName = ZLEncodingCollection.Instance().getEncodingName(encodingCode);
-			if (encodingName == null) {
-				encodingName = "utf-8";
-			}
+			final Encoding encoding = supportedEncodings().getEncoding(encodingCode);
+			final String encodingName = encoding != null ? encoding.Name : "utf-8";
 			book.setEncoding(encodingName);
 			PdbUtil.skip(stream, 52);
 			final int fullNameOffset = (int)PdbUtil.readInt(stream);
@@ -111,9 +110,8 @@ public class MobipocketPlugin extends PdbPlugin {
 			final byte[] titleBuffer = new byte[fullNameLength];
 			stream.read(titleBuffer);
 			book.setTitle(new String(titleBuffer, encodingName));
-			return true;
 		} catch (IOException e) {
-			return false;
+			throw new BookReadingException(e, book.File);
 		} finally {
 			if (stream != null) {
 				try {
@@ -125,17 +123,35 @@ public class MobipocketPlugin extends PdbPlugin {
 	}
 
 	@Override
-	public boolean readModel(BookModel model) {
+	public void readModel(BookModel model) throws BookReadingException {
 		try {
-			return new MobipocketHtmlBookReader(model).readBook();
+			new MobipocketHtmlBookReader(model).readBook();
 		} catch (IOException e) {
-			//e.printStackTrace();
-			return false;
+			throw new BookReadingException(e, model.Book.File);
 		}
 	}
 
 	@Override
-	public ZLImage readCover(ZLFile file) {
+	public ZLImage readCover(final ZLFile file) {
+		return new ZLImageProxy() {
+			@Override
+			public String getId() {
+				return file.getPath();
+			}
+
+			@Override
+			public int sourceType() {
+				return SourceType.DISK;
+			}
+
+			@Override
+			public ZLSingleImage getRealImage() {
+				return readCoverInternal(file);
+			}
+		};
+	}
+
+	private ZLSingleImage readCoverInternal(ZLFile file) {
 		InputStream stream = null;
 		try {
 			stream = file.getInputStream();
@@ -209,7 +225,7 @@ public class MobipocketPlugin extends PdbPlugin {
 			if (start >= 0) {
 				int len = myMobipocketStream.getImageLength(coverIndex);
 				if (len > 0) {
-					return new ZLFileImage(MimeType.IMAGE_AUTO, file, start, len);
+					return new ZLFileImage(MimeType.IMAGE_AUTO, file, ZLFileImage.ENCODING_NONE, start, len);
 				}
 			}
 			return null; 
@@ -228,5 +244,43 @@ public class MobipocketPlugin extends PdbPlugin {
 	@Override
 	public String readAnnotation(ZLFile file) {
 		return null;
+	}
+
+	@Override
+	public JavaEncodingCollection supportedEncodings() {
+		return JavaEncodingCollection.Instance();
+	}
+
+	@Override
+	public void detectLanguageAndEncoding(Book book) throws BookReadingException {
+		InputStream stream = null;
+		try {
+			stream = book.File.getInputStream();
+			final PdbHeader header = new PdbHeader(stream);
+			PdbUtil.skip(stream, header.Offsets[0] + 16 - header.length());
+			if (PdbUtil.readInt(stream) != 0x4D4F4249) /* "MOBI" */ {
+				throw new BookReadingException("unsupportedFileFormat", book.File);
+			}
+			final int length = (int)PdbUtil.readInt(stream);
+			PdbUtil.skip(stream, 4);
+			final int encodingCode = (int)PdbUtil.readInt(stream);
+			final Encoding encoding = supportedEncodings().getEncoding(encodingCode);
+			final String encodingName = encoding != null ? encoding.Name : "utf-8";
+			book.setEncoding(encodingName);
+			PdbUtil.skip(stream, 52);
+			final int fullNameOffset = (int)PdbUtil.readInt(stream);
+			final int fullNameLength = (int)PdbUtil.readInt(stream);
+			final int languageCode = (int)PdbUtil.readInt(stream);
+			book.setLanguage(ZLLanguageUtil.languageByIntCode(languageCode & 0xFF, (languageCode >> 8) & 0xFF));
+		} catch (IOException e) {
+			throw new BookReadingException(e, book.File);
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+				}
+			}
+		}
 	}
 }

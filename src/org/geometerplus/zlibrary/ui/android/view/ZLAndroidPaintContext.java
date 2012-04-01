@@ -28,11 +28,17 @@ import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 import org.geometerplus.zlibrary.ui.android.util.ZLAndroidColorUtil;
 
 public final class ZLAndroidPaintContext extends ZLPaintContext {
+	public static ZLBooleanOption AntiAliasOption = new ZLBooleanOption("Fonts", "AntiAlias", true);
+	public static ZLBooleanOption DeviceKerningOption = new ZLBooleanOption("Fonts", "DeviceKerning", false);
+	public static ZLBooleanOption DitheringOption = new ZLBooleanOption("Fonts", "Dithering", false);
+	public static ZLBooleanOption SubpixelOption = new ZLBooleanOption("Fonts", "Subpixel", false);
+
 	private final Canvas myCanvas;
 	private final Paint myTextPaint = new Paint();
 	private final Paint myLinePaint = new Paint();
@@ -54,8 +60,14 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myScrollbarWidth = scrollbarWidth;
 
 		myTextPaint.setLinearText(false);
-		myTextPaint.setAntiAlias(true);
-		myTextPaint.setSubpixelText(false);
+		myTextPaint.setAntiAlias(AntiAliasOption.getValue());
+		if (DeviceKerningOption.getValue()) {
+			myTextPaint.setFlags(myTextPaint.getFlags() | Paint.DEV_KERN_TEXT_FLAG);
+		} else {
+			myTextPaint.setFlags(myTextPaint.getFlags() & ~Paint.DEV_KERN_TEXT_FLAG);
+		}
+		myTextPaint.setDither(DitheringOption.getValue());
+		myTextPaint.setSubpixelText(SubpixelOption.getValue());
 
 		myLinePaint.setStyle(Paint.Style.STROKE);
 
@@ -82,15 +94,20 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 					final int w = fileBitmap.getWidth();
 					final int h = fileBitmap.getHeight();
 					final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
-					for (int i = 0; i < w; ++i) {
-						for (int j = 0; j < h; ++j) {
-							int color = fileBitmap.getPixel(i, j);
-							wallpaper.setPixel(i, j, color);
-							wallpaper.setPixel(i, 2 * h - j - 1, color);
-							wallpaper.setPixel(2 * w - i - 1, j, color);
-							wallpaper.setPixel(2 * w - i - 1, 2 * h - j - 1, color);
-						}
-					}
+					final Canvas wallpaperCanvas = new Canvas(wallpaper);
+					final Paint wallpaperPaint = new Paint();
+
+					Matrix m = new Matrix();
+					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+					m.preScale(-1, 1);
+					m.postTranslate(2 * w, 0);
+					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+					m.preScale(1, -1);
+					m.postTranslate(0, 2 * h);
+					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+					m.preScale(-1, 1);
+					m.postTranslate(- 2 * w, 0);
+					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
 					ourWallpaper = wallpaper;
 				} else {
 					ourWallpaper = fileBitmap;
@@ -178,7 +195,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myOutlinePaint);
 	}
 
-	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline) {
+	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
 		family = realFontFamilyName(family);
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = myTypefaces.get(family);
@@ -214,6 +231,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myTextPaint.setTypeface(tf);
 		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
+		myTextPaint.setStrikeThruText(strikeThrought);
 	}
 
 	@Override

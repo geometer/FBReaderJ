@@ -22,8 +22,9 @@ package org.geometerplus.android.util;
 import java.util.Queue;
 import java.util.LinkedList;
 
-import android.content.Context;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
@@ -43,23 +44,42 @@ public abstract class UIUtil {
 		}
 	};
 	private static final Queue<Pair> ourTaskQueue = new LinkedList<Pair>();
-	private static final Handler ourProgressHandler = new Handler() {
-		public void handleMessage(Message message) {
-			try {
-				synchronized (ourMonitor) {
-					if (ourTaskQueue.isEmpty()) {
-						ourProgress.dismiss();
-						ourProgress = null;
-					} else {
-						ourProgress.setMessage(ourTaskQueue.peek().Message);
-					}
-					ourMonitor.notify();
-				}
-			} catch (Exception e) {
-			}
+	private static volatile Handler ourProgressHandler;
+	
+	private static boolean init() {
+		if (ourProgressHandler != null) {
+			return true;
 		}
-	};
+		try {
+			ourProgressHandler = new Handler() {
+				public void handleMessage(Message message) {
+					try {
+						synchronized (ourMonitor) {
+							if (ourTaskQueue.isEmpty()) {
+								ourProgress.dismiss();
+								ourProgress = null;
+							} else {
+								ourProgress.setMessage(ourTaskQueue.peek().Message);
+							}
+							ourMonitor.notify();
+						}
+					} catch (Exception e) {
+					}
+				}
+			};
+			return true;
+		} catch (Throwable t) {
+			t.printStackTrace();
+			return false;
+		}
+	}
+
 	public static void wait(String key, Runnable action, Context context) {
+		if (!init()) {
+			action.run();
+			return;
+		}
+
 		synchronized (ourMonitor) {
 			final String message =
 				ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
@@ -88,26 +108,36 @@ public abstract class UIUtil {
 		}).start();
 	}
 
-	public static void runWithMessage(Context context, String key, final Runnable action, final Runnable postAction) {
+	public static void runWithMessage(final Activity activity, String key, final Runnable action, final Runnable postAction, final boolean minPriority) {
 		final String message =
 			ZLResource.resource("dialog").getResource("waitMessage").getResource(key).getValue();
-		final ProgressDialog progress = ProgressDialog.show(context, null, message, true, false);
-
-		final Handler handler = new Handler() {
-			public void handleMessage(Message message) {
-				progress.dismiss();
-				postAction.run();
-			}
-		};
-
-		final Thread runner = new Thread(new Runnable() {
+		activity.runOnUiThread(new Runnable() {
 			public void run() {
-				action.run();
-				handler.sendEmptyMessage(0);
+				final ProgressDialog progress = ProgressDialog.show(activity, null, message, true, false);
+            
+				final Thread runner = new Thread() {
+					public void run() {
+						action.run();
+						activity.runOnUiThread(new Runnable() {
+							public void run() {
+								try {
+									progress.dismiss();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								if (postAction != null) {
+									postAction.run();
+								}
+							}
+						});
+					}
+				};
+				if (minPriority) {
+					runner.setPriority(Thread.MIN_PRIORITY);
+				}
+				runner.start();
 			}
 		});
-		runner.setPriority(Thread.MIN_PRIORITY);
-		runner.start();
 	}
 
 	public static void showMessageText(Context context, String text) {

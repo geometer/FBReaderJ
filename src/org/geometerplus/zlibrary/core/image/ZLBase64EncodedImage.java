@@ -61,7 +61,7 @@ public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 		try {
 			decode();
 			final File file = new File(decodedFileName());
-			return ZLFileImage.SCHEME + "://" + decodedFileName() + "\0000\000" + (int)file.length();
+			return ZLFileImage.SCHEME + "://" + decodedFileName() + "\000\0000\000" + (int)file.length();
 		} catch (Exception e) {
 			return null;
 		}
@@ -105,16 +105,16 @@ public abstract class ZLBase64EncodedImage extends ZLSingleImage {
 			int dataPos = 0;
 			for (int pos = 0; pos < dataLength; ) {
 				byte n0 = -1, n1 = -1, n2 = -1, n3 = -1;
-				while ((pos < dataLength) && (n0 == -1)) {
+				while (pos < dataLength && n0 == -1) {
 					n0 = decodeByte(encodedData[pos++]);
 				}
-				while ((pos < dataLength) && (n1 == -1)) {
+				while (pos < dataLength && n1 == -1) {
 					n1 = decodeByte(encodedData[pos++]);
 				}
-				while ((pos < dataLength) && (n2 == -1)) {
+				while (pos < dataLength && n2 == -1) {
 					n2 = decodeByte(encodedData[pos++]);
 				}
-				while ((pos < dataLength) && (n3 == -1)) {
+				while (pos < dataLength && n3 == -1) {
 					n3 = decodeByte(encodedData[pos++]);
 				}
 				data[dataPos++] = (byte)(n0 << 2 | n1 >> 4);

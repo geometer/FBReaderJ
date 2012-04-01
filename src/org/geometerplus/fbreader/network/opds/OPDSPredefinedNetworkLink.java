@@ -30,6 +30,10 @@ public class OPDSPredefinedNetworkLink extends OPDSNetworkLink implements IPrede
 		myPredefinedId = predifinedId;
 	}
 
+	public Type getType() {
+		return Type.Predefined;
+	}
+
 	public String getPredefinedId() {
 		return myPredefinedId;
 	}

@@ -34,9 +34,10 @@ abstract public class ZLApplicationWindow {
 	}
 
 	abstract protected void setTitle(String title);
-	abstract protected void wait(String key, Runnable runnable);
+	abstract protected void runWithMessage(String key, Runnable runnable, Runnable postAction);
+	abstract protected void processException(Exception e);
 
-	abstract protected void refreshMenu();
+	abstract protected void refresh();
 	
 	abstract protected ZLViewWidget getViewWidget();
 

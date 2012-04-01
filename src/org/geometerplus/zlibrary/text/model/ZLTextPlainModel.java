@@ -25,7 +25,7 @@ import org.geometerplus.zlibrary.core.util.*;
 import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public class ZLTextPlainModel implements ZLTextModel {
-	protected final String myId;
+	private final String myId;
 	private final String myLanguage;
 
 	protected int[] myStartEntryIndices;
@@ -37,9 +37,9 @@ public class ZLTextPlainModel implements ZLTextModel {
 	protected int myParagraphsNumber;
 
 	protected final CharStorage myStorage;
-	private ArrayList<ZLTextMark> myMarks;
-
 	protected final ZLImageMap myImageMap;
+
+	private ArrayList<ZLTextMark> myMarks;
 
 	final class EntryIteratorImpl implements ZLTextParagraph.EntryIterator {
 		private int myCounter;
@@ -49,18 +49,25 @@ public class ZLTextPlainModel implements ZLTextModel {
 		int myDataIndex;
 		int myDataOffset;
 
+		// TextEntry data
 		private char[] myTextData;
 		private int myTextOffset;
 		private int myTextLength;
 
+		// ControlEntry data
 		private byte myControlKind;
 		private boolean myControlIsStart;
+		// HyperlinkControlEntry data
 		private byte myHyperlinkType;
 		private String myHyperlinkId;
 
+		// ImageEntry
 		private ZLImageEntry myImageEntry;
-		private ZLTextForcedControlEntry myForcedControlEntry;
 
+		// StyleEntry
+		private ZLTextStyleEntry myStyleEntry;
+
+		// FixedHSpaceEntry data
 		private short myFixedHSpaceLength;
 
 		EntryIteratorImpl(int index) {
@@ -107,8 +114,8 @@ public class ZLTextPlainModel implements ZLTextModel {
 			return myImageEntry;
 		}
 
-		public ZLTextForcedControlEntry getForcedControlEntry() {
-			return myForcedControlEntry;
+		public ZLTextStyleEntry getStyleEntry() {
+			return myStyleEntry;
 		}
 
 		public short getFixedHSpaceLength() {
@@ -117,7 +124,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 
 		public boolean hasNext() {
 			return myCounter < myLength;
-		}	
+		}
 
 		public void next() {
 			int dataOffset = myDataOffset;
@@ -137,8 +144,8 @@ public class ZLTextPlainModel implements ZLTextModel {
 			switch (type) {
 				case ZLTextParagraph.Entry.TEXT:
 					myTextLength =
-						((int)data[dataOffset++] << 16) +
-						(int)data[dataOffset++];
+						(int)data[dataOffset++] +
+						(((int)data[dataOffset++]) << 16);
 					myTextData = data;
 					myTextOffset = dataOffset;
 					dataOffset += myTextLength;
@@ -148,12 +155,18 @@ public class ZLTextPlainModel implements ZLTextModel {
 					short kind = (short)data[dataOffset++];
 					myControlKind = (byte)kind;
 					myControlIsStart = (kind & 0x0100) == 0x0100;
-					myHyperlinkType = (byte)(kind >> 9);
-					if (myHyperlinkType != 0) {
-						short labelLength = (short)data[dataOffset++];
-						myHyperlinkId = new String(data, dataOffset, labelLength);
-						dataOffset += labelLength;
-					}
+					myHyperlinkType = 0;
+					break;
+				}
+				case ZLTextParagraph.Entry.HYPERLINK_CONTROL:
+				{
+					short kind = (short)data[dataOffset++];
+					myControlKind = (byte)kind;
+					myControlIsStart = true;
+					myHyperlinkType = (byte)(kind >> 8);
+					short labelLength = (short)data[dataOffset++];
+					myHyperlinkId = new String(data, dataOffset, labelLength);
+					dataOffset += labelLength;
 					break;
 				}
 				case ZLTextParagraph.Entry.IMAGE:
@@ -169,39 +182,52 @@ public class ZLTextPlainModel implements ZLTextModel {
 				case ZLTextParagraph.Entry.FIXED_HSPACE:
 					myFixedHSpaceLength = (short)data[dataOffset++];
 					break;
-				case ZLTextParagraph.Entry.FORCED_CONTROL:
+				case ZLTextParagraph.Entry.STYLE:
 				{
 					final int mask = (int)data[dataOffset++];
-					final ZLTextForcedControlEntry entry = new ZLTextForcedControlEntry();
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) ==
-								ZLTextForcedControlEntry.SUPPORTS_LEFT_INDENT) {
+					final ZLTextStyleEntry entry = new ZLTextStyleEntry();
+					if ((mask & ZLTextStyleEntry.SUPPORTS_LEFT_INDENT) ==
+								ZLTextStyleEntry.SUPPORTS_LEFT_INDENT) {
 						entry.setLeftIndent((short)data[dataOffset++]);
 					}
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) ==
-								ZLTextForcedControlEntry.SUPPORTS_RIGHT_INDENT) {
+					if ((mask & ZLTextStyleEntry.SUPPORTS_RIGHT_INDENT) ==
+								ZLTextStyleEntry.SUPPORTS_RIGHT_INDENT) {
 						entry.setRightIndent((short)data[dataOffset++]);
 					}
-					if ((mask & ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) ==
-								ZLTextForcedControlEntry.SUPPORTS_ALIGNMENT_TYPE) {
+					if ((mask & ZLTextStyleEntry.SUPPORTS_ALIGNMENT_TYPE) ==
+								ZLTextStyleEntry.SUPPORTS_ALIGNMENT_TYPE) {
 						entry.setAlignmentType((byte)data[dataOffset++]);
 					}
-					myForcedControlEntry = entry;
+					myStyleEntry = entry;
 				}
+				case ZLTextParagraph.Entry.RESET_BIDI:
+					// No data => skip
+					break;
 			}
 			++myCounter;
 			myDataOffset = dataOffset;
 		}
 	}
 
-	protected ZLTextPlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
+	protected ZLTextPlainModel(
+		String id,
+		String language,
+		int[] entryIndices,
+		int[] entryOffsets,
+		int[] paragraphLenghts,
+		int[] textSizes,
+		byte[] paragraphKinds,
+		CharStorage storage,
+		ZLImageMap imageMap
+	) {
 		myId = id;
 		myLanguage = language;
-		myStartEntryIndices = new int[arraySize];
-		myStartEntryOffsets = new int[arraySize];
-		myParagraphLengths = new int[arraySize];
-		myTextSizes = new int[arraySize];
-		myParagraphKinds = new byte[arraySize];
-		myStorage = new CachedCharStorage(dataBlockSize, directoryName, extension);
+		myStartEntryIndices = entryIndices;
+		myStartEntryOffsets = entryOffsets;
+		myParagraphLengths = paragraphLenghts;
+		myTextSizes = textSizes;
+		myParagraphKinds = paragraphKinds;
+		myStorage = storage;
 		myImageMap = imageMap;
 	}
 
@@ -216,7 +242,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 	public final ZLTextMark getFirstMark() {
 		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(0);
 	}
-	
+
 	public final ZLTextMark getLastMark() {
 		return ((myMarks == null) || myMarks.isEmpty()) ? null : myMarks.get(myMarks.size() - 1);
 	}
@@ -258,13 +284,14 @@ public class ZLTextPlainModel implements ZLTextModel {
 		ZLSearchPattern pattern = new ZLSearchPattern(text, ignoreCase);
 		myMarks = new ArrayList<ZLTextMark>();
 		if (startIndex > myParagraphsNumber) {
-                	startIndex = myParagraphsNumber;				
+			startIndex = myParagraphsNumber;
 		}
 		if (endIndex > myParagraphsNumber) {
 			endIndex = myParagraphsNumber;
-		}				
+		}
 		int index = startIndex;
-		for (EntryIteratorImpl it = new EntryIteratorImpl(index); index < endIndex; it.reset(++index)) {
+		final EntryIteratorImpl it = new EntryIteratorImpl(index);
+		while (true) {
 			int offset = 0;
 			while (it.hasNext()) {
 				it.next();
@@ -272,21 +299,25 @@ public class ZLTextPlainModel implements ZLTextModel {
 					char[] textData = it.getTextData();
 					int textOffset = it.getTextOffset();
 					int textLength = it.getTextLength();
-					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1; 
+					for (int pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern); pos != -1;
 						pos = ZLSearchUtil.find(textData, textOffset, textLength, pattern, pos + 1)) {
 						myMarks.add(new ZLTextMark(index, offset + pos, pattern.getLength()));
 						++count;
 					}
-					offset += textLength;						
-				}				
-			} 
+					offset += textLength;
+				}
+			}
+			if (++index >= endIndex) {
+				break;
+			}
+			it.reset(index);
 		}
 		return count;
 	}
 
 	public final List<ZLTextMark> getMarks() {
 		return (myMarks != null) ? myMarks : Collections.<ZLTextMark>emptyList();
-	}	
+	}
 
 	public final void removeAllMarks() {
 		myMarks = null;

@@ -125,7 +125,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				if (MimeType.IMAGE_PNG.equals(type) || MimeType.IMAGE_JPEG.equals(type)) {
 					urls.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
-			} else if (MimeType.APP_ATOM.Name.equals(type.Name) &&
+			} else if (MimeType.APP_ATOM_XML.weakEquals(type) &&
 					   "entry".equals(type.getParameter("type"))) {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.SingleEntry, href));
 			} else if (UrlInfo.Type.BookBuy == referenceType) {
@@ -205,9 +205,11 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	}
 
 	static int formatByMimeType(MimeType type) {
-		if (MimeType.APP_FB2ZIP.equals(type)) {
+		if (MimeType.TEXT_FB2.equals(type)) {
+			return BookUrlInfo.Format.FB2;
+		} else if (MimeType.APP_FB2_ZIP.equals(type)) {
 			return BookUrlInfo.Format.FB2_ZIP;
-		} else if (MimeType.APP_EPUB.equals(type)) {
+		} else if (MimeType.APP_EPUB_ZIP.equals(type)) {
 			return BookUrlInfo.Format.EPUB;
 		} else if (MimeType.APP_MOBI.equals(type)) {
 			return BookUrlInfo.Format.MOBIPOCKET;
@@ -271,7 +273,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 
 	@Override
 	public OPDSCatalogItem createRelatedCatalogItem(RelatedUrlInfo info) {
-		if (MimeType.APP_ATOM.equals(info.Mime)) {
+		if (MimeType.APP_ATOM_XML.weakEquals(info.Mime)) {
 			return new OPDSCatalogItem((OPDSNetworkLink)Link, info);
 		}
 		return null;

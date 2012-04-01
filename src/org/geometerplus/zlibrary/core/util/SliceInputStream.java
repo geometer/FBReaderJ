@@ -34,13 +34,40 @@ public class SliceInputStream extends ZLInputStreamWithOffset {
 	}
 	
 	@Override
+	public int read() throws IOException {
+		if (myLength >= offset()) {
+			return -1;
+		}
+		return super.read();
+	}
+
+	@Override
+	public int read(byte[] b, int off, int len) throws IOException {
+		final int maxbytes = myLength - offset();
+		if (maxbytes <= 0) {
+			return -1;
+		}
+		return super.read(b, off, Math.min(len, maxbytes));
+	}
+
+	@Override
+	public long skip(long n) throws IOException {
+		return super.skip(Math.min(n, myLength - offset()));
+	}
+
+	@Override
 	public int available() throws IOException {
-		return Math.min(super.available(), Math.max(myStart + myLength - super.offset(), 0));
+		return Math.min(super.available(), Math.max(myLength - offset(), 0));
 	}
 
 	@Override
 	public void reset() throws IOException {
 		super.reset();
 		super.skip(myStart);
+	}
+
+	@Override
+	public int offset() {
+		return super.offset() - myStart;
 	}
 }

@@ -60,6 +60,10 @@ public abstract class ZLLanguageUtil {
 		}
 	}
 
+	public static String defaultLanguageCode() {
+		return Locale.getDefault().getLanguage();
+	}
+
 	public static List<String> languageCodes() {
 		if (ourLanguageCodes.isEmpty()) {
 			TreeSet<String> codes = new TreeSet<String>();
@@ -73,6 +77,8 @@ public abstract class ZLLanguageUtil {
 					}
 				}
 			}
+			codes.add("id");
+			codes.add("de-traditional");
 
 			ourLanguageCodes.addAll(codes);
 		}

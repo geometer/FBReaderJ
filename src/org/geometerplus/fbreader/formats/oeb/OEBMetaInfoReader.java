@@ -20,12 +20,14 @@
 package org.geometerplus.fbreader.formats.oeb;
 
 import java.util.*;
+import java.io.IOException;
 
 import org.geometerplus.zlibrary.core.constants.XMLNamespaces;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.xml.*;
 
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private final Book myBook;
@@ -52,12 +54,14 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myBook.setLanguage(null);
 	}
 
-	boolean readMetaInfo(ZLFile file) {
+	void readMetaInfo(ZLFile file) throws BookReadingException {
 		myReadMetaData = false;
 		myReadState = READ_NONE;
 
-		if (!ZLXMLProcessor.read(this, file, 512)) {
-			return false;
+		try {
+			ZLXMLProcessor.read(this, file, 512);
+		} catch (IOException e) {
+			throw new BookReadingException(e, file);
 		}
 
 		final ArrayList<String> authors = myAuthorList.isEmpty() ? myAuthorList2 : myAuthorList;
@@ -70,8 +74,6 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 			}
 			myBook.addAuthor(a);
 		}
-
-		return true;
 	}
 
 	private static final int READ_NONE = 0;
@@ -200,7 +202,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 			}
 		} else {
 			if (tag.equals(myMetaTag)) {
-				if (!"".equals(mySeriesTitle) && mySeriesIndex > 0) {
+				if (!"".equals(mySeriesTitle)) {
 					myBook.setSeriesInfo(mySeriesTitle, mySeriesIndex);
 				}
 			}

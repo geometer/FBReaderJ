@@ -19,19 +19,22 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.TreeSet;
+import java.util.*;
 
 import android.content.Context;
 import android.content.Intent;
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.encodings.Encoding;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.formats.*;
 
+import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
 
@@ -71,11 +74,8 @@ class LanguagePreference extends ZLStringListPreference {
 			++index;
 		}
 		setLists(codes, names);
-		String language = myBook.getLanguage();
-		if (language == null) {
-			language = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
-		}
-		if (!setInitialValue(language)) {
+		final String language = myBook.getLanguage();
+		if (language == null || !setInitialValue(language)) {
 			setInitialValue(ZLLanguageUtil.OTHER_LANGUAGE_CODE);
 		}
 	}
@@ -86,6 +86,57 @@ class LanguagePreference extends ZLStringListPreference {
 		if (result) {
 			final String value = getValue();
 			myBook.setLanguage(value.length() > 0 ? value : null);
+		}
+	}
+}
+
+class EncodingPreference extends ZLStringListPreference {
+	private final Book myBook;
+
+	EncodingPreference(Context context, ZLResource rootResource, String resourceKey, Book book) {
+		super(context, rootResource, resourceKey);
+		myBook = book;
+
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
+		if (plugin != null) {
+			final List<Encoding> encodings =
+				new ArrayList<Encoding>(plugin.supportedEncodings().encodings());
+			Collections.sort(encodings, new Comparator<Encoding>() {
+				public int compare(Encoding e1, Encoding e2) {
+					return e1.DisplayName.compareTo(e2.DisplayName);
+				}
+			});
+			final String[] codes = new String[encodings.size()];
+			final String[] names = new String[encodings.size()];
+			int index = 0;
+			for (Encoding e : encodings) {
+				//addItem(e.Family, e.Name, e.DisplayName);
+				codes[index] = e.Name;
+				names[index] = e.DisplayName;
+				++index;
+			}
+			setLists(codes, names);
+			if (encodings.size() == 1) {
+				setInitialValue(codes[0]);
+				setEnabled(false);
+			} else {
+				final String bookEncoding = book.getEncoding();
+				if (bookEncoding != null) {
+					setInitialValue(bookEncoding.toLowerCase());
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void onDialogClosed(boolean result) {
+		super.onDialogClosed(result);
+		if (result) {
+			final String value = getValue();
+			if (!value.equalsIgnoreCase(myBook.getEncoding())) {
+				myBook.setEncoding(value);
+				((EditBookInfoActivity)getContext()).setResult(FBReader.RESULT_RELOAD_BOOK);
+			}
 		}
 	}
 }
@@ -106,6 +157,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		final String path = intent.getStringExtra(BookInfoActivity.CURRENT_BOOK_PATH_KEY);
 		final ZLFile file = ZLFile.createFileByPath(path);
 		myBook = Book.getByFile(file);
+		setResult(FBReader.RESULT_REPAINT);
 
 		if (myBook == null) {
 			finish();
@@ -114,6 +166,7 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
+		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
 	}
 
 	@Override

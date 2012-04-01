@@ -33,18 +33,20 @@ public class ZLTextStyleDecoration {
 	public final ZLBoolean3Option BoldOption;
 	public final ZLBoolean3Option ItalicOption;
 	public final ZLBoolean3Option UnderlineOption;
+	public final ZLBoolean3Option StrikeThroughOption;
 	public final ZLIntegerOption VerticalShiftOption;
 	public final ZLBoolean3Option AllowHyphenationsOption;
 
 	private final String myName;
 
-	public ZLTextStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, int verticalShift, ZLBoolean3 allowHyphenations) {
+	public ZLTextStyleDecoration(String name, int fontSizeDelta, ZLBoolean3 bold, ZLBoolean3 italic, ZLBoolean3 underline, ZLBoolean3 strikeThrough, int verticalShift, ZLBoolean3 allowHyphenations) {
 		myName = name;
 		FontFamilyOption = new ZLStringOption(STYLE, name + ":fontFamily", "");
 		FontSizeDeltaOption = new ZLIntegerRangeOption(STYLE, name + ":fontSize", -16, 16, fontSizeDelta);
 		BoldOption = new ZLBoolean3Option(STYLE, name + ":bold", bold);
 		ItalicOption = new ZLBoolean3Option(STYLE, name + ":italic", italic);
 		UnderlineOption = new ZLBoolean3Option(STYLE, name + ":underline", underline);
+		StrikeThroughOption = new ZLBoolean3Option(STYLE, name + ":strikeThrough", strikeThrough);
 		VerticalShiftOption = new ZLIntegerOption(STYLE, name + ":vShift", verticalShift);
 		AllowHyphenationsOption = new ZLBoolean3Option(STYLE, name + ":allowHyphenations", allowHyphenations);
 	}

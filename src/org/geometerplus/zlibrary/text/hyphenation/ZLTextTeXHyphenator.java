@@ -21,7 +21,7 @@ package org.geometerplus.zlibrary.text.hyphenation;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
+import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
@@ -53,15 +53,18 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 		return Collections.unmodifiableList(myLanguageCodes);
 	}
 
-	public void load(final String language) {
-		if (ZLMiscUtil.equals(language, myLanguage)) {
+	public void load(String language) {
+		if (language == null || ZLLanguageUtil.OTHER_LANGUAGE_CODE.equals(language)) {
+			language = ZLLanguageUtil.defaultLanguageCode();
+		}
+		if (language == null || language.equals(myLanguage)) {
 			return;
 		}
 		myLanguage = language;
 		unload();
 
 		if (language != null) {
-			new ZLTextHyphenationReader(this).read(ZLResourceFile.createResourceFile(
+			new ZLTextHyphenationReader(this).readQuietly(ZLResourceFile.createResourceFile(
 		  		"hyphenationPatterns/" + language + ".pattern"
 			)); 
 		}

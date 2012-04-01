@@ -1,0 +1,3903 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dictionaries>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Russian"
+		package="com.slovoed.noreg.russian_swedish.compact"
+		pattern="%s/808465729"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Swedish"
+		package="com.slovoed.noreg.russian_swedish.compact"
+		pattern="%s/808465730"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;French"
+		package="com.slovoed.noreg.greek_french.compact"
+		pattern="%s/808469808"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Greek"
+		package="com.slovoed.noreg.greek_french.compact"
+		pattern="%s/808469809"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;German"
+		package="com.slovoed.noreg.german_greek.compact"
+		pattern="%s/808469810"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Greek"
+		package="com.slovoed.noreg.german_greek.compact"
+		pattern="%s/808469811"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Italian"
+		package="com.slovoed.noreg.greek_italian.compact"
+		pattern="%s/808469812"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Dutch"
+		package="com.slovoed.noreg.greek_dutch.compact"
+		pattern="%s/808469572"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;English"
+		package="com.slovoed.noreg.english_greek.compact"
+		pattern="%s/808469573"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Greek"
+		package="com.slovoed.noreg.english_greek.compact"
+		pattern="%s/808469574"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;English"
+		package="com.slovoed.noreg.english_swedish.compact"
+		pattern="%s/808465721"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Swedish"
+		package="com.slovoed.noreg.english_swedish.compact"
+		pattern="%s/808465720"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;French"
+		package="com.slovoed.noreg.french_german.classic"
+		pattern="%s/808465973"
+	/>
+	<dictionary
+		title="Slovoed Classic French-&gt;German"
+		package="com.slovoed.noreg.french_german.classic"
+		pattern="%s/808465972"
+	/>
+	<dictionary
+		title="Slovoed Classic Portuguese-&gt;English"
+		package="com.slovoed.noreg.english_portuguese.classic"
+		pattern="%s/808465971"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Portuguese"
+		package="com.slovoed.noreg.english_portuguese.classic"
+		pattern="%s/808465970"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Greek"
+		package="com.slovoed.noreg.greek_russian.compact"
+		pattern="%s/808469826"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Russian"
+		package="com.slovoed.noreg.greek_russian.compact"
+		pattern="%s/808469825"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;Greek"
+		package="com.slovoed.noreg.greek_spanish.compact"
+		pattern="%s/808469828"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Spanish"
+		package="com.slovoed.noreg.greek_spanish.compact"
+		pattern="%s/808469827"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Polish"
+		package="com.slovoed.noreg.greek_polish.compact"
+		pattern="%s/808469814"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Greek"
+		package="com.slovoed.noreg.greek_italian.compact"
+		pattern="%s/808469813"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Portuguese"
+		package="com.slovoed.noreg.greek_portuguese.compact"
+		pattern="%s/808469816"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Greek"
+		package="com.slovoed.noreg.greek_polish.compact"
+		pattern="%s/808469815"
+	/>
+	<dictionary
+		title="Slovoed Compact Portuguese-&gt;Greek"
+		package="com.slovoed.noreg.greek_portuguese.compact"
+		pattern="%s/808469817"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;English"
+		package="com.slovoed.noreg.english_russian.compact"
+		pattern="%s/808465473"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Russian"
+		package="com.slovoed.noreg.english_russian.compact"
+		pattern="%s/808465474"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.noreg.german_russian.classic"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Portuguese"
+		package="com.slovoed.noreg.polish_portuguese.compact"
+		pattern="%s/808470068"
+	/>
+	<dictionary
+		title="Slovoed Compact Portuguese-&gt;Polish"
+		package="com.slovoed.noreg.polish_portuguese.compact"
+		pattern="%s/808470069"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Italian"
+		package="com.slovoed.noreg.italian_polish.compact"
+		pattern="%s/808470066"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Polish"
+		package="com.slovoed.noreg.italian_polish.compact"
+		pattern="%s/808470067"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;French"
+		package="com.slovoed.noreg.french_polish.compact"
+		pattern="%s/808469829"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Polish"
+		package="com.slovoed.noreg.french_polish.compact"
+		pattern="%s/808469830"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Italian-&gt;Russian"
+		package="com.slovoed.noreg.italian_russian.deluxe"
+		pattern="%s/808465714"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;Russian"
+		package="com.slovoed.noreg.spanish_russian.deluxe"
+		pattern="%s/808465715"
+	/>
+	<dictionary
+		title="Slovoed Classic English explanatory"
+		package="com.slovoed.noreg.english_english.classic"
+		pattern="%s/808470082"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;Polish"
+		package="com.slovoed.noreg.polish_spanish.compact"
+		pattern="%s/808470073"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Spanish"
+		package="com.slovoed.noreg.polish_spanish.compact"
+		pattern="%s/808470072"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Polish"
+		package="com.slovoed.noreg.polish_russian.compact"
+		pattern="%s/808470071"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Russian"
+		package="com.slovoed.noreg.polish_russian.compact"
+		pattern="%s/808470070"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;German"
+		package="com.slovoed.noreg.german_russian.deluxe"
+		pattern="%s/808465477"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.noreg.german_russian.classic"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Russian"
+		package="com.slovoed.noreg.german_russian.deluxe"
+		pattern="%s/808465478"
+	/>
+	<dictionary
+		title="Slovoed Compact Ukrainian-&gt;Russian"
+		package="com.slovoed.noreg.russian_ukrainian.compact"
+		pattern="%s/808466245"
+	/>
+	<dictionary
+		title="Slovoed Compact Serbian-&gt;English"
+		package="com.slovoed.noreg.english_serbian.compact"
+		pattern="%s/808466246"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Ukrainian"
+		package="com.slovoed.noreg.russian_ukrainian.compact"
+		pattern="%s/808466244"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Serbian"
+		package="com.slovoed.noreg.english_serbian.compact"
+		pattern="%s/808466480"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Italian"
+		package="com.slovoed.noreg.german_italian.deluxe"
+		pattern="%s/808465985"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Italian-&gt;German"
+		package="com.slovoed.noreg.german_italian.deluxe"
+		pattern="%s/808465986"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;Spanish"
+		package="com.slovoed.noreg.german_spanish.classic"
+		pattern="%s/808465987"
+	/>
+	<dictionary
+		title="Slovoed Classic Spanish-&gt;German"
+		package="com.slovoed.noreg.german_spanish.classic"
+		pattern="%s/808465988"
+	/>
+	<dictionary
+		title="Slovoed Classic Spanish-&gt;Italian"
+		package="com.slovoed.noreg.italian_spanish.classic"
+		pattern="%s/808465989"
+	/>
+	<dictionary
+		title="Slovoed Classic French-&gt;Italian"
+		package="com.slovoed.noreg.french_italian.classic"
+		pattern="%s/808465974"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;French"
+		package="com.slovoed.noreg.french_italian.classic"
+		pattern="%s/808465975"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Spanish"
+		package="com.slovoed.noreg.french_spanish.compact"
+		pattern="%s/808465976"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;French"
+		package="com.slovoed.noreg.french_spanish.compact"
+		pattern="%s/808465977"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Russian"
+		package="com.slovoed.noreg.english_russian.deluxe"
+		pattern="%s/808466224"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;English"
+		package="com.slovoed.noreg.english_russian.deluxe"
+		pattern="%s/808466225"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;Spanish"
+		package="com.slovoed.noreg.italian_spanish.classic"
+		pattern="%s/808465990"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;Spanish"
+		package="com.slovoed.noreg.spanish_russian.deluxe"
+		pattern="%s/808596274"
+	/>
+	<dictionary
+		title="Slovoed Classic Russian-&gt;Italian"
+		package="com.slovoed.noreg.italian_russian.classic"
+		pattern="%s/808596273"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Turkish-&gt;English"
+		package="com.slovoed.noreg.english_turkish.deluxe"
+		pattern="%s/808596293"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Czech"
+		package="com.slovoed.noreg.czech_english.deluxe"
+		pattern="%s/808468786"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Czech-&gt;English"
+		package="com.slovoed.noreg.czech_english.deluxe"
+		pattern="%s/808468787"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Czech"
+		package="com.slovoed.noreg.czech_german.deluxe"
+		pattern="%s/808468788"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;Czech"
+		package="com.slovoed.noreg.czech_italian.classic"
+		pattern="%s/808534326"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Czech-&gt;German"
+		package="com.slovoed.noreg.czech_german.deluxe"
+		pattern="%s/808468789"
+	/>
+	<dictionary
+		title="Slovoed Classic Czech-&gt;Italian"
+		package="com.slovoed.noreg.czech_italian.classic"
+		pattern="%s/808534327"
+	/>
+	<dictionary
+		title="Slovoed Deluxe French-&gt;Czech"
+		package="com.slovoed.noreg.czech_french.deluxe"
+		pattern="%s/808468790"
+	/>
+	<dictionary
+		title="Slovoed DeLuxe Czech-&gt;French"
+		package="com.slovoed.noreg.czech_french.deluxe"
+		pattern="%s/808468791"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Croatian"
+		package="com.slovoed.noreg.croatian_english.deluxe"
+		pattern="%s/808534324"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Croatian-&gt;English"
+		package="com.slovoed.noreg.croatian_english.deluxe"
+		pattern="%s/808534325"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Turkish"
+		package="com.slovoed.noreg.english_turkish.deluxe"
+		pattern="%s/808596292"
+	/>
+	<dictionary
+		title="Slovoed Compact Hebrew-&gt;Russian"
+		package="com.slovoed.noreg.slovoed.base_00b1.hebrew_russian"
+		pattern="%s/808469041"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;English"
+		package="com.slovoed.noreg.english_german.classic"
+		pattern="%s/808469044"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;French"
+		package="com.slovoed.noreg.english_french.compact"
+		pattern="%s/808469045"
+	/>
+	<dictionary
+		title="Slovoed Compact English explanatory"
+		package="com.slovoed.noreg.english_english.compact"
+		pattern="%s/808534578"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Hebrew"
+		package="com.slovoed.noreg.slovoed.base_00b1.hebrew_russian"
+		pattern="%s/808469042"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;German"
+		package="com.slovoed.noreg.english_german.classic"
+		pattern="%s/808469043"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;English"
+		package="com.slovoed.noreg.english_spanish.compact"
+		pattern="%s/808469048"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;German"
+		package="com.slovoed.noreg.german_swedish.compact"
+		pattern="%s/808469049"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;English"
+		package="com.slovoed.noreg.english_french.compact"
+		pattern="%s/808469046"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;German"
+		package="com.slovoed.noreg.german_italian.compact"
+		pattern="%s/808534583"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Spanish"
+		package="com.slovoed.noreg.english_spanish.compact"
+		pattern="%s/808469047"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Italian"
+		package="com.slovoed.noreg.german_italian.compact"
+		pattern="%s/808534584"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;Russian"
+		package="com.slovoed.noreg.italian_russian.classic"
+		pattern="%s/808596272"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Swedish"
+		package="com.slovoed.noreg.german_swedish.compact"
+		pattern="%s/808469057"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.noreg.french_russian.compact"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Danish"
+		package="com.slovoed.noreg.danish_swedish.compact"
+		pattern="%s/808469062"
+	/>
+	<dictionary
+		title="Slovoed Compact Czech-&gt;Swedish"
+		package="com.slovoed.noreg.czech_swedish.compact"
+		pattern="%s/808469059"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Czech"
+		package="com.slovoed.noreg.czech_swedish.compact"
+		pattern="%s/808469058"
+	/>
+	<dictionary
+		title="Slovoed Compact Romanian-&gt;Swedish"
+		package="com.slovoed.noreg.romanian_swedish.compact"
+		pattern="%s/808469061"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.noreg.french_russian.compact"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Romanian"
+		package="com.slovoed.noreg.romanian_swedish.compact"
+		pattern="%s/808469060"
+	/>
+	<dictionary
+		title="Slovoed Compact Danish-&gt;Swedish"
+		package="com.slovoed.noreg.danish_swedish.compact"
+		pattern="%s/808469296"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Bulgarian"
+		package="com.slovoed.noreg.bulgarian_swedish.compact"
+		pattern="%s/808469303"
+	/>
+	<dictionary
+		title="Slovoed Compact Bulgarian-&gt;Swedish"
+		package="com.slovoed.noreg.bulgarian_swedish.compact"
+		pattern="%s/808469304"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;French"
+		package="com.slovoed.noreg.french_swedish.compact"
+		pattern="%s/808469305"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Norwegian"
+		package="com.slovoed.noreg.norwegian_swedish.compact"
+		pattern="%s/808469301"
+	/>
+	<dictionary
+		title="Slovoed Compact Norwegian-&gt;Swedish"
+		package="com.slovoed.noreg.norwegian_swedish.compact"
+		pattern="%s/808469302"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Swedish"
+		package="com.slovoed.noreg.french_swedish.compact"
+		pattern="%s/808469313"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Hungarian"
+		package="com.slovoed.noreg.english_hungarian.deluxe"
+		pattern="%s/808595505"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;German"
+		package="com.slovoed.noreg.english_german.deluxe"
+		pattern="%s/808464949"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Spanish"
+		package="com.slovoed.noreg.spanish_swedish.compact"
+		pattern="%s/808469318"
+	/>
+	<dictionary
+		title="Slovoed Compact Portuguese-&gt;Swedish"
+		package="com.slovoed.noreg.portuguese_swedish.compact"
+		pattern="%s/808469317"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;English"
+		package="com.slovoed.noreg.english_german.deluxe"
+		pattern="%s/808464950"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Portuguese"
+		package="com.slovoed.noreg.portuguese_swedish.compact"
+		pattern="%s/808469316"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Italian"
+		package="com.slovoed.noreg.english_italian.classic"
+		pattern="%s/808464953"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Hungarian-&gt;English"
+		package="com.slovoed.noreg.english_hungarian.deluxe"
+		pattern="%s/808595506"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;German"
+		package="com.slovoed.noreg.french_german.compact"
+		pattern="%s/808469555"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;English"
+		package="com.slovoed.noreg.english_german.compact"
+		pattern="%s/808469554"
+	/>
+	<dictionary
+		title="Slovoed Classic French-&gt;English"
+		package="com.slovoed.noreg.english_french.classic"
+		pattern="%s/808595512"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;German"
+		package="com.slovoed.noreg.english_german.compact"
+		pattern="%s/808469553"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;French"
+		package="com.slovoed.noreg.english_french.classic"
+		pattern="%s/808595511"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;Swedish"
+		package="com.slovoed.noreg.spanish_swedish.compact"
+		pattern="%s/808469552"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;English"
+		package="com.slovoed.noreg.english_italian.classic"
+		pattern="%s/808464961"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Spanish"
+		package="com.slovoed.noreg.english_spanish.classic"
+		pattern="%s/808595521"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Latin"
+		package="com.slovoed.noreg.german_latin.compact"
+		pattern="%s/808469560"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;German"
+		package="com.slovoed.noreg.german_spanish.compact"
+		pattern="%s/808469561"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English explanatory"
+		package="com.slovoed.noreg.english_english.deluxe"
+		pattern="%s/808595524"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;Italian"
+		package="com.slovoed.noreg.german_italian.classic"
+		pattern="%s/808469558"
+	/>
+	<dictionary
+		title="Slovoed Compact Latin-&gt;German"
+		package="com.slovoed.noreg.german_latin.compact"
+		pattern="%s/808469559"
+	/>
+	<dictionary
+		title="Slovoed Classic Spanish-&gt;English"
+		package="com.slovoed.noreg.english_spanish.classic"
+		pattern="%s/808595522"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;French"
+		package="com.slovoed.noreg.french_german.compact"
+		pattern="%s/808469556"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;German"
+		package="com.slovoed.noreg.german_italian.classic"
+		pattern="%s/808469557"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Dutch"
+		package="com.slovoed.noreg.dutch_swedish.compact"
+		pattern="%s/808469570"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Slovak"
+		package="com.slovoed.noreg.english_slovak.compact"
+		pattern="%s/808600626"
+	/>
+	<dictionary
+		title="Slovoed Compact Dutch-&gt;Swedish"
+		package="com.slovoed.noreg.dutch_swedish.compact"
+		pattern="%s/808469571"
+	/>
+	<dictionary
+		title="Slovoed Compact Slovak-&gt;English"
+		package="com.slovoed.noreg.english_slovak.compact"
+		pattern="%s/808600627"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Slovak"
+		package="com.slovoed.noreg.german_slovak.compact"
+		pattern="%s/808600628"
+	/>
+	<dictionary
+		title="Slovoed Compact Slovak-&gt;German"
+		package="com.slovoed.noreg.german_slovak.compact"
+		pattern="%s/808600629"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Spanish"
+		package="com.slovoed.noreg.german_spanish.compact"
+		pattern="%s/808469569"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;Polish"
+		package="com.slovoed.noreg.german_polish.classic"
+		pattern="%s/808596784"
+	/>
+	<dictionary
+		title="Slovoed Classic Polish-&gt;German"
+		package="com.slovoed.noreg.german_polish.classic"
+		pattern="%s/808596785"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Greek"
+		package="com.slovoed.noreg.german_greek.deluxe"
+		pattern="%s/808596534"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Greek-&gt;German"
+		package="com.slovoed.noreg.german_greek.deluxe"
+		pattern="%s/808596535"
+	/>
+	<dictionary
+		title="Slovoed Deluxe French-&gt;German"
+		package="com.slovoed.noreg.french_german.deluxe"
+		pattern="%s/808596536"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;French"
+		package="com.slovoed.noreg.french_german.deluxe"
+		pattern="%s/808596537"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Spanish"
+		package="com.slovoed.noreg.german_spanish.deluxe"
+		pattern="%s/808596530"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;German"
+		package="com.slovoed.noreg.german_spanish.deluxe"
+		pattern="%s/808596531"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Uzbek"
+		package="com.slovoed.noreg.english_uzbek.classic"
+		pattern="%s/808600889"
+	/>
+	<dictionary
+		title="Slovoed Classic Uzbek-&gt;English"
+		package="com.slovoed.noreg.english_uzbek.classic"
+		pattern="%s/808600897"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;Turkish"
+		package="com.slovoed.noreg.german_turkish.classic"
+		pattern="%s/808596787"
+	/>
+	<dictionary
+		title="Slovoed Classic Turkish-&gt;German"
+		package="com.slovoed.noreg.german_turkish.classic"
+		pattern="%s/808596788"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Catalan-&gt;Spanish"
+		package="com.slovoed.noreg.catalan_spanish.deluxe"
+		pattern="%s/808535093"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.noreg.portuguese_russian.classic"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;Catalan"
+		package="com.slovoed.noreg.catalan_spanish.deluxe"
+		pattern="%s/808535092"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Latvian"
+		package="com.slovoed.noreg.english_latvian.classic"
+		pattern="%s/808535096"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;Italian"
+		package="com.slovoed.noreg.italian_spanish.deluxe"
+		pattern="%s/808535089"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Italian-&gt;Spanish"
+		package="com.slovoed.noreg.italian_spanish.deluxe"
+		pattern="%s/808535088"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Swedish"
+		package="com.slovoed.noreg.italian_swedish.compact"
+		pattern="%s/808534850"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Italian"
+		package="com.slovoed.noreg.italian_swedish.compact"
+		pattern="%s/808534851"
+	/>
+	<dictionary
+		title="Slovoed Compact Turkish-&gt;Italian"
+		package="com.slovoed.noreg.italian_turkish.compact"
+		pattern="%s/808534849"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Dutch"
+		package="com.slovoed.noreg.dutch_italian.compact"
+		pattern="%s/808534835"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;French"
+		package="com.slovoed.noreg.french_italian.compact"
+		pattern="%s/808534837"
+	/>
+	<dictionary
+		title="Slovoed Compact Dutch-&gt;Italian"
+		package="com.slovoed.noreg.dutch_italian.compact"
+		pattern="%s/808534836"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Russian"
+		package="com.slovoed.noreg.italian_russian.compact"
+		pattern="%s/808534839"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Turkish"
+		package="com.slovoed.noreg.english_turkish.classic"
+		pattern="%s/808530756"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Italian"
+		package="com.slovoed.noreg.french_italian.compact"
+		pattern="%s/808534838"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.noreg.portuguese_russian.classic"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Turkish"
+		package="com.slovoed.noreg.italian_turkish.compact"
+		pattern="%s/808534841"
+	/>
+	<dictionary
+		title="Slovoed Classic Turkish-&gt;English"
+		package="com.slovoed.noreg.english_turkish.classic"
+		pattern="%s/808530755"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;Italian"
+		package="com.slovoed.noreg.italian_russian.deluxe"
+		pattern="%s/808597554"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Italian"
+		package="com.slovoed.noreg.italian_russian.compact"
+		pattern="%s/808534840"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Hebrew"
+		package="com.slovoed.noreg.slovoed.base_013a.hebrew_english"
+		pattern="%s/808530754"
+	/>
+	<dictionary
+		title="Slovoed Classic Hebrew-&gt;English"
+		package="com.slovoed.noreg.slovoed.base_013a.hebrew_english"
+		pattern="%s/808530753"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish Italian"
+		package="com.slovoed.noreg.italian_spanish.compact"
+		pattern="%s/808534832"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Lithuanian"
+		package="com.slovoed.noreg.italian_lithuanian.compact"
+		pattern="%s/808534594"
+	/>
+	<dictionary
+		title="Slovoed Compact Lithuanian-&gt;Italian"
+		package="com.slovoed.noreg.italian_lithuanian.compact"
+		pattern="%s/808534595"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Spanish"
+		package="com.slovoed.noreg.italian_spanish.compact"
+		pattern="%s/808534598"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Italian"
+		package="com.slovoed.noreg.english_italian.compact"
+		pattern="%s/808532272"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;English"
+		package="com.slovoed.noreg.english_italian.compact"
+		pattern="%s/808532273"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Latin"
+		package="com.slovoed.noreg.english_latin.classic"
+		pattern="%s/808532274"
+	/>
+	<dictionary
+		title="Slovoed Classic Latin-&gt;English"
+		package="com.slovoed.noreg.english_latin.classic"
+		pattern="%s/808532275"
+	/>
+	<dictionary
+		title="Slovoed Compact Portuguese-&gt;Spanish"
+		package="com.slovoed.noreg.portuguese_spanish.compact"
+		pattern="%s/808532278"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;Portuguese"
+		package="com.slovoed.noreg.portuguese_spanish.compact"
+		pattern="%s/808532279"
+	/>
+	<dictionary
+		title="Slovoed Classic Spanish-&gt;French"
+		package="com.slovoed.noreg.french_spanish.classic"
+		pattern="%s/808532281"
+	/>
+	<dictionary
+		title="Slovoed Classic French-&gt;Spanish"
+		package="com.slovoed.noreg.french_spanish.classic"
+		pattern="%s/808532280"
+	/>
+	<dictionary
+		title="Slovoed Classic Arabic-&gt;English"
+		package="com.slovoed.noreg.slovoed.base_019c.arabic_english"
+		pattern="%s/808532291"
+	/>
+	<dictionary
+		title="Slovoed Classic Polish-&gt;English"
+		package="com.slovoed.noreg.english_polish.classic"
+		pattern="%s/808466502"
+	/>
+	<dictionary
+		title="Slovoed Deluxe French explanatory"
+		package="com.slovoed.noreg.french_french.deluxe"
+		pattern="%s/808532290"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Polish"
+		package="com.slovoed.noreg.english_polish.classic"
+		pattern="%s/808466501"
+	/>
+	<dictionary
+		title="Slovoed Compact Ukrainian-&gt;English"
+		package="com.slovoed.noreg.english_ukrainian.compact"
+		pattern="%s/808466500"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Ukrainian"
+		package="com.slovoed.noreg.english_ukrainian.compact"
+		pattern="%s/808466499"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Arabic"
+		package="com.slovoed.noreg.slovoed.base_019c.arabic_english"
+		pattern="%s/808532292"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Arabic"
+		package="com.slovoed.noreg.slovoed.base_0169.arabic_russian"
+		pattern="%s/808531760"
+	/>
+	<dictionary
+		title="Slovoed Compact Arabic-&gt;Russian"
+		package="com.slovoed.noreg.slovoed.base_0169.arabic_russian"
+		pattern="%s/808531513"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish explanatory"
+		package="com.slovoed.noreg.spanish_spanish.deluxe"
+		pattern="%s/808531782"
+	/>
+	<dictionary
+		title="Slovoed Deluxe French-&gt;Russian"
+		package="com.slovoed.noreg.french_russian.deluxe"
+		pattern="%s/808532019"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;French"
+		package="com.slovoed.noreg.french_russian.deluxe"
+		pattern="%s/808532018"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;English"
+		package="com.slovoed.noreg.english_spanish.deluxe"
+		pattern="%s/808531781"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Spanish"
+		package="com.slovoed.noreg.english_spanish.deluxe"
+		pattern="%s/808531780"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Russian"
+		package="com.slovoed.russian_swedish.compact"
+		pattern="%s/808465729"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Swedish"
+		package="com.slovoed.russian_swedish.compact"
+		pattern="%s/808465730"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;French"
+		package="com.slovoed.greek_french.compact"
+		pattern="%s/808469808"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Greek"
+		package="com.slovoed.greek_french.compact"
+		pattern="%s/808469809"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;German"
+		package="com.slovoed.german_greek.compact"
+		pattern="%s/808469810"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Greek"
+		package="com.slovoed.german_greek.compact"
+		pattern="%s/808469811"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Italian"
+		package="com.slovoed.greek_italian.compact"
+		pattern="%s/808469812"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Dutch"
+		package="com.slovoed.greek_dutch.compact"
+		pattern="%s/808469572"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;English"
+		package="com.slovoed.english_greek.compact"
+		pattern="%s/808469573"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Greek"
+		package="com.slovoed.english_greek.compact"
+		pattern="%s/808469574"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;English"
+		package="com.slovoed.english_swedish.compact"
+		pattern="%s/808465721"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Swedish"
+		package="com.slovoed.english_swedish.compact"
+		pattern="%s/808465720"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;French"
+		package="com.slovoed.french_german.classic"
+		pattern="%s/808465973"
+	/>
+	<dictionary
+		title="Slovoed Classic French-&gt;German"
+		package="com.slovoed.french_german.classic"
+		pattern="%s/808465972"
+	/>
+	<dictionary
+		title="Slovoed Classic Portuguese-&gt;English"
+		package="com.slovoed.english_portuguese.classic"
+		pattern="%s/808465971"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Portuguese"
+		package="com.slovoed.english_portuguese.classic"
+		pattern="%s/808465970"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Greek"
+		package="com.slovoed.greek_russian.compact"
+		pattern="%s/808469826"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Russian"
+		package="com.slovoed.greek_russian.compact"
+		pattern="%s/808469825"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;Greek"
+		package="com.slovoed.greek_spanish.compact"
+		pattern="%s/808469828"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Spanish"
+		package="com.slovoed.greek_spanish.compact"
+		pattern="%s/808469827"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Polish"
+		package="com.slovoed.greek_polish.compact"
+		pattern="%s/808469814"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Greek"
+		package="com.slovoed.greek_italian.compact"
+		pattern="%s/808469813"
+	/>
+	<dictionary
+		title="Slovoed Compact Greek-&gt;Portuguese"
+		package="com.slovoed.greek_portuguese.compact"
+		pattern="%s/808469816"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Greek"
+		package="com.slovoed.greek_polish.compact"
+		pattern="%s/808469815"
+	/>
+	<dictionary
+		title="Slovoed Compact Portuguese-&gt;Greek"
+		package="com.slovoed.greek_portuguese.compact"
+		pattern="%s/808469817"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;English"
+		package="com.slovoed.english_russian.compact"
+		pattern="%s/808465473"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Russian"
+		package="com.slovoed.english_russian.compact"
+		pattern="%s/808465474"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.german_russian.classic"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Portuguese"
+		package="com.slovoed.polish_portuguese.compact"
+		pattern="%s/808470068"
+	/>
+	<dictionary
+		title="Slovoed Compact Portuguese-&gt;Polish"
+		package="com.slovoed.polish_portuguese.compact"
+		pattern="%s/808470069"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Italian"
+		package="com.slovoed.italian_polish.compact"
+		pattern="%s/808470066"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Polish"
+		package="com.slovoed.italian_polish.compact"
+		pattern="%s/808470067"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;French"
+		package="com.slovoed.french_polish.compact"
+		pattern="%s/808469829"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Polish"
+		package="com.slovoed.french_polish.compact"
+		pattern="%s/808469830"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Italian-&gt;Russian"
+		package="com.slovoed.italian_russian.deluxe"
+		pattern="%s/808465714"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;Russian"
+		package="com.slovoed.spanish_russian.deluxe"
+		pattern="%s/808465715"
+	/>
+	<dictionary
+		title="Slovoed Classic English explanatory"
+		package="com.slovoed.english_english.classic"
+		pattern="%s/808470082"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;Polish"
+		package="com.slovoed.polish_spanish.compact"
+		pattern="%s/808470073"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Spanish"
+		package="com.slovoed.polish_spanish.compact"
+		pattern="%s/808470072"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Polish"
+		package="com.slovoed.polish_russian.compact"
+		pattern="%s/808470071"
+	/>
+	<dictionary
+		title="Slovoed Compact Polish-&gt;Russian"
+		package="com.slovoed.polish_russian.compact"
+		pattern="%s/808470070"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;German"
+		package="com.slovoed.german_russian.deluxe"
+		pattern="%s/808465477"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.german_russian.classic"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Russian"
+		package="com.slovoed.german_russian.deluxe"
+		pattern="%s/808465478"
+	/>
+	<dictionary
+		title="Slovoed Compact Ukrainian-&gt;Russian"
+		package="com.slovoed.russian_ukrainian.compact"
+		pattern="%s/808466245"
+	/>
+	<dictionary
+		title="Slovoed Compact Serbian-&gt;English"
+		package="com.slovoed.english_serbian.compact"
+		pattern="%s/808466246"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Ukrainian"
+		package="com.slovoed.russian_ukrainian.compact"
+		pattern="%s/808466244"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Serbian"
+		package="com.slovoed.english_serbian.compact"
+		pattern="%s/808466480"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Italian"
+		package="com.slovoed.german_italian.deluxe"
+		pattern="%s/808465985"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Italian-&gt;German"
+		package="com.slovoed.german_italian.deluxe"
+		pattern="%s/808465986"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;Spanish"
+		package="com.slovoed.german_spanish.classic"
+		pattern="%s/808465987"
+	/>
+	<dictionary
+		title="Slovoed Classic Spanish-&gt;German"
+		package="com.slovoed.german_spanish.classic"
+		pattern="%s/808465988"
+	/>
+	<dictionary
+		title="Slovoed Classic Spanish-&gt;Italian"
+		package="com.slovoed.italian_spanish.classic"
+		pattern="%s/808465989"
+	/>
+	<dictionary
+		title="Slovoed Classic French-&gt;Italian"
+		package="com.slovoed.french_italian.classic"
+		pattern="%s/808465974"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;French"
+		package="com.slovoed.french_italian.classic"
+		pattern="%s/808465975"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Spanish"
+		package="com.slovoed.french_spanish.compact"
+		pattern="%s/808465976"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;French"
+		package="com.slovoed.french_spanish.compact"
+		pattern="%s/808465977"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Russian"
+		package="com.slovoed.english_russian.deluxe"
+		pattern="%s/808466224"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;English"
+		package="com.slovoed.english_russian.deluxe"
+		pattern="%s/808466225"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;Spanish"
+		package="com.slovoed.italian_spanish.classic"
+		pattern="%s/808465990"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;Spanish"
+		package="com.slovoed.spanish_russian.deluxe"
+		pattern="%s/808596274"
+	/>
+	<dictionary
+		title="Slovoed Classic Russian-&gt;Italian"
+		package="com.slovoed.italian_russian.classic"
+		pattern="%s/808596273"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Turkish-&gt;English"
+		package="com.slovoed.english_turkish.deluxe"
+		pattern="%s/808596293"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Czech"
+		package="com.slovoed.czech_english.deluxe"
+		pattern="%s/808468786"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Czech-&gt;English"
+		package="com.slovoed.czech_english.deluxe"
+		pattern="%s/808468787"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Czech"
+		package="com.slovoed.czech_german.deluxe"
+		pattern="%s/808468788"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;Czech"
+		package="com.slovoed.czech_italian.classic"
+		pattern="%s/808534326"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Czech-&gt;German"
+		package="com.slovoed.czech_german.deluxe"
+		pattern="%s/808468789"
+	/>
+	<dictionary
+		title="Slovoed Classic Czech-&gt;Italian"
+		package="com.slovoed.czech_italian.classic"
+		pattern="%s/808534327"
+	/>
+	<dictionary
+		title="Slovoed Deluxe French-&gt;Czech"
+		package="com.slovoed.czech_french.deluxe"
+		pattern="%s/808468790"
+	/>
+	<dictionary
+		title="Slovoed DeLuxe Czech-&gt;French"
+		package="com.slovoed.czech_french.deluxe"
+		pattern="%s/808468791"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Croatian"
+		package="com.slovoed.croatian_english.deluxe"
+		pattern="%s/808534324"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Croatian-&gt;English"
+		package="com.slovoed.croatian_english.deluxe"
+		pattern="%s/808534325"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Turkish"
+		package="com.slovoed.english_turkish.deluxe"
+		pattern="%s/808596292"
+	/>
+	<dictionary
+		title="Slovoed Compact Hebrew-&gt;Russian"
+		package="com.slovoed.slovoed.base_00b1.hebrew_russian"
+		pattern="%s/808469041"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;English"
+		package="com.slovoed.english_german.classic"
+		pattern="%s/808469044"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;French"
+		package="com.slovoed.english_french.compact"
+		pattern="%s/808469045"
+	/>
+	<dictionary
+		title="Slovoed Compact English explanatory"
+		package="com.slovoed.english_english.compact"
+		pattern="%s/808534578"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Hebrew"
+		package="com.slovoed.slovoed.base_00b1.hebrew_russian"
+		pattern="%s/808469042"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;German"
+		package="com.slovoed.english_german.classic"
+		pattern="%s/808469043"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;English"
+		package="com.slovoed.english_spanish.compact"
+		pattern="%s/808469048"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;German"
+		package="com.slovoed.german_swedish.compact"
+		pattern="%s/808469049"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;English"
+		package="com.slovoed.english_french.compact"
+		pattern="%s/808469046"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;German"
+		package="com.slovoed.german_italian.compact"
+		pattern="%s/808534583"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Spanish"
+		package="com.slovoed.english_spanish.compact"
+		pattern="%s/808469047"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Italian"
+		package="com.slovoed.german_italian.compact"
+		pattern="%s/808534584"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;Russian"
+		package="com.slovoed.italian_russian.classic"
+		pattern="%s/808596272"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Swedish"
+		package="com.slovoed.german_swedish.compact"
+		pattern="%s/808469057"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.french_russian.compact"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Danish"
+		package="com.slovoed.danish_swedish.compact"
+		pattern="%s/808469062"
+	/>
+	<dictionary
+		title="Slovoed Compact Czech-&gt;Swedish"
+		package="com.slovoed.czech_swedish.compact"
+		pattern="%s/808469059"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Czech"
+		package="com.slovoed.czech_swedish.compact"
+		pattern="%s/808469058"
+	/>
+	<dictionary
+		title="Slovoed Compact Romanian-&gt;Swedish"
+		package="com.slovoed.romanian_swedish.compact"
+		pattern="%s/808469061"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.french_russian.compact"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Romanian"
+		package="com.slovoed.romanian_swedish.compact"
+		pattern="%s/808469060"
+	/>
+	<dictionary
+		title="Slovoed Compact Danish-&gt;Swedish"
+		package="com.slovoed.danish_swedish.compact"
+		pattern="%s/808469296"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Bulgarian"
+		package="com.slovoed.bulgarian_swedish.compact"
+		pattern="%s/808469303"
+	/>
+	<dictionary
+		title="Slovoed Compact Bulgarian-&gt;Swedish"
+		package="com.slovoed.bulgarian_swedish.compact"
+		pattern="%s/808469304"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;French"
+		package="com.slovoed.french_swedish.compact"
+		pattern="%s/808469305"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Norwegian"
+		package="com.slovoed.norwegian_swedish.compact"
+		pattern="%s/808469301"
+	/>
+	<dictionary
+		title="Slovoed Compact Norwegian-&gt;Swedish"
+		package="com.slovoed.norwegian_swedish.compact"
+		pattern="%s/808469302"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Swedish"
+		package="com.slovoed.french_swedish.compact"
+		pattern="%s/808469313"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Hungarian"
+		package="com.slovoed.english_hungarian.deluxe"
+		pattern="%s/808595505"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;German"
+		package="com.slovoed.english_german.deluxe"
+		pattern="%s/808464949"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Spanish"
+		package="com.slovoed.spanish_swedish.compact"
+		pattern="%s/808469318"
+	/>
+	<dictionary
+		title="Slovoed Compact Portuguese-&gt;Swedish"
+		package="com.slovoed.portuguese_swedish.compact"
+		pattern="%s/808469317"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;English"
+		package="com.slovoed.english_german.deluxe"
+		pattern="%s/808464950"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Portuguese"
+		package="com.slovoed.portuguese_swedish.compact"
+		pattern="%s/808469316"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Italian"
+		package="com.slovoed.english_italian.classic"
+		pattern="%s/808464953"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Hungarian-&gt;English"
+		package="com.slovoed.english_hungarian.deluxe"
+		pattern="%s/808595506"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;German"
+		package="com.slovoed.french_german.compact"
+		pattern="%s/808469555"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;English"
+		package="com.slovoed.english_german.compact"
+		pattern="%s/808469554"
+	/>
+	<dictionary
+		title="Slovoed Classic French-&gt;English"
+		package="com.slovoed.english_french.classic"
+		pattern="%s/808595512"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;German"
+		package="com.slovoed.english_german.compact"
+		pattern="%s/808469553"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;French"
+		package="com.slovoed.english_french.classic"
+		pattern="%s/808595511"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;Swedish"
+		package="com.slovoed.spanish_swedish.compact"
+		pattern="%s/808469552"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;English"
+		package="com.slovoed.english_italian.classic"
+		pattern="%s/808464961"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Spanish"
+		package="com.slovoed.english_spanish.classic"
+		pattern="%s/808595521"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Latin"
+		package="com.slovoed.german_latin.compact"
+		pattern="%s/808469560"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;German"
+		package="com.slovoed.german_spanish.compact"
+		pattern="%s/808469561"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English explanatory"
+		package="com.slovoed.english_english.deluxe"
+		pattern="%s/808595524"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;Italian"
+		package="com.slovoed.german_italian.classic"
+		pattern="%s/808469558"
+	/>
+	<dictionary
+		title="Slovoed Compact Latin-&gt;German"
+		package="com.slovoed.german_latin.compact"
+		pattern="%s/808469559"
+	/>
+	<dictionary
+		title="Slovoed Classic Spanish-&gt;English"
+		package="com.slovoed.english_spanish.classic"
+		pattern="%s/808595522"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;French"
+		package="com.slovoed.french_german.compact"
+		pattern="%s/808469556"
+	/>
+	<dictionary
+		title="Slovoed Classic Italian-&gt;German"
+		package="com.slovoed.german_italian.classic"
+		pattern="%s/808469557"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Dutch"
+		package="com.slovoed.dutch_swedish.compact"
+		pattern="%s/808469570"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Slovak"
+		package="com.slovoed.english_slovak.compact"
+		pattern="%s/808600626"
+	/>
+	<dictionary
+		title="Slovoed Compact Dutch-&gt;Swedish"
+		package="com.slovoed.dutch_swedish.compact"
+		pattern="%s/808469571"
+	/>
+	<dictionary
+		title="Slovoed Compact Slovak-&gt;English"
+		package="com.slovoed.english_slovak.compact"
+		pattern="%s/808600627"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Slovak"
+		package="com.slovoed.german_slovak.compact"
+		pattern="%s/808600628"
+	/>
+	<dictionary
+		title="Slovoed Compact Slovak-&gt;German"
+		package="com.slovoed.german_slovak.compact"
+		pattern="%s/808600629"
+	/>
+	<dictionary
+		title="Slovoed Compact German-&gt;Spanish"
+		package="com.slovoed.german_spanish.compact"
+		pattern="%s/808469569"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;Polish"
+		package="com.slovoed.german_polish.classic"
+		pattern="%s/808596784"
+	/>
+	<dictionary
+		title="Slovoed Classic Polish-&gt;German"
+		package="com.slovoed.german_polish.classic"
+		pattern="%s/808596785"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Greek"
+		package="com.slovoed.german_greek.deluxe"
+		pattern="%s/808596534"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Greek-&gt;German"
+		package="com.slovoed.german_greek.deluxe"
+		pattern="%s/808596535"
+	/>
+	<dictionary
+		title="Slovoed Deluxe French-&gt;German"
+		package="com.slovoed.french_german.deluxe"
+		pattern="%s/808596536"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;French"
+		package="com.slovoed.french_german.deluxe"
+		pattern="%s/808596537"
+	/>
+	<dictionary
+		title="Slovoed Deluxe German-&gt;Spanish"
+		package="com.slovoed.german_spanish.deluxe"
+		pattern="%s/808596530"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;German"
+		package="com.slovoed.german_spanish.deluxe"
+		pattern="%s/808596531"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Uzbek"
+		package="com.slovoed.english_uzbek.classic"
+		pattern="%s/808600889"
+	/>
+	<dictionary
+		title="Slovoed Classic Uzbek-&gt;English"
+		package="com.slovoed.english_uzbek.classic"
+		pattern="%s/808600897"
+	/>
+	<dictionary
+		title="Slovoed Classic German-&gt;Turkish"
+		package="com.slovoed.german_turkish.classic"
+		pattern="%s/808596787"
+	/>
+	<dictionary
+		title="Slovoed Classic Turkish-&gt;German"
+		package="com.slovoed.german_turkish.classic"
+		pattern="%s/808596788"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Catalan-&gt;Spanish"
+		package="com.slovoed.catalan_spanish.deluxe"
+		pattern="%s/808535093"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.portuguese_russian.classic"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;Catalan"
+		package="com.slovoed.catalan_spanish.deluxe"
+		pattern="%s/808535092"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Latvian"
+		package="com.slovoed.english_latvian.classic"
+		pattern="%s/808535096"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;Italian"
+		package="com.slovoed.italian_spanish.deluxe"
+		pattern="%s/808535089"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Italian-&gt;Spanish"
+		package="com.slovoed.italian_spanish.deluxe"
+		pattern="%s/808535088"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Swedish"
+		package="com.slovoed.italian_swedish.compact"
+		pattern="%s/808534850"
+	/>
+	<dictionary
+		title="Slovoed Compact Swedish-&gt;Italian"
+		package="com.slovoed.italian_swedish.compact"
+		pattern="%s/808534851"
+	/>
+	<dictionary
+		title="Slovoed Compact Turkish-&gt;Italian"
+		package="com.slovoed.italian_turkish.compact"
+		pattern="%s/808534849"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Dutch"
+		package="com.slovoed.dutch_italian.compact"
+		pattern="%s/808534835"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;French"
+		package="com.slovoed.french_italian.compact"
+		pattern="%s/808534837"
+	/>
+	<dictionary
+		title="Slovoed Compact Dutch-&gt;Italian"
+		package="com.slovoed.dutch_italian.compact"
+		pattern="%s/808534836"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Russian"
+		package="com.slovoed.italian_russian.compact"
+		pattern="%s/808534839"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Turkish"
+		package="com.slovoed.english_turkish.classic"
+		pattern="%s/808530756"
+	/>
+	<dictionary
+		title="Slovoed Compact French-&gt;Italian"
+		package="com.slovoed.french_italian.compact"
+		pattern="%s/808534838"
+	/>
+	<dictionary
+		title="null"
+		package="com.slovoed.portuguese_russian.classic"
+		pattern="%s/null"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Turkish"
+		package="com.slovoed.italian_turkish.compact"
+		pattern="%s/808534841"
+	/>
+	<dictionary
+		title="Slovoed Classic Turkish-&gt;English"
+		package="com.slovoed.english_turkish.classic"
+		pattern="%s/808530755"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;Italian"
+		package="com.slovoed.italian_russian.deluxe"
+		pattern="%s/808597554"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Italian"
+		package="com.slovoed.italian_russian.compact"
+		pattern="%s/808534840"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Hebrew"
+		package="com.slovoed.slovoed.base_013a.hebrew_english"
+		pattern="%s/808530754"
+	/>
+	<dictionary
+		title="Slovoed Classic Hebrew-&gt;English"
+		package="com.slovoed.slovoed.base_013a.hebrew_english"
+		pattern="%s/808530753"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish Italian"
+		package="com.slovoed.italian_spanish.compact"
+		pattern="%s/808534832"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Lithuanian"
+		package="com.slovoed.italian_lithuanian.compact"
+		pattern="%s/808534594"
+	/>
+	<dictionary
+		title="Slovoed Compact Lithuanian-&gt;Italian"
+		package="com.slovoed.italian_lithuanian.compact"
+		pattern="%s/808534595"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;Spanish"
+		package="com.slovoed.italian_spanish.compact"
+		pattern="%s/808534598"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Italian"
+		package="com.slovoed.english_italian.compact"
+		pattern="%s/808532272"
+	/>
+	<dictionary
+		title="Slovoed Compact Italian-&gt;English"
+		package="com.slovoed.english_italian.compact"
+		pattern="%s/808532273"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Latin"
+		package="com.slovoed.english_latin.classic"
+		pattern="%s/808532274"
+	/>
+	<dictionary
+		title="Slovoed Classic Latin-&gt;English"
+		package="com.slovoed.english_latin.classic"
+		pattern="%s/808532275"
+	/>
+	<dictionary
+		title="Slovoed Compact Portuguese-&gt;Spanish"
+		package="com.slovoed.portuguese_spanish.compact"
+		pattern="%s/808532278"
+	/>
+	<dictionary
+		title="Slovoed Compact Spanish-&gt;Portuguese"
+		package="com.slovoed.portuguese_spanish.compact"
+		pattern="%s/808532279"
+	/>
+	<dictionary
+		title="Slovoed Classic Spanish-&gt;French"
+		package="com.slovoed.french_spanish.classic"
+		pattern="%s/808532281"
+	/>
+	<dictionary
+		title="Slovoed Classic French-&gt;Spanish"
+		package="com.slovoed.french_spanish.classic"
+		pattern="%s/808532280"
+	/>
+	<dictionary
+		title="Slovoed Classic Arabic-&gt;English"
+		package="com.slovoed.slovoed.base_019c.arabic_english"
+		pattern="%s/808532291"
+	/>
+	<dictionary
+		title="Slovoed Classic Polish-&gt;English"
+		package="com.slovoed.english_polish.classic"
+		pattern="%s/808466502"
+	/>
+	<dictionary
+		title="Slovoed Deluxe French explanatory"
+		package="com.slovoed.french_french.deluxe"
+		pattern="%s/808532290"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Polish"
+		package="com.slovoed.english_polish.classic"
+		pattern="%s/808466501"
+	/>
+	<dictionary
+		title="Slovoed Compact Ukrainian-&gt;English"
+		package="com.slovoed.english_ukrainian.compact"
+		pattern="%s/808466500"
+	/>
+	<dictionary
+		title="Slovoed Compact English-&gt;Ukrainian"
+		package="com.slovoed.english_ukrainian.compact"
+		pattern="%s/808466499"
+	/>
+	<dictionary
+		title="Slovoed Classic English-&gt;Arabic"
+		package="com.slovoed.slovoed.base_019c.arabic_english"
+		pattern="%s/808532292"
+	/>
+	<dictionary
+		title="Slovoed Compact Russian-&gt;Arabic"
+		package="com.slovoed.slovoed.base_0169.arabic_russian"
+		pattern="%s/808531760"
+	/>
+	<dictionary
+		title="Slovoed Compact Arabic-&gt;Russian"
+		package="com.slovoed.slovoed.base_0169.arabic_russian"
+		pattern="%s/808531513"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish explanatory"
+		package="com.slovoed.spanish_spanish.deluxe"
+		pattern="%s/808531782"
+	/>
+	<dictionary
+		title="Slovoed Deluxe French-&gt;Russian"
+		package="com.slovoed.french_russian.deluxe"
+		pattern="%s/808532019"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Russian-&gt;French"
+		package="com.slovoed.french_russian.deluxe"
+		pattern="%s/808532018"
+	/>
+	<dictionary
+		title="Slovoed Deluxe Spanish-&gt;English"
+		package="com.slovoed.english_spanish.deluxe"
+		pattern="%s/808531781"
+	/>
+	<dictionary
+		title="Slovoed Deluxe English-&gt;Spanish"
+		package="com.slovoed.english_spanish.deluxe"
+		pattern="%s/808531780"
+	/>
+	<dictionary
+		title="Duden Foreign Words Dictionary"
+		package="com.slovoed.noreg.duden.base_03dc.german_german"
+		pattern="%s/808666179"
+	/>
+	<dictionary
+		title="Duden Foreign Words Dictionary"
+		package="com.slovoed.duden.base_03dc.german_german"
+		pattern="%s/808666179"
+	/>
+	<dictionary
+		title="Langenscheidt Professional German-&gt;Spanish"
+		package="com.slovoed.noreg.langenscheidt.professional.german_spanish"
+		pattern="%s/808661298"
+	/>
+	<dictionary
+		title="Langenscheidt Professional German-&gt;Spanish"
+		package="com.slovoed.langenscheidt.professional.german_spanish"
+		pattern="%s/808661298"
+	/>
+	<dictionary
+		title="Langenscheidt Professional Spanish-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.professional.german_spanish"
+		pattern="%s/808661299"
+	/>
+	<dictionary
+		title="Langenscheidt Professional Spanish-&gt;German"
+		package="com.slovoed.langenscheidt.professional.german_spanish"
+		pattern="%s/808661299"
+	/>
+	<dictionary
+		title="Langenscheidt Professional German-&gt;French"
+		package="com.slovoed.noreg.langenscheidt.professional.german_french"
+		pattern="%s/808661300"
+	/>
+	<dictionary
+		title="Langenscheidt Professional German-&gt;French"
+		package="com.slovoed.langenscheidt.professional.german_french"
+		pattern="%s/808661300"
+	/>
+	<dictionary
+		title="Langenscheidt Professional French-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.professional.german_french"
+		pattern="%s/808661301"
+	/>
+	<dictionary
+		title="Langenscheidt Professional French-&gt;German"
+		package="com.slovoed.langenscheidt.professional.german_french"
+		pattern="%s/808661301"
+	/>
+	<dictionary
+		title="Langenscheidt Professional German-&gt;English"
+		package="com.slovoed.noreg.langenscheidt.professional.german_english"
+		pattern="%s/808661296"
+	/>
+	<dictionary
+		title="Langenscheidt Professional German-&gt;English"
+		package="com.slovoed.langenscheidt.professional.german_english"
+		pattern="%s/808661296"
+	/>
+	<dictionary
+		title="Langenscheidt Professional English-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.professional.german_english"
+		pattern="%s/808661297"
+	/>
+	<dictionary
+		title="Langenscheidt Professional English-&gt;German"
+		package="com.slovoed.langenscheidt.professional.german_english"
+		pattern="%s/808661297"
+	/>
+	<dictionary
+		title="PONS Latin-&gt;German"
+		package="com.slovoed.noreg.pons.base_03c8.latin_german"
+		pattern="%s/808665912"
+	/>
+	<dictionary
+		title="PONS Latin-&gt;German"
+		package="com.slovoed.pons.base_03c8.latin_german"
+		pattern="%s/808665912"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;English BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_english"
+		pattern="%s/808661304"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;English BASIC"
+		package="com.slovoed.pons.basic.bulgarian_english"
+		pattern="%s/808661304"
+	/>
+	<dictionary
+		title="PONS English-&gt;Bulgarian BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_english"
+		pattern="%s/808661305"
+	/>
+	<dictionary
+		title="PONS English-&gt;Bulgarian BASIC"
+		package="com.slovoed.pons.basic.bulgarian_english"
+		pattern="%s/808661305"
+	/>
+	<dictionary
+		title="Duden - German dictionary of synonyms"
+		package="com.slovoed.noreg.duden.base_03c9.german_german"
+		pattern="%s/808665913"
+	/>
+	<dictionary
+		title="Duden - German dictionary of synonyms"
+		package="com.slovoed.duden.base_03c9.german_german"
+		pattern="%s/808665913"
+	/>
+	<dictionary
+		title="Russian dictionary of antonyms"
+		package="com.slovoed.noreg.ast_press.base_03bf.russian_russian"
+		pattern="%s/808665670"
+	/>
+	<dictionary
+		title="Russian dictionary of antonyms"
+		package="com.slovoed.ast_press.base_03bf.russian_russian"
+		pattern="%s/808665670"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;German BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_german"
+		pattern="%s/808661315"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;German BASIC"
+		package="com.slovoed.pons.basic.bulgarian_german"
+		pattern="%s/808661315"
+	/>
+	<dictionary
+		title="Russian thesaurus dictionary of synonyms"
+		package="com.slovoed.noreg.ast_press.base_03be.russian_russian"
+		pattern="%s/808665669"
+	/>
+	<dictionary
+		title="Russian thesaurus dictionary of synonyms"
+		package="com.slovoed.ast_press.base_03be.russian_russian"
+		pattern="%s/808665669"
+	/>
+	<dictionary
+		title="PONS French-&gt;Bulgarian BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_french"
+		pattern="%s/808661314"
+	/>
+	<dictionary
+		title="PONS French-&gt;Bulgarian BASIC"
+		package="com.slovoed.pons.basic.bulgarian_french"
+		pattern="%s/808661314"
+	/>
+	<dictionary
+		title="Explanatory dictionary of Russian nouns"
+		package="com.slovoed.noreg.ast_press.base_03bd.russian_russian"
+		pattern="%s/808665668"
+	/>
+	<dictionary
+		title="Explanatory dictionary of Russian nouns"
+		package="com.slovoed.ast_press.base_03bd.russian_russian"
+		pattern="%s/808665668"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;Italian BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_italian"
+		pattern="%s/808661317"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;Italian BASIC"
+		package="com.slovoed.pons.basic.bulgarian_italian"
+		pattern="%s/808661317"
+	/>
+	<dictionary
+		title="Explanatory dictionary of Russian verbs "
+		package="com.slovoed.noreg.ast_press.base_03bc.russian_russian"
+		pattern="%s/808665667"
+	/>
+	<dictionary
+		title="Explanatory dictionary of Russian verbs "
+		package="com.slovoed.ast_press.base_03bc.russian_russian"
+		pattern="%s/808665667"
+	/>
+	<dictionary
+		title="PONS German-&gt;Bulgarian BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_german"
+		pattern="%s/808661316"
+	/>
+	<dictionary
+		title="PONS German-&gt;Bulgarian BASIC"
+		package="com.slovoed.pons.basic.bulgarian_german"
+		pattern="%s/808661316"
+	/>
+	<dictionary
+		title="Advanced Russian phraseological dictionary"
+		package="com.slovoed.noreg.ast_press.base_03bb.russian_russian"
+		pattern="%s/808665666"
+	/>
+	<dictionary
+		title="Advanced Russian phraseological dictionary"
+		package="com.slovoed.ast_press.base_03bb.russian_russian"
+		pattern="%s/808665666"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;French BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_french"
+		pattern="%s/808661313"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;French BASIC"
+		package="com.slovoed.pons.basic.bulgarian_french"
+		pattern="%s/808661313"
+	/>
+	<dictionary
+		title="PONS Italian-&gt;Bulgarian BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_italian"
+		pattern="%s/808661318"
+	/>
+	<dictionary
+		title="PONS Italian-&gt;Bulgarian BASIC"
+		package="com.slovoed.pons.basic.bulgarian_italian"
+		pattern="%s/808661318"
+	/>
+	<dictionary
+		title="PONS German-&gt;Italian ADVANCED"
+		package="com.slovoed.noreg.pons.german_italian"
+		pattern="%s/808465985"
+	/>
+	<dictionary
+		title="PONS German-&gt;Italian ADVANCED"
+		package="com.slovoed.pons.german_italian"
+		pattern="%s/808465985"
+	/>
+	<dictionary
+		title="PONS Italian-&gt;German ADVANCED"
+		package="com.slovoed.noreg.pons.german_italian"
+		pattern="%s/808465986"
+	/>
+	<dictionary
+		title="PONS Italian-&gt;German ADVANCED"
+		package="com.slovoed.pons.german_italian"
+		pattern="%s/808465986"
+	/>
+	<dictionary
+		title="Oxford University Press 2007 Oxford English-&gt;Russian"
+		package="com.slovoed.noreg.oxford.english_russian"
+		pattern="%s/808466224"
+	/>
+	<dictionary
+		title="Oxford University Press 2007 Oxford English-&gt;Russian"
+		package="com.slovoed.oxford.english_russian"
+		pattern="%s/808466224"
+	/>
+	<dictionary
+		title="Langenscheidt Basic Turkish-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.basic.german_turkish"
+		pattern="%s/808661060"
+	/>
+	<dictionary
+		title="Langenscheidt Basic Turkish-&gt;German"
+		package="com.slovoed.langenscheidt.basic.german_turkish"
+		pattern="%s/808661060"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;Turkish"
+		package="com.slovoed.noreg.langenscheidt.basic.german_turkish"
+		pattern="%s/808661059"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;Turkish"
+		package="com.slovoed.langenscheidt.basic.german_turkish"
+		pattern="%s/808661059"
+	/>
+	<dictionary
+		title="Oxford University Press 2007 Oxford Russian-&gt;English"
+		package="com.slovoed.noreg.oxford.english_russian"
+		pattern="%s/808466225"
+	/>
+	<dictionary
+		title="Oxford University Press 2007 Oxford Russian-&gt;English"
+		package="com.slovoed.oxford.english_russian"
+		pattern="%s/808466225"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Czech-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_czech"
+		pattern="%s/808661062"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Czech-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_czech"
+		pattern="%s/808661062"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Czech"
+		package="com.slovoed.noreg.langenscheidt.standard.german_czech"
+		pattern="%s/808661061"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Czech"
+		package="com.slovoed.langenscheidt.standard.german_czech"
+		pattern="%s/808661061"
+	/>
+	<dictionary
+		title="Duden Foreign Words Dictionary"
+		package="com.slovoed.noreg.duden.duden_foreign_words_dictionary"
+		pattern="%s/808596280"
+	/>
+	<dictionary
+		title="Duden Foreign Words Dictionary"
+		package="com.slovoed.duden.duden_foreign_words_dictionary"
+		pattern="%s/808596280"
+	/>
+	<dictionary
+		title="Duden - German dictionary of synonyms"
+		package="com.slovoed.noreg.duden.duden_synonyms_dictionary"
+		pattern="%s/808596279"
+	/>
+	<dictionary
+		title="Duden - German dictionary of synonyms"
+		package="com.slovoed.duden.duden_synonyms_dictionary"
+		pattern="%s/808596279"
+	/>
+	<dictionary
+		title="Duden - German explanatory dictionary"
+		package="com.slovoed.noreg.duden.duden_german_explanatory_dictionary"
+		pattern="%s/808596281"
+	/>
+	<dictionary
+		title="Duden - German explanatory dictionary"
+		package="com.slovoed.duden.duden_german_explanatory_dictionary"
+		pattern="%s/808596281"
+	/>
+	<dictionary
+		title="Duden - German spelling dictionary"
+		package="com.slovoed.noreg.duden.duden_spelling_dictionary"
+		pattern="%s/808596289"
+	/>
+	<dictionary
+		title="Duden - German spelling dictionary"
+		package="com.slovoed.duden.duden_spelling_dictionary"
+		pattern="%s/808596289"
+	/>
+	<dictionary
+		title="Langenscheidt German Learner's Dictionary"
+		package="com.slovoed.noreg.langenscheidt.langenscheidt_learners_german_dictionary"
+		pattern="%s/808599861"
+	/>
+	<dictionary
+		title="Langenscheidt German Learner's Dictionary"
+		package="com.slovoed.langenscheidt.langenscheidt_learners_german_dictionary"
+		pattern="%s/808599861"
+	/>
+	<dictionary
+		title="PONS English-&gt;Russian CONCISE"
+		package="com.slovoed.noreg.pons.english_russian"
+		pattern="%s/808599859"
+	/>
+	<dictionary
+		title="PONS English-&gt;Russian CONCISE"
+		package="com.slovoed.pons.english_russian"
+		pattern="%s/808599859"
+	/>
+	<dictionary
+		title="PONS Russian-&gt;English CONCISE"
+		package="com.slovoed.noreg.pons.english_russian"
+		pattern="%s/808599860"
+	/>
+	<dictionary
+		title="PONS Russian-&gt;English CONCISE"
+		package="com.slovoed.pons.english_russian"
+		pattern="%s/808599860"
+	/>
+	<dictionary
+		title="Langenscheidt Professional German-&gt;Italian"
+		package="com.slovoed.noreg.langenscheidt.professional.german_italian"
+		pattern="%s/808661827"
+	/>
+	<dictionary
+		title="Langenscheidt Professional German-&gt;Italian"
+		package="com.slovoed.langenscheidt.professional.german_italian"
+		pattern="%s/808661827"
+	/>
+	<dictionary
+		title="PONS English-&gt;Polish CONCISE"
+		package="com.slovoed.noreg.pons.english_polish"
+		pattern="%s/808599857"
+	/>
+	<dictionary
+		title="PONS English-&gt;Polish CONCISE"
+		package="com.slovoed.pons.english_polish"
+		pattern="%s/808599857"
+	/>
+	<dictionary
+		title="Langenscheidt Professional Italian-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.professional.german_italian"
+		pattern="%s/808661828"
+	/>
+	<dictionary
+		title="Langenscheidt Professional Italian-&gt;German"
+		package="com.slovoed.langenscheidt.professional.german_italian"
+		pattern="%s/808661828"
+	/>
+	<dictionary
+		title="PONS Polish-&gt;English CONCISE"
+		package="com.slovoed.noreg.pons.english_polish"
+		pattern="%s/808599858"
+	/>
+	<dictionary
+		title="PONS Polish-&gt;English CONCISE"
+		package="com.slovoed.pons.english_polish"
+		pattern="%s/808599858"
+	/>
+	<dictionary
+		title="PONS Russian-&gt;German CONCISE"
+		package="com.slovoed.noreg.pons.german_russian.compact"
+		pattern="%s/808599856"
+	/>
+	<dictionary
+		title="PONS Russian-&gt;German CONCISE"
+		package="com.slovoed.pons.german_russian.compact"
+		pattern="%s/808599856"
+	/>
+	<dictionary
+		title="Langenscheidt Classic Polish-&gt;Italian"
+		package="com.slovoed.noreg.langenscheidt.base_03b6.italian_polish"
+		pattern="%s/808665655"
+	/>
+	<dictionary
+		title="Langenscheidt Classic Polish-&gt;Italian"
+		package="com.slovoed.langenscheidt.base_03b6.italian_polish"
+		pattern="%s/808665655"
+	/>
+	<dictionary
+		title="PONS German-&gt;Bulgarian CONCISE"
+		package="com.slovoed.noreg.pons.concise.bulgarian_german"
+		pattern="%s/808661559"
+	/>
+	<dictionary
+		title="PONS German-&gt;Bulgarian CONCISE"
+		package="com.slovoed.pons.concise.bulgarian_german"
+		pattern="%s/808661559"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;Spanish BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_spanish"
+		pattern="%s/808661554"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;Spanish BASIC"
+		package="com.slovoed.pons.basic.bulgarian_spanish"
+		pattern="%s/808661554"
+	/>
+	<dictionary
+		title="Langenscheidt Premium German-&gt;Polish Dictionary"
+		package="com.slovoed.noreg.langenscheidt.base_03b0.german_polish"
+		pattern="%s/808665648"
+	/>
+	<dictionary
+		title="Langenscheidt Premium German-&gt;Polish Dictionary"
+		package="com.slovoed.langenscheidt.base_03b0.german_polish"
+		pattern="%s/808665648"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;English"
+		package="com.slovoed.noreg.langenscheidt.standard.german_english"
+		pattern="%s/808599876"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;English"
+		package="com.slovoed.langenscheidt.standard.german_english"
+		pattern="%s/808599876"
+	/>
+	<dictionary
+		title="PONS Russian-&gt;Bulgarian BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_russian"
+		pattern="%s/808661553"
+	/>
+	<dictionary
+		title="PONS Russian-&gt;Bulgarian BASIC"
+		package="com.slovoed.pons.basic.bulgarian_russian"
+		pattern="%s/808661553"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;Russian BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_russian"
+		pattern="%s/808661552"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;Russian BASIC"
+		package="com.slovoed.pons.basic.bulgarian_russian"
+		pattern="%s/808661552"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;French"
+		package="com.slovoed.noreg.langenscheidt.standard.german_french"
+		pattern="%s/808599878"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;French"
+		package="com.slovoed.langenscheidt.standard.german_french"
+		pattern="%s/808599878"
+	/>
+	<dictionary
+		title="Langenscheidt Premium Polish-&gt;German Dictionary"
+		package="com.slovoed.noreg.langenscheidt.base_03b0.german_polish"
+		pattern="%s/808665649"
+	/>
+	<dictionary
+		title="Langenscheidt Premium Polish-&gt;German Dictionary"
+		package="com.slovoed.langenscheidt.base_03b0.german_polish"
+		pattern="%s/808665649"
+	/>
+	<dictionary
+		title="Langenscheidt Standard English-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_english"
+		pattern="%s/808599877"
+	/>
+	<dictionary
+		title="Langenscheidt Standard English-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_english"
+		pattern="%s/808599877"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;German CONCISE"
+		package="com.slovoed.noreg.pons.concise.bulgarian_german"
+		pattern="%s/808661558"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;German CONCISE"
+		package="com.slovoed.pons.concise.bulgarian_german"
+		pattern="%s/808661558"
+	/>
+	<dictionary
+		title="Langenscheidt Classic French-&gt;Polish"
+		package="com.slovoed.noreg.langenscheidt.base_03b4.french_polish"
+		pattern="%s/808665652"
+	/>
+	<dictionary
+		title="Langenscheidt Classic French-&gt;Polish"
+		package="com.slovoed.langenscheidt.base_03b4.french_polish"
+		pattern="%s/808665652"
+	/>
+	<dictionary
+		title="PONS English-&gt;Bulgarian CONCISE"
+		package="com.slovoed.noreg.pons.concise.bulgarian_english"
+		pattern="%s/808661557"
+	/>
+	<dictionary
+		title="PONS English-&gt;Bulgarian CONCISE"
+		package="com.slovoed.pons.concise.bulgarian_english"
+		pattern="%s/808661557"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;English CONCISE"
+		package="com.slovoed.noreg.pons.concise.bulgarian_english"
+		pattern="%s/808661556"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;English CONCISE"
+		package="com.slovoed.pons.concise.bulgarian_english"
+		pattern="%s/808661556"
+	/>
+	<dictionary
+		title="Langenscheidt Classic Italian-&gt;Polish"
+		package="com.slovoed.noreg.langenscheidt.base_03b6.italian_polish"
+		pattern="%s/808665654"
+	/>
+	<dictionary
+		title="Langenscheidt Classic Italian-&gt;Polish"
+		package="com.slovoed.langenscheidt.base_03b6.italian_polish"
+		pattern="%s/808665654"
+	/>
+	<dictionary
+		title="Merriam-Webster's Collegiate"
+		package="com.slovoed.noreg.merriam_webster.english_english_collegiate"
+		pattern="%s/808534576"
+	/>
+	<dictionary
+		title="Merriam-Webster's Collegiate"
+		package="com.slovoed.merriam_webster.english_english_collegiate"
+		pattern="%s/808534576"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;Bulgarian BASIC"
+		package="com.slovoed.noreg.pons.basic.bulgarian_spanish"
+		pattern="%s/808661555"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;Bulgarian BASIC"
+		package="com.slovoed.pons.basic.bulgarian_spanish"
+		pattern="%s/808661555"
+	/>
+	<dictionary
+		title="Langenscheidt Classic Polish-&gt;French"
+		package="com.slovoed.noreg.langenscheidt.base_03b4.french_polish"
+		pattern="%s/808665653"
+	/>
+	<dictionary
+		title="Langenscheidt Classic Polish-&gt;French"
+		package="com.slovoed.langenscheidt.base_03b4.french_polish"
+		pattern="%s/808665653"
+	/>
+	<dictionary
+		title="Langenscheidt Classic Polish-&gt;English Dictionary"
+		package="com.slovoed.noreg.langenscheidt.base_03ae.english_polish"
+		pattern="%s/808665414"
+	/>
+	<dictionary
+		title="Langenscheidt Classic Polish-&gt;English Dictionary"
+		package="com.slovoed.langenscheidt.base_03ae.english_polish"
+		pattern="%s/808665414"
+	/>
+	<dictionary
+		title="Merriam-Webster's Dictionary"
+		package="com.slovoed.noreg.merriam_webster.english_english_mass_market"
+		pattern="%s/808534577"
+	/>
+	<dictionary
+		title="Merriam-Webster's Dictionary"
+		package="com.slovoed.merriam_webster.english_english_mass_market"
+		pattern="%s/808534577"
+	/>
+	<dictionary
+		title="Merriam-Webster's Pocket"
+		package="com.slovoed.noreg.merriam_webster.english_english_pocket"
+		pattern="%s/808534578"
+	/>
+	<dictionary
+		title="Merriam-Webster's Pocket"
+		package="com.slovoed.merriam_webster.english_english_pocket"
+		pattern="%s/808534578"
+	/>
+	<dictionary
+		title="Langenscheidt Basic Italian-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.basic.german_italian"
+		pattern="%s/808600120"
+	/>
+	<dictionary
+		title="Langenscheidt Basic Italian-&gt;German"
+		package="com.slovoed.langenscheidt.basic.german_italian"
+		pattern="%s/808600120"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;Spanish"
+		package="com.slovoed.noreg.langenscheidt.basic.german_spanish"
+		pattern="%s/808600121"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;Spanish"
+		package="com.slovoed.langenscheidt.basic.german_spanish"
+		pattern="%s/808600121"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Spanish-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_spanish"
+		pattern="%s/808600116"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Spanish-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_spanish"
+		pattern="%s/808600116"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;French"
+		package="com.slovoed.noreg.langenscheidt.basic.german_french"
+		pattern="%s/808600117"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;French"
+		package="com.slovoed.langenscheidt.basic.german_french"
+		pattern="%s/808600117"
+	/>
+	<dictionary
+		title="Langenscheidt Basic French-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.basic.german_french"
+		pattern="%s/808600118"
+	/>
+	<dictionary
+		title="Langenscheidt Basic French-&gt;German"
+		package="com.slovoed.langenscheidt.basic.german_french"
+		pattern="%s/808600118"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;Italian"
+		package="com.slovoed.noreg.langenscheidt.basic.german_italian"
+		pattern="%s/808600119"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;Italian"
+		package="com.slovoed.langenscheidt.basic.german_italian"
+		pattern="%s/808600119"
+	/>
+	<dictionary
+		title="Langenscheidt Standard French-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_french"
+		pattern="%s/808600112"
+	/>
+	<dictionary
+		title="Langenscheidt Standard French-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_french"
+		pattern="%s/808600112"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Italian"
+		package="com.slovoed.noreg.langenscheidt.standard.german_italian"
+		pattern="%s/808600113"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Italian"
+		package="com.slovoed.langenscheidt.standard.german_italian"
+		pattern="%s/808600113"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Italian-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_italian"
+		pattern="%s/808600114"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Italian-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_italian"
+		pattern="%s/808600114"
+	/>
+	<dictionary
+		title="Langenscheidt Classic English-&gt;Polish Dictionary"
+		package="com.slovoed.noreg.langenscheidt.base_03ae.english_polish"
+		pattern="%s/808665413"
+	/>
+	<dictionary
+		title="Langenscheidt Classic English-&gt;Polish Dictionary"
+		package="com.slovoed.langenscheidt.base_03ae.english_polish"
+		pattern="%s/808665413"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Spanish"
+		package="com.slovoed.noreg.langenscheidt.standard.german_spanish"
+		pattern="%s/808600115"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Spanish"
+		package="com.slovoed.langenscheidt.standard.german_spanish"
+		pattern="%s/808600115"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;English"
+		package="com.slovoed.noreg.langenscheidt.basic.german_english"
+		pattern="%s/808600131"
+	/>
+	<dictionary
+		title="Langenscheidt Basic German-&gt;English"
+		package="com.slovoed.langenscheidt.basic.german_english"
+		pattern="%s/808600131"
+	/>
+	<dictionary
+		title="Langenscheidt Basic English-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.basic.german_english"
+		pattern="%s/808600130"
+	/>
+	<dictionary
+		title="Langenscheidt Basic English-&gt;German"
+		package="com.slovoed.langenscheidt.basic.german_english"
+		pattern="%s/808600130"
+	/>
+	<dictionary
+		title="Langenscheidt Basic Spanish-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.basic.german_spanish"
+		pattern="%s/808600129"
+	/>
+	<dictionary
+		title="Langenscheidt Basic Spanish-&gt;German"
+		package="com.slovoed.langenscheidt.basic.german_spanish"
+		pattern="%s/808600129"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;English PREMIUM"
+		package="com.slovoed.noreg.pons.premium.bulgarian_english"
+		pattern="%s/808662577"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;English PREMIUM"
+		package="com.slovoed.pons.premium.bulgarian_english"
+		pattern="%s/808662577"
+	/>
+	<dictionary
+		title="PONS English-&gt;Bulgarian PREMIUM"
+		package="com.slovoed.noreg.pons.premium.bulgarian_english"
+		pattern="%s/808662578"
+	/>
+	<dictionary
+		title="PONS English-&gt;Bulgarian PREMIUM"
+		package="com.slovoed.pons.premium.bulgarian_english"
+		pattern="%s/808662578"
+	/>
+	<dictionary
+		title="PONS English-&gt;German ADVANCED"
+		package="com.slovoed.noreg.pons.english_german"
+		pattern="%s/808464949"
+	/>
+	<dictionary
+		title="PONS English-&gt;German ADVANCED"
+		package="com.slovoed.pons.english_german"
+		pattern="%s/808464949"
+	/>
+	<dictionary
+		title="PONS German-&gt;English ADVANCED"
+		package="com.slovoed.noreg.pons.english_german"
+		pattern="%s/808464950"
+	/>
+	<dictionary
+		title="PONS German-&gt;English ADVANCED"
+		package="com.slovoed.pons.english_german"
+		pattern="%s/808464950"
+	/>
+	<dictionary
+		title="Merriam-Webster's Medical"
+		package="com.slovoed.noreg.merriam_webster.english_english_medical"
+		pattern="%s/808595513"
+	/>
+	<dictionary
+		title="Merriam-Webster's Medical"
+		package="com.slovoed.merriam_webster.english_english_medical"
+		pattern="%s/808595513"
+	/>
+	<dictionary
+		title="Merriam-Webster's French-&gt;English"
+		package="com.slovoed.noreg.merriam_webster.english_french"
+		pattern="%s/808595512"
+	/>
+	<dictionary
+		title="Merriam-Webster's French-&gt;English"
+		package="com.slovoed.merriam_webster.english_french"
+		pattern="%s/808595512"
+	/>
+	<dictionary
+		title="Merriam-Webster's English-&gt;French"
+		package="com.slovoed.noreg.merriam_webster.english_french"
+		pattern="%s/808595511"
+	/>
+	<dictionary
+		title="Merriam-Webster's English-&gt;French"
+		package="com.slovoed.merriam_webster.english_french"
+		pattern="%s/808595511"
+	/>
+	<dictionary
+		title="Merriam-Webster's English-&gt;Spanish"
+		package="com.slovoed.noreg.merriam_webster.english_spanish"
+		pattern="%s/808595521"
+	/>
+	<dictionary
+		title="Merriam-Webster's English-&gt;Spanish"
+		package="com.slovoed.merriam_webster.english_spanish"
+		pattern="%s/808595521"
+	/>
+	<dictionary
+		title="Merriam-Webster's Unabridged"
+		package="com.slovoed.noreg.merriam_webster.english_english_unabridged"
+		pattern="%s/808595524"
+	/>
+	<dictionary
+		title="Merriam-Webster's Unabridged"
+		package="com.slovoed.merriam_webster.english_english_unabridged"
+		pattern="%s/808595524"
+	/>
+	<dictionary
+		title="Merriam-Webster's Spanish-&gt;English"
+		package="com.slovoed.noreg.merriam_webster.english_spanish"
+		pattern="%s/808595522"
+	/>
+	<dictionary
+		title="Merriam-Webster's Spanish-&gt;English"
+		package="com.slovoed.merriam_webster.english_spanish"
+		pattern="%s/808595522"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish SCHOOL"
+		package="com.slovoed.noreg.pons.school_spanish"
+		pattern="%s/808600641"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish SCHOOL"
+		package="com.slovoed.pons.school_spanish"
+		pattern="%s/808600641"
+	/>
+	<dictionary
+		title="PONS English-&gt;German SCHOOL"
+		package="com.slovoed.noreg.pons.school_english"
+		pattern="%s/808600630"
+	/>
+	<dictionary
+		title="PONS English-&gt;German SCHOOL"
+		package="com.slovoed.pons.school_english"
+		pattern="%s/808600630"
+	/>
+	<dictionary
+		title="PONS German-&gt;English SCHOOL"
+		package="com.slovoed.noreg.pons.school_english"
+		pattern="%s/808600631"
+	/>
+	<dictionary
+		title="PONS German-&gt;English SCHOOL"
+		package="com.slovoed.pons.school_english"
+		pattern="%s/808600631"
+	/>
+	<dictionary
+		title="PONS German-&gt;French SCHOOL"
+		package="com.slovoed.noreg.pons.school_french"
+		pattern="%s/808600632"
+	/>
+	<dictionary
+		title="PONS German-&gt;French SCHOOL"
+		package="com.slovoed.pons.school_french"
+		pattern="%s/808600632"
+	/>
+	<dictionary
+		title="PONS French-&gt;German SCHOOL"
+		package="com.slovoed.noreg.pons.school_french"
+		pattern="%s/808600633"
+	/>
+	<dictionary
+		title="PONS French-&gt;German SCHOOL"
+		package="com.slovoed.pons.school_french"
+		pattern="%s/808600633"
+	/>
+	<dictionary
+		title="PONS German-&gt;Polish CONCISE"
+		package="com.slovoed.noreg.pons.german_polish"
+		pattern="%s/808596784"
+	/>
+	<dictionary
+		title="PONS German-&gt;Polish CONCISE"
+		package="com.slovoed.pons.german_polish"
+		pattern="%s/808596784"
+	/>
+	<dictionary
+		title="VOX General Spanish Dictionary"
+		package="com.slovoed.noreg.vox.spanish_spanish"
+		pattern="%s/808596786"
+	/>
+	<dictionary
+		title="VOX General Spanish Dictionary"
+		package="com.slovoed.vox.spanish_spanish"
+		pattern="%s/808596786"
+	/>
+	<dictionary
+		title="PONS Polish-&gt;German CONCISE"
+		package="com.slovoed.noreg.pons.german_polish"
+		pattern="%s/808596785"
+	/>
+	<dictionary
+		title="PONS Polish-&gt;German CONCISE"
+		package="com.slovoed.pons.german_polish"
+		pattern="%s/808596785"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Chinese"
+		package="com.slovoed.noreg.langenscheidt.standard.german_chinese"
+		pattern="%s/808601155"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Chinese"
+		package="com.slovoed.langenscheidt.standard.german_chinese"
+		pattern="%s/808601155"
+	/>
+	<dictionary
+		title="Langenscheidt Essential Japanese-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.base_02fa.german_japanese"
+		pattern="%s/808601154"
+	/>
+	<dictionary
+		title="Langenscheidt Essential Japanese-&gt;German"
+		package="com.slovoed.langenscheidt.base_02fa.german_japanese"
+		pattern="%s/808601154"
+	/>
+	<dictionary
+		title="Langenscheidt Essential German-&gt;Japanese"
+		package="com.slovoed.noreg.langenscheidt.base_02fa.german_japanese"
+		pattern="%s/808601153"
+	/>
+	<dictionary
+		title="Langenscheidt Essential German-&gt;Japanese"
+		package="com.slovoed.langenscheidt.base_02fa.german_japanese"
+		pattern="%s/808601153"
+	/>
+	<dictionary
+		title="PONS German-&gt;Greek PREMIUM"
+		package="com.slovoed.noreg.pons.german_greek"
+		pattern="%s/808596534"
+	/>
+	<dictionary
+		title="PONS German-&gt;Greek PREMIUM"
+		package="com.slovoed.pons.german_greek"
+		pattern="%s/808596534"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Swedish"
+		package="com.slovoed.noreg.langenscheidt.standard.german_swedish"
+		pattern="%s/808600901"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Swedish"
+		package="com.slovoed.langenscheidt.standard.german_swedish"
+		pattern="%s/808600901"
+	/>
+	<dictionary
+		title="PONS Greek-&gt;German PREMIUM"
+		package="com.slovoed.noreg.pons.german_greek"
+		pattern="%s/808596535"
+	/>
+	<dictionary
+		title="PONS Greek-&gt;German PREMIUM"
+		package="com.slovoed.pons.german_greek"
+		pattern="%s/808596535"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Swedish-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_swedish"
+		pattern="%s/808600902"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Swedish-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_swedish"
+		pattern="%s/808600902"
+	/>
+	<dictionary
+		title="PONS French-&gt;German ADVANCED"
+		package="com.slovoed.noreg.pons.french_german"
+		pattern="%s/808596536"
+	/>
+	<dictionary
+		title="PONS French-&gt;German ADVANCED"
+		package="com.slovoed.pons.french_german"
+		pattern="%s/808596536"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Danish"
+		package="com.slovoed.noreg.langenscheidt.standard.german_danish"
+		pattern="%s/808600899"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Danish"
+		package="com.slovoed.langenscheidt.standard.german_danish"
+		pattern="%s/808600899"
+	/>
+	<dictionary
+		title="PONS German-&gt;French ADVANCED"
+		package="com.slovoed.noreg.pons.french_german"
+		pattern="%s/808596537"
+	/>
+	<dictionary
+		title="PONS German-&gt;French ADVANCED"
+		package="com.slovoed.pons.french_german"
+		pattern="%s/808596537"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Danish-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_danish"
+		pattern="%s/808600900"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Danish-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_danish"
+		pattern="%s/808600900"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish ADVANCED"
+		package="com.slovoed.noreg.pons.german_spanish"
+		pattern="%s/808596530"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish ADVANCED"
+		package="com.slovoed.pons.german_spanish"
+		pattern="%s/808596530"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German ADVANCED"
+		package="com.slovoed.noreg.pons.german_spanish"
+		pattern="%s/808596531"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German ADVANCED"
+		package="com.slovoed.pons.german_spanish"
+		pattern="%s/808596531"
+	/>
+	<dictionary
+		title="Langenscheidt Essential German-&gt;Slovenian"
+		package="com.slovoed.noreg.langenscheidt.essential.german_slovenian"
+		pattern="%s/808601138"
+	/>
+	<dictionary
+		title="Langenscheidt Essential German-&gt;Slovenian"
+		package="com.slovoed.langenscheidt.essential.german_slovenian"
+		pattern="%s/808601138"
+	/>
+	<dictionary
+		title="Langenscheidt Essential Slovenian-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.essential.german_slovenian"
+		pattern="%s/808601139"
+	/>
+	<dictionary
+		title="Langenscheidt Essential Slovenian-&gt;German"
+		package="com.slovoed.langenscheidt.essential.german_slovenian"
+		pattern="%s/808601139"
+	/>
+	<dictionary
+		title="Langenscheidt Essential German-&gt;Hungarian"
+		package="com.slovoed.noreg.langenscheidt.essential.german_hungarian"
+		pattern="%s/808601136"
+	/>
+	<dictionary
+		title="Langenscheidt Essential German-&gt;Hungarian"
+		package="com.slovoed.langenscheidt.essential.german_hungarian"
+		pattern="%s/808601136"
+	/>
+	<dictionary
+		title="Langenscheidt Essential Hungarian-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.essential.german_hungarian"
+		pattern="%s/808601137"
+	/>
+	<dictionary
+		title="Langenscheidt Essential Hungarian-&gt;German"
+		package="com.slovoed.langenscheidt.essential.german_hungarian"
+		pattern="%s/808601137"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Turkish-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_turkish"
+		pattern="%s/808600884"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Turkish-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_turkish"
+		pattern="%s/808600884"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Turkish"
+		package="com.slovoed.noreg.langenscheidt.standard.german_turkish"
+		pattern="%s/808600883"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Turkish"
+		package="com.slovoed.langenscheidt.standard.german_turkish"
+		pattern="%s/808600883"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Russian-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.langenscheidt_standard_worterbuch_russisch"
+		pattern="%s/808597041"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Russian-&gt;German"
+		package="com.slovoed.langenscheidt.langenscheidt_standard_worterbuch_russisch"
+		pattern="%s/808597041"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Russian"
+		package="com.slovoed.noreg.langenscheidt.langenscheidt_standard_worterbuch_russisch"
+		pattern="%s/808597040"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Russian"
+		package="com.slovoed.langenscheidt.langenscheidt_standard_worterbuch_russisch"
+		pattern="%s/808597040"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German SCHOOL"
+		package="com.slovoed.noreg.pons.school_spanish"
+		pattern="%s/808600642"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German SCHOOL"
+		package="com.slovoed.pons.school_spanish"
+		pattern="%s/808600642"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Portuguese"
+		package="com.slovoed.noreg.langenscheidt.standard.german_portuguese"
+		pattern="%s/808600643"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Portuguese"
+		package="com.slovoed.langenscheidt.standard.german_portuguese"
+		pattern="%s/808600643"
+	/>
+	<dictionary
+		title="Van Dale Lingo 5"
+		package="com.slovoed.noreg.langenscheidt.standard.german_portuguese"
+		pattern="%s/808600645"
+	/>
+	<dictionary
+		title="Van Dale Lingo 5"
+		package="com.slovoed.langenscheidt.standard.german_portuguese"
+		pattern="%s/808600645"
+	/>
+	<dictionary
+		title="Van Dale Lingo 6"
+		package="com.slovoed.noreg.langenscheidt.standard.german_polish"
+		pattern="%s/808600646"
+	/>
+	<dictionary
+		title="Van Dale Lingo 6"
+		package="com.slovoed.langenscheidt.standard.german_polish"
+		pattern="%s/808600646"
+	/>
+	<dictionary
+		title="PONS German-&gt;Turkish CONCISE"
+		package="com.slovoed.noreg.pons.german_turkish"
+		pattern="%s/808596787"
+	/>
+	<dictionary
+		title="PONS German-&gt;Turkish CONCISE"
+		package="com.slovoed.pons.german_turkish"
+		pattern="%s/808596787"
+	/>
+	<dictionary
+		title="PONS Turkish-&gt;German CONCISE"
+		package="com.slovoed.noreg.pons.german_turkish"
+		pattern="%s/808596788"
+	/>
+	<dictionary
+		title="PONS Turkish-&gt;German CONCISE"
+		package="com.slovoed.pons.german_turkish"
+		pattern="%s/808596788"
+	/>
+	<dictionary
+		title="Van Dale Lingo 7"
+		package="com.slovoed.noreg.langenscheidt.standard.german_polish"
+		pattern="%s/808600880"
+	/>
+	<dictionary
+		title="Van Dale Lingo 7"
+		package="com.slovoed.langenscheidt.standard.german_polish"
+		pattern="%s/808600880"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Dutch"
+		package="com.slovoed.noreg.langenscheidt.standard.german_dutch"
+		pattern="%s/808600881"
+	/>
+	<dictionary
+		title="Langenscheidt Standard German-&gt;Dutch"
+		package="com.slovoed.langenscheidt.standard.german_dutch"
+		pattern="%s/808600881"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Dutch-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_dutch"
+		pattern="%s/808600882"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Dutch-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_dutch"
+		pattern="%s/808600882"
+	/>
+	<dictionary
+		title="VOX Spanish-&gt;French Dictionary"
+		package="com.slovoed.noreg.vox.french_spanish"
+		pattern="%s/808535094"
+	/>
+	<dictionary
+		title="VOX Spanish-&gt;French Dictionary"
+		package="com.slovoed.vox.french_spanish"
+		pattern="%s/808535094"
+	/>
+	<dictionary
+		title="VOX Catalan-&gt;Spanish Dictionary"
+		package="com.slovoed.noreg.vox.catalan_spanish"
+		pattern="%s/808535093"
+	/>
+	<dictionary
+		title="VOX Catalan-&gt;Spanish Dictionary"
+		package="com.slovoed.vox.catalan_spanish"
+		pattern="%s/808535093"
+	/>
+	<dictionary
+		title="VOX Spanish-&gt;Catalan Dictionary"
+		package="com.slovoed.noreg.vox.catalan_spanish"
+		pattern="%s/808535092"
+	/>
+	<dictionary
+		title="VOX Spanish-&gt;Catalan Dictionary"
+		package="com.slovoed.vox.catalan_spanish"
+		pattern="%s/808535092"
+	/>
+	<dictionary
+		title="VOX French-&gt;Spanish Dictionary"
+		package="com.slovoed.noreg.vox.french_spanish"
+		pattern="%s/808535095"
+	/>
+	<dictionary
+		title="VOX French-&gt;Spanish Dictionary"
+		package="com.slovoed.vox.french_spanish"
+		pattern="%s/808535095"
+	/>
+	<dictionary
+		title="VOX Spanish-&gt;Italian Dictionary"
+		package="com.slovoed.noreg.vox.italian_spanish"
+		pattern="%s/808535089"
+	/>
+	<dictionary
+		title="VOX Spanish-&gt;Italian Dictionary"
+		package="com.slovoed.vox.italian_spanish"
+		pattern="%s/808535089"
+	/>
+	<dictionary
+		title="VOX Italian-&gt;Spanish Dictionary"
+		package="com.slovoed.noreg.vox.italian_spanish"
+		pattern="%s/808535088"
+	/>
+	<dictionary
+		title="VOX Italian-&gt;Spanish Dictionary"
+		package="com.slovoed.vox.italian_spanish"
+		pattern="%s/808535088"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Chinese-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.standard.german_chinese"
+		pattern="%s/808601156"
+	/>
+	<dictionary
+		title="Langenscheidt Standard Chinese-&gt;German"
+		package="com.slovoed.langenscheidt.standard.german_chinese"
+		pattern="%s/808601156"
+	/>
+	<dictionary
+		title="PONS German Spelling"
+		package="com.slovoed.noreg.pons.german_spelling"
+		pattern="%s/808663105"
+	/>
+	<dictionary
+		title="PONS German Spelling"
+		package="com.slovoed.pons.german_spelling"
+		pattern="%s/808663105"
+	/>
+	<dictionary
+		title="PONS German-&gt;Italian PREMIUM"
+		package="com.slovoed.noreg.pons.premium.german_italian"
+		pattern="%s/808663106"
+	/>
+	<dictionary
+		title="PONS German-&gt;Italian PREMIUM"
+		package="com.slovoed.pons.premium.german_italian"
+		pattern="%s/808663106"
+	/>
+	<dictionary
+		title="PONS Italian-&gt;German PREMIUM"
+		package="com.slovoed.noreg.pons.premium.german_italian"
+		pattern="%s/808663107"
+	/>
+	<dictionary
+		title="PONS Italian-&gt;German PREMIUM"
+		package="com.slovoed.pons.premium.german_italian"
+		pattern="%s/808663107"
+	/>
+	<dictionary
+		title="PONS German-&gt;Russian BASIC"
+		package="com.slovoed.noreg.pons.basic.german_russian"
+		pattern="%s/808663108"
+	/>
+	<dictionary
+		title="PONS German-&gt;Russian BASIC"
+		package="com.slovoed.pons.basic.german_russian"
+		pattern="%s/808663108"
+	/>
+	<dictionary
+		title="AST Press Academical English-&gt;Russian"
+		package="com.slovoed.noreg.slovari_xxi_veka.big_english_russian"
+		pattern="%s/808663096"
+	/>
+	<dictionary
+		title="AST Press Academical English-&gt;Russian"
+		package="com.slovoed.slovari_xxi_veka.big_english_russian"
+		pattern="%s/808663096"
+	/>
+	<dictionary
+		title="OOO Russkiy yazik - Media, 2007 Academical Russian-&gt;English"
+		package="com.slovoed.noreg.slovari_xxi_veka.big_english_russian"
+		pattern="%s/808663097"
+	/>
+	<dictionary
+		title="OOO Russkiy yazik - Media, 2007 Academical Russian-&gt;English"
+		package="com.slovoed.slovari_xxi_veka.big_english_russian"
+		pattern="%s/808663097"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German BUSINESS"
+		package="com.slovoed.noreg.pons.business_spanish"
+		pattern="%s/808597574"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German BUSINESS"
+		package="com.slovoed.pons.business_spanish"
+		pattern="%s/808597574"
+	/>
+	<dictionary
+		title="PONS German-&gt;French BUSINESS"
+		package="com.slovoed.noreg.pons.business_french"
+		pattern="%s/808597571"
+	/>
+	<dictionary
+		title="PONS German-&gt;French BUSINESS"
+		package="com.slovoed.pons.business_french"
+		pattern="%s/808597571"
+	/>
+	<dictionary
+		title="PONS German-&gt;English BUSINESS"
+		package="com.slovoed.noreg.pons.business_english"
+		pattern="%s/808597570"
+	/>
+	<dictionary
+		title="PONS German-&gt;English BUSINESS"
+		package="com.slovoed.pons.business_english"
+		pattern="%s/808597570"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish BUSINESS"
+		package="com.slovoed.noreg.pons.business_spanish"
+		pattern="%s/808597573"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish BUSINESS"
+		package="com.slovoed.pons.business_spanish"
+		pattern="%s/808597573"
+	/>
+	<dictionary
+		title="PONS French-&gt;German BUSINESS"
+		package="com.slovoed.noreg.pons.business_french"
+		pattern="%s/808597572"
+	/>
+	<dictionary
+		title="PONS French-&gt;German BUSINESS"
+		package="com.slovoed.pons.business_french"
+		pattern="%s/808597572"
+	/>
+	<dictionary
+		title="VOX School Spanish-&gt;Portuguese"
+		package="com.slovoed.noreg.vox.school.portuguese_spanish"
+		pattern="%s/808663347"
+	/>
+	<dictionary
+		title="VOX School Spanish-&gt;Portuguese"
+		package="com.slovoed.vox.school.portuguese_spanish"
+		pattern="%s/808663347"
+	/>
+	<dictionary
+		title="VOX School Portuguese-&gt;Spanish"
+		package="com.slovoed.noreg.vox.school.portuguese_spanish"
+		pattern="%s/808663346"
+	/>
+	<dictionary
+		title="VOX School Portuguese-&gt;Spanish"
+		package="com.slovoed.vox.school.portuguese_spanish"
+		pattern="%s/808663346"
+	/>
+	<dictionary
+		title="PONS English-&gt;German BUSINESS"
+		package="com.slovoed.noreg.pons.business_english"
+		pattern="%s/808597569"
+	/>
+	<dictionary
+		title="PONS English-&gt;German BUSINESS"
+		package="com.slovoed.pons.business_english"
+		pattern="%s/808597569"
+	/>
+	<dictionary
+		title="PONS German-&gt;French BASIC"
+		package="com.slovoed.noreg.pons.basic.french_german"
+		pattern="%s/808663349"
+	/>
+	<dictionary
+		title="PONS German-&gt;French BASIC"
+		package="com.slovoed.pons.basic.french_german"
+		pattern="%s/808663349"
+	/>
+	<dictionary
+		title="PONS French-&gt;German BASIC"
+		package="com.slovoed.noreg.pons.basic.french_german"
+		pattern="%s/808663348"
+	/>
+	<dictionary
+		title="PONS French-&gt;German BASIC"
+		package="com.slovoed.pons.basic.french_german"
+		pattern="%s/808663348"
+	/>
+	<dictionary
+		title="VOX Medical "
+		package="com.slovoed.noreg.vox.medical"
+		pattern="%s/808663110"
+	/>
+	<dictionary
+		title="VOX Medical "
+		package="com.slovoed.vox.medical"
+		pattern="%s/808663110"
+	/>
+	<dictionary
+		title="PONS Russian-&gt;German BASIC"
+		package="com.slovoed.noreg.pons.basic.german_russian"
+		pattern="%s/808663109"
+	/>
+	<dictionary
+		title="PONS Russian-&gt;German BASIC"
+		package="com.slovoed.pons.basic.german_russian"
+		pattern="%s/808663109"
+	/>
+	<dictionary
+		title="Merriam-Webster's Advanced Learner's"
+		package="com.slovoed.noreg.merriam_webster.english_english_advanced_learners"
+		pattern="%s/808597561"
+	/>
+	<dictionary
+		title="Merriam-Webster's Advanced Learner's"
+		package="com.slovoed.merriam_webster.english_english_advanced_learners"
+		pattern="%s/808597561"
+	/>
+	<dictionary
+		title="Langenscheidt Essential German-&gt;Chinese"
+		package="com.slovoed.noreg.langenscheidt.essential.german_chinese"
+		pattern="%s/808663364"
+	/>
+	<dictionary
+		title="Langenscheidt Essential German-&gt;Chinese"
+		package="com.slovoed.langenscheidt.essential.german_chinese"
+		pattern="%s/808663364"
+	/>
+	<dictionary
+		title="Langenscheidt Essential Chinese-&gt;German"
+		package="com.slovoed.noreg.langenscheidt.essential.german_chinese"
+		pattern="%s/808663365"
+	/>
+	<dictionary
+		title="Langenscheidt Essential Chinese-&gt;German"
+		package="com.slovoed.langenscheidt.essential.german_chinese"
+		pattern="%s/808663365"
+	/>
+	<dictionary
+		title="PONS German-&gt;Russian CONCISE"
+		package="com.slovoed.noreg.pons.german_russian.compact"
+		pattern="%s/808597830"
+	/>
+	<dictionary
+		title="PONS German-&gt;Russian CONCISE"
+		package="com.slovoed.pons.german_russian.compact"
+		pattern="%s/808597830"
+	/>
+	<dictionary
+		title="VOX Encyclopaedical"
+		package="com.slovoed.noreg.vox.encyclopaedical"
+		pattern="%s/808597828"
+	/>
+	<dictionary
+		title="VOX Encyclopaedical"
+		package="com.slovoed.vox.encyclopaedical"
+		pattern="%s/808597828"
+	/>
+	<dictionary
+		title="VOX Basque-&gt;Spanish"
+		package="com.slovoed.noreg.vox.basque_spanish"
+		pattern="%s/808597827"
+	/>
+	<dictionary
+		title="VOX Basque-&gt;Spanish"
+		package="com.slovoed.vox.basque_spanish"
+		pattern="%s/808597827"
+	/>
+	<dictionary
+		title="VOX Spanish-&gt;Basque"
+		package="com.slovoed.noreg.vox.basque_spanish"
+		pattern="%s/808597826"
+	/>
+	<dictionary
+		title="VOX Spanish-&gt;Basque"
+		package="com.slovoed.vox.basque_spanish"
+		pattern="%s/808597826"
+	/>
+	<dictionary
+		title="Duden Native Words Dictionary"
+		package="com.slovoed.noreg.duden.base_036a.german_german"
+		pattern="%s/808662593"
+	/>
+	<dictionary
+		title="Duden Native Words Dictionary"
+		package="com.slovoed.duden.base_036a.german_german"
+		pattern="%s/808662593"
+	/>
+	<dictionary
+		title="Collins Pocket English-&gt;Russian"
+		package="com.slovoed.noreg.collins.english_russian.pocket"
+		pattern="%s/808662594"
+	/>
+	<dictionary
+		title="Collins Pocket English-&gt;Russian"
+		package="com.slovoed.collins.english_russian.pocket"
+		pattern="%s/808662594"
+	/>
+	<dictionary
+		title="AST Press Russian Spelling"
+		package="com.slovoed.noreg.slovari_xxi_veka.russian_speling"
+		pattern="%s/808662583"
+	/>
+	<dictionary
+		title="AST Press Russian Spelling"
+		package="com.slovoed.slovari_xxi_veka.russian_speling"
+		pattern="%s/808662583"
+	/>
+	<dictionary
+		title="Duden - Style Dictionary"
+		package="com.slovoed.noreg.duden.base_0369.german_german"
+		pattern="%s/808662585"
+	/>
+	<dictionary
+		title="Duden - Style Dictionary"
+		package="com.slovoed.duden.base_0369.german_german"
+		pattern="%s/808662585"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;German PREMIUM"
+		package="com.slovoed.noreg.pons.premium.bulgarian_german"
+		pattern="%s/808662579"
+	/>
+	<dictionary
+		title="PONS Bulgarian-&gt;German PREMIUM"
+		package="com.slovoed.pons.premium.bulgarian_german"
+		pattern="%s/808662579"
+	/>
+	<dictionary
+		title="PONS German-&gt;Bulgarian PREMIUM"
+		package="com.slovoed.noreg.pons.premium.bulgarian_german"
+		pattern="%s/808662580"
+	/>
+	<dictionary
+		title="PONS German-&gt;Bulgarian PREMIUM"
+		package="com.slovoed.pons.premium.bulgarian_german"
+		pattern="%s/808662580"
+	/>
+	<dictionary
+		title="VOX School English-&gt;Spanish"
+		package="com.slovoed.noreg.vox.school.english_spanish"
+		pattern="%s/808662581"
+	/>
+	<dictionary
+		title="VOX School English-&gt;Spanish"
+		package="com.slovoed.vox.school.english_spanish"
+		pattern="%s/808662581"
+	/>
+	<dictionary
+		title="VOX School Spanish-&gt;English"
+		package="com.slovoed.noreg.vox.school.english_spanish"
+		pattern="%s/808662582"
+	/>
+	<dictionary
+		title="VOX School Spanish-&gt;English"
+		package="com.slovoed.vox.school.english_spanish"
+		pattern="%s/808662582"
+	/>
+	<dictionary
+		title="Collins Russian-&gt;English Dictionary"
+		package="com.slovoed.noreg.collins.english_russian.bformat"
+		pattern="%s/808662832"
+	/>
+	<dictionary
+		title="Collins Russian-&gt;English Dictionary"
+		package="com.slovoed.collins.english_russian.bformat"
+		pattern="%s/808662832"
+	/>
+	<dictionary
+		title="Collins Gem English-&gt;Russian"
+		package="com.slovoed.noreg.collins.english_russian.gem"
+		pattern="%s/808662596"
+	/>
+	<dictionary
+		title="Collins Gem English-&gt;Russian"
+		package="com.slovoed.collins.english_russian.gem"
+		pattern="%s/808662596"
+	/>
+	<dictionary
+		title="Collins Pocket Russian-&gt;English"
+		package="com.slovoed.noreg.collins.english_russian.pocket"
+		pattern="%s/808662595"
+	/>
+	<dictionary
+		title="Collins Pocket Russian-&gt;English"
+		package="com.slovoed.collins.english_russian.pocket"
+		pattern="%s/808662595"
+	/>
+	<dictionary
+		title="Collins English-&gt;Russian Dictionary"
+		package="com.slovoed.noreg.collins.english_russian.bformat"
+		pattern="%s/808662598"
+	/>
+	<dictionary
+		title="Collins English-&gt;Russian Dictionary"
+		package="com.slovoed.collins.english_russian.bformat"
+		pattern="%s/808662598"
+	/>
+	<dictionary
+		title="Collins Gem Russian-&gt;English"
+		package="com.slovoed.noreg.collins.english_russian.gem"
+		pattern="%s/808662597"
+	/>
+	<dictionary
+		title="Collins Gem Russian-&gt;English"
+		package="com.slovoed.collins.english_russian.gem"
+		pattern="%s/808662597"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German PREMIUM"
+		package="com.slovoed.noreg.pons.premium.german_spanish"
+		pattern="%s/808662850"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German PREMIUM"
+		package="com.slovoed.pons.premium.german_spanish"
+		pattern="%s/808662850"
+	/>
+	<dictionary
+		title="PONS English-&gt;German BASIC"
+		package="com.slovoed.noreg.pons.basic.english_german"
+		pattern="%s/808662851"
+	/>
+	<dictionary
+		title="PONS English-&gt;German BASIC"
+		package="com.slovoed.pons.basic.english_german"
+		pattern="%s/808662851"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish PREMIUM"
+		package="com.slovoed.noreg.pons.premium.german_spanish"
+		pattern="%s/808662849"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish PREMIUM"
+		package="com.slovoed.pons.premium.german_spanish"
+		pattern="%s/808662849"
+	/>
+	<dictionary
+		title="PONS French-&gt;German PREMIUM"
+		package="com.slovoed.noreg.pons.premium.german_french"
+		pattern="%s/808662840"
+	/>
+	<dictionary
+		title="PONS French-&gt;German PREMIUM"
+		package="com.slovoed.pons.premium.german_french"
+		pattern="%s/808662840"
+	/>
+	<dictionary
+		title="PONS German-&gt;French PREMIUM"
+		package="com.slovoed.noreg.pons.premium.german_french"
+		pattern="%s/808662841"
+	/>
+	<dictionary
+		title="PONS German-&gt;French PREMIUM"
+		package="com.slovoed.pons.premium.german_french"
+		pattern="%s/808662841"
+	/>
+	<dictionary
+		title="PONS English-&gt;German PREMIUM"
+		package="com.slovoed.noreg.pons.premium.german_english"
+		pattern="%s/808662838"
+	/>
+	<dictionary
+		title="PONS English-&gt;German PREMIUM"
+		package="com.slovoed.pons.premium.german_english"
+		pattern="%s/808662838"
+	/>
+	<dictionary
+		title="PONS German-&gt;English PREMIUM"
+		package="com.slovoed.noreg.pons.premium.german_english"
+		pattern="%s/808662839"
+	/>
+	<dictionary
+		title="PONS German-&gt;English PREMIUM"
+		package="com.slovoed.pons.premium.german_english"
+		pattern="%s/808662839"
+	/>
+	<dictionary
+		title="PONS Portuguese-&gt;German BASIC"
+		package="com.slovoed.noreg.pons.basic.portuguese_german"
+		pattern="%s/808663091"
+	/>
+	<dictionary
+		title="PONS Portuguese-&gt;German BASIC"
+		package="com.slovoed.pons.basic.portuguese_german"
+		pattern="%s/808663091"
+	/>
+	<dictionary
+		title="PONS German-&gt;Portuguese BASIC"
+		package="com.slovoed.noreg.pons.basic.portuguese_german"
+		pattern="%s/808663090"
+	/>
+	<dictionary
+		title="PONS German-&gt;Portuguese BASIC"
+		package="com.slovoed.pons.basic.portuguese_german"
+		pattern="%s/808663090"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German BASIC"
+		package="com.slovoed.noreg.pons.basic.german_spanish"
+		pattern="%s/808663089"
+	/>
+	<dictionary
+		title="PONS Spanish-&gt;German BASIC"
+		package="com.slovoed.pons.basic.german_spanish"
+		pattern="%s/808663089"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish BASIC"
+		package="com.slovoed.noreg.pons.basic.german_spanish"
+		pattern="%s/808663088"
+	/>
+	<dictionary
+		title="PONS German-&gt;Spanish BASIC"
+		package="com.slovoed.pons.basic.german_spanish"
+		pattern="%s/808663088"
+	/>
+	<dictionary
+		title="VOX Advanced Spanish-&gt;English Dictionary"
+		package="com.slovoed.noreg.vox.english_spanish"
+		pattern="%s/808531781"
+	/>
+	<dictionary
+		title="VOX Advanced Spanish-&gt;English Dictionary"
+		package="com.slovoed.vox.english_spanish"
+		pattern="%s/808531781"
+	/>
+	<dictionary
+		title="VOX Advanced English-&gt;Spanish Dictionary"
+		package="com.slovoed.noreg.vox.english_spanish"
+		pattern="%s/808531780"
+	/>
+	<dictionary
+		title="VOX Advanced English-&gt;Spanish Dictionary"
+		package="com.slovoed.vox.english_spanish"
+		pattern="%s/808531780"
+	/>
+	<dictionary
+		title="PONS Italian-&gt;German BASIC"
+		package="com.slovoed.noreg.pons.basic.italian_german"
+		pattern="%s/808662854"
+	/>
+	<dictionary
+		title="PONS Italian-&gt;German BASIC"
+		package="com.slovoed.pons.basic.italian_german"
+		pattern="%s/808662854"
+	/>
+	<dictionary
+		title="PONS German-&gt;Italian BASIC"
+		package="com.slovoed.noreg.pons.basic.italian_german"
+		pattern="%s/808662853"
+	/>
+	<dictionary
+		title="PONS German-&gt;Italian BASIC"
+		package="com.slovoed.pons.basic.italian_german"
+		pattern="%s/808662853"
+	/>
+	<dictionary
+		title="PONS German-&gt;English BASIC"
+		package="com.slovoed.noreg.pons.basic.english_german"
+		pattern="%s/808662852"
+	/>
+	<dictionary
+		title="PONS German-&gt;English BASIC"
+		package="com.slovoed.pons.basic.english_german"
+		pattern="%s/808662852"
+	/>
+	<dictionary
+		title="Van Dale Lingo 7"
+		package="com.slovoed.noreg.van_dale.base_02e0.dutch_dutch"
+		pattern="%s/808600880"
+	/>
+	<dictionary
+		title="Van Dale Lingo 7"
+		package="com.slovoed.van_dale.base_02e0.dutch_dutch"
+		pattern="%s/808600880"
+	/>
+	<dictionary
+		title="Van Dale Uitgevers, Utrecht/Antwerpen. Official Scrabble wordlist"
+		package="com.slovoed.noreg.van_dale.base_0290.dutch_dutch"
+		pattern="%s/808597808"
+	/>
+	<dictionary
+		title="Van Dale Uitgevers, Utrecht/Antwerpen. Official Scrabble wordlist"
+		package="com.slovoed.van_dale.base_0290.dutch_dutch"
+		pattern="%s/808597808"
+	/>
+	<dictionary
+		title="Van Dale Dutch-&gt;English dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_vertaalwoordenboek_engels"
+		pattern="%s/808531764"
+	/>
+	<dictionary
+		title="Van Dale Dutch-&gt;English dictionary"
+		package="com.slovoed.van_dale.van_dale_vertaalwoordenboek_engels"
+		pattern="%s/808531764"
+	/>
+	<dictionary
+		title="Van Dale English-&gt;Dutch dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_vertaalwoordenboek_engels"
+		pattern="%s/808531765"
+	/>
+	<dictionary
+		title="Van Dale English-&gt;Dutch dictionary"
+		package="com.slovoed.van_dale.van_dale_vertaalwoordenboek_engels"
+		pattern="%s/808531765"
+	/>
+	<dictionary
+		title="Van Dale Dutch-&gt;German dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_vertaalwoordenboek_duits"
+		pattern="%s/808531769"
+	/>
+	<dictionary
+		title="Van Dale Dutch-&gt;German dictionary"
+		package="com.slovoed.van_dale.van_dale_vertaalwoordenboek_duits"
+		pattern="%s/808531769"
+	/>
+	<dictionary
+		title="Van Dale German-&gt;Dutch dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_vertaalwoordenboek_duits"
+		pattern="%s/808531768"
+	/>
+	<dictionary
+		title="Van Dale German-&gt;Dutch dictionary"
+		package="com.slovoed.van_dale.van_dale_vertaalwoordenboek_duits"
+		pattern="%s/808531768"
+	/>
+	<dictionary
+		title="Van Dale Dutch-&gt;French dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_vertaalwoordenboek_frans"
+		pattern="%s/808531767"
+	/>
+	<dictionary
+		title="Van Dale Dutch-&gt;French dictionary"
+		package="com.slovoed.van_dale.van_dale_vertaalwoordenboek_frans"
+		pattern="%s/808531767"
+	/>
+	<dictionary
+		title="Van Dale French-&gt;Dutch dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_vertaalwoordenboek_frans"
+		pattern="%s/808531766"
+	/>
+	<dictionary
+		title="Van Dale French-&gt;Dutch dictionary"
+		package="com.slovoed.van_dale.van_dale_vertaalwoordenboek_frans"
+		pattern="%s/808531766"
+	/>
+	<dictionary
+		title="Van Dale Dutch dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_woordenboek_nederlands"
+		pattern="%s/808531779"
+	/>
+	<dictionary
+		title="Van Dale Dutch dictionary"
+		package="com.slovoed.van_dale.van_dale_woordenboek_nederlands"
+		pattern="%s/808531779"
+	/>
+	<dictionary
+		title="Van Dale Dutch-&gt;Spanish dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_vertaalwoordenboek_spaans"
+		pattern="%s/808531778"
+	/>
+	<dictionary
+		title="Van Dale Dutch-&gt;Spanish dictionary"
+		package="com.slovoed.van_dale.van_dale_vertaalwoordenboek_spaans"
+		pattern="%s/808531778"
+	/>
+	<dictionary
+		title="Van Dale Spanish-&gt;Dutch dictionary"
+		package="com.slovoed.noreg.van_dale.van_dale_vertaalwoordenboek_spaans"
+		pattern="%s/808531777"
+	/>
+	<dictionary
+		title="Van Dale Spanish-&gt;Dutch dictionary"
+		package="com.slovoed.van_dale.van_dale_vertaalwoordenboek_spaans"
+		pattern="%s/808531777"
+	/>
+</dictionaries>

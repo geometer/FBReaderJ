@@ -20,9 +20,12 @@
 package org.geometerplus.fbreader.network;
 
 import java.util.*;
+import java.lang.ref.WeakReference;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
+import org.geometerplus.zlibrary.core.util.MimeType;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.network.ZLNetworkException;
 import org.geometerplus.zlibrary.core.language.ZLLanguageUtil;
@@ -82,6 +85,9 @@ public class NetworkLibrary {
 		Collections.synchronizedSet(new HashSet<ChangeListener>());
 	private final Map<NetworkTree,NetworkItemsLoader> myLoaders =
 		Collections.synchronizedMap(new HashMap<NetworkTree,NetworkItemsLoader>());
+
+	private final Map<String,WeakReference<ZLImage>> myImageMap =
+		Collections.synchronizedMap(new HashMap<String,WeakReference<ZLImage>>());
 
 	public List<String> languageCodes() {
 		final TreeSet<String> languageSet = new TreeSet<String>();
@@ -289,7 +295,7 @@ public class NetworkLibrary {
 			// we create this copy to prevent long operations on synchronized list
 			final List<INetworkLink> linksCopy = new ArrayList<INetworkLink>(myLinks);
 			for (INetworkLink link : linksCopy) {
-				if (link instanceof ICustomNetworkLink) {
+				if (link.getType() == INetworkLink.Type.Custom) {
 					final ICustomNetworkLink customLink = (ICustomNetworkLink)link;
 					if (customLink.isObsolete(12 * 60 * 60 * 1000)) { // 12 hours
 						try {
@@ -509,7 +515,43 @@ public class NetworkLibrary {
 		return myUpdateInProgress;
 	}
 
+	public final void startLoading(NetworkCatalogItem item) {
+		if (item != null) {
+			item.UpdatingInProgress = true;
+			fireModelChangedEvent(ChangeListener.Code.SomeCode);
+		}
+	}
+
+	public final void stopLoading(NetworkCatalogItem item) {
+		if (item != null) {
+			item.UpdatingInProgress = false;
+			fireModelChangedEvent(ChangeListener.Code.SomeCode);
+		}
+	}
+
+	public boolean isLoadingInProgress(NetworkTree tree) {
+		return
+			(tree instanceof NetworkCatalogTree &&
+				((NetworkCatalogTree)tree).Item.UpdatingInProgress) ||
+			getStoredLoader(tree) != null;
+	}
+
 	public final void removeStoredLoader(NetworkTree tree) {
 		myLoaders.remove(tree);
+	}
+
+	public ZLImage getImageByUrl(String url, MimeType mimeType) {
+		synchronized (myImageMap) {
+			WeakReference<ZLImage> ref = myImageMap.get(url);
+			if (ref != null) {
+				final ZLImage image = ref.get();
+				if (image != null) {
+					return image;
+				}
+			}
+			final ZLImage image = new NetworkImage(url, mimeType);
+			myImageMap.put(url, new WeakReference<ZLImage>(image));
+			return image;
+		}
 	}
 }

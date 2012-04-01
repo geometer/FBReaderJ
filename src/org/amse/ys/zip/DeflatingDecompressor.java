@@ -4,7 +4,7 @@ import java.io.*;
 
 class DeflatingDecompressor extends Decompressor {
 	static {
-		System.loadLibrary("DeflatingDecompressor-v2");
+		System.loadLibrary("DeflatingDecompressor-v3");
 	}
 
 	// common variables
@@ -52,7 +52,7 @@ class DeflatingDecompressor extends Decompressor {
 
 		myInflatorId = startInflating();
 		if (myInflatorId == -1) {
-			throw new IOException("cannot start inflating");
+			throw new ZipException("cannot start inflating");
 		}
 	}
 
@@ -75,7 +75,7 @@ class DeflatingDecompressor extends Decompressor {
 			}
 			if (myOutBufferLength == 0) {
 				if (myInflatorId != -1) {
-					throw new IOException("cannot read from zip");
+					throw new ZipException("cannot read from zip");
 				} else {
 					len -= toFill;
 					break;
@@ -108,7 +108,7 @@ class DeflatingDecompressor extends Decompressor {
 		}
 		if (myOutBufferLength == 0) {
 			if (myInflatorId != -1) {
-				throw new IOException("cannot read from zip");
+				throw new ZipException("cannot read from zip");
 			} else {
 				myAvailable = 0;
 				return -1;
@@ -135,14 +135,25 @@ class DeflatingDecompressor extends Decompressor {
 					myCompressedAvailable -= toRead;
 				}
 			}
-			if (myInBufferLength == 0) {
+			if (myInBufferLength <= 0) {
 				break;
 			}
 			final long result = inflate(myInflatorId, myInBuffer, myInBufferOffset, myInBufferLength, myOutBuffer);
 			if (result <= 0) {
-				throw new IOException("Cannot inflate zip-compressed block, code = " + result);
+				final StringBuffer extraInfo = new StringBuffer()
+					.append(myStream.offset()).append(":")
+					.append(myInBufferOffset).append(":")
+					.append(myInBufferLength).append(":")
+					.append(myOutBuffer.length).append(":");
+				for (int i = 0; i < Math.min(10, myInBufferLength); ++i) {
+					extraInfo.append(myInBuffer[myInBufferOffset + i]).append(",");
+				}
+				throw new ZipException("Cannot inflate zip-compressed block, code = " + result + ";extra info = " + extraInfo);
 			}
 			final int in = (int)(result >> 16) & 0xFFFF;
+			if (in > myInBufferLength) {
+				throw new ZipException("Invalid inflating result, code = " + result + "; buffer length = " + myInBufferLength);
+			}
 			final int out = (int)result & 0xFFFF;
 			myInBufferOffset += in;
 			myInBufferLength -= in;

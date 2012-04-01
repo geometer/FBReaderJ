@@ -36,8 +36,8 @@
 		<condition property="native.libraries.are.uptodate" value="true">
 			<and>
 				<!-- Check if libDeflatingDecompressor exists and is up to date -->
-				<available file="./libs/armeabi/libDeflatingDecompressor-v2.so" />
-				<uptodate targetfile="libs/armeabi/libDeflatingDecompressor-v2.so">
+				<available file="./libs/armeabi/libDeflatingDecompressor-v3.so" />
+				<uptodate targetfile="libs/armeabi/libDeflatingDecompressor-v3.so">
 					<srcfiles dir="jni/DeflatingDecompressor" includes="**/*.cpp"/>
 				</uptodate>
 				<!-- Check if libLineBreak exists and is up to date -->
@@ -89,6 +89,9 @@
 		<delete dir="libs/armeabi" />
 		<delete dir="libs/armeabi-v7a" />
 		<delete dir="libs/x86" />
+		<delete dir="libs/mips" />
+		<delete dir="libs/mips-r2" />
+		<delete dir="libs/mips-r2-sf" />
 		<echo message="DONE (Deleting native libraries)" />
 	</target>
 

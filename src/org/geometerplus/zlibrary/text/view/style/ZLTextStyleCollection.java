@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 import org.geometerplus.zlibrary.core.xml.*;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
@@ -31,7 +32,7 @@ public class ZLTextStyleCollection {
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
 	private ZLTextStyleCollection() {
-		new TextStyleReader(this).read(ZLResourceFile.createResourceFile("default/styles.xml"));
+		new TextStyleReader(this).readQuietly(ZLResourceFile.createResourceFile("default/styles.xml"));
 	}
 
 	public static ZLTextStyleCollection Instance() {
@@ -54,19 +55,28 @@ public class ZLTextStyleCollection {
 	}
 
 	private static class TextStyleReader extends ZLXMLReaderAdapter {
+		private final int myDpi = ZLibrary.Instance().getDisplayDPI();
 		private ZLTextStyleCollection myCollection;
 
 		public boolean dontCacheAttributeValues() {
 			return true;
 		}
 
-		private static int intValue(ZLStringMap attributes, String name, int defaultValue) {
+		private int intValue(ZLStringMap attributes, String name, int defaultValue) {
 			int i = defaultValue;
 			String value = attributes.getValue(name);
 			if (value != null) {
-				try {
-					i = Integer.parseInt(value);
-				} catch (NumberFormatException e) {
+				if (value.startsWith("dpi*")) {
+					try {
+						final float coe = Float.parseFloat(value.substring(4));
+						i = (int)(coe * myDpi + .5f);
+					} catch (NumberFormatException e) {
+					}
+				} else {
+					try {
+						i = Integer.parseInt(value);
+					} catch (NumberFormatException e) {
+					}
 				}
 			}
 			return i;
@@ -101,11 +111,12 @@ public class ZLTextStyleCollection {
 					ZLBoolean3 bold = b3Value(attributes, "bold");
 					ZLBoolean3 italic = b3Value(attributes, "italic");
 					ZLBoolean3 underline = b3Value(attributes, "underline");
+					ZLBoolean3 strikeThrough = b3Value(attributes, "strikeThrough");
 					int verticalShift = intValue(attributes, "vShift", 0);
 					ZLBoolean3 allowHyphenations = b3Value(attributes, "allowHyphenations");
 
 					if (booleanValue(attributes, "partial")) {
-						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, underline, verticalShift, allowHyphenations);
+						decoration = new ZLTextStyleDecoration(name, fontSizeDelta, bold, italic, underline, strikeThrough, verticalShift, allowHyphenations);
 					} else {
 						int spaceBefore = intValue(attributes, "spaceBefore", 0);
 						int spaceAfter = intValue(attributes, "spaceAfter", 0);
@@ -128,7 +139,7 @@ public class ZLTextStyleCollection {
 						}
 						final int lineSpacePercent = intValue(attributes, "lineSpacingPercent", -1);
 
-						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, underline, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
+						decoration = new ZLTextFullStyleDecoration(name, fontSizeDelta, bold, italic, underline, strikeThrough, spaceBefore, spaceAfter, leftIndent, rightIndent, firstLineIndentDelta, verticalShift, alignment, lineSpacePercent, allowHyphenations);
 					}
 
 					String fontFamily = attributes.getValue("family");

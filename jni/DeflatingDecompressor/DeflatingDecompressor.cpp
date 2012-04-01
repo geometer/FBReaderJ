@@ -79,5 +79,5 @@ jlong Java_org_amse_ys_zip_DeflatingDecompressor_inflate(JNIEnv *env, jobject th
 		}
 		return result;
 	}
-	return -3;
+	return -1024 + code;
 }

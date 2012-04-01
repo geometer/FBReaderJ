@@ -21,41 +21,36 @@ package org.geometerplus.fbreader.formats;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
 import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
+import org.geometerplus.fbreader.filetype.*;
 
 public class PluginCollection {
+	static {
+		System.loadLibrary("NativeFormats-v2");
+	}
+
 	private static PluginCollection ourInstance;
 
-	private final ArrayList<FormatPlugin> myPlugins = new ArrayList<FormatPlugin>();
-	public ZLStringOption DefaultLanguageOption;
-	public ZLStringOption DefaultEncodingOption;
-	public ZLBooleanOption LanguageAutoDetectOption;
-	
+	private final Map<FormatPlugin.Type,List<FormatPlugin>> myPlugins =
+		new HashMap<FormatPlugin.Type,List<FormatPlugin>>();
+
 	public static PluginCollection Instance() {
 		if (ourInstance == null) {
 			ourInstance = new PluginCollection();
-			ourInstance.myPlugins.add(new FB2Plugin());
-			//ourInstance.myPlugins.add(new PluckerPlugin());
-			//ourInstance->myPlugins.push_back(new DocBookPlugin());
-			//ourInstance.myPlugins.add(new HtmlPlugin());
-			//ourInstance.myPlugins.add(new TxtPlugin());
-			//ourInstance.myPlugins.add(new PalmDocPlugin());
-			ourInstance.myPlugins.add(new MobipocketPlugin());
-			//ourInstance.myPlugins.add(new ZTXTPlugin());
-			//ourInstance.myPlugins.add(new TcrPlugin());
-			//ourInstance.myPlugins.add(new CHMPlugin());
-			ourInstance.myPlugins.add(new OEBPlugin());
-			//ourInstance.myPlugins.add(new RtfPlugin());
-			//ourInstance.myPlugins.add(new OpenReaderPlugin());
+
+			// This code can not be moved to constructor because nativePlugins() is a native method
+			for (NativeFormatPlugin p : ourInstance.nativePlugins()) {
+				ourInstance.addPlugin(p);
+				System.err.println("native plugin: " + p);
+			}
 		}
 		return ourInstance;
 	}
-	
+
 	public static void deleteInstance() {
 		if (ourInstance != null) {
 			ourInstance = null;
@@ -63,17 +58,60 @@ public class PluginCollection {
 	}
 
 	private PluginCollection() {
-		LanguageAutoDetectOption = new ZLBooleanOption("Format", "AutoDetect", true);
-		DefaultLanguageOption = new ZLStringOption("Format", "DefaultLanguage", "en"); 
-		DefaultEncodingOption = new ZLStringOption("Format", "DefaultEncoding", "windows-1252");
+		addPlugin(new FB2Plugin());
+		addPlugin(new MobipocketPlugin());
+		addPlugin(new OEBPlugin());
 	}
-		
-	public FormatPlugin getPlugin(ZLFile file) {
-		for (FormatPlugin plugin : myPlugins) {
-			if (plugin.acceptsFile(file)) {
-				return plugin;
-			}
+
+	private void addPlugin(FormatPlugin plugin) {
+		final FormatPlugin.Type type = plugin.type();
+		List<FormatPlugin> list = myPlugins.get(type);
+		if (list == null) {
+			list = new ArrayList<FormatPlugin>();
+			myPlugins.put(type, list);
 		}
-		return null;
+		list.add(plugin);
+	}
+
+	public FormatPlugin getPlugin(ZLFile file) {
+		return getPlugin(file, FormatPlugin.Type.ANY);
+	}
+
+	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
+		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
+		return getPlugin(fileType, formatType);
+	}
+
+	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
+		if (fileType == null) {
+			return null;
+		}
+
+		if (formatType == FormatPlugin.Type.ANY) {
+			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+			if (p == null) {
+				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
+			}
+			return p;
+		} else {
+			final List<FormatPlugin> list = myPlugins.get(formatType);
+			if (list == null) {
+				return null;
+			}
+			for (FormatPlugin p : list) {
+				if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
+					return p;
+				}
+			}
+			return null;
+		}
+	}
+
+	private native NativeFormatPlugin[] nativePlugins();
+	private native void free();
+
+	protected void finalize() throws Throwable {
+		free();
+		super.finalize();
 	}
 }

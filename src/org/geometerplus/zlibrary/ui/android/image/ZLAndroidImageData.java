@@ -45,7 +45,7 @@ public abstract class ZLAndroidImageData implements ZLImageData {
 		return getBitmap(new ZLPaintContext.Size(maxWidth, maxHeight), ZLPaintContext.ScalingType.FitMaximum);
 	}
 
-	public Bitmap getBitmap(ZLPaintContext.Size maxSize, ZLPaintContext.ScalingType scaling) {
+	public synchronized Bitmap getBitmap(ZLPaintContext.Size maxSize, ZLPaintContext.ScalingType scaling) {
 		if (scaling != ZLPaintContext.ScalingType.OriginalSize) {
 			if (maxSize == null || maxSize.Width <= 0 || maxSize.Height <= 0) {
 				return null;
@@ -55,6 +55,9 @@ public abstract class ZLAndroidImageData implements ZLImageData {
 			maxSize = new ZLPaintContext.Size(-1, -1);
 		}
 		if (!maxSize.equals(myLastRequestedSize) || scaling != myLastRequestedScaling) {
+			myLastRequestedSize = maxSize;
+			myLastRequestedScaling = scaling;
+
 			if (myBitmap != null) {
 				myBitmap.recycle();
 				myBitmap = null;
@@ -128,8 +131,6 @@ public abstract class ZLAndroidImageData implements ZLImageData {
 							break;
 						}
 					}
-					myLastRequestedSize = maxSize;
-					myLastRequestedScaling = scaling;
 				}
 			} catch (OutOfMemoryError e) {
 				e.printStackTrace();
