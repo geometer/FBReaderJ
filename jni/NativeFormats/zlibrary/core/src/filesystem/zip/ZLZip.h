@@ -116,7 +116,7 @@ private:
 
 public:
 	~ZLZipDir();
-	void collectSubDirs(std::vector<std::string>&, bool);
+	//void collectSubDirs(std::vector<std::string>&, bool);
 	void collectFiles(std::vector<std::string> &names, bool includeSymlinks);
 
 protected:
@@ -127,6 +127,6 @@ friend class ZLFile;
 
 inline ZLZipDir::ZLZipDir(const std::string &name) : ZLDir(name) {}
 inline ZLZipDir::~ZLZipDir() {}
-inline void ZLZipDir::collectSubDirs(std::vector<std::string>&, bool) {}
+//inline void ZLZipDir::collectSubDirs(std::vector<std::string>&, bool) {}
 
 #endif /* __ZLZIP_H__ */

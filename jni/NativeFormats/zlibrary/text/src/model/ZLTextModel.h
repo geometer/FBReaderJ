@@ -45,7 +45,9 @@ public:
 
 protected:
 	ZLTextModel(const std::string &id, const std::string &language, const size_t rowSize,
-			const std::string &directoryName, const std::string &fileExtension);
+		const std::string &directoryName, const std::string &fileExtension);
+	ZLTextModel(const std::string &id, const std::string &language,
+		shared_ptr<ZLCachedMemoryAllocator> allocator);
 
 public:
 	virtual ~ZLTextModel();
@@ -92,14 +94,12 @@ public:
 protected:
 	void addParagraphInternal(ZLTextParagraph *paragraph);
 
-	void checkUtf8Text();
-
 private:
 	const std::string myId;
 	const std::string myLanguage;
 	std::vector<ZLTextParagraph*> myParagraphs;
 	//mutable std::vector<ZLTextMark> myMarks;
-	mutable ZLCachedMemoryAllocator myAllocator;
+	mutable shared_ptr<ZLCachedMemoryAllocator> myAllocator;
 
 	char *myLastEntryStart;
 
@@ -119,6 +119,8 @@ class ZLTextPlainModel : public ZLTextModel {
 public:
 	ZLTextPlainModel(const std::string &id, const std::string &language, const size_t rowSize,
 			const std::string &directoryName, const std::string &fileExtension);
+	ZLTextPlainModel(const std::string &id, const std::string &language,
+		shared_ptr<ZLCachedMemoryAllocator> allocator);
 	Kind kind() const;
 	void createParagraph(ZLTextParagraph::Kind kind);
 };
@@ -145,7 +147,7 @@ inline const std::string &ZLTextModel::language() const { return myLanguage; }
 inline size_t ZLTextModel::paragraphsNumber() const { return myParagraphs.size(); }
 //inline const std::vector<ZLTextMark> &ZLTextModel::marks() const { return myMarks; }
 //inline void ZLTextModel::removeAllMarks() { myMarks.clear(); }
-inline const ZLCachedMemoryAllocator &ZLTextModel::allocator() const { return myAllocator; }
+inline const ZLCachedMemoryAllocator &ZLTextModel::allocator() const { return *myAllocator; }
 inline const std::vector<jint> &ZLTextModel::startEntryIndices() const { return myStartEntryIndices; }
 inline const std::vector<jint> &ZLTextModel::startEntryOffsets() const { return myStartEntryOffsets; }
 inline const std::vector<jint> &ZLTextModel::paragraphLengths() const { return myParagraphLengths; };
