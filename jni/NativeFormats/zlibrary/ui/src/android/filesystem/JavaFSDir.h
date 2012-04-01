@@ -30,7 +30,7 @@ public:
 	JavaFSDir(const std::string &name);
 	~JavaFSDir();
 
-	void collectSubDirs(std::vector<std::string> &names, bool includeSymlinks);
+	//void collectSubDirs(std::vector<std::string> &names, bool includeSymlinks);
 	void collectFiles(std::vector<std::string> &names, bool includeSymlinks);
 
 private:
