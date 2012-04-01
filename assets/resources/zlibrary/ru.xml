@@ -68,6 +68,7 @@
 		<node name="ro" value="румынский"/>
 		<node name="ru" value="русский" />
 		<node name="sv" value="шведский" />
+		<node name="ta" value="тамильский" />
 		<node name="th" value="тайский" />
 		<node name="tr" value="турецкий" />
 		<node name="uk" value="украинский" />
