@@ -59,6 +59,8 @@
 				<data android:pathPattern=".*\\.fb2\\.zip" />
 				<data android:pathPattern=".*\\.mobi" />
 				<data android:pathPattern=".*\\.prc" />
+				<data android:pathPattern=".*\\.txt" />
+				<data android:pathPattern=".*\\.rtf" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
@@ -69,6 +71,8 @@
 				<data android:pathPattern=".*\\.fb2" />
 				<data android:pathPattern=".*\\.mobi" />
 				<data android:pathPattern=".*\\.prc" />
+				<data android:pathPattern=".*\\.txt" />
+				<data android:pathPattern=".*\\.rtf" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
@@ -128,6 +132,8 @@
 				<data android:pathPattern=".*\\.fb2\\.zip" />
 				<data android:pathPattern=".*\\.mobi" />
 				<data android:pathPattern=".*\\.prc" />
+				<data android:pathPattern=".*\\.txt" />
+				<data android:pathPattern=".*\\.rtf" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
