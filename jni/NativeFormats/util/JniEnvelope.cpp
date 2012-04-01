@@ -20,6 +20,7 @@
 #include <ZLLogger.h>
 
 #include "JniEnvelope.h"
+#include "AndroidUtil.h"
 
 static const std::string JNI_LOGGER_CLASS = "JniLog";
 
@@ -41,13 +42,13 @@ std::string JavaArray::code() const {
 	return "[" + myBase.code();
 }
 
-JavaClass::JavaClass(JNIEnv *env, const std::string &name) : myName(name), myEnv(env) {
+JavaClass::JavaClass(const std::string &name) : myName(name) {
 	myClass = 0;
 }
 
 JavaClass::~JavaClass() {
 	if (myClass != 0) {
-		myEnv->DeleteGlobalRef(myClass);
+		AndroidUtil::getEnv()->DeleteGlobalRef(myClass);
 	}
 }
 
@@ -57,9 +58,10 @@ std::string JavaClass::code() const {
 
 jclass JavaClass::j() const {
 	if (myClass == 0) {
-		jclass ref = myEnv->FindClass(myName.c_str());
-		myClass = (jclass)myEnv->NewGlobalRef(ref);
-		myEnv->DeleteLocalRef(ref);
+		JNIEnv *env = AndroidUtil::getEnv();
+		jclass ref = env->FindClass(myName.c_str());
+		myClass = (jclass)env->NewGlobalRef(ref);
+		env->DeleteLocalRef(ref);
 	}
 	return myClass;
 }
@@ -72,19 +74,19 @@ Member::~Member() {
 }
 
 Constructor::Constructor(const JavaClass &cls, const std::string &parameters) : Member(cls) {
-	myId = env().GetMethodID(jClass(), "<init>", parameters.c_str());
+	myId = AndroidUtil::getEnv()->GetMethodID(jClass(), "<init>", parameters.c_str());
 }
 
 jobject Constructor::call(...) {
 	va_list lst;
 	va_start(lst, this);
-	jobject obj = env().NewObjectV(jClass(), myId, lst);
+	jobject obj = AndroidUtil::getEnv()->NewObjectV(jClass(), myId, lst);
 	va_end(lst);
 	return obj;
 }
 
 Field::Field(const JavaClass &cls, const std::string &name, const JavaType &type) : Member(cls), myName(name) {
-	myId = env().GetFieldID(jClass(), name.c_str(), type.code().c_str());
+	myId = AndroidUtil::getEnv()->GetFieldID(jClass(), name.c_str(), type.code().c_str());
 }
 
 Field::~Field() {
@@ -92,7 +94,7 @@ Field::~Field() {
 
 Method::Method(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters) : Member(cls), myName(name) {
 	const std::string signature = parameters + returnType.code();
-	myId = env().GetMethodID(jClass(), name.c_str(), signature.c_str());
+	myId = AndroidUtil::getEnv()->GetMethodID(jClass(), name.c_str(), signature.c_str());
 }
 
 Method::~Method() {
@@ -100,7 +102,7 @@ Method::~Method() {
 
 StaticMethod::StaticMethod(const JavaClass &cls, const std::string &name, const JavaType &returnType, const std::string &parameters) : Member(cls), myName(name) {
 	const std::string signature = parameters + returnType.code();
-	myId = env().GetStaticMethodID(jClass(), name.c_str(), signature.c_str());
+	myId = AndroidUtil::getEnv()->GetStaticMethodID(jClass(), name.c_str(), signature.c_str());
 }
 
 StaticMethod::~StaticMethod() {
@@ -111,7 +113,7 @@ ObjectField::ObjectField(const JavaClass &cls, const std::string &name, const Ja
 
 jobject ObjectField::value(jobject obj) const {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "getting value of ObjectField " + myName);
-	jobject val = env().GetObjectField(obj, myId);
+	jobject val = AndroidUtil::getEnv()->GetObjectField(obj, myId);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "got value of ObjectField " + myName);
 	return val;
 }
@@ -123,7 +125,7 @@ void VoidMethod::call(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling VoidMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	env().CallVoidMethodV(base, myId, lst);
+	AndroidUtil::getEnv()->CallVoidMethodV(base, myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished VoidMethod " + myName);
 }
@@ -135,7 +137,7 @@ jint IntMethod::call(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling IntMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jint result = env().CallIntMethodV(base, myId, lst);
+	jint result = AndroidUtil::getEnv()->CallIntMethodV(base, myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished IntMethod " + myName);
 	return result;
@@ -148,7 +150,7 @@ jlong LongMethod::call(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling LongMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jlong result = env().CallLongMethodV(base, myId, lst);
+	jlong result = AndroidUtil::getEnv()->CallLongMethodV(base, myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished LongMethod " + myName);
 	return result;
@@ -161,7 +163,7 @@ jboolean BooleanMethod::call(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling BooleanMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jboolean result = env().CallBooleanMethodV(base, myId, lst);
+	jboolean result = AndroidUtil::getEnv()->CallBooleanMethodV(base, myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished BooleanMethod " + myName);
 	return result;
@@ -176,7 +178,7 @@ jstring StringMethod::call(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StringMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jstring result = (jstring)env().CallObjectMethodV(base, myId, lst);
+	jstring result = (jstring)AndroidUtil::getEnv()->CallObjectMethodV(base, myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished StringMethod " + myName);
 	return result;
@@ -189,7 +191,7 @@ jobject ObjectMethod::call(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling ObjectMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jobject result = env().CallObjectMethodV(base, myId, lst);
+	jobject result = AndroidUtil::getEnv()->CallObjectMethodV(base, myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished ObjectMethod " + myName);
 	return result;
@@ -202,7 +204,7 @@ jobjectArray ObjectArrayMethod::call(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling ObjectArrayMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
-	jobjectArray result = (jobjectArray)env().CallObjectMethodV(base, myId, lst);
+	jobjectArray result = (jobjectArray)AndroidUtil::getEnv()->CallObjectMethodV(base, myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished ObjectArrayMethod " + myName);
 	return result;
@@ -215,7 +217,7 @@ jobject StaticObjectMethod::call(...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StaticObjectMethod " + myName);
 	va_list lst;
 	va_start(lst, this);
-	jobject result = env().CallStaticObjectMethodV(jClass(), myId, lst);
+	jobject result = AndroidUtil::getEnv()->CallStaticObjectMethodV(jClass(), myId, lst);
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished StaticObjectMethod " + myName);
 	return result;
