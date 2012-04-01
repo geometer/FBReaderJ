@@ -25,18 +25,16 @@ import android.os.Environment;
 
 public abstract class Paths {
 
-	public static String BOOKS_DIRECTORY = "Books";
-	public static String FONTS_DIRECTORY = "Fonts";
-	public static String WALLPAPERS_DIRECTORY = "Walpapers";
-
 	public static String cardDirectory() {
 		return Environment.getExternalStorageDirectory().getPath();
 	}
 
-	public static ZLStringListOption DirectoryOption(String s) {
-		if (FONTS_DIRECTORY.equals(s)) return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
-		if (WALLPAPERS_DIRECTORY.equals(s)) return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
-		return null;
+	public static ZLStringListOption FontsDirectoryOption() {
+		return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
+	}
+
+	public static ZLStringListOption WallpapersDirectoryOption() {
+		return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
 	}
 
 	public static ZLStringOption BooksDirectoryOption() {

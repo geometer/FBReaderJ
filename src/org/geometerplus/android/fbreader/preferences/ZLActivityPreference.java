@@ -20,29 +20,42 @@
 package org.geometerplus.android.fbreader.preferences;
 
 import android.content.*;
+import android.app.Activity;
 import android.preference.Preference;
 
+import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
-class ZLDirectoryPreference extends Preference {
-	private String myOptionName;
+class ZLActivityPreference extends Preference {
 
-	ZLDirectoryPreference(Context context, String optionName, ZLResource rootResource, String resourceKey) {
+	private final ZLStringListOption myOption;
+	private final int myRequestCode;
+
+	ZLActivityPreference(Context context, ZLStringListOption option, int requestCode, ZLResource rootResource, String resourceKey) {
 		super(context);
-		myOptionName = optionName;
+		myOption = option;
+		myRequestCode = requestCode;
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
+		setSummary(ZLMiscUtil.listToString(myOption.getValue(), ": "));
 	}
 
 	@Override
 	protected void onClick() {
 		final Intent intent = new Intent();
 		intent.setClass(getContext(), EditableStringListActivity.class);
-		intent.putExtra(EditableStringListActivity.OPTION_NAME, myOptionName);
+		intent.putExtra(EditableStringListActivity.LIST, ZLMiscUtil.listToString(myOption.getValue(), "\n"));
 		intent.putExtra(EditableStringListActivity.TITLE, getTitle());
 
-		getContext().startActivity(intent);
+		((Activity)getContext()).startActivityForResult(intent, myRequestCode);
+	}
+
+	public void setValue(Intent data) {
+		String value = data.getStringExtra(EditableStringListActivity.LIST);
+		myOption.setValue(ZLMiscUtil.stringToList(value, "\n"));
+		setSummary(ZLMiscUtil.listToString(myOption.getValue(), ": "));
 	}
 
 }

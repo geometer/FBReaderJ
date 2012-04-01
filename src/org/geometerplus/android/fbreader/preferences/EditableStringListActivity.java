@@ -27,16 +27,17 @@ import android.view.*;
 import android.widget.*;
 import android.text.*;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.Paths;
 
 public class EditableStringListActivity extends ListActivity {
 
-	public static final String OPTION_NAME = "optionName";
+	public static final String LIST = "list";
 	public static final String TITLE = "title";
 
 	private static String[] rootpaths;
@@ -46,7 +47,6 @@ public class EditableStringListActivity extends ListActivity {
 		rootpaths[0] = Paths.cardDirectory() + "/";
 	}
 
-	private ZLStringListOption myOption;
 	private ImageButton addButton;
 	private Button okButton;
 
@@ -61,30 +61,29 @@ public class EditableStringListActivity extends ListActivity {
 		setContentView(R.layout.editable_stringlist);
 		setTitle(getIntent().getStringExtra(TITLE));
 
-		myOption = Paths.DirectoryOption(getIntent().getStringExtra(OPTION_NAME));
+		List<String> list = ZLMiscUtil.stringToList(getIntent().getStringExtra(LIST), "\n");
 
 
-		final View bottomView = getLayoutInflater().inflate(R.layout.editable_stringlist_lastitem, null);
-		getListView().addFooterView(bottomView);
+//		final View bottomView = findViewById(R.id.editable_stringlist_bottom);
 
 		setListAdapter(new ItemAdapter());
 
-		for (String s : myOption.getValue()) {
+		for (String s : list) {
 			DirectoryItem i = new DirectoryItem();
 			i.setPath(s);
 			getListAdapter().addDirectoryItem(i);
 		}
 
-		addButton = (ImageButton)bottomView.findViewById(R.id.editable_stringlist_addbutton);
+		addButton = (ImageButton)findViewById(R.id.editable_stringlist_addbutton);
 		addButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
-					EditableStringListActivity.this.getListAdapter().addDirectoryItem(new DirectoryItem());
+					getListAdapter().addDirectoryItem(new DirectoryItem());
 				}
 			}
 		);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final View buttonView = bottomView.findViewById(R.id.editable_stringlist_buttons);
+		final View buttonView = findViewById(R.id.editable_stringlist_buttons);
 		okButton = (Button)buttonView.findViewById(R.id.ok_button);
 		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
@@ -94,12 +93,13 @@ public class EditableStringListActivity extends ListActivity {
 			new View.OnClickListener() {
 				public void onClick(View view) {
 					ArrayList<String> paths = new ArrayList<String>();
-					for (int i = 0; i < EditableStringListActivity.this.getListAdapter().getCount(); i++) {
-						paths.add(EditableStringListActivity.this.getListAdapter().getItem(i).getPath());
+					for (int i = 0; i < getListAdapter().getCount(); i++) {
+						paths.add(getListAdapter().getItem(i).getPath());
 					}
-					EditableStringListActivity.this.myOption.setValue(paths);
-
-					EditableStringListActivity.this.finish();
+					Intent intent = new Intent();
+					intent.putExtra(LIST, ZLMiscUtil.listToString(paths, "\n"));
+					setResult(RESULT_OK, intent);
+					finish();
 				}
 			}
 		);
@@ -108,7 +108,8 @@ public class EditableStringListActivity extends ListActivity {
 		cancelButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
-					EditableStringListActivity.this.finish();
+					setResult(RESULT_CANCELED);
+					finish();
 				}
 			}
 		);
@@ -140,7 +141,12 @@ public class EditableStringListActivity extends ListActivity {
 			nextId = nextId + 1;
 			myItems.add(i);
 			notifyDataSetChanged();
-			EditableStringListActivity.this.enableButtons();
+			enableButtons();
+			getListView().post(new Runnable(){
+				public void run() {
+					getListView().setSelection(getCount() - 1);
+				}
+			});
 		}
 
 		@Override
@@ -160,7 +166,7 @@ public class EditableStringListActivity extends ListActivity {
 				if (myItems.get(i).getId() == id) {
 					myItems.remove(i);
 					notifyDataSetChanged();
-					EditableStringListActivity.this.enableButtons();
+					enableButtons();
 					return;
 				}
 			}
@@ -178,20 +184,25 @@ public class EditableStringListActivity extends ListActivity {
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					item.setPath(s.toString());
-					EditableStringListActivity.this.enableButtons();
+					enableButtons();
 				}
 			});
 			text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this, android.R.layout.simple_dropdown_item_1line, rootpaths));
+			if ("".equals(item.getPath())) {
+				text.requestFocus();
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.toggleSoftInput(0, 0);
+			}
 			final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
 			button.setOnClickListener(
 				new View.OnClickListener() {
 					public void onClick(View view) {
-						ItemAdapter.this.removeDirectoryItem(item.getId());
-						EditableStringListActivity.this.enableButtons();
+						removeDirectoryItem(item.getId());
+						enableButtons();
 					}
 				}
 			);
-			button.setEnabled(ItemAdapter.this.getCount() > 1);
+			button.setEnabled(getCount() > 1);
 			return view;
 		}
 	}
