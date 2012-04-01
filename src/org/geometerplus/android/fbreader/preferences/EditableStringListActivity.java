@@ -31,13 +31,13 @@ import android.view.inputmethod.InputMethodManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
+import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.Paths;
 
 public class EditableStringListActivity extends ListActivity {
 
-	public static final String OPTION_NAME = "optionName";
+	public static final String LIST = "list";
 	public static final String TITLE = "title";
 
 	private static String[] rootpaths;
@@ -47,7 +47,6 @@ public class EditableStringListActivity extends ListActivity {
 		rootpaths[0] = Paths.cardDirectory() + "/";
 	}
 
-	private ZLStringListOption myOption;
 	private ImageButton addButton;
 	private Button okButton;
 
@@ -62,14 +61,14 @@ public class EditableStringListActivity extends ListActivity {
 		setContentView(R.layout.editable_stringlist);
 		setTitle(getIntent().getStringExtra(TITLE));
 
-		myOption = Paths.DirectoryOption(getIntent().getStringExtra(OPTION_NAME));
+		List<String> list = ZLMiscUtil.stringToList(getIntent().getStringExtra(LIST), "\n");
 
 
 //		final View bottomView = findViewById(R.id.editable_stringlist_bottom);
 
 		setListAdapter(new ItemAdapter());
 
-		for (String s : myOption.getValue()) {
+		for (String s : list) {
 			DirectoryItem i = new DirectoryItem();
 			i.setPath(s);
 			getListAdapter().addDirectoryItem(i);
@@ -94,12 +93,13 @@ public class EditableStringListActivity extends ListActivity {
 			new View.OnClickListener() {
 				public void onClick(View view) {
 					ArrayList<String> paths = new ArrayList<String>();
-					for (int i = 0; i < EditableStringListActivity.this.getListAdapter().getCount(); i++) {
-						paths.add(EditableStringListActivity.this.getListAdapter().getItem(i).getPath());
+					for (int i = 0; i < getListAdapter().getCount(); i++) {
+						paths.add(getListAdapter().getItem(i).getPath());
 					}
-					EditableStringListActivity.this.myOption.setValue(paths);
-
-					EditableStringListActivity.this.finish();
+					Intent intent = new Intent();
+					intent.putExtra(LIST, ZLMiscUtil.listToString(paths, "\n"));
+					setResult(RESULT_OK, intent);
+					finish();
 				}
 			}
 		);
@@ -108,7 +108,8 @@ public class EditableStringListActivity extends ListActivity {
 		cancelButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
-					EditableStringListActivity.this.finish();
+					setResult(RESULT_CANCELED);
+					finish();
 				}
 			}
 		);

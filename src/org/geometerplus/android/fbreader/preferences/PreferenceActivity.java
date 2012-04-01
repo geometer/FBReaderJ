@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.util.HashMap;
+
 import android.content.Intent;
 import android.view.KeyEvent;
 
@@ -41,8 +43,19 @@ import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
+
+	private HashMap<Integer, ZLActivityPreference> myActivityPrefs = new HashMap<Integer, ZLActivityPreference>();
+
 	public PreferenceActivity() {
 		super("Preferences");
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		ZLActivityPreference p = myActivityPrefs.get(requestCode);
+		if (resultCode == RESULT_OK) {
+			p.setValue(data);
+		}
 	}
 
 	@Override
@@ -56,9 +69,13 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
 		if (AndroidFontUtil.areExternalFontsSupported()) {
-			directoriesScreen.addPreference(new ZLDirectoryPreference(this, Paths.FONTS_DIRECTORY, directoriesScreen.Resource, "fonts"));
+			ZLActivityPreference fp = new ZLActivityPreference(this, Paths.FontsDirectoryOption(), 0, directoriesScreen.Resource, "fonts");
+			myActivityPrefs.put(0, fp);
+			directoriesScreen.addPreference(fp);
 		}
-		directoriesScreen.addPreference(new ZLDirectoryPreference(this, Paths.WALLPAPERS_DIRECTORY, directoriesScreen.Resource, "wallpapers"));
+		ZLActivityPreference wp = new ZLActivityPreference(this, Paths.WallpapersDirectoryOption(), 1, directoriesScreen.Resource, "wallpapers");
+		myActivityPrefs.put(1, wp);
+		directoriesScreen.addPreference(wp);
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
