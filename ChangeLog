@@ -3,6 +3,7 @@
 * fixed repeated book opening issue
 * max margin value changed to 100
 * first line indent depends on screen DPI
+* all footnotes in single file
 
 ===== 1.4.3 (Mar 29, 2012) =====
 * fixed fb2 books opening issue

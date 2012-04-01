@@ -94,8 +94,6 @@ public:
 protected:
 	void addParagraphInternal(ZLTextParagraph *paragraph);
 
-	void checkUtf8Text();
-
 private:
 	const std::string myId;
 	const std::string myLanguage;

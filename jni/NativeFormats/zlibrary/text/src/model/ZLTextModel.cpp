@@ -117,8 +117,6 @@ ZLTextMark ZLTextModel::previousMark(ZLTextMark position) const {
 */
 
 void ZLTextModel::addParagraphInternal(ZLTextParagraph *paragraph) {
-	checkUtf8Text();
-
 	const size_t dataSize = myAllocator->blocksNumber();
 	const size_t bytesOffset = myAllocator->currentBytesOffset();
 
@@ -182,80 +180,72 @@ void ZLTextPlainModel::createParagraph(ZLTextParagraph::Kind kind) {
 	addParagraphInternal(paragraph);
 }
 
-void ZLTextModel::checkUtf8Text() {
-	if (myLastEntryStart == 0 || *myLastEntryStart != ZLTextParagraphEntry::TEXT_ENTRY
-			|| *(myLastEntryStart + 1) == 0) {
-		return;
-	}
-	const size_t utf8Len = ZLCachedMemoryAllocator::readUInt32(myLastEntryStart + 2);
-	ZLUnicodeUtil::Ucs2String ucs2str;
-	ZLUnicodeUtil::utf8ToUcs2(ucs2str, myLastEntryStart + 6, utf8Len);
-
-	const size_t newLen = ucs2str.size() * 2;
-	myLastEntryStart = myAllocator->reallocateLast(myLastEntryStart, newLen + 6);
-
-	*(myLastEntryStart + 1) = 0;
-	ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, ucs2str.size());
-	memcpy(myLastEntryStart + 6, &ucs2str.front(), newLen);
-	myTextSizes.back() += ucs2str.size();
-}
-
 void ZLTextModel::addText(const std::string &text) {
-	const size_t len = text.length();
-	if (myLastEntryStart != 0 && *myLastEntryStart == ZLTextParagraphEntry::TEXT_ENTRY
-			&& *(myLastEntryStart + 1) != 0) {
+	ZLUnicodeUtil::Ucs2String ucs2str;
+	ZLUnicodeUtil::utf8ToUcs2(ucs2str, text);
+	const size_t len = ucs2str.size();
+
+	if (myLastEntryStart != 0 && *myLastEntryStart == ZLTextParagraphEntry::TEXT_ENTRY) {
 		const size_t oldLen = ZLCachedMemoryAllocator::readUInt32(myLastEntryStart + 2);
 		const size_t newLen = oldLen + len;
-		myLastEntryStart = myAllocator->reallocateLast(myLastEntryStart, newLen + 6);
+		myLastEntryStart = myAllocator->reallocateLast(myLastEntryStart, 2 * newLen + 6);
 		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, newLen);
-		memcpy(myLastEntryStart + 6 + oldLen, text.data(), len);
+		memcpy(myLastEntryStart + 6 + oldLen, &ucs2str.front(), 2 * newLen);
 	} else {
-		myLastEntryStart = myAllocator->allocate(len + 6);
+		myLastEntryStart = myAllocator->allocate(2 * len + 6);
 		*myLastEntryStart = ZLTextParagraphEntry::TEXT_ENTRY;
-		*(myLastEntryStart + 1) = 1;
+		*(myLastEntryStart + 1) = 0;
 		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, len);
-		memcpy(myLastEntryStart + 6, text.data(), len);
+		memcpy(myLastEntryStart + 6, &ucs2str.front(), 2 * len);
 		myParagraphs.back()->addEntry(myLastEntryStart);
 		++myParagraphLengths.back();
 	}
+	myTextSizes.back() += len;
 }
 
 void ZLTextModel::addText(const std::vector<std::string> &text) {
 	if (text.size() == 0) {
 		return;
 	}
-	size_t len = 0;
+	size_t fullLength = 0;
 	for (std::vector<std::string>::const_iterator it = text.begin(); it != text.end(); ++it) {
-		len += it->length();
+		fullLength += ZLUnicodeUtil::utf8Length(*it);
 	}
-	if (myLastEntryStart != 0 && *myLastEntryStart == ZLTextParagraphEntry::TEXT_ENTRY
-			&& *(myLastEntryStart + 1) != 0) {
+
+	ZLUnicodeUtil::Ucs2String ucs2str;
+	if (myLastEntryStart != 0 && *myLastEntryStart == ZLTextParagraphEntry::TEXT_ENTRY) {
 		const size_t oldLen = ZLCachedMemoryAllocator::readUInt32(myLastEntryStart + 2);
-		const size_t newLen = oldLen + len;
-		myLastEntryStart = myAllocator->reallocateLast(myLastEntryStart, newLen + 6);
+		const size_t newLen = oldLen + fullLength;
+		myLastEntryStart = myAllocator->reallocateLast(myLastEntryStart, 2 * newLen + 6);
 		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, newLen);
 		size_t offset = 6 + oldLen;
 		for (std::vector<std::string>::const_iterator it = text.begin(); it != text.end(); ++it) {
-			memcpy(myLastEntryStart + offset, it->data(), it->length());
-			offset += it->length();
+			ZLUnicodeUtil::utf8ToUcs2(ucs2str, *it);
+			const size_t len = 2 * ucs2str.size();
+			memcpy(myLastEntryStart + offset, &ucs2str.front(), len);
+			offset += len;
+			ucs2str.clear();
 		}
 	} else {
-		myLastEntryStart = myAllocator->allocate(len + 6);
+		myLastEntryStart = myAllocator->allocate(2 * fullLength + 6);
 		*myLastEntryStart = ZLTextParagraphEntry::TEXT_ENTRY;
-		*(myLastEntryStart + 1) = 1;
-		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, len);
+		*(myLastEntryStart + 1) = 0;
+		ZLCachedMemoryAllocator::writeUInt32(myLastEntryStart + 2, fullLength);
 		size_t offset = 6;
 		for (std::vector<std::string>::const_iterator it = text.begin(); it != text.end(); ++it) {
-			memcpy(myLastEntryStart + offset, it->data(), it->length());
-			offset += it->length();
+			ZLUnicodeUtil::utf8ToUcs2(ucs2str, *it);
+			const size_t len = 2 * ucs2str.size();
+			memcpy(myLastEntryStart + offset, &ucs2str.front(), len);
+			offset += len;
+			ucs2str.clear();
 		}
 		myParagraphs.back()->addEntry(myLastEntryStart);
 		++myParagraphLengths.back();
 	}
+	myTextSizes.back() += fullLength;
 }
 
 void ZLTextModel::addFixedHSpace(unsigned char length) {
-	checkUtf8Text();
 	myLastEntryStart = myAllocator->allocate(4);
 	*myLastEntryStart = ZLTextParagraphEntry::FIXED_HSPACE_ENTRY;
 	*(myLastEntryStart + 1) = 0;
@@ -266,7 +256,6 @@ void ZLTextModel::addFixedHSpace(unsigned char length) {
 }
 
 void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
-	checkUtf8Text();
 	myLastEntryStart = myAllocator->allocate(4);
 	*myLastEntryStart = ZLTextParagraphEntry::CONTROL_ENTRY;
 	*(myLastEntryStart + 1) = 0;
@@ -277,8 +266,7 @@ void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
 }
 
 void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
-	/*checkUtf8Text();
-
+	/*
 	size_t len = 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
 			(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);
 
@@ -339,8 +327,6 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 }
 
 void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label) {
-	checkUtf8Text();
-
 	ZLUnicodeUtil::Ucs2String ucs2label;
 	ZLUnicodeUtil::utf8ToUcs2(ucs2label, label);
 
@@ -358,8 +344,6 @@ void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyper
 }
 
 void ZLTextModel::addImage(const std::string &id, short vOffset, bool isCover) {
-	checkUtf8Text();
-
 	ZLUnicodeUtil::Ucs2String ucs2id;
 	ZLUnicodeUtil::utf8ToUcs2(ucs2id, id);
 
@@ -377,7 +361,6 @@ void ZLTextModel::addImage(const std::string &id, short vOffset, bool isCover) {
 }
 
 void ZLTextModel::addBidiReset() {
-	checkUtf8Text();
 	myLastEntryStart = myAllocator->allocate(2);
 	*myLastEntryStart = ZLTextParagraphEntry::RESET_BIDI_ENTRY;
 	*(myLastEntryStart + 1) = 0;
@@ -386,6 +369,5 @@ void ZLTextModel::addBidiReset() {
 }
 
 void ZLTextModel::flush() {
-	checkUtf8Text();
 	myAllocator->flush();
 }
