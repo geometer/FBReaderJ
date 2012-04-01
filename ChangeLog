@@ -28,7 +28,7 @@
   ** HTML support
   ** CSS/ePub support
 
-===== 1.4.4 (Apr ??, 2012) =====
+===== 1.4.4 (Apr 01, 2012) =====
 * introduced jni C++ wrappers (this avoids incorrect method calls)
 * fixed repeated book opening issue
 * max margin value changed to 100
