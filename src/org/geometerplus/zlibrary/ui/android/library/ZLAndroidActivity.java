@@ -190,7 +190,10 @@ public abstract class ZLAndroidActivity extends Activity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		ZLApplication.Instance().openFile(fileFromIntent(intent), null);
+		final String action = intent.getAction();
+		if (Intent.ACTION_VIEW.equals(action) || "android.fbreader.action.VIEW".equals(action)) {
+			ZLApplication.Instance().openFile(fileFromIntent(intent), null);
+		}
 	}
 
 	private static ZLAndroidLibrary getLibrary() {

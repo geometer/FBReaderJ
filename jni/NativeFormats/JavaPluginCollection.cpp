@@ -28,7 +28,7 @@ extern "C"
 JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_nativePlugins(JNIEnv* env, jobject thiz) {
 	const std::vector<shared_ptr<FormatPlugin> > plugins = PluginCollection::Instance().plugins();
 	const size_t size = plugins.size();
-	jclass cls = AndroidUtil::Class_NativeFormatPlugin->j();
+	jclass cls = AndroidUtil::Class_NativeFormatPlugin.j();
 	// TODO: memory leak?
 	jobjectArray javaPlugins = env->NewObjectArray(size, cls, 0);
 
