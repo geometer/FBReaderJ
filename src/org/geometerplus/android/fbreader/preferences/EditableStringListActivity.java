@@ -79,7 +79,7 @@ public class EditableStringListActivity extends ListActivity {
 		addButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
-					EditableStringListActivity.this.getListAdapter().addDirectoryItem(new DirectoryItem());
+					getListAdapter().addDirectoryItem(new DirectoryItem());
 				}
 			}
 		);
@@ -140,7 +140,12 @@ public class EditableStringListActivity extends ListActivity {
 			nextId = nextId + 1;
 			myItems.add(i);
 			notifyDataSetChanged();
-			EditableStringListActivity.this.enableButtons();
+			enableButtons();
+			getListView().post(new Runnable(){
+				public void run() {
+					getListView().setSelection(getCount() - 1);
+				}
+			});
 		}
 
 		@Override
@@ -160,7 +165,7 @@ public class EditableStringListActivity extends ListActivity {
 				if (myItems.get(i).getId() == id) {
 					myItems.remove(i);
 					notifyDataSetChanged();
-					EditableStringListActivity.this.enableButtons();
+					enableButtons();
 					return;
 				}
 			}
@@ -178,7 +183,7 @@ public class EditableStringListActivity extends ListActivity {
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					item.setPath(s.toString());
-					EditableStringListActivity.this.enableButtons();
+					enableButtons();
 				}
 			});
 			text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this, android.R.layout.simple_dropdown_item_1line, rootpaths));
@@ -191,12 +196,12 @@ public class EditableStringListActivity extends ListActivity {
 			button.setOnClickListener(
 				new View.OnClickListener() {
 					public void onClick(View view) {
-						ItemAdapter.this.removeDirectoryItem(item.getId());
-						EditableStringListActivity.this.enableButtons();
+						removeDirectoryItem(item.getId());
+						enableButtons();
 					}
 				}
 			);
-			button.setEnabled(ItemAdapter.this.getCount() > 1);
+			button.setEnabled(getCount() > 1);
 			return view;
 		}
 	}
