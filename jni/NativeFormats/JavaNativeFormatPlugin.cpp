@@ -195,11 +195,13 @@ static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &mode
 	jstring fileExtension = env->NewStringUTF(model.allocator().fileExtension().c_str());
 	jint blocksNumber = (jint) model.allocator().blocksNumber();
 
-	jobject textModel = AndroidUtil::Method_NativeBookModel_createTextModel->call(javaModel,
+	jobject textModel = AndroidUtil::Method_NativeBookModel_createTextModel->call(
+		javaModel,
 		id, language,
 		paragraphsNumber, entryIndices, entryOffsets,
 		paragraphLenghts, textSizes, paragraphKinds,
-		directoryName, fileExtension, blocksNumber);
+		directoryName, fileExtension, blocksNumber
+	);
 
 	if (env->ExceptionCheck()) {
 		textModel = 0;
