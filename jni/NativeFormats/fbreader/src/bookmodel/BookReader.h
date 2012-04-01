@@ -32,6 +32,7 @@
 class BookModel;
 class ZLTextModel;
 class ZLInputStream;
+class ZLCachedMemoryAllocator;
 
 class BookReader {
 
@@ -102,6 +103,8 @@ private:
 	std::string myHyperlinkReference;
 	FBHyperlinkType myHyperlinkType;
 	FBTextKind myHyperlinkKind;
+
+	shared_ptr<ZLCachedMemoryAllocator> myFootnotesAllocator;
 };
 
 inline bool BookReader::paragraphIsOpen() const {
