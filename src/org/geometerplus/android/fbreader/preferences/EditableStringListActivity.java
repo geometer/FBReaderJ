@@ -27,6 +27,7 @@ import android.view.*;
 import android.widget.*;
 import android.text.*;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -64,8 +65,7 @@ public class EditableStringListActivity extends ListActivity {
 		myOption = Paths.DirectoryOption(getIntent().getStringExtra(OPTION_NAME));
 
 
-		final View bottomView = getLayoutInflater().inflate(R.layout.editable_stringlist_lastitem, null);
-		getListView().addFooterView(bottomView);
+//		final View bottomView = findViewById(R.id.editable_stringlist_bottom);
 
 		setListAdapter(new ItemAdapter());
 
@@ -75,7 +75,7 @@ public class EditableStringListActivity extends ListActivity {
 			getListAdapter().addDirectoryItem(i);
 		}
 
-		addButton = (ImageButton)bottomView.findViewById(R.id.editable_stringlist_addbutton);
+		addButton = (ImageButton)findViewById(R.id.editable_stringlist_addbutton);
 		addButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
@@ -84,7 +84,7 @@ public class EditableStringListActivity extends ListActivity {
 			}
 		);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final View buttonView = bottomView.findViewById(R.id.editable_stringlist_buttons);
+		final View buttonView = findViewById(R.id.editable_stringlist_buttons);
 		okButton = (Button)buttonView.findViewById(R.id.ok_button);
 		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
@@ -182,6 +182,11 @@ public class EditableStringListActivity extends ListActivity {
 				}
 			});
 			text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this, android.R.layout.simple_dropdown_item_1line, rootpaths));
+			if ("".equals(item.getPath())) {
+				text.requestFocus();
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.toggleSoftInput(0, 0);
+			}
 			final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
 			button.setOnClickListener(
 				new View.OnClickListener() {

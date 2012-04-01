@@ -14,13 +14,15 @@
 		android:singleLine="true"
 		android:completionThreshold="1"
 		android:imeOptions="actionDone"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="5dp"
 	/>
 	<ImageButton
 		android:id="@+id/editable_stringlist_deletebutton"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_weight="3"
-		android:layout_marginLeft="10dp"
+		android:layout_marginLeft="5dp"
 		android:layout_marginRight="10dp"
 		android:src="@android:drawable/ic_delete"
 	/>
