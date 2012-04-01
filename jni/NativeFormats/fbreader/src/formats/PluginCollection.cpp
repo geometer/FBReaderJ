@@ -18,6 +18,7 @@
  */
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include <ZLibrary.h>
 #include <ZLFile.h>
@@ -71,11 +72,9 @@ void PluginCollection::deleteInstance() {
 
 PluginCollection::PluginCollection() {
 	JNIEnv *env = AndroidUtil::getEnv();
-	jclass cls = env->FindClass(AndroidUtil::Class_PluginCollection);
-	jobject instance = env->CallStaticObjectMethod(cls, AndroidUtil::SMID_PluginCollection_Instance);
+	jobject instance = AndroidUtil::StaticMethod_PluginCollection_Instance->call();
 	myJavaInstance = env->NewGlobalRef(instance);
 	env->DeleteLocalRef(instance);
-	env->DeleteLocalRef(cls);
 }
 
 PluginCollection::~PluginCollection() {

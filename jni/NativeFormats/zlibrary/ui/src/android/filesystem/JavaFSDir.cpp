@@ -20,6 +20,7 @@
 #include <set>
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include "JavaFSDir.h"
 
@@ -47,60 +48,37 @@ jobjectArray JavaFSDir::getFileChildren(JNIEnv *env) {
 		return 0;
 	}
 
-	jobject list = env->CallObjectMethod(myJavaFile, AndroidUtil::MID_ZLFile_children);
+	jobject list = AndroidUtil::Method_ZLFile_children->call(myJavaFile);
 	if (list == 0) {
 		return 0;
 	}
-	jobjectArray array = (jobjectArray)env->CallObjectMethod(list, AndroidUtil::MID_java_util_Collection_toArray);
+	jobjectArray array = AndroidUtil::Method_java_util_Collection_toArray->call(list);
 	env->DeleteLocalRef(list);
 	return array;
 }
 
-void JavaFSDir::collectChildren(std::vector<std::string> &names, bool filesNotDirs) {
+void JavaFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlinks) {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jobjectArray array = getFileChildren(env);
 	if (array == 0) {
 		return;
 	}
 
-	std::set<std::string> filesSet;
-
-	std::string prefix(path());
-	prefix.append("/");
-	size_t prefixLength = prefix.length();
-
 	const jsize size = env->GetArrayLength(array);
 	for (jsize i = 0; i < size; ++i) {
 		jobject file = env->GetObjectArrayElement(array, i);
+		jstring javaPath = AndroidUtil::Method_ZLFile_getPath->call(file);
+		env->DeleteLocalRef(file);
 
-		jstring javaPath = (jstring)env->CallObjectMethod(file, AndroidUtil::MID_ZLFile_getPath);
 		const char *chars = env->GetStringUTFChars(javaPath, 0);
 		std::string path(chars);
 		env->ReleaseStringUTFChars(javaPath, chars);
 		env->DeleteLocalRef(javaPath);
 
-		if (path.length() > prefixLength) {
-			size_t index = path.find('/', prefixLength);
-			bool isdir = false;
-			if (index != std::string::npos) {
-				path.erase(index);
-				isdir = true;
-			} /*else {
-				isdir = env->CallBooleanMethod(file, AndroidUtil::MID_ZLFile_isDirectory) != 0;
-			}*/
-			if (isdir ^ filesNotDirs) {
-				names.push_back(path.substr(prefixLength));
-			}
+		size_t index = path.rfind('/');
+		if (index != std::string::npos) {
+			path = path.substr(index + 1);
 		}
-
-		env->DeleteLocalRef(file);
+		names.push_back(path);
 	}
-}
-
-void JavaFSDir::collectSubDirs(std::vector<std::string> &names, bool includeSymlinks) {
-	collectChildren(names, false);
-}
-
-void JavaFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlinks) {
-	collectChildren(names, true);
 }

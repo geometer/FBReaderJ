@@ -18,10 +18,12 @@
  */
 
 #include <AndroidUtil.h>
+#include <JniEnvelope.h>
 
 #include <ZLImage.h>
 #include <ZLFileImage.h>
 #include <ZLLogger.h>
+#include <ZLCachedMemoryAllocator.h>
 
 #include "BookReader.h"
 #include "BookModel.h"
@@ -52,8 +54,10 @@ void BookReader::setFootnoteTextModel(const std::string &id) {
 	if (it != myModel.myFootnotes.end()) {
 		myCurrentTextModel = (*it).second;
 	} else {
-		myCurrentTextModel = new ZLTextPlainModel(id, myModel.myBookTextModel->language(), 8192,
-				Library::Instance().cacheDirectory(), "nfootnote_id=" + id);
+		if (myFootnotesAllocator.isNull()) {
+			myFootnotesAllocator = new ZLCachedMemoryAllocator(8192, Library::Instance().cacheDirectory(), "footnotes");
+		}
+		myCurrentTextModel = new ZLTextPlainModel(id, myModel.myBookTextModel->language(), myFootnotesAllocator);
 		myModel.myFootnotes.insert(std::make_pair(id, myCurrentTextModel));
 	}
 }
@@ -202,7 +206,7 @@ void BookReader::addImage(const std::string &id, shared_ptr<const ZLImage> image
 
 	jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
 	jstring javaId = AndroidUtil::createJavaString(env, id);
-	env->CallVoidMethod(myModel.myJavaModel, AndroidUtil::MID_NativeBookModel_addImage, javaId, javaImage);
+	AndroidUtil::Method_NativeBookModel_addImage->call(myModel.myJavaModel, javaId, javaImage);
 
 	env->DeleteLocalRef(javaId);
 	env->DeleteLocalRef(javaImage);

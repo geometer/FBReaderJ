@@ -20,7 +20,7 @@
 #include "JavaInputStream.h"
 
 #include <AndroidUtil.h>
-
+#include <JniEnvelope.h>
 
 JavaInputStream::JavaInputStream(const std::string &name) : myName(name), myNeedRepositionToStart(false) {
 	myJavaFile = 0;
@@ -52,7 +52,7 @@ void JavaInputStream::initStream(JNIEnv *env) {
 		}
 	}
 
-	jobject stream = env->CallObjectMethod(myJavaFile, AndroidUtil::MID_ZLFile_getInputStream);
+	jobject stream = AndroidUtil::Method_ZLFile_getInputStream->call(myJavaFile);
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
 	} else {
@@ -63,7 +63,7 @@ void JavaInputStream::initStream(JNIEnv *env) {
 }
 
 void JavaInputStream::closeStream(JNIEnv *env) {
-	env->CallVoidMethod(myJavaInputStream, AndroidUtil::MID_java_io_InputStream_close);
+	AndroidUtil::Method_java_io_InputStream_close->call(myJavaInputStream);
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
 	}
@@ -94,8 +94,8 @@ void JavaInputStream::ensureBufferCapacity(JNIEnv *env, size_t maxSize) {
 size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, size_t maxSize) {
 	ensureBufferCapacity(env, maxSize);
 
-	jint result = env->CallIntMethod(myJavaInputStream,
-			AndroidUtil::MID_java_io_InputStream_read, myJavaBuffer, (jint)0, (jint)maxSize);
+	jint result =
+		AndroidUtil::Method_java_io_InputStream_read->call(myJavaInputStream, myJavaBuffer, (jint)0, (jint)maxSize);
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
 		return 0;
@@ -114,8 +114,8 @@ size_t JavaInputStream::readToBuffer(JNIEnv *env, char *buffer, size_t maxSize) 
 }
 
 size_t JavaInputStream::skip(JNIEnv *env, size_t offset) {
-	size_t result = (size_t) env->CallLongMethod(myJavaInputStream,
-			AndroidUtil::MID_java_io_InputStream_skip, (jlong)offset);
+	size_t result =
+		(size_t)AndroidUtil::Method_java_io_InputStream_skip->call(myJavaInputStream, (jlong)offset);
 	if (env->ExceptionCheck()) {
 		env->ExceptionClear();
 		return 0;
@@ -155,8 +155,7 @@ size_t JavaInputStream::sizeOfOpened() {
 	if (myJavaInputStream == 0 || myJavaFile == 0) {
 		return 0;
 	}
-	JNIEnv *env = AndroidUtil::getEnv();
-	return (size_t) env->CallLongMethod(myJavaFile, AndroidUtil::MID_ZLFile_size);
+	return (size_t)AndroidUtil::Method_ZLFile_size->call(myJavaFile);
 }
 
 void JavaInputStream::seek(int offset, bool absoluteOffset) {
