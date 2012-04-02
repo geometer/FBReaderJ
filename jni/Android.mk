@@ -114,6 +114,8 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/txt/TxtBookReader.cpp \
 	NativeFormats/fbreader/src/formats/txt/TxtPlugin.cpp \
 	NativeFormats/fbreader/src/formats/txt/TxtReader.cpp \
+	NativeFormats/fbreader/src/formats/util/EntityFilesCollector.cpp \
+	NativeFormats/fbreader/src/formats/util/MiscUtil.cpp \
 	NativeFormats/fbreader/src/formats/xhtml/XHTMLReader.cpp \
 	NativeFormats/fbreader/src/library/Author.cpp \
 	NativeFormats/fbreader/src/library/Book.cpp \
