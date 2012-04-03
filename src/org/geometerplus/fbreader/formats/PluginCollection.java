@@ -103,9 +103,9 @@ public class PluginCollection {
 		}
 
 		FormatPlugin plugin;
-		FormatPlugin builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
+		FormatPlugin builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 		if (builtInPlugin == null) {
-			builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+			builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
 		}
 		if (builtInPlugin != null) {
 			plugin = new ExternalFormatPlugin(fileType.Id, builtInPlugin);
@@ -124,9 +124,9 @@ public class PluginCollection {
 		if (formatType == FormatPlugin.Type.EXTERNAL) {
 			return getOrCreateExternalPlugin(fileType);
 		} else if (formatType == FormatPlugin.Type.ANY) {
-			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.JAVA);
+			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 			if (p == null) {
-				p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
 			}
 			return p;
 		} else {
