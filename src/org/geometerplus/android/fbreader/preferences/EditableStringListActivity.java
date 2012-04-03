@@ -31,28 +31,25 @@ import android.view.inputmethod.InputMethodManager;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
-import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 import org.geometerplus.fbreader.Paths;
 
 public class EditableStringListActivity extends ListActivity {
-
 	public static final String LIST = "list";
 	public static final String TITLE = "title";
 
-	private static String[] rootpaths;
+	private static String[] ourRootpaths = { Paths.cardDirectory() + "/" };
 
-	static {
-		rootpaths = new String[1];
-		rootpaths[0] = Paths.cardDirectory() + "/";
-	}
-
-	private ImageButton addButton;
-	private Button okButton;
+	private ImageButton myAddButton;
+	private Button myOkButton;
 
 	private void enableButtons() {
-		if (addButton != null) addButton.setEnabled(!getListAdapter().hasEmpty());
-		if (okButton != null) okButton.setEnabled(!getListAdapter().hasEmpty());
+		if (myAddButton != null) {
+			myAddButton.setEnabled(!getListAdapter().hasEmpty());
+		}
+		if (myOkButton != null) {
+			myOkButton.setEnabled(!getListAdapter().hasEmpty());
+		}
 	}
 
 	@Override
@@ -61,8 +58,7 @@ public class EditableStringListActivity extends ListActivity {
 		setContentView(R.layout.editable_stringlist);
 		setTitle(getIntent().getStringExtra(TITLE));
 
-		List<String> list = ZLMiscUtil.stringToList(getIntent().getStringExtra(LIST), "\n");
-
+		final List<String> list = getIntent().getStringArrayListExtra(LIST);
 
 //		final View bottomView = findViewById(R.id.editable_stringlist_bottom);
 
@@ -74,8 +70,8 @@ public class EditableStringListActivity extends ListActivity {
 			getListAdapter().addDirectoryItem(i);
 		}
 
-		addButton = (ImageButton)findViewById(R.id.editable_stringlist_addbutton);
-		addButton.setOnClickListener(
+		myAddButton = (ImageButton)findViewById(R.id.editable_stringlist_addbutton);
+		myAddButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
 					getListAdapter().addDirectoryItem(new DirectoryItem());
@@ -84,12 +80,12 @@ public class EditableStringListActivity extends ListActivity {
 		);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
 		final View buttonView = findViewById(R.id.editable_stringlist_buttons);
-		okButton = (Button)buttonView.findViewById(R.id.ok_button);
+		myOkButton = (Button)buttonView.findViewById(R.id.ok_button);
 		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
-		okButton.setText(buttonResource.getResource("ok").getValue());
+		myOkButton.setText(buttonResource.getResource("ok").getValue());
 
-		okButton.setOnClickListener(
+		myOkButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
 					ArrayList<String> paths = new ArrayList<String>();
@@ -97,7 +93,7 @@ public class EditableStringListActivity extends ListActivity {
 						paths.add(getListAdapter().getItem(i).getPath());
 					}
 					Intent intent = new Intent();
-					intent.putExtra(LIST, ZLMiscUtil.listToString(paths, "\n"));
+					intent.putStringArrayListExtra(LIST, paths);
 					setResult(RESULT_OK, intent);
 					finish();
 				}
@@ -113,7 +109,6 @@ public class EditableStringListActivity extends ListActivity {
 				}
 			}
 		);
-
 	}
 
 	@Override
@@ -187,7 +182,7 @@ public class EditableStringListActivity extends ListActivity {
 					enableButtons();
 				}
 			});
-			text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this, android.R.layout.simple_dropdown_item_1line, rootpaths));
+			text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this, android.R.layout.simple_dropdown_item_1line, ourRootpaths));
 			if ("".equals(item.getPath())) {
 				text.requestFocus();
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

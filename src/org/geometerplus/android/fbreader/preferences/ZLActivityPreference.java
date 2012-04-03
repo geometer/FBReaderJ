@@ -19,6 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
+import java.util.*;
+
 import android.content.*;
 import android.app.Activity;
 import android.preference.Preference;
@@ -28,34 +30,40 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 class ZLActivityPreference extends Preference {
-
 	private final ZLStringListOption myOption;
 	private final int myRequestCode;
 
-	ZLActivityPreference(Context context, ZLStringListOption option, int requestCode, ZLResource rootResource, String resourceKey) {
+	ZLActivityPreference(Context context, ZLStringListOption option, Map<Integer,ZLActivityPreference> map, ZLResource rootResource, String resourceKey) {
 		super(context);
 		myOption = option;
-		myRequestCode = requestCode;
+		myRequestCode = map.size();
+		map.put(myRequestCode, this);
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
-		setSummary(ZLMiscUtil.listToString(myOption.getValue(), ": "));
+		updateSummary();
 	}
 
 	@Override
 	protected void onClick() {
 		final Intent intent = new Intent();
 		intent.setClass(getContext(), EditableStringListActivity.class);
-		intent.putExtra(EditableStringListActivity.LIST, ZLMiscUtil.listToString(myOption.getValue(), "\n"));
+		intent.putStringArrayListExtra(
+			EditableStringListActivity.LIST,
+			new ArrayList<String>(myOption.getValue())
+		);
 		intent.putExtra(EditableStringListActivity.TITLE, getTitle());
 
 		((Activity)getContext()).startActivityForResult(intent, myRequestCode);
 	}
 
 	public void setValue(Intent data) {
-		String value = data.getStringExtra(EditableStringListActivity.LIST);
-		myOption.setValue(ZLMiscUtil.stringToList(value, "\n"));
-		setSummary(ZLMiscUtil.listToString(myOption.getValue(), ": "));
+		final List<String> value = data.getStringArrayListExtra(EditableStringListActivity.LIST);
+		myOption.setValue(value);
+		updateSummary();
 	}
 
+	private void updateSummary() {
+		setSummary(ZLMiscUtil.listToString(myOption.getValue(), ":"));
+	}
 }
