@@ -298,8 +298,8 @@
 				<node name="summary" value="Directories to seek for files"/>
 				<node name="books" value="Books directory"/>
 				<node name="temp" value="Temp files directory"/>
-				<node name="fonts" value="Fonts directory"/>
-				<node name="wallpapers" value="Wallpapers directory"/>
+				<node name="fonts" value="Fonts directories"/>
+				<node name="wallpapers" value="Wallpapers directories"/>
 			</node>
 			<node name="appearance" value="Appearance">
 				<node name="summary" value="Display settings, status bar, button lights"/>

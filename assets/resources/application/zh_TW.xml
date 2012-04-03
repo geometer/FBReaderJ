@@ -290,8 +290,8 @@
 			<node name="directories" value="目錄">
 				<node name="summary" value="文件目錄"/>
 				<node name="books" value="藏書目錄"/>
-				<node name="fonts" value="字型目錄"/>
-				<node name="wallpapers" value="壁紙目錄"/>
+				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="外觀">
 				<node name="summary" value="旋轉， 狀態列"/>

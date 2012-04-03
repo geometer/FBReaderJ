@@ -296,8 +296,8 @@
 			<node name="directories" value="Adresáře">
 				<node name="summary" value="Adresáře pro hledání souborů"/>
 				<node name="books" value="Adresář s knihami"/>
-				<node name="fonts" value="Adresář s písmy"/>
-				<node name="wallpapers" value="Adresář s tapetami"/>
+				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Vzhled">
 				<node name="summary" value="Otáčení, stavový řádek"/>
