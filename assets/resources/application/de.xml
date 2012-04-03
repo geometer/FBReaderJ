@@ -293,8 +293,8 @@
 			<node name="directories" value="Verzeichnisse">
 				<node name="summary" value="Verzeichnisse in den Dateien gesucht werden."/>
 				<node name="books" value="Verzeichnis der Bücher"/>
-				<node name="fonts" value="Verzeichnis für Schriftarten (Fonts)"/>
-				<node name="wallpapers" value="Verzeichnis für Hintergründe"/>
+				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Aussehen">
 				<node name="summary" value="Ausrichtung, Statuszeile"/>
