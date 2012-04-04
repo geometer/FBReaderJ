@@ -37,11 +37,17 @@ import org.geometerplus.fbreader.Paths;
 public class EditableStringListActivity extends ListActivity {
 	public static final String LIST = "list";
 	public static final String TITLE = "title";
+	public static final String SUGGESTIONS = "suggestions";
+	public static final String TYPE = "type";
 
-	private static String[] ourRootpaths = { Paths.cardDirectory() + "/" };
+	public static final String TYPE_FIRST_MAIN = "firstMain";
 
 	private ImageButton myAddButton;
 	private Button myOkButton;
+	private List<String> mySuggestions;
+	private String myType;
+
+	private boolean myUserWasWarned = false;
 
 	private void enableButtons() {
 		if (myAddButton != null) {
@@ -59,6 +65,8 @@ public class EditableStringListActivity extends ListActivity {
 		setTitle(getIntent().getStringExtra(TITLE));
 
 		final List<String> list = getIntent().getStringArrayListExtra(LIST);
+		mySuggestions = getIntent().getStringArrayListExtra(SUGGESTIONS);
+		myType = getIntent().getStringExtra(TYPE);
 
 //		final View bottomView = findViewById(R.id.editable_stringlist_bottom);
 
@@ -170,10 +178,17 @@ public class EditableStringListActivity extends ListActivity {
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			final DirectoryItem item = getItem(position);
-			final View view = LayoutInflater.from(EditableStringListActivity.this).inflate(R.layout.editable_stringlist_item, parent, false);
-
+			final View view;
+			if (TYPE_FIRST_MAIN.equals(myType) && position == 0) {
+				view = LayoutInflater.from(EditableStringListActivity.this).inflate(R.layout.editable_stringlist_mainitem, parent, false);
+				final TextView warningtext = (TextView)view.findViewById(R.id.editable_stringlist_maintext);
+				warningtext.setText("Main directory:");
+			} else {
+				view = LayoutInflater.from(EditableStringListActivity.this).inflate(R.layout.editable_stringlist_item, parent, false);
+			}
 			final AutoCompleteTextView text = (AutoCompleteTextView)view.findViewById(R.id.editable_stringlist_text);
 			text.setText(item.getPath());
+			System.err.println(item.getPath());
 			text.addTextChangedListener(new TextWatcher(){
 				public void afterTextChanged(Editable s) {}
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -182,7 +197,53 @@ public class EditableStringListActivity extends ListActivity {
 					enableButtons();
 				}
 			});
-			text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this, android.R.layout.simple_dropdown_item_1line, ourRootpaths));
+			text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+    					if (hasFocus) {
+						text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this,
+							android.R.layout.simple_dropdown_item_1line, mySuggestions
+						));
+					} else {
+						text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this,
+							android.R.layout.simple_dropdown_item_1line, Collections.<String>emptyList()));
+					}
+				}
+			});
+
+
+			if (TYPE_FIRST_MAIN.equals(myType) && position == 0) {
+				final TextView inactiveText = (TextView)view.findViewById(R.id.editable_stringlist_text_inactive);
+				if (!myUserWasWarned) {
+					inactiveText.setText(item.getPath());
+					inactiveText.setOnClickListener(
+						new View.OnClickListener() {
+							public void onClick(View v) {
+								if (!myUserWasWarned) {
+									new AlertDialog.Builder(EditableStringListActivity.this)
+										.setTitle("Editing of main directory will lead to loss of data")
+										.setMessage("Continue?")
+										.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface arg0, int arg1) {
+												inactiveText.setVisibility(View.GONE);
+												text.setVisibility(View.VISIBLE);
+												myUserWasWarned = true;
+											}
+										})
+										.setNegativeButton("No", new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface arg0, int arg1) {
+											}
+										}).show();
+								}
+							}
+						}
+					);
+				} else {
+					inactiveText.setVisibility(View.GONE);
+					text.setVisibility(View.VISIBLE);
+				}
+			}
+
 			if ("".equals(item.getPath())) {
 				text.requestFocus();
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -197,7 +258,7 @@ public class EditableStringListActivity extends ListActivity {
 					}
 				}
 			);
-			button.setEnabled(getCount() > 1);
+			button.setEnabled(getCount() > 1 && !(TYPE_FIRST_MAIN.equals(myType) && position == 0));
 			return view;
 		}
 	}

@@ -25,19 +25,29 @@ import android.content.*;
 import android.app.Activity;
 import android.preference.Preference;
 
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
 class ZLActivityPreference extends Preference {
-	private final ZLStringListOption myOption;
-	private final int myRequestCode;
 
-	ZLActivityPreference(Context context, ZLStringListOption option, Map<Integer,ZLActivityPreference> map, ZLResource rootResource, String resourceKey) {
+	public static interface ListHolder {
+
+		public List<String> getValue();
+		public void setValue(List<String> l);
+	}
+
+	private final ListHolder myOption;
+	private final int myRequestCode;
+	private final List<String> mySuggestions;
+	private final String myType;
+
+	ZLActivityPreference(Context context, ListHolder option, Map<Integer,ZLActivityPreference> map, List<String> suggestions, String type, ZLResource rootResource, String resourceKey) {
 		super(context);
 		myOption = option;
 		myRequestCode = map.size();
 		map.put(myRequestCode, this);
+		mySuggestions = (suggestions != null) ? suggestions : new ArrayList<String>();
+		myType = type;
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
@@ -52,7 +62,12 @@ class ZLActivityPreference extends Preference {
 			EditableStringListActivity.LIST,
 			new ArrayList<String>(myOption.getValue())
 		);
+		intent.putStringArrayListExtra(
+			EditableStringListActivity.SUGGESTIONS,
+			new ArrayList<String>(mySuggestions)
+		);
 		intent.putExtra(EditableStringListActivity.TITLE, getTitle());
+		intent.putExtra(EditableStringListActivity.TYPE, myType);
 
 		((Activity)getContext()).startActivityForResult(intent, myRequestCode);
 	}

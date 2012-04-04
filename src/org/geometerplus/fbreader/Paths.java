@@ -37,12 +37,12 @@ public abstract class Paths {
 		return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
 	}
 
-	public static ZLStringOption BooksDirectoryOption() {
-		return new ZLStringOption("Files", "BooksDirectory", cardDirectory() + "/Books");
+	public static ZLStringListOption BooksDirectoryOption() {
+		return new ZLStringListOption("Files", "BooksDirectory", cardDirectory() + "/Books", "\n");
 	}
 
 	public static String cacheDirectory() {
-		return BooksDirectoryOption().getValue() + "/.FBReader";
+		return BooksDirectoryOption().getValue().get(0) + "/.FBReader";
 	}
 
 	public static String networkCacheDirectory() {

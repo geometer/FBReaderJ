@@ -164,7 +164,7 @@ public class Book {
 			final int index = fileName.lastIndexOf('.');
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
-		final String demoPathPrefix = Paths.BooksDirectoryOption().getValue() + java.io.File.separator + "Demos" + java.io.File.separator;
+		final String demoPathPrefix = Paths.BooksDirectoryOption().getValue().get(0) + java.io.File.separator + "Demos" + java.io.File.separator;
 		if (File.getPath().startsWith(demoPathPrefix)) {
 			final String demoTag = LibraryUtil.resource().getResource("demo").getValue();
 			setTitle(getTitle() + " (" + demoTag + ")");
@@ -183,6 +183,24 @@ public class Book {
 
 	public List<Author> authors() {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
+	}
+
+	public List<String> getAuthors() {
+		if (myAuthors == null) {
+			return Collections.<String>emptyList();
+		}
+		List<String> result = new ArrayList<String>();
+		for (Author a : myAuthors) {
+			result.add(a.DisplayName);
+		}
+		return result;
+	}
+
+	public void setAuthors(List<String> list) {
+		myAuthors = null;
+		for (String s : list) {
+			addAuthor(s);
+		}
 	}
 
 	void addAuthorWithNoCheck(Author author) {
@@ -313,6 +331,24 @@ public class Book {
 
 	public List<Tag> tags() {
 		return (myTags != null) ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
+	}
+
+	public List<String> getTags() {
+		if (myTags == null) {
+			return Collections.<String>emptyList();
+		}
+		List<String> result = new ArrayList<String>();
+		for (Tag a : myTags) {
+			result.add(a.Name);
+		}
+		return result;
+	}
+
+	public void setTags(List<String> list) {
+		myTags = null;
+		for (String s : list) {
+			addTag(s);
+		}
 	}
 
 	void addTagWithNoCheck(Tag tag) {

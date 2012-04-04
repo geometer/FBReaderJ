@@ -154,7 +154,9 @@ public final class Library extends AbstractLibrary {
 		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
 		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
 
-		dirQueue.offer(new ZLPhysicalFile(new File(Paths.BooksDirectoryOption().getValue())));
+		for (String s : Paths.BooksDirectoryOption().getValue()) {
+			dirQueue.offer(new ZLPhysicalFile(new File(s)));
+		}
 
 		while (!dirQueue.isEmpty()) {
 			for (ZLFile file : dirQueue.poll().children()) {

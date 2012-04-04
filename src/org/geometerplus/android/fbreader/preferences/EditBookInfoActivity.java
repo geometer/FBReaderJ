@@ -144,8 +144,41 @@ class EncodingPreference extends ZLStringListPreference {
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private Book myBook;
 
+	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
+		new HashMap<Integer,ZLActivityPreference>();
+
 	public EditBookInfoActivity() {
 		super("BookInfo");
+	}
+
+	private class AuthorsHolder implements ZLActivityPreference.ListHolder {
+
+		public List<String> getValue() {
+			return myBook.getAuthors();
+		}
+
+		public void setValue(List<String> l) {
+			myBook.setAuthors(l);
+		}
+	}
+
+	private class TagsHolder implements ZLActivityPreference.ListHolder {
+
+		public List<String> getValue() {
+			return myBook.getTags();
+		}
+
+		public void setValue(List<String> l) {
+			myBook.setTags(l);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		ZLActivityPreference p = myActivityPrefs.get(requestCode);
+		if (resultCode == RESULT_OK) {
+			p.setValue(data);
+		}
 	}
 
 	@Override
@@ -167,6 +200,15 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
 		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
+		addPreference(new ZLActivityPreference(
+			this, new AuthorsHolder(), myActivityPrefs, null, null,
+			Resource, "authors"
+		));
+
+		addPreference(new ZLActivityPreference(
+			this, new TagsHolder(), myActivityPrefs, null, null,
+			Resource, "tags"
+		));
 	}
 
 	@Override

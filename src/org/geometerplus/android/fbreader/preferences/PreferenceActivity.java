@@ -19,14 +19,13 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.HashMap;
+import java.util.*;
 
 import android.content.Intent;
 import android.view.KeyEvent;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.view.style.*;
 
@@ -44,6 +43,8 @@ import org.geometerplus.android.fbreader.DictionaryUtil;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 
+	private final List<String> myRootpaths = Arrays.asList(Paths.cardDirectory() + "/");
+
 	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
 		new HashMap<Integer,ZLActivityPreference>();
 
@@ -59,6 +60,22 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 	}
 
+	private static class OptionHolder implements ZLActivityPreference.ListHolder {
+		private ZLStringListOption myOption;
+
+		public OptionHolder(ZLStringListOption option) {
+			myOption = option;
+		}
+
+		public List<String> getValue() {
+			return myOption.getValue();
+		}
+
+		public void setValue(List<String> l) {
+			myOption.setValue(l);
+		}
+	}
+
 	@Override
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
@@ -68,15 +85,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
+		directoriesScreen.addPreference(new ZLActivityPreference(
+			this, new OptionHolder(Paths.BooksDirectoryOption()), myActivityPrefs, myRootpaths, EditableStringListActivity.TYPE_FIRST_MAIN,
+			directoriesScreen.Resource, "books"
+		));
 		if (AndroidFontUtil.areExternalFontsSupported()) {
 			directoriesScreen.addPreference(new ZLActivityPreference(
-				this, Paths.FontsDirectoryOption(), myActivityPrefs,
+				this, new OptionHolder(Paths.FontsDirectoryOption()), myActivityPrefs, myRootpaths, null,
 				directoriesScreen.Resource, "fonts"
 			));
 		}
 		directoriesScreen.addPreference(new ZLActivityPreference(
-			this, Paths.WallpapersDirectoryOption(), myActivityPrefs,
+			this, new OptionHolder(Paths.WallpapersDirectoryOption()), myActivityPrefs, myRootpaths, null,
 			directoriesScreen.Resource, "wallpapers"
 		));
 
