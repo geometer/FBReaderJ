@@ -188,7 +188,6 @@ public class EditableStringListActivity extends ListActivity {
 			}
 			final AutoCompleteTextView text = (AutoCompleteTextView)view.findViewById(R.id.editable_stringlist_text);
 			text.setText(item.getPath());
-			System.err.println(item.getPath());
 			text.addTextChangedListener(new TextWatcher(){
 				public void afterTextChanged(Editable s) {}
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -228,10 +227,14 @@ public class EditableStringListActivity extends ListActivity {
 												inactiveText.setVisibility(View.GONE);
 												text.setVisibility(View.VISIBLE);
 												myUserWasWarned = true;
+												view.requestFocus();
+												view.clearFocus();
 											}
 										})
 										.setNegativeButton("No", new DialogInterface.OnClickListener() {
 											public void onClick(DialogInterface arg0, int arg1) {
+												view.requestFocus();
+												view.clearFocus();
 											}
 										}).show();
 								}
