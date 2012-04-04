@@ -307,7 +307,7 @@
 		<node name="Preferences">
 			<node name="directories" value="Каталоги">
 				<node name="summary" value="Где искать файлы"/>
-				<node name="books" value="Каталог с книгами"/>
+				<node name="books" value="Каталоги с книгами"/>
 				<node name="fonts" value="Каталоги со шрифтами"/>
 				<node name="wallpapers" value="Каталоги с обоями"/>
 			</node>

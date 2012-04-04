@@ -289,7 +289,7 @@
 		<node name="Preferences">
 			<node name="directories" value="ไดเรคทอรี">
 				<node name="summary" value="ไดเรคทอรีในการค้นหาไฟล์"/>
-				<node name="books" value="ไดเรคทอรีของหนังสือ"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>

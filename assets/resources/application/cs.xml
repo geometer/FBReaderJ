@@ -295,7 +295,7 @@
 		<node name="Preferences">
 			<node name="directories" value="Adresáře">
 				<node name="summary" value="Adresáře pro hledání souborů"/>
-				<node name="books" value="Adresář s knihami"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>

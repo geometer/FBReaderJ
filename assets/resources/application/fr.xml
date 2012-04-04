@@ -292,7 +292,7 @@
 		<node name="Preferences">
 			<node name="directories" value="Répertoires">
 				<node name="summary" value="Emplacements des livres et des polices"/>
-				<node name="books" value="Répertoire des livres"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>

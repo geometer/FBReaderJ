@@ -289,7 +289,7 @@
 		<node name="Preferences">
 			<node name="directories" value="Mappák">
 				<node name="summary" value="Mely mappákban keressen fájlokat"/>
-				<node name="books" value="Könyvek mappája"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>

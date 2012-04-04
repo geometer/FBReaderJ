@@ -292,7 +292,7 @@
 		<node name="Preferences">
 			<node name="directories" value="Verzeichnisse">
 				<node name="summary" value="Verzeichnisse in den Dateien gesucht werden."/>
-				<node name="books" value="Verzeichnis der Bücher"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>

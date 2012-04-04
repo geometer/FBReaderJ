@@ -290,7 +290,7 @@
 		<node name="Preferences">
 			<node name="directories" value="Cartelle">
 				<node name="summary" value="Cartella in cui cercare i File"/>
-				<node name="books" value="Cartella dei Libri"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>

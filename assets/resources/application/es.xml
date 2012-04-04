@@ -294,7 +294,7 @@
 		<node name="Preferences">
 			<node name="directories" value="Directorios">
 				<node name="summary" value="Directorios para buscar archivos"/>
-				<node name="books" value="Directorio de libros"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
