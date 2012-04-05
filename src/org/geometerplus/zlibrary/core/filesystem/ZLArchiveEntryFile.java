@@ -86,11 +86,6 @@ public abstract class ZLArchiveEntryFile extends ZLFile {
 	}
 	
 	@Override
-	public boolean exists() {
-		return myParent.exists();
-	}
-	
-	@Override
 	public boolean isDirectory() {
 		return false;
 	}

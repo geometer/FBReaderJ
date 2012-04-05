@@ -19,7 +19,7 @@
 
 package org.geometerplus.fbreader;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 import android.os.Environment;
 
@@ -28,20 +28,20 @@ public abstract class Paths {
 		return Environment.getExternalStorageDirectory().getPath();
 	}
 
-	public static ZLStringOption BooksDirectoryOption() {
-		return new ZLStringOption("Files", "BooksDirectory", cardDirectory() + "/Books");
-	}
-
 	public static ZLStringOption TempDirectoryOption() {
 		return new ZLStringOption("Files", "TempDirectory", cardDirectory() + "/Temp");
 	}
 
-	public static ZLStringOption FontsDirectoryOption() {
-		return new ZLStringOption("Files", "FontsDirectory", cardDirectory() + "/Fonts");
+	public static ZLStringListOption FontsDirectoryOption() {
+		return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
 	}
 
-	public static ZLStringOption WallpapersDirectoryOption() {
-		return new ZLStringOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers");
+	public static ZLStringListOption WallpapersDirectoryOption() {
+		return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
+	}
+
+	public static ZLStringOption BooksDirectoryOption() {
+		return new ZLStringOption("Files", "BooksDirectory", cardDirectory() + "/Books");
 	}
 
 	public static String cacheDirectory() {

@@ -290,8 +290,8 @@
 			<node name="directories" value="文件夹设定">
 				<node name="summary" value="相关文件夹位置设定"/>
 				<node name="books" value="书文存放位置"/>
-				<node name="fonts" value="字体存放位置"/>
-				<node name="wallpapers" value="墙纸存放位置" />
+				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="呈现方式">
 				<node name="summary" value="旋转，状态工具条"/>

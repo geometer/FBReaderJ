@@ -308,8 +308,8 @@
 			<node name="directories" value="Каталоги">
 				<node name="summary" value="Где искать файлы"/>
 				<node name="books" value="Каталог с книгами"/>
-				<node name="fonts" value="Каталог со шрифтами"/>
-				<node name="wallpapers" value="Каталог с обоями"/>
+				<node name="fonts" value="Каталоги со шрифтами"/>
+				<node name="wallpapers" value="Каталоги с обоями"/>
 			</node>
 			<node name="appearance" value="Внешний вид">
 				<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>

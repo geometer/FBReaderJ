@@ -291,8 +291,8 @@
 			<node name="directories" value="Cartelle">
 				<node name="summary" value="Cartella in cui cercare i File"/>
 				<node name="books" value="Cartella dei Libri"/>
-				<node name="fonts" value="Cartella dei Fonts"/>
-				<node name="wallpapers" value="Cartella degli Sfondi"/>
+				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Aspetto">
 				<node name="summary" value="Rotazione, barra di stato"/>

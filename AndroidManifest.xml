@@ -225,5 +225,6 @@
 			</intent-filter>
 		</receiver>
 		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.Holo.Dialog"/>
+		<activity android:name="org.geometerplus.android.fbreader.preferences.EditableStringListActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Holo.Dialog" android:windowSoftInputMode="adjustPan" />
 	</application>
 </manifest>

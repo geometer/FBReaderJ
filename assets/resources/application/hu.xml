@@ -290,8 +290,8 @@
 			<node name="directories" value="Mappák">
 				<node name="summary" value="Mely mappákban keressen fájlokat"/>
 				<node name="books" value="Könyvek mappája"/>
-				<node name="fonts" value="Betűtípusok mappája"/>
-				<node name="wallpapers" value="Háttérképek mappája"/>
+				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Megjelenés">
 				<node name="summary" value="Elforgatás, állapotsor"/>

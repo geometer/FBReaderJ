@@ -33,6 +33,23 @@ public final class AndroidFontUtil {
 	private static Map<String,File[]> ourFontMap;
 	private static File[] ourFileList;
 	private static long myTimeStamp;
+
+	private static <T> T[] concat(T[] a, T[] b) {
+		final int alen = a != null ? a.length : 0;
+		final int blen = b != null ? b.length : 0;
+		if (alen == 0) {
+			return b;
+		}
+		if (blen == 0) {
+			return a;
+		}
+		final T[] result = (T[]) java.lang.reflect.Array.
+				newInstance(a.getClass().getComponentType(), alen + blen);
+		System.arraycopy(a, 0, result, 0, alen);
+		System.arraycopy(b, 0, result, alen, blen);
+		return result;
+	}
+
 	public static Map<String,File[]> getFontMap(boolean forceReload) {
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < myTimeStamp + 1000) {
