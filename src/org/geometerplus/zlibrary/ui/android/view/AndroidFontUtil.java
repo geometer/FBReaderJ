@@ -31,7 +31,7 @@ import org.geometerplus.fbreader.Paths;
 
 public final class AndroidFontUtil {
 	private static Map<String,File[]> ourFontMap;
-	private static File[] ourFileList;
+	private static final Set<File> ourFileSet = new HashSet<File>();
 	private static long myTimeStamp;
 
 	private static <T> T[] concat(T[] a, T[] b) {
@@ -57,30 +57,26 @@ public final class AndroidFontUtil {
 		}
 		myTimeStamp = timeStamp;
 		if (ourFontMap == null || forceReload) {
-			boolean rebuildMap = ourFontMap == null;
-			final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
-				new FilenameFilter() {
-					public boolean accept(File dir, String name) {
-						if (name.startsWith(".")) {
-							return false;
-						}
-						final String lcName = name.toLowerCase();
-						return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
+			final HashSet<File> fileSet = new HashSet<File>();
+			final FilenameFilter filter = new FilenameFilter() {
+				public boolean accept(File dir, String name) {
+					if (name.startsWith(".")) {
+						return false;
 					}
+					final String lcName = name.toLowerCase();
+					return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 				}
-			);
-			if (fileList == null) {
-				if (ourFileList != null) {
-					ourFileList = null;
-					rebuildMap = true;
+			};
+			for (String dirName : Paths.FontsDirectoryOption().getValue()) {
+				final File[] fileList = new File(dirName).listFiles(filter);
+				if (fileList != null) {
+					fileSet.addAll(Arrays.asList(fileList));
 				}
 			}
-			if (fileList != null && !fileList.equals(ourFileList)) {
-				ourFileList = fileList;
-				rebuildMap = true;
-			}
-			if (rebuildMap) {
-				ourFontMap = new ZLTTFInfoDetector().collectFonts(fileList);
+			if (!fileSet.equals(ourFileSet)) {
+				ourFileSet.clear();
+				ourFileSet.addAll(fileSet);
+				ourFontMap = new ZLTTFInfoDetector().collectFonts(fileSet);
 			}
 		}
 		return ourFontMap;
