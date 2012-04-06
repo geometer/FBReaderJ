@@ -59,45 +59,38 @@ public final class AndroidFontUtil {
 	}
 
 	private static Map<String,File[]> ourFontMap;
-	private static File[] ourFileList;
+	private static Set<File> ourFileSet;
 	private static long myTimeStamp;
+
 	public static Map<String,File[]> getFontMap(boolean forceReload) {
+		if (ourFontCreationMethod == null) {
+			return Collections.emptyMap();
+		}
+
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < myTimeStamp + 1000) {
 			forceReload = false;
 		}
 		myTimeStamp = timeStamp;
-		if (ourFontMap == null || forceReload) {
-			boolean rebuildMap = ourFontMap == null;
-			if (ourFontCreationMethod == null) {
-				if (rebuildMap) {
-					ourFontMap = new HashMap<String,File[]>();
-				}
-			} else {
-				final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
-					new FilenameFilter() {
-						public boolean accept(File dir, String name) {
-							if (name.startsWith(".")) {
-								return false;
-							}
-							final String lcName = name.toLowerCase();
-							return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
+		if (ourFileSet == null || forceReload) {
+			final HashSet<File> fileSet = new HashSet<File>();
+			final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
+				new FilenameFilter() {
+					public boolean accept(File dir, String name) {
+						if (name.startsWith(".")) {
+							return false;
 						}
-					}
-				);
-				if (fileList == null) {
-					if (ourFileList != null) {
-						ourFileList = null;
-						rebuildMap = true;
+						final String lcName = name.toLowerCase();
+						return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 					}
 				}
-				if (fileList != null && !fileList.equals(ourFileList)) {
-					ourFileList = fileList;
-					rebuildMap = true;
-				}
-				if (rebuildMap) {
-					ourFontMap = new ZLTTFInfoDetector().collectFonts(fileList);
-				}
+			);
+			if (fileList != null) {
+				fileSet.addAll(Arrays.asList(fileList));
+			}
+			if (!fileSet.equals(ourFileSet)) {
+				ourFileSet = fileSet;
+				ourFontMap = new ZLTTFInfoDetector().collectFonts(fileSet);
 			}
 		}
 		return ourFontMap;
