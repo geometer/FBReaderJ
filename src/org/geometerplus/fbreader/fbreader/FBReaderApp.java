@@ -66,15 +66,20 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLEnumOption<ImageTappingAction> ImageTappingActionOption =
 		new ZLEnumOption<ImageTappingAction>("Options", "ImageTappingAction", ImageTappingAction.openImageView);
 
-	private final int myDpi = ZLibrary.Instance().getDisplayDPI();
-	public final ZLIntegerRangeOption LeftMarginOption =
-		new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, myDpi / 20);
-	public final ZLIntegerRangeOption RightMarginOption =
-		new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, myDpi / 20);
-	public final ZLIntegerRangeOption TopMarginOption =
-		new ZLIntegerRangeOption("Options", "TopMargin", 0,  100, 0);
-	public final ZLIntegerRangeOption BottomMarginOption =
-		new ZLIntegerRangeOption("Options", "BottomMargin", 0,  100, 4);
+	public final ZLIntegerRangeOption LeftMarginOption;
+	public final ZLIntegerRangeOption RightMarginOption;
+	public final ZLIntegerRangeOption TopMarginOption;
+	public final ZLIntegerRangeOption BottomMarginOption;
+	{
+		final int dpi = ZLibrary.Instance().getDisplayDPI();
+		final int x = ZLibrary.Instance().getPixelWidth();
+		final int y = ZLibrary.Instance().getPixelHeight();
+		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 20);
+		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
+		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
+		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
+		BottomMarginOption = new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
+	}
 
 	public final ZLIntegerRangeOption ScrollbarTypeOption =
 		new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 3, FBView.SCROLLBAR_SHOW_AS_FOOTER);
