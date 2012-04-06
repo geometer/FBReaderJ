@@ -31,32 +31,20 @@ import org.geometerplus.fbreader.Paths;
 
 public final class AndroidFontUtil {
 	private static Map<String,File[]> ourFontMap;
-	private static final Set<File> ourFileSet = new HashSet<File>();
+	private static Set<File> ourFileSet;
 	private static long myTimeStamp;
 
-	private static <T> T[] concat(T[] a, T[] b) {
-		final int alen = a != null ? a.length : 0;
-		final int blen = b != null ? b.length : 0;
-		if (alen == 0) {
-			return b;
-		}
-		if (blen == 0) {
-			return a;
-		}
-		final T[] result = (T[]) java.lang.reflect.Array.
-				newInstance(a.getClass().getComponentType(), alen + blen);
-		System.arraycopy(a, 0, result, 0, alen);
-		System.arraycopy(b, 0, result, alen, blen);
-		return result;
-	}
-
 	public static Map<String,File[]> getFontMap(boolean forceReload) {
+		if (ourFontCreationMethod == null) {
+			return Collections.emptyMap();
+		}
+
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < myTimeStamp + 1000) {
 			forceReload = false;
 		}
 		myTimeStamp = timeStamp;
-		if (ourFontMap == null || forceReload) {
+		if (ourFileSet == null || forceReload) {
 			final HashSet<File> fileSet = new HashSet<File>();
 			final FilenameFilter filter = new FilenameFilter() {
 				public boolean accept(File dir, String name) {
@@ -74,8 +62,7 @@ public final class AndroidFontUtil {
 				}
 			}
 			if (!fileSet.equals(ourFileSet)) {
-				ourFileSet.clear();
-				ourFileSet.addAll(fileSet);
+				ourFileSet = fileSet;
 				ourFontMap = new ZLTTFInfoDetector().collectFonts(fileSet);
 			}
 		}
