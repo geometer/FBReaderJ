@@ -153,6 +153,7 @@ public class AddCustomCatalogActivity extends Activity {
 			loadInfoByUri(uri);
 		} else if (isEmptyString(title)) {
 			setErrorByKey("titleIsEmpty");
+			setExtraFieldsVisibility(true);
 		} else {
 			myLink.setTitle(title);
 			myLink.setSummary(summary);
