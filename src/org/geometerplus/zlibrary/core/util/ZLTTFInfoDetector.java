@@ -19,12 +19,11 @@
 
 package org.geometerplus.zlibrary.core.util;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 import java.io.*;
 
 public class ZLTTFInfoDetector {
-	public Map<String,File[]> collectFonts(File[] files) {
+	public Map<String,File[]> collectFonts(Iterable<File> files) {
 		final HashMap<String,File[]> fonts = new HashMap<String,File[]>();
 		if (files == null) {
 			return fonts;

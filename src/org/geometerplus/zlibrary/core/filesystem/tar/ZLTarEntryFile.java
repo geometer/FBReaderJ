@@ -57,6 +57,12 @@ public final class ZLTarEntryFile extends ZLArchiveEntryFile {
 	}
 
 	@Override
+	public boolean exists() {
+		// TODO: optimize
+		return myParent.exists() && archiveEntries(myParent).contains(this);
+	}
+
+	@Override
 	public long size() {
 		throw new RuntimeException("Not implemented yet.");
 	}
