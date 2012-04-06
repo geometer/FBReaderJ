@@ -61,6 +61,7 @@ public final class AndroidFontUtil {
 	private static Map<String,File[]> ourFontMap;
 	private static Set<File> ourFileSet;
 	private static long myTimeStamp;
+
 	public static Map<String,File[]> getFontMap(boolean forceReload) {
 		if (ourFontCreationMethod == null) {
 			return Collections.emptyMap();
