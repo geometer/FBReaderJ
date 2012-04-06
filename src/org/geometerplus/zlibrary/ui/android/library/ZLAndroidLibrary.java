@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Point;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
@@ -151,14 +152,42 @@ public final class ZLAndroidLibrary extends ZLibrary {
 		return (myActivity != null) ? myActivity.getScreenBrightness() : 0;
 	}
 
+	private DisplayMetrics myMetrics;
+
 	@Override
 	public int getDisplayDPI() {
-		if (myActivity == null) {
-			return 0;
+		if (myMetrics == null) {
+			if (myActivity == null) {
+				return 0;
+			}
+			myMetrics = new DisplayMetrics();
+			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
 		}
-		DisplayMetrics metrics = new DisplayMetrics();
-		myActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		return (int)(160 * metrics.density);
+		return (int)(160 * myMetrics.density);
+	}
+
+	@Override
+	public int getPixelWidth() {
+		if (myMetrics == null) {
+			if (myActivity == null) {
+				return 0;
+			}
+			myMetrics = new DisplayMetrics();
+			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
+		}
+		return myMetrics.widthPixels;
+	}
+
+	@Override
+	public int getPixelHeight() {
+		if (myMetrics == null) {
+			if (myActivity == null) {
+				return 0;
+			}
+			myMetrics = new DisplayMetrics();
+			myActivity.getWindowManager().getDefaultDisplay().getMetrics(myMetrics);
+		}
+		return myMetrics.heightPixels;
 	}
 
 	@Override
