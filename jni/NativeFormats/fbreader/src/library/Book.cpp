@@ -85,25 +85,13 @@ shared_ptr<Book> Book::loadFromFile(const ZLFile &file) {
 */
 
 shared_ptr<Book> Book::loadFromJavaBook(JNIEnv *env, jobject javaBook) {
-	jstring javaString;
-
 	jobject javaFile = AndroidUtil::Field_Book_File->value(javaBook);
-	javaString = AndroidUtil::Method_ZLFile_getPath->call(javaFile);
-	const std::string path = AndroidUtil::fromJavaString(env, javaString);
-	env->DeleteLocalRef(javaString);
+	const std::string path = AndroidUtil::Method_ZLFile_getPath->callForCppString(javaFile);
 	env->DeleteLocalRef(javaFile);
 
-	javaString = AndroidUtil::Method_Book_getTitle->call(javaBook);
-	const std::string title = AndroidUtil::fromJavaString(env, javaString);
-	env->DeleteLocalRef(javaString);
-
-	javaString = AndroidUtil::Method_Book_getLanguage->call(javaBook);
-	const std::string language = AndroidUtil::fromJavaString(env, javaString);
-	env->DeleteLocalRef(javaString);
-
-	javaString = AndroidUtil::Method_Book_getEncodingNoDetection->call(javaBook);
-	const std::string encoding = AndroidUtil::fromJavaString(env, javaString);
-	env->DeleteLocalRef(javaString);
+	const std::string title = AndroidUtil::Method_Book_getTitle->callForCppString(javaBook);
+	const std::string language = AndroidUtil::Method_Book_getLanguage->callForCppString(javaBook);
+	const std::string encoding = AndroidUtil::Method_Book_getEncodingNoDetection->callForCppString(javaBook);
 
 	return createBook(ZLFile(path), 0, encoding, language, title);
 }
