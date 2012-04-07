@@ -36,6 +36,7 @@ ZLCachedMemoryAllocator::ZLCachedMemoryAllocator(const size_t rowSize,
 	myCurrentRowSize(0),
 	myOffset(0),
 	myHasChanges(false),
+	myFailed(false),
 	myDirectoryName(directoryName),
 	myFileExtension(fileExtension) {
 	ZLFile(directoryName).directory(true);
@@ -67,7 +68,7 @@ std::string ZLCachedMemoryAllocator::makeFileName(size_t index) {
 }
 
 void ZLCachedMemoryAllocator::writeCache(size_t blockLength) {
-	if (myPool.size() == 0) {
+	if (myFailed || myPool.size() == 0) {
 		return;
 	}
 	const size_t index = myPool.size() - 1;
@@ -75,7 +76,7 @@ void ZLCachedMemoryAllocator::writeCache(size_t blockLength) {
 	ZLFile file(fileName);
 	shared_ptr<ZLOutputStream> stream = file.outputStream();
 	if (stream.isNull() || !stream->open()) {
-		//AndroidUtil::throwCachedCharStorageException("Cannot create file " + fileName);
+		myFailed = true;
 		return;
 	}
 	stream->write(myPool[index], blockLength);

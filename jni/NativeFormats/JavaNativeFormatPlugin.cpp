@@ -250,7 +250,10 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 	if (!plugin->readModel(*model)) {
 		return JNI_FALSE;
 	}
-	model->flush();
+	if (!model->flush()) {
+		AndroidUtil::throwCachedCharStorageException("Cannot write file from native code");
+		return JNI_FALSE;
+	}
 
 	if (!initInternalHyperlinks(env, javaModel, *model) || !initTOC(env, javaModel, *model)) {
 		return JNI_FALSE;
