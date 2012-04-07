@@ -1,6 +1,7 @@
 ===== 2.0 beta 7 (??? ??, 2012) =====
 * All changes from 1.4.3
 * 'Open book in external program' feature
+* Multiple directories for user's fonts and wallpapers
 
 ===== 2.0 beta 6 (Feb 26, 2012) =====
 * All changes from 1.3.9
@@ -27,6 +28,10 @@
   ** plain text support
   ** HTML support
   ** CSS/ePub support
+
+===== 1.4.5 (Apr ??, 2012) =====
+* ePub reader does not fail if NCX file in referenced but missing
+* native plugin does not crash if cache file cannot be created
 
 ===== 1.4.4 (Apr 01, 2012) =====
 * introduced jni C++ wrappers (this avoids incorrect method calls)
