@@ -53,6 +53,6 @@ class FileTypeMobipocket extends FileTypePalm {
 
 	@Override
 	public MimeType mimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.APP_MOBI : MimeType.NULL;
+		return acceptsFile(file) ? MimeType.APP_MOBIPOCKET : MimeType.NULL;
 	}
 }
