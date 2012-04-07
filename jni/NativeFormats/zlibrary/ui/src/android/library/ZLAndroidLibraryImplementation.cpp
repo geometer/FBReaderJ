@@ -45,7 +45,7 @@ void ZLAndroidLibraryImplementation::init(int &argc, char **&argv) {
 std::string ZLibrary::Language() {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jobject locale = AndroidUtil::StaticMethod_java_util_Locale_getDefault->call();
-	jstring javaLang = (jstring)AndroidUtil::Method_java_util_Locale_getLanguage->call(locale);
+	jstring javaLang = AndroidUtil::Method_java_util_Locale_getLanguage->call(locale);
 	const char *langData = env->GetStringUTFChars(javaLang, 0);
 	std::string lang(langData);
 	env->ReleaseStringUTFChars(javaLang, langData);
