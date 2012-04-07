@@ -275,13 +275,11 @@ jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte
 }
 
 void AndroidUtil::throwRuntimeException(const std::string &message) {
-	JNIEnv *env = getEnv();
-	getEnv()->ThrowNew((jclass)env->NewLocalRef(Class_java_lang_RuntimeException.j()), message.c_str());
+	getEnv()->ThrowNew(Class_java_lang_RuntimeException.j(), message.c_str());
 }
 
 void AndroidUtil::throwCachedCharStorageException(const std::string &message) {
-	JNIEnv *env = getEnv();
-	getEnv()->ThrowNew((jclass)env->NewLocalRef(Class_CachedCharStorageException.j()), message.c_str());
+	getEnv()->ThrowNew(Class_CachedCharStorageException.j(), message.c_str());
 }
 
 /*
