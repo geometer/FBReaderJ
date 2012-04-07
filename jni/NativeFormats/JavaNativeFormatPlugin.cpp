@@ -34,7 +34,7 @@ static shared_ptr<FormatPlugin> findCppPlugin(JNIEnv *env, jobject base) {
 	env->DeleteLocalRef(fileTypeJava);
 	shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().pluginByType(fileTypeCpp);
 	if (plugin.isNull()) {
-		AndroidUtil::throwRuntimeException(env, "Native FormatPlugin instance is NULL for type " + fileTypeCpp);
+		AndroidUtil::throwRuntimeException("Native FormatPlugin instance is NULL for type " + fileTypeCpp);
 	}
 	return plugin;
 }
