@@ -1,4 +1,6 @@
 ===== 1.4.5 (Apr ??, 2012) =====
+* book sharing via e-mail, skype, etc
+* 'Open library' and 'Open network library' items in back button menu 
 * ePub reader does not fail if NCX file in referenced but missing
 * native plugin does not crash if cache file cannot be created
 

@@ -21,7 +21,6 @@ package org.geometerplus.android.fbreader.library;
 
 import android.app.AlertDialog;
 import android.content.*;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -37,10 +36,10 @@ import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.tree.FBTree;
-import org.geometerplus.fbreader.filetype.FileTypeCollection;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.Util;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
@@ -132,23 +131,6 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		);
 	}
 
-	private void shareBook(Book book) {
-		try {
-			final ZLPhysicalFile file = book.File.getPhysicalFile();
-			if (file == null) {
-				// That should be impossible
-				return;
-			}
-			startActivity(
-				new Intent(Intent.ACTION_SEND)
-					.setType(FileTypeCollection.Instance.mimeType(book.File).Name)
-					.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file.javaFile()))
-			);
-		} catch (ActivityNotFoundException e) {
-			// TODO: show toast
-		}
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int returnCode, Intent intent) {
 		if (requestCode == BOOK_INFO_REQUEST && intent != null) {
@@ -236,7 +218,7 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 				showBookInfo(book);
 				return true;
 			case SHARE_BOOK_ITEM_ID:
-				shareBook(book);
+				Util.shareBook(this, book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
 				myLibrary.addBookToFavorites(book);
