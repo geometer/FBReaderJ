@@ -72,7 +72,7 @@ public final class FBReaderApp extends ZLApplication {
 		final int dpi = ZLibrary.Instance().getDisplayDPI();
 		final int x = ZLibrary.Instance().getPixelWidth();
 		final int y = ZLibrary.Instance().getPixelHeight();
-		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 20);
+		final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
 		LeftMarginOption = new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
 		RightMarginOption = new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
 		TopMarginOption = new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 15);
