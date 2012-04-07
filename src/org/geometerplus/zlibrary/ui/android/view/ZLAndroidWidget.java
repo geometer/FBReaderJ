@@ -406,7 +406,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 				myTrackingStartTime = System.currentTimeMillis();
 				return true;
 			} else {
-				return application.doActionByKey(keyCode, false);
+				return application.runActionByKey(keyCode, false);
 			}
 		} else {
 			return false;
@@ -418,7 +418,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 			if (myKeyUnderTracking == keyCode) {
 				final boolean longPress = System.currentTimeMillis() >
 					myTrackingStartTime + ViewConfiguration.getLongPressTimeout();
-				ZLApplication.Instance().doActionByKey(keyCode, longPress);
+				ZLApplication.Instance().runActionByKey(keyCode, longPress);
 			}
 			myKeyUnderTracking = -1;
 			return true;

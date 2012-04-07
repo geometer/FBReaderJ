@@ -127,6 +127,7 @@ public final class MimeType {
 	// ???
 	public static final MimeType IMAGE_XDJVU = get("image/x-djvu");
 
+	public static final MimeType UNKNOWN = get("*/*");
 	public static final MimeType NULL = new MimeType(null, null);
 
 	//mime lists

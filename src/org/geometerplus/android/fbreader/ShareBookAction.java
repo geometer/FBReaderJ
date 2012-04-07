@@ -17,42 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.filetype;
+package org.geometerplus.android.fbreader;
 
-import java.util.List;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
-
-class FileTypeDjVu extends FileType {
-	FileTypeDjVu() {
-		super("DjVu");
+public class ShareBookAction extends FBAndroidAction {
+	ShareBookAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
 	}
 
 	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return acceptsExtension(file.getExtension());
+	public boolean isVisible() {
+		return Reader.Model != null && Reader.Model.Book.File.getPhysicalFile() != null;
 	}
 
 	@Override
-	public boolean acceptsExtension(String extension) {
-		return "djvu".equalsIgnoreCase(extension) || "djv".equalsIgnoreCase(extension);
-	}
-
-	/*
-	@Override
-	public String extension() {
-		return "djvu";
-	}
-	*/
-
-	@Override
-	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_DJVU;
-	}
-
-	@Override
-	public MimeType mimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.IMAGE_VND_DJVU : MimeType.NULL;
+	protected void run(Object ... params) {
+		Util.shareBook(BaseActivity, Reader.Model.Book);
 	}
 }
