@@ -23,4 +23,10 @@ git merge ice-cream-sandwich
 git checkout library-service-ics
 git merge booksdb-ics
 
+git checkout epub-native
+git merge master
+
+git checkout multidirs
+git merge master
+
 git checkout master
