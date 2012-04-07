@@ -39,12 +39,12 @@ class FileTypeMobipocket extends FileTypePalm {
 	public boolean acceptsExtension(String ext) {
 		return "mobi".equalsIgnoreCase(ext);
 	}
+	*/
 
 	@Override
 	public String extension() {
 		return "mobi";
 	}
-	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {

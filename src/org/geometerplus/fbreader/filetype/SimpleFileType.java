@@ -44,12 +44,10 @@ class SimpleFileType extends FileType {
 		return myExtension.equalsIgnoreCase(ext);
 	}
 
-	/*
 	@Override
 	public String extension() {
 		return myExtension;
 	}
-	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {

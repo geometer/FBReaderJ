@@ -39,12 +39,10 @@ class FileTypeDjVu extends FileType {
 		return "djvu".equalsIgnoreCase(extension) || "djv".equalsIgnoreCase(extension);
 	}
 
-	/*
 	@Override
 	public String extension() {
 		return "djvu";
 	}
-	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {

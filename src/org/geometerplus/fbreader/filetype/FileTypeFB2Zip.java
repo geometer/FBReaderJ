@@ -39,12 +39,10 @@ class FileTypeFB2Zip extends FileType {
 		return false;
 	}
 
-	/*
 	@Override
 	public String extension() {
 		return "fb2.zip";
 	}
-	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {

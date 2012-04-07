@@ -39,12 +39,10 @@ class FileTypeHtml extends FileType {
 		return (ext.toLowerCase()).endsWith("html") || "htm".equals(ext.toLowerCase());
 	}
 
-	/*
 	@Override
 	public String extension() {
 		return "html";
 	}
-	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
