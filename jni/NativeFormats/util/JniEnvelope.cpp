@@ -174,7 +174,7 @@ static JavaPrimitiveType FakeString("Ljava/lang/String;");
 StringMethod::StringMethod(const JavaClass &cls, const std::string &name, const std::string &parameters) : Method(cls, name, FakeString, parameters) {
 }
 
-jstring StringMethod::call(jobject base, ...) {
+jstring StringMethod::callForJavaString(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StringMethod " + myName);
 	va_list lst;
 	va_start(lst, base);

@@ -181,7 +181,7 @@ class StringMethod : public Method {
 
 public:
 	StringMethod(const JavaClass &cls, const std::string &name, const std::string &parameters);
-	jstring call(jobject base, ...);
+	jstring callForJavaString(jobject base, ...);
 	std::string callForCppString(jobject base, ...);
 };
 
