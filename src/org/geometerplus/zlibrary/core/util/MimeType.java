@@ -107,6 +107,7 @@ public final class MimeType {
 	// ???
 	public static final MimeType IMAGE_XDJVU = get("image/x-djvu");
 
+	public static final MimeType UNKNOWN = get("*/*");
 	public static final MimeType NULL = new MimeType(null, null);
 
 	public static final List<MimeType> TYPES_FB2 = Collections.singletonList(TEXT_FB2);

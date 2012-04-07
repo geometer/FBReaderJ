@@ -433,6 +433,8 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		imagesScreen.addOption(fbReader.ImageViewBackgroundOption, "backgroundColor");
 
 		final Screen cancelMenuScreen = createPreferenceScreen("cancelMenu");
+		cancelMenuScreen.addOption(fbReader.ShowLibraryInCancelMenuOption, "library");
+		cancelMenuScreen.addOption(fbReader.ShowNetworkLibraryInCancelMenuOption, "networkLibrary");
 		cancelMenuScreen.addOption(fbReader.ShowPreviousBookInCancelMenuOption, "previousBook");
 		cancelMenuScreen.addOption(fbReader.ShowPositionsInCancelMenuOption, "positions");
 		final String[] backKeyActions =

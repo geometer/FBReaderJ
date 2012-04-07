@@ -1,6 +1,10 @@
 ===== 1.4.5 (Apr ??, 2012) =====
+* book sharing via e-mail, skype, etc
+* 'Open library' and 'Open network library' items in back button menu 
 * ePub reader does not fail if NCX file in referenced but missing
 * native plugin does not crash if cache file cannot be created
+* right and left margind depend on screen size
+* fixed 'no catalog title' issue in 'add custom catalog' dialog
 
 ===== 1.4.4 (Apr 01, 2012) =====
 * introduced jni C++ wrappers (this avoids incorrect method calls)
