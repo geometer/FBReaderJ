@@ -31,17 +31,23 @@ class FileTypeFB2Zip extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		// TODO: implement
-		return false;
+		return file.getShortName().toLowerCase().endsWith(".fb2.zip");
 	}
 
+	/*
 	@Override
 	public String extension() {
 		return "fb2.zip";
 	}
+	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_FB2_ZIP;
+	}
+
+	@Override
+	public MimeType mimeType(ZLFile file) {
+		return acceptsFile(file) ? MimeType.APP_FB2_ZIP : MimeType.NULL;
 	}
 }
