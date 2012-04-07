@@ -38,6 +38,7 @@ JavaClass AndroidUtil::Class_ZLibrary("org/geometerplus/zlibrary/core/library/ZL
 JavaClass AndroidUtil::Class_ZLFile("org/geometerplus/zlibrary/core/filesystem/ZLFile");
 JavaClass AndroidUtil::Class_ZLFileImage("org/geometerplus/zlibrary/core/image/ZLFileImage");
 JavaClass AndroidUtil::Class_ZLTextModel("org/geometerplus/zlibrary/text/model/ZLTextModel");
+JavaClass AndroidUtil::Class_CachedCharStorageException("org/geometerplus/zlibrary/text/model/CachedCharStorageException");
 
 JavaClass AndroidUtil::Class_Encoding("org/geometerplus/zlibrary/core/encodings/Encoding");
 JavaClass AndroidUtil::Class_EncodingConverter("org/geometerplus/zlibrary/core/encodings/EncodingConverter");
@@ -273,8 +274,14 @@ jbyteArray AndroidUtil::createJavaByteArray(JNIEnv *env, const std::vector<jbyte
 	return array;
 }
 
-void AndroidUtil::throwRuntimeException(JNIEnv *env, const std::string &message) {
-	env->ThrowNew(Class_java_lang_RuntimeException.j(), message.c_str());
+void AndroidUtil::throwRuntimeException(const std::string &message) {
+	JNIEnv *env = getEnv();
+	getEnv()->ThrowNew((jclass)env->NewLocalRef(Class_java_lang_RuntimeException.j()), message.c_str());
+}
+
+void AndroidUtil::throwCachedCharStorageException(const std::string &message) {
+	JNIEnv *env = getEnv();
+	getEnv()->ThrowNew((jclass)env->NewLocalRef(Class_CachedCharStorageException.j()), message.c_str());
 }
 
 /*
