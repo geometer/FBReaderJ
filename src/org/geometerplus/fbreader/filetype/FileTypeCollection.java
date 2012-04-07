@@ -69,6 +69,6 @@ public class FileTypeCollection {
 				return mime;
 			}
 		}
-		return MimeType.NULL;
+		return MimeType.UNKNOWN;
 	}
 }
