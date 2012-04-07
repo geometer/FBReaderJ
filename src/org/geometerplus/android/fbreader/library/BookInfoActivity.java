@@ -36,6 +36,7 @@ import android.view.*;
 import android.widget.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.image.ZLLoadableImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
@@ -243,9 +244,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 		setupInfoPair(R.id.file_name, "name", book.File.getPath());
 		if (ENABLE_EXTENDED_FILE_INFO) {
 			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
-
-			final ZLFile physFile = book.File.getPhysicalFile();
-			final File file = physFile == null ? null : new File(physFile.getPath());
+        
+			final ZLPhysicalFile physFile = book.File.getPhysicalFile();
+			final File file = physFile == null ? null : physFile.javaFile();
 			if (file != null && file.exists() && file.isFile()) {
 				setupInfoPair(R.id.file_size, "size", formatSize(file.length()));
 				setupInfoPair(R.id.file_time, "time", formatDate(file.lastModified()));

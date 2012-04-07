@@ -35,13 +35,20 @@ class FileTypeHtml extends FileType {
 		return extension.endsWith("html") || "htm".equals(extension);
 	}
 
+	/*
 	@Override
 	public String extension() {
 		return "html";
 	}
+	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_HTML;
+	}
+
+	@Override
+	public MimeType mimeType(ZLFile file) {
+		return acceptsFile(file) ? MimeType.TEXT_HTML : MimeType.NULL;
 	}
 }
