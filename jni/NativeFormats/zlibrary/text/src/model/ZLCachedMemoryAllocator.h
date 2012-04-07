@@ -46,6 +46,7 @@ public:
 	const std::string &fileExtension() const;
 	size_t blocksNumber() const;
 	size_t currentBytesOffset() const;
+	bool failed() const;
 
 private:
 	std::string makeFileName(size_t index);
@@ -58,6 +59,7 @@ private:
 	size_t myOffset;
 
 	bool myHasChanges;
+	bool myFailed;
 
 	const std::string myDirectoryName;
 	const std::string myFileExtension;
@@ -71,6 +73,7 @@ inline const std::string &ZLCachedMemoryAllocator::directoryName() const { retur
 inline const std::string &ZLCachedMemoryAllocator::fileExtension() const { return myFileExtension; }
 inline size_t ZLCachedMemoryAllocator::blocksNumber() const { return myPool.size(); }
 inline size_t ZLCachedMemoryAllocator::currentBytesOffset() const { return myOffset; }
+inline bool ZLCachedMemoryAllocator::failed() const { return myFailed; }
 
 inline char *ZLCachedMemoryAllocator::writeUInt16(char *ptr, uint16_t value) {
 	*ptr++ = value;
