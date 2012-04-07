@@ -50,6 +50,7 @@ import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.network.HtmlUtil;
 
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.Util;
 import org.geometerplus.android.fbreader.preferences.EditBookInfoActivity;
 
 public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemClickListener {
@@ -287,13 +288,15 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 
 	private static final int OPEN_BOOK = 1;
 	private static final int EDIT_INFO = 2;
-	private static final int RELOAD_INFO = 3;
+	private static final int SHARE_BOOK = 3;
+	private static final int RELOAD_INFO = 4;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		addMenuItem(menu, OPEN_BOOK, "openBook", true);
 		addMenuItem(menu, EDIT_INFO, "editInfo", true);
+		addMenuItem(menu, SHARE_BOOK, "shareBook", false);
 		addMenuItem(menu, RELOAD_INFO, "reloadInfo", false);
 		return true;
 	}
@@ -328,6 +331,9 @@ public class BookInfoActivity extends Activity implements MenuItem.OnMenuItemCli
 						.putExtra(CURRENT_BOOK_PATH_KEY, myFile.getPath()),
 					1
 				);
+				return true;
+			case SHARE_BOOK:
+				Util.shareBook(this, Book.getByFile(myFile));
 				return true;
 			case RELOAD_INFO:
 			{
