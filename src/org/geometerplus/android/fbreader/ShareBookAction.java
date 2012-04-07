@@ -17,37 +17,22 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.filetype;
+package org.geometerplus.android.fbreader;
 
-import java.util.List;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
-
-class FileTypeFB2Zip extends FileType {
-	FileTypeFB2Zip() {
-		super("fb2.zip");
+public class ShareBookAction extends FBAndroidAction {
+	ShareBookAction(FBReader baseActivity, FBReaderApp fbreader) {
+		super(baseActivity, fbreader);
 	}
 
 	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return file.getShortName().toLowerCase().endsWith(".fb2.zip");
-	}
-
-	/*
-	@Override
-	public String extension() {
-		return "fb2.zip";
-	}
-	*/
-
-	@Override
-	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_FB2_ZIP;
+	public boolean isVisible() {
+		return Reader.Model != null && Reader.Model.Book.File.getPhysicalFile() != null;
 	}
 
 	@Override
-	public MimeType mimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.APP_FB2_ZIP : MimeType.NULL;
+	protected void run(Object ... params) {
+		Util.shareBook(BaseActivity, Reader.Model.Book);
 	}
 }

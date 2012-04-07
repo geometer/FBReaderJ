@@ -67,13 +67,8 @@ void JavaFSDir::collectFiles(std::vector<std::string> &names, bool includeSymlin
 	const jsize size = env->GetArrayLength(array);
 	for (jsize i = 0; i < size; ++i) {
 		jobject file = env->GetObjectArrayElement(array, i);
-		jstring javaPath = AndroidUtil::Method_ZLFile_getPath->call(file);
+		std::string path = AndroidUtil::Method_ZLFile_getPath->callForCppString(file);
 		env->DeleteLocalRef(file);
-
-		const char *chars = env->GetStringUTFChars(javaPath, 0);
-		std::string path(chars);
-		env->ReleaseStringUTFChars(javaPath, chars);
-		env->DeleteLocalRef(javaPath);
 
 		size_t index = path.rfind('/');
 		if (index != std::string::npos) {

@@ -38,13 +38,25 @@ class FileTypeEpub extends FileType {
 			"opf".equalsIgnoreCase(extension);
 	}
 
+	/*
 	@Override
 	public String extension() {
 		return "epub";
 	}
+	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_EPUB;
+	}
+
+	@Override
+	public MimeType mimeType(ZLFile file) {
+		final String extension = file.getExtension();
+		if ("epub".equalsIgnoreCase(extension)) {
+			return MimeType.APP_EPUB_ZIP;
+		}
+		// TODO: process other extensions (?)
+		return MimeType.NULL;
 	}
 }
