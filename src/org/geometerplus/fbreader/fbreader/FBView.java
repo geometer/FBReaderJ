@@ -79,11 +79,11 @@ public final class FBView extends ZLTextView {
 			selectRegion(region);
 			myReader.getViewWidget().reset();
 			myReader.getViewWidget().repaint();
-			myReader.doAction(ActionCode.PROCESS_HYPERLINK);
+			myReader.runAction(ActionCode.PROCESS_HYPERLINK);
 			return true;
 		}
 
-		myReader.doAction(getZoneMap().getActionByCoordinates(
+		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(),
 			isDoubleTapSupported() ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.singleTap
 		), x, y);
@@ -101,7 +101,7 @@ public final class FBView extends ZLTextView {
 		if (super.onFingerDoubleTap(x, y)) {
 			return true;
 		}
-		myReader.doAction(getZoneMap().getActionByCoordinates(
+		myReader.runAction(getZoneMap().getActionByCoordinates(
 			x, y, myContext.getWidth(), myContext.getHeight(), TapZoneMap.Tap.doubleTap
 		), x, y);
 		return true;
@@ -114,7 +114,7 @@ public final class FBView extends ZLTextView {
 
 		final ZLTextSelectionCursor cursor = findSelectionCursor(x, y, MAX_SELECTION_DISTANCE);
 		if (cursor != ZLTextSelectionCursor.None) {
-			myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+			myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 			moveSelectionCursorTo(cursor, x, y);
 			return true;
 		}
@@ -216,7 +216,7 @@ public final class FBView extends ZLTextView {
 			if (soul instanceof ZLTextWordRegionSoul) {
 				switch (myReader.WordTappingActionOption.getValue()) {
 					case startSelecting:
-						myReader.doAction(ActionCode.SELECTION_HIDE_PANEL);
+						myReader.runAction(ActionCode.SELECTION_HIDE_PANEL);
 						initSelection(x, y);
 						final ZLTextSelectionCursor cursor = findSelectionCursor(x, y);
 						if (cursor != ZLTextSelectionCursor.None) {
@@ -308,7 +308,7 @@ public final class FBView extends ZLTextView {
 			}
 
 			if (doRunAction) {
-				myReader.doAction(ActionCode.PROCESS_HYPERLINK);
+				myReader.runAction(ActionCode.PROCESS_HYPERLINK);
 				return true;
 			}
 		}
@@ -584,7 +584,7 @@ public final class FBView extends ZLTextView {
 	protected void releaseSelectionCursor() {
 		super.releaseSelectionCursor();
 		if (getCountOfSelectedWords() > 0) {
-			myReader.doAction(ActionCode.SELECTION_SHOW_PANEL);
+			myReader.runAction(ActionCode.SELECTION_SHOW_PANEL);
 		}
 	}
 

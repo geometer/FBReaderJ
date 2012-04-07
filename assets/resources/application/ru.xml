@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Читать книгу"/>
 		<node name="showBookInfo" value="Информация о книге"/>
+		<node name="shareBook" value="Поделиться книгой"/>
 		<node name="deleteBook" value="Удалить книгу"/>
 		<node name="addToFavorites" value="Добавить в избранное"/>
 		<node name="removeFromFavorites" value="Убрать из избранного"/>
@@ -222,6 +223,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Открыть библиотеку"/>
+		<node name="networkLibrary" value="Открыть сетевую библиотеку"/>
 		<node name="previousBook" value="Открыть предыдущую книгу"/>
 		<node name="returnTo" value="Вернуться к ..."/>
 		<node name="back" value="Назад"/>
@@ -255,6 +258,7 @@
 			<node name="undo" value="Назад"/>
 			<node name="redo" value="Вперед"/>
 		</node>
+		<node name="shareBook" value="Поделиться книгой"/>
 		<node name="search" value="Поиск"/>
 		<node name="rotate" value="Повернуть"/>
 		<node name="screenOrientation" value="Ориентация экрана"/>

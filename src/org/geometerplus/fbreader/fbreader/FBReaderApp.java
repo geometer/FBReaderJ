@@ -99,6 +99,10 @@ public final class FBReaderApp extends ZLApplication {
 	final ZLStringOption ColorProfileOption =
 		new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
 
+	public final ZLBooleanOption ShowLibraryInCancelMenuOption =
+		new ZLBooleanOption("CancelMenu", "library", true);
+	public final ZLBooleanOption ShowNetworkLibraryInCancelMenuOption =
+		new ZLBooleanOption("CancelMenu", "networkLibrary", false);
 	public final ZLBooleanOption ShowPreviousBookInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "previousBook", false);
 	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
@@ -377,6 +381,8 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	static enum CancelActionType {
+		library,
+		networkLibrary,
 		previousBook,
 		returnTo,
 		close
@@ -409,6 +415,16 @@ public final class FBReaderApp extends ZLApplication {
 
 	public List<CancelActionDescription> getCancelActionsList() {
 		myCancelActionsList.clear();
+		if (ShowLibraryInCancelMenuOption.getValue()) {
+			myCancelActionsList.add(new CancelActionDescription(
+				CancelActionType.library, null
+			));
+		}
+		if (ShowNetworkLibraryInCancelMenuOption.getValue()) {
+			myCancelActionsList.add(new CancelActionDescription(
+				CancelActionType.networkLibrary, null
+			));
+		}
 		if (ShowPreviousBookInCancelMenuOption.getValue()) {
 			final Book previousBook = Library.Instance().getPreviousBook();
 			if (previousBook != null) {
@@ -437,6 +453,12 @@ public final class FBReaderApp extends ZLApplication {
 
 		final CancelActionDescription description = myCancelActionsList.get(index);
 		switch (description.Type) {
+			case library:
+				runAction(ActionCode.SHOW_LIBRARY);
+				break;
+			case networkLibrary:
+				runAction(ActionCode.SHOW_NETWORK_LIBRARY);
+				break;
 			case previousBook:
 				openBook(Library.Instance().getPreviousBook(), null, null);
 				break;

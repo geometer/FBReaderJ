@@ -34,6 +34,7 @@ class FileTypeMobipocket extends FileTypePalm {
 		return "mobi".equalsIgnoreCase(file.getExtension()) || super.acceptsFile(file);
 	}
 
+	/*
 	@Override
 	public boolean acceptsExtension(String ext) {
 		return "mobi".equalsIgnoreCase(ext);
@@ -43,9 +44,15 @@ class FileTypeMobipocket extends FileTypePalm {
 	public String extension() {
 		return "mobi";
 	}
+	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_MOBIPOCKET;
+	}
+
+	@Override
+	public MimeType mimeType(ZLFile file) {
+		return acceptsFile(file) ? MimeType.APP_MOBI : MimeType.NULL;
 	}
 }

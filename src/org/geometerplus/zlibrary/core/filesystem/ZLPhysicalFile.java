@@ -58,6 +58,10 @@ public final class ZLPhysicalFile extends ZLFile {
 		return myFile.delete();
 	}
 
+	public File javaFile() {
+		return myFile;
+	}
+
 	@Override
 	public String getPath() {
 		return myFile.getPath();

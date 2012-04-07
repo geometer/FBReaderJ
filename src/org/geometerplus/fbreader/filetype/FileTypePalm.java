@@ -66,8 +66,10 @@ abstract class FileTypePalm extends FileType {
 		return ("pdb".equalsIgnoreCase(ext) || "prc".equalsIgnoreCase(ext));
 	}
 
+	/*
 	@Override
 	public String extension() {
 		return "pdb";
 	}
+	*/
 }
