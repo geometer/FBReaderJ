@@ -275,6 +275,7 @@
 			<node name="openBook" value="Read"/>
 			<node name="editInfo" value="Edit"/>
 			<node name="reloadInfo" value="Reload"/>
+			<node name="shareBook" value="Share"/>
 			<node name="topup" value="Top up"/>
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
