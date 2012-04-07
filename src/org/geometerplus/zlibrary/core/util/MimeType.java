@@ -62,7 +62,7 @@ public final class MimeType {
 	// unofficial, http://en.wikipedia.org/wiki/EPUB
 	public static final MimeType APP_EPUB_ZIP = get("application/epub+zip");
 	// ???
-	public static final MimeType APP_MOBI = get("application/x-mobipocket-ebook");
+	public static final MimeType APP_MOBIPOCKET = get("application/x-mobipocket-ebook");
 	// http://www.iana.org/assignments/media-types/application/index.html
 	public static final MimeType APP_PDF = get("application/pdf");
 	// ???
@@ -112,7 +112,7 @@ public final class MimeType {
 
 	public static final List<MimeType> TYPES_FB2 = Collections.singletonList(TEXT_FB2);
 	public static final List<MimeType> TYPES_EPUB = Collections.singletonList(APP_EPUB_ZIP);
-	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.singletonList(APP_MOBI);
+	public static final List<MimeType> TYPES_MOBIPOCKET = Collections.singletonList(APP_MOBIPOCKET);
 	public static final List<MimeType> TYPES_TXT = Collections.singletonList(TEXT_PLAIN);
 	public static final List<MimeType> TYPES_RTF = Collections.unmodifiableList(Arrays.asList(APP_RTF, TEXT_RTF));
 	public static final List<MimeType> TYPES_HTML = Collections.singletonList(TEXT_HTML);
