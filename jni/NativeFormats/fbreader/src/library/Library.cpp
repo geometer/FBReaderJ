@@ -40,9 +40,9 @@ Library::~Library() {
 std::string Library::cacheDirectory() const {
 	JNIEnv *env = AndroidUtil::getEnv();
 	jstring res = (jstring)AndroidUtil::StaticMethod_Paths_cacheDirectory->call();
-	const char *data = env->GetStringUTFChars(res, 0);
-	std::string str(data);
-	env->ReleaseStringUTFChars(res, data);
-	env->DeleteLocalRef(res);
+	std::string str = AndroidUtil::fromJavaString(env, res);
+	if (res != 0) {
+		env->DeleteLocalRef(res);
+	}
 	return str;
 }

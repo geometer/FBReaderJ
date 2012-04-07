@@ -62,7 +62,7 @@ abstract class ButtonsPopupPanel extends PopupPanel implements View.OnClickListe
 
 	public void onClick(View view) {
 		final ActionButton button = (ActionButton)view;
-		Application.doAction(button.ActionId);
+		Application.runAction(button.ActionId);
 		if (button.IsCloseButton) {
 			storePosition();
 			StartPosition = null;

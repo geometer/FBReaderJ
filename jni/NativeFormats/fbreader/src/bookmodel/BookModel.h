@@ -75,7 +75,7 @@ public:
 
 	const shared_ptr<Book> book() const;
 
-	void flush();
+	bool flush();
 
 private:
 	const shared_ptr<Book> myBook;

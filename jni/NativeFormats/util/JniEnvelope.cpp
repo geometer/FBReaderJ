@@ -174,7 +174,7 @@ static JavaPrimitiveType FakeString("Ljava/lang/String;");
 StringMethod::StringMethod(const JavaClass &cls, const std::string &name, const std::string &parameters) : Method(cls, name, FakeString, parameters) {
 }
 
-jstring StringMethod::call(jobject base, ...) {
+jstring StringMethod::callForJavaString(jobject base, ...) {
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StringMethod " + myName);
 	va_list lst;
 	va_start(lst, base);
@@ -182,6 +182,21 @@ jstring StringMethod::call(jobject base, ...) {
 	va_end(lst);
 	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "finished StringMethod " + myName);
 	return result;
+}
+
+std::string StringMethod::callForCppString(jobject base, ...) {
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StringMethod " + myName);
+	JNIEnv *env = AndroidUtil::getEnv();
+	va_list lst;
+	va_start(lst, base);
+	jstring j = (jstring)env->CallObjectMethodV(base, myId, lst);
+	va_end(lst);
+	std::string str = AndroidUtil::fromJavaString(env, j);
+	if (j != 0) {
+		env->DeleteLocalRef(j);
+	}
+	ZLLogger::Instance().println(JNI_LOGGER_CLASS, "calling StringMethod " + myName);
+	return str;
 }
 
 ObjectMethod::ObjectMethod(const JavaClass &cls, const std::string &name, const JavaClass &returnType, const std::string &parameters) : Method(cls, name, returnType, parameters) {

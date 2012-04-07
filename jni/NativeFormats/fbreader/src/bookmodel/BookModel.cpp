@@ -76,12 +76,19 @@ const shared_ptr<Book> BookModel::book() const {
 	return myBook;
 }
 
-void BookModel::flush() {
+bool BookModel::flush() {
 	myBookTextModel->flush();
+	if (myBookTextModel->allocator().failed()) {
+		return false;
+	}
 	myContentsModel->flush();
 
 	std::map<std::string,shared_ptr<ZLTextModel> >::const_iterator it = myFootnotes.begin();
 	for (; it != myFootnotes.end(); ++it) {
 		it->second->flush();
+		if (it->second->allocator().failed()) {
+			return false;
+		}
 	}
+	return true;
 }
