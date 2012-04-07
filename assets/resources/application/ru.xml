@@ -286,6 +286,7 @@
 			<node name="openBook" value="Читать"/>
 			<node name="editInfo" value="Изменить"/>
 			<node name="reloadInfo" value="Обновить"/>
+			<node name="shareBook" value="Поделиться"/>
 			<node name="topup" value="Пополнить счёт"/>
 			<node name="pay" value="Заплатить"/>
 			<node name="refresh" value="Обновить"/>
