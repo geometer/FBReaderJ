@@ -35,6 +35,11 @@ class FileTypeFB2 extends FileType {
 	}
 
 	@Override
+	public boolean acceptsExtension(String extension) {
+		return "fb2".equalsIgnoreCase(extension);
+	}
+
+	@Override
 	public String extension() {
 		return "fb2";
 	}
