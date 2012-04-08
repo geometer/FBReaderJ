@@ -53,4 +53,9 @@ class FileTypeFB2Zip extends FileType {
 	public MimeType mimeType(ZLFile file) {
 		return acceptsFile(file) ? MimeType.APP_FB2_ZIP : MimeType.NULL;
 	}
+
+	@Override
+	public MimeType simplifiedMimeType(ZLFile file) {
+		return acceptsFile(file) ? MimeType.APP_ZIP : MimeType.NULL;
+	}
 }
