@@ -33,6 +33,6 @@ public class ShareBookAction extends FBAndroidAction {
 
 	@Override
 	protected void run(Object ... params) {
-		Util.shareBook(BaseActivity, Reader.Model.Book);
+		FBUtil.shareBook(BaseActivity, Reader.Model.Book);
 	}
 }

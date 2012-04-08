@@ -59,6 +59,8 @@ public final class MimeType {
 	}
 
 	// MIME types / application
+	// ???
+	public static final MimeType APP_ZIP = get("application/zip");
 	// unofficial, http://en.wikipedia.org/wiki/EPUB
 	public static final MimeType APP_EPUB_ZIP = get("application/epub+zip");
 	// ???
@@ -81,6 +83,8 @@ public final class MimeType {
 	public static final MimeType APP_LITRES = get("application/litres+xml");
 
 	// MIME types / text
+	// ???
+	public static final MimeType TEXT_XML = get("text/xml");
 	// http://www.iana.org/assignments/media-types/text/index.html
 	public static final MimeType TEXT_HTML = get("text/html");
 	// ???
