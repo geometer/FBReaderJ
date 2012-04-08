@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.filetype.FileTypeCollection;
 
-public abstract class Util {
+public abstract class FBUtil {
 	public static void shareBook(Activity activity, Book book) {
 		try {
 			final ZLPhysicalFile file = book.File.getPhysicalFile();
@@ -39,7 +39,7 @@ public abstract class Util {
 			}
 			activity.startActivity(
 				new Intent(Intent.ACTION_SEND)
-					.setType(FileTypeCollection.Instance.mimeType(book.File).Name)
+					.setType(FileTypeCollection.Instance.simplifiedMimeType(file).Name)
 					.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file.javaFile()))
 			);
 		} catch (ActivityNotFoundException e) {

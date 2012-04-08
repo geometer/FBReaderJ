@@ -24,35 +24,35 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-class FileTypeFB2Zip extends FileType {
-	FileTypeFB2Zip() {
-		super("fb2.zip");
+class FileTypeFB2 extends FileType {
+	FileTypeFB2() {
+		super("fb2");
 	}
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return file.getShortName().toLowerCase().endsWith(".fb2.zip");
+		return "fb2".equalsIgnoreCase(file.getExtension());
 	}
 
 	/*
 	@Override
 	public String extension() {
-		return "fb2.zip";
+		return "fb2";
 	}
 	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_FB2_ZIP;
+		return MimeType.TYPES_FB2;
 	}
 
 	@Override
 	public MimeType mimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.APP_FB2_ZIP : MimeType.NULL;
+		return acceptsFile(file) ? MimeType.TEXT_FB2 : MimeType.NULL;
 	}
 
 	@Override
 	public MimeType simplifiedMimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.APP_ZIP : MimeType.NULL;
+		return acceptsFile(file) ? MimeType.TEXT_XML : MimeType.NULL;
 	}
 }
