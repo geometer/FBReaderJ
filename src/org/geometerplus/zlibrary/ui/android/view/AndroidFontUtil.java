@@ -74,17 +74,16 @@ public final class AndroidFontUtil {
 		myTimeStamp = timeStamp;
 		if (ourFileSet == null || forceReload) {
 			final HashSet<File> fileSet = new HashSet<File>();
-			final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(
-				new FilenameFilter() {
-					public boolean accept(File dir, String name) {
-						if (name.startsWith(".")) {
-							return false;
-						}
-						final String lcName = name.toLowerCase();
-						return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
+			final FilenameFilter filter = new FilenameFilter() {
+				public boolean accept(File dir, String name) {
+					if (name.startsWith(".")) {
+						return false;
 					}
+					final String lcName = name.toLowerCase();
+					return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 				}
-			);
+			};
+			final File[] fileList = new File(Paths.FontsDirectoryOption().getValue()).listFiles(filter);
 			if (fileList != null) {
 				fileSet.addAll(Arrays.asList(fileList));
 			}
