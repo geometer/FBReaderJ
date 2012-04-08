@@ -24,51 +24,35 @@ import java.util.List;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
-class FileTypeEpub extends FileType {
-	FileTypeEpub() {
-		super("ePub");
+class FileTypeFB2 extends FileType {
+	FileTypeFB2() {
+		super("fb2");
 	}
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return acceptsExtension(file.getExtension());
+		return "fb2".equalsIgnoreCase(file.getExtension());
 	}
 
-	@Override
-	public boolean acceptsExtension(String extension) {
-		return
-			"epub".equalsIgnoreCase(extension) ||
-			"oebzip".equalsIgnoreCase(extension) ||
-			"opf".equalsIgnoreCase(extension);
-	}
-
+	/*
 	@Override
 	public String extension() {
-		return "epub";
+		return "fb2";
 	}
+	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_EPUB;
+		return MimeType.TYPES_FB2;
 	}
 
 	@Override
 	public MimeType mimeType(ZLFile file) {
-		final String extension = file.getExtension();
-		if ("epub".equalsIgnoreCase(extension)) {
-			return MimeType.APP_EPUB_ZIP;
-		}
-		// TODO: process other extensions (?)
-		return MimeType.NULL;
+		return acceptsFile(file) ? MimeType.TEXT_FB2 : MimeType.NULL;
 	}
 
 	@Override
 	public MimeType simplifiedMimeType(ZLFile file) {
-		final String extension = file.getExtension();
-		if ("epub".equalsIgnoreCase(extension)) {
-			return MimeType.APP_ZIP;
-		}
-		// TODO: process other extensions (?)
-		return MimeType.NULL;
+		return acceptsFile(file) ? MimeType.TEXT_XML : MimeType.NULL;
 	}
 }
