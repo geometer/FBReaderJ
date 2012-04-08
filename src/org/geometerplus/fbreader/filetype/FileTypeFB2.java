@@ -34,12 +34,10 @@ class FileTypeFB2 extends FileType {
 		return "fb2".equalsIgnoreCase(file.getExtension());
 	}
 
-	/*
 	@Override
 	public String extension() {
 		return "fb2";
 	}
-	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
