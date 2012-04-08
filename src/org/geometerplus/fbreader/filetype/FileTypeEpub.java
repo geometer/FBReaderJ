@@ -59,4 +59,14 @@ class FileTypeEpub extends FileType {
 		// TODO: process other extensions (?)
 		return MimeType.NULL;
 	}
+
+	@Override
+	public MimeType simplifiedMimeType(ZLFile file) {
+		final String extension = file.getExtension();
+		if ("epub".equalsIgnoreCase(extension)) {
+			return MimeType.APP_ZIP;
+		}
+		// TODO: process other extensions (?)
+		return MimeType.NULL;
+	}
 }
