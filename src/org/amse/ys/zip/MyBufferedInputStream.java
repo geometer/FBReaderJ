@@ -109,6 +109,7 @@ final class MyBufferedInputStream extends InputStream {
 				}
 				left -= skipped;
 			}
+			myCurrentPosition += n - left;
 			return n - left;
 		}
 	}
