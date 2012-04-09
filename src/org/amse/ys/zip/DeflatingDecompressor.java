@@ -74,7 +74,7 @@ class DeflatingDecompressor extends Decompressor {
 				fillOutBuffer();
 			}
 			if (myOutBufferLength == 0) {
-				if (myInflatorId != -1) {
+				if (myInflatorId == -1) {
 					throw new ZipException("cannot read from zip");
 				} else {
 					len -= toFill;
@@ -107,7 +107,7 @@ class DeflatingDecompressor extends Decompressor {
 			fillOutBuffer();
 		}
 		if (myOutBufferLength == 0) {
-			if (myInflatorId != -1) {
+			if (myInflatorId == -1) {
 				throw new ZipException("cannot read from zip");
 			} else {
 				myAvailable = 0;
