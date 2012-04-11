@@ -47,6 +47,8 @@ public class EditableStringListActivity extends ListActivity {
 	private List<String> mySuggestions;
 	private String myType;
 
+	private boolean myKeyboardShowed = false;
+
 	private boolean myUserWasWarned = false;
 
 	private void enableButtons() {
@@ -68,7 +70,8 @@ public class EditableStringListActivity extends ListActivity {
 		mySuggestions = getIntent().getStringArrayListExtra(SUGGESTIONS);
 		myType = getIntent().getStringExtra(TYPE);
 
-//		final View bottomView = findViewById(R.id.editable_stringlist_bottom);
+		final View footerView = LayoutInflater.from(this).inflate(R.layout.editable_stringlist_footer, null);
+		getListView().addFooterView(footerView);
 
 		setListAdapter(new ItemAdapter());
 
@@ -78,7 +81,7 @@ public class EditableStringListActivity extends ListActivity {
 			getListAdapter().addDirectoryItem(i);
 		}
 
-		myAddButton = (ImageButton)findViewById(R.id.editable_stringlist_addbutton);
+		myAddButton = (ImageButton)footerView.findViewById(R.id.editable_stringlist_addbutton);
 		myAddButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
@@ -87,7 +90,7 @@ public class EditableStringListActivity extends ListActivity {
 			}
 		);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final View buttonView = findViewById(R.id.editable_stringlist_buttons);
+		final View buttonView = footerView.findViewById(R.id.editable_stringlist_buttons);
 		myOkButton = (Button)buttonView.findViewById(R.id.ok_button);
 		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
@@ -145,6 +148,7 @@ public class EditableStringListActivity extends ListActivity {
 			myItems.add(i);
 			notifyDataSetChanged();
 			enableButtons();
+			myKeyboardShowed = false;
 			getListView().post(new Runnable(){
 				public void run() {
 					getListView().setSelection(getCount() - 1);
@@ -210,12 +214,6 @@ public class EditableStringListActivity extends ListActivity {
 				}
 			});
 
-			if ("".equals(item.getPath())) {
-				text.requestFocus();
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.toggleSoftInput(0, 0);
-			}
-
 			if (TYPE_FIRST_MAIN.equals(myType) && position == 0) {
 				final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_unlockbutton);
 				button.setOnClickListener(
@@ -264,7 +262,15 @@ public class EditableStringListActivity extends ListActivity {
 						}
 					}
 				);
-				button.setEnabled(getCount() > 1 && !(TYPE_FIRST_MAIN.equals(myType) && position == 0));
+				button.setEnabled(getCount() > 1);
+				if ("".equals(item.getPath())) {
+					text.requestFocus();
+					if ( !myKeyboardShowed) {
+						InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.toggleSoftInput(0, 0);
+						myKeyboardShowed = true;
+					}
+				}
 				return view;
 			}
 		}
