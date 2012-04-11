@@ -28,26 +28,15 @@
 			android:imeOptions="actionDone"
 			android:layout_marginLeft="10dp"
 			android:layout_marginRight="5dp"
-			android:visibility="gone"
-		/>
-		<TextView
-			android:id="@+id/editable_stringlist_text_inactive"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:layout_weight="1"
-			android:singleLine="true"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="5dp"
-			android:textSize = "20sp"
 		/>
 		<ImageButton
-			android:id="@+id/editable_stringlist_deletebutton"
+			android:id="@+id/editable_stringlist_unlockbutton"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_weight="3"
 			android:layout_marginLeft="5dp"
 			android:layout_marginRight="10dp"
-			android:src="@+drawable/ic_delete"
+			android:src="@+drawable/ic_lock_lock"
 		/>
 	</LinearLayout>
 </LinearLayout>

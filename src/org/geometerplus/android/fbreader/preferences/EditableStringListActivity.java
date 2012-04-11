@@ -210,59 +210,63 @@ public class EditableStringListActivity extends ListActivity {
 				}
 			});
 
-
-			if (TYPE_FIRST_MAIN.equals(myType) && position == 0) {
-				final TextView inactiveText = (TextView)view.findViewById(R.id.editable_stringlist_text_inactive);
-				if (!myUserWasWarned) {
-					inactiveText.setText(item.getPath());
-					inactiveText.setOnClickListener(
-						new View.OnClickListener() {
-							public void onClick(View v) {
-								if (!myUserWasWarned) {
-									new AlertDialog.Builder(EditableStringListActivity.this)
-										.setTitle("Editing of main directory will lead to loss of data")
-										.setMessage("Continue?")
-										.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-											public void onClick(DialogInterface arg0, int arg1) {
-												inactiveText.setVisibility(View.GONE);
-												text.setVisibility(View.VISIBLE);
-												myUserWasWarned = true;
-												view.requestFocus();
-												view.clearFocus();
-											}
-										})
-										.setNegativeButton("No", new DialogInterface.OnClickListener() {
-											public void onClick(DialogInterface arg0, int arg1) {
-												view.requestFocus();
-												view.clearFocus();
-											}
-										}).show();
-								}
-							}
-						}
-					);
-				} else {
-					inactiveText.setVisibility(View.GONE);
-					text.setVisibility(View.VISIBLE);
-				}
-			}
-
 			if ("".equals(item.getPath())) {
 				text.requestFocus();
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.toggleSoftInput(0, 0);
 			}
-			final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
-			button.setOnClickListener(
-				new View.OnClickListener() {
-					public void onClick(View view) {
-						removeDirectoryItem(item.getId());
-						enableButtons();
-					}
+
+			if (TYPE_FIRST_MAIN.equals(myType) && position == 0) {
+				final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_unlockbutton);
+				button.setOnClickListener(
+					new View.OnClickListener() {
+						public void onClick(View v) {
+							if (!myUserWasWarned) {
+								new AlertDialog.Builder(EditableStringListActivity.this)
+									.setTitle("Editing of main directory will lead to loss of data")
+									.setMessage("Continue?")
+									.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface arg0, int arg1) {
+											text.setEnabled(true);
+											text.setFocusable(true);
+											text.setFocusableInTouchMode(true);
+											myUserWasWarned = true;
+											view.requestFocus();
+											view.clearFocus();
+											button.setEnabled(false);
+										}
+									})
+									.setNegativeButton("No", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface arg0, int arg1) {
+											view.requestFocus();
+											view.clearFocus();
+										}
+									}).show();
+								}
+							}
+						}
+				);
+				button.setEnabled(!myUserWasWarned);
+				if (!myUserWasWarned) {
+					text.setEnabled(false);
+					text.setFocusable(false);
+					text.setFocusableInTouchMode(false);
 				}
-			);
-			button.setEnabled(getCount() > 1 && !(TYPE_FIRST_MAIN.equals(myType) && position == 0));
-			return view;
+				return view;
+			} else {
+
+				final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
+				button.setOnClickListener(
+					new View.OnClickListener() {
+						public void onClick(View view) {
+							removeDirectoryItem(item.getId());
+							enableButtons();
+						}
+					}
+				);
+				button.setEnabled(getCount() > 1 && !(TYPE_FIRST_MAIN.equals(myType) && position == 0));
+				return view;
+			}
 		}
 	}
 
