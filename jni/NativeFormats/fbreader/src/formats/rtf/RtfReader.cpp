@@ -49,7 +49,7 @@ RtfFontPropertyCommand::RtfFontPropertyCommand(RtfReader::FontProperty property)
 }
 
 void RtfFontPropertyCommand::run(RtfReader &reader, int *parameter) const {
-	bool start = (parameter == 0) || (*parameter != 0);
+	const bool start = (parameter == 0) || (*parameter != 0);
 	switch (myProperty) {
 		case RtfReader::FONT_BOLD:
 			if (reader.myState.Bold != start) {
