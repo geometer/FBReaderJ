@@ -666,6 +666,14 @@
 			</node>
 			<node name="cancelMenu" value="Меню выхода из программы">
 				<node name="summary" value="Список действий при нажатии на кнопку 'Назад'"/>
+				<node name="library" value="Библиотека">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Сетевая библиотека">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Предыдущая книга">
 					<node name="summaryOn" value="Показать пункт меню для возврата к предыдущей книге"/>
 					<node name="summaryOff" value="Не нужна возможность возврата к предыдущей книге"/>
@@ -830,5 +838,6 @@
 		<node name="fileNotFound" value="Не найти файл: %s"/>
 		<node name="opfFileNotFound" value="Не удалось найти OPF в %s"/>
 		<node name="unsupportedFileFormat" value="Не поддерживается формат файла '%s'"/>
+		<node name="errorParsingRtf" value="Ошибка при чтении RTF-файла %s"/>
 	</node>
 </resources>
