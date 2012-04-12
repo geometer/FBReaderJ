@@ -9,6 +9,7 @@ scripts/resources/*.diff
 obj/
 epubs/
 mappings/
+READY/
 .classpath
 .settings
 *.so
