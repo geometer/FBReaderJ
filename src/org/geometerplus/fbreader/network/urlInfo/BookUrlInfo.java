@@ -22,6 +22,8 @@ package org.geometerplus.fbreader.network.urlInfo;
 import java.io.File;
 import java.net.URI;
 
+import org.geometerplus.zlibrary.core.util.MimeType;
+
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.filetype.*;
 
@@ -56,7 +58,7 @@ public class BookUrlInfo extends UrlInfo {
 
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
-	public static String makeBookFileName(String url, String format, Type resolvedReferenceType) {
+	public static String makeBookFileName(String url, FileType fileType, MimeType mimeType, Type resolvedReferenceType) {
 		URI uri;
 		try {
 			uri = new URI(url);
@@ -97,9 +99,7 @@ public class BookUrlInfo extends UrlInfo {
 		}
 
 		String ext = null;
-		if (FileTypeCollection.Instance.typeById(format) != null) {
-			ext = "." + FileTypeCollection.Instance.typeById(format).extension();
-		}
+		ext = "." + fileType.extension(mimeType);
 
 		if (ext == null) {
 			int j = path.indexOf(".", nameIndex); // using not lastIndexOf to preserve extensions like `.fb2.zip`

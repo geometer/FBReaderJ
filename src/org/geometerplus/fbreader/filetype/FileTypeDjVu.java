@@ -40,7 +40,7 @@ class FileTypeDjVu extends FileType {
 	}
 
 	@Override
-	public String extension() {
+	public String extension(MimeType mimeType) {
 		return "djvu";
 	}
 

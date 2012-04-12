@@ -42,7 +42,7 @@ class FileTypeMobipocket extends FileTypePalm {
 	*/
 
 	@Override
-	public String extension() {
+	public String extension(MimeType mimeType) {
 		return "mobi";
 	}
 
