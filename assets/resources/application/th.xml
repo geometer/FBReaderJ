@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="อ่านหนังสือ"/>
 		<node name="showBookInfo" value="ข้อมูลหนังสือ"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="ลบหนังสือ"/>
 		<node name="addToFavorites" value="เพิ่มเป็นหนังสือเล่มโปรด"/>
 		<node name="removeFromFavorites" value="ลบจากหนังสือเล่มโปรด"/>
@@ -240,6 +241,7 @@
 			<node name="undo" value="ย้อนกลับ"/>
 			<node name="redo" value="ไปข้างหน้า"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="ค้นหา"/>
 		<node name="rotate" value="หมุนหน้าจอ"/>
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>

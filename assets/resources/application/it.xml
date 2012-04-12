@@ -44,6 +44,7 @@
 		</node>
 		<node name="openBook" value="Apri libro"/>
 		<node name="showBookInfo" value="Informazioni sul libro"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="Cancella libro"/>
 		<node name="addToFavorites" value="Aggiungi a preferiti"/>
 		<node name="removeFromFavorites" value="Rimuovi da preferiti"/>
@@ -241,6 +242,7 @@
 			<node name="undo" value="Torna indietro"/>
 			<node name="redo" value="Vai avanti"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="Cerca"/>
 		<node name="rotate" value="Ruota schermo"/>
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>

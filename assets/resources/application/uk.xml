@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Читати книжку"/>
 		<node name="showBookInfo" value="Деталі про книгу"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="Видалити книжку"/>
 		<node name="addToFavorites" value="Додати в улюблені"/>
 		<node name="removeFromFavorites" value="Прибрати з улюблених"/>
@@ -240,6 +241,7 @@
 			<node name="undo" value="Назад"/>
 			<node name="redo" value="Вперед"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="Пошук"/>
 		<node name="rotate" value="Повернути"/>
 		<node name="screenOrientation" value="Орієнтація екрану"/>

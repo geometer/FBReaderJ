@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="打开阅读" />
 		<node name="showBookInfo" value="书文信息"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="删除本书" />
 		<node name="addToFavorites" value="收藏到我的超爱"/>
 		<node name="removeFromFavorites" value="从收藏列表中移除"/>
@@ -240,6 +241,7 @@
 			<node name="undo" value="还原" />
 			<node name="redo" value="重做" />
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="内容查找" />
 		<node name="rotate" value="翻转屏幕" />
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>

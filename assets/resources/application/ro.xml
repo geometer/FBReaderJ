@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Deschide carte"/>
 		<node name="showBookInfo" value="Informatii despre carte"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="Stergere cartea"/>
 		<node name="addToFavorites" value="Adauga la favorite"/>
 		<node name="removeFromFavorites" value="Sterge din favorite"/>
@@ -240,6 +241,7 @@
 			<node name="undo" value="Mergeti înapoi"/>
 			<node name="redo" value="Mergeti înainte"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="Cauta"/>
 		<node name="rotate" value="Rotire ecran"/>
 		<node name="screenOrientation" value="Orientarea ecranului"/>

@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Mở sách"/>
 		<node name="showBookInfo" value="Book info"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="Xóa sách"/>
 		<node name="addToFavorites" value="Thêm vào yêu thích"/>
 		<node name="removeFromFavorites" value="Xóa khỏi yêu thích"/>
@@ -240,6 +241,7 @@
 			<node name="undo" value="Quay Lại"/>
 			<node name="redo" value="Đi Tiếp"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="Tìm"/>
 		<node name="rotate" value="Quay màn hình"/>
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
