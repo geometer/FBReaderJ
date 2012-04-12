@@ -40,7 +40,7 @@ class FileTypeFB2Zip extends FileType {
 	}
 
 	@Override
-	public String extension() {
+	public String extension(MimeType mimeType) {
 		return "fb2.zip";
 	}
 

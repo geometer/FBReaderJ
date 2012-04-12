@@ -40,7 +40,7 @@ class FileTypeFB2 extends FileType {
 	}
 
 	@Override
-	public String extension() {
+	public String extension(MimeType mimeType) {
 		return "fb2";
 	}
 

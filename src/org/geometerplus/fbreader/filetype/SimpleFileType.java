@@ -45,7 +45,7 @@ class SimpleFileType extends FileType {
 	}
 
 	@Override
-	public String extension() {
+	public String extension(MimeType mimeType) {
 		return myExtension;
 	}
 

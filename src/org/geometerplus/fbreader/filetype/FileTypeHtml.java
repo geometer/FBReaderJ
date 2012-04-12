@@ -40,7 +40,7 @@ class FileTypeHtml extends FileType {
 	}
 
 	@Override
-	public String extension() {
+	public String extension(MimeType mimeType) {
 		return "html";
 	}
 
