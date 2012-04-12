@@ -205,6 +205,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Előző könyv megnyitása" />
 		<node name="returnTo" value="Visszatérés ..."/>
 		<node name="back" value="Vissza"/>
@@ -265,11 +267,13 @@
 			<node name="openBook" value="Olvasás" />
 			<node name="editInfo" value="Szerkesztés" />
 			<node name="reloadInfo" value="Újratölt" />
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Számla feltöltése"/>
 			<node name="pay" value="Fizetés"/>
 			<node name="refresh" value="Frissítés"/>
 			<node name="authorize" value="Hitelesítés"/>
 			<node name="resetPosition" value="Pozíció nullázása"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Bővítmény telepítése" />
@@ -643,6 +647,14 @@
 			</node>
 			<node name="cancelMenu" value="Vissza menü">
 				<node name="summary" value="Vissza gomb műveletek"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Előző könyv">
 					<node name="summaryOn" value="Mutassa a menüben a 'Vissza az előző könyvhöz' menüpontot"/>
 					<node name="summaryOff" value="Ne mutassa a 'Vissza az előző könyvhöz' menüpontot"/>

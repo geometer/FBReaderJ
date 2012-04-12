@@ -205,6 +205,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Відкрити поперердню книгу"/>
 		<node name="returnTo" value="Повернутися до ..."/>
 		<node name="back" value="Назад"/>
@@ -265,11 +267,13 @@
 			<node name="openBook" value="Читати" />
 			<node name="editInfo" value="Редагувати" />
 			<node name="reloadInfo" value="Перезавантажити" />
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="pay" value="Заплатити"/>
 			<node name="refresh" value="Оновити"/>
 			<node name="authorize" value="Авторизуватись"/>
 			<node name="resetPosition" value="Скинути позицію"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Встановити plugin" />
@@ -643,6 +647,14 @@
 			</node>
 			<node name="cancelMenu" value="Меню відміни">
 				<node name="summary" value="Список дій кнопки Назад"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Попередня книга">
 					<node name="summaryOn" value="Показувати 'повернутись до попередньої книги'"/>
 					<node name="summaryOff" value="Не показувати 'повернутись до попередньої книги'"/>

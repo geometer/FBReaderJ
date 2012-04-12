@@ -210,6 +210,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Abrir libro anterior"/>
 		<node name="returnTo" value="Volver a ..."/>
 		<node name="back" value="Atrás"/>
@@ -270,11 +272,13 @@
 			<node name="openBook" value="Leer" />
 			<node name="editInfo" value="Editar" />
 			<node name="reloadInfo" value="Recargar" />
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Completar"/>
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar complemento"/>
@@ -648,6 +652,14 @@
 			</node>
 			<node name="cancelMenu" value="Menú cancelar">
 				<node name="summary" value="Lista de acciones para botón «atrás»"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Libro anterior">
 					<node name="summaryOn" value="Mostrar «volver al libro anterior»"/>
 					<node name="summaryOff" value="No mostrar «volver al libro anterior»"/>

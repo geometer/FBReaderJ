@@ -205,6 +205,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Deschide cartea anteriora"/>
 		<node name="returnTo" value="Înapoi la&#8230;"/>
 		<node name="back" value="Înapoi"/>
@@ -265,11 +267,13 @@
 			<node name="openBook" value="Citeste"/>
 			<node name="editInfo" value="Editeaza"/>
 			<node name="reloadInfo" value="Reîncarca"/>
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Incarca"/>
 			<node name="pay" value="Plateste"/>
 			<node name="refresh" value="Actualizare"/>
 			<node name="authorize" value="Autorizeaza"/>
 			<node name="resetPosition" value="Reseteaza pozitia"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -643,6 +647,14 @@
 			</node>
 			<node name="cancelMenu" value="Anuleaza meniu">
 				<node name="summary" value="Lista actiunilor pentru butonul inapoi"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Cartea anterioara">
 					<node name="summaryOn" value="Arata reveniti la cartea precedenta"/>
 					<node name="summaryOff" value="Nu arata reveniti la cartea precedenta"/>
