@@ -23,7 +23,8 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public abstract class LibraryUtil {
 	public static ZLResource resource() {
@@ -34,8 +35,11 @@ public abstract class LibraryUtil {
 		return book != null ? book.getCover() : null;
 	}
 
-	public static String getAnnotation(ZLFile file) {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
-		return plugin != null ? plugin.readAnnotation(file) : null;
+	public static String getAnnotation(Book book) {
+		try {
+			return book.getPlugin().readAnnotation(book.File);
+		} catch (BookReadingException e) {
+			return null;
+		}
 	}
 }

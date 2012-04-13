@@ -261,7 +261,7 @@ public class BookInfoActivity extends Activity {
 	private void setupAnnotation(Book book) {
 		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
 		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
-		final String annotation = LibraryUtil.getAnnotation(book.File);	
+		final String annotation = LibraryUtil.getAnnotation(book);
 		if (annotation == null) {
 			titleView.setVisibility(View.GONE);
 			bodyView.setVisibility(View.GONE);
