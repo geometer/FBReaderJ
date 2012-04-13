@@ -60,7 +60,12 @@ public class Book {
 		}
 		fileInfos.save();
 
-		return book.readMetaInfo() ? book : null;
+		try {
+			book.readMetaInfo();
+			return book;
+		} catch (BookReadingException e) {
+			return null;
+		}
 	}
 
 	public static Book getByFile(ZLFile bookFile) {
@@ -85,14 +90,18 @@ public class Book {
 		}
 		fileInfos.save();
 
-		if (book == null) {
-			book = new Book(bookFile);
+		try {
+			if (book == null) {
+				book = new Book(bookFile);
+			} else {
+				book.readMetaInfo();
+			}
+		} catch (BookReadingException e) {
+			return null;
 		}
-		if (book.readMetaInfo()) {
-			book.save();
-			return book;
-		}
-		return null;
+
+		book.save();
+		return book;
 	}
 
 	public final ZLFile File;
@@ -120,14 +129,18 @@ public class Book {
 		myIsSaved = true;
 	}
 
-	Book(ZLFile file) {
+	Book(ZLFile file) throws BookReadingException {
 		myId = -1;
 		File = file;
+		readMetaInfo();
 	}
 
 	public void reloadInfoFromFile() {
-		if (readMetaInfo()) {
+		try {
+			readMetaInfo();
 			save();
+		} catch (BookReadingException e) {
+			// ignore
 		}
 	}
 
@@ -140,7 +153,7 @@ public class Book {
 		myIsSaved = true;
 	}
 
-	boolean readMetaInfo() {
+	void readMetaInfo() throws BookReadingException {
 		myEncoding = null;
 		myLanguage = null;
 		myTitle = null;
@@ -152,13 +165,10 @@ public class Book {
 
 		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
 		if (plugin == null) {
-			return false;
+			throw new BookReadingException("pluginNotFound", File);
 		}
-		try {
-			plugin.readMetaInfo(this);
-		} catch (BookReadingException e) {
-			return false;
-		}
+		plugin.readMetaInfo(this);
+
 		if (myTitle == null || myTitle.length() == 0) {
 			final String fileName = File.getShortName();
 			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL ? -1 : fileName.lastIndexOf('.'));
@@ -170,7 +180,6 @@ public class Book {
 			setTitle(getTitle() + " (" + demoTag + ")");
 			addTag(demoTag);
 		}
-		return true;
 	}
 
 	private void loadLists() {

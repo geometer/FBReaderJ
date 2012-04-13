@@ -27,6 +27,7 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public final class Library extends AbstractLibrary {
 	public static final String ROOT_FOUND = "found";
@@ -122,20 +123,29 @@ public final class Library extends AbstractLibrary {
 			return;
 		}
 
-		Book book = orphanedBooksByFileId.get(fileId);
-		if (book != null && (!doReadMetaInfo || book.readMetaInfo())) {
-			addBookToLibrary(book);
-			fireModelChangedEvent(ChangeListener.Code.BookAdded);
-			newBooks.add(book);
-			return;
+		try {
+			final Book book = orphanedBooksByFileId.get(fileId);
+			if (book != null) {
+				if (doReadMetaInfo) {
+					book.readMetaInfo();
+				}
+				addBookToLibrary(book);
+				fireModelChangedEvent(ChangeListener.Code.BookAdded);
+				newBooks.add(book);
+				return;
+			}
+		} catch (BookReadingException e) {
+			// ignore
 		}
 
-		book = new Book(file);
-		if (book.readMetaInfo()) {
+		try {
+			final Book book = new Book(file);
 			addBookToLibrary(book);
 			fireModelChangedEvent(ChangeListener.Code.BookAdded);
 			newBooks.add(book);
 			return;
+		} catch (BookReadingException e) {
+			// ignore
 		}
 
 		if (file.isArchive()) {
@@ -338,9 +348,10 @@ public final class Library extends AbstractLibrary {
 						continue;
 					}
 					if (!fileInfos.check(file, true)) {
-						if (book.readMetaInfo()) {
+						try {
+							book.readMetaInfo();
 							book.save();
-						} else {
+						} catch (BookReadingException e) {
 							doAdd = false;
 						}
 						file.setCached(false);
@@ -378,14 +389,18 @@ public final class Library extends AbstractLibrary {
 		}
 		
 		// Step 4: add help file
-		final ZLFile helpFile = getHelpFile();
-		Book helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
-		if (helpBook == null) {
-			helpBook = new Book(helpFile);
-			helpBook.readMetaInfo();
+		try {
+			final ZLFile helpFile = getHelpFile();
+			Book helpBook = savedBooksByFileId.get(fileInfos.getId(helpFile));
+			if (helpBook == null) {
+				helpBook = new Book(helpFile);
+			}
+			addBookToLibrary(helpBook);
+			fireModelChangedEvent(ChangeListener.Code.BookAdded);
+		} catch (BookReadingException e) {
+			// that's impossible
+			e.printStackTrace();
 		}
-		addBookToLibrary(helpBook);
-		fireModelChangedEvent(ChangeListener.Code.BookAdded);
 
 		// Step 5: save changes into database
 		fileInfos.save();
