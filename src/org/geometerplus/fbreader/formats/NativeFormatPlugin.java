@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.formats;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.JavaEncodingCollection;
 import org.geometerplus.zlibrary.core.image.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
@@ -27,12 +28,18 @@ import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
+import org.geometerplus.fbreader.formats.fb2.FB2NativePlugin;
 
 public class NativeFormatPlugin extends FormatPlugin {
-	// No free method because all plugins' instances are freed by 
-	//   PluginCollection::deleteInstance method (C++)
+	public static NativeFormatPlugin create(String fileType) {
+		if ("fb2".equals(fileType)) {
+			return new FB2NativePlugin();
+		} else {
+			return new NativeFormatPlugin(fileType);
+		}
+	}
 
-	public NativeFormatPlugin(String fileType) {
+	protected NativeFormatPlugin(String fileType) {
 		super(fileType);
 	}
 
@@ -97,7 +104,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 	}
 
 	@Override
-	public JavaEncodingCollection supportedEncodings() {
+	public EncodingCollection supportedEncodings() {
 		// TODO: implement
 		return JavaEncodingCollection.Instance();
 	}
