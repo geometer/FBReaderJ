@@ -153,7 +153,19 @@ public class Book {
 		myIsSaved = true;
 	}
 
+	public FormatPlugin getPlugin() throws BookReadingException {
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
+		if (plugin == null) {
+			throw new BookReadingException("pluginNotFound", File);
+		}
+		return plugin;
+	}
+
 	void readMetaInfo() throws BookReadingException {
+		readMetaInfo(getPlugin());
+	}
+
+	private void readMetaInfo(FormatPlugin plugin) throws BookReadingException {
 		myEncoding = null;
 		myLanguage = null;
 		myTitle = null;
@@ -163,10 +175,6 @@ public class Book {
 
 		myIsSaved = false;
 
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
-		if (plugin == null) {
-			throw new BookReadingException("pluginNotFound", File);
-		}
 		plugin.readMetaInfo(this);
 
 		if (myTitle == null || myTitle.length() == 0) {
@@ -313,15 +321,12 @@ public class Book {
 
 	public String getEncoding() {
 		if (myEncoding == null) {
-			final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
-				if (plugin != null) {
-				try {
-					plugin.detectLanguageAndEncoding(this);
-				} catch (BookReadingException e) {
-				}
-				if (myEncoding == null) {
-					setEncoding("utf-8");
-				}
+			try {
+				getPlugin().detectLanguageAndEncoding(this);
+			} catch (BookReadingException e) {
+			}
+			if (myEncoding == null) {
+				setEncoding("utf-8");
 			}
 		}
 		return myEncoding;
@@ -536,9 +541,10 @@ public class Book {
 			}
 		}
 		ZLImage image = null;
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
-		if (plugin != null) {
-			image = plugin.readCover(File);
+		try {
+			image = getPlugin().readCover(File);
+		} catch (BookReadingException e) {
+			// ignore
 		}
 		myCover = image != null ? new WeakReference<ZLImage>(image) : NULL_IMAGE;
 		return image;
