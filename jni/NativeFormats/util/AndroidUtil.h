@@ -98,7 +98,7 @@ public:
 
 	static shared_ptr<Constructor> Constructor_ZLFileImage;
 
-	static shared_ptr<Constructor> Constructor_NativeFormatPlugin;
+	static shared_ptr<StaticObjectMethod> StaticMethod_NativeFormatPlugin_create;
 	static shared_ptr<StringMethod> Method_NativeFormatPlugin_supportedFileType;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_PluginCollection_Instance;
