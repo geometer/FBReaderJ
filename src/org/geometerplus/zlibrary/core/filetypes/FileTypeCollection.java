@@ -39,7 +39,6 @@ public class FileTypeCollection {
 		addType(new SimpleFileType("doc", "doc", MimeType.TYPES_DOC));
 		addType(new SimpleFileType("PDF", "pdf", MimeType.TYPES_PDF));
 		addType(new FileTypeDjVu());
-		addType(new FileTypeFB2Zip());
 		addType(new SimpleFileType("ZIP archive", "zip", Collections.singletonList(MimeType.APP_ZIP)));
 	}
 

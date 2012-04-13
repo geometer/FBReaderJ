@@ -131,8 +131,9 @@ public class Book {
 
 	Book(ZLFile file) throws BookReadingException {
 		myId = -1;
-		File = file;
-		readMetaInfo();
+		final FormatPlugin plugin = getPlugin(file);
+		File = plugin.realBookFile(file);
+		readMetaInfo(plugin);
 	}
 
 	public void reloadInfoFromFile() {
@@ -153,12 +154,16 @@ public class Book {
 		myIsSaved = true;
 	}
 
-	public FormatPlugin getPlugin() throws BookReadingException {
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(File);
+	private FormatPlugin getPlugin(ZLFile file) throws BookReadingException {
+		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(file);
 		if (plugin == null) {
-			throw new BookReadingException("pluginNotFound", File);
+			throw new BookReadingException("pluginNotFound", file);
 		}
 		return plugin;
+	}
+
+	public FormatPlugin getPlugin() throws BookReadingException {
+		return getPlugin(File);
 	}
 
 	void readMetaInfo() throws BookReadingException {
