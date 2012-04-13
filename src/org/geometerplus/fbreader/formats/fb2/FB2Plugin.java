@@ -34,6 +34,11 @@ public class FB2Plugin extends JavaFormatPlugin {
 	}
 
 	@Override
+	public ZLFile realBookFile(ZLFile file) {
+		return FB2Util.getRealFB2File(file);
+	}
+
+	@Override
 	public void readMetaInfo(Book book) throws BookReadingException {
 		new FB2MetaInfoReader(book).readMetaInfo();
 	}
