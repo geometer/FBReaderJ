@@ -374,6 +374,20 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		return list;
 	}
 
+	public List<Author> loadAuthors() {
+		final Cursor cursor = myDatabase.rawQuery("SELECT name, sort_key FROM Authors", null);
+		if (!cursor.moveToNext()) {
+			cursor.close();
+			return null;
+		}
+		final ArrayList<Author> list = new ArrayList<Author>();
+		do {
+			list.add(new Author(cursor.getString(0), cursor.getString(1)));
+		} while (cursor.moveToNext());
+		cursor.close();
+		return list;
+	}
+
 	private SQLiteStatement myGetTagIdStatement;
 	private SQLiteStatement myCreateTagIdStatement;
 	private long getTagId(Tag tag) {
@@ -462,7 +476,21 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		do {
 			list.add(getTagById(cursor.getLong(0)));
 		} while (cursor.moveToNext());
-		cursor.close();	
+		cursor.close();
+		return list;
+	}
+
+	public List<Tag> loadTags() {
+		final Cursor cursor = myDatabase.rawQuery("SELECT tag_id FROM Tags", null);
+		if (!cursor.moveToNext()) {
+			cursor.close();
+			return null;
+		}
+		ArrayList<Tag> list = new ArrayList<Tag>();
+		do {
+			list.add(getTagById(cursor.getLong(0)));
+		} while (cursor.moveToNext());
+		cursor.close();
 		return list;
 	}
 

@@ -36,49 +36,50 @@ class ZLActivityPreference extends Preference {
 		public void setValue(List<String> l);
 	}
 
-	private final ListHolder myOption;
+	private final ListHolder myHolder;
 	private final int myRequestCode;
-	private final List<String> mySuggestions;
-	private final String myType;
+	protected List<String> mySuggestions;
 
-	ZLActivityPreference(Context context, ListHolder option, Map<Integer,ZLActivityPreference> map, List<String> suggestions, String type, ZLResource rootResource, String resourceKey) {
+	ZLActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
 		super(context);
-		myOption = option;
+		myHolder = holder;
 		myRequestCode = map.size();
 		map.put(myRequestCode, this);
 		mySuggestions = (suggestions != null) ? suggestions : new ArrayList<String>();
-		myType = type;
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
 		updateSummary();
 	}
 
+	protected Intent prepareIntent(Intent intent) {
+		intent.setClass(getContext(), EditableStringListActivity.class);
+		return intent;
+	}
+
 	@Override
 	protected void onClick() {
 		final Intent intent = new Intent();
-		intent.setClass(getContext(), EditableStringListActivity.class);
 		intent.putStringArrayListExtra(
-			EditableStringListActivity.LIST,
-			new ArrayList<String>(myOption.getValue())
+			BaseStringListActivity.LIST,
+			new ArrayList<String>(myHolder.getValue())
 		);
 		intent.putStringArrayListExtra(
-			EditableStringListActivity.SUGGESTIONS,
+			BaseStringListActivity.SUGGESTIONS,
 			new ArrayList<String>(mySuggestions)
 		);
-		intent.putExtra(EditableStringListActivity.TITLE, getTitle());
-		intent.putExtra(EditableStringListActivity.TYPE, myType);
+		intent.putExtra(BaseStringListActivity.TITLE, getTitle());
 
-		((Activity)getContext()).startActivityForResult(intent, myRequestCode);
+		((Activity)getContext()).startActivityForResult(prepareIntent(intent), myRequestCode);
 	}
 
 	public void setValue(Intent data) {
 		final List<String> value = data.getStringArrayListExtra(EditableStringListActivity.LIST);
-		myOption.setValue(value);
+		myHolder.setValue(value);
 		updateSummary();
 	}
 
 	private void updateSummary() {
-		setSummary(ZLMiscUtil.listToString(myOption.getValue(), ":"));
+		setSummary(ZLMiscUtil.listToString(myHolder.getValue(), ":"));
 	}
 }
