@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Open book"/>
 		<node name="showBookInfo" value="Book info"/>
+		<node name="shareBook" value="Share book"/>
 		<node name="deleteBook" value="Delete book"/>
 		<node name="addToFavorites" value="Add to favorites"/>
 		<node name="removeFromFavorites" value="Remove from favorites"/>
@@ -211,6 +212,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library"/>
+		<node name="networkLibrary" value="Open network library"/>
 		<node name="previousBook" value="Open previous book"/>
 		<node name="returnTo" value="Return to &#8230;"/>
 		<node name="back" value="Back"/>
@@ -244,6 +247,7 @@
 			<node name="undo" value="Go Back"/>
 			<node name="redo" value="Go Forward"/>
 		</node>
+		<node name="shareBook" value="Share book"/>
 		<node name="search" value="Search"/>
 		<node name="rotate" value="Rotate screen"/>
 		<node name="screenOrientation" value="Screen orientation"/>
@@ -271,6 +275,7 @@
 			<node name="openBook" value="Read"/>
 			<node name="editInfo" value="Edit"/>
 			<node name="reloadInfo" value="Reload"/>
+			<node name="shareBook" value="Share"/>
 			<node name="topup" value="Top up"/>
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
@@ -652,6 +657,14 @@
 			</node>
 			<node name="cancelMenu" value="Cancel menu">
 				<node name="summary" value="Back button action list"/>
+				<node name="library" value="Library">
+					<node name="summaryOn" value="Show 'open library' item"/>
+					<node name="summaryOff" value="Don't show 'open library' item"/>
+				</node>
+				<node name="networkLibrary" value="Network library">
+					<node name="summaryOn" value="Show 'open network library' item"/>
+					<node name="summaryOff" value="Don't show 'open network library' item"/>
+				</node>
 				<node name="previousBook" value="Previous book">
 					<node name="summaryOn" value="Show 'return to previous book' item"/>
 					<node name="summaryOff" value="Don't show 'return to previous book' item"/>

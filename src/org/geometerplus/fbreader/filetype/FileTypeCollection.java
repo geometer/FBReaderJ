@@ -30,7 +30,7 @@ public class FileTypeCollection {
 	private final TreeMap<String,FileType> myTypes = new TreeMap<String,FileType>();
 
 	private FileTypeCollection() {
-		addType(new SimpleFileType("fb2", "fb2", MimeType.TYPES_FB2));
+		addType(new FileTypeFB2());
 		addType(new FileTypeEpub());
 		addType(new FileTypeMobipocket());
 		addType(new FileTypeHtml());
@@ -39,6 +39,7 @@ public class FileTypeCollection {
 		addType(new SimpleFileType("PDF", "pdf", MimeType.TYPES_PDF));
 		addType(new FileTypeDjVu());
 		addType(new FileTypeFB2Zip());
+		addType(new SimpleFileType("ZIP archive", "zip", Collections.singletonList(MimeType.APP_ZIP)));
 	}
 
 	private void addType(FileType type) {
@@ -60,5 +61,25 @@ public class FileTypeCollection {
 			}
 		}
 		return null;
+	}
+
+	public MimeType mimeType(ZLFile file) {
+		for (FileType type : types()) {
+			final MimeType mime = type.mimeType(file);
+			if (mime != MimeType.NULL) {
+				return mime;
+			}
+		}
+		return MimeType.UNKNOWN;
+	}
+
+	public MimeType simplifiedMimeType(ZLFile file) {
+		for (FileType type : types()) {
+			final MimeType mime = type.simplifiedMimeType(file);
+			if (mime != MimeType.NULL) {
+				return mime;
+			}
+		}
+		return MimeType.UNKNOWN;
 	}
 }

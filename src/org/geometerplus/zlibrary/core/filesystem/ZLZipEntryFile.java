@@ -68,6 +68,15 @@ final class ZLZipEntryFile extends ZLArchiveEntryFile {
 	}
 
 	@Override
+	public boolean exists() {
+		try {
+			return myParent.exists() && getZipFile(myParent).entryExists(myName);
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
+	@Override
 	public long size() {
 		try {
 			return getZipFile(myParent).getEntrySize(myName);

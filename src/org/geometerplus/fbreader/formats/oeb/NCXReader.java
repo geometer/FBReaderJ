@@ -58,8 +58,7 @@ class NCXReader extends ZLXMLReaderAdapter {
 	NCXReader(BookReader modelReader) {
 	}
 
-	void readFile(String filePath) throws BookReadingException {
-		final ZLFile file = ZLFile.createFileByPath(filePath);
+	void readFile(ZLFile file) throws BookReadingException {
 		myLocalPathPrefix = MiscUtil.archiveEntryName(MiscUtil.htmlDirectoryPrefix(file));
 		try {
 			read(file);

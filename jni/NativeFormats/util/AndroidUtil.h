@@ -61,6 +61,7 @@ public:
 	static JavaClass Class_ZLFile;
 	static JavaClass Class_ZLFileImage;
 	static JavaClass Class_ZLTextModel;
+	static JavaClass Class_CachedCharStorageException;
 	static JavaClass Class_NativeFormatPlugin;
 	static JavaClass Class_PluginCollection;
 	static JavaClass Class_Encoding;
@@ -153,7 +154,8 @@ public:
 	static jintArray createJavaIntArray(JNIEnv *env, const std::vector<jint> &data);
 	static jbyteArray createJavaByteArray(JNIEnv *env, const std::vector<jbyte> &data);
 
-	static void throwRuntimeException(JNIEnv *env, const std::string &message);
+	static void throwRuntimeException(const std::string &message);
+	static void throwCachedCharStorageException(const std::string &message);
 	//static void throwBookReadingException(const std::string &resourceId, const ZLFile &file);
 };
 

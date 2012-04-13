@@ -35,13 +35,20 @@ class FileTypeDjVu extends FileType {
 		return "djvu".equalsIgnoreCase(extension) || "djv".equalsIgnoreCase(extension);
 	}
 
+	/*
 	@Override
 	public String extension() {
 		return "djvu";
 	}
+	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {
 		return MimeType.TYPES_DJVU;
+	}
+
+	@Override
+	public MimeType mimeType(ZLFile file) {
+		return acceptsFile(file) ? MimeType.IMAGE_VND_DJVU : MimeType.NULL;
 	}
 }

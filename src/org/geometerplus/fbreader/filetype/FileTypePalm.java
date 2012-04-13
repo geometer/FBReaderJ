@@ -62,8 +62,10 @@ abstract class FileTypePalm extends FileType {
 			myPalmId.equals(palmFileType(file));
 	}
 
+	/*
 	@Override
 	public String extension() {
 		return "pdb";
 	}
+	*/
 }

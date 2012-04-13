@@ -21,14 +21,16 @@ package org.geometerplus.android.fbreader.library;
 
 import android.app.AlertDialog;
 import android.content.*;
-import android.view.*;
 import android.os.Bundle;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
+import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -37,6 +39,7 @@ import org.geometerplus.fbreader.tree.FBTree;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.fbreader.FBReader;
+import org.geometerplus.android.fbreader.FBUtil;
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 
 public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItemClickListener, View.OnCreateContextMenuListener, Library.ChangeListener {
@@ -164,9 +167,10 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	//
 	private static final int OPEN_BOOK_ITEM_ID = 0;
 	private static final int SHOW_BOOK_INFO_ITEM_ID = 1;
-	private static final int ADD_TO_FAVORITES_ITEM_ID = 2;
-	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 3;
-	private static final int DELETE_BOOK_ITEM_ID = 4;
+	private static final int SHARE_BOOK_ITEM_ID = 2;
+	private static final int ADD_TO_FAVORITES_ITEM_ID = 3;
+	private static final int REMOVE_FROM_FAVORITES_ITEM_ID = 4;
+	private static final int DELETE_BOOK_ITEM_ID = 5;
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -182,6 +186,9 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 		menu.setHeaderTitle(book.getTitle());
 		menu.add(0, OPEN_BOOK_ITEM_ID, 0, resource.getResource("openBook").getValue());
 		menu.add(0, SHOW_BOOK_INFO_ITEM_ID, 0, resource.getResource("showBookInfo").getValue());
+		if (book.File.getPhysicalFile() != null) {
+			menu.add(0, SHARE_BOOK_ITEM_ID, 0, resource.getResource("shareBook").getValue());
+		}
 		if (myLibrary.isBookInFavorites(book)) {
 			menu.add(0, REMOVE_FROM_FAVORITES_ITEM_ID, 0, resource.getResource("removeFromFavorites").getValue());
 		} else {
@@ -209,6 +216,9 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 				return true;
 			case SHOW_BOOK_INFO_ITEM_ID:
 				showBookInfo(book);
+				return true;
+			case SHARE_BOOK_ITEM_ID:
+				FBUtil.shareBook(this, book);
 				return true;
 			case ADD_TO_FAVORITES_ITEM_ID:
 				myLibrary.addBookToFavorites(book);

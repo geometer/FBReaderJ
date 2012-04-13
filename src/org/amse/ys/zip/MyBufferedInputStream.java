@@ -90,26 +90,27 @@ final class MyBufferedInputStream extends InputStream {
 		return new String(array);
 	}
 
-	public void skip(int n) throws IOException {
-		myCurrentPosition += n;
+	@Override
+	public long skip(long n) throws IOException {
 		if (myBytesReady >= n) {
 			myBytesReady -= n;
 			myPositionInBuffer += n;
+			myCurrentPosition += n;
+			return n;
 		} else {
-			n -= myBytesReady;
+			long left = n - myBytesReady;
 			myBytesReady = 0;
 
-			if (n > myFileInputStream.available()) {
-				throw new ZipException("Not enough bytes to read");
-			}
-			n -= myFileInputStream.skip(n);
-			while (n > 0) {
-				int skipped = myFileInputStream.read(myBuffer, 0, Math.min(n, myBuffer.length));
+			left -= myFileInputStream.skip(left);
+			while (left > 0) {
+				int skipped = myFileInputStream.read(myBuffer, 0, Math.min((int)left, myBuffer.length));
 				if (skipped <= 0) {
-					throw new ZipException("Not enough bytes to read");
+					break;
 				}
-				n -= skipped;
+				left -= skipped;
 			}
+			myCurrentPosition += n - left;
+			return n - left;
 		}
 	}
 

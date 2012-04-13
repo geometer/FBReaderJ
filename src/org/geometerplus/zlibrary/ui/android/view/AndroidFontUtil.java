@@ -59,66 +59,39 @@ public final class AndroidFontUtil {
 	}
 
 	private static Map<String,File[]> ourFontMap;
-	private static File[] ourFileList;
+	private static Set<File> ourFileSet;
 	private static long myTimeStamp;
 
-	private static <T> T[] concat(T[] a, T[] b) {
-		final int alen = a != null ? a.length : 0;
-		final int blen = b != null ? b.length : 0;
-		if (alen == 0) {
-			return b;
-		}
-		if (blen == 0) {
-			return a;
-		}
-		final T[] result = (T[]) java.lang.reflect.Array.
-				newInstance(a.getClass().getComponentType(), alen + blen);
-		System.arraycopy(a, 0, result, 0, alen);
-		System.arraycopy(b, 0, result, alen, blen);
-		return result;
-	}
-
 	public static Map<String,File[]> getFontMap(boolean forceReload) {
+		if (ourFontCreationMethod == null) {
+			return Collections.emptyMap();
+		}
+
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < myTimeStamp + 1000) {
 			forceReload = false;
 		}
 		myTimeStamp = timeStamp;
-		if (ourFontMap == null || forceReload) {
-			boolean rebuildMap = ourFontMap == null;
-			if (ourFontCreationMethod == null) {
-				if (rebuildMap) {
-					ourFontMap = new HashMap<String,File[]>();
-				}
-			} else {
-				File[] fileList = new File[0];
-				for (String dir : Paths.FontsDirectoryOption().getValue()) {
-					final File[] tempList = new File(dir).listFiles(
-						new FilenameFilter() {
-							public boolean accept(File dir, String name) {
-								if (name.startsWith(".")) {
-									return false;
-								}
-								final String lcName = name.toLowerCase();
-								return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
-							}
-						}
-					);
-					fileList = concat(fileList, tempList);
-				}
-				if (fileList == null) {
-					if (ourFileList != null) {
-						ourFileList = null;
-						rebuildMap = true;
+		if (ourFileSet == null || forceReload) {
+			final HashSet<File> fileSet = new HashSet<File>();
+			final FilenameFilter filter = new FilenameFilter() {
+				public boolean accept(File dir, String name) {
+					if (name.startsWith(".")) {
+						return false;
 					}
+					final String lcName = name.toLowerCase();
+					return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 				}
-				if (fileList != null && !fileList.equals(ourFileList)) {
-					ourFileList = fileList;
-					rebuildMap = true;
+			};
+			for (String dirName : Paths.FontsDirectoryOption().getValue()) {
+				final File[] fileList = new File(dirName).listFiles(filter);
+				if (fileList != null) {
+					fileSet.addAll(Arrays.asList(fileList));
 				}
-				if (rebuildMap) {
-					ourFontMap = new ZLTTFInfoDetector().collectFonts(fileList);
-				}
+			}
+			if (!fileSet.equals(ourFileSet)) {
+				ourFileSet = fileSet;
+				ourFontMap = new ZLTTFInfoDetector().collectFonts(fileSet);
 			}
 		}
 		return ourFontMap;
