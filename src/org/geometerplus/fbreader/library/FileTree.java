@@ -43,19 +43,6 @@ public class FileTree extends LibraryTree {
 
 	public FileTree(FileTree parent, ZLFile file) {
 		super(parent);
-		if (file.isArchive() && file.getPath().endsWith(".fb2.zip")) {
-			final List<ZLFile> children = file.children();
-			if (children.size() == 1) {
-				final ZLFile child = children.get(0);
-				if (child.getPath().endsWith(".fb2")) {
-					myFile = child;
-					myName = file.getLongName();
-					mySummary = null;
-					myIsSelectable = true;
-					return;
-				}
-			} 
-		}
 		myFile = file;
 		myName = null;
 		mySummary = null;
