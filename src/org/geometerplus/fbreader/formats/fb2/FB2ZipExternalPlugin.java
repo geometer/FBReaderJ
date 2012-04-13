@@ -28,12 +28,11 @@ import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.formats.*;
 
 public class FB2ZipExternalPlugin extends ExternalFormatPlugin {
-
 	public FB2ZipExternalPlugin() {
-		super("fb2.zip", new FB2ZipPlugin());
+		super("fb2.zip", new FB2Plugin());
 	}
 
-	public ZLFile prepareFile(ZLFile f) {
-		return super.prepareFile(FB2ZipPlugin.getTrueFile(f));
+	public ZLFile prepareFile(ZLFile file) {
+		return super.prepareFile(FB2Util.getRealFB2File(file));
 	}
 }
