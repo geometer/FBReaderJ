@@ -34,7 +34,7 @@ JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginColl
 
 	for (size_t i = 0; i < size; ++i) {
 		jstring fileType = AndroidUtil::createJavaString(env, plugins[i]->supportedFileType());
-		jobject p = AndroidUtil::Constructor_NativeFormatPlugin->call(fileType);
+		jobject p = AndroidUtil::StaticMethod_NativeFormatPlugin_create->call(fileType);
 		env->SetObjectArrayElement(javaPlugins, i, p);
 		env->DeleteLocalRef(p);
 		env->DeleteLocalRef(fileType);
