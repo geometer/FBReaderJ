@@ -43,7 +43,7 @@ class FileTypeFB2 extends FileType {
 
 	@Override
 	public String extension(MimeType mimeType) {
-		return "fb2";
+		return MimeType.TYPES_FB2_ZIP.contains(mimeType) ? "fb2.zip" : "fb2";
 	}
 
 	private final List<MimeType> myMimeTypes = new ArrayList<MimeType>();
