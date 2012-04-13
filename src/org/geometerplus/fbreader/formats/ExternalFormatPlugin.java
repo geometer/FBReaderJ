@@ -19,21 +19,19 @@
 
 package org.geometerplus.fbreader.formats;
 
+import java.io.*;
+
 import org.geometerplus.zlibrary.core.filesystem.*;
+import org.geometerplus.zlibrary.core.encodings.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
-import org.geometerplus.zlibrary.core.encodings.*;
 import org.geometerplus.fbreader.library.Book;
-
 import org.geometerplus.fbreader.Paths;
 
-import java.io.*;
-
 public class ExternalFormatPlugin extends FormatPlugin {
-
 	private FormatPlugin myInfoReader;
 
 	public ExternalFormatPlugin(String fileType) {

@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.filetype;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -31,7 +32,8 @@ class FileTypeFB2 extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		return "fb2".equalsIgnoreCase(file.getExtension());
+		final String lName = file.getShortName().toLowerCase();
+		return lName.endsWith(".fb2") || lName.endsWith(".fb2.zip");
 	}
 
 	@Override
@@ -41,21 +43,41 @@ class FileTypeFB2 extends FileType {
 
 	@Override
 	public String extension(MimeType mimeType) {
-		return "fb2";
+		return MimeType.TYPES_FB2_ZIP.contains(mimeType) ? "fb2.zip" : "fb2";
 	}
+
+	private final List<MimeType> myMimeTypes = new ArrayList<MimeType>();
 
 	@Override
 	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_FB2;
+		if (myMimeTypes.isEmpty()) {
+			myMimeTypes.addAll(MimeType.TYPES_FB2);
+			myMimeTypes.addAll(MimeType.TYPES_FB2_ZIP);
+		}
+		return myMimeTypes;
 	}
 
 	@Override
 	public MimeType mimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.TEXT_FB2 : MimeType.NULL;
+		final String lName = file.getShortName().toLowerCase();
+		if (lName.endsWith(".fb2")) {
+			return MimeType.TEXT_FB2;
+		} else if (lName.endsWith(".fb2.zip")) {
+			return MimeType.APP_FB2_ZIP;
+		} else {
+			return MimeType.NULL;
+		}
 	}
 
 	@Override
 	public MimeType simplifiedMimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.TEXT_XML : MimeType.NULL;
+		final String lName = file.getShortName().toLowerCase();
+		if (lName.endsWith(".fb2")) {
+			return MimeType.TEXT_XML;
+		} else if (lName.endsWith(".fb2.zip")) {
+			return MimeType.APP_ZIP;
+		} else {
+			return MimeType.NULL;
+		}
 	}
 }
