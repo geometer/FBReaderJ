@@ -200,7 +200,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 }
 
 jobject AndroidUtil::createJavaFile(JNIEnv *env, const std::string &path) {
-	jstring javaPath = env->NewStringUTF(path.c_str());
+	jstring javaPath = createJavaString(env, path);
 	jobject javaFile = StaticMethod_ZLFile_createFileByPath->call(javaPath);
 	env->DeleteLocalRef(javaPath);
 	return javaFile;
