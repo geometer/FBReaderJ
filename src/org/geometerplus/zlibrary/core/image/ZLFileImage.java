@@ -76,7 +76,7 @@ public class ZLFileImage extends ZLSingleImage {
 	public InputStream inputStream() {
 		try {
 			final InputStream stream =
-				new SliceInputStream(myFile.getInputStream(), myOffset, myLength);
+				new SliceInputStream(myFile.getInputStream(), myOffset, myLength != 0 ? myLength : Integer.MAX_VALUE);
 			if (ENCODING_NONE.equals(myEncoding)) {
 				return stream;
 			} else if (ENCODING_HEX.equals(myEncoding)) {

@@ -78,6 +78,21 @@ public abstract class ZLXMLReaderAdapter implements ZLXMLReader {
 		myNamespaceMap = namespaces != null ? namespaces : Collections.<String,String>emptyMap();
 	}
 
+	public boolean testTag(String namespace, String name, String tag) {
+		if (name.equals(tag) && namespace.equals(myNamespaceMap.get(""))) {
+			return true;
+		}
+		final int nameLen = name.length();
+		final int tagLen = tag.length();
+		if (tagLen < nameLen + 2) {
+			return false;
+		}
+		if (tag.endsWith(name) && tag.charAt(tagLen - nameLen - 1) == ':') {
+			return namespace.equals(myNamespaceMap.get(tag.substring(0, tagLen - nameLen - 1)));
+		}
+		return false;
+	}
+
 	public String getAttributeValue(ZLStringMap attributes, String namespace, String name) {
 		if (namespace == null) {
 			return attributes.getValue(name);
