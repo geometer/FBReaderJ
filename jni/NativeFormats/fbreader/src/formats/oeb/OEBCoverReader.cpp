@@ -19,6 +19,7 @@
 
 #include <ZLFile.h>
 #include <ZLFileImage.h>
+#include <ZLXMLNamespace.h>
 
 #include "OEBCoverReader.h"
 
@@ -57,7 +58,7 @@ OEBCoverReader::OEBCoverReader() {
 
 shared_ptr<ZLImage> OEBCoverReader::readCover(const ZLFile &file) {
 	myPathPrefix = MiscUtil::htmlDirectoryPrefix(file.path());
-	myReadGuide = false;
+	myReadState = READ_NOTHING;
 	myImage = 0;
 	myCoverXHTML.erase();
 	readDocument(file);
@@ -74,37 +75,90 @@ shared_ptr<ZLImage> OEBCoverReader::readCover(const ZLFile &file) {
 	return myImage;
 }
 
+static const std::string METADATA = "metadata";
+static const std::string META = "meta";
+static const std::string MANIFEST = "manifest";
+static const std::string ITEM = "item";
 static const std::string GUIDE = "guide";
 static const std::string REFERENCE = "reference";
 static const std::string COVER = "cover";
 static const std::string COVER_IMAGE = "other.ms-coverimage-standard";
 
+bool OEBCoverReader::processNamespaces() const {
+	return true;
+}
+
 void OEBCoverReader::startElementHandler(const char *tag, const char **attributes) {
-	if (GUIDE == tag) {
-		myReadGuide = true;
-	} else if (myReadGuide && REFERENCE == tag) {
-		const char *type = attributeValue(attributes, "type");
-		if (type != 0) {
-			if (COVER == type) {
-				const char *href = attributeValue(attributes, "href");
-				if (href != 0) {
-					myCoverXHTML = myPathPrefix + MiscUtil::decodeHtmlURL(href);
-					interrupt();
-				}
-			} else if (COVER_IMAGE == type) {
-				const char *href = attributeValue(attributes, "href");
-				if (href != 0) {
-					myImage = new ZLFileImage(ZLFile(myPathPrefix + MiscUtil::decodeHtmlURL(href)), "", 0);
-					interrupt();
+	switch (myReadState) {
+		case READ_NOTHING:
+			if (GUIDE == tag) {
+				myReadState = READ_GUIDE;
+			} else if (MANIFEST == tag && !myCoverId.empty()) {
+				myReadState = READ_MANIFEST;
+			} else if (testTag(ZLXMLNamespace::OpenPackagingFormat, METADATA, tag)) {
+				myReadState = READ_METADATA;
+			}
+			break;
+		case READ_GUIDE:
+			if (REFERENCE == tag) {
+				const char *type = attributeValue(attributes, "type");
+				if (type != 0) {
+					if (COVER == type) {
+						const char *href = attributeValue(attributes, "href");
+						if (href != 0) {
+							myCoverXHTML = myPathPrefix + MiscUtil::decodeHtmlURL(href);
+							interrupt();
+						}
+					} else if (COVER_IMAGE == type) {
+						createImage(attributeValue(attributes, "href"));
+					}
 				}
 			}
-		}
+			break;
+		case READ_METADATA:
+			if (testTag(ZLXMLNamespace::OpenPackagingFormat, META, tag)) {
+				const char *name = attributeValue(attributes, "name");
+				if (name != 0 && COVER == name) {
+					myCoverId = attributeValue(attributes, "content");
+				}
+			}
+			break;
+		case READ_MANIFEST:
+			if (ITEM == tag) {
+				const char *id = attributeValue(attributes, "id");
+				if (id != 0 && myCoverId == id) {
+					createImage(attributeValue(attributes, "href"));
+				}
+			}
+			break;
+	}
+}
+
+void OEBCoverReader::createImage(const char *href) {
+	if (href != 0) {
+		myImage = new ZLFileImage(ZLFile(myPathPrefix + MiscUtil::decodeHtmlURL(href)), "", 0);
+		interrupt();
 	}
 }
 
 void OEBCoverReader::endElementHandler(const char *tag) {
-	if (GUIDE == tag) {
-		myReadGuide = false;
-		interrupt();
+	switch (myReadState) {
+		case READ_NOTHING:
+			break;
+		case READ_GUIDE:
+			if (GUIDE == tag) {
+				myReadState = READ_NOTHING;
+			}
+			break;
+		case READ_METADATA:
+			if (testTag(ZLXMLNamespace::OpenPackagingFormat, METADATA, tag)) {
+				myReadState = READ_NOTHING;
+			}
+			break;
+		case READ_MANIFEST:
+			if (MANIFEST == tag) {
+				myReadState = READ_NOTHING;
+			}
+			break;
 	}
 }
