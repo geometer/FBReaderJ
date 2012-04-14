@@ -101,7 +101,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myOpfMetadataTag = "metadata";
 		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
 			final String id = entry.getValue();
-			if (id.startsWith(DublinCorePrefix) || id.startsWith(DublinCoreLegacyPrefix)) {
+			if (DublinCore.equals(id) || id.startsWith(DublinCoreLegacyPrefix)) {
 				final String name = entry.getKey();
 				myTitleTag = (name + ":title").intern();
 				myAuthorTag = (name + ":creator").intern();
