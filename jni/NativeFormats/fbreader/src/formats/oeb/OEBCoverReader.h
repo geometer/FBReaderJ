@@ -33,14 +33,24 @@ public:
 	OEBCoverReader();
 	shared_ptr<ZLImage> readCover(const ZLFile &file);
 
+private:
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
+	bool processNamespaces() const;
+
+	void createImage(const char *href);
 
 private:
 	shared_ptr<ZLImage> myImage;
 	std::string myPathPrefix;
 	std::string myCoverXHTML;
-	bool myReadGuide;
+	std::string myCoverId;
+	enum {
+		READ_NOTHING,
+		READ_METADATA,
+		READ_MANIFEST,
+		READ_GUIDE
+	} myReadState;
 
 friend class XHTMLImageFinder;
 };

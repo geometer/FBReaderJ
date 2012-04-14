@@ -59,7 +59,7 @@ public class ZLFileImage extends ZLSingleImage {
 	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int offset, int length) {
 		super(mimeType);
 		myFile = file;
-		myEncoding = encoding;
+		myEncoding = encoding != null ? encoding : ENCODING_NONE;
 		myOffset = offset;
 		myLength = length;
 	}
