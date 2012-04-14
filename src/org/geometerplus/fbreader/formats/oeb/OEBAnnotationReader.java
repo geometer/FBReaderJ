@@ -64,7 +64,7 @@ class OEBAnnotationReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		myDescriptionTag = null;
 		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
 			final String id = entry.getValue();
-			if (id.startsWith(DublinCorePrefix) || id.startsWith(DublinCoreLegacyPrefix)) {
+			if (DublinCore.equals(id) || id.startsWith(DublinCoreLegacyPrefix)) {
 				myDescriptionTag = entry.getKey() + ":description";
 			}
 		}
