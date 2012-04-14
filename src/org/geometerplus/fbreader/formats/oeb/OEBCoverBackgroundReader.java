@@ -30,56 +30,114 @@ import org.geometerplus.fbreader.formats.util.MiscUtil;
 class OEBCoverBackgroundReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private ZLFileImage myImage;
 	private String myPathPrefix;
-	private boolean myReadGuide;
+
+	private static final int READ_NOTHING = 0;
+	private static final int READ_METADATA = 1;
+	private static final int READ_MANIFEST = 2;
+	private static final int READ_GUIDE = 3;
+	private int myReadState = READ_NOTHING;
+
+	private String myCoverId;
 
 	public ZLFileImage readCover(ZLFile file) {
 		myPathPrefix = MiscUtil.htmlDirectoryPrefix(file);
-		myReadGuide = false;
+		myReadState = READ_NOTHING;
+		myCoverId = null;
 		myImage = null;
 		readQuietly(file);
 		return myImage;
 	}
 
 	private static final String GUIDE = "guide";
-	private static final String REFERENCE = "reference";
-	private static final String COVER = "cover";
-	private static final String COVER_IMAGE = "other.ms-coverimage-standard";
+	private static final String MANIFEST = "manifest";
+
+	@Override
+	public boolean processNamespaces() {
+		return true;
+	}
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
-		tag = tag.toLowerCase().intern();
-		if (GUIDE == tag) {
-			myReadGuide = true;
-		} else if (myReadGuide && REFERENCE == tag) {
-			final String type = attributes.getValue("type");
-			if (COVER == type) {
-				final String href = attributes.getValue("href");
-				if (href != null) {
-					final ZLFile coverFile =
-						ZLFile.createFileByPath(myPathPrefix + MiscUtil.decodeHtmlReference(href));
-					myImage = XHTMLImageFinder.getCoverImage(coverFile);
-					return true;
+		tag = tag.toLowerCase();
+		switch (myReadState) {
+			case READ_NOTHING:
+				if (GUIDE.equals(tag)) {
+					myReadState = READ_GUIDE;
+				} else if (MANIFEST.equals(tag) && myCoverId != null) {
+					myReadState = READ_MANIFEST;
+				} else if (testTag(OpenPackagingFormat, "metadata", tag)) {
+					myReadState = READ_METADATA;
 				}
-			} else if (COVER_IMAGE == type) {
-				final String href = attributes.getValue("href");
-				if (href != null) {
-					myImage = new ZLFileImage(
-						MimeType.IMAGE_AUTO,
-						ZLFile.createFileByPath(myPathPrefix + MiscUtil.decodeHtmlReference(href))
-					);
-					return true;
+				break;
+			case READ_GUIDE:
+				if ("reference".equals(tag)) {
+					final String type = attributes.getValue("type");
+					if ("cover" == type) {
+						final String href = attributes.getValue("href");
+						if (href != null) {
+							final ZLFile coverFile = ZLFile.createFileByPath(
+								myPathPrefix + MiscUtil.decodeHtmlReference(href)
+							);
+							myImage = XHTMLImageFinder.getCoverImage(coverFile);
+							return true;
+						}
+					} else if ("other.ms-coverimage-standard".equals(type)) {
+						myImage = imageByHref(attributes.getValue("href"));
+						if (myImage != null) {
+							return true;
+						}
+					}
 				}
-			}
+				break;
+			case READ_METADATA:
+				if (testTag(OpenPackagingFormat, "meta", tag)) {
+					final String name = attributes.getValue("name");
+					if ("cover".equals(name)) {
+						myCoverId = attributes.getValue("content");
+					}
+				}
+				break;
+			case READ_MANIFEST:
+				if ("item".equals(tag) && myCoverId.equals(attributes.getValue("id"))) {
+					myImage = imageByHref(attributes.getValue("href"));
+					if (myImage != null) {
+						return true;
+					}
+				}
+				break;
 		}
 		return false;
+	}
+
+	private ZLFileImage imageByHref(String href) {
+		if (href == null) {
+			return null;
+		}
+		return new ZLFileImage(
+			MimeType.IMAGE_AUTO,
+			ZLFile.createFileByPath(myPathPrefix + MiscUtil.decodeHtmlReference(href))
+		);
 	}
 
 	@Override
 	public boolean endElementHandler(String tag) {
 		tag = tag.toLowerCase();
-		if (GUIDE == tag) {
-			myReadGuide = false;
-			return true;
+		switch (myReadState) {
+			case READ_GUIDE:
+				if (GUIDE.equals(tag)) {
+					myReadState = READ_NOTHING;
+				}
+				break;
+			case READ_MANIFEST:
+				if (MANIFEST.equals(tag)) {
+					myReadState = READ_NOTHING;
+				}
+				break;
+			case READ_METADATA:
+				if (testTag(OpenPackagingFormat, "metadata", tag)) {
+					myReadState = READ_NOTHING;
+				}
+				break;
 		}
 		return false;
 	}
