@@ -19,7 +19,7 @@
 
 #include "ZLXMLNamespace.h"
 
-const std::string ZLXMLNamespace::DublinCorePrefix = "http://purl.org/dc/elements";
+const std::string ZLXMLNamespace::DublinCore = "http://purl.org/dc/elements/1.1/";
 const std::string ZLXMLNamespace::DublinCoreLegacyPrefix = "http://purl.org/metadata/dublin_core";
 const std::string ZLXMLNamespace::DublinCoreTerms = "http://purl.org/dc/terms/";
 const std::string ZLXMLNamespace::XLink = "http://www.w3.org/1999/xlink";

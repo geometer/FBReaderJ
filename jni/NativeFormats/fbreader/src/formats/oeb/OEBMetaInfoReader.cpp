@@ -65,7 +65,7 @@ bool OEBMetaInfoReader::isDublinCoreNamespace(const std::string &nsId) const {
 	std::map<std::string,std::string>::const_iterator iter = namespaces().find(nsId);
 	return
 		((iter != namespaceMap.end()) &&
-		 (ZLStringUtil::stringStartsWith(iter->second, ZLXMLNamespace::DublinCorePrefix) ||
+		 (ZLXMLNamespace::DublinCore == iter->second ||
 		  ZLStringUtil::stringStartsWith(iter->second, ZLXMLNamespace::DublinCoreLegacyPrefix)));
 }
 

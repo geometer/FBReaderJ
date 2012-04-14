@@ -39,14 +39,17 @@ void ZLXMLReaderInternal::fStartElementHandler(void *userData, const char *name,
 		if (reader.processNamespaces()) {
 			int count = 0;
 			for (const char **a = attributes; (*a != 0) && (*(a + 1) != 0); a += 2) {
-				if (strncmp(*a, "xmlns:", 6) == 0) {
+				if (strncmp(*a, "xmlns", 5) == 0) {
+					std::string id;
+					if ((*a)[5] == ':') {
+						id = *a + 6;
+					}
 					if (count == 0) {
 						reader.myNamespaces.push_back(
 							new std::map<std::string,std::string>(*reader.myNamespaces.back())
 						);
 					}
 					++count;
-					const std::string id(*a + 6);
 					const std::string reference(*(a + 1));
 					(*reader.myNamespaces.back())[id] = reference;
 				}
