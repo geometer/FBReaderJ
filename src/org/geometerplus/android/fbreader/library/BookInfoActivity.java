@@ -235,12 +235,8 @@ public class BookInfoActivity extends Activity {
 		final SeriesInfo series = book.getSeriesInfo();
 		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Name);
 		String seriesIndexString = null;
-		if (series != null && series.Index > 0) {
-			if (Math.abs(series.Index - Math.round(series.Index)) < 0.01) {
-				seriesIndexString = String.valueOf(Math.round(series.Index));
-			} else {
-				seriesIndexString = String.format("%.1f", series.Index);
-			}
+		if (series != null && series.Index != null) {
+			seriesIndexString = series.Index.toString();
 		}
 		setupInfoPair(R.id.book_series_index, "indexInSeries", seriesIndexString);
 

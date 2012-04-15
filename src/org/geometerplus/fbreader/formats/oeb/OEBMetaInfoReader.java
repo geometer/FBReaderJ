@@ -33,7 +33,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private final Book myBook;
 
 	private String mySeriesTitle = "";
-	private float mySeriesIndex = 0;
+	private String mySeriesIndex = null;
 	
 	private final ArrayList<String> myAuthorList = new ArrayList<String>();
 	private final ArrayList<String> myAuthorList2 = new ArrayList<String>();
@@ -47,7 +47,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	void readMetaInfo(ZLFile file) throws BookReadingException {
 		myReadState = ReadState.Nothing;
 		mySeriesTitle = "";
-		mySeriesIndex = 0;
+		mySeriesIndex = null;
 
 		try {
 			ZLXMLProcessor.read(this, file, 512);
@@ -122,11 +122,7 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 					if (attributes.getValue("name").equals("calibre:series")) {
 						mySeriesTitle = attributes.getValue("content");
 					} else if (attributes.getValue("name").equals("calibre:series_index")) {
-						final String strIndex = attributes.getValue("content");
-						try {
-							mySeriesIndex = Float.parseFloat(strIndex);
-						} catch (NumberFormatException e) {
-						}
+						mySeriesIndex = attributes.getValue("content");
 					}
 				}
 				break;
