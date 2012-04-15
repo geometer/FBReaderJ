@@ -119,7 +119,7 @@ public class ImageViewActivity extends Activity {
 
 			final int bw = (int)(myBitmap.getWidth() * myZoomFactor);
 			final int bh = (int)(myBitmap.getHeight() * myZoomFactor);
-			
+
 			final Rect src = new Rect(0, 0, (int)(w / myZoomFactor), (int)(h / myZoomFactor));
 			final Rect dst = new Rect(0, 0, w, h);
 			if (bw <= w) {
@@ -231,16 +231,16 @@ public class ImageViewActivity extends Activity {
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
 				{
-					final float diffX = event.getX(0) - event.getX(1); 
-					final float diffY = event.getY(0) - event.getY(1); 
+					final float diffX = event.getX(0) - event.getX(1);
+					final float diffY = event.getY(0) - event.getY(1);
 					myStartPinchDistance2 = Math.max(diffX * diffX + diffY * diffY, 10f);
 					myStartZoomFactor = myZoomFactor;
 					break;
 				}
 				case MotionEvent.ACTION_MOVE:
 				{
-					final float diffX = event.getX(0) - event.getX(1); 
-					final float diffY = event.getY(0) - event.getY(1); 
+					final float diffX = event.getX(0) - event.getX(1);
+					final float diffY = event.getY(0) - event.getY(1);
 					final float distance2 = Math.max(diffX * diffX + diffY * diffY, 10f);
 					if (myStartPinchDistance2 < 0) {
 						myStartPinchDistance2 = distance2;
