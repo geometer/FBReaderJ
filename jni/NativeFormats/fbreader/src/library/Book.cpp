@@ -36,7 +36,7 @@
 
 const std::string Book::AutoEncoding = "auto";
 
-Book::Book(const ZLFile &file, int id) : myBookId(id), myFile(file), myIndexInSeries(0) {
+Book::Book(const ZLFile &file, int id) : myBookId(id), myFile(file) {
 }
 
 Book::~Book() {
@@ -273,7 +273,7 @@ void Book::setEncoding(const std::string &encoding) {
 	myEncoding = encoding;
 }
 
-void Book::setSeries(const std::string &title, int index) {
+void Book::setSeries(const std::string &title, const std::string &index) {
 	mySeriesTitle = title;
 	myIndexInSeries = index;
 }
