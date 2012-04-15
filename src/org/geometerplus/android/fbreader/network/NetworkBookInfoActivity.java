@@ -59,7 +59,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	private NetworkBookItem myBook;
 	private View myMainView;
 
-	private final ZLResource myResource = ZLResource.resource("networkBookView");
+	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private BookDownloaderServiceConnection myConnection;
 
 	@Override

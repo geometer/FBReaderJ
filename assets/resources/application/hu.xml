@@ -146,21 +146,11 @@
 		<node name="unsufficientFunds" value="A vásárlás végösszege %0, de az Ön számláján csak %1 van "/>
 		<node name="zeroFunds" value="A vásárlás végösszege %0"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Könyv adatai" />
-		<node name="description" value="Leírás" />
-		<node name="noDescription" value="Nem érhető el leírás." />
-		<node name="title" value="Cím:" />
-		<node name="authors" value="Szerzők:" />
-		<node name="series" value="Sorozat:" />
-		<node name="indexInSeries" value="Sorszám:" />
-		<node name="tags" value="Címkék:" />
-		<node name="catalog" value="Katalógus:"/>
-		<node name="extraLinks" value="Kapcsolódó linkek" />
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Könyv adatai" />
 		<node name="fileInfo" value="Fájlinformáció" />
+		<node name="description" value="Leírás" />
+		<node name="noDescription" value="Nem érhető el leírás." />
 		<node name="annotation" value="Fülszöveg" />
 		<node name="title" value="Cím:" />
 		<node name="authors" value="Szerzők:" />
@@ -174,6 +164,8 @@
 		<node name="time" value="Utolsó módosítás:" />
 		<node name="sizeInBytes" value="%s byte" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="Katalógus:"/>
+		<node name="extraLinks" value="Kapcsolódó linkek" />
 		<node name="menu">
 			<node name="edit" value="Szerkesztés" />
 		</node>
