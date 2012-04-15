@@ -61,4 +61,9 @@ public final class SeriesTree extends LibraryTree {
 		final SeriesInfo info = book.getSeriesInfo();
 		return info != null && Series.equals(info.Name);
 	}
+
+	@Override
+	protected String getSortKey() {
+		return "SSK:" + super.getSortKey();
+	}
 }
