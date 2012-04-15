@@ -58,6 +58,24 @@ final class ZLTreeResource extends ZLResource {
 		}
 	}
 
+	private static class ModRangeCondition implements Condition {
+		private final int myMin;
+		private final int myMax;
+		private final int myBase;
+
+		ModRangeCondition(int min, int max, int base) {
+			myMin = min;
+			myMax = max;
+			myBase = base;
+		}
+
+		@Override
+		public boolean accepts(int number) {
+			number = number % myBase;
+			return myMin <= number && number <= myMax;
+		}
+	}
+
 	private static class ModCondition implements Condition {
 		private final int myMod;
 		private final int myBase;
@@ -80,6 +98,8 @@ final class ZLTreeResource extends ZLResource {
 				return new RangeCondition(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
 			} else if ("mod".equals(parts[0])) {
 				return new ModCondition(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+			} else if ("modrange".equals(parts[0])) {
+				return new ModRangeCondition(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
 			} else if ("value".equals(parts[0])) {
 				return new ValueCondition(Integer.parseInt(parts[1]));
 			}

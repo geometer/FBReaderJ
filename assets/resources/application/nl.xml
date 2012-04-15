@@ -146,21 +146,11 @@
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Boekinformatie" />
-		<node name="description" value="Beschrijving" />
-		<node name="noDescription" value="Geen beschrijving beschikbaar" />
-		<node name="title" value="Titel:" />
-		<node name="authors" value="Auteurs:" />
-		<node name="series" value="Serie:" />
-		<node name="indexInSeries" value="Nummer in serie:" />
-		<node name="tags" value="Trefwoorden:" />
-		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
-		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Boekinformatie" />
 		<node name="fileInfo" value="Bestandsinformatie" />
+		<node name="description" value="Beschrijving" />
+		<node name="noDescription" value="Geen beschrijving beschikbaar" />
 		<node name="annotation" value="Annotatie" />
 		<node name="title" value="Titel:" />
 		<node name="authors" value="Auteurs:" />
@@ -174,6 +164,8 @@
 		<node name="time" value="Laatst gewijzigd:" />
 		<node name="sizeInBytes" value="%s byte(s)" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 		<node name="menu">
 			<node name="edit" value="Bewerken" />
 		</node>

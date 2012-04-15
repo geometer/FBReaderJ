@@ -146,21 +146,11 @@
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="書藉資訊" />
-		<node name="description" value="描述" />
-		<node name="noDescription" value="沒有描述" />
-		<node name="title" value="書名:" />
-		<node name="authors" value="作者:" />
-		<node name="series" value="系列:" />
-		<node name="indexInSeries" value="系列編號:" />
-		<node name="tags" value="標籤:" />
-		<node name="catalog" value="目錄:" />
-		<node name="extraLinks" value="Related links" toBeTranslated="true" />
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="書藉資訊" />
 		<node name="fileInfo" value="檔案資訊" />
+		<node name="description" value="描述" />
+		<node name="noDescription" value="沒有描述" />
 		<node name="annotation" value="註解" />
 		<node name="title" value="書名:" />
 		<node name="authors" value="作者:" />
@@ -174,6 +164,8 @@
 		<node name="time" value="最後更新時間:" />
 		<node name="sizeInBytes" value="%s 字節" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="目錄:" />
+		<node name="extraLinks" value="Related links" toBeTranslated="true" />
 		<node name="menu">
 			<node name="edit" value="編輯" />
 		</node>
