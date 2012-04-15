@@ -21,6 +21,8 @@ package org.geometerplus.fbreader.library;
 
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
+import org.geometerplus.fbreader.tree.FBTree;
+
 public class BookTree extends LibraryTree {
 	public final Book Book;
 	private final boolean myShowAuthors;
@@ -84,6 +86,23 @@ public class BookTree extends LibraryTree {
 	@Override
 	public boolean containsBook(Book book) {
 		return book != null && book.equals(Book);
+	}
+
+	@Override
+	protected String getSortKey() {
+		return "BSK:" + super.getSortKey();
+	}
+
+	@Override
+	public int compareTo(FBTree tree) {
+		final int cmp = super.compareTo(tree);
+		if (cmp == 0 && tree instanceof BookTree) {
+			final Book b = ((BookTree)tree).Book;
+			if (Book != null && b != null) {
+				return Book.File.getPath().compareTo(b.File.getPath());
+			}
+		}
+		return cmp;
 	}
 
 	@Override
