@@ -146,21 +146,11 @@
 		<node name="unsufficientFunds" value="Дана покупка коштує %0 але у Вас лише %1"/>
 		<node name="zeroFunds" value="Дана покупка коштує %0"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Інформація про книгу" />
-		<node name="description" value="Опис" />
-		<node name="noDescription" value="Опис відсутній." />
-		<node name="title" value="Назва:" />
-		<node name="authors" value="Автори:" />
-		<node name="series" value="Серія:" />
-		<node name="indexInSeries" value="Номер у серії:" />
-		<node name="tags" value="Категорії:" />
-		<node name="catalog" value="Каталог:"/>
-		<node name="extraLinks" value="Пов'язані посилання"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Інформація про книгу" />
 		<node name="fileInfo" value="Інформація про файл" />
+		<node name="description" value="Опис" />
+		<node name="noDescription" value="Опис відсутній." />
 		<node name="annotation" value="Анотації" />
 		<node name="title" value="Назва:" />
 		<node name="authors" value="Автори:" />
@@ -174,6 +164,8 @@
 		<node name="time" value="Востаннє змінено:" />
 		<node name="sizeInBytes" value="%s байт" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="Каталог:"/>
+		<node name="extraLinks" value="Пов'язані посилання"/>
 		<node name="menu">
 			<node name="edit" value="Редагувати" />
 		</node>

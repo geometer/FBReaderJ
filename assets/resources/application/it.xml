@@ -147,21 +147,11 @@
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Info Libro" />
-		<node name="description" value="Descrizione" />
-		<node name="noDescription" value="Nessuna descrizione presente." />
-		<node name="title" value="Titolo:" />
-		<node name="authors" value="Autori:" />
-		<node name="series" value="Serie:" />
-		<node name="indexInSeries" value="Indice in serie:" />
-		<node name="tags" value="Etichette:" />
-		<node name="catalog" value="Catalogo:"/>
-		<node name="extraLinks" value="Collegamenti correlati:"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Info Libro" />
 		<node name="fileInfo" value="Info File" />
+		<node name="description" value="Descrizione" />
+		<node name="noDescription" value="Nessuna descrizione presente." />
 		<node name="annotation" value="Annotazione:" />
 		<node name="title" value="Titolo:" />
 		<node name="authors" value="Autori:" />
@@ -175,6 +165,8 @@
 		<node name="time" value="Ultima modifica:" />
 		<node name="sizeInBytes" value="%s byte(s)" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="Catalogo:"/>
+		<node name="extraLinks" value="Collegamenti correlati:"/>
 		<node name="menu">
 			<node name="edit" value="Modifica" />
 		</node>
