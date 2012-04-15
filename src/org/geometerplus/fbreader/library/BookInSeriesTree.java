@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.library;
 
+import java.math.BigDecimal;
+
 import org.geometerplus.fbreader.tree.FBTree;
 
 public final class BookInSeriesTree extends BookTree {
@@ -33,11 +35,12 @@ public final class BookInSeriesTree extends BookTree {
 	@Override
 	public int compareTo(FBTree tree) {
 		if (tree instanceof BookInSeriesTree) {
-			final float difference =
-				Book.getSeriesInfo().Index - ((BookTree)tree).Book.getSeriesInfo().Index;
-			if (difference != 0) {
-				return difference > 0 ? 1 : -1;
+			final BigDecimal index0 = Book.getSeriesInfo().Index;
+			final BigDecimal index1 = ((BookTree)tree).Book.getSeriesInfo().Index;
+			if (index0 == null) {
+				return index1 == null ? 0 : 1;
 			}
+			return index1 == null ? -1 : index0.compareTo(index1);
 		}
 		return super.compareTo(tree);
 	}
