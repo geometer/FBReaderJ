@@ -19,11 +19,21 @@
 
 package org.geometerplus.fbreader.library;
 
-public final class SeriesInfo {
-	public final String Name;
-	public final float Index;
+import java.math.BigDecimal;
 
-	public SeriesInfo(String name, float index) {
+public final class SeriesInfo {
+	public static BigDecimal createIndex(String index) {
+		try {
+			return index != null ? new BigDecimal(index).stripTrailingZeros() : null;
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	public final String Name;
+	public final BigDecimal Index;
+
+	public SeriesInfo(String name, BigDecimal index) {
 		Name = name;
 		Index = index;
 	}

@@ -20,6 +20,7 @@
 package org.geometerplus.fbreader.library;
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
 import java.util.*;
 import java.io.InputStream;
 import java.io.IOException;
@@ -276,11 +277,15 @@ public class Book {
 		return mySeriesInfo;
 	}
 
-	void setSeriesInfoWithNoCheck(String name, float index) {
+	void setSeriesInfoWithNoCheck(String name, BigDecimal index) {
 		mySeriesInfo = new SeriesInfo(name, index);
 	}
 
-	public void setSeriesInfo(String name, float index) {
+	public void setSeriesInfo(String name, String index) {
+		setSeriesInfo(name, SeriesInfo.createIndex(index));
+	}
+
+	public void setSeriesInfo(String name, BigDecimal index) {
 		if (mySeriesInfo == null) {
 			if (name != null) {
 				mySeriesInfo = new SeriesInfo(name, index);
