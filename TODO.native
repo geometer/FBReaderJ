@@ -16,9 +16,6 @@
 BUGS IN C++:
 	* не учитывается файл OPF из metainf
 	* картинки могут не открываться...
-	* в epub'ах seriesIndex может быть дробным
-		* проверить сравнения этого Index в С++
-
 
 ДЛЯ ПАРКА:
 	* добавить схему "parkru://" в formats/util/MiscUtil.cpp:referenceType
