@@ -45,9 +45,9 @@ private:
 private:
 	Book &myBook;
 
-	bool myReadMetaData;
 	enum {
 		READ_NONE,
+		READ_METADATA,
 		READ_AUTHOR,
 		READ_AUTHOR2,
 		READ_TITLE,
@@ -55,7 +55,6 @@ private:
 		READ_LANGUAGE,
 	} myReadState;
 
-	std::string myDCMetadataTag;
 	std::string myBuffer;
 	std::vector<std::string> myAuthorList;
 	std::vector<std::string> myAuthorList2;
