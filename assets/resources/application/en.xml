@@ -150,27 +150,21 @@
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1"/>
 		<node name="zeroFunds" value="This purchase costs %0"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Book Info"/>
-		<node name="description" value="Description"/>
-		<node name="noDescription" value="No description available."/>
-		<node name="title" value="Title:"/>
-		<node name="authors" value="Authors:"/>
-		<node name="series" value="Series:"/>
-		<node name="indexInSeries" value="Index in series:"/>
-		<node name="tags" value="Tags:"/>
-		<node name="catalog" value="Catalog:"/>
-		<node name="extraLinks" value="Related links"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Book Info"/>
 		<node name="fileInfo" value="File Info"/>
+		<node name="description" value="Description"/>
+		<node name="noDescription" value="No description available."/>
 		<node name="annotation" value="Annotation"/>
 		<node name="title" value="Title:"/>
-		<node name="authors" value="Authors:"/>
+		<node name="authors" value="Authors:">
+			<node condition="value 1" value="Author:"/>
+		</node>
 		<node name="series" value="Series:"/>
 		<node name="indexInSeries" value="Index in series:"/>
-		<node name="tags" value="Tags:"/>
+		<node name="tags" value="Tags:">
+			<node condition="value 1" value="Tag:"/>
+		</node>
 		<node name="language" value="Language:"/>
 		<node name="name" value="Name:"/>
 		<node name="type" value="Type:"/>
@@ -180,6 +174,8 @@
 			<node condition="value 1" value="%s byte"/>
 		</node>
 		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="Catalog:"/>
+		<node name="extraLinks" value="Related links"/>
 		<node name="menu">
 			<node name="edit" value="Edit"/>
 		</node>
