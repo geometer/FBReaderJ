@@ -20,10 +20,11 @@
 #include <ZLFile.h>
 #include <ZLImage.h>
 #include <ZLStringUtil.h>
+#include <ZLUnicodeUtil.h>
 #include <ZLDir.h>
 #include <ZLInputStream.h>
 #include <ZLLogger.h>
-//#include <ZLMimeType.h>
+#include <ZLXMLReader.h>
 
 #include "OEBPlugin.h"
 #include "OEBMetaInfoReader.h"
@@ -37,6 +38,33 @@ static const std::string OPF = "opf";
 static const std::string OEBZIP = "oebzip";
 static const std::string EPUB = "epub";
 
+class ContainerFileReader : public ZLXMLReader {
+
+public:
+	const std::string &rootPath() const;
+
+private:
+	void startElementHandler(const char *tag, const char **attributes);
+
+private:
+	std::string myRootPath;
+};
+
+const std::string &ContainerFileReader::rootPath() const {
+	return myRootPath;
+}
+
+void ContainerFileReader::startElementHandler(const char *tag, const char **attributes) {
+	const std::string tagString = ZLUnicodeUtil::toLower(tag);
+	if (tagString == "rootfile") {
+		const char *path = attributeValue(attributes, "full-path");
+		if (path != 0) {
+			myRootPath = path;
+			interrupt();
+		}
+	}
+}
+
 OEBPlugin::~OEBPlugin() {
 }
 
@@ -49,11 +77,29 @@ const std::string OEBPlugin::supportedFileType() const {
 }
 
 ZLFile OEBPlugin::opfFile(const ZLFile &oebFile) {
+	//ZLLogger::Instance().registerClass("epub");
+
 	if (oebFile.extension() == OPF) {
 		return oebFile;
 	}
 
 	ZLLogger::Instance().println("epub", "Looking for opf file in " + oebFile.path());
+
+	shared_ptr<ZLDir> oebDir = oebFile.directory();
+	if (!oebDir.isNull()) {
+		const ZLFile containerInfoFile(oebDir->itemPath("META-INF/container.xml"));
+		if (containerInfoFile.exists()) {
+			ZLLogger::Instance().println("epub", "Found container file " + containerInfoFile.path());
+			ContainerFileReader reader;
+			reader.readDocument(containerInfoFile);
+			const std::string &opfPath = reader.rootPath();
+			ZLLogger::Instance().println("epub", "opf path = " + opfPath);
+			if (!opfPath.empty()) {
+				return ZLFile(oebDir->itemPath(opfPath));
+			}
+		}
+	}
+
 	oebFile.forceArchiveType(ZLFile::ZIP);
 	shared_ptr<ZLDir> zipDir = oebFile.directory(false);
 	if (zipDir.isNull()) {
