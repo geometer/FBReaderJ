@@ -6,5 +6,9 @@ for file in ../../assets/resources/application/*.xml; do
   all_lcount=`egrep 'name=.+value="' $lfile | wc | awk '{ print $1 }'`
   neg_count=`fgrep toBeTranslated $file | wc | awk '{ print $1 }'`
   neg_lcount=`fgrep toBeTranslated $lfile | wc | awk '{ print $1 }'`
-	echo $lang $(($neg_count+$neg_lcount)) of $(($all_count+$all_lcount))
+	if [ "$1" == "-html" ]; then
+		echo "<tr><td>$lang</td><td>$(($all_count+$all_lcount))</td><td>$(($neg_count+$neg_lcount))</td>"
+	else
+		echo $lang $(($neg_count+$neg_lcount)) of $(($all_count+$all_lcount))
+	fi
 done
