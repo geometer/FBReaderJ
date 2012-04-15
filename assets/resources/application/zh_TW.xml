@@ -330,8 +330,8 @@
 					<!-- Percent sign (%) could not be used in resource strings
 								because there is a bug in Cyanogen Mod firmware that
 								crashes the program with such resources
-					<node name="25" value="當電量大於25%"/>
-					<node name="50" value="當電量大於50%"/>-->
+					<node name="25" value= "當電量大於25%"/>
+					<node name="50" value= "當電量大於50%"/>-->
 					<node name="25" value="While battery level is greater than 25 percent"/>
 					<node name="50" value="While battery level is greater than 50 percent"/>
 					<node name="100" value="永不"/>
