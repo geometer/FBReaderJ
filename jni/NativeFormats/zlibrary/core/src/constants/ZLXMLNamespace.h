@@ -29,7 +29,7 @@ private:
 
 public:
 	static const std::string DublinCore;
-	static const std::string DublinCoreLegacyPrefix;
+	static const std::string DublinCoreLegacy;
 	static const std::string DublinCoreTerms;
 	static const std::string XLink;
 	static const std::string OpenPackagingFormat;
