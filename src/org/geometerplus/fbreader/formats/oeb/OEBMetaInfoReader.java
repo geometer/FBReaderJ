@@ -32,11 +32,6 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 	private final Book myBook;
 
-	private String myTitleTag;
-	private String myAuthorTag;
-	private String mySubjectTag;
-	private String myLanguageTag;
-
 	private String mySeriesTitle = "";
 	private float mySeriesIndex = 0;
 	
@@ -94,55 +89,47 @@ class OEBMetaInfoReader extends ZLXMLReaderAdapter implements XMLNamespaces {
 		return true;
 	}
 
-	@Override
-	public void namespaceMapChangedHandler(Map<String,String> namespaceMap) {
-		super.namespaceMapChangedHandler(namespaceMap);
-		myTitleTag = null;
-		myAuthorTag = null;
-		mySubjectTag = null;
-		myLanguageTag = null;
-		for (Map.Entry<String,String> entry : namespaceMap.entrySet()) {
-			final String id = entry.getValue();
-			if (DublinCore.equals(id) || id.startsWith(DublinCoreLegacyPrefix)) {
-				final String name = entry.getKey();
-				myTitleTag = (name + ":title").intern();
-				myAuthorTag = (name + ":creator").intern();
-				mySubjectTag = (name + ":subject").intern();
-				myLanguageTag = (name + ":language").intern();
-			}
-		}
+	private boolean testDCTag(String name, String tag) {
+		return testTag(DublinCore, name, tag) || testTag(DublinCoreLegacy, name, tag);
 	}
 
 	@Override
 	public boolean startElementHandler(String tag, ZLStringMap attributes) {
-		tag = tag.toLowerCase().intern();
-		if (testTag(OpenPackagingFormat, "metadata", tag) || "dc-metadata".equals(tag)) {
-			myReadState = ReadState.Metadata;
-		} else if (myReadState == ReadState.Metadata) {
-			if (tag == myTitleTag) {
-				myReadState = ReadState.Title;
-			} else if (tag == myAuthorTag) {
-				final String role = attributes.getValue("role");
-				if (role == null) {
-					myReadState = ReadState.Author2;
-				} else if (role.equals("aut")) {
-					myReadState = ReadState.Author;
+		tag = tag.toLowerCase();
+		switch (myReadState) {
+			default:
+				break;
+			case Nothing:
+				if (testTag(OpenPackagingFormat, "metadata", tag) || "dc-metadata".equals(tag)) {
+					myReadState = ReadState.Metadata;
 				}
-			} else if (tag == mySubjectTag) {
-				myReadState = ReadState.Subject;
-			} else if (tag == myLanguageTag) {
-				myReadState = ReadState.Language;
-			} else if (testTag(OpenPackagingFormat, "meta", tag)) {
-				if (attributes.getValue("name").equals("calibre:series")) {
-					mySeriesTitle = attributes.getValue("content");
-				} else if (attributes.getValue("name").equals("calibre:series_index")) {
-					final String strIndex = attributes.getValue("content");
-					try {
-						mySeriesIndex = Float.parseFloat(strIndex);
-					} catch (NumberFormatException e) {
+				break;
+			case Metadata:
+				if (testDCTag("title", tag)) {
+					myReadState = ReadState.Title;
+				} else if (testDCTag("author", tag)) {
+					final String role = attributes.getValue("role");
+					if (role == null) {
+						myReadState = ReadState.Author2;
+					} else if (role.equals("aut")) {
+						myReadState = ReadState.Author;
+					}
+				} else if (testDCTag("subject", tag)) {
+					myReadState = ReadState.Subject;
+				} else if (testDCTag("language", tag)) {
+					myReadState = ReadState.Language;
+				} else if (testTag(OpenPackagingFormat, "meta", tag)) {
+					if (attributes.getValue("name").equals("calibre:series")) {
+						mySeriesTitle = attributes.getValue("content");
+					} else if (attributes.getValue("name").equals("calibre:series_index")) {
+						final String strIndex = attributes.getValue("content");
+						try {
+							mySeriesIndex = Float.parseFloat(strIndex);
+						} catch (NumberFormatException e) {
+						}
 					}
 				}
-			}
+				break;
 		}
 		return false;
 	}
