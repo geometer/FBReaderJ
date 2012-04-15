@@ -146,21 +146,11 @@
 		<node name="unsufficientFunds" value="Costul este de %0 dar aveti disponibil doar %1"/>
 		<node name="zeroFunds" value="Costul este de %0"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Informatii despre carte"/>
-		<node name="description" value="Descriere"/>
-		<node name="noDescription" value="Nu este disponibila nicio descriere."/>
-		<node name="title" value="Titlu:"/>
-		<node name="authors" value="Autori:"/>
-		<node name="series" value="Seria:"/>
-		<node name="indexInSeries" value="Indexul seriilor:"/>
-		<node name="tags" value="Tag-uri:"/>
-		<node name="catalog" value="Catalog:"/>
-		<node name="extraLinks" value="Link-uri utile"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Cartea Info"/>
 		<node name="fileInfo" value="Informatii fisier"/>
+		<node name="description" value="Descriere"/>
+		<node name="noDescription" value="Nu este disponibila nicio descriere."/>
 		<node name="annotation" value="Adnotare"/>
 		<node name="title" value="Titlu:"/>
 		<node name="authors" value="Autori:"/>
@@ -174,6 +164,8 @@
 		<node name="time" value="Ultima modificare:"/>
 		<node name="sizeInBytes" value=" %s octet (e)"/>
 		<node name="sizeInKiloBytes" value=" %s kB"/>
+		<node name="catalog" value="Catalog:"/>
+		<node name="extraLinks" value="Link-uri utile"/>
 		<node name="menu">
 			<node name="edit" value="Editeaza"/>
 		</node>

@@ -146,21 +146,11 @@
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="ข้อมูลหนังสือ"/>
-		<node name="description" value="รายละเอียดหนังสือ"/>
-		<node name="noDescription" value="ไม่พบรายละเอียดหนังสือ"/>
-		<node name="title" value="ชื่อหนังสือ:"/>
-		<node name="authors" value="ชื่อผู้แต่ง:"/>
-		<node name="series" value="ชุดหนังสือ:"/>
-		<node name="indexInSeries" value="ดัชนีชุดหนังสือ:"/>
-		<node name="tags" value="แท็ก:"/>
-		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
-		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="ข้อมูลหนังสือ"/>
 		<node name="fileInfo" value="ข้อมูลไฟล์"/>
+		<node name="description" value="รายละเอียดหนังสือ"/>
+		<node name="noDescription" value="ไม่พบรายละเอียดหนังสือ"/>
 		<node name="annotation" value="บันทึกย่อ"/>
 		<node name="title" value="ชื่อหนังสือ:"/>
 		<node name="authors" value="ชื่อผู้แต่ง:"/>
@@ -174,6 +164,8 @@
 		<node name="time" value="แก้ไขล่าสุดเมื่อ:"/>
 		<node name="sizeInBytes" value="%s ไบต์"/>
 		<node name="sizeInKiloBytes" value="%s กิโลไบต์"/>
+		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
+		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 		<node name="menu">
 			<node name="edit" value="แก้ไข"/>
 		</node>
