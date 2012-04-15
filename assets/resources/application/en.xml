@@ -155,10 +155,14 @@
 		<node name="description" value="Description"/>
 		<node name="noDescription" value="No description available."/>
 		<node name="title" value="Title:"/>
-		<node name="authors" value="Authors:"/>
+		<node name="authors" value="Authors:">
+			<node condition="value 1" value="Author:"/>
+		</node>
 		<node name="series" value="Series:"/>
 		<node name="indexInSeries" value="Index in series:"/>
-		<node name="tags" value="Tags:"/>
+		<node name="tags" value="Tags:">
+			<node condition="value 1" value="Tag:"/>
+		</node>
 		<node name="catalog" value="Catalog:"/>
 		<node name="extraLinks" value="Related links"/>
 	</node>
@@ -167,10 +171,14 @@
 		<node name="fileInfo" value="File Info"/>
 		<node name="annotation" value="Annotation"/>
 		<node name="title" value="Title:"/>
-		<node name="authors" value="Authors:"/>
+		<node name="authors" value="Authors:">
+			<node condition="value 1" value="Author:"/>
+		</node>
 		<node name="series" value="Series:"/>
 		<node name="indexInSeries" value="Index in series:"/>
-		<node name="tags" value="Tags:"/>
+		<node name="tags" value="Tags:">
+			<node condition="value 1" value="Tag:"/>
+		</node>
 		<node name="language" value="Language:"/>
 		<node name="name" value="Name:"/>
 		<node name="type" value="Type:"/>

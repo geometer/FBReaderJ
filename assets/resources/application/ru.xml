@@ -163,10 +163,14 @@
 		<node name="description" value="Описание"/>
 		<node name="noDescription" value="Описание отсутствует."/>
 		<node name="title" value="Название:"/>
-		<node name="authors" value="Авторы:"/>
+		<node name="authors" value="Авторы:">
+			<node condition="value 1" value="Автор:"/>
+		</node>
 		<node name="series" value="Серия:"/>
 		<node name="indexInSeries" value="Номер в серии:"/>
-		<node name="tags" value="Категории:"/>
+		<node name="tags" value="Категории:">
+			<node condition="value 1" value="Категория:"/>
+		</node>
 		<node name="catalog" value="Каталог:"/>
 		<node name="extraLinks" value="Ссылки"/>
 	</node>
@@ -175,10 +179,14 @@
 		<node name="fileInfo" value="Информация о файле"/>
 		<node name="annotation" value="Аннотация"/>
 		<node name="title" value="Название:"/>
-		<node name="authors" value="Авторы:"/>
+		<node name="authors" value="Авторы:">
+			<node condition="value 1" value="Автор:"/>
+		</node>
 		<node name="series" value="Серия:"/>
 		<node name="indexInSeries" value="Номер в серии:"/>
-		<node name="tags" value="Категории:"/>
+		<node name="tags" value="Категории:">
+			<node condition="value 1" value="Категория:"/>
+		</node>
 		<node name="language" value="Язык:"/>
 		<node name="name" value="Название:"/>
 		<node name="type" value="Тип:"/>
