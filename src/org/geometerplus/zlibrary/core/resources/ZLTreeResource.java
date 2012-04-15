@@ -247,6 +247,7 @@ final class ZLTreeResource extends ZLResource {
 					} else {
 						if (value != null) {
 							node.setValue(value);
+							node.myConditionalValues = null;
 						}
 					}
 					stack.add(node);
