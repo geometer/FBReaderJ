@@ -119,7 +119,7 @@ public class ImageViewActivity extends Activity {
 
 			final int bw = (int)(myBitmap.getWidth() * myZoomFactor);
 			final int bh = (int)(myBitmap.getHeight() * myZoomFactor);
-			
+
 			final Rect src = new Rect(0, 0, (int)(w / myZoomFactor), (int)(h / myZoomFactor));
 			final Rect dst = new Rect(0, 0, w, h);
 			if (bw <= w) {
