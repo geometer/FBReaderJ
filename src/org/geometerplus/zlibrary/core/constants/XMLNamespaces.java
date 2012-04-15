@@ -21,7 +21,8 @@ package org.geometerplus.zlibrary.core.constants;
 
 public interface XMLNamespaces {
 	String DublinCore = "http://purl.org/dc/elements/1.1/";
-	String DublinCoreLegacyPrefix = "http://purl.org/metadata/dublin_core";
+	// TODO: full id
+	String DublinCoreLegacy = "http://purl.org/metadata/dublin_core";
 	String XLink = "http://www.w3.org/1999/xlink";
 	String OpenPackagingFormat = "http://www.idpf.org/2007/opf";
 
