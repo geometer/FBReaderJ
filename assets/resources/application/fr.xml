@@ -149,21 +149,11 @@
 		<node name="unsufficientFunds" value="Cet article vaut %0 et vous n'avez que %1"/>
 		<node name="zeroFunds" value="Cet article coûte %0"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Informations sur le livre" />
-		<node name="description" value="Description" />
-		<node name="noDescription" value="Aucune description disponible." />
-		<node name="title" value="Titre:" />
-		<node name="authors" value="Auteurs:" />
-		<node name="series" value="Série:" />
-		<node name="indexInSeries" value="Index dans les séries:" />
-		<node name="tags" value="Tags:" />
-		<node name="catalog" value="Catalogue:"/>
-		<node name="extraLinks" value="Voir aussi"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Informations sur le livre" />
 		<node name="fileInfo" value="Info fichier" />
+		<node name="description" value="Description" />
+		<node name="noDescription" value="Aucune description disponible." />
 		<node name="annotation" value="Annotation" />
 		<node name="title" value="Titre:" />
 		<node name="authors" value="Auteurs:" />
@@ -177,6 +167,8 @@
 		<node name="time" value="Dernière modification:" />
 		<node name="sizeInBytes" value="%s octet(s)" />
 		<node name="sizeInKiloBytes" value="%s Ko" />
+		<node name="catalog" value="Catalogue:"/>
+		<node name="extraLinks" value="Voir aussi"/>
 		<node name="menu">
 			<node name="edit" value="Editer" />
 		</node>
