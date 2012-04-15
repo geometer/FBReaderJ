@@ -49,6 +49,7 @@ static const std::string AUTHOR_ROLE = "aut";
 void OEBMetaInfoReader::characterDataHandler(const char *text, size_t len) {
 	switch (myReadState) {
 		case READ_NONE:
+		case READ_METADATA:
 			break;
 		case READ_AUTHOR:
 		case READ_AUTHOR2:
@@ -84,79 +85,97 @@ bool OEBMetaInfoReader::isNSName(const std::string &fullName, const std::string 
 
 void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attributes) {
 	const std::string tagString = ZLUnicodeUtil::toLower(tag);
-	if (METADATA == tagString || DC_METADATA == tagString ||
-			isNSName(tagString, METADATA, ZLXMLNamespace::OpenPackagingFormat)) {
-		myDCMetadataTag = tagString;
-		myReadMetaData = true;
-	} else if (myReadMetaData) {
-		if (ZLStringUtil::stringEndsWith(tagString, TITLE_SUFFIX)) {
-			if (isDublinCoreNamespace(tagString.substr(0, tagString.length() - TITLE_SUFFIX.length()))) {
-				myReadState = READ_TITLE;
+	switch (myReadState) {
+		default:
+			break;
+		case READ_NONE:
+			if (testTag(ZLXMLNamespace::OpenPackagingFormat, METADATA, tagString) ||
+					DC_METADATA == tagString) {
+				myReadState = READ_METADATA;
 			}
-		} else if (ZLStringUtil::stringEndsWith(tagString, AUTHOR_SUFFIX)) {
-			if (isDublinCoreNamespace(tagString.substr(0, tagString.length() - AUTHOR_SUFFIX.length()))) {
-				const char *role = attributeValue(attributes, "role");
-				if (role == 0) {
-					myReadState = READ_AUTHOR2;
-				} else if (AUTHOR_ROLE == role) {
-					myReadState = READ_AUTHOR;
+			break;
+		case READ_METADATA:
+			if (ZLStringUtil::stringEndsWith(tagString, TITLE_SUFFIX)) {
+				if (isDublinCoreNamespace(tagString.substr(0, tagString.length() - TITLE_SUFFIX.length()))) {
+					myReadState = READ_TITLE;
+				}
+			} else if (ZLStringUtil::stringEndsWith(tagString, AUTHOR_SUFFIX)) {
+				if (isDublinCoreNamespace(tagString.substr(0, tagString.length() - AUTHOR_SUFFIX.length()))) {
+					const char *role = attributeValue(attributes, "role");
+					if (role == 0) {
+						myReadState = READ_AUTHOR2;
+					} else if (AUTHOR_ROLE == role) {
+						myReadState = READ_AUTHOR;
+					}
+				}
+			} else if (ZLStringUtil::stringEndsWith(tagString, SUBJECT_SUFFIX)) {
+				if (isDublinCoreNamespace(tagString.substr(0, tagString.length() - SUBJECT_SUFFIX.length()))) {
+					myReadState = READ_SUBJECT;
+				}
+			} else if (ZLStringUtil::stringEndsWith(tagString, LANGUAGE_SUFFIX)) {
+				if (isDublinCoreNamespace(tagString.substr(0, tagString.length() - LANGUAGE_SUFFIX.length()))) {
+					myReadState = READ_LANGUAGE;
+				}
+			} else if (testTag(ZLXMLNamespace::OpenPackagingFormat, META, tagString)) {
+				const char *name = attributeValue(attributes, "name");
+				const char *content = attributeValue(attributes, "content");
+				if (name != 0 && content != 0) {
+					std::string sName = name;
+					if (isNSName(sName, SERIES, ZLXMLNamespace::CalibreMetadata)) {
+						myBook.setSeries(content, myBook.indexInSeries());
+					} else if (isNSName(sName, SERIES_INDEX, ZLXMLNamespace::CalibreMetadata)) {
+						myBook.setSeries(myBook.seriesTitle(), content);
+					}
 				}
 			}
-		} else if (ZLStringUtil::stringEndsWith(tagString, SUBJECT_SUFFIX)) {
-			if (isDublinCoreNamespace(tagString.substr(0, tagString.length() - SUBJECT_SUFFIX.length()))) {
-				myReadState = READ_SUBJECT;
-			}
-		} else if (ZLStringUtil::stringEndsWith(tagString, LANGUAGE_SUFFIX)) {
-			if (isDublinCoreNamespace(tagString.substr(0, tagString.length() - LANGUAGE_SUFFIX.length()))) {
-				myReadState = READ_LANGUAGE;
-			}
-		} else if (tagString == META) {
-			const char *name = attributeValue(attributes, "name");
-			const char *content = attributeValue(attributes, "content");
-			if (name != 0 && content != 0) {
-				std::string sName = name;
-				if (isNSName(sName, SERIES, ZLXMLNamespace::CalibreMetadata)) {
-					myBook.setSeries(content, myBook.indexInSeries());
-				} else if (isNSName(sName, SERIES_INDEX, ZLXMLNamespace::CalibreMetadata)) {
-					myBook.setSeries(myBook.seriesTitle(), atoi(content));
-				}
-			}
-		}
+			break;
 	}
 }
 
 void OEBMetaInfoReader::endElementHandler(const char *tag) {
 	const std::string tagString = ZLUnicodeUtil::toLower(tag);
-	if (myDCMetadataTag == tagString) {
+	if (myReadState == READ_METADATA &&
+			(testTag(ZLXMLNamespace::OpenPackagingFormat, METADATA, tagString) ||
+			 DC_METADATA == tagString)) {
 		interrupt();
 	} else {
 		ZLStringUtil::stripWhiteSpaces(myBuffer);
 		if (!myBuffer.empty()) {
-			if (myReadState == READ_AUTHOR) {
-				myAuthorList.push_back(myBuffer);
-			} else if (myReadState == READ_AUTHOR2) {
-				myAuthorList2.push_back(myBuffer);
-			} else if (myReadState == READ_SUBJECT) {
-				myBook.addTag(myBuffer);
-			} else if (myReadState == READ_TITLE) {
-				myBook.setTitle(myBuffer);
-			} else if (myReadState == READ_LANGUAGE) {
-				int index = myBuffer.find('-');
-				if (index >= 0) {
-					myBuffer = myBuffer.substr(0, index);
+			switch (myReadState) {
+				default:
+					break;
+				case READ_AUTHOR:
+					myAuthorList.push_back(myBuffer);
+					break;
+				case READ_AUTHOR2:
+					myAuthorList2.push_back(myBuffer);
+					break;
+				case READ_SUBJECT:
+					myBook.addTag(myBuffer);
+					break;
+				case READ_TITLE:
+					myBook.setTitle(myBuffer);
+					break;
+				case READ_LANGUAGE:
+				{
+					int index = myBuffer.find('-');
+					if (index >= 0) {
+						myBuffer = myBuffer.substr(0, index);
+					}
+					index = myBuffer.find('_');
+					if (index >= 0) {
+						myBuffer = myBuffer.substr(0, index);
+					}
+					if (myBuffer == "cz") {
+						myBuffer = "cs";
+					}
+					myBook.setLanguage(myBuffer);
+					break;
 				}
-				index = myBuffer.find('_');
-				if (index >= 0) {
-					myBuffer = myBuffer.substr(0, index);
-				}
-				if (myBuffer == "cz") {
-					myBuffer = "cs";
-				}
-				myBook.setLanguage(myBuffer);
 			}
 			myBuffer.erase();
 		}
-		myReadState = READ_NONE;
+		myReadState = READ_METADATA;
 	}
 }
 
@@ -165,7 +184,6 @@ bool OEBMetaInfoReader::processNamespaces() const {
 }
 
 bool OEBMetaInfoReader::readMetaInfo(const ZLFile &file) {
-	myReadMetaData = false;
 	myReadState = READ_NONE;
 	if (!readDocument(file)) {
 		ZLLogger::Instance().println("epub", "Failure while reading info from " + file.path());

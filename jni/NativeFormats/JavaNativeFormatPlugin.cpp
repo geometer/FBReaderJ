@@ -58,7 +58,11 @@ static void fillMetaInfo(JNIEnv* env, jobject javaBook, Book &book) {
 
 	javaString = AndroidUtil::createJavaString(env, book.seriesTitle());
 	if (javaString != 0) {
-		AndroidUtil::Method_Book_setSeriesInfo->call(javaBook, javaString, (jfloat)book.indexInSeries());
+		jstring indexString = AndroidUtil::createJavaString(env, book.indexInSeries());
+		AndroidUtil::Method_Book_setSeriesInfo->call(javaBook, javaString, indexString);
+		if (indexString != 0) {
+			env->DeleteLocalRef(indexString);
+		}
 		env->DeleteLocalRef(javaString);
 	}
 
