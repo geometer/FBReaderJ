@@ -37,10 +37,15 @@ public final class BookInSeriesTree extends BookTree {
 		if (tree instanceof BookInSeriesTree) {
 			final BigDecimal index0 = Book.getSeriesInfo().Index;
 			final BigDecimal index1 = ((BookTree)tree).Book.getSeriesInfo().Index;
+			final int cmp;
 			if (index0 == null) {
-				return index1 == null ? 0 : 1;
+				cmp = index1 == null ? 0 : 1;
+			} else {
+				cmp = index1 == null ? -1 : index0.compareTo(index1);
 			}
-			return index1 == null ? -1 : index0.compareTo(index1);
+			if (cmp != 0) {
+				return cmp;
+			}
 		}
 		return super.compareTo(tree);
 	}
