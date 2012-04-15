@@ -110,7 +110,7 @@ void FB2MetaInfoReader::startElementHandler(int tag, const char **attributes) {
 					std::string seriesTitle = name;
 					ZLStringUtil::stripWhiteSpaces(seriesTitle);
 					const char *number = attributeValue(attributes, "number");
-					myBook.setSeries(seriesTitle, number != 0 ? atoi(number) : 0);
+					myBook.setSeries(seriesTitle, number != 0 ? std::string(number) : std::string());
 				}
 			}
 			break;
