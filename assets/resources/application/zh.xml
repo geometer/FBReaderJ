@@ -146,21 +146,11 @@
 		<node name="unsufficientFunds" value="你这次买了 %0 ，但是你现在只有 %1" />
 		<node name="zeroFunds" value="你这次买了 %0" />
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="书籍信息" />
-		<node name="description" value="描述" />
-		<node name="noDescription" value="没有有效描述." />
-		<node name="title" value="书名:" />
-		<node name="authors" value="作者:" />
-		<node name="series" value="丛书系列:" />
-		<node name="indexInSeries" value="系列序号:" />
-		<node name="tags" value="标签:" />
-		<node name="catalog" value="书库:" />
-		<node name="extraLinks" value="相关链接" />
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="书籍信息" />
 		<node name="fileInfo" value="书文信息" />
+		<node name="description" value="描述" />
+		<node name="noDescription" value="没有有效描述." />
 		<node name="annotation" value="简介" />
 		<node name="title" value="书名:" />
 		<node name="authors" value="作者:" />
@@ -174,6 +164,8 @@
 		<node name="time" value="最后更改时间:" />
 		<node name="sizeInBytes" value="%s 字节" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="书库:" />
+		<node name="extraLinks" value="相关链接" />
 		<node name="menu">
 			<node name="edit" value="编辑" />
 		</node>
