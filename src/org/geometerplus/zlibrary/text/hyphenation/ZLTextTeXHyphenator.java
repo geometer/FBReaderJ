@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 
 final class ZLTextTeXHyphenator extends ZLTextHyphenator {
-	private final HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern> myPatternTable = 
+	private final HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern> myPatternTable =
 		new HashMap<ZLTextTeXHyphenationPattern,ZLTextTeXHyphenationPattern>();
 	private String myLanguage;
 
@@ -42,7 +42,7 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 			for (ZLFile file : patternsFile.children()) {
 				final String name = file.getShortName();
 				if (name.endsWith(".pattern")) {
-				    codes.add(name.substring(0, name.length() - ".pattern".length()));
+					codes.add(name.substring(0, name.length() - ".pattern".length()));
 				}
 			}
 
@@ -65,10 +65,10 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 
 		if (language != null) {
 			new ZLTextHyphenationReader(this).readQuietly(ZLResourceFile.createResourceFile(
-		  		"hyphenationPatterns/" + language + ".pattern"
-			)); 
+				"hyphenationPatterns/" + language + ".pattern"
+			));
 		}
-	}	
+	}
 
 	public void unload() {
 		myPatternTable.clear();
@@ -100,7 +100,7 @@ final class ZLTextTeXHyphenator extends ZLTextHyphenator {
 				}
 			}
 		}
- 	
+ 
 		for (int i = 0; i < length - 1; i++) {
 			mask[i] = (values[i + 1] % 2) == 1;
 		}
