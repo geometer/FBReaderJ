@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Читати книжку"/>
 		<node name="showBookInfo" value="Деталі про книгу"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="Видалити книжку"/>
 		<node name="addToFavorites" value="Додати в улюблені"/>
 		<node name="removeFromFavorites" value="Прибрати з улюблених"/>
@@ -145,21 +146,11 @@
 		<node name="unsufficientFunds" value="Дана покупка коштує %0 але у Вас лише %1"/>
 		<node name="zeroFunds" value="Дана покупка коштує %0"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Інформація про книгу" />
-		<node name="description" value="Опис" />
-		<node name="noDescription" value="Опис відсутній." />
-		<node name="title" value="Назва:" />
-		<node name="authors" value="Автори:" />
-		<node name="series" value="Серія:" />
-		<node name="indexInSeries" value="Номер у серії:" />
-		<node name="tags" value="Категорії:" />
-		<node name="catalog" value="Каталог:"/>
-		<node name="extraLinks" value="Пов'язані посилання"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Інформація про книгу" />
 		<node name="fileInfo" value="Інформація про файл" />
+		<node name="description" value="Опис" />
+		<node name="noDescription" value="Опис відсутній." />
 		<node name="annotation" value="Анотації" />
 		<node name="title" value="Назва:" />
 		<node name="authors" value="Автори:" />
@@ -173,6 +164,8 @@
 		<node name="time" value="Востаннє змінено:" />
 		<node name="sizeInBytes" value="%s байт" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="Каталог:"/>
+		<node name="extraLinks" value="Пов'язані посилання"/>
 		<node name="menu">
 			<node name="edit" value="Редагувати" />
 		</node>
@@ -205,6 +198,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Відкрити поперердню книгу"/>
 		<node name="returnTo" value="Повернутися до ..."/>
 		<node name="back" value="Назад"/>
@@ -238,6 +233,7 @@
 			<node name="undo" value="Назад"/>
 			<node name="redo" value="Вперед"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="Пошук"/>
 		<node name="rotate" value="Повернути"/>
 		<node name="screenOrientation" value="Орієнтація екрану"/>
@@ -265,11 +261,13 @@
 			<node name="openBook" value="Читати" />
 			<node name="editInfo" value="Редагувати" />
 			<node name="reloadInfo" value="Перезавантажити" />
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="pay" value="Заплатити"/>
 			<node name="refresh" value="Оновити"/>
 			<node name="authorize" value="Авторизуватись"/>
 			<node name="resetPosition" value="Скинути позицію"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Встановити plugin" />
@@ -643,6 +641,14 @@
 			</node>
 			<node name="cancelMenu" value="Меню відміни">
 				<node name="summary" value="Список дій кнопки Назад"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Попередня книга">
 					<node name="summaryOn" value="Показувати 'повернутись до попередньої книги'"/>
 					<node name="summaryOff" value="Не показувати 'повернутись до попередньої книги'"/>
@@ -793,5 +799,20 @@
 			<node name="title" value="Проблема з FBReader"/>
 			<node name="text" value="FBReader не може завантажити native library. Можливо її не встановлено. Якщо проблема залишається, спробуйте перевстановити FBReader."/>
 		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 	</node>
 </resources>

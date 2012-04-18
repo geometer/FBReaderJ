@@ -59,7 +59,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	private NetworkBookItem myBook;
 	private View myMainView;
 
-	private final ZLResource myResource = ZLResource.resource("networkBookView");
+	private final ZLResource myResource = ZLResource.resource("bookInfo");
 	private BookDownloaderServiceConnection myConnection;
 
 	@Override
@@ -101,7 +101,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				}
 				library.initialize();
 			}
-        
+
 			if (myBook == null) {
 				final Uri url = getIntent().getData();
 				if (url != null && "litres-book".equals(url.getScheme())) {
@@ -140,9 +140,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 					myConnection,
 					BIND_AUTO_CREATE
 				);
-            
+
 				setTitle(myBook.Title);
-            
+
 				setupDescription();
 				setupExtraLinks();
 				setupInfo();
@@ -225,9 +225,13 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 	}
 
 	private void setPairLabelTextFromResource(int id, String resourceKey) {
-		final LinearLayout layout = (LinearLayout)findViewById(id);
-		((TextView)layout.findViewById(R.id.book_info_key))
+		((TextView)findViewById(id).findViewById(R.id.book_info_key))
 			.setText(myResource.getResource(resourceKey).getValue());
+	}
+
+	private void setPairLabelTextFromResource(int id, String resourceKey, int param) {
+		((TextView)findViewById(id).findViewById(R.id.book_info_key))
+			.setText(myResource.getResource(resourceKey).getValue(param));
 	}
 
 	private void setPairValueText(int id, CharSequence text) {
@@ -242,7 +246,6 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 		setPairLabelTextFromResource(R.id.network_book_authors, "authors");
 		setPairLabelTextFromResource(R.id.network_book_series_title, "series");
 		setPairLabelTextFromResource(R.id.network_book_series_index, "indexInSeries");
-		setPairLabelTextFromResource(R.id.network_book_tags, "tags");
 		setPairLabelTextFromResource(R.id.network_book_catalog, "catalog");
 
 		setPairValueText(R.id.network_book_title, myBook.Title);
@@ -256,6 +259,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				}
 				authorsText.append(author.DisplayName);
 			}
+			setPairLabelTextFromResource(R.id.network_book_authors, "authors", myBook.Authors.size());
 			setPairValueText(R.id.network_book_authors, authorsText);
 		} else {
 			findViewById(R.id.network_book_authors).setVisibility(View.GONE);
@@ -291,6 +295,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				}
 				tagsText.append(tag);
 			}
+			setPairLabelTextFromResource(R.id.network_book_tags, "tags", myBook.Tags.size());
 			setPairValueText(R.id.network_book_tags, tagsText);
 		} else {
 			findViewById(R.id.network_book_tags).setVisibility(View.GONE);

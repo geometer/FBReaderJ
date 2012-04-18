@@ -26,6 +26,10 @@ git merge booksdb-ics
 git checkout epub-native
 git merge master
 
+git checkout epub-native-ics
+git merge epub-native
+git merge ice-cream-sandwich
+
 git checkout multidirs
 git merge master
 

@@ -73,6 +73,7 @@
 		<node name="ro" value="Roumain"/>
 		<node name="ru" value="Russe"/>
 		<node name="sv" value="Suédois"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
 		<node name="th" value="Thailandais"/>
 		<node name="tr" value="Turc"/>
 		<node name="uk" value="Ukrainien"/>

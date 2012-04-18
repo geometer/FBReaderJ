@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,27 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.filetype;
+package org.geometerplus.fbreader.formats.fb2;
 
-import java.util.List;
+import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
+import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
-public abstract class FileType {
-	public final String Id;
+import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
-	protected FileType(String id) {
-		Id = id;
+public class FB2NativePlugin extends NativeFormatPlugin {
+	public FB2NativePlugin() {
+		super("fb2");
 	}
 
-	public abstract boolean acceptsFile(ZLFile file);
+	@Override
+	public ZLFile realBookFile(ZLFile file) {
+		return FB2Util.getRealFB2File(file);
+	}
 
-	//public abstract String extension();
-	public abstract List<MimeType> mimeTypes();
-	public abstract MimeType mimeType(ZLFile file);
-	public MimeType simplifiedMimeType(ZLFile file) {
-		return mimeType(file);
+	@Override
+	public EncodingCollection supportedEncodings() {
+		return new AutoEncodingCollection();
 	}
 }

@@ -46,7 +46,7 @@ public class AuthorTree extends LibraryTree {
 
 	@Override
 	protected String getSortKey() {
-		return Author != null ? Author.SortKey + ":" + Author.DisplayName : null;
+		return Author != null ? "ASK:" + Author.SortKey + ":" + Author.DisplayName : null;
 	}
 
 	@Override

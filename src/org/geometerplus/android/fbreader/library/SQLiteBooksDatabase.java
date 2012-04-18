@@ -20,6 +20,7 @@
 package org.geometerplus.android.fbreader.library;
 
 import java.util.*;
+import java.math.BigDecimal;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -70,7 +71,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 
 	private void migrate(Context context) {
 		final int version = myDatabase.getVersion();
-		final int currentVersion = 18;
+		final int currentVersion = 19;
 		if (version >= currentVersion) {
 			return;
 		}
@@ -115,6 +116,8 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 						updateTables16();
 					case 17:
 						updateTables17();
+					case 18:
+						updateTables18();
 				}
 				myDatabase.setTransactionSuccessful();
 				myDatabase.endTransaction();
@@ -255,9 +258,9 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		while (cursor.moveToNext()) {
 			Book book = booksById.get(cursor.getLong(0));
 			if (book != null) {
-				String series = seriesById.get(cursor.getLong(1));
+				final String series = seriesById.get(cursor.getLong(1));
 				if (series != null) {
-					setSeriesInfo(book, series, cursor.getFloat(2));
+					setSeriesInfo(book, series, cursor.getString(2));
 				}
 			}
 		}
@@ -528,7 +531,10 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			}
 			myInsertBookSeriesStatement.bindLong(1, bookId);
 			myInsertBookSeriesStatement.bindLong(2, seriesId);
-			myInsertBookSeriesStatement.bindDouble(3, seriesInfo.Index);
+			SQLiteUtil.bindString(
+				myInsertBookSeriesStatement, 3,
+				seriesInfo.Index != null ? seriesInfo.Index.toString() : null
+			);
 			myInsertBookSeriesStatement.execute();
 		}
 	}
@@ -537,7 +543,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		final Cursor cursor = myDatabase.rawQuery("SELECT Series.name,BookSeries.book_index FROM BookSeries INNER JOIN Series ON Series.series_id = BookSeries.series_id WHERE BookSeries.book_id = ?", new String[] { "" + bookId });
 		SeriesInfo info = null;
 		if (cursor.moveToNext()) {
-			info = new SeriesInfo(cursor.getString(0), cursor.getFloat(1));
+			info = new SeriesInfo(cursor.getString(0), SeriesInfo.createIndex(cursor.getString(1)));
 		}
 		cursor.close();	
 		return info;
@@ -1263,5 +1269,38 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 				"access_time INTEGER NOT NULL," +
 				"pages_full INTEGER NOT NULL," +
 				"page_current INTEGER NOT NULL)");
+	}
+
+	private void updateTables18() {
+		myDatabase.execSQL("ALTER TABLE BookSeries RENAME TO BookSeries_Obsolete");
+		myDatabase.execSQL(
+			"CREATE TABLE BookSeries(" +
+				"series_id INTEGER NOT NULL REFERENCES Series(series_id)," +
+				"book_id INTEGER NOT NULL UNIQUE REFERENCES Books(book_id)," +
+				"book_index TEXT)");
+		final SQLiteStatement insert = myDatabase.compileStatement(
+			"INSERT INTO BookSeries (series_id,book_id,book_index) VALUES (?,?,?)"
+		);
+		final Cursor cursor = myDatabase.rawQuery("SELECT series_id,book_id,book_index FROM BookSeries_Obsolete", null);
+		while (cursor.moveToNext()) {
+			insert.bindLong(1, cursor.getLong(0));
+			insert.bindLong(2, cursor.getLong(1));
+			final float index = cursor.getFloat(2);
+			final String stringIndex;
+			if (index == 0.0f) {
+				stringIndex = null;
+			} else {
+				if (Math.abs(index - Math.round(index)) < 0.01) {
+					stringIndex = String.valueOf(Math.round(index));
+				} else {
+					stringIndex = String.format("%.1f", index);
+				}
+			}
+			final BigDecimal bdIndex = SeriesInfo.createIndex(stringIndex);
+			SQLiteUtil.bindString(insert, 3, bdIndex != null ? bdIndex.toString() : null);
+			insert.executeInsert();
+		}
+		cursor.close();
+		myDatabase.execSQL("DROP TABLE BookSeries_Obsolete");
 	}
 }

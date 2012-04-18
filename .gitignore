@@ -5,7 +5,11 @@ bin/
 gen/
 res/drawable/
 res/raw/
+scripts/resources/*.diff
 obj/
+epubs/
+mappings/
+READY/
 .classpath
 .settings
 *.so

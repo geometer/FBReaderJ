@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Könyv megnyitása"/>
 		<node name="showBookInfo" value="Információk a könyvről"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="Könyv törlése"/>
 		<node name="addToFavorites" value="Hozzáadás a kedvencekhez"/>
 		<node name="removeFromFavorites" value="Eltávolítás a kedvencek közül"/>
@@ -145,21 +146,11 @@
 		<node name="unsufficientFunds" value="A vásárlás végösszege %0, de az Ön számláján csak %1 van "/>
 		<node name="zeroFunds" value="A vásárlás végösszege %0"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Könyv adatai" />
-		<node name="description" value="Leírás" />
-		<node name="noDescription" value="Nem érhető el leírás." />
-		<node name="title" value="Cím:" />
-		<node name="authors" value="Szerzők:" />
-		<node name="series" value="Sorozat:" />
-		<node name="indexInSeries" value="Sorszám:" />
-		<node name="tags" value="Címkék:" />
-		<node name="catalog" value="Katalógus:"/>
-		<node name="extraLinks" value="Kapcsolódó linkek" />
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Könyv adatai" />
 		<node name="fileInfo" value="Fájlinformáció" />
+		<node name="description" value="Leírás" />
+		<node name="noDescription" value="Nem érhető el leírás." />
 		<node name="annotation" value="Fülszöveg" />
 		<node name="title" value="Cím:" />
 		<node name="authors" value="Szerzők:" />
@@ -173,6 +164,8 @@
 		<node name="time" value="Utolsó módosítás:" />
 		<node name="sizeInBytes" value="%s byte" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="Katalógus:"/>
+		<node name="extraLinks" value="Kapcsolódó linkek" />
 		<node name="menu">
 			<node name="edit" value="Szerkesztés" />
 		</node>
@@ -205,6 +198,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Előző könyv megnyitása" />
 		<node name="returnTo" value="Visszatérés ..."/>
 		<node name="back" value="Vissza"/>
@@ -238,6 +233,7 @@
 			<node name="undo" value="Vissza"/>
 			<node name="redo" value="Előre"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="Keresés"/>
 		<node name="rotate" value="Kijelző elforgatása"/>
 		<node name="screenOrientation" value="Kijelző iránya"/>
@@ -265,11 +261,13 @@
 			<node name="openBook" value="Olvasás" />
 			<node name="editInfo" value="Szerkesztés" />
 			<node name="reloadInfo" value="Újratölt" />
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Számla feltöltése"/>
 			<node name="pay" value="Fizetés"/>
 			<node name="refresh" value="Frissítés"/>
 			<node name="authorize" value="Hitelesítés"/>
 			<node name="resetPosition" value="Pozíció nullázása"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Bővítmény telepítése" />
@@ -643,6 +641,14 @@
 			</node>
 			<node name="cancelMenu" value="Vissza menü">
 				<node name="summary" value="Vissza gomb műveletek"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Előző könyv">
 					<node name="summaryOn" value="Mutassa a menüben a 'Vissza az előző könyvhöz' menüpontot"/>
 					<node name="summaryOff" value="Ne mutassa a 'Vissza az előző könyvhöz' menüpontot"/>
@@ -793,5 +799,20 @@
 			<node name="title" value="FBReader probléma"/>
 			<node name="text" value="Az FBReader nem tudta betölteni a helyi könyvtárat. Lehet, hogy nincs megfelelően telepítve. Ha a probléma nem szűnik meg, próbálja meg újratelepíteni az FBReadert."/>
 		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 	</node>
 </resources>

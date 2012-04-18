@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,26 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.library;
+package org.geometerplus.fbreader.filetype;
 
-import java.math.BigDecimal;
+import java.util.List;
 
-public final class SeriesInfo {
-	public static BigDecimal createIndex(String index) {
-		try {
-			return index != null ? new BigDecimal(index).stripTrailingZeros() : null;
-		} catch (NumberFormatException e) {
-			return null;
-		}
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.util.MimeType;
+
+public abstract class FileType {
+	public final String Id;
+
+	protected FileType(String id) {
+		Id = id;
 	}
 
-	public final String Name;
-	public final BigDecimal Index;
+	public abstract boolean acceptsFile(ZLFile file);
 
-	public SeriesInfo(String name, BigDecimal index) {
-		Name = name;
-		Index = index;
+	//public abstract String extension(MimeType mimeType);
+	public abstract List<MimeType> mimeTypes();
+	public abstract MimeType mimeType(ZLFile file);
+	public MimeType simplifiedMimeType(ZLFile file) {
+		return mimeType(file);
 	}
 }

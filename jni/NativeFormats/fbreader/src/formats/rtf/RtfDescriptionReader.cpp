@@ -44,7 +44,7 @@ bool RtfDescriptionReader::readDocument(const ZLFile &file) {
 }
 
 void RtfDescriptionReader::addCharData(const char *data, size_t len, bool convert) {
-	if (myDoRead) {
+	if (myDoRead && len > 0) {
 		if (convert) {
 			myConverter->convert(myBuffer, data, data + len);
 		} else {

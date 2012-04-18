@@ -17,42 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.filetype;
+package org.geometerplus.fbreader.formats.fb2;
 
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.util.MimeType;
 
-class FileTypeFB2Zip extends FileType {
-	FileTypeFB2Zip() {
-		super("fb2.zip");
-	}
-
-	@Override
-	public boolean acceptsFile(ZLFile file) {
-		return file.getShortName().toLowerCase().endsWith(".fb2.zip");
-	}
-
-	/*
-	@Override
-	public String extension() {
-		return "fb2.zip";
-	}
-	*/
-
-	@Override
-	public List<MimeType> mimeTypes() {
-		return MimeType.TYPES_FB2_ZIP;
-	}
-
-	@Override
-	public MimeType mimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.APP_FB2_ZIP : MimeType.NULL;
-	}
-
-	@Override
-	public MimeType simplifiedMimeType(ZLFile file) {
-		return acceptsFile(file) ? MimeType.APP_ZIP : MimeType.NULL;
+abstract class FB2Util {
+	static ZLFile getRealFB2File(ZLFile file) {
+		final String name = file.getShortName().toLowerCase();
+		if (name.endsWith(".fb2.zip") && file.isArchive()) {
+			final List<ZLFile> children = file.children();
+			if (children != null && children.size() == 1) {
+				return children.get(0);
+			} else {
+				return null;
+			}
+		} else {
+			return file;
+		}
 	}
 }

@@ -66,7 +66,7 @@ shared_ptr<LongMethod> AndroidUtil::Method_java_io_InputStream_skip;
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_ZLibrary_Instance;
 shared_ptr<StringMethod> AndroidUtil::Method_ZLibrary_getVersionName;
 
-shared_ptr<Constructor> AndroidUtil::Constructor_NativeFormatPlugin;
+shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_NativeFormatPlugin_create;
 shared_ptr<StringMethod> AndroidUtil::Method_NativeFormatPlugin_supportedFileType;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_PluginCollection_Instance;
@@ -142,7 +142,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	StaticMethod_ZLibrary_Instance = new StaticObjectMethod(Class_ZLibrary, "Instance", Class_ZLibrary, "()");
 	Method_ZLibrary_getVersionName = new StringMethod(Class_ZLibrary, "getVersionName", "()");
 
-	Constructor_NativeFormatPlugin = new Constructor(Class_NativeFormatPlugin, "(Ljava/lang/String;)V");
+	StaticMethod_NativeFormatPlugin_create = new StaticObjectMethod(Class_NativeFormatPlugin, "create", Class_NativeFormatPlugin, "(Ljava/lang/String;)");
 	Method_NativeFormatPlugin_supportedFileType = new StringMethod(Class_NativeFormatPlugin, "supportedFileType", "()");
 
 	StaticMethod_PluginCollection_Instance = new StaticObjectMethod(Class_PluginCollection, "Instance", Class_PluginCollection, "()");
@@ -174,7 +174,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_Book_getLanguage = new StringMethod(Class_Book, "getLanguage", "()");
 	Method_Book_getEncodingNoDetection = new StringMethod(Class_Book, "getEncodingNoDetection", "()");
 	Method_Book_setTitle = new VoidMethod(Class_Book, "setTitle", "(Ljava/lang/String;)");
-	Method_Book_setSeriesInfo = new VoidMethod(Class_Book, "setSeriesInfo", "(Ljava/lang/String;F)");
+	Method_Book_setSeriesInfo = new VoidMethod(Class_Book, "setSeriesInfo", "(Ljava/lang/String;Ljava/lang/String;)");
 	Method_Book_setLanguage = new VoidMethod(Class_Book, "setLanguage", "(Ljava/lang/String;)");
 	Method_Book_setEncoding = new VoidMethod(Class_Book, "setEncoding", "(Ljava/lang/String;)");
 	Method_Book_addAuthor = new VoidMethod(Class_Book, "addAuthor", "(Ljava/lang/String;Ljava/lang/String;)");
@@ -200,7 +200,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 }
 
 jobject AndroidUtil::createJavaFile(JNIEnv *env, const std::string &path) {
-	jstring javaPath = env->NewStringUTF(path.c_str());
+	jstring javaPath = createJavaString(env, path);
 	jobject javaFile = StaticMethod_ZLFile_createFileByPath->call(javaPath);
 	env->DeleteLocalRef(javaPath);
 	return javaFile;

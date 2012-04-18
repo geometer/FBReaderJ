@@ -30,7 +30,7 @@ bool BookComparator::operator() (
 	int comp = seriesTitle0.compare(seriesTitle1);
 	if (comp == 0) {
 		if (!seriesTitle0.empty()) {
-			comp = book0->indexInSeries() - book1->indexInSeries();
+			comp = book0->indexInSeries().compare(book1->indexInSeries());
 			if (comp != 0) {
 				return comp < 0;
 			}

@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Deschide carte"/>
 		<node name="showBookInfo" value="Informatii despre carte"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="Stergere cartea"/>
 		<node name="addToFavorites" value="Adauga la favorite"/>
 		<node name="removeFromFavorites" value="Sterge din favorite"/>
@@ -145,21 +146,11 @@
 		<node name="unsufficientFunds" value="Costul este de %0 dar aveti disponibil doar %1"/>
 		<node name="zeroFunds" value="Costul este de %0"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Informatii despre carte"/>
-		<node name="description" value="Descriere"/>
-		<node name="noDescription" value="Nu este disponibila nicio descriere."/>
-		<node name="title" value="Titlu:"/>
-		<node name="authors" value="Autori:"/>
-		<node name="series" value="Seria:"/>
-		<node name="indexInSeries" value="Indexul seriilor:"/>
-		<node name="tags" value="Tag-uri:"/>
-		<node name="catalog" value="Catalog:"/>
-		<node name="extraLinks" value="Link-uri utile"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Cartea Info"/>
 		<node name="fileInfo" value="Informatii fisier"/>
+		<node name="description" value="Descriere"/>
+		<node name="noDescription" value="Nu este disponibila nicio descriere."/>
 		<node name="annotation" value="Adnotare"/>
 		<node name="title" value="Titlu:"/>
 		<node name="authors" value="Autori:"/>
@@ -173,6 +164,8 @@
 		<node name="time" value="Ultima modificare:"/>
 		<node name="sizeInBytes" value=" %s octet (e)"/>
 		<node name="sizeInKiloBytes" value=" %s kB"/>
+		<node name="catalog" value="Catalog:"/>
+		<node name="extraLinks" value="Link-uri utile"/>
 		<node name="menu">
 			<node name="edit" value="Editeaza"/>
 		</node>
@@ -205,6 +198,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Deschide cartea anteriora"/>
 		<node name="returnTo" value="Înapoi la&#8230;"/>
 		<node name="back" value="Înapoi"/>
@@ -238,6 +233,7 @@
 			<node name="undo" value="Mergeti înapoi"/>
 			<node name="redo" value="Mergeti înainte"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="Cauta"/>
 		<node name="rotate" value="Rotire ecran"/>
 		<node name="screenOrientation" value="Orientarea ecranului"/>
@@ -265,11 +261,13 @@
 			<node name="openBook" value="Citeste"/>
 			<node name="editInfo" value="Editeaza"/>
 			<node name="reloadInfo" value="Reîncarca"/>
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Incarca"/>
 			<node name="pay" value="Plateste"/>
 			<node name="refresh" value="Actualizare"/>
 			<node name="authorize" value="Autorizeaza"/>
 			<node name="resetPosition" value="Reseteaza pozitia"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalati plugin"/>
@@ -643,6 +641,14 @@
 			</node>
 			<node name="cancelMenu" value="Anuleaza meniu">
 				<node name="summary" value="Lista actiunilor pentru butonul inapoi"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Cartea anterioara">
 					<node name="summaryOn" value="Arata reveniti la cartea precedenta"/>
 					<node name="summaryOff" value="Nu arata reveniti la cartea precedenta"/>
@@ -793,5 +799,20 @@
 			<node name="title" value="Problema in aplicatie"/>
 			<node name="text" value="Aplicatia nu gaseste librariile native. Poate nu a fost instalata corect. Daca erorare persista, va rugam reinstalati aplicatia"/>
 		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 	</node>
 </resources>

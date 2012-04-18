@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
 import org.geometerplus.fbreader.library.*;
 import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
@@ -97,33 +98,37 @@ class EncodingPreference extends ZLStringListPreference {
 		super(context, rootResource, resourceKey);
 		myBook = book;
 
-		final FormatPlugin plugin = PluginCollection.Instance().getPlugin(book.File);
-		if (plugin != null) {
-			final List<Encoding> encodings =
-				new ArrayList<Encoding>(plugin.supportedEncodings().encodings());
-			Collections.sort(encodings, new Comparator<Encoding>() {
-				public int compare(Encoding e1, Encoding e2) {
-					return e1.DisplayName.compareTo(e2.DisplayName);
-				}
-			});
-			final String[] codes = new String[encodings.size()];
-			final String[] names = new String[encodings.size()];
-			int index = 0;
-			for (Encoding e : encodings) {
-				//addItem(e.Family, e.Name, e.DisplayName);
-				codes[index] = e.Name;
-				names[index] = e.DisplayName;
-				++index;
+		final FormatPlugin plugin;
+		try {
+			plugin = book.getPlugin();
+		} catch (BookReadingException e) {
+			return;
+		}
+
+		final List<Encoding> encodings =
+			new ArrayList<Encoding>(plugin.supportedEncodings().encodings());
+		Collections.sort(encodings, new Comparator<Encoding>() {
+			public int compare(Encoding e1, Encoding e2) {
+				return e1.DisplayName.compareTo(e2.DisplayName);
 			}
-			setLists(codes, names);
-			if (encodings.size() == 1) {
-				setInitialValue(codes[0]);
-				setEnabled(false);
-			} else {
-				final String bookEncoding = book.getEncoding();
-				if (bookEncoding != null) {
-					setInitialValue(bookEncoding.toLowerCase());
-				}
+		});
+		final String[] codes = new String[encodings.size()];
+		final String[] names = new String[encodings.size()];
+		int index = 0;
+		for (Encoding e : encodings) {
+			//addItem(e.Family, e.Name, e.DisplayName);
+			codes[index] = e.Name;
+			names[index] = e.DisplayName;
+			++index;
+		}
+		setLists(codes, names);
+		if (encodings.size() == 1) {
+			setInitialValue(codes[0]);
+			setEnabled(false);
+		} else {
+			final String bookEncoding = book.getEncoding();
+			if (bookEncoding != null) {
+				setInitialValue(bookEncoding.toLowerCase());
 			}
 		}
 	}

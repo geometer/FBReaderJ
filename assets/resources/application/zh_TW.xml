@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="打開書藉"/>
 		<node name="showBookInfo" value="書藉資訊"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="刪除書藉"/>
 		<node name="addToFavorites" value="收藏"/>
 		<node name="removeFromFavorites" value="從收藏中移除"/>
@@ -145,21 +146,11 @@
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="書藉資訊" />
-		<node name="description" value="描述" />
-		<node name="noDescription" value="沒有描述" />
-		<node name="title" value="書名:" />
-		<node name="authors" value="作者:" />
-		<node name="series" value="系列:" />
-		<node name="indexInSeries" value="系列編號:" />
-		<node name="tags" value="標籤:" />
-		<node name="catalog" value="目錄:" />
-		<node name="extraLinks" value="Related links" toBeTranslated="true" />
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="書藉資訊" />
 		<node name="fileInfo" value="檔案資訊" />
+		<node name="description" value="描述" />
+		<node name="noDescription" value="沒有描述" />
 		<node name="annotation" value="註解" />
 		<node name="title" value="書名:" />
 		<node name="authors" value="作者:" />
@@ -173,6 +164,8 @@
 		<node name="time" value="最後更新時間:" />
 		<node name="sizeInBytes" value="%s 字節" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="目錄:" />
+		<node name="extraLinks" value="Related links" toBeTranslated="true" />
 		<node name="menu">
 			<node name="edit" value="編輯" />
 		</node>
@@ -205,6 +198,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="開啟之前的書藉"/>
 		<node name="returnTo" value="回到 ..."/>
 		<node name="back" value="返回"/>
@@ -238,6 +233,7 @@
 			<node name="undo" value="回復"/>
 			<node name="redo" value="重做"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="搜尋"/>
 		<node name="rotate" value="旋轉屏幕"/>
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
@@ -265,11 +261,13 @@
 			<node name="openBook" value="閱讀" />
 			<node name="editInfo" value="編輯" />
 			<node name="reloadInfo" value="重新整理" />
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="升級賬戶"/>
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安裝插件"/>
@@ -332,8 +330,8 @@
 					<!-- Percent sign (%) could not be used in resource strings
 								because there is a bug in Cyanogen Mod firmware that
 								crashes the program with such resources
-					<node name="25" value="當電量大於25%"/>
-					<node name="50" value="當電量大於50%"/>-->
+					<node name="25" value= "當電量大於25%"/>
+					<node name="50" value= "當電量大於50%"/>-->
 					<node name="25" value="While battery level is greater than 25 percent"/>
 					<node name="50" value="While battery level is greater than 50 percent"/>
 					<node name="100" value="永不"/>
@@ -648,6 +646,14 @@
 			</node>
 			<node name="cancelMenu" value="取消選單">
 				<node name="summary" value="返回鍵動作列表"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="上一本書">
 					<node name="summaryOn" value="顯示'返回上一本書'選項"/>
 					<node name="summaryOff" value="不要顯示'返回上一本書'選項"/>
@@ -798,5 +804,20 @@
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the problem persists please try to reinstall FBReader." toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 	</node>
 </resources>

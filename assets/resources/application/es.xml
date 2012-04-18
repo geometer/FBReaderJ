@@ -48,6 +48,7 @@
 		</node>
 		<node name="openBook" value="Abrir libro"/>
 		<node name="showBookInfo" value="Información del libro"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="Eliminar libro"/>
 		<node name="addToFavorites" value="Añadir a favoritos"/>
 		<node name="removeFromFavorites" value="Retirar de favoritos"/>
@@ -150,21 +151,11 @@
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="Información del libro" />
-		<node name="description" value="Descripción" />
-		<node name="noDescription" value="No hay descripción disponible." />
-		<node name="title" value="Título:" />
-		<node name="authors" value="Autores:" />
-		<node name="series" value="Series:" />
-		<node name="indexInSeries" value="Índices de las series:" />
-		<node name="tags" value="Etiquetas:" />
-		<node name="catalog" value="Catálogo:"/>
-		<node name="extraLinks" value="Enlaces relacionados"/>
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="Información del libro" />
 		<node name="fileInfo" value="Información del archivo"/>
+		<node name="description" value="Descripción" />
+		<node name="noDescription" value="No hay descripción disponible." />
 		<node name="annotation" value="Anotación" />
 		<node name="title" value="Título:" />
 		<node name="authors" value="Autores:" />
@@ -178,6 +169,8 @@
 		<node name="time" value="Última modificación:" />
 		<node name="sizeInBytes" value="%s byte(s)" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="Catálogo:"/>
+		<node name="extraLinks" value="Enlaces relacionados"/>
 		<node name="menu">
 			<node name="edit" value="Editar" />
 		</node>
@@ -210,6 +203,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Abrir libro anterior"/>
 		<node name="returnTo" value="Volver a ..."/>
 		<node name="back" value="Atrás"/>
@@ -243,6 +238,7 @@
 			<node name="undo" value="Anterior"/>
 			<node name="redo" value="Siguiente"/>
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="Buscar"/>
 		<node name="rotate" value="Rotar la pantalla"/>
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
@@ -270,11 +266,13 @@
 			<node name="openBook" value="Leer" />
 			<node name="editInfo" value="Editar" />
 			<node name="reloadInfo" value="Recargar" />
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Completar"/>
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalar complemento"/>
@@ -648,6 +646,14 @@
 			</node>
 			<node name="cancelMenu" value="Menú cancelar">
 				<node name="summary" value="Lista de acciones para botón «atrás»"/>
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="Libro anterior">
 					<node name="summaryOn" value="Mostrar «volver al libro anterior»"/>
 					<node name="summaryOff" value="No mostrar «volver al libro anterior»"/>
@@ -798,5 +804,20 @@
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the issue persists please try to reinstall FBReader." toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 	</node>
 </resources>

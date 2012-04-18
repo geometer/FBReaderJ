@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="打开阅读" />
 		<node name="showBookInfo" value="书文信息"/>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="deleteBook" value="删除本书" />
 		<node name="addToFavorites" value="收藏到我的超爱"/>
 		<node name="removeFromFavorites" value="从收藏列表中移除"/>
@@ -145,21 +146,11 @@
 		<node name="unsufficientFunds" value="你这次买了 %0 ，但是你现在只有 %1" />
 		<node name="zeroFunds" value="你这次买了 %0" />
 	</node>
-	<node name="networkBookView">
-		<node name="bookInfo" value="书籍信息" />
-		<node name="description" value="描述" />
-		<node name="noDescription" value="没有有效描述." />
-		<node name="title" value="书名:" />
-		<node name="authors" value="作者:" />
-		<node name="series" value="丛书系列:" />
-		<node name="indexInSeries" value="系列序号:" />
-		<node name="tags" value="标签:" />
-		<node name="catalog" value="书库:" />
-		<node name="extraLinks" value="相关链接" />
-	</node>
 	<node name="bookInfo">
 		<node name="bookInfo" value="书籍信息" />
 		<node name="fileInfo" value="书文信息" />
+		<node name="description" value="描述" />
+		<node name="noDescription" value="没有有效描述." />
 		<node name="annotation" value="简介" />
 		<node name="title" value="书名:" />
 		<node name="authors" value="作者:" />
@@ -173,6 +164,8 @@
 		<node name="time" value="最后更改时间:" />
 		<node name="sizeInBytes" value="%s 字节" />
 		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="catalog" value="书库:" />
+		<node name="extraLinks" value="相关链接" />
 		<node name="menu">
 			<node name="edit" value="编辑" />
 		</node>
@@ -205,6 +198,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
+		<node name="library" value="Open library" toBeTranslated="true"/>
+		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="打开上一本书" />
 		<node name="returnTo" value="返回到..." />
 		<node name="back" value="后退" />
@@ -238,6 +233,7 @@
 			<node name="undo" value="还原" />
 			<node name="redo" value="重做" />
 		</node>
+		<node name="shareBook" value="Share book" toBeTranslated="true"/>
 		<node name="search" value="内容查找" />
 		<node name="rotate" value="翻转屏幕" />
 		<node name="screenOrientation" value="Screen orientation" toBeTranslated="true"/>
@@ -265,11 +261,13 @@
 			<node name="openBook" value="阅读" />
 			<node name="editInfo" value="编辑" />
 			<node name="reloadInfo" value="重新加载" />
+			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="重新输入账号"/>
 			<node name="pay" value="支付" />
 			<node name="refresh" value="刷新" />
 			<node name="authorize" value="授权" />
 			<node name="resetPosition" value="Reset position" toBeTranslated="true"/>
+			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="安装插件" />
@@ -643,6 +641,14 @@
 			</node>
 			<node name="cancelMenu" value="取消菜单设定" >
 				<node name="summary" value="设定回退按键动作" />
+				<node name="library" value="Library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+				</node>
+				<node name="networkLibrary" value="Network library" toBeTranslated="true">
+					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+				</node>
 				<node name="previousBook" value="上一本书" >
 					<node name="summaryOn" value="显示“返回到上一本书”" />
 					<node name="summaryOff" value="不显示“返回到上一本书”" />
@@ -793,5 +799,20 @@
 			<node name="title" value="FBReader issue" toBeTranslated="true"/>
 			<node name="text" value="FBReader can not load native library. May be it is not properly installed. If the problem persists please try to reinstall FBReader." toBeTranslated="true"/>
 		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
+		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
+		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
+		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
+		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
+		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
+		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
 	</node>
 </resources>

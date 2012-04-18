@@ -162,13 +162,17 @@ public class BookInfoActivity extends Activity {
 	}
 
 	private void setupInfoPair(int id, String key, CharSequence value) {
+		setupInfoPair(id, key, value, 0);
+	}
+
+	private void setupInfoPair(int id, String key, CharSequence value, int param) {
 		final LinearLayout layout = (LinearLayout)findViewById(id);
 		if (value == null || value.length() == 0) {
 			layout.setVisibility(View.GONE);
 			return;
 		}
 		layout.setVisibility(View.VISIBLE);
-		((TextView)layout.findViewById(R.id.book_info_key)).setText(myResource.getResource(key).getValue());
+		((TextView)layout.findViewById(R.id.book_info_key)).setText(myResource.getResource(key).getValue(param));
 		((TextView)layout.findViewById(R.id.book_info_value)).setText(value);
 	}
 
@@ -219,23 +223,20 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.book_title, "title", book.getTitle());
 
 		final StringBuilder buffer = new StringBuilder();
-		for (Author author: book.authors()) {
+		final List<Author> authors = book.authors();
+		for (Author a : authors) {
 			if (buffer.length() > 0) {
 				buffer.append(", ");
 			}
-			buffer.append(author.DisplayName);
+			buffer.append(a.DisplayName);
 		}
-		setupInfoPair(R.id.book_authors, "authors", buffer);
+		setupInfoPair(R.id.book_authors, "authors", buffer, authors.size());
 
 		final SeriesInfo series = book.getSeriesInfo();
 		setupInfoPair(R.id.book_series, "series", series == null ? null : series.Name);
 		String seriesIndexString = null;
-		if (series != null && series.Index > 0) {
-			if (Math.abs(series.Index - Math.round(series.Index)) < 0.01) {
-				seriesIndexString = String.valueOf(Math.round(series.Index));
-			} else {
-				seriesIndexString = String.format("%.1f", series.Index);
-			}
+		if (series != null && series.Index != null) {
+			seriesIndexString = series.Index.toString();
 		}
 		setupInfoPair(R.id.book_series_index, "indexInSeries", seriesIndexString);
 
@@ -250,7 +251,7 @@ public class BookInfoActivity extends Activity {
 				tagNames.add(tag.Name);
 			}
 		}
-		setupInfoPair(R.id.book_tags, "tags", buffer);
+		setupInfoPair(R.id.book_tags, "tags", buffer, tagNames.size());
 		String language = book.getLanguage();
 		if (!ZLLanguageUtil.languageCodes().contains(language)) {
 			language = ZLLanguageUtil.OTHER_LANGUAGE_CODE;
@@ -261,7 +262,7 @@ public class BookInfoActivity extends Activity {
 	private void setupAnnotation(Book book) {
 		final TextView titleView = (TextView)findViewById(R.id.book_info_annotation_title);
 		final TextView bodyView = (TextView)findViewById(R.id.book_info_annotation_body);
-		final String annotation = LibraryUtil.getAnnotation(book.File);	
+		final String annotation = LibraryUtil.getAnnotation(book);
 		if (annotation == null) {
 			titleView.setVisibility(View.GONE);
 			bodyView.setVisibility(View.GONE);
@@ -279,7 +280,7 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.file_name, "name", book.File.getPath());
 		if (ENABLE_EXTENDED_FILE_INFO) {
 			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
-        
+
 			final ZLPhysicalFile physFile = book.File.getPhysicalFile();
 			final File file = physFile == null ? null : physFile.javaFile();
 			if (file != null && file.exists() && file.isFile()) {
