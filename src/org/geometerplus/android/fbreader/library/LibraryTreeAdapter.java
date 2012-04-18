@@ -40,10 +40,10 @@ class LibraryTreeAdapter extends TreeAdapter {
 	}
 
 	private View createView(View convertView, ViewGroup parent, LibraryTree tree) {
-		final View view = (convertView != null) ?  convertView :
+		final View view = (convertView != null) ? convertView :
 			LayoutInflater.from(parent.getContext()).inflate(R.layout.library_tree_item, parent, false);
 
-        ((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
+		((TextView)view.findViewById(R.id.library_tree_item_name)).setText(tree.getName());
 		((TextView)view.findViewById(R.id.library_tree_item_childrenlist)).setText(tree.getSummary());
 		return view;
 	}
