@@ -31,8 +31,8 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 import org.geometerplus.android.fbreader.FBReader;
@@ -148,6 +148,10 @@ class EncodingPreference extends ZLStringListPreference {
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private Book myBook;
+	private final List<String> myAuthors = new ArrayList<String>();
+	private final List<String> myTags = new ArrayList<String>();
+	private ZLSpinnerActivityPreference myAuthorPref;
+	private ZLSpinnerActivityPreference myTagPref;
 
 	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
 		new HashMap<Integer,ZLActivityPreference>();
@@ -184,6 +188,17 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 		if (resultCode == RESULT_OK) {
 			p.setValue(data);
 		}
+		myBook.save();
+		myAuthors.clear();
+		myTags.clear();
+		for (Author a : BooksDatabase.Instance().loadAuthors()) {
+			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
+		}
+		myAuthorPref.setSuggestions(myAuthors);
+		for (Tag t : BooksDatabase.Instance().loadTags()) {
+			if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
+		}
+		myTagPref.setSuggestions(myTags);
 	}
 
 	@Override
@@ -202,18 +217,29 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			return;
 		}
 
+		for (Author a : BooksDatabase.Instance().loadAuthors()) {
+			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
+		}
+		for (Tag t : BooksDatabase.Instance().loadTags()) {
+			if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
+		}
+
+		myAuthorPref = new ZLSpinnerActivityPreference(
+			this, new AuthorsHolder(), myActivityPrefs, myAuthors,
+			Resource, "authors"
+		);
+
+		myTagPref = new ZLSpinnerActivityPreference(
+			this, new TagsHolder(), myActivityPrefs, myTags,
+			Resource, "tags"
+		);
+
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
+		addPreference(myAuthorPref);
+		addPreference(myTagPref);
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
 		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
-		addPreference(new ZLActivityPreference(
-			this, new AuthorsHolder(), myActivityPrefs, null, null,
-			Resource, "authors"
-		));
 
-		addPreference(new ZLActivityPreference(
-			this, new TagsHolder(), myActivityPrefs, null, null,
-			Resource, "tags"
-		));
 	}
 
 	@Override

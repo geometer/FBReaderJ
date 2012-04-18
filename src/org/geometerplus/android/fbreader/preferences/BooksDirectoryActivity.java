@@ -34,7 +34,7 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
 
-public class EditableStringListActivity extends BaseStringListActivity {
+public class BooksDirectoryActivity extends BaseStringListActivity {
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -52,7 +52,13 @@ public class EditableStringListActivity extends BaseStringListActivity {
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			final StringItem item = getItem(position);
 			final View view;
-			view = LayoutInflater.from(myActivity).inflate(R.layout.editable_stringlist_item, parent, false);
+			if (position == 0) {
+				view = LayoutInflater.from(myActivity).inflate(R.layout.editable_stringlist_mainitem, parent, false);
+				final TextView warningtext = (TextView)view.findViewById(R.id.editable_stringlist_maintext);
+				warningtext.setText("Main directory:");
+			} else {
+				view = LayoutInflater.from(myActivity).inflate(R.layout.editable_stringlist_item, parent, false);
+			}
 			final AutoCompleteTextView text = (AutoCompleteTextView)view.findViewById(R.id.editable_stringlist_text);
 			text.setText(item.getData());
 			text.addTextChangedListener(new TextWatcher(){
@@ -77,28 +83,65 @@ public class EditableStringListActivity extends BaseStringListActivity {
 				}
 			});
 
+			if (position == 0) {
+				final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_unlockbutton);
+				button.setOnClickListener(
+					new View.OnClickListener() {
+						public void onClick(View v) {
+							if (!myUserWasWarned) {
+								new AlertDialog.Builder(myActivity)
+									.setTitle("Editing of main directory will lead to loss of data")
+									.setMessage("Continue?")
+									.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface arg0, int arg1) {
+											text.setEnabled(true);
+											text.setFocusable(true);
+											text.setFocusableInTouchMode(true);
+											myUserWasWarned = true;
+											view.requestFocus();
+											view.clearFocus();
+											button.setEnabled(false);
+										}
+									})
+									.setNegativeButton("No", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface arg0, int arg1) {
+											view.requestFocus();
+											view.clearFocus();
+										}
+									}).show();
+								}
+							}
+						}
+				);
+				button.setEnabled(!myUserWasWarned);
+				if (!myUserWasWarned) {
+					text.setEnabled(false);
+					text.setFocusable(false);
+					text.setFocusableInTouchMode(false);
+				}
+				return view;
+			} else {
 
-			final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
-			button.setOnClickListener(
-				new View.OnClickListener() {
-					public void onClick(View view) {
-						removeStringItem(item.getId());
-						myActivity.enableButtons();
+				final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
+				button.setOnClickListener(
+					new View.OnClickListener() {
+						public void onClick(View view) {
+							removeStringItem(item.getId());
+							myActivity.enableButtons();
+						}
+					}
+				);
+				button.setEnabled(getCount() > 1);
+				if ("".equals(item.getData())) {
+					text.requestFocus();
+					if ( !myKeyboardShowed) {
+						InputMethodManager imm = (InputMethodManager) myActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.toggleSoftInput(0, 0);
+						myKeyboardShowed = true;
 					}
 				}
-			);
-			button.setEnabled(getCount() > 1);
-			if ("".equals(item.getData())) {
-				text.requestFocus();
-				if ( !myKeyboardShowed) {
-					InputMethodManager imm = (InputMethodManager) myActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.toggleSoftInput(0, 0);
-					myKeyboardShowed = true;
-				}
+				return view;
 			}
-			return view;
 		}
 	}
-
-
 }

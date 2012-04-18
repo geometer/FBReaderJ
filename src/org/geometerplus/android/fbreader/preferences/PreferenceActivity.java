@@ -85,18 +85,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addPreference(new ZLActivityPreference(
-			this, new OptionHolder(Paths.BooksDirectoryOption()), myActivityPrefs, myRootpaths, EditableStringListActivity.TYPE_FIRST_MAIN,
+		directoriesScreen.addPreference(new ZLBookDirActivityPreference(
+			this, new OptionHolder(Paths.BooksDirectoryOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "books"
 		));
 		if (AndroidFontUtil.areExternalFontsSupported()) {
 			directoriesScreen.addPreference(new ZLActivityPreference(
-				this, new OptionHolder(Paths.FontsDirectoryOption()), myActivityPrefs, myRootpaths, null,
+				this, new OptionHolder(Paths.FontsDirectoryOption()), myActivityPrefs, myRootpaths,
 				directoriesScreen.Resource, "fonts"
 			));
 		}
 		directoriesScreen.addPreference(new ZLActivityPreference(
-			this, new OptionHolder(Paths.WallpapersDirectoryOption()), myActivityPrefs, myRootpaths, null,
+			this, new OptionHolder(Paths.WallpapersDirectoryOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "wallpapers"
 		));
 
