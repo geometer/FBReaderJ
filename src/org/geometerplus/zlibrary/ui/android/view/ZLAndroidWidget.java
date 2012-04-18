@@ -277,13 +277,13 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 	private volatile boolean myLongClickPerformed;
 
 	private void postLongClickRunnable() {
-        myLongClickPerformed = false;
+		myLongClickPerformed = false;
 		myPendingPress = false;
-        if (myPendingLongClickRunnable == null) {
-            myPendingLongClickRunnable = new LongClickRunnable();
-        }
-        postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
-    }
+		if (myPendingLongClickRunnable == null) {
+			myPendingLongClickRunnable = new LongClickRunnable();
+		}
+		postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
+	}
 
 	private class ShortClickRunnable implements Runnable {
 		public void run() {
@@ -318,10 +318,10 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 					}
 					if (myPendingPress) {
 						if (view.isDoubleTapSupported()) {
-        					if (myPendingShortClickRunnable == null) {
-            					myPendingShortClickRunnable = new ShortClickRunnable();
-        					}
-        					postDelayed(myPendingShortClickRunnable, ViewConfiguration.getDoubleTapTimeout());
+							if (myPendingShortClickRunnable == null) {
+								myPendingShortClickRunnable = new ShortClickRunnable();
+							}
+							postDelayed(myPendingShortClickRunnable, ViewConfiguration.getDoubleTapTimeout());
 						} else {
 							view.onFingerSingleTap(x, y);
 						}
