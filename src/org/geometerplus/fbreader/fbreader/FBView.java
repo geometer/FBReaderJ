@@ -235,7 +235,7 @@ public final class FBView extends ZLTextView {
 			} else if (soul instanceof ZLTextHyperlinkRegionSoul) {
 				doSelectRegion = true;
 			}
-        
+
 			if (doSelectRegion) {
 				selectRegion(region);
 				myReader.getViewWidget().reset();
@@ -355,7 +355,7 @@ public final class FBView extends ZLTextView {
 		if ("".equals(filePath)) {
 			return null;
 		}
-		
+
 		final ZLFile file = ZLFile.createFileByPath(filePath);
 		if (file == null || !file.exists()) {
 			return null;
