@@ -62,7 +62,7 @@ public abstract class Util implements UserRegistrationConstants {
 				if (SQLiteNetworkDatabase.Instance() == null) {
 					new SQLiteNetworkDatabase(activity.getApplication());
 				}
-                
+
 				library.initialize();
 			}
 		}, activity);
@@ -119,7 +119,7 @@ public abstract class Util implements UserRegistrationConstants {
 		final BookUrlInfo ref = book.reference(resolvedType);
 		if (ref != null) {
 			activity.startService(
-				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url), 
+				new Intent(Intent.ACTION_VIEW, Uri.parse(ref.Url),
 						activity.getApplicationContext(), BookDownloaderService.class)
 					.putExtra(BookDownloaderService.BOOK_FORMAT_KEY, ref.BookFormat)
 					.putExtra(BookDownloaderService.REFERENCE_TYPE_KEY, resolvedType)

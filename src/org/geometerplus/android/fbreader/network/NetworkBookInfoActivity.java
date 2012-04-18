@@ -101,7 +101,7 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 				}
 				library.initialize();
 			}
-        
+
 			if (myBook == null) {
 				final Uri url = getIntent().getData();
 				if (url != null && "litres-book".equals(url.getScheme())) {
@@ -140,9 +140,9 @@ public class NetworkBookInfoActivity extends Activity implements NetworkLibrary.
 					myConnection,
 					BIND_AUTO_CREATE
 				);
-            
+
 				setTitle(myBook.Title);
-            
+
 				setupDescription();
 				setupExtraLinks();
 				setupInfo();
