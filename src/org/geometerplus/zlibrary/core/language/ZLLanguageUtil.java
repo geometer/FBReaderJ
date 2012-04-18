@@ -73,7 +73,7 @@ public abstract class ZLLanguageUtil {
 				if (index != -1) {
 					String str = name.substring(0, index);
 					if (!codes.contains(str)) {
-					    codes.add(str);
+						codes.add(str);
 					}
 				}
 			}

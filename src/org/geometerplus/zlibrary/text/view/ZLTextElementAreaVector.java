@@ -163,9 +163,9 @@ final class ZLTextElementAreaVector {
 			if (myElementRegions.isEmpty()) {
 				return null;
 			}
-        
+
 			int index = currentRegion != null ? myElementRegions.indexOf(currentRegion) : -1;
-        
+
 			switch (direction) {
 				case rightToLeft:
 				case up:
@@ -186,7 +186,7 @@ final class ZLTextElementAreaVector {
 					}
 					break;
 			}
-        
+
 			switch (direction) {
 				case rightToLeft:
 					for (; index >= 0; --index) {
