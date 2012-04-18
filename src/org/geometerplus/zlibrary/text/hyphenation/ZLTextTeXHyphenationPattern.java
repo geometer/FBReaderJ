@@ -45,7 +45,7 @@ public final class ZLTextTeXHyphenationPattern {
 			}
 			final char[] symbols = new char[patternLength];
 			final byte[] values = new byte[patternLength + 1];
-    
+
 			for (int i = 0, k = 0; i < length; ++i) {
 				final char sym = pattern[offset + i];
 				if ((sym <= '9') && (sym >= '0')) {
@@ -55,7 +55,7 @@ public final class ZLTextTeXHyphenationPattern {
 					++k;
 				}
 			}
-    
+
 			myLength = patternLength;
 			mySymbols = symbols;
 			myValues = values;
@@ -67,7 +67,7 @@ public final class ZLTextTeXHyphenationPattern {
 			myValues = null;
 		}
 	}
-	
+
 	void apply(byte[] mask, int position) {
 		final int patternLength = myLength;
 		final byte[] values = myValues;
@@ -115,7 +115,7 @@ public final class ZLTextTeXHyphenationPattern {
 	}
 
 	public char[] getSymbols() {
-		return mySymbols;	
+		return mySymbols;
 	}
 
 	public byte[] getValues() {
