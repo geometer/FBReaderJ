@@ -46,26 +46,26 @@ class SelectionPopup extends ButtonsPopupPanel {
 
 		myWindow = new PopupWindow(activity, root, PopupWindow.Location.Floating, false);
 
-        addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
-        addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
-        addButton(ActionCode.SELECTION_TRANSLATE, true, R.drawable.selection_translate);
-        addButton(ActionCode.SELECTION_BOOKMARK, true, R.drawable.selection_bookmark);
-        addButton(ActionCode.SELECTION_CLEAR, true, R.drawable.selection_close);
-    }
-    
-    public void move(int selectionStartY, int selectionEndY) {
+		addButton(ActionCode.SELECTION_COPY_TO_CLIPBOARD, true, R.drawable.selection_copy);
+		addButton(ActionCode.SELECTION_SHARE, true, R.drawable.selection_share);
+		addButton(ActionCode.SELECTION_TRANSLATE, true, R.drawable.selection_translate);
+		addButton(ActionCode.SELECTION_BOOKMARK, true, R.drawable.selection_bookmark);
+		addButton(ActionCode.SELECTION_CLEAR, true, R.drawable.selection_close);
+	}
+
+	public void move(int selectionStartY, int selectionEndY) {
 		if (myWindow == null) {
 			return;
 		}
 
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 			RelativeLayout.LayoutParams.WRAP_CONTENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
+			RelativeLayout.LayoutParams.WRAP_CONTENT
 		);
-        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        final int verticalPosition; 
-        final int screenHeight = ((View)myWindow.getParent()).getHeight();
+		final int verticalPosition;
+		final int screenHeight = ((View)myWindow.getParent()).getHeight();
 		final int diffTop = screenHeight - selectionEndY;
 		final int diffBottom = selectionStartY;
 		if (diffTop > diffBottom) {
@@ -76,7 +76,7 @@ class SelectionPopup extends ButtonsPopupPanel {
 				? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.CENTER_VERTICAL;
 		}
 
-        layoutParams.addRule(verticalPosition);
-        myWindow.setLayoutParams(layoutParams);
-    }
+		layoutParams.addRule(verticalPosition);
+		myWindow.setLayoutParams(layoutParams);
+	}
 }

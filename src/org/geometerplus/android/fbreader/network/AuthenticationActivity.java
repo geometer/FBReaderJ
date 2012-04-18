@@ -66,7 +66,7 @@ public class AuthenticationActivity extends Activity {
 	static final String PASSWORD_KEY = "password";
 	static final String ERROR_KEY = "error";
 	static final String CUSTOM_AUTH_KEY = "customAuth";
-                  
+
 	static void initCredentialsCreator(Context context) {
 		final ZLNetworkManager manager = ZLNetworkManager.Instance();
 		if (manager.getCredentialsCreator() == null) {

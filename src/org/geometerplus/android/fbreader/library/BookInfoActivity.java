@@ -280,7 +280,7 @@ public class BookInfoActivity extends Activity {
 		setupInfoPair(R.id.file_name, "name", book.File.getPath());
 		if (ENABLE_EXTENDED_FILE_INFO) {
 			setupInfoPair(R.id.file_type, "type", book.File.getExtension());
-        
+
 			final ZLPhysicalFile physFile = book.File.getPhysicalFile();
 			final File file = physFile == null ? null : physFile.javaFile();
 			if (file != null && file.exists() && file.isFile()) {
