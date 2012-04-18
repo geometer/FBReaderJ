@@ -126,10 +126,10 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 					urls.addInfo(new UrlInfo(UrlInfo.Type.Image, href));
 				}
 			} else if (MimeType.APP_ATOM_XML.weakEquals(type) &&
-					   "entry".equals(type.getParameter("type"))) {
+						"entry".equals(type.getParameter("type"))) {
 				urls.addInfo(new UrlInfo(UrlInfo.Type.SingleEntry, href));
 			} else if (UrlInfo.Type.BookBuy == referenceType) {
-				final OPDSLink opdsLink = (OPDSLink)link; 
+				final OPDSLink opdsLink = (OPDSLink)link;
 				Money price = opdsLink.selectBestPrice();
 				if (price == null) {
 					// FIXME: HACK: price handling must be implemented not through attributes!!!
