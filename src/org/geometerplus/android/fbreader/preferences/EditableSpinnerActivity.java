@@ -40,7 +40,6 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		initView(new MyAdapter(this));
-		Suggestions.add("");
 		Collections.sort(Suggestions);
 	}
 
@@ -57,13 +56,16 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 			view = LayoutInflater.from(myActivity).inflate(R.layout.editable_stringlist_spinneritem, parent, false);
 			final Spinner spinner = (Spinner)view.findViewById(R.id.editable_stringlist_spinner);
 			int spinnerPosition = myActivity.Suggestions.indexOf(item.getData());
-			SpinnerAdapter adapter = new SpinnerAdapter(item);
-			spinner.setAdapter(adapter);
-			if (spinnerPosition == -1) {
-				spinnerPosition = 0;
-				item.setData(myActivity.Suggestions.get(0));
+			SpinnerAdapter adapter;
+			if (spinnerPosition != -1) {
+				adapter = new SpinnerAdapter(item, false);
+			} else {
+				adapter = new SpinnerAdapter(item, true);
 			}
-			spinner.setSelection(spinnerPosition, false);
+			spinner.setAdapter(adapter);
+			if (spinnerPosition != -1) {
+				spinner.setSelection(spinnerPosition, false);
+			}
 
 			final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
 			button.setOnClickListener(
@@ -81,9 +83,11 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 		private class SpinnerAdapter extends BaseAdapter {
 			private final StringItem myItem;
 			private int myPrevPosition;
+			private boolean myNeedToSkip;
 
-			public SpinnerAdapter(StringItem i) {
+			public SpinnerAdapter(StringItem i, boolean needToSkip) {
 				myItem = i;
+				myNeedToSkip = needToSkip;
 			}
 
 			@Override
@@ -104,13 +108,14 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 			@Override
 			public View getView(final int position, View convertView, ViewGroup parent) {
 				final String name;
-				if (myPrevPosition != position) {
+				if (myPrevPosition != position && !myNeedToSkip) {
 					name = getItem(position);
 					myItem.setData(name);
 					myActivity.enableButtons();
 
 				} else {
 					name = myItem.getData();
+					myNeedToSkip = false;
 				}
 				final View view;
 				view = LayoutInflater.from(myActivity).inflate(R.layout.editable_spinner_item, parent, false);
@@ -132,7 +137,7 @@ public class EditableSpinnerActivity extends BaseStringListActivity {
 			public View getDropDownView(final int position, View convertView, ViewGroup parent) {
 				final String name = getItem(position);
 				final View view;
-				view = LayoutInflater.from(myActivity).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
+				view = LayoutInflater.from(myActivity).inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
 				final TextView text = (TextView)view.findViewById(android.R.id.text1);
 				text.setText(name);
 				return view;
