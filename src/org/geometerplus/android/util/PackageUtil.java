@@ -116,11 +116,11 @@ public abstract class PackageUtil {
 			final ZLBooleanOption doNotInstallOption = new ZLBooleanOption("doNotInstall", plugin, false);
 			if (!doNotInstallOption.getValue()) {
 				final String pluginVersion = pluginData.get("androidPluginVersion");
-            
+
 				String message = null;
 				String positiveButtonKey = null;
 				String titleResourceKey = null;
-				
+
 				if (!PackageUtil.isPluginInstalled(activity, plugin)) {
 					message = pluginData.get("androidPluginInstallMessage");
 					positiveButtonKey = "install";

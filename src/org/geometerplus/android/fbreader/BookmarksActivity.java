@@ -88,7 +88,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 					myThisBookBookmarks.add(bookmark);
 				}
 			}
-        
+
 			myThisBookView = createTab("thisBook", R.id.this_book);
 			new BookmarksAdapter(myThisBookView, myThisBookBookmarks, true);
 		} else {
@@ -106,7 +106,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			return;
 		}
-	   	String pattern = intent.getStringExtra(SearchManager.QUERY);
+		String pattern = intent.getStringExtra(SearchManager.QUERY);
 		myBookmarkSearchPatternOption.setValue(pattern);
 
 		final LinkedList<Bookmark> bookmarks = new LinkedList<Bookmark>();
@@ -192,8 +192,8 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 				gotoBookmark(bookmark);
 				return true;
 			case EDIT_ITEM_ID:
-        		final Intent intent = new Intent(this, BookmarkEditActivity.class);
-        		startActivityForResult(intent, 1);
+				final Intent intent = new Intent(this, BookmarkEditActivity.class);
+				startActivityForResult(intent, 1);
 				// TODO: implement
 				return true;
 			case DELETE_ITEM_ID:
@@ -294,7 +294,7 @@ public class BookmarksActivity extends TabActivity implements MenuItem.OnMenuIte
 		public final long getItemId(int position) {
 			return position;
 		}
-	
+
 		public final Bookmark getItem(int position) {
 			if (myCurrentBook) {
 				--position;
