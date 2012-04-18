@@ -97,7 +97,7 @@ class ZLTextSelection implements ZLTextAbstractHighlighting {
 		}
 	}
 
-	void  expandTo(int x, int y) {
+	void expandTo(int x, int y) {
 		if (isEmpty()) {
 			return;
 		}

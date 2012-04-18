@@ -95,7 +95,7 @@ public abstract class FBTree extends ZLTree<FBTree> implements Comparable<FBTree
 
 	/**
 	 * Returns id used as a part of unique key above. This string must be not null
-     * and be different for all children of same tree
+	 * and be different for all children of same tree
 	 */
 	protected abstract String getStringId();
 

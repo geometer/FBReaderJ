@@ -162,9 +162,9 @@ class CurlAnimationProvider extends AnimationProvider {
 		canvas.clipPath(myFgPath);
 		canvas.drawBitmap(fgBitmap, 0, 0, myPaint);
 		canvas.restore();
-        
+
 		myEdgePaint.setColor(ZLAndroidColorUtil.rgb(ZLAndroidColorUtil.getAverageColor(fgBitmap)));
-        
+
 		myEdgePath.rewind();
 		myEdgePath.moveTo(x, y);
 		myEdgePath.lineTo(
@@ -239,7 +239,7 @@ class CurlAnimationProvider extends AnimationProvider {
 				y = 1;
 			} else {
 				x = 1;
-				y = mySpeed < 0 ? myHeight  - 3 : 3;
+				y = mySpeed < 0 ? myHeight - 3 : 3;
 			}
 		} else {
 			final int cornerX = x > myWidth / 2 ? myWidth : 0;
