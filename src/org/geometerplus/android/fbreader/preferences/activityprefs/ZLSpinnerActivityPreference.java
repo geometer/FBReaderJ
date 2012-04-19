@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.preferences;
+package org.geometerplus.android.fbreader.preferences.activityprefs;
 
 import java.util.*;
 
@@ -26,9 +26,9 @@ import android.preference.Preference;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-class ZLSpinnerActivityPreference extends ZLActivityPreference {
+public class ZLSpinnerActivityPreference extends ZLActivityPreference {
 
-	ZLSpinnerActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
+	public ZLSpinnerActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
 		super(context, holder, map, suggestions, rootResource, resourceKey);
 	}
 
