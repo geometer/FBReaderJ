@@ -25,25 +25,6 @@
 			<node name="connectionRefused" value="A conexión foi rexeitada por&#10;%s"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="Vermello"/>
-		<node name="green" value="Verde"/>
-		<node name="blue" value="Azul"/>
-		<node name="black" value="Negro"/>
-		<node name="white" value="Branco"/>
-		<node name="maroon" value="Marrón"/>
-		<node name="olive" value="Verde oliva"/>
-		<node name="navy" value="Azul mariño"/>
-		<node name="purple" value="Púrpura"/>
-		<node name="teal" value="Verde azulado"/>
-		<node name="silver" value="Prata"/>
-		<node name="gray" value="Gris"/>
-		<node name="lime" value="Lima"/>
-		<node name="yellow" value="Amarelo"/>
-		<node name="magenta" value="Maxenta"/>
-		<node name="cyan" value="Cian"/>
-		<node name="custom..." value="Personalizado..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="Arabe"/>
 		<node name="cs" value="heco"/>

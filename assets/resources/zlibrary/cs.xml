@@ -26,25 +26,6 @@
 			<node name="connectionRefused" value="Spojení bylo odmítnuto:&#10;%s"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="Červená"/>
-		<node name="green" value="Zelená"/>
-		<node name="blue" value="Morá"/>
-		<node name="black" value="Černá"/>
-		<node name="white" value="Bílá"/>
-		<node name="maroon" value="Kaštanová"/>
-		<node name="olive" value="Olivová"/>
-		<node name="navy" value="Tmavě modrá"/>
-		<node name="purple" value="Purpurová"/>
-		<node name="teal" value="Světle modrá"/>
-		<node name="silver" value="Stříbrná"/>
-		<node name="gray" value="Šedá"/>
-		<node name="lime" value="Citrónová"/>
-		<node name="yellow" value="Žlutá"/>
-		<node name="magenta" value="Fialová"/>
-		<node name="cyan" value="Tyrkysová"/>
-		<node name="custom..." value="Vlastní..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="Arabsky"/>
 		<node name="cs" value="Česky"/>
