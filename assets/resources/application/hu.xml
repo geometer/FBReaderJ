@@ -12,7 +12,7 @@
 			<node name="summary" value="Könyvek cím szerint"/>
 		</node>
 		<node name="bySeries" value="Sorozat">
-			<node name="summary" value="Könyvek sorozat szerint" />
+			<node name="summary" value="Könyvek sorozat szerint"/>
 		</node>
 		<node name="byTag" value="Címkék">
 			<node name="summary" value="Könyvek címkék szerint"/>
@@ -24,7 +24,7 @@
 			<node name="summary" value="Kedvencnek jelölt könyveim"/>
 		</node>
 		<node name="found" value="Találatok">
-			<node name="summary" value="Keresés: %s" />
+			<node name="summary" value="Keresés: %s"/>
 		</node>
 		<node name="fileTree" value="Könytárfa">
 			<node name="summary" value="Fájlrendszer tallózása"/>
@@ -62,15 +62,15 @@
 			<node name="summary" value="Könyvek sorozat szerint"/>
 		</node>
 		<node name="search" value="Keresés">
-			<node name="summary" value="Keresés itt: %s" />
-			<node name="summaryAllCatalogs" value="Könyvek keresése a katalógusokban" />
+			<node name="summary" value="Keresés itt: %s"/>
+			<node name="summaryAllCatalogs" value="Könyvek keresése a katalógusokban"/>
 			<node name="summaryInProgress" value="keresés folyamatban"/>
 		</node>
 		<node name="found" value="Találatok">
-			<node name="summary" value="Keresés az eredmények között: %s" />
+			<node name="summary" value="Keresés az eredmények között: %s"/>
 		</node>
 		<node name="openCatalog" value="Katalógus megnyitása"/>
-		<node name="networkSearch" value="Keresés" />
+		<node name="networkSearch" value="Keresés"/>
 		<node name="showResults" value="Eredmények"/>
 		<node name="showBooks" value="Könyvek"/>
 		<node name="download" value="Letöltés"/>
@@ -84,10 +84,10 @@
 		<node name="removeFromBasket" value="Kosárból eltávolít"/>
 		<node name="openBasket" value="Kosár megnyitása"/>
 		<node name="clearBasket" value="Kosár kiürítése"/>
-		<node name="buyAllBooks" value="Összes könyv megvásárlása" />
-		<node name="openInBrowser" value="Megnyitás böngészőben" />
-		<node name="stopLoading" value="Letöltés leállítása" />
-		<node name="stopSearching" value="Keresés leállítása" />
+		<node name="buyAllBooks" value="Összes könyv megvásárlása"/>
+		<node name="openInBrowser" value="Megnyitás böngészőben"/>
+		<node name="stopLoading" value="Letöltés leállítása"/>
+		<node name="stopSearching" value="Keresés leállítása"/>
 		<node name="signIn" value="Bejelentkezés"/>
 		<node name="signOut" value="Kijelentkezés (%s)"/>
 		<node name="topup" value="Számla feltöltése (Jelenleg: %s)"/>
@@ -99,10 +99,10 @@
 		<node name="basketSummaryEmpty" value="A kosár üres."/>
 		<node name="basketSummaryCountOnly" value="%0 könyv"/>
 		<node name="basketSummary" value="%0 könyv (%1)"/>
-		<node name="alreadyDownloading" value="Könyv letöltése folyamatban" />
-		<node name="alreadyDownloadingDemo" value="Minta letöltése folyamatban" />
-		<node name="stoppingCatalogLoading" value="Letöltés leállítása" />
-		<node name="stoppingNetworkSearch" value="Keresés leállítása" />
+		<node name="alreadyDownloading" value="Könyv letöltése folyamatban"/>
+		<node name="alreadyDownloadingDemo" value="Minta letöltése folyamatban"/>
+		<node name="stoppingCatalogLoading" value="Letöltés leállítása"/>
+		<node name="stoppingNetworkSearch" value="Keresés leállítása"/>
 		<node name="editCustomCatalog" value="Katalógus szerkesztése"/>
 		<node name="removeCustomCatalog" value="Katalógus törlése"/>
 		<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
@@ -113,10 +113,12 @@
 			<node name="readDemo" value="Elolvassa a mintát?"/>
 			<node name="downloadDemo" value="Letölti a mintát?"/>
 			<node name="buy" value="Megvásárolja a könyvet? (%s)"/>
-			<node name="openInBrowser" value="Megnyitja a katalógust a böngészőben?" />
+			<node name="openInBrowser" value="Megnyitja a katalógust a böngészőben?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Katalógusok letöltése"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Könyv keresése az interneten"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Katalógusok letöltése"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Könyv keresése az interneten"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Új katalógus"/>
 			<node name="editUrl" value="URL megadása"/>
@@ -125,7 +127,7 @@
 			<node name="networkSearch" value="Internetes keresés"/>
 			<node name="reload" value="Újratöltés"/>
 			<node name="signIn" value="Bejelentkezés"/>
-			<node name="signUp" value="Regisztráció" />
+			<node name="signUp" value="Regisztráció"/>
 			<node name="signOut" value="Kijelentkezés (%s)"/>
 			<node name="topup" value="Számla feltöltése"/>
 			<node name="addCustomCatalog" value="Katalógus hozzáadása"/>
@@ -136,49 +138,49 @@
 		</node>
 	</node>
 	<node name="buyBook">
-		<node name="title" value="Könyv vásárlása" />
+		<node name="title" value="Könyv vásárlása"/>
 		<node name="titleSeveralBooks" value="Könyvek vásárlása"/>
-		<node name="confirm" value="Biztosan megvásárolja ezt a könyvet?&#10;&#8220;%s&#8221;" />
-		<node name="confirmSeveralBooks" value="Biztosan megvásárol %s könyvet?" />
-		<node name="alreadyBought" value="Ezt a könyvet már megvásárolta" />
-		<node name="notAuthorized" value="Bejelentkezés szükséges" />
-		<node name="noAccountInformation" value="Fiók állapota nem elérhető" />
+		<node name="confirm" value="Biztosan megvásárolja ezt a könyvet?&#10;“%s”"/>
+		<node name="confirmSeveralBooks" value="Biztosan megvásárol %s könyvet?"/>
+		<node name="alreadyBought" value="Ezt a könyvet már megvásárolta"/>
+		<node name="notAuthorized" value="Bejelentkezés szükséges"/>
+		<node name="noAccountInformation" value="Fiók állapota nem elérhető"/>
 		<node name="unsufficientFunds" value="A vásárlás végösszege %0, de az Ön számláján csak %1 van "/>
 		<node name="zeroFunds" value="A vásárlás végösszege %0"/>
 	</node>
 	<node name="bookInfo">
-		<node name="bookInfo" value="Könyv adatai" />
-		<node name="fileInfo" value="Fájlinformáció" />
-		<node name="description" value="Leírás" />
-		<node name="noDescription" value="Nem érhető el leírás." />
-		<node name="annotation" value="Fülszöveg" />
-		<node name="title" value="Cím:" />
-		<node name="authors" value="Szerzők:" />
-		<node name="series" value="Sorozat:" />
-		<node name="indexInSeries" value="Sorszám:" />
-		<node name="tags" value="Címkék:" />
+		<node name="bookInfo" value="Könyv adatai"/>
+		<node name="fileInfo" value="Fájlinformáció"/>
+		<node name="description" value="Leírás"/>
+		<node name="noDescription" value="Nem érhető el leírás."/>
+		<node name="annotation" value="Fülszöveg"/>
+		<node name="title" value="Cím:"/>
+		<node name="authors" value="Szerzők:"/>
+		<node name="series" value="Sorozat:"/>
+		<node name="indexInSeries" value="Sorszám:"/>
+		<node name="tags" value="Címkék:"/>
 		<node name="language" value="Nyelv:"/>
-		<node name="name" value="Név:" />
-		<node name="type" value="Típus:" />
-		<node name="size" value="Méret:" />
-		<node name="time" value="Utolsó módosítás:" />
-		<node name="sizeInBytes" value="%s byte" />
-		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="name" value="Név:"/>
+		<node name="type" value="Típus:"/>
+		<node name="size" value="Méret:"/>
+		<node name="time" value="Utolsó módosítás:"/>
+		<node name="sizeInBytes" value="%s byte"/>
+		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Katalógus:"/>
-		<node name="extraLinks" value="Kapcsolódó linkek" />
+		<node name="extraLinks" value="Kapcsolódó linkek"/>
 		<node name="menu">
-			<node name="edit" value="Szerkesztés" />
+			<node name="edit" value="Szerkesztés"/>
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Könyv letöltve" />
-		<node name="tickerError" value="Hiba a könyv letöltése közben" />
-		<node name="contentSuccess" value="Letöltés kész" />
-		<node name="contentError" value="Letöltés sikertelen" />
-		<node name="downloadingStarted" value="Könyv letöltése elindítva" />
-		<node name="alreadyDownloading" value="A könyv már letöltés alatt" />
-		<node name="cannotCreateDirectory" value="%s mappa létrehozása sikertelen" />
-		<node name="cannotCreateFile" value="%s fájl létrehozása sikertelen" />
+		<node name="tickerSuccess" value="Könyv letöltve"/>
+		<node name="tickerError" value="Hiba a könyv letöltése közben"/>
+		<node name="contentSuccess" value="Letöltés kész"/>
+		<node name="contentError" value="Letöltés sikertelen"/>
+		<node name="downloadingStarted" value="Könyv letöltése elindítva"/>
+		<node name="alreadyDownloading" value="A könyv már letöltés alatt"/>
+		<node name="cannotCreateDirectory" value="%s mappa létrehozása sikertelen"/>
+		<node name="cannotCreateFile" value="%s fájl létrehozása sikertelen"/>
 	</node>
 	<node name="tocView">
 		<node name="expandTree" value="Kibontás"/>
@@ -200,7 +202,7 @@
 	<node name="cancelMenu">
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
-		<node name="previousBook" value="Előző könyv megnyitása" />
+		<node name="previousBook" value="Előző könyv megnyitása"/>
 		<node name="returnTo" value="Visszatérés ..."/>
 		<node name="back" value="Vissza"/>
 		<node name="forward" value="Előre"/>
@@ -243,24 +245,24 @@
 		<node name="screenOrientationLandscape" value="Fekvő"/>
 		<node name="screenOrientationReversePortrait" value="Fordított álló"/>
 		<node name="screenOrientationReverseLandscape" value="Fordított fekvő"/>
-		<node name="increaseFont" value="Nagyítás" />
-		<node name="decreaseFont" value="Kicsinyítés" />
+		<node name="increaseFont" value="Nagyítás"/>
+		<node name="decreaseFont" value="Kicsinyítés"/>
 		<node name="toggleFullscreen" value="Teljes kijelző"/>
 		<node name="bookmarks" value="Könyvjelzők"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Telepítés" />
-			<node name="update" value="Frissítés" />
-			<node name="skip" value="Kihagy" />
-			<node name="buy" value="Vásárlás" />
-			<node name="buyAndDownload" value="Vásárlás és letöltés" />
-			<node name="continue" value="Folytatás" />
-			<node name="editUrl" value="URL szerkesztése" />
-			<node name="tryAgain" value="Próbálja újra" />
-			<node name="openBook" value="Olvasás" />
-			<node name="editInfo" value="Szerkesztés" />
-			<node name="reloadInfo" value="Újratölt" />
+			<node name="install" value="Telepítés"/>
+			<node name="update" value="Frissítés"/>
+			<node name="skip" value="Kihagy"/>
+			<node name="buy" value="Vásárlás"/>
+			<node name="buyAndDownload" value="Vásárlás és letöltés"/>
+			<node name="continue" value="Folytatás"/>
+			<node name="editUrl" value="URL szerkesztése"/>
+			<node name="tryAgain" value="Próbálja újra"/>
+			<node name="openBook" value="Olvasás"/>
+			<node name="editInfo" value="Szerkesztés"/>
+			<node name="reloadInfo" value="Újratölt"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Számla feltöltése"/>
 			<node name="pay" value="Fizetés"/>
@@ -270,22 +272,22 @@
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
-			<node name="installTitle" value="Bővítmény telepítése" />
-			<node name="updateTitle" value="Bővítmény frissítése" />
-			<node name="dontAskAgain" value="Ne kérdezze megint" />
+			<node name="installTitle" value="Bővítmény telepítése"/>
+			<node name="updateTitle" value="Bővítmény frissítése"/>
+			<node name="dontAskAgain" value="Ne kérdezze megint"/>
 		</node>
 		<node name="installDictionary">
 			<node name="title" value="Telepítés helye"/>
-			<node name="message" value="%s Telepíti?" />
+			<node name="message" value="%s Telepíti?"/>
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Fájlnév"/>
 			<node name="title" value="Cím"/>
 			<node name="language" value="Nyelv"/>
 			<node name="encoding" value="Kódolás"/>
-			<node name="authors" value="Szerzők" />
-			<node name="tags" value="Címkék" />
-			<node name="series" value="Sorozat" />
+			<node name="authors" value="Szerzők"/>
+			<node name="tags" value="Címkék"/>
+			<node name="series" value="Sorozat"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Mappák">
@@ -330,9 +332,9 @@
 				</node>
 				<node name="dontTurnScreenOff" value="Kijelző kikapcsolása">
 					<node name="0" value="Soha"/>
-					<node name="25" value="25 százalék akku töltöttség alatt" />
-					<node name="50" value="50 százalék akku töltöttség alatt" />
-					<node name="100" value="Mindig (automatikusan)" />
+					<node name="25" value="25 százalék akku töltöttség alatt"/>
+					<node name="50" value="50 százalék akku töltöttség alatt"/>
+					<node name="100" value="Mindig (automatikusan)"/>
 				</node>
 				<node name="dontTurnScreenOffDuringCharging" value="Kijelző kikapcsolása töltéskor">
 					<node name="summaryOn" value="Ne kapcsoljon ki a kijelző az akkumulátor töltésekor"/>
@@ -523,7 +525,7 @@
 				</node>
 			</node>
 			<node name="colors" value="Színek és háttérképek">
-				<node name="summary" value="Színbeállítások" />
+				<node name="summary" value="Színbeállítások"/>
 				<node name="background" value="Háttér">
 					<node name="solidColor" value="Egyszínű"/>
 					<node name="leather" value="Bőr"/>
@@ -595,13 +597,13 @@
 				</node>
 				<node name="animation" value="Animáció">
 					<node name="none" value="Görgetés animáció nélkül"/>
-					<node name="curl" value="Hajlítás" />
-					<node name="slide" value="Csúsztatás" />
+					<node name="curl" value="Hajlítás"/>
+					<node name="slide" value="Csúsztatás"/>
 					<node name="shift" value="Eltolás"/>
 				</node>
 				<node name="animationSpeed" value="Animáció sebessége">
-					<node name="fast" value="gyors" />
-					<node name="slow" value="lassú" />
+					<node name="fast" value="gyors"/>
+					<node name="slow" value="lassú"/>
 				</node>
 				<node name="horizontal" value="Vízszintes lapozás">
 					<node name="summaryOn" value="Oldalak görgetése vízszintesen"/>
@@ -615,13 +617,13 @@
 					<node name="right_to_left" value="Jobbról balra lapozás"/>
 					<node name="up" value="Lentről felfelé lapozás"/>
 					<node name="down" value="Fentről lefelé lapozás"/>
-					<node name="custom" value="Egyéni&#8230;" />
+					<node name="custom" value="Egyéni…"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Szótár">
 				<node name="summary" value="Szótár beállításai"/>
 				<node name="dictionary" value="Szótár"/>
-				<node name="translator" value="Fordító" />
+				<node name="translator" value="Fordító"/>
 				<node name="tappingAction" value="Hosszú érintés">
 					<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
 					<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>
@@ -637,8 +639,8 @@
 				<node name="summary" value="Képmegjelenítési beállítások"/>
 				<node name="backgroundColor" value="Képnéző háttérszíne"/>
 				<node name="tappingAction" value="Művelet hosszú érintésre">
-					<node name="doNothing" value="Nem történik semmi hosszú érintésre" />
-					<node name="selectImage" value="A hosszú érintés kijelöli a képet" />
+					<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
+					<node name="selectImage" value="A hosszú érintés kijelöli a képet"/>
 					<node name="openImageView" value="A hosszú érintés megnyitja a képnézőt"/>
 				</node>
 			</node>
@@ -661,14 +663,14 @@
 					<node name="summaryOff" value="Ne mutassa az utolsó 3 pozíciót"/>
 				</node>
 				<node name="backKeyAction" value="Vissza gomb műveletek">
-					<node name="exit" value="FBReader bezárása" />
+					<node name="exit" value="FBReader bezárása"/>
 					<node name="goBack" value="Navigáljon vissza a szövegben"/>
-					<node name="cancelMenu" value="Vissza menü megjelenítése" />
+					<node name="cancelMenu" value="Vissza menü megjelenítése"/>
 				</node>
 				<node name="backKeyLongPressAction" value="Vissza gomb hosszú nyomására">
-					<node name="exit" value="FBReader bezárása" />
+					<node name="exit" value="FBReader bezárása"/>
 					<node name="goBack" value="Navigáljon vissza a szövegben"/>
-					<node name="cancelMenu" value="Vissza menü megjelenítése" />
+					<node name="cancelMenu" value="Vissza menü megjelenítése"/>
 					<node name="none" value="Semmit ne tegyen"/>
 				</node>
 			</node>
@@ -702,60 +704,60 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Könyv letöltése %s"/>
 			<node name="search" value="Keresés. Egy kis türelmet..."/>
-			<node name="loadInfo" value="Információ letöltése. Egy kis türelmet..." />
+			<node name="loadInfo" value="Információ letöltése. Egy kis türelmet..."/>
 			<node name="loadingBook" value="Könyv megnyitása. Egy kis türelmet..."/>
 			<node name="loadingBookList" value="Könyvtár megnyitása. Egy kis türelmet..."/>
 			<node name="creatingBooksDatabase" value="Adatbázis létrehozása. Egy kis türelmet..."/>
 			<node name="updatingBooksDatabase" value="Adatbázis frissítése. Egy kis türelmet..."/>
-			<node name="loadingNetworkLibrary" value="Könyvtár megnyitása. Egy kis türelmet..." />
-			<node name="authentication" value="Bejelentkezés. Egy kis türelmet..." />
-			<node name="signOut" value="Kijelentkezés. Egy kis türelmet..." />
-			<node name="purchaseBook" value="Könyv vásárlása. Egy kis türelmet..." />
-			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..." />
-			<node name="loadingNetworkBookInfo" value="Könyv információinak letöltése. Egy kis türelmet&#8230;" />
+			<node name="loadingNetworkLibrary" value="Könyvtár megnyitása. Egy kis türelmet..."/>
+			<node name="authentication" value="Bejelentkezés. Egy kis türelmet..."/>
+			<node name="signOut" value="Kijelentkezés. Egy kis türelmet..."/>
+			<node name="purchaseBook" value="Könyv vásárlása. Egy kis türelmet..."/>
+			<node name="loadingCatalogInfo" value="Katalógus információ letöltése. Egy kis türelmet..."/>
+			<node name="loadingNetworkBookInfo" value="Könyv információinak letöltése. Egy kis türelmet…"/>
 			<node name="updatingCatalogsList" value="Katalógus listák frissítése. Egy kis türelmet..."/>
-			<node name="updatingAccountInformation" value="Fiókadatok frissítése. Egy kis türelmet&#8230;" />
+			<node name="updatingAccountInformation" value="Fiókadatok frissítése. Egy kis türelmet…"/>
 		</node>
 		<node name="networkError">
-			<node name="internalError" value="Belső szerverhiba" />
-			<node name="purchaseNotEnoughMoney" value="Nincs elegendő pénz a számláján" />
-			<node name="purchaseMissingBook" value="Nincs ilyen könyv" />
-			<node name="purchaseAlreadyPurchased" value="Már megvásárolta a könyvet" />
-			<node name="bookNotPurchased" value="A könyv nincs megvásárolva" />
-			<node name="downloadLimitExceeded" value="Túllépte a letöltési korlátot" />
-			<node name="noUserEmail" value="Nincs regisztrált felhasználónk&#10;ezzel az e-mail címmel" />
-			<node name="unsupportedOperation" value="Nem támogatott művelet" />
-			<node name="notAnOPDS" value="Ez nem OPSD formátumú katalógus" />
-			<node name="noRequiredInformation" value="Szükséges információ nincs megadva a katalógusban" />
-			<node name="cacheDirectoryError" value="Gyorsítótár létrehozása sikertelen" />
+			<node name="internalError" value="Belső szerverhiba"/>
+			<node name="purchaseNotEnoughMoney" value="Nincs elegendő pénz a számláján"/>
+			<node name="purchaseMissingBook" value="Nincs ilyen könyv"/>
+			<node name="purchaseAlreadyPurchased" value="Már megvásárolta a könyvet"/>
+			<node name="bookNotPurchased" value="A könyv nincs megvásárolva"/>
+			<node name="downloadLimitExceeded" value="Túllépte a letöltési korlátot"/>
+			<node name="noUserEmail" value="Nincs regisztrált felhasználónk&#10;ezzel az e-mail címmel"/>
+			<node name="unsupportedOperation" value="Nem támogatott művelet"/>
+			<node name="notAnOPDS" value="Ez nem OPSD formátumú katalógus"/>
+			<node name="noRequiredInformation" value="Szükséges információ nincs megadva a katalógusban"/>
+			<node name="cacheDirectoryError" value="Gyorsítótár létrehozása sikertelen"/>
 		</node>
 		<node name="AuthenticationDialog">
-			<node name="title" value="Bejelentkezés" />
-			<node name="unencryptedWarning" value="Jelszava titkosítatlanul lesz elküldve" />
-			<node name="login" value="Felhasználónév" />
-			<node name="password" value="Jelszó" />
-			<node name="loginIsEmpty" value="A felhasználónév nem lehet üres" />
-			<node name="register" value="Regisztráció" />
+			<node name="title" value="Bejelentkezés"/>
+			<node name="unencryptedWarning" value="Jelszava titkosítatlanul lesz elküldve"/>
+			<node name="login" value="Felhasználónév"/>
+			<node name="password" value="Jelszó"/>
+			<node name="loginIsEmpty" value="A felhasználónév nem lehet üres"/>
+			<node name="register" value="Regisztráció"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: egyéni katalógus hozzáadása" />
-			<node name="catalogTitle" value="Cím" />
-			<node name="catalogUrl" value="URL" />
-			<node name="catalogSummary" value="Leírás" />
-			<node name="catalogTitleExample" value="Pl.: Project Gutenberg katalógus" />
-			<node name="catalogUrlExample" value="Pl.: http://m.gutenberg.org/" />
-			<node name="catalogSummaryExample" value="Pl.: Ingyenes könyvek" />
-			<node name="titleIsEmpty" value="A cím nem lehet üres" />
-			<node name="urlIsEmpty" value="Az URL nem lehet üres" />
-			<node name="invalidUrl" value="Érvényelen URL" />
-			<node name="titleAlreadyExists" value="A megadott cím már használatban van" />
-			<node name="siteAlreadyExists" value="A megadott oldal már használatban van" />
+			<node name="title" value="FBReader: egyéni katalógus hozzáadása"/>
+			<node name="catalogTitle" value="Cím"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Leírás"/>
+			<node name="catalogTitleExample" value="Pl.: Project Gutenberg katalógus"/>
+			<node name="catalogUrlExample" value="Pl.: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="Pl.: Ingyenes könyvek"/>
+			<node name="titleIsEmpty" value="A cím nem lehet üres"/>
+			<node name="urlIsEmpty" value="Az URL nem lehet üres"/>
+			<node name="invalidUrl" value="Érvényelen URL"/>
+			<node name="titleAlreadyExists" value="A megadott cím már használatban van"/>
+			<node name="siteAlreadyExists" value="A megadott oldal már használatban van"/>
 		</node>
 		<node name="languageFilterDialog">
 			<node name="title" value="Nyelvi szűrő"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="A nap tippje" />
+			<node name="title" value="A nap tippje"/>
 			<node name="initializationText" value="Szeretne naponta tippeket kapni az FBReaderről? Az új tippek az FBReader webhelyéről töltődnek le. A várható hálózati forgalom 1-2 kilobyte hetente.&#10;&#10;Bekapcsolja a tippeket?"/>
 			<node name="dontShowAgain" value="Ne mutassa többet"/>
 			<node name="more" value="Következő"/>
@@ -771,7 +773,7 @@
 		<node name="permissionDenied" value="Sanos nem engedélyezett"/>
 		<node name="noFavorites" value="A Kedvencek listája üres"/>
 		<node name="emptyCatalog" value="A katalógus üres"/>
-		<node name="emptyBasket" value="A kosár sajnos üres" />
+		<node name="emptyBasket" value="A kosár sajnos üres"/>
 		<node name="emptyNetworkSearchResults" value="Nem található megfelelő könyv"/>
 	</node>
 	<node name="external">

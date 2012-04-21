@@ -10,20 +10,20 @@
 			<node name="apply" value="Застосувати"/>
 		</node>
 		<node name="networkError">
-			<node name="title" value="Помилка при роботі з мережею" />
-			<node name="unknownErrorMessage" value="Невідома помилка" />
-			<node name="operationTimedOutMessage" value="Відведений час вичерпаний" />
-			<node name="somethingWrongMessage" value="Помилка при роботі з&#10;%s" />
-			<node name="couldntCreateDirectoryMessage" value="Не вдалося створити теку&#10;%s" />
-			<node name="couldntCreateFileMessage" value="Не вдалося створити файл&#10;%s" />
-			<node name="couldntConnectToNetworkMessage" value="Не вдалося з’єднатися з мережею" />
-			<node name="couldntConnectMessage" value="Не вдалося з’єднатися з сайтом&#10;%s" />
-			<node name="couldntResolveHostMessage" value="Не вдається знайти сайт&#10;%s" />
-			<node name="authenticationFailed" value="Помилка авторизації" />
-			<node name="unsupportedProtocol" value="Невідомий протокол" />
-			<node name="invalidURL" value="Неправильний URL" />
-			<node name="hostCantBeReached" value="Сайт %s недоступний" />
-			<node name="connectionRefused" value="З’єднання закрите сайтом&#10;%s" />
+			<node name="title" value="Помилка при роботі з мережею"/>
+			<node name="unknownErrorMessage" value="Невідома помилка"/>
+			<node name="operationTimedOutMessage" value="Відведений час вичерпаний"/>
+			<node name="somethingWrongMessage" value="Помилка при роботі з&#10;%s"/>
+			<node name="couldntCreateDirectoryMessage" value="Не вдалося створити теку&#10;%s"/>
+			<node name="couldntCreateFileMessage" value="Не вдалося створити файл&#10;%s"/>
+			<node name="couldntConnectToNetworkMessage" value="Не вдалося з’єднатися з мережею"/>
+			<node name="couldntConnectMessage" value="Не вдалося з’єднатися з сайтом&#10;%s"/>
+			<node name="couldntResolveHostMessage" value="Не вдається знайти сайт&#10;%s"/>
+			<node name="authenticationFailed" value="Помилка авторизації"/>
+			<node name="unsupportedProtocol" value="Невідомий протокол"/>
+			<node name="invalidURL" value="Неправильний URL"/>
+			<node name="hostCantBeReached" value="Сайт %s недоступний"/>
+			<node name="connectionRefused" value="З’єднання закрите сайтом&#10;%s"/>
 		</node>
 	</node>
 	<node name="color">
@@ -46,37 +46,37 @@
 		<node name="custom..." value="Налаштувати..."/>
 	</node>
 	<node name="language">
-		<node name="ar" value="арабська" />
-		<node name="cs" value="чеська" />
-		<node name="de" value="німецька" />
-		<node name="de-traditional" value="німецька (стара орфографія)" />
-		<node name="el" value="грецька" />
-		<node name="en" value="англійська" />
-		<node name="eo" value="есперанто" />
-		<node name="es" value="іспанська" />
-		<node name="fi" value="фінська" />
-		<node name="fr" value="французька" />
+		<node name="ar" value="арабська"/>
+		<node name="cs" value="чеська"/>
+		<node name="de" value="німецька"/>
+		<node name="de-traditional" value="німецька (стара орфографія)"/>
+		<node name="el" value="грецька"/>
+		<node name="en" value="англійська"/>
+		<node name="eo" value="есперанто"/>
+		<node name="es" value="іспанська"/>
+		<node name="fi" value="фінська"/>
+		<node name="fr" value="французька"/>
 		<node name="gl" value="галицька"/>
-		<node name="he" value="іврит" />
-		<node name="hu" value="угорська" />
-		<node name="id" value="індонезійська" />
-		<node name="it" value="італійська" />
-		<node name="lt" value="литовська" />
-		<node name="nl" value="голландська" />
-		<node name="no" value="норвезька" />
-		<node name="pl" value="польська" />
-		<node name="pt" value="португальська" />
+		<node name="he" value="іврит"/>
+		<node name="hu" value="угорська"/>
+		<node name="id" value="індонезійська"/>
+		<node name="it" value="італійська"/>
+		<node name="lt" value="литовська"/>
+		<node name="nl" value="голландська"/>
+		<node name="no" value="норвезька"/>
+		<node name="pl" value="польська"/>
+		<node name="pt" value="португальська"/>
 		<node name="ro" value="румунська"/>
-		<node name="ru" value="російська" />
-		<node name="sv" value="шведська" />
+		<node name="ru" value="російська"/>
+		<node name="sv" value="шведська"/>
 		<node name="ta" value="Tamil" toBeTranslated="true"/>
 		<node name="th" value="тайська"/>
-		<node name="tr" value="турецька" />
-		<node name="uk" value="українська" />
-		<node name="vi" value="в’єтнамська" />
-		<node name="zh" value="китайська" />
-		<node name="other" value="інша" />
-		<node name="multi" value="Мультимовна" />
+		<node name="tr" value="турецька"/>
+		<node name="uk" value="українська"/>
+		<node name="vi" value="в’єтнамська"/>
+		<node name="zh" value="китайська"/>
+		<node name="other" value="інша"/>
+		<node name="multi" value="Мультимовна"/>
 	</node>
 	<node name="boolean3">
 		<node name="on" value="включити"/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Vietnamese FBReaderJ resources, by Phạm Văn Hùng_Firestork -->
 <resources>
 	<node name="library" value="FBReader library" toBeTranslated="true">
@@ -24,7 +24,7 @@
 			<node name="summary" value="Sách của tôi"/>
 		</node>
 		<node name="found" value="Tìm thấy">
-			<node name="summary" value="Kết quả tìm kiếm khoảng: %s" />
+			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
 		</node>
 		<node name="fileTree" value="Cây Tập tin">
 			<node name="summary" value="Duyệt tập tin hệ thống"/>
@@ -63,14 +63,14 @@
 		</node>
 		<node name="search" value="Tìm">
 			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
-			<node name="summaryAllCatalogs" value="Tìm sách trong danh mục" />
+			<node name="summaryAllCatalogs" value="Tìm sách trong danh mục"/>
 			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="Tìm thấy">
-			<node name="summary" value="Kết quả tìm kiếm khoảng: %s" />
+			<node name="summary" value="Kết quả tìm kiếm khoảng: %s"/>
 		</node>
 		<node name="openCatalog" value="Mở danh mục"/>
-		<node name="networkSearch" value="Tìm" />
+		<node name="networkSearch" value="Tìm"/>
 		<node name="showResults" value="Hiện kết quả"/>
 		<node name="showBooks" value="Show books"/>
 		<node name="download" value="Tải về"/>
@@ -85,9 +85,9 @@
 		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
 		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
-		<node name="openInBrowser" value="Mở trình duyệt" />
-		<node name="stopLoading" value="Dừng tải" />
-		<node name="stopSearching" value="Dừng tìm kiếm" />
+		<node name="openInBrowser" value="Mở trình duyệt"/>
+		<node name="stopLoading" value="Dừng tải"/>
+		<node name="stopSearching" value="Dừng tìm kiếm"/>
 		<node name="signIn" value="Đăng nhập"/>
 		<node name="signOut" value="Đăng xuất (%s)"/>
 		<node name="topup" value="Làm đầy lại tài khoản (hiện tại: %s)"/>
@@ -99,10 +99,10 @@
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
 		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
 		<node name="basketSummary" value="%0 book(s) (%1)"/>
-		<node name="alreadyDownloading" value="Sách đang được tải về" />
-		<node name="alreadyDownloadingDemo" value="Bản thử đang được tải về" />
-		<node name="stoppingCatalogLoading" value="Dừng tải" />
-		<node name="stoppingNetworkSearch" value="Dừng tìm" />
+		<node name="alreadyDownloading" value="Sách đang được tải về"/>
+		<node name="alreadyDownloadingDemo" value="Bản thử đang được tải về"/>
+		<node name="stoppingCatalogLoading" value="Dừng tải"/>
+		<node name="stoppingNetworkSearch" value="Dừng tìm"/>
 		<node name="editCustomCatalog" value="Sửa Catalo"/>
 		<node name="removeCustomCatalog" value="Xóa catalo"/>
 		<node name="addCustomCatalog" value="Thêm"/>
@@ -113,10 +113,12 @@
 			<node name="readDemo" value="Bạn muốn đọc thử?"/>
 			<node name="downloadDemo" value="Bản muốn tải về bản đọc thử?"/>
 			<node name="buy" value="Bạn muốn mua quyển sách này? (%s)"/>
-			<node name="openInBrowser" value="Bạn muốn mở danh mục sách trong trình duyệt?" />
+			<node name="openInBrowser" value="Bạn muốn mở danh mục sách trong trình duyệt?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Đang tải các danh mục"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Đang tìm sách trên mạng"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Đang tải các danh mục"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Đang tìm sách trên mạng"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
@@ -125,7 +127,7 @@
 			<node name="networkSearch" value="Tìm trên mạng"/>
 			<node name="reload" value="Tải lại"/>
 			<node name="signIn" value="Đăng nhập"/>
-			<node name="signUp" value="Đăng ký" />
+			<node name="signUp" value="Đăng ký"/>
 			<node name="signOut" value="Đăng xuất (%s)"/>
 			<node name="topup" value="Tái đầy tài khoản "/>
 			<node name="addCustomCatalog" value="Thêm catalo"/>
@@ -136,47 +138,47 @@
 		</node>
 	</node>
 	<node name="buyBook">
-		<node name="title" value="Mua sách" />
+		<node name="title" value="Mua sách"/>
 		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
-		<node name="confirm" value="Bạn có chắc muốn mua quyển&#10;&#8220;%s&#8221;&#10;?" />
+		<node name="confirm" value="Bạn có chắc muốn mua quyển&#10;“%s”&#10;?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
-		<node name="alreadyBought" value="Sách đã được mua" />
+		<node name="alreadyBought" value="Sách đã được mua"/>
 		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
 		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
-		<node name="bookInfo" value="Thông tin sách" />
-		<node name="fileInfo" value="Thông tin tập tin" />
-		<node name="description" value="Miêu tả" />
-		<node name="noDescription" value="Không có miêu tả nào." />
-		<node name="annotation" value="Chú giải" />
-		<node name="title" value="Tiêu đề:" />
-		<node name="authors" value="Tác giả:" />
-		<node name="series" value="Bộ sách:" />
-		<node name="indexInSeries" value="Chỉ mục trong bộ:" />
-		<node name="tags" value="Từ khóa:" />
+		<node name="bookInfo" value="Thông tin sách"/>
+		<node name="fileInfo" value="Thông tin tập tin"/>
+		<node name="description" value="Miêu tả"/>
+		<node name="noDescription" value="Không có miêu tả nào."/>
+		<node name="annotation" value="Chú giải"/>
+		<node name="title" value="Tiêu đề:"/>
+		<node name="authors" value="Tác giả:"/>
+		<node name="series" value="Bộ sách:"/>
+		<node name="indexInSeries" value="Chỉ mục trong bộ:"/>
+		<node name="tags" value="Từ khóa:"/>
 		<node name="language" value="Ngôn ngữ:"/>
-		<node name="name" value="Tên:" />
-		<node name="type" value="Loại:" />
-		<node name="size" value="Cỡ:" />
-		<node name="time" value="Lần sửa cuối:" />
-		<node name="sizeInBytes" value="%s byte(s)" />
-		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="name" value="Tên:"/>
+		<node name="type" value="Loại:"/>
+		<node name="size" value="Cỡ:"/>
+		<node name="time" value="Lần sửa cuối:"/>
+		<node name="sizeInBytes" value="%s byte(s)"/>
+		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 		<node name="menu">
-			<node name="edit" value="Sửa" />
+			<node name="edit" value="Sửa"/>
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Sách đã được tải về" />
-		<node name="tickerError" value="Lỗi tải sách về" />
-		<node name="contentSuccess" value="Tải về hoàn tất" />
-		<node name="contentError" value="Tải về thất bại" />
-		<node name="downloadingStarted" value="Việc tải sách đang bắt đầu" />
-		<node name="alreadyDownloading" value="Sách đang được tải về" />
+		<node name="tickerSuccess" value="Sách đã được tải về"/>
+		<node name="tickerError" value="Lỗi tải sách về"/>
+		<node name="contentSuccess" value="Tải về hoàn tất"/>
+		<node name="contentError" value="Tải về thất bại"/>
+		<node name="downloadingStarted" value="Việc tải sách đang bắt đầu"/>
+		<node name="alreadyDownloading" value="Sách đang được tải về"/>
 		<node name="cannotCreateDirectory" value="Unable to create directory %s" toBeTranslated="true"/>
 		<node name="cannotCreateFile" value="Unable to create file %s" toBeTranslated="true"/>
 	</node>
@@ -243,24 +245,24 @@
 		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
 		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
-		<node name="increaseFont" value="Phóng to" />
-		<node name="decreaseFont" value="Thu nhỏ" />
+		<node name="increaseFont" value="Phóng to"/>
+		<node name="decreaseFont" value="Thu nhỏ"/>
 		<node name="toggleFullscreen" value="Toàn Màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Cài đặt" />
-			<node name="update" value="Cập nhật" />
-			<node name="skip" value="Bỏ qua" />
-			<node name="buy" value="Mua" />
-			<node name="buyAndDownload" value="Mua và Tải về" />
-			<node name="continue" value="Tiếp tục" />
-			<node name="editUrl" value="Sửa URL" />
-			<node name="tryAgain" value="Thử lại" />
-			<node name="openBook" value="Đọc" />
-			<node name="editInfo" value="Sửa" />
-			<node name="reloadInfo" value="Tải lại" />
+			<node name="install" value="Cài đặt"/>
+			<node name="update" value="Cập nhật"/>
+			<node name="skip" value="Bỏ qua"/>
+			<node name="buy" value="Mua"/>
+			<node name="buyAndDownload" value="Mua và Tải về"/>
+			<node name="continue" value="Tiếp tục"/>
+			<node name="editUrl" value="Sửa URL"/>
+			<node name="tryAgain" value="Thử lại"/>
+			<node name="openBook" value="Đọc"/>
+			<node name="editInfo" value="Sửa"/>
+			<node name="reloadInfo" value="Tải lại"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Tái đầy tài khoản "/>
 			<node name="pay" value="Pay" toBeTranslated="true"/>
@@ -270,29 +272,29 @@
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
-			<node name="installTitle" value="Cài phần bổ trợ" />
-			<node name="updateTitle" value="Cập nhật phần bổ trợ" />
-			<node name="dontAskAgain" value="Đừng hỏi lại" />
+			<node name="installTitle" value="Cài phần bổ trợ"/>
+			<node name="updateTitle" value="Cập nhật phần bổ trợ"/>
+			<node name="dontAskAgain" value="Đừng hỏi lại"/>
 		</node>
 		<node name="installDictionary">
-			<node name="title" value="Cài từ điển" />
-			<node name="message" value="Bạn có muốn cài %s?" />
+			<node name="title" value="Cài từ điển"/>
+			<node name="message" value="Bạn có muốn cài %s?"/>
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Tên tập tin"/>
 			<node name="title" value="Tiêu đề"/>
 			<node name="language" value="Ngôn ngữ"/>
 			<node name="encoding" value="Mã hóa"/>
-			<node name="authors" value="Tác giả" />
-			<node name="tags" value="Từ khóa" />
-			<node name="series" value="Bộ sách" />
+			<node name="authors" value="Tác giả"/>
+			<node name="tags" value="Từ khóa"/>
+			<node name="series" value="Bộ sách"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Thư mục">
 				<node name="summary" value="Các thư mục để tìm kiếm tập tin"/>
 				<node name="books" value="Thư mục sách"/>
-				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
-				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
+				<node name="fonts" value="Thư mục phông"/>
+				<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Giao diện">
 				<node name="summary" value="Xoay, thanh trạng thái"/>
@@ -615,7 +617,7 @@
 					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
 					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
 					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+					<node name="custom" value="Custom…" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Từ điển">
@@ -707,55 +709,55 @@
 			<node name="loadingBookList" value="Đang mở thư viện. Xin chờ..."/>
 			<node name="creatingBooksDatabase" value="Đang tạo kho sách. Xin chờ..."/>
 			<node name="updatingBooksDatabase" value="Đang cập nhật kho sách. Xin chờ..."/>
-			<node name="loadingNetworkLibrary" value="Đang mở thư viện. Xin chờ..." />
-			<node name="authentication" value="Xác thực. Xin chờ..." />
-			<node name="signOut" value="Đang thoát. Xin chờ..." />
-			<node name="purchaseBook" value="Mua sách. Xin chờ..." />
-			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..." />
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
+			<node name="loadingNetworkLibrary" value="Đang mở thư viện. Xin chờ..."/>
+			<node name="authentication" value="Xác thực. Xin chờ..."/>
+			<node name="signOut" value="Đang thoát. Xin chờ..."/>
+			<node name="purchaseBook" value="Mua sách. Xin chờ..."/>
+			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..."/>
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
-			<node name="internalError" value="Lỗi mạng nội bộ " />
-			<node name="purchaseNotEnoughMoney" value="Thiếu tiền :)" />
-			<node name="purchaseMissingBook" value="Mất sách" />
-			<node name="purchaseAlreadyPurchased" value="Đã mua" />
-			<node name="bookNotPurchased" value="Sách chưa được mua" />
-			<node name="downloadLimitExceeded" value="Quá giói hạn tải về" />
-			<node name="noUserEmail" value="Không người nào đang ký&#10;với địa chỉ email xác định" />
-			<node name="unsupportedOperation" value="Thao tác không được hỗ trợ" />
-			<node name="notAnOPDS" value="Đây không phải là một catalo OPDS" />
-			<node name="noRequiredInformation" value="Thông tin yêu cầu không định vị được trong catalo" />
-			<node name="cacheDirectoryError" value="Không thể tạo thư mục đệm" />
+			<node name="internalError" value="Lỗi mạng nội bộ "/>
+			<node name="purchaseNotEnoughMoney" value="Thiếu tiền :)"/>
+			<node name="purchaseMissingBook" value="Mất sách"/>
+			<node name="purchaseAlreadyPurchased" value="Đã mua"/>
+			<node name="bookNotPurchased" value="Sách chưa được mua"/>
+			<node name="downloadLimitExceeded" value="Quá giói hạn tải về"/>
+			<node name="noUserEmail" value="Không người nào đang ký&#10;với địa chỉ email xác định"/>
+			<node name="unsupportedOperation" value="Thao tác không được hỗ trợ"/>
+			<node name="notAnOPDS" value="Đây không phải là một catalo OPDS"/>
+			<node name="noRequiredInformation" value="Thông tin yêu cầu không định vị được trong catalo"/>
+			<node name="cacheDirectoryError" value="Không thể tạo thư mục đệm"/>
 		</node>
 		<node name="AuthenticationDialog">
-			<node name="title" value="Xác thực" />
+			<node name="title" value="Xác thực"/>
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
-			<node name="login" value="Người dùng" />
-			<node name="password" value="Mật khẩu" />
-			<node name="loginIsEmpty" value="Tên người dùng không được rỗng" />
-			<node name="register" value="Đăng ký" />
+			<node name="login" value="Người dùng"/>
+			<node name="password" value="Mật khẩu"/>
+			<node name="loginIsEmpty" value="Tên người dùng không được rỗng"/>
+			<node name="register" value="Đăng ký"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
-			<node name="catalogTitle" value="Tiêu đề" />
-			<node name="catalogUrl" value="URL" />
-			<node name="catalogSummary" value="Tóm tắt" />
-			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog" />
-			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/" />
-			<node name="catalogSummaryExample" value="E.g.: Public domain books" />
-			<node name="titleIsEmpty" value="Tiêu đề không nên để trống" />
-			<node name="urlIsEmpty" value="URL không nên để trống" />
-			<node name="invalidUrl" value="URL sai" />
-			<node name="titleAlreadyExists" value="Tiêu đề đã được dùng" />
-			<node name="siteAlreadyExists" value="Trang đã được dùng" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true"/>
+			<node name="catalogTitle" value="Tiêu đề"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Tóm tắt"/>
+			<node name="catalogTitleExample" value="E.g.: Project Gutenberg catalog"/>
+			<node name="catalogUrlExample" value="E.g.: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="E.g.: Public domain books"/>
+			<node name="titleIsEmpty" value="Tiêu đề không nên để trống"/>
+			<node name="urlIsEmpty" value="URL không nên để trống"/>
+			<node name="invalidUrl" value="URL sai"/>
+			<node name="titleAlreadyExists" value="Tiêu đề đã được dùng"/>
+			<node name="siteAlreadyExists" value="Trang đã được dùng"/>
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Bộ lọc ngôn ngữ" />
+			<node name="title" value="Bộ lọc ngôn ngữ"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" toBeTranslated="true" />
+			<node name="title" value="Tip of the day" toBeTranslated="true"/>
 			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
 			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
 			<node name="more" value="Next tip" toBeTranslated="true"/>
