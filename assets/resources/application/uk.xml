@@ -283,6 +283,9 @@
 			<node name="title" value="Назва"/>
 			<node name="language" value="Мова"/>
 			<node name="encoding" value="Кодування"/>
+			<node name="authors" value="Автори" />
+			<node name="tags" value="Категорії" />
+			<node name="series" value="Серія" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Теки">
@@ -687,16 +690,6 @@
 				</node>
 				<node name="twitter" value="Зафоловити нас на Твітері">
 					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Мова">
-					<node name="autoDetect" value="Автоматично визначати мову та кодування"/>
-					<node name="defaultLanguage" value="Мова за замовчуванням"/>
-					<node name="defaultEncodingSet" value="Набір кодувань за замовчуванням"/>
-					<node name="defaultEncoding" value="Кодування за замовчуванням"/>
 				</node>
 			</node>
 		</node>

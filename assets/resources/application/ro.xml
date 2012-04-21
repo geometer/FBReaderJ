@@ -283,6 +283,9 @@
 			<node name="title" value="Titlu"/>
 			<node name="language" value="Limba"/>
 			<node name="encoding" value="Encodare"/>
+			<node name="authors" value="Autori"/>
+			<node name="tags" value="Tag-uri"/>
+			<node name="series" value="Seria"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Directoare">
@@ -687,16 +690,6 @@
 				</node>
 				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
 					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Limba">
-					<node name="autoDetect" value="Detecta automat limba si encodare"/>
-					<node name="defaultLanguage" value="Limba implicita"/>
-					<node name="defaultEncodingSet" value="Set de codare implicit"/>
-					<node name="defaultEncoding" value="Codare implicita"/>
 				</node>
 			</node>
 		</node>

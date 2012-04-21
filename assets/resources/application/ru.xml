@@ -298,6 +298,9 @@
 			<node name="title" value="Название"/>
 			<node name="language" value="Язык"/>
 			<node name="encoding" value="Кодировка"/>
+			<node name="authors" value="Авторы"/>
+			<node name="tags" value="Категории"/>
+			<node name="series" value="Серия"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Каталоги">
@@ -702,16 +705,6 @@
 				</node>
 				<node name="twitter" value="Читайте нас в твиттере">
 					<node name="url" value="http://twitter.com/fbreader_ru"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Язык">
-					<node name="autoDetect" value="Автоматически определять язык и кодировку"/>
-					<node name="defaultLanguage" value="Язык по умолчанию"/>
-					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
-					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
 				</node>
 			</node>
 		</node>
