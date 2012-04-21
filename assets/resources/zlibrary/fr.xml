@@ -24,10 +24,10 @@
 			<node name="couldntConnectMessage" value="Impossible de se connecter à l'hôte %s"/>
 			<node name="couldntResolveHostMessage" value="Résolution du nom %s impossible"/>
 			<node name="authenticationFailed" value="Authentification échouée"/>
-			<node name="unsupportedProtocol" value="Protocole non supporté" />
-			<node name="invalidURL" value="URL invalide" />
-			<node name="hostCantBeReached" value="L'hôte %s&#10;ne peut être joint" />
-			<node name="connectionRefused" value="La connexion a été refusée par&#10;%s" />
+			<node name="unsupportedProtocol" value="Protocole non supporté"/>
+			<node name="invalidURL" value="URL invalide"/>
+			<node name="hostCantBeReached" value="L'hôte %s&#10;ne peut être joint"/>
+			<node name="connectionRefused" value="La connexion a été refusée par&#10;%s"/>
 		</node>
 	</node>
 	<node name="color">
@@ -62,13 +62,13 @@
 		<node name="fr" value="Français"/>
 		<node name="gl" value="Galique"/>
 		<node name="he" value="Hébreu"/>
-		<node name="hu" value="Hongrois" />
+		<node name="hu" value="Hongrois"/>
 		<node name="id" value="Indonésien"/>
 		<node name="it" value="Italien"/>
 		<node name="lt" value="Lithuanien"/>
 		<node name="nl" value="Néerlandais"/>
 		<node name="no" value="Norvégien"/>
-		<node name="pl" value="Polonais" />
+		<node name="pl" value="Polonais"/>
 		<node name="pt" value="Portugais"/>
 		<node name="ro" value="Roumain"/>
 		<node name="ru" value="Russe"/>
@@ -77,7 +77,7 @@
 		<node name="th" value="Thailandais"/>
 		<node name="tr" value="Turc"/>
 		<node name="uk" value="Ukrainien"/>
-		<node name="vi" value="Vietnamien" />
+		<node name="vi" value="Vietnamien"/>
 		<node name="zh" value="Chinois"/>
 		<node name="other" value="Autre"/>
 		<node name="multi" value="Multi-langage"/>
