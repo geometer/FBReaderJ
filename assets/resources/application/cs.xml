@@ -289,6 +289,9 @@
 			<node name="title" value="Název"/>
 			<node name="language" value="Jazyk"/>
 			<node name="encoding" value="Kódování"/>
+			<node name="authors" value="Autoři"/>
+			<node name="tags" value="Štítky"/>
+			<node name="series" value="Série"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Adresáře">

@@ -283,6 +283,9 @@
 			<node name="title" value="書名"/>
 			<node name="language" value="語言"/>
 			<node name="encoding" value="編碼"/>
+			<node name="authors" value="作者" />
+			<node name="tags" value="標籤" />
+			<node name="series" value="系列" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="目錄">

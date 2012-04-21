@@ -284,6 +284,9 @@
 			<node name="title" value="Titolo"/>
 			<node name="language" value="Lingua"/>
 			<node name="encoding" value="Codifica"/>
+			<node name="authors" value="Autori" />
+			<node name="tags" value="Etichette" />
+			<node name="series" value="Serie" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Cartelle">

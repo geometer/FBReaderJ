@@ -283,6 +283,9 @@
 			<node name="title" value="Cím"/>
 			<node name="language" value="Nyelv"/>
 			<node name="encoding" value="Kódolás"/>
+			<node name="authors" value="Szerzők" />
+			<node name="tags" value="Címkék" />
+			<node name="series" value="Sorozat" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Mappák">

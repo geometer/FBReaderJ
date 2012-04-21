@@ -283,6 +283,9 @@
 			<node name="title" value="ชื่อหนังสือ"/>
 			<node name="language" value="ภาษา"/>
 			<node name="encoding" value="การเข้ารหัสภาษา"/>
+			<node name="authors" value="ชื่อผู้แต่ง"/>
+			<node name="tags" value="แท็ก"/>
+			<node name="series" value="ชุดหนังสือ"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="ไดเรคทอรี">

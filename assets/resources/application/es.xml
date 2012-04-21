@@ -288,6 +288,9 @@
 			<node name="title" value="Título"/>
 			<node name="language" value="Idioma"/>
 			<node name="encoding" value="Codificación"/>
+			<node name="authors" value="Autores" />
+			<node name="tags" value="Etiquetas" />
+			<node name="series" value="Series" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Directorios">

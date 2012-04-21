@@ -283,6 +283,9 @@
 			<node name="title" value="Titlu"/>
 			<node name="language" value="Limba"/>
 			<node name="encoding" value="Encodare"/>
+			<node name="authors" value="Autori"/>
+			<node name="tags" value="Tag-uri"/>
+			<node name="series" value="Seria"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Directoare">

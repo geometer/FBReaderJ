@@ -286,6 +286,9 @@
 			<node name="title" value="Titel"/>
 			<node name="language" value="Sprache"/>
 			<node name="encoding" value="Codierung"/>
+			<node name="authors" value="Autor(en)"/>
+			<node name="tags" value="Schlagwörter (Tags)"/>
+			<node name="series" value="Serie"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Verzeichnisse">

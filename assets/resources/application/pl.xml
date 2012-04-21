@@ -283,6 +283,9 @@
 			<node name="title" value="Tytuł"/>
 			<node name="language" value="Język"/>
 			<node name="encoding" value="Kodowanie"/>
+			<node name="authors" value="Autorzy" />
+			<node name="tags" value="Etykiety" />
+			<node name="series" value="Seria" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Katalogi">

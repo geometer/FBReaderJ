@@ -298,6 +298,9 @@
 			<node name="title" value="Название"/>
 			<node name="language" value="Язык"/>
 			<node name="encoding" value="Кодировка"/>
+			<node name="authors" value="Авторы"/>
+			<node name="tags" value="Категории"/>
+			<node name="series" value="Серия"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Каталоги">

@@ -293,6 +293,9 @@
 			<node name="title" value="Title"/>
 			<node name="language" value="Language"/>
 			<node name="encoding" value="Encoding"/>
+			<node name="authors" value="Author(s)"/>
+			<node name="tags" value="Tag(s)"/>
+			<node name="series" value="Series"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Directories">
