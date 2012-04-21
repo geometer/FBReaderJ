@@ -118,8 +118,10 @@
 			<node name="buy" value="Möchten Sie dieses Buch kaufen? (%s)"/>
 			<node name="openInBrowser" value="Möchten Sie diesen Katalog im Browser öffnen?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Heruntergeladene Kataloge"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Suche nach Büchern im Netzwerk"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Heruntergeladene Kataloge"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Suche nach Büchern im Netzwerk"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
@@ -141,7 +143,7 @@
 	<node name="buyBook">
 		<node name="title" value="Buchkauf"/>
 		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
-		<node name="confirm" value="Wollen Sie das Buch&#10;&#8220;%s&#8221;&#10;wirklich kaufen?"/>
+		<node name="confirm" value="Wollen Sie das Buch&#10;“%s”&#10;wirklich kaufen?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
 		<node name="alreadyBought" value="Buch wurde schon gekauft"/>
 		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
@@ -618,7 +620,7 @@
 					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
 					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
 					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+					<node name="custom" value="Custom…" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Wörterbuch">
@@ -715,9 +717,9 @@
 			<node name="signOut" value="Buch wird ausgetragen. Bitte warten..."/>
 			<node name="purchaseBook" value="Buch wird gekauft. Bitte warten..."/>
 			<node name="loadingCatalogInfo" value="Kataloginformation wird geladen. Bitte warten..."/>
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="Katalogliste wird aktualisiert. Bitte warten..."/>
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Interner Server-Fehler."/>
@@ -758,7 +760,7 @@
 			<node name="title" value="Sprachfilter"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" toBeTranslated="true" />
+			<node name="title" value="Tip of the day" toBeTranslated="true"/>
 			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
 			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
 			<node name="more" value="Next tip" toBeTranslated="true"/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Thai zlibrary resources, by Samphan Pojanasophanakul -->
 <resources>
 	<node name="dialog">
@@ -70,7 +70,7 @@
 		<node name="ru" value="รัสเซีย"/>
 		<node name="sv" value="สวีเดน"/>
 		<node name="ta" value="Tamil" toBeTranslated="true"/>
-		<node name="th" value="ไทย" />
+		<node name="th" value="ไทย"/>
 		<node name="tr" value="ตุรกี"/>
 		<node name="uk" value="ยูเครน"/>
 		<node name="vi" value="เวียดนาม"/>

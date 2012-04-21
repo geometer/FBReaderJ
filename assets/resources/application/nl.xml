@@ -9,7 +9,7 @@
 			<node name="summary" value="Boeken gesorteerd op auteur"/>
 		</node>
 		<node name="byTitle" value="Titel">
-			<node name="summary" value="Boeken gesorteerd op titel" />
+			<node name="summary" value="Boeken gesorteerd op titel"/>
 		</node>
 		<node name="bySeries" value="Series">
 			<node name="summary" value="Boeken gesorteerd op series"/>
@@ -63,14 +63,14 @@
 		</node>
 		<node name="search" value="Zoeken">
 			<node name="summary" value="Search books on %s" toBeTranslated="true"/>
-			<node name="summaryAllCatalogs" value="Zoeken naar boeken in catalogi" />
+			<node name="summaryAllCatalogs" value="Zoeken naar boeken in catalogi"/>
 			<node name="summaryInProgress" value="Search in progress" toBeTranslated="true"/>
 		</node>
 		<node name="found" value="Gevonden">
 			<node name="summary" value="Zoekresultaten voor: %s"/>
 		</node>
 		<node name="openCatalog" value="Open catalogus"/>
-		<node name="networkSearch" value="Zoeken" />
+		<node name="networkSearch" value="Zoeken"/>
 		<node name="showResults" value="Toon resulten"/>
 		<node name="showBooks" value="Toon boeken"/>
 		<node name="download" value="Download"/>
@@ -85,24 +85,24 @@
 		<node name="openBasket" value="Open basket" toBeTranslated="true"/>
 		<node name="clearBasket" value="Clear basket" toBeTranslated="true"/>
 		<node name="buyAllBooks" value="Buy all books" toBeTranslated="true"/>
-		<node name="openInBrowser" value="Openen in de browser" />
-		<node name="stopLoading" value="Stop loading" toBeTranslated="true" />
-		<node name="stopSearching" value="Stop searching" toBeTranslated="true" />
+		<node name="openInBrowser" value="Openen in de browser"/>
+		<node name="stopLoading" value="Stop loading" toBeTranslated="true"/>
+		<node name="stopSearching" value="Stop searching" toBeTranslated="true"/>
 		<node name="signIn" value="Sign in" toBeTranslated="true"/>
 		<node name="signOut" value="Sign out (%s)" toBeTranslated="true"/>
 		<node name="topup" value="Top up account (currently: %s)" toBeTranslated="true"/>
 		<node name="topupTitle" value="Top up account" toBeTranslated="true"/>
-		<node name="topupViaBrowser" value="Open pagina in de browser" />
+		<node name="topupViaBrowser" value="Open pagina in de browser"/>
 		<node name="authorizationMenuTitle" value="Select action" toBeTranslated="true"/>
 		<node name="topupSummary" value="Currently: %s" toBeTranslated="true"/>
 		<node name="basket" value="Basket" toBeTranslated="true"/>
 		<node name="basketSummaryEmpty" value="No books" toBeTranslated="true"/>
 		<node name="basketSummaryCountOnly" value="%0 book(s)" toBeTranslated="true"/>
 		<node name="basketSummary" value="%0 book(s) (%1)"/>
-		<node name="alreadyDownloading" value="Boek wordt gedownload" />
-		<node name="alreadyDownloadingDemo" value="Voorbeeld wordt gedownload" />
-		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true" />
-		<node name="stoppingNetworkSearch" value="Stopping search" toBeTranslated="true" />
+		<node name="alreadyDownloading" value="Boek wordt gedownload"/>
+		<node name="alreadyDownloadingDemo" value="Voorbeeld wordt gedownload"/>
+		<node name="stoppingCatalogLoading" value="Stopping loading" toBeTranslated="true"/>
+		<node name="stoppingNetworkSearch" value="Stopping search" toBeTranslated="true"/>
 		<node name="editCustomCatalog" value="Catalogus bewerken"/>
 		<node name="removeCustomCatalog" value="Verwijder catalogus"/>
 		<node name="addCustomCatalog" value="Catalogus toevoegen"/>
@@ -112,11 +112,13 @@
 			<node name="download" value="Wil je dit boek downloaden?"/>
 			<node name="readDemo" value="Wil je het voorbeeld lezen?"/>
 			<node name="downloadDemo" value="Wil je het voorbeeld downloaden"/>
-			<node name="buy" value="Wil je dit boek kopen? (%s)" />
-			<node name="openInBrowser" value="Wil je deze catalous openen in de browser?" />
+			<node name="buy" value="Wil je dit boek kopen? (%s)"/>
+			<node name="openInBrowser" value="Wil je deze catalous openen in de browser?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Downloading catalogs" toBeTranslated="true"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Searching for books in network" toBeTranslated="true"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Downloading catalogs" toBeTranslated="true"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Searching for books in network" toBeTranslated="true"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
@@ -136,47 +138,47 @@
 		</node>
 	</node>
 	<node name="buyBook">
-		<node name="title" value="Koop boek" />
+		<node name="title" value="Koop boek"/>
 		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
-		<node name="confirm" value="Weet je zeker dat je het boek &#10;&#8220;%s&#8221;&#10; wilt kopen?" />
+		<node name="confirm" value="Weet je zeker dat je het boek &#10;“%s”&#10; wilt kopen?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
-		<node name="alreadyBought" value="Boek is al aangescahft" />
+		<node name="alreadyBought" value="Boek is al aangescahft"/>
 		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
 		<node name="noAccountInformation" value="Cannot load account state" toBeTranslated="true"/>
 		<node name="unsufficientFunds" value="This purchase costs %0 and you have only %1" toBeTranslated="true"/>
 		<node name="zeroFunds" value="This purchase costs %0" toBeTranslated="true"/>
 	</node>
 	<node name="bookInfo">
-		<node name="bookInfo" value="Boekinformatie" />
-		<node name="fileInfo" value="Bestandsinformatie" />
-		<node name="description" value="Beschrijving" />
-		<node name="noDescription" value="Geen beschrijving beschikbaar" />
-		<node name="annotation" value="Annotatie" />
-		<node name="title" value="Titel:" />
-		<node name="authors" value="Auteurs:" />
-		<node name="series" value="Serie:" />
-		<node name="indexInSeries" value="Nummer in serie:" />
-		<node name="tags" value="Trefwoorden:" />
+		<node name="bookInfo" value="Boekinformatie"/>
+		<node name="fileInfo" value="Bestandsinformatie"/>
+		<node name="description" value="Beschrijving"/>
+		<node name="noDescription" value="Geen beschrijving beschikbaar"/>
+		<node name="annotation" value="Annotatie"/>
+		<node name="title" value="Titel:"/>
+		<node name="authors" value="Auteurs:"/>
+		<node name="series" value="Serie:"/>
+		<node name="indexInSeries" value="Nummer in serie:"/>
+		<node name="tags" value="Trefwoorden:"/>
 		<node name="language" value="Taal:"/>
-		<node name="name" value="Naam:" />
-		<node name="type" value="Type:" />
-		<node name="size" value="Grootte:" />
-		<node name="time" value="Laatst gewijzigd:" />
-		<node name="sizeInBytes" value="%s byte(s)" />
-		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="name" value="Naam:"/>
+		<node name="type" value="Type:"/>
+		<node name="size" value="Grootte:"/>
+		<node name="time" value="Laatst gewijzigd:"/>
+		<node name="sizeInBytes" value="%s byte(s)"/>
+		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Catalog:" toBeTranslated="true"/>
 		<node name="extraLinks" value="Related links" toBeTranslated="true"/>
 		<node name="menu">
-			<node name="edit" value="Bewerken" />
+			<node name="edit" value="Bewerken"/>
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Boek is gedownload" />
-		<node name="tickerError" value="Fout bij downloaden boek" />
-		<node name="contentSuccess" value="Klaar met downloaden" />
-		<node name="contentError" value="Download mislukt" />
-		<node name="downloadingStarted" value="Downloaden van boek is begonnen" />
-		<node name="alreadyDownloading" value="Boek wordt al gedownload" />
+		<node name="tickerSuccess" value="Boek is gedownload"/>
+		<node name="tickerError" value="Fout bij downloaden boek"/>
+		<node name="contentSuccess" value="Klaar met downloaden"/>
+		<node name="contentError" value="Download mislukt"/>
+		<node name="downloadingStarted" value="Downloaden van boek is begonnen"/>
+		<node name="alreadyDownloading" value="Boek wordt al gedownload"/>
 		<node name="cannotCreateDirectory" value="Unable to create directory %s" toBeTranslated="true"/>
 		<node name="cannotCreateFile" value="Unable to create file %s" toBeTranslated="true"/>
 	</node>
@@ -200,8 +202,8 @@
 	<node name="cancelMenu">
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
-		<node name="previousBook" value="Open vorige boek" />
-		<node name="returnTo" value="Terug naar..." />
+		<node name="previousBook" value="Open vorige boek"/>
+		<node name="returnTo" value="Terug naar..."/>
 		<node name="back" value="Vorige"/>
 		<node name="forward" value="Volgende"/>
 		<node name="close" value="FBReader afsluiten"/>
@@ -226,10 +228,10 @@
 			<node name="toc" value="Inhoudsopgave"/>
 			<node name="gotoHome" value="Begin van document"/>
 			<node name="gotoPageNumber" value="Ga naar pagina..."/>
-			<node name="gotoSectionStart" value="Ga naar het begin van de sectie" />
-			<node name="gotoSectionEnd" value="Ga naar het einde van de sectie" />
-			<node name="nextTOCSection" value="Ga naar het volgende hoofdstuk" />
-			<node name="previousTOCSection" value="Ga naar het vorige hoofdstuk" />
+			<node name="gotoSectionStart" value="Ga naar het begin van de sectie"/>
+			<node name="gotoSectionEnd" value="Ga naar het einde van de sectie"/>
+			<node name="nextTOCSection" value="Ga naar het volgende hoofdstuk"/>
+			<node name="previousTOCSection" value="Ga naar het vorige hoofdstuk"/>
 			<node name="undo" value="Terug"/>
 			<node name="redo" value="Verder"/>
 		</node>
@@ -243,26 +245,26 @@
 		<node name="screenOrientationLandscape" value="Landscape" toBeTranslated="true"/>
 		<node name="screenOrientationReversePortrait" value="Reverse portrait" toBeTranslated="true"/>
 		<node name="screenOrientationReverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
-		<node name="increaseFont" value="Inzoomen" />
-		<node name="decreaseFont" value="Uitzoomen" />
+		<node name="increaseFont" value="Inzoomen"/>
+		<node name="decreaseFont" value="Uitzoomen"/>
 		<node name="toggleFullscreen" value="Volledig scherm"/>
 		<node name="bookmarks" value="Bladwijzers"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Installeren" />
-			<node name="update" value="Bijwerken" />
-			<node name="skip" value="Overslaan" />
-			<node name="buy" value="Kopen" />
-			<node name="buyAndDownload" value="Kopen en downloaden" />
-			<node name="continue" value="Doorgaan" />
-			<node name="editUrl" value="URL bewerken" />
-			<node name="tryAgain" value="Probeer opnieuw" />
-			<node name="openBook" value="Lezen" />
-			<node name="editInfo" value="Bewerken" />
-			<node name="reloadInfo" value="Vernieuwen" />
+			<node name="install" value="Installeren"/>
+			<node name="update" value="Bijwerken"/>
+			<node name="skip" value="Overslaan"/>
+			<node name="buy" value="Kopen"/>
+			<node name="buyAndDownload" value="Kopen en downloaden"/>
+			<node name="continue" value="Doorgaan"/>
+			<node name="editUrl" value="URL bewerken"/>
+			<node name="tryAgain" value="Probeer opnieuw"/>
+			<node name="openBook" value="Lezen"/>
+			<node name="editInfo" value="Bewerken"/>
+			<node name="reloadInfo" value="Vernieuwen"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
-			<node name="topup" value="Top up" toBeTranslated="true" />
+			<node name="topup" value="Top up" toBeTranslated="true"/>
 			<node name="pay" value="Pay" toBeTranslated="true"/>
 			<node name="refresh" value="Refresh" toBeTranslated="true"/>
 			<node name="authorize" value="Authorize" toBeTranslated="true"/>
@@ -283,9 +285,9 @@
 			<node name="title" value="Titel"/>
 			<node name="language" value="Taal"/>
 			<node name="encoding" value="Codering"/>
-			<node name="authors" value="Auteurs" />
-			<node name="tags" value="Trefwoorden" />
-			<node name="series" value="Serie" />
+			<node name="authors" value="Auteurs"/>
+			<node name="tags" value="Trefwoorden"/>
+			<node name="series" value="Serie"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Mappen">
@@ -412,9 +414,9 @@
 				<node name="allowHyphenations" value="Afbreken">
 					<node name="summaryOn" value="woorden afbreken"/>
 					<node name="summaryOff" value="woorden niet afbreken"/>
-					<node name="unchanged" value="&lt;ongewijzigd&gt;" />
+					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
 				</node>
-				<node name="firstLineIndent" value="Eerste regel inspringen" />
+				<node name="firstLineIndent" value="Eerste regel inspringen"/>
 				<node name="spaceBefore" value="Ruimte voor"/>
 				<node name="spaceAfter" value="Ruimte achter"/>
 				<node name="leftIndent" value="Links inspringen"/>
@@ -537,7 +539,7 @@
 				<node name="hyperlink" value="Hyperlink tekst"/>
 				<node name="hyperlinkVisited" value="Bezochte hyperlink tekst"/>
 				<node name="highlighting" value="Achtergrond zoekresultaten"/>
-				<node name="footer" value="Voettekst" />
+				<node name="footer" value="Voettekst"/>
 			</node>
 			<node name="margins" value="Marges">
 				<node name="summary" value="Tekst marges"/>
@@ -554,8 +556,8 @@
 					<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
 					<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
 				</node>
-				<node name="footerHeight" value="Footer height" toBeTranslated="true" />
-				<node name="footerColor" value="Footer color" toBeTranslated="true" />
+				<node name="footerHeight" value="Footer height" toBeTranslated="true"/>
+				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
 				<node name="tocMarks" value="Toon inhoudsmarkeringen">
 					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
 					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
@@ -595,7 +597,7 @@
 				</node>
 				<node name="animation" value="Animatie">
 					<node name="none" value="Omslaan zonder animatie"/>
-					<node name="curl" value="Krul-animatie" />
+					<node name="curl" value="Krul-animatie"/>
 					<node name="slide" value="Slide-animatie"/>
 					<node name="shift" value="Shift-animatie"/>
 				</node>
@@ -615,7 +617,7 @@
 					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
 					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
 					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+					<node name="custom" value="Custom…" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Woordenboek">
@@ -700,62 +702,62 @@
 			<node name="message" value="Bestand bestaat al. Opnieuw downloaden?"/>
 		</node>
 		<node name="waitMessage">
-			<node name="downloadingFile" value="Boek %s wordt gedownload" />
-			<node name="search" value="Bezig met zoeken. Een ogenblik..." />
+			<node name="downloadingFile" value="Boek %s wordt gedownload"/>
+			<node name="search" value="Bezig met zoeken. Een ogenblik..."/>
 			<node name="loadInfo" value="Informatie wordt geladen. Een ogenblik..."/>
-			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik..." />
-			<node name="loadingBookList" value="Bibliotheek wordt geladen. Een ogenblik..." />
-			<node name="creatingBooksDatabase" value="Boekendatabase wordt gemaakt. Een ogenblik..." />
-			<node name="updatingBooksDatabase" value="Boekendatabase wordt bijgewerkt. Een ogenblik..." />
-			<node name="loadingNetworkLibrary" value="Bibliotheek wordt geladen. Een ogenblik..." />
-			<node name="authentication" value="Authenticatie. Een ogenblik..." />
-			<node name="signOut" value="Afmelden. Een ogenblik..." />
-			<node name="purchaseBook" value="Boek wordt gekocht. Een ogenblik..." />
-			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik..." />
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
+			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik..."/>
+			<node name="loadingBookList" value="Bibliotheek wordt geladen. Een ogenblik..."/>
+			<node name="creatingBooksDatabase" value="Boekendatabase wordt gemaakt. Een ogenblik..."/>
+			<node name="updatingBooksDatabase" value="Boekendatabase wordt bijgewerkt. Een ogenblik..."/>
+			<node name="loadingNetworkLibrary" value="Bibliotheek wordt geladen. Een ogenblik..."/>
+			<node name="authentication" value="Authenticatie. Een ogenblik..."/>
+			<node name="signOut" value="Afmelden. Een ogenblik..."/>
+			<node name="purchaseBook" value="Boek wordt gekocht. Een ogenblik..."/>
+			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik..."/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
 			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik..."/>
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
-			<node name="internalError" value="Interne serverfout" />
-			<node name="purchaseNotEnoughMoney" value="Niet genoeg geld" />
-			<node name="purchaseMissingBook" value="Missing book" toBeTranslated="true" />
-			<node name="purchaseAlreadyPurchased" value="Reeds aangeschaft" />
-			<node name="bookNotPurchased" value="Boek was niet aangeschaft" />
-			<node name="downloadLimitExceeded" value="Downloadlimiet bereikt" />
-			<node name="noUserEmail" value="Er is geen gebruik bekend met het opgegeven e-mailadres" />
-			<node name="unsupportedOperation" value="Bewerking wordt niet ondersteund" />
-			<node name="notAnOPDS" value="Dit is geen OPDS-catalogus" />
-			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true" />
-			<node name="cacheDirectoryError" value="Maken van de cache-directory is mislukt" />
+			<node name="internalError" value="Interne serverfout"/>
+			<node name="purchaseNotEnoughMoney" value="Niet genoeg geld"/>
+			<node name="purchaseMissingBook" value="Missing book" toBeTranslated="true"/>
+			<node name="purchaseAlreadyPurchased" value="Reeds aangeschaft"/>
+			<node name="bookNotPurchased" value="Boek was niet aangeschaft"/>
+			<node name="downloadLimitExceeded" value="Downloadlimiet bereikt"/>
+			<node name="noUserEmail" value="Er is geen gebruik bekend met het opgegeven e-mailadres"/>
+			<node name="unsupportedOperation" value="Bewerking wordt niet ondersteund"/>
+			<node name="notAnOPDS" value="Dit is geen OPDS-catalogus"/>
+			<node name="noRequiredInformation" value="Required information is not specified in the catalog" toBeTranslated="true"/>
+			<node name="cacheDirectoryError" value="Maken van de cache-directory is mislukt"/>
 		</node>
 		<node name="AuthenticationDialog">
-			<node name="title" value="Authenticatie" />
+			<node name="title" value="Authenticatie"/>
 			<node name="unencryptedWarning" value="Your password will be sent unencrypted" toBeTranslated="true"/>
-			<node name="login" value="Gebruikersnaam" />
-			<node name="password" value="Wachtwoord" />
-			<node name="loginIsEmpty" value="Gebruikersnaam kan niet leeg zijn" />
-			<node name="register" value="Registeren" />
+			<node name="login" value="Gebruikersnaam"/>
+			<node name="password" value="Wachtwoord"/>
+			<node name="loginIsEmpty" value="Gebruikersnaam kan niet leeg zijn"/>
+			<node name="register" value="Registeren"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
-			<node name="catalogTitle" value="Titel" />
-			<node name="catalogUrl" value="URL" />
-			<node name="catalogSummary" value="Beschrijving" />
-			<node name="catalogTitleExample" value="Bijv.: Project Gutenberg catalogus" />
-			<node name="catalogUrlExample" value="Bijv.: http://m.gutenberg.org/" />
-			<node name="catalogSummaryExample" value="Bijv.: Public domain boeken" />
-			<node name="titleIsEmpty" value="Titel kan niet leeg zijn" />
-			<node name="urlIsEmpty" value="URL kan niet leeg zijn" />
-			<node name="invalidUrl" value="Ongeldige URL" />
-			<node name="titleAlreadyExists" value="Deze titel wordt al gebruikt" />
-			<node name="siteAlreadyExists" value="Deze site wordt al gebruikt" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true"/>
+			<node name="catalogTitle" value="Titel"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Beschrijving"/>
+			<node name="catalogTitleExample" value="Bijv.: Project Gutenberg catalogus"/>
+			<node name="catalogUrlExample" value="Bijv.: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="Bijv.: Public domain boeken"/>
+			<node name="titleIsEmpty" value="Titel kan niet leeg zijn"/>
+			<node name="urlIsEmpty" value="URL kan niet leeg zijn"/>
+			<node name="invalidUrl" value="Ongeldige URL"/>
+			<node name="titleAlreadyExists" value="Deze titel wordt al gebruikt"/>
+			<node name="siteAlreadyExists" value="Deze site wordt al gebruikt"/>
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Taalfilter" />
+			<node name="title" value="Taalfilter"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" toBeTranslated="true" />
+			<node name="title" value="Tip of the day" toBeTranslated="true"/>
 			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
 			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
 			<node name="more" value="Next tip" toBeTranslated="true"/>
@@ -765,7 +767,7 @@
 		<node name="cannotRunAndroidMarket" value="Geen toegang tot de Android Market. Installeer %s handmatig"/>
 		<node name="textNotFound" value="Er is geen passende tekst in het boek"/>
 		<node name="bookNotFound" value="Er zijn geen passende boeken in de bibliotheek"/>
-		<node name="bookmarkNotFound" value="Er zijn geen passende bladwijzers gevonden" />
+		<node name="bookmarkNotFound" value="Er zijn geen passende bladwijzers gevonden"/>
 		<node name="cannotOpenBook" value="Kan het boek nu niet openen"/>
 		<node name="dictionaryIsNotInstalled" value="Woordenboek is niet geïnstalleerd"/>
 		<node name="permissionDenied" value="Toegang geweigerd"/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Thai FBReaderJ resources, by Samphan Pojanasophanakul -->
 <resources>
 	<node name="library" value="FBReader library" toBeTranslated="true">
@@ -115,8 +115,10 @@
 			<node name="buy" value="คุณต้องการซื้อหนังสือเล่มนี้หรือไม่? (%s)"/>
 			<node name="openInBrowser" value="คุณต้องการเปิดแคตตาล็อกในเว็บเบราว์เซอร์หรือไม่?"/>
 		</node>
-		<node name="downloadingCatalogs" value="กำลังดาวน์โหลดแคตตาล็อก"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="ค้นหาหนังสือในระบบเครือข่าย"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="กำลังดาวน์โหลดแคตตาล็อก"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="ค้นหาหนังสือในระบบเครือข่าย"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Add catalog" toBeTranslated="true"/>
 			<node name="editUrl" value="Enter URL manually" toBeTranslated="true"/>
@@ -138,7 +140,7 @@
 	<node name="buyBook">
 		<node name="title" value="ซื้อหนังสือ"/>
 		<node name="titleSeveralBooks" value="Purchase books" toBeTranslated="true"/>
-		<node name="confirm" value="คุณแน่ใจว่าจะซื้อหนังสือ&#10;&#8220;%s&#8221;&#10;?"/>
+		<node name="confirm" value="คุณแน่ใจว่าจะซื้อหนังสือ&#10;“%s”&#10;?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?" toBeTranslated="true"/>
 		<node name="alreadyBought" value="หนังสือถูกซื้อเรียบร้อยแล้ว"/>
 		<node name="notAuthorized" value="Authorization required" toBeTranslated="true"/>
@@ -317,8 +319,8 @@
 					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
 				</node>
 				<node name="showStatusBarWhenMenuIsActive" value="แสดงแถบสถานะเมื่อแสดงเมนู">
-					<node name="summaryOn" value="แสดงแถบสถานะเมื่อแสดงเมนู" />
-					<node name="summaryOff" value="ไม่แสดงแถบสถานะเมื่อแสดงเมนู" />
+					<node name="summaryOn" value="แสดงแถบสถานะเมื่อแสดงเมนู"/>
+					<node name="summaryOff" value="ไม่แสดงแถบสถานะเมื่อแสดงเมนู"/>
 				</node>
 				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
 					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
@@ -615,7 +617,7 @@
 					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
 					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
 					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+					<node name="custom" value="Custom…" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="dictionary" value="พจนานุกรม">
@@ -697,7 +699,7 @@
 			<node name="message" value="ไฟล์นี้จะถูกลบอย่างถาวร คุณแน่ใจหรือไม่?"/>
 		</node>
 		<node name="redownloadFileBox">
-			<node name="message" value="มีไฟล์นี้อยู่แล้วในระบบ ต้องการที่จะดาวน์โหลดใหม่หรือไม่?" />
+			<node name="message" value="มีไฟล์นี้อยู่แล้วในระบบ ต้องการที่จะดาวน์โหลดใหม่หรือไม่?"/>
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="กำลังดาวน์โหลดหนังสือ %s"/>
@@ -712,9 +714,9 @@
 			<node name="signOut" value="กำลังออกจากระบบ, กรุณารอสักครู่..."/>
 			<node name="purchaseBook" value="กำลังซื้อหนังสือ, กรุณารอสักครู่..."/>
 			<node name="loadingCatalogInfo" value="กำลังดาวน์โหลข้อมูลของแคตตาล็อก, กรุณารอสักครู่..."/>
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;" toBeTranslated="true" />
-			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..." />
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;" toBeTranslated="true"/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
+			<node name="updatingCatalogsList" value="กำลังอัพเดตรายการแคตตาล็อก, กรุณารอสักครู่..."/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="เซิร์ฟเวอร์ภายในเกิดขัดข้อง"/>
@@ -738,7 +740,7 @@
 			<node name="register" value="ลงทะเบียน"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true" />
+			<node name="title" value="FBReader: add custom catalog" toBeTranslated="true"/>
 			<node name="catalogTitle" value="ชื่อแคตตาล็อก"/>
 			<node name="catalogUrl" value="URL"/>
 			<node name="catalogSummary" value="สรุป"/>
@@ -755,7 +757,7 @@
 			<node name="title" value="ตัวกรองภาษา"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" toBeTranslated="true" />
+			<node name="title" value="Tip of the day" toBeTranslated="true"/>
 			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?" toBeTranslated="true"/>
 			<node name="dontShowAgain" value="Don't show again" toBeTranslated="true"/>
 			<node name="more" value="Next tip" toBeTranslated="true"/>
