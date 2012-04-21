@@ -34,7 +34,7 @@ public class SelectionCopyAction extends FBAndroidAction {
 	}
 
 	@Override
-    protected void run(Object ... params) {
+	protected void run(Object ... params) {
 		final String text = Reader.getTextView().getSelectedText();
 		Reader.getTextView().clearSelection();
 
