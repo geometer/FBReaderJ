@@ -25,25 +25,6 @@
 			<node name="connectionRefused" value="Conexiunea a fost refuzata de &#10;%s"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="Rosu"/>
-		<node name="green" value="Verde"/>
-		<node name="blue" value="Albastru"/>
-		<node name="black" value="Negru"/>
-		<node name="white" value="Alb"/>
-		<node name="maroon" value="Maro"/>
-		<node name="olive" value="Masliniu"/>
-		<node name="navy" value="Bleumarin"/>
-		<node name="purple" value="Violet"/>
-		<node name="teal" value="Turcuaz"/>
-		<node name="silver" value="Argintiu"/>
-		<node name="gray" value="Gri"/>
-		<node name="lime" value="Verde deschis"/>
-		<node name="yellow" value="Galben"/>
-		<node name="magenta" value="Purpuriu"/>
-		<node name="cyan" value="Bleu"/>
-		<node name="custom..." value="Custom..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="Araba"/>
 		<node name="cs" value="Ceha"/>
