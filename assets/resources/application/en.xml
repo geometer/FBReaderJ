@@ -119,8 +119,10 @@
 			<node name="buy" value="Do you want to buy this book? (%s)"/>
 			<node name="openInBrowser" value="Do you want to open this catalog in browser?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Downloading catalogs"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Searching for books in network"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Downloading catalogs"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Searching for books in network"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Add catalog"/>
 			<node name="editUrl" value="Enter URL manually"/>
@@ -142,7 +144,7 @@
 	<node name="buyBook">
 		<node name="title" value="Purchase book"/>
 		<node name="titleSeveralBooks" value="Purchase books"/>
-		<node name="confirm" value="Are you sure you want to buy &#10;&#8220;%s&#8221;?"/>
+		<node name="confirm" value="Are you sure you want to buy &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Are you sure you want to buy %s books?"/>
 		<node name="alreadyBought" value="Book is already bought"/>
 		<node name="notAuthorized" value="Authorization required"/>
@@ -211,7 +213,7 @@
 		<node name="library" value="Open library"/>
 		<node name="networkLibrary" value="Open network library"/>
 		<node name="previousBook" value="Open previous book"/>
-		<node name="returnTo" value="Return to &#8230;"/>
+		<node name="returnTo" value="Return to …"/>
 		<node name="back" value="Back"/>
 		<node name="forward" value="Forward"/>
 		<node name="close" value="Close FBReader"/>
@@ -235,7 +237,7 @@
 		<node name="navigate" value="Navigate">
 			<node name="toc" value="Table of Contents"/>
 			<node name="gotoHome" value="Go to Start of Document"/>
-			<node name="gotoPageNumber" value="Go to Page&#8230;"/>
+			<node name="gotoPageNumber" value="Go to Page…"/>
 			<node name="gotoSectionStart" value="Go to Start of Text Section"/>
 			<node name="gotoSectionEnd" value="Go to End of Text Section"/>
 			<node name="nextTOCSection" value="Go to Next TOC Item"/>
@@ -276,8 +278,8 @@
 			<node name="pay" value="Pay"/>
 			<node name="refresh" value="Refresh"/>
 			<node name="authorize" value="Authorize"/>
-			<node name="resetPosition" value="Reset position" />
-			<node name="sendReport" value="Send report" />
+			<node name="resetPosition" value="Reset position"/>
+			<node name="sendReport" value="Send report"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Install plugin"/>
@@ -625,7 +627,7 @@
 					<node name="right_to_left" value="Right to left page scrolling"/>
 					<node name="up" value="Down to up page scrolling"/>
 					<node name="down" value="Up to down page scrolling"/>
-					<node name="custom" value="Custom&#8230;"/>
+					<node name="custom" value="Custom…"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Dictionary">
@@ -711,20 +713,20 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Downloading book %s"/>
-			<node name="search" value="Searching. Please, wait&#8230;"/>
-			<node name="loadInfo" value="Loading information. Please, wait&#8230;"/>
-			<node name="loadingBook" value="Opening book. Please, wait&#8230;"/>
-			<node name="loadingBookList" value="Opening library. Please, wait&#8230;"/>
-			<node name="creatingBooksDatabase" value="Creating books database. Please, wait&#8230;"/>
-			<node name="updatingBooksDatabase" value="Updating books database. Please, wait&#8230;"/>
-			<node name="loadingNetworkLibrary" value="Opening library. Please, wait&#8230;"/>
-			<node name="authentication" value="Authentication. Please, wait&#8230;"/>
-			<node name="signOut" value="Signing out. Please, wait&#8230;"/>
-			<node name="purchaseBook" value="Purchase book. Please, wait&#8230;"/>
-			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait&#8230;"/>
-			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait&#8230;"/>
-			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait&#8230;"/>
-			<node name="updatingAccountInformation" value="Updating account information. Please, wait&#8230;"/>
+			<node name="search" value="Searching. Please, wait…"/>
+			<node name="loadInfo" value="Loading information. Please, wait…"/>
+			<node name="loadingBook" value="Opening book. Please, wait…"/>
+			<node name="loadingBookList" value="Opening library. Please, wait…"/>
+			<node name="creatingBooksDatabase" value="Creating books database. Please, wait…"/>
+			<node name="updatingBooksDatabase" value="Updating books database. Please, wait…"/>
+			<node name="loadingNetworkLibrary" value="Opening library. Please, wait…"/>
+			<node name="authentication" value="Authentication. Please, wait…"/>
+			<node name="signOut" value="Signing out. Please, wait…"/>
+			<node name="purchaseBook" value="Purchase book. Please, wait…"/>
+			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait…"/>
+			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…"/>
+			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
+			<node name="updatingAccountInformation" value="Updating account information. Please, wait…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Internal server error"/>
@@ -765,7 +767,7 @@
 			<node name="title" value="Language filter"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Tip of the day" />
+			<node name="title" value="Tip of the day"/>
 			<node name="initializationText" value="Would you like to read FBReader daily tips? New tips would be downloaded from FBReader site. Expected network traffic is 1-2 kilobytes per week.&#10;&#10;Enable tips?"/>
 			<node name="dontShowAgain" value="Don't show again"/>
 			<node name="more" value="Next tip"/>
