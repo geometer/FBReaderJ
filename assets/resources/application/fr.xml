@@ -206,7 +206,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Ouvrir le livre précédent"/>
-		<node name="returnTo" value="Retourner à..."/>
+		<node name="returnTo" value="Retourner à…"/>
 		<node name="back" value="Retour"/>
 		<node name="forward" value="Suivant"/>
 		<node name="close" value="Fermer FBReader"/>
@@ -230,7 +230,7 @@
 		<node name="navigate" value="Naviguer">
 			<node name="toc" value="Table des Matières"/>
 			<node name="gotoHome" value="Aller au début du document"/>
-			<node name="gotoPageNumber" value="Aller à la Page..."/>
+			<node name="gotoPageNumber" value="Aller à la Page…"/>
 			<node name="gotoSectionStart" value="Aller au début de la section de texte"/>
 			<node name="gotoSectionEnd" value="Aller à la fin de la section de texte"/>
 			<node name="nextTOCSection" value="Aller au prochain élément de la table des matières"/>
@@ -706,19 +706,19 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Téléchargement de %s"/>
-			<node name="search" value="Recherche en cours, veuillez patienter..."/>
-			<node name="loadInfo" value="Chargement des infos, veuillez patienter..."/>
-			<node name="loadingBook" value="Ouverture en cours, veuillez patienter..."/>
-			<node name="loadingBookList" value="Ouverture de la bibliothèque, veuillez patienter..."/>
-			<node name="creatingBooksDatabase" value="Création de la base des livres, veuillez patienter..."/>
-			<node name="updatingBooksDatabase" value="Mise à jour de la base des livres, veuillez patienter..."/>
-			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque, veuillez patienter..."/>
-			<node name="authentication" value="Authentification. Veuillez patienter..."/>
-			<node name="signOut" value="Déconnexion en cours, veuillez patienter..."/>
-			<node name="purchaseBook" value="Achat du livre. Veuillez patienter..."/>
-			<node name="loadingCatalogInfo" value="Chargement du catalogue, veuillez patienter..."/>
+			<node name="search" value="Recherche en cours, veuillez patienter…"/>
+			<node name="loadInfo" value="Chargement des infos, veuillez patienter…"/>
+			<node name="loadingBook" value="Ouverture en cours, veuillez patienter…"/>
+			<node name="loadingBookList" value="Ouverture de la bibliothèque, veuillez patienter…"/>
+			<node name="creatingBooksDatabase" value="Création de la base des livres, veuillez patienter…"/>
+			<node name="updatingBooksDatabase" value="Mise à jour de la base des livres, veuillez patienter…"/>
+			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque, veuillez patienter…"/>
+			<node name="authentication" value="Authentification. Veuillez patienter…"/>
+			<node name="signOut" value="Déconnexion en cours, veuillez patienter…"/>
+			<node name="purchaseBook" value="Achat du livre. Veuillez patienter…"/>
+			<node name="loadingCatalogInfo" value="Chargement du catalogue, veuillez patienter…"/>
 			<node name="loadingNetworkBookInfo" value="Chargement des informations du livre, veuillez patienter…"/>
-			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier..."/>
+			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier…"/>
 			<node name="updatingAccountInformation" value="Mise à jour des informations du compte, veuillez patienter…"/>
 		</node>
 		<node name="networkError">

@@ -203,7 +203,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Open vorige boek"/>
-		<node name="returnTo" value="Terug naar..."/>
+		<node name="returnTo" value="Terug naar…"/>
 		<node name="back" value="Vorige"/>
 		<node name="forward" value="Volgende"/>
 		<node name="close" value="FBReader afsluiten"/>
@@ -227,7 +227,7 @@
 		<node name="navigate" value="Navigeer">
 			<node name="toc" value="Inhoudsopgave"/>
 			<node name="gotoHome" value="Begin van document"/>
-			<node name="gotoPageNumber" value="Ga naar pagina..."/>
+			<node name="gotoPageNumber" value="Ga naar pagina…"/>
 			<node name="gotoSectionStart" value="Ga naar het begin van de sectie"/>
 			<node name="gotoSectionEnd" value="Ga naar het einde van de sectie"/>
 			<node name="nextTOCSection" value="Ga naar het volgende hoofdstuk"/>
@@ -703,19 +703,19 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Boek %s wordt gedownload"/>
-			<node name="search" value="Bezig met zoeken. Een ogenblik..."/>
-			<node name="loadInfo" value="Informatie wordt geladen. Een ogenblik..."/>
-			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik..."/>
-			<node name="loadingBookList" value="Bibliotheek wordt geladen. Een ogenblik..."/>
-			<node name="creatingBooksDatabase" value="Boekendatabase wordt gemaakt. Een ogenblik..."/>
-			<node name="updatingBooksDatabase" value="Boekendatabase wordt bijgewerkt. Een ogenblik..."/>
-			<node name="loadingNetworkLibrary" value="Bibliotheek wordt geladen. Een ogenblik..."/>
-			<node name="authentication" value="Authenticatie. Een ogenblik..."/>
-			<node name="signOut" value="Afmelden. Een ogenblik..."/>
-			<node name="purchaseBook" value="Boek wordt gekocht. Een ogenblik..."/>
-			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik..."/>
+			<node name="search" value="Bezig met zoeken. Een ogenblik…"/>
+			<node name="loadInfo" value="Informatie wordt geladen. Een ogenblik…"/>
+			<node name="loadingBook" value="Boek wordt geopend. Een ogenblik…"/>
+			<node name="loadingBookList" value="Bibliotheek wordt geladen. Een ogenblik…"/>
+			<node name="creatingBooksDatabase" value="Boekendatabase wordt gemaakt. Een ogenblik…"/>
+			<node name="updatingBooksDatabase" value="Boekendatabase wordt bijgewerkt. Een ogenblik…"/>
+			<node name="loadingNetworkLibrary" value="Bibliotheek wordt geladen. Een ogenblik…"/>
+			<node name="authentication" value="Authenticatie. Een ogenblik…"/>
+			<node name="signOut" value="Afmelden. Een ogenblik…"/>
+			<node name="purchaseBook" value="Boek wordt gekocht. Een ogenblik…"/>
+			<node name="loadingCatalogInfo" value="Catalogusinformati wordt geladen. Een ogenblik…"/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
-			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik..."/>
+			<node name="updatingCatalogsList" value="Cataloguslijst wordt bijgewerkt. Een ogenblik…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
