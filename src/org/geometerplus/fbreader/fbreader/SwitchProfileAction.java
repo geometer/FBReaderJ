@@ -33,7 +33,7 @@ class SwitchProfileAction extends FBAction {
 	}
 
 	@Override
-	public void run(Object ... params) {
+	protected void run(Object ... params) {
 		Reader.setColorProfileName(myProfileName);
 		Reader.getViewWidget().reset();
 		Reader.getViewWidget().repaint();
