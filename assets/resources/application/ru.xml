@@ -123,8 +123,10 @@
 			<node name="buy" value="Вы хотите купить эту книгу? (%s)"/>
 			<node name="openInBrowser" value="Вы хотите открыть этот каталог в браузере?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Идёт загрузка каталогов"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Поиск книг в сети"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Идёт загрузка каталогов"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Поиск книг в сети"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Добавление каталога"/>
 			<node name="editUrl" value="Ввести адрес вручную"/>
@@ -282,7 +284,7 @@
 			<node name="refresh" value="Обновить"/>
 			<node name="authorize" value="Авторизоваться"/>
 			<node name="resetPosition" value="Назад"/>
-			<node name="sendReport" value="Отправить сообщение" />
+			<node name="sendReport" value="Отправить сообщение"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Установка дополнения"/>
@@ -630,7 +632,7 @@
 					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
 					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
 					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom&#8230;" toBeTranslated="true"/>
+					<node name="custom" value="Custom…" toBeTranslated="true"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Словарь">
@@ -641,7 +643,7 @@
 					<node name="doNothing" value="Ничего не делать"/>
 					<node name="selectSingleWord" value="Выделять одно слово"/>
 					<node name="startSelecting" value="Начинать процесс пометки"/>
-					<node name="openDictionary" value="Выделять одно слово, а при отпускании &#8211; запускать словарь"/>
+					<node name="openDictionary" value="Выделять одно слово, а при отпускании – запускать словарь"/>
 				</node>
 				<node name="navigateOverAllWords" value="Перемещаться по всем словам">
 					<node name="summaryOn" value="При перемещении с помощью кнопок помечать все слова"/>
@@ -716,20 +718,20 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Загужается книга %s"/>
-			<node name="search" value="Идет поиск. Подождите, пожалуйста&#8230;"/>
-			<node name="loadInfo" value="Загружается информация. Подождите, пожалуйста&#8230;"/>
-			<node name="loadingBook" value="Открывается книга. Подождите, пожалуйста&#8230;"/>
-			<node name="loadingBookList" value="Открывается библиотека. Подождите, пожалуйста&#8230;"/>
-			<node name="creatingBooksDatabase" value="Создается база книг. Подождите, пожалуйста&#8230;"/>
-			<node name="updatingBooksDatabase" value="Обновляется база книг. Подождите, пожалуйста&#8230;"/>
-			<node name="loadingNetworkLibrary" value="Открывается библиотека. Подождите, пожалуйста&#8230;"/>
-			<node name="authentication" value="Идет авторизация. Подождите, пожалуйста&#8230;"/>
-			<node name="signOut" value="Выход из системы. Подождите, пожалуйста&#8230;"/>
-			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста&#8230;"/>
-			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста&#8230;"/>
-			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста&#8230;"/>
-			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста&#8230;"/>
-			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста&#8230;"/>
+			<node name="search" value="Идет поиск. Подождите, пожалуйста…"/>
+			<node name="loadInfo" value="Загружается информация. Подождите, пожалуйста…"/>
+			<node name="loadingBook" value="Открывается книга. Подождите, пожалуйста…"/>
+			<node name="loadingBookList" value="Открывается библиотека. Подождите, пожалуйста…"/>
+			<node name="creatingBooksDatabase" value="Создается база книг. Подождите, пожалуйста…"/>
+			<node name="updatingBooksDatabase" value="Обновляется база книг. Подождите, пожалуйста…"/>
+			<node name="loadingNetworkLibrary" value="Открывается библиотека. Подождите, пожалуйста…"/>
+			<node name="authentication" value="Идет авторизация. Подождите, пожалуйста…"/>
+			<node name="signOut" value="Выход из системы. Подождите, пожалуйста…"/>
+			<node name="purchaseBook" value="Идет покупка книги. Подождите, пожалуйста…"/>
+			<node name="loadingCatalogInfo" value="Загрузка информации из каталога. Подождите, пожалуйста…"/>
+			<node name="loadingNetworkBookInfo" value="Загрузка информации о книге. Подождите, пожалуйста…"/>
+			<node name="updatingCatalogsList" value="Обновляется список каталогов. Подождите, пожалуйста…"/>
+			<node name="updatingAccountInformation" value="Загружается информация о состоянии счета. Подождите, пожалуйста…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутренняя ошибка сервера"/>

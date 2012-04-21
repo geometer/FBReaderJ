@@ -66,14 +66,14 @@
 		</node>
 		<node name="search" value="Rechercher">
 			<node name="summary" value="Chercher des livres sur %s"/>
-			<node name="summaryAllCatalogs" value="Chercher des livres dans les catalogues" />
+			<node name="summaryAllCatalogs" value="Chercher des livres dans les catalogues"/>
 			<node name="summaryInProgress" value="Recherche en cours"/>
 		</node>
 		<node name="found" value="Trouvé(s)">
 			<node name="summary" value="Résultats de la recherche : %s"/>
 		</node>
 		<node name="openCatalog" value="Ouvrir le catalogue"/>
-		<node name="networkSearch" value="Rechercher" />
+		<node name="networkSearch" value="Rechercher"/>
 		<node name="showResults" value="Afficher les résultats"/>
 		<node name="showBooks" value="Afficher les livres"/>
 		<node name="download" value="Télécharger"/>
@@ -88,9 +88,9 @@
 		<node name="openBasket" value="Voir le panier"/>
 		<node name="clearBasket" value="Vider le panier"/>
 		<node name="buyAllBooks" value="Acheter tous les livres"/>
-		<node name="openInBrowser" value="Ouvrir dans un navigateur" />
-		<node name="stopLoading" value="Arrêt du chargement" />
-		<node name="stopSearching" value="Arrêt de la recherche" />
+		<node name="openInBrowser" value="Ouvrir dans un navigateur"/>
+		<node name="stopLoading" value="Arrêt du chargement"/>
+		<node name="stopSearching" value="Arrêt de la recherche"/>
 		<node name="signIn" value="Connexion"/>
 		<node name="signOut" value="Déconnexion (%s)"/>
 		<node name="topup" value="Recréditer le compte (actuellement : %s)"/>
@@ -102,10 +102,10 @@
 		<node name="basketSummaryEmpty" value="Aucun livre"/>
 		<node name="basketSummaryCountOnly" value="%0 livre(s)"/>
 		<node name="basketSummary" value="%0 livre(s) (%1)"/>
-		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement" />
-		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement" />
-		<node name="stoppingCatalogLoading" value="Arrêt du chargement" />
-		<node name="stoppingNetworkSearch" value="Arrêt de la recherche" />
+		<node name="alreadyDownloading" value="Le livre est en cours de téléchargement"/>
+		<node name="alreadyDownloadingDemo" value="L'exemple est en cours de téléchargement"/>
+		<node name="stoppingCatalogLoading" value="Arrêt du chargement"/>
+		<node name="stoppingNetworkSearch" value="Arrêt de la recherche"/>
 		<node name="editCustomCatalog" value="Editer le catalogue"/>
 		<node name="removeCustomCatalog" value="Supprimer le catalogue"/>
 		<node name="addCustomCatalog" value="Ajouter un catalogue"/>
@@ -116,10 +116,12 @@
 			<node name="readDemo" value="Voulez-vous lire l'exemple?"/>
 			<node name="downloadDemo" value="Voulez-vous télécharger l'exemple?"/>
 			<node name="buy" value="Voulez-vous acheter ce livre? (%s)"/>
-			<node name="openInBrowser" value="Voulez-vous ouvrir ce catalogue dans le navigateur?" />
+			<node name="openInBrowser" value="Voulez-vous ouvrir ce catalogue dans le navigateur?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Chargement des catalogues"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Recherche de livres sur le réseau"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Chargement des catalogues"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Recherche de livres sur le réseau"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Ajouter un catalogue"/>
 			<node name="editUrl" value="Saisir une adresse (URL)"/>
@@ -143,43 +145,43 @@
 		<node name="titleSeveralBooks" value="Acheter des livres"/>
 		<node name="confirm" value="Êtes-vous sûr de vouloir acheter&#10;le livre&#10;« %s » ?"/>
 		<node name="confirmSeveralBooks" value="Etes-vous sûr d'acheter %s livres ?"/>
-		<node name="alreadyBought" value="Le livre a déjà été acheté" />
+		<node name="alreadyBought" value="Le livre a déjà été acheté"/>
 		<node name="notAuthorized" value="Autorisation requise"/>
 		<node name="noAccountInformation" value="Impossible de charger les informations du compte"/>
 		<node name="unsufficientFunds" value="Cet article vaut %0 et vous n'avez que %1"/>
 		<node name="zeroFunds" value="Cet article coûte %0"/>
 	</node>
 	<node name="bookInfo">
-		<node name="bookInfo" value="Informations sur le livre" />
-		<node name="fileInfo" value="Info fichier" />
-		<node name="description" value="Description" />
-		<node name="noDescription" value="Aucune description disponible." />
-		<node name="annotation" value="Annotation" />
-		<node name="title" value="Titre:" />
-		<node name="authors" value="Auteurs:" />
-		<node name="series" value="Série:" />
-		<node name="indexInSeries" value="Index dans les séries:" />
-		<node name="tags" value="Tags:" />
+		<node name="bookInfo" value="Informations sur le livre"/>
+		<node name="fileInfo" value="Info fichier"/>
+		<node name="description" value="Description"/>
+		<node name="noDescription" value="Aucune description disponible."/>
+		<node name="annotation" value="Annotation"/>
+		<node name="title" value="Titre:"/>
+		<node name="authors" value="Auteurs:"/>
+		<node name="series" value="Série:"/>
+		<node name="indexInSeries" value="Index dans les séries:"/>
+		<node name="tags" value="Tags:"/>
 		<node name="language" value="Langue:"/>
-		<node name="name" value="Nom:" />
-		<node name="type" value="Type:" />
-		<node name="size" value="Taille:" />
-		<node name="time" value="Dernière modification:" />
-		<node name="sizeInBytes" value="%s octet(s)" />
-		<node name="sizeInKiloBytes" value="%s Ko" />
+		<node name="name" value="Nom:"/>
+		<node name="type" value="Type:"/>
+		<node name="size" value="Taille:"/>
+		<node name="time" value="Dernière modification:"/>
+		<node name="sizeInBytes" value="%s octet(s)"/>
+		<node name="sizeInKiloBytes" value="%s Ko"/>
 		<node name="catalog" value="Catalogue:"/>
 		<node name="extraLinks" value="Voir aussi"/>
 		<node name="menu">
-			<node name="edit" value="Editer" />
+			<node name="edit" value="Editer"/>
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Le livre a été téléchargé" />
-		<node name="tickerError" value="Erreur de téléchargement du livre" />
-		<node name="contentSuccess" value="Téléchargement terminé" />
-		<node name="contentError" value="Téléchargement échoué" />
-		<node name="downloadingStarted" value="Le téléchargement du livre a été démarré" />
-		<node name="alreadyDownloading" value="Le livre est déjà en cours de téléchargement" />
+		<node name="tickerSuccess" value="Le livre a été téléchargé"/>
+		<node name="tickerError" value="Erreur de téléchargement du livre"/>
+		<node name="contentSuccess" value="Téléchargement terminé"/>
+		<node name="contentError" value="Téléchargement échoué"/>
+		<node name="downloadingStarted" value="Le téléchargement du livre a été démarré"/>
+		<node name="alreadyDownloading" value="Le livre est déjà en cours de téléchargement"/>
 		<node name="cannotCreateDirectory" value="Impossible de créer le répertoire %s"/>
 		<node name="cannotCreateFile" value="Impossible de créer le fichier %s"/>
 	</node>
@@ -246,24 +248,24 @@
 		<node name="screenOrientationLandscape" value="Paysage"/>
 		<node name="screenOrientationReversePortrait" value="Portrait inversé"/>
 		<node name="screenOrientationReverseLandscape" value="Paysage inversé"/>
-		<node name="increaseFont" value="Augmenter la taille" />
-		<node name="decreaseFont" value="Diminuer la taille" />
+		<node name="increaseFont" value="Augmenter la taille"/>
+		<node name="decreaseFont" value="Diminuer la taille"/>
 		<node name="toggleFullscreen" value="Plein écran"/>
 		<node name="bookmarks" value="Marque-pages"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Installer" />
-			<node name="update" value="Modifier" />
-			<node name="skip" value="Sauter" />
+			<node name="install" value="Installer"/>
+			<node name="update" value="Modifier"/>
+			<node name="skip" value="Sauter"/>
 			<node name="buy" value="Acheter"/>
 			<node name="buyAndDownload" value="Acheter et télécharger"/>
-			<node name="continue" value="Continuer" />
-			<node name="editUrl" value="Editer l'url" />
-			<node name="tryAgain" value="Recommencer" />
-			<node name="openBook" value="Lire" />
-			<node name="editInfo" value="Modifier" />
-			<node name="reloadInfo" value="Recharger" />
+			<node name="continue" value="Continuer"/>
+			<node name="editUrl" value="Editer l'url"/>
+			<node name="tryAgain" value="Recommencer"/>
+			<node name="openBook" value="Lire"/>
+			<node name="editInfo" value="Modifier"/>
+			<node name="reloadInfo" value="Recharger"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Recréditer"/>
 			<node name="pay" value="Payer"/>
@@ -273,22 +275,22 @@
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
-			<node name="installTitle" value="Installer plugin" />
-			<node name="updateTitle" value="Mettre à jour plugin" />
-			<node name="dontAskAgain" value="Ne plus demander" />
+			<node name="installTitle" value="Installer plugin"/>
+			<node name="updateTitle" value="Mettre à jour plugin"/>
+			<node name="dontAskAgain" value="Ne plus demander"/>
 		</node>
 		<node name="installDictionary">
-			<node name="title" value="Installer un dictionnaire" />
-			<node name="message" value="Souhaitez-vous installer %s ?" />
+			<node name="title" value="Installer un dictionnaire"/>
+			<node name="message" value="Souhaitez-vous installer %s ?"/>
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Nom du fichier"/>
 			<node name="title" value="Titre"/>
 			<node name="language" value="Langue"/>
 			<node name="encoding" value="Encodage"/>
-			<node name="authors" value="Auteurs" />
-			<node name="tags" value="Tags" />
-			<node name="series" value="Série" />
+			<node name="authors" value="Auteurs"/>
+			<node name="tags" value="Tags"/>
+			<node name="series" value="Série"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Répertoires">
@@ -618,7 +620,7 @@
 					<node name="right_to_left" value="Défilement page de la droite vers la gauche"/>
 					<node name="up" value="Défilement page du bas vers le haut"/>
 					<node name="down" value="Défilement page du haut vers le bas"/>
-					<node name="custom" value="Personnalisation&#8230;"/>
+					<node name="custom" value="Personnalisation…"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Dictionnaire">
@@ -710,14 +712,14 @@
 			<node name="loadingBookList" value="Ouverture de la bibliothèque, veuillez patienter..."/>
 			<node name="creatingBooksDatabase" value="Création de la base des livres, veuillez patienter..."/>
 			<node name="updatingBooksDatabase" value="Mise à jour de la base des livres, veuillez patienter..."/>
-			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque, veuillez patienter..." />
+			<node name="loadingNetworkLibrary" value="Ouverture de la bibliothèque, veuillez patienter..."/>
 			<node name="authentication" value="Authentification. Veuillez patienter..."/>
-			<node name="signOut" value="Déconnexion en cours, veuillez patienter..." />
+			<node name="signOut" value="Déconnexion en cours, veuillez patienter..."/>
 			<node name="purchaseBook" value="Achat du livre. Veuillez patienter..."/>
-			<node name="loadingCatalogInfo" value="Chargement du catalogue, veuillez patienter..." />
-			<node name="loadingNetworkBookInfo" value="Chargement des informations du livre, veuillez patienter&#8230;"/>
+			<node name="loadingCatalogInfo" value="Chargement du catalogue, veuillez patienter..."/>
+			<node name="loadingNetworkBookInfo" value="Chargement des informations du livre, veuillez patienter…"/>
 			<node name="updatingCatalogsList" value="Mise à jour de la liste, veuillez patentier..."/>
-			<node name="updatingAccountInformation" value="Mise à jour des informations du compte, veuillez patienter&#8230;"/>
+			<node name="updatingAccountInformation" value="Mise à jour des informations du compte, veuillez patienter…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erreur interne du serveur"/>
@@ -728,9 +730,9 @@
 			<node name="downloadLimitExceeded" value="Limite de téléchargement atteinte"/>
 			<node name="noUserEmail" value="Aucun utilisateur n'est inscrit&#10;avec l'adresse email indiquée"/>
 			<node name="unsupportedOperation" value="Opération non supportée"/>
-			<node name="notAnOPDS" value="Il ne s'agit pas d'un catalogue OPDS" />
-			<node name="noRequiredInformation" value="Certaines informations requises sont absentes du catalogue" />
-			<node name="cacheDirectoryError" value="Impossible de créer le répertoire contenant le cache" />
+			<node name="notAnOPDS" value="Il ne s'agit pas d'un catalogue OPDS"/>
+			<node name="noRequiredInformation" value="Certaines informations requises sont absentes du catalogue"/>
+			<node name="cacheDirectoryError" value="Impossible de créer le répertoire contenant le cache"/>
 		</node>
 		<node name="AuthenticationDialog">
 			<node name="title" value="Authentification"/>
@@ -742,20 +744,20 @@
 		</node>
 		<node name="CustomCatalogDialog">
 			<node name="title" value="FBReader: ajouter un catalogue personnalisé"/>
-			<node name="catalogTitle" value="Titre" />
-			<node name="catalogUrl" value="Adresse du catalogue sur le réseau" />
-			<node name="catalogSummary" value="Description" />
-			<node name="catalogTitleExample" value="Ex: Catalogue du project Gutenberg" />
-			<node name="catalogUrlExample" value="Ex: http://m.gutenberg.org/" />
-			<node name="catalogSummaryExample" value="Ex: Livres du domaine publique" />
-			<node name="titleIsEmpty" value="Le titre ne devrait pas être vide" />
-			<node name="urlIsEmpty" value="L'adresse ne doit pas être vide" />
-			<node name="invalidUrl" value="Adresse invalide" />
-			<node name="titleAlreadyExists" value="Le titre indiqué est déjà utilisé" />
-			<node name="siteAlreadyExists" value="Le site spécifié est déjà utilisé" />
+			<node name="catalogTitle" value="Titre"/>
+			<node name="catalogUrl" value="Adresse du catalogue sur le réseau"/>
+			<node name="catalogSummary" value="Description"/>
+			<node name="catalogTitleExample" value="Ex: Catalogue du project Gutenberg"/>
+			<node name="catalogUrlExample" value="Ex: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="Ex: Livres du domaine publique"/>
+			<node name="titleIsEmpty" value="Le titre ne devrait pas être vide"/>
+			<node name="urlIsEmpty" value="L'adresse ne doit pas être vide"/>
+			<node name="invalidUrl" value="Adresse invalide"/>
+			<node name="titleAlreadyExists" value="Le titre indiqué est déjà utilisé"/>
+			<node name="siteAlreadyExists" value="Le site spécifié est déjà utilisé"/>
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Filtre de langue" />
+			<node name="title" value="Filtre de langue"/>
 		</node>
 		<node name="tips">
 			<node name="title" value="Astuce du jour"/>
@@ -775,7 +777,7 @@
 		<node name="noFavorites" value="Votre liste de favoris est vide"/>
 		<node name="emptyCatalog" value="Le catalogue est vide"/>
 		<node name="emptyBasket" value="Votre panier est vide, désolé"/>
-		<node name="emptyNetworkSearchResults" value="Aucun livre correspondant trouvé" />
+		<node name="emptyNetworkSearchResults" value="Aucun livre correspondant trouvé"/>
 	</node>
 	<node name="external">
 		<node name="browser" value="Navigateur"/>
