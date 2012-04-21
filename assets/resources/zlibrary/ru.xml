@@ -25,25 +25,6 @@
 			<node name="connectionRefused" value="Соединение закрыто сайтом %s"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="Красный"/>
-		<node name="green" value="Зелёный"/>
-		<node name="blue" value="Синий"/>
-		<node name="black" value="Черный"/>
-		<node name="white" value="Белый"/>
-		<node name="maroon" value="Бордовый"/>
-		<node name="olive" value="Оливковый"/>
-		<node name="navy" value="Темно-синий"/>
-		<node name="purple" value="Фиолетовый"/>
-		<node name="teal" value="Темно-голубой"/>
-		<node name="silver" value="Серебристый"/>
-		<node name="gray" value="Серый"/>
-		<node name="lime" value="Светло-зеленый"/>
-		<node name="yellow" value="Желтый"/>
-		<node name="magenta" value="Пурпурный"/>
-		<node name="cyan" value="Голубой"/>
-		<node name="custom..." value="Настроить..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="арабский"/>
 		<node name="cs" value="чешский"/>
