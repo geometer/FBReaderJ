@@ -26,25 +26,6 @@
 			<node name="connectionRefused" value="連接被拒 &#10;%s"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="紅色"/>
-		<node name="green" value="綠色"/>
-		<node name="blue" value="藍色"/>
-		<node name="black" value="黑色"/>
-		<node name="white" value="白色"/>
-		<node name="maroon" value="栗子色"/>
-		<node name="olive" value="棷欖色"/>
-		<node name="navy" value="海軍藍"/>
-		<node name="purple" value="紫色"/>
-		<node name="teal" value="水鴨色"/>
-		<node name="silver" value="銀色"/>
-		<node name="gray" value="灰色"/>
-		<node name="lime" value="石灰色"/>
-		<node name="yellow" value="黃色"/>
-		<node name="magenta" value="桃紅色"/>
-		<node name="cyan" value="天青色"/>
-		<node name="custom..." value="自訂..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="Arabic" toBeTranslated="true"/>
 		<node name="cs" value="Czech" toBeTranslated="true"/>

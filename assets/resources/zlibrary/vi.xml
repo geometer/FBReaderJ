@@ -26,25 +26,6 @@
 			<node name="connectionRefused" value="Kết nối bị từ chối bởi&#10;%s"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="Đỏ"/>
-		<node name="green" value="Xanh lá cây"/>
-		<node name="blue" value="Xanh sẫm"/>
-		<node name="black" value="Đen"/>
-		<node name="white" value="Trắng"/>
-		<node name="maroon" value="Nâu sẫm"/>
-		<node name="olive" value="Màu oliu"/>
-		<node name="navy" value="Xanh nước biển"/>
-		<node name="purple" value="Tím"/>
-		<node name="teal" value="Xanh vừa"/>
-		<node name="silver" value="Bạc"/>
-		<node name="gray" value="Xám"/>
-		<node name="lime" value="Chanh tươi"/>
-		<node name="yellow" value="Vàng"/>
-		<node name="magenta" value="Đỏ tươi"/>
-		<node name="cyan" value="Xanh lá mạ"/>
-		<node name="custom..." value="Tùy chỉnh..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="Tiếng Ả Rập"/>
 		<node name="cs" value="Tiếng Séc"/>

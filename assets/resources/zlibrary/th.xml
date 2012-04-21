@@ -26,25 +26,6 @@
 			<node name="connectionRefused" value="การเชื่อมต่อถูกปฏิเสธโดย&#10;%s"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="แดง"/>
-		<node name="green" value="เขียว"/>
-		<node name="blue" value="น้ำเงิน"/>
-		<node name="black" value="ดำ"/>
-		<node name="white" value="ขาว"/>
-		<node name="maroon" value="น้ำตาลแดง"/>
-		<node name="olive" value="เขีวเข้ม"/>
-		<node name="navy" value="ฟ้า"/>
-		<node name="purple" value="ม่วง"/>
-		<node name="teal" value="น้ำเงินอมเขียว"/>
-		<node name="silver" value="เงิน"/>
-		<node name="gray" value="เทา"/>
-		<node name="lime" value="เขียวมะนาว"/>
-		<node name="yellow" value="เหลือง"/>
-		<node name="magenta" value="แดงม่วง"/>
-		<node name="cyan" value="น้ำเงินเขียว"/>
-		<node name="custom..." value="กำหนดเอง..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="อารบิค"/>
 		<node name="cs" value="เชค"/>

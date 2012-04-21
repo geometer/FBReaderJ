@@ -26,25 +26,6 @@
 			<node name="connectionRefused" value="Verbinding was geweigerd door&#10;%s"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="Rood"/>
-		<node name="green" value="Groen"/>
-		<node name="blue" value="Blauw"/>
-		<node name="black" value="Zwart"/>
-		<node name="white" value="Wit"/>
-		<node name="maroon" value="Bordeauxrood"/>
-		<node name="olive" value="Olijfgroen"/>
-		<node name="navy" value="Donkerblauw"/>
-		<node name="purple" value="Paars"/>
-		<node name="teal" value="Blauwgroen"/>
-		<node name="silver" value="Zilver"/>
-		<node name="gray" value="Grijs"/>
-		<node name="lime" value="Felgroen"/>
-		<node name="yellow" value="Geel"/>
-		<node name="magenta" value="Magenta"/>
-		<node name="cyan" value="Cyaan"/>
-		<node name="custom..." value="Aangepast..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="Arabisch"/>
 		<node name="cs" value="Tsjechisch"/>
