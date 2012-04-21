@@ -24,7 +24,7 @@
 			<node name="summary" value="Мої вибрані книги"/>
 		</node>
 		<node name="found" value="Знайдено">
-			<node name="summary" value="Результати пошуку для: %s" />
+			<node name="summary" value="Результати пошуку для: %s"/>
 		</node>
 		<node name="fileTree" value="Дерево файлів">
 			<node name="summary" value="Переглянути файлову систему"/>
@@ -63,14 +63,14 @@
 		</node>
 		<node name="search" value="Пошук">
 			<node name="summary" value="Пошук %s"/>
-			<node name="summaryAllCatalogs" value="Пошук книжок у каталогах" />
+			<node name="summaryAllCatalogs" value="Пошук книжок у каталогах"/>
 			<node name="summaryInProgress" value="Ведеться пошук"/>
 		</node>
 		<node name="found" value="Знайдено">
-			<node name="summary" value="Результати пошуку для: %s" />
+			<node name="summary" value="Результати пошуку для: %s"/>
 		</node>
 		<node name="openCatalog" value="Відкрити теку"/>
-		<node name="networkSearch" value="Пошук" />
+		<node name="networkSearch" value="Пошук"/>
 		<node name="showResults" value="Показати результати"/>
 		<node name="showBooks" value="Показати книжки"/>
 		<node name="download" value="Завантажити"/>
@@ -85,12 +85,12 @@
 		<node name="openBasket" value="Відкрити кошик"/>
 		<node name="clearBasket" value="Очистити кошик"/>
 		<node name="buyAllBooks" value="Купити всі книжки"/>
-		<node name="openInBrowser" value="Показати у браузері" />
-		<node name="stopLoading" value="Припинити завантаження" />
-		<node name="stopSearching" value="Припинити пошук" />
+		<node name="openInBrowser" value="Показати у браузері"/>
+		<node name="stopLoading" value="Припинити завантаження"/>
+		<node name="stopSearching" value="Припинити пошук"/>
 		<node name="signIn" value="Увійти"/>
 		<node name="signOut" value="Вийти (%s)"/>
-		<node name="topup" value="Поповнити рахунок (поточний рахунок: %s)" />
+		<node name="topup" value="Поповнити рахунок (поточний рахунок: %s)"/>
 		<node name="topupTitle" value="Поповнити рахунок"/>
 		<node name="topupViaBrowser" value="Відкрити сторінку веб-переглядачем"/>
 		<node name="authorizationMenuTitle" value="Select action"/>
@@ -99,10 +99,10 @@
 		<node name="basketSummaryEmpty" value="Немає книжок"/>
 		<node name="basketSummaryCountOnly" value="%0 книжок"/>
 		<node name="basketSummary" value="%0 книжок (%1)"/>
-		<node name="alreadyDownloading" value="Книжка завантажується" />
-		<node name="alreadyDownloadingDemo" value="Уривок завантажається" />
-		<node name="stoppingCatalogLoading" value="Зупинка завантаження" />
-		<node name="stoppingNetworkSearch" value="Завершення пошуку" />
+		<node name="alreadyDownloading" value="Книжка завантажується"/>
+		<node name="alreadyDownloadingDemo" value="Уривок завантажається"/>
+		<node name="stoppingCatalogLoading" value="Зупинка завантаження"/>
+		<node name="stoppingNetworkSearch" value="Завершення пошуку"/>
 		<node name="editCustomCatalog" value="Змінити теку"/>
 		<node name="removeCustomCatalog" value="Видалити теку"/>
 		<node name="addCustomCatalog" value="Додати теку"/>
@@ -113,10 +113,12 @@
 			<node name="readDemo" value="Ви хочете відкрити уривок?"/>
 			<node name="downloadDemo" value="Ви хочете завантажити уривок?"/>
 			<node name="buy" value="Ви хочете придбати цю книгу? (%s)"/>
-			<node name="openInBrowser" value="Ви хочете відкрити цю теку у браузері?" />
+			<node name="openInBrowser" value="Ви хочете відкрити цю теку у браузері?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Йде завантаження каталогів"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Пошук книжок у мережі"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Йде завантаження каталогів"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Пошук книжок у мережі"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Додати каталог"/>
 			<node name="editUrl" value="Ввести URL вручну"/>
@@ -125,7 +127,7 @@
 			<node name="networkSearch" value="Пошук в мережі"/>
 			<node name="reload" value="Оновити"/>
 			<node name="signIn" value="Увійти"/>
-			<node name="signUp" value="Зареєструватися" />
+			<node name="signUp" value="Зареєструватися"/>
 			<node name="signOut" value="Вийти (%s)"/>
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="addCustomCatalog" value="Додати каталог"/>
@@ -136,47 +138,47 @@
 		</node>
 	</node>
 	<node name="buyBook">
-		<node name="title" value="Придбання книги" />
+		<node name="title" value="Придбання книги"/>
 		<node name="titleSeveralBooks" value="Придбати книжки"/>
-		<node name="confirm" value="Ви впевненні, що хочете придбати книгу&#10;«%s»?" />
+		<node name="confirm" value="Ви впевненні, що хочете придбати книгу&#10;«%s»?"/>
 		<node name="confirmSeveralBooks" value="Ви впевнені що хочете придбати %s книжок?"/>
-		<node name="alreadyBought" value="Книга вже придбана" />
+		<node name="alreadyBought" value="Книга вже придбана"/>
 		<node name="notAuthorized" value="Потрібна авторизація"/>
 		<node name="noAccountInformation" value="Неможливо завантажити стан аккаунту"/>
 		<node name="unsufficientFunds" value="Дана покупка коштує %0 але у Вас лише %1"/>
 		<node name="zeroFunds" value="Дана покупка коштує %0"/>
 	</node>
 	<node name="bookInfo">
-		<node name="bookInfo" value="Інформація про книгу" />
-		<node name="fileInfo" value="Інформація про файл" />
-		<node name="description" value="Опис" />
-		<node name="noDescription" value="Опис відсутній." />
-		<node name="annotation" value="Анотації" />
-		<node name="title" value="Назва:" />
-		<node name="authors" value="Автори:" />
-		<node name="series" value="Серія:" />
-		<node name="indexInSeries" value="Номер у серії:" />
-		<node name="tags" value="Категорії:" />
+		<node name="bookInfo" value="Інформація про книгу"/>
+		<node name="fileInfo" value="Інформація про файл"/>
+		<node name="description" value="Опис"/>
+		<node name="noDescription" value="Опис відсутній."/>
+		<node name="annotation" value="Анотації"/>
+		<node name="title" value="Назва:"/>
+		<node name="authors" value="Автори:"/>
+		<node name="series" value="Серія:"/>
+		<node name="indexInSeries" value="Номер у серії:"/>
+		<node name="tags" value="Категорії:"/>
 		<node name="language" value="Мова:"/>
-		<node name="name" value="Ім'я:" />
-		<node name="type" value="Тип:" />
-		<node name="size" value="Розмір:" />
-		<node name="time" value="Востаннє змінено:" />
-		<node name="sizeInBytes" value="%s байт" />
-		<node name="sizeInKiloBytes" value="%s kB" />
+		<node name="name" value="Ім'я:"/>
+		<node name="type" value="Тип:"/>
+		<node name="size" value="Розмір:"/>
+		<node name="time" value="Востаннє змінено:"/>
+		<node name="sizeInBytes" value="%s байт"/>
+		<node name="sizeInKiloBytes" value="%s kB"/>
 		<node name="catalog" value="Каталог:"/>
 		<node name="extraLinks" value="Пов'язані посилання"/>
 		<node name="menu">
-			<node name="edit" value="Редагувати" />
+			<node name="edit" value="Редагувати"/>
 		</node>
 	</node>
 	<node name="bookDownloader">
-		<node name="tickerSuccess" value="Книга завантажена" />
-		<node name="tickerError" value="Книгу завантажити не вдалось" />
-		<node name="contentSuccess" value="Завантаження завершене" />
-		<node name="contentError" value="Не вдалось завантажити" />
-		<node name="downloadingStarted" value="Завантаження книги почалось" />
-		<node name="alreadyDownloading" value="Книга вже завантажується" />
+		<node name="tickerSuccess" value="Книга завантажена"/>
+		<node name="tickerError" value="Книгу завантажити не вдалось"/>
+		<node name="contentSuccess" value="Завантаження завершене"/>
+		<node name="contentError" value="Не вдалось завантажити"/>
+		<node name="downloadingStarted" value="Завантаження книги почалось"/>
+		<node name="alreadyDownloading" value="Книга вже завантажується"/>
 		<node name="cannotCreateDirectory" value="Неможливо створити теку %s"/>
 		<node name="cannotCreateFile" value="Неможливо створити файл %s"/>
 	</node>
@@ -243,24 +245,24 @@
 		<node name="screenOrientationLandscape" value="Ландшафтна"/>
 		<node name="screenOrientationReversePortrait" value="Перевернута портретна"/>
 		<node name="screenOrientationReverseLandscape" value="Перевернута ландшафтна"/>
-		<node name="increaseFont" value="Збільшити шрифт" />
-		<node name="decreaseFont" value="Зменшити шрифт" />
+		<node name="increaseFont" value="Збільшити шрифт"/>
+		<node name="decreaseFont" value="Зменшити шрифт"/>
 		<node name="toggleFullscreen" value="На весь екран"/>
 		<node name="bookmarks" value="Закладки"/>
 	</node>
 	<node name="dialog">
 		<node name="button">
-			<node name="install" value="Встановити" />
-			<node name="update" value="Оновити" />
-			<node name="skip" value="Пропустити" />
-			<node name="buy" value="Придбати" />
-			<node name="buyAndDownload" value="Придбати та завантажити" />
-			<node name="continue" value="Продовжити" />
-			<node name="editUrl" value="Змінити URL" />
-			<node name="tryAgain" value="Повторити" />
-			<node name="openBook" value="Читати" />
-			<node name="editInfo" value="Редагувати" />
-			<node name="reloadInfo" value="Перезавантажити" />
+			<node name="install" value="Встановити"/>
+			<node name="update" value="Оновити"/>
+			<node name="skip" value="Пропустити"/>
+			<node name="buy" value="Придбати"/>
+			<node name="buyAndDownload" value="Придбати та завантажити"/>
+			<node name="continue" value="Продовжити"/>
+			<node name="editUrl" value="Змінити URL"/>
+			<node name="tryAgain" value="Повторити"/>
+			<node name="openBook" value="Читати"/>
+			<node name="editInfo" value="Редагувати"/>
+			<node name="reloadInfo" value="Перезавантажити"/>
 			<node name="shareBook" value="Share" toBeTranslated="true"/>
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="pay" value="Заплатити"/>
@@ -270,22 +272,22 @@
 			<node name="sendReport" value="Send report" toBeTranslated="true"/>
 		</node>
 		<node name="plugin">
-			<node name="installTitle" value="Встановити plugin" />
-			<node name="updateTitle" value="Оновити plugin" />
-			<node name="dontAskAgain" value="Не питати знову" />
+			<node name="installTitle" value="Встановити plugin"/>
+			<node name="updateTitle" value="Оновити plugin"/>
+			<node name="dontAskAgain" value="Не питати знову"/>
 		</node>
 		<node name="installDictionary">
-			<node name="title" value="Встановити словникy" />
-			<node name="message" value="Ви хочете встановити %s?" />
+			<node name="title" value="Встановити словникy"/>
+			<node name="message" value="Ви хочете встановити %s?"/>
 		</node>
 		<node name="BookInfo">
 			<node name="fileName" value="Файл"/>
 			<node name="title" value="Назва"/>
 			<node name="language" value="Мова"/>
 			<node name="encoding" value="Кодування"/>
-			<node name="authors" value="Автори" />
-			<node name="tags" value="Категорії" />
-			<node name="series" value="Серія" />
+			<node name="authors" value="Автори"/>
+			<node name="tags" value="Категорії"/>
+			<node name="series" value="Серія"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Теки">
@@ -615,7 +617,7 @@
 					<node name="right_to_left" value="Перегортання сторінки сплава наліво"/>
 					<node name="up" value="Перегортання сторінки знизу догори"/>
 					<node name="down" value="Перегортання сторінки зверху вниз"/>
-					<node name="custom" value="Інше&#8230;"/>
+					<node name="custom" value="Інше…"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Словник">
@@ -707,55 +709,55 @@
 			<node name="loadingBookList" value="Відкривається бібліотека. Зачекайте, будь ласка..."/>
 			<node name="creatingBooksDatabase" value="Створюється база книг. Зачекайте, будь ласка..."/>
 			<node name="updatingBooksDatabase" value="Оновлюється база книг. Зачекайте, будь ласка..."/>
-			<node name="loadingNetworkLibrary" value="Відкривається бібліотека. Зачекайте, будь ласка..." />
-			<node name="authentication" value="Йде авторизація. Зачекайте, будь ласка..." />
-			<node name="signOut" value="Вихід із системи. Зачекайте, будь ласка..." />
-			<node name="purchaseBook" value="Йде придбання книги. Зачекайте, будь ласка..." />
-			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка..." />
-			<node name="loadingNetworkBookInfo" value="Завантаження інформації про книгу. Зачекайте, будь ласка...&#8230;" />
+			<node name="loadingNetworkLibrary" value="Відкривається бібліотека. Зачекайте, будь ласка..."/>
+			<node name="authentication" value="Йде авторизація. Зачекайте, будь ласка..."/>
+			<node name="signOut" value="Вихід із системи. Зачекайте, будь ласка..."/>
+			<node name="purchaseBook" value="Йде придбання книги. Зачекайте, будь ласка..."/>
+			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка..."/>
+			<node name="loadingNetworkBookInfo" value="Завантаження інформації про книгу. Зачекайте, будь ласка...…"/>
 			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
-			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка...&#8230;"/>
+			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка...…"/>
 		</node>
 		<node name="networkError">
-			<node name="internalError" value="Внутрішня помилка сервера" />
-			<node name="purchaseNotEnoughMoney" value="Не достатньо коштів на рахунку" />
-			<node name="purchaseMissingBook" value="Книга відсутня у продажу" />
-			<node name="purchaseAlreadyPurchased" value="Книга вже була придбана" />
-			<node name="bookNotPurchased" value="Книгу не було придбано" />
-			<node name="downloadLimitExceeded" value="Вичерпано ліміт завантажень" />
-			<node name="noUserEmail" value="Нема користувача з такою адресою" />
-			<node name="unsupportedOperation" value="Непідтримувана операція" />
-			<node name="notAnOPDS" value="Це не OPDS каталог" />
-			<node name="noRequiredInformation" value="Необхідна інформація не знайдена в каталозі" />
-			<node name="cacheDirectoryError" value="Не вдається створити каталог для кеша" />
+			<node name="internalError" value="Внутрішня помилка сервера"/>
+			<node name="purchaseNotEnoughMoney" value="Не достатньо коштів на рахунку"/>
+			<node name="purchaseMissingBook" value="Книга відсутня у продажу"/>
+			<node name="purchaseAlreadyPurchased" value="Книга вже була придбана"/>
+			<node name="bookNotPurchased" value="Книгу не було придбано"/>
+			<node name="downloadLimitExceeded" value="Вичерпано ліміт завантажень"/>
+			<node name="noUserEmail" value="Нема користувача з такою адресою"/>
+			<node name="unsupportedOperation" value="Непідтримувана операція"/>
+			<node name="notAnOPDS" value="Це не OPDS каталог"/>
+			<node name="noRequiredInformation" value="Необхідна інформація не знайдена в каталозі"/>
+			<node name="cacheDirectoryError" value="Не вдається створити каталог для кеша"/>
 		</node>
 		<node name="AuthenticationDialog">
-			<node name="title" value="Авторизація" />
+			<node name="title" value="Авторизація"/>
 			<node name="unencryptedWarning" value="Ваш пароль буде відправлено незашифрованим"/>
-			<node name="login" value="Ім’я користувача" />
-			<node name="password" value="Пароль" />
-			<node name="loginIsEmpty" value="Ім’я користувача не може бути порожнім" />
-			<node name="register" value="Зареєструватися" />
+			<node name="login" value="Ім’я користувача"/>
+			<node name="password" value="Пароль"/>
+			<node name="loginIsEmpty" value="Ім’я користувача не може бути порожнім"/>
+			<node name="register" value="Зареєструватися"/>
 		</node>
 		<node name="CustomCatalogDialog">
-			<node name="title" value="FBReader: додати спеціальний каталог" />
-			<node name="catalogTitle" value="Назва" />
-			<node name="catalogUrl" value="URL" />
-			<node name="catalogSummary" value="Опис" />
-			<node name="catalogTitleExample" value="Напр.: Epub Books" />
-			<node name="catalogUrlExample" value="Напр.: http://www.epubbooks.ru/index.xml" />
-			<node name="catalogSummaryExample" value="Напр.: Книжки українською" />
-			<node name="titleIsEmpty" value="Назва не може бути пустою" />
-			<node name="urlIsEmpty" value="URL не може бути пустим" />
-			<node name="invalidUrl" value="Невірний URL" />
-			<node name="titleAlreadyExists" value="Таку назву вже використано" />
-			<node name="siteAlreadyExists" value="Цей каталог вже є у списку" />
+			<node name="title" value="FBReader: додати спеціальний каталог"/>
+			<node name="catalogTitle" value="Назва"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Опис"/>
+			<node name="catalogTitleExample" value="Напр.: Epub Books"/>
+			<node name="catalogUrlExample" value="Напр.: http://www.epubbooks.ru/index.xml"/>
+			<node name="catalogSummaryExample" value="Напр.: Книжки українською"/>
+			<node name="titleIsEmpty" value="Назва не може бути пустою"/>
+			<node name="urlIsEmpty" value="URL не може бути пустим"/>
+			<node name="invalidUrl" value="Невірний URL"/>
+			<node name="titleAlreadyExists" value="Таку назву вже використано"/>
+			<node name="siteAlreadyExists" value="Цей каталог вже є у списку"/>
 		</node>
 		<node name="languageFilterDialog">
-			<node name="title" value="Мовний фільтр" />
+			<node name="title" value="Мовний фільтр"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Порада дня" />
+			<node name="title" value="Порада дня"/>
 			<node name="initializationText" value="Чи хочете ви читати щоденні поради FBReader? Нові поради будуть завантажені з сайту FBReader. Очікуваний інтернет-трафік 1-2 кілобайти на тиждень.&#10;&#10;Ввімкнути поради?"/>
 			<node name="dontShowAgain" value="Не показувати знову"/>
 			<node name="more" value="Наступна порада"/>
