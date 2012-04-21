@@ -39,7 +39,7 @@ class TurnPageAction extends FBAction {
 	}
 
 	@Override
-	public void run(Object ... params) {
+	protected void run(Object ... params) {
 		final ScrollingPreferences preferences = ScrollingPreferences.Instance();
 		if (params.length == 2 && params[0] instanceof Integer && params[1] instanceof Integer) {
 			final int x = (Integer)params[0];

@@ -31,7 +31,7 @@ class MoveCursorAction extends FBAction {
 	}
 
 	@Override
-	public void run(Object ... params) {
+	protected void run(Object ... params) {
 		final FBView fbView = Reader.getTextView();
 		ZLTextRegion region = fbView.getSelectedRegion();
 		final ZLTextRegion.Filter filter =
