@@ -695,16 +695,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="語言">
-					<node name="autoDetect" value="自動偵測語言及編碼"/>
-					<node name="defaultLanguage" value="預設語言設定"/>
-					<node name="defaultEncodingSet" value="預設編碼集"/>
-					<node name="defaultEncoding" value="預設編碼"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="確認刪除此檔案?"/>
 		</node>

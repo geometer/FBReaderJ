@@ -690,16 +690,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="语言">
-					<node name="autoDetect" value="自动检测语言和编码" />
-					<node name="defaultLanguage" value="默认语言" />
-					<node name="defaultEncodingSet" value="默认编码设置" />
-					<node name="defaultEncoding" value="默认编码" />
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="确认删除该文件?" />
 		</node>

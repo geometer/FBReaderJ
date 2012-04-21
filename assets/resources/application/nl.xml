@@ -690,16 +690,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Taal">
-					<node name="autoDetect" value="Taal en codering automatisch detecteren" />
-					<node name="defaultLanguage" value="Standaard taal"/>
-					<node name="defaultEncodingSet" value="Standaard coderingsset"/>
-					<node name="defaultEncoding" value="Standaard codering" />
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Het verwijderen van dit boek kan niet ongedaan worden gemaakt. Weet u het zeker?"/>
 		</node>

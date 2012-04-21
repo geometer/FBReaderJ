@@ -696,16 +696,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Jazyk">
-					<node name="autoDetect" value="Automaticky rozpoznávat jazyk a kódování"/>
-					<node name="defaultLanguage" value="Výchozí jazyk"/>
-					<node name="defaultEncodingSet" value="Výchozí sada kódování"/>
-					<node name="defaultEncoding" value="Výchozí kódování"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Soubor s knihou bude nevratně odebrán. Opravdu chcete pokračovat?"/>
 		</node>

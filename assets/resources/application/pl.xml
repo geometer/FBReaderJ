@@ -690,16 +690,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Język">
-					<node name="autoDetect" value="Wykryj język i kodowanie automatycznie"/>
-					<node name="defaultLanguage" value="Domyślny język"/>
-					<node name="defaultEncodingSet" value="Domyslny zestaw znaków"/>
-					<node name="defaultEncoding" value="Domyślne kodowanie"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Książka zostanie nieodwracalnie usunięta. Jesteś pewien?"/>
 		</node>

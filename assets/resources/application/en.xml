@@ -700,16 +700,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Language">
-					<node name="autoDetect" value="Automatically Detect Language and Encoding"/>
-					<node name="defaultLanguage" value="Default Language"/>
-					<node name="defaultEncodingSet" value="Default Encoding Set"/>
-					<node name="defaultEncoding" value="Default Encoding"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="The book file will be removed irreversibly. Are you sure?"/>
 		</node>

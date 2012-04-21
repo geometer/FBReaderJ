@@ -693,16 +693,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Sprache">
-					<node name="autoDetect" value="Automatisch Sprache und Codierung erkennen"/>
-					<node name="defaultLanguage" value="Standardsprache"/>
-					<node name="defaultEncodingSet" value="Standard-Codierungs-Set"/>
-					<node name="defaultEncoding" value="Standard Codierung"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Die Buchdatei wird unwiderruflich gelöscht. Sind Sie sicher?"/>
 		</node>

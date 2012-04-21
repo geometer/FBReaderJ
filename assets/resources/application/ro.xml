@@ -690,16 +690,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Limba">
-					<node name="autoDetect" value="Detecta automat limba si encodare"/>
-					<node name="defaultLanguage" value="Limba implicita"/>
-					<node name="defaultEncodingSet" value="Set de codare implicit"/>
-					<node name="defaultEncoding" value="Codare implicita"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Fisierul cartii va fi sters ireversibil. Sunteti sigur?"/>
 		</node>

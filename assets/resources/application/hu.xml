@@ -690,16 +690,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Nyelv">
-					<node name="autoDetect" value="Nyelv és kódolás automatikus felismerése"/>
-					<node name="defaultLanguage" value="Alapértelmezett nyelv"/>
-					<node name="defaultEncodingSet" value="Alapértelmezett kódkészlet"/>
-					<node name="defaultEncoding" value="Alapértelmezett kódolás"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="A fájl törlése nem visszavonható. Biztosan törli?"/>
 		</node>

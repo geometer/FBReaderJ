@@ -690,16 +690,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Ngôn ngữ">
-					<node name="autoDetect" value="Tự động chọn Ngôn ngữ và Cách mã hóa"/>
-					<node name="defaultLanguage" value="Ngôn ngữ Mặc định"/>
-					<node name="defaultEncodingSet" value="Đặt cách Mã hóa Mặc định"/>
-					<node name="defaultEncoding" value="Cách mã hóa mặc định"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Sách sẽ bị xóa và không thể hoàn tác. Bạn chắc chứ?"/>
 		</node>

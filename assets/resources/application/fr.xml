@@ -693,16 +693,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Langue">
-					<node name="autoDetect" value="Détection automatique de la langue et de l'encodage"/>
-					<node name="defaultLanguage" value="Langue par défaut"/>
-					<node name="defaultEncodingSet" value="Groupe d'encodage par défaut"/>
-					<node name="defaultEncoding" value="Encodage par défaut"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Le livre va être supprimé de façon définitive. Etes-vous sûr?"/>
 		</node>

@@ -691,16 +691,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Lingua">
-					<node name="autoDetect" value="Rileva automaticamente Lingua e Codifica"/>
-					<node name="defaultLanguage" value="Lingua predefinita"/>
-					<node name="defaultEncodingSet" value="Impostazione di codifica predefinita"/>
-					<node name="defaultEncoding" value="Codifica predefinita"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Il file del libro verrà rimosso definitivamente. Sei sicuro?"/>
 		</node>

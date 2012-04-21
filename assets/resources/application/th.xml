@@ -690,16 +690,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="ภาษา">
-					<node name="autoDetect" value="เลือกภาษาโดยอัตโนมัติ"/>
-					<node name="defaultLanguage" value="ภาษาเริ่มต้น"/>
-					<node name="defaultEncodingSet" value="ค่าชุดการเข้ารหัสภาษาเริ่มต้น"/>
-					<node name="defaultEncoding" value="ค่าการเข้ารหัสภาษาเริ่มต้น"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="ไฟล์นี้จะถูกลบอย่างถาวร คุณแน่ใจหรือไม่?"/>
 		</node>

@@ -705,16 +705,6 @@
 				</node>
 			</node>
 		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Язык">
-					<node name="autoDetect" value="Автоматически определять язык и кодировку"/>
-					<node name="defaultLanguage" value="Язык по умолчанию"/>
-					<node name="defaultEncodingSet" value="Набор кодировок по умолчанию"/>
-					<node name="defaultEncoding" value="Кодировка по умолчанию"/>
-				</node>
-			</node>
-		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Файл книги будет удален необратимо. Продолжать?"/>
 		</node>
