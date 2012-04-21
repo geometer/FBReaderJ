@@ -115,8 +115,10 @@
 			<node name="buy" value="Doriti sa cumparati aceasta carte? (%s)"/>
 			<node name="openInBrowser" value="Nu doriti sa deschideti acest catalog în browser?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Descarcare cataloage"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Cauta pentru carti în retea"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Descarcare cataloage"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Cauta pentru carti în retea"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Adauga Catalog"/>
 			<node name="editUrl" value="Editeaza URL manual"/>
@@ -138,7 +140,7 @@
 	<node name="buyBook">
 		<node name="title" value="Cumpara cartea"/>
 		<node name="titleSeveralBooks" value="Cumpara carti"/>
-		<node name="confirm" value="Sunteti sigur ca doriti sa cumparati cartea &#10;&#8220; %s&#8221;&#10;?"/>
+		<node name="confirm" value="Sunteti sigur ca doriti sa cumparati cartea &#10;“ %s”&#10;?"/>
 		<node name="confirmSeveralBooks" value="Sunteti sigur ca doriti sa cumparati %s carti?"/>
 		<node name="alreadyBought" value="Cartea este deja cumparata"/>
 		<node name="notAuthorized" value="Este necesara autorizatie"/>
@@ -201,7 +203,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Deschide cartea anteriora"/>
-		<node name="returnTo" value="Înapoi la&#8230;"/>
+		<node name="returnTo" value="Înapoi la…"/>
 		<node name="back" value="Înapoi"/>
 		<node name="forward" value="Înainte"/>
 		<node name="close" value="Inchide Aplicatia"/>
@@ -225,7 +227,7 @@
 		<node name="navigate" value="Navigati">
 			<node name="toc" value="Cuprins"/>
 			<node name="gotoHome" value="Du-te la Start a documentului"/>
-			<node name="gotoPageNumber" value="Du-te la pagina&#8230;"/>
+			<node name="gotoPageNumber" value="Du-te la pagina…"/>
 			<node name="gotoSectionStart" value="Du-te la Inceputul textului"/>
 			<node name="gotoSectionEnd" value="Du-te la Sfârsitul textului"/>
 			<node name="nextTOCSection" value="Du-te la urmatoarea intrare din cuprins"/>
@@ -615,7 +617,7 @@
 					<node name="right_to_left" value="Defilare pagina de la dreapta la stânga"/>
 					<node name="up" value="Defilare pagina de jos în sus"/>
 					<node name="down" value="Defilare pagina de sus în jos"/>
-					<node name="custom" value="Particularizate&#8230;"/>
+					<node name="custom" value="Particularizate…"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Dictionar">
@@ -701,20 +703,20 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Descarcare carte%s"/>
-			<node name="search" value="Cautarea a inceput. Va rugam asteptati&#8230;"/>
-			<node name="loadInfo" value="Se incarca informatiile necesare. Va rugam asteptati&#8230;"/>
-			<node name="loadingBook" value="Se deschide cartea. Va rugam asteptati&#8230;"/>
-			<node name="loadingBookList" value="Deschiderea biblioteca. Va rugam asteptati&#8230;"/>
-			<node name="creatingBooksDatabase" value="Crearea bazei de date de carti. Va rugam asteptati&#8230;"/>
-			<node name="updatingBooksDatabase" value="Actualizarea bazei de date carti. Va rugam asteptati&#8230;"/>
-			<node name="loadingNetworkLibrary" value="Se deschide biblioteca. Va rugam asteptati&#8230;"/>
-			<node name="authentication" value="Autentificare. Va rugam asteptati&#8230;"/>
-			<node name="signOut" value="Iesire. Va rugam asteptati&#8230;"/>
-			<node name="purchaseBook" value="Se cumpara cartea. Va rugam asteptati&#8230;"/>
-			<node name="loadingCatalogInfo" value="Se incarca informatii despre catalog. Va rugam asteptati&#8230;"/>
-			<node name="loadingNetworkBookInfo" value="Se incarca informatii despre carte. Va rugam asteptati &#8230;"/>
-			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati&#8230;"/>
-			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati&#8230;"/>
+			<node name="search" value="Cautarea a inceput. Va rugam asteptati…"/>
+			<node name="loadInfo" value="Se incarca informatiile necesare. Va rugam asteptati…"/>
+			<node name="loadingBook" value="Se deschide cartea. Va rugam asteptati…"/>
+			<node name="loadingBookList" value="Deschiderea biblioteca. Va rugam asteptati…"/>
+			<node name="creatingBooksDatabase" value="Crearea bazei de date de carti. Va rugam asteptati…"/>
+			<node name="updatingBooksDatabase" value="Actualizarea bazei de date carti. Va rugam asteptati…"/>
+			<node name="loadingNetworkLibrary" value="Se deschide biblioteca. Va rugam asteptati…"/>
+			<node name="authentication" value="Autentificare. Va rugam asteptati…"/>
+			<node name="signOut" value="Iesire. Va rugam asteptati…"/>
+			<node name="purchaseBook" value="Se cumpara cartea. Va rugam asteptati…"/>
+			<node name="loadingCatalogInfo" value="Se incarca informatii despre catalog. Va rugam asteptati…"/>
+			<node name="loadingNetworkBookInfo" value="Se incarca informatii despre carte. Va rugam asteptati …"/>
+			<node name="updatingCatalogsList" value="Actualizare lista de cataloage. Va rugam asteptati…"/>
+			<node name="updatingAccountInformation" value="Se actualizeaza detaliile contului. Va rugam asteptati…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Eroare interna la server"/>

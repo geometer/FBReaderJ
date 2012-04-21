@@ -119,8 +119,10 @@
 			<node name="buy" value="Chcete zakoupit tuto knihu? (%s)"/>
 			<node name="openInBrowser" value="Chcete otevřít tento katalog v prohlížeči?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Stahování katalogů"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Vyhledávání knih v síti"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Stahování katalogů"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Vyhledávání knih v síti"/>
+		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Přidat katalog"/>
 			<node name="editUrl" value="Zadat adresu ručně"/>
@@ -142,7 +144,7 @@
 	<node name="buyBook">
 		<node name="title" value="Zakoupit knihu"/>
 		<node name="titleSeveralBooks" value="Zakoupit knihy"/>
-		<node name="confirm" value="Opravdu chcete zakoupit&#10;&#8220;%s&#8221;&#10;knihu?"/>
+		<node name="confirm" value="Opravdu chcete zakoupit&#10;“%s”&#10;knihu?"/>
 		<node name="confirmSeveralBooks" value="Opravdu chcete zakoupit %s knih?"/>
 		<node name="alreadyBought" value="Kniha je již zakoupena"/>
 		<node name="notAuthorized" value="Vyžadována autorizace"/>
@@ -207,7 +209,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Otevřít předchozí knihu"/>
-		<node name="returnTo" value="Vrátit se &#8230;"/>
+		<node name="returnTo" value="Vrátit se …"/>
 		<node name="back" value="Zpět"/>
 		<node name="forward" value="Vpřed"/>
 		<node name="close" value="Zavřít FBReader"/>
@@ -231,7 +233,7 @@
 		<node name="navigate" value="Navigace">
 			<node name="toc" value="Obsah"/>
 			<node name="gotoHome" value="Přejít na začátek dokumentu"/>
-			<node name="gotoPageNumber" value="Přejít na stránku&#8230;"/>
+			<node name="gotoPageNumber" value="Přejít na stránku…"/>
 			<node name="gotoSectionStart" value="Přejít na začátek textové části"/>
 			<node name="gotoSectionEnd" value="Přejít na konec textové části"/>
 			<node name="nextTOCSection" value="Přejít na další položku obsahu"/>
@@ -621,7 +623,7 @@
 					<node name="right_to_left" value="Posouvání stránky zprava doleva"/>
 					<node name="up" value="Posouvání stránky zdola nahoru"/>
 					<node name="down" value="Posouvání stránky zhora dolů"/>
-					<node name="custom" value="Vlastní&#8230;"/>
+					<node name="custom" value="Vlastní…"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Slovník">
@@ -707,20 +709,20 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Stahování knihy %s"/>
-			<node name="search" value="Vyhledávání. Čekejte&#8230;"/>
-			<node name="loadInfo" value="Načítání informací. Čekejte&#8230;"/>
-			<node name="loadingBook" value="Otevírání knihy. Čekejte&#8230;"/>
-			<node name="loadingBookList" value="Otevírání knihovny. Čekejte&#8230;"/>
-			<node name="creatingBooksDatabase" value="Vytváření databáze knih. Čekejte&#8230;"/>
-			<node name="updatingBooksDatabase" value="Aktualizace databáze knih. Čekejte&#8230;"/>
-			<node name="loadingNetworkLibrary" value="Otevírání knihovny. Čekejte&#8230;"/>
-			<node name="authentication" value="Ověřování. Čekejte&#8230;"/>
-			<node name="signOut" value="Odhlašování. Čekejte&#8230;"/>
-			<node name="purchaseBook" value="Nakupování knihy. Čekejte&#8230;"/>
-			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte&#8230;"/>
-			<node name="loadingNetworkBookInfo" value="Načítání informací o knize. Čekejte&#8230;" />
-			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte&#8230;"/>
-			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte&#8230;"/>
+			<node name="search" value="Vyhledávání. Čekejte…"/>
+			<node name="loadInfo" value="Načítání informací. Čekejte…"/>
+			<node name="loadingBook" value="Otevírání knihy. Čekejte…"/>
+			<node name="loadingBookList" value="Otevírání knihovny. Čekejte…"/>
+			<node name="creatingBooksDatabase" value="Vytváření databáze knih. Čekejte…"/>
+			<node name="updatingBooksDatabase" value="Aktualizace databáze knih. Čekejte…"/>
+			<node name="loadingNetworkLibrary" value="Otevírání knihovny. Čekejte…"/>
+			<node name="authentication" value="Ověřování. Čekejte…"/>
+			<node name="signOut" value="Odhlašování. Čekejte…"/>
+			<node name="purchaseBook" value="Nakupování knihy. Čekejte…"/>
+			<node name="loadingCatalogInfo" value="Načítání informací o katalogu. Čekejte…"/>
+			<node name="loadingNetworkBookInfo" value="Načítání informací o knize. Čekejte…"/>
+			<node name="updatingCatalogsList" value="Aktualizace seznamu katalogů. Čekejte…"/>
+			<node name="updatingAccountInformation" value="Aktualizace informací o účtu. Čekejte…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Vnitřní chyba serveru"/>
@@ -761,10 +763,10 @@
 			<node name="title" value="Filtr jazyků"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Denní tip" />
+			<node name="title" value="Denní tip"/>
 			<node name="initializationText" value="Chtěli byste číst denní tipy FBReaderu? Nové tipy by byly stahovány ze stránky FBReaderu. Předpokládaný provoz v síti je 1–2 kilobajty týdně.&#10;&#10;Povolit tipy?"/>
-			<node name="dontShowAgain" value="Znovu nezobrazovat" />
-			<node name="more" value="Další tip" />
+			<node name="dontShowAgain" value="Znovu nezobrazovat"/>
+			<node name="more" value="Další tip"/>
 		</node>
 	</node>
 	<node name="errorMessage">
