@@ -283,6 +283,9 @@
 			<node name="title" value="Tiêu đề"/>
 			<node name="language" value="Ngôn ngữ"/>
 			<node name="encoding" value="Mã hóa"/>
+			<node name="authors" value="Tác giả" />
+			<node name="tags" value="Từ khóa" />
+			<node name="series" value="Bộ sách" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Thư mục">
@@ -687,16 +690,6 @@
 				</node>
 				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
 					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Ngôn ngữ">
-					<node name="autoDetect" value="Tự động chọn Ngôn ngữ và Cách mã hóa"/>
-					<node name="defaultLanguage" value="Ngôn ngữ Mặc định"/>
-					<node name="defaultEncodingSet" value="Đặt cách Mã hóa Mặc định"/>
-					<node name="defaultEncoding" value="Cách mã hóa mặc định"/>
 				</node>
 			</node>
 		</node>

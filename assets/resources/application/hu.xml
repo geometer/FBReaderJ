@@ -283,6 +283,9 @@
 			<node name="title" value="Cím"/>
 			<node name="language" value="Nyelv"/>
 			<node name="encoding" value="Kódolás"/>
+			<node name="authors" value="Szerzők" />
+			<node name="tags" value="Címkék" />
+			<node name="series" value="Sorozat" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Mappák">
@@ -687,16 +690,6 @@
 				</node>
 				<node name="twitter" value="Kövessen Twitteren">
 					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Nyelv">
-					<node name="autoDetect" value="Nyelv és kódolás automatikus felismerése"/>
-					<node name="defaultLanguage" value="Alapértelmezett nyelv"/>
-					<node name="defaultEncodingSet" value="Alapértelmezett kódkészlet"/>
-					<node name="defaultEncoding" value="Alapértelmezett kódolás"/>
 				</node>
 			</node>
 		</node>
