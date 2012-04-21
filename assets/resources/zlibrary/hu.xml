@@ -26,25 +26,6 @@
 			<node name="connectionRefused" value="%s&#10;bontotta a kapcsolatot"/>
 		</node>
 	</node>
-	<node name="color">
-		<node name="red" value="Piros"/>
-		<node name="green" value="Zöld"/>
-		<node name="blue" value="Kék"/>
-		<node name="black" value="Fekete"/>
-		<node name="white" value="Fehér"/>
-		<node name="maroon" value="Gesztenye"/>
-		<node name="olive" value="Olívazöld"/>
-		<node name="navy" value="Tengerészkék"/>
-		<node name="purple" value="Lila"/>
-		<node name="teal" value="Türkiz"/>
-		<node name="silver" value="Ezüst"/>
-		<node name="gray" value="Szürke"/>
-		<node name="lime" value="Lime"/>
-		<node name="yellow" value="Sárga"/>
-		<node name="magenta" value="Bíbor"/>
-		<node name="cyan" value="Cián"/>
-		<node name="custom..." value="Egyéni..."/>
-	</node>
 	<node name="language">
 		<node name="ar" value="Arab"/>
 		<node name="cs" value="Cseh"/>
