@@ -283,6 +283,9 @@
 			<node name="title" value="书名" />
 			<node name="language" value="语言" />
 			<node name="encoding" value="编码" />
+			<node name="authors" value="作者" />
+			<node name="tags" value="标签" />
+			<node name="series" value="丛书系列" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="文件夹设定">
@@ -687,16 +690,6 @@
 				</node>
 				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
 					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="语言">
-					<node name="autoDetect" value="自动检测语言和编码" />
-					<node name="defaultLanguage" value="默认语言" />
-					<node name="defaultEncodingSet" value="默认编码设置" />
-					<node name="defaultEncoding" value="默认编码" />
 				</node>
 			</node>
 		</node>
