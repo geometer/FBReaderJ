@@ -283,6 +283,9 @@
 			<node name="title" value="Titel"/>
 			<node name="language" value="Taal"/>
 			<node name="encoding" value="Codering"/>
+			<node name="authors" value="Auteurs" />
+			<node name="tags" value="Trefwoorden" />
+			<node name="series" value="Serie" />
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Mappen">
@@ -687,16 +690,6 @@
 				</node>
 				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
 					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Taal">
-					<node name="autoDetect" value="Taal en codering automatisch detecteren" />
-					<node name="defaultLanguage" value="Standaard taal"/>
-					<node name="defaultEncodingSet" value="Standaard coderingsset"/>
-					<node name="defaultEncoding" value="Standaard codering" />
 				</node>
 			</node>
 		</node>

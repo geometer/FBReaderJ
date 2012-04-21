@@ -289,6 +289,9 @@
 			<node name="title" value="Název"/>
 			<node name="language" value="Jazyk"/>
 			<node name="encoding" value="Kódování"/>
+			<node name="authors" value="Autoři"/>
+			<node name="tags" value="Štítky"/>
+			<node name="series" value="Série"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Adresáře">
@@ -693,16 +696,6 @@
 				</node>
 				<node name="twitter" value="Sledujte nás na twitteru">
 					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Jazyk">
-					<node name="autoDetect" value="Automaticky rozpoznávat jazyk a kódování"/>
-					<node name="defaultLanguage" value="Výchozí jazyk"/>
-					<node name="defaultEncodingSet" value="Výchozí sada kódování"/>
-					<node name="defaultEncoding" value="Výchozí kódování"/>
 				</node>
 			</node>
 		</node>

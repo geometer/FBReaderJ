@@ -293,6 +293,9 @@
 			<node name="title" value="Title"/>
 			<node name="language" value="Language"/>
 			<node name="encoding" value="Encoding"/>
+			<node name="authors" value="Author(s)"/>
+			<node name="tags" value="Tag(s)"/>
+			<node name="series" value="Series"/>
 		</node>
 		<node name="Preferences">
 			<node name="directories" value="Directories">
@@ -697,16 +700,6 @@
 				</node>
 				<node name="twitter" value="Follow us at twitter">
 					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
-		</node>
-		<node name="OptionsDialog">
-			<node name="tab">
-				<node name="Language" value="Language">
-					<node name="autoDetect" value="Automatically Detect Language and Encoding"/>
-					<node name="defaultLanguage" value="Default Language"/>
-					<node name="defaultEncodingSet" value="Default Encoding Set"/>
-					<node name="defaultEncoding" value="Default Encoding"/>
 				</node>
 			</node>
 		</node>
