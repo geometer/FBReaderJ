@@ -310,7 +310,7 @@ public class BookReader {
 	}
 
 	public final void addContentsData(char[] data, int offset, int length) {
-		if ((length != 0) && (myCurrentContentsTree != null)) {
+		if (length != 0 && myCurrentContentsTree != null) {
 			myContentsBuffer.append(data, offset, length);
 		}
 	}
