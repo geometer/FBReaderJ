@@ -306,6 +306,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 	}
 
 	private SQLiteStatement myInsertBookInfoStatement;
+	@Override
 	protected long insertBookInfo(ZLFile file, String encoding, String language, String title) {
 		if (myInsertBookInfoStatement == null) {
 			myInsertBookInfoStatement = myDatabase.compileStatement(
