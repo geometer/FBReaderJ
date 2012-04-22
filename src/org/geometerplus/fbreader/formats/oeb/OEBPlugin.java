@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
 public class OEBPlugin extends JavaFormatPlugin {
 	public OEBPlugin() {
@@ -60,7 +60,7 @@ public class OEBPlugin extends JavaFormatPlugin {
 	public void readMetaInfo(Book book) throws BookReadingException {
 		new OEBMetaInfoReader(book).readMetaInfo(getOpfFile(book.File));
 	}
-	
+
 	@Override
 	public void readModel(BookModel model) throws BookReadingException {
 		model.Book.File.setCached(true);
@@ -73,7 +73,7 @@ public class OEBPlugin extends JavaFormatPlugin {
 			return new OEBCoverReader().readCover(getOpfFile(file));
 		} catch (BookReadingException e) {
 			return null;
-		} 
+		}
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class OEBPlugin extends JavaFormatPlugin {
 			return new OEBAnnotationReader().readAnnotation(getOpfFile(file));
 		} catch (BookReadingException e) {
 			return null;
-		} 
+		}
 	}
 
 	@Override

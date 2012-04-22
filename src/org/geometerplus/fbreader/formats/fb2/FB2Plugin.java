@@ -26,7 +26,7 @@ import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.fbreader.formats.JavaFormatPlugin;
 
 public class FB2Plugin extends JavaFormatPlugin {
 	public FB2Plugin() {

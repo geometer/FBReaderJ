@@ -34,7 +34,7 @@ public final class ZLTextStyleEntry {
 
 	short getMask() {
 		return myMask;
-	};
+	}
 	
 	public boolean isLeftIndentSupported() {
 		return (myMask & SUPPORTS_LEFT_INDENT) == SUPPORTS_LEFT_INDENT;
@@ -42,7 +42,7 @@ public final class ZLTextStyleEntry {
 	
 	public short getLeftIndent() {
 		return myLeftIndent;
-	};
+	}
 	
 	public void setLeftIndent(short leftIndent) {
 		myMask |= SUPPORTS_LEFT_INDENT;
