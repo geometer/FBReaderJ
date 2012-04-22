@@ -293,7 +293,7 @@ public final class Library extends AbstractLibrary {
 		}
 
 		// Step 1: set myDoGroupTitlesByFirstLetter value,
-        // add "existing" books into recent and favorites lists
+		// add "existing" books into recent and favorites lists
 		if (savedBooksByFileId.size() > 10) {
 			final HashSet<String> letterSet = new HashSet<String>();
 			for (Book book : savedBooksByFileId.values()) {
