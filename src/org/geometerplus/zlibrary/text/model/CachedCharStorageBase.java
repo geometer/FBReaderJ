@@ -62,8 +62,6 @@ abstract class CachedCharStorageBase implements CharStorage {
 					throw new CachedCharStorageException("Error during reading " + fileName(index));
 				}
 				reader.close();
-			} catch (FileNotFoundException e) {
-				throw new CachedCharStorageException("Error during reading " + fileName(index));
 			} catch (IOException e) {
 				throw new CachedCharStorageException("Error during reading " + fileName(index));
 			}
