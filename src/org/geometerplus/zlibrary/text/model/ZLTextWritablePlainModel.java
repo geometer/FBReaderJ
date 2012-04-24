@@ -19,15 +19,16 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import org.geometerplus.zlibrary.core.util.*;
+import java.util.Map;
 
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
+import org.geometerplus.zlibrary.core.image.ZLImage;
+import org.geometerplus.zlibrary.core.util.*;
 
 public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements ZLTextWritableModel {
 	private char[] myCurrentDataBlock;
 	private int myBlockOffset;
 
-	public ZLTextWritablePlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, ZLImageMap imageMap) {
+	public ZLTextWritablePlainModel(String id, String language, int arraySize, int dataBlockSize, String directoryName, String extension, Map<String,ZLImage> imageMap) {
 		super(
 			id, language,
 			new int[arraySize], new int[arraySize],
