@@ -156,7 +156,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		++myParagraphLengths[myParagraphsNumber - 1];
 		block[myBlockOffset++] = (char)ZLTextParagraph.Entry.FIXED_HSPACE;
 		block[myBlockOffset++] = (char)length;
-	}	
+	}
 
 	public void addBidiReset() {
 		final char[] block = getDataBlock(1);
