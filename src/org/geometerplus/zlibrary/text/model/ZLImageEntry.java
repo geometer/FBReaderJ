@@ -19,16 +19,17 @@
 
 package org.geometerplus.zlibrary.text.model;
 
+import java.util.Map;
+
 import org.geometerplus.zlibrary.core.image.ZLImage;
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
 
 public final class ZLImageEntry {
-	private final ZLImageMap myImageMap;
+	private final Map<String,ZLImage> myImageMap;
 	public final String Id;
 	public final short VOffset;
 	public final boolean IsCover;
 
-	ZLImageEntry(ZLImageMap imageMap, String id, short vOffset, boolean isCover) {
+	ZLImageEntry(Map<String,ZLImage> imageMap, String id, short vOffset, boolean isCover) {
 		myImageMap = imageMap;
 		Id = id;
 		VOffset = vOffset;
@@ -36,6 +37,6 @@ public final class ZLImageEntry {
 	}
 	
 	public ZLImage getImage() {
-		return myImageMap.getImage(Id);
+		return myImageMap.get(Id);
 	}
 }

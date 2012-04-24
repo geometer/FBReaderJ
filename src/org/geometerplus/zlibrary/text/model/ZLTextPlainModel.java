@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.text.model;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.util.*;
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class ZLTextPlainModel implements ZLTextModel {
 	private final String myId;
@@ -37,7 +37,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 	protected int myParagraphsNumber;
 
 	protected final CharStorage myStorage;
-	protected final ZLImageMap myImageMap;
+	protected final Map<String,ZLImage> myImageMap;
 
 	private ArrayList<ZLTextMark> myMarks;
 
@@ -218,7 +218,7 @@ public class ZLTextPlainModel implements ZLTextModel {
 		int[] textSizes,
 		byte[] paragraphKinds,
 		CharStorage storage,
-		ZLImageMap imageMap
+		Map<String,ZLImage> imageMap
 	) {
 		myId = id;
 		myLanguage = language;
