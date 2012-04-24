@@ -19,7 +19,9 @@
 
 package org.geometerplus.zlibrary.text.model;
 
-import org.geometerplus.zlibrary.core.image.ZLImageMap;
+import java.util.Map;
+
+import org.geometerplus.zlibrary.core.image.ZLImage;
 
 public class ZLTextNativeModel extends ZLTextPlainModel {
 	public ZLTextNativeModel(
@@ -28,7 +30,7 @@ public class ZLTextNativeModel extends ZLTextPlainModel {
 		int[] paragraphLengths, int[] textSizes,
 		byte[] paragraphKinds,
 		String directoryName, String fileExtension, int blocksNumber,
-		ZLImageMap imageMap
+		Map<String,ZLImage> imageMap
 	) {
 		super(
 			id, language,

@@ -112,15 +112,15 @@ final class ZLTreeResource extends ZLResource {
 	static volatile ZLTreeResource ourRoot;
 	private static final Object ourLock = new Object();
 
-    private static long ourTimeStamp = 0;
-    private static String ourLanguage = null;
-    private static String ourCountry = null;
+	private static long ourTimeStamp = 0;
+	private static String ourLanguage = null;
+	private static String ourCountry = null;
 
 	private boolean myHasValue;
 	private	String myValue;
 	private HashMap<String,ZLTreeResource> myChildren;
 	private LinkedHashMap<Condition,String> myConditionalValues;
-	
+
 	static void buildTree() {
 		synchronized (ourLock) {
 			if (ourRoot == null) {
@@ -132,14 +132,14 @@ final class ZLTreeResource extends ZLResource {
 		}
 	}
 
-    private static void updateLanguage() {
-        final long timeStamp = System.currentTimeMillis();
-        if (timeStamp > ourTimeStamp + 1000) {
-            synchronized (ourLock) {
-                if (timeStamp > ourTimeStamp + 1000) {
+	private static void updateLanguage() {
+		final long timeStamp = System.currentTimeMillis();
+		if (timeStamp > ourTimeStamp + 1000) {
+			synchronized (ourLock) {
+				if (timeStamp > ourTimeStamp + 1000) {
 					ourTimeStamp = timeStamp;
-        			final String language = Locale.getDefault().getLanguage();
-        			final String country = Locale.getDefault().getCountry();
+					final String language = Locale.getDefault().getLanguage();
+					final String country = Locale.getDefault().getCountry();
 					if ((language != null && !language.equals(ourLanguage)) ||
 						(country != null && !country.equals(ourCountry))) {
 						ourLanguage = language;
@@ -149,8 +149,8 @@ final class ZLTreeResource extends ZLResource {
 				}
 			}
 		}
-    }
-	
+	}
+
 	private static void loadData(ResourceTreeReader reader, String fileName) {
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/zlibrary/" + fileName));
 		reader.readDocument(ourRoot, ZLResourceFile.createResourceFile("resources/application/" + fileName));
@@ -166,17 +166,17 @@ final class ZLTreeResource extends ZLResource {
 		super(name);
 		setValue(value);
 	}
-	
+
 	private void setValue(String value) {
 		myHasValue = value != null;
 		myValue = value;
 	}
-	
+
 	@Override
 	public boolean hasValue() {
 		return myHasValue;
 	}
-	
+
 	@Override
 	public String getValue() {
 		updateLanguage();
@@ -207,11 +207,11 @@ final class ZLTreeResource extends ZLResource {
 		}
 		return ZLMissingResource.Instance;
 	}
-		
+
 	private static class ResourceTreeReader extends ZLXMLReaderAdapter {
-		private static final String NODE = "node"; 
+		private static final String NODE = "node";
 		private final ArrayList<ZLTreeResource> myStack = new ArrayList<ZLTreeResource>();
-		
+
 		public void readDocument(ZLTreeResource root, ZLFile file) {
 			myStack.clear();
 			myStack.add(root);
