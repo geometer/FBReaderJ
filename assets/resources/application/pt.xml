@@ -43,6 +43,7 @@
 		</node>
 		<node name="openBook" value="Abra o livro"/>
 		<node name="showBookInfo" value="Informações do livro"/>
+		<node name="shareBook" value="Compartilhar o livro"/>
 		<node name="deleteBook" value="Delete o livro"/>
 		<node name="addToFavorites" value="Adicionar aos favoritos"/>
 		<node name="removeFromFavorites" value="Remover dos favoritos"/>
@@ -72,7 +73,6 @@
 		<node name="networkSearch" value="Pesquise"/>
 		<node name="showResults" value="Mostrar resultados"/>
 		<node name="showBooks" value="Mostrar livros"/>
-		<node name="shareBook" value="Compartilhar o livro"/>
 		<node name="download" value="Baixar"/>
 		<node name="read" value="Ler a cópia local"/>
 		<node name="delete" value="Delete a cópia local"/>
