@@ -35,11 +35,12 @@ public class ZLStringListOption extends ZLOption {
 		myDelimiter = delimiter;
 	}
 
-	/*
-	public ZLStringListOption(String group, String optionName, List<String> defaultValue) {
-		this(group, optionName, defaultValue, "\000");
+	public ZLStringListOption(String group, String optionName, String defaultValue, String delimiter) {
+		super(group, optionName);
+		myDefaultValue = (defaultValue != null) ? Collections.singletonList(defaultValue) : Collections.<String>emptyList();
+		myValue = myDefaultValue;
+		myDelimiter = delimiter;
 	}
-	*/
 
 	public List<String> getValue() {
 		if (!myIsSynchronized) {
