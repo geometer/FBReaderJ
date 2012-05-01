@@ -70,6 +70,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUserData.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLAsynchronousInputStream.cpp \
+	NativeFormats/zlibrary/core/src/xml/ZLPlainAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
 	NativeFormats/zlibrary/core/src/xml/expat/ZLXMLReaderInternal.cpp \
 	NativeFormats/zlibrary/core/src/unix/filesystem/ZLUnixFSDir.cpp \
@@ -95,6 +96,14 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/fb2/FB2Plugin.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2Reader.cpp \
 	NativeFormats/fbreader/src/formats/fb2/FB2TagManager.cpp \
+	NativeFormats/fbreader/src/formats/css/StyleSheetParser.cpp \
+	NativeFormats/fbreader/src/formats/css/StyleSheetTable.cpp \
+	NativeFormats/fbreader/src/formats/oeb/NCXReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBBookReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBCoverReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBMetaInfoReader.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBPlugin.cpp \
+	NativeFormats/fbreader/src/formats/oeb/OEBTextStream.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfBookReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfDescriptionReader.cpp \
 	NativeFormats/fbreader/src/formats/rtf/RtfPlugin.cpp \
@@ -104,6 +113,11 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/txt/TxtBookReader.cpp \
 	NativeFormats/fbreader/src/formats/txt/TxtPlugin.cpp \
 	NativeFormats/fbreader/src/formats/txt/TxtReader.cpp \
+	NativeFormats/fbreader/src/formats/util/EntityFilesCollector.cpp \
+	NativeFormats/fbreader/src/formats/util/MergedStream.cpp \
+	NativeFormats/fbreader/src/formats/util/MiscUtil.cpp \
+	NativeFormats/fbreader/src/formats/util/XMLTextStream.cpp \
+	NativeFormats/fbreader/src/formats/xhtml/XHTMLReader.cpp \
 	NativeFormats/fbreader/src/library/Author.cpp \
 	NativeFormats/fbreader/src/library/Book.cpp \
 	NativeFormats/fbreader/src/library/Comparators.cpp \
