@@ -23,6 +23,7 @@
 
 #include <ZLFile.h>
 #include <ZLInputStream.h>
+#include <ZLStringUtil.h>
 #include <ZLUnicodeUtil.h>
 
 #include "ZLAsynchronousInputStream.h"
@@ -76,7 +77,7 @@ void ZLXMLReader::characterDataHandler(const char*, size_t) {
 void ZLXMLReader::namespaceListChangedHandler() {
 }
 
-const std::map<std::string,std::string> &ZLXMLReader::namespaces() const {
+const ZLXMLReader::nsMap &ZLXMLReader::namespaces() const {
 	return *myNamespaces.back();
 }
 
@@ -131,7 +132,7 @@ bool ZLXMLReader::readDocument(shared_ptr<ZLInputStream> stream) {
 void ZLXMLReader::initialize(const char *encoding) {
 	myInternalReader->init(encoding);
 	myInterrupted = false;
-	myNamespaces.push_back(new std::map<std::string, std::string>());
+	myNamespaces.push_back(new nsMap());
 }
 
 void ZLXMLReader::shutdown() {
@@ -183,8 +184,8 @@ ZLXMLReader::NamespaceAttributeNamePredicate::NamespaceAttributeNamePredicate(co
 }
 
 bool ZLXMLReader::NamespaceAttributeNamePredicate::accepts(const ZLXMLReader &reader, const char *name) const {
-	const std::map<std::string,std::string> &namespaces = reader.namespaces();
-	for (std::map<std::string,std::string>::const_iterator it = namespaces.begin(); it != namespaces.end(); ++it) {
+	const nsMap &namespaces = reader.namespaces();
+	for (nsMap::const_iterator it = namespaces.begin(); it != namespaces.end(); ++it) {
 		if (it->second == myNamespaceName) {
 			return it->first + ':' + myAttributeName == name;
 		}
@@ -205,6 +206,25 @@ const char *ZLXMLReader::attributeValue(const char **xmlattributes, const Attrib
 		++xmlattributes;
 	}
 	return 0;
+}
+
+bool ZLXMLReader::testTag(const std::string &ns, const std::string &name, const std::string &tag) const {
+	const nsMap &nspaces = namespaces();
+
+	if (name == tag) {
+		const nsMap::const_iterator it = nspaces.find(std::string());
+		return it != nspaces.end() && ns == it->second;
+	}
+	const int nameLen = name.size();
+	const int tagLen = tag.size();
+	if (tagLen < nameLen + 2) {
+		return false;
+	}
+	if (ZLStringUtil::stringEndsWith(tag, name) && tag[tagLen - nameLen - 1] == ':') {
+		const nsMap::const_iterator it = nspaces.find(tag.substr(0, tagLen - nameLen - 1));
+		return it != nspaces.end() && ns == it->second;
+	}
+	return false;
 }
 
 bool ZLXMLReader::readDocument(shared_ptr<ZLAsynchronousInputStream> stream) {
