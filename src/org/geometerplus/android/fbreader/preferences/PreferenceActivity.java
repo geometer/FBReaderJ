@@ -40,6 +40,7 @@ import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
 
@@ -89,16 +90,20 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			this, new OptionHolder(Paths.BooksDirectoryOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "books"
 		));
-		if (AndroidFontUtil.areExternalFontsSupported()) {
-			directoriesScreen.addPreference(new ZLActivityPreference(
+
+		final ZLActivityPreference fontPref = new ZLActivityPreference(
 				this, new OptionHolder(Paths.FontsDirectoryOption()), myActivityPrefs, myRootpaths,
-				directoriesScreen.Resource, "fonts"
-			));
-		}
-		directoriesScreen.addPreference(new ZLActivityPreference(
+				directoriesScreen.Resource, "fonts");
+
+
+		final ZLActivityPreference wallPref = new ZLActivityPreference(
 			this, new OptionHolder(Paths.WallpapersDirectoryOption()), myActivityPrefs, myRootpaths,
-			directoriesScreen.Resource, "wallpapers"
-		));
+			directoriesScreen.Resource, "wallpapers");
+
+		if (AndroidFontUtil.areExternalFontsSupported()) {
+			directoriesScreen.addPreference(fontPref);
+		}
+		directoriesScreen.addPreference(wallPref);
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
@@ -146,10 +151,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
-		textScreen.addPreference(new FontOption(
+
+		final FontOption fontOption = new FontOption(
 			this, textScreen.Resource, "font",
-			baseStyle.FontFamilyOption, false
-		));
+			baseStyle.FontFamilyOption, false);
+
+		textScreen.addPreference(fontOption);
+		fontPref.setBoundPref(fontOption);
+
 		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
 			baseStyle.FontSizeOption
@@ -294,15 +303,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ZLPreferenceSet bgPreferences = new ZLPreferenceSet();
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
-		colorsScreen.addPreference(new WallpaperPreference(
-			this, profile, colorsScreen.Resource, "background"
-		) {
-			@Override
-			protected void onDialogClosed(boolean result) {
-				super.onDialogClosed(result);
-				bgPreferences.setEnabled("".equals(getValue()));
-			}
-		});
+
+		final WallpaperPreference wp = new WallpaperPreference(this, profile, colorsScreen.Resource, "background") {
+				@Override
+				protected void onDialogClosed(boolean result) {
+					super.onDialogClosed(result);
+					bgPreferences.setEnabled("".equals(getValue()));
+				}
+			};
+
+		colorsScreen.addPreference(wp);
+		wallPref.setBoundPref(wp);
+
 		bgPreferences.add(
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
 		);

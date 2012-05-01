@@ -19,26 +19,8 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.*;
+public interface ZLReloadable {
 
-import android.content.*;
-import android.preference.Preference;
+	public void reload();
 
-import org.geometerplus.zlibrary.core.resources.ZLResource;
-
-class ZLSpinnerActivityPreference extends ZLActivityPreference {
-
-	ZLSpinnerActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
-		super(context, holder, map, suggestions, rootResource, resourceKey);
-	}
-
-	public void setSuggestions(List<String> suggestions) {
-		mySuggestions = suggestions;
-	}
-
-	@Override
-	protected Intent prepareIntent(Intent intent) {
-		intent.setClass(getContext(), EditableSpinnerActivity.class);
-		return intent;
-	}
 }
