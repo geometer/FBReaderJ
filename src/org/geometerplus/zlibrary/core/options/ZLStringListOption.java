@@ -42,12 +42,6 @@ public class ZLStringListOption extends ZLOption {
 		myDelimiter = delimiter;
 	}
 
-	/*
-	public ZLStringListOption(String group, String optionName, List<String> defaultValue) {
-		this(group, optionName, defaultValue, "\000");
-	}
-	*/
-
 	public List<String> getValue() {
 		if (!myIsSynchronized) {
 			final String value = getConfigValue(ZLMiscUtil.listToString(myDefaultValue, myDelimiter));
