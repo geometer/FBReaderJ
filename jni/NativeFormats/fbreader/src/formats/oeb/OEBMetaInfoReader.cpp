@@ -37,12 +37,6 @@ OEBMetaInfoReader::OEBMetaInfoReader(Book &book) : myBook(book) {
 
 static const std::string METADATA = "metadata";
 static const std::string DC_METADATA = "dc-metadata";
-static const std::string TITLE_SUFFIX = ":title";
-static const std::string AUTHOR_SUFFIX = ":creator";
-static const std::string SUBJECT_SUFFIX = ":subject";
-static const std::string LANGUAGE_SUFFIX = ":language";
-static const std::string SERIES = "series";
-static const std::string SERIES_INDEX = "series_index";
 static const std::string META = "meta";
 static const std::string AUTHOR_ROLE = "aut";
 
@@ -94,7 +88,7 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 		case READ_METADATA:
 			if (testDCTag("title", tagString)) {
 				myReadState = READ_TITLE;
-			} else if (testDCTag("author", tagString)) {
+			} else if (testDCTag("creator", tagString)) {
 				const char *role = attributeValue(attributes, "role");
 				if (role == 0) {
 					myReadState = READ_AUTHOR2;
@@ -110,9 +104,9 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 				const char *content = attributeValue(attributes, "content");
 				if (name != 0 && content != 0) {
 					std::string sName = name;
-					if (isNSName(sName, SERIES, ZLXMLNamespace::CalibreMetadata)) {
+					if (isNSName(sName, "series", ZLXMLNamespace::CalibreMetadata)) {
 						myBook.setSeries(content, myBook.indexInSeries());
-					} else if (isNSName(sName, SERIES_INDEX, ZLXMLNamespace::CalibreMetadata)) {
+					} else if (isNSName(sName, "series_index", ZLXMLNamespace::CalibreMetadata)) {
 						myBook.setSeries(myBook.seriesTitle(), content);
 					}
 				}
