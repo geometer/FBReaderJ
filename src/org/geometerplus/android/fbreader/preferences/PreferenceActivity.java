@@ -19,15 +19,14 @@
 
 package org.geometerplus.android.fbreader.preferences;
 
-import java.util.HashMap;
+import java.util.*;
 
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.os.Build;
 
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
-import org.geometerplus.zlibrary.core.options.ZLIntegerOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 import org.geometerplus.zlibrary.text.view.style.*;
 
@@ -43,8 +42,11 @@ import org.geometerplus.fbreader.formats.Formats;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.DictionaryUtil;
+import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
+
+	private final List<String> myRootpaths = Arrays.asList(Paths.cardDirectory() + "/");
 
 	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
 		new HashMap<Integer,ZLActivityPreference>();
@@ -61,6 +63,22 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		}
 	}
 
+	private static class OptionHolder implements ZLActivityPreference.ListHolder {
+		private ZLStringListOption myOption;
+
+		public OptionHolder(ZLStringListOption option) {
+			myOption = option;
+		}
+
+		public List<String> getValue() {
+			return myOption.getValue();
+		}
+
+		public void setValue(List<String> l) {
+			myOption.setValue(l);
+		}
+	}
+
 	@Override
 	protected void init(Intent intent) {
 		setResult(FBReader.RESULT_REPAINT);
@@ -70,16 +88,24 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ColorProfile profile = fbReader.getColorProfile();
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
-		directoriesScreen.addOption(Paths.BooksDirectoryOption(), "books");
 		directoriesScreen.addOption(Paths.TempDirectoryOption(), "temp");
-		directoriesScreen.addPreference(new ZLActivityPreference(
-			this, Paths.FontsDirectoryOption(), myActivityPrefs,
-			directoriesScreen.Resource, "fonts"
+		directoriesScreen.addPreference(new ZLBookDirActivityPreference(
+			this, new OptionHolder(Paths.BookPathOption()), myActivityPrefs, myRootpaths,
+			directoriesScreen.Resource, "books"
 		));
-		directoriesScreen.addPreference(new ZLActivityPreference(
-			this, Paths.WallpapersDirectoryOption(), myActivityPrefs,
-			directoriesScreen.Resource, "wallpapers"
-		));
+
+		final ZLActivityPreference fontPref = new ZLActivityPreference(
+				this, new OptionHolder(Paths.FontPathOption()), myActivityPrefs, myRootpaths,
+				directoriesScreen.Resource, "fonts");
+
+		final ZLActivityPreference wallPref = new ZLActivityPreference(
+			this, new OptionHolder(Paths.WallpaperPathOption()), myActivityPrefs, myRootpaths,
+			directoriesScreen.Resource, "wallpapers");
+
+		if (AndroidFontUtil.areExternalFontsSupported()) {
+			directoriesScreen.addPreference(fontPref);
+		}
+		directoriesScreen.addPreference(wallPref);
 
 		final Screen appearanceScreen = createPreferenceScreen("appearance");
 		appearanceScreen.addPreference(new ZLStringChoicePreference(
@@ -133,10 +159,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
 		final ZLTextBaseStyle baseStyle = collection.getBaseStyle();
-		textScreen.addPreference(new FontOption(
+
+		final FontOption fontOption = new FontOption(
 			this, textScreen.Resource, "font",
-			baseStyle.FontFamilyOption, false
-		));
+			baseStyle.FontFamilyOption, false);
+
+		textScreen.addPreference(fontOption);
+		fontPref.setBoundPref(fontOption);
+
 		textScreen.addPreference(new ZLIntegerRangePreference(
 			this, textScreen.Resource.getResource("fontSize"),
 			baseStyle.FontSizeOption
@@ -281,15 +311,18 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 		final ZLPreferenceSet bgPreferences = new ZLPreferenceSet();
 
 		final Screen colorsScreen = createPreferenceScreen("colors");
-		colorsScreen.addPreference(new WallpaperPreference(
-			this, profile, colorsScreen.Resource, "background"
-		) {
-			@Override
-			protected void onDialogClosed(boolean result) {
-				super.onDialogClosed(result);
-				bgPreferences.setEnabled("".equals(getValue()));
-			}
-		});
+
+		final WallpaperPreference wp = new WallpaperPreference(this, profile, colorsScreen.Resource, "background") {
+				@Override
+				protected void onDialogClosed(boolean result) {
+					super.onDialogClosed(result);
+					bgPreferences.setEnabled("".equals(getValue()));
+				}
+			};
+
+		colorsScreen.addPreference(wp);
+		wallPref.setBoundPref(wp);
+
 		bgPreferences.add(
 			colorsScreen.addOption(profile.BackgroundOption, "backgroundColor")
 		);

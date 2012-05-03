@@ -19,9 +19,12 @@
 
 package org.geometerplus.fbreader;
 
+import java.util.List;
+
 import android.os.Environment;
 
 import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
 public abstract class Paths {
 	public static String cardDirectory() {
@@ -32,20 +35,21 @@ public abstract class Paths {
 		return new ZLStringOption("Files", "TempDirectory", cardDirectory() + "/Temp");
 	}
 
-	public static ZLStringListOption FontsDirectoryOption() {
+	public static ZLStringListOption FontPathOption() {
 		return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
 	}
 
-	public static ZLStringListOption WallpapersDirectoryOption() {
+	public static ZLStringListOption WallpaperPathOption() {
 		return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
 	}
 
-	public static ZLStringOption BooksDirectoryOption() {
-		return new ZLStringOption("Files", "BooksDirectory", cardDirectory() + "/Books");
+	public static ZLStringListOption BookPathOption() {
+		return new ZLStringListOption("Files", "BooksDirectory", cardDirectory() + "/Books", "\n");
 	}
 
 	public static String mainBookDirectory() {
-		return BooksDirectoryOption().getValue();
+		final List<String> bookPath = BookPathOption().getValue();
+		return bookPath.isEmpty() ? cardDirectory() + "/Books" : bookPath.get(0);
 	}
 
 	public static String cacheDirectory() {

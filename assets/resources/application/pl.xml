@@ -292,7 +292,7 @@
 		<node name="Preferences">
 			<node name="directories" value="Katalogi">
 				<node name="summary" value="Katalogi do poszukiwania plików"/>
-				<node name="books" value="Katalog z książkami"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>

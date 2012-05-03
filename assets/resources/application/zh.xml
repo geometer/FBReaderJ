@@ -64,7 +64,7 @@
 		<node name="search" value="搜索">
 			<node name="summary" value="在 %s 上搜索图书"/>
 			<node name="summaryAllCatalogs" value="搜索书库"/>
-			<node name="summaryInProgress" value="搜索中..."/>
+			<node name="summaryInProgress" value="搜索中…"/>
 		</node>
 		<node name="found" value="搜索结果">
 			<node name="summary" value="搜索结果: %s"/>
@@ -203,7 +203,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="打开上一本书"/>
-		<node name="returnTo" value="返回到..."/>
+		<node name="returnTo" value="返回到…"/>
 		<node name="back" value="后退"/>
 		<node name="forward" value="前进"/>
 		<node name="close" value="关闭FBReader"/>
@@ -293,8 +293,8 @@
 			<node name="directories" value="文件夹设定">
 				<node name="summary" value="相关文件夹位置设定"/>
 				<node name="books" value="书文存放位置"/>
-				<node name="fonts" value="字体存放位置"/>
-				<node name="wallpapers" value="墙纸存放位置"/>
+				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="呈现方式">
 				<node name="summary" value="旋转，状态工具条"/>
@@ -703,19 +703,19 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="已下载 %s"/>
-			<node name="search" value="搜索中，请等待..."/>
-			<node name="loadInfo" value="信息加载中，请等待..."/>
-			<node name="loadingBook" value="图书加载中，请等待..."/>
-			<node name="loadingBookList" value="书库加载中，请等待..."/>
-			<node name="creatingBooksDatabase" value="正在创建图书数据库，请等待..."/>
-			<node name="updatingBooksDatabase" value="正在更新图书数据库，请等待..."/>
-			<node name="loadingNetworkLibrary" value="正在打开书库，请等待..."/>
-			<node name="authentication" value="验证中.请等待..."/>
-			<node name="signOut" value="退出. 正在处理,请稍等..."/>
-			<node name="purchaseBook" value="书籍购买中. 请等待..."/>
-			<node name="loadingCatalogInfo" value="加载书库信息中，请稍待..."/>
+			<node name="search" value="搜索中，请等待…"/>
+			<node name="loadInfo" value="信息加载中，请等待…"/>
+			<node name="loadingBook" value="图书加载中，请等待…"/>
+			<node name="loadingBookList" value="书库加载中，请等待…"/>
+			<node name="creatingBooksDatabase" value="正在创建图书数据库，请等待…"/>
+			<node name="updatingBooksDatabase" value="正在更新图书数据库，请等待…"/>
+			<node name="loadingNetworkLibrary" value="正在打开书库，请等待…"/>
+			<node name="authentication" value="验证中.请等待…"/>
+			<node name="signOut" value="退出. 正在处理,请稍等…"/>
+			<node name="purchaseBook" value="书籍购买中. 请等待…"/>
+			<node name="loadingCatalogInfo" value="加载书库信息中，请稍待…"/>
 			<node name="loadingNetworkBookInfo" value="书籍信息加载中，请等待…"/>
-			<node name="updatingCatalogsList" value="更新书库列表中，请稍待..."/>
+			<node name="updatingCatalogsList" value="更新书库列表中，请稍待…"/>
 			<node name="updatingAccountInformation" value="正在更新账户信息，请等待…"/>
 		</node>
 		<node name="networkError">

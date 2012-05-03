@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,10 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.fbreader;
+package org.geometerplus.android.fbreader.preferences;
 
-import java.util.List;
-import java.util.ArrayList;
+public interface ZLReloadable {
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+	public void reload();
 
-import org.geometerplus.fbreader.Paths;
-
-public abstract class WallpapersUtil {
-	public static List<ZLFile> predefinedWallpaperFiles() {
-		return ZLFile.createFileByPath("wallpapers").children();
-	}
-
-	public static List<ZLFile> externalWallpaperFiles() {
-		ArrayList<ZLFile> result = new ArrayList<ZLFile>();
-		for (String path : Paths.WallpaperPathOption().getValue()) {
-			result.addAll(ZLFile.createFileByPath(path).children());
-		}
-		return result;
-	}
 }

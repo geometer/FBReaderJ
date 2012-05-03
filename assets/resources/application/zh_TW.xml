@@ -203,7 +203,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="開啟之前的書藉"/>
-		<node name="returnTo" value="回到 ..."/>
+		<node name="returnTo" value="回到 …"/>
 		<node name="back" value="返回"/>
 		<node name="forward" value="前進"/>
 		<node name="close" value="開閉 FBReader"/>
@@ -227,7 +227,7 @@
 		<node name="navigate" value="導航">
 			<node name="toc" value="目錄"/>
 			<node name="gotoHome" value="往文件開首"/>
-			<node name="gotoPageNumber" value="往第 ... 頁"/>
+			<node name="gotoPageNumber" value="往第 … 頁"/>
 			<node name="gotoSectionStart" value="往本章開首"/>
 			<node name="gotoSectionEnd" value="往本章結尾"/>
 			<node name="nextTOCSection" value="往下一章"/>
@@ -292,7 +292,7 @@
 		<node name="Preferences">
 			<node name="directories" value="目錄">
 				<node name="summary" value="文件目錄"/>
-				<node name="books" value="藏書目錄"/>
+				<node name="books" value="Books directories" toBeTranslated="true"/>
 				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
 				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
@@ -622,7 +622,7 @@
 					<node name="right_to_left" value="右至左翻頁"/>
 					<node name="up" value="下至上翻頁"/>
 					<node name="down" value="上至下翻頁"/>
-					<node name="custom" value="自訂..."/>
+					<node name="custom" value="自訂…"/>
 				</node>
 			</node>
 			<node name="dictionary" value="字典">
@@ -708,19 +708,19 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="正下載 %s"/>
-			<node name="search" value="搜尋中，請稍候 ..."/>
+			<node name="search" value="搜尋中，請稍候 …"/>
 			<node name="loadInfo" value="Loading information. Please, wait…" toBeTranslated="true"/>
-			<node name="loadingBook" value="打開書藉中，請稍候..."/>
-			<node name="loadingBookList" value="打開書庫中，請稍候..."/>
+			<node name="loadingBook" value="打開書藉中，請稍候…"/>
+			<node name="loadingBookList" value="打開書庫中，請稍候…"/>
 			<node name="creatingBooksDatabase" value="正在創建書藉數據庫，請稍候．.."/>
-			<node name="updatingBooksDatabase" value="正在更新書藉數據庫，請稍候..."/>
-			<node name="loadingNetworkLibrary" value="打開網絡書庫中，請稍候..."/>
-			<node name="authentication" value="驗證中，請稍候..."/>
-			<node name="signOut" value="登出中，請稍候..."/>
-			<node name="purchaseBook" value="正購買書藉，請稍候..."/>
-			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候..."/>
+			<node name="updatingBooksDatabase" value="正在更新書藉數據庫，請稍候…"/>
+			<node name="loadingNetworkLibrary" value="打開網絡書庫中，請稍候…"/>
+			<node name="authentication" value="驗證中，請稍候…"/>
+			<node name="signOut" value="登出中，請稍候…"/>
+			<node name="purchaseBook" value="正購買書藉，請稍候…"/>
+			<node name="loadingCatalogInfo" value="讀取目錄內容中，請稍候…"/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
-			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣..."/>
+			<node name="updatingCatalogsList" value="更新目錄列表中，請稍倣…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">
