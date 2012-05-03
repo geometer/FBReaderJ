@@ -64,7 +64,7 @@
 		<node name="search" value="Поиск">
 			<node name="summary" value="Искать книги на %s"/>
 			<node name="summaryAllCatalogs" value="Искать книги во всех каталогах"/>
-			<node name="summaryInProgress" value="Идёт поиск..."/>
+			<node name="summaryInProgress" value="Идёт поиск…"/>
 		</node>
 		<node name="found" value="Найдено">
 			<node name="summary" value="Результаты поиска для: %s"/>
@@ -218,7 +218,7 @@
 		<node name="library" value="Открыть библиотеку"/>
 		<node name="networkLibrary" value="Открыть сетевую библиотеку"/>
 		<node name="previousBook" value="Открыть предыдущую книгу"/>
-		<node name="returnTo" value="Вернуться к ..."/>
+		<node name="returnTo" value="Вернуться к …"/>
 		<node name="back" value="Назад"/>
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрыть FBReader"/>
@@ -242,7 +242,7 @@
 		<node name="navigate" value="Переход">
 			<node name="toc" value="Оглавление"/>
 			<node name="gotoHome" value="В начало книги"/>
-			<node name="gotoPageNumber" value="На страницу..."/>
+			<node name="gotoPageNumber" value="На страницу…"/>
 			<node name="gotoSectionStart" value="В начало раздела"/>
 			<node name="gotoSectionEnd" value="В конец раздела"/>
 			<node name="nextTOCSection" value="К следующей главе"/>
