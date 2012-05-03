@@ -23,8 +23,10 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Html;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLPhysicalFile;
+import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.filetype.FileTypeCollection;
@@ -37,9 +39,13 @@ public abstract class FBUtil {
 				// That should be impossible
 				return;
 			}
+			final CharSequence sharedFrom =
+				Html.fromHtml(ZLResource.resource("sharing").getResource("sharedFrom").getValue());
 			activity.startActivity(
 				new Intent(Intent.ACTION_SEND)
 					.setType(FileTypeCollection.Instance.simplifiedMimeType(file).Name)
+					.putExtra(Intent.EXTRA_SUBJECT, book.getTitle())
+					.putExtra(Intent.EXTRA_TEXT, sharedFrom)
 					.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file.javaFile()))
 			);
 		} catch (ActivityNotFoundException e) {
