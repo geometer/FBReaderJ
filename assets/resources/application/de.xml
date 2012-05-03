@@ -206,7 +206,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Vorangegangenes Buch öffnen"/>
-		<node name="returnTo" value="Zurückkehren …"/>
+		<node name="returnTo" value="Zurückkehren…"/>
 		<node name="back" value="Zurück"/>
 		<node name="forward" value="Vorwärts"/>
 		<node name="close" value="FBReader schließen"/>
@@ -424,7 +424,7 @@
 				<node name="spaceAfter" value="Abstand nach"/>
 				<node name="leftIndent" value="Einzug linker Rand"/>
 				<node name="rightIndent" value="Einzug rechter Rand"/>
-				<node name="more" value="Weitere Formatierungen …">
+				<node name="more" value="Weitere Formatierungen…">
 					<node name="summary" value="Detailierte Einstellungen für Überschiften, Inhalte, etc."/>
 					<node name="Regular Paragraph" value="Normaler Absatz">
 						<node name="summary" value=""/>
