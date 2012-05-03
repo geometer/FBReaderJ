@@ -49,7 +49,7 @@ public class FixBooksDirectoryActivity extends Activity {
 		textView.setText(resource.getResource("text").getValue());
 
 		final EditText directoryView = (EditText)findViewById(R.id.books_directory_fix_directory);
-		directoryView.setText(Paths.BooksDirectoryOption().getValue());
+		directoryView.setText(Paths.mainBookDirectory());
 
 		final View buttonsView = findViewById(R.id.books_directory_fix_buttons);
 		final Button okButton = (Button)buttonsView.findViewById(R.id.ok_button);
