@@ -203,7 +203,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Open previous book" toBeTranslated="true"/>
-		<node name="returnTo" value="Return to ..." toBeTranslated="true"/>
+		<node name="returnTo" value="Return to …" toBeTranslated="true"/>
 		<node name="back" value="Back" toBeTranslated="true"/>
 		<node name="forward" value="Forward" toBeTranslated="true"/>
 		<node name="close" value="Close FBReader" toBeTranslated="true"/>
@@ -227,7 +227,7 @@
 		<node name="navigate" value="Định hướng">
 			<node name="toc" value="Mục Lục"/>
 			<node name="gotoHome" value="Đến đầu Tài liệu"/>
-			<node name="gotoPageNumber" value="Đến trang..."/>
+			<node name="gotoPageNumber" value="Đến trang…"/>
 			<node name="gotoSectionStart" value="Đến Đầu Chương"/>
 			<node name="gotoSectionEnd" value="Đến Cuối Chương"/>
 			<node name="nextTOCSection" value="Đến Phần tiếp của ML"/>
@@ -703,19 +703,19 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Đang tải sách về %s"/>
-			<node name="search" value="Đang tìm. Xin chờ..."/>
-			<node name="loadInfo" value="Loading information. Please, wait..." toBeTranslated="true"/>
-			<node name="loadingBook" value="Đang mở sách. Xin chờ..."/>
-			<node name="loadingBookList" value="Đang mở thư viện. Xin chờ..."/>
-			<node name="creatingBooksDatabase" value="Đang tạo kho sách. Xin chờ..."/>
-			<node name="updatingBooksDatabase" value="Đang cập nhật kho sách. Xin chờ..."/>
-			<node name="loadingNetworkLibrary" value="Đang mở thư viện. Xin chờ..."/>
-			<node name="authentication" value="Xác thực. Xin chờ..."/>
-			<node name="signOut" value="Đang thoát. Xin chờ..."/>
-			<node name="purchaseBook" value="Mua sách. Xin chờ..."/>
-			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait..."/>
+			<node name="search" value="Đang tìm. Xin chờ…"/>
+			<node name="loadInfo" value="Loading information. Please, wait…" toBeTranslated="true"/>
+			<node name="loadingBook" value="Đang mở sách. Xin chờ…"/>
+			<node name="loadingBookList" value="Đang mở thư viện. Xin chờ…"/>
+			<node name="creatingBooksDatabase" value="Đang tạo kho sách. Xin chờ…"/>
+			<node name="updatingBooksDatabase" value="Đang cập nhật kho sách. Xin chờ…"/>
+			<node name="loadingNetworkLibrary" value="Đang mở thư viện. Xin chờ…"/>
+			<node name="authentication" value="Xác thực. Xin chờ…"/>
+			<node name="signOut" value="Đang thoát. Xin chờ…"/>
+			<node name="purchaseBook" value="Mua sách. Xin chờ…"/>
+			<node name="loadingCatalogInfo" value="Loading catalog information. Please, wait…"/>
 			<node name="loadingNetworkBookInfo" value="Loading book information. Please, wait…" toBeTranslated="true"/>
-			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait..."/>
+			<node name="updatingCatalogsList" value="Updating catalogs list. Please, wait…"/>
 			<node name="updatingAccountInformation" value="Updating account information. Please, wait…" toBeTranslated="true"/>
 		</node>
 		<node name="networkError">

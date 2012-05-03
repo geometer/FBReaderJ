@@ -203,7 +203,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Deschide cartea anteriora"/>
-		<node name="returnTo" value="Înapoi la…"/>
+		<node name="returnTo" value="Înapoi la …"/>
 		<node name="back" value="Înapoi"/>
 		<node name="forward" value="Înainte"/>
 		<node name="close" value="Inchide Aplicatia"/>
