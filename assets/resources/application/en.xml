@@ -226,6 +226,9 @@
 		<node name="bookmarkCreated" value="Bookmark created:&#10;%s"/>
 		<node name="clearSelection" value="Clear"/>
 	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Settings"/>
 		<node name="bookInfo" value="Book info"/>
