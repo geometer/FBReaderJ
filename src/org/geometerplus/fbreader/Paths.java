@@ -19,9 +19,9 @@
 
 package org.geometerplus.fbreader;
 
-import org.geometerplus.zlibrary.core.options.*;
-
 import android.os.Environment;
+
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public abstract class Paths {
 	public static String cardDirectory() {
@@ -44,8 +44,12 @@ public abstract class Paths {
 		return new ZLStringOption("Files", "BooksDirectory", cardDirectory() + "/Books");
 	}
 
+	public static String mainBookDirectory() {
+		return BooksDirectoryOption().getValue();
+	}
+
 	public static String cacheDirectory() {
-		return BooksDirectoryOption().getValue() + "/.FBReader";
+		return mainBookDirectory() + "/.FBReader";
 	}
 
 	public static String networkCacheDirectory() {
