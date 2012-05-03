@@ -225,6 +225,8 @@
 			</intent-filter>
 		</receiver>
 		<activity android:name="org.geometerplus.android.fbreader.tips.TipsActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog"/>
-		<activity android:name="org.geometerplus.android.fbreader.preferences.EditableStringListActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog" android:windowSoftInputMode="adjustPan" />
+		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.EditableStringListActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog" android:windowSoftInputMode="adjustPan" />
+		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.BooksDirectoryActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog" android:windowSoftInputMode="adjustPan" />
+		<activity android:name="org.geometerplus.android.fbreader.preferences.activityprefs.EditableSpinnerActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.Dialog" android:windowSoftInputMode="adjustPan" />
 	</application>
 </manifest>

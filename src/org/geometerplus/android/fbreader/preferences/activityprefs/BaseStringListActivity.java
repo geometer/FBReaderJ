@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.preferences;
+package org.geometerplus.android.fbreader.preferences.activityprefs;
 
 import java.util.*;
 
@@ -34,52 +34,54 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
 
-public class EditableStringListActivity extends ListActivity {
+public abstract class BaseStringListActivity extends ListActivity {
 	public static final String LIST = "list";
 	public static final String TITLE = "title";
-
-	private static String[] ourRootpaths = { Paths.cardDirectory() + "/" };
+	public static final String SUGGESTIONS = "suggestions";
 
 	private ImageButton myAddButton;
 	private Button myOkButton;
+	public List<String> Suggestions;
 
-	private void enableButtons() {
+	private ItemAdapter myAdapter;
+
+	public void enableButtons() {
 		if (myAddButton != null) {
-			myAddButton.setEnabled(!getListAdapter().hasEmpty());
+			myAddButton.setEnabled(getListAdapter().isSaveable());
 		}
 		if (myOkButton != null) {
-			myOkButton.setEnabled(!getListAdapter().hasEmpty());
+			myOkButton.setEnabled(getListAdapter().isSaveable());
 		}
 	}
 
-	@Override
-	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+	protected void initView(ItemAdapter a) {
 		setContentView(R.layout.editable_stringlist);
+
 		setTitle(getIntent().getStringExtra(TITLE));
 
 		final List<String> list = getIntent().getStringArrayListExtra(LIST);
+		Suggestions = getIntent().getStringArrayListExtra(SUGGESTIONS);
 
-//		final View bottomView = findViewById(R.id.editable_stringlist_bottom);
-
-		setListAdapter(new ItemAdapter());
+		final View footerView = LayoutInflater.from(this).inflate(R.layout.editable_stringlist_footer, null);
+		getListView().addFooterView(footerView);
+		setListAdapter(a);
 
 		for (String s : list) {
-			DirectoryItem i = new DirectoryItem();
-			i.setPath(s);
-			getListAdapter().addDirectoryItem(i);
+			StringItem i = new StringItem();
+			i.setData(s);
+			getListAdapter().addStringItem(i);
 		}
 
-		myAddButton = (ImageButton)findViewById(R.id.editable_stringlist_addbutton);
+		myAddButton = (ImageButton)footerView.findViewById(R.id.editable_stringlist_addbutton);
 		myAddButton.setOnClickListener(
 			new View.OnClickListener() {
 				public void onClick(View view) {
-					getListAdapter().addDirectoryItem(new DirectoryItem());
+					getListAdapter().addStringItem(new StringItem());
 				}
 			}
 		);
 		final ZLResource buttonResource = ZLResource.resource("dialog").getResource("button");
-		final View buttonView = findViewById(R.id.editable_stringlist_buttons);
+		final View buttonView = footerView.findViewById(R.id.editable_stringlist_buttons);
 		myOkButton = (Button)buttonView.findViewById(R.id.ok_button);
 		final Button cancelButton = (Button)buttonView.findViewById(R.id.cancel_button);
 		cancelButton.setText(buttonResource.getResource("cancel").getValue());
@@ -90,7 +92,7 @@ public class EditableStringListActivity extends ListActivity {
 				public void onClick(View view) {
 					ArrayList<String> paths = new ArrayList<String>();
 					for (int i = 0; i < getListAdapter().getCount(); i++) {
-						paths.add(getListAdapter().getItem(i).getPath());
+						paths.add(getListAdapter().getItem(i).getData());
 					}
 					Intent intent = new Intent();
 					intent.putStringArrayListExtra(LIST, paths);
@@ -109,6 +111,7 @@ public class EditableStringListActivity extends ListActivity {
 				}
 			}
 		);
+
 	}
 
 	@Override
@@ -116,10 +119,20 @@ public class EditableStringListActivity extends ListActivity {
 		return (ItemAdapter)super.getListAdapter();
 	}
 
-	private class ItemAdapter extends BaseAdapter {
+	protected static abstract class ItemAdapter extends BaseAdapter {
 		private int nextId = 0;
+		protected final BaseStringListActivity myActivity;
 
-		private final ArrayList<DirectoryItem> myItems = new ArrayList<DirectoryItem>();
+		private final ArrayList<StringItem> myItems = new ArrayList<StringItem>();
+
+		protected boolean myKeyboardShowed = false;
+
+		protected boolean myUserWasWarned = false;
+
+		public ItemAdapter(BaseStringListActivity a) {
+			super();
+			myActivity = a;
+		}
 
 		@Override
 		public long getItemId(int position) {
@@ -127,19 +140,20 @@ public class EditableStringListActivity extends ListActivity {
 		}
 
 		@Override
-		public DirectoryItem getItem(int position) {
+		public StringItem getItem(int position) {
 			return myItems.get(position);
 		}
 
-		synchronized void addDirectoryItem(DirectoryItem i) {
+		synchronized void addStringItem(StringItem i) {
 			i.setId(nextId);
 			nextId = nextId + 1;
 			myItems.add(i);
 			notifyDataSetChanged();
-			enableButtons();
-			getListView().post(new Runnable(){
+			myActivity.enableButtons();
+			myKeyboardShowed = false;
+			myActivity.getListView().post(new Runnable(){
 				public void run() {
-					getListView().setSelection(getCount() - 1);
+					myActivity.getListView().setSelection(getCount() - 1);
 				}
 			});
 		}
@@ -149,68 +163,35 @@ public class EditableStringListActivity extends ListActivity {
 			return myItems.size();
 		}
 
-		public boolean hasEmpty() {
-			for (DirectoryItem i : myItems) {
-				if ("".equals(i.getPath())) return true;
+		public boolean isSaveable() {
+			for (StringItem i : myItems) {
+				if ("".equals(i.getData())) return false;
 			}
-			return false;
+			return true;
 		}
 
-		synchronized void removeDirectoryItem(int id) {
+		synchronized void removeStringItem(int id) {
 			for (int i = 0; i < myItems.size(); i++) {
 				if (myItems.get(i).getId() == id) {
 					myItems.remove(i);
 					notifyDataSetChanged();
-					enableButtons();
+					myActivity.enableButtons();
 					return;
 				}
 			}
 		}
 
-		@Override
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			final DirectoryItem item = getItem(position);
-			final View view = LayoutInflater.from(EditableStringListActivity.this).inflate(R.layout.editable_stringlist_item, parent, false);
-
-			final AutoCompleteTextView text = (AutoCompleteTextView)view.findViewById(R.id.editable_stringlist_text);
-			text.setText(item.getPath());
-			text.addTextChangedListener(new TextWatcher(){
-				public void afterTextChanged(Editable s) {}
-				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					item.setPath(s.toString());
-					enableButtons();
-				}
-			});
-			text.setAdapter(new ArrayAdapter<String>(EditableStringListActivity.this, android.R.layout.simple_dropdown_item_1line, ourRootpaths));
-			if ("".equals(item.getPath())) {
-				text.requestFocus();
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.toggleSoftInput(0, 0);
-			}
-			final ImageButton button = (ImageButton)view.findViewById(R.id.editable_stringlist_deletebutton);
-			button.setOnClickListener(
-				new View.OnClickListener() {
-					public void onClick(View view) {
-						removeDirectoryItem(item.getId());
-						enableButtons();
-					}
-				}
-			);
-			button.setEnabled(getCount() > 1);
-			return view;
-		}
 	}
 
-	private static class DirectoryItem {
-		private String myPath = "";
+	protected static class StringItem {
+		private String myData = "";
 		private int myId;
 
-		public String getPath() {
-			return myPath;
+		public String getData() {
+			return myData;
 		}
-		public void setPath(String path) {
-			myPath = path;
+		public void setData(String data) {
+			myData = data;
 		}
 
 		public int getId() {

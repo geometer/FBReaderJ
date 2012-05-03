@@ -64,6 +64,9 @@ public abstract class BooksDatabase {
 
 	protected abstract List<Author> loadAuthors(long bookId);
 	protected abstract List<Tag> loadTags(long bookId);
+	public abstract List<Author> loadAuthors();
+	public abstract List<Tag> loadTags();
+
 	protected abstract SeriesInfo loadSeriesInfo(long bookId);
 	protected abstract void updateBookInfo(long bookId, long fileId, String encoding, String language, String title);
 	protected abstract long insertBookInfo(ZLFile file, String encoding, String language, String title);

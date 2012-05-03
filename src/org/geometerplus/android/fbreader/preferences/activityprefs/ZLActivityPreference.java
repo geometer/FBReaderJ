@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.android.fbreader.preferences;
+package org.geometerplus.android.fbreader.preferences.activityprefs;
 
 import java.util.*;
 
@@ -25,45 +25,71 @@ import android.content.*;
 import android.app.Activity;
 import android.preference.Preference;
 
-import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.core.util.ZLMiscUtil;
 
-class ZLActivityPreference extends Preference {
-	private final ZLStringListOption myOption;
-	private final int myRequestCode;
+import org.geometerplus.android.fbreader.preferences.ZLReloadable;
 
-	ZLActivityPreference(Context context, ZLStringListOption option, Map<Integer,ZLActivityPreference> map, ZLResource rootResource, String resourceKey) {
+public class ZLActivityPreference extends Preference {
+	private ZLReloadable MyBoundPref = null;
+
+	public static interface ListHolder {
+
+		public List<String> getValue();
+		public void setValue(List<String> l);
+	}
+
+	private final ListHolder myHolder;
+	private final int myRequestCode;
+	protected List<String> mySuggestions;
+
+	public ZLActivityPreference(Context context, ListHolder holder, Map<Integer,ZLActivityPreference> map, List<String> suggestions, ZLResource rootResource, String resourceKey) {
 		super(context);
-		myOption = option;
+		myHolder = holder;
 		myRequestCode = map.size();
 		map.put(myRequestCode, this);
+		mySuggestions = (suggestions != null) ? suggestions : new ArrayList<String>();
 
 		ZLResource resource = rootResource.getResource(resourceKey);
 		setTitle(resource.getValue());
 		updateSummary();
 	}
 
+	public void setBoundPref(ZLReloadable boundPref) {
+		MyBoundPref = boundPref;
+	}
+
+	protected Intent prepareIntent(Intent intent) {
+		intent.setClass(getContext(), EditableStringListActivity.class);
+		return intent;
+	}
+
 	@Override
 	protected void onClick() {
 		final Intent intent = new Intent();
-		intent.setClass(getContext(), EditableStringListActivity.class);
 		intent.putStringArrayListExtra(
-			EditableStringListActivity.LIST,
-			new ArrayList<String>(myOption.getValue())
+			BaseStringListActivity.LIST,
+			new ArrayList<String>(myHolder.getValue())
 		);
-		intent.putExtra(EditableStringListActivity.TITLE, getTitle());
+		intent.putStringArrayListExtra(
+			BaseStringListActivity.SUGGESTIONS,
+			new ArrayList<String>(mySuggestions)
+		);
+		intent.putExtra(BaseStringListActivity.TITLE, getTitle());
 
-		((Activity)getContext()).startActivityForResult(intent, myRequestCode);
+		((Activity)getContext()).startActivityForResult(prepareIntent(intent), myRequestCode);
 	}
 
 	public void setValue(Intent data) {
 		final List<String> value = data.getStringArrayListExtra(EditableStringListActivity.LIST);
-		myOption.setValue(value);
+		myHolder.setValue(value);
 		updateSummary();
+		if (MyBoundPref != null) {
+			MyBoundPref.reload();
+		}
 	}
 
 	private void updateSummary() {
-		setSummary(ZLMiscUtil.listToString(myOption.getValue(), ":"));
+		setSummary(ZLMiscUtil.listToString(myHolder.getValue(), ":"));
 	}
 }

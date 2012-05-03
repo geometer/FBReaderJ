@@ -203,7 +203,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Відкрити поперердню книгу"/>
-		<node name="returnTo" value="Повернутися до ..."/>
+		<node name="returnTo" value="Повернутися до …"/>
 		<node name="back" value="Назад"/>
 		<node name="forward" value="Вперед"/>
 		<node name="close" value="Закрити FBReader"/>
@@ -227,7 +227,7 @@
 		<node name="navigate" value="Перехід">
 			<node name="toc" value="Зміст"/>
 			<node name="gotoHome" value="В початок книги"/>
-			<node name="gotoPageNumber" value="На сторінку..."/>
+			<node name="gotoPageNumber" value="На сторінку…"/>
 			<node name="gotoSectionStart" value="В початок разділу"/>
 			<node name="gotoSectionEnd" value="В кінець розділу"/>
 			<node name="nextTOCSection" value="До наступної глави"/>
@@ -703,20 +703,20 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Завантажується книга %s"/>
-			<node name="search" value="Йде пошук. Зачекайте, будь ласка..."/>
-			<node name="loadInfo" value="Loading information. Please, wait..."/>
-			<node name="loadingBook" value="Відкривається книга. Зачекайте, будь ласка..."/>
-			<node name="loadingBookList" value="Відкривається бібліотека. Зачекайте, будь ласка..."/>
-			<node name="creatingBooksDatabase" value="Створюється база книг. Зачекайте, будь ласка..."/>
-			<node name="updatingBooksDatabase" value="Оновлюється база книг. Зачекайте, будь ласка..."/>
-			<node name="loadingNetworkLibrary" value="Відкривається бібліотека. Зачекайте, будь ласка..."/>
-			<node name="authentication" value="Йде авторизація. Зачекайте, будь ласка..."/>
-			<node name="signOut" value="Вихід із системи. Зачекайте, будь ласка..."/>
-			<node name="purchaseBook" value="Йде придбання книги. Зачекайте, будь ласка..."/>
-			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка..."/>
-			<node name="loadingNetworkBookInfo" value="Завантаження інформації про книгу. Зачекайте, будь ласка...…"/>
-			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка..."/>
-			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка...…"/>
+			<node name="search" value="Йде пошук. Зачекайте, будь ласка…"/>
+			<node name="loadInfo" value="Loading information. Please, wait…"/>
+			<node name="loadingBook" value="Відкривається книга. Зачекайте, будь ласка…"/>
+			<node name="loadingBookList" value="Відкривається бібліотека. Зачекайте, будь ласка…"/>
+			<node name="creatingBooksDatabase" value="Створюється база книг. Зачекайте, будь ласка…"/>
+			<node name="updatingBooksDatabase" value="Оновлюється база книг. Зачекайте, будь ласка…"/>
+			<node name="loadingNetworkLibrary" value="Відкривається бібліотека. Зачекайте, будь ласка…"/>
+			<node name="authentication" value="Йде авторизація. Зачекайте, будь ласка…"/>
+			<node name="signOut" value="Вихід із системи. Зачекайте, будь ласка…"/>
+			<node name="purchaseBook" value="Йде придбання книги. Зачекайте, будь ласка…"/>
+			<node name="loadingCatalogInfo" value="Завантаження інформації з каталогу. Зачекайте, будь ласка…"/>
+			<node name="loadingNetworkBookInfo" value="Завантаження інформації про книгу. Зачекайте, будь ласка……"/>
+			<node name="updatingCatalogsList" value="Оновлюється список каталогів. Зачекайте, будь ласка…"/>
+			<node name="updatingAccountInformation" value="Оновлення інформації аккаунту. Зачекайте, будь ласка……"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Внутрішня помилка сервера"/>
