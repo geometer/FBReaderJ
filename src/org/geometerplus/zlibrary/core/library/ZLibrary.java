@@ -38,7 +38,7 @@ public abstract class ZLibrary {
 	public static final String SCREEN_ORIENTATION_REVERSE_PORTRAIT = "reversePortrait";
 	public static final String SCREEN_ORIENTATION_REVERSE_LANDSCAPE = "reverseLandscape";
 
-	public final ZLStringOption OrientationOption = new ZLStringOption("LookNFeel", "Orientation", "auto");
+	public final ZLStringOption OrientationOption = new ZLStringOption("LookNFeel", "Orientation", "system");
 
 	protected ZLibrary() {
 		ourImplementation = this;
