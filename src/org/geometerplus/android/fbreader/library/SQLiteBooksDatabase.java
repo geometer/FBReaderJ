@@ -374,7 +374,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		do {
 			list.add(new Author(cursor.getString(0), cursor.getString(1)));
 		} while (cursor.moveToNext());
-		cursor.close();	
+		cursor.close();
 		return list;
 	}
 
@@ -402,7 +402,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 			myCreateTagIdStatement = myDatabase.compileStatement(
 				"INSERT OR IGNORE INTO Tags (parent_id,name) VALUES (?,?)"
 			);
-		}	
+		}
 		{
 			final Long id = myIdByTag.get(tag);
 			if (id != null) {
@@ -546,7 +546,7 @@ public final class SQLiteBooksDatabase extends BooksDatabase {
 		if (cursor.moveToNext()) {
 			info = new SeriesInfo(cursor.getString(0), SeriesInfo.createIndex(cursor.getString(1)));
 		}
-		cursor.close();	
+		cursor.close();
 		return info;
 	}
 
