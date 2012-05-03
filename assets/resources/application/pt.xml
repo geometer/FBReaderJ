@@ -119,9 +119,11 @@
 			<node name="buy" value="Você quer comprar este livro? (%s)"/>
 			<node name="openInBrowser" value="Você quer abrir este catálogo no navegador?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Baixando os catálogos"/> <!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Baixando os catálogos"/>
 		<!-- used as notification title -->
-		<node name="searchingNetwork" value="Pesquisando por livros na rede"/> <!-- used as notification title -->
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Pesquisando por livros na rede"/>
+		<!-- used as notification title -->
 		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Adicionar catálogo"/>
@@ -144,7 +146,7 @@
 	<node name="buyBook">
 		<node name="title" value="Comprar livro"/>
 		<node name="titleSeveralBooks" value="Comprar livros"/>
-		<node name="confirm" value="Tem certeza que você quer comprar &#10;&#8220;%s&#8221;?"/>
+		<node name="confirm" value="Tem certeza que você quer comprar &#10;“%s”?"/>
 		<node name="confirmSeveralBooks" value="Tem certeza que você quer comprar %s livros?"/>
 		<node name="alreadyBought" value="Livro já está comprado"/>
 		<node name="notAuthorized" value="Autorização necessária"/>
@@ -213,7 +215,7 @@
 		<node name="library" value="Abra a biblioteca"/>
 		<node name="networkLibrary" value="Abra a rede de bibliotecas"/>
 		<node name="previousBook" value="Abra o livro anterior"/>
-		<node name="returnTo" value="Retorne a &#8230;"/>
+		<node name="returnTo" value="Retorne a …"/>
 		<node name="back" value="Volte"/>
 		<node name="forward" value="Adiantar"/>
 		<node name="close" value="Feche o FBReader"/>
@@ -237,7 +239,7 @@
 		<node name="navigate" value="Navegar">
 			<node name="toc" value="Índice de Conteúdo"/>
 			<node name="gotoHome" value="Ir para o Início do Documento"/>
-			<node name="gotoPageNumber" value="Ir para a Página &#8230;"/>
+			<node name="gotoPageNumber" value="Ir para a Página …"/>
 			<node name="gotoSectionStart" value="Ir para o Início do Texto da Seção"/>
 			<node name="gotoSectionEnd" value="Ir para o Fim do Texto da Seção"/>
 			<node name="nextTOCSection" value="Ir para o Próximo Item TOC"/>
@@ -278,7 +280,7 @@
 			<node name="pay" value="Pagar"/>
 			<node name="refresh" value="Atualizar"/>
 			<node name="authorize" value="Autorizar"/>
-			<node name="resetPosition" value="Redefinir posição" />
+			<node name="resetPosition" value="Redefinir posição"/>
 			<node name="sendReport" value="Enviar relatório"/>
 		</node>
 		<node name="plugin">
@@ -418,7 +420,7 @@
 					<node name="unchanged" value="&lt;sem alteração&gt;"/>
 				</node>
 				<node name="autoHyphenations" value="Auto hyphenations">
-				  <node name="summaryOn" value="Hifenizar palavras automaticamente"/>
+					<node name="summaryOn" value="Hifenizar palavras automaticamente"/>
 					<node name="summaryOff" value="Não hifenizar palavras automaticamente"/>
 				</node>
 				<node name="allowHyphenations" value="Permitir hifenizações">
@@ -627,7 +629,7 @@
 					<node name="right_to_left" value="Role as páginas da direita para a esquerda"/>
 					<node name="up" value="Role as páginas de baixo para cima"/>
 					<node name="down" value="Role as páginas de cima para baixo"/>
-					<node name="custom" value="Personalizado&#8230;"/>
+					<node name="custom" value="Personalizado…"/>
 				</node>
 			</node>
 			<node name="dictionary" value="Dicionário">
@@ -713,20 +715,20 @@
 		</node>
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Baixando livro %s"/>
-			<node name="search" value="Pesquisando. Por favor, aguarde&#8230;"/>
-			<node name="loadInfo" value="Carregando informações. Por favor, aguarde&#8230;"/>
-			<node name="loadingBook" value="Abrindo livro. Por favor, aguarde&#8230;"/>
-			<node name="loadingBookList" value="Abrindo biblioteca. Por favor, aguarde&#8230;"/>
-			<node name="creatingBooksDatabase" value="Criando banco de dados de livros. Por favor, aguarde&#8230;"/>
-			<node name="updatingBooksDatabase" value="Atualizando banco de dados de livros. Por favor, aguarde&#8230;"/>
-			<node name="loadingNetworkLibrary" value="Abrindo biblioteca. Por favor, aguarde&#8230;"/>
-			<node name="authentication" value="Autenticação. Por favor, aguarde&#8230;"/>
-			<node name="signOut" value="Saindo. Por favor, aguarde&#8230;"/>
-			<node name="purchaseBook" value="Comprar livro. Por favor, aguarde&#8230;"/>
-			<node name="loadingCatalogInfo" value="Carregando informações de catálogo. Por favor, aguarde&#8230;"/>
-			<node name="loadingNetworkBookInfo" value="Carregando informações do livro. Por favor, aguarde&#8230;"/>
-			<node name="updatingCatalogsList" value="Atualizando lista de catálogos. Por favor, aguarde&#8230;"/>
-			<node name="updatingAccountInformation" value="Atualizando as informações da conta. Por favor, aguarde&#8230;"/>
+			<node name="search" value="Pesquisando. Por favor, aguarde…"/>
+			<node name="loadInfo" value="Carregando informações. Por favor, aguarde…"/>
+			<node name="loadingBook" value="Abrindo livro. Por favor, aguarde…"/>
+			<node name="loadingBookList" value="Abrindo biblioteca. Por favor, aguarde…"/>
+			<node name="creatingBooksDatabase" value="Criando banco de dados de livros. Por favor, aguarde…"/>
+			<node name="updatingBooksDatabase" value="Atualizando banco de dados de livros. Por favor, aguarde…"/>
+			<node name="loadingNetworkLibrary" value="Abrindo biblioteca. Por favor, aguarde…"/>
+			<node name="authentication" value="Autenticação. Por favor, aguarde…"/>
+			<node name="signOut" value="Saindo. Por favor, aguarde…"/>
+			<node name="purchaseBook" value="Comprar livro. Por favor, aguarde…"/>
+			<node name="loadingCatalogInfo" value="Carregando informações de catálogo. Por favor, aguarde…"/>
+			<node name="loadingNetworkBookInfo" value="Carregando informações do livro. Por favor, aguarde…"/>
+			<node name="updatingCatalogsList" value="Atualizando lista de catálogos. Por favor, aguarde…"/>
+			<node name="updatingAccountInformation" value="Atualizando as informações da conta. Por favor, aguarde…"/>
 		</node>
 		<node name="networkError">
 			<node name="internalError" value="Erro interno do servidor"/>
@@ -767,7 +769,7 @@
 			<node name="title" value="Filtro de idioma"/>
 		</node>
 		<node name="tips">
-			<node name="title" value="Dica do dia" />
+			<node name="title" value="Dica do dia"/>
 			<node name="initializationText" value="Gostaria de ler as dicas diárias do FBReader? Novas dicas irão ser baixadas do site FBReader. Tráfego de rede esperado é de 1-2 kilobytes por semana.&#10;&#10; Ativar dicas?"/>
 			<node name="dontShowAgain" value="Não mostrar novamente"/>
 			<node name="more" value="Próxima dica"/>
