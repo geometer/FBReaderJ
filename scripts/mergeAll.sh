@@ -6,12 +6,15 @@ git merge master
 git checkout ice-cream-sandwich
 git merge master
 
-git checkout beta
+git checkout multidirs
 git merge master
 
+git checkout beta
+git merge multidirs
+
 git checkout beta-ics
-git merge ice-cream-sandwich
 git merge beta
+git merge ice-cream-sandwich
 
 git checkout booksdb
 git merge master
@@ -22,8 +25,5 @@ git merge booksdb
 
 git checkout library-service-ics
 git merge booksdb-ics
-
-git checkout multidirs
-git merge master
 
 git checkout master
