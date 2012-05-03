@@ -206,7 +206,7 @@
 		<node name="library" value="Open library" toBeTranslated="true"/>
 		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
 		<node name="previousBook" value="Ouvrir le livre précédent"/>
-		<node name="returnTo" value="Retourner à…"/>
+		<node name="returnTo" value="Retourner à …"/>
 		<node name="back" value="Retour"/>
 		<node name="forward" value="Suivant"/>
 		<node name="close" value="Fermer FBReader"/>
