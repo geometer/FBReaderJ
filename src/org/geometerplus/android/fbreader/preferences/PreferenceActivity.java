@@ -87,17 +87,17 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final Screen directoriesScreen = createPreferenceScreen("directories");
 		directoriesScreen.addPreference(new ZLBookDirActivityPreference(
-			this, new OptionHolder(Paths.BooksDirectoryOption()), myActivityPrefs, myRootpaths,
+			this, new OptionHolder(Paths.BookPathOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "books"
 		));
 
 		final ZLActivityPreference fontPref = new ZLActivityPreference(
-				this, new OptionHolder(Paths.FontsDirectoryOption()), myActivityPrefs, myRootpaths,
+				this, new OptionHolder(Paths.FontPathOption()), myActivityPrefs, myRootpaths,
 				directoriesScreen.Resource, "fonts");
 
 
 		final ZLActivityPreference wallPref = new ZLActivityPreference(
-			this, new OptionHolder(Paths.WallpapersDirectoryOption()), myActivityPrefs, myRootpaths,
+			this, new OptionHolder(Paths.WallpaperPathOption()), myActivityPrefs, myRootpaths,
 			directoriesScreen.Resource, "wallpapers");
 
 		if (AndroidFontUtil.areExternalFontsSupported()) {

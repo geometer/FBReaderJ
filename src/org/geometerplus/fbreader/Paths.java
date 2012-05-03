@@ -19,30 +19,36 @@
 
 package org.geometerplus.fbreader;
 
-import org.geometerplus.zlibrary.core.options.*;
+import java.util.List;
 
 import android.os.Environment;
 
-public abstract class Paths {
+import org.geometerplus.zlibrary.core.options.ZLStringListOption;
 
+public abstract class Paths {
 	public static String cardDirectory() {
 		return Environment.getExternalStorageDirectory().getPath();
 	}
 
-	public static ZLStringListOption FontsDirectoryOption() {
+	public static ZLStringListOption FontPathOption() {
 		return new ZLStringListOption("Files", "FontsDirectory", cardDirectory() + "/Fonts", "\n");
 	}
 
-	public static ZLStringListOption WallpapersDirectoryOption() {
+	public static ZLStringListOption WallpaperPathOption() {
 		return new ZLStringListOption("Files", "WallpapersDirectory", cardDirectory() + "/Wallpapers", "\n");
 	}
 
-	public static ZLStringListOption BooksDirectoryOption() {
+	public static ZLStringListOption BookPathOption() {
 		return new ZLStringListOption("Files", "BooksDirectory", cardDirectory() + "/Books", "\n");
 	}
 
+	public static String mainBookDirectory() {
+		final List<String> bookPath = BookPathOption().getValue();
+		return bookPath.isEmpty() ? cardDirectory() + "/Books" : bookPath.get(0);
+	}
+
 	public static String cacheDirectory() {
-		return BooksDirectoryOption().getValue().get(0) + "/.FBReader";
+		return mainBookDirectory() + "/.FBReader";
 	}
 
 	public static String networkCacheDirectory() {

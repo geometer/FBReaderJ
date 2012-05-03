@@ -27,7 +27,7 @@ import org.geometerplus.fbreader.Paths;
 public class FileFirstLevelTree extends FirstLevelTree {
 	FileFirstLevelTree(RootTree root, String id) {
 		super(root, id);
-		for (String s : Paths.BooksDirectoryOption().getValue()) {
+		for (String s : Paths.BookPathOption().getValue()) {
 			addChild(s, s, "");//FIXME
 		}
 		addChild("/", "fileTreeRoot");
