@@ -39,7 +39,8 @@ private:
 	jobject myJavaConverter;
 	int myBufferLength;
 	jbyteArray myInBuffer;
-	jbyteArray myOutBuffer;
+	jcharArray myOutBuffer;
+	jchar *myCppOutBuffer;
 
 friend class JavaEncodingConverterProvider;
 };
@@ -73,11 +74,13 @@ JavaEncodingConverter::JavaEncodingConverter(const std::string &encoding) {
 
 	myBufferLength = 32768;
 	myInBuffer = env->NewByteArray(myBufferLength);
-	myOutBuffer = env->NewByteArray(2 * myBufferLength);
+	myOutBuffer = env->NewCharArray(myBufferLength);
+	myCppOutBuffer = new jchar[myBufferLength];
 }
 
 JavaEncodingConverter::~JavaEncodingConverter() {
 	JNIEnv *env = AndroidUtil::getEnv();
+	delete[] myCppOutBuffer;
 	env->DeleteLocalRef(myOutBuffer);
 	env->DeleteLocalRef(myInBuffer);
 	env->DeleteLocalRef(myJavaConverter);
@@ -95,18 +98,26 @@ void JavaEncodingConverter::convert(std::string &dst, const char *srcStart, cons
 	JNIEnv *env = AndroidUtil::getEnv();
 	const int srcLen = srcEnd - srcStart;
 	if (srcLen > myBufferLength) {
+		delete[] myCppOutBuffer;
 		env->DeleteLocalRef(myOutBuffer);
 		env->DeleteLocalRef(myInBuffer);
 		myBufferLength = srcLen;
 		myInBuffer = env->NewByteArray(myBufferLength);
-		myOutBuffer = env->NewByteArray(2 * myBufferLength);
+		myOutBuffer = env->NewCharArray(myBufferLength);
+		myCppOutBuffer = new jchar[myBufferLength];
 	}
 
 	env->SetByteArrayRegion(myInBuffer, 0, srcLen, (jbyte*)srcStart);
-	const jint dstLen = AndroidUtil::Method_EncodingConverter_convert->call(myJavaConverter, myInBuffer, 0, srcLen, myOutBuffer, 0);
-	const int origLen = dst.size();
-	dst.append(dstLen, '\0');
-	env->GetByteArrayRegion(myOutBuffer, 0, dstLen, (jbyte*)dst.data() + origLen);
+	const jint decodedCount = AndroidUtil::Method_EncodingConverter_convert->call(
+		myJavaConverter, myInBuffer, 0, srcLen, myOutBuffer
+	);
+	dst.reserve(dst.length() + decodedCount * 3);
+	env->GetCharArrayRegion(myOutBuffer, 0, decodedCount, myCppOutBuffer);
+	const jchar *end = myCppOutBuffer + decodedCount;
+	char buffer[3];
+	for (const jchar *ptr = myCppOutBuffer; ptr < end; ++ptr) {
+		dst.append(buffer, ZLUnicodeUtil::ucs2ToUtf8(buffer, *ptr));
+	}
 }
 
 void JavaEncodingConverter::reset() {
