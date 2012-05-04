@@ -40,24 +40,33 @@ public:
 	void readDocument(ZLInputStream &stream);
 
 protected:
-	bool isAscii(char *ptr);
-	bool isAscii(char *ptr, char ascii);
+	virtual char getAscii(const char *ptr) = 0;
+	virtual void setAscii(char *ptr, char ascii) = 0;
 };
 
-class TxtReaderCoreUtf16BE : public TxtReaderCore {
+class TxtReaderCoreUtf16LE : public TxtReaderCoreUtf16 {
+
+public:
+	TxtReaderCoreUtf16LE(TxtReader &reader);
+
+protected:
+	char getAscii(const char *ptr);
+	void setAscii(char *ptr, char ascii);
+};
+
+class TxtReaderCoreUtf16BE : public TxtReaderCoreUtf16 {
 
 public:
 	TxtReaderCoreUtf16BE(TxtReader &reader);
-	void readDocument(ZLInputStream &stream);
 
 protected:
-	bool isAscii(char *ptr);
-	bool isAscii(char *ptr, char ascii);
+	char getAscii(const char *ptr);
+	void setAscii(char *ptr, char ascii);
 };
 
 TxtReader::TxtReader(const std::string &encoding) : EncodedTextReader(encoding) {
 	if (ZLEncodingConverter::UTF16 == encoding) {
-		myCore = new TxtReaderCoreUtf16(*this);
+		myCore = new TxtReaderCoreUtf16LE(*this);
 	} else if (ZLEncodingConverter::UTF16BE == encoding) {
 		myCore = new TxtReaderCoreUtf16BE(*this);
 	} else {
@@ -82,9 +91,6 @@ TxtReaderCore::TxtReaderCore(TxtReader &reader) : myReader(reader) {
 }
 
 TxtReaderCoreUtf16::TxtReaderCoreUtf16(TxtReader &reader) : TxtReaderCore(reader) {
-}
-
-TxtReaderCoreUtf16BE::TxtReaderCoreUtf16BE(TxtReader &reader) : TxtReaderCore(reader) {
 }
 
 void TxtReaderCore::readDocument(ZLInputStream &stream) {
@@ -129,14 +135,6 @@ void TxtReaderCore::readDocument(ZLInputStream &stream) {
 	delete[] buffer;
 }
 
-bool TxtReaderCoreUtf16::isAscii(char *ptr) {
-	return *(ptr + 1) == '\0';
-}
-
-bool TxtReaderCoreUtf16::isAscii(char *ptr, char ascii) {
-	return *ptr == ascii && *(ptr + 1) == '\0';
-}
-
 void TxtReaderCoreUtf16::readDocument(ZLInputStream &stream) {
 	const size_t BUFSIZE = 2048;
 	char *buffer = new char[BUFSIZE];
@@ -147,11 +145,12 @@ void TxtReaderCoreUtf16::readDocument(ZLInputStream &stream) {
 		char *start = buffer;
 		const char *end = buffer + length;
 		for (char *ptr = start; ptr < end; ptr += 2) {
-			if (isAscii(ptr, '\n') || isAscii(ptr, '\r')) {
+			const char chr = getAscii(ptr);
+			if (chr == '\n' || chr == '\r') {
 				bool skipNewLine = false;
-				if (isAscii(ptr, '\r') && ptr + 2 != end && isAscii(ptr + 2, '\n')) {
+				if (chr == '\r' && ptr + 2 != end && getAscii(ptr + 2) == '\n') {
 					skipNewLine = true;
-					*ptr = '\n';
+					setAscii(ptr, '\n');
 				}
 				if (start != ptr) {
 					str.erase();
@@ -163,11 +162,10 @@ void TxtReaderCoreUtf16::readDocument(ZLInputStream &stream) {
 				}
 				start = ptr + 2;
 				myReader.newLineHandler();
-			} else if (isspace((unsigned char)*ptr) && *(ptr + 1) == '\0') {
-				if (*ptr != '\t') {
-					*ptr = ' ';
+			} else if (chr != 0 && isspace(chr)) {
+				if (chr != '\t') {
+					setAscii(ptr, ' ');
 				}
-			} else {
 			}
 		}
 		if (start != end) {
@@ -179,52 +177,24 @@ void TxtReaderCoreUtf16::readDocument(ZLInputStream &stream) {
 	delete[] buffer;
 }
 
-bool TxtReaderCoreUtf16BE::isAscii(char *ptr) {
-	return *ptr == '\0';
+TxtReaderCoreUtf16LE::TxtReaderCoreUtf16LE(TxtReader &reader) : TxtReaderCoreUtf16(reader) {
 }
 
-bool TxtReaderCoreUtf16BE::isAscii(char *ptr, char ascii) {
-	return *ptr == '\0' && *(ptr + 1) == ascii;
+char TxtReaderCoreUtf16LE::getAscii(const char *ptr) {
+	return *(ptr + 1) == '\0' ? *ptr : '\0';
 }
 
-void TxtReaderCoreUtf16BE::readDocument(ZLInputStream &stream) {
-	const size_t BUFSIZE = 2048;
-	char *buffer = new char[BUFSIZE];
-	std::string str;
-	size_t length;
-	do {
-		length = stream.read(buffer, BUFSIZE);
-		char *start = buffer;
-		const char *end = buffer + length;
-		for (char *ptr = start; ptr < end; ptr += 2) {
-			if (isAscii(ptr, '\n') || isAscii(ptr, '\r')) {
-				bool skipNewLine = false;
-				if (isAscii(ptr, '\r') && ptr + 2 != end && isAscii(ptr + 2, '\n')) {
-					skipNewLine = true;
-					*(ptr + 1) = '\n';
-				}
-				if (start != ptr) {
-					str.erase();
-					myReader.myConverter->convert(str, start, ptr + 2);
-					myReader.characterDataHandler(str);
-				}
-				if (skipNewLine) {
-					ptr += 2;
-				}
-				start = ptr + 2;
-				myReader.newLineHandler();
-			} else if (isspace((unsigned char)*(ptr + 1)) && *ptr == '\0') {
-				if (*(ptr + 1) != '\t') {
-					*(ptr + 1) = ' ';
-				}
-			} else {
-			}
-		}
-		if (start != end) {
-			str.erase();
-			myReader.myConverter->convert(str, start, end);
-			myReader.characterDataHandler(str);
-		}
-	} while (length == BUFSIZE);
-	delete[] buffer;
+void TxtReaderCoreUtf16LE::setAscii(char *ptr, char ascii) {
+	*ptr = ascii;
+}
+
+TxtReaderCoreUtf16BE::TxtReaderCoreUtf16BE(TxtReader &reader) : TxtReaderCoreUtf16(reader) {
+}
+
+char TxtReaderCoreUtf16BE::getAscii(const char *ptr) {
+	return *ptr == '\0' ? *(ptr + 1) : '\0';
+}
+
+void TxtReaderCoreUtf16BE::setAscii(char *ptr, char ascii) {
+	*(ptr + 1) = ascii;
 }
