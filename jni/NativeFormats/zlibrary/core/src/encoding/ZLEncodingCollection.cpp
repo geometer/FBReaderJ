@@ -25,6 +25,7 @@
 
 #include "ZLEncodingConverter.h"
 #include "DummyEncodingConverter.h"
+#include "Utf16EncodingConverters.h"
 #include "JavaEncodingConverter.h"
 
 ZLEncodingCollection *ZLEncodingCollection::ourInstance = 0;
@@ -42,6 +43,7 @@ std::string ZLEncodingCollection::encodingDescriptionPath() {
 
 ZLEncodingCollection::ZLEncodingCollection() {
 	registerProvider(new DummyEncodingConverterProvider());
+	registerProvider(new Utf16EncodingConverterProvider());
 	registerProvider(new JavaEncodingConverterProvider());
 }
 

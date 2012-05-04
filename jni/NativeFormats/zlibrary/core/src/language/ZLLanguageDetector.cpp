@@ -21,6 +21,7 @@
 #include <ZLInputStream.h>
 #include <ZLDir.h>
 #include <ZLUnicodeUtil.h>
+#include <ZLEncodingConverter.h>
 
 #include "ZLLanguageList.h"
 #include "ZLLanguageDetector.h"
@@ -56,10 +57,10 @@ ZLLanguageDetector::~ZLLanguageDetector() {
 
 static std::string naiveEncodingDetection(const unsigned char *buffer, size_t length) {
 	if (buffer[0] == 0xFE && buffer[1] == 0xFF) {
-		return "utf-16be";	
+		return ZLEncodingConverter::UTF16BE;
 	}
 	if (buffer[0] == 0xFF && buffer[1] == 0xFE) {
-		return "utf-16";	
+		return ZLEncodingConverter::UTF16;
 	}
 
 	bool ascii = true;
@@ -92,10 +93,10 @@ shared_ptr<ZLLanguageDetector::LanguageInfo> ZLLanguageDetector::findInfo(const 
 	std::string naive;
 	if ((unsigned char)buffer[0] == 0xFE &&
 			(unsigned char)buffer[1] == 0xFF) {
-		naive = "utf-16be";	
+		naive = ZLEncodingConverter::UTF16BE;
 	} else if ((unsigned char)buffer[0] == 0xFF &&
 			(unsigned char)buffer[1] == 0xFE) {
-		naive = "utf-16";	
+		naive = ZLEncodingConverter::UTF16;
 	} else {
 		naive = naiveEncodingDetection((const unsigned char*)buffer, length);
 	}

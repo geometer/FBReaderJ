@@ -42,6 +42,7 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/util/JniEnvelope.cpp \
 	NativeFormats/zlibrary/core/src/constants/ZLXMLNamespace.cpp \
 	NativeFormats/zlibrary/core/src/encoding/DummyEncodingConverter.cpp \
+	NativeFormats/zlibrary/core/src/encoding/Utf16EncodingConverters.cpp \
 	NativeFormats/zlibrary/core/src/encoding/JavaEncodingConverter.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingCollection.cpp \
 	NativeFormats/zlibrary/core/src/encoding/ZLEncodingConverter.cpp \

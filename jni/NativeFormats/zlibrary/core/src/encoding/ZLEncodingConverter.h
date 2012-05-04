@@ -28,6 +28,10 @@
 
 class ZLEncodingConverter {
 
+public:
+	static const std::string UTF16;
+	static const std::string UTF16BE;
+
 protected:
 	ZLEncodingConverter();
 
