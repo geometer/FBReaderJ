@@ -17,40 +17,17 @@
  * 02110-1301, USA.
  */
 
-#ifndef __TXTREADER_H__
-#define __TXTREADER_H__
+#ifndef __UTF16ENCODINGCONVERTERS_H__
+#define __UTF16ENCODINGCONVERTERS_H__
 
-#include <string>
+#include "ZLEncodingConverter.h"
+#include "ZLEncodingConverterProvider.h"
 
-#include <ZLEncodingConverter.h>
-
-#include "../EncodedTextReader.h"
-
-class ZLInputStream;
-class TxtReaderCore;
-
-class TxtReader : public EncodedTextReader {
+class Utf16EncodingConverterProvider : public ZLEncodingConverterProvider {
 
 public:
-	void readDocument(ZLInputStream &stream);
-
-protected:
-	TxtReader(const std::string &encoding);
-	virtual ~TxtReader();
-
-protected:
-	virtual void startDocumentHandler() = 0;
-	virtual void endDocumentHandler() = 0;
-
-	virtual bool characterDataHandler(std::string &str) = 0;
-	virtual bool newLineHandler() = 0;
-
-private:
-	shared_ptr<TxtReaderCore> myCore;
-
-friend class TxtReaderCore;
-friend class TxtReaderCoreUtf16;
-friend class TxtReaderCoreUtf16BE;
+	bool providesConverter(const std::string &encoding);
+	shared_ptr<ZLEncodingConverter> createConverter(const std::string &encoding);
 };
 
-#endif /* __TXTREADER_H__ */
+#endif /* __UTF16ENCODINGCONVERTERS_H__ */
