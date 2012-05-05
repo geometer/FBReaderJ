@@ -292,9 +292,9 @@
 		<node name="Preferences">
 			<node name="directories" value="Mappen">
 				<node name="summary" value="Waar zijn de bestanden opgeslagen"/>
-				<node name="books" value="Books directories" toBeTranslated="true"/>
-				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
-				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
+				<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+				<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Weergave">
 				<node name="summary" value="Draaien, statusbalk"/>
