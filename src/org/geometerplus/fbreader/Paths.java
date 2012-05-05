@@ -47,10 +47,6 @@ public abstract class Paths {
 		return bookPath.isEmpty() ? cardDirectory() + "/Books" : bookPath.get(0);
 	}
 
-	public static String mainBookDirectory() {
-		return BooksDirectoryOption().getValue();
-	}
-
 	public static String cacheDirectory() {
 		return mainBookDirectory() + "/.FBReader";
 	}
