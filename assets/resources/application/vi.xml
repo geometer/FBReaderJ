@@ -250,6 +250,424 @@
 		<node name="toggleFullscreen" value="Toàn Màn hình "/>
 		<node name="bookmarks" value="Đánh dấu"/>
 	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Tên tập tin"/>
+		<node name="title" value="Tiêu đề"/>
+		<node name="language" value="Ngôn ngữ"/>
+		<node name="encoding" value="Mã hóa"/>
+		<node name="authors" value="Tác giả"/>
+		<node name="tags" value="Từ khóa"/>
+		<node name="series" value="Bộ sách"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Thư mục">
+			<node name="summary" value="Các thư mục để tìm kiếm tập tin"/>
+			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+			<node name="books" value="Thư mục sách"/>
+			<node name="fonts" value="Thư mục phông"/>
+			<node name="wallpapers" value="Wallpapers directory" toBeTranslated="true"/>
+		</node>
+		<node name="appearance" value="Giao diện">
+			<node name="summary" value="Xoay, thanh trạng thái"/>
+			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+				<node name="system" value="System" toBeTranslated="true"/>
+				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
+				<node name="portrait" value="Portrait" toBeTranslated="true"/>
+				<node name="landscape" value="Landscape" toBeTranslated="true"/>
+				<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+				<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+			</node>
+			<node name="autoOrientation" value="Tự xoay">
+				<node name="summaryOn" value="Màn hình sẽ xoay khi bạn quay thiết bị"/>
+				<node name="summaryOff" value="Màn hình sẽ không xoay khi bạn quay thiết bị"/>
+			</node>
+			<node name="showStatusBar" value="Hiện thanh trạng thái">
+				<node name="summaryOn" value="Hiện thanh trạng thái khi đọc"/>
+				<node name="summaryOff" value=" Ẩn thanh trạng thía khi đọc"/>
+			</node>
+			<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+				<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+				<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
+				<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+			</node>
+			<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
+				<node name="summaryOn" value="Bằng việc rê ngón tay lên/xuống dọc cạnh trái màn hình"/>
+				<node name="summaryOff" value="Tắt"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Không cho màn hình tắt">
+				<node name="0" value="Luôn luôn"/>
+				<node name="25" value="Khi thời lượng pin lớn hơn 25%"/>
+				<node name="50" value="Khi thời lượng pin lớn hơn 50%"/>
+				<node name="100" value="Không bao giờ"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Ngăn màn hình tắt trong khi sạc">
+				<node name="summaryOn" value="Ngăn màn hình tắt nếu máy đang sạc"/>
+				<node name="summaryOff" value="Tắt màn hình ngay cả khi máy đang sạc"/>
+			</node>
+		</node>
+		<node name="text" value="Văn bản">
+			<node name="summary" value="Phông, tách chữ, v..v."/>
+			<node name="fontProperties" value="Font properties" toBeTranslated="true">
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="Họ phông">
+				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			</node>
+			<node name="fontSize" value="Cỡ phông"/>
+			<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
+			<node name="fontStyle" value="Kiểu phông">
+				<node name="regular" value="Thường"/>
+				<node name="bold" value="Đậm"/>
+				<node name="italic" value="Nghiêng"/>
+				<node name="boldItalic" value="Đậm nghiêng"/>
+			</node>
+			<node name="bold" value="Đậm">
+				<node name="summaryOn" value="đậm"/>
+				<node name="summaryOff" value="thường"/>
+				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			</node>
+			<node name="italic" value="Nghiêng">
+				<node name="summaryOn" value="nghiêng"/>
+				<node name="summaryOff" value="thường"/>
+				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			</node>
+			<node name="underlined" value="Underlined" toBeTranslated="true">
+				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Cách dòng">
+				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			</node>
+			<node name="alignment" value="Thẳng hàng">
+				<node name="left" value="Trái"/>
+				<node name="right" value="Phải"/>
+				<node name="center" value="Giữa"/>
+				<node name="justify" value="Căn chỉnh"/>
+				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Tự động Tách từ">
+				<node name="summaryOn" value="Tách từ một cách tự động"/>
+				<node name="summaryOff" value="Không tách từ một cách tự động"/>
+			</node>
+			<node name="allowHyphenations" value="Cho phép Tách từ">
+				<node name="summaryOn" value="tách từ"/>
+				<node name="summaryOff" value="không tách từ"/>
+				<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Lùi Dòng Đầu"/>
+			<node name="spaceBefore" value="Khoảng trống trước"/>
+			<node name="spaceAfter" value="Khoảng trống sau"/>
+			<node name="leftIndent" value="Lùi Trái"/>
+			<node name="rightIndent" value="Lùi Phải"/>
+			<node name="more" value="Thêm kiểu">
+				<node name="summary" value="Các thiết lập riêng cho tiêu đề, đề từ,v..v."/>
+				<node name="Regular Paragraph" value="Đoạn văn Thường">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Tiêu đề">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Tiêu đề Đoạn">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Tiêu đề Thơ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Chú thích">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Chú giải">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Đề từ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Khổ thơ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Câu thơ">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Văn bản định dạng">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Ảnh">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Trích dẫn">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Tác giả">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Ngày tháng">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Siêu liên kết trong">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Chú thích cuối trang">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Nhấn mạnh">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Mạnh">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Chữ,số dưới">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Chữ,số trên">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Mã">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="StrikeThrough">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Nghiêng">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Đậm">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Định nghĩa">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Mô tả Định nghĩa">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Đầu trang 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Đầu trang 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Đầu trang 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Đầu trang 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Đầu trang 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Đầu trang 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Siêu liên kết ngoài">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
+			<node name="summary" value="Color settings"/>
+			<node name="background" value="Nền">
+				<node name="solidColor" value="Solid color" toBeTranslated="true"/>
+				<node name="leather" value="Leather" toBeTranslated="true"/>
+				<node name="sepia" value="Sepia" toBeTranslated="true"/>
+				<node name="wood" value="Wood" toBeTranslated="true"/>
+			</node>
+			<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
+			<node name="selectionBackground" value="Nền Phần chọn"/>
+			<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
+			<node name="text" value="Văn bản Thường"/>
+			<node name="hyperlink" value="Siêu liên kết"/>
+			<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
+			<node name="highlighting" value="Kết quả Tìm kiếm"/>
+			<node name="footer" value="Footer"/>
+		</node>
+		<node name="margins" value="Canh lề">
+			<node name="summary" value="Text margins"/>
+			<node name="left" value="Lề Trái"/>
+			<node name="right" value="Lề Phải"/>
+			<node name="top" value="Lề Trên"/>
+			<node name="bottom" value="Lề Dưới"/>
+		</node>
+		<node name="scrollBar" value="Thanh cuộn">
+			<node name="summary" value="Thiết lập thanh cuộn &amp; cuối trang"/>
+			<node name="scrollbarType" value="Loại thanh cuộn">
+				<node name="hide" value="Dấu"/>
+				<node name="show" value="Thanh trượt dọc"/>
+				<node name="showAsProgress" value="Thanh quá trình dọc"/>
+				<node name="showAsFooter" value="Dòng cuois trang ngang"/>
+			</node>
+			<node name="footerHeight" value="Chiều cao của cuối trang"/>
+			<node name="footerColor" value="Màu sắc cuối trang"/>
+			<node name="tocMarks" value="Hiện đánh dấu mục lục">
+				<node name="summaryOn" value="Hiện đánh dấu mục lục ở thanh cuối trang"/>
+				<node name="summaryOff" value="Không Hiện đánh dấu mục lục ở thanh cuối trang"/>
+			</node>
+			<node name="showProgress" value="Hiện số trang">
+				<node name="summaryOn" value="Hiện số trang ở dòng cuối"/>
+				<node name="summaryOff" value="Đừng hiện số trang ở dòng cuối"/>
+			</node>
+			<node name="showBattery" value="Hiện thời lượng pin">
+				<node name="summaryOn" value="Hiện thời lượng pin ở dòng cuối"/>
+				<node name="summaryOff" value="Đừng hiện thời lượng pin ở dòng cuối"/>
+			</node>
+			<node name="showClock" value="Hiện đồng hồ">
+				<node name="summaryOn" value="Hiện đồng hồ ở dòng cuối"/>
+				<node name="summaryOff" value="Đừng hiện đồng hồ ở dòng cuối"/>
+			</node>
+			<node name="font" value="Họ phông"/>
+		</node>
+		<node name="scrolling" value="Cuộn">
+			<node name="summary" value="Cách để cuộn văn bản"/>
+			<node name="fingerScrolling" value="Cuôn màn hình cảm ứng">
+				<node name="byTap" value="Cuộn trang bằng cách chạm nhẹ"/>
+				<node name="byFlick" value="Cuộn trang bằng cách búng nhẹ"/>
+				<node name="byTapAndFlick" value="Cuộn trang bằng cả búng và chạm nhẹ"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
+				<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
+				<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
+			</node>
+			<node name="volumeKeys" value="Cuộn bằng phím âm lượng">
+				<node name="summaryOn" value="Dùng phím âm lượng để cuộn"/>
+				<node name="summaryOff" value="Giữ phím âm lượng cho âm thanh"/>
+			</node>
+			<node name="invertVolumeKeys" value="Đảo ngược cuộn bằng phím âm lượng">
+				<node name="summaryOn" value="Ấn lên (xuống) phím để cuộn trang xuống (lên)"/>
+				<node name="summaryOff" value="Ấn xuống (lên) phím để cuộn trang lên (xuống)"/>
+			</node>
+			<node name="animation" value="Animation" toBeTranslated="true">
+				<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
+				<node name="curl" value="Curl animation" toBeTranslated="true"/>
+				<node name="slide" value="Slide animation" toBeTranslated="true"/>
+				<node name="shift" value="Shift animation" toBeTranslated="true"/>
+			</node>
+			<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
+				<node name="fast" value="fast" toBeTranslated="true"/>
+				<node name="slow" value="slow" toBeTranslated="true"/>
+			</node>
+			<node name="horizontal" value="Cuộn ngang">
+				<node name="summaryOn" value="Cuộn trang theo chiều ngang"/>
+				<node name="summaryOff" value="Cuộn trang theo chiều dọc"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Tap zones" toBeTranslated="true">
+			<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+			<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+				<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+				<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+				<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+				<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+				<node name="custom" value="Custom…" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Từ điển">
+			<node name="summary" value="Cài đặt từ điển"/>
+			<node name="dictionary" value="Từ điển"/>
+			<node name="translator" value="Translator" toBeTranslated="true"/>
+			<node name="tappingAction" value="Nhấn giữ">
+				<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
+				<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>
+				<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+				<node name="openDictionary" value="Chọn từ và mở từ điển khi nhấn giữ"/>
+			</node>
+			<node name="navigateOverAllWords" value="Điều hướng mọi từ">
+				<node name="summaryOn" value="Phím điều hướng tác động lên mọi từ"/>
+				<node name="summaryOff" value="Phím điều hướng chỉ tác động lên siêu liên kết"/>
+			</node>
+		</node>
+		<node name="images" value="Images" toBeTranslated="true">
+			<node name="summary" value="Image displaying options" toBeTranslated="true"/>
+			<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
+			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+				<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
+				<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
+			<node name="summary" value="Back button action list" toBeTranslated="true"/>
+			<node name="library" value="Library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="Network library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="Previous book" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'return to previous book' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'return to previous book' item" toBeTranslated="true"/>
+			</node>
+			<node name="positions" value="Last 3 positions" toBeTranslated="true">
+				<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
+			</node>
+			<node name="backKeyAction" value="Back key action" toBeTranslated="true">
+				<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+				<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+				<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
+				<node name="exit" value="Close FBReader" toBeTranslated="true"/>
+				<node name="goBack" value="Navigate back" toBeTranslated="true"/>
+				<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
+				<node name="none" value="No action" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="tips" value="Tips" toBeTranslated="true">
+			<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
+			<node name="showTips" value="Show tips" toBeTranslated="true">
+				<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="about" value="About FBReader" toBeTranslated="true">
+			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
+			<node name="version" value="Version" toBeTranslated="true"/>
+			<node name="site" value="Visit our website" toBeTranslated="true">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Send us an e-mail" toBeTranslated="true">
+				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+			</node>
+			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Cài đặt"/>
@@ -279,421 +697,6 @@
 		<node name="installDictionary">
 			<node name="title" value="Cài từ điển"/>
 			<node name="message" value="Bạn có muốn cài %s?"/>
-		</node>
-		<node name="BookInfo">
-			<node name="fileName" value="Tên tập tin"/>
-			<node name="title" value="Tiêu đề"/>
-			<node name="language" value="Ngôn ngữ"/>
-			<node name="encoding" value="Mã hóa"/>
-			<node name="authors" value="Tác giả"/>
-			<node name="tags" value="Từ khóa"/>
-			<node name="series" value="Bộ sách"/>
-		</node>
-		<node name="Preferences">
-			<node name="directories" value="Thư mục">
-				<node name="summary" value="Các thư mục để tìm kiếm tập tin"/>
-				<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-				<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-				<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
-			</node>
-			<node name="appearance" value="Giao diện">
-				<node name="summary" value="Xoay, thanh trạng thái"/>
-				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
-					<node name="system" value="System" toBeTranslated="true"/>
-					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
-					<node name="portrait" value="Portrait" toBeTranslated="true"/>
-					<node name="landscape" value="Landscape" toBeTranslated="true"/>
-					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
-				</node>
-				<node name="autoOrientation" value="Tự xoay">
-					<node name="summaryOn" value="Màn hình sẽ xoay khi bạn quay thiết bị"/>
-					<node name="summaryOff" value="Màn hình sẽ không xoay khi bạn quay thiết bị"/>
-				</node>
-				<node name="showStatusBar" value="Hiện thanh trạng thái">
-					<node name="summaryOn" value="Hiện thanh trạng thái khi đọc"/>
-					<node name="summaryOff" value=" Ẩn thanh trạng thía khi đọc"/>
-				</node>
-				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
-					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
-				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
-					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
-				</node>
-				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
-					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
-				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Điều chỉnh độ sáng màn hình">
-					<node name="summaryOn" value="Bằng việc rê ngón tay lên/xuống dọc cạnh trái màn hình"/>
-					<node name="summaryOff" value="Tắt"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Không cho màn hình tắt">
-					<node name="0" value="Luôn luôn"/>
-					<node name="25" value="Khi thời lượng pin lớn hơn 25%"/>
-					<node name="50" value="Khi thời lượng pin lớn hơn 50%"/>
-					<node name="100" value="Không bao giờ"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Ngăn màn hình tắt trong khi sạc">
-					<node name="summaryOn" value="Ngăn màn hình tắt nếu máy đang sạc"/>
-					<node name="summaryOff" value="Tắt màn hình ngay cả khi máy đang sạc"/>
-				</node>
-			</node>
-			<node name="text" value="Văn bản">
-				<node name="summary" value="Phông, tách chữ, v..v."/>
-				<node name="fontProperties" value="Font properties" toBeTranslated="true">
-					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="dithering" value="Dithering" toBeTranslated="true">
-						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="hinting" value="Hinting" toBeTranslated="true">
-						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
-					</node>
-				</node>
-				<node name="font" value="Họ phông">
-					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-				</node>
-				<node name="fontSize" value="Cỡ phông"/>
-				<node name="fontSizeDifference" value="Cỡ chữ Khác nhau"/>
-				<node name="fontStyle" value="Kiểu phông">
-					<node name="regular" value="Thường"/>
-					<node name="bold" value="Đậm"/>
-					<node name="italic" value="Nghiêng"/>
-					<node name="boldItalic" value="Đậm nghiêng"/>
-				</node>
-				<node name="bold" value="Đậm">
-					<node name="summaryOn" value="đậm"/>
-					<node name="summaryOff" value="thường"/>
-					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-				</node>
-				<node name="italic" value="Nghiêng">
-					<node name="summaryOn" value="nghiêng"/>
-					<node name="summaryOff" value="thường"/>
-					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-				</node>
-				<node name="underlined" value="Underlined" toBeTranslated="true">
-					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-				</node>
-				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-				</node>
-				<node name="lineSpacing" value="Cách dòng">
-					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-				</node>
-				<node name="alignment" value="Thẳng hàng">
-					<node name="left" value="Trái"/>
-					<node name="right" value="Phải"/>
-					<node name="center" value="Giữa"/>
-					<node name="justify" value="Căn chỉnh"/>
-					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-				</node>
-				<node name="autoHyphenations" value="Tự động Tách từ">
-					<node name="summaryOn" value="Tách từ một cách tự động"/>
-					<node name="summaryOff" value="Không tách từ một cách tự động"/>
-				</node>
-				<node name="allowHyphenations" value="Cho phép Tách từ">
-					<node name="summaryOn" value="tách từ"/>
-					<node name="summaryOff" value="không tách từ"/>
-					<node name="unchanged" value="&lt;giữ nguyên&gt;"/>
-				</node>
-				<node name="firstLineIndent" value="Lùi Dòng Đầu"/>
-				<node name="spaceBefore" value="Khoảng trống trước"/>
-				<node name="spaceAfter" value="Khoảng trống sau"/>
-				<node name="leftIndent" value="Lùi Trái"/>
-				<node name="rightIndent" value="Lùi Phải"/>
-				<node name="more" value="Thêm kiểu">
-					<node name="summary" value="Các thiết lập riêng cho tiêu đề, đề từ,v..v."/>
-					<node name="Regular Paragraph" value="Đoạn văn Thường">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Title" value="Tiêu đề">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Section Title" value="Tiêu đề Đoạn">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Poem Title" value="Tiêu đề Thơ">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subtitle" value="Chú thích">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Annotation" value="Chú giải">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Epigraph" value="Đề từ">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Stanza" value="Khổ thơ">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Verse" value="Câu thơ">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Preformatted text" value="Văn bản định dạng">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Image" value="Ảnh">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Cite" value="Trích dẫn">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Author" value="Tác giả">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Date" value="Ngày tháng">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Internal Hyperlink" value="Siêu liên kết trong">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Footnote" value="Chú thích cuối trang">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Emphasis" value="Nhấn mạnh">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Strong" value="Mạnh">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subscript" value="Chữ,số dưới">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Superscript" value="Chữ,số trên">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Code" value="Mã">
-						<node name="summary" value=""/>
-					</node>
-					<node name="StrikeThrough" value="StrikeThrough">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Italic" value="Nghiêng">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Bold" value="Đậm">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition" value="Định nghĩa">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition Description" value="Mô tả Định nghĩa">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 1" value="Đầu trang 1">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 2" value="Đầu trang 2">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 3" value="Đầu trang 3">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 4" value="Đầu trang 4">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 5" value="Đầu trang 5">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 6" value="Đầu trang 6">
-						<node name="summary" value=""/>
-					</node>
-					<node name="External Hyperlink" value="Siêu liên kết ngoài">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-			</node>
-			<node name="colors" value="Colors &amp; wallpapers" toBeTranslated="true">
-				<node name="summary" value="Color settings"/>
-				<node name="background" value="Nền">
-					<node name="solidColor" value="Solid color" toBeTranslated="true"/>
-					<node name="leather" value="Leather" toBeTranslated="true"/>
-					<node name="sepia" value="Sepia" toBeTranslated="true"/>
-					<node name="wood" value="Wood" toBeTranslated="true"/>
-				</node>
-				<node name="backgroundColor" value="Background color" toBeTranslated="true"/>
-				<node name="selectionBackground" value="Nền Phần chọn"/>
-				<node name="selectionForeground" value="Selected text" toBeTranslated="true"/>
-				<node name="text" value="Văn bản Thường"/>
-				<node name="hyperlink" value="Siêu liên kết"/>
-				<node name="hyperlinkVisited" value="Visited hyperlink text" toBeTranslated="true"/>
-				<node name="highlighting" value="Kết quả Tìm kiếm"/>
-				<node name="footer" value="Footer"/>
-			</node>
-			<node name="margins" value="Canh lề">
-				<node name="summary" value="Text margins"/>
-				<node name="left" value="Lề Trái"/>
-				<node name="right" value="Lề Phải"/>
-				<node name="top" value="Lề Trên"/>
-				<node name="bottom" value="Lề Dưới"/>
-			</node>
-			<node name="scrollBar" value="Thanh cuộn">
-				<node name="summary" value="Thiết lập thanh cuộn &amp; cuối trang"/>
-				<node name="scrollbarType" value="Loại thanh cuộn">
-					<node name="hide" value="Dấu"/>
-					<node name="show" value="Thanh trượt dọc"/>
-					<node name="showAsProgress" value="Thanh quá trình dọc"/>
-					<node name="showAsFooter" value="Dòng cuois trang ngang"/>
-				</node>
-				<node name="footerHeight" value="Chiều cao của cuối trang"/>
-				<node name="footerColor" value="Màu sắc cuối trang"/>
-				<node name="tocMarks" value="Hiện đánh dấu mục lục">
-					<node name="summaryOn" value="Hiện đánh dấu mục lục ở thanh cuối trang"/>
-					<node name="summaryOff" value="Không Hiện đánh dấu mục lục ở thanh cuối trang"/>
-				</node>
-				<node name="showProgress" value="Hiện số trang">
-					<node name="summaryOn" value="Hiện số trang ở dòng cuối"/>
-					<node name="summaryOff" value="Đừng hiện số trang ở dòng cuối"/>
-				</node>
-				<node name="showBattery" value="Hiện thời lượng pin">
-					<node name="summaryOn" value="Hiện thời lượng pin ở dòng cuối"/>
-					<node name="summaryOff" value="Đừng hiện thời lượng pin ở dòng cuối"/>
-				</node>
-				<node name="showClock" value="Hiện đồng hồ">
-					<node name="summaryOn" value="Hiện đồng hồ ở dòng cuối"/>
-					<node name="summaryOff" value="Đừng hiện đồng hồ ở dòng cuối"/>
-				</node>
-				<node name="font" value="Họ phông"/>
-			</node>
-			<node name="scrolling" value="Cuộn">
-				<node name="summary" value="Cách để cuộn văn bản"/>
-				<node name="fingerScrolling" value="Cuôn màn hình cảm ứng">
-					<node name="byTap" value="Cuộn trang bằng cách chạm nhẹ"/>
-					<node name="byFlick" value="Cuộn trang bằng cách búng nhẹ"/>
-					<node name="byTapAndFlick" value="Cuộn trang bằng cả búng và chạm nhẹ"/>
-				</node>
-				<node name="enableDoubleTapDetection" value="Double tap detection" toBeTranslated="true">
-					<node name="summaryOn" value="Double tap to run navigation dialog/menu" toBeTranslated="true"/>
-					<node name="summaryOff" value="Ignore double taps" toBeTranslated="true"/>
-				</node>
-				<node name="volumeKeys" value="Cuộn bằng phím âm lượng">
-					<node name="summaryOn" value="Dùng phím âm lượng để cuộn"/>
-					<node name="summaryOff" value="Giữ phím âm lượng cho âm thanh"/>
-				</node>
-				<node name="invertVolumeKeys" value="Đảo ngược cuộn bằng phím âm lượng">
-					<node name="summaryOn" value="Ấn lên (xuống) phím để cuộn trang xuống (lên)"/>
-					<node name="summaryOff" value="Ấn xuống (lên) phím để cuộn trang lên (xuống)"/>
-				</node>
-				<node name="animation" value="Animation" toBeTranslated="true">
-					<node name="none" value="Scroll with no animation" toBeTranslated="true"/>
-					<node name="curl" value="Curl animation" toBeTranslated="true"/>
-					<node name="slide" value="Slide animation" toBeTranslated="true"/>
-					<node name="shift" value="Shift animation" toBeTranslated="true"/>
-				</node>
-				<node name="animationSpeed" value="Animation speed" toBeTranslated="true">
-					<node name="fast" value="fast" toBeTranslated="true"/>
-					<node name="slow" value="slow" toBeTranslated="true"/>
-				</node>
-				<node name="horizontal" value="Cuộn ngang">
-					<node name="summaryOn" value="Cuộn trang theo chiều ngang"/>
-					<node name="summaryOff" value="Cuộn trang theo chiều dọc"/>
-				</node>
-			</node>
-			<node name="tapZones" value="Tap zones" toBeTranslated="true">
-				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
-				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
-					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
-					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
-					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
-					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom…" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="dictionary" value="Từ điển">
-				<node name="summary" value="Cài đặt từ điển"/>
-				<node name="dictionary" value="Từ điển"/>
-				<node name="translator" value="Translator" toBeTranslated="true"/>
-				<node name="tappingAction" value="Nhấn giữ">
-					<node name="doNothing" value="Không làm gì khi nhấn giữ"/>
-					<node name="selectSingleWord" value="Chọn từ khi nhấn giữ"/>
-					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
-					<node name="openDictionary" value="Chọn từ và mở từ điển khi nhấn giữ"/>
-				</node>
-				<node name="navigateOverAllWords" value="Điều hướng mọi từ">
-					<node name="summaryOn" value="Phím điều hướng tác động lên mọi từ"/>
-					<node name="summaryOff" value="Phím điều hướng chỉ tác động lên siêu liên kết"/>
-				</node>
-			</node>
-			<node name="images" value="Images" toBeTranslated="true">
-				<node name="summary" value="Image displaying options" toBeTranslated="true"/>
-				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
-				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-					<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
-					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="cancelMenu" value="Cancel menu" toBeTranslated="true">
-				<node name="summary" value="Back button action list" toBeTranslated="true"/>
-				<node name="library" value="Library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-				</node>
-				<node name="networkLibrary" value="Network library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-				</node>
-				<node name="previousBook" value="Previous book" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'return to previous book' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'return to previous book' item" toBeTranslated="true"/>
-				</node>
-				<node name="positions" value="Last 3 positions" toBeTranslated="true">
-					<node name="summaryOn" value="Show items for last 3 positions in the book" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show items for last 3 positions in the book" toBeTranslated="true"/>
-				</node>
-				<node name="backKeyAction" value="Back key action" toBeTranslated="true">
-					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
-					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
-					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
-				</node>
-				<node name="backKeyLongPressAction" value="Back key long press action" toBeTranslated="true">
-					<node name="exit" value="Close FBReader" toBeTranslated="true"/>
-					<node name="goBack" value="Navigate back" toBeTranslated="true"/>
-					<node name="cancelMenu" value="Show cancel menu" toBeTranslated="true"/>
-					<node name="none" value="No action" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="tips" value="Tips" toBeTranslated="true">
-				<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
-				<node name="showTips" value="Show tips" toBeTranslated="true">
-					<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
-					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="about" value="About FBReader" toBeTranslated="true">
-				<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-				<node name="version" value="Version" toBeTranslated="true"/>
-				<node name="site" value="Visit our website" toBeTranslated="true">
-					<node name="url" value="http://www.fbreader.org/"/>
-				</node>
-				<node name="email" value="Send us an e-mail" toBeTranslated="true">
-					<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
-				</node>
-				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
-					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Sách sẽ bị xóa và không thể hoàn tác. Bạn chắc chứ?"/>

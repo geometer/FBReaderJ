@@ -250,6 +250,424 @@
 		<node name="toggleFullscreen" value="На весь екран"/>
 		<node name="bookmarks" value="Закладки"/>
 	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Файл"/>
+		<node name="title" value="Назва"/>
+		<node name="language" value="Мова"/>
+		<node name="encoding" value="Кодування"/>
+		<node name="authors" value="Автори"/>
+		<node name="tags" value="Категорії"/>
+		<node name="series" value="Серія"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Теки">
+			<node name="summary" value="Теки для пошуку файлів"/>
+			<node name="bookPath" value="Теки з книжками"/>
+			<node name="fontPath" value="Теки зі шрифтами"/>
+			<node name="wallpaperPath" value="Теки зі шпалерами"/>
+			<node name="books" value="Теки з книжками"/>
+			<node name="fonts" value="Теки зі шрифтами"/>
+			<node name="wallpapers" value="Теки зі шпалерами"/>
+		</node>
+		<node name="appearance" value="Зовнішній вигляд">
+			<node name="summary" value="Орієнтація, панель стану"/>
+			<node name="screenOrientation" value="Орієнтація екрану">
+				<node name="system" value="Системна"/>
+				<node name="sensor" value="Залежна від положення пристрою"/>
+				<node name="portrait" value="Портнетна"/>
+				<node name="landscape" value="Ландшафтна"/>
+				<node name="reversePortrait" value="Перевернута портрента"/>
+				<node name="reverseLandscape" value="Перевернута ландшафтна"/>
+			</node>
+			<node name="autoOrientation" value="Автоматичний поворот">
+				<node name="summaryOn" value="Зображення повертається при повороті пристрою"/>
+				<node name="summaryOff" value="Зображення не повертається при повороті пристрою"/>
+			</node>
+			<node name="showStatusBar" value="Показати панель стану">
+				<node name="summaryOn" value="Панель стану видно під час читання"/>
+				<node name="summaryOff" value="Панель стану не видно під час читання"/>
+			</node>
+			<node name="showActionBar" value="Показувати панель дій">
+				<node name="summaryOn" value="Показувати панель дій під час читання"/>
+				<node name="summaryOff" value="Сховати панель дій під час читання"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Панель стану коли відкрите меню">
+				<node name="summaryOn" value="Показати панель стану коли відкривається меню"/>
+				<node name="summaryOff" value="Не показувати панель стану коли відкривається меню"/>
+			</node>
+			<node name="disableButtonLights" value="Підсвічування апаратник клавіш">
+				<node name="summaryOn" value="Вимкнути підсвічування (не для всіх пристроїв)"/>
+				<node name="summaryOff" value="Не намагатись вимкнути підсвічування"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Керування яскравістю екрану">
+				<node name="summaryOn" value="Жестом догори-донизу в лівій частині екрану"/>
+				<node name="summaryOff" value="Вимкнути"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Запобігати вимкненню екрану">
+				<node name="0" value="Завжди"/>
+				<node name="25" value="Доки заряд батареї більший за 25 відсотків"/>
+				<node name="50" value="Доки заряд батареї більший за 50 відсотків"/>
+				<node name="100" value="Ніколи"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Запобігати вимкненню екрану при зарядженні">
+				<node name="summaryOn" value="Запобігати вимкненню екрану в режимі зарядки"/>
+				<node name="summaryOff" value="Вимикати екран в режимі зарядки"/>
+			</node>
+		</node>
+		<node name="text" value="Текст">
+			<node name="summary" value="Шрифти, переноси, etc."/>
+			<node name="fontProperties" value="Font properties" toBeTranslated="true">
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="Родина шрифту">
+				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			</node>
+			<node name="fontSize" value="Розмір шрифту"/>
+			<node name="fontSizeDifference" value="Розмір"/>
+			<node name="fontStyle" value="Стиль шрифту">
+				<node name="regular" value="Звичайний"/>
+				<node name="bold" value="Жирний"/>
+				<node name="italic" value="Курсив"/>
+				<node name="boldItalic" value="Жирний курсив"/>
+			</node>
+			<node name="bold" value="Жирний">
+				<node name="summaryOn" value="жирний"/>
+				<node name="summaryOff" value="звичайний"/>
+				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			</node>
+			<node name="italic" value="Курсив">
+				<node name="summaryOn" value="курсив"/>
+				<node name="summaryOff" value="звичайний"/>
+				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			</node>
+			<node name="underlined" value="Underlined" toBeTranslated="true">
+				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Інтервал">
+				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			</node>
+			<node name="alignment" value="Вирівнювання">
+				<node name="left" value="ліве"/>
+				<node name="right" value="праве"/>
+				<node name="center" value="по центру"/>
+				<node name="justify" value="по краях"/>
+				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Перенесення">
+				<node name="summaryOn" value="Переносити слова автоматично"/>
+				<node name="summaryOff" value="Не переносити слова автоматично"/>
+			</node>
+			<node name="allowHyphenations" value="Перенесення">
+				<node name="summaryOn" value="переносити слова"/>
+				<node name="summaryOff" value="не переносити слова"/>
+				<node name="unchanged" value="&lt;не міняти&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Червона стрічка"/>
+			<node name="spaceBefore" value="Пропуск перед"/>
+			<node name="spaceAfter" value="Пропуск після"/>
+			<node name="leftIndent" value="Відступ зліва"/>
+			<node name="rightIndent" value="Відступ зправа"/>
+			<node name="more" value="Більше стилів">
+				<node name="summary" value="Окремі налаштування для заголовків, епіграфів, etc."/>
+				<node name="Regular Paragraph" value="звичайного тексту">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="заголовку">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="назви глави">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="назви вірша">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="підзаголовку">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="анотації">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="епіграфа">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="строфи">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="віршів">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="тексту всередині &lt;pre&gt;">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="малюнка">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="цитати">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="імені автора">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="дати">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="посилання">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="виноски">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="виділення (emphasis)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="виділення (strong)">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="нижнього індекса">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="верхнього індекса">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="тексту програми">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="закресленого тексту">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="курсиву">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="жирного тексту">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="визначення">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="тексту визначення">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="тексу всередині &lt;h1&gt;">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="тексту всередині &lt;h2&gt;">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="тексту всередині &lt;h3&gt;">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="тексту всередині &lt;h4&gt;">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="тексту всередині &lt;h5&gt;">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="тексту всередині &lt;h6&gt;">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="зовнішнього посилання">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="Кольори &amp; шпалери">
+			<node name="summary" value="Налаштування кольору"/>
+			<node name="background" value="Фон">
+				<node name="solidColor" value="Суцільний колір"/>
+				<node name="leather" value="Шкіра"/>
+				<node name="sepia" value="Сепія"/>
+				<node name="wood" value="Деревина"/>
+			</node>
+			<node name="backgroundColor" value="Фоновий колір"/>
+			<node name="selectionBackground" value="Фон позначки"/>
+			<node name="selectionForeground" value="Вибраний текст"/>
+			<node name="text" value="Звичайний текст"/>
+			<node name="hyperlink" value="Посилання"/>
+			<node name="hyperlinkVisited" value="Переглянуті посилання"/>
+			<node name="highlighting" value="Фон результатів пошуку"/>
+			<node name="footer" value="Нижній колонтитул (підвал)"/>
+		</node>
+		<node name="margins" value="Відступи">
+			<node name="summary" value="Відступи тексту"/>
+			<node name="left" value="Відступ зліва"/>
+			<node name="right" value="Відступ зправа"/>
+			<node name="top" value="Відступ зверху"/>
+			<node name="bottom" value="Відступ знизу"/>
+		</node>
+		<node name="scrollBar" value="Смуга прокрутки">
+			<node name="summary" value="Смуга прокрутки &amp; налаштування підвалу"/>
+			<node name="scrollbarType" value="Тип cмуги прокрутки">
+				<node name="hide" value="Схована"/>
+				<node name="show" value="Вертикальний слайдер"/>
+				<node name="showAsProgress" value="Вертикальна панель стану"/>
+				<node name="showAsFooter" value="Горизонтальний підвал"/>
+			</node>
+			<node name="footerHeight" value="Висота підвалу"/>
+			<node name="footerColor" value="Колір підвалу"/>
+			<node name="tocMarks" value="Показувати відмітки TOC">
+				<node name="summaryOn" value="Показувати відмітки TOC в підвалі"/>
+				<node name="summaryOff" value="Не показувати відмітки TOC в підвалі"/>
+			</node>
+			<node name="showProgress" value="Показувати номер сторінки">
+				<node name="summaryOn" value="Показувати номер сторінки в підвалі"/>
+				<node name="summaryOff" value="Не показувати номер сторінки в підвалі"/>
+			</node>
+			<node name="showBattery" value="Показувати рівень заяду">
+				<node name="summaryOn" value="Показувати рівень заяду в підвалі"/>
+				<node name="summaryOff" value="Не показувати рівень заяду в підвалі"/>
+			</node>
+			<node name="showClock" value="Показувати годинник">
+				<node name="summaryOn" value="Показувати годинник в підвалі"/>
+				<node name="summaryOff" value="Не показувати годинник в підвалі"/>
+			</node>
+			<node name="font" value="Родина шрифтів"/>
+		</node>
+		<node name="scrolling" value="Перегортання сторінок">
+			<node name="summary" value="Як прокручувати текст"/>
+			<node name="fingerScrolling" value="Жести прокручування">
+				<node name="byTap" value="Перегортати сторінку дотиком"/>
+				<node name="byFlick" value="Перегортати сторінку жестом вліво-вправо"/>
+				<node name="byTapAndFlick" value="Перегортати сторінку дотиком або жестом вліво-вправо"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Визначати подвійний дотик">
+				<node name="summaryOn" value="Подвійний дотик для запуску меню навігації"/>
+				<node name="summaryOff" value="Ігнорувати подвійний дотик"/>
+			</node>
+			<node name="volumeKeys" value="Використання кнопки налаштування звуку">
+				<node name="summaryOn" value="Кнопки збільшення/зменшення звуку перегортають сторінки"/>
+				<node name="summaryOff" value="Кнопки збільшення/зменшення звуку працюють як звичайно"/>
+			</node>
+			<node name="invertVolumeKeys" value="Перегортати кнопками в зворотньому напрямку">
+				<node name="summaryOn" value="Нижня кнопка гортає сторінки вперед"/>
+				<node name="summaryOff" value="Верхня кнопка гортає сторінки вперед"/>
+			</node>
+			<node name="animation" value="Анімація">
+				<node name="none" value="Перегортати без анімації"/>
+				<node name="curl" value="Кучеряво"/>
+				<node name="slide" value="Слайд"/>
+				<node name="shift" value="Зсув"/>
+			</node>
+			<node name="animationSpeed" value="Швидкість анімації">
+				<node name="fast" value="швидко"/>
+				<node name="slow" value="повільно"/>
+			</node>
+			<node name="horizontal" value="Горизонтальне перегортання">
+				<node name="summaryOn" value="При гортанні сторінка рухається по горизонталі"/>
+				<node name="summaryOff" value="При гортанні сторінка рухається по вертикалі"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Зони дотику">
+			<node name="summary" value="Дії при дотику"/>
+			<node name="tapZonesScheme" value="Схема зон дотику">
+				<node name="left_to_right" value="Перегортання сторінки зліва направо"/>
+				<node name="right_to_left" value="Перегортання сторінки сплава наліво"/>
+				<node name="up" value="Перегортання сторінки знизу догори"/>
+				<node name="down" value="Перегортання сторінки зверху вниз"/>
+				<node name="custom" value="Інше…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Словник">
+			<node name="summary" value="Налаштування словника"/>
+			<node name="dictionary" value="Словник"/>
+			<node name="translator" value="Перекладач"/>
+			<node name="tappingAction" value="Дія при довгому натисканні">
+				<node name="doNothing" value="Довге натискання нічого не робить"/>
+				<node name="selectSingleWord" value="Довге натискання вибирає слово"/>
+				<node name="startSelecting" value="Довге натискання починає виділення"/>
+				<node name="openDictionary" value="Довге натискання вибирає слово, відпускання відкриває словник"/>
+			</node>
+			<node name="navigateOverAllWords" value="Перехід по всім словам">
+				<node name="summaryOn" value="Ключовий перехід відвідує всі слова"/>
+				<node name="summaryOff" value="Ключовий перехід відвідує тільки посилання"/>
+			</node>
+		</node>
+		<node name="images" value="Зображення">
+			<node name="summary" value="Параметри перегляду зображень"/>
+			<node name="backgroundColor" value="Фоновий колір для перегляду зображень"/>
+			<node name="tappingAction" value="Дія при довгому натисканні">
+				<node name="doNothing" value="Довге натискання нічого не робить"/>
+				<node name="selectImage" value="Довге натискання виділяє зображення"/>
+				<node name="openImageView" value="Довге натискання відкриває перегляд зображення"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Меню відміни">
+			<node name="summary" value="Список дій кнопки Назад"/>
+			<node name="library" value="Library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="Network library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="Попередня книга">
+				<node name="summaryOn" value="Показувати 'повернутись до попередньої книги'"/>
+				<node name="summaryOff" value="Не показувати 'повернутись до попередньої книги'"/>
+			</node>
+			<node name="positions" value="Останні 3 позиції">
+				<node name="summaryOn" value="Показувати елементи для останніх трьох позицій в книзі"/>
+				<node name="summaryOff" value="Не показувати елементи для останніх трьох позицій в книзі"/>
+			</node>
+			<node name="backKeyAction" value="Дія кнопки назад">
+				<node name="exit" value="Закрити FBReader"/>
+				<node name="goBack" value="Перейти назад"/>
+				<node name="cancelMenu" value="Показати меню відміни"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Дія довгого натискання кнопки назад">
+				<node name="exit" value="Закрити FBReader"/>
+				<node name="goBack" value="Перейти назад"/>
+				<node name="cancelMenu" value="Показати меню відміни"/>
+				<node name="none" value="No action"/>
+			</node>
+		</node>
+		<node name="tips" value="Tips">
+			<node name="summary" value="Налаштування щоденних порад"/>
+			<node name="showTips" value="Показувати поради">
+				<node name="summaryOn" value="Показувати щоденні поради"/>
+				<node name="summaryOff" value="Не показувати"/>
+			</node>
+		</node>
+		<node name="about" value="Закрити FBReader">
+			<node name="summary" value="Інформація про версію, контакти"/>
+			<node name="version" value="Версія"/>
+			<node name="site" value="Зайти на наш вебсайт">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Відпратити нам email">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="Зафоловити нас на Твітері">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Встановити"/>
@@ -279,421 +697,6 @@
 		<node name="installDictionary">
 			<node name="title" value="Встановити словникy"/>
 			<node name="message" value="Ви хочете встановити %s?"/>
-		</node>
-		<node name="BookInfo">
-			<node name="fileName" value="Файл"/>
-			<node name="title" value="Назва"/>
-			<node name="language" value="Мова"/>
-			<node name="encoding" value="Кодування"/>
-			<node name="authors" value="Автори"/>
-			<node name="tags" value="Категорії"/>
-			<node name="series" value="Серія"/>
-		</node>
-		<node name="Preferences">
-			<node name="directories" value="Теки">
-				<node name="summary" value="Теки для пошуку файлів"/>
-				<node name="bookPath" value="Теки з книжками"/>
-				<node name="fontPath" value="Теки зі шрифтами"/>
-				<node name="wallpaperPath" value="Теки зі шпалерами"/>
-			</node>
-			<node name="appearance" value="Зовнішній вигляд">
-				<node name="summary" value="Орієнтація, панель стану"/>
-				<node name="screenOrientation" value="Орієнтація екрану">
-					<node name="system" value="Системна"/>
-					<node name="sensor" value="Залежна від положення пристрою"/>
-					<node name="portrait" value="Портнетна"/>
-					<node name="landscape" value="Ландшафтна"/>
-					<node name="reversePortrait" value="Перевернута портрента"/>
-					<node name="reverseLandscape" value="Перевернута ландшафтна"/>
-				</node>
-				<node name="autoOrientation" value="Автоматичний поворот">
-					<node name="summaryOn" value="Зображення повертається при повороті пристрою"/>
-					<node name="summaryOff" value="Зображення не повертається при повороті пристрою"/>
-				</node>
-				<node name="showStatusBar" value="Показати панель стану">
-					<node name="summaryOn" value="Панель стану видно під час читання"/>
-					<node name="summaryOff" value="Панель стану не видно під час читання"/>
-				</node>
-				<node name="showActionBar" value="Показувати панель дій">
-					<node name="summaryOn" value="Показувати панель дій під час читання"/>
-					<node name="summaryOff" value="Сховати панель дій під час читання"/>
-				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Панель стану коли відкрите меню">
-					<node name="summaryOn" value="Показати панель стану коли відкривається меню"/>
-					<node name="summaryOff" value="Не показувати панель стану коли відкривається меню"/>
-				</node>
-				<node name="disableButtonLights" value="Підсвічування апаратник клавіш">
-					<node name="summaryOn" value="Вимкнути підсвічування (не для всіх пристроїв)"/>
-					<node name="summaryOff" value="Не намагатись вимкнути підсвічування"/>
-				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Керування яскравістю екрану">
-					<node name="summaryOn" value="Жестом догори-донизу в лівій частині екрану"/>
-					<node name="summaryOff" value="Вимкнути"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Запобігати вимкненню екрану">
-					<node name="0" value="Завжди"/>
-					<node name="25" value="Доки заряд батареї більший за 25 відсотків"/>
-					<node name="50" value="Доки заряд батареї більший за 50 відсотків"/>
-					<node name="100" value="Ніколи"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Запобігати вимкненню екрану при зарядженні">
-					<node name="summaryOn" value="Запобігати вимкненню екрану в режимі зарядки"/>
-					<node name="summaryOff" value="Вимикати екран в режимі зарядки"/>
-				</node>
-			</node>
-			<node name="text" value="Текст">
-				<node name="summary" value="Шрифти, переноси, etc."/>
-				<node name="fontProperties" value="Font properties" toBeTranslated="true">
-					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="dithering" value="Dithering" toBeTranslated="true">
-						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="hinting" value="Hinting" toBeTranslated="true">
-						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
-					</node>
-				</node>
-				<node name="font" value="Родина шрифту">
-					<node name="unchanged" value="&lt;не міняти&gt;"/>
-				</node>
-				<node name="fontSize" value="Розмір шрифту"/>
-				<node name="fontSizeDifference" value="Розмір"/>
-				<node name="fontStyle" value="Стиль шрифту">
-					<node name="regular" value="Звичайний"/>
-					<node name="bold" value="Жирний"/>
-					<node name="italic" value="Курсив"/>
-					<node name="boldItalic" value="Жирний курсив"/>
-				</node>
-				<node name="bold" value="Жирний">
-					<node name="summaryOn" value="жирний"/>
-					<node name="summaryOff" value="звичайний"/>
-					<node name="unchanged" value="&lt;не міняти&gt;"/>
-				</node>
-				<node name="italic" value="Курсив">
-					<node name="summaryOn" value="курсив"/>
-					<node name="summaryOff" value="звичайний"/>
-					<node name="unchanged" value="&lt;не міняти&gt;"/>
-				</node>
-				<node name="underlined" value="Underlined" toBeTranslated="true">
-					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;не міняти&gt;"/>
-				</node>
-				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;не міняти&gt;"/>
-				</node>
-				<node name="lineSpacing" value="Інтервал">
-					<node name="unchanged" value="&lt;не міняти&gt;"/>
-				</node>
-				<node name="alignment" value="Вирівнювання">
-					<node name="left" value="ліве"/>
-					<node name="right" value="праве"/>
-					<node name="center" value="по центру"/>
-					<node name="justify" value="по краях"/>
-					<node name="unchanged" value="&lt;не міняти&gt;"/>
-				</node>
-				<node name="autoHyphenations" value="Перенесення">
-					<node name="summaryOn" value="Переносити слова автоматично"/>
-					<node name="summaryOff" value="Не переносити слова автоматично"/>
-				</node>
-				<node name="allowHyphenations" value="Перенесення">
-					<node name="summaryOn" value="переносити слова"/>
-					<node name="summaryOff" value="не переносити слова"/>
-					<node name="unchanged" value="&lt;не міняти&gt;"/>
-				</node>
-				<node name="firstLineIndent" value="Червона стрічка"/>
-				<node name="spaceBefore" value="Пропуск перед"/>
-				<node name="spaceAfter" value="Пропуск після"/>
-				<node name="leftIndent" value="Відступ зліва"/>
-				<node name="rightIndent" value="Відступ зправа"/>
-				<node name="more" value="Більше стилів">
-					<node name="summary" value="Окремі налаштування для заголовків, епіграфів, etc."/>
-					<node name="Regular Paragraph" value="звичайного тексту">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Title" value="заголовку">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Section Title" value="назви глави">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Poem Title" value="назви вірша">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subtitle" value="підзаголовку">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Annotation" value="анотації">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Epigraph" value="епіграфа">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Stanza" value="строфи">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Verse" value="віршів">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Preformatted text" value="тексту всередині &lt;pre&gt;">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Image" value="малюнка">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Cite" value="цитати">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Author" value="імені автора">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Date" value="дати">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Internal Hyperlink" value="посилання">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Footnote" value="виноски">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Emphasis" value="виділення (emphasis)">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Strong" value="виділення (strong)">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subscript" value="нижнього індекса">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Superscript" value="верхнього індекса">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Code" value="тексту програми">
-						<node name="summary" value=""/>
-					</node>
-					<node name="StrikeThrough" value="закресленого тексту">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Italic" value="курсиву">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Bold" value="жирного тексту">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition" value="визначення">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition Description" value="тексту визначення">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 1" value="тексу всередині &lt;h1&gt;">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 2" value="тексту всередині &lt;h2&gt;">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 3" value="тексту всередині &lt;h3&gt;">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 4" value="тексту всередині &lt;h4&gt;">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 5" value="тексту всередині &lt;h5&gt;">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 6" value="тексту всередині &lt;h6&gt;">
-						<node name="summary" value=""/>
-					</node>
-					<node name="External Hyperlink" value="зовнішнього посилання">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-			</node>
-			<node name="colors" value="Кольори &amp; шпалери">
-				<node name="summary" value="Налаштування кольору"/>
-				<node name="background" value="Фон">
-					<node name="solidColor" value="Суцільний колір"/>
-					<node name="leather" value="Шкіра"/>
-					<node name="sepia" value="Сепія"/>
-					<node name="wood" value="Деревина"/>
-				</node>
-				<node name="backgroundColor" value="Фоновий колір"/>
-				<node name="selectionBackground" value="Фон позначки"/>
-				<node name="selectionForeground" value="Вибраний текст"/>
-				<node name="text" value="Звичайний текст"/>
-				<node name="hyperlink" value="Посилання"/>
-				<node name="hyperlinkVisited" value="Переглянуті посилання"/>
-				<node name="highlighting" value="Фон результатів пошуку"/>
-				<node name="footer" value="Нижній колонтитул (підвал)"/>
-			</node>
-			<node name="margins" value="Відступи">
-				<node name="summary" value="Відступи тексту"/>
-				<node name="left" value="Відступ зліва"/>
-				<node name="right" value="Відступ зправа"/>
-				<node name="top" value="Відступ зверху"/>
-				<node name="bottom" value="Відступ знизу"/>
-			</node>
-			<node name="scrollBar" value="Смуга прокрутки">
-				<node name="summary" value="Смуга прокрутки &amp; налаштування підвалу"/>
-				<node name="scrollbarType" value="Тип cмуги прокрутки">
-					<node name="hide" value="Схована"/>
-					<node name="show" value="Вертикальний слайдер"/>
-					<node name="showAsProgress" value="Вертикальна панель стану"/>
-					<node name="showAsFooter" value="Горизонтальний підвал"/>
-				</node>
-				<node name="footerHeight" value="Висота підвалу"/>
-				<node name="footerColor" value="Колір підвалу"/>
-				<node name="tocMarks" value="Показувати відмітки TOC">
-					<node name="summaryOn" value="Показувати відмітки TOC в підвалі"/>
-					<node name="summaryOff" value="Не показувати відмітки TOC в підвалі"/>
-				</node>
-				<node name="showProgress" value="Показувати номер сторінки">
-					<node name="summaryOn" value="Показувати номер сторінки в підвалі"/>
-					<node name="summaryOff" value="Не показувати номер сторінки в підвалі"/>
-				</node>
-				<node name="showBattery" value="Показувати рівень заяду">
-					<node name="summaryOn" value="Показувати рівень заяду в підвалі"/>
-					<node name="summaryOff" value="Не показувати рівень заяду в підвалі"/>
-				</node>
-				<node name="showClock" value="Показувати годинник">
-					<node name="summaryOn" value="Показувати годинник в підвалі"/>
-					<node name="summaryOff" value="Не показувати годинник в підвалі"/>
-				</node>
-				<node name="font" value="Родина шрифтів"/>
-			</node>
-			<node name="scrolling" value="Перегортання сторінок">
-				<node name="summary" value="Як прокручувати текст"/>
-				<node name="fingerScrolling" value="Жести прокручування">
-					<node name="byTap" value="Перегортати сторінку дотиком"/>
-					<node name="byFlick" value="Перегортати сторінку жестом вліво-вправо"/>
-					<node name="byTapAndFlick" value="Перегортати сторінку дотиком або жестом вліво-вправо"/>
-				</node>
-				<node name="enableDoubleTapDetection" value="Визначати подвійний дотик">
-					<node name="summaryOn" value="Подвійний дотик для запуску меню навігації"/>
-					<node name="summaryOff" value="Ігнорувати подвійний дотик"/>
-				</node>
-				<node name="volumeKeys" value="Використання кнопки налаштування звуку">
-					<node name="summaryOn" value="Кнопки збільшення/зменшення звуку перегортають сторінки"/>
-					<node name="summaryOff" value="Кнопки збільшення/зменшення звуку працюють як звичайно"/>
-				</node>
-				<node name="invertVolumeKeys" value="Перегортати кнопками в зворотньому напрямку">
-					<node name="summaryOn" value="Нижня кнопка гортає сторінки вперед"/>
-					<node name="summaryOff" value="Верхня кнопка гортає сторінки вперед"/>
-				</node>
-				<node name="animation" value="Анімація">
-					<node name="none" value="Перегортати без анімації"/>
-					<node name="curl" value="Кучеряво"/>
-					<node name="slide" value="Слайд"/>
-					<node name="shift" value="Зсув"/>
-				</node>
-				<node name="animationSpeed" value="Швидкість анімації">
-					<node name="fast" value="швидко"/>
-					<node name="slow" value="повільно"/>
-				</node>
-				<node name="horizontal" value="Горизонтальне перегортання">
-					<node name="summaryOn" value="При гортанні сторінка рухається по горизонталі"/>
-					<node name="summaryOff" value="При гортанні сторінка рухається по вертикалі"/>
-				</node>
-			</node>
-			<node name="tapZones" value="Зони дотику">
-				<node name="summary" value="Дії при дотику"/>
-				<node name="tapZonesScheme" value="Схема зон дотику">
-					<node name="left_to_right" value="Перегортання сторінки зліва направо"/>
-					<node name="right_to_left" value="Перегортання сторінки сплава наліво"/>
-					<node name="up" value="Перегортання сторінки знизу догори"/>
-					<node name="down" value="Перегортання сторінки зверху вниз"/>
-					<node name="custom" value="Інше…"/>
-				</node>
-			</node>
-			<node name="dictionary" value="Словник">
-				<node name="summary" value="Налаштування словника"/>
-				<node name="dictionary" value="Словник"/>
-				<node name="translator" value="Перекладач"/>
-				<node name="tappingAction" value="Дія при довгому натисканні">
-					<node name="doNothing" value="Довге натискання нічого не робить"/>
-					<node name="selectSingleWord" value="Довге натискання вибирає слово"/>
-					<node name="startSelecting" value="Довге натискання починає виділення"/>
-					<node name="openDictionary" value="Довге натискання вибирає слово, відпускання відкриває словник"/>
-				</node>
-				<node name="navigateOverAllWords" value="Перехід по всім словам">
-					<node name="summaryOn" value="Ключовий перехід відвідує всі слова"/>
-					<node name="summaryOff" value="Ключовий перехід відвідує тільки посилання"/>
-				</node>
-			</node>
-			<node name="images" value="Зображення">
-				<node name="summary" value="Параметри перегляду зображень"/>
-				<node name="backgroundColor" value="Фоновий колір для перегляду зображень"/>
-				<node name="tappingAction" value="Дія при довгому натисканні">
-					<node name="doNothing" value="Довге натискання нічого не робить"/>
-					<node name="selectImage" value="Довге натискання виділяє зображення"/>
-					<node name="openImageView" value="Довге натискання відкриває перегляд зображення"/>
-				</node>
-			</node>
-			<node name="cancelMenu" value="Меню відміни">
-				<node name="summary" value="Список дій кнопки Назад"/>
-				<node name="library" value="Library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-				</node>
-				<node name="networkLibrary" value="Network library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-				</node>
-				<node name="previousBook" value="Попередня книга">
-					<node name="summaryOn" value="Показувати 'повернутись до попередньої книги'"/>
-					<node name="summaryOff" value="Не показувати 'повернутись до попередньої книги'"/>
-				</node>
-				<node name="positions" value="Останні 3 позиції">
-					<node name="summaryOn" value="Показувати елементи для останніх трьох позицій в книзі"/>
-					<node name="summaryOff" value="Не показувати елементи для останніх трьох позицій в книзі"/>
-				</node>
-				<node name="backKeyAction" value="Дія кнопки назад">
-					<node name="exit" value="Закрити FBReader"/>
-					<node name="goBack" value="Перейти назад"/>
-					<node name="cancelMenu" value="Показати меню відміни"/>
-				</node>
-				<node name="backKeyLongPressAction" value="Дія довгого натискання кнопки назад">
-					<node name="exit" value="Закрити FBReader"/>
-					<node name="goBack" value="Перейти назад"/>
-					<node name="cancelMenu" value="Показати меню відміни"/>
-					<node name="none" value="No action"/>
-				</node>
-			</node>
-			<node name="tips" value="Tips">
-				<node name="summary" value="Налаштування щоденних порад"/>
-				<node name="showTips" value="Показувати поради">
-					<node name="summaryOn" value="Показувати щоденні поради"/>
-					<node name="summaryOff" value="Не показувати"/>
-				</node>
-			</node>
-			<node name="about" value="Закрити FBReader">
-				<node name="summary" value="Інформація про версію, контакти"/>
-				<node name="version" value="Версія"/>
-				<node name="site" value="Зайти на наш вебсайт">
-					<node name="url" value="http://www.fbreader.org/"/>
-				</node>
-				<node name="email" value="Відпратити нам email">
-					<node name="url" value="mailto:contact@geometerplus.com"/>
-				</node>
-				<node name="twitter" value="Зафоловити нас на Твітері">
-					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Файл книги буде видалено необоротно. Продовжити?"/>
