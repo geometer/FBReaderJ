@@ -99,34 +99,39 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private static ZLFile ourWallpaperFile;
 	private static Bitmap ourWallpaper;
 	@Override
-	public void clear(ZLFile wallpaperFile, boolean doMirror) {
+	public void clear(ZLFile wallpaperFile, WallpaperMode mode) {
 		if (!wallpaperFile.equals(ourWallpaperFile)) {
 			ourWallpaperFile = wallpaperFile;
 			ourWallpaper = null;
 			try {
 				final Bitmap fileBitmap =
 					BitmapFactory.decodeStream(wallpaperFile.getInputStream());
-				if (doMirror) {
-					final int w = fileBitmap.getWidth();
-					final int h = fileBitmap.getHeight();
-					final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
-					final Canvas wallpaperCanvas = new Canvas(wallpaper);
-					final Paint wallpaperPaint = new Paint();
-
-					Matrix m = new Matrix();
-					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
-					m.preScale(-1, 1);
-					m.postTranslate(2 * w, 0);
-					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
-					m.preScale(1, -1);
-					m.postTranslate(0, 2 * h);
-					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
-					m.preScale(-1, 1);
-					m.postTranslate(- 2 * w, 0);
-					wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
-					ourWallpaper = wallpaper;
-				} else {
-					ourWallpaper = fileBitmap;
+				switch (mode) {
+					case TILE_MIRROR:
+					{
+						final int w = fileBitmap.getWidth();
+						final int h = fileBitmap.getHeight();
+						final Bitmap wallpaper = Bitmap.createBitmap(2 * w, 2 * h, fileBitmap.getConfig());
+						final Canvas wallpaperCanvas = new Canvas(wallpaper);
+						final Paint wallpaperPaint = new Paint();
+                    
+						Matrix m = new Matrix();
+						wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+						m.preScale(-1, 1);
+						m.postTranslate(2 * w, 0);
+						wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+						m.preScale(1, -1);
+						m.postTranslate(0, 2 * h);
+						wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+						m.preScale(-1, 1);
+						m.postTranslate(- 2 * w, 0);
+						wallpaperCanvas.drawBitmap(fileBitmap, m, wallpaperPaint);
+						ourWallpaper = wallpaper;
+						break;
+					}
+					case TILE:
+						ourWallpaper = fileBitmap;
+						break;
 				}
 			} catch (Throwable t) {
 				t.printStackTrace();
@@ -256,8 +261,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void setLineColor(ZLColor color, int style) {
-		// TODO: use style
+	public void setLineColor(ZLColor color) {
 		myLinePaint.setColor(ZLAndroidColorUtil.rgb(color));
 	}
 	@Override
@@ -266,8 +270,7 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void setFillColor(ZLColor color, int alpha, int style) {
-		// TODO: use style
+	public void setFillColor(ZLColor color, int alpha) {
 		myFillPaint.setColor(ZLAndroidColorUtil.rgba(color, alpha));
 	}
 
