@@ -265,6 +265,9 @@
 			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
 			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
 			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+			<node name="books" value="Directorul cu carti"/>
+			<node name="fonts" value="Directorul cu fonturi"/>
+			<node name="wallpapers" value="Imagini de Fundal director"/>
 		</node>
 		<node name="appearance" value="Aspect">
 			<node name="summary" value="Rotire, bara de stare"/>

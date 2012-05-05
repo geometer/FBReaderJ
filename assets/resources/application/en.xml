@@ -278,6 +278,9 @@
 			<node name="bookPath" value="Books directories"/>
 			<node name="fontPath" value="Fonts directories"/>
 			<node name="wallpaperPath" value="Wallpapers directories"/>
+			<node name="books" value="Books directory"/>
+			<node name="fonts" value="Fonts directory"/>
+			<node name="wallpapers" value="Wallpapers directory"/>
 		</node>
 		<node name="appearance" value="Appearance">
 			<node name="summary" value="Display settings, status bar, button lights"/>

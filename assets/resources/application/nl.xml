@@ -265,6 +265,9 @@
 			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
 			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
 			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+			<node name="books" value="Map met boeken"/>
+			<node name="fonts" value="Map met lettertypes"/>
+			<node name="wallpapers" value="Map met achtergronden"/>
 		</node>
 		<node name="appearance" value="Weergave">
 			<node name="summary" value="Draaien, statusbalk"/>

@@ -265,6 +265,9 @@
 			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
 			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
 			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+			<node name="books" value="ไดเรคทอรีของหนังสือ"/>
+			<node name="fonts" value="ไดเรคทอรีของแบบตัวอักษร"/>
+			<node name="wallpapers" value="ไดเรคทอรีของวอลล์เปเปอร์"/>
 		</node>
 		<node name="appearance" value="ลักษณะการแสดงผล">
 			<node name="summary" value="การหมุนหน้าจอ, แถบสถานะ"/>

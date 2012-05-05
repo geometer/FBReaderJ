@@ -268,6 +268,9 @@
 			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
 			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
 			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+			<node name="books" value="Verzeichnis der Bücher"/>
+			<node name="fonts" value="Verzeichnis für Schriftarten (Fonts)"/>
+			<node name="wallpapers" value="Verzeichnis für Hintergründe"/>
 		</node>
 		<node name="appearance" value="Aussehen">
 			<node name="summary" value="Ausrichtung, Statuszeile"/>

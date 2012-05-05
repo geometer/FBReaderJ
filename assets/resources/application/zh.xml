@@ -265,6 +265,9 @@
 			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
 			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
 			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+			<node name="books" value="书文存放位置"/>
+			<node name="fonts" value="字体存放位置"/>
+			<node name="wallpapers" value="墙纸存放位置"/>
 		</node>
 		<node name="appearance" value="呈现方式">
 			<node name="summary" value="旋转，状态工具条"/>
