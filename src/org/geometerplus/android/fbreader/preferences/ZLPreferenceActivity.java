@@ -89,7 +89,7 @@ abstract class ZLPreferenceActivity extends android.preference.PreferenceActivit
 	final ZLResource Resource;
 
 	ZLPreferenceActivity(String resourceKey) {
-		Resource = ZLResource.resource("dialog").getResource(resourceKey);
+		Resource = ZLResource.resource(resourceKey);
 	}
 
 	Screen createPreferenceScreen(String resourceKey) {

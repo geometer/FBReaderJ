@@ -253,6 +253,421 @@
 		<node name="toggleFullscreen" value="Plein écran"/>
 		<node name="bookmarks" value="Marque-pages"/>
 	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Nom du fichier"/>
+		<node name="title" value="Titre"/>
+		<node name="language" value="Langue"/>
+		<node name="encoding" value="Encodage"/>
+		<node name="authors" value="Auteurs"/>
+		<node name="tags" value="Tags"/>
+		<node name="series" value="Série"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Répertoires">
+			<node name="summary" value="Emplacements des livres et des polices"/>
+			<node name="books" value="Répertoire des livres"/>
+			<node name="fonts" value="Répertoire des polices"/>
+			<node name="wallpapers" value="Répertoire des fonds d'écran"/>
+		</node>
+		<node name="appearance" value="Apparence">
+			<node name="summary" value="Rotation, barre de statut"/>
+			<node name="screenOrientation" value="Orientation de l'écran">
+				<node name="system" value="Système"/>
+				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
+				<node name="portrait" value="Portrait"/>
+				<node name="landscape" value="Paysage"/>
+				<node name="reversePortrait" value="Portrait inversé"/>
+				<node name="reverseLandscape" value="Paysage inversé"/>
+			</node>
+			<node name="autoOrientation" value="Rotation automatique">
+				<node name="summaryOn" value="Basculer l'affichage du texte pour suivre la rotation de l'écran"/>
+				<node name="summaryOff" value="Garder l'affichage tel quel en ignorant la rotation de l'écran"/>
+			</node>
+			<node name="showStatusBar" value="Barre de statut">
+				<node name="summaryOn" value="Afficher la barre de statut en mode lecture"/>
+				<node name="summaryOff" value="Cacher la barre de statut en mode lecture"/>
+			</node>
+			<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+				<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+				<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Afficher la barre de statut lorsque le menu est actif">
+				<node name="summaryOn" value="Afficher la barre  de statut lorsque le menu devient actif"/>
+				<node name="summaryOff" value="Cacher la barre de statut lorsque le menu devient actif"/>
+			</node>
+			<node name="disableButtonLights" value="Désactiver la lumière des boutons physiques pendant la lecture">
+				<node name="summaryOn" value="Désactive la lumière des boutons (ne fonctionne pas sur certains appareils)"/>
+				<node name="summaryOff" value="Ne pas essayer de désactiver la lumière des boutons"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
+				<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
+				<node name="summaryOff" value="Contrôle désactivé"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Empêcher l'écran de s'éteindre">
+				<node name="0" value="Toujours"/>
+				<node name="25" value="Tant que le niveau de batterie est supérieur à 25 pourcent"/>
+				<node name="50" value="Tant que le niveau de batterie est supérieur à 50 pourcent"/>
+				<node name="100" value="Jamais"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Empêcher l'écran de se mettre en veille pendant le chargement">
+				<node name="summaryOn" value="Pas de mise en veille lorsque la batterie est en charge"/>
+				<node name="summaryOff" value="Éteindre l'écran lorsque la batterie se recharge"/>
+			</node>
+		</node>
+		<node name="text" value="Texte">
+			<node name="summary" value="Polices, césures, etc."/>
+			<node name="fontProperties" value="Font properties" toBeTranslated="true">
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="Famille de police">
+				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			</node>
+			<node name="fontSize" value="Taille de police"/>
+			<node name="fontSizeDifference" value="Différence de taille"/>
+			<node name="fontStyle" value="Style de police">
+				<node name="regular" value="Normale"/>
+				<node name="bold" value="Gras"/>
+				<node name="italic" value="Italique"/>
+				<node name="boldItalic" value="Gras italique"/>
+			</node>
+			<node name="bold" value="Gras">
+				<node name="summaryOn" value="gras"/>
+				<node name="summaryOff" value="normale"/>
+				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			</node>
+			<node name="italic" value="Italique">
+				<node name="summaryOn" value="italique"/>
+				<node name="summaryOff" value="normale"/>
+				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			</node>
+			<node name="underlined" value="Underlined" toBeTranslated="true">
+				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Espacement de lignes">
+				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			</node>
+			<node name="alignment" value="Alignement">
+				<node name="left" value="Gauche"/>
+				<node name="right" value="Droite"/>
+				<node name="center" value="Centré"/>
+				<node name="justify" value="Justifié"/>
+				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Césures automatiques">
+				<node name="summaryOn" value="Mettre automatiquement les traits d'union entre les mots"/>
+				<node name="summaryOff" value="Ne pas appliquer les césures automatiquement"/>
+			</node>
+			<node name="allowHyphenations" value="Autoriser les césures">
+				<node name="summaryOn" value="couper les mots"/>
+				<node name="summaryOff" value="ne pas couper les mots"/>
+				<node name="unchanged" value="&lt;inchangé&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Indentation de la première ligne"/>
+			<node name="spaceBefore" value="Espace avant"/>
+			<node name="spaceAfter" value="Espace après"/>
+			<node name="leftIndent" value="Indentation à gauche"/>
+			<node name="rightIndent" value="Indentation à droite"/>
+			<node name="more" value="Plus de styles">
+				<node name="summary" value="Paramètres de configuration des titres, épigraphes etc."/>
+				<node name="Regular Paragraph" value="Paragraphe normal">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Titre">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Titre de section">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Titre de poême">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Sous-titre">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Annotation">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Epigraphe">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Strophe">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Vers">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Texte préformatté">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Image">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Citation">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Auteur">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Date">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Lien interne">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Bas de page">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Emphase">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Fort">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Indice">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Exposant">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Code">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Texte barré">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Italique">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Gras">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Définition">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Définition Description">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Entête 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Entête 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Entête 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Entête 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Entête 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Entête 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Lien externe">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="Couleurs &amp; fonds d'écran">
+			<node name="summary" value="Paramètres des couleurs"/>
+			<node name="background" value="Arrière-plan">
+				<node name="solidColor" value="Couleur pleine"/>
+				<node name="leather" value="Cuir"/>
+				<node name="sepia" value="Sépia"/>
+				<node name="wood" value="Bois"/>
+			</node>
+			<node name="backgroundColor" value="Couleur de fond"/>
+			<node name="selectionBackground" value="Arrière-plan de sélection"/>
+			<node name="selectionForeground" value="Texte sélectionné"/>
+			<node name="text" value="Texte normal"/>
+			<node name="hyperlink" value="Text d'hyperlien"/>
+			<node name="hyperlinkVisited" value="Lien hypertexte visité"/>
+			<node name="highlighting" value="Arrière-plan des résultats de recherche"/>
+			<node name="footer" value="Pied de page"/>
+		</node>
+		<node name="margins" value="Marge">
+			<node name="summary" value="Marges du texte"/>
+			<node name="left" value="Marge de gauche"/>
+			<node name="right" value="Marge de droite"/>
+			<node name="top" value="Marge du haut"/>
+			<node name="bottom" value="Marge du bas"/>
+		</node>
+		<node name="scrollBar" value="Barre de défilement">
+			<node name="summary" value="Configuration de la barre &amp; pied de page"/>
+			<node name="scrollbarType" value="Nature de la barre de défilement">
+				<node name="hide" value="Cachée"/>
+				<node name="show" value="Curseur vertical"/>
+				<node name="showAsProgress" value="Barre de progression verticale"/>
+				<node name="showAsFooter" value="Pied de page horizontal"/>
+			</node>
+			<node name="footerHeight" value="Hauteur du pied de page"/>
+			<node name="footerColor" value="Couleur pied de page"/>
+			<node name="tocMarks" value="Afficher les repères de la table des matières">
+				<node name="summaryOn" value="Afficher les repères dans la barre du pied de page"/>
+				<node name="summaryOff" value="Ne pas afficher les repères dans la barre du pied de page"/>
+			</node>
+			<node name="showProgress" value="Afficher le numéro de page">
+				<node name="summaryOn" value="Affiche le numéro de la page dans le pied de page"/>
+				<node name="summaryOff" value="N'affiche page le numéro de page"/>
+			</node>
+			<node name="showBattery" value="Afficher le niveau de batterie">
+				<node name="summaryOn" value="Affiche le niveau de batterie dans le pied de page"/>
+				<node name="summaryOff" value="N'affiche pas le niveau de batterie"/>
+			</node>
+			<node name="showClock" value="Afficher l'horloge">
+				<node name="summaryOn" value="Affiche l'horloge dans le pied de page"/>
+				<node name="summaryOff" value="N'affiche pas l'horloge dans le pied de page"/>
+			</node>
+			<node name="font" value="Famille de police"/>
+		</node>
+		<node name="scrolling" value="Navigation">
+			<node name="summary" value="Modalités de défilement du texte"/>
+			<node name="fingerScrolling" value="Défilement à l'écran">
+				<node name="byTap" value="Changer de page par appui du doigt"/>
+				<node name="byFlick" value="Changer de page par petit coup du doigt"/>
+				<node name="byTapAndFlick" value="Changer de page lors d'un appui ou petit coup"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Détection appui double">
+				<node name="summaryOn" value="Appui double pour afficher le menu de navigation"/>
+				<node name="summaryOff" value="Ignorer les appuis doubles"/>
+			</node>
+			<node name="volumeKeys" value="Touches du volume">
+				<node name="summaryOn" value="Les touches du volume permettent de changer de page"/>
+				<node name="summaryOff" value="Les touches du volume n'ont pas d'effet sur la navigation"/>
+			</node>
+			<node name="invertVolumeKeys" value="Inversion touches du volume">
+				<node name="summaryOn" value="Volume + affiche la page suivante"/>
+				<node name="summaryOff" value="Volume + affiche la page précédente"/>
+			</node>
+			<node name="animation" value="Animation">
+				<node name="none" value="Pas d'animation"/>
+				<node name="curl" value="Effet curl"/>
+				<node name="slide" value="Effet slide"/>
+				<node name="shift" value="Effet shift"/>
+			</node>
+			<node name="animationSpeed" value="Vitesse d'animation">
+				<node name="fast" value="rapide"/>
+				<node name="slow" value="lente"/>
+			</node>
+			<node name="horizontal" value="Défilement horizontal">
+				<node name="summaryOn" value="Défilement des pages horizontalement"/>
+				<node name="summaryOff" value="Défilement des pages verticalement"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Zones d'appui">
+			<node name="summary" value="Actions lors d'un appui du doigt"/>
+			<node name="tapZonesScheme" value="Schéma des zones d'appui">
+				<node name="left_to_right" value="Défilement page de la gauche vers la droite"/>
+				<node name="right_to_left" value="Défilement page de la droite vers la gauche"/>
+				<node name="up" value="Défilement page du bas vers le haut"/>
+				<node name="down" value="Défilement page du haut vers le bas"/>
+				<node name="custom" value="Personnalisation…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Dictionnaire">
+			<node name="summary" value="Paramètres du dictionnaire"/>
+			<node name="dictionary" value="Dictionnaire"/>
+			<node name="translator" value="Traducteur"/>
+			<node name="tappingAction" value="Configuration de l'appui long">
+				<node name="doNothing" value="Un appui long ne fait rien"/>
+				<node name="selectSingleWord" value="Un appui long selectionne le mot"/>
+				<node name="startSelecting" value="Un appui long indique un début de sélection"/>
+				<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
+			</node>
+			<node name="navigateOverAllWords" value="Parcourir l'ensemble des mots">
+				<node name="summaryOn" value="La navigation par touches parcourt tous les mots"/>
+				<node name="summaryOff" value="La navigation par touches visite les liens hypertexts uniquement"/>
+			</node>
+		</node>
+		<node name="images" value="Images">
+			<node name="summary" value="Options d'affichage des images"/>
+			<node name="backgroundColor" value="Couleur de fond de l'image"/>
+			<node name="tappingAction" value="Action de l'appui long">
+				<node name="doNothing" value="Un appui long ne fait rien"/>
+				<node name="selectImage" value="Un appui long selectionne l'image"/>
+				<node name="openImageView" value="Un appui long affiche l'image seule"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Bouton retour">
+			<node name="summary" value="Liste des actions du bouton retour"/>
+			<node name="library" value="Library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="Network library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="Livre précédent">
+				<node name="summaryOn" value="Permet de revenir au livre précédent"/>
+				<node name="summaryOff" value="Ne permet pas de retourner au livre précédent"/>
+			</node>
+			<node name="positions" value="3 dernières positions">
+				<node name="summaryOn" value="Afficher les 3 dernières positions dans le livre"/>
+				<node name="summaryOff" value="Ne pas afficher les 3 dernières positions dans le livre"/>
+			</node>
+			<node name="backKeyAction" value="Action de la touche retour">
+				<node name="exit" value="Fermer FBReader"/>
+				<node name="goBack" value="Retour en arrière"/>
+				<node name="cancelMenu" value="Afficher le menu annulation"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Action appui long touche retour">
+				<node name="exit" value="Fermer FBReader"/>
+				<node name="goBack" value="Retour en arrière"/>
+				<node name="cancelMenu" value="Afficher le menu annulation"/>
+				<node name="none" value="Sans effet"/>
+			</node>
+		</node>
+		<node name="tips" value="Astuces">
+			<node name="summary" value="Paramètres des conseils du jour"/>
+			<node name="showTips" value="Afficher les astuces">
+				<node name="summaryOn" value="Affiche les conseils du jour"/>
+				<node name="summaryOff" value="Pas d'astuces"/>
+			</node>
+		</node>
+		<node name="about" value="About FBReader" toBeTranslated="true">
+			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
+			<node name="version" value="Version" toBeTranslated="true"/>
+			<node name="site" value="Visit our website" toBeTranslated="true">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Send us an e-mail" toBeTranslated="true">
+				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+			</node>
+			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Installer"/>
@@ -282,421 +697,6 @@
 		<node name="installDictionary">
 			<node name="title" value="Installer un dictionnaire"/>
 			<node name="message" value="Souhaitez-vous installer %s ?"/>
-		</node>
-		<node name="BookInfo">
-			<node name="fileName" value="Nom du fichier"/>
-			<node name="title" value="Titre"/>
-			<node name="language" value="Langue"/>
-			<node name="encoding" value="Encodage"/>
-			<node name="authors" value="Auteurs"/>
-			<node name="tags" value="Tags"/>
-			<node name="series" value="Série"/>
-		</node>
-		<node name="Preferences">
-			<node name="directories" value="Répertoires">
-				<node name="summary" value="Emplacements des livres et des polices"/>
-				<node name="books" value="Répertoire des livres"/>
-				<node name="fonts" value="Répertoire des polices"/>
-				<node name="wallpapers" value="Répertoire des fonds d'écran"/>
-			</node>
-			<node name="appearance" value="Apparence">
-				<node name="summary" value="Rotation, barre de statut"/>
-				<node name="screenOrientation" value="Orientation de l'écran">
-					<node name="system" value="Système"/>
-					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
-					<node name="portrait" value="Portrait"/>
-					<node name="landscape" value="Paysage"/>
-					<node name="reversePortrait" value="Portrait inversé"/>
-					<node name="reverseLandscape" value="Paysage inversé"/>
-				</node>
-				<node name="autoOrientation" value="Rotation automatique">
-					<node name="summaryOn" value="Basculer l'affichage du texte pour suivre la rotation de l'écran"/>
-					<node name="summaryOff" value="Garder l'affichage tel quel en ignorant la rotation de l'écran"/>
-				</node>
-				<node name="showStatusBar" value="Barre de statut">
-					<node name="summaryOn" value="Afficher la barre de statut en mode lecture"/>
-					<node name="summaryOff" value="Cacher la barre de statut en mode lecture"/>
-				</node>
-				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
-					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
-				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Afficher la barre de statut lorsque le menu est actif">
-					<node name="summaryOn" value="Afficher la barre  de statut lorsque le menu devient actif"/>
-					<node name="summaryOff" value="Cacher la barre de statut lorsque le menu devient actif"/>
-				</node>
-				<node name="disableButtonLights" value="Désactiver la lumière des boutons physiques pendant la lecture">
-					<node name="summaryOn" value="Désactive la lumière des boutons (ne fonctionne pas sur certains appareils)"/>
-					<node name="summaryOff" value="Ne pas essayer de désactiver la lumière des boutons"/>
-				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Contrôle de la luminosité">
-					<node name="summaryOn" value="Ajuste la luminosité en déplaçant le doigt verticalement sur le bord gauche de l'écran"/>
-					<node name="summaryOff" value="Contrôle désactivé"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Empêcher l'écran de s'éteindre">
-					<node name="0" value="Toujours"/>
-					<node name="25" value="Tant que le niveau de batterie est supérieur à 25 pourcent"/>
-					<node name="50" value="Tant que le niveau de batterie est supérieur à 50 pourcent"/>
-					<node name="100" value="Jamais"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Empêcher l'écran de se mettre en veille pendant le chargement">
-					<node name="summaryOn" value="Pas de mise en veille lorsque la batterie est en charge"/>
-					<node name="summaryOff" value="Éteindre l'écran lorsque la batterie se recharge"/>
-				</node>
-			</node>
-			<node name="text" value="Texte">
-				<node name="summary" value="Polices, césures, etc."/>
-				<node name="fontProperties" value="Font properties" toBeTranslated="true">
-					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="dithering" value="Dithering" toBeTranslated="true">
-						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="hinting" value="Hinting" toBeTranslated="true">
-						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
-					</node>
-				</node>
-				<node name="font" value="Famille de police">
-					<node name="unchanged" value="&lt;inchangé&gt;"/>
-				</node>
-				<node name="fontSize" value="Taille de police"/>
-				<node name="fontSizeDifference" value="Différence de taille"/>
-				<node name="fontStyle" value="Style de police">
-					<node name="regular" value="Normale"/>
-					<node name="bold" value="Gras"/>
-					<node name="italic" value="Italique"/>
-					<node name="boldItalic" value="Gras italique"/>
-				</node>
-				<node name="bold" value="Gras">
-					<node name="summaryOn" value="gras"/>
-					<node name="summaryOff" value="normale"/>
-					<node name="unchanged" value="&lt;inchangé&gt;"/>
-				</node>
-				<node name="italic" value="Italique">
-					<node name="summaryOn" value="italique"/>
-					<node name="summaryOff" value="normale"/>
-					<node name="unchanged" value="&lt;inchangé&gt;"/>
-				</node>
-				<node name="underlined" value="Underlined" toBeTranslated="true">
-					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;inchangé&gt;"/>
-				</node>
-				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;inchangé&gt;"/>
-				</node>
-				<node name="lineSpacing" value="Espacement de lignes">
-					<node name="unchanged" value="&lt;inchangé&gt;"/>
-				</node>
-				<node name="alignment" value="Alignement">
-					<node name="left" value="Gauche"/>
-					<node name="right" value="Droite"/>
-					<node name="center" value="Centré"/>
-					<node name="justify" value="Justifié"/>
-					<node name="unchanged" value="&lt;inchangé&gt;"/>
-				</node>
-				<node name="autoHyphenations" value="Césures automatiques">
-					<node name="summaryOn" value="Mettre automatiquement les traits d'union entre les mots"/>
-					<node name="summaryOff" value="Ne pas appliquer les césures automatiquement"/>
-				</node>
-				<node name="allowHyphenations" value="Autoriser les césures">
-					<node name="summaryOn" value="couper les mots"/>
-					<node name="summaryOff" value="ne pas couper les mots"/>
-					<node name="unchanged" value="&lt;inchangé&gt;"/>
-				</node>
-				<node name="firstLineIndent" value="Indentation de la première ligne"/>
-				<node name="spaceBefore" value="Espace avant"/>
-				<node name="spaceAfter" value="Espace après"/>
-				<node name="leftIndent" value="Indentation à gauche"/>
-				<node name="rightIndent" value="Indentation à droite"/>
-				<node name="more" value="Plus de styles">
-					<node name="summary" value="Paramètres de configuration des titres, épigraphes etc."/>
-					<node name="Regular Paragraph" value="Paragraphe normal">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Title" value="Titre">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Section Title" value="Titre de section">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Poem Title" value="Titre de poême">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subtitle" value="Sous-titre">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Annotation" value="Annotation">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Epigraph" value="Epigraphe">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Stanza" value="Strophe">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Verse" value="Vers">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Preformatted text" value="Texte préformatté">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Image" value="Image">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Cite" value="Citation">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Author" value="Auteur">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Date" value="Date">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Internal Hyperlink" value="Lien interne">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Footnote" value="Bas de page">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Emphasis" value="Emphase">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Strong" value="Fort">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subscript" value="Indice">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Superscript" value="Exposant">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Code" value="Code">
-						<node name="summary" value=""/>
-					</node>
-					<node name="StrikeThrough" value="Texte barré">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Italic" value="Italique">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Bold" value="Gras">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition" value="Définition">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition Description" value="Définition Description">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 1" value="Entête 1">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 2" value="Entête 2">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 3" value="Entête 3">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 4" value="Entête 4">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 5" value="Entête 5">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 6" value="Entête 6">
-						<node name="summary" value=""/>
-					</node>
-					<node name="External Hyperlink" value="Lien externe">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-			</node>
-			<node name="colors" value="Couleurs &amp; fonds d'écran">
-				<node name="summary" value="Paramètres des couleurs"/>
-				<node name="background" value="Arrière-plan">
-					<node name="solidColor" value="Couleur pleine"/>
-					<node name="leather" value="Cuir"/>
-					<node name="sepia" value="Sépia"/>
-					<node name="wood" value="Bois"/>
-				</node>
-				<node name="backgroundColor" value="Couleur de fond"/>
-				<node name="selectionBackground" value="Arrière-plan de sélection"/>
-				<node name="selectionForeground" value="Texte sélectionné"/>
-				<node name="text" value="Texte normal"/>
-				<node name="hyperlink" value="Text d'hyperlien"/>
-				<node name="hyperlinkVisited" value="Lien hypertexte visité"/>
-				<node name="highlighting" value="Arrière-plan des résultats de recherche"/>
-				<node name="footer" value="Pied de page"/>
-			</node>
-			<node name="margins" value="Marge">
-				<node name="summary" value="Marges du texte"/>
-				<node name="left" value="Marge de gauche"/>
-				<node name="right" value="Marge de droite"/>
-				<node name="top" value="Marge du haut"/>
-				<node name="bottom" value="Marge du bas"/>
-			</node>
-			<node name="scrollBar" value="Barre de défilement">
-				<node name="summary" value="Configuration de la barre &amp; pied de page"/>
-				<node name="scrollbarType" value="Nature de la barre de défilement">
-					<node name="hide" value="Cachée"/>
-					<node name="show" value="Curseur vertical"/>
-					<node name="showAsProgress" value="Barre de progression verticale"/>
-					<node name="showAsFooter" value="Pied de page horizontal"/>
-				</node>
-				<node name="footerHeight" value="Hauteur du pied de page"/>
-				<node name="footerColor" value="Couleur pied de page"/>
-				<node name="tocMarks" value="Afficher les repères de la table des matières">
-					<node name="summaryOn" value="Afficher les repères dans la barre du pied de page"/>
-					<node name="summaryOff" value="Ne pas afficher les repères dans la barre du pied de page"/>
-				</node>
-				<node name="showProgress" value="Afficher le numéro de page">
-					<node name="summaryOn" value="Affiche le numéro de la page dans le pied de page"/>
-					<node name="summaryOff" value="N'affiche page le numéro de page"/>
-				</node>
-				<node name="showBattery" value="Afficher le niveau de batterie">
-					<node name="summaryOn" value="Affiche le niveau de batterie dans le pied de page"/>
-					<node name="summaryOff" value="N'affiche pas le niveau de batterie"/>
-				</node>
-				<node name="showClock" value="Afficher l'horloge">
-					<node name="summaryOn" value="Affiche l'horloge dans le pied de page"/>
-					<node name="summaryOff" value="N'affiche pas l'horloge dans le pied de page"/>
-				</node>
-				<node name="font" value="Famille de police"/>
-			</node>
-			<node name="scrolling" value="Navigation">
-				<node name="summary" value="Modalités de défilement du texte"/>
-				<node name="fingerScrolling" value="Défilement à l'écran">
-					<node name="byTap" value="Changer de page par appui du doigt"/>
-					<node name="byFlick" value="Changer de page par petit coup du doigt"/>
-					<node name="byTapAndFlick" value="Changer de page lors d'un appui ou petit coup"/>
-				</node>
-				<node name="enableDoubleTapDetection" value="Détection appui double">
-					<node name="summaryOn" value="Appui double pour afficher le menu de navigation"/>
-					<node name="summaryOff" value="Ignorer les appuis doubles"/>
-				</node>
-				<node name="volumeKeys" value="Touches du volume">
-					<node name="summaryOn" value="Les touches du volume permettent de changer de page"/>
-					<node name="summaryOff" value="Les touches du volume n'ont pas d'effet sur la navigation"/>
-				</node>
-				<node name="invertVolumeKeys" value="Inversion touches du volume">
-					<node name="summaryOn" value="Volume + affiche la page suivante"/>
-					<node name="summaryOff" value="Volume + affiche la page précédente"/>
-				</node>
-				<node name="animation" value="Animation">
-					<node name="none" value="Pas d'animation"/>
-					<node name="curl" value="Effet curl"/>
-					<node name="slide" value="Effet slide"/>
-					<node name="shift" value="Effet shift"/>
-				</node>
-				<node name="animationSpeed" value="Vitesse d'animation">
-					<node name="fast" value="rapide"/>
-					<node name="slow" value="lente"/>
-				</node>
-				<node name="horizontal" value="Défilement horizontal">
-					<node name="summaryOn" value="Défilement des pages horizontalement"/>
-					<node name="summaryOff" value="Défilement des pages verticalement"/>
-				</node>
-			</node>
-			<node name="tapZones" value="Zones d'appui">
-				<node name="summary" value="Actions lors d'un appui du doigt"/>
-				<node name="tapZonesScheme" value="Schéma des zones d'appui">
-					<node name="left_to_right" value="Défilement page de la gauche vers la droite"/>
-					<node name="right_to_left" value="Défilement page de la droite vers la gauche"/>
-					<node name="up" value="Défilement page du bas vers le haut"/>
-					<node name="down" value="Défilement page du haut vers le bas"/>
-					<node name="custom" value="Personnalisation…"/>
-				</node>
-			</node>
-			<node name="dictionary" value="Dictionnaire">
-				<node name="summary" value="Paramètres du dictionnaire"/>
-				<node name="dictionary" value="Dictionnaire"/>
-				<node name="translator" value="Traducteur"/>
-				<node name="tappingAction" value="Configuration de l'appui long">
-					<node name="doNothing" value="Un appui long ne fait rien"/>
-					<node name="selectSingleWord" value="Un appui long selectionne le mot"/>
-					<node name="startSelecting" value="Un appui long indique un début de sélection"/>
-					<node name="openDictionary" value="Un appui long selectionne le mot, relâcher ouvre le dictionnaire"/>
-				</node>
-				<node name="navigateOverAllWords" value="Parcourir l'ensemble des mots">
-					<node name="summaryOn" value="La navigation par touches parcourt tous les mots"/>
-					<node name="summaryOff" value="La navigation par touches visite les liens hypertexts uniquement"/>
-				</node>
-			</node>
-			<node name="images" value="Images">
-				<node name="summary" value="Options d'affichage des images"/>
-				<node name="backgroundColor" value="Couleur de fond de l'image"/>
-				<node name="tappingAction" value="Action de l'appui long">
-					<node name="doNothing" value="Un appui long ne fait rien"/>
-					<node name="selectImage" value="Un appui long selectionne l'image"/>
-					<node name="openImageView" value="Un appui long affiche l'image seule"/>
-				</node>
-			</node>
-			<node name="cancelMenu" value="Bouton retour">
-				<node name="summary" value="Liste des actions du bouton retour"/>
-				<node name="library" value="Library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-				</node>
-				<node name="networkLibrary" value="Network library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-				</node>
-				<node name="previousBook" value="Livre précédent">
-					<node name="summaryOn" value="Permet de revenir au livre précédent"/>
-					<node name="summaryOff" value="Ne permet pas de retourner au livre précédent"/>
-				</node>
-				<node name="positions" value="3 dernières positions">
-					<node name="summaryOn" value="Afficher les 3 dernières positions dans le livre"/>
-					<node name="summaryOff" value="Ne pas afficher les 3 dernières positions dans le livre"/>
-				</node>
-				<node name="backKeyAction" value="Action de la touche retour">
-					<node name="exit" value="Fermer FBReader"/>
-					<node name="goBack" value="Retour en arrière"/>
-					<node name="cancelMenu" value="Afficher le menu annulation"/>
-				</node>
-				<node name="backKeyLongPressAction" value="Action appui long touche retour">
-					<node name="exit" value="Fermer FBReader"/>
-					<node name="goBack" value="Retour en arrière"/>
-					<node name="cancelMenu" value="Afficher le menu annulation"/>
-					<node name="none" value="Sans effet"/>
-				</node>
-			</node>
-			<node name="tips" value="Astuces">
-				<node name="summary" value="Paramètres des conseils du jour"/>
-				<node name="showTips" value="Afficher les astuces">
-					<node name="summaryOn" value="Affiche les conseils du jour"/>
-					<node name="summaryOff" value="Pas d'astuces"/>
-				</node>
-			</node>
-			<node name="about" value="About FBReader" toBeTranslated="true">
-				<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-				<node name="version" value="Version" toBeTranslated="true"/>
-				<node name="site" value="Visit our website" toBeTranslated="true">
-					<node name="url" value="http://www.fbreader.org/"/>
-				</node>
-				<node name="email" value="Send us an e-mail" toBeTranslated="true">
-					<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
-				</node>
-				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
-					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Le livre va être supprimé de façon définitive. Etes-vous sûr?"/>
