@@ -30,7 +30,7 @@ final class DummyPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void clear(ZLFile wallpaperFile, boolean doMirror) {
+	public void clear(ZLFile wallpaperFile, WallpaperMode mode) {
 	}
 
 	@Override
@@ -51,14 +51,14 @@ final class DummyPaintContext extends ZLPaintContext {
 	}
 
 	@Override
-	public void setLineColor(ZLColor color, int style) {
+	public void setLineColor(ZLColor color) {
 	}
 	@Override
 	public void setLineWidth(int width) {
 	}
 
 	@Override
-	public void setFillColor(ZLColor color, int alpha, int style) {
+	public void setFillColor(ZLColor color, int alpha) {
 	}
 
 	@Override

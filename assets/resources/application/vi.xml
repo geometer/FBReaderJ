@@ -292,9 +292,9 @@
 		<node name="Preferences">
 			<node name="directories" value="Thư mục">
 				<node name="summary" value="Các thư mục để tìm kiếm tập tin"/>
-				<node name="books" value="Books directories" toBeTranslated="true"/>
-				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
-				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
+				<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+				<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Giao diện">
 				<node name="summary" value="Xoay, thanh trạng thái"/>

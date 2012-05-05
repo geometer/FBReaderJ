@@ -51,6 +51,7 @@ abstract class ZLTextViewBase extends ZLView {
 	public abstract int getBottomMargin();
 
 	public abstract ZLFile getWallpaperFile();
+	public abstract ZLPaintContext.WallpaperMode getWallpaperMode();
 	public abstract ZLColor getBackgroundColor();
 	public abstract ZLColor getSelectedBackgroundColor();
 	public abstract ZLColor getSelectedForegroundColor();

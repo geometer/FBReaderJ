@@ -295,9 +295,9 @@
 		<node name="Preferences">
 			<node name="directories" value="Directorios">
 				<node name="summary" value="Directorios para buscar archivos"/>
-				<node name="books" value="Books directories" toBeTranslated="true"/>
-				<node name="fonts" value="Fonts directories" toBeTranslated="true"/>
-				<node name="wallpapers" value="Wallpapers directories" toBeTranslated="true"/>
+				<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+				<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+				<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			</node>
 			<node name="appearance" value="Apariencia">
 				<node name="summary" value="Rotación, barra de estado"/>
