@@ -364,6 +364,13 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
+	public ZLPaintContext.WallpaperMode getWallpaperMode() {
+		return getWallpaperFile() instanceof ZLResourceFile
+			? ZLPaintContext.WallpaperMode.TILE_MIRROR
+			: ZLPaintContext.WallpaperMode.TILE;
+	}
+
+	@Override
 	public ZLColor getBackgroundColor() {
 		return myReader.getColorProfile().BackgroundOption.getValue();
 	}
@@ -448,7 +455,7 @@ public final class FBView extends ZLTextView {
 		public synchronized void paint(ZLPaintContext context) {
 			final ZLFile wallpaper = getWallpaperFile();
 			if (wallpaper != null) {
-				context.clear(wallpaper, wallpaper instanceof ZLResourceFile);
+				context.clear(wallpaper, getWallpaperMode());
 			} else {
 				context.clear(getBackgroundColor());
 			}
