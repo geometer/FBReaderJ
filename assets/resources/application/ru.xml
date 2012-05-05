@@ -307,9 +307,9 @@
 		<node name="Preferences">
 			<node name="directories" value="Каталоги">
 				<node name="summary" value="Где искать файлы"/>
-				<node name="books" value="Каталоги с книгами"/>
-				<node name="fonts" value="Каталоги со шрифтами"/>
-				<node name="wallpapers" value="Каталоги с обоями"/>
+				<node name="bookPath" value="Каталоги с книгами"/>
+				<node name="fontPath" value="Каталоги со шрифтами"/>
+				<node name="wallpaperPath" value="Каталоги с обоями"/>
 			</node>
 			<node name="appearance" value="Внешний вид">
 				<node name="summary" value="Экран, строка состояния, подсветка кнопок"/>
