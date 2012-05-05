@@ -250,6 +250,421 @@
 		<node name="toggleFullscreen" value="全屏"/>
 		<node name="bookmarks" value="我的书签"/>
 	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="文件"/>
+		<node name="title" value="书名"/>
+		<node name="language" value="语言"/>
+		<node name="encoding" value="编码"/>
+		<node name="authors" value="作者"/>
+		<node name="tags" value="标签"/>
+		<node name="series" value="丛书系列"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="文件夹设定">
+			<node name="summary" value="相关文件夹位置设定"/>
+			<node name="books" value="书文存放位置"/>
+			<node name="fonts" value="字体存放位置"/>
+			<node name="wallpapers" value="墙纸存放位置"/>
+		</node>
+		<node name="appearance" value="呈现方式">
+			<node name="summary" value="旋转，状态工具条"/>
+			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+				<node name="system" value="System" toBeTranslated="true"/>
+				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
+				<node name="portrait" value="Portrait" toBeTranslated="true"/>
+				<node name="landscape" value="Landscape" toBeTranslated="true"/>
+				<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+				<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+			</node>
+			<node name="autoOrientation" value="自动翻转">
+				<node name="summaryOn" value="晃动设备时自动翻转"/>
+				<node name="summaryOff" value="晃动设备时禁止翻转"/>
+			</node>
+			<node name="showStatusBar" value="显示状态栏">
+				<node name="summaryOn" value="阅读模式下显示状态栏"/>
+				<node name="summaryOff" value="阅读模式下隐藏状态栏"/>
+			</node>
+			<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+				<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+				<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="菜单激活时显示状态栏">
+				<node name="summaryOn" value="菜单处于激活状态时显示状态栏"/>
+				<node name="summaryOff" value="菜单激活时不要显示状态栏"/>
+			</node>
+			<node name="disableButtonLights" value="阅读时禁用系统按键发亮">
+				<node name="summaryOn" value="禁用设备系统按键发亮 (对某些设备无效)"/>
+				<node name="summaryOff" value="不要尝试禁用系统按键发亮"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="屏幕亮度调整">
+				<node name="summaryOn" value="通过在屏幕左侧上下滑动手指来调整"/>
+				<node name="summaryOff" value="禁用屏幕亮度调整"/>
+			</node>
+			<node name="dontTurnScreenOff" value="禁止屏幕睡眠">
+				<node name="0" value="总是"/>
+				<node name="25" value="当电量大于百分之25"/>
+				<node name="50" value="当电量大于百分之50"/>
+				<node name="100" value="从不"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="在充电时防止屏幕进入睡眠状态">
+				<node name="summaryOn" value="如果设备处于充电模式则禁止屏幕进入睡眠状态"/>
+				<node name="summaryOff" value="如果设备处于充电模式则关闭屏幕"/>
+			</node>
+		</node>
+		<node name="text" value="文字">
+			<node name="summary" value="字体, 断字等等。"/>
+			<node name="fontProperties" value="Font properties" toBeTranslated="true">
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="字体">
+				<node name="unchanged" value="&lt;不变&gt;"/>
+			</node>
+			<node name="fontSize" value="字体大小"/>
+			<node name="fontSizeDifference" value="大小差异"/>
+			<node name="fontStyle" value="字型">
+				<node name="regular" value="正常"/>
+				<node name="bold" value="加粗"/>
+				<node name="italic" value="倾斜"/>
+				<node name="boldItalic" value="加粗并倾斜"/>
+			</node>
+			<node name="bold" value="加粗">
+				<node name="summaryOn" value="加粗"/>
+				<node name="summaryOff" value="正常"/>
+				<node name="unchanged" value="&lt;不变&gt;"/>
+			</node>
+			<node name="italic" value="倾斜">
+				<node name="summaryOn" value="倾斜"/>
+				<node name="summaryOff" value="规则"/>
+				<node name="unchanged" value="&lt;不变&gt;"/>
+			</node>
+			<node name="underlined" value="Underlined" toBeTranslated="true">
+				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;不变&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;不变&gt;"/>
+			</node>
+			<node name="lineSpacing" value="行间距">
+				<node name="unchanged" value="&lt;不变&gt;"/>
+			</node>
+			<node name="alignment" value="对齐">
+				<node name="left" value="左"/>
+				<node name="right" value="右"/>
+				<node name="center" value="居中"/>
+				<node name="justify" value="对齐"/>
+				<node name="unchanged" value="&lt;不变&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="自动断字">
+				<node name="summaryOn" value="自动断字"/>
+				<node name="summaryOff" value="禁止自动断字"/>
+			</node>
+			<node name="allowHyphenations" value="允许断字">
+				<node name="summaryOn" value="断字"/>
+				<node name="summaryOff" value="禁止断字"/>
+				<node name="unchanged" value="&lt;不变&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="首行缩进"/>
+			<node name="spaceBefore" value="段前距"/>
+			<node name="spaceAfter" value="段后距"/>
+			<node name="leftIndent" value="左缩进"/>
+			<node name="rightIndent" value="右缩进"/>
+			<node name="more" value="更多样式">
+				<node name="summary" value="分别设定标题、段落等."/>
+				<node name="Regular Paragraph" value="连续段落">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="书名">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="章节标题">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="诗标题">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="副标题">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="摘要">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="题词">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="节">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="韵文">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="预置格式文本">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="图像">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="举例">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="作者">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="日期">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="内部超链接">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="脚注">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="重点">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="固定">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="下标">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="上标">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="编码">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="删除线">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="倾斜">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="加粗">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="定义">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="定义描述">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="标题 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="标题 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="标题 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="标题 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="标题 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="标题 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="外部链接">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="颜色 &amp; 墙纸">
+			<node name="summary" value="设置颜色"/>
+			<node name="background" value="背景色">
+				<node name="solidColor" value="单色"/>
+				<node name="leather" value="皮革"/>
+				<node name="sepia" value="棕褐"/>
+				<node name="wood" value="木质"/>
+			</node>
+			<node name="backgroundColor" value="背景色"/>
+			<node name="selectionBackground" value="选择背景色"/>
+			<node name="selectionForeground" value="选择的文本"/>
+			<node name="text" value="普通文字"/>
+			<node name="hyperlink" value="链接文字"/>
+			<node name="hyperlinkVisited" value="已访问过的链接文字"/>
+			<node name="highlighting" value="搜索结果背景"/>
+			<node name="footer" value="页脚"/>
+		</node>
+		<node name="margins" value="边距">
+			<node name="summary" value="文本空白距"/>
+			<node name="left" value="左边距"/>
+			<node name="right" value="右边距"/>
+			<node name="top" value="顶边距"/>
+			<node name="bottom" value="底边距"/>
+		</node>
+		<node name="scrollBar" value="滚动条">
+			<node name="summary" value="滚动条 &amp; 页脚设定"/>
+			<node name="scrollbarType" value="滚动条设置">
+				<node name="hide" value="隐藏"/>
+				<node name="show" value="垂直滚动"/>
+				<node name="showAsProgress" value="垂直进度方式"/>
+				<node name="showAsFooter" value="水平页脚方式"/>
+			</node>
+			<node name="footerHeight" value="页脚高度"/>
+			<node name="footerColor" value="页脚颜色"/>
+			<node name="tocMarks" value="显示内容目录标志">
+				<node name="summaryOn" value="在页脚栏显示内容目录标志"/>
+				<node name="summaryOff" value="不在页脚栏显示内容目录标志"/>
+			</node>
+			<node name="showProgress" value="显示页码">
+				<node name="summaryOn" value="在页脚显示页码"/>
+				<node name="summaryOff" value="不在页脚显示页码"/>
+			</node>
+			<node name="showBattery" value="显示电量百分比">
+				<node name="summaryOn" value="在页脚显示电量百分比"/>
+				<node name="summaryOff" value="不在页脚显示电量百分比"/>
+			</node>
+			<node name="showClock" value="显示时间">
+				<node name="summaryOn" value="页脚处显示时间"/>
+				<node name="summaryOff" value="不在页脚处显示时间"/>
+			</node>
+			<node name="font" value="字体"/>
+		</node>
+		<node name="scrolling" value="翻阅操作">
+			<node name="summary" value="如何翻阅文字内容"/>
+			<node name="fingerScrolling" value="触滑屏幕翻阅">
+				<node name="byTap" value="手指拍触屏幕翻页"/>
+				<node name="byFlick" value="手指触滑翻页"/>
+				<node name="byTapAndFlick" value="触滑或者拍触以翻页"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="连续拍触动作设定">
+				<node name="summaryOn" value="连续拍触屏幕两次显示对话框/菜单"/>
+				<node name="summaryOff" value="忽略连续拍触动作"/>
+			</node>
+			<node name="volumeKeys" value="音量键滚动">
+				<node name="summaryOn" value="使用音量键翻页"/>
+				<node name="summaryOff" value="音量键仅用于声音"/>
+			</node>
+			<node name="invertVolumeKeys" value="用音量键来翻动">
+				<node name="summaryOn" value="允许上 (下) 键上(下)翻动页面"/>
+				<node name="summaryOff" value="禁止上 (下) 键上(下)翻动页面"/>
+			</node>
+			<node name="animation" value="动画效果">
+				<node name="none" value="无动画效果的滚屏"/>
+				<node name="curl" value="翻卷动画"/>
+				<node name="slide" value="滑动动画"/>
+				<node name="shift" value="移动动画"/>
+			</node>
+			<node name="animationSpeed" value="动画速度">
+				<node name="fast" value="快"/>
+				<node name="slow" value="慢"/>
+			</node>
+			<node name="horizontal" value="横屏翻阅">
+				<node name="summaryOn" value="横屏翻阅"/>
+				<node name="summaryOff" value="纵屏翻阅"/>
+			</node>
+		</node>
+		<node name="tapZones" value="拍触区域">
+			<node name="summary" value="手指拍触动作设定"/>
+			<node name="tapZonesScheme" value="拍触区域设定">
+				<node name="left_to_right" value="从左向右翻阅"/>
+				<node name="right_to_left" value="从右向左翻阅"/>
+				<node name="up" value="从下往上翻阅"/>
+				<node name="down" value="从上往下翻阅"/>
+				<node name="custom" value="定制…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="字典设定">
+			<node name="summary" value="设置字典及其对应操作"/>
+			<node name="dictionary" value="字典"/>
+			<node name="translator" value="译者"/>
+			<node name="tappingAction" value="长按动作设定">
+				<node name="doNothing" value="长按不做任何事"/>
+				<node name="selectSingleWord" value="长按选择词语"/>
+				<node name="startSelecting" value="长按选择内容"/>
+				<node name="openDictionary" value="长按选择词语，放开后打开字典"/>
+			</node>
+			<node name="navigateOverAllWords" value="导航键访问词句设定">
+				<node name="summaryOn" value="导航键访问所有的词句"/>
+				<node name="summaryOff" value="导航键仅访问超链接词句"/>
+			</node>
+		</node>
+		<node name="images" value="图像设定">
+			<node name="summary" value="图像显示选项"/>
+			<node name="backgroundColor" value="图像显示时的背景颜色"/>
+			<node name="tappingAction" value="长按动作设定">
+				<node name="doNothing" value="长按不做任何事"/>
+				<node name="selectImage" value="长按选择图像"/>
+				<node name="openImageView" value="长按打开图像"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="取消菜单设定">
+			<node name="summary" value="设定回退按键动作"/>
+			<node name="library" value="Library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="Network library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="上一本书">
+				<node name="summaryOn" value="显示“返回到上一本书”"/>
+				<node name="summaryOff" value="不显示“返回到上一本书”"/>
+			</node>
+			<node name="positions" value="最近浏览的3处位置">
+				<node name="summaryOn" value="显示最近浏览的3处位置"/>
+				<node name="summaryOff" value="不显示最近浏览的3处位置"/>
+			</node>
+			<node name="backKeyAction" value="回退键动作设定">
+				<node name="exit" value="关闭 FBReader"/>
+				<node name="goBack" value="后退到前一个界面"/>
+				<node name="cancelMenu" value="显示取消菜单"/>
+			</node>
+			<node name="backKeyLongPressAction" value="长按回退键动作设定">
+				<node name="exit" value="关闭FBReader"/>
+				<node name="goBack" value="后退到前一个界面"/>
+				<node name="cancelMenu" value="显示取消菜单"/>
+				<node name="none" value="不做任何事"/>
+			</node>
+		</node>
+		<node name="tips" value="Tips" toBeTranslated="true">
+			<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
+			<node name="showTips" value="Show tips" toBeTranslated="true">
+				<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="about" value="About FBReader" toBeTranslated="true">
+			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
+			<node name="version" value="Version" toBeTranslated="true"/>
+			<node name="site" value="Visit our website" toBeTranslated="true">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Send us an e-mail" toBeTranslated="true">
+				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+			</node>
+			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="安装"/>
@@ -279,421 +694,6 @@
 		<node name="installDictionary">
 			<node name="title" value="安装字典"/>
 			<node name="message" value="你希望安装 %s 么?"/>
-		</node>
-		<node name="BookInfo">
-			<node name="fileName" value="文件"/>
-			<node name="title" value="书名"/>
-			<node name="language" value="语言"/>
-			<node name="encoding" value="编码"/>
-			<node name="authors" value="作者"/>
-			<node name="tags" value="标签"/>
-			<node name="series" value="丛书系列"/>
-		</node>
-		<node name="Preferences">
-			<node name="directories" value="文件夹设定">
-				<node name="summary" value="相关文件夹位置设定"/>
-				<node name="books" value="书文存放位置"/>
-				<node name="fonts" value="字体存放位置"/>
-				<node name="wallpapers" value="墙纸存放位置"/>
-			</node>
-			<node name="appearance" value="呈现方式">
-				<node name="summary" value="旋转，状态工具条"/>
-				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
-					<node name="system" value="System" toBeTranslated="true"/>
-					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
-					<node name="portrait" value="Portrait" toBeTranslated="true"/>
-					<node name="landscape" value="Landscape" toBeTranslated="true"/>
-					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
-				</node>
-				<node name="autoOrientation" value="自动翻转">
-					<node name="summaryOn" value="晃动设备时自动翻转"/>
-					<node name="summaryOff" value="晃动设备时禁止翻转"/>
-				</node>
-				<node name="showStatusBar" value="显示状态栏">
-					<node name="summaryOn" value="阅读模式下显示状态栏"/>
-					<node name="summaryOff" value="阅读模式下隐藏状态栏"/>
-				</node>
-				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
-					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
-				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="菜单激活时显示状态栏">
-					<node name="summaryOn" value="菜单处于激活状态时显示状态栏"/>
-					<node name="summaryOff" value="菜单激活时不要显示状态栏"/>
-				</node>
-				<node name="disableButtonLights" value="阅读时禁用系统按键发亮">
-					<node name="summaryOn" value="禁用设备系统按键发亮 (对某些设备无效)"/>
-					<node name="summaryOff" value="不要尝试禁用系统按键发亮"/>
-				</node>
-				<node name="allowScreenBrightnessAdjustment" value="屏幕亮度调整">
-					<node name="summaryOn" value="通过在屏幕左侧上下滑动手指来调整"/>
-					<node name="summaryOff" value="禁用屏幕亮度调整"/>
-				</node>
-				<node name="dontTurnScreenOff" value="禁止屏幕睡眠">
-					<node name="0" value="总是"/>
-					<node name="25" value="当电量大于百分之25"/>
-					<node name="50" value="当电量大于百分之50"/>
-					<node name="100" value="从不"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="在充电时防止屏幕进入睡眠状态">
-					<node name="summaryOn" value="如果设备处于充电模式则禁止屏幕进入睡眠状态"/>
-					<node name="summaryOff" value="如果设备处于充电模式则关闭屏幕"/>
-				</node>
-			</node>
-			<node name="text" value="文字">
-				<node name="summary" value="字体, 断字等等。"/>
-				<node name="fontProperties" value="Font properties" toBeTranslated="true">
-					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="dithering" value="Dithering" toBeTranslated="true">
-						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="hinting" value="Hinting" toBeTranslated="true">
-						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
-					</node>
-				</node>
-				<node name="font" value="字体">
-					<node name="unchanged" value="&lt;不变&gt;"/>
-				</node>
-				<node name="fontSize" value="字体大小"/>
-				<node name="fontSizeDifference" value="大小差异"/>
-				<node name="fontStyle" value="字型">
-					<node name="regular" value="正常"/>
-					<node name="bold" value="加粗"/>
-					<node name="italic" value="倾斜"/>
-					<node name="boldItalic" value="加粗并倾斜"/>
-				</node>
-				<node name="bold" value="加粗">
-					<node name="summaryOn" value="加粗"/>
-					<node name="summaryOff" value="正常"/>
-					<node name="unchanged" value="&lt;不变&gt;"/>
-				</node>
-				<node name="italic" value="倾斜">
-					<node name="summaryOn" value="倾斜"/>
-					<node name="summaryOff" value="规则"/>
-					<node name="unchanged" value="&lt;不变&gt;"/>
-				</node>
-				<node name="underlined" value="Underlined" toBeTranslated="true">
-					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;不变&gt;"/>
-				</node>
-				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;不变&gt;"/>
-				</node>
-				<node name="lineSpacing" value="行间距">
-					<node name="unchanged" value="&lt;不变&gt;"/>
-				</node>
-				<node name="alignment" value="对齐">
-					<node name="left" value="左"/>
-					<node name="right" value="右"/>
-					<node name="center" value="居中"/>
-					<node name="justify" value="对齐"/>
-					<node name="unchanged" value="&lt;不变&gt;"/>
-				</node>
-				<node name="autoHyphenations" value="自动断字">
-					<node name="summaryOn" value="自动断字"/>
-					<node name="summaryOff" value="禁止自动断字"/>
-				</node>
-				<node name="allowHyphenations" value="允许断字">
-					<node name="summaryOn" value="断字"/>
-					<node name="summaryOff" value="禁止断字"/>
-					<node name="unchanged" value="&lt;不变&gt;"/>
-				</node>
-				<node name="firstLineIndent" value="首行缩进"/>
-				<node name="spaceBefore" value="段前距"/>
-				<node name="spaceAfter" value="段后距"/>
-				<node name="leftIndent" value="左缩进"/>
-				<node name="rightIndent" value="右缩进"/>
-				<node name="more" value="更多样式">
-					<node name="summary" value="分别设定标题、段落等."/>
-					<node name="Regular Paragraph" value="连续段落">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Title" value="书名">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Section Title" value="章节标题">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Poem Title" value="诗标题">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subtitle" value="副标题">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Annotation" value="摘要">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Epigraph" value="题词">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Stanza" value="节">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Verse" value="韵文">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Preformatted text" value="预置格式文本">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Image" value="图像">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Cite" value="举例">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Author" value="作者">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Date" value="日期">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Internal Hyperlink" value="内部超链接">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Footnote" value="脚注">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Emphasis" value="重点">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Strong" value="固定">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subscript" value="下标">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Superscript" value="上标">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Code" value="编码">
-						<node name="summary" value=""/>
-					</node>
-					<node name="StrikeThrough" value="删除线">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Italic" value="倾斜">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Bold" value="加粗">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition" value="定义">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition Description" value="定义描述">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 1" value="标题 1">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 2" value="标题 2">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 3" value="标题 3">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 4" value="标题 4">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 5" value="标题 5">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 6" value="标题 6">
-						<node name="summary" value=""/>
-					</node>
-					<node name="External Hyperlink" value="外部链接">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-			</node>
-			<node name="colors" value="颜色 &amp; 墙纸">
-				<node name="summary" value="设置颜色"/>
-				<node name="background" value="背景色">
-					<node name="solidColor" value="单色"/>
-					<node name="leather" value="皮革"/>
-					<node name="sepia" value="棕褐"/>
-					<node name="wood" value="木质"/>
-				</node>
-				<node name="backgroundColor" value="背景色"/>
-				<node name="selectionBackground" value="选择背景色"/>
-				<node name="selectionForeground" value="选择的文本"/>
-				<node name="text" value="普通文字"/>
-				<node name="hyperlink" value="链接文字"/>
-				<node name="hyperlinkVisited" value="已访问过的链接文字"/>
-				<node name="highlighting" value="搜索结果背景"/>
-				<node name="footer" value="页脚"/>
-			</node>
-			<node name="margins" value="边距">
-				<node name="summary" value="文本空白距"/>
-				<node name="left" value="左边距"/>
-				<node name="right" value="右边距"/>
-				<node name="top" value="顶边距"/>
-				<node name="bottom" value="底边距"/>
-			</node>
-			<node name="scrollBar" value="滚动条">
-				<node name="summary" value="滚动条 &amp; 页脚设定"/>
-				<node name="scrollbarType" value="滚动条设置">
-					<node name="hide" value="隐藏"/>
-					<node name="show" value="垂直滚动"/>
-					<node name="showAsProgress" value="垂直进度方式"/>
-					<node name="showAsFooter" value="水平页脚方式"/>
-				</node>
-				<node name="footerHeight" value="页脚高度"/>
-				<node name="footerColor" value="页脚颜色"/>
-				<node name="tocMarks" value="显示内容目录标志">
-					<node name="summaryOn" value="在页脚栏显示内容目录标志"/>
-					<node name="summaryOff" value="不在页脚栏显示内容目录标志"/>
-				</node>
-				<node name="showProgress" value="显示页码">
-					<node name="summaryOn" value="在页脚显示页码"/>
-					<node name="summaryOff" value="不在页脚显示页码"/>
-				</node>
-				<node name="showBattery" value="显示电量百分比">
-					<node name="summaryOn" value="在页脚显示电量百分比"/>
-					<node name="summaryOff" value="不在页脚显示电量百分比"/>
-				</node>
-				<node name="showClock" value="显示时间">
-					<node name="summaryOn" value="页脚处显示时间"/>
-					<node name="summaryOff" value="不在页脚处显示时间"/>
-				</node>
-				<node name="font" value="字体"/>
-			</node>
-			<node name="scrolling" value="翻阅操作">
-				<node name="summary" value="如何翻阅文字内容"/>
-				<node name="fingerScrolling" value="触滑屏幕翻阅">
-					<node name="byTap" value="手指拍触屏幕翻页"/>
-					<node name="byFlick" value="手指触滑翻页"/>
-					<node name="byTapAndFlick" value="触滑或者拍触以翻页"/>
-				</node>
-				<node name="enableDoubleTapDetection" value="连续拍触动作设定">
-					<node name="summaryOn" value="连续拍触屏幕两次显示对话框/菜单"/>
-					<node name="summaryOff" value="忽略连续拍触动作"/>
-				</node>
-				<node name="volumeKeys" value="音量键滚动">
-					<node name="summaryOn" value="使用音量键翻页"/>
-					<node name="summaryOff" value="音量键仅用于声音"/>
-				</node>
-				<node name="invertVolumeKeys" value="用音量键来翻动">
-					<node name="summaryOn" value="允许上 (下) 键上(下)翻动页面"/>
-					<node name="summaryOff" value="禁止上 (下) 键上(下)翻动页面"/>
-				</node>
-				<node name="animation" value="动画效果">
-					<node name="none" value="无动画效果的滚屏"/>
-					<node name="curl" value="翻卷动画"/>
-					<node name="slide" value="滑动动画"/>
-					<node name="shift" value="移动动画"/>
-				</node>
-				<node name="animationSpeed" value="动画速度">
-					<node name="fast" value="快"/>
-					<node name="slow" value="慢"/>
-				</node>
-				<node name="horizontal" value="横屏翻阅">
-					<node name="summaryOn" value="横屏翻阅"/>
-					<node name="summaryOff" value="纵屏翻阅"/>
-				</node>
-			</node>
-			<node name="tapZones" value="拍触区域">
-				<node name="summary" value="手指拍触动作设定"/>
-				<node name="tapZonesScheme" value="拍触区域设定">
-					<node name="left_to_right" value="从左向右翻阅"/>
-					<node name="right_to_left" value="从右向左翻阅"/>
-					<node name="up" value="从下往上翻阅"/>
-					<node name="down" value="从上往下翻阅"/>
-					<node name="custom" value="定制…"/>
-				</node>
-			</node>
-			<node name="dictionary" value="字典设定">
-				<node name="summary" value="设置字典及其对应操作"/>
-				<node name="dictionary" value="字典"/>
-				<node name="translator" value="译者"/>
-				<node name="tappingAction" value="长按动作设定">
-					<node name="doNothing" value="长按不做任何事"/>
-					<node name="selectSingleWord" value="长按选择词语"/>
-					<node name="startSelecting" value="长按选择内容"/>
-					<node name="openDictionary" value="长按选择词语，放开后打开字典"/>
-				</node>
-				<node name="navigateOverAllWords" value="导航键访问词句设定">
-					<node name="summaryOn" value="导航键访问所有的词句"/>
-					<node name="summaryOff" value="导航键仅访问超链接词句"/>
-				</node>
-			</node>
-			<node name="images" value="图像设定">
-				<node name="summary" value="图像显示选项"/>
-				<node name="backgroundColor" value="图像显示时的背景颜色"/>
-				<node name="tappingAction" value="长按动作设定">
-					<node name="doNothing" value="长按不做任何事"/>
-					<node name="selectImage" value="长按选择图像"/>
-					<node name="openImageView" value="长按打开图像"/>
-				</node>
-			</node>
-			<node name="cancelMenu" value="取消菜单设定">
-				<node name="summary" value="设定回退按键动作"/>
-				<node name="library" value="Library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-				</node>
-				<node name="networkLibrary" value="Network library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-				</node>
-				<node name="previousBook" value="上一本书">
-					<node name="summaryOn" value="显示“返回到上一本书”"/>
-					<node name="summaryOff" value="不显示“返回到上一本书”"/>
-				</node>
-				<node name="positions" value="最近浏览的3处位置">
-					<node name="summaryOn" value="显示最近浏览的3处位置"/>
-					<node name="summaryOff" value="不显示最近浏览的3处位置"/>
-				</node>
-				<node name="backKeyAction" value="回退键动作设定">
-					<node name="exit" value="关闭 FBReader"/>
-					<node name="goBack" value="后退到前一个界面"/>
-					<node name="cancelMenu" value="显示取消菜单"/>
-				</node>
-				<node name="backKeyLongPressAction" value="长按回退键动作设定">
-					<node name="exit" value="关闭FBReader"/>
-					<node name="goBack" value="后退到前一个界面"/>
-					<node name="cancelMenu" value="显示取消菜单"/>
-					<node name="none" value="不做任何事"/>
-				</node>
-			</node>
-			<node name="tips" value="Tips" toBeTranslated="true">
-				<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
-				<node name="showTips" value="Show tips" toBeTranslated="true">
-					<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
-					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="about" value="About FBReader" toBeTranslated="true">
-				<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-				<node name="version" value="Version" toBeTranslated="true"/>
-				<node name="site" value="Visit our website" toBeTranslated="true">
-					<node name="url" value="http://www.fbreader.org/"/>
-				</node>
-				<node name="email" value="Send us an e-mail" toBeTranslated="true">
-					<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
-				</node>
-				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
-					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="确认删除该文件?"/>
