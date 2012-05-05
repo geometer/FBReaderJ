@@ -250,6 +250,421 @@
 		<node name="toggleFullscreen" value="Teljes kijelző"/>
 		<node name="bookmarks" value="Könyvjelzők"/>
 	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Fájlnév"/>
+		<node name="title" value="Cím"/>
+		<node name="language" value="Nyelv"/>
+		<node name="encoding" value="Kódolás"/>
+		<node name="authors" value="Szerzők"/>
+		<node name="tags" value="Címkék"/>
+		<node name="series" value="Sorozat"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Mappák">
+			<node name="summary" value="Mely mappákban keressen fájlokat"/>
+			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+		</node>
+		<node name="appearance" value="Megjelenés">
+			<node name="summary" value="Elforgatás, állapotsor"/>
+			<node name="screenOrientation" value="Kijelző iránya">
+				<node name="system" value="Rendszerbeállítás"/>
+				<node name="sensor" value="A készülék irányától függ"/>
+				<node name="portrait" value="Álló"/>
+				<node name="landscape" value="Fekvő"/>
+				<node name="reversePortrait" value="Fordított álló"/>
+				<node name="reverseLandscape" value="Fordított fekvő"/>
+			</node>
+			<node name="autoOrientation" value="Automatikus elforgatás">
+				<node name="summaryOn" value="A kijelző elfordul a készülék mozgatásakor"/>
+				<node name="summaryOff" value="A kijelző nem fordul el a készülés mozgatásakor"/>
+			</node>
+			<node name="showStatusBar" value="Állapotsor látható">
+				<node name="summaryOn" value="Az állapotsor látszik olvasás közben"/>
+				<node name="summaryOff" value="Az állapotsor nem látszik olvasás közben"/>
+			</node>
+			<node name="showActionBar" value="Akciósáv látható">
+				<node name="summaryOn" value="Akciósáv látható olvasás közben"/>
+				<node name="summaryOff" value="Akciósáv elrejtése olvasás közben"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Állapotsor látható a menüben">
+				<node name="summaryOn" value="Az állapotsor látszik a menübe belépéskor"/>
+				<node name="summaryOff" value="Az állapotsor nem látszik a menübe belépéskor"/>
+			</node>
+			<node name="disableButtonLights" value="Gombok megvilágításának kikapcsolása">
+				<node name="summaryOn" value="Megvilágítás kikapcsolása olvasás közben (nem minden eszköznél működik)"/>
+				<node name="summaryOff" value="Ne próbálja kikapcsolni a gombok háttérvilágítását"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Fényerő beállítása">
+				<node name="summaryOn" value="Felfelé/lefelé csúsztatás a képernyő bal oldalán"/>
+				<node name="summaryOff" value="Kikapcsolva"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Kijelző kikapcsolása">
+				<node name="0" value="Soha"/>
+				<node name="25" value="25 százalék akku töltöttség alatt"/>
+				<node name="50" value="50 százalék akku töltöttség alatt"/>
+				<node name="100" value="Mindig (automatikusan)"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Kijelző kikapcsolása töltéskor">
+				<node name="summaryOn" value="Ne kapcsoljon ki a kijelző az akkumulátor töltésekor"/>
+				<node name="summaryOff" value="A kijelző automatikusan kikapcsol az akkumulátor töltésekor is"/>
+			</node>
+		</node>
+		<node name="text" value="Szöveg">
+			<node name="summary" value="Betűtípus, elválasztás stb."/>
+			<node name="fontProperties" value="Font properties" toBeTranslated="true">
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="Betűtípus">
+				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			</node>
+			<node name="fontSize" value="Betűméret"/>
+			<node name="fontSizeDifference" value="Méretkülönbség"/>
+			<node name="fontStyle" value="Betűstílus">
+				<node name="regular" value="Normál"/>
+				<node name="bold" value="Félkövér"/>
+				<node name="italic" value="Dőlt"/>
+				<node name="boldItalic" value="Félkövér és dőlt"/>
+			</node>
+			<node name="bold" value="Félkövér">
+				<node name="summaryOn" value="félkövér"/>
+				<node name="summaryOff" value="normál"/>
+				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			</node>
+			<node name="italic" value="Dőlt">
+				<node name="summaryOn" value="dőlt"/>
+				<node name="summaryOff" value="normál"/>
+				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			</node>
+			<node name="underlined" value="Underlined" toBeTranslated="true">
+				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Sorköz">
+				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			</node>
+			<node name="alignment" value="Igazítás">
+				<node name="left" value="Balra"/>
+				<node name="right" value="Jobbra"/>
+				<node name="center" value="Középre"/>
+				<node name="justify" value="Sorkizárt"/>
+				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Automatikus elválasztás">
+				<node name="summaryOn" value="Automatikusan válassza el a szavakat"/>
+				<node name="summaryOff" value="Automatikus elválasztás kikapcsolva"/>
+			</node>
+			<node name="allowHyphenations" value="Elválasztás engedélyezése">
+				<node name="summaryOn" value="válassza el a szavakat"/>
+				<node name="summaryOff" value="ne válassza el a szavakat"/>
+				<node name="unchanged" value="&lt;változatlan&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Első sor behúzása"/>
+			<node name="spaceBefore" value="Térköz előtte"/>
+			<node name="spaceAfter" value="Térköz utána"/>
+			<node name="leftIndent" value="Bal oldali behúzás"/>
+			<node name="rightIndent" value="Jobb oldali behúzás"/>
+			<node name="more" value="További formázás">
+				<node name="summary" value="Különálló beállítások címekhez, mottókhoz stb."/>
+				<node name="Regular Paragraph" value="Normál bekezdés">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Cím">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Rész címe">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Vers címe">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Alcím">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Fülszöveg">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Mottó">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Versszak">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Verssor">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Előformázott szöveg">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Kép">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Idézet">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Szerző">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Dátum">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Belső hivatkozás">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Lábjegyzet">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Kiemelés">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Hangsúly">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Alsó index">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Felső index">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Kód">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Áthúzás">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Dőlt">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Félkövér">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Definíció">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Definíció leírása">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Címsor 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Címsor 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Címsor 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Címsor 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Címsor 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Címsor 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Külső hiperhivatkozás">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="Színek és háttérképek">
+			<node name="summary" value="Színbeállítások"/>
+			<node name="background" value="Háttér">
+				<node name="solidColor" value="Egyszínű"/>
+				<node name="leather" value="Bőr"/>
+				<node name="sepia" value="Szépia"/>
+				<node name="wood" value="Fa"/>
+			</node>
+			<node name="backgroundColor" value="Háttérszín"/>
+			<node name="selectionBackground" value="Kijelölés háttere"/>
+			<node name="selectionForeground" value="Kijelölt szöveg"/>
+			<node name="text" value="Szöveg"/>
+			<node name="hyperlink" value="Link"/>
+			<node name="hyperlinkVisited" value="Meglátogatott link"/>
+			<node name="highlighting" value="Találatok kiemelése"/>
+			<node name="footer" value="Lábléc"/>
+		</node>
+		<node name="margins" value="Margók">
+			<node name="summary" value="Szövegmargók"/>
+			<node name="left" value="Bal margó"/>
+			<node name="right" value="Jobb margó"/>
+			<node name="top" value="Felső margó"/>
+			<node name="bottom" value="Alsó margó"/>
+		</node>
+		<node name="scrollBar" value="Gördítősáv">
+			<node name="summary" value="A gördítősáv és a lábléc beállításai"/>
+			<node name="scrollbarType" value="Gördítősáv típusa">
+				<node name="hide" value="Rejtett"/>
+				<node name="show" value="Függőleges csúszka"/>
+				<node name="showAsProgress" value="Függőleges folyamatjelző"/>
+				<node name="showAsFooter" value="Vízszintes lábléc"/>
+			</node>
+			<node name="footerHeight" value="Lábléc magassága"/>
+			<node name="footerColor" value="Lábléc színe"/>
+			<node name="tocMarks" value="Tartalomjegyzék jelzése">
+				<node name="summaryOn" value="Mutassa a tartalomjegyzék elemeit a láblécen"/>
+				<node name="summaryOff" value="Ne mutassa a tartalomjegyzék elemeit a láblécen"/>
+			</node>
+			<node name="showProgress" value="Oldalszám">
+				<node name="summaryOn" value="Mutassa az oldalszámot a láblécben"/>
+				<node name="summaryOff" value="Ne mutassa az oldalszámot a láblécben"/>
+			</node>
+			<node name="showBattery" value="Akku töltöttség">
+				<node name="summaryOn" value="Mutassa az akkumulátor töltöttségét a láblécben"/>
+				<node name="summaryOff" value="Ne mutassa az akkumulátor töltöttségét a láblécben"/>
+			</node>
+			<node name="showClock" value="Óra">
+				<node name="summaryOn" value="Mutassa a pontos időt a láblécben"/>
+				<node name="summaryOff" value="Ne mutassa a pontos időt a láblécben"/>
+			</node>
+			<node name="font" value="Lábléc betűtípusa"/>
+		</node>
+		<node name="scrolling" value="Lapozás">
+			<node name="summary" value="Szöveg görgetésének beállításai"/>
+			<node name="fingerScrolling" value="Lapozás az érintőképernyőn">
+				<node name="byTap" value="Lapozás érintésre"/>
+				<node name="byFlick" value="Lapozás ujjmozdulatra"/>
+				<node name="byTapAndFlick" value="Lapozás érintésre és ujjmozdulatra"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Dupla érintés érzékelése">
+				<node name="summaryOn" value="Dupla érintés a navigációhoz/menühöz"/>
+				<node name="summaryOff" value="Dupla érintések figyelmen kívül hagyása"/>
+			</node>
+			<node name="volumeKeys" value="Lapozás a hangerő gombokkal">
+				<node name="summaryOn" value="Hangerő gombok használata lapozáshoz"/>
+				<node name="summaryOff" value="A hangerő gombok a hangerőt állítják"/>
+			</node>
+			<node name="invertVolumeKeys" value="Fordított lapozás a hangerő gombokal">
+				<node name="summaryOn" value="Fel (le) gomb lefelé (felfelé) lapoz"/>
+				<node name="summaryOff" value="Fel (le) gomb felfelé (lefelé) lapoz"/>
+			</node>
+			<node name="animation" value="Animáció">
+				<node name="none" value="Görgetés animáció nélkül"/>
+				<node name="curl" value="Hajlítás"/>
+				<node name="slide" value="Csúsztatás"/>
+				<node name="shift" value="Eltolás"/>
+			</node>
+			<node name="animationSpeed" value="Animáció sebessége">
+				<node name="fast" value="gyors"/>
+				<node name="slow" value="lassú"/>
+			</node>
+			<node name="horizontal" value="Vízszintes lapozás">
+				<node name="summaryOn" value="Oldalak görgetése vízszintesen"/>
+				<node name="summaryOff" value="Oldalak görgetése függőlegesen"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Érintési zónák">
+			<node name="summary" value="Műveletek érintésre"/>
+			<node name="tapZonesScheme" value="Érintési zóna sémák">
+				<node name="left_to_right" value="Balról jobbra lapozás"/>
+				<node name="right_to_left" value="Jobbról balra lapozás"/>
+				<node name="up" value="Lentről felfelé lapozás"/>
+				<node name="down" value="Fentről lefelé lapozás"/>
+				<node name="custom" value="Egyéni…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Szótár">
+			<node name="summary" value="Szótár beállításai"/>
+			<node name="dictionary" value="Szótár"/>
+			<node name="translator" value="Fordító"/>
+			<node name="tappingAction" value="Hosszú érintés">
+				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
+				<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>
+				<node name="startSelecting" value="A hosszú érintés elindítja a kijelölést"/>
+				<node name="openDictionary" value="A hosszú érintés kijelöli a szót, a felengedés megnyitja a szótárt"/>
+			</node>
+			<node name="navigateOverAllWords" value="Navigáció szavanként">
+				<node name="summaryOn" value="A gombnyomásos navigáció szóról szóra ugrik"/>
+				<node name="summaryOff" value="A gombnyomásos navigáció linkről linkre ugrik"/>
+			</node>
+		</node>
+		<node name="images" value="Képek">
+			<node name="summary" value="Képmegjelenítési beállítások"/>
+			<node name="backgroundColor" value="Képnéző háttérszíne"/>
+			<node name="tappingAction" value="Művelet hosszú érintésre">
+				<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
+				<node name="selectImage" value="A hosszú érintés kijelöli a képet"/>
+				<node name="openImageView" value="A hosszú érintés megnyitja a képnézőt"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Vissza menü">
+			<node name="summary" value="Vissza gomb műveletek"/>
+			<node name="library" value="Library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="Network library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="Előző könyv">
+				<node name="summaryOn" value="Mutassa a menüben a 'Vissza az előző könyvhöz' menüpontot"/>
+				<node name="summaryOff" value="Ne mutassa a 'Vissza az előző könyvhöz' menüpontot"/>
+			</node>
+			<node name="positions" value="Utolsó 3 pozíció">
+				<node name="summaryOn" value="Mutassa az utolsó 3 elmentett pozíciót a könyvben"/>
+				<node name="summaryOff" value="Ne mutassa az utolsó 3 pozíciót"/>
+			</node>
+			<node name="backKeyAction" value="Vissza gomb műveletek">
+				<node name="exit" value="FBReader bezárása"/>
+				<node name="goBack" value="Navigáljon vissza a szövegben"/>
+				<node name="cancelMenu" value="Vissza menü megjelenítése"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Vissza gomb hosszú nyomására">
+				<node name="exit" value="FBReader bezárása"/>
+				<node name="goBack" value="Navigáljon vissza a szövegben"/>
+				<node name="cancelMenu" value="Vissza menü megjelenítése"/>
+				<node name="none" value="Semmit ne tegyen"/>
+			</node>
+		</node>
+		<node name="tips" value="Tippek">
+			<node name="summary" value="Napi tippek beállításai"/>
+			<node name="showTips" value="Napi tippek">
+				<node name="summaryOn" value="Mutasson tippeket"/>
+				<node name="summaryOff" value="Ne mutasson"/>
+			</node>
+		</node>
+		<node name="about" value="Az FBReader névjegye">
+			<node name="summary" value="Verziószám, kapcsolat"/>
+			<node name="version" value="Verzió"/>
+			<node name="site" value="Ugrás a weboldalunkra">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="E-mail küldése">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="Kövessen Twitteren">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Telepítés"/>
@@ -279,421 +694,6 @@
 		<node name="installDictionary">
 			<node name="title" value="Telepítés helye"/>
 			<node name="message" value="%s Telepíti?"/>
-		</node>
-		<node name="BookInfo">
-			<node name="fileName" value="Fájlnév"/>
-			<node name="title" value="Cím"/>
-			<node name="language" value="Nyelv"/>
-			<node name="encoding" value="Kódolás"/>
-			<node name="authors" value="Szerzők"/>
-			<node name="tags" value="Címkék"/>
-			<node name="series" value="Sorozat"/>
-		</node>
-		<node name="Preferences">
-			<node name="directories" value="Mappák">
-				<node name="summary" value="Mely mappákban keressen fájlokat"/>
-				<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-				<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-				<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
-			</node>
-			<node name="appearance" value="Megjelenés">
-				<node name="summary" value="Elforgatás, állapotsor"/>
-				<node name="screenOrientation" value="Kijelző iránya">
-					<node name="system" value="Rendszerbeállítás"/>
-					<node name="sensor" value="A készülék irányától függ"/>
-					<node name="portrait" value="Álló"/>
-					<node name="landscape" value="Fekvő"/>
-					<node name="reversePortrait" value="Fordított álló"/>
-					<node name="reverseLandscape" value="Fordított fekvő"/>
-				</node>
-				<node name="autoOrientation" value="Automatikus elforgatás">
-					<node name="summaryOn" value="A kijelző elfordul a készülék mozgatásakor"/>
-					<node name="summaryOff" value="A kijelző nem fordul el a készülés mozgatásakor"/>
-				</node>
-				<node name="showStatusBar" value="Állapotsor látható">
-					<node name="summaryOn" value="Az állapotsor látszik olvasás közben"/>
-					<node name="summaryOff" value="Az állapotsor nem látszik olvasás közben"/>
-				</node>
-				<node name="showActionBar" value="Akciósáv látható">
-					<node name="summaryOn" value="Akciósáv látható olvasás közben"/>
-					<node name="summaryOff" value="Akciósáv elrejtése olvasás közben"/>
-				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Állapotsor látható a menüben">
-					<node name="summaryOn" value="Az állapotsor látszik a menübe belépéskor"/>
-					<node name="summaryOff" value="Az állapotsor nem látszik a menübe belépéskor"/>
-				</node>
-				<node name="disableButtonLights" value="Gombok megvilágításának kikapcsolása">
-					<node name="summaryOn" value="Megvilágítás kikapcsolása olvasás közben (nem minden eszköznél működik)"/>
-					<node name="summaryOff" value="Ne próbálja kikapcsolni a gombok háttérvilágítását"/>
-				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Fényerő beállítása">
-					<node name="summaryOn" value="Felfelé/lefelé csúsztatás a képernyő bal oldalán"/>
-					<node name="summaryOff" value="Kikapcsolva"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Kijelző kikapcsolása">
-					<node name="0" value="Soha"/>
-					<node name="25" value="25 százalék akku töltöttség alatt"/>
-					<node name="50" value="50 százalék akku töltöttség alatt"/>
-					<node name="100" value="Mindig (automatikusan)"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Kijelző kikapcsolása töltéskor">
-					<node name="summaryOn" value="Ne kapcsoljon ki a kijelző az akkumulátor töltésekor"/>
-					<node name="summaryOff" value="A kijelző automatikusan kikapcsol az akkumulátor töltésekor is"/>
-				</node>
-			</node>
-			<node name="text" value="Szöveg">
-				<node name="summary" value="Betűtípus, elválasztás stb."/>
-				<node name="fontProperties" value="Font properties" toBeTranslated="true">
-					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="dithering" value="Dithering" toBeTranslated="true">
-						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="hinting" value="Hinting" toBeTranslated="true">
-						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
-					</node>
-				</node>
-				<node name="font" value="Betűtípus">
-					<node name="unchanged" value="&lt;változatlan&gt;"/>
-				</node>
-				<node name="fontSize" value="Betűméret"/>
-				<node name="fontSizeDifference" value="Méretkülönbség"/>
-				<node name="fontStyle" value="Betűstílus">
-					<node name="regular" value="Normál"/>
-					<node name="bold" value="Félkövér"/>
-					<node name="italic" value="Dőlt"/>
-					<node name="boldItalic" value="Félkövér és dőlt"/>
-				</node>
-				<node name="bold" value="Félkövér">
-					<node name="summaryOn" value="félkövér"/>
-					<node name="summaryOff" value="normál"/>
-					<node name="unchanged" value="&lt;változatlan&gt;"/>
-				</node>
-				<node name="italic" value="Dőlt">
-					<node name="summaryOn" value="dőlt"/>
-					<node name="summaryOff" value="normál"/>
-					<node name="unchanged" value="&lt;változatlan&gt;"/>
-				</node>
-				<node name="underlined" value="Underlined" toBeTranslated="true">
-					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;változatlan&gt;"/>
-				</node>
-				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;változatlan&gt;"/>
-				</node>
-				<node name="lineSpacing" value="Sorköz">
-					<node name="unchanged" value="&lt;változatlan&gt;"/>
-				</node>
-				<node name="alignment" value="Igazítás">
-					<node name="left" value="Balra"/>
-					<node name="right" value="Jobbra"/>
-					<node name="center" value="Középre"/>
-					<node name="justify" value="Sorkizárt"/>
-					<node name="unchanged" value="&lt;változatlan&gt;"/>
-				</node>
-				<node name="autoHyphenations" value="Automatikus elválasztás">
-					<node name="summaryOn" value="Automatikusan válassza el a szavakat"/>
-					<node name="summaryOff" value="Automatikus elválasztás kikapcsolva"/>
-				</node>
-				<node name="allowHyphenations" value="Elválasztás engedélyezése">
-					<node name="summaryOn" value="válassza el a szavakat"/>
-					<node name="summaryOff" value="ne válassza el a szavakat"/>
-					<node name="unchanged" value="&lt;változatlan&gt;"/>
-				</node>
-				<node name="firstLineIndent" value="Első sor behúzása"/>
-				<node name="spaceBefore" value="Térköz előtte"/>
-				<node name="spaceAfter" value="Térköz utána"/>
-				<node name="leftIndent" value="Bal oldali behúzás"/>
-				<node name="rightIndent" value="Jobb oldali behúzás"/>
-				<node name="more" value="További formázás">
-					<node name="summary" value="Különálló beállítások címekhez, mottókhoz stb."/>
-					<node name="Regular Paragraph" value="Normál bekezdés">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Title" value="Cím">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Section Title" value="Rész címe">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Poem Title" value="Vers címe">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subtitle" value="Alcím">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Annotation" value="Fülszöveg">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Epigraph" value="Mottó">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Stanza" value="Versszak">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Verse" value="Verssor">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Preformatted text" value="Előformázott szöveg">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Image" value="Kép">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Cite" value="Idézet">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Author" value="Szerző">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Date" value="Dátum">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Internal Hyperlink" value="Belső hivatkozás">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Footnote" value="Lábjegyzet">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Emphasis" value="Kiemelés">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Strong" value="Hangsúly">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subscript" value="Alsó index">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Superscript" value="Felső index">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Code" value="Kód">
-						<node name="summary" value=""/>
-					</node>
-					<node name="StrikeThrough" value="Áthúzás">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Italic" value="Dőlt">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Bold" value="Félkövér">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition" value="Definíció">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition Description" value="Definíció leírása">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 1" value="Címsor 1">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 2" value="Címsor 2">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 3" value="Címsor 3">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 4" value="Címsor 4">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 5" value="Címsor 5">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 6" value="Címsor 6">
-						<node name="summary" value=""/>
-					</node>
-					<node name="External Hyperlink" value="Külső hiperhivatkozás">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-			</node>
-			<node name="colors" value="Színek és háttérképek">
-				<node name="summary" value="Színbeállítások"/>
-				<node name="background" value="Háttér">
-					<node name="solidColor" value="Egyszínű"/>
-					<node name="leather" value="Bőr"/>
-					<node name="sepia" value="Szépia"/>
-					<node name="wood" value="Fa"/>
-				</node>
-				<node name="backgroundColor" value="Háttérszín"/>
-				<node name="selectionBackground" value="Kijelölés háttere"/>
-				<node name="selectionForeground" value="Kijelölt szöveg"/>
-				<node name="text" value="Szöveg"/>
-				<node name="hyperlink" value="Link"/>
-				<node name="hyperlinkVisited" value="Meglátogatott link"/>
-				<node name="highlighting" value="Találatok kiemelése"/>
-				<node name="footer" value="Lábléc"/>
-			</node>
-			<node name="margins" value="Margók">
-				<node name="summary" value="Szövegmargók"/>
-				<node name="left" value="Bal margó"/>
-				<node name="right" value="Jobb margó"/>
-				<node name="top" value="Felső margó"/>
-				<node name="bottom" value="Alsó margó"/>
-			</node>
-			<node name="scrollBar" value="Gördítősáv">
-				<node name="summary" value="A gördítősáv és a lábléc beállításai"/>
-				<node name="scrollbarType" value="Gördítősáv típusa">
-					<node name="hide" value="Rejtett"/>
-					<node name="show" value="Függőleges csúszka"/>
-					<node name="showAsProgress" value="Függőleges folyamatjelző"/>
-					<node name="showAsFooter" value="Vízszintes lábléc"/>
-				</node>
-				<node name="footerHeight" value="Lábléc magassága"/>
-				<node name="footerColor" value="Lábléc színe"/>
-				<node name="tocMarks" value="Tartalomjegyzék jelzése">
-					<node name="summaryOn" value="Mutassa a tartalomjegyzék elemeit a láblécen"/>
-					<node name="summaryOff" value="Ne mutassa a tartalomjegyzék elemeit a láblécen"/>
-				</node>
-				<node name="showProgress" value="Oldalszám">
-					<node name="summaryOn" value="Mutassa az oldalszámot a láblécben"/>
-					<node name="summaryOff" value="Ne mutassa az oldalszámot a láblécben"/>
-				</node>
-				<node name="showBattery" value="Akku töltöttség">
-					<node name="summaryOn" value="Mutassa az akkumulátor töltöttségét a láblécben"/>
-					<node name="summaryOff" value="Ne mutassa az akkumulátor töltöttségét a láblécben"/>
-				</node>
-				<node name="showClock" value="Óra">
-					<node name="summaryOn" value="Mutassa a pontos időt a láblécben"/>
-					<node name="summaryOff" value="Ne mutassa a pontos időt a láblécben"/>
-				</node>
-				<node name="font" value="Lábléc betűtípusa"/>
-			</node>
-			<node name="scrolling" value="Lapozás">
-				<node name="summary" value="Szöveg görgetésének beállításai"/>
-				<node name="fingerScrolling" value="Lapozás az érintőképernyőn">
-					<node name="byTap" value="Lapozás érintésre"/>
-					<node name="byFlick" value="Lapozás ujjmozdulatra"/>
-					<node name="byTapAndFlick" value="Lapozás érintésre és ujjmozdulatra"/>
-				</node>
-				<node name="enableDoubleTapDetection" value="Dupla érintés érzékelése">
-					<node name="summaryOn" value="Dupla érintés a navigációhoz/menühöz"/>
-					<node name="summaryOff" value="Dupla érintések figyelmen kívül hagyása"/>
-				</node>
-				<node name="volumeKeys" value="Lapozás a hangerő gombokkal">
-					<node name="summaryOn" value="Hangerő gombok használata lapozáshoz"/>
-					<node name="summaryOff" value="A hangerő gombok a hangerőt állítják"/>
-				</node>
-				<node name="invertVolumeKeys" value="Fordított lapozás a hangerő gombokal">
-					<node name="summaryOn" value="Fel (le) gomb lefelé (felfelé) lapoz"/>
-					<node name="summaryOff" value="Fel (le) gomb felfelé (lefelé) lapoz"/>
-				</node>
-				<node name="animation" value="Animáció">
-					<node name="none" value="Görgetés animáció nélkül"/>
-					<node name="curl" value="Hajlítás"/>
-					<node name="slide" value="Csúsztatás"/>
-					<node name="shift" value="Eltolás"/>
-				</node>
-				<node name="animationSpeed" value="Animáció sebessége">
-					<node name="fast" value="gyors"/>
-					<node name="slow" value="lassú"/>
-				</node>
-				<node name="horizontal" value="Vízszintes lapozás">
-					<node name="summaryOn" value="Oldalak görgetése vízszintesen"/>
-					<node name="summaryOff" value="Oldalak görgetése függőlegesen"/>
-				</node>
-			</node>
-			<node name="tapZones" value="Érintési zónák">
-				<node name="summary" value="Műveletek érintésre"/>
-				<node name="tapZonesScheme" value="Érintési zóna sémák">
-					<node name="left_to_right" value="Balról jobbra lapozás"/>
-					<node name="right_to_left" value="Jobbról balra lapozás"/>
-					<node name="up" value="Lentről felfelé lapozás"/>
-					<node name="down" value="Fentről lefelé lapozás"/>
-					<node name="custom" value="Egyéni…"/>
-				</node>
-			</node>
-			<node name="dictionary" value="Szótár">
-				<node name="summary" value="Szótár beállításai"/>
-				<node name="dictionary" value="Szótár"/>
-				<node name="translator" value="Fordító"/>
-				<node name="tappingAction" value="Hosszú érintés">
-					<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
-					<node name="selectSingleWord" value="A hosszú érintés kijelöli a szót"/>
-					<node name="startSelecting" value="A hosszú érintés elindítja a kijelölést"/>
-					<node name="openDictionary" value="A hosszú érintés kijelöli a szót, a felengedés megnyitja a szótárt"/>
-				</node>
-				<node name="navigateOverAllWords" value="Navigáció szavanként">
-					<node name="summaryOn" value="A gombnyomásos navigáció szóról szóra ugrik"/>
-					<node name="summaryOff" value="A gombnyomásos navigáció linkről linkre ugrik"/>
-				</node>
-			</node>
-			<node name="images" value="Képek">
-				<node name="summary" value="Képmegjelenítési beállítások"/>
-				<node name="backgroundColor" value="Képnéző háttérszíne"/>
-				<node name="tappingAction" value="Művelet hosszú érintésre">
-					<node name="doNothing" value="Nem történik semmi hosszú érintésre"/>
-					<node name="selectImage" value="A hosszú érintés kijelöli a képet"/>
-					<node name="openImageView" value="A hosszú érintés megnyitja a képnézőt"/>
-				</node>
-			</node>
-			<node name="cancelMenu" value="Vissza menü">
-				<node name="summary" value="Vissza gomb műveletek"/>
-				<node name="library" value="Library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-				</node>
-				<node name="networkLibrary" value="Network library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-				</node>
-				<node name="previousBook" value="Előző könyv">
-					<node name="summaryOn" value="Mutassa a menüben a 'Vissza az előző könyvhöz' menüpontot"/>
-					<node name="summaryOff" value="Ne mutassa a 'Vissza az előző könyvhöz' menüpontot"/>
-				</node>
-				<node name="positions" value="Utolsó 3 pozíció">
-					<node name="summaryOn" value="Mutassa az utolsó 3 elmentett pozíciót a könyvben"/>
-					<node name="summaryOff" value="Ne mutassa az utolsó 3 pozíciót"/>
-				</node>
-				<node name="backKeyAction" value="Vissza gomb műveletek">
-					<node name="exit" value="FBReader bezárása"/>
-					<node name="goBack" value="Navigáljon vissza a szövegben"/>
-					<node name="cancelMenu" value="Vissza menü megjelenítése"/>
-				</node>
-				<node name="backKeyLongPressAction" value="Vissza gomb hosszú nyomására">
-					<node name="exit" value="FBReader bezárása"/>
-					<node name="goBack" value="Navigáljon vissza a szövegben"/>
-					<node name="cancelMenu" value="Vissza menü megjelenítése"/>
-					<node name="none" value="Semmit ne tegyen"/>
-				</node>
-			</node>
-			<node name="tips" value="Tippek">
-				<node name="summary" value="Napi tippek beállításai"/>
-				<node name="showTips" value="Napi tippek">
-					<node name="summaryOn" value="Mutasson tippeket"/>
-					<node name="summaryOff" value="Ne mutasson"/>
-				</node>
-			</node>
-			<node name="about" value="Az FBReader névjegye">
-				<node name="summary" value="Verziószám, kapcsolat"/>
-				<node name="version" value="Verzió"/>
-				<node name="site" value="Ugrás a weboldalunkra">
-					<node name="url" value="http://www.fbreader.org/"/>
-				</node>
-				<node name="email" value="E-mail küldése">
-					<node name="url" value="mailto:contact@geometerplus.com"/>
-				</node>
-				<node name="twitter" value="Kövessen Twitteren">
-					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="A fájl törlése nem visszavonható. Biztosan törli?"/>

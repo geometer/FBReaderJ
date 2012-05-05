@@ -256,6 +256,421 @@
 		<node name="toggleFullscreen" value="Na celou obrazovku"/>
 		<node name="bookmarks" value="Záložky"/>
 	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Název souboru"/>
+		<node name="title" value="Název"/>
+		<node name="language" value="Jazyk"/>
+		<node name="encoding" value="Kódování"/>
+		<node name="authors" value="Autoři"/>
+		<node name="tags" value="Štítky"/>
+		<node name="series" value="Série"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Adresáře">
+			<node name="summary" value="Adresáře pro hledání souborů"/>
+			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+		</node>
+		<node name="appearance" value="Vzhled">
+			<node name="summary" value="Otáčení, stavový řádek"/>
+			<node name="screenOrientation" value="Orientace obrazovky">
+				<node name="system" value="Systém"/>
+				<node name="sensor" value="Podle orientace zařízení"/>
+				<node name="portrait" value="Na výšku"/>
+				<node name="landscape" value="Na šířku"/>
+				<node name="reversePortrait" value="Převráceně na výšku"/>
+				<node name="reverseLandscape" value="Převráceně na šířku"/>
+			</node>
+			<node name="autoOrientation" value="Automatické otáčení">
+				<node name="summaryOn" value="Displej se otočí pokud uživatel pohne zařízením"/>
+				<node name="summaryOff" value="Displej se neotočí pokud uživatel pohne zařízením"/>
+			</node>
+			<node name="showStatusBar" value="Zobrazit stavový řádek">
+				<node name="summaryOn" value="Zobrazit stavový řádek v režimu čtení"/>
+				<node name="summaryOff" value="Skrýt stavový řádek v režimu čtení"/>
+			</node>
+			<node name="showActionBar" value="Zobrazit panel akcí">
+				<node name="summaryOn" value="Zobrazit panel akcí v režimu čtení"/>
+				<node name="summaryOff" value="Skrýt panel akcí v režimu čtení"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Zobrazit stavový řádek, když je menu aktivní">
+				<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
+				<node name="summaryOff" value="Nezobrazovat stavový řádek, když se menu aktivuje"/>
+			</node>
+			<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
+				<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
+				<node name="summaryOff" value="Nezakazovat tlačítka osvětlení"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
+				<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
+				<node name="summaryOff" value="Zakázáno"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Zabránit usínání displeje">
+				<node name="0" value="Vždy"/>
+				<node name="25" value="Pokud je úroveň baterie větší než 25 procent"/>
+				<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
+				<node name="100" value="Nikdy"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Zabránit usínání displeje během nabíjení">
+				<node name="summaryOn" value="Zabránit usínání displeje pokud je zařízení v režimu nabíjení"/>
+				<node name="summaryOff" value="Vypínat displej i když je zařízení v režimu nabíjení"/>
+			</node>
+		</node>
+		<node name="text" value="Text">
+			<node name="summary" value="Písmo, dělení slov atd."/>
+			<node name="fontProperties" value="Vlastnosti písma">
+				<node name="summary" value="Volby vyhlazování písma"/>
+				<node name="antiAlias" value="Vyhlazování">
+					<node name="summaryOn" value="Vyhlazování je povoleno"/>
+					<node name="summaryOff" value="Vyhlazování je zakázáno"/>
+				</node>
+				<node name="deviceKerning" value="Prokládání">
+					<node name="summaryOn" value="Prokládání je povoleno"/>
+					<node name="summaryOff" value="Prokládání je zakázáno"/>
+				</node>
+				<node name="dithering" value="Tónování">
+					<node name="summaryOn" value="Barevné tónování je povoleno"/>
+					<node name="summaryOff" value="Barevné tónování je zakázáno"/>
+				</node>
+				<node name="hinting" value="Ztenčení">
+					<node name="summaryOn" value="Ztenčení písma je povoleno"/>
+					<node name="summaryOff" value="Ztenčení písma je zakázáno"/>
+				</node>
+				<node name="subpixel" value="Vyhlazování subpixelů">
+					<node name="summaryOn" value="Vyhlazování subpixelů je povoleno"/>
+					<node name="summaryOff" value="Vyhlazování subpixelů je zakázáno"/>
+				</node>
+			</node>
+			<node name="font" value="Rodina písem">
+				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			</node>
+			<node name="fontSize" value="Velikost písma"/>
+			<node name="fontSizeDifference" value="Rozlišovat velikost"/>
+			<node name="fontStyle" value="Řez písma">
+				<node name="regular" value="Obyčejné"/>
+				<node name="bold" value="Tučné"/>
+				<node name="italic" value="Kurzíva"/>
+				<node name="boldItalic" value="Tučná kurzíva"/>
+			</node>
+			<node name="bold" value="Tučné">
+				<node name="summaryOn" value="tučné"/>
+				<node name="summaryOff" value="obyčejné"/>
+				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			</node>
+			<node name="italic" value="Kurzíva">
+				<node name="summaryOn" value="kurzíva"/>
+				<node name="summaryOff" value="obyčejné"/>
+				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			</node>
+			<node name="underlined" value="Podtržené">
+				<node name="summaryOn" value="podtržené"/>
+				<node name="summaryOff" value="obyčejné"/>
+				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Přeškrtnuté">
+				<node name="summaryOn" value="přeškrtnuté"/>
+				<node name="summaryOff" value="obyčejné"/>
+				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Řádkování">
+				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			</node>
+			<node name="alignment" value="Zarovnání">
+				<node name="left" value="Vlevo"/>
+				<node name="right" value="Vpravo"/>
+				<node name="center" value="Na střed"/>
+				<node name="justify" value="Do bloku"/>
+				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Automatické dělení slov">
+				<node name="summaryOn" value="Dělit slova automaticky"/>
+				<node name="summaryOff" value="Nedělit slova automaticky"/>
+			</node>
+			<node name="allowHyphenations" value="Povolit dělení slov">
+				<node name="summaryOn" value="dělit slova"/>
+				<node name="summaryOff" value="nedělit slova"/>
+				<node name="unchanged" value="&lt;nezměněno&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Odsazení prvního řádku"/>
+			<node name="spaceBefore" value="Mezera před"/>
+			<node name="spaceAfter" value="Mezera za"/>
+			<node name="leftIndent" value="Odsazení vlevo"/>
+			<node name="rightIndent" value="Odsazení vpravo"/>
+			<node name="more" value="Další styly">
+				<node name="summary" value="Oddělené nastavení pro názvy, mota atd."/>
+				<node name="Regular Paragraph" value="Běžný odstavec">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Název">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Název části">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Název básně">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Podtitul">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Anotace">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Moto">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Sloka">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Verš">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Předformátovaný text">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Obrázek">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Citát">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Autor">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Datum">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Vnitřní odkaz">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Poznámka pod čarou">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Zvýraznění">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Silně">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Dolní index">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Horní index">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Kód">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Přeškrtnutí">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Kurzíva">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Tučné">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Definice">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Popis definice">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Hlavička 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Hlavička 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Hlavička 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Hlavička 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Hlavička 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Hlavička 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Vnější odkaz">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="Barvy a pozadí">
+			<node name="summary" value="Nastavení barev"/>
+			<node name="background" value="Pozadí">
+				<node name="solidColor" value="Plná barva"/>
+				<node name="leather" value="Kůže"/>
+				<node name="sepia" value="Sépie"/>
+				<node name="wood" value="Dřevo"/>
+			</node>
+			<node name="backgroundColor" value="Barva pozadí"/>
+			<node name="selectionBackground" value="Pozadí výběru"/>
+			<node name="selectionForeground" value="Vybraný text"/>
+			<node name="text" value="Běžný text"/>
+			<node name="hyperlink" value="Hypertextový odkaz"/>
+			<node name="hyperlinkVisited" value="Navštívený hypertextový odkaz"/>
+			<node name="highlighting" value="Pozadí výsledků vyhledávání"/>
+			<node name="footer" value="Patička"/>
+		</node>
+		<node name="margins" value="Okraje">
+			<node name="summary" value="Okraje textu"/>
+			<node name="left" value="Levý okraj"/>
+			<node name="right" value="Pravý okraj"/>
+			<node name="top" value="Horní okraj"/>
+			<node name="bottom" value="Dolní okraj"/>
+		</node>
+		<node name="scrollBar" value="Posuvník">
+			<node name="summary" value="Nastavení posuvníku"/>
+			<node name="scrollbarType" value="Typ posuvníku">
+				<node name="hide" value="Skrýt"/>
+				<node name="show" value="Svislé šoupátko"/>
+				<node name="showAsProgress" value="Svislý indikátor průběhu"/>
+				<node name="showAsFooter" value="Vodorovná patička"/>
+			</node>
+			<node name="footerHeight" value="Výška patičky"/>
+			<node name="footerColor" value="Barva patičky"/>
+			<node name="tocMarks" value="Zobrazit značky obsahu">
+				<node name="summaryOn" value="Zobrazit značky obsahu v patičce"/>
+				<node name="summaryOff" value="Nezobrazovat značky obsahu v patičce"/>
+			</node>
+			<node name="showProgress" value="Zobrazit číslo stránky">
+				<node name="summaryOn" value="Zobrazit číslo stránky v patičce"/>
+				<node name="summaryOff" value="Nezobrazovat číslo stránky v patičce"/>
+			</node>
+			<node name="showBattery" value="Zobrazit úroveň baterie">
+				<node name="summaryOn" value="Zobrazit úroveň baterie v patičce"/>
+				<node name="summaryOff" value="Nezobrazovat úroveň baterie v patičce"/>
+			</node>
+			<node name="showClock" value="Zobrazit hodiny">
+				<node name="summaryOn" value="Zobrazit hodiny v patičce"/>
+				<node name="summaryOff" value="Nezobrazovat hodiny v patičce"/>
+			</node>
+			<node name="font" value="Rodina písem"/>
+		</node>
+		<node name="scrolling" value="Posouvání">
+			<node name="summary" value="Jak posouvat text"/>
+			<node name="fingerScrolling" value="Posouvání dotykem displeje">
+				<node name="byTap" value="Posouvat stránky klepnutím prstem"/>
+				<node name="byFlick" value="Posouvat stránky rychlým pohybem prstem"/>
+				<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstem"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Rozpoznání poklepání">
+				<node name="summaryOn" value="Poklepání spustí navigaci nebo menu"/>
+				<node name="summaryOff" value="Ignorovat poklepání"/>
+			</node>
+			<node name="volumeKeys" value="Posouvání tlačítky ovládání hlasitosti">
+				<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
+				<node name="summaryOff" value="Ponechat tlačítka ovládání hlasitosti pro zvuk"/>
+			</node>
+			<node name="invertVolumeKeys" value="Převrátit posouvání tlačítky ovládání hlasitosti">
+				<node name="summaryOn" value="Tlačítko nahoru (dolů) posouvá stránku dolů (nahoru)"/>
+				<node name="summaryOff" value="Tlačítko nahoru (dolů) posouvá stránku nahoru (dolů)"/>
+			</node>
+			<node name="animation" value="Animace">
+				<node name="none" value="Posouvat bez animace"/>
+				<node name="curl" value="Animace otočení"/>
+				<node name="slide" value="Animace vysunutí"/>
+				<node name="shift" value="Animace posunutí"/>
+			</node>
+			<node name="animationSpeed" value="Rychlost animace">
+				<node name="fast" value="rychle"/>
+				<node name="slow" value="pomalu"/>
+			</node>
+			<node name="horizontal" value="Vodorovné posouvání">
+				<node name="summaryOn" value="Posouvat stránky vodorovně"/>
+				<node name="summaryOff" value="Posouvat stránky svisle"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Oblasti dotyku">
+			<node name="summary" value="Akce pro dotyk prstem"/>
+			<node name="tapZonesScheme" value="Schéma oblastí dotyku">
+				<node name="left_to_right" value="Posouvání stránky zleva doprava"/>
+				<node name="right_to_left" value="Posouvání stránky zprava doleva"/>
+				<node name="up" value="Posouvání stránky zdola nahoru"/>
+				<node name="down" value="Posouvání stránky zhora dolů"/>
+				<node name="custom" value="Vlastní…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Slovník">
+			<node name="summary" value="Nastavení slovníku"/>
+			<node name="dictionary" value="Slovník"/>
+			<node name="translator" value="Překladač"/>
+			<node name="tappingAction" value="Dlouhé klepnutí">
+				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
+				<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
+				<node name="startSelecting" value="Dlouhé klepnutí spustí vybírání"/>
+				<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
+			</node>
+			<node name="navigateOverAllWords" value="Navigovat přes všechna slova">
+				<node name="summaryOn" value="Navigace klávesami prochází všechna slova"/>
+				<node name="summaryOff" value="Navigace klávesami prochází pouze hypertextové odkazy"/>
+			</node>
+		</node>
+		<node name="images" value="Obrázky">
+			<node name="summary" value="Možnosti zobrazení obrázku"/>
+			<node name="backgroundColor" value="Barva pozadí pro zobrazení obrázku"/>
+			<node name="tappingAction" value="Akce dlouhého klepnutí">
+				<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
+				<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
+				<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Nabídka Zrušit">
+			<node name="summary" value="Seznam akcí tlačítka Zpět"/>
+			<node name="library" value="Library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="Network library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="Předchozí kniha">
+				<node name="summaryOn" value="Zobrazit položku 'návrat na předchozí knihu'"/>
+				<node name="summaryOff" value="Nezobrazovat položku 'návrat na předchozí knihu'"/>
+			</node>
+			<node name="positions" value="Poslední 3 pozice">
+				<node name="summaryOn" value="Zobrazit položky pro poslední 3 pozice v knize"/>
+				<node name="summaryOff" value="Nezobrazovat položky pro poslední 3 pozice v knize"/>
+			</node>
+			<node name="backKeyAction" value="Akce tlačítka Zpět">
+				<node name="exit" value="Zavřít FBReader"/>
+				<node name="goBack" value="Navigovat zpět"/>
+				<node name="cancelMenu" value="Zobrazit nabídku Zrušit"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Akce dlouhého stisknutí tlačítka Zpět">
+				<node name="exit" value="Zavřít FBReader"/>
+				<node name="goBack" value="Navigovat zpět"/>
+				<node name="cancelMenu" value="Zobrazit nabídku Zrušit"/>
+				<node name="none" value="Žádná akce"/>
+			</node>
+		</node>
+		<node name="tips" value="Tipy">
+			<node name="summary" value="Nastavení denních tipů"/>
+			<node name="showTips" value="Zobrazovat tipy">
+				<node name="summaryOn" value="Zobrazovat denní tipy"/>
+				<node name="summaryOff" value="Nezobrazovat"/>
+			</node>
+		</node>
+		<node name="about" value="O aplikaci FBReader">
+			<node name="summary" value="Informace o verzi, kontakty"/>
+			<node name="version" value="Verze"/>
+			<node name="site" value="Navštivte naši webovou stránku">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Pošlete nám e-mail">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="Sledujte nás na twitteru">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Instalovat"/>
@@ -285,421 +700,6 @@
 		<node name="installDictionary">
 			<node name="title" value="Instalovat slovník"/>
 			<node name="message" value="Chcete nainstalovat %s?"/>
-		</node>
-		<node name="BookInfo">
-			<node name="fileName" value="Název souboru"/>
-			<node name="title" value="Název"/>
-			<node name="language" value="Jazyk"/>
-			<node name="encoding" value="Kódování"/>
-			<node name="authors" value="Autoři"/>
-			<node name="tags" value="Štítky"/>
-			<node name="series" value="Série"/>
-		</node>
-		<node name="Preferences">
-			<node name="directories" value="Adresáře">
-				<node name="summary" value="Adresáře pro hledání souborů"/>
-				<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-				<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-				<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
-			</node>
-			<node name="appearance" value="Vzhled">
-				<node name="summary" value="Otáčení, stavový řádek"/>
-				<node name="screenOrientation" value="Orientace obrazovky">
-					<node name="system" value="Systém"/>
-					<node name="sensor" value="Podle orientace zařízení"/>
-					<node name="portrait" value="Na výšku"/>
-					<node name="landscape" value="Na šířku"/>
-					<node name="reversePortrait" value="Převráceně na výšku"/>
-					<node name="reverseLandscape" value="Převráceně na šířku"/>
-				</node>
-				<node name="autoOrientation" value="Automatické otáčení">
-					<node name="summaryOn" value="Displej se otočí pokud uživatel pohne zařízením"/>
-					<node name="summaryOff" value="Displej se neotočí pokud uživatel pohne zařízením"/>
-				</node>
-				<node name="showStatusBar" value="Zobrazit stavový řádek">
-					<node name="summaryOn" value="Zobrazit stavový řádek v režimu čtení"/>
-					<node name="summaryOff" value="Skrýt stavový řádek v režimu čtení"/>
-				</node>
-				<node name="showActionBar" value="Zobrazit panel akcí">
-					<node name="summaryOn" value="Zobrazit panel akcí v režimu čtení"/>
-					<node name="summaryOff" value="Skrýt panel akcí v režimu čtení"/>
-				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Zobrazit stavový řádek, když je menu aktivní">
-					<node name="summaryOn" value="Zobrazit stavový řádek, když se menu aktivuje"/>
-					<node name="summaryOff" value="Nezobrazovat stavový řádek, když se menu aktivuje"/>
-				</node>
-				<node name="disableButtonLights" value="Zakázat hardwarová tlačítka osvětlení během čtení">
-					<node name="summaryOn" value="Zakázat tlačítka osvětlení (nefunguje pro některá zařízení)"/>
-					<node name="summaryOff" value="Nezakazovat tlačítka osvětlení"/>
-				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Nastavení jasu obrazovky">
-					<node name="summaryOn" value="Tahem prstu nahoru nebo dolů podél levého okraje obrazovky"/>
-					<node name="summaryOff" value="Zakázáno"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Zabránit usínání displeje">
-					<node name="0" value="Vždy"/>
-					<node name="25" value="Pokud je úroveň baterie větší než 25 procent"/>
-					<node name="50" value="Pokud je úroveň baterie větší než 50 procent"/>
-					<node name="100" value="Nikdy"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Zabránit usínání displeje během nabíjení">
-					<node name="summaryOn" value="Zabránit usínání displeje pokud je zařízení v režimu nabíjení"/>
-					<node name="summaryOff" value="Vypínat displej i když je zařízení v režimu nabíjení"/>
-				</node>
-			</node>
-			<node name="text" value="Text">
-				<node name="summary" value="Písmo, dělení slov atd."/>
-				<node name="fontProperties" value="Vlastnosti písma">
-					<node name="summary" value="Volby vyhlazování písma"/>
-					<node name="antiAlias" value="Vyhlazování">
-						<node name="summaryOn" value="Vyhlazování je povoleno"/>
-						<node name="summaryOff" value="Vyhlazování je zakázáno"/>
-					</node>
-					<node name="deviceKerning" value="Prokládání">
-						<node name="summaryOn" value="Prokládání je povoleno"/>
-						<node name="summaryOff" value="Prokládání je zakázáno"/>
-					</node>
-					<node name="dithering" value="Tónování">
-						<node name="summaryOn" value="Barevné tónování je povoleno"/>
-						<node name="summaryOff" value="Barevné tónování je zakázáno"/>
-					</node>
-					<node name="hinting" value="Ztenčení">
-						<node name="summaryOn" value="Ztenčení písma je povoleno"/>
-						<node name="summaryOff" value="Ztenčení písma je zakázáno"/>
-					</node>
-					<node name="subpixel" value="Vyhlazování subpixelů">
-						<node name="summaryOn" value="Vyhlazování subpixelů je povoleno"/>
-						<node name="summaryOff" value="Vyhlazování subpixelů je zakázáno"/>
-					</node>
-				</node>
-				<node name="font" value="Rodina písem">
-					<node name="unchanged" value="&lt;nezměněno&gt;"/>
-				</node>
-				<node name="fontSize" value="Velikost písma"/>
-				<node name="fontSizeDifference" value="Rozlišovat velikost"/>
-				<node name="fontStyle" value="Řez písma">
-					<node name="regular" value="Obyčejné"/>
-					<node name="bold" value="Tučné"/>
-					<node name="italic" value="Kurzíva"/>
-					<node name="boldItalic" value="Tučná kurzíva"/>
-				</node>
-				<node name="bold" value="Tučné">
-					<node name="summaryOn" value="tučné"/>
-					<node name="summaryOff" value="obyčejné"/>
-					<node name="unchanged" value="&lt;nezměněno&gt;"/>
-				</node>
-				<node name="italic" value="Kurzíva">
-					<node name="summaryOn" value="kurzíva"/>
-					<node name="summaryOff" value="obyčejné"/>
-					<node name="unchanged" value="&lt;nezměněno&gt;"/>
-				</node>
-				<node name="underlined" value="Podtržené">
-					<node name="summaryOn" value="podtržené"/>
-					<node name="summaryOff" value="obyčejné"/>
-					<node name="unchanged" value="&lt;nezměněno&gt;"/>
-				</node>
-				<node name="strikedThrough" value="Přeškrtnuté">
-					<node name="summaryOn" value="přeškrtnuté"/>
-					<node name="summaryOff" value="obyčejné"/>
-					<node name="unchanged" value="&lt;nezměněno&gt;"/>
-				</node>
-				<node name="lineSpacing" value="Řádkování">
-					<node name="unchanged" value="&lt;nezměněno&gt;"/>
-				</node>
-				<node name="alignment" value="Zarovnání">
-					<node name="left" value="Vlevo"/>
-					<node name="right" value="Vpravo"/>
-					<node name="center" value="Na střed"/>
-					<node name="justify" value="Do bloku"/>
-					<node name="unchanged" value="&lt;nezměněno&gt;"/>
-				</node>
-				<node name="autoHyphenations" value="Automatické dělení slov">
-					<node name="summaryOn" value="Dělit slova automaticky"/>
-					<node name="summaryOff" value="Nedělit slova automaticky"/>
-				</node>
-				<node name="allowHyphenations" value="Povolit dělení slov">
-					<node name="summaryOn" value="dělit slova"/>
-					<node name="summaryOff" value="nedělit slova"/>
-					<node name="unchanged" value="&lt;nezměněno&gt;"/>
-				</node>
-				<node name="firstLineIndent" value="Odsazení prvního řádku"/>
-				<node name="spaceBefore" value="Mezera před"/>
-				<node name="spaceAfter" value="Mezera za"/>
-				<node name="leftIndent" value="Odsazení vlevo"/>
-				<node name="rightIndent" value="Odsazení vpravo"/>
-				<node name="more" value="Další styly">
-					<node name="summary" value="Oddělené nastavení pro názvy, mota atd."/>
-					<node name="Regular Paragraph" value="Běžný odstavec">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Title" value="Název">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Section Title" value="Název části">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Poem Title" value="Název básně">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subtitle" value="Podtitul">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Annotation" value="Anotace">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Epigraph" value="Moto">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Stanza" value="Sloka">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Verse" value="Verš">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Preformatted text" value="Předformátovaný text">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Image" value="Obrázek">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Cite" value="Citát">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Author" value="Autor">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Date" value="Datum">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Internal Hyperlink" value="Vnitřní odkaz">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Footnote" value="Poznámka pod čarou">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Emphasis" value="Zvýraznění">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Strong" value="Silně">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subscript" value="Dolní index">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Superscript" value="Horní index">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Code" value="Kód">
-						<node name="summary" value=""/>
-					</node>
-					<node name="StrikeThrough" value="Přeškrtnutí">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Italic" value="Kurzíva">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Bold" value="Tučné">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition" value="Definice">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition Description" value="Popis definice">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 1" value="Hlavička 1">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 2" value="Hlavička 2">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 3" value="Hlavička 3">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 4" value="Hlavička 4">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 5" value="Hlavička 5">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 6" value="Hlavička 6">
-						<node name="summary" value=""/>
-					</node>
-					<node name="External Hyperlink" value="Vnější odkaz">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-			</node>
-			<node name="colors" value="Barvy a pozadí">
-				<node name="summary" value="Nastavení barev"/>
-				<node name="background" value="Pozadí">
-					<node name="solidColor" value="Plná barva"/>
-					<node name="leather" value="Kůže"/>
-					<node name="sepia" value="Sépie"/>
-					<node name="wood" value="Dřevo"/>
-				</node>
-				<node name="backgroundColor" value="Barva pozadí"/>
-				<node name="selectionBackground" value="Pozadí výběru"/>
-				<node name="selectionForeground" value="Vybraný text"/>
-				<node name="text" value="Běžný text"/>
-				<node name="hyperlink" value="Hypertextový odkaz"/>
-				<node name="hyperlinkVisited" value="Navštívený hypertextový odkaz"/>
-				<node name="highlighting" value="Pozadí výsledků vyhledávání"/>
-				<node name="footer" value="Patička"/>
-			</node>
-			<node name="margins" value="Okraje">
-				<node name="summary" value="Okraje textu"/>
-				<node name="left" value="Levý okraj"/>
-				<node name="right" value="Pravý okraj"/>
-				<node name="top" value="Horní okraj"/>
-				<node name="bottom" value="Dolní okraj"/>
-			</node>
-			<node name="scrollBar" value="Posuvník">
-				<node name="summary" value="Nastavení posuvníku"/>
-				<node name="scrollbarType" value="Typ posuvníku">
-					<node name="hide" value="Skrýt"/>
-					<node name="show" value="Svislé šoupátko"/>
-					<node name="showAsProgress" value="Svislý indikátor průběhu"/>
-					<node name="showAsFooter" value="Vodorovná patička"/>
-				</node>
-				<node name="footerHeight" value="Výška patičky"/>
-				<node name="footerColor" value="Barva patičky"/>
-				<node name="tocMarks" value="Zobrazit značky obsahu">
-					<node name="summaryOn" value="Zobrazit značky obsahu v patičce"/>
-					<node name="summaryOff" value="Nezobrazovat značky obsahu v patičce"/>
-				</node>
-				<node name="showProgress" value="Zobrazit číslo stránky">
-					<node name="summaryOn" value="Zobrazit číslo stránky v patičce"/>
-					<node name="summaryOff" value="Nezobrazovat číslo stránky v patičce"/>
-				</node>
-				<node name="showBattery" value="Zobrazit úroveň baterie">
-					<node name="summaryOn" value="Zobrazit úroveň baterie v patičce"/>
-					<node name="summaryOff" value="Nezobrazovat úroveň baterie v patičce"/>
-				</node>
-				<node name="showClock" value="Zobrazit hodiny">
-					<node name="summaryOn" value="Zobrazit hodiny v patičce"/>
-					<node name="summaryOff" value="Nezobrazovat hodiny v patičce"/>
-				</node>
-				<node name="font" value="Rodina písem"/>
-			</node>
-			<node name="scrolling" value="Posouvání">
-				<node name="summary" value="Jak posouvat text"/>
-				<node name="fingerScrolling" value="Posouvání dotykem displeje">
-					<node name="byTap" value="Posouvat stránky klepnutím prstem"/>
-					<node name="byFlick" value="Posouvat stránky rychlým pohybem prstem"/>
-					<node name="byTapAndFlick" value="Posouvat stránky klepnutím nebo rychlým pohybem prstem"/>
-				</node>
-				<node name="enableDoubleTapDetection" value="Rozpoznání poklepání">
-					<node name="summaryOn" value="Poklepání spustí navigaci nebo menu"/>
-					<node name="summaryOff" value="Ignorovat poklepání"/>
-				</node>
-				<node name="volumeKeys" value="Posouvání tlačítky ovládání hlasitosti">
-					<node name="summaryOn" value="Použít tlačítka ovládání hlasitosti pro posun"/>
-					<node name="summaryOff" value="Ponechat tlačítka ovládání hlasitosti pro zvuk"/>
-				</node>
-				<node name="invertVolumeKeys" value="Převrátit posouvání tlačítky ovládání hlasitosti">
-					<node name="summaryOn" value="Tlačítko nahoru (dolů) posouvá stránku dolů (nahoru)"/>
-					<node name="summaryOff" value="Tlačítko nahoru (dolů) posouvá stránku nahoru (dolů)"/>
-				</node>
-				<node name="animation" value="Animace">
-					<node name="none" value="Posouvat bez animace"/>
-					<node name="curl" value="Animace otočení"/>
-					<node name="slide" value="Animace vysunutí"/>
-					<node name="shift" value="Animace posunutí"/>
-				</node>
-				<node name="animationSpeed" value="Rychlost animace">
-					<node name="fast" value="rychle"/>
-					<node name="slow" value="pomalu"/>
-				</node>
-				<node name="horizontal" value="Vodorovné posouvání">
-					<node name="summaryOn" value="Posouvat stránky vodorovně"/>
-					<node name="summaryOff" value="Posouvat stránky svisle"/>
-				</node>
-			</node>
-			<node name="tapZones" value="Oblasti dotyku">
-				<node name="summary" value="Akce pro dotyk prstem"/>
-				<node name="tapZonesScheme" value="Schéma oblastí dotyku">
-					<node name="left_to_right" value="Posouvání stránky zleva doprava"/>
-					<node name="right_to_left" value="Posouvání stránky zprava doleva"/>
-					<node name="up" value="Posouvání stránky zdola nahoru"/>
-					<node name="down" value="Posouvání stránky zhora dolů"/>
-					<node name="custom" value="Vlastní…"/>
-				</node>
-			</node>
-			<node name="dictionary" value="Slovník">
-				<node name="summary" value="Nastavení slovníku"/>
-				<node name="dictionary" value="Slovník"/>
-				<node name="translator" value="Překladač"/>
-				<node name="tappingAction" value="Dlouhé klepnutí">
-					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
-					<node name="selectSingleWord" value="Dlouhé klepnutí vybere slovo"/>
-					<node name="startSelecting" value="Dlouhé klepnutí spustí vybírání"/>
-					<node name="openDictionary" value="Dlouhé klepnutí vybere slovo, puštění otevře slovník"/>
-				</node>
-				<node name="navigateOverAllWords" value="Navigovat přes všechna slova">
-					<node name="summaryOn" value="Navigace klávesami prochází všechna slova"/>
-					<node name="summaryOff" value="Navigace klávesami prochází pouze hypertextové odkazy"/>
-				</node>
-			</node>
-			<node name="images" value="Obrázky">
-				<node name="summary" value="Možnosti zobrazení obrázku"/>
-				<node name="backgroundColor" value="Barva pozadí pro zobrazení obrázku"/>
-				<node name="tappingAction" value="Akce dlouhého klepnutí">
-					<node name="doNothing" value="Dlouhé klepnutí nedělá nic"/>
-					<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
-					<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
-				</node>
-			</node>
-			<node name="cancelMenu" value="Nabídka Zrušit">
-				<node name="summary" value="Seznam akcí tlačítka Zpět"/>
-				<node name="library" value="Library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-				</node>
-				<node name="networkLibrary" value="Network library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-				</node>
-				<node name="previousBook" value="Předchozí kniha">
-					<node name="summaryOn" value="Zobrazit položku 'návrat na předchozí knihu'"/>
-					<node name="summaryOff" value="Nezobrazovat položku 'návrat na předchozí knihu'"/>
-				</node>
-				<node name="positions" value="Poslední 3 pozice">
-					<node name="summaryOn" value="Zobrazit položky pro poslední 3 pozice v knize"/>
-					<node name="summaryOff" value="Nezobrazovat položky pro poslední 3 pozice v knize"/>
-				</node>
-				<node name="backKeyAction" value="Akce tlačítka Zpět">
-					<node name="exit" value="Zavřít FBReader"/>
-					<node name="goBack" value="Navigovat zpět"/>
-					<node name="cancelMenu" value="Zobrazit nabídku Zrušit"/>
-				</node>
-				<node name="backKeyLongPressAction" value="Akce dlouhého stisknutí tlačítka Zpět">
-					<node name="exit" value="Zavřít FBReader"/>
-					<node name="goBack" value="Navigovat zpět"/>
-					<node name="cancelMenu" value="Zobrazit nabídku Zrušit"/>
-					<node name="none" value="Žádná akce"/>
-				</node>
-			</node>
-			<node name="tips" value="Tipy">
-				<node name="summary" value="Nastavení denních tipů"/>
-				<node name="showTips" value="Zobrazovat tipy">
-					<node name="summaryOn" value="Zobrazovat denní tipy"/>
-					<node name="summaryOff" value="Nezobrazovat"/>
-				</node>
-			</node>
-			<node name="about" value="O aplikaci FBReader">
-				<node name="summary" value="Informace o verzi, kontakty"/>
-				<node name="version" value="Verze"/>
-				<node name="site" value="Navštivte naši webovou stránku">
-					<node name="url" value="http://www.fbreader.org/"/>
-				</node>
-				<node name="email" value="Pošlete nám e-mail">
-					<node name="url" value="mailto:contact@geometerplus.com"/>
-				</node>
-				<node name="twitter" value="Sledujte nás na twitteru">
-					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Soubor s knihou bude nevratně odebrán. Opravdu chcete pokračovat?"/>

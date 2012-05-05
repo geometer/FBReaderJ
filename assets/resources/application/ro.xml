@@ -250,6 +250,421 @@
 		<node name="toggleFullscreen" value="Pe intreg ecranul"/>
 		<node name="bookmarks" value="Favorite"/>
 	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Nume de fisier"/>
+		<node name="title" value="Titlu"/>
+		<node name="language" value="Limba"/>
+		<node name="encoding" value="Encodare"/>
+		<node name="authors" value="Autori"/>
+		<node name="tags" value="Tag-uri"/>
+		<node name="series" value="Seria"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Directoare">
+			<node name="summary" value="Directoare sa caute fisiere"/>
+			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
+		</node>
+		<node name="appearance" value="Aspect">
+			<node name="summary" value="Rotire, bara de stare"/>
+			<node name="screenOrientation" value="Orientarea ecranului">
+				<node name="system" value="Sistem"/>
+				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
+				<node name="portrait" value="Portret"/>
+				<node name="landscape" value="Orizontal (Peisaj)"/>
+				<node name="reversePortrait" value="Portret inversat"/>
+				<node name="reverseLandscape" value="Orizontal (Peisaj) inversat"/>
+			</node>
+			<node name="autoOrientation" value="Rotire automata">
+				<node name="summaryOn" value="Ecranului se vor roti atunci când utilizatorul misca aparatul"/>
+				<node name="summaryOff" value="Ecranului nu se vor roti atunci când utilizatorul va misca aparatul"/>
+			</node>
+			<node name="showStatusBar" value="Arata bara de stare">
+				<node name="summaryOn" value="Afiseaza bara de stare arata în modul de citire"/>
+				<node name="summaryOff" value="Ascunde bara de stare în modul de citire"/>
+			</node>
+			<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+				<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+				<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Arata bara de stare atunci când meniul este activ">
+				<node name="summaryOn" value="Arata bara de stare atunci când meniu devine activ"/>
+				<node name="summaryOff" value="Nu afisati bara de stare atunci când meniu devine activ"/>
+			</node>
+			<node name="disableButtonLights" value="Dezactiveaza lumina butoanelor hardware în timpul lecturii">
+				<node name="summaryOn" value="Dezactiveaza lumina butonului (nu functioneaza pentru unele dispozitive)"/>
+				<node name="summaryOff" value="Nu dezactivati lumina butonului"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
+				<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
+				<node name="summaryOff" value="Dezactivat"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Împiedicati modul stand-by">
+				<node name="0" value="Mereu"/>
+				<node name="25" value="În timp ce nivelul bateriei este mai mare de 25 la suta"/>
+				<node name="50" value="În timp ce nivelul bateriei este mai mare de 50 la suta"/>
+				<node name="100" value="Niciodata"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Împiedicati modul stand-by în timpul încarcarii">
+				<node name="summaryOn" value="Împiedicati modul stand-by, daca aparatul este în modul de încarcare"/>
+				<node name="summaryOff" value="Inchide ecran, chiar daca aparatul este în modul de încarcare"/>
+			</node>
+		</node>
+		<node name="text" value="Text">
+			<node name="summary" value="Font, hyphenations, etc."/>
+			<node name="fontProperties" value="Font properties" toBeTranslated="true">
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="Familia de fonturi">
+				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			</node>
+			<node name="fontSize" value="Dimensiunea fontului"/>
+			<node name="fontSizeDifference" value="Diferenta dimensiunii fontului"/>
+			<node name="fontStyle" value="Stilul fontului">
+				<node name="regular" value="Normal"/>
+				<node name="bold" value="Ingrosat"/>
+				<node name="italic" value="Cursiv"/>
+				<node name="boldItalic" value="Ingrosat Cursiv"/>
+			</node>
+			<node name="bold" value="Ingrosat">
+				<node name="summaryOn" value="ingrosat"/>
+				<node name="summaryOff" value="normal"/>
+				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			</node>
+			<node name="italic" value="Cursiv">
+				<node name="summaryOn" value="cursiv"/>
+				<node name="summaryOff" value="normal"/>
+				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			</node>
+			<node name="underlined" value="Underlined" toBeTranslated="true">
+				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Spatiere linii">
+				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			</node>
+			<node name="alignment" value="Aliniere">
+				<node name="left" value="Stânga"/>
+				<node name="right" value="Dreapta"/>
+				<node name="center" value="Centru"/>
+				<node name="justify" value="Aliniere stanga si dreapta"/>
+				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Despartire în silabe automata">
+				<node name="summaryOn" value="Despartire în silabe cuvinte în mod automat"/>
+				<node name="summaryOff" value="Nu despartiti în silabe cuvintele în mod automat"/>
+			</node>
+			<node name="allowHyphenations" value="Permiteti despartire în silabe">
+				<node name="summaryOn" value="Desparte în silabe cuvintele"/>
+				<node name="summaryOff" value="nu desparti cuvintele în silabe"/>
+				<node name="unchanged" value="&lt;neschimbat&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Aliniaza prima linie"/>
+			<node name="spaceBefore" value="Spatiu înainte"/>
+			<node name="spaceAfter" value="Spatiu dupa"/>
+			<node name="leftIndent" value="Aliniere stânga"/>
+			<node name="rightIndent" value="Aliniere dreapta"/>
+			<node name="more" value="Mai multe stiluri">
+				<node name="summary" value="Setari separate pentru titluri, epigrafe, etc"/>
+				<node name="Regular Paragraph" value="Paragraf normal">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Titlu">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Sectiunea titlu">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Poem titlul">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Subtitlu">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Adnotare">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Epigraf">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Strofa">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Verset">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Text preformatat">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Imagine">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Citat">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Autor">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Data">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Hyperlink intern">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Nota de subsol">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Accent">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Puternic">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Indice">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Exponent">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Cod">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Taiat">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Cursiv">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Îngrosat">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Definitie">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Definitie Descriere">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Antet 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Antet 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Antet 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Antet 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Antet 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Antet 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Hyperlink extern">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="Culori si imagini de fundal">
+			<node name="summary" value="Setarile de culoare"/>
+			<node name="background" value="Fundal">
+				<node name="solidColor" value="Culoare uniforma"/>
+				<node name="leather" value="Piele"/>
+				<node name="sepia" value="Sepia"/>
+				<node name="wood" value="Lemn"/>
+			</node>
+			<node name="backgroundColor" value="Culoare de fundal"/>
+			<node name="selectionBackground" value="Selectie de fundal"/>
+			<node name="selectionForeground" value="Text selectat"/>
+			<node name="text" value="Text obisnuit"/>
+			<node name="hyperlink" value="Hyperlink Text"/>
+			<node name="hyperlinkVisited" value="Textul hyperlinkului vizitat"/>
+			<node name="highlighting" value="Rezultatele cautarii in fundal"/>
+			<node name="footer" value="Subsol"/>
+		</node>
+		<node name="margins" value="Margini">
+			<node name="summary" value="Marginile textului"/>
+			<node name="left" value="Marginea din Stânga"/>
+			<node name="right" value="Marginea din dreapta"/>
+			<node name="top" value="Marginea de sus"/>
+			<node name="bottom" value="Marginea de jos"/>
+		</node>
+		<node name="scrollBar" value="Indicator de progres">
+			<node name="summary" value="Setarile scrollbar &amp; subsol"/>
+			<node name="scrollbarType" value="Tip scrollbar">
+				<node name="hide" value="Ascunde"/>
+				<node name="show" value="Glisorul vertical"/>
+				<node name="showAsProgress" value="Bara verticala de progres"/>
+				<node name="showAsFooter" value="Subsol orizontal"/>
+			</node>
+			<node name="footerHeight" value="înaltime subsol"/>
+			<node name="footerColor" value="Culoarea subsolului"/>
+			<node name="tocMarks" value="Arata favoritele curpinsului">
+				<node name="summaryOn" value="Arata favoritele curpinsului în bara de subsol"/>
+				<node name="summaryOff" value="Nu arata semne de cuprins în bara de subsol"/>
+			</node>
+			<node name="showProgress" value="Arata numarul paginii">
+				<node name="summaryOn" value="Afiseaza numarul paginii în subsol"/>
+				<node name="summaryOff" value="Nu arata numarul paginii în subsol"/>
+			</node>
+			<node name="showBattery" value="Afiseaza nivelul bateriei">
+				<node name="summaryOn" value="Afiseaza nivelul bateriei în subsol"/>
+				<node name="summaryOff" value="Nu afisa nivelul bateriei în subsol"/>
+			</node>
+			<node name="showClock" value="Afisare ceas">
+				<node name="summaryOn" value="Afisare ceas în subsol"/>
+				<node name="summaryOff" value="Nu se arata ceasul în subsol"/>
+			</node>
+			<node name="font" value="Familia de fonturi"/>
+		</node>
+		<node name="scrolling" value="Defilare">
+			<node name="summary" value="Cum se face defilarea textului"/>
+			<node name="fingerScrolling" value="Defilare mod touch screen">
+				<node name="byTap" value="Dati pagina apasand cu degetul"/>
+				<node name="byFlick" value="Dati pagina trecand cu degetul"/>
+				<node name="byTapAndFlick" value="Dati pagina apasand sau trecand cu degetul"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Detectare atingere de doua ori ">
+				<node name="summaryOn" value="Atingeti de doua ori pentru a afisa dialogul de navigare / meniul"/>
+				<node name="summaryOff" value="Ignorati dubla atingere"/>
+			</node>
+			<node name="volumeKeys" value="Întoarceti pagina cu tastele de volum">
+				<node name="summaryOn" value="Utilizati tastele de volum pentru a întoarce paginile"/>
+				<node name="summaryOff" value="Pastrati tastele de volum pentru sunet"/>
+			</node>
+			<node name="invertVolumeKeys" value="Inversati directia tastelor de volum">
+				<node name="summaryOn" value="Mai tare (mai incet), tasta pentru pagina anterioara (urmatoare)"/>
+				<node name="summaryOff" value="Mai incet (mai tare), tasta pentru pagina urmatoare (anterioara) "/>
+			</node>
+			<node name="animation" value="Animatie">
+				<node name="none" value="Derulati fara animatie"/>
+				<node name="curl" value="Animatie la rotund"/>
+				<node name="slide" value="Animatie glisare"/>
+				<node name="shift" value="Animatie mutare"/>
+			</node>
+			<node name="animationSpeed" value="Viteza de animatie">
+				<node name="fast" value="rapid"/>
+				<node name="slow" value="lent"/>
+			</node>
+			<node name="horizontal" value="Defilare orizontala">
+				<node name="summaryOn" value="Defilare orizontala de pagini"/>
+				<node name="summaryOff" value="Defilare verticala de pagini"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Apasati zone">
+			<node name="summary" value="Actiunile la apasare deget"/>
+			<node name="tapZonesScheme" value="Design zone de apasare">
+				<node name="left_to_right" value="Defilare pagina de la stânga la dreapta"/>
+				<node name="right_to_left" value="Defilare pagina de la dreapta la stânga"/>
+				<node name="up" value="Defilare pagina de jos în sus"/>
+				<node name="down" value="Defilare pagina de sus în jos"/>
+				<node name="custom" value="Particularizate…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Dictionar">
+			<node name="summary" value="Setari dictionar "/>
+			<node name="dictionary" value="Dictionar"/>
+			<node name="translator" value="Traducator"/>
+			<node name="tappingAction" value="Atingere lunga pentru actiune">
+				<node name="doNothing" value="Apasând lung nu face nimic"/>
+				<node name="selectSingleWord" value="Apasând lung selecteaza un singur cuvânt"/>
+				<node name="startSelecting" value="Apasând lung initiaza selectarea"/>
+				<node name="openDictionary" value="Apasând lung selecteaza un singur cuvânt, la ridicarea degetului se deschide dictionarul"/>
+			</node>
+			<node name="navigateOverAllWords" value="Navigati peste toate cuvintele">
+				<node name="summaryOn" value="Tasta de navigare viziteaza toate cuvintele"/>
+				<node name="summaryOff" value="Tasta de navigare viziteaza numai hyperlink-uri"/>
+			</node>
+		</node>
+		<node name="images" value="Imagini">
+			<node name="summary" value="Setari afisare imagine"/>
+			<node name="backgroundColor" value="Culoare de fundal pentru a vizualizare imagini"/>
+			<node name="tappingAction" value="Actiune la apasare lunga">
+				<node name="doNothing" value="Apasând lung nu face nimic"/>
+				<node name="selectImage" value="Apasând lung selecteaza imaginea"/>
+				<node name="openImageView" value="Apasând lung se vizualizeaza imaginea"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Anuleaza meniu">
+			<node name="summary" value="Lista actiunilor pentru butonul inapoi"/>
+			<node name="library" value="Library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="Network library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="Cartea anterioara">
+				<node name="summaryOn" value="Arata reveniti la cartea precedenta"/>
+				<node name="summaryOff" value="Nu arata reveniti la cartea precedenta"/>
+			</node>
+			<node name="positions" value="Ultimele 3 pozitii">
+				<node name="summaryOn" value="Arata articolele pentru ultimele 3 pozitii în carte"/>
+				<node name="summaryOff" value="Nu afisa elementele pentru ultimele 3 pozitii în carte"/>
+			</node>
+			<node name="backKeyAction" value="Actiunea tastei inapoi">
+				<node name="exit" value="Inchide Aplicatia"/>
+				<node name="goBack" value="Navigati înapoi"/>
+				<node name="cancelMenu" value="Arata  meniul de anulare"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Actiune pentru apasarea lunga a tastei inapoi">
+				<node name="exit" value="Inchide Aplicatia"/>
+				<node name="goBack" value="Navigati înapoi"/>
+				<node name="cancelMenu" value="Arata meniul de anulare"/>
+				<node name="none" value="Nicio actiune"/>
+			</node>
+		</node>
+		<node name="tips" value="Sfaturi">
+			<node name="summary" value="Setari sfaturi zilnice"/>
+			<node name="showTips" value="Afiseaza sfaturi">
+				<node name="summaryOn" value="Afiseaza sfaturi zilnice"/>
+				<node name="summaryOff" value="Nu afisa"/>
+			</node>
+		</node>
+		<node name="about" value="About FBReader" toBeTranslated="true">
+			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
+			<node name="version" value="Version" toBeTranslated="true"/>
+			<node name="site" value="Visit our website" toBeTranslated="true">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Send us an e-mail" toBeTranslated="true">
+				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+			</node>
+			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Instaleaza"/>
@@ -279,421 +694,6 @@
 		<node name="installDictionary">
 			<node name="title" value="Instalati dictionar"/>
 			<node name="message" value="Doriti sa instalati%s?"/>
-		</node>
-		<node name="BookInfo">
-			<node name="fileName" value="Nume de fisier"/>
-			<node name="title" value="Titlu"/>
-			<node name="language" value="Limba"/>
-			<node name="encoding" value="Encodare"/>
-			<node name="authors" value="Autori"/>
-			<node name="tags" value="Tag-uri"/>
-			<node name="series" value="Seria"/>
-		</node>
-		<node name="Preferences">
-			<node name="directories" value="Directoare">
-				<node name="summary" value="Directoare sa caute fisiere"/>
-				<node name="bookPath" value="Books directories" toBeTranslated="true"/>
-				<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
-				<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
-			</node>
-			<node name="appearance" value="Aspect">
-				<node name="summary" value="Rotire, bara de stare"/>
-				<node name="screenOrientation" value="Orientarea ecranului">
-					<node name="system" value="Sistem"/>
-					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
-					<node name="portrait" value="Portret"/>
-					<node name="landscape" value="Orizontal (Peisaj)"/>
-					<node name="reversePortrait" value="Portret inversat"/>
-					<node name="reverseLandscape" value="Orizontal (Peisaj) inversat"/>
-				</node>
-				<node name="autoOrientation" value="Rotire automata">
-					<node name="summaryOn" value="Ecranului se vor roti atunci când utilizatorul misca aparatul"/>
-					<node name="summaryOff" value="Ecranului nu se vor roti atunci când utilizatorul va misca aparatul"/>
-				</node>
-				<node name="showStatusBar" value="Arata bara de stare">
-					<node name="summaryOn" value="Afiseaza bara de stare arata în modul de citire"/>
-					<node name="summaryOff" value="Ascunde bara de stare în modul de citire"/>
-				</node>
-				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
-					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
-				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Arata bara de stare atunci când meniul este activ">
-					<node name="summaryOn" value="Arata bara de stare atunci când meniu devine activ"/>
-					<node name="summaryOff" value="Nu afisati bara de stare atunci când meniu devine activ"/>
-				</node>
-				<node name="disableButtonLights" value="Dezactiveaza lumina butoanelor hardware în timpul lecturii">
-					<node name="summaryOn" value="Dezactiveaza lumina butonului (nu functioneaza pentru unele dispozitive)"/>
-					<node name="summaryOff" value="Nu dezactivati lumina butonului"/>
-				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Reglarea luminozitatii ecranului">
-					<node name="summaryOn" value="Glisând degetul în sus / jos de-a lungul partii stângi a ecranului"/>
-					<node name="summaryOff" value="Dezactivat"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Împiedicati modul stand-by">
-					<node name="0" value="Mereu"/>
-					<node name="25" value="În timp ce nivelul bateriei este mai mare de 25 la suta"/>
-					<node name="50" value="În timp ce nivelul bateriei este mai mare de 50 la suta"/>
-					<node name="100" value="Niciodata"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Împiedicati modul stand-by în timpul încarcarii">
-					<node name="summaryOn" value="Împiedicati modul stand-by, daca aparatul este în modul de încarcare"/>
-					<node name="summaryOff" value="Inchide ecran, chiar daca aparatul este în modul de încarcare"/>
-				</node>
-			</node>
-			<node name="text" value="Text">
-				<node name="summary" value="Font, hyphenations, etc."/>
-				<node name="fontProperties" value="Font properties" toBeTranslated="true">
-					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="dithering" value="Dithering" toBeTranslated="true">
-						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="hinting" value="Hinting" toBeTranslated="true">
-						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
-					</node>
-				</node>
-				<node name="font" value="Familia de fonturi">
-					<node name="unchanged" value="&lt;neschimbat&gt;"/>
-				</node>
-				<node name="fontSize" value="Dimensiunea fontului"/>
-				<node name="fontSizeDifference" value="Diferenta dimensiunii fontului"/>
-				<node name="fontStyle" value="Stilul fontului">
-					<node name="regular" value="Normal"/>
-					<node name="bold" value="Ingrosat"/>
-					<node name="italic" value="Cursiv"/>
-					<node name="boldItalic" value="Ingrosat Cursiv"/>
-				</node>
-				<node name="bold" value="Ingrosat">
-					<node name="summaryOn" value="ingrosat"/>
-					<node name="summaryOff" value="normal"/>
-					<node name="unchanged" value="&lt;neschimbat&gt;"/>
-				</node>
-				<node name="italic" value="Cursiv">
-					<node name="summaryOn" value="cursiv"/>
-					<node name="summaryOff" value="normal"/>
-					<node name="unchanged" value="&lt;neschimbat&gt;"/>
-				</node>
-				<node name="underlined" value="Underlined" toBeTranslated="true">
-					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;neschimbat&gt;"/>
-				</node>
-				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;neschimbat&gt;"/>
-				</node>
-				<node name="lineSpacing" value="Spatiere linii">
-					<node name="unchanged" value="&lt;neschimbat&gt;"/>
-				</node>
-				<node name="alignment" value="Aliniere">
-					<node name="left" value="Stânga"/>
-					<node name="right" value="Dreapta"/>
-					<node name="center" value="Centru"/>
-					<node name="justify" value="Aliniere stanga si dreapta"/>
-					<node name="unchanged" value="&lt;neschimbat&gt;"/>
-				</node>
-				<node name="autoHyphenations" value="Despartire în silabe automata">
-					<node name="summaryOn" value="Despartire în silabe cuvinte în mod automat"/>
-					<node name="summaryOff" value="Nu despartiti în silabe cuvintele în mod automat"/>
-				</node>
-				<node name="allowHyphenations" value="Permiteti despartire în silabe">
-					<node name="summaryOn" value="Desparte în silabe cuvintele"/>
-					<node name="summaryOff" value="nu desparti cuvintele în silabe"/>
-					<node name="unchanged" value="&lt;neschimbat&gt;"/>
-				</node>
-				<node name="firstLineIndent" value="Aliniaza prima linie"/>
-				<node name="spaceBefore" value="Spatiu înainte"/>
-				<node name="spaceAfter" value="Spatiu dupa"/>
-				<node name="leftIndent" value="Aliniere stânga"/>
-				<node name="rightIndent" value="Aliniere dreapta"/>
-				<node name="more" value="Mai multe stiluri">
-					<node name="summary" value="Setari separate pentru titluri, epigrafe, etc"/>
-					<node name="Regular Paragraph" value="Paragraf normal">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Title" value="Titlu">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Section Title" value="Sectiunea titlu">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Poem Title" value="Poem titlul">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subtitle" value="Subtitlu">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Annotation" value="Adnotare">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Epigraph" value="Epigraf">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Stanza" value="Strofa">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Verse" value="Verset">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Preformatted text" value="Text preformatat">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Image" value="Imagine">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Cite" value="Citat">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Author" value="Autor">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Date" value="Data">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Internal Hyperlink" value="Hyperlink intern">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Footnote" value="Nota de subsol">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Emphasis" value="Accent">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Strong" value="Puternic">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subscript" value="Indice">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Superscript" value="Exponent">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Code" value="Cod">
-						<node name="summary" value=""/>
-					</node>
-					<node name="StrikeThrough" value="Taiat">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Italic" value="Cursiv">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Bold" value="Îngrosat">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition" value="Definitie">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition Description" value="Definitie Descriere">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 1" value="Antet 1">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 2" value="Antet 2">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 3" value="Antet 3">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 4" value="Antet 4">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 5" value="Antet 5">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 6" value="Antet 6">
-						<node name="summary" value=""/>
-					</node>
-					<node name="External Hyperlink" value="Hyperlink extern">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-			</node>
-			<node name="colors" value="Culori si imagini de fundal">
-				<node name="summary" value="Setarile de culoare"/>
-				<node name="background" value="Fundal">
-					<node name="solidColor" value="Culoare uniforma"/>
-					<node name="leather" value="Piele"/>
-					<node name="sepia" value="Sepia"/>
-					<node name="wood" value="Lemn"/>
-				</node>
-				<node name="backgroundColor" value="Culoare de fundal"/>
-				<node name="selectionBackground" value="Selectie de fundal"/>
-				<node name="selectionForeground" value="Text selectat"/>
-				<node name="text" value="Text obisnuit"/>
-				<node name="hyperlink" value="Hyperlink Text"/>
-				<node name="hyperlinkVisited" value="Textul hyperlinkului vizitat"/>
-				<node name="highlighting" value="Rezultatele cautarii in fundal"/>
-				<node name="footer" value="Subsol"/>
-			</node>
-			<node name="margins" value="Margini">
-				<node name="summary" value="Marginile textului"/>
-				<node name="left" value="Marginea din Stânga"/>
-				<node name="right" value="Marginea din dreapta"/>
-				<node name="top" value="Marginea de sus"/>
-				<node name="bottom" value="Marginea de jos"/>
-			</node>
-			<node name="scrollBar" value="Indicator de progres">
-				<node name="summary" value="Setarile scrollbar &amp; subsol"/>
-				<node name="scrollbarType" value="Tip scrollbar">
-					<node name="hide" value="Ascunde"/>
-					<node name="show" value="Glisorul vertical"/>
-					<node name="showAsProgress" value="Bara verticala de progres"/>
-					<node name="showAsFooter" value="Subsol orizontal"/>
-				</node>
-				<node name="footerHeight" value="înaltime subsol"/>
-				<node name="footerColor" value="Culoarea subsolului"/>
-				<node name="tocMarks" value="Arata favoritele curpinsului">
-					<node name="summaryOn" value="Arata favoritele curpinsului în bara de subsol"/>
-					<node name="summaryOff" value="Nu arata semne de cuprins în bara de subsol"/>
-				</node>
-				<node name="showProgress" value="Arata numarul paginii">
-					<node name="summaryOn" value="Afiseaza numarul paginii în subsol"/>
-					<node name="summaryOff" value="Nu arata numarul paginii în subsol"/>
-				</node>
-				<node name="showBattery" value="Afiseaza nivelul bateriei">
-					<node name="summaryOn" value="Afiseaza nivelul bateriei în subsol"/>
-					<node name="summaryOff" value="Nu afisa nivelul bateriei în subsol"/>
-				</node>
-				<node name="showClock" value="Afisare ceas">
-					<node name="summaryOn" value="Afisare ceas în subsol"/>
-					<node name="summaryOff" value="Nu se arata ceasul în subsol"/>
-				</node>
-				<node name="font" value="Familia de fonturi"/>
-			</node>
-			<node name="scrolling" value="Defilare">
-				<node name="summary" value="Cum se face defilarea textului"/>
-				<node name="fingerScrolling" value="Defilare mod touch screen">
-					<node name="byTap" value="Dati pagina apasand cu degetul"/>
-					<node name="byFlick" value="Dati pagina trecand cu degetul"/>
-					<node name="byTapAndFlick" value="Dati pagina apasand sau trecand cu degetul"/>
-				</node>
-				<node name="enableDoubleTapDetection" value="Detectare atingere de doua ori ">
-					<node name="summaryOn" value="Atingeti de doua ori pentru a afisa dialogul de navigare / meniul"/>
-					<node name="summaryOff" value="Ignorati dubla atingere"/>
-				</node>
-				<node name="volumeKeys" value="Întoarceti pagina cu tastele de volum">
-					<node name="summaryOn" value="Utilizati tastele de volum pentru a întoarce paginile"/>
-					<node name="summaryOff" value="Pastrati tastele de volum pentru sunet"/>
-				</node>
-				<node name="invertVolumeKeys" value="Inversati directia tastelor de volum">
-					<node name="summaryOn" value="Mai tare (mai incet), tasta pentru pagina anterioara (urmatoare)"/>
-					<node name="summaryOff" value="Mai incet (mai tare), tasta pentru pagina urmatoare (anterioara) "/>
-				</node>
-				<node name="animation" value="Animatie">
-					<node name="none" value="Derulati fara animatie"/>
-					<node name="curl" value="Animatie la rotund"/>
-					<node name="slide" value="Animatie glisare"/>
-					<node name="shift" value="Animatie mutare"/>
-				</node>
-				<node name="animationSpeed" value="Viteza de animatie">
-					<node name="fast" value="rapid"/>
-					<node name="slow" value="lent"/>
-				</node>
-				<node name="horizontal" value="Defilare orizontala">
-					<node name="summaryOn" value="Defilare orizontala de pagini"/>
-					<node name="summaryOff" value="Defilare verticala de pagini"/>
-				</node>
-			</node>
-			<node name="tapZones" value="Apasati zone">
-				<node name="summary" value="Actiunile la apasare deget"/>
-				<node name="tapZonesScheme" value="Design zone de apasare">
-					<node name="left_to_right" value="Defilare pagina de la stânga la dreapta"/>
-					<node name="right_to_left" value="Defilare pagina de la dreapta la stânga"/>
-					<node name="up" value="Defilare pagina de jos în sus"/>
-					<node name="down" value="Defilare pagina de sus în jos"/>
-					<node name="custom" value="Particularizate…"/>
-				</node>
-			</node>
-			<node name="dictionary" value="Dictionar">
-				<node name="summary" value="Setari dictionar "/>
-				<node name="dictionary" value="Dictionar"/>
-				<node name="translator" value="Traducator"/>
-				<node name="tappingAction" value="Atingere lunga pentru actiune">
-					<node name="doNothing" value="Apasând lung nu face nimic"/>
-					<node name="selectSingleWord" value="Apasând lung selecteaza un singur cuvânt"/>
-					<node name="startSelecting" value="Apasând lung initiaza selectarea"/>
-					<node name="openDictionary" value="Apasând lung selecteaza un singur cuvânt, la ridicarea degetului se deschide dictionarul"/>
-				</node>
-				<node name="navigateOverAllWords" value="Navigati peste toate cuvintele">
-					<node name="summaryOn" value="Tasta de navigare viziteaza toate cuvintele"/>
-					<node name="summaryOff" value="Tasta de navigare viziteaza numai hyperlink-uri"/>
-				</node>
-			</node>
-			<node name="images" value="Imagini">
-				<node name="summary" value="Setari afisare imagine"/>
-				<node name="backgroundColor" value="Culoare de fundal pentru a vizualizare imagini"/>
-				<node name="tappingAction" value="Actiune la apasare lunga">
-					<node name="doNothing" value="Apasând lung nu face nimic"/>
-					<node name="selectImage" value="Apasând lung selecteaza imaginea"/>
-					<node name="openImageView" value="Apasând lung se vizualizeaza imaginea"/>
-				</node>
-			</node>
-			<node name="cancelMenu" value="Anuleaza meniu">
-				<node name="summary" value="Lista actiunilor pentru butonul inapoi"/>
-				<node name="library" value="Library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-				</node>
-				<node name="networkLibrary" value="Network library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-				</node>
-				<node name="previousBook" value="Cartea anterioara">
-					<node name="summaryOn" value="Arata reveniti la cartea precedenta"/>
-					<node name="summaryOff" value="Nu arata reveniti la cartea precedenta"/>
-				</node>
-				<node name="positions" value="Ultimele 3 pozitii">
-					<node name="summaryOn" value="Arata articolele pentru ultimele 3 pozitii în carte"/>
-					<node name="summaryOff" value="Nu afisa elementele pentru ultimele 3 pozitii în carte"/>
-				</node>
-				<node name="backKeyAction" value="Actiunea tastei inapoi">
-					<node name="exit" value="Inchide Aplicatia"/>
-					<node name="goBack" value="Navigati înapoi"/>
-					<node name="cancelMenu" value="Arata  meniul de anulare"/>
-				</node>
-				<node name="backKeyLongPressAction" value="Actiune pentru apasarea lunga a tastei inapoi">
-					<node name="exit" value="Inchide Aplicatia"/>
-					<node name="goBack" value="Navigati înapoi"/>
-					<node name="cancelMenu" value="Arata meniul de anulare"/>
-					<node name="none" value="Nicio actiune"/>
-				</node>
-			</node>
-			<node name="tips" value="Sfaturi">
-				<node name="summary" value="Setari sfaturi zilnice"/>
-				<node name="showTips" value="Afiseaza sfaturi">
-					<node name="summaryOn" value="Afiseaza sfaturi zilnice"/>
-					<node name="summaryOff" value="Nu afisa"/>
-				</node>
-			</node>
-			<node name="about" value="About FBReader" toBeTranslated="true">
-				<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-				<node name="version" value="Version" toBeTranslated="true"/>
-				<node name="site" value="Visit our website" toBeTranslated="true">
-					<node name="url" value="http://www.fbreader.org/"/>
-				</node>
-				<node name="email" value="Send us an e-mail" toBeTranslated="true">
-					<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
-				</node>
-				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
-					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Fisierul cartii va fi sters ireversibil. Sunteti sigur?"/>
