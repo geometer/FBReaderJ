@@ -250,6 +250,421 @@
 		<node name="toggleFullscreen" value="Volledig scherm"/>
 		<node name="bookmarks" value="Bladwijzers"/>
 	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Bestandsnaam"/>
+		<node name="title" value="Titel"/>
+		<node name="language" value="Taal"/>
+		<node name="encoding" value="Codering"/>
+		<node name="authors" value="Auteurs"/>
+		<node name="tags" value="Trefwoorden"/>
+		<node name="series" value="Serie"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Mappen">
+			<node name="summary" value="Waar zijn de bestanden opgeslagen"/>
+			<node name="books" value="Map met boeken"/>
+			<node name="fonts" value="Map met lettertypes"/>
+			<node name="wallpapers" value="Map met achtergronden"/>
+		</node>
+		<node name="appearance" value="Weergave">
+			<node name="summary" value="Draaien, statusbalk"/>
+			<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
+				<node name="system" value="System" toBeTranslated="true"/>
+				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
+				<node name="portrait" value="Portrait" toBeTranslated="true"/>
+				<node name="landscape" value="Landscape" toBeTranslated="true"/>
+				<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
+				<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
+			</node>
+			<node name="autoOrientation" value="Automatisch draaien">
+				<node name="summaryOn" value="Het scherm zal draaien als het apparaat gedraaid wordt"/>
+				<node name="summaryOff" value="Het scherm zal niet draaien als het apparaat gedraaid wordt"/>
+			</node>
+			<node name="showStatusBar" value="Toon statusbalk">
+				<node name="summaryOn" value="Toon statusbalk tijdens lezen"/>
+				<node name="summaryOff" value="Verberg statusbalk tijdens lezen"/>
+			</node>
+			<node name="showActionBar" value="Show action bar" toBeTranslated="true">
+				<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
+				<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
+				<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
+			</node>
+			<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
+				<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
+				<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
+				<node name="summaryOff" value="Uitgeschakeld"/>
+			</node>
+			<node name="dontTurnScreenOff" value="Voorkom uitschakelen scherm">
+				<node name="0" value="Altijd"/>
+				<node name="25" value="Zolang batterijniveau hoger is dan 25 procent"/>
+				<node name="50" value="Zolang batterijniveau hoger is dan 50 procent"/>
+				<node name="100" value="Nooit"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Voorkom uitschakelen scherm tijdens opladen">
+				<node name="summaryOn" value="Voorkom uitschakelen scherm tijdens het opladen"/>
+				<node name="summaryOff" value="Schakel scherm uit, zelfs tijdens het opladen"/>
+			</node>
+		</node>
+		<node name="text" value="Tekst">
+			<node name="summary" value="Lettertype, Afbreken, etc."/>
+			<node name="fontProperties" value="Font properties" toBeTranslated="true">
+				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
+				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
+					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
+					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="dithering" value="Dithering" toBeTranslated="true">
+					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="hinting" value="Hinting" toBeTranslated="true">
+					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				</node>
+				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
+					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
+					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				</node>
+			</node>
+			<node name="font" value="Lettertype">
+				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			</node>
+			<node name="fontSize" value="Lettergrootte"/>
+			<node name="fontSizeDifference" value="Lettergrootte verschil"/>
+			<node name="fontStyle" value="Letterstijl">
+				<node name="regular" value="Normaal"/>
+				<node name="bold" value="Vet"/>
+				<node name="italic" value="Cursief"/>
+				<node name="boldItalic" value="Vet Cursief"/>
+			</node>
+			<node name="bold" value="Vet">
+				<node name="summaryOn" value="vet"/>
+				<node name="summaryOff" value="normaal"/>
+				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			</node>
+			<node name="italic" value="Cursief">
+				<node name="summaryOn" value="cursief"/>
+				<node name="summaryOff" value="normaal"/>
+				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			</node>
+			<node name="underlined" value="Underlined" toBeTranslated="true">
+				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
+				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
+				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Regelafstand">
+				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			</node>
+			<node name="alignment" value="Uitlijning">
+				<node name="left" value="Links"/>
+				<node name="right" value="Rechts"/>
+				<node name="center" value="Gecentreerd"/>
+				<node name="justify" value="Uitvullen"/>
+				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Automatisch afbreken">
+				<node name="summaryOn" value="Woorden automatisch afbreken"/>
+				<node name="summaryOff" value="Woorden niet automatisch afbreken"/>
+			</node>
+			<node name="allowHyphenations" value="Afbreken">
+				<node name="summaryOn" value="woorden afbreken"/>
+				<node name="summaryOff" value="woorden niet afbreken"/>
+				<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Eerste regel inspringen"/>
+			<node name="spaceBefore" value="Ruimte voor"/>
+			<node name="spaceAfter" value="Ruimte achter"/>
+			<node name="leftIndent" value="Links inspringen"/>
+			<node name="rightIndent" value="Rechts inspringen"/>
+			<node name="more" value="Meer stijlen">
+				<node name="summary" value="Aangepaste instellingen voor titels, paragrafen, etc."/>
+				<node name="Regular Paragraph" value="Normale paragraaf">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Titel">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Section Title" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Poem Title" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Subtitel">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Annotatie">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Epigraph" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Stanza" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Verse" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Preformatted text" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Afbeelding">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Cite" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Auteur">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Datum">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Interne hyperlink">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Voetnote">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Emphasis" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Strong" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Subscript">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Superscript">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Code">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Doorhalen">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Cursief">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Vet">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Definitie">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Definition Description" toBeTranslated="true">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Koptekst 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Koptekst 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Koptekst 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Koptekst 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Koptekst 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Koptekst 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Externe hyperlink">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="Kleuren">
+			<node name="summary" value="Kleurinstellingen"/>
+			<node name="background" value="Achtergrond">
+				<node name="solidColor" value="Effen kleur"/>
+				<node name="leather" value="Leer"/>
+				<node name="sepia" value="Sepia"/>
+				<node name="wood" value="Hout"/>
+			</node>
+			<node name="backgroundColor" value="Achtergrondkleur"/>
+			<node name="selectionBackground" value="Selectie achtergrond"/>
+			<node name="selectionForeground" value="Geselecteerde tekst"/>
+			<node name="text" value="Normale tekst"/>
+			<node name="hyperlink" value="Hyperlink tekst"/>
+			<node name="hyperlinkVisited" value="Bezochte hyperlink tekst"/>
+			<node name="highlighting" value="Achtergrond zoekresultaten"/>
+			<node name="footer" value="Voettekst"/>
+		</node>
+		<node name="margins" value="Marges">
+			<node name="summary" value="Tekst marges"/>
+			<node name="left" value="Linkermarge"/>
+			<node name="right" value="Rechtermarge"/>
+			<node name="top" value="Bovenmarge"/>
+			<node name="bottom" value="Ondermarge"/>
+		</node>
+		<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
+			<node name="summary" value="Scrollbar &amp; footer settings" toBeTranslated="true"/>
+			<node name="scrollbarType" value="Scrollbar type" toBeTranslated="true">
+				<node name="hide" value="Hide" toBeTranslated="true"/>
+				<node name="show" value="Vertical slider" toBeTranslated="true"/>
+				<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
+				<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
+			</node>
+			<node name="footerHeight" value="Footer height" toBeTranslated="true"/>
+			<node name="footerColor" value="Footer color" toBeTranslated="true"/>
+			<node name="tocMarks" value="Toon inhoudsmarkeringen">
+				<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
+			</node>
+			<node name="showProgress" value="Toon paginanummer">
+				<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
+			</node>
+			<node name="showBattery" value="Toon batterijniveau">
+				<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
+			</node>
+			<node name="showClock" value="Toon klok">
+				<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
+			</node>
+			<node name="font" value="Lettertype"/>
+		</node>
+		<node name="scrolling" value="Omslaan">
+			<node name="summary" value="Hoe sla je de bladzijdes om"/>
+			<node name="fingerScrolling" value="Touch screen omslaan">
+				<node name="byTap" value="Omslaan door te tikken op het scherm"/>
+				<node name="byFlick" value="Omslaan door te schuiven over het scherm"/>
+				<node name="byTapAndFlick" value="Omslaan door te schuiven of te tikken op het scherm"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Dubbel-tik detectie">
+				<node name="summaryOn" value="Dubbel-tik om navigatiescherm te openen"/>
+				<node name="summaryOff" value="Dubbel-tikken negeren"/>
+			</node>
+			<node name="volumeKeys" value="Omslaan met volumeknoppen">
+				<node name="summaryOn" value="Gebruik volumeknoppen om om te slaan"/>
+				<node name="summaryOff" value="Gebruik volumeknoppen voor geluid"/>
+			</node>
+			<node name="invertVolumeKeys" value="Richting volumeknoppen">
+				<node name="summaryOn" value="Harder (zachter) toets naar volgende (vorige) pagina"/>
+				<node name="summaryOff" value="Harder (zachter) toets naar vorige (volgende) pagina"/>
+			</node>
+			<node name="animation" value="Animatie">
+				<node name="none" value="Omslaan zonder animatie"/>
+				<node name="curl" value="Krul-animatie"/>
+				<node name="slide" value="Slide-animatie"/>
+				<node name="shift" value="Shift-animatie"/>
+			</node>
+			<node name="animationSpeed" value="Animatiesnelheid">
+				<node name="fast" value="snel"/>
+				<node name="slow" value="langzaam"/>
+			</node>
+			<node name="horizontal" value="Horizontaal omslaan">
+				<node name="summaryOn" value="Pagina's horizontaal omslaan"/>
+				<node name="summaryOff" value="Pagina's verticaal omslaan"/>
+			</node>
+		</node>
+		<node name="tapZones" value="Tap zones" toBeTranslated="true">
+			<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
+			<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
+				<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
+				<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
+				<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
+				<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
+				<node name="custom" value="Custom…" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Woordenboek">
+			<node name="summary" value="Woordenboek instellingen"/>
+			<node name="dictionary" value="Woordenboek"/>
+			<node name="translator" value="Vertaler"/>
+			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+				<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
+				<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
+				<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
+			</node>
+			<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
+				<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
+				<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="images" value="Afbeeldingen">
+			<node name="summary" value="Tonen afbeeldingen opties"/>
+			<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
+			<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
+				<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
+				<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
+				<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Afsluitmenu">
+			<node name="summary" value="Terugknop actie"/>
+			<node name="library" value="Library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			</node>
+			<node name="networkLibrary" value="Network library" toBeTranslated="true">
+				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
+				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			</node>
+			<node name="previousBook" value="Vorige boek">
+				<node name="summaryOn" value="Toon 'Open vorige boek' item"/>
+				<node name="summaryOff" value="Verberg 'Open vorige boek' item"/>
+			</node>
+			<node name="positions" value="Laatste 3 posities">
+				<node name="summaryOn" value="Toon laatste 3 posities in het boek"/>
+				<node name="summaryOff" value="Verberg laatste 3 posities in het boek"/>
+			</node>
+			<node name="backKeyAction" value="Terugknop indrukken">
+				<node name="exit" value="FBReader afsluiten"/>
+				<node name="goBack" value="Navigeer terug"/>
+				<node name="cancelMenu" value="Toon afsluitmenu"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Terugknop lang indrukken">
+				<node name="exit" value="FBReader afsluiten"/>
+				<node name="goBack" value="Navigeer terug"/>
+				<node name="cancelMenu" value="Toon afsluitmenu"/>
+				<node name="none" value="Geen actie"/>
+			</node>
+		</node>
+		<node name="tips" value="Tips" toBeTranslated="true">
+			<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
+			<node name="showTips" value="Show tips" toBeTranslated="true">
+				<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
+				<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
+			</node>
+		</node>
+		<node name="about" value="About FBReader" toBeTranslated="true">
+			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
+			<node name="version" value="Version" toBeTranslated="true"/>
+			<node name="site" value="Visit our website" toBeTranslated="true">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Send us an e-mail" toBeTranslated="true">
+				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+			</node>
+			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
 	<node name="dialog">
 		<node name="button">
 			<node name="install" value="Installeren"/>
@@ -279,421 +694,6 @@
 		<node name="installDictionary">
 			<node name="title" value="Installeer woordenboek"/>
 			<node name="message" value="Wil je %s installeren?"/>
-		</node>
-		<node name="BookInfo">
-			<node name="fileName" value="Bestandsnaam"/>
-			<node name="title" value="Titel"/>
-			<node name="language" value="Taal"/>
-			<node name="encoding" value="Codering"/>
-			<node name="authors" value="Auteurs"/>
-			<node name="tags" value="Trefwoorden"/>
-			<node name="series" value="Serie"/>
-		</node>
-		<node name="Preferences">
-			<node name="directories" value="Mappen">
-				<node name="summary" value="Waar zijn de bestanden opgeslagen"/>
-				<node name="books" value="Map met boeken"/>
-				<node name="fonts" value="Map met lettertypes"/>
-				<node name="wallpapers" value="Map met achtergronden"/>
-			</node>
-			<node name="appearance" value="Weergave">
-				<node name="summary" value="Draaien, statusbalk"/>
-				<node name="screenOrientation" value="Screen orientation" toBeTranslated="true">
-					<node name="system" value="System" toBeTranslated="true"/>
-					<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
-					<node name="portrait" value="Portrait" toBeTranslated="true"/>
-					<node name="landscape" value="Landscape" toBeTranslated="true"/>
-					<node name="reversePortrait" value="Reverse portrait" toBeTranslated="true"/>
-					<node name="reverseLandscape" value="Reverse landscape" toBeTranslated="true"/>
-				</node>
-				<node name="autoOrientation" value="Automatisch draaien">
-					<node name="summaryOn" value="Het scherm zal draaien als het apparaat gedraaid wordt"/>
-					<node name="summaryOff" value="Het scherm zal niet draaien als het apparaat gedraaid wordt"/>
-				</node>
-				<node name="showStatusBar" value="Toon statusbalk">
-					<node name="summaryOn" value="Toon statusbalk tijdens lezen"/>
-					<node name="summaryOff" value="Verberg statusbalk tijdens lezen"/>
-				</node>
-				<node name="showActionBar" value="Show action bar" toBeTranslated="true">
-					<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
-					<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
-				</node>
-				<node name="showStatusBarWhenMenuIsActive" value="Show status bar when menu is active" toBeTranslated="true">
-					<node name="summaryOn" value="Show status bar when menu becomes active" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show status bar when menu becomes active" toBeTranslated="true"/>
-				</node>
-				<node name="disableButtonLights" value="Disable hardware buttons light during reading" toBeTranslated="true">
-					<node name="summaryOn" value="Disable button lights (that does not for some devices)" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't try to disable button lights" toBeTranslated="true"/>
-				</node>
-				<node name="allowScreenBrightnessAdjustment" value="Helderheid scherm aanpassen">
-					<node name="summaryOn" value="Door vinger op/neer te slepen over linkerkant scherm"/>
-					<node name="summaryOff" value="Uitgeschakeld"/>
-				</node>
-				<node name="dontTurnScreenOff" value="Voorkom uitschakelen scherm">
-					<node name="0" value="Altijd"/>
-					<node name="25" value="Zolang batterijniveau hoger is dan 25 procent"/>
-					<node name="50" value="Zolang batterijniveau hoger is dan 50 procent"/>
-					<node name="100" value="Nooit"/>
-				</node>
-				<node name="dontTurnScreenOffDuringCharging" value="Voorkom uitschakelen scherm tijdens opladen">
-					<node name="summaryOn" value="Voorkom uitschakelen scherm tijdens het opladen"/>
-					<node name="summaryOff" value="Schakel scherm uit, zelfs tijdens het opladen"/>
-				</node>
-			</node>
-			<node name="text" value="Tekst">
-				<node name="summary" value="Lettertype, Afbreken, etc."/>
-				<node name="fontProperties" value="Font properties" toBeTranslated="true">
-					<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-					<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-						<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-						<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="dithering" value="Dithering" toBeTranslated="true">
-						<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="hinting" value="Hinting" toBeTranslated="true">
-						<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
-					</node>
-					<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-						<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-						<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
-					</node>
-				</node>
-				<node name="font" value="Lettertype">
-					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-				</node>
-				<node name="fontSize" value="Lettergrootte"/>
-				<node name="fontSizeDifference" value="Lettergrootte verschil"/>
-				<node name="fontStyle" value="Letterstijl">
-					<node name="regular" value="Normaal"/>
-					<node name="bold" value="Vet"/>
-					<node name="italic" value="Cursief"/>
-					<node name="boldItalic" value="Vet Cursief"/>
-				</node>
-				<node name="bold" value="Vet">
-					<node name="summaryOn" value="vet"/>
-					<node name="summaryOff" value="normaal"/>
-					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-				</node>
-				<node name="italic" value="Cursief">
-					<node name="summaryOn" value="cursief"/>
-					<node name="summaryOff" value="normaal"/>
-					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-				</node>
-				<node name="underlined" value="Underlined" toBeTranslated="true">
-					<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-				</node>
-				<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-					<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-					<node name="summaryOff" value="regular" toBeTranslated="true"/>
-					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-				</node>
-				<node name="lineSpacing" value="Regelafstand">
-					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-				</node>
-				<node name="alignment" value="Uitlijning">
-					<node name="left" value="Links"/>
-					<node name="right" value="Rechts"/>
-					<node name="center" value="Gecentreerd"/>
-					<node name="justify" value="Uitvullen"/>
-					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-				</node>
-				<node name="autoHyphenations" value="Automatisch afbreken">
-					<node name="summaryOn" value="Woorden automatisch afbreken"/>
-					<node name="summaryOff" value="Woorden niet automatisch afbreken"/>
-				</node>
-				<node name="allowHyphenations" value="Afbreken">
-					<node name="summaryOn" value="woorden afbreken"/>
-					<node name="summaryOff" value="woorden niet afbreken"/>
-					<node name="unchanged" value="&lt;ongewijzigd&gt;"/>
-				</node>
-				<node name="firstLineIndent" value="Eerste regel inspringen"/>
-				<node name="spaceBefore" value="Ruimte voor"/>
-				<node name="spaceAfter" value="Ruimte achter"/>
-				<node name="leftIndent" value="Links inspringen"/>
-				<node name="rightIndent" value="Rechts inspringen"/>
-				<node name="more" value="Meer stijlen">
-					<node name="summary" value="Aangepaste instellingen voor titels, paragrafen, etc."/>
-					<node name="Regular Paragraph" value="Normale paragraaf">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Title" value="Titel">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Section Title" value="Section Title" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Poem Title" value="Poem Title" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subtitle" value="Subtitel">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Annotation" value="Annotatie">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Epigraph" value="Epigraph" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Stanza" value="Stanza" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Verse" value="Verse" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Preformatted text" value="Preformatted text" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Image" value="Afbeelding">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Cite" value="Cite" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Author" value="Auteur">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Date" value="Datum">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Internal Hyperlink" value="Interne hyperlink">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Footnote" value="Voetnote">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Emphasis" value="Emphasis" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Strong" value="Strong" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Subscript" value="Subscript">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Superscript" value="Superscript">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Code" value="Code">
-						<node name="summary" value=""/>
-					</node>
-					<node name="StrikeThrough" value="Doorhalen">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Italic" value="Cursief">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Bold" value="Vet">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition" value="Definitie">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Definition Description" value="Definition Description" toBeTranslated="true">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 1" value="Koptekst 1">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 2" value="Koptekst 2">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 3" value="Koptekst 3">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 4" value="Koptekst 4">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 5" value="Koptekst 5">
-						<node name="summary" value=""/>
-					</node>
-					<node name="Header 6" value="Koptekst 6">
-						<node name="summary" value=""/>
-					</node>
-					<node name="External Hyperlink" value="Externe hyperlink">
-						<node name="summary" value=""/>
-					</node>
-				</node>
-			</node>
-			<node name="colors" value="Kleuren">
-				<node name="summary" value="Kleurinstellingen"/>
-				<node name="background" value="Achtergrond">
-					<node name="solidColor" value="Effen kleur"/>
-					<node name="leather" value="Leer"/>
-					<node name="sepia" value="Sepia"/>
-					<node name="wood" value="Hout"/>
-				</node>
-				<node name="backgroundColor" value="Achtergrondkleur"/>
-				<node name="selectionBackground" value="Selectie achtergrond"/>
-				<node name="selectionForeground" value="Geselecteerde tekst"/>
-				<node name="text" value="Normale tekst"/>
-				<node name="hyperlink" value="Hyperlink tekst"/>
-				<node name="hyperlinkVisited" value="Bezochte hyperlink tekst"/>
-				<node name="highlighting" value="Achtergrond zoekresultaten"/>
-				<node name="footer" value="Voettekst"/>
-			</node>
-			<node name="margins" value="Marges">
-				<node name="summary" value="Tekst marges"/>
-				<node name="left" value="Linkermarge"/>
-				<node name="right" value="Rechtermarge"/>
-				<node name="top" value="Bovenmarge"/>
-				<node name="bottom" value="Ondermarge"/>
-			</node>
-			<node name="scrollBar" value="Scrollbar" toBeTranslated="true">
-				<node name="summary" value="Scrollbar &amp; footer settings" toBeTranslated="true"/>
-				<node name="scrollbarType" value="Scrollbar type" toBeTranslated="true">
-					<node name="hide" value="Hide" toBeTranslated="true"/>
-					<node name="show" value="Vertical slider" toBeTranslated="true"/>
-					<node name="showAsProgress" value="Vertical progress bar" toBeTranslated="true"/>
-					<node name="showAsFooter" value="Horizontal footer" toBeTranslated="true"/>
-				</node>
-				<node name="footerHeight" value="Footer height" toBeTranslated="true"/>
-				<node name="footerColor" value="Footer color" toBeTranslated="true"/>
-				<node name="tocMarks" value="Toon inhoudsmarkeringen">
-					<node name="summaryOn" value="Show TOC marks in the footer bar" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show TOC marks in the footer bar" toBeTranslated="true"/>
-				</node>
-				<node name="showProgress" value="Toon paginanummer">
-					<node name="summaryOn" value="Show page number in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show page number in footer" toBeTranslated="true"/>
-				</node>
-				<node name="showBattery" value="Toon batterijniveau">
-					<node name="summaryOn" value="Show battery level in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show battery level in footer" toBeTranslated="true"/>
-				</node>
-				<node name="showClock" value="Toon klok">
-					<node name="summaryOn" value="Show clock in footer" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show clock in footer" toBeTranslated="true"/>
-				</node>
-				<node name="font" value="Lettertype"/>
-			</node>
-			<node name="scrolling" value="Omslaan">
-				<node name="summary" value="Hoe sla je de bladzijdes om"/>
-				<node name="fingerScrolling" value="Touch screen omslaan">
-					<node name="byTap" value="Omslaan door te tikken op het scherm"/>
-					<node name="byFlick" value="Omslaan door te schuiven over het scherm"/>
-					<node name="byTapAndFlick" value="Omslaan door te schuiven of te tikken op het scherm"/>
-				</node>
-				<node name="enableDoubleTapDetection" value="Dubbel-tik detectie">
-					<node name="summaryOn" value="Dubbel-tik om navigatiescherm te openen"/>
-					<node name="summaryOff" value="Dubbel-tikken negeren"/>
-				</node>
-				<node name="volumeKeys" value="Omslaan met volumeknoppen">
-					<node name="summaryOn" value="Gebruik volumeknoppen om om te slaan"/>
-					<node name="summaryOff" value="Gebruik volumeknoppen voor geluid"/>
-				</node>
-				<node name="invertVolumeKeys" value="Richting volumeknoppen">
-					<node name="summaryOn" value="Harder (zachter) toets naar volgende (vorige) pagina"/>
-					<node name="summaryOff" value="Harder (zachter) toets naar vorige (volgende) pagina"/>
-				</node>
-				<node name="animation" value="Animatie">
-					<node name="none" value="Omslaan zonder animatie"/>
-					<node name="curl" value="Krul-animatie"/>
-					<node name="slide" value="Slide-animatie"/>
-					<node name="shift" value="Shift-animatie"/>
-				</node>
-				<node name="animationSpeed" value="Animatiesnelheid">
-					<node name="fast" value="snel"/>
-					<node name="slow" value="langzaam"/>
-				</node>
-				<node name="horizontal" value="Horizontaal omslaan">
-					<node name="summaryOn" value="Pagina's horizontaal omslaan"/>
-					<node name="summaryOff" value="Pagina's verticaal omslaan"/>
-				</node>
-			</node>
-			<node name="tapZones" value="Tap zones" toBeTranslated="true">
-				<node name="summary" value="Actions on finger tap" toBeTranslated="true"/>
-				<node name="tapZonesScheme" value="Tap zones scheme" toBeTranslated="true">
-					<node name="left_to_right" value="Left to right page scrolling" toBeTranslated="true"/>
-					<node name="right_to_left" value="Right to left page scrolling" toBeTranslated="true"/>
-					<node name="up" value="Down to up page scrolling" toBeTranslated="true"/>
-					<node name="down" value="Up to down page scrolling" toBeTranslated="true"/>
-					<node name="custom" value="Custom…" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="dictionary" value="Woordenboek">
-				<node name="summary" value="Woordenboek instellingen"/>
-				<node name="dictionary" value="Woordenboek"/>
-				<node name="translator" value="Vertaler"/>
-				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-					<node name="selectSingleWord" value="Long tapping selects single word" toBeTranslated="true"/>
-					<node name="startSelecting" value="Long tapping initiates selecting" toBeTranslated="true"/>
-					<node name="openDictionary" value="Long tapping selects the word, release opens dictionary" toBeTranslated="true"/>
-				</node>
-				<node name="navigateOverAllWords" value="Navigate over all words" toBeTranslated="true">
-					<node name="summaryOn" value="Key navigation visits all words" toBeTranslated="true"/>
-					<node name="summaryOff" value="Key navigation visits hyperlinks only" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="images" value="Afbeeldingen">
-				<node name="summary" value="Tonen afbeeldingen opties"/>
-				<node name="backgroundColor" value="Background color for image view" toBeTranslated="true"/>
-				<node name="tappingAction" value="Long tapping action" toBeTranslated="true">
-					<node name="doNothing" value="Long tapping does nothing" toBeTranslated="true"/>
-					<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
-					<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="cancelMenu" value="Afsluitmenu">
-				<node name="summary" value="Terugknop actie"/>
-				<node name="library" value="Library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
-				</node>
-				<node name="networkLibrary" value="Network library" toBeTranslated="true">
-					<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-					<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
-				</node>
-				<node name="previousBook" value="Vorige boek">
-					<node name="summaryOn" value="Toon 'Open vorige boek' item"/>
-					<node name="summaryOff" value="Verberg 'Open vorige boek' item"/>
-				</node>
-				<node name="positions" value="Laatste 3 posities">
-					<node name="summaryOn" value="Toon laatste 3 posities in het boek"/>
-					<node name="summaryOff" value="Verberg laatste 3 posities in het boek"/>
-				</node>
-				<node name="backKeyAction" value="Terugknop indrukken">
-					<node name="exit" value="FBReader afsluiten"/>
-					<node name="goBack" value="Navigeer terug"/>
-					<node name="cancelMenu" value="Toon afsluitmenu"/>
-				</node>
-				<node name="backKeyLongPressAction" value="Terugknop lang indrukken">
-					<node name="exit" value="FBReader afsluiten"/>
-					<node name="goBack" value="Navigeer terug"/>
-					<node name="cancelMenu" value="Toon afsluitmenu"/>
-					<node name="none" value="Geen actie"/>
-				</node>
-			</node>
-			<node name="tips" value="Tips" toBeTranslated="true">
-				<node name="summary" value="Daily tips settings" toBeTranslated="true"/>
-				<node name="showTips" value="Show tips" toBeTranslated="true">
-					<node name="summaryOn" value="Show daily tips" toBeTranslated="true"/>
-					<node name="summaryOff" value="Do not show" toBeTranslated="true"/>
-				</node>
-			</node>
-			<node name="about" value="About FBReader" toBeTranslated="true">
-				<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-				<node name="version" value="Version" toBeTranslated="true"/>
-				<node name="site" value="Visit our website" toBeTranslated="true">
-					<node name="url" value="http://www.fbreader.org/"/>
-				</node>
-				<node name="email" value="Send us an e-mail" toBeTranslated="true">
-					<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
-				</node>
-				<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
-					<node name="url" value="http://twitter.com/fbreader"/>
-				</node>
-			</node>
 		</node>
 		<node name="deleteBookBox">
 			<node name="message" value="Het verwijderen van dit boek kan niet ongedaan worden gemaakt. Weet u het zeker?"/>
