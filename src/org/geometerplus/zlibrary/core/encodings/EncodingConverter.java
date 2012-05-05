@@ -25,32 +25,24 @@ import java.nio.charset.*;
 public class EncodingConverter {
 	public final String Name;
 	private CharsetDecoder myDecoder;
-	private CharsetEncoder myEncoder;
 
 	EncodingConverter(String encoding) {
 		Name = encoding;
 		myDecoder = Charset.forName(encoding).newDecoder()
 			.onMalformedInput(CodingErrorAction.REPLACE)
 			.onUnmappableCharacter(CodingErrorAction.REPLACE);
-		myEncoder = Charset.forName("utf-8").newEncoder();
 	}
 
 	// we assume out is large enough for this conversion
-	// returns number of filled bytes in out buffer
-	public int convert(byte[] in, int inOffset, int inLength, byte[] out, int outOffset) {
+	// returns number of filled chars in out buffer
+	public int convert(byte[] in, int inOffset, int inLength, char[] out) {
 		final ByteBuffer inBuffer = ByteBuffer.wrap(in, inOffset, inLength);
-		final ByteBuffer outBuffer = ByteBuffer.wrap(out, outOffset, out.length - outOffset);
-		try {
-			final CharBuffer charBuffer = myDecoder.decode(inBuffer);
-			myEncoder.encode(charBuffer, outBuffer, true);
-		} catch (CharacterCodingException e) {
-			e.printStackTrace();
-		}
+		final CharBuffer outBuffer = CharBuffer.wrap(out, 0, out.length);
+		myDecoder.decode(inBuffer, outBuffer, false);
 		return outBuffer.position();
 	}
 
 	public void reset() {
 		myDecoder.reset();
-		myEncoder.reset();
 	}
 }

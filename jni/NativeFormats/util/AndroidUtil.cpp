@@ -149,7 +149,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	Method_Encoding_createConverter = new ObjectMethod(Class_Encoding, "createConverter", Class_EncodingConverter, "()");
 	Field_EncodingConverter_Name = new ObjectField(Class_EncodingConverter, "Name", Class_java_lang_String);
-	Method_EncodingConverter_convert = new IntMethod(Class_EncodingConverter, "convert", "([BII[BI)");
+	Method_EncodingConverter_convert = new IntMethod(Class_EncodingConverter, "convert", "([BII[C)");
 	Method_EncodingConverter_reset = new VoidMethod(Class_EncodingConverter, "reset", "()");
 
 	StaticMethod_JavaEncodingCollection_Instance = new StaticObjectMethod(Class_JavaEncodingCollection, "Instance", Class_JavaEncodingCollection, "()");
