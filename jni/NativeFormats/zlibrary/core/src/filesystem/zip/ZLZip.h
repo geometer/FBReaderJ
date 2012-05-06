@@ -30,10 +30,15 @@
 class ZLZDecompressor;
 class ZLFile;
 
-class ZLZipEntryCache : public ZLUserData {
+class ZLZipEntryCache {
 
 public:
-	static const ZLZipEntryCache &cache(ZLInputStream &baseStream);
+	static shared_ptr<ZLZipEntryCache> cache(const std::string &containerName, ZLInputStream &containerStream);
+
+private:
+	static const size_t ourStorageSize;
+	static shared_ptr<ZLZipEntryCache> *ourStoredCaches;
+	static size_t ourIndex;
 
 public:
 	struct Info {
@@ -45,19 +50,22 @@ public:
 		int UncompressedSize;
 	};
 
+private:
+	ZLZipEntryCache(const std::string &containerName, ZLInputStream &containerStream);
+
 public:
-	ZLZipEntryCache(ZLInputStream &baseStream);
 	Info info(const std::string &entryName) const;
 	void collectFileNames(std::vector<std::string> &names) const;
 
 private:
+	const std::string myContainerName;
 	std::map<std::string,Info> myInfoMap;
 };
 
 class ZLZipInputStream : public ZLInputStream {
 
 private:
-	ZLZipInputStream(shared_ptr<ZLInputStream> &base, const std::string &entryName);
+	ZLZipInputStream(shared_ptr<ZLInputStream> &base, const std::string &baseName, const std::string &entryName);
 
 public:
 	~ZLZipInputStream();
@@ -71,6 +79,7 @@ public:
 
 private:
 	shared_ptr<ZLInputStream> myBaseStream;
+	std::string myBaseName;
 	std::string myEntryName;
 	bool myIsDeflated;
 
