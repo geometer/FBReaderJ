@@ -24,7 +24,7 @@
 #include "ZLZDecompressor.h"
 #include "../ZLFSManager.h"
 
-ZLZipInputStream::ZLZipInputStream(shared_ptr<ZLInputStream> &base, const std::string &entryName) : myBaseStream(new ZLInputStreamDecorator(base)), myEntryName(entryName), myUncompressedSize(0) {
+ZLZipInputStream::ZLZipInputStream(shared_ptr<ZLInputStream> &base, const std::string &baseName, const std::string &entryName) : myBaseStream(new ZLInputStreamDecorator(base)), myBaseName(baseName), myEntryName(entryName), myUncompressedSize(0) {
 }
 
 ZLZipInputStream::~ZLZipInputStream() {
@@ -34,8 +34,7 @@ ZLZipInputStream::~ZLZipInputStream() {
 bool ZLZipInputStream::open() {
 	close();
 
-	const ZLZipEntryCache &cache = ZLZipEntryCache::cache(*myBaseStream);
-	ZLZipEntryCache::Info info = cache.info(myEntryName);
+	ZLZipEntryCache::Info info = ZLZipEntryCache::cache(myBaseName, *myBaseStream)->info(myEntryName);
 
 	if (!myBaseStream->open()) {
 		return false;
