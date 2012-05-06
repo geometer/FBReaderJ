@@ -22,10 +22,12 @@
 
 #include <ZLStringUtil.h>
 #include <ZLInputStream.h>
+#include <ZLLogger.h>
 
 #include "StyleSheetParser.h"
 
 StyleSheetTableParser::StyleSheetTableParser(StyleSheetTable &table) : myTable(table) {
+	//ZLLogger::Instance().registerClass("CSS");
 }
 
 void StyleSheetTableParser::storeData(const std::string &tagName, const std::string &className, const StyleSheetTable::AttributeMap &map) {

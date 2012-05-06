@@ -26,6 +26,7 @@
 #include <ZLUnicodeUtil.h>
 #include <ZLStringUtil.h>
 #include <ZLXMLNamespace.h>
+#include <ZLLogger.h>
 
 #include "XHTMLReader.h"
 #include "../util/EntityFilesCollector.h"
@@ -188,6 +189,7 @@ void XHTMLTagStyleAction::doAtStart(XHTMLReader &reader, const char **xmlattribu
 	if (reader.myReadState == XHTMLReader::READ_NOTHING) {
 		reader.myReadState = XHTMLReader::READ_STYLE;
 		reader.myTableParser = new StyleSheetTableParser(reader.myStyleSheetTable);
+		ZLLogger::Instance().println("CSS", "parsing style tag content");
 	}
 }
 
@@ -216,10 +218,12 @@ void XHTMLTagLinkAction::doAtStart(XHTMLReader &reader, const char **xmlattribut
 		return;
 	}
 
+	ZLLogger::Instance().println("CSS", "style file: " + reader.myPathPrefix + MiscUtil::decodeHtmlURL(href));
 	shared_ptr<ZLInputStream> cssStream = ZLFile(reader.myPathPrefix + MiscUtil::decodeHtmlURL(href)).inputStream();
 	if (cssStream.isNull()) {
 		return;
 	}
+	ZLLogger::Instance().println("CSS", "parsing file");
 	StyleSheetTableParser parser(reader.myStyleSheetTable);
 	parser.parse(*cssStream);
 	//reader.myStyleSheetTable.dump();
@@ -542,6 +546,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 	addStyleEntry(sTag, sClass);
 	const char *style = attributeValue(attributes, "style");
 	if (style != 0) {
+		ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
 		shared_ptr<ZLTextStyleEntry> entry = myStyleParser.parseString(style);
 		myModelReader.addControl(*entry);
 		myStyleEntryStack.push_back(entry);
