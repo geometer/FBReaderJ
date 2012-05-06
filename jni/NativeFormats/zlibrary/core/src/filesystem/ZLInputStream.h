@@ -23,9 +23,8 @@
 #include <string>
 
 #include <shared_ptr.h>
-#include <ZLUserData.h>
 
-class ZLInputStream : public ZLUserDataHolder {
+class ZLInputStream {
 
 protected:
 	ZLInputStream();
