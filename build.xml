@@ -45,6 +45,11 @@
 				<uptodate property="libLineBreak-build-is-not-required" targetfile="libs/armeabi/libLineBreak-v2.so">
 					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
 				</uptodate>
+				<!-- Check if libNativeFormats exists and is up to date -->
+				<available file="./libs/armeabi/libNativeFormats-v2.so" />
+				<uptodate property="libNativeFormats-build-is-not-required" targetfile="libs/armeabi/libNativeFormats-v2.so">
+					<srcfiles dir="jni/NativeFormats" includes="**/*.cpp,**/*.c,**/*.h"/>
+				</uptodate>
 			</and>
 		</condition>
 		<echo message="DONE (Checking if native libraries are up-to-date)"/>
