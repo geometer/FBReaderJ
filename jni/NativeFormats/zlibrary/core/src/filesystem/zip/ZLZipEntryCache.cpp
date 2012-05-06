@@ -18,49 +18,61 @@
  */
 
 #include <AndroidUtil.h>
+#include <ZLLogger.h>
 
 #include "ZLZip.h"
 #include "ZLZipHeader.h"
 
+const size_t ZLZipEntryCache::ourStorageSize = 5;
+shared_ptr<ZLZipEntryCache> *ZLZipEntryCache::ourStoredCaches =
+	 new shared_ptr<ZLZipEntryCache>[ourStorageSize];
+size_t ZLZipEntryCache::ourIndex = 0;
+
+shared_ptr<ZLZipEntryCache> ZLZipEntryCache::cache(const std::string &containerName, ZLInputStream &containerStream) {
+	//ZLLogger::Instance().registerClass("ZipEntryCache");
+	ZLLogger::Instance().println("ZipEntryCache", "requesting cache for " + containerName);
+	for (size_t i = 0; i < ourStorageSize; ++i) {
+		shared_ptr<ZLZipEntryCache> cache = ourStoredCaches[i];
+		if (!cache.isNull() && cache->myContainerName == containerName) {
+			return cache;
+		}
+	}
+	shared_ptr<ZLZipEntryCache> cache = new ZLZipEntryCache(containerName, containerStream);
+	ourStoredCaches[ourIndex] = cache;
+	ourIndex = (ourIndex + 1) % ourStorageSize;
+	return cache;
+}
+
 ZLZipEntryCache::Info::Info() : Offset(-1) {
 }
 
-const ZLZipEntryCache &ZLZipEntryCache::cache(ZLInputStream &stream) {
-	static const std::string zipEntryMapKey = "zipEntryMap";
-	shared_ptr<ZLUserData> data = stream.getUserData(zipEntryMapKey);
-	if (data.isNull()) {
-		data = new ZLZipEntryCache(stream);
-		stream.addUserData(zipEntryMapKey, data);
-	}
-	return (const ZLZipEntryCache&)*data;
-}
-
-ZLZipEntryCache::ZLZipEntryCache(ZLInputStream &baseStream) {
-	if (!baseStream.open()) {
+ZLZipEntryCache::ZLZipEntryCache(const std::string &containerName, ZLInputStream &containerStream) : myContainerName(containerName) {
+	ZLLogger::Instance().println("ZipEntryCache", "creating cache for " + containerName);
+	if (!containerStream.open()) {
 		return;
 	}
 
 	ZLZipHeader header;
-	while (header.readFrom(baseStream)) {
+	while (header.readFrom(containerStream)) {
 		Info *infoPtr = 0;
 		if (header.Signature == (unsigned long)ZLZipHeader::SignatureLocalFile) {
 			std::string entryName(header.NameLength, '\0');
-			if ((unsigned int)baseStream.read((char*)entryName.data(), header.NameLength) == header.NameLength) {
+			if ((unsigned int)containerStream.read((char*)entryName.data(), header.NameLength) == header.NameLength) {
 				entryName = AndroidUtil::convertNonUtfString(entryName);
 				Info &info = myInfoMap[entryName];
-				info.Offset = baseStream.offset() + header.ExtraLength;
+				info.Offset = containerStream.offset() + header.ExtraLength;
 				info.CompressionMethod = header.CompressionMethod;
 				info.CompressedSize = header.CompressedSize;
 				info.UncompressedSize = header.UncompressedSize;
 				infoPtr = &info;
 			}
 		}
-		ZLZipHeader::skipEntry(baseStream, header);
+		ZLZipHeader::skipEntry(containerStream, header);
 		if (infoPtr != 0) {
 			infoPtr->UncompressedSize = header.UncompressedSize;
 		}
 	}
-	baseStream.close();
+	containerStream.close();
 }
 
 ZLZipEntryCache::Info ZLZipEntryCache::info(const std::string &entryName) const {

@@ -27,7 +27,6 @@
 
 #include <ZLTextModel.h>
 #include <ZLTextParagraph.h>
-#include <ZLUserData.h>
 
 class ZLImage;
 class Book;
@@ -43,7 +42,7 @@ private:
 	std::map<const ZLTextTreeParagraph*,int> myReferenceByParagraph;
 };
 
-class BookModel : public ZLUserDataHolder {
+class BookModel {
 
 public:
 	struct Label {

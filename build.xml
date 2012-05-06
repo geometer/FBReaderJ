@@ -46,9 +46,9 @@
 					<srcfiles dir="jni/LineBreak" includes="**/*.cpp,**/*.c,**/*.h"/>
 				</uptodate>
 				<!-- Check if libNativeFormats exists and is up to date -->
-				<available file="./libs/armeabi/libNativeFormats-v1.so" />
-				<uptodate property="libNativeFormats-build-is-not-required" targetfile="libs/armeabi/libNativeFormats-v1.so">
-					<srcfiles dir="jni/NativeFormats" includes="**/*.cpp,**/*.h"/>
+				<available file="./libs/armeabi/libNativeFormats-v2.so" />
+				<uptodate property="libNativeFormats-build-is-not-required" targetfile="libs/armeabi/libNativeFormats-v2.so">
+					<srcfiles dir="jni/NativeFormats" includes="**/*.cpp,**/*.c,**/*.h"/>
 				</uptodate>
 			</and>
 		</condition>

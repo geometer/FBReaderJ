@@ -106,11 +106,12 @@ shared_ptr<ZLInputStream> ZLFile::inputStream() const {
 		stream = ZLFSManager::Instance().createPlainInputStream(myPath);
 		stream = envelopeCompressedStream(stream);
 	} else {
-		ZLFile baseFile(myPath.substr(0, index));
+		const std::string baseName = myPath.substr(0, index);
+		const ZLFile baseFile(baseName);
 		shared_ptr<ZLInputStream> base = baseFile.inputStream();
 		if (!base.isNull()) {
 			if (baseFile.myArchiveType & ZIP) {
-				stream = new ZLZipInputStream(base, myPath.substr(index + 1));
+				stream = new ZLZipInputStream(base, baseName, myPath.substr(index + 1));
 			} /*else if (baseFile.myArchiveType & TAR) {
 				stream = new ZLTarInputStream(base, myPath.substr(index + 1));
 			}*/
