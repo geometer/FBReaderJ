@@ -69,7 +69,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/zlibrary/core/src/util/ZLFileUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLStringUtil.cpp \
 	NativeFormats/zlibrary/core/src/util/ZLUnicodeUtil.cpp \
-	NativeFormats/zlibrary/core/src/util/ZLUserData.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLPlainAsynchronousInputStream.cpp \
 	NativeFormats/zlibrary/core/src/xml/ZLXMLReader.cpp \
