@@ -99,11 +99,11 @@ public:
 
 	bool isEmpty() const;
 
-	bool lengthSupported(Length name) const;
+	bool isLengthSupported(Length name) const;
 	short length(Length name, const Metrics &metrics) const;
 	void setLength(Length name, short length, SizeUnit unit);
 
-	bool alignmentTypeSupported() const;
+	bool isAlignmentTypeSupported() const;
 	ZLTextAlignmentType alignmentType() const;
 	void setAlignmentType(ZLTextAlignmentType alignmentType);
 
@@ -111,17 +111,17 @@ public:
 	unsigned char fontModifier() const;
 	void setFontModifier(ZLTextFontModifier style, bool set);
 
-	bool fontSizeSupported() const;
+	bool isFontSizeMagSupported() const;
 	signed char fontSizeMag() const;
 	void setFontSizeMag(signed char fontSizeMag);
 
-	bool fontFamilySupported() const;
+	bool isFontFamilySupported() const;
 	const std::string &fontFamily() const;
 	void setFontFamily(const std::string &fontFamily);
 
-	static const unsigned int SUPPORT_ALIGNMENT_TYPE = 1U << NUMBER_OF_LENGTHS;
-	static const unsigned int SUPPORT_FONT_SIZE = 1U << (NUMBER_OF_LENGTHS + 1);
-	static const unsigned int SUPPORT_FONT_FAMILY = 1U << (NUMBER_OF_LENGTHS + 2);
+	static const unsigned int SUPPORTS_ALIGNMENT_TYPE =  1U <<  NUMBER_OF_LENGTHS;
+	static const unsigned int SUPPORTS_FONT_SIZE_MAG =   1U << (NUMBER_OF_LENGTHS + 1);
+	static const unsigned int SUPPORTS_FONT_FAMILY =     1U << (NUMBER_OF_LENGTHS + 2);
 
 private:
 	unsigned int myMask;
@@ -337,16 +337,16 @@ inline ZLTextStyleEntry::Metrics::Metrics(int fontSize, int fontXHeight, int ful
 
 inline bool ZLTextStyleEntry::isEmpty() const { return myMask == 0; }
 
-inline bool ZLTextStyleEntry::lengthSupported(Length name) const { return (myMask & (1U << name)) != 0; }
+inline bool ZLTextStyleEntry::isLengthSupported(Length name) const { return (myMask & (1U << name)) != 0; }
 inline void ZLTextStyleEntry::setLength(Length name, short length, SizeUnit unit) {
 	myLengths[name].Size = length;
 	myLengths[name].Unit = unit;
 	myMask |= 1U << name;
 }
 
-inline bool ZLTextStyleEntry::alignmentTypeSupported() const { return (myMask & SUPPORT_ALIGNMENT_TYPE) == SUPPORT_ALIGNMENT_TYPE; }
+inline bool ZLTextStyleEntry::isAlignmentTypeSupported() const { return (myMask & SUPPORTS_ALIGNMENT_TYPE) == SUPPORTS_ALIGNMENT_TYPE; }
 inline ZLTextAlignmentType ZLTextStyleEntry::alignmentType() const { return myAlignmentType; }
-inline void ZLTextStyleEntry::setAlignmentType(ZLTextAlignmentType alignmentType) { myAlignmentType = alignmentType; myMask |= SUPPORT_ALIGNMENT_TYPE; }
+inline void ZLTextStyleEntry::setAlignmentType(ZLTextAlignmentType alignmentType) { myAlignmentType = alignmentType; myMask |= SUPPORTS_ALIGNMENT_TYPE; }
 
 inline unsigned char ZLTextStyleEntry::supportedFontModifier() const { return mySupportedFontModifier; }
 inline unsigned char ZLTextStyleEntry::fontModifier() const { return myFontModifier; }
@@ -359,13 +359,13 @@ inline void ZLTextStyleEntry::setFontModifier(ZLTextFontModifier style, bool set
 	mySupportedFontModifier |= style;
 }
 
-inline bool ZLTextStyleEntry::fontSizeSupported() const { return (myMask & SUPPORT_FONT_SIZE) == SUPPORT_FONT_SIZE; }
+inline bool ZLTextStyleEntry::isFontSizeMagSupported() const { return (myMask & SUPPORTS_FONT_SIZE_MAG) == SUPPORTS_FONT_SIZE_MAG; }
 inline signed char ZLTextStyleEntry::fontSizeMag() const { return myFontSizeMag; }
-inline void ZLTextStyleEntry::setFontSizeMag(signed char fontSizeMag) { myFontSizeMag = fontSizeMag; myMask |= SUPPORT_FONT_SIZE; }
+inline void ZLTextStyleEntry::setFontSizeMag(signed char fontSizeMag) { myFontSizeMag = fontSizeMag; myMask |= SUPPORTS_FONT_SIZE_MAG; }
 
-inline bool ZLTextStyleEntry::fontFamilySupported() const { return (myMask & SUPPORT_FONT_FAMILY) == SUPPORT_FONT_FAMILY; }
+inline bool ZLTextStyleEntry::isFontFamilySupported() const { return (myMask & SUPPORTS_FONT_FAMILY) == SUPPORTS_FONT_FAMILY; }
 inline const std::string &ZLTextStyleEntry::fontFamily() const { return myFontFamily; }
-inline void ZLTextStyleEntry::setFontFamily(const std::string &fontFamily) { myFontFamily = fontFamily; myMask |= SUPPORT_FONT_FAMILY; }
+inline void ZLTextStyleEntry::setFontFamily(const std::string &fontFamily) { myFontFamily = fontFamily; myMask |= SUPPORTS_FONT_FAMILY; }
 
 inline ZLTextControlEntry::ZLTextControlEntry(ZLTextKind kind, bool isStart) : myKind(kind), myStart(isStart) {}
 inline ZLTextControlEntry::~ZLTextControlEntry() {}
