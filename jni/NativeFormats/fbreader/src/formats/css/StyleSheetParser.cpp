@@ -189,8 +189,15 @@ void StyleSheetParser::processWordWithoutComments(const std::string &word) {
 			myMap[myAttributeName].clear();
 			break;
 		case ATTRIBUTE_VALUE:
-			myMap[myAttributeName].push_back(word);
+		{
+			const size_t l = word.length();
+			if (l >= 2 && (word[0] == '"' || word[0] == '\'') && word[0] == word[l - 1]) {
+				myMap[myAttributeName].push_back(word.substr(1, l - 2));
+			} else {
+				myMap[myAttributeName].push_back(word);
+			}
 			break;
+		}
 		case BROKEN:
 			break;
 	}
