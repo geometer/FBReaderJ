@@ -103,7 +103,7 @@ private:
 class ZLTextHyperlinkControlEntry : public ZLTextControlEntry {
 
 public:
-	ZLTextHyperlinkControlEntry(const char *address);
+	//ZLTextHyperlinkControlEntry(const char *address);
 	~ZLTextHyperlinkControlEntry();
 	const std::string &label() const;
 	ZLHyperlinkType hyperlinkType() const;
@@ -117,7 +117,7 @@ private:
 class ZLTextEntry : public ZLTextParagraphEntry {
 
 public:
-	ZLTextEntry(const char *address);
+	//ZLTextEntry(const char *address);
 	~ZLTextEntry();
 
 	size_t dataLength() const;
@@ -130,7 +130,7 @@ private:
 class ImageEntry : public ZLTextParagraphEntry {
 
 public:
-	ImageEntry(const char *address);
+	//ImageEntry(const char *address);
 	~ImageEntry();
 	const std::string &id() const;
 	short vOffset() const;
@@ -152,6 +152,7 @@ private:
 class ZLTextParagraph {
 
 public:
+/*
 	class Iterator {
 
 	public:
@@ -169,6 +170,7 @@ public:
 		size_t myEndIndex;
 		mutable shared_ptr<ZLTextParagraphEntry> myEntry;
 	};
+*/
 
 	enum Kind {
 		TEXT_PARAGRAPH,
@@ -189,8 +191,8 @@ public:
 
 	size_t entryNumber() const;
 
-	size_t textDataLength() const;
-	size_t characterNumber() const;
+	//size_t textDataLength() const;
+	//size_t characterNumber() const;
 
 private:
 	void addEntry(char *address);
@@ -283,10 +285,10 @@ inline ZLTextParagraph::Kind ZLTextParagraph::kind() const { return TEXT_PARAGRA
 inline size_t ZLTextParagraph::entryNumber() const { return myEntryNumber; }
 inline void ZLTextParagraph::addEntry(char *address) { if (myEntryNumber == 0) myFirstEntryAddress = address; ++myEntryNumber; }
 
-inline ZLTextParagraph::Iterator::Iterator(const ZLTextParagraph &paragraph) : myPointer(paragraph.myFirstEntryAddress), myIndex(0), myEndIndex(paragraph.entryNumber()) {}
-inline ZLTextParagraph::Iterator::~Iterator() {}
-inline bool ZLTextParagraph::Iterator::isEnd() const { return myIndex == myEndIndex; }
-inline ZLTextParagraphEntry::Kind ZLTextParagraph::Iterator::entryKind() const { return (ZLTextParagraphEntry::Kind)*myPointer; }
+//inline ZLTextParagraph::Iterator::Iterator(const ZLTextParagraph &paragraph) : myPointer(paragraph.myFirstEntryAddress), myIndex(0), myEndIndex(paragraph.entryNumber()) {}
+//inline ZLTextParagraph::Iterator::~Iterator() {}
+//inline bool ZLTextParagraph::Iterator::isEnd() const { return myIndex == myEndIndex; }
+//inline ZLTextParagraphEntry::Kind ZLTextParagraph::Iterator::entryKind() const { return (ZLTextParagraphEntry::Kind)*myPointer; }
 
 inline ZLTextSpecialParagraph::ZLTextSpecialParagraph(Kind kind) : myKind(kind) {}
 inline ZLTextSpecialParagraph::~ZLTextSpecialParagraph() {}

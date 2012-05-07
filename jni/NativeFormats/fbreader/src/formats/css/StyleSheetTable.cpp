@@ -70,7 +70,7 @@ static void parseLength(const std::string &toParse, short &size, ZLTextStyleEntr
 	}
 }
 
-void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Length name, const AttributeMap &map, const std::string &attributeName) {
+void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature fetureId, const AttributeMap &map, const std::string &attributeName) {
 	StyleSheetTable::AttributeMap::const_iterator it = map.find(attributeName);
 	if (it == map.end()) {
 		return;
@@ -80,7 +80,7 @@ void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Lengt
 		short size;
 		ZLTextStyleEntry::SizeUnit unit;
 		parseLength(values[0], size, unit);
-		entry.setLength(name, size, unit);
+		entry.setLength(fetureId, size, unit);
 	}
 }
 
@@ -190,19 +190,19 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 	const std::vector<std::string> &fontSize = values(styles, "font-size");
 	if (!fontSize.empty()) {
 		if (fontSize[0] == "xx-small") {
-			entry->setFontSizeMag(-3);
+			entry->setFontSizeMagnification(-3);
 		} else if (fontSize[0] == "x-small") {
-			entry->setFontSizeMag(-2);
+			entry->setFontSizeMagnification(-2);
 		} else if (fontSize[0] == "small") {
-			entry->setFontSizeMag(-1);
+			entry->setFontSizeMagnification(-1);
 		} else if (fontSize[0] == "medium") {
-			entry->setFontSizeMag(0);
+			entry->setFontSizeMagnification(0);
 		} else if (fontSize[0] == "large") {
-			entry->setFontSizeMag(1);
+			entry->setFontSizeMagnification(1);
 		} else if (fontSize[0] == "x-large") {
-			entry->setFontSizeMag(2);
+			entry->setFontSizeMagnification(2);
 		} else if (fontSize[0] == "xx-large") {
-			entry->setFontSizeMag(3);
+			entry->setFontSizeMagnification(3);
 		}
 	}
 

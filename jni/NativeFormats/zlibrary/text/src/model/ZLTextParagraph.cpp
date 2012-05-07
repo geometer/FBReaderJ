@@ -30,32 +30,33 @@
 
 const shared_ptr<ZLTextParagraphEntry> ResetBidiEntry::Instance = new ResetBidiEntry();
 
-short ZLTextStyleEntry::length(Length name, const Metrics &metrics) const {
-	switch (myLengths[name].Unit) {
+short ZLTextStyleEntry::length(Feature featureId, const Metrics &metrics) const {
+	switch (myLengths[featureId].Unit) {
 		default:
 		case SIZE_UNIT_PIXEL:
-			return myLengths[name].Size;
+			return myLengths[featureId].Size;
 		case SIZE_UNIT_EM_100:
-			return (myLengths[name].Size * metrics.FontSize + 50) / 100;
+			return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
 		case SIZE_UNIT_EX_100:
-			return (myLengths[name].Size * metrics.FontXHeight + 50) / 100;
+			return (myLengths[featureId].Size * metrics.FontXHeight + 50) / 100;
 		case SIZE_UNIT_PERCENT:
-			switch (name) {
+			switch (featureId) {
 				default:
 				case LENGTH_LEFT_INDENT:
 				case LENGTH_RIGHT_INDENT:
 				case LENGTH_FIRST_LINE_INDENT_DELTA:
-					return (myLengths[name].Size * metrics.FullWidth + 50) / 100;
+					return (myLengths[featureId].Size * metrics.FullWidth + 50) / 100;
 				case LENGTH_SPACE_BEFORE:
 				case LENGTH_SPACE_AFTER:
-					return (myLengths[name].Size * metrics.FullHeight + 50) / 100;
+					return (myLengths[featureId].Size * metrics.FullHeight + 50) / 100;
 			}
 	}
 }
 
+/*
 ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
-	myMask = ZLCachedMemoryAllocator::readUInt32(address);
-	address += 4;
+	myFeatureMask = ZLCachedMemoryAllocator::readUInt16(address);
+	address += 2;
 
 	const int lengthMinusOne = ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1;
 	for (int i = 0; i < lengthMinusOne; i += 2) {
@@ -78,14 +79,15 @@ ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
 	mySupportedFontModifier = *address++;
 	myFontModifier = *address++;
 	myAlignmentType = (ZLTextAlignmentType)*address++;
-	myFontSizeMag = *address++;
-	if (isFontFamilySupported()) {
+	myFontSizeMagnification = *address++;
+	if (isFeatureSupported(FONT_FAMILY)) {
 		const size_t len = ZLCachedMemoryAllocator::readUInt16(address);
 		ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 2);
 		ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 		ZLUnicodeUtil::ucs2ToUtf8(myFontFamily, ucs2str);
 	}
 }
+*/
 
 ZLTextControlEntryPool ZLTextControlEntryPool::Pool;
 
@@ -100,6 +102,7 @@ shared_ptr<ZLTextParagraphEntry> ZLTextControlEntryPool::controlEntry(ZLTextKind
 	return entry;
 }
 
+/*
 ZLTextHyperlinkControlEntry::ZLTextHyperlinkControlEntry(const char *address) : ZLTextControlEntry((ZLTextKind)*address, true), myHyperlinkType((ZLHyperlinkType)*(address + 1)) {
 	const size_t len = ZLCachedMemoryAllocator::readUInt16(address + 2);
 	ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 4);
@@ -121,7 +124,6 @@ ImageEntry::ImageEntry(const char *address) {
 	ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
 	ZLUnicodeUtil::ucs2ToUtf8(myId, ucs2str);
 }
-
 
 const shared_ptr<ZLTextParagraphEntry> ZLTextParagraph::Iterator::entry() const {
 	if (myEntry.isNull()) {
@@ -182,7 +184,7 @@ void ZLTextParagraph::Iterator::next() {
 			case ZLTextParagraphEntry::STYLE_ENTRY:
 			{
 				unsigned int mask = ZLCachedMemoryAllocator::readUInt32(myPointer + 2);
-				bool withFontFamily = (mask & ZLTextStyleEntry::SUPPORTS_FONT_FAMILY) == ZLTextStyleEntry::SUPPORTS_FONT_FAMILY;
+				bool withFontFamily = (mask & (1 << ZLTextStyleEntry::FONT_FAMILY)) != 0;
 
 				myPointer += 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
 						(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);
@@ -234,7 +236,7 @@ size_t ZLTextParagraph::characterNumber() const {
 	}
 	return len;
 }
-
+*/
 
 ZLTextTreeParagraph::ZLTextTreeParagraph(ZLTextTreeParagraph *parent) : myIsOpen(false), myParent(parent) {
 	if (parent != 0) {

@@ -25,9 +25,12 @@
 //#include <ZLSearchUtil.h>
 //#include <ZLLanguageUtil.h>
 #include <ZLUnicodeUtil.h>
+//#include <ZLStringUtil.h>
+//#include <ZLLogger.h>
 
 #include "ZLTextModel.h"
 #include "ZLTextParagraph.h"
+#include "ZLTextStyleEntry.h"
 
 ZLTextModel::ZLTextModel(const std::string &id, const std::string &language, const size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension) :
@@ -265,65 +268,73 @@ void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
 	++myParagraphLengths.back();
 }
 
+//static int EntryCount = 0;
+//static int EntryLen = 0;
+
 void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
-	/*
-	size_t len = 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
-			(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);
-
-	ZLUnicodeUtil::Ucs2String fontFamily;
-	size_t fontFamilyLen = 0;
-	if (entry.fontFamilySupported()) {
-		ZLUnicodeUtil::utf8ToUcs2(fontFamily, entry.fontFamily());
-		fontFamilyLen = fontFamily.size() * 2;
-		len += 2 + fontFamilyLen;
+	// +++ calculating entry size
+	size_t len = 4; // entry type + feature mask
+	for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS; ++i) {
+		if (entry.isFeatureSupported((ZLTextStyleEntry::Feature)i)) {
+			len += 4; // each supported length
+		}
 	}
+	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE) ||
+			entry.isFeatureSupported(ZLTextStyleEntry::FONT_SIZE_MAGNIFICATION)) {
+		len += 2;
+	}
+	ZLUnicodeUtil::Ucs2String fontFamily;
+	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
+		ZLUnicodeUtil::utf8ToUcs2(fontFamily, entry.fontFamily());
+		len += 2 + fontFamily.size() * 2;
+	}
+	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_STYLE_MODIFIER)) {
+		len += 2;
+	}
+	// --- calculating entry size
 
+/*
+	EntryCount += 1;
+	EntryLen += len;
+	std::string debug = "style entry counter: ";
+	ZLStringUtil::appendNumber(debug, EntryCount);
+	debug += "/";
+	ZLStringUtil::appendNumber(debug, EntryLen);
+	ZLLogger::Instance().println(ZLLogger::DEFAULT_CLASS, debug);
+*/
+
+	// +++ writing entry
 	myLastEntryStart = myAllocator->allocate(len);
 	char *address = myLastEntryStart;
 
 	*address++ = ZLTextParagraphEntry::STYLE_ENTRY;
 	*address++ = 0;
+	address = ZLCachedMemoryAllocator::writeUInt16(address, entry.myFeatureMask);
 
-	ZLCachedMemoryAllocator::writeUInt32(address, entry.myMask);
-	address += 4;
+	for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS; ++i) {
+		if (entry.isFeatureSupported((ZLTextStyleEntry::Feature)i)) {
+			const ZLTextStyleEntry::LengthType &len = entry.myLengths[i];
+			address = ZLCachedMemoryAllocator::writeUInt16(address, len.Size);
+			*address++ = len.Unit;
+			*address++ = 0;
+		}
+	}
+	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE) ||
+			entry.isFeatureSupported(ZLTextStyleEntry::FONT_SIZE_MAGNIFICATION)) {
+		*address++ = entry.myAlignmentType;
+		*address++ = entry.myFontSizeMagnification;
+	}
+	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
+		address = ZLCachedMemoryAllocator::writeString(address, fontFamily);
+	}
+	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_STYLE_MODIFIER)) {
+		*address++ = entry.mySupportedFontModifier;
+		*address++ = entry.myFontModifier;
+	}
+	// --- writing entry
 
-	// Pack myLengths array in following manner:
-	//
-	//  1) for each two elements there is a word with those Units (two Units
-	//     in two bytes) followed by two words with those Sizes;
-	//
-	//  2) if myLengths.size() is odd (that means the last element has no paired one)
-	//     one more word is appended with only one Unit (in the first byte) followed by
-	//     a word containing corresponding Size.
-	//
-	for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1; i += 2) {
-		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[i];
-		const ZLTextStyleEntry::LengthType &l1 = entry.myLengths[i + 1];
-		*address++ = l0.Unit;
-		*address++ = l1.Unit;
-		ZLCachedMemoryAllocator::writeUInt16(address, l0.Size);
-		address += 2;
-		ZLCachedMemoryAllocator::writeUInt16(address, l1.Size);
-		address += 2;
-	}
-	if (ZLTextStyleEntry::NUMBER_OF_LENGTHS % 2 == 1) {
-		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1];
-		*address++ = l0.Unit;
-		*address++ = 0;
-		ZLCachedMemoryAllocator::writeUInt16(address, l0.Size);
-		address += 2;
-	}
-	*address++ = entry.mySupportedFontModifier;
-	*address++ = entry.myFontModifier;
-	*address++ = entry.myAlignmentType;
-	*address++ = entry.myFontSizeMag;
-	if (entry.fontFamilySupported()) {
-		ZLCachedMemoryAllocator::writeUInt16(address, fontFamily.size());
-		memcpy(address + 2, &fontFamily.front(), fontFamilyLen);
-	}
 	myParagraphs.back()->addEntry(myLastEntryStart);
 	++myParagraphLengths.back();
-	*/
 }
 
 void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label) {
