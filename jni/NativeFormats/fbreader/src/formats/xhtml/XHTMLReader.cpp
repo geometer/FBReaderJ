@@ -36,8 +36,6 @@
 #include "../../bookmodel/BookReader.h"
 #include "../../bookmodel/BookModel.h"
 
-static const bool USE_CSS = false;
-
 std::map<std::string,XHTMLTagAction*> XHTMLReader::ourTagActions;
 
 XHTMLTagAction::~XHTMLTagAction() {
