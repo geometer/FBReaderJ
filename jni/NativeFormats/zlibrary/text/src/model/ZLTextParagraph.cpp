@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-#include <string.h>
+#include <cstring>
 
 #include <algorithm>
 
@@ -26,7 +26,6 @@
 
 #include "ZLCachedMemoryAllocator.h"
 #include "ZLTextParagraph.h"
-
 
 const shared_ptr<ZLTextParagraphEntry> ResetBidiEntry::Instance = new ResetBidiEntry();
 
@@ -79,7 +78,7 @@ ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
 	myFontModifier = *address++;
 	myAlignmentType = (ZLTextAlignmentType)*address++;
 	myFontSizeMag = *address++;
-	if (fontFamilySupported()) {
+	if (isFontFamilySupported()) {
 		const size_t len = ZLCachedMemoryAllocator::readUInt16(address);
 		ZLUnicodeUtil::Ucs2Char *ucs2data = (ZLUnicodeUtil::Ucs2Char *)(address + 2);
 		ZLUnicodeUtil::Ucs2String ucs2str(ucs2data, ucs2data + len);
@@ -182,7 +181,7 @@ void ZLTextParagraph::Iterator::next() {
 			case ZLTextParagraphEntry::STYLE_ENTRY:
 			{
 				unsigned int mask = ZLCachedMemoryAllocator::readUInt32(myPointer + 2);
-				bool withFontFamily = (mask & ZLTextStyleEntry::SUPPORT_FONT_FAMILY) == ZLTextStyleEntry::SUPPORT_FONT_FAMILY;
+				bool withFontFamily = (mask & ZLTextStyleEntry::SUPPORTS_FONT_FAMILY) == ZLTextStyleEntry::SUPPORTS_FONT_FAMILY;
 
 				myPointer += 10 + 2 * (ZLTextStyleEntry::NUMBER_OF_LENGTHS +
 						(ZLTextStyleEntry::NUMBER_OF_LENGTHS + 1) / 2);

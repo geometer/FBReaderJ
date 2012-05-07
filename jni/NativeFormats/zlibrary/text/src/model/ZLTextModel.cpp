@@ -285,19 +285,18 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 	*address++ = 0;
 
 	ZLCachedMemoryAllocator::writeUInt32(address, entry.myMask);
-	address += 4;*/
+	address += 4;
 
-	// Pack myLengths array so:
+	// Pack myLengths array in following manner:
 	//
-	//  1) for every two elements there is a word with those Units (two Units
+	//  1) for each two elements there is a word with those Units (two Units
 	//     in two bytes) followed by two words with those Sizes;
 	//
-	//  2) if there is one last element (without a pair) => then another one
-	//     word is appended with only one Unit (in the first byte) followed by
+	//  2) if myLengths.size() is odd (that means the last element has no paired one)
+	//     one more word is appended with only one Unit (in the first byte) followed by
 	//     a word containing corresponding Size.
 	//
-	/*const int lengthMinusOne = ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1;
-	for (int i = 0; i < lengthMinusOne; i += 2) {
+	for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1; i += 2) {
 		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[i];
 		const ZLTextStyleEntry::LengthType &l1 = entry.myLengths[i + 1];
 		*address++ = l0.Unit;
@@ -307,8 +306,8 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 		ZLCachedMemoryAllocator::writeUInt16(address, l1.Size);
 		address += 2;
 	}
-	if (ZLTextStyleEntry::NUMBER_OF_LENGTHS % 2) {
-		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[lengthMinusOne];
+	if (ZLTextStyleEntry::NUMBER_OF_LENGTHS % 2 == 1) {
+		const ZLTextStyleEntry::LengthType &l0 = entry.myLengths[ZLTextStyleEntry::NUMBER_OF_LENGTHS - 1];
 		*address++ = l0.Unit;
 		*address++ = 0;
 		ZLCachedMemoryAllocator::writeUInt16(address, l0.Size);
@@ -323,7 +322,8 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 		memcpy(address + 2, &fontFamily.front(), fontFamilyLen);
 	}
 	myParagraphs.back()->addEntry(myLastEntryStart);
-	++myParagraphLengths.back();*/
+	++myParagraphLengths.back();
+	*/
 }
 
 void ZLTextModel::addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label) {
