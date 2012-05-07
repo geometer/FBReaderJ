@@ -24,7 +24,7 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 import org.geometerplus.zlibrary.core.util.*;
 
-public class ZLTextPlainModel implements ZLTextModel {
+public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 	private final String myId;
 	private final String myLanguage;
 
@@ -184,20 +184,30 @@ public class ZLTextPlainModel implements ZLTextModel {
 					break;
 				case ZLTextParagraph.Entry.STYLE:
 				{
-					final int mask = (int)data[dataOffset++];
 					final ZLTextStyleEntry entry = new ZLTextStyleEntry();
-					if ((mask & ZLTextStyleEntry.SUPPORTS_LEFT_INDENT) ==
-								ZLTextStyleEntry.SUPPORTS_LEFT_INDENT) {
-						entry.setLeftIndent((short)data[dataOffset++]);
+
+					final short mask = (short)data[dataOffset++];
+					for (int i = 0; i < NUMBER_OF_LENGTHS; ++i) {
+						if (ZLTextStyleEntry.isFeatureSupported(mask, i)) {
+							// TODO: read length
+							dataOffset += 2;
+						}
 					}
-					if ((mask & ZLTextStyleEntry.SUPPORTS_RIGHT_INDENT) ==
-								ZLTextStyleEntry.SUPPORTS_RIGHT_INDENT) {
-						entry.setRightIndent((short)data[dataOffset++]);
+					if (ZLTextStyleEntry.isFeatureSupported(mask, ALIGNMENT_TYPE) ||
+						ZLTextStyleEntry.isFeatureSupported(mask, FONT_SIZE_MAGNIFICATION)) {
+						// TODO: read alignment type and/or font size magnification
+						dataOffset += 1;
 					}
-					if ((mask & ZLTextStyleEntry.SUPPORTS_ALIGNMENT_TYPE) ==
-								ZLTextStyleEntry.SUPPORTS_ALIGNMENT_TYPE) {
-						entry.setAlignmentType((byte)data[dataOffset++]);
+					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_FAMILY)) {
+						final short familyLength = (short)data[dataOffset++];
+						// TODO: read font family
+						dataOffset += familyLength;
 					}
+					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_STYLE_MODIFIER)) {
+						// TODO: read font modifiers
+						dataOffset += 1;
+					}
+					
 					myStyleEntry = entry;
 				}
 				case ZLTextParagraph.Entry.RESET_BIDI:

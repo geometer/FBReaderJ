@@ -24,6 +24,7 @@
 #include <ZLFileImage.h>
 #include <ZLLogger.h>
 #include <ZLCachedMemoryAllocator.h>
+#include <ZLTextStyleEntry.h>
 
 #include "BookReader.h"
 #include "BookModel.h"

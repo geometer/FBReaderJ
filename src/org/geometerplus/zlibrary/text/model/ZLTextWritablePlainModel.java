@@ -132,6 +132,8 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 	}
 
 	public void addStyleEntry(ZLTextStyleEntry entry) {
+		// TODO: implement
+		/*
 		int len = 2;
 		for (int mask = entry.getMask(); mask != 0; mask >>= 1) {
 			len += mask & 1;
@@ -149,6 +151,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		if (entry.isAlignmentTypeSupported()) {
 			block[myBlockOffset++] = (char)entry.getAlignmentType();
 		}
+		*/
 	}
 
 	public void addFixedHSpace(short length) {
