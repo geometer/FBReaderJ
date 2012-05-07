@@ -20,6 +20,7 @@
 #include <cstdlib>
 
 #include <ZLStringUtil.h>
+#include <ZLLogger.h>
 
 #include "StyleSheetTable.h"
 
@@ -185,6 +186,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 	const std::vector<std::string> &fontFamily = values(styles, "font-family");
 	if (!fontFamily.empty() && !fontFamily[0].empty()) {
 		entry->setFontFamily(fontFamily[0]);
+		ZLLogger::Instance().println(ZLLogger::DEFAULT_CLASS, "font family: " + fontFamily[0]);
 	}
 
 	const std::vector<std::string> &fontSize = values(styles, "font-size");
