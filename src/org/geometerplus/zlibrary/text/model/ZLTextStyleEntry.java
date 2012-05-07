@@ -34,6 +34,9 @@ public final class ZLTextStyleEntry {
 	}
 
 	private short myFeatureMask;
+	private byte myAlignmentType;
+	private byte myFontSizeMagnification;
+	private String myFontFamily;
 
 	static boolean isFeatureSupported(short mask, int featureId) {
 		return (mask & (1 << featureId)) != 0;
@@ -45,8 +48,7 @@ public final class ZLTextStyleEntry {
 
 	//private short myLeftIndent;
 	//private short myRightIndent;
-	//private byte myAlignmentType;
-		
+
 	public ZLTextStyleEntry() {
 	}
 
@@ -58,9 +60,35 @@ public final class ZLTextStyleEntry {
 	public short getRightIndent() {
 		return myRightIndent;
 	}
+	*/
+
+	void setAlignmentType(byte alignmentType) {
+		myFeatureMask |= 1 << Feature.ALIGNMENT_TYPE;
+		System.err.println("setting alignment to " + alignmentType);
+		myAlignmentType = alignmentType;
+	}
 	
 	public byte getAlignmentType() {
 		return myAlignmentType;
 	}
-	*/
+
+	void setFontSizeMagnification(byte fontSizeMagnification) {
+		myFeatureMask |= 1 << Feature.FONT_SIZE_MAGNIFICATION;
+		System.err.println("setting font size magnification to " + fontSizeMagnification);
+		myFontSizeMagnification = fontSizeMagnification;
+	}
+	
+	public byte getFontSizeMagnification() {
+		return myFontSizeMagnification;
+	}
+
+	void setFontFamily(String fontFamily) {
+		myFeatureMask |= 1 << Feature.FONT_FAMILY;
+		System.err.println("setting font family to " + fontFamily);
+		myFontFamily = fontFamily;
+	}
+
+	public String getFontFamily() {
+		return myFontFamily;
+	}
 }
