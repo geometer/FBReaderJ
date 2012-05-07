@@ -20,58 +20,47 @@
 package org.geometerplus.zlibrary.text.model;
 
 public final class ZLTextStyleEntry {
-	final static short SUPPORTS_LEFT_INDENT = 1 << 0;
-	final static short SUPPORTS_RIGHT_INDENT = 1 << 1;
-	final static short SUPPORTS_ALIGNMENT_TYPE = 1 << 2;
-	
-	private short myMask;
-	private short myLeftIndent;
-	private short myRightIndent;
-	private byte myAlignmentType;
+	interface Feature {
+		int LENGTH_LEFT_INDENT =                0;
+		int LENGTH_RIGHT_INDENT =               1;
+		int LENGTH_FIRST_LINE_INDENT_DELTA =    2;
+		int LENGTH_SPACE_BEFORE =               3;
+		int LENGTH_SPACE_AFTER =                4;
+		int NUMBER_OF_LENGTHS =                 5;
+		int ALIGNMENT_TYPE =                    NUMBER_OF_LENGTHS;
+		int FONT_SIZE_MAGNIFICATION =           NUMBER_OF_LENGTHS + 1;
+		int FONT_FAMILY =                       NUMBER_OF_LENGTHS + 2;
+		int FONT_STYLE_MODIFIER =               NUMBER_OF_LENGTHS + 3;
+	}
+
+	private short myFeatureMask;
+
+	static boolean isFeatureSupported(short mask, int featureId) {
+		return (mask & (1 << featureId)) != 0;
+	}
+
+	public boolean isFeatureSupported(int featureId) {
+		return isFeatureSupported(myFeatureMask, featureId);
+	}
+
+	//private short myLeftIndent;
+	//private short myRightIndent;
+	//private byte myAlignmentType;
 		
 	public ZLTextStyleEntry() {
 	}
 
-	short getMask() {
-		return myMask;
-	}
-	
-	public boolean isLeftIndentSupported() {
-		return (myMask & SUPPORTS_LEFT_INDENT) == SUPPORTS_LEFT_INDENT;
-	}
-	
+	/*
 	public short getLeftIndent() {
 		return myLeftIndent;
-	}
-	
-	public void setLeftIndent(short leftIndent) {
-		myMask |= SUPPORTS_LEFT_INDENT;
-		myLeftIndent = leftIndent;
-	}
-	
-	public boolean isRightIndentSupported() {
-		return (myMask & SUPPORTS_RIGHT_INDENT) == SUPPORTS_RIGHT_INDENT;
 	}
 	
 	public short getRightIndent() {
 		return myRightIndent;
 	}
 	
-	public void setRightIndent(short rightIndent) {
-		myMask |= SUPPORTS_RIGHT_INDENT;
-		myRightIndent = rightIndent;
-	}
-
-	public boolean isAlignmentTypeSupported() {
-		return (myMask & SUPPORTS_ALIGNMENT_TYPE) == SUPPORTS_ALIGNMENT_TYPE;
-	}
-	
 	public byte getAlignmentType() {
 		return myAlignmentType;
 	}
-	
-	public void setAlignmentType(byte alignmentType) {
-		myMask |= SUPPORTS_ALIGNMENT_TYPE;
-		myAlignmentType = alignmentType;
-	}
+	*/
 }
