@@ -33,6 +33,7 @@ class BookModel;
 class ZLTextModel;
 class ZLInputStream;
 class ZLCachedMemoryAllocator;
+class ZLTextStyleEntry;
 
 class BookReader {
 
