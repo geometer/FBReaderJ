@@ -26,6 +26,7 @@
 
 #include "ZLCachedMemoryAllocator.h"
 #include "ZLTextParagraph.h"
+#include "ZLTextStyleEntry.h"
 
 const shared_ptr<ZLTextParagraphEntry> ResetBidiEntry::Instance = new ResetBidiEntry();
 

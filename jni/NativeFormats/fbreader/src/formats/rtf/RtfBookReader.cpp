@@ -21,6 +21,7 @@
 
 #include <ZLStringUtil.h>
 #include <ZLFileImage.h>
+#include <ZLTextStyleEntry.h>
 
 #include "RtfBookReader.h"
 #include "../../bookmodel/BookModel.h"

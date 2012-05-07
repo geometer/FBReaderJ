@@ -27,6 +27,7 @@
 #include <shared_ptr.h>
 
 #include <ZLTextParagraph.h>
+#include <ZLTextStyleEntry.h>
 
 class StyleSheetTable {
 

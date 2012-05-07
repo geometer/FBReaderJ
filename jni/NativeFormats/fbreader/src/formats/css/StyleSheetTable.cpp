@@ -160,28 +160,26 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 			num = 700;
 		} else if (bold[0] == "normal") {
 			num = 400;
-		} else if ((bold[0].length() == 3) &&
-							 (bold[0][1] == '0') &&
-							 (bold[0][2] == '0') &&
-							 (bold[0][0] >= '1') &&
-							 (bold[0][0] <= '9')) {
-			num = 100 * (bold[0][0] - '0');
 		} else if (bold[0] == "bolder") {
+			// TODO: implement
 		} else if (bold[0] == "lighter") {
+			// TODO: implement
+		} else {
+			num = ZLStringUtil::stringToInteger(bold[0], -1);
 		}
 		if (num != -1) {
-			entry->setFontModifier(FONT_MODIFIER_BOLD, num >= 600);
+			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_BOLD, num >= 600);
 		}
 	}
 
 	const std::vector<std::string> &italic = values(styles, "font-style");
 	if (!italic.empty()) {
-		entry->setFontModifier(FONT_MODIFIER_ITALIC, italic[0] == "italic");
+		entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_ITALIC, italic[0] == "italic");
 	}
 
 	const std::vector<std::string> &variant = values(styles, "font-variant");
 	if (!variant.empty()) {
-		entry->setFontModifier(FONT_MODIFIER_SMALLCAPS, variant[0] == "small-caps");
+		entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_SMALLCAPS, variant[0] == "small-caps");
 	}
 
 	const std::vector<std::string> &fontFamily = values(styles, "font-family");

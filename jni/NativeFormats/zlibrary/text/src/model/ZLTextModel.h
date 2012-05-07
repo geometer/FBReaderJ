@@ -32,8 +32,7 @@
 //#include <ZLTextMark.h>
 #include <ZLCachedMemoryAllocator.h>
 
-class ZLTextParagraph;
-class ZLTextTreeParagraph;
+class ZLTextStyleEntry;
 
 class ZLTextModel {
 
