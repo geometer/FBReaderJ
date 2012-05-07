@@ -105,11 +105,28 @@ std::string ZLStringUtil::doubleToString(double value) {
 	return buf;
 }
 
-double ZLStringUtil::stringToDouble(const std::string &value, double defaultValue) {
-	if (!value.empty()) {
+double ZLStringUtil::stringToDouble(const std::string &str, double defaultValue) {
+	if (!str.empty()) {
 		setlocale(LC_NUMERIC, "C");
-		return atof(value.c_str());
+		return atof(str.c_str());
 	} else {
 		return defaultValue;
 	}
+}
+
+int ZLStringUtil::stringToInteger(const std::string &str, int defaultValue) {
+	if (str.empty()) {
+		return defaultValue;
+	}
+	if (!isdigit(str[0]) && (str.length() == 1 || str[0] != '-' || !isdigit(str[1]))) {
+		return defaultValue;
+	}
+
+	for (size_t i = 1; i < str.length(); ++i) {
+		if (!isdigit(str[i])) {
+			return defaultValue;
+		}
+	}
+
+	return atoi(str.c_str());
 }

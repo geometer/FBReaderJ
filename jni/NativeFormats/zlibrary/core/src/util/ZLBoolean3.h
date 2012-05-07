@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,13 @@
  * 02110-1301, USA.
  */
 
-#ifndef __ZLTEXTFONTMODIFIER_H__
-#define __ZLTEXTFONTMODIFIER_H__
+#ifndef __ZLBOOLEAN3_H__
+#define __ZLBOOLEAN3_H__
 
-enum ZLTextFontModifier {
-	FONT_MODIFIER_DEFAULT = 0,
-	FONT_MODIFIER_BOLD = 1 << 0,
-	FONT_MODIFIER_ITALIC = 1 << 1,
-	FONT_MODIFIER_SMALLCAPS = 1 << 2,
+enum ZLBoolean3 {
+	B3_FALSE = 0,
+	B3_TRUE = 1,
+	B3_UNDEFINED = 2
 };
 
-#endif /* __ZLTEXTFONTMODIFIER_H__ */
+#endif /* __ZLBOOLEAN3_H__ */
