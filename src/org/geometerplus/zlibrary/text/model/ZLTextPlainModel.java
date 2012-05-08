@@ -215,8 +215,11 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 					
 					myStyleEntry = entry;
 				}
+				case ZLTextParagraph.Entry.STYLE_CLOSE:
+					// No data
+					break;
 				case ZLTextParagraph.Entry.RESET_BIDI:
-					// No data => skip
+					// No data
 					break;
 			}
 			++myCounter;

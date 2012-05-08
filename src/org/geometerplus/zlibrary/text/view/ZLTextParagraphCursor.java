@@ -101,7 +101,10 @@ public final class ZLTextParagraphCursor {
 						}
 						break;
 					case ZLTextParagraph.Entry.STYLE:
-						// TODO: implement
+						elements.add(new ZLTextStyleElement(it.getStyleEntry()));
+						break;
+					case ZLTextParagraph.Entry.STYLE_CLOSE:
+						elements.add(ZLTextElement.StyleClose);
 						break;
 					case ZLTextParagraph.Entry.FIXED_HSPACE:
 						elements.add(ZLTextFixedHSpaceElement.getElement(it.getFixedHSpaceLength()));
