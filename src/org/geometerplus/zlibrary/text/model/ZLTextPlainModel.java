@@ -209,8 +209,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						dataOffset += familyLength;
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_STYLE_MODIFIER)) {
-						// TODO: read font modifiers
-						dataOffset += 1;
+						final short value = (short)data[dataOffset++];
+						entry.setFontModifiers((byte)(value & 0xFF), (byte)((value >> 8) & 0xFF));
 					}
 					
 					myStyleEntry = entry;

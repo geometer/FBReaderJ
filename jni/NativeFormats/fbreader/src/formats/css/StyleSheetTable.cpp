@@ -156,6 +156,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 
 	const std::vector<std::string> &bold = values(styles, "font-weight");
 	if (!bold.empty()) {
+		ZLLogger::Instance().println(ZLLogger::DEFAULT_CLASS, "bold: " + bold[0]);
 		int num = -1;
 		if (bold[0] == "bold") {
 			num = 700;
@@ -186,7 +187,6 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 	const std::vector<std::string> &fontFamily = values(styles, "font-family");
 	if (!fontFamily.empty() && !fontFamily[0].empty()) {
 		entry->setFontFamily(fontFamily[0]);
-		ZLLogger::Instance().println(ZLLogger::DEFAULT_CLASS, "font family: " + fontFamily[0]);
 	}
 
 	const std::vector<std::string> &fontSize = values(styles, "font-size");
