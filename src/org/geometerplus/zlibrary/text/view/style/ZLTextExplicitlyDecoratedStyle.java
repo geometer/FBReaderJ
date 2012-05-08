@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.text.view.style;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.model.ZLTextStyleEntry;
 
-public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTextStyleEntry.Feature {
+public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTextStyleEntry.Feature, ZLTextStyleEntry.FontModifier {
 	private final ZLTextStyleEntry myEntry;
 
 	public ZLTextExplicitlyDecoratedStyle(ZLTextStyle base, ZLTextStyleEntry entry) {
@@ -40,20 +40,56 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 	}
 
 	public boolean isBold() {
-		// TODO: implement
-		return Base.isBold();
+		if (!myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
+			return Base.isBold();
+		}
+		switch (myEntry.getFontModifier(FONT_MODIFIER_BOLD)) {
+			case B3_TRUE:
+				return true;
+			case B3_FALSE:
+				return false;
+			default:
+				return Base.isBold();
+		}
 	}
 	public boolean isItalic() {
-		// TODO: implement
-		return Base.isItalic();
+		if (!myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
+			return Base.isItalic();
+		}
+		switch (myEntry.getFontModifier(FONT_MODIFIER_ITALIC)) {
+			case B3_TRUE:
+				return true;
+			case B3_FALSE:
+				return false;
+			default:
+				return Base.isItalic();
+		}
 	}
 	public boolean isUnderline() {
-		// TODO: implement
-		return Base.isUnderline();
+		if (!myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
+			return Base.isUnderline();
+		}
+		switch (myEntry.getFontModifier(FONT_MODIFIER_UNDERLINED)) {
+			case B3_TRUE:
+				return true;
+			case B3_FALSE:
+				return false;
+			default:
+				return Base.isUnderline();
+		}
 	}
 	public boolean isStrikeThrough() {
-		// TODO: implement
-		return Base.isStrikeThrough();
+		if (!myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
+			return Base.isStrikeThrough();
+		}
+		switch (myEntry.getFontModifier(FONT_MODIFIER_STRIKEDTHROUGH)) {
+			case B3_TRUE:
+				return true;
+			case B3_FALSE:
+				return false;
+			default:
+				return Base.isStrikeThrough();
+		}
 	}
 
 	public int getLeftIndent() {

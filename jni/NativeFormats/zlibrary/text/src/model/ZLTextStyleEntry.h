@@ -137,7 +137,7 @@ inline ZLBoolean3 ZLTextStyleEntry::fontModifier(FontModifier modifier) const {
 	return (myFontModifier & modifier) == 0 ? B3_FALSE : B3_TRUE;
 }
 inline void ZLTextStyleEntry::setFontModifier(FontModifier modifier, bool on) {
-	myFeatureMask |= FONT_STYLE_MODIFIER;
+	myFeatureMask |= 1 << FONT_STYLE_MODIFIER;
 	mySupportedFontModifier |= modifier;
 	if (on) {
 		myFontModifier |= modifier;
@@ -148,13 +148,13 @@ inline void ZLTextStyleEntry::setFontModifier(FontModifier modifier, bool on) {
 
 inline signed char ZLTextStyleEntry::fontSizeMagnification() const { return myFontSizeMagnification; }
 inline void ZLTextStyleEntry::setFontSizeMagnification(signed char fontSizeMagnification) {
-	myFeatureMask |= FONT_SIZE_MAGNIFICATION;
+	myFeatureMask |= 1 << FONT_SIZE_MAGNIFICATION;
 	myFontSizeMagnification = fontSizeMagnification;
 }
 
 inline const std::string &ZLTextStyleEntry::fontFamily() const { return myFontFamily; }
 inline void ZLTextStyleEntry::setFontFamily(const std::string &fontFamily) {
-	myFeatureMask |= FONT_FAMILY;
+	myFeatureMask |= 1 << FONT_FAMILY;
 	myFontFamily = fontFamily;
 }
 
