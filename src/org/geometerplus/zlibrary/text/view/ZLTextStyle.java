@@ -24,7 +24,7 @@ public abstract class ZLTextStyle {
 	public final ZLTextHyperlink Hyperlink;
 
 	protected ZLTextStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
-		Base = (base != null) ? base : this;
+		Base = base != null ? base : this;
 		Hyperlink = hyperlink;
 	}
 
