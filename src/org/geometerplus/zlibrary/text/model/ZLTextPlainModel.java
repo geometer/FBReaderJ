@@ -189,8 +189,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 					final short mask = (short)data[dataOffset++];
 					for (int i = 0; i < NUMBER_OF_LENGTHS; ++i) {
 						if (ZLTextStyleEntry.isFeatureSupported(mask, i)) {
-							// TODO: read length
-							dataOffset += 2;
+							final short size = (short)data[dataOffset++];
+							final byte unit = (byte)data[dataOffset++];
+							entry.setLength(i, size, unit);
 						}
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, ALIGNMENT_TYPE) ||
@@ -209,8 +210,8 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						dataOffset += familyLength;
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_STYLE_MODIFIER)) {
-						// TODO: read font modifiers
-						dataOffset += 1;
+						final short value = (short)data[dataOffset++];
+						entry.setFontModifiers((byte)(value & 0xFF), (byte)((value >> 8) & 0xFF));
 					}
 					
 					myStyleEntry = entry;
