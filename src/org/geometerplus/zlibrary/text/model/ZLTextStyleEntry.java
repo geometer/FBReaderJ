@@ -43,7 +43,26 @@ public final class ZLTextStyleEntry {
 		byte FONT_MODIFIER_SMALLCAPS          = 1 << 4;
 	}
 
+	public interface SizeUnit {
+		byte SIZE_UNIT_PIXEL                  = 0;
+		byte SIZE_UNIT_EM_100                 = 1;
+		byte SIZE_UNIT_EX_100                 = 2;
+		byte SIZE_UNIT_PERCENT                = 3;
+	}
+
+	class Length {
+		public final short Size;
+		public final byte Unit;
+
+		Length(short size, byte unit) {
+			Size = size;
+			Unit = unit;
+		}
+	}
+
 	private short myFeatureMask;
+
+	private Length[] myLengths = new Length[Feature.NUMBER_OF_LENGTHS];
 	private byte myAlignmentType;
 	private byte myFontSizeMagnification;
 	private String myFontFamily;
@@ -58,19 +77,17 @@ public final class ZLTextStyleEntry {
 		return isFeatureSupported(myFeatureMask, featureId);
 	}
 
-	//private short myLeftIndent;
-	//private short myRightIndent;
-
 	public ZLTextStyleEntry() {
 	}
 
-	/*
-	public short getLeftIndent() {
-		return myLeftIndent;
+	void setLength(int featureId, short size, byte unit) {
+		myFeatureMask |= 1 << featureId;
+		myLengths[featureId] = new Length(size, unit);
 	}
-	
-	public short getRightIndent() {
-		return myRightIndent;
+
+	/*
+	public Length getLength(int featureId) {
+		return myLengths[featureId];
 	}
 	*/
 
