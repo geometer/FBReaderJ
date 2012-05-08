@@ -36,7 +36,7 @@ public:
 	void parse(const char *text, int len, bool final = false);
 
 protected:
-	virtual void storeData(const std::string &tagName, const std::string &className, const StyleSheetTable::AttributeMap &map);
+	virtual void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
 
 private:
 	bool isControlSymbol(const char symbol);
@@ -48,14 +48,13 @@ private:
 	std::string myWord;
 	std::string myAttributeName;
 	enum {
-		TAG_NAME,
+		SELECTOR,
 		ATTRIBUTE_NAME,
 		ATTRIBUTE_VALUE,
 		BROKEN,
 	} myReadState;
 	bool myInsideComment;
-	std::string myTagName;
-	std::string myClassName;
+	std::string mySelectorString;
 	StyleSheetTable::AttributeMap myMap;
 
 friend class StyleSheetSingleStyleParser;
@@ -67,7 +66,7 @@ public:
 	StyleSheetTableParser(StyleSheetTable &table);
 
 private:
-	void storeData(const std::string &tagName, const std::string &className, const StyleSheetTable::AttributeMap &map);
+	void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
 
 private:
 	StyleSheetTable &myTable;

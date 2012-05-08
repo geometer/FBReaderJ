@@ -90,6 +90,19 @@ void ZLStringUtil::stripWhiteSpaces(std::string &str) {
 	str.erase(r_counter, length - r_counter);
 }
 
+std::vector<std::string> ZLStringUtil::split(const std::string &str, const std::string &delimiter) {
+	std::vector<std::string> result;
+	size_t start = 0;
+	size_t index = str.find(delimiter);
+	while (index != std::string::npos) {
+		result.push_back(str.substr(start, index - start));
+		start = index + delimiter.length();
+		index = str.find(delimiter, start);
+	}
+	result.push_back(str.substr(start, index - start));
+	return result;
+}
+
 std::string ZLStringUtil::printf(const std::string &format, const std::string &arg0) {
 	int index = format.find("%s");
 	if (index == -1) {
