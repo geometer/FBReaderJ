@@ -30,8 +30,20 @@ StyleSheetTableParser::StyleSheetTableParser(StyleSheetTable &table) : myTable(t
 	//ZLLogger::Instance().registerClass("CSS");
 }
 
-void StyleSheetTableParser::storeData(const std::string &tagName, const std::string &className, const StyleSheetTable::AttributeMap &map) {
-	myTable.addMap(tagName, className, map);
+void StyleSheetTableParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
+	const std::vector<std::string> ids = ZLStringUtil::split(selector, ",");
+	for (std::vector<std::string>::const_iterator it = ids.begin(); it != ids.end(); ++it) {
+		std::string id = *it;
+		ZLStringUtil::stripWhiteSpaces(id);
+		if (!id.empty()) {
+			const size_t index = id.find('.');
+			if (index == std::string::npos) {
+				myTable.addMap(id, std::string(), map);
+			} else {
+				myTable.addMap(id.substr(0, index), id.substr(index + 1), map);
+			}
+		}
+	}
 }
 
 shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char *text) {
@@ -42,7 +54,7 @@ shared_ptr<ZLTextStyleEntry> StyleSheetSingleStyleParser::parseString(const char
 	return control;
 }
 
-StyleSheetParser::StyleSheetParser() : myReadState(TAG_NAME), myInsideComment(false) {
+StyleSheetParser::StyleSheetParser() : myReadState(SELECTOR), myInsideComment(false) {
 }
 
 StyleSheetParser::~StyleSheetParser() {
@@ -51,10 +63,9 @@ StyleSheetParser::~StyleSheetParser() {
 void StyleSheetParser::reset() {
 	myWord.erase();
 	myAttributeName.erase();
-	myReadState = TAG_NAME;
+	myReadState = SELECTOR;
 	myInsideComment = false;
-	myTagName.erase();
-	myClassName.erase();
+	mySelectorString.erase();
 	myMap.clear();
 }
 
@@ -115,21 +126,20 @@ bool StyleSheetParser::isControlSymbol(const char symbol) {
 	}
 }
 
-void StyleSheetParser::storeData(const std::string&, const std::string&, const StyleSheetTable::AttributeMap&) {
+void StyleSheetParser::storeData(const std::string&, const StyleSheetTable::AttributeMap&) {
 }
 
 void StyleSheetParser::processControl(const char control) {
 	switch (control) {
 		case '{':
-			myReadState = (myReadState == TAG_NAME) ? ATTRIBUTE_NAME : BROKEN;
+			myReadState = (myReadState == SELECTOR) ? ATTRIBUTE_NAME : BROKEN;
 			break;
 		case '}':
 			if (myReadState != BROKEN) {
-				storeData(myTagName, myClassName, myMap);
+				storeData(mySelectorString, myMap);
 			}
-			myReadState = TAG_NAME;
-			myTagName.erase();
-			myClassName.erase();
+			myReadState = SELECTOR;
+			mySelectorString.erase();
 			myMap.clear();
 			break;
 		case ';':
@@ -163,23 +173,12 @@ void StyleSheetParser::processWord(std::string &word) {
 	
 void StyleSheetParser::processWordWithoutComments(const std::string &word) {	
 	switch (myReadState) {
-		case TAG_NAME:
+		case SELECTOR:
 		{
-			int index = word.find('.');
-			if (index == -1) {
-				if (myTagName.empty()) {
-					myTagName = word;
-				} else {
-					myTagName += ' ' + word;
-				}
+			if (mySelectorString.empty()) {
+				mySelectorString = word;
 			} else {
-				if (myTagName.empty()) {
-					myTagName = word.substr(0, index);
-					myClassName = word.substr(index + 1);
-				} else {
-					myTagName += ' ' + word.substr(0, index);
-					myClassName += ' ' + word.substr(index + 1);
-				}
+				mySelectorString += ' ' + word;
 			}
 			myMap.clear();
 			break;
