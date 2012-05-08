@@ -20,7 +20,7 @@
 package org.geometerplus.zlibrary.text.model;
 
 public final class ZLTextStyleEntry {
-	interface Feature {
+	public interface Feature {
 		int LENGTH_LEFT_INDENT =                0;
 		int LENGTH_RIGHT_INDENT =               1;
 		int LENGTH_FIRST_LINE_INDENT_DELTA =    2;
@@ -64,7 +64,6 @@ public final class ZLTextStyleEntry {
 
 	void setAlignmentType(byte alignmentType) {
 		myFeatureMask |= 1 << Feature.ALIGNMENT_TYPE;
-		System.err.println("setting alignment to " + alignmentType);
 		myAlignmentType = alignmentType;
 	}
 	
@@ -74,7 +73,6 @@ public final class ZLTextStyleEntry {
 
 	void setFontSizeMagnification(byte fontSizeMagnification) {
 		myFeatureMask |= 1 << Feature.FONT_SIZE_MAGNIFICATION;
-		System.err.println("setting font size magnification to " + fontSizeMagnification);
 		myFontSizeMagnification = fontSizeMagnification;
 	}
 	

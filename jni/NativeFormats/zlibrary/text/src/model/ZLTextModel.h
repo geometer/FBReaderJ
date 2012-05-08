@@ -72,7 +72,8 @@ public:
 	ZLTextMark previousMark(ZLTextMark position) const;
 */
 	void addControl(ZLTextKind textKind, bool isStart);
-	void addControl(const ZLTextStyleEntry &entry);
+	void addStyleEntry(const ZLTextStyleEntry &entry);
+	void addStyleCloseEntry();
 	void addHyperlinkControl(ZLTextKind textKind, ZLHyperlinkType hyperlinkType, const std::string &label);
 	void addText(const std::string &text);
 	void addText(const std::vector<std::string> &text);
