@@ -54,20 +54,25 @@ void StyleSheetTable::addMap(const std::string &tag, const std::string &aClass, 
 	}
 }
 
-static void parseLength(const std::string &toParse, short &size, ZLTextStyleEntry::SizeUnit &unit) {
+static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntry::SizeUnit &unit) {
 	if (ZLStringUtil::stringEndsWith(toParse, "%")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_PERCENT;
 		size = atoi(toParse.c_str());
+		return true;
 	} else if (ZLStringUtil::stringEndsWith(toParse, "em")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_EM_100;
 		size = (short)(100 * ZLStringUtil::stringToDouble(toParse, 0));
+		return true;
 	} else if (ZLStringUtil::stringEndsWith(toParse, "ex")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_EX_100;
 		size = (short)(100 * ZLStringUtil::stringToDouble(toParse, 0));
+		return true;
 	} else {
 		unit = ZLTextStyleEntry::SIZE_UNIT_PIXEL;
 		size = atoi(toParse.c_str());
+		return true;
 	}
+	return false;
 }
 
 void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature fetureId, const AttributeMap &map, const std::string &attributeName) {
@@ -79,8 +84,9 @@ void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Featu
 	if (!values.empty() && !values[0].empty()) {
 		short size;
 		ZLTextStyleEntry::SizeUnit unit;
-		parseLength(values[0], size, unit);
-		entry.setLength(fetureId, size, unit);
+		if (parseLength(values[0], size, unit)) {
+			entry.setLength(fetureId, size, unit);
+		}
 	}
 }
 
