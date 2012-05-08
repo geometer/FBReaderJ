@@ -56,7 +56,7 @@ public class ZLTextStyleDecoration {
 	}
 
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
-		return new ZLTextPartialDecoratedStyle(base, this, hyperlink);
+		return new ZLTextPartiallyDecoratedStyle(base, this, hyperlink);
 	}
 	
 	public String getName() {

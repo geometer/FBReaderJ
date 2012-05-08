@@ -271,7 +271,7 @@ void ZLTextModel::addControl(ZLTextKind textKind, bool isStart) {
 //static int EntryCount = 0;
 //static int EntryLen = 0;
 
-void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
+void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry) {
 	// +++ calculating entry size
 	size_t len = 4; // entry type + feature mask
 	for (int i = 0; i < ZLTextStyleEntry::NUMBER_OF_LENGTHS; ++i) {
@@ -332,6 +332,17 @@ void ZLTextModel::addControl(const ZLTextStyleEntry &entry) {
 		*address++ = entry.myFontModifier;
 	}
 	// --- writing entry
+
+	myParagraphs.back()->addEntry(myLastEntryStart);
+	++myParagraphLengths.back();
+}
+
+void ZLTextModel::addStyleCloseEntry() {
+	myLastEntryStart = myAllocator->allocate(2);
+	char *address = myLastEntryStart;
+
+	*address++ = ZLTextParagraphEntry::STYLE_CLOSE_ENTRY;
+	*address++ = 0;
 
 	myParagraphs.back()->addEntry(myLastEntryStart);
 	++myParagraphLengths.back();
