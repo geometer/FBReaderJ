@@ -25,8 +25,7 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
-import org.geometerplus.zlibrary.text.view.style.ZLTextStyleDecoration;
+import org.geometerplus.zlibrary.text.view.style.*;
 
 abstract class ZLTextViewBase extends ZLView {
 	private ZLTextStyle myTextStyle;
@@ -94,7 +93,30 @@ abstract class ZLTextViewBase extends ZLView {
 		setTextStyle(ZLTextStyleCollection.Instance().getBaseStyle());
 	}
 
-	void applyControl(ZLTextControlElement control) {
+	boolean isStyleChangeElement(ZLTextElement element) {
+		return
+			element == ZLTextElement.StyleClose ||
+			element instanceof ZLTextStyleElement ||
+			element instanceof ZLTextControlElement;
+	}
+
+	void applyStyleChangeElement(ZLTextElement element) {
+		if (element == ZLTextElement.StyleClose) {
+			applyStyleClose();
+		} else if (element instanceof ZLTextStyleElement) {
+			applyStyle((ZLTextStyleElement)element);
+		} else if (element instanceof ZLTextControlElement) {
+			applyControl((ZLTextControlElement)element);
+		}
+	}
+
+	void applyStyleChanges(ZLTextParagraphCursor cursor, int index, int end) {
+		for (; index != end; ++index) {
+			applyStyleChangeElement(cursor.getElement(index));
+		}
+	}
+
+	private void applyControl(ZLTextControlElement control) {
 		if (control.IsStart) {
 			final ZLTextStyleDecoration decoration =
 				ZLTextStyleCollection.Instance().getDecoration(control.Kind);
@@ -108,13 +130,12 @@ abstract class ZLTextViewBase extends ZLView {
 		}
 	}
 
-	void applyControls(ZLTextParagraphCursor cursor, int index, int end) {
-		for (; index != end; ++index) {
-			final ZLTextElement element = cursor.getElement(index);
-			if (element instanceof ZLTextControlElement) {
-				applyControl((ZLTextControlElement)element);
-			}
-		}
+	private void applyStyle(ZLTextStyleElement element) {
+		setTextStyle(new ZLTextExplicitlyDecoratedStyle(myTextStyle, element.Entry));
+	}
+
+	private void applyStyleClose() {
+		setTextStyle(myTextStyle.Base);
 	}
 
 	final int getElementWidth(ZLTextElement element, int charIndex) {
@@ -130,7 +151,7 @@ abstract class ZLTextViewBase extends ZLView {
 					: ZLPaintContext.ScalingType.IntegerCoefficient
 			);
 			return size != null ? size.Width : 0;
-		} else if (element == ZLTextElement.IndentElement) {
+		} else if (element == ZLTextElement.Indent) {
 			return myTextStyle.getFirstLineIndentDelta();
 		} else if (element instanceof ZLTextFixedHSpaceElement) {
 			return myContext.getSpaceWidth() * ((ZLTextFixedHSpaceElement)element).Length;

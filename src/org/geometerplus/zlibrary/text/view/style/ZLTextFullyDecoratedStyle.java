@@ -23,10 +23,10 @@ import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
 
-public class ZLTextFullDecoratedStyle extends ZLTextPartialDecoratedStyle {
+public class ZLTextFullyDecoratedStyle extends ZLTextPartiallyDecoratedStyle {
 	private final ZLTextFullStyleDecoration myFullDecoration;
 	
-	ZLTextFullDecoratedStyle(ZLTextStyle base, ZLTextFullStyleDecoration decoration, ZLTextHyperlink hyperlink) {
+	ZLTextFullyDecoratedStyle(ZLTextStyle base, ZLTextFullStyleDecoration decoration, ZLTextHyperlink hyperlink) {
 		super(base, decoration, hyperlink);
 		myFullDecoration = decoration;	
 	}

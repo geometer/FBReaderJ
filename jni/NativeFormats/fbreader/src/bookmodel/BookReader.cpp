@@ -113,10 +113,17 @@ void BookReader::addControl(FBTextKind kind, bool start) {
 	}
 }
 
-void BookReader::addControl(const ZLTextStyleEntry &entry) {
+void BookReader::addStyleEntry(const ZLTextStyleEntry &entry) {
 	if (myTextParagraphExists) {
 		flushTextBufferToParagraph();
-		myCurrentTextModel->addControl(entry);
+		myCurrentTextModel->addStyleEntry(entry);
+	}
+}
+
+void BookReader::addStyleCloseEntry() {
+	if (myTextParagraphExists) {
+		flushTextBufferToParagraph();
+		myCurrentTextModel->addStyleCloseEntry();
 	}
 }
 

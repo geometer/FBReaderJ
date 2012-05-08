@@ -49,6 +49,6 @@ public class ZLTextFullStyleDecoration extends ZLTextStyleDecoration {
 	}
 
 	public ZLTextStyle createDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
-		return new ZLTextFullDecoratedStyle(base, this, hyperlink);
+		return new ZLTextFullyDecoratedStyle(base, this, hyperlink);
 	}
 }
