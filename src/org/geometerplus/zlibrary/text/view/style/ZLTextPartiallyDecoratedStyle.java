@@ -22,10 +22,10 @@ package org.geometerplus.zlibrary.text.view.style;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
-class ZLTextPartialDecoratedStyle extends ZLTextDecoratedStyle {
+class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	private final ZLTextStyleDecoration myDecoration;
 
-	ZLTextPartialDecoratedStyle(ZLTextStyle base, ZLTextStyleDecoration decoration, ZLTextHyperlink hyperlink) {
+	ZLTextPartiallyDecoratedStyle(ZLTextStyle base, ZLTextStyleDecoration decoration, ZLTextHyperlink hyperlink) {
 		super(base, hyperlink);
 		myDecoration = decoration;		
 	}
