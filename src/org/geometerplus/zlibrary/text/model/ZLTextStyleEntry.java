@@ -20,6 +20,7 @@
 package org.geometerplus.zlibrary.text.model;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public final class ZLTextStyleEntry {
 	public interface Feature {
@@ -50,20 +51,6 @@ public final class ZLTextStyleEntry {
 		byte EM_100                           = 1;
 		byte EX_100                           = 2;
 		byte PERCENT                          = 3;
-	}
-
-	public class Metrics {
-		public final int FontSize;
-		public final int FontXHeight;
-		public final int FullWidth;
-		public final int FullHeight;
-
-		public Metrics(int fontSize, int fontXHeight, int fullWidth, int fullHeight) {
-			FontSize = fontSize;
-			FontXHeight = fontXHeight;
-			FullWidth = fullWidth;
-			FullHeight = fullHeight;
-		}
 	}
 
 	private class Length {
@@ -100,7 +87,22 @@ public final class ZLTextStyleEntry {
 		myLengths[featureId] = new Length(size, unit);
 	}
 
-	public int getLength(int featureId, Metrics metrics) {
+	private int fullSize(ZLPaintContext.Metrics metrics, int featureId) {
+		switch (featureId) {
+			default:
+			case Feature.LENGTH_LEFT_INDENT:
+			case Feature.LENGTH_RIGHT_INDENT:
+			case Feature.LENGTH_FIRST_LINE_INDENT_DELTA:
+				return metrics.FullWidth;
+			case Feature.LENGTH_SPACE_BEFORE:
+			case Feature.LENGTH_SPACE_AFTER:
+				return metrics.FullHeight;
+			case Feature.LENGTH_FONT_SIZE:
+				return metrics.FontSize;
+		}
+	}
+
+	public int getLength(int featureId, ZLPaintContext.Metrics metrics) {
 		switch (myLengths[featureId].Unit) {
 			default:
 			case SizeUnit.PIXEL:
@@ -110,18 +112,7 @@ public final class ZLTextStyleEntry {
 			case SizeUnit.EX_100:
 				return (myLengths[featureId].Size * metrics.FontXHeight + 50) / 100;
 			case SizeUnit.PERCENT:
-				switch (featureId) {
-					default:
-					case Feature.LENGTH_LEFT_INDENT:
-					case Feature.LENGTH_RIGHT_INDENT:
-					case Feature.LENGTH_FIRST_LINE_INDENT_DELTA:
-						return (myLengths[featureId].Size * metrics.FullWidth + 50) / 100;
-					case Feature.LENGTH_SPACE_BEFORE:
-					case Feature.LENGTH_SPACE_AFTER:
-						return (myLengths[featureId].Size * metrics.FullHeight + 50) / 100;
-					case Feature.LENGTH_FONT_SIZE:
-						return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
-				}
+				return (myLengths[featureId].Size * fullSize(metrics, featureId) + 50) / 100;
 		}
 	}
 
