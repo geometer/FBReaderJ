@@ -30,11 +30,14 @@ import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
 import org.geometerplus.fbreader.filetype.*;
 import org.geometerplus.fbreader.formats.fb2.FB2NativePlugin;
+import org.geometerplus.fbreader.formats.oeb.OEBNativePlugin;
 
 public class NativeFormatPlugin extends FormatPlugin {
 	public static NativeFormatPlugin create(String fileType) {
 		if ("fb2".equals(fileType)) {
 			return new FB2NativePlugin();
+		} else if ("ePub".equals(fileType)) {
+			return new OEBNativePlugin();
 		} else {
 			return new NativeFormatPlugin(fileType);
 		}
@@ -89,7 +92,7 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	protected native void readCoverInternal(ZLFile file, ZLImage[] box);
 
-	// FIXME: temporary implementation; implement as a native code
+	// FIXME: temporary implementation; implement as a native code (?)
 	@Override
 	public String readAnnotation(ZLFile file) {
 		FileType ft = FileTypeCollection.Instance.typeForFile(file);
@@ -107,7 +110,6 @@ public class NativeFormatPlugin extends FormatPlugin {
 
 	@Override
 	public EncodingCollection supportedEncodings() {
-		// TODO: implement
 		return JavaEncodingCollection.Instance();
 	}
 }
