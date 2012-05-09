@@ -51,6 +51,8 @@ public:
 		FONT_MODIFIER_UNDERLINED =     1 << 2,
 		FONT_MODIFIER_STRIKEDTHROUGH = 1 << 3,
 		FONT_MODIFIER_SMALLCAPS =      1 << 4,
+		FONT_MODIFIER_SMALLER =        1 << 5,
+		FONT_MODIFIER_LARGER =         1 << 6,
 	};
 
 	enum Feature {
@@ -59,11 +61,11 @@ public:
 		LENGTH_FIRST_LINE_INDENT_DELTA =    2,
 		LENGTH_SPACE_BEFORE =               3,
 		LENGTH_SPACE_AFTER =                4,
-		NUMBER_OF_LENGTHS =                 5,
+		LENGTH_FONT_SIZE =                  5,
+		NUMBER_OF_LENGTHS =                 6,
 		ALIGNMENT_TYPE =                    NUMBER_OF_LENGTHS,
-		FONT_SIZE_MAGNIFICATION =           NUMBER_OF_LENGTHS + 1,
-		FONT_FAMILY =                       NUMBER_OF_LENGTHS + 2,
-		FONT_STYLE_MODIFIER =               NUMBER_OF_LENGTHS + 3,
+		FONT_FAMILY =                       NUMBER_OF_LENGTHS + 1,
+		FONT_STYLE_MODIFIER =               NUMBER_OF_LENGTHS + 2,
 	};
 
 private:
@@ -89,9 +91,6 @@ public:
 	ZLBoolean3 fontModifier(FontModifier modifier) const;
 	void setFontModifier(FontModifier modifier, bool on);
 
-	signed char fontSizeMagnification() const;
-	void setFontSizeMagnification(signed char fontSizeMagnification);
-
 	const std::string &fontFamily() const;
 	void setFontFamily(const std::string &fontFamily);
 
@@ -102,13 +101,12 @@ private:
 	ZLTextAlignmentType myAlignmentType;
 	unsigned char mySupportedFontModifier;
 	unsigned char myFontModifier;
-	signed char myFontSizeMagnification;
 	std::string myFontFamily;
 
 	friend class ZLTextModel;
 };
 
-inline ZLTextStyleEntry::ZLTextStyleEntry() : myFeatureMask(0), myAlignmentType(ALIGN_UNDEFINED), mySupportedFontModifier(0), myFontModifier(0), myFontSizeMagnification(0) {}
+inline ZLTextStyleEntry::ZLTextStyleEntry() : myFeatureMask(0), myAlignmentType(ALIGN_UNDEFINED), mySupportedFontModifier(0), myFontModifier(0) {}
 inline ZLTextStyleEntry::~ZLTextStyleEntry() {}
 
 inline ZLTextStyleEntry::Metrics::Metrics(int fontSize, int fontXHeight, int fullWidth, int fullHeight) : FontSize(fontSize), FontXHeight(fontXHeight), FullWidth(fullWidth), FullHeight(fullHeight) {}
@@ -144,12 +142,6 @@ inline void ZLTextStyleEntry::setFontModifier(FontModifier modifier, bool on) {
 	} else {
 		myFontModifier &= ~modifier;
 	}
-}
-
-inline signed char ZLTextStyleEntry::fontSizeMagnification() const { return myFontSizeMagnification; }
-inline void ZLTextStyleEntry::setFontSizeMagnification(signed char fontSizeMagnification) {
-	myFeatureMask |= 1 << FONT_SIZE_MAGNIFICATION;
-	myFontSizeMagnification = fontSizeMagnification;
 }
 
 inline const std::string &ZLTextStyleEntry::fontFamily() const { return myFontFamily; }
