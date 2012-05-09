@@ -30,6 +30,7 @@
 
 const shared_ptr<ZLTextParagraphEntry> ResetBidiEntry::Instance = new ResetBidiEntry();
 
+/*
 short ZLTextStyleEntry::length(Feature featureId, const Metrics &metrics) const {
 	switch (myLengths[featureId].Unit) {
 		default:
@@ -55,7 +56,6 @@ short ZLTextStyleEntry::length(Feature featureId, const Metrics &metrics) const 
 	}
 }
 
-/*
 ZLTextStyleEntry::ZLTextStyleEntry(char *address) {
 	myFeatureMask = ZLCachedMemoryAllocator::readUInt16(address);
 	address += 2;
