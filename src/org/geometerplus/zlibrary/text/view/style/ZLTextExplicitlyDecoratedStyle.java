@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.core.util.ZLBoolean3;
+
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.model.ZLTextStyleEntry;
 
@@ -35,14 +37,17 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 		return Base.getFontFamily();
 	}
 	public int getFontSize() {
+		if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
+			return Base.getFontSize() * 120 / 100;
+		}
+		if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == ZLBoolean3.B3_TRUE) {
+			return Base.getFontSize() * 100 / 120;
+		}
 		// TODO: implement
 		return Base.getFontSize();
 	}
 
 	public boolean isBold() {
-		if (!myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
-			return Base.isBold();
-		}
 		switch (myEntry.getFontModifier(FONT_MODIFIER_BOLD)) {
 			case B3_TRUE:
 				return true;
@@ -53,9 +58,6 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 		}
 	}
 	public boolean isItalic() {
-		if (!myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
-			return Base.isItalic();
-		}
 		switch (myEntry.getFontModifier(FONT_MODIFIER_ITALIC)) {
 			case B3_TRUE:
 				return true;
@@ -66,9 +68,6 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 		}
 	}
 	public boolean isUnderline() {
-		if (!myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
-			return Base.isUnderline();
-		}
 		switch (myEntry.getFontModifier(FONT_MODIFIER_UNDERLINED)) {
 			case B3_TRUE:
 				return true;
@@ -79,9 +78,6 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 		}
 	}
 	public boolean isStrikeThrough() {
-		if (!myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
-			return Base.isStrikeThrough();
-		}
 		switch (myEntry.getFontModifier(FONT_MODIFIER_STRIKEDTHROUGH)) {
 			case B3_TRUE:
 				return true;

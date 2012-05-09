@@ -508,12 +508,14 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	return readDocument(file);
 }
 
-void XHTMLReader::addStyleEntry(const std::string tag, const std::string aClass) {
+bool XHTMLReader::addStyleEntry(const std::string tag, const std::string aClass) {
 	shared_ptr<ZLTextStyleEntry> entry = myStyleSheetTable.control(tag, aClass);
 	if (!entry.isNull()) {
 		myModelReader.addStyleEntry(*entry);
 		myStyleEntryStack.push_back(entry);
+		return true;
 	}
+	return false;
 }
 
 void XHTMLReader::startElementHandler(const char *tag, const char **attributes) {
@@ -548,6 +550,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 		shared_ptr<ZLTextStyleEntry> entry = myStyleParser.parseString(style);
 		myModelReader.addStyleEntry(*entry);
 		myStyleEntryStack.push_back(entry);
+	} else {
 	}
 	myCSSStack.push_back(myStyleEntryStack.size() - sizeBefore);
 }
