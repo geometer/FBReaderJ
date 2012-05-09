@@ -38,10 +38,10 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 	}
 	public int getFontSize() {
 		if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
-			return Base.getFontSize() * 120 / 100;
+			return Base.Base.getFontSize() * 120 / 100;
 		}
 		if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == ZLBoolean3.B3_TRUE) {
-			return Base.getFontSize() * 100 / 120;
+			return Base.Base.getFontSize() * 100 / 120;
 		}
 		// TODO: implement
 		return Base.getFontSize();

@@ -4,7 +4,7 @@
 * Improved series information support for ePubs
 * Some CSS support for ePubs:
   ** alignments
-  ** font styles (bold/italic)
+  ** font styles (bold/italic/underline/line-through)
 * Portuguese translation by http://www.gototranslation.com, sponsored by Panacea Supplies
 * ICS: old style navigation bar
 * Fixed multibyte (UTF16, GB18030, etc.) encodings support
