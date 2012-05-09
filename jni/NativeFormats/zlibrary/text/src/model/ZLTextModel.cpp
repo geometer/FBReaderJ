@@ -279,8 +279,7 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry) {
 			len += 4; // each supported length
 		}
 	}
-	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE) ||
-			entry.isFeatureSupported(ZLTextStyleEntry::FONT_SIZE_MAGNIFICATION)) {
+	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE)) {
 		len += 2;
 	}
 	ZLUnicodeUtil::Ucs2String fontFamily;
@@ -319,10 +318,9 @@ void ZLTextModel::addStyleEntry(const ZLTextStyleEntry &entry) {
 			*address++ = 0;
 		}
 	}
-	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE) ||
-			entry.isFeatureSupported(ZLTextStyleEntry::FONT_SIZE_MAGNIFICATION)) {
+	if (entry.isFeatureSupported(ZLTextStyleEntry::ALIGNMENT_TYPE)) {
 		*address++ = entry.myAlignmentType;
-		*address++ = entry.myFontSizeMagnification;
+		*address++ = 0;
 	}
 	if (entry.isFeatureSupported(ZLTextStyleEntry::FONT_FAMILY)) {
 		address = ZLCachedMemoryAllocator::writeString(address, fontFamily);

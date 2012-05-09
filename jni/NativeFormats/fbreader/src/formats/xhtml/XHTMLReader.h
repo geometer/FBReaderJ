@@ -73,7 +73,7 @@ private:
 
 	void beginParagraph();
 	void endParagraph();
-	void addStyleEntry(const std::string tag, const std::string aClass);
+	bool addStyleEntry(const std::string tag, const std::string aClass);
 
 private:
 	BookReader &myModelReader;

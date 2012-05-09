@@ -49,6 +49,8 @@ short ZLTextStyleEntry::length(Feature featureId, const Metrics &metrics) const 
 				case LENGTH_SPACE_BEFORE:
 				case LENGTH_SPACE_AFTER:
 					return (myLengths[featureId].Size * metrics.FullHeight + 50) / 100;
+				case LENGTH_FONT_SIZE:
+					return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
 			}
 	}
 }
