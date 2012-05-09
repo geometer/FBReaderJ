@@ -31,7 +31,19 @@ StyleSheetTableParser::StyleSheetTableParser(StyleSheetTable &table) : myTable(t
 }
 
 void StyleSheetTableParser::storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map) {
-	const std::vector<std::string> ids = ZLStringUtil::split(selector, ",");
+	std::string s = selector;
+	ZLStringUtil::stripWhiteSpaces(s);
+
+	if (s.empty()) {
+		return;
+	}
+
+	if (s[0] == '@') {
+		processAtRule(s, map);
+		return;
+	}
+
+	const std::vector<std::string> ids = ZLStringUtil::split(s, ",");
 	for (std::vector<std::string>::const_iterator it = ids.begin(); it != ids.end(); ++it) {
 		std::string id = *it;
 		ZLStringUtil::stripWhiteSpaces(id);
@@ -43,6 +55,11 @@ void StyleSheetTableParser::storeData(const std::string &selector, const StyleSh
 				myTable.addMap(id.substr(0, index), id.substr(index + 1), map);
 			}
 		}
+	}
+}
+
+void StyleSheetTableParser::processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map) {
+	if (name == "@font-face") {
 	}
 }
 
@@ -127,6 +144,9 @@ bool StyleSheetParser::isControlSymbol(const char symbol) {
 }
 
 void StyleSheetParser::storeData(const std::string&, const StyleSheetTable::AttributeMap&) {
+}
+
+void StyleSheetParser::processAtRule(const std::string&, const StyleSheetTable::AttributeMap&) {
 }
 
 void StyleSheetParser::processControl(const char control) {
