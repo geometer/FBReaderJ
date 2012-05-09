@@ -159,6 +159,15 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 		}
 	}
 
+	const std::vector<std::string> &deco = values(styles, "text-decoration");
+	for (std::vector<std::string>::const_iterator it = deco.begin(); it != deco.end(); ++it) {
+		if (*it == "underline") {
+			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_UNDERLINED, true);
+		} else if (*it == "line-through") {
+			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_STRIKEDTHROUGH, true);
+		}
+	}
+
 	const std::vector<std::string> &bold = values(styles, "font-weight");
 	if (!bold.empty()) {
 		int num = -1;
