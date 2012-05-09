@@ -194,15 +194,9 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 							entry.setLength(i, size, unit);
 						}
 					}
-					if (ZLTextStyleEntry.isFeatureSupported(mask, ALIGNMENT_TYPE) ||
-						ZLTextStyleEntry.isFeatureSupported(mask, FONT_SIZE_MAGNIFICATION)) {
+					if (ZLTextStyleEntry.isFeatureSupported(mask, ALIGNMENT_TYPE)) {
 						final short value = (short)data[dataOffset++];
-						if (ZLTextStyleEntry.isFeatureSupported(mask, ALIGNMENT_TYPE)) {
-							entry.setAlignmentType((byte)(value & 0xFF));
-						}
-						if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_SIZE_MAGNIFICATION)) {
-							entry.setFontSizeMagnification((byte)((value >> 8) & 0xFF));
-						}
+						entry.setAlignmentType((byte)(value & 0xFF));
 					}
 					if (ZLTextStyleEntry.isFeatureSupported(mask, FONT_FAMILY)) {
 						final short familyLength = (short)data[dataOffset++];
