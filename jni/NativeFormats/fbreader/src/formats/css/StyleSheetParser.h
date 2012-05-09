@@ -37,6 +37,7 @@ public:
 
 protected:
 	virtual void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
+	virtual void processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map);
 
 private:
 	bool isControlSymbol(const char symbol);
@@ -67,6 +68,7 @@ public:
 
 private:
 	void storeData(const std::string &selector, const StyleSheetTable::AttributeMap &map);
+	void processAtRule(const std::string &name, const StyleSheetTable::AttributeMap &map);
 
 private:
 	StyleSheetTable &myTable;
