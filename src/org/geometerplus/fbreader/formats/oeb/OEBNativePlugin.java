@@ -19,10 +19,16 @@
 
 package org.geometerplus.fbreader.formats.oeb;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
 import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+
+import org.geometerplus.fbreader.bookmodel.BookModel;
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
@@ -34,5 +40,18 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 	@Override
 	public EncodingCollection supportedEncodings() {
 		return new AutoEncodingCollection();
+	}
+
+	@Override
+	public void readModel(BookModel model) throws BookReadingException {
+		super.readModel(model);
+		model.setLabelResolver(new BookModel.LabelResolver() {
+			public List<String> getCandidates(String id) {
+				final int index = id.indexOf("#");
+				return index > 0
+					? Collections.<String>singletonList(id.substring(0, index))
+					: Collections.<String>emptyList();
+			}
+		});
 	}
 }
