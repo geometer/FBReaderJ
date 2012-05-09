@@ -28,11 +28,11 @@ public final class ZLTextStyleEntry {
 		int LENGTH_FIRST_LINE_INDENT_DELTA    = 2;
 		int LENGTH_SPACE_BEFORE               = 3;
 		int LENGTH_SPACE_AFTER                = 4;
-		int NUMBER_OF_LENGTHS                 = 5;
+		int LENGTH_FONT_SIZE                  = 5;
+		int NUMBER_OF_LENGTHS                 = 6;
 		int ALIGNMENT_TYPE                    = NUMBER_OF_LENGTHS;
-		int FONT_SIZE_MAGNIFICATION           = NUMBER_OF_LENGTHS + 1;
-		int FONT_FAMILY                       = NUMBER_OF_LENGTHS + 2;
-		int FONT_STYLE_MODIFIER               = NUMBER_OF_LENGTHS + 3;
+		int FONT_FAMILY                       = NUMBER_OF_LENGTHS + 1;
+		int FONT_STYLE_MODIFIER               = NUMBER_OF_LENGTHS + 2;
 	}
 
 	public interface FontModifier {
@@ -41,16 +41,32 @@ public final class ZLTextStyleEntry {
 		byte FONT_MODIFIER_UNDERLINED         = 1 << 2;
 		byte FONT_MODIFIER_STRIKEDTHROUGH     = 1 << 3;
 		byte FONT_MODIFIER_SMALLCAPS          = 1 << 4;
+		byte FONT_MODIFIER_SMALLER            = 1 << 5;
+		byte FONT_MODIFIER_LARGER             = 1 << 6;
 	}
 
 	public interface SizeUnit {
-		byte SIZE_UNIT_PIXEL                  = 0;
-		byte SIZE_UNIT_EM_100                 = 1;
-		byte SIZE_UNIT_EX_100                 = 2;
-		byte SIZE_UNIT_PERCENT                = 3;
+		byte PIXEL                            = 0;
+		byte EM_100                           = 1;
+		byte EX_100                           = 2;
+		byte PERCENT                          = 3;
 	}
 
-	class Length {
+	public class Metrics {
+		public final int FontSize;
+		public final int FontXHeight;
+		public final int FullWidth;
+		public final int FullHeight;
+
+		public Metrics(int fontSize, int fontXHeight, int fullWidth, int fullHeight) {
+			FontSize = fontSize;
+			FontXHeight = fontXHeight;
+			FullWidth = fullWidth;
+			FullHeight = fullHeight;
+		}
+	}
+
+	private class Length {
 		public final short Size;
 		public final byte Unit;
 
@@ -64,7 +80,6 @@ public final class ZLTextStyleEntry {
 
 	private Length[] myLengths = new Length[Feature.NUMBER_OF_LENGTHS];
 	private byte myAlignmentType;
-	private byte myFontSizeMagnification;
 	private String myFontFamily;
 	private byte mySupportedFontModifiers;
 	private byte myFontModifiers;
@@ -85,11 +100,30 @@ public final class ZLTextStyleEntry {
 		myLengths[featureId] = new Length(size, unit);
 	}
 
-	/*
-	public Length getLength(int featureId) {
-		return myLengths[featureId];
+	public int getLength(int featureId, Metrics metrics) {
+		switch (myLengths[featureId].Unit) {
+			default:
+			case SizeUnit.PIXEL:
+				return myLengths[featureId].Size;
+			case SizeUnit.EM_100:
+				return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
+			case SizeUnit.EX_100:
+				return (myLengths[featureId].Size * metrics.FontXHeight + 50) / 100;
+			case SizeUnit.PERCENT:
+				switch (featureId) {
+					default:
+					case Feature.LENGTH_LEFT_INDENT:
+					case Feature.LENGTH_RIGHT_INDENT:
+					case Feature.LENGTH_FIRST_LINE_INDENT_DELTA:
+						return (myLengths[featureId].Size * metrics.FullWidth + 50) / 100;
+					case Feature.LENGTH_SPACE_BEFORE:
+					case Feature.LENGTH_SPACE_AFTER:
+						return (myLengths[featureId].Size * metrics.FullHeight + 50) / 100;
+					case Feature.LENGTH_FONT_SIZE:
+						return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
+				}
+		}
 	}
-	*/
 
 	void setAlignmentType(byte alignmentType) {
 		myFeatureMask |= 1 << Feature.ALIGNMENT_TYPE;
@@ -98,15 +132,6 @@ public final class ZLTextStyleEntry {
 	
 	public byte getAlignmentType() {
 		return myAlignmentType;
-	}
-
-	void setFontSizeMagnification(byte fontSizeMagnification) {
-		myFeatureMask |= 1 << Feature.FONT_SIZE_MAGNIFICATION;
-		myFontSizeMagnification = fontSizeMagnification;
-	}
-	
-	public byte getFontSizeMagnification() {
-		return myFontSizeMagnification;
 	}
 
 	void setFontFamily(String fontFamily) {

@@ -75,7 +75,7 @@ static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntr
 	return false;
 }
 
-void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature fetureId, const AttributeMap &map, const std::string &attributeName) {
+void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Feature featureId, const AttributeMap &map, const std::string &attributeName) {
 	StyleSheetTable::AttributeMap::const_iterator it = map.find(attributeName);
 	if (it == map.end()) {
 		return;
@@ -85,7 +85,7 @@ void StyleSheetTable::setLength(ZLTextStyleEntry &entry, ZLTextStyleEntry::Featu
 		short size;
 		ZLTextStyleEntry::SizeUnit unit;
 		if (parseLength(values[0], size, unit)) {
-			entry.setLength(fetureId, size, unit);
+			entry.setLength(featureId, size, unit);
 		}
 	}
 }
@@ -195,20 +195,34 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 
 	const std::vector<std::string> &fontSize = values(styles, "font-size");
 	if (!fontSize.empty()) {
+		bool doSetFontSize = true; 
+		short size = 100;
+		ZLTextStyleEntry::SizeUnit unit = ZLTextStyleEntry::SIZE_UNIT_PERCENT;
 		if (fontSize[0] == "xx-small") {
-			entry->setFontSizeMagnification(-3);
+			size = 58;
 		} else if (fontSize[0] == "x-small") {
-			entry->setFontSizeMagnification(-2);
+			size = 69;
 		} else if (fontSize[0] == "small") {
-			entry->setFontSizeMagnification(-1);
+			size = 83;
 		} else if (fontSize[0] == "medium") {
-			entry->setFontSizeMagnification(0);
+			size = 100;
 		} else if (fontSize[0] == "large") {
-			entry->setFontSizeMagnification(1);
+			size = 120;
 		} else if (fontSize[0] == "x-large") {
-			entry->setFontSizeMagnification(2);
+			size = 144;
 		} else if (fontSize[0] == "xx-large") {
-			entry->setFontSizeMagnification(3);
+			size = 173;
+		} else if (fontSize[0] == "smaller") {
+			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_SMALLER, true);
+			doSetFontSize = false;
+		} else if (fontSize[0] == "larger") {
+			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_LARGER, true);
+			doSetFontSize = false;
+		} else if (!parseLength(fontSize[0], size, unit)) {
+			doSetFontSize = false;
+		}
+		if (doSetFontSize) {
+			entry->setLength(ZLTextStyleEntry::LENGTH_FONT_SIZE, size, unit);
 		}
 	}
 
