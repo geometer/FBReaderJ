@@ -33,6 +33,9 @@
 * New faster engine got ePub files
 * Improved cover support for ePubs
 * Improved series information support for ePubs
+* Some CSS support for ePubs:
+  ** alignments
+  ** font styles (bold/italic)
 * Portuguese translation by http://www.gototranslation.com, sponsored by Panacea Supplies
 * ICS: old style navigation bar
 * Fixed multibyte (UTF16, GB18030, etc.) encodings support
