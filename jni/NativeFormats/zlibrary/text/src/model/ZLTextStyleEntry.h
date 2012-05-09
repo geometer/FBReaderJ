@@ -82,7 +82,7 @@ public:
 	bool isEmpty() const;
 	bool isFeatureSupported(Feature featureId) const;
 
-	short length(Feature featureId, const Metrics &metrics) const;
+	//short length(Feature featureId, const Metrics &metrics) const;
 	void setLength(Feature featureId, short length, SizeUnit unit);
 
 	ZLTextAlignmentType alignmentType() const;
