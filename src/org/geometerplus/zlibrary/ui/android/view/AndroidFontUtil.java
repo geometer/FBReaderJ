@@ -32,14 +32,14 @@ import org.geometerplus.fbreader.Paths;
 public final class AndroidFontUtil {
 	private static Map<String,File[]> ourFontMap;
 	private static Set<File> ourFileSet;
-	private static long myTimeStamp;
+	private static long ourTimeStamp;
 
-	public static Map<String,File[]> getFontMap(boolean forceReload) {
+	private static Map<String,File[]> getFontMap(boolean forceReload) {
 		final long timeStamp = System.currentTimeMillis();
-		if (forceReload && timeStamp < myTimeStamp + 1000) {
+		if (forceReload && timeStamp < ourTimeStamp + 1000) {
 			forceReload = false;
 		}
-		myTimeStamp = timeStamp;
+		ourTimeStamp = timeStamp;
 		if (ourFileSet == null || forceReload) {
 			final HashSet<File> fileSet = new HashSet<File>();
 			final FilenameFilter filter = new FilenameFilter() {
@@ -83,11 +83,54 @@ public final class AndroidFontUtil {
 		return "sans-serif";
 	}
 
-	public static void fillFamiliesList(ArrayList<String> families, boolean forceReload) {
-		final TreeSet<String> familySet = new TreeSet<String>(getFontMap(forceReload).keySet());
+	public static void fillFamiliesList(ArrayList<String> families) {
+		final TreeSet<String> familySet = new TreeSet<String>(getFontMap(true).keySet());
 		familySet.add("Droid Sans");
 		familySet.add("Droid Serif");
 		familySet.add("Droid Mono");
 		families.addAll(familySet);
+	}
+
+	private static final HashMap<String,Typeface[]> ourTypefaces = new HashMap<String,Typeface[]>();
+
+	public static Typeface typeface(String family, boolean bold, boolean italic) {
+		family = realFontFamilyName(family);
+		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
+		Typeface[] typefaces = ourTypefaces.get(family);
+		if (typefaces == null) {
+			typefaces = new Typeface[4];
+			ourTypefaces.put(family, typefaces);
+		}
+		Typeface tf = typefaces[style];
+		if (tf == null) {
+			File[] files = getFontMap(false).get(family);
+			if (files != null) {
+				try {
+					if (files[style] != null) {
+						tf = createFontFromFile(files[style]);
+					} else {
+						for (int i = 0; i < 4; ++i) {
+							if (files[i] != null) {
+								tf = (typefaces[i] != null) ?
+									typefaces[i] : createFontFromFile(files[i]);
+								typefaces[i] = tf;
+								break;
+							}
+						}
+					}
+				} catch (Throwable e) {
+				}
+			}
+			if (tf == null) {
+				tf = Typeface.create(family, style);
+			}
+			typefaces[style] = tf;
+		}
+		return tf;
+	}
+
+	public static void clearFontCache() {
+		ourTypefaces.clear();
+		ourFileSet = null;
 	}
 }
