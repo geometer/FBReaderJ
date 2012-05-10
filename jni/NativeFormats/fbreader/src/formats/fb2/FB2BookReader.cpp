@@ -58,6 +58,10 @@ void FB2BookReader::characterDataHandler(const char *text, size_t len) {
 	}
 }
 
+bool FB2BookReader::processNamespaces() const {
+	return true;
+}
+
 void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 	const char *id = attributeValue(xmlattributes, "id");
 	if (id != 0 && tag != _BINARY) {
@@ -158,8 +162,7 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 			break;
 		case _A:
 		{
-			const std::string hrefName = xlinkNamespace() + ":href";
-			const char *ref = attributeValue(xmlattributes, hrefName.c_str());
+			const char *ref = attributeValue(xmlattributes, myHrefPredicate);
 			if (ref != 0) {
 				if (ref[0] == '#') {
 					const char *type = attributeValue(xmlattributes, "type");
@@ -182,8 +185,7 @@ void FB2BookReader::startElementHandler(int tag, const char **xmlattributes) {
 		}
 		case _IMAGE:
 		{
-			const std::string hrefName = xlinkNamespace() + ":href";
-			const char *ref = attributeValue(xmlattributes, hrefName.c_str());
+			const char *ref = attributeValue(xmlattributes, myHrefPredicate);
 			const char *vOffset = attributeValue(xmlattributes, "voffset");
 			char offset = (vOffset != 0) ? atoi(vOffset) : 0;
 			if ((ref != 0) && (*ref == '#')) {

@@ -221,6 +221,9 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 			size = 144;
 		} else if (fontSize[0] == "xx-large") {
 			size = 173;
+		} else if (fontSize[0] == "inherit") {
+			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_INHERIT, true);
+			doSetFontSize = false;
 		} else if (fontSize[0] == "smaller") {
 			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_SMALLER, true);
 			doSetFontSize = false;

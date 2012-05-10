@@ -36,13 +36,9 @@ protected:
 	virtual void startElementHandler(int tag, const char **attributes) = 0;
 	virtual void endElementHandler(int tag) = 0;
 
-	const std::string &xlinkNamespace() const;
-
 private:
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
-	bool processNamespaces() const;
-	void namespaceListChangedHandler();
 
 	void collectExternalEntities(std::map<std::string,std::string> &entityMap);
 
@@ -89,12 +85,10 @@ protected:
 	FB2Reader();
 	~FB2Reader();
 
-private:
-	std::string myXLinkNamespace;
+protected:
+	const NamespaceAttributeNamePredicate myHrefPredicate;
 };
 
-inline FB2Reader::FB2Reader() {}
 inline FB2Reader::~FB2Reader() {}
-inline const std::string &FB2Reader::xlinkNamespace() const { return myXLinkNamespace; }
 
 #endif /* __FB2READER_H__ */
