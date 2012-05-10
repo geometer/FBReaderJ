@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.text.model;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public final class ZLTextStyleEntry {
 	public interface Feature {
@@ -87,7 +86,7 @@ public final class ZLTextStyleEntry {
 		myLengths[featureId] = new Length(size, unit);
 	}
 
-	private int fullSize(ZLPaintContext.Metrics metrics, int featureId) {
+	private int fullSize(ZLTextMetrics metrics, int featureId) {
 		switch (featureId) {
 			default:
 			case Feature.LENGTH_LEFT_INDENT:
@@ -102,7 +101,7 @@ public final class ZLTextStyleEntry {
 		}
 	}
 
-	public int getLength(int featureId, ZLPaintContext.Metrics metrics) {
+	public int getLength(int featureId, ZLTextMetrics metrics) {
 		switch (myLengths[featureId].Unit) {
 			default:
 			case SizeUnit.PIXEL:
