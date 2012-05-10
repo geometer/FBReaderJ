@@ -108,9 +108,6 @@ final class DummyPaintContext extends ZLPaintContext {
 	@Override
 	public void fillRectangle(int x0, int y0, int x1, int y1) {
 	}
-	@Override
-	public void drawFilledCircle(int x, int y, int r) {
-	}
 
 	@Override
 	public void fillPolygon(int[] xs, int ys[]) {
@@ -120,13 +117,5 @@ final class DummyPaintContext extends ZLPaintContext {
 	}
 	@Override
 	public void drawOutline(int[] xs, int ys[]) {
-	}
-
-	@Override
-	public String realFontFamilyName(String fontFamily) {
-		return fontFamily;
-	}
-	@Override
-	protected void fillFamiliesList(ArrayList<String> families) {
 	}
 }

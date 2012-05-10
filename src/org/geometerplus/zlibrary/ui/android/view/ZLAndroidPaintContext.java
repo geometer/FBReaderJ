@@ -20,7 +20,6 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import java.util.*;
-import java.io.File;
 
 import android.graphics.*;
 
@@ -63,8 +62,6 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 	private final int myScrollbarWidth;
 
 	private ZLColor myBackgroundColor = new ZLColor(0, 0, 0);
-
-	private HashMap<String,Typeface[]> myTypefaces = new HashMap<String,Typeface[]>();
 
 	ZLAndroidPaintContext(Canvas canvas, int width, int height, int scrollbarWidth) {
 		myCanvas = canvas;
@@ -216,40 +213,9 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 		myCanvas.drawPath(path, myOutlinePaint);
 	}
 
+	@Override
 	protected void setFontInternal(String family, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
-		family = realFontFamilyName(family);
-		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
-		Typeface[] typefaces = myTypefaces.get(family);
-		if (typefaces == null) {
-			typefaces = new Typeface[4];
-			myTypefaces.put(family, typefaces);
-		}
-		Typeface tf = typefaces[style];
-		if (tf == null) {
-			File[] files = AndroidFontUtil.getFontMap(false).get(family);
-			if (files != null) {
-				try {
-					if (files[style] != null) {
-						tf = Typeface.createFromFile(files[style]);
-					} else {
-						for (int i = 0; i < 4; ++i) {
-							if (files[i] != null) {
-								tf = (typefaces[i] != null) ?
-									typefaces[i] : Typeface.createFromFile(files[i]);
-								typefaces[i] = tf;
-								break;
-							}
-						}
-					}
-				} catch (Throwable e) {
-				}
-			}
-			if (tf == null) {
-				tf = Typeface.create(family, style);
-			}
-			typefaces[style] = tf;
-		}
-		myTextPaint.setTypeface(tf);
+		myTextPaint.setTypeface(AndroidFontUtil.typeface(family, bold, italic));
 		myTextPaint.setTextSize(size);
 		myTextPaint.setUnderlineText(underline);
 		myTextPaint.setStrikeThruText(strikeThrought);
@@ -379,19 +345,5 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
 			y0 = swap;
 		}
 		myCanvas.drawRect(x0, y0, x1 + 1, y1 + 1, myFillPaint);
-	}
-	@Override
-	public void drawFilledCircle(int x, int y, int r) {
-		// TODO: implement
-	}
-
-	@Override
-	public String realFontFamilyName(String fontFamily) {
-		return AndroidFontUtil.realFontFamilyName(fontFamily);
-	}
-
-	@Override
-	protected void fillFamiliesList(ArrayList<String> families) {
-		AndroidFontUtil.fillFamiliesList(families, false);
 	}
 }

@@ -38,7 +38,7 @@ class FontOption extends ZLStringListPreference {
 
 		myOption = option;
 		final ArrayList<String> fonts = new ArrayList<String>();
-		AndroidFontUtil.fillFamiliesList(fonts, true);
+		AndroidFontUtil.fillFamiliesList(fonts);
 		if (includeDummyValue) {
 			fonts.add(0, UNCHANGED);
 		}
