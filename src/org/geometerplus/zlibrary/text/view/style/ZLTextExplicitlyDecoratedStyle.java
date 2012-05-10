@@ -42,6 +42,9 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 	}
 	public int getFontSize(ZLTextMetrics metrics) {
 		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
+			if (myEntry.getFontModifier(FONT_MODIFIER_INHERIT) == ZLBoolean3.B3_TRUE) {
+				return Base.Base.getFontSize(metrics);
+			}
 			if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
 				return Base.Base.getFontSize(metrics) * 120 / 100;
 			}
