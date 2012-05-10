@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
+
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
@@ -37,8 +39,8 @@ class ZLTextPartiallyDecoratedStyle extends ZLTextDecoratedStyle {
 	}
 
 	@Override
-	protected int getFontSizeInternal() {
-		return Base.getFontSize() + myDecoration.FontSizeDeltaOption.getValue();
+	protected int getFontSizeInternal(ZLTextMetrics metrics) {
+		return Base.getFontSize(metrics) + myDecoration.FontSizeDeltaOption.getValue();
 	}
 
 	@Override

@@ -1340,6 +1340,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearCaches() {
+		resetMetrics();
 		rebuildPaintInfo();
 		Application.getViewWidget().reset();
 		myCharWidth = -1;

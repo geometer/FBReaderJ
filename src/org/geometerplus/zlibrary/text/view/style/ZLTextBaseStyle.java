@@ -23,6 +23,7 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 
 import org.geometerplus.zlibrary.text.model.ZLTextAlignmentType;
+import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
@@ -61,9 +62,13 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		return FontFamilyOption.getValue();
 	}
 
-	@Override
 	public int getFontSize() {
 		return FontSizeOption.getValue();
+	}
+
+	@Override
+	public int getFontSize(ZLTextMetrics metrics) {
+		return getFontSize();
 	}
 
 	@Override
