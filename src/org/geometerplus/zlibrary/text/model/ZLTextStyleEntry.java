@@ -134,7 +134,6 @@ public final class ZLTextStyleEntry {
 	}
 
 	void setFontModifiers(byte supported, byte values) {
-		System.err.println("setting font modifiers to " + supported + "/" + values);
 		myFeatureMask |= 1 << Feature.FONT_STYLE_MODIFIER;
 		mySupportedFontModifiers = supported;
 		myFontModifiers = values;
