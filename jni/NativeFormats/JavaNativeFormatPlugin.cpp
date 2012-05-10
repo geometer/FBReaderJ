@@ -299,7 +299,7 @@ JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 
 	const std::string path = AndroidUtil::Method_ZLFile_getPath->callForCppString(file);
 
-	shared_ptr<ZLImage> image = plugin->coverImage(ZLFile(path));
+	shared_ptr<const ZLImage> image = plugin->coverImage(ZLFile(path));
 	if (!image.isNull()) {
 		jobject javaImage = AndroidUtil::createJavaImage(env, (const ZLFileImage&)*image);
 		env->SetObjectArrayElement(box, 0, javaImage);

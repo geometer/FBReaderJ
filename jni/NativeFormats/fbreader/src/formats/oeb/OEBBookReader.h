@@ -61,6 +61,7 @@ private:
 	std::map<std::string,std::string> myIdToHref;
 	std::vector<std::string> myHtmlFileNames;
 	std::string myNCXTOCFileName;
+	std::string myCoverFileName;
 	std::vector<std::pair<std::string,std::string> > myTourTOC;
 	std::vector<std::pair<std::string,std::string> > myGuideTOC;
 };
