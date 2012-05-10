@@ -31,7 +31,7 @@ class OEBCoverReader : public ZLXMLReader {
 
 public:
 	OEBCoverReader();
-	shared_ptr<ZLImage> readCover(const ZLFile &file);
+	shared_ptr<const ZLImage> readCover(const ZLFile &file);
 
 private:
 	void startElementHandler(const char *tag, const char **attributes);
@@ -41,7 +41,7 @@ private:
 	void createImage(const char *href);
 
 private:
-	shared_ptr<ZLImage> myImage;
+	shared_ptr<const ZLImage> myImage;
 	std::string myPathPrefix;
 	std::string myCoverXHTML;
 	std::string myCoverId;

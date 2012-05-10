@@ -29,14 +29,14 @@ class ZLImage;
 class XHTMLImageFinder : public ZLXMLReader {
 
 public:
-	shared_ptr<ZLImage> readImage(const ZLFile &file);
+	shared_ptr<const ZLImage> readImage(const ZLFile &file);
 
 private:
 	void startElementHandler(const char *tag, const char **attributes);
 
 private:
 	std::string myPathPrefix;
-	shared_ptr<ZLImage> myImage;
+	shared_ptr<const ZLImage> myImage;
 };
 
 #endif /* __XHTMLIMAGEFINDER_H__ */

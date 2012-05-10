@@ -26,7 +26,7 @@
 static const std::string TAG_IMG = "img";
 static const std::string TAG_IMAGE = "image";
 
-shared_ptr<ZLImage> XHTMLImageFinder::readImage(const ZLFile &file) {
+shared_ptr<const ZLImage> XHTMLImageFinder::readImage(const ZLFile &file) {
 	myImage.reset();
 	myPathPrefix = MiscUtil::htmlDirectoryPrefix(file.path());
 	readDocument(file);

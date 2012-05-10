@@ -29,7 +29,7 @@
 OEBCoverReader::OEBCoverReader() {
 }
 
-shared_ptr<ZLImage> OEBCoverReader::readCover(const ZLFile &file) {
+shared_ptr<const ZLImage> OEBCoverReader::readCover(const ZLFile &file) {
 	myPathPrefix = MiscUtil::htmlDirectoryPrefix(file.path());
 	myReadState = READ_NOTHING;
 	myImage.reset();

@@ -32,7 +32,7 @@ public:
 	bool readMetaInfo(Book &book) const;
 	bool readLanguageAndEncoding(Book &book) const;
 	bool readModel(BookModel &model) const;
-	shared_ptr<ZLImage> coverImage(const ZLFile &file) const;
+	shared_ptr<const ZLImage> coverImage(const ZLFile &file) const;
 };
 
 inline FB2Plugin::FB2Plugin() {}

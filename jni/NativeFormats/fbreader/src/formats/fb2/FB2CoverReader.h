@@ -29,7 +29,7 @@ class FB2CoverReader : public FB2Reader {
 
 public:
 	FB2CoverReader(const ZLFile &file);
-	shared_ptr<ZLImage> readCover();
+	shared_ptr<const ZLImage> readCover();
 
 private:
 	void startElementHandler(int tag, const char **attributes);
@@ -42,7 +42,7 @@ private:
 	bool myLookForImage;
 	std::string myImageId;
 	int myImageStart;
-	shared_ptr<ZLImage> myImage;
+	shared_ptr<const ZLImage> myImage;
 };
 
 #endif /* __FB2COVERREADER_H__ */

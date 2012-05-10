@@ -26,6 +26,7 @@
 #include <ZLXMLNamespace.h>
 
 #include "OEBBookReader.h"
+#include "XHTMLImageFinder.h"
 #include "NCXReader.h"
 #include "../xhtml/XHTMLReader.h"
 #include "../util/MiscUtil.h"
@@ -94,17 +95,15 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 					ZLFile imageFile(myFilePrefix + reference);
 					myCoverFileName = imageFile.path();
 					const std::string imageName = imageFile.name(false);
-					/*
-					final ZLFileImage image = XHTMLImageFinder.getCoverImage(imageFile);
-					if (image != null) {
+					shared_ptr<const ZLImage> image = XHTMLImageFinder().readImage(imageFile);
+					if (!image.isNull()) {
 						myModelReader.setMainTextModel();
 						myModelReader.addImageReference(imageName, (short)0, true);
 						myModelReader.addImage(imageName, image);
 						myModelReader.insertEndOfSectionParagraph();
 					} else {
-						myCoverFileName = null;
+						myCoverFileName.erase();
 					}
-					*/
 				} else if (COVER_IMAGE == type) {
 					ZLFile imageFile(myFilePrefix + reference);
 					myCoverFileName = imageFile.path();
@@ -154,14 +153,18 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myModelReader.setMainTextModel();
 	myModelReader.pushKind(REGULAR);
 
+	bool firstFile = true;
 	for (std::vector<std::string>::const_iterator it = myHtmlFileNames.begin(); it != myHtmlFileNames.end(); ++it) {
-		if (it != myHtmlFileNames.begin()) {
-			myModelReader.insertEndOfSectionParagraph();
-		} else if (*it == myCoverFileName) {
+		const ZLFile xhtmlFile(myFilePrefix + *it);
+		if (firstFile && myCoverFileName == xhtmlFile.path()) {
 			continue;
 		}
+		if (!firstFile) {
+			myModelReader.insertEndOfSectionParagraph();
+		}
 		XHTMLReader xhtmlReader(myModelReader);
-		xhtmlReader.readFile(ZLFile(myFilePrefix + *it), *it);
+		xhtmlReader.readFile(xhtmlFile, *it);
+		firstFile = false;
 	}
 
 	generateTOC();
