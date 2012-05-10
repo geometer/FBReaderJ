@@ -170,19 +170,8 @@ abstract public class ZLPaintContext {
 
 	abstract public void drawLine(int x0, int y0, int x1, int y1);
 	abstract public void fillRectangle(int x0, int y0, int x1, int y1);
-	abstract public void drawFilledCircle(int x, int y, int r);
 
 	abstract public void drawPolygonalLine(int[] xs, int ys[]);
 	abstract public void fillPolygon(int[] xs, int[] ys);
 	abstract public void drawOutline(int[] xs, int ys[]);
-
-	public ArrayList<String> fontFamilies() {
-		if (myFamilies.isEmpty()) {
-			fillFamiliesList(myFamilies);
-		}
-		return myFamilies;
-	}	
-
-	abstract public String realFontFamilyName(String fontFamily);
-	abstract protected void fillFamiliesList(ArrayList<String> families);
 }
