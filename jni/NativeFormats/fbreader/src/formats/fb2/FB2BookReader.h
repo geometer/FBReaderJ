@@ -31,6 +31,7 @@ public:
 	FB2BookReader(BookModel &model);
 	bool readBook();
 
+	bool processNamespaces() const;
 	void startElementHandler(int tag, const char **attributes);
 	void endElementHandler(int tag);
 	void characterDataHandler(const char *text, size_t len);
