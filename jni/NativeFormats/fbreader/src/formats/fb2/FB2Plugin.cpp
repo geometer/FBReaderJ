@@ -37,7 +37,7 @@ bool FB2Plugin::readModel(BookModel &model) const {
 	return FB2BookReader(model).readBook();
 }
 
-shared_ptr<ZLImage> FB2Plugin::coverImage(const ZLFile &file) const {
+shared_ptr<const ZLImage> FB2Plugin::coverImage(const ZLFile &file) const {
 	return FB2CoverReader(file).readCover();
 }
 

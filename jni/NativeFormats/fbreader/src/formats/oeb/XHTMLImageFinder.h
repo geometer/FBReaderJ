@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2009-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,26 @@
  * 02110-1301, USA.
  */
 
-#ifndef __FB2PLUGIN_H__
-#define __FB2PLUGIN_H__
+#ifndef __XHTMLIMAGEFINDER_H__
+#define __XHTMLIMAGEFINDER_H__
 
-#include "../FormatPlugin.h"
+#include <shared_ptr.h>
+#include <ZLXMLReader.h>
 
-class FB2Plugin : public FormatPlugin {
+class ZLFile;
+class ZLImage;
+
+class XHTMLImageFinder : public ZLXMLReader {
 
 public:
-	FB2Plugin();
-	~FB2Plugin();
-	bool providesMetaInfo() const;
-	const std::string supportedFileType() const;
-	bool readMetaInfo(Book &book) const;
-	bool readLanguageAndEncoding(Book &book) const;
-	bool readModel(BookModel &model) const;
-	shared_ptr<const ZLImage> coverImage(const ZLFile &file) const;
+	shared_ptr<const ZLImage> readImage(const ZLFile &file);
+
+private:
+	void startElementHandler(const char *tag, const char **attributes);
+
+private:
+	std::string myPathPrefix;
+	shared_ptr<const ZLImage> myImage;
 };
 
-inline FB2Plugin::FB2Plugin() {}
-inline FB2Plugin::~FB2Plugin() {}
-inline bool FB2Plugin::providesMetaInfo() const { return true; }
-
-#endif /* __FB2PLUGIN_H__ */
+#endif /* __XHTMLIMAGEFINDER_H__ */
