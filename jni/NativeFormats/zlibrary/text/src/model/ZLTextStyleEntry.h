@@ -51,8 +51,9 @@ public:
 		FONT_MODIFIER_UNDERLINED =     1 << 2,
 		FONT_MODIFIER_STRIKEDTHROUGH = 1 << 3,
 		FONT_MODIFIER_SMALLCAPS =      1 << 4,
-		FONT_MODIFIER_SMALLER =        1 << 5,
-		FONT_MODIFIER_LARGER =         1 << 6,
+		FONT_MODIFIER_INHERIT =        1 << 5,
+		FONT_MODIFIER_SMALLER =        1 << 6,
+		FONT_MODIFIER_LARGER =         1 << 7,
 	};
 
 	enum Feature {

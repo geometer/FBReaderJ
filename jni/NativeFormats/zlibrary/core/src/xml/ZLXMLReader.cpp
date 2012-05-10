@@ -60,9 +60,6 @@ bool ZLXMLReaderHandler::handleBuffer(const char *data, size_t len) {
 	return myReader.readFromBuffer(data, len);
 }
 
-
-
-
 static const size_t BUFFER_SIZE = 2048;
 
 void ZLXMLReader::startElementHandler(const char*, const char**) {
@@ -184,13 +181,17 @@ ZLXMLReader::NamespaceAttributeNamePredicate::NamespaceAttributeNamePredicate(co
 }
 
 bool ZLXMLReader::NamespaceAttributeNamePredicate::accepts(const ZLXMLReader &reader, const char *name) const {
+	const std::string full(name);
+	const size_t index = full.find(':');
+	const std::string namespaceId =
+		index == std::string::npos ? std::string() : full.substr(0, index);
+
 	const nsMap &namespaces = reader.namespaces();
-	for (nsMap::const_iterator it = namespaces.begin(); it != namespaces.end(); ++it) {
-		if (it->second == myNamespaceName) {
-			return it->first + ':' + myAttributeName == name;
-		}
-	}
-	return false;
+	nsMap::const_iterator it = namespaces.find(namespaceId);
+	return
+		it != namespaces.end() &&
+		it->second == myNamespaceName &&
+		full.substr(index + 1) == myAttributeName;
 }
 
 const char *ZLXMLReader::attributeValue(const char **xmlattributes, const AttributeNamePredicate &predicate) {
