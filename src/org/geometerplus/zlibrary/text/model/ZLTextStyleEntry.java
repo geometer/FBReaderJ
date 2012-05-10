@@ -41,8 +41,9 @@ public final class ZLTextStyleEntry {
 		byte FONT_MODIFIER_UNDERLINED         = 1 << 2;
 		byte FONT_MODIFIER_STRIKEDTHROUGH     = 1 << 3;
 		byte FONT_MODIFIER_SMALLCAPS          = 1 << 4;
-		byte FONT_MODIFIER_SMALLER            = 1 << 5;
-		byte FONT_MODIFIER_LARGER             = 1 << 6;
+		byte FONT_MODIFIER_INHERIT            = 1 << 5;
+		byte FONT_MODIFIER_SMALLER            = 1 << 6;
+		byte FONT_MODIFIER_LARGER             = (byte)(1 << 7);
 	}
 
 	public interface SizeUnit {

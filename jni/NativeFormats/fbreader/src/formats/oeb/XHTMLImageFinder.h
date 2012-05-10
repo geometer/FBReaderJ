@@ -32,6 +32,7 @@ public:
 	shared_ptr<const ZLImage> readImage(const ZLFile &file);
 
 private:
+	bool processNamespaces() const;
 	void startElementHandler(const char *tag, const char **attributes);
 
 private:
