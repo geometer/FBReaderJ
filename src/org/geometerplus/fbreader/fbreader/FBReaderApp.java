@@ -102,7 +102,7 @@ public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption ShowLibraryInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "library", true);
 	public final ZLBooleanOption ShowNetworkLibraryInCancelMenuOption =
-		new ZLBooleanOption("CancelMenu", "networkLibrary", false);
+		new ZLBooleanOption("CancelMenu", "networkLibrary", true);
 	public final ZLBooleanOption ShowPreviousBookInCancelMenuOption =
 		new ZLBooleanOption("CancelMenu", "previousBook", false);
 	public final ZLBooleanOption ShowPositionsInCancelMenuOption =
