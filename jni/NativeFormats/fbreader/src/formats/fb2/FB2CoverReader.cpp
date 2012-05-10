@@ -37,6 +37,10 @@ shared_ptr<const ZLImage> FB2CoverReader::readCover() {
 	return myImage;
 }
 
+bool FB2CoverReader::processNamespaces() const {
+	return true;
+}
+
 void FB2CoverReader::startElementHandler(int tag, const char **attributes) {
 	switch (tag) {
 		case _COVERPAGE:
@@ -44,8 +48,7 @@ void FB2CoverReader::startElementHandler(int tag, const char **attributes) {
 			break;
 		case _IMAGE:
 			if (myReadCoverPage) {
-				const std::string hrefName = xlinkNamespace() + ":href";
-				const char *ref = attributeValue(attributes, hrefName.c_str());
+				const char *ref = attributeValue(attributes, myHrefPredicate);
 				if (ref != 0 && *ref == '#' && *(ref + 1) != '\0') {
 					myImageId = ref + 1;
 				}
