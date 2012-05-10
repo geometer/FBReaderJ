@@ -45,6 +45,7 @@ static const std::string ITEM = "item";
 static const std::string ITEMREF = "itemref";
 static const std::string REFERENCE = "reference";
 
+static const std::string COVER = "cover";
 static const std::string COVER_IMAGE = "other.ms-coverimage-standard";
 
 void OEBBookReader::startElementHandler(const char *tag, const char **xmlattributes) {
@@ -88,12 +89,31 @@ void OEBBookReader::startElementHandler(const char *tag, const char **xmlattribu
 			if (title != 0) {
 				myGuideTOC.push_back(std::make_pair(std::string(title), reference));
 			}
-			if ((type != 0) && (COVER_IMAGE == type)) {
-				myModelReader.setMainTextModel();
-				ZLFile imageFile(myFilePrefix + reference);
-				const std::string imageName = imageFile.name(false);
-				myModelReader.addImageReference(imageName, 0, false);
-				myModelReader.addImage(imageName, new ZLFileImage(imageFile, "", 0));
+			if (type != 0) {
+				if (COVER == type) {
+					ZLFile imageFile(myFilePrefix + reference);
+					myCoverFileName = imageFile.path();
+					const std::string imageName = imageFile.name(false);
+					/*
+					final ZLFileImage image = XHTMLImageFinder.getCoverImage(imageFile);
+					if (image != null) {
+						myModelReader.setMainTextModel();
+						myModelReader.addImageReference(imageName, (short)0, true);
+						myModelReader.addImage(imageName, image);
+						myModelReader.insertEndOfSectionParagraph();
+					} else {
+						myCoverFileName = null;
+					}
+					*/
+				} else if (COVER_IMAGE == type) {
+					ZLFile imageFile(myFilePrefix + reference);
+					myCoverFileName = imageFile.path();
+					const std::string imageName = imageFile.name(false);
+					myModelReader.setMainTextModel();
+					myModelReader.addImageReference(imageName, 0, true);
+					myModelReader.addImage(imageName, new ZLFileImage(imageFile, "", 0));
+					myModelReader.insertEndOfSectionParagraph();
+				}
 			}
 		}
 	} else if ((myState == READ_TOUR) && (SITE == tagString)) {
@@ -122,6 +142,7 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myIdToHref.clear();
 	myHtmlFileNames.clear();
 	myNCXTOCFileName.erase();
+	myCoverFileName.erase();
 	myTourTOC.clear();
 	myGuideTOC.clear();
 	myState = READ_NONE;
@@ -136,6 +157,8 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	for (std::vector<std::string>::const_iterator it = myHtmlFileNames.begin(); it != myHtmlFileNames.end(); ++it) {
 		if (it != myHtmlFileNames.begin()) {
 			myModelReader.insertEndOfSectionParagraph();
+		} else if (*it == myCoverFileName) {
+			continue;
 		}
 		XHTMLReader xhtmlReader(myModelReader);
 		xhtmlReader.readFile(ZLFile(myFilePrefix + *it), *it);
