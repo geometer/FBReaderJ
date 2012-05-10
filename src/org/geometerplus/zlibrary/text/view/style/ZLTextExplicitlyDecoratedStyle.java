@@ -21,8 +21,10 @@ package org.geometerplus.zlibrary.text.view.style;
 
 import org.geometerplus.zlibrary.core.util.ZLBoolean3;
 
-import org.geometerplus.zlibrary.text.view.ZLTextStyle;
+import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
 import org.geometerplus.zlibrary.text.model.ZLTextStyleEntry;
+
+import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 
 public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTextStyleEntry.Feature, ZLTextStyleEntry.FontModifier {
 	private final ZLTextStyleEntry myEntry;
@@ -33,18 +35,24 @@ public class ZLTextExplicitlyDecoratedStyle extends ZLTextStyle implements ZLTex
 	}
 
 	public String getFontFamily() {
-		// TODO: implement
+		if (myEntry.isFeatureSupported(FONT_FAMILY)) {
+			// TODO: implement
+		}
 		return Base.getFontFamily();
 	}
-	public int getFontSize() {
-		if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
-			return Base.Base.getFontSize() * 120 / 100;
+	public int getFontSize(ZLTextMetrics metrics) {
+		if (myEntry.isFeatureSupported(FONT_STYLE_MODIFIER)) {
+			if (myEntry.getFontModifier(FONT_MODIFIER_LARGER) == ZLBoolean3.B3_TRUE) {
+				return Base.Base.getFontSize(metrics) * 120 / 100;
+			}
+			if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == ZLBoolean3.B3_TRUE) {
+				return Base.Base.getFontSize(metrics) * 100 / 120;
+			}
 		}
-		if (myEntry.getFontModifier(FONT_MODIFIER_SMALLER) == ZLBoolean3.B3_TRUE) {
-			return Base.Base.getFontSize() * 100 / 120;
+		if (myEntry.isFeatureSupported(LENGTH_FONT_SIZE)) {
+			return myEntry.getLength(LENGTH_FONT_SIZE, metrics);
 		}
-		// TODO: implement
-		return Base.getFontSize();
+		return Base.getFontSize(metrics);
 	}
 
 	public boolean isBold() {

@@ -19,13 +19,14 @@
 
 package org.geometerplus.zlibrary.text.view.style;
 
+import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
+
 import org.geometerplus.zlibrary.text.view.ZLTextStyle;
 import org.geometerplus.zlibrary.text.view.ZLTextHyperlink;
 
 public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	// fields to be cached
 	private String myFontFamily;
-	private int myFontSize;
 	private boolean myIsItalic;
 	private boolean myIsBold;
 	private boolean myIsUnderline;
@@ -34,13 +35,15 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 
 	private boolean myIsNotCached = true;
 
+	private int myFontSize;
+	private ZLTextMetrics myMetrics;
+
 	protected ZLTextDecoratedStyle(ZLTextStyle base, ZLTextHyperlink hyperlink) {
 		super(base, (hyperlink != null) ? hyperlink : base.Hyperlink);
 	}
 
 	private void initCache() {
 		myFontFamily = getFontFamilyInternal();
-		myFontSize = getFontSizeInternal();
 		myIsItalic = isItalicInternal();
 		myIsBold = isBoldInternal();
 		myIsUnderline = isUnderlineInternal();
@@ -48,6 +51,11 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 		myVerticalShift = getVerticalShiftInternal();
 
 		myIsNotCached = false;
+	}
+
+	private void initMetricsCache(ZLTextMetrics metrics) {
+		myMetrics = metrics;
+		myFontSize = getFontSizeInternal(metrics);
 	}
 
 	@Override
@@ -60,13 +68,13 @@ public abstract class ZLTextDecoratedStyle extends ZLTextStyle {
 	protected abstract String getFontFamilyInternal();
 
 	@Override
-	public final int getFontSize() {
-		if (myIsNotCached) {
-			initCache();
+	public final int getFontSize(ZLTextMetrics metrics) {
+		if (!metrics.equals(myMetrics)) {
+			initMetricsCache(metrics);
 		}
 		return myFontSize;
 	}
-	protected abstract int getFontSizeInternal();
+	protected abstract int getFontSizeInternal(ZLTextMetrics metrics);
 
 	@Override
 	public final boolean isItalic() {
