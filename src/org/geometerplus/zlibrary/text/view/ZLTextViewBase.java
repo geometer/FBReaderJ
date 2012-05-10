@@ -25,15 +25,38 @@ import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
+
 import org.geometerplus.zlibrary.text.view.style.*;
 
 abstract class ZLTextViewBase extends ZLView {
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
+	private ZLTextMetrics myMetrics;
 
 	ZLTextViewBase(ZLApplication application) {
 		super(application);
 		resetTextStyle();
+	}
+
+	protected void resetMetrics() {
+		myMetrics = null;
+	}
+
+	private ZLTextMetrics metrics() {
+		if (myMetrics == null) {
+			final ZLTextBaseStyle base = ZLTextStyleCollection.Instance().getBaseStyle();
+			myMetrics = new ZLTextMetrics(
+				base.getFontSize(),
+				// TODO: font X height
+				base.getFontSize() * 15 / 10,
+				// TODO: screen area width
+				100,
+				// TODO: screen area height
+				100
+			);
+		}
+		return myMetrics;
 	}
 
 	final int getWordHeight() {
@@ -86,7 +109,7 @@ abstract class ZLTextViewBase extends ZLView {
 			myTextStyle = style;
 			myWordHeight = -1;
 		}
-		myContext.setFont(style.getFontFamily(), style.getFontSize(), style.isBold(), style.isItalic(), style.isUnderline(), style.isStrikeThrough());
+		myContext.setFont(style.getFontFamily(), style.getFontSize(metrics()), style.isBold(), style.isItalic(), style.isUnderline(), style.isStrikeThrough());
 	}
 
 	final void resetTextStyle() {
