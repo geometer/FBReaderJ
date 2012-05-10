@@ -105,12 +105,12 @@ public final class AndroidFontUtil {
 			if (files != null) {
 				try {
 					if (files[style] != null) {
-						tf = createFontFromFile(files[style]);
+						tf = Typeface.createFromFile(files[style]);
 					} else {
 						for (int i = 0; i < 4; ++i) {
 							if (files[i] != null) {
 								tf = (typefaces[i] != null) ?
-									typefaces[i] : createFontFromFile(files[i]);
+									typefaces[i] : Typeface.createFromFile(files[i]);
 								typefaces[i] = tf;
 								break;
 							}
