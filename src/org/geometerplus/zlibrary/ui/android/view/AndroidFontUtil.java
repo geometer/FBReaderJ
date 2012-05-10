@@ -34,7 +34,7 @@ public final class AndroidFontUtil {
 	private static Set<File> ourFileSet;
 	private static long ourTimeStamp;
 
-	public static Map<String,File[]> getFontMap(boolean forceReload) {
+	private static Map<String,File[]> getFontMap(boolean forceReload) {
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < ourTimeStamp + 1000) {
 			forceReload = false;
