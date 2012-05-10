@@ -26,7 +26,7 @@
 FB2CoverReader::FB2CoverReader(const ZLFile &file) : myFile(file) {
 }
 
-shared_ptr<ZLImage> FB2CoverReader::readCover() {
+shared_ptr<const ZLImage> FB2CoverReader::readCover() {
 	myReadCoverPage = false;
 	myLookForImage = false;
 	myImageId.erase();
