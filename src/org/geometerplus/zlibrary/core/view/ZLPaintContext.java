@@ -26,20 +26,6 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 
 abstract public class ZLPaintContext {
-	public static final class Metrics {
-		public final int FontSize;
-		public final int FontXHeight;
-		public final int FullWidth;
-		public final int FullHeight;
-
-		public Metrics(int fontSize, int fontXHeight, int fullWidth, int fullHeight) {
-			FontSize = fontSize;
-			FontXHeight = fontXHeight;
-			FullWidth = fullWidth;
-			FullHeight = fullHeight;
-		}
-	}
-
 	private final ArrayList<String> myFamilies = new ArrayList<String>();
 
 	protected ZLPaintContext() {
