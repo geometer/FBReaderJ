@@ -22,54 +22,26 @@
 #include <ZLXMLNamespace.h>
 
 #include "OEBCoverReader.h"
+#include "XHTMLImageFinder.h"
 
 #include "../util/MiscUtil.h"
-
-class XHTMLImageFinder : public ZLXMLReader {
-
-public:
-	XHTMLImageFinder(OEBCoverReader &coverReader);
-
-private:
-	void startElementHandler(const char *tag, const char **attributes);
-
-private:
-	OEBCoverReader &myCoverReader;
-};
-
-XHTMLImageFinder::XHTMLImageFinder(OEBCoverReader &coverReader) : myCoverReader(coverReader) {
-}
-
-static const std::string IMG = "img";
-
-void XHTMLImageFinder::startElementHandler(const char *tag, const char **attributes) {
-	if (IMG == tag) {
-		const char *src = attributeValue(attributes, "src");
-		if (src != 0) {
-			myCoverReader.myImage =
-				new ZLFileImage(ZLFile(myCoverReader.myPathPrefix + src), "", 0);
-			interrupt();
-		}
-	}
-}
 
 OEBCoverReader::OEBCoverReader() {
 }
 
-shared_ptr<ZLImage> OEBCoverReader::readCover(const ZLFile &file) {
+shared_ptr<const ZLImage> OEBCoverReader::readCover(const ZLFile &file) {
 	myPathPrefix = MiscUtil::htmlDirectoryPrefix(file.path());
 	myReadState = READ_NOTHING;
-	myImage = 0;
+	myImage.reset();
 	myCoverXHTML.erase();
 	readDocument(file);
-	myPathPrefix = MiscUtil::htmlDirectoryPrefix(myCoverXHTML);
-	if (!myCoverXHTML.empty()) {
-		ZLFile coverFile(myCoverXHTML);
+	if (myImage.isNull() && !myCoverXHTML.empty()) {
+		const ZLFile coverFile(myCoverXHTML);
 		const std::string ext = coverFile.extension();
 		if (ext == "gif" || ext == "jpeg" || ext == "jpg") {
-			myImage = new ZLFileImage(ZLFile(myCoverXHTML), "", 0);
+			myImage = new ZLFileImage(coverFile, "", 0);
 		} else {
-			XHTMLImageFinder(*this).readDocument(coverFile);
+			myImage = XHTMLImageFinder().readImage(coverFile);
 		}
 	}
 	return myImage;
