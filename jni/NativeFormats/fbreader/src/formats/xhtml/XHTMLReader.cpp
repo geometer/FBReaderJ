@@ -500,10 +500,16 @@ bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName)
 	myPreformatted = false;
 	myNewParagraphInProgress = false;
 	myReadState = READ_NOTHING;
+	myCurrentParagraphIsEmpty = true;
 
+	myStyleSheetTable.clear();
 	myCSSStack.clear();
 	myStyleEntryStack.clear();
 	myStylesToRemove = 0;
+
+	myDoPageBreakAfterStack.clear();
+	myStyleParser = new StyleSheetSingleStyleParser();
+	myTableParser.reset();
 
 	return readDocument(file);
 }
@@ -547,7 +553,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 	const char *style = attributeValue(attributes, "style");
 	if (style != 0) {
 		ZLLogger::Instance().println("CSS", std::string("parsing style attribute: ") + style);
-		shared_ptr<ZLTextStyleEntry> entry = myStyleParser.parseString(style);
+		shared_ptr<ZLTextStyleEntry> entry = myStyleParser->parseString(style);
 		myModelReader.addStyleEntry(*entry);
 		myStyleEntryStack.push_back(entry);
 	} else {
