@@ -25,6 +25,11 @@
 			<node name="connectionRefused" value="Conexão foi recusada por %s" />
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Red" toBeTranslated="true"/>
+		<node name="green" value="Green" toBeTranslated="true"/>
+		<node name="blue" value="Blue" toBeTranslated="true"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="Árabe" />
 		<node name="cs" value="Tcheco" />
