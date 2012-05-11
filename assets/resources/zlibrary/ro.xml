@@ -25,6 +25,11 @@
 			<node name="connectionRefused" value="Conexiunea a fost refuzata de &#10;%s"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Rosu"/>
+		<node name="green" value="Verde"/>
+		<node name="blue" value="Albastru"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="Araba"/>
 		<node name="cs" value="Ceha"/>

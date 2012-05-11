@@ -26,6 +26,11 @@
 			<node name="connectionRefused" value="การเชื่อมต่อถูกปฏิเสธโดย&#10;%s"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="แดง"/>
+		<node name="green" value="เขียว"/>
+		<node name="blue" value="น้ำเงิน"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="อารบิค"/>
 		<node name="cs" value="เชค"/>

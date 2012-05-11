@@ -26,6 +26,11 @@
 			<node name="connectionRefused" value="%s&#10;bontotta a kapcsolatot"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Piros"/>
+		<node name="green" value="Zöld"/>
+		<node name="blue" value="Kék"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="Arab"/>
 		<node name="cs" value="Cseh"/>
