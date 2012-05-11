@@ -153,6 +153,7 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 	myModelReader.setMainTextModel();
 	myModelReader.pushKind(REGULAR);
 
+	XHTMLReader xhtmlReader(myModelReader);
 	bool firstFile = true;
 	for (std::vector<std::string>::const_iterator it = myHtmlFileNames.begin(); it != myHtmlFileNames.end(); ++it) {
 		const ZLFile xhtmlFile(myFilePrefix + *it);
@@ -162,7 +163,6 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 		if (!firstFile) {
 			myModelReader.insertEndOfSectionParagraph();
 		}
-		XHTMLReader xhtmlReader(myModelReader);
 		xhtmlReader.readFile(xhtmlFile, *it);
 		firstFile = false;
 	}
