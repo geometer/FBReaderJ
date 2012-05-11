@@ -29,6 +29,11 @@
 			<node name="connectionRefused" value="Conexión rechazada por&#10;%s"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Rojo"/>
+		<node name="green" value="Verde"/>
+		<node name="blue" value="Azul"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="árabe"/>
 		<node name="cs" value="Checoslovaco"/>
