@@ -63,6 +63,8 @@ public:
 	bool readFile(const ZLFile &file, const std::string &referenceName);
 
 private:
+	const std::string &fileAlias(const std::string &fileName) const;
+
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
 	void characterDataHandler(const char *text, size_t len);
@@ -76,6 +78,8 @@ private:
 	bool addStyleEntry(const std::string tag, const std::string aClass);
 
 private:
+	mutable std::map<std::string,std::string> myFileNumbers;
+
 	BookReader &myModelReader;
 	std::string myPathPrefix;
 	std::string myReferenceName;
