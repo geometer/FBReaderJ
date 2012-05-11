@@ -5,9 +5,10 @@
 	android:layout_height="fill_parent"
 >
 	<SeekBar
+		android:id="@+id/animation_speed_slider"
+		style="@android:style/Widget.SeekBar"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/animation_speed_slider"
 		android:padding="4dip"
 	/>
 </ScrollView>
