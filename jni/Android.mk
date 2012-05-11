@@ -123,7 +123,6 @@ LOCAL_SRC_FILES               := \
 	NativeFormats/fbreader/src/formats/util/EntityFilesCollector.cpp \
 	NativeFormats/fbreader/src/formats/util/MergedStream.cpp \
 	NativeFormats/fbreader/src/formats/util/MiscUtil.cpp \
-	NativeFormats/fbreader/src/formats/util/TextFormatDetector.cpp \
 	NativeFormats/fbreader/src/formats/util/XMLTextStream.cpp \
 	NativeFormats/fbreader/src/formats/xhtml/XHTMLReader.cpp \
 	NativeFormats/fbreader/src/library/Author.cpp \
