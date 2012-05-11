@@ -55,7 +55,6 @@ public:
 	static JavaClass Class_java_lang_String;
 	static JavaClass Class_java_util_Collection;
 	static JavaClass Class_java_util_List;
-	static JavaClass Class_java_util_Map;
 	static JavaClass Class_java_util_Locale;
 	static JavaClass Class_java_io_InputStream;
 	static JavaClass Class_ZLibrary;
@@ -78,9 +77,6 @@ public:
 	static shared_ptr<StringMethod> Method_java_lang_String_toUpperCase;
 
 	static shared_ptr<ObjectArrayMethod> Method_java_util_Collection_toArray;
-	static shared_ptr<BooleanMethod> Method_java_util_Collection_add;
-
-	static shared_ptr<ObjectMethod> Method_java_util_Map_put;
 
 	static shared_ptr<StaticObjectMethod> StaticMethod_java_util_Locale_getDefault;
 	static shared_ptr<StringMethod> Method_java_util_Locale_getLanguage;
@@ -146,8 +142,6 @@ public:
 
 public:
 	static bool init(JavaVM* jvm);
-
-public:
 	static JNIEnv *getEnv();
 
 	static std::string fromJavaString(JNIEnv *env, jstring from);
