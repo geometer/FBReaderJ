@@ -47,6 +47,8 @@ public:
 	bool doBreakAfter(const std::string &tag, const std::string &aClass) const;
 	shared_ptr<ZLTextStyleEntry> control(const std::string &tag, const std::string &aClass) const;
 
+	void clear();
+
 private:
 	struct Key {
 		Key(const std::string &tag, const std::string &aClass);

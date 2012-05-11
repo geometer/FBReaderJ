@@ -88,7 +88,7 @@ private:
 	int myStylesToRemove;
 	std::vector<bool> myDoPageBreakAfterStack;
 	bool myCurrentParagraphIsEmpty;
-	StyleSheetSingleStyleParser myStyleParser;
+	shared_ptr<StyleSheetSingleStyleParser> myStyleParser;
 	shared_ptr<StyleSheetTableParser> myTableParser;
 	enum {
 		READ_NOTHING,
