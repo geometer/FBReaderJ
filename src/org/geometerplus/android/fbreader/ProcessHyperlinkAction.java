@@ -104,7 +104,9 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
 		new Thread(new Runnable() {
 			public void run() {
-				nLibrary.initialize();
+				if (!urlString.startsWith("fbreader-action:")) {
+					nLibrary.initialize();
+				}
 				intent.setData(Uri.parse(nLibrary.rewriteUrl(urlString, externalUrl)));
 				BaseActivity.runOnUiThread(new Runnable() {
 					public void run() {
