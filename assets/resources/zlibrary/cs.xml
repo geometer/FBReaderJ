@@ -26,6 +26,11 @@
 			<node name="connectionRefused" value="Spojení bylo odmítnuto:&#10;%s"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Červená"/>
+		<node name="green" value="Zelená"/>
+		<node name="blue" value="Morá"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="Arabsky"/>
 		<node name="cs" value="Česky"/>

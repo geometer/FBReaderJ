@@ -26,6 +26,11 @@
 			<node name="connectionRefused" value="Verbinding was geweigerd door&#10;%s"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Rood"/>
+		<node name="green" value="Groen"/>
+		<node name="blue" value="Blauw"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="Arabisch"/>
 		<node name="cs" value="Tsjechisch"/>
