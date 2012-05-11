@@ -28,6 +28,11 @@
 			<node name="connectionRefused" value="Die Verbindung zu&#10;%s&#10;wurde verweigert."/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Rot"/>
+		<node name="green" value="Grün"/>
+		<node name="blue" value="Blau"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="Arabisch"/>
 		<node name="cs" value="Tschechisch"/>

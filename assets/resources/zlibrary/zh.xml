@@ -26,6 +26,11 @@
 			<node name="connectionRefused" value="连接被拒绝&#10;%s"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="红色"/>
+		<node name="green" value="绿色"/>
+		<node name="blue" value="蓝色"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="阿拉伯语"/>
 		<node name="cs" value="捷克语"/>
