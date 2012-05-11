@@ -26,6 +26,11 @@
 			<node name="connectionRefused" value="Kết nối bị từ chối bởi&#10;%s"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Đỏ"/>
+		<node name="green" value="Xanh lá cây"/>
+		<node name="blue" value="Xanh sẫm"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="Tiếng Ả Rập"/>
 		<node name="cs" value="Tiếng Séc"/>

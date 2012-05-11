@@ -26,6 +26,11 @@
 			<node name="connectionRefused" value="З’єднання закрите сайтом&#10;%s"/>
 		</node>
 	</node>
+	<node name="color">
+		<node name="red" value="Червоний"/>
+		<node name="green" value="Зелений"/>
+		<node name="blue" value="Синій"/>
+	</node>
 	<node name="language">
 		<node name="ar" value="арабська"/>
 		<node name="cs" value="чеська"/>
