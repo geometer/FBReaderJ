@@ -31,7 +31,6 @@ JavaClass AndroidUtil::Class_java_lang_RuntimeException("java/lang/RuntimeExcept
 JavaClass AndroidUtil::Class_java_lang_String("java/lang/String");
 JavaClass AndroidUtil::Class_java_util_Collection("java/util/Collection");
 JavaClass AndroidUtil::Class_java_util_List("java/util/List");
-JavaClass AndroidUtil::Class_java_util_Map("java/util/Map");
 JavaClass AndroidUtil::Class_java_util_Locale("java/util/Locale");
 JavaClass AndroidUtil::Class_java_io_InputStream("java/io/InputStream");
 
@@ -56,9 +55,6 @@ shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toLowerCase;
 shared_ptr<StringMethod> AndroidUtil::Method_java_lang_String_toUpperCase;
 
 shared_ptr<ObjectArrayMethod> AndroidUtil::Method_java_util_Collection_toArray;
-shared_ptr<BooleanMethod> AndroidUtil::Method_java_util_Collection_add;
-
-shared_ptr<ObjectMethod> AndroidUtil::Method_java_util_Map_put;
 
 shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_java_util_Locale_getDefault;
 shared_ptr<StringMethod> AndroidUtil::Method_java_util_Locale_getLanguage;
@@ -135,9 +131,6 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_java_lang_String_toUpperCase = new StringMethod(Class_java_lang_String, "toUpperCase", "()");
 
 	Method_java_util_Collection_toArray = new ObjectArrayMethod(Class_java_util_Collection, "toArray", Array_java_lang_Object, "()");
-	Method_java_util_Collection_add = new BooleanMethod(Class_java_util_Collection, "add", "(Ljava/lang/Object;)");
-
-	Method_java_util_Map_put = new ObjectMethod(Class_java_util_Map, "put", Class_java_lang_Object, "(Ljava/lang/Object;Ljava/lang/Object;)");
 
 	StaticMethod_java_util_Locale_getDefault = new StaticObjectMethod(Class_java_util_Locale, "getDefault", Class_java_util_Locale, "()");
 	Method_java_util_Locale_getLanguage = new StringMethod(Class_java_util_Locale, "getLanguage", "()");
