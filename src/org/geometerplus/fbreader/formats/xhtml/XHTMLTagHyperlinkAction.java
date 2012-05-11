@@ -34,7 +34,7 @@ class XHTMLTagHyperlinkAction extends XHTMLTagAction {
 				return false;
 			case 'f':
 				return
-					text.startsWith("fbreader-action://") ||
+					text.startsWith("fbreader-action:") ||
 					text.startsWith("ftp://");
 			case 'h':
 				return
