@@ -680,3 +680,23 @@ const std::vector<std::string> &XHTMLReader::externalDTDs() const {
 bool XHTMLReader::processNamespaces() const {
 	return true;
 }
+
+const std::string &XHTMLReader::fileAlias(const std::string &fileName) const {
+	std::map<std::string,std::string>::const_iterator it = myFileNumbers.find(fileName);
+	if (it != myFileNumbers.end()) {
+		return it->second;
+	}
+
+	const std::string correctedFileName =
+		ZLFileUtil::normalizeUnixPath(MiscUtil::decodeHtmlURL(fileName));
+	it = myFileNumbers.find(correctedFileName);
+	if (it != myFileNumbers.end()) {
+		return it->second;
+	}
+
+	std::string num;
+	ZLStringUtil::appendNumber(num, myFileNumbers.size());
+	myFileNumbers.insert(std::make_pair(correctedFileName, num));
+	it = myFileNumbers.find(correctedFileName);
+	return it->second;
+}
