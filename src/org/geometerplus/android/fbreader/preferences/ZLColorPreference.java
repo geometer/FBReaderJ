@@ -57,12 +57,12 @@ class ZLColorPreference extends DialogPreference {
 
 	private SeekBar createSlider(View view, int id, int value, String resourceKey) {
 		final SeekBar slider = (SeekBar)view.findViewById(id);
-		slider.setProgress(value);
 		slider.setProgressDrawable(new SeekBarDrawable(
 			slider.getProgressDrawable(),
 			ZLResource.resource("color").getResource(resourceKey).getValue(),
 			slider
 		));
+		slider.setProgress(value);
 		return slider;
 	}
 
