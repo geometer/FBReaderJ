@@ -28,7 +28,6 @@
 #include "../library/Book.h"
 
 #include "fb2/FB2Plugin.h"
-////#include "docbook/DocBookPlugin.h"
 #include "html/HtmlPlugin.h"
 #include "txt/TxtPlugin.h"
 //#include "pdb/PdbPlugin.h"
@@ -37,7 +36,6 @@
 //#include "chm/CHMPlugin.h"
 #include "rtf/RtfPlugin.h"
 //#include "openreader/OpenReaderPlugin.h"
-////#include "pdf/PdfPlugin.h"
 
 PluginCollection *PluginCollection::ourInstance = 0;
 
@@ -45,7 +43,6 @@ PluginCollection &PluginCollection::Instance() {
 	if (ourInstance == 0) {
 		ourInstance = new PluginCollection();
 		ourInstance->myPlugins.push_back(new FB2Plugin());
-//		//ourInstance->myPlugins.push_back(new DocBookPlugin());
 		ourInstance->myPlugins.push_back(new HtmlPlugin());
 		ourInstance->myPlugins.push_back(new TxtPlugin());
 //		ourInstance->myPlugins.push_back(new PluckerPlugin());
@@ -58,7 +55,6 @@ PluginCollection &PluginCollection::Instance() {
 		ourInstance->myPlugins.push_back(new OEBPlugin());
 		ourInstance->myPlugins.push_back(new RtfPlugin());
 //		ourInstance->myPlugins.push_back(new OpenReaderPlugin());
-//		//ourInstance->myPlugins.push_back(new PdfPlugin());
 	}
 	return *ourInstance;
 }
