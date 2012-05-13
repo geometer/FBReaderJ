@@ -71,9 +71,6 @@ void ZLXMLReader::endElementHandler(const char*) {
 void ZLXMLReader::characterDataHandler(const char*, size_t) {
 }
 
-void ZLXMLReader::namespaceListChangedHandler() {
-}
-
 const ZLXMLReader::nsMap &ZLXMLReader::namespaces() const {
 	return *myNamespaces.back();
 }
