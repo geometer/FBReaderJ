@@ -211,33 +211,19 @@ static jobject createTextModel(JNIEnv *env, jobject javaModel, ZLTextModel &mode
 	return env->PopLocalFrame(textModel);
 }
 
-static bool initTOC(JNIEnv *env, jobject javaModel, BookModel &model) {
-	ContentsModel &contentsModel = (ContentsModel&)*model.contentsModel();
+static void initTOC(JNIEnv *env, jobject javaModel, const ContentsTree &tree) {
+	const std::vector<shared_ptr<ContentsTree> > &children = tree.children();
+	for (std::vector<shared_ptr<ContentsTree> >::const_iterator it = children.begin(); it != children.end(); ++it) {
+		const ContentsTree &child = **it;
+		jstring text = AndroidUtil::createJavaString(env, child.text());
+		const int ref = child.reference();
+		AndroidUtil::Method_NativeBookModel_addTOCItem->call(javaModel, text, ref);
+		env->DeleteLocalRef(text);
 
-	jobject javaTextModel = createTextModel(env, javaModel, contentsModel);
-	if (javaTextModel == 0) {
-		return false;
+		initTOC(env, javaModel, child);
+
+		AndroidUtil::Method_NativeBookModel_leaveTOCItem->call(javaModel);
 	}
-
-	std::vector<jint> childrenNumbers;
-	std::vector<jint> referenceNumbers;
-	const size_t size = contentsModel.paragraphsNumber();
-	childrenNumbers.reserve(size);
-	referenceNumbers.reserve(size);
-	for (size_t pos = 0; pos < size; ++pos) {
-		ZLTextTreeParagraph *par = (ZLTextTreeParagraph*)contentsModel[pos];
-		childrenNumbers.push_back(par->children().size());
-		referenceNumbers.push_back(contentsModel.reference(par));
-	}
-	jintArray javaChildrenNumbers = AndroidUtil::createJavaIntArray(env, childrenNumbers);
-	jintArray javaReferenceNumbers = AndroidUtil::createJavaIntArray(env, referenceNumbers);
-
-	AndroidUtil::Method_NativeBookModel_initTOC->call(javaModel, javaTextModel, javaChildrenNumbers, javaReferenceNumbers);
-
-	env->DeleteLocalRef(javaTextModel);
-	env->DeleteLocalRef(javaChildrenNumbers);
-	env->DeleteLocalRef(javaReferenceNumbers);
-	return !env->ExceptionCheck();
 }
 
 extern "C"
@@ -259,9 +245,11 @@ JNIEXPORT jboolean JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPl
 		return JNI_FALSE;
 	}
 
-	if (!initInternalHyperlinks(env, javaModel, *model) || !initTOC(env, javaModel, *model)) {
+	if (!initInternalHyperlinks(env, javaModel, *model)) {
 		return JNI_FALSE;
 	}
+
+	initTOC(env, javaModel, *model->contentsTree());
 
 	shared_ptr<ZLTextModel> textModel = model->bookTextModel();
 	jobject javaTextModel = createTextModel(env, javaModel, *textModel);

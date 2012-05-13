@@ -36,12 +36,6 @@ class ZLTextStyleEntry;
 
 class ZLTextModel {
 
-public:
-	enum Kind {
-		PLAIN_TEXT_MODEL,
-		TREE_MODEL,
-	};
-
 protected:
 	ZLTextModel(const std::string &id, const std::string &language, const size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension);
@@ -50,7 +44,6 @@ protected:
 
 public:
 	virtual ~ZLTextModel();
-	virtual Kind kind() const = 0;
 
 	const std::string &id() const;
 	const std::string &language() const;
@@ -121,25 +114,7 @@ public:
 			const std::string &directoryName, const std::string &fileExtension);
 	ZLTextPlainModel(const std::string &id, const std::string &language,
 		shared_ptr<ZLCachedMemoryAllocator> allocator);
-	Kind kind() const;
 	void createParagraph(ZLTextParagraph::Kind kind);
-};
-
-class ZLTextTreeModel : public ZLTextModel {
-
-public:
-	ZLTextTreeModel(const std::string &id, const std::string &language,
-			const std::string &directoryName, const std::string &fileExtension);
-	~ZLTextTreeModel();
-	Kind kind() const;
-
-	ZLTextTreeParagraph *createParagraph(ZLTextTreeParagraph *parent = 0);
-
-	void search(const std::string &text, size_t startIndex, size_t endIndex, bool ignoreCase) const;
-	void selectParagraph(size_t index) const;
-
-private:
-	ZLTextTreeParagraph *myRoot;
 };
 
 inline const std::string &ZLTextModel::id() const { return myId; }
@@ -161,9 +136,5 @@ inline ZLTextParagraph *ZLTextModel::operator [] (size_t index) {
 inline const ZLTextParagraph *ZLTextModel::operator [] (size_t index) const {
 	return myParagraphs[std::min(myParagraphs.size() - 1, index)];
 }
-
-inline ZLTextModel::Kind ZLTextPlainModel::kind() const { return PLAIN_TEXT_MODEL; }
-
-inline ZLTextModel::Kind ZLTextTreeModel::kind() const { return TREE_MODEL; }
 
 #endif /* __ZLTEXTMODEL_H__ */
