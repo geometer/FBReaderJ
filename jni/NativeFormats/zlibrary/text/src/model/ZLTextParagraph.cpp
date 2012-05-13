@@ -239,32 +239,3 @@ size_t ZLTextParagraph::characterNumber() const {
 	return len;
 }
 */
-
-ZLTextTreeParagraph::ZLTextTreeParagraph(ZLTextTreeParagraph *parent) : myIsOpen(false), myParent(parent) {
-	if (parent != 0) {
-		parent->addChild(this);
-		myDepth = parent->myDepth + 1;
-	} else {
-		myDepth = 0;
-	}
-}
-
-void ZLTextTreeParagraph::openTree() {
-	for (ZLTextTreeParagraph *p = parent(); p != 0; p = p->parent()) {
-		p->open(true);
-	}
-}
-
-void ZLTextTreeParagraph::removeFromParent() {
-	if (myParent != 0) {
-		myParent->myChildren.erase(std::find(myParent->myChildren.begin(), myParent->myChildren.end(), this));
-	}
-}
-
-int ZLTextTreeParagraph::fullSize() const {
-	int size = 1;
-	for (std::vector<ZLTextTreeParagraph*>::const_iterator it = myChildren.begin(); it != myChildren.end(); ++it) {
-		size += (*it)->fullSize();
-	}
-	return size;
-}

@@ -132,7 +132,8 @@ public:
 
 	static shared_ptr<ObjectField> Field_NativeBookModel_Book;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_initInternalHyperlinks;
-	static shared_ptr<VoidMethod> Method_NativeBookModel_initTOC;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_addTOCItem;
+	static shared_ptr<VoidMethod> Method_NativeBookModel_leaveTOCItem;
 	static shared_ptr<ObjectMethod> Method_NativeBookModel_createTextModel;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_setBookTextModel;
 	static shared_ptr<VoidMethod> Method_NativeBookModel_setFootnoteModel;
