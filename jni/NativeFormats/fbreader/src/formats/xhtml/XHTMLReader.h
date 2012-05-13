@@ -61,10 +61,9 @@ private:
 public:
 	XHTMLReader(BookReader &modelReader);
 	bool readFile(const ZLFile &file, const std::string &referenceName);
-
-private:
 	const std::string &fileAlias(const std::string &fileName) const;
 
+private:
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
 	void characterDataHandler(const char *text, size_t len);
