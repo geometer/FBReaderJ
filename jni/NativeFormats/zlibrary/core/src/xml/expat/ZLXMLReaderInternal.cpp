@@ -56,8 +56,6 @@ void ZLXMLReaderInternal::fStartElementHandler(void *userData, const char *name,
 			}
 			if (count == 0) {
 				reader.myNamespaces.push_back(reader.myNamespaces.back());
-			} else {
-				reader.namespaceListChangedHandler();
 			}
 		}
 		reader.startElementHandler(name, attributes);
@@ -71,9 +69,6 @@ void ZLXMLReaderInternal::fEndElementHandler(void *userData, const char *name) {
 		if (reader.processNamespaces()) {
 			shared_ptr<std::map<std::string,std::string> > oldMap = reader.myNamespaces.back();
 			reader.myNamespaces.pop_back();
-			if (reader.myNamespaces.back() != oldMap) {
-				reader.namespaceListChangedHandler();
-			}
 		}
 	}
 }
