@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ===== 2.0 beta 7 (May ??, 2012) =====
 * All changes from 1.5
 * 'Open book in external program' feature
@@ -29,7 +30,7 @@
   ** HTML support
   ** CSS/ePub support
 
-===== 1.5 (May ??, 2012) =====
+===== 1.5 (May 13, 2012) =====
 * New faster engine got ePub files
 * Improved cover support for ePubs
 * Improved series information support for ePubs
