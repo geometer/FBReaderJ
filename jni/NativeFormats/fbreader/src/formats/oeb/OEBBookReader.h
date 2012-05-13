@@ -28,6 +28,8 @@
 
 #include "../../bookmodel/BookReader.h"
 
+class XHTMLReader;
+
 class OEBBookReader : public ZLXMLReader {
 
 public:
@@ -41,7 +43,7 @@ private:
 	void namespaceListChangedHandler();
 	const std::vector<std::string> &externalDTDs() const;
 
-	void generateTOC();
+	void generateTOC(const XHTMLReader &xhtmlReader);
 
 private:
 	enum ReaderState {
