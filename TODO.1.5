@@ -1,69 +1,53 @@
-Messages: David, китайцы (opds), Scott (FBSync)
-Site: FAQ, API doc, Czech tips
-Larger icon on the site
+Site: FAQ, API doc, Czech tips, larger icon
 
 litres: top/hot lists (what's happen?)
 litres: author photos
 
-* <hr/> tag
+1.5:
+
 * the SJ book:
   ** empty pages at start (in emulator)
-  DONE hyperlinks (including button image)
-  DONE TOC!!!
 * Network library initialization in ProcessHyperlinkAction :(
 * "Use embedded fonts" option
 * "Scan hidden directories" option
-* ePub:
-  DONE reference resolver (Имя розы)
-  DONE reference shortening in native code (like java code shortening)
-  DONE large covers (cover mark for images in native code)
-* "modes" for wallpapers: tile, fullscreen, etc.
-* zip: re-use open files
-DONE Screen orientation by default: not selected?
-DONE Old style seekbar for navigation
 * Start position mark in navigation widget
-DONE "Shared from FBReader" in message with shared book
-* Link sharing
 * fb2 native: footnote id depth
-* check new condition syntax
 * test opensearch parser
 * update series data for ePubs
-DONE Chinese/Tamil UTF16 files
 * fb2 plugins: compare native & java
 * language codes in ZLTextHyphenator and ZLLanguageUtil (java & cpp)
 * resources synchronization
 * in library: search more on network
-* ePubs in zips
-* show-hide temporary activity after brightness changing (to switch off the button lights)
-DONE encodings list for native plugins
 * CSS:
-  ** @namespace
   ** @page
   ** @import
-  ** why do we use CSS stack (in XHTML parser)?
-  DONE parse tag lists like 'h1,h2,h3'
   ** metrics: font X height
   ** metrics: screen height & width
-  DONE font size
-  DONE font size: smaller and larger
-  ** font modifier: smallcaps
-  DONE font size: inherit
-  DONE underline
-  DONE strikethrough
   ** embedded fonts
-  ** list of fonts (for same selector, in preference order)
-  ** do not read style file multiple times
-  ** page breaks: all values (including "avoid")
-  ** compound selectors ("h2 p" or "a[href]")
-  ** colors
-  ** backgrounds
-  DONE don't apply "fbreader internal" font size settings before CSS "smaller" or "larger"
-  ** use CSS for default styles
-* предупреждение "не могу открыть зашифрованный файл"
-* API от Paragon
 * Two-page view
 * image size option (cover only full-screen, all full-screen, etc.)
 
+1.6+:
+
+* Link sharing
+* предупреждение "не могу открыть зашифрованный файл"
+* CSS:
+  ** @namespace
+  ** why do we use CSS stack (in XHTML parser)?
+  ** font modifier: smallcaps
+  ** list of fonts (for same selector, in preference order)
+  ** compound selectors ("h2 p" or "a[href]")
+  ** colors
+  ** backgrounds
+  ** do not read style file multiple times
+  ** page breaks: all values (including "avoid")
+  ** use CSS for default styles
+* API от Paragon
+* ePubs in zips
+* show-hide temporary activity after brightness changing (to switch off the button lights)
+* "modes" for wallpapers: tile, fullscreen, etc.
+* zip: re-use open files
+* <hr/> tag
 * Better file name for shared file
 * java fb2 plugin: use Base64InputStream technique
 * - namespaceMapChangedHandler
@@ -80,7 +64,6 @@ DONE encodings list for native plugins
 * auto-detect language for fb2
 * pure java language detector (?)
 * more possible values for margins
-* strikethrough test for native version
 * Show action bar for a second at start (?)
 * Clear caches
 * repaint/reload book after library visiting (and book info editing)
