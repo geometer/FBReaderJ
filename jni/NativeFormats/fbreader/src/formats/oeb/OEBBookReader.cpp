@@ -49,89 +49,124 @@ static const std::string REFERENCE = "reference";
 static const std::string COVER = "cover";
 static const std::string COVER_IMAGE = "other.ms-coverimage-standard";
 
+bool OEBBookReader::isOPFTag(const std::string &expected, const std::string &tag) const {
+	return expected == tag && testTag(ZLXMLNamespace::OpenPackagingFormat, expected, tag);
+}
+
 void OEBBookReader::startElementHandler(const char *tag, const char **xmlattributes) {
 	std::string tagString = ZLUnicodeUtil::toLower(tag);
-	if (!myOPFSchemePrefix.empty() &&
-			ZLStringUtil::stringStartsWith(tagString, myOPFSchemePrefix)) {
-		tagString = tagString.substr(myOPFSchemePrefix.length());
-	}
-	if (MANIFEST == tagString) {
-		myState = READ_MANIFEST;
-	} else if (SPINE == tagString) {
-		const char *toc = attributeValue(xmlattributes, "toc");
-		if (toc != 0) {
-			myNCXTOCFileName = myIdToHref[toc];
-		}
-		myState = READ_SPINE;
-	} else if (GUIDE == tagString) {
-		myState = READ_GUIDE;
-	} else if (TOUR == tagString) {
-		myState = READ_TOUR;
-	} else if ((myState == READ_MANIFEST) && (ITEM == tagString)) {
-		const char *id = attributeValue(xmlattributes, "id");
-		const char *href = attributeValue(xmlattributes, "href");
-		if ((id != 0) && (href != 0)) {
-			myIdToHref[id] = MiscUtil::decodeHtmlURL(href);
-		}
-	} else if ((myState == READ_SPINE) && (ITEMREF == tagString)) {
-		const char *id = attributeValue(xmlattributes, "idref");
-		if (id != 0) {
-			const std::string &fileName = myIdToHref[id];
-			if (!fileName.empty()) {
-				myHtmlFileNames.push_back(fileName);
+
+	switch (myState) {
+		case READ_NONE:
+			if (isOPFTag(MANIFEST, tagString)) {
+				myState = READ_MANIFEST;
+			} else if (isOPFTag(SPINE, tagString)) {
+				const char *toc = attributeValue(xmlattributes, "toc");
+				if (toc != 0) {
+					myNCXTOCFileName = myIdToHref[toc];
+				}
+				myState = READ_SPINE;
+			} else if (isOPFTag(GUIDE, tagString)) {
+				myState = READ_GUIDE;
+			} else if (isOPFTag(TOUR, tagString)) {
+				myState = READ_TOUR;
 			}
-		}
-	} else if ((myState == READ_GUIDE) && (REFERENCE == tagString)) {
-		const char *type = attributeValue(xmlattributes, "type");
-		const char *title = attributeValue(xmlattributes, "title");
-		const char *href = attributeValue(xmlattributes, "href");
-		if (href != 0) {
-			const std::string reference = MiscUtil::decodeHtmlURL(href);
-			if (title != 0) {
-				myGuideTOC.push_back(std::make_pair(std::string(title), reference));
-			}
-			if (type != 0) {
-				if (COVER == type) {
-					ZLFile imageFile(myFilePrefix + reference);
-					myCoverFileName = imageFile.path();
-					const std::string imageName = imageFile.name(false);
-					shared_ptr<const ZLImage> image = XHTMLImageFinder().readImage(imageFile);
-					if (!image.isNull()) {
-						myModelReader.setMainTextModel();
-						myModelReader.addImageReference(imageName, (short)0, true);
-						myModelReader.addImage(imageName, image);
-						myModelReader.insertEndOfSectionParagraph();
-					} else {
-						myCoverFileName.erase();
-					}
-				} else if (COVER_IMAGE == type) {
-					ZLFile imageFile(myFilePrefix + reference);
-					myCoverFileName = imageFile.path();
-					const std::string imageName = imageFile.name(false);
-					myModelReader.setMainTextModel();
-					myModelReader.addImageReference(imageName, 0, true);
-					myModelReader.addImage(imageName, new ZLFileImage(imageFile, "", 0));
-					myModelReader.insertEndOfSectionParagraph();
+			break;
+		case READ_MANIFEST:
+			if (isOPFTag(ITEM, tagString)) {
+				const char *id = attributeValue(xmlattributes, "id");
+				const char *href = attributeValue(xmlattributes, "href");
+				if (id != 0 && href != 0) {
+					myIdToHref[id] = MiscUtil::decodeHtmlURL(href);
 				}
 			}
-		}
-	} else if ((myState == READ_TOUR) && (SITE == tagString)) {
-		const char *title = attributeValue(xmlattributes, "title");
-		const char *href = attributeValue(xmlattributes, "href");
-		if ((title != 0) && (href != 0)) {
-			myTourTOC.push_back(std::make_pair(title, MiscUtil::decodeHtmlURL(href)));
-		}
+			break;
+		case READ_SPINE:
+			if (isOPFTag(ITEMREF, tagString)) {
+				const char *id = attributeValue(xmlattributes, "idref");
+				if (id != 0) {
+					const std::string &fileName = myIdToHref[id];
+					if (!fileName.empty()) {
+						myHtmlFileNames.push_back(fileName);
+					}
+				}
+			}
+			break;
+		case READ_GUIDE:
+			if (isOPFTag(REFERENCE, tagString)) {
+				const char *type = attributeValue(xmlattributes, "type");
+				const char *title = attributeValue(xmlattributes, "title");
+				const char *href = attributeValue(xmlattributes, "href");
+				if (href != 0) {
+					const std::string reference = MiscUtil::decodeHtmlURL(href);
+					if (title != 0) {
+						myGuideTOC.push_back(std::make_pair(std::string(title), reference));
+					}
+					if (type != 0) {
+						if (COVER == type) {
+							ZLFile imageFile(myFilePrefix + reference);
+							myCoverFileName = imageFile.path();
+							const std::string imageName = imageFile.name(false);
+							shared_ptr<const ZLImage> image = XHTMLImageFinder().readImage(imageFile);
+							if (!image.isNull()) {
+								myModelReader.setMainTextModel();
+								myModelReader.addImageReference(imageName, (short)0, true);
+								myModelReader.addImage(imageName, image);
+								myModelReader.insertEndOfSectionParagraph();
+							} else {
+								myCoverFileName.erase();
+							}
+						} else if (COVER_IMAGE == type) {
+							ZLFile imageFile(myFilePrefix + reference);
+							myCoverFileName = imageFile.path();
+							const std::string imageName = imageFile.name(false);
+							myModelReader.setMainTextModel();
+							myModelReader.addImageReference(imageName, 0, true);
+							myModelReader.addImage(imageName, new ZLFileImage(imageFile, "", 0));
+							myModelReader.insertEndOfSectionParagraph();
+						}
+					}
+				}
+			}
+			break;
+		case READ_TOUR:
+			if (isOPFTag(SITE, tagString)) {
+				const char *title = attributeValue(xmlattributes, "title");
+				const char *href = attributeValue(xmlattributes, "href");
+				if ((title != 0) && (href != 0)) {
+					myTourTOC.push_back(std::make_pair(title, MiscUtil::decodeHtmlURL(href)));
+				}
+			}
+			break;
 	}
 }
 
 void OEBBookReader::endElementHandler(const char *tag) {
 	std::string tagString = ZLUnicodeUtil::toLower(tag);
-	if (!myOPFSchemePrefix.empty() &&
-			ZLStringUtil::stringStartsWith(tagString, myOPFSchemePrefix)) {
-		tagString = tagString.substr(myOPFSchemePrefix.length());
-	}
-	if ((MANIFEST == tagString) || (SPINE == tagString) || (GUIDE == tagString) || (TOUR == tagString)) {
-		myState = READ_NONE;
+
+	switch (myState) {
+		case READ_MANIFEST:
+			if (isOPFTag(MANIFEST, tagString)) {
+				myState = READ_NONE;
+			}
+			break;
+		case READ_SPINE:
+			if (isOPFTag(SPINE, tagString)) {
+				myState = READ_NONE;
+			}
+			break;
+		case READ_GUIDE:
+			if (isOPFTag(GUIDE, tagString)) {
+				myState = READ_NONE;
+			}
+			break;
+		case READ_TOUR:
+			if (isOPFTag(TOUR, tagString)) {
+				myState = READ_NONE;
+			}
+			break;
+		case READ_NONE:
+			break;
 	}
 }
 
@@ -215,21 +250,6 @@ void OEBBookReader::generateTOC(const XHTMLReader &xhtmlReader) {
 
 bool OEBBookReader::processNamespaces() const {
 	return true;
-}
-
-void OEBBookReader::namespaceListChangedHandler() {
-	const std::map<std::string,std::string> &namespaceMap = namespaces();
-	std::map<std::string,std::string>::const_iterator iter = namespaceMap.begin();
-	for (; iter != namespaceMap.end(); ++iter) {
-		if (iter->second == ZLXMLNamespace::OpenPackagingFormat) {
-			break;
-		}
-	}
-	if (iter != namespaceMap.end()) {
-		myOPFSchemePrefix = iter->first + ":";
-	} else {
-		myOPFSchemePrefix.erase();
-	}
 }
 
 const std::vector<std::string> &OEBBookReader::externalDTDs() const {
