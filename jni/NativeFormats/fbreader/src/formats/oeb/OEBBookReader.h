@@ -40,7 +40,7 @@ private:
 	void startElementHandler(const char *tag, const char **attributes);
 	void endElementHandler(const char *tag);
 	bool processNamespaces() const;
-	void namespaceListChangedHandler();
+	bool isOPFTag(const std::string &expected, const std::string &tag) const;
 	const std::vector<std::string> &externalDTDs() const;
 
 	void generateTOC(const XHTMLReader &xhtmlReader);
@@ -56,8 +56,6 @@ private:
 
 	BookReader myModelReader;
 	ReaderState myState;
-
-	std::string myOPFSchemePrefix;
 
 	std::string myFilePrefix;
 	std::map<std::string,std::string> myIdToHref;
