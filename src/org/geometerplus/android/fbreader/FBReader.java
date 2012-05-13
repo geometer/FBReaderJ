@@ -71,6 +71,7 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private boolean myShowStatusBarFlag;
 	private boolean myShowActionBarFlag;
+	private boolean myActionBarIsVisible;
 
 	private static final String PLUGIN_ACTION_PREFIX = "___";
 	private final List<PluginApi.ActionInfo> myPluginActions =
@@ -136,6 +137,7 @@ public final class FBReader extends ZLAndroidActivity {
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		myShowStatusBarFlag = zlibrary.ShowStatusBarOption.getValue();
 		myShowActionBarFlag = zlibrary.ShowActionBarOption.getValue();
+		myActionBarIsVisible = myShowActionBarFlag;
 
 		final ActionBar bar = getActionBar();
 		bar.setDisplayOptions(
@@ -417,17 +419,17 @@ public final class FBReader extends ZLAndroidActivity {
 
 	private void addMenuItem(Menu menu, String actionId, String name) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.addMenuItem(menu, actionId, null, name);
+		application.myMainWindow.addMenuItem(menu, actionId, null, name, false);
 	}
 
 	private void addMenuItem(Menu menu, String actionId, int iconId) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.addMenuItem(menu, actionId, iconId, null);
+		application.myMainWindow.addMenuItem(menu, actionId, iconId, null, myActionBarIsVisible);
 	}
 
 	private void addMenuItem(Menu menu, String actionId) {
 		final ZLAndroidApplication application = (ZLAndroidApplication)getApplication();
-		application.myMainWindow.addMenuItem(menu, actionId, null, null);
+		application.myMainWindow.addMenuItem(menu, actionId, null, null, false);
 	}
 
 	@Override
@@ -488,6 +490,8 @@ public final class FBReader extends ZLAndroidActivity {
 		final ZLAndroidLibrary zlibrary = (ZLAndroidLibrary)ZLibrary.Instance();
 		if (!zlibrary.ShowActionBarOption.getValue()) {
 			getActionBar().hide();
+			myActionBarIsVisible = false;
+			invalidateOptionsMenu();
 		}
 
 		if (zlibrary.DisableButtonLightsOption.getValue()) {
@@ -497,6 +501,8 @@ public final class FBReader extends ZLAndroidActivity {
 
 	void showBars() {
 		getActionBar().show();
+		myActionBarIsVisible = true;
+		invalidateOptionsMenu();
 
 		final RelativeLayout root = (RelativeLayout)findViewById(R.id.root_view);
 		root.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
