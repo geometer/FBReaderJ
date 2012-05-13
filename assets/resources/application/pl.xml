@@ -216,6 +216,9 @@
 		<node name="bookmarkCreated" value="Zakładka dodana:&#10;%s"/>
 		<node name="clearSelection" value="Wyczyść"/>
 	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Ustawienia"/>
 		<node name="bookInfo" value="Informacje o książce"/>
