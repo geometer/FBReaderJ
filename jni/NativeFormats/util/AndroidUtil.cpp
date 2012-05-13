@@ -110,7 +110,8 @@ shared_ptr<StaticObjectMethod> AndroidUtil::StaticMethod_Tag_getTag;
 
 shared_ptr<ObjectField> AndroidUtil::Field_NativeBookModel_Book;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_initInternalHyperlinks;
-shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_initTOC;
+shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_addTOCItem;
+shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_leaveTOCItem;
 shared_ptr<ObjectMethod> AndroidUtil::Method_NativeBookModel_createTextModel;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_setBookTextModel;
 shared_ptr<VoidMethod> AndroidUtil::Method_NativeBookModel_setFootnoteModel;
@@ -185,7 +186,8 @@ bool AndroidUtil::init(JavaVM* jvm) {
 
 	Field_NativeBookModel_Book = new ObjectField(Class_NativeBookModel, "Book", Class_Book);
 	Method_NativeBookModel_initInternalHyperlinks = new VoidMethod(Class_NativeBookModel, "initInternalHyperlinks", "(Ljava/lang/String;Ljava/lang/String;I)");
-	Method_NativeBookModel_initTOC = new VoidMethod(Class_NativeBookModel, "initTOC", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;[I[I)");
+	Method_NativeBookModel_addTOCItem = new VoidMethod(Class_NativeBookModel, "addTOCItem", "(Ljava/lang/String;I)");
+	Method_NativeBookModel_leaveTOCItem = new VoidMethod(Class_NativeBookModel, "leaveTOCItem", "()");
 	Method_NativeBookModel_createTextModel = new ObjectMethod(Class_NativeBookModel, "createTextModel", Class_ZLTextModel, "(Ljava/lang/String;Ljava/lang/String;I[I[I[I[I[BLjava/lang/String;Ljava/lang/String;I)");
 	Method_NativeBookModel_setBookTextModel = new VoidMethod(Class_NativeBookModel, "setBookTextModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");
 	Method_NativeBookModel_setFootnoteModel = new VoidMethod(Class_NativeBookModel, "setFootnoteModel", "(Lorg/geometerplus/zlibrary/text/model/ZLTextModel;)");

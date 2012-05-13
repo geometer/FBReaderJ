@@ -133,42 +133,6 @@ void ZLTextModel::addParagraphInternal(ZLTextParagraph *paragraph) {
 	myLastEntryStart = 0;
 }
 
-ZLTextTreeModel::ZLTextTreeModel(const std::string &id, const std::string &language,
-		const std::string &directoryName, const std::string &fileExtension) :
-	ZLTextModel(id, language, 8192, directoryName, fileExtension) {
-	myRoot = new ZLTextTreeParagraph();
-	myRoot->open(true);
-}
-
-ZLTextTreeModel::~ZLTextTreeModel() {
-	delete myRoot;
-}
-
-ZLTextTreeParagraph *ZLTextTreeModel::createParagraph(ZLTextTreeParagraph *parent) {
-	if (parent == 0) {
-		parent = myRoot;
-	}
-	ZLTextTreeParagraph *tp = new ZLTextTreeParagraph(parent);
-	addParagraphInternal(tp);
-	return tp;
-}
-
-/*
-void ZLTextTreeModel::search(const std::string &text, size_t startIndex, size_t endIndex, bool ignoreCase) const {
-	ZLTextModel::search(text, startIndex, endIndex, ignoreCase);
-	for (std::vector<ZLTextMark>::const_iterator it = marks().begin(); it != marks().end(); ++it) {
-		((ZLTextTreeParagraph*)(*this)[it->ParagraphIndex])->openTree();
-	}
-}
-
-void ZLTextTreeModel::selectParagraph(size_t index) const {
-	if (index < paragraphsNumber()) {
-		ZLTextModel::selectParagraph(index);
-		((ZLTextTreeParagraph*)(*this)[index])->openTree();
-	}
-}
-*/
-
 ZLTextPlainModel::ZLTextPlainModel(const std::string &id, const std::string &language, const size_t rowSize,
 		const std::string &directoryName, const std::string &fileExtension) :
 	ZLTextModel(id, language, rowSize, directoryName, fileExtension) {
