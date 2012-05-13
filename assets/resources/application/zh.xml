@@ -216,6 +216,9 @@
 		<node name="bookmarkCreated" value="创建书签:&#10;%s"/>
 		<node name="clearSelection" value="清除"/>
 	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="阅读相关设置"/>
 		<node name="bookInfo" value="书籍信息"/>

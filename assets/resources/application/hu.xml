@@ -216,6 +216,9 @@
 		<node name="bookmarkCreated" value="Könyvjelző létrehozva:&#10;%s"/>
 		<node name="clearSelection" value="Kijelölés eltávolítása"/>
 	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Beállítások"/>
 		<node name="bookInfo" value="Könyv adatai"/>
