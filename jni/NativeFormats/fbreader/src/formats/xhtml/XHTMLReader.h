@@ -82,7 +82,7 @@ private:
 
 	BookReader &myModelReader;
 	std::string myPathPrefix;
-	std::string myReferenceName;
+	std::string myReferenceAlias;
 	std::string myReferenceDirName;
 	bool myPreformatted;
 	bool myNewParagraphInProgress;

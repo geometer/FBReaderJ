@@ -346,10 +346,16 @@ void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlatt
 		const FBTextKind hyperlinkType = MiscUtil::referenceType(href);
 		std::string link = MiscUtil::decodeHtmlURL(href);
 		if (hyperlinkType == INTERNAL_HYPERLINK) {
-			link = (link[0] == '#') ?
-				reader.myReferenceName + link :
-				reader.myReferenceDirName + link;
-			link = ZLFileUtil::normalizeUnixPath(link);
+			if (link[0] == '#') {
+				link = reader.myReferenceAlias + link;
+			} else {
+				const size_t index = link.find('#');
+				if (index == std::string::npos) {
+					link = reader.fileAlias(reader.myReferenceDirName + link);
+				} else {
+					link = reader.fileAlias(reader.myReferenceDirName + link.substr(0, index)) + link.substr(index);
+				}
+			}
 		}
 		myHyperlinkStack.push(hyperlinkType);
 		bookReader(reader).addHyperlinkControl(hyperlinkType, link);
@@ -359,7 +365,7 @@ void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlatt
 	const char *name = reader.attributeValue(xmlattributes, "name");
 	if (name != 0) {
 		bookReader(reader).addHyperlinkLabel(
-			reader.myReferenceName + "#" + MiscUtil::decodeHtmlURL(name)
+			reader.myReferenceAlias + "#" + MiscUtil::decodeHtmlURL(name)
 		);
 	}
 }
@@ -488,12 +494,12 @@ XHTMLReader::XHTMLReader(BookReader &modelReader) : myModelReader(modelReader) {
 }
 
 bool XHTMLReader::readFile(const ZLFile &file, const std::string &referenceName) {
-	myModelReader.addHyperlinkLabel(referenceName);
-
 	fillTagTable();
 
 	myPathPrefix = MiscUtil::htmlDirectoryPrefix(file.path());
-	myReferenceName = referenceName;
+	myReferenceAlias = fileAlias(referenceName);
+	myModelReader.addHyperlinkLabel(myReferenceAlias);
+
 	const int index = referenceName.rfind('/', referenceName.length() - 1);
 	myReferenceDirName = referenceName.substr(0, index + 1);
 
@@ -528,7 +534,7 @@ void XHTMLReader::startElementHandler(const char *tag, const char **attributes) 
 	static const std::string HASH = "#";
 	const char *id = attributeValue(attributes, "id");
 	if (id != 0) {
-		myModelReader.addHyperlinkLabel(myReferenceName + HASH + id);
+		myModelReader.addHyperlinkLabel(myReferenceAlias + HASH + id);
 	}
 
 	const std::string sTag = ZLUnicodeUtil::toLower(tag);
