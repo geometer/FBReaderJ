@@ -167,12 +167,12 @@ bool OEBBookReader::readBook(const ZLFile &file) {
 		firstFile = false;
 	}
 
-	generateTOC();
+	generateTOC(xhtmlReader);
 
 	return true;
 }
 
-void OEBBookReader::generateTOC() {
+void OEBBookReader::generateTOC(const XHTMLReader &xhtmlReader) {
 	if (!myNCXTOCFileName.empty()) {
 		NCXReader ncxReader(myModelReader);
 		if (ncxReader.readDocument(ZLFile(myFilePrefix + myNCXTOCFileName))) {
@@ -181,7 +181,7 @@ void OEBBookReader::generateTOC() {
 				size_t level = 0;
 				for (std::map<int,NCXReader::NavPoint>::const_iterator it = navigationMap.begin(); it != navigationMap.end(); ++it) {
 					const NCXReader::NavPoint &point = it->second;
-					int index = myModelReader.model().label(point.ContentHRef).ParagraphNumber;
+					int index = myModelReader.model().label(xhtmlReader.fileAlias(point.ContentHRef)).ParagraphNumber;
 					while (level > point.Level) {
 						myModelReader.endContentsParagraph();
 						--level;
