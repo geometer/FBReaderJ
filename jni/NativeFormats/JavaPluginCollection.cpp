@@ -44,4 +44,5 @@ JNIEXPORT jobjectArray JNICALL Java_org_geometerplus_fbreader_formats_PluginColl
 
 extern "C"
 JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_PluginCollection_free(JNIEnv* env, jobject thiz) {
+	PluginCollection::deleteInstance();
 }
