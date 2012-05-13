@@ -49,10 +49,11 @@ private:
 	std::string myWord;
 	std::string myAttributeName;
 	enum {
+		WAITING_FOR_SELECTOR,
 		SELECTOR,
+		WAITING_FOR_ATTRIBUTE,
 		ATTRIBUTE_NAME,
 		ATTRIBUTE_VALUE,
-		BROKEN,
 	} myReadState;
 	bool myInsideComment;
 	std::string mySelectorString;
