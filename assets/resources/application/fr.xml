@@ -219,6 +219,9 @@
 		<node name="bookmarkCreated" value="Favori créé:&#10;%s"/>
 		<node name="clearSelection" value="Effacer"/>
 	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+	</node>
 	<node name="menu">
 		<node name="preferences" value="Paramètres"/>
 		<node name="bookInfo" value="Information sur le livre"/>
