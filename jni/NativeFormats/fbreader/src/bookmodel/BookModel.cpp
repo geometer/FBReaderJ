@@ -34,7 +34,7 @@ BookModel::BookModel(const shared_ptr<Book> book, jobject javaModel) : myBook(bo
 
 	const std::string cacheDirectory = Library::Instance().cacheDirectory();
 	myBookTextModel = new ZLTextPlainModel(std::string(), book->language(), 131072, cacheDirectory, "ncache");
-	myContentsModel = new ContentsModel(book->language(), cacheDirectory, "ncontents");
+	myContentsTree = new ContentsTree();
 	/*shared_ptr<FormatPlugin> plugin = PluginCollection::Instance().plugin(book->file(), false);
 	if (!plugin.isNull()) {
 		plugin->readModel(*this);
@@ -58,20 +58,6 @@ BookModel::Label BookModel::label(const std::string &id) const {
 	return (it != myInternalHyperlinks.end()) ? it->second : Label(0, -1);
 }
 
-ContentsModel::ContentsModel(const std::string &language,
-		const std::string &directoryName, const std::string &fileExtension) :
-	ZLTextTreeModel(std::string(), language, directoryName, fileExtension) {
-}
-
-void ContentsModel::setReference(const ZLTextTreeParagraph *paragraph, int reference) {
-	myReferenceByParagraph[paragraph] = reference;
-}
-
-int ContentsModel::reference(const ZLTextTreeParagraph *paragraph) const {
-	std::map<const ZLTextTreeParagraph*,int>::const_iterator it = myReferenceByParagraph.find(paragraph);
-	return (it != myReferenceByParagraph.end()) ? it->second : -1;
-}
-
 const shared_ptr<Book> BookModel::book() const {
 	return myBook;
 }
@@ -81,7 +67,6 @@ bool BookModel::flush() {
 	if (myBookTextModel->allocator().failed()) {
 		return false;
 	}
-	myContentsModel->flush();
 
 	std::map<std::string,shared_ptr<ZLTextModel> >::const_iterator it = myFootnotes.begin();
 	for (; it != myFootnotes.end(); ++it) {
