@@ -165,6 +165,9 @@ shared_ptr<ZLTextStyleEntry> StyleSheetTable::createControl(const AttributeMap &
 			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_UNDERLINED, true);
 		} else if (*it == "line-through") {
 			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_STRIKEDTHROUGH, true);
+		} else if (*it == "none") {
+			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_UNDERLINED, false);
+			entry->setFontModifier(ZLTextStyleEntry::FONT_MODIFIER_STRIKEDTHROUGH, false);
 		}
 	}
 
