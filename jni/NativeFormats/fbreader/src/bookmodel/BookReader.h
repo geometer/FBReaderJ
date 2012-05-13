@@ -30,6 +30,7 @@
 #include "FBTextKind.h"
 
 class BookModel;
+class ContentsTree;
 class ZLTextModel;
 class ZLInputStream;
 class ZLCachedMemoryAllocator;
@@ -69,7 +70,7 @@ public:
 	void beginContentsParagraph(int referenceNumber = -1);
 	void endContentsParagraph();
 	bool contentsParagraphIsOpen() const;
-	void setReference(size_t contentsParagraphNumber, int referenceNumber);
+	//void setReference(size_t contentsParagraphNumber, int referenceNumber);
 
 	void addData(const std::string &data);
 	void addContentsData(const std::string &data);
@@ -93,14 +94,12 @@ private:
 
 	bool myTextParagraphExists;
 	bool myContentsParagraphExists;
-	std::stack<ZLTextTreeParagraph*> myTOCStack;
-	bool myLastTOCParagraphIsEmpty;
+	std::stack<shared_ptr<ContentsTree> > myContentsTreeStack;
 
 	bool mySectionContainsRegularContents;
 	bool myInsideTitle;
 
 	std::vector<std::string> myBuffer;
-	std::vector<std::string> myContentsBuffer;
 
 	std::string myHyperlinkReference;
 	FBHyperlinkType myHyperlinkType;

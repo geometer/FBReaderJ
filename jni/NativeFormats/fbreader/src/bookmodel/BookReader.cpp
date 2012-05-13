@@ -34,10 +34,8 @@
 
 BookReader::BookReader(BookModel &model) : myModel(model) {
 	myCurrentTextModel = 0;
-	myLastTOCParagraphIsEmpty = false;
 
 	myTextParagraphExists = false;
-	myContentsParagraphExists = false;
 
 	myInsideTitle = false;
 	mySectionContainsRegularContents = false;
@@ -195,8 +193,8 @@ void BookReader::addData(const std::string &data) {
 }
 
 void BookReader::addContentsData(const std::string &data) {
-	if (!data.empty() && !myTOCStack.empty()) {
-		myContentsBuffer.push_back(data);
+	if (!data.empty() && !myContentsTreeStack.empty()) {
+		myContentsTreeStack.top()->addText(data);
 	}
 }
 
@@ -256,45 +254,33 @@ void BookReader::addImageReference(const std::string &id, short vOffset, bool is
 
 void BookReader::beginContentsParagraph(int referenceNumber) {
 	if (myCurrentTextModel == myModel.myBookTextModel) {
-		ContentsModel &contentsModel = (ContentsModel&)*myModel.myContentsModel;
 		if (referenceNumber == -1) {
 			referenceNumber = myCurrentTextModel->paragraphsNumber();
 		}
-		ZLTextTreeParagraph *peek = myTOCStack.empty() ? 0 : myTOCStack.top();
-		if (!myContentsBuffer.empty()) {
-			contentsModel.addText(myContentsBuffer);
-			myContentsBuffer.clear();
-			myLastTOCParagraphIsEmpty = false;
+		shared_ptr<ContentsTree> parent =
+			myContentsTreeStack.empty() ? myModel.contentsTree() : myContentsTreeStack.top();
+		if (parent->text().empty()) {
+			parent->addText("...");
 		}
-		if (myLastTOCParagraphIsEmpty) {
-			contentsModel.addText("...");
-		}
-		ZLTextTreeParagraph *para = contentsModel.createParagraph(peek);
-		contentsModel.addControl(CONTENTS_TABLE_ENTRY, true);
-		contentsModel.setReference(para, referenceNumber);
-		myTOCStack.push(para);
-		myLastTOCParagraphIsEmpty = true;
+		new ContentsTree(*parent, referenceNumber);
+		const std::vector<shared_ptr<ContentsTree> > &children = parent->children();
+		myContentsTreeStack.push(children[children.size() - 1]);
 		myContentsParagraphExists = true;
 	}
 }
 
 void BookReader::endContentsParagraph() {
-	if (!myTOCStack.empty()) {
-		ContentsModel &contentsModel = (ContentsModel&)*myModel.myContentsModel;
-		if (!myContentsBuffer.empty()) {
-			contentsModel.addText(myContentsBuffer);
-			myContentsBuffer.clear();
-			myLastTOCParagraphIsEmpty = false;
+	if (!myContentsTreeStack.empty()) {
+		shared_ptr<ContentsTree> tree = myContentsTreeStack.top();
+		if (tree->text().empty()) {
+			tree->addText("...");
 		}
-		if (myLastTOCParagraphIsEmpty) {
-			contentsModel.addText("...");
-			myLastTOCParagraphIsEmpty = false;
-		}
-		myTOCStack.pop();
+		myContentsTreeStack.pop();
 	}
 	myContentsParagraphExists = false;
 }
 
+/*
 void BookReader::setReference(size_t contentsParagraphNumber, int referenceNumber) {
 	ContentsModel &contentsModel = (ContentsModel&)*myModel.myContentsModel;
 	if (contentsParagraphNumber >= contentsModel.paragraphsNumber()) {
@@ -302,6 +288,7 @@ void BookReader::setReference(size_t contentsParagraphNumber, int referenceNumbe
 	}
 	contentsModel.setReference((const ZLTextTreeParagraph*)contentsModel[contentsParagraphNumber], referenceNumber);
 }
+*/
 
 void BookReader::reset() {
 	myKindStack.clear();

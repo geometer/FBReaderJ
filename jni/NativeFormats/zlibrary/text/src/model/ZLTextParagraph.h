@@ -222,34 +222,6 @@ private:
 friend class ZLTextPlainModel;
 };
 
-class ZLTextTreeParagraph : public ZLTextParagraph {
-
-public:
-	ZLTextTreeParagraph(ZLTextTreeParagraph *parent = 0);
-	~ZLTextTreeParagraph();
-	Kind kind() const;
-
-	bool isOpen() const;
-	void open(bool o);
-	void openTree();
-	int depth() const;
-	ZLTextTreeParagraph *parent();
-	const ZLTextTreeParagraph *parent() const;
-	const std::vector<ZLTextTreeParagraph*> &children() const;
-	int fullSize() const;
-
-	void removeFromParent();
-
-private:
-	void addChild(ZLTextTreeParagraph *child);
-
-private:
-	bool myIsOpen;
-	int myDepth;
-	ZLTextTreeParagraph *myParent;
-	std::vector<ZLTextTreeParagraph*> myChildren;
-};
-
 inline ZLTextParagraphEntry::ZLTextParagraphEntry() {}
 inline ZLTextParagraphEntry::~ZLTextParagraphEntry() {}
 
@@ -294,15 +266,5 @@ inline void ZLTextParagraph::addEntry(char *address) { if (myEntryNumber == 0) m
 inline ZLTextSpecialParagraph::ZLTextSpecialParagraph(Kind kind) : myKind(kind) {}
 inline ZLTextSpecialParagraph::~ZLTextSpecialParagraph() {}
 inline ZLTextParagraph::Kind ZLTextSpecialParagraph::kind() const { return myKind; }
-
-inline ZLTextTreeParagraph::~ZLTextTreeParagraph() {}
-inline ZLTextParagraph::Kind ZLTextTreeParagraph::kind() const { return TREE_PARAGRAPH; }
-inline bool ZLTextTreeParagraph::isOpen() const { return myIsOpen; }
-inline void ZLTextTreeParagraph::open(bool o) { myIsOpen = o; }
-inline int ZLTextTreeParagraph::depth() const { return myDepth; }
-inline ZLTextTreeParagraph *ZLTextTreeParagraph::parent() { return myParent; }
-inline const ZLTextTreeParagraph *ZLTextTreeParagraph::parent() const { return myParent; }
-inline const std::vector<ZLTextTreeParagraph*> &ZLTextTreeParagraph::children() const { return myChildren; }
-inline void ZLTextTreeParagraph::addChild(ZLTextTreeParagraph *child) { myChildren.push_back(child); }
 
 #endif /* __ZLTEXTPARAGRAPH_H__ */
