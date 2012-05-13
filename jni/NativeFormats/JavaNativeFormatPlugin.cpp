@@ -294,12 +294,3 @@ JNIEXPORT void JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin
 		env->DeleteLocalRef(javaImage);
 	}
 }
-
-/*extern "C"
-JNIEXPORT jstring JNICALL Java_org_geometerplus_fbreader_formats_NativeFormatPlugin_readAnnotation(JNIEnv* env, jobject thiz, jobject file) {
-	shared_ptr<FormatPlugin> plugin = findCppPlugin(env, thiz);
-	if (plugin.isNull()) {
-		return 0;
-	}
-	return 0;
-}*/
