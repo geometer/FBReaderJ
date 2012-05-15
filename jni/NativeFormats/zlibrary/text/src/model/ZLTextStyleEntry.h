@@ -31,6 +31,7 @@ class ZLTextStyleEntry : public ZLTextParagraphEntry {
 public:
 	enum SizeUnit {
 		SIZE_UNIT_PIXEL,
+		SIZE_UNIT_POINT,
 		SIZE_UNIT_EM_100,
 		SIZE_UNIT_EX_100,
 		SIZE_UNIT_PERCENT
