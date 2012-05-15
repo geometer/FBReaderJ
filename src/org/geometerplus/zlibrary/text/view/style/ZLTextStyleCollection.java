@@ -28,6 +28,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 public class ZLTextStyleCollection {
 	private static ZLTextStyleCollection ourInstance = null;
 
+	private int myDefaultFontSize;
 	private ZLTextBaseStyle myBaseStyle;
 	private final ZLTextStyleDecoration[] myDecorationMap = new ZLTextStyleDecoration[256];
 
@@ -44,6 +45,10 @@ public class ZLTextStyleCollection {
 
 	public static void deleteInstance() {
 		ourInstance = null;
+	}
+
+	public int getDefaultFontSize() {
+		return myDefaultFontSize;
 	}
 
 	public ZLTextBaseStyle getBaseStyle() {
@@ -99,7 +104,8 @@ public class ZLTextStyleCollection {
 			final String STYLE = "style";
 
 			if (BASE.equals(tag)) {
-				myCollection.myBaseStyle = new ZLTextBaseStyle(attributes.getValue("family"), intValue(attributes, "fontSize", 0));
+				myCollection.myDefaultFontSize = intValue(attributes, "fontSize", 0);
+				myCollection.myBaseStyle = new ZLTextBaseStyle(attributes.getValue("family"), myCollection.myDefaultFontSize);
 			} else if (STYLE.equals(tag)) {
 				String idString = attributes.getValue("id");
 				String name = attributes.getValue("name");
