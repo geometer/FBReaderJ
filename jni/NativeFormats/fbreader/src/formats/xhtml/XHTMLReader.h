@@ -62,6 +62,7 @@ public:
 	XHTMLReader(BookReader &modelReader);
 	bool readFile(const ZLFile &file, const std::string &referenceName);
 	const std::string &fileAlias(const std::string &fileName) const;
+	const std::string normalizedReference(const std::string &reference) const;
 
 private:
 	void startElementHandler(const char *tag, const char **attributes);

@@ -29,6 +29,10 @@
   ** HTML support
   ** CSS/ePub support
 
+===== 1.5.1 (May ??, 2012) =====
+* Fixed pt/px measured font size processing for CSS's
+* Fixed ToC in some ePubs (e.g. for ePubs from project Gutenberg)
+
 ===== 1.5 (May 13, 2012) =====
 * New faster engine got ePub files
 * Improved cover support for ePubs
