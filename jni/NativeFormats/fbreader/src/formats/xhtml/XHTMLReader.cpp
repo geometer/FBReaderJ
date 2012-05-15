@@ -349,12 +349,7 @@ void XHTMLTagHyperlinkAction::doAtStart(XHTMLReader &reader, const char **xmlatt
 			if (link[0] == '#') {
 				link = reader.myReferenceAlias + link;
 			} else {
-				const size_t index = link.find('#');
-				if (index == std::string::npos) {
-					link = reader.fileAlias(reader.myReferenceDirName + link);
-				} else {
-					link = reader.fileAlias(reader.myReferenceDirName + link.substr(0, index)) + link.substr(index);
-				}
+				link = reader.normalizedReference(reader.myReferenceDirName + link);
 			}
 		}
 		myHyperlinkStack.push(hyperlinkType);
@@ -685,6 +680,15 @@ const std::vector<std::string> &XHTMLReader::externalDTDs() const {
 
 bool XHTMLReader::processNamespaces() const {
 	return true;
+}
+
+const std::string XHTMLReader::normalizedReference(const std::string &reference) const {
+	const size_t index = reference.find('#');
+	if (index == std::string::npos) {
+		return fileAlias(reference);
+	} else {
+		return fileAlias(reference.substr(0, index)) + reference.substr(index);
+	}
 }
 
 const std::string &XHTMLReader::fileAlias(const std::string &fileName) const {

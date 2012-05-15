@@ -67,8 +67,12 @@ static bool parseLength(const std::string &toParse, short &size, ZLTextStyleEntr
 		unit = ZLTextStyleEntry::SIZE_UNIT_EX_100;
 		size = (short)(100 * ZLStringUtil::stringToDouble(toParse, 0));
 		return true;
-	} else {
+	} else if (ZLStringUtil::stringEndsWith(toParse, "px")) {
 		unit = ZLTextStyleEntry::SIZE_UNIT_PIXEL;
+		size = atoi(toParse.c_str());
+		return true;
+	} else if (ZLStringUtil::stringEndsWith(toParse, "pt")) {
+		unit = ZLTextStyleEntry::SIZE_UNIT_POINT;
 		size = atoi(toParse.c_str());
 		return true;
 	}
