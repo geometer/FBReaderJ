@@ -24,6 +24,7 @@ import org.geometerplus.zlibrary.core.encodings.AutoEncodingCollection;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
+import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.formats.NativeFormatPlugin;
 
 public class FB2NativePlugin extends NativeFormatPlugin {
@@ -32,8 +33,12 @@ public class FB2NativePlugin extends NativeFormatPlugin {
 	}
 
 	@Override
-	public ZLFile realBookFile(ZLFile file) {
-		return FB2Util.getRealFB2File(file);
+	public ZLFile realBookFile(ZLFile file) throws BookReadingException {
+		final ZLFile realFile = FB2Util.getRealFB2File(file);
+		if (realFile == null) {
+			throw new BookReadingException("incorrectFb2ZipFile", file);
+		}
+		return realFile;
 	}
 
 	@Override
