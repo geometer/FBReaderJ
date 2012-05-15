@@ -48,9 +48,10 @@ public final class ZLTextStyleEntry {
 
 	public interface SizeUnit {
 		byte PIXEL                            = 0;
-		byte EM_100                           = 1;
-		byte EX_100                           = 2;
-		byte PERCENT                          = 3;
+		byte POINT                            = 1;
+		byte EM_100                           = 2;
+		byte EX_100                           = 3;
+		byte PERCENT                          = 4;
 	}
 
 	private class Length {
@@ -106,7 +107,12 @@ public final class ZLTextStyleEntry {
 		switch (myLengths[featureId].Unit) {
 			default:
 			case SizeUnit.PIXEL:
-				return myLengths[featureId].Size;
+				return myLengths[featureId].Size * metrics.FontSize / metrics.DefaultFontSize;
+			// we understand "point" as "1/2 point"
+			case SizeUnit.POINT:
+				return myLengths[featureId].Size
+					* metrics.DPI * metrics.FontSize
+					/ 72 / metrics.DefaultFontSize / 2;
 			case SizeUnit.EM_100:
 				return (myLengths[featureId].Size * metrics.FontSize + 50) / 100;
 			case SizeUnit.EX_100:

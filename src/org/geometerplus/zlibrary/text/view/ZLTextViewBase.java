@@ -20,10 +20,11 @@
 package org.geometerplus.zlibrary.text.view;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
 
@@ -45,8 +46,11 @@ abstract class ZLTextViewBase extends ZLView {
 
 	private ZLTextMetrics metrics() {
 		if (myMetrics == null) {
-			final ZLTextBaseStyle base = ZLTextStyleCollection.Instance().getBaseStyle();
+			final ZLTextStyleCollection collection = ZLTextStyleCollection.Instance();
+			final ZLTextBaseStyle base = collection.getBaseStyle();
 			myMetrics = new ZLTextMetrics(
+				ZLibrary.Instance().getDisplayDPI(),
+				collection.getDefaultFontSize(),
 				base.getFontSize(),
 				// TODO: font X height
 				base.getFontSize() * 15 / 10,
