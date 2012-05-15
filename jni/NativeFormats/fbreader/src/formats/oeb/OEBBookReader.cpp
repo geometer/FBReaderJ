@@ -216,7 +216,7 @@ void OEBBookReader::generateTOC(const XHTMLReader &xhtmlReader) {
 				size_t level = 0;
 				for (std::map<int,NCXReader::NavPoint>::const_iterator it = navigationMap.begin(); it != navigationMap.end(); ++it) {
 					const NCXReader::NavPoint &point = it->second;
-					int index = myModelReader.model().label(xhtmlReader.fileAlias(point.ContentHRef)).ParagraphNumber;
+					int index = myModelReader.model().label(xhtmlReader.normalizedReference(point.ContentHRef)).ParagraphNumber;
 					while (level > point.Level) {
 						myModelReader.endContentsParagraph();
 						--level;
