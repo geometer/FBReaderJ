@@ -43,6 +43,8 @@ void ZLXMLReaderInternal::fStartElementHandler(void *userData, const char *name,
 					std::string id;
 					if ((*a)[5] == ':') {
 						id = *a + 6;
+					} else if ((*a)[5] != '\0') {
+						continue;
 					}
 					if (count == 0) {
 						reader.myNamespaces.push_back(
