@@ -97,7 +97,7 @@ public final class ZipFile {
 	 * Finds descriptor of the last header and installs sizes of files
 	 */
 	private void findAndReadDescriptor(MyBufferedInputStream baseStream, LocalFileHeader header) throws IOException {
-		Decompressor decompressor = Decompressor.init(baseStream, header);
+		final Decompressor decompressor = Decompressor.init(baseStream, header);
 		int uncompressedSize = 0;
 		while (true) {
 			int blockSize = decompressor.read(null, 0, 2048);

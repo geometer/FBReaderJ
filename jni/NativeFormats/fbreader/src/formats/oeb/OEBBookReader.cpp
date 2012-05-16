@@ -50,7 +50,7 @@ static const std::string COVER = "cover";
 static const std::string COVER_IMAGE = "other.ms-coverimage-standard";
 
 bool OEBBookReader::isOPFTag(const std::string &expected, const std::string &tag) const {
-	return expected == tag && testTag(ZLXMLNamespace::OpenPackagingFormat, expected, tag);
+	return expected == tag || testTag(ZLXMLNamespace::OpenPackagingFormat, expected, tag);
 }
 
 void OEBBookReader::startElementHandler(const char *tag, const char **xmlattributes) {
