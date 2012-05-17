@@ -1,6 +1,7 @@
 ===== 1.5.2 (May ??, 2012) =====
 * Fixed reading of zip archives with 0x08 bit in entry flag
 * Fixed reading of opf files with defined :opf prefix
+* No book duplicates in library
 
 ===== 1.5.1 (May 15, 2012) =====
 * Fixed pt/px measured font size processing for CSS's
