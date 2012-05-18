@@ -43,7 +43,7 @@
 		</node>
 		<node name="openBook" value="Otevřít knihu"/>
 		<node name="showBookInfo" value="Informace o knize"/>
-		<node name="shareBook" value="Share book" toBeTranslated="true"/>
+		<node name="shareBook" value="Sdílet knihu"/>
 		<node name="deleteBook" value="Odstranit knihu"/>
 		<node name="addToFavorites" value="Přidat do oblíbených"/>
 		<node name="removeFromFavorites" value="Odebrat z oblíbených"/>
@@ -159,10 +159,14 @@
 		<node name="noDescription" value="Není dostupný žádný popis."/>
 		<node name="annotation" value="Anotace"/>
 		<node name="title" value="Název:"/>
-		<node name="authors" value="Autoři:"/>
+		<node name="authors" value="Autoři:">
+			<node condition="value 1" value="Autor:"/>
+		</node>
 		<node name="series" value="Série:"/>
 		<node name="indexInSeries" value="Díl v sérii:"/>
-		<node name="tags" value="Štítky:"/>
+		<node name="tags" value="Štítky:">
+			<node condition="value 1" value="Štítek:"/>
+		</node>
 		<node name="language" value="Jazyk:"/>
 		<node name="name" value="Jméno:"/>
 		<node name="type" value="Typ:"/>
@@ -206,10 +210,10 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
-		<node name="library" value="Open library" toBeTranslated="true"/>
-		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
+		<node name="library" value="Otevřít knihovnu"/>
+		<node name="networkLibrary" value="Otevřít síťovou knihovnu"/>
 		<node name="previousBook" value="Otevřít předchozí knihu"/>
-		<node name="returnTo" value="Vrátit se …"/>
+		<node name="returnTo" value="Vrátit se…"/>
 		<node name="back" value="Zpět"/>
 		<node name="forward" value="Vpřed"/>
 		<node name="close" value="Zavřít FBReader"/>
@@ -223,7 +227,7 @@
 		<node name="clearSelection" value="Vymazat"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Sdíleno z &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Nastavení"/>
@@ -244,7 +248,7 @@
 			<node name="undo" value="Přejít zpět"/>
 			<node name="redo" value="Přejít vpřed"/>
 		</node>
-		<node name="shareBook" value="Share book" toBeTranslated="true"/>
+		<node name="shareBook" value="Sdílet knihu"/>
 		<node name="search" value="Hledat"/>
 		<node name="rotate" value="Otočit obrazovku"/>
 		<node name="screenOrientation" value="Orientace obrazovky"/>
@@ -628,13 +632,13 @@
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">
 			<node name="summary" value="Seznam akcí tlačítka Zpět"/>
-			<node name="library" value="Library" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			<node name="library" value="Knihovna">
+				<node name="summaryOn" value="Zobrazit položku 'otevřít knihovnu'"/>
+				<node name="summaryOff" value="Nezobrazovat položku 'otevřít knihovnu'"/>
 			</node>
-			<node name="networkLibrary" value="Network library" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			<node name="networkLibrary" value="Síťová knihovna">
+				<node name="summaryOn" value="Zobrazit položku 'otevřít síťovou knihovnu'"/>
+				<node name="summaryOff" value="Nezobrazovat položku 'otevřít síťovou knihovnu'"/>
 			</node>
 			<node name="previousBook" value="Předchozí kniha">
 				<node name="summaryOn" value="Zobrazit položku 'návrat na předchozí knihu'"/>
@@ -690,13 +694,13 @@
 			<node name="openBook" value="Číst"/>
 			<node name="editInfo" value="Upravit"/>
 			<node name="reloadInfo" value="Znovu načíst"/>
-			<node name="shareBook" value="Share" toBeTranslated="true"/>
+			<node name="shareBook" value="Sdílet"/>
 			<node name="topup" value="Doplnit účet"/>
 			<node name="pay" value="Zaplatit"/>
 			<node name="refresh" value="Aktualizovat"/>
 			<node name="authorize" value="Authorizovat"/>
 			<node name="resetPosition" value="Obnovit pozici"/>
-			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="sendReport" value="Odeslat zprávu"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Instalovat doplněk"/>
@@ -809,17 +813,17 @@
 	</node>
 	<node name="error">
 		<node name="bookReading">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="title" value="Problém FBReaderu"/>
 		</node>
 	</node>
 	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Došlo k chybě během čtení '%s'"/>
+		<node name="errorReadingZip" value="Došlo k chybě během rozbalování '%s'"/>
+		<node name="pluginNotFound" value="Žádný doplněk pro '%s'"/>
+		<node name="unknownPluginType" value="Neznámý typ doplňku: %s"/>
+		<node name="fileNotFound" value="Soubor nebyl nalezen: %s"/>
+		<node name="opfFileNotFound" value="OPF nebyl nalezen v %s"/>
+		<node name="unsupportedFileFormat" value="Formát souboru není podporován pro '%s'"/>
+		<node name="errorParsingRtf" value="Chyba analýzy RTF v: %s"/>
 	</node>
 </resources>
