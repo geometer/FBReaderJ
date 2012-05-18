@@ -252,7 +252,7 @@ std::string AndroidUtil::convertNonUtfString(const std::string &str) {
 
 	jchar *chars = new jchar[len];
 	for (int i = 0; i < len; ++i) {
-		chars[i] = str[i];
+		chars[i] = (unsigned char)str[i];
 	}
 	jstring javaString = env->NewString(chars, len);
 	const std::string result = fromJavaString(env, javaString);
