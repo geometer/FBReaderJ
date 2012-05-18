@@ -47,16 +47,19 @@ public class BookUrlInfo extends UrlInfo {
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
 	public static String makeBookFileName(String url, int format, Type resolvedReferenceType) {
-		URI uri;
+		final URI uri;
 		try {
 			uri = new URI(url);
 		} catch (Throwable ex) {
 			return null;
 		}
 
-		String host = uri.getHost();
+		final String host = uri.getHost();
+		if (host == null) {
+			throw new IllegalArgumentException("Invalid URL: `" + url + "'");
+		}
 
-		StringBuilder path = new StringBuilder(host);
+		final StringBuilder path = new StringBuilder(host);
 		if (host.startsWith("www.")) {
 			path.delete(0, 4);
 		}
