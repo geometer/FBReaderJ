@@ -29,7 +29,7 @@
   ** HTML support
   ** CSS/ePub support
 
-===== 1.5.2 (May ??, 2012) =====
+===== 1.5.2 (May 19, 2012) =====
 * Fixed reading of zip archives with 0x08 bit in entry flag
 * Fixed reading of zip entry names on MIPS devices
 * Fixed reading of opf files with defined :opf prefix
