@@ -55,7 +55,7 @@
 		<node name="ro" value="Rumunsky"/>
 		<node name="ru" value="Rusky"/>
 		<node name="sv" value="Švédsky"/>
-		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="ta" value="Tamilsky"/>
 		<node name="th" value="Thajsky"/>
 		<node name="tr" value="Turecky"/>
 		<node name="uk" value="Ukrajinsky"/>
@@ -73,3 +73,4 @@
 		<node name="actionFor" value="Akce pro klávesu"/>
 	</node>
 </resources>
+
