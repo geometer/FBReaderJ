@@ -20,8 +20,8 @@
 package org.geometerplus.fbreader.network;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
+
+import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLFileImage;
@@ -44,16 +44,14 @@ public final class NetworkImage extends ZLLoadableImage {
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
 	public static String makeImageFilePath(String url, MimeType mimeType) {
-		URI uri;
-		try {
-			uri = new URI(url);
-		} catch (URISyntaxException ex) {
-			return null;
-		}
+		final Uri uri = Uri.parse(url);
 
 		String host = uri.getHost();
+		if (host == null) {
+			host = "host.unknown";
+		}
 
-		StringBuilder path = new StringBuilder(host);
+		final StringBuilder path = new StringBuilder(host);
 		if (host.startsWith("www.")) {
 			path.delete(0, 4);
 		}
@@ -62,7 +60,10 @@ public final class NetworkImage extends ZLLoadableImage {
 
 		int index = path.length();
 
-		path.append(uri.getPath());
+		final String uriPath = uri.getPath();
+		if (uriPath != null) {
+			path.append(uriPath);
+		}
 
 		int nameIndex = index;
 		while (index < path.length()) {
