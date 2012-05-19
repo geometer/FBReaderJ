@@ -56,21 +56,13 @@ public final class FB2Reader extends ZLXMLReaderAdapter {
 
 	private int myFootnoteIdDepth;
 
-	private ZLFile myFile;
-
 	public FB2Reader(BookModel model) {
  		myBookReader = new BookReader(model);
-		myFile = model.Book.File;
-	}
-
-	public FB2Reader(BookModel model, ZLFile file) {
- 		myBookReader = new BookReader(model);
-		myFile = file;
 	}
 
 	void readBook() throws BookReadingException {
 		Base64EncodedImage.resetCounter();
-		final ZLFile file = myFile;
+		final ZLFile file = myBookReader.Model.Book.File;
 		try {
 			ZLXMLProcessor.read(this, file);
 		} catch (IOException e) {
