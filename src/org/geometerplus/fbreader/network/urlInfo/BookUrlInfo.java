@@ -20,7 +20,8 @@
 package org.geometerplus.fbreader.network.urlInfo;
 
 import java.io.File;
-import java.net.URI;
+
+import android.net.Uri;
 
 import org.geometerplus.zlibrary.core.util.MimeType;
 
@@ -59,16 +60,11 @@ public class BookUrlInfo extends UrlInfo {
 	private static final String TOESCAPE = "<>:\"|?*\\";
 
 	public static String makeBookFileName(String url, FileType fileType, MimeType mimeType, Type resolvedReferenceType) {
-		final URI uri;
-		try {
-			uri = new URI(url);
-		} catch (Throwable ex) {
-			return null;
-		}
+		final Uri uri = Uri.parse(url);
 
-		final String host = uri.getHost();
+		String host = uri.getHost();
 		if (host == null) {
-			throw new IllegalArgumentException("Invalid URL: `" + url + "'");
+			host = "host.unknown";
 		}
 
 		final StringBuilder path = new StringBuilder(host);
@@ -83,7 +79,10 @@ public class BookUrlInfo extends UrlInfo {
 		path.insert(0, Paths.mainBookDirectory());
 
 		int index = path.length();
-		path.append(uri.getPath());
+		final String uriPath = uri.getPath();
+		if (uriPath != null) {
+			path.append(uriPath);
+		}
 		int nameIndex = index;
 		while (index < path.length()) {
 			char ch = path.charAt(index);

@@ -69,12 +69,12 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		} else if (soul instanceof ZLTextImageRegionSoul) {
 			Reader.getTextView().hideSelectedRegionBorder();
 			Reader.getViewWidget().repaint();
-			final String uriString = ((ZLTextImageRegionSoul)soul).ImageElement.URI;
-			if (uriString != null) {
+			final String url = ((ZLTextImageRegionSoul)soul).ImageElement.URL;
+			if (url != null) {
 				try {
 					final Intent intent = new Intent();
 					intent.setClass(BaseActivity, ImageViewActivity.class);
-					intent.setData(Uri.parse(uriString));
+					intent.setData(Uri.parse(url));
 					intent.putExtra(
 						ImageViewActivity.BACKGROUND_COLOR_KEY,
 						Reader.ImageViewBackgroundOption.getValue().getIntValue()
@@ -91,10 +91,10 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		}
 	}
 
-	private void openInBrowser(final String urlString) {
+	private void openInBrowser(final String url) {
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
 		final boolean externalUrl;
-		if (BookDownloader.acceptsUri(Uri.parse(urlString))) {
+		if (BookDownloader.acceptsUri(Uri.parse(url))) {
 			intent.setClass(BaseActivity, BookDownloader.class);
 			intent.putExtra(BookDownloaderService.SHOW_NOTIFICATIONS_KEY, BookDownloaderService.Notifications.ALL);
 			externalUrl = false;
@@ -104,10 +104,10 @@ class ProcessHyperlinkAction extends FBAndroidAction {
 		final NetworkLibrary nLibrary = NetworkLibrary.Instance();
 		new Thread(new Runnable() {
 			public void run() {
-				if (!urlString.startsWith("fbreader-action:")) {
+				if (!url.startsWith("fbreader-action:")) {
 					nLibrary.initialize();
 				}
-				intent.setData(Uri.parse(nLibrary.rewriteUrl(urlString, externalUrl)));
+				intent.setData(Uri.parse(nLibrary.rewriteUrl(url, externalUrl)));
 				BaseActivity.runOnUiThread(new Runnable() {
 					public void run() {
 						try {
