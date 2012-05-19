@@ -22,22 +22,22 @@ package org.geometerplus.fbreader.network.atom;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 
 public class ATOMGenerator extends ATOMCommonAttributes {
-	public static final String URI = "uri";
-	public static final String VERSION = "version";
+	public static final String KEY_URI = "uri";
+	public static final String KEY_VERSION = "version";
 
 	public String Text;
 
 	protected ATOMGenerator(ZLStringMap source) {
 		super(source);
-		readAttribute(URI, source);
-		readAttribute(VERSION, source);
+		readAttribute(KEY_URI, source);
+		readAttribute(KEY_VERSION, source);
 	}
 
 	public final String getUri() {
-		return getAttribute(URI);
+		return getAttribute(KEY_URI);
 	}
 
 	public final String getVersion() {
-		return getAttribute(VERSION);
+		return getAttribute(KEY_VERSION);
 	}
 }
