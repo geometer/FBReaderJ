@@ -51,11 +51,11 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		myBook.setTitle(null);
 		myBook.setLanguage(null);
 	}
-	
+
 	public boolean dontCacheAttributeValues() {
 		return true;
 	}
-	
+
 	public void readMetaInfo() throws BookReadingException {
 		myReadState = READ_NOTHING;
 		myAuthorNames[0] = "";
@@ -125,7 +125,7 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 		}
 		return false;
 	}
-	
+
 	public boolean endElementHandler(String tag) {
 		switch (FB2Tag.getTagByName(tag)) {
 			case FB2Tag.TITLE_INFO:
@@ -197,11 +197,11 @@ public class FB2MetaInfoReader extends ZLXMLReaderAdapter {
 				break;
 			default:
 				break;
-		}	
+		}
 		myBuffer.delete(0, myBuffer.length());
 		return false;
 	}
-	
+
 	public void characterDataHandler(char[] data, int start, int length) {
 		switch (myReadState) {
 			case READ_AUTHOR_NAME_0:
