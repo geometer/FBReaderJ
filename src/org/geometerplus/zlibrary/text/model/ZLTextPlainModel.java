@@ -207,7 +207,7 @@ public class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Feature {
 						final short value = (short)data[dataOffset++];
 						entry.setFontModifiers((byte)(value & 0xFF), (byte)((value >> 8) & 0xFF));
 					}
-					
+
 					myStyleEntry = entry;
 				}
 				case ZLTextParagraph.Entry.STYLE_CLOSE:
