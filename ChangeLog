@@ -31,6 +31,7 @@
 
 ===== 1.5.3 (May ??, 2012) =====
 * Fixed book downloading for hosts containing '_' in name
+* Fixed ePub series info reading for books where calibre namespace is not defined
 
 ===== 1.5.2 (May 19, 2012) =====
 * Fixed reading of zip archives with 0x08 bit in entry flag

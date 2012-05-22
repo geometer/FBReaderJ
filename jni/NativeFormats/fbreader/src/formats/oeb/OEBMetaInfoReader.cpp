@@ -104,9 +104,9 @@ void OEBMetaInfoReader::startElementHandler(const char *tag, const char **attrib
 				const char *content = attributeValue(attributes, "content");
 				if (name != 0 && content != 0) {
 					std::string sName = name;
-					if (isNSName(sName, "series", ZLXMLNamespace::CalibreMetadata)) {
+					if (sName == "calibre:series" || isNSName(sName, "series", ZLXMLNamespace::CalibreMetadata)) {
 						myBook.setSeries(content, myBook.indexInSeries());
-					} else if (isNSName(sName, "series_index", ZLXMLNamespace::CalibreMetadata)) {
+					} else if (sName == "calibre:series_index" || isNSName(sName, "series_index", ZLXMLNamespace::CalibreMetadata)) {
 						myBook.setSeries(myBook.seriesTitle(), content);
 					}
 				}
