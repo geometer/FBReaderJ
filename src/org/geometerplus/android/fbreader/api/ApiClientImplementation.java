@@ -181,6 +181,15 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return new ApiObject[] { ApiObject.envelope(value) };
 	}
 
+	private static ApiObject[] envelope(List<String> value) {
+		final ApiObject[] objects = new ApiObject[value.size()];
+		int index = 0;
+		for (String s : value) {
+		    objects[index++] = ApiObject.envelope(s);
+		}
+		return objects;
+	}
+
 	// information about fbreader
 	public String getFBReaderVersion() throws ApiException {
 		return requestString(GET_FBREADER_VERSION, EMPTY_PARAMETERS);
@@ -303,5 +312,68 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	public void clearHighlighting() throws ApiException {
 		request(CLEAR_HIGHLIGHTING, EMPTY_PARAMETERS);
+	}
+
+	// action control
+	public String getKeyAction(int key, boolean longPress) throws ApiException {
+		return requestString(GET_KEY_ACTION, new ApiObject[] {
+			ApiObject.envelope(key),
+			ApiObject.envelope(longPress)
+		});
+	}
+
+	public void setKeyAction(int key, boolean longPress, String action) throws ApiException {
+		request(SET_KEY_ACTION, new ApiObject[] {
+			ApiObject.envelope(key),
+			ApiObject.envelope(longPress),
+			ApiObject.envelope(action)
+		});
+	}
+
+	public List<String> listActions() throws ApiException {
+	  	return requestStringList(LIST_ACTIONS, EMPTY_PARAMETERS);
+	}
+
+	public List<String> listActionNames(List<String> actions) throws ApiException {
+	  	return requestStringList(LIST_ACTION_NAMES, envelope(actions));
+	}
+
+	public List<String> listTapZones() throws ApiException {
+	  	return requestStringList(LIST_TAPZONES, EMPTY_PARAMETERS);
+	}
+
+	public int getTapZoneHeight(String name) throws ApiException {
+		return requestInt(GET_TAPZONE_HEIGHT, envelope(name));
+	}
+
+	public int getTapZoneWidth(String name) throws ApiException {
+		return requestInt(GET_TAPZONE_WIDTH, envelope(name));
+	}
+
+	public String getTapZoneAction(String name, int v, int h, boolean longPress) throws ApiException {
+		return requestString(GET_TAPZONE_ACTION, new ApiObject[] {
+			ApiObject.envelope(name),
+			ApiObject.envelope(v),
+			ApiObject.envelope(h),
+			ApiObject.envelope(longPress)
+		});
+	}
+
+	public boolean createTapZone(String name, int height, int width) throws ApiException {
+		return requestBoolean(CREATE_TAPZONE, new ApiObject[] {
+			ApiObject.envelope(name),
+			ApiObject.envelope(height),
+			ApiObject.envelope(width)
+		});
+	}
+
+	public void setTapZoneAction(String name, int v, int h, boolean longPress, String action) throws ApiException {
+		request(SET_TAPZONE_ACTION, new ApiObject[] {
+			ApiObject.envelope(name),
+			ApiObject.envelope(v),
+			ApiObject.envelope(h),
+			ApiObject.envelope(longPress),
+			ApiObject.envelope(action)
+		});
 	}
 }
