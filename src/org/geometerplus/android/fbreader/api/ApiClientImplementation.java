@@ -181,6 +181,10 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return new ApiObject[] { ApiObject.envelope(value) };
 	}
 
+	private static ApiObject[] envelope(long value) {
+		return new ApiObject[] { ApiObject.envelope(value) };
+	}
+
 	private static ApiObject[] envelope(List<String> value) {
 		final ApiObject[] objects = new ApiObject[value.size()];
 		int index = 0;
@@ -197,11 +201,11 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 
 	// preferences information
 	public List<String> getOptionGroups() throws ApiException {
-		return requestStringList(GET_OPTION_GROUPS, EMPTY_PARAMETERS);
+		return requestStringList(LIST_OPTION_GROUPS, EMPTY_PARAMETERS);
 	}
 
 	public List<String> getOptionNames(String group) throws ApiException {
-		return requestStringList(GET_OPTION_NAMES, envelope(group));
+		return requestStringList(LIST_OPTION_NAMES, envelope(group));
 	}
 
 	public String getOptionValue(String group, String name) throws ApiException {
@@ -227,7 +231,7 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public List<String> getBookTags() throws ApiException {
-		return requestStringList(GET_BOOK_TAGS, EMPTY_PARAMETERS);
+		return requestStringList(LIST_BOOK_TAGS, EMPTY_PARAMETERS);
 	}
 
 	public String getBookFilePath() throws ApiException {
@@ -247,31 +251,31 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	}
 
 	public String getBookLanguage(long id) throws ApiException {
-		return requestString(GET_BOOK_LANGUAGE, EMPTY_PARAMETERS);
+		return requestString(GET_BOOK_LANGUAGE, envelope(id));
 	}
 
 	public String getBookTitle(long id) throws ApiException {
-		return requestString(GET_BOOK_TITLE, EMPTY_PARAMETERS);
+		return requestString(GET_BOOK_TITLE, envelope(id));
 	}
 
 	public List<String> getBookTags(long id) throws ApiException {
-		return requestStringList(GET_BOOK_TAGS, EMPTY_PARAMETERS);
+		return requestStringList(LIST_BOOK_TAGS, envelope(id));
 	}
 
 	public String getBookFilePath(long id) throws ApiException {
-		return requestString(GET_BOOK_FILE_PATH, EMPTY_PARAMETERS);
+		return requestString(GET_BOOK_FILE_PATH, envelope(id));
 	}
 
 	public String getBookHash(long id) throws ApiException {
-		return requestString(GET_BOOK_HASH, EMPTY_PARAMETERS);
+		return requestString(GET_BOOK_HASH, envelope(id));
 	}
 
 	public String getBookUniqueId(long id) throws ApiException {
-		return requestString(GET_BOOK_UNIQUE_ID, EMPTY_PARAMETERS);
+		return requestString(GET_BOOK_UNIQUE_ID, envelope(id));
 	}
 
 	public Date getBookLastTurningTime(long id) throws ApiException {
-		return requestDate(GET_BOOK_LAST_TURNING_TIME, EMPTY_PARAMETERS);
+		return requestDate(GET_BOOK_LAST_TURNING_TIME, envelope(id));
 	}
 
 	public TextPosition getPageStart() throws ApiException {
@@ -342,6 +346,10 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	  	return requestStringList(LIST_TAPZONES, EMPTY_PARAMETERS);
 	}
 
+	public String getCurrentTapZone() throws ApiException {
+	  	return requestString(GET_CURRENT_TAPZONE, EMPTY_PARAMETERS);
+	}
+
 	public int getTapZoneHeight(String name) throws ApiException {
 		return requestInt(GET_TAPZONE_HEIGHT, envelope(name));
 	}
@@ -350,29 +358,29 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestInt(GET_TAPZONE_WIDTH, envelope(name));
 	}
 
-	public String getTapZoneAction(String name, int v, int h, boolean longPress) throws ApiException {
+	public String getTapZoneAction(String name, int h, int v, boolean singleTap) throws ApiException {
 		return requestString(GET_TAPZONE_ACTION, new ApiObject[] {
 			ApiObject.envelope(name),
-			ApiObject.envelope(v),
 			ApiObject.envelope(h),
-			ApiObject.envelope(longPress)
+			ApiObject.envelope(v),
+			ApiObject.envelope(singleTap)
 		});
 	}
 
-	public boolean createTapZone(String name, int height, int width) throws ApiException {
-		return requestBoolean(CREATE_TAPZONE, new ApiObject[] {
+	public void createTapZone(String name, int width, int height) throws ApiException {
+		request(CREATE_TAPZONE, new ApiObject[] {
 			ApiObject.envelope(name),
-			ApiObject.envelope(height),
-			ApiObject.envelope(width)
+			ApiObject.envelope(width),
+			ApiObject.envelope(height)
 		});
 	}
 
-	public void setTapZoneAction(String name, int v, int h, boolean longPress, String action) throws ApiException {
+	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) throws ApiException {
 		request(SET_TAPZONE_ACTION, new ApiObject[] {
 			ApiObject.envelope(name),
-			ApiObject.envelope(v),
 			ApiObject.envelope(h),
-			ApiObject.envelope(longPress),
+			ApiObject.envelope(v),
+			ApiObject.envelope(singleTap),
 			ApiObject.envelope(action)
 		});
 	}
