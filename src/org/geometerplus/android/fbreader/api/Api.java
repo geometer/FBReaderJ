@@ -67,6 +67,6 @@ public interface Api {
 	int getTapZoneHeight(String name) throws ApiException;
 	int getTapZoneWidth(String name) throws ApiException;
 	String getTapZoneAction(String name, int v, int h, boolean longPress) throws ApiException;
-	boolean createTapZone(String name, int height, int width) throws ApiException;
+	void createTapZone(String name, int height, int width) throws ApiException;
 	void setTapZoneAction(String name, int v, int h, boolean longPress, String action) throws ApiException;
 }

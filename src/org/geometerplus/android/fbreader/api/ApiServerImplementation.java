@@ -131,6 +131,45 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				case CLEAR_HIGHLIGHTING:
 					clearHighlighting();
 					return ApiObject.Void.Instance;
+				case GET_KEY_ACTION:
+					return ApiObject.envelope(getKeyAction(
+						((ApiObject.Integer)parameters[0]).Value,
+						((ApiObject.Boolean)parameters[1]).Value
+					));
+				case SET_KEY_ACTION:
+					setKeyAction(
+						((ApiObject.Integer)parameters[0]).Value,
+						((ApiObject.Boolean)parameters[1]).Value,
+						((ApiObject.String)parameters[2]).Value
+					);
+					return ApiObject.Void.Instance;
+				case GET_TAPZONE_ACTION:
+					return ApiObject.envelope(getTapZoneAction(
+						((ApiObject.String)parameters[0]).Value,
+						((ApiObject.Integer)parameters[1]).Value,
+						((ApiObject.Integer)parameters[2]).Value,
+						((ApiObject.Boolean)parameters[3]).Value
+					));
+				case GET_TAPZONE_HEIGHT:
+					return ApiObject.envelope(getTapZoneHeight(((ApiObject.String)parameters[0]).Value));
+				case GET_TAPZONE_WIDTH:
+					return ApiObject.envelope(getTapZoneWidth(((ApiObject.String)parameters[0]).Value));
+				case SET_TAPZONE_ACTION:
+					setTapZoneAction(
+						((ApiObject.String)parameters[0]).Value,
+						((ApiObject.Integer)parameters[1]).Value,
+						((ApiObject.Integer)parameters[2]).Value,
+						((ApiObject.Boolean)parameters[3]).Value,
+						((ApiObject.String)parameters[4]).Value
+					);
+					return ApiObject.Void.Instance;
+				case CREATE_TAPZONE:
+					createTapZone(
+						((ApiObject.String)parameters[0]).Value,
+						((ApiObject.Integer)parameters[1]).Value,
+						((ApiObject.Integer)parameters[2]).Value
+					);
+					return ApiObject.Void.Instance;
 				default:
 					return unsupportedMethodError(method);
 			}
@@ -142,14 +181,26 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	public List<ApiObject> requestList(int method, ApiObject[] parameters) {
 		try {
 			switch (method) {
-				case GET_OPTION_GROUPS:
+				case LIST_OPTION_GROUPS:
 					return ApiObject.envelope(getOptionGroups());
-				case GET_OPTION_NAMES:
+				case LIST_OPTION_NAMES:
 					return ApiObject.envelope(getOptionNames(
 						((ApiObject.String)parameters[0]).Value
 					));
-				case GET_BOOK_TAGS:
+				case LIST_BOOK_TAGS:
 					return ApiObject.envelope(getBookTags());
+				case LIST_ACTIONS:
+					return ApiObject.envelope(listActions());
+				case LIST_ACTION_NAMES:
+				{
+					final ArrayList<String> actions = new ArrayList<String>(parameters.length);
+					for (ApiObject o : parameters) {
+					  	actions.add(((ApiObject.String)o).Value);
+					}
+					return ApiObject.envelope(listActionNames(actions));
+				}
+				case LIST_TAPZONES:
+					return ApiObject.envelope(listTapZones());
 				default:
 					return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 			}
@@ -340,51 +391,50 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	// action control
-	public List<String> listActions() throws ApiException {
+	public List<String> listActions() {
 		// TODO: implement
 		return Collections.emptyList();
 	}
 
-	public List<String> listActionNames(List<String> actions) throws ApiException {
+	public List<String> listActionNames(List<String> actions) {
 		// TODO: implement
 		return Collections.emptyList();
 	}
 
-	public String getKeyAction(int key, boolean longPress) throws ApiException {
+	public String getKeyAction(int key, boolean longPress) {
 		// TODO: implement
 		return null;
 	}
 
-	public void setKeyAction(int key, boolean longPress, String action) throws ApiException {
+	public void setKeyAction(int key, boolean longPress, String action) {
 		// TODO: implement
 	}
 
-	public List<String> listTapZones() throws ApiException {
+	public List<String> listTapZones() {
 		// TODO: implement
 		return Collections.emptyList();
 	}
 
-	public int getTapZoneHeight(String name) throws ApiException {
+	public int getTapZoneHeight(String name) {
 		// TODO: implement
 	  	return -1;
 	}
 
-	public int getTapZoneWidth(String name) throws ApiException {
+	public int getTapZoneWidth(String name) {
 		// TODO: implement
 	  	return -1;
 	}
 
-	public String getTapZoneAction(String name, int v, int h, boolean longPress) throws ApiException {
+	public String getTapZoneAction(String name, int v, int h, boolean longPress) {
 		// TODO: implement
 		return null;
 	}
 
-	public boolean createTapZone(String name, int height, int width) throws ApiException {
+	public void createTapZone(String name, int height, int width) {
 		// TODO: implement
-		return false;
 	}
 
-	public void setTapZoneAction(String name, int v, int h, boolean longPress, String action) throws ApiException {
+	public void setTapZoneAction(String name, int v, int h, boolean longPress, String action) {
 		// TODO: implement
 	}
 }
