@@ -19,46 +19,92 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import java.util.HashMap;
+import java.util.*;
 
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.options.*;
 
 public class TapZoneMap {
+	private static final ZLStringListOption ourMapsOption;
+	static {
+		final List<String> lst = new LinkedList<String>();
+		// TODO: list files from default/tapzones
+		lst.add("left_to_right");
+		lst.add("up");
+	    ourMapsOption = new ZLStringListOption("TapZones", "List", lst, "\000");
+	}
+	private static final Map<String,TapZoneMap> ourMaps = new HashMap<String,TapZoneMap>();
+
+	public static List<String> zoneMapNames() {
+	  	return ourMapsOption.getValue();
+	}
+
+	public static TapZoneMap zoneMap(String name) {
+	    TapZoneMap map = ourMaps.get(name);
+		if (map == null) {
+		    map = new TapZoneMap(name);
+			ourMaps.put(name, map);
+	    }
+		return map;
+	}
+
+	public static TapZoneMap createZoneMap(String name, int width, int height) {
+		if (ourMapsOption.getValue().contains(name)) {
+		    return null;
+		}
+
+	    final TapZoneMap map = zoneMap(name);
+		map.myWidth.setValue(width);
+		map.myHeight.setValue(height);
+		final List<String> lst = new LinkedList<String>(ourMapsOption.getValue());
+		lst.add(name);
+		ourMapsOption.setValue(lst);
+		return map;
+	}
+
 	public static enum Tap {
 		singleTap,
 		singleNotDoubleTap,
 		doubleTap
 	};
 
-    private final String myName;
-	private int myVerticalSize = 3;
-	private int myHorizontalSize = 3;
+    public final String Name;
+    private final String myOptionGroupName;
+	private ZLIntegerRangeOption myHeight;
+	private ZLIntegerRangeOption myWidth;
 	private final HashMap<Zone,ZLStringOption> myZoneMap = new HashMap<Zone,ZLStringOption>();
 	private final HashMap<Zone,ZLStringOption> myZoneMap2 = new HashMap<Zone,ZLStringOption>();
 
-	TapZoneMap(String name, int v, int h) {
-        myName = name;
-		myVerticalSize = v;
-		myHorizontalSize = h;
-	}
-
-	TapZoneMap(String name) {
-        myName = name;
+	private TapZoneMap(String name) {
+        Name = name;
+		myOptionGroupName = "TapZones:" + name;
+		myHeight = new ZLIntegerRangeOption(myOptionGroupName, "Height", 2, 5, 3);
+		myWidth = new ZLIntegerRangeOption(myOptionGroupName, "Width", 2, 5, 3);
 		final ZLFile mapFile = ZLFile.createFileByPath(
 			"default/tapzones/" + name.toLowerCase() + ".xml"
 		);
 		new Reader().readQuietly(mapFile);
 	}
 
+	public int getHeight() {
+	  	return myHeight.getValue();
+	}
+
+	public int getWidth() {
+	  	return myWidth.getValue();
+	}
+
 	public String getActionByCoordinates(int x, int y, int width, int height, Tap tap) {
 		if (width == 0 || height == 0) {
 			return null;
 		}
-		final Zone zone = new Zone(myHorizontalSize * x / width, myVerticalSize * y / height);
-		final ZLStringOption option = getOptionByZone(zone, tap);
+		return getActionByZone(myWidth.getValue() * x / width, myHeight.getValue() * y / height, tap);
+	}
+
+	public String getActionByZone(int h, int v, Tap tap) {
+		final ZLStringOption option = getOptionByZone(new Zone(h, v), tap);
 		return option != null ? option.getValue() : null;
 	}
 
@@ -80,14 +126,14 @@ public class TapZoneMap {
 
     private ZLStringOption createOptionForZone(Zone zone, boolean singleTap, String action) {
         return new ZLStringOption(
-            "TapZones:" + (singleTap ? "Action" : "Action2"),
-            myName + ":" + zone.HIndex + ":" + zone.VIndex,
+            myOptionGroupName,
+			(singleTap ? "Action" : "Action2") + ":" + zone.HIndex + ":" + zone.VIndex,
             action
         );
     }
 
-    /*
-    public void setActionForZone(Zone zone, boolean singleTap, String action) {
+    public void setActionForZone(int h, int v, boolean singleTap, String action) {
+		final Zone zone = new Zone(h, v);
 	    final HashMap<Zone,ZLStringOption> map = singleTap ? myZoneMap : myZoneMap2;
         ZLStringOption option = map.get(zone);
         if (option == null) {
@@ -96,7 +142,6 @@ public class TapZoneMap {
         }
         option.setValue(action);
     }
-    */
 
 	private static class Zone {
 		int HIndex;
@@ -153,11 +198,11 @@ public class TapZoneMap {
 				} else if ("tapZones".equals(tag)) {
 					final String v = attributes.getValue("v");
 					if (v != null) {
-						myVerticalSize = Integer.parseInt(v);
+						myHeight.setValue(Integer.parseInt(v));
 					}
 					final String h = attributes.getValue("h");
 					if (h != null) {
-						myHorizontalSize = Integer.parseInt(h);
+						myWidth.setValue(Integer.parseInt(h));
 					}
 				}
 			} catch (Throwable e) {

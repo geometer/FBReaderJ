@@ -19,9 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
-import org.geometerplus.zlibrary.core.options.ZLEnumOption;
-import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
+import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLView;
 
 public class ScrollingPreferences {
@@ -44,11 +42,8 @@ public class ScrollingPreferences {
 
 	public final ZLBooleanOption HorizontalOption =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public static enum TapZonesScheme {
-		left_to_right, right_to_left, up, down, custom
-	}
-	public final ZLEnumOption<TapZonesScheme> TapZonesSchemeOption =
-		new ZLEnumOption<TapZonesScheme>("Scrolling", "TapZonesScheme", TapZonesScheme.right_to_left);
+	public final ZLStringOption TapZonesSchemeOption =
+		new ZLStringOption("Scrolling", "TapZonesScheme", "");
 
 	private ScrollingPreferences() {
 		ourInstance = this;

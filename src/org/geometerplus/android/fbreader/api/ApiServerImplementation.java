@@ -29,7 +29,7 @@ import org.geometerplus.zlibrary.core.config.ZLConfig;
 
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.*;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
@@ -143,6 +143,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 						((ApiObject.String)parameters[2]).Value
 					);
 					return ApiObject.Void.Instance;
+				case GET_CURRENT_TAPZONE:
+				    return ApiObject.envelope(getCurrentTapZone());
 				case GET_TAPZONE_ACTION:
 					return ApiObject.envelope(getTapZoneAction(
 						((ApiObject.String)parameters[0]).Value,
@@ -411,30 +413,32 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public List<String> listTapZones() {
-		// TODO: implement
-		return Collections.emptyList();
+		return TapZoneMap.zoneMapNames();
+	}
+
+	public String getCurrentTapZone() {
+	  	return ScrollingPreferences.Instance().TapZonesSchemeOption.getValue();
 	}
 
 	public int getTapZoneHeight(String name) {
-		// TODO: implement
-	  	return -1;
+		return TapZoneMap.zoneMap(name).getHeight();
 	}
 
 	public int getTapZoneWidth(String name) {
-		// TODO: implement
-	  	return -1;
+		return TapZoneMap.zoneMap(name).getWidth();
 	}
 
-	public String getTapZoneAction(String name, int v, int h, boolean longPress) {
-		// TODO: implement
-		return null;
+	public String getTapZoneAction(String name, int h, int v, boolean singleTap) {
+		return TapZoneMap.zoneMap(name).getActionByZone(
+			h, v, singleTap ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.doubleTap
+		);
 	}
 
-	public void createTapZone(String name, int height, int width) {
-		// TODO: implement
+	public void createTapZone(String name, int width, int height) {
+		TapZoneMap.createZoneMap(name, width, height);
 	}
 
-	public void setTapZoneAction(String name, int v, int h, boolean longPress, String action) {
-		// TODO: implement
+	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
+		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
 	}
 }
