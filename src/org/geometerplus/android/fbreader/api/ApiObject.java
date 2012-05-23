@@ -152,6 +152,10 @@ public abstract class ApiObject implements Parcelable {
 		return new Integer(value);
 	}
 
+	static ApiObject envelope(long value) {
+		return new Long(value);
+	}
+
 	static ApiObject envelope(boolean value) {
 		return new Boolean(value);
 	}
