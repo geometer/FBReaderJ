@@ -447,12 +447,11 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public boolean isZoneMapCustom(String name) throws ApiException {
-		// TODO: implement
-		return false;
+		return TapZoneMap.zoneMap(name).isCustom();
 	}
 
 	public void deleteZoneMap(String name) throws ApiException {
-		// TODO: implement
+		TapZoneMap.deleteZoneMap(name);
 	}
 
 	public String getTapZoneAction(String name, int h, int v, boolean singleTap) {

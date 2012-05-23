@@ -27,13 +27,15 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.options.*;
 
 public class TapZoneMap {
+	private static final List<String> ourPredefinedMaps = new LinkedList<String>();
 	private static final ZLStringListOption ourMapsOption;
 	static {
-		final List<String> lst = new LinkedList<String>();
 		// TODO: list files from default/tapzones
-		lst.add("left_to_right");
-		lst.add("up");
-	    ourMapsOption = new ZLStringListOption("TapZones", "List", lst, "\000");
+		ourPredefinedMaps.add("right_to_left");
+		ourPredefinedMaps.add("left_to_right");
+		ourPredefinedMaps.add("down");
+		ourPredefinedMaps.add("up");
+	    ourMapsOption = new ZLStringListOption("TapZones", "List", ourPredefinedMaps, "\000");
 	}
 	private static final Map<String,TapZoneMap> ourMaps = new HashMap<String,TapZoneMap>();
 
@@ -64,6 +66,18 @@ public class TapZoneMap {
 		return map;
 	}
 
+	public static void deleteZoneMap(String name) {
+		if (ourPredefinedMaps.contains(name)) {
+		  	return;
+		}
+
+	  	ourMaps.remove(name);
+
+		final List<String> lst = new LinkedList<String>(ourMapsOption.getValue());
+		lst.remove(name);
+		ourMapsOption.setValue(lst);
+	}
+
 	public static enum Tap {
 		singleTap,
 		singleNotDoubleTap,
@@ -86,6 +100,10 @@ public class TapZoneMap {
 			"default/tapzones/" + name.toLowerCase() + ".xml"
 		);
 		new Reader().readQuietly(mapFile);
+	}
+
+	public boolean isCustom() {
+	  	return !ourPredefinedMaps.contains(Name);
 	}
 
 	public int getHeight() {
