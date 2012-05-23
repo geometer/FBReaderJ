@@ -53,18 +53,16 @@ public final class FBView extends ZLTextView {
 	private boolean myIsBrightnessAdjustmentInProgress;
 	private int myStartBrightness;
 
-	private String myZoneMapId;
 	private TapZoneMap myZoneMap;
 
 	private TapZoneMap getZoneMap() {
-		//final String id =
-		//	ScrollingPreferences.Instance().TapZonesSchemeOption.getValue().toString();
-		final String id =
-			ScrollingPreferences.Instance().HorizontalOption.getValue()
-				? "right_to_left" : "up";
-		if (!id.equals(myZoneMapId)) {
-			myZoneMap = new TapZoneMap(id);
-			myZoneMapId = id;
+		final ScrollingPreferences prefs = ScrollingPreferences.Instance();
+		String id = prefs.TapZonesSchemeOption.getValue();
+		if ("".equals(id)) {
+			id = ScrollingPreferences.Instance().HorizontalOption.getValue() ? "right_to_left" : "up";
+		}
+		if (myZoneMap == null || !id.equals(myZoneMap.Name)) {
+			myZoneMap = TapZoneMap.zoneMap(id);
 		}
 		return myZoneMap;
 	}
