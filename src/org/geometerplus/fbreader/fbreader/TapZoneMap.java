@@ -24,6 +24,7 @@ import java.util.HashMap;
 import org.geometerplus.zlibrary.core.xml.ZLXMLReaderAdapter;
 import org.geometerplus.zlibrary.core.xml.ZLStringMap;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
 
 public class TapZoneMap {
 	public static enum Tap {
@@ -32,17 +33,20 @@ public class TapZoneMap {
 		doubleTap
 	};
 
+    private final String myName;
 	private int myVerticalSize = 3;
 	private int myHorizontalSize = 3;
-	private final HashMap<Zone,String> myZoneMap = new HashMap<Zone,String>();
-	private final HashMap<Zone,String> myZoneMap2 = new HashMap<Zone,String>();
+	private final HashMap<Zone,ZLStringOption> myZoneMap = new HashMap<Zone,ZLStringOption>();
+	private final HashMap<Zone,ZLStringOption> myZoneMap2 = new HashMap<Zone,ZLStringOption>();
 
-	TapZoneMap(int v, int h) {
+	TapZoneMap(String name, int v, int h) {
+        myName = name;
 		myVerticalSize = v;
 		myHorizontalSize = h;
 	}
 
 	TapZoneMap(String name) {
+        myName = name;
 		final ZLFile mapFile = ZLFile.createFileByPath(
 			"default/tapzones/" + name.toLowerCase() + ".xml"
 		);
@@ -54,19 +58,45 @@ public class TapZoneMap {
 			return null;
 		}
 		final Zone zone = new Zone(myHorizontalSize * x / width, myVerticalSize * y / height);
+		final ZLStringOption option = getOptionByZone(zone, tap);
+		return option != null ? option.getValue() : null;
+	}
+
+    private ZLStringOption getOptionByZone(Zone zone, Tap tap) {
 		switch (tap) {
+            default:
+                return null;
 			case singleTap:
-			{
-				final String action = myZoneMap.get(zone);
-				return action != null ? action : myZoneMap2.get(zone);
-			}
+            {
+				final ZLStringOption option = myZoneMap.get(zone);
+                return option != null ? option : myZoneMap2.get(zone);
+            }
 			case singleNotDoubleTap:
 				return myZoneMap.get(zone);
 			case doubleTap:
 				return myZoneMap2.get(zone);
 		}
-		return null;
-	}
+    }
+
+    private ZLStringOption createOptionForZone(Zone zone, boolean singleTap, String action) {
+        return new ZLStringOption(
+            "TapZones:" + (singleTap ? "Action" : "Action2"),
+            myName + ":" + zone.HIndex + ":" + zone.VIndex,
+            action
+        );
+    }
+
+    /*
+    public void setActionForZone(Zone zone, boolean singleTap, String action) {
+	    final HashMap<Zone,ZLStringOption> map = singleTap ? myZoneMap : myZoneMap2;
+        ZLStringOption option = map.get(zone);
+        if (option == null) {
+            option = createOptionForZone(zone, singleTap, null);
+            map.put(zone, option);
+        }
+        option.setValue(action);
+    }
+    */
 
 	private static class Zone {
 		int HIndex;
@@ -108,15 +138,17 @@ public class TapZoneMap {
 		public boolean startElementHandler(String tag, ZLStringMap attributes) {
 			try {
 				if ("zone".equals(tag)) {
-					final int x = Integer.parseInt(attributes.getValue("x"));
-					final int y = Integer.parseInt(attributes.getValue("y"));
+					final Zone zone = new Zone(
+                        Integer.parseInt(attributes.getValue("x")),
+					    Integer.parseInt(attributes.getValue("y"))
+                    );
 					final String action = attributes.getValue("action");
 					final String action2 = attributes.getValue("action2");
 					if (action != null) {
-						myZoneMap.put(new Zone(x, y), action);
+						myZoneMap.put(zone, createOptionForZone(zone, true, action));
 					}
 					if (action2 != null) {
-						myZoneMap2.put(new Zone(x, y), action2);
+						myZoneMap2.put(zone, createOptionForZone(zone, false, action2));
 					}
 				} else if ("tapZones".equals(tag)) {
 					final String v = attributes.getValue("v");
