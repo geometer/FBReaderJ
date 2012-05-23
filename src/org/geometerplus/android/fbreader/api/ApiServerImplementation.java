@@ -143,8 +143,15 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 						((ApiObject.String)parameters[2]).Value
 					);
 					return ApiObject.Void.Instance;
-				case GET_CURRENT_TAPZONE:
-				    return ApiObject.envelope(getCurrentTapZone());
+				case GET_ZONEMAP:
+				    return ApiObject.envelope(getZoneMap());
+				case SET_ZONEMAP:
+				    setZoneMap(((ApiObject.String)parameters[0]).Value);
+					return ApiObject.Void.Instance;
+				case GET_ZONEMAP_HEIGHT:
+					return ApiObject.envelope(getZoneMapHeight(((ApiObject.String)parameters[0]).Value));
+				case GET_ZONEMAP_WIDTH:
+					return ApiObject.envelope(getZoneMapWidth(((ApiObject.String)parameters[0]).Value));
 				case GET_TAPZONE_ACTION:
 					return ApiObject.envelope(getTapZoneAction(
 						((ApiObject.String)parameters[0]).Value,
@@ -152,10 +159,6 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 						((ApiObject.Integer)parameters[2]).Value,
 						((ApiObject.Boolean)parameters[3]).Value
 					));
-				case GET_TAPZONE_HEIGHT:
-					return ApiObject.envelope(getTapZoneHeight(((ApiObject.String)parameters[0]).Value));
-				case GET_TAPZONE_WIDTH:
-					return ApiObject.envelope(getTapZoneWidth(((ApiObject.String)parameters[0]).Value));
 				case SET_TAPZONE_ACTION:
 					setTapZoneAction(
 						((ApiObject.String)parameters[0]).Value,
@@ -165,12 +168,19 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 						((ApiObject.String)parameters[4]).Value
 					);
 					return ApiObject.Void.Instance;
-				case CREATE_TAPZONE:
-					createTapZone(
+				case CREATE_ZONEMAP:
+					createZoneMap(
 						((ApiObject.String)parameters[0]).Value,
 						((ApiObject.Integer)parameters[1]).Value,
 						((ApiObject.Integer)parameters[2]).Value
 					);
+					return ApiObject.Void.Instance;
+				case IS_ZONEMAP_CUSTOM:
+					return ApiObject.envelope(isZoneMapCustom(
+						((ApiObject.String)parameters[0]).Value
+					));
+				case DELETE_ZONEMAP:
+					deleteZoneMap(((ApiObject.String)parameters[0]).Value);
 					return ApiObject.Void.Instance;
 				default:
 					return unsupportedMethodError(method);
@@ -201,8 +211,8 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					}
 					return ApiObject.envelope(listActionNames(actions));
 				}
-				case LIST_TAPZONES:
-					return ApiObject.envelope(listTapZones());
+				case LIST_ZONEMAPS:
+					return ApiObject.envelope(listZoneMaps());
 				default:
 					return Collections.<ApiObject>singletonList(unsupportedMethodError(method));
 			}
@@ -412,30 +422,43 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		// TODO: implement
 	}
 
-	public List<String> listTapZones() {
+	public List<String> listZoneMaps() {
 		return TapZoneMap.zoneMapNames();
 	}
 
-	public String getCurrentTapZone() {
-	  	return ScrollingPreferences.Instance().TapZonesSchemeOption.getValue();
+	public String getZoneMap() {
+	  	return ScrollingPreferences.Instance().TapZoneMapOption.getValue();
 	}
 
-	public int getTapZoneHeight(String name) {
+	public void setZoneMap(String name) {
+	  	ScrollingPreferences.Instance().TapZoneMapOption.setValue(name);
+	}
+
+	public int getZoneMapHeight(String name) {
 		return TapZoneMap.zoneMap(name).getHeight();
 	}
 
-	public int getTapZoneWidth(String name) {
+	public int getZoneMapWidth(String name) {
 		return TapZoneMap.zoneMap(name).getWidth();
+	}
+
+	public void createZoneMap(String name, int width, int height) {
+		TapZoneMap.createZoneMap(name, width, height);
+	}
+
+	public boolean isZoneMapCustom(String name) throws ApiException {
+		// TODO: implement
+		return false;
+	}
+
+	public void deleteZoneMap(String name) throws ApiException {
+		// TODO: implement
 	}
 
 	public String getTapZoneAction(String name, int h, int v, boolean singleTap) {
 		return TapZoneMap.zoneMap(name).getActionByZone(
 			h, v, singleTap ? TapZoneMap.Tap.singleNotDoubleTap : TapZoneMap.Tap.doubleTap
 		);
-	}
-
-	public void createTapZone(String name, int width, int height) {
-		TapZoneMap.createZoneMap(name, width, height);
 	}
 
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {

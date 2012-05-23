@@ -63,11 +63,15 @@ public interface Api {
 	String getKeyAction(int key, boolean longPress) throws ApiException;
 	void setKeyAction(int key, boolean longPress, String action) throws ApiException;
 
-	List<String> listTapZones() throws ApiException;
-	String getCurrentTapZone() throws ApiException;
-	int getTapZoneHeight(String name) throws ApiException;
-	int getTapZoneWidth(String name) throws ApiException;
+	List<String> listZoneMaps() throws ApiException;
+	String getZoneMap() throws ApiException;
+	void setZoneMap(String name) throws ApiException;
+	int getZoneMapHeight(String name) throws ApiException;
+	int getZoneMapWidth(String name) throws ApiException;
+	void createZoneMap(String name, int width, int height) throws ApiException;
+	boolean isZoneMapCustom(String name) throws ApiException;
+	void deleteZoneMap(String name) throws ApiException;
+
 	String getTapZoneAction(String name, int h, int v, boolean singleTap) throws ApiException;
-	void createTapZone(String name, int width, int height) throws ApiException;
 	void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) throws ApiException;
 }
