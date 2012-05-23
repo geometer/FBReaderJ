@@ -397,9 +397,6 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 		final ScrollingPreferences scrollingPreferences = ScrollingPreferences.Instance();
 
-		//final Screen tapZonesScreen = createPreferenceScreen("tapZones");
-		//tapZonesScreen.addOption(scrollingPreferences.TapZonesSchemeOption, "tapZonesScheme");
-
 		final ZLKeyBindings keyBindings = fbReader.keyBindings();
 
 		final Screen scrollingScreen = createPreferenceScreen("scrolling");
