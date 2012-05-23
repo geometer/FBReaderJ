@@ -338,4 +338,53 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		}
 		return sb.toString();
 	}
+
+	// action control
+	public List<String> listActions() throws ApiException {
+		// TODO: implement
+		return Collections.emptyList();
+	}
+
+	public List<String> listActionNames(List<String> actions) throws ApiException {
+		// TODO: implement
+		return Collections.emptyList();
+	}
+
+	public String getKeyAction(int key, boolean longPress) throws ApiException {
+		// TODO: implement
+		return null;
+	}
+
+	public void setKeyAction(int key, boolean longPress, String action) throws ApiException {
+		// TODO: implement
+	}
+
+	public List<String> listTapZones() throws ApiException {
+		// TODO: implement
+		return Collections.emptyList();
+	}
+
+	public int getTapZoneHeight(String name) throws ApiException {
+		// TODO: implement
+	  	return -1;
+	}
+
+	public int getTapZoneWidth(String name) throws ApiException {
+		// TODO: implement
+	  	return -1;
+	}
+
+	public String getTapZoneAction(String name, int v, int h, boolean longPress) throws ApiException {
+		// TODO: implement
+		return null;
+	}
+
+	public boolean createTapZone(String name, int height, int width) throws ApiException {
+		// TODO: implement
+		return false;
+	}
+
+	public void setTapZoneAction(String name, int v, int h, boolean longPress, String action) throws ApiException {
+		// TODO: implement
+	}
 }

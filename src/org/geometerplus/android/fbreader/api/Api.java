@@ -55,4 +55,18 @@ public interface Api {
 	void setPageStart(TextPosition position) throws ApiException;
 	void highlightArea(TextPosition start, TextPosition end) throws ApiException;
 	void clearHighlighting() throws ApiException;
+
+	// action control
+	List<String> listActions() throws ApiException;
+	List<String> listActionNames(List<String> actions) throws ApiException;
+
+	String getKeyAction(int key, boolean longPress) throws ApiException;
+	void setKeyAction(int key, boolean longPress, String action) throws ApiException;
+
+	List<String> listTapZones() throws ApiException;
+	int getTapZoneHeight(String name) throws ApiException;
+	int getTapZoneWidth(String name) throws ApiException;
+	String getTapZoneAction(String name, int v, int h, boolean longPress) throws ApiException;
+	boolean createTapZone(String name, int height, int width) throws ApiException;
+	void setTapZoneAction(String name, int v, int h, boolean longPress, String action) throws ApiException;
 }
