@@ -342,20 +342,40 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 	  	return requestStringList(LIST_ACTION_NAMES, envelope(actions));
 	}
 
-	public List<String> listTapZones() throws ApiException {
-	  	return requestStringList(LIST_TAPZONES, EMPTY_PARAMETERS);
+	public List<String> listZoneMaps() throws ApiException {
+	  	return requestStringList(LIST_ZONEMAPS, EMPTY_PARAMETERS);
 	}
 
-	public String getCurrentTapZone() throws ApiException {
-	  	return requestString(GET_CURRENT_TAPZONE, EMPTY_PARAMETERS);
+	public String getZoneMap() throws ApiException {
+	  	return requestString(GET_ZONEMAP, EMPTY_PARAMETERS);
 	}
 
-	public int getTapZoneHeight(String name) throws ApiException {
-		return requestInt(GET_TAPZONE_HEIGHT, envelope(name));
+	public void setZoneMap(String name) throws ApiException {
+	  	request(SET_ZONEMAP, envelope(name));
 	}
 
-	public int getTapZoneWidth(String name) throws ApiException {
-		return requestInt(GET_TAPZONE_WIDTH, envelope(name));
+	public int getZoneMapHeight(String name) throws ApiException {
+		return requestInt(GET_ZONEMAP_HEIGHT, envelope(name));
+	}
+
+	public int getZoneMapWidth(String name) throws ApiException {
+		return requestInt(GET_ZONEMAP_WIDTH, envelope(name));
+	}
+
+	public void createZoneMap(String name, int width, int height) throws ApiException {
+		request(CREATE_ZONEMAP, new ApiObject[] {
+			ApiObject.envelope(name),
+			ApiObject.envelope(width),
+			ApiObject.envelope(height)
+		});
+	}
+
+	public boolean isZoneMapCustom(String name) throws ApiException {
+		return requestBoolean(IS_ZONEMAP_CUSTOM, envelope(name));
+	}
+
+	public void deleteZoneMap(String name) throws ApiException {
+		request(DELETE_ZONEMAP, envelope(name));
 	}
 
 	public String getTapZoneAction(String name, int h, int v, boolean singleTap) throws ApiException {
@@ -364,14 +384,6 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			ApiObject.envelope(h),
 			ApiObject.envelope(v),
 			ApiObject.envelope(singleTap)
-		});
-	}
-
-	public void createTapZone(String name, int width, int height) throws ApiException {
-		request(CREATE_TAPZONE, new ApiObject[] {
-			ApiObject.envelope(name),
-			ApiObject.envelope(width),
-			ApiObject.envelope(height)
 		});
 	}
 

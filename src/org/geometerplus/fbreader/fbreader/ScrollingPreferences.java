@@ -42,8 +42,8 @@ public class ScrollingPreferences {
 
 	public final ZLBooleanOption HorizontalOption =
 		new ZLBooleanOption("Scrolling", "Horizontal", true);
-	public final ZLStringOption TapZonesSchemeOption =
-		new ZLStringOption("Scrolling", "TapZonesScheme", "");
+	public final ZLStringOption TapZoneMapOption =
+		new ZLStringOption("Scrolling", "TapZoneMap", "");
 
 	private ScrollingPreferences() {
 		ourInstance = this;
