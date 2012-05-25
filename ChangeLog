@@ -1,4 +1,4 @@
-===== 1.5.3 (May ??, 2012) =====
+===== 1.5.3 (May 25, 2012) =====
 * Fixed book downloading for hosts containing '_' in name (e.g. for epubbud.com catalogue)
 * Fixed ePub series info reading for books where calibre namespace is not defined
 * Fixed CSS processing if attribute value is not finished by ';' symbol (e.g. for Gutenberg books)
