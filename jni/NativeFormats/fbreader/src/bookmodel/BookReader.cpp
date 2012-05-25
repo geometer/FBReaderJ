@@ -82,6 +82,7 @@ bool BookReader::isKindStackEmpty() const {
 }
 
 void BookReader::beginParagraph(ZLTextParagraph::Kind kind) {
+	endParagraph();
 	if (myCurrentTextModel != 0) {
 		((ZLTextPlainModel&)*myCurrentTextModel).createParagraph(kind);
 		for (std::vector<FBTextKind>::const_iterator it = myKindStack.begin(); it != myKindStack.end(); ++it) {
