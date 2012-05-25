@@ -29,9 +29,11 @@
   ** HTML support
   ** CSS/ePub support
 
-===== 1.5.3 (May ??, 2012) =====
-* Fixed book downloading for hosts containing '_' in name
+===== 1.5.3 (May 25, 2012) =====
+* Fixed book downloading for hosts containing '_' in name (e.g. for epubbud.com catalogue)
 * Fixed ePub series info reading for books where calibre namespace is not defined
+* Fixed CSS processing if attribute value is not finished by ';' symbol (e.g. for Gutenberg books)
+* fb2: <empty-line/> inside <p> tag processing has been fixed
 
 ===== 1.5.2 (May 19, 2012) =====
 * Fixed reading of zip archives with 0x08 bit in entry flag
