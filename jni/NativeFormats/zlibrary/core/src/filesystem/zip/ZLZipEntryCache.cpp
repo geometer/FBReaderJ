@@ -30,7 +30,7 @@ size_t ZLZipEntryCache::ourIndex = 0;
 
 shared_ptr<ZLZipEntryCache> ZLZipEntryCache::cache(const std::string &containerName, ZLInputStream &containerStream) {
 	//ZLLogger::Instance().registerClass("ZipEntryCache");
-	ZLLogger::Instance().println("ZipEntryCache", "requesting cache for " + containerName);
+	//ZLLogger::Instance().println("ZipEntryCache", "requesting cache for " + containerName);
 	for (size_t i = 0; i < ourStorageSize; ++i) {
 		shared_ptr<ZLZipEntryCache> cache = ourStoredCaches[i];
 		if (!cache.isNull() && cache->myContainerName == containerName) {
@@ -47,7 +47,7 @@ ZLZipEntryCache::Info::Info() : Offset(-1) {
 }
 
 ZLZipEntryCache::ZLZipEntryCache(const std::string &containerName, ZLInputStream &containerStream) : myContainerName(containerName) {
-	ZLLogger::Instance().println("ZipEntryCache", "creating cache for " + containerName);
+	//ZLLogger::Instance().println("ZipEntryCache", "creating cache for " + containerName);
 	if (!containerStream.open()) {
 		return;
 	}
