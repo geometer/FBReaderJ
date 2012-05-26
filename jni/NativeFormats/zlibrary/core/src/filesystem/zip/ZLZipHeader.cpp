@@ -87,7 +87,7 @@ void ZLZipHeader::skipEntry(ZLInputStream &stream, ZLZipHeader &header) {
 		default:
 			break;
 		case SignatureLocalFile:
-			if ((header.Flags & 0x08) == 0x08 && header.CompressionMethod != 0) {
+			if ((header.Flags & 0x08) == 0x08 && header.CompressionMethod != 0 && header.CompressedSize != 0) {
 				stream.seek(header.ExtraLength, false);
 				ZLZDecompressor decompressor((size_t)-1);
 				size_t size;
