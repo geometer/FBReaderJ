@@ -120,6 +120,16 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					return ApiObject.envelope(isPageEndOfSection());
 				case IS_PAGE_END_OF_TEXT:
 					return ApiObject.envelope(isPageEndOfText());
+				case GET_GLOBAL_OFFSET_BY_POSITION:
+					return ApiObject.envelope(getGlobalOffsetByPosition(
+						(TextPosition)parameters[0]
+					));
+				case GET_POSITION_BY_GLOBAL_OFFSET:
+					return getPositionByGlobalOffset(
+						((ApiObject.Integer)parameters[0]).Value
+					);
+				case GET_MAX_GLOBAL_OFFSET:
+					return ApiObject.envelope(getMaxGlobalOffset());
 				case SET_PAGE_START:
 					setPageStart((TextPosition)parameters[0]);
 					return ApiObject.Void.Instance;
@@ -144,9 +154,9 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					);
 					return ApiObject.Void.Instance;
 				case GET_ZONEMAP:
-				    return ApiObject.envelope(getZoneMap());
+					return ApiObject.envelope(getZoneMap());
 				case SET_ZONEMAP:
-				    setZoneMap(((ApiObject.String)parameters[0]).Value);
+					setZoneMap(((ApiObject.String)parameters[0]).Value);
 					return ApiObject.Void.Instance;
 				case GET_ZONEMAP_HEIGHT:
 					return ApiObject.envelope(getZoneMapHeight(((ApiObject.String)parameters[0]).Value));
@@ -207,7 +217,7 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 				{
 					final ArrayList<String> actions = new ArrayList<String>(parameters.length);
 					for (ApiObject o : parameters) {
-					  	actions.add(((ApiObject.String)o).Value);
+						actions.add(((ApiObject.String)o).Value);
 					}
 					return ApiObject.envelope(listActionNames(actions));
 				}
@@ -343,20 +353,32 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 		return cursor.isEndOfParagraph() && cursor.getParagraphCursor().isLast();
 	}
 
-	private TextPosition getTextPosition(ZLTextWordCursor cursor) {
+	private TextPosition getTextPosition(ZLTextPosition position) {
 		return new TextPosition(
-			cursor.getParagraphIndex(),
-			cursor.getElementIndex(),
-			cursor.getCharIndex()
+			position.getParagraphIndex(),
+			position.getElementIndex(),
+			position.getCharIndex()
 		);
 	}
 
-	private ZLTextFixedPosition getZLTextPosition(TextPosition position) {
+	private ZLTextPosition getZLTextPosition(TextPosition position) {
 		return new ZLTextFixedPosition(
 			position.ParagraphIndex,
 			position.ElementIndex,
 			position.CharIndex
 		);
+	}
+
+	public int getGlobalOffsetByPosition(TextPosition position) {
+		return myReader.getTextView().getGlobalOffsetByPosition(getZLTextPosition(position));
+	}
+
+	public TextPosition getPositionByGlobalOffset(int offset) {
+		return getTextPosition(myReader.getTextView().getPositionByGlobalOffset(offset));
+	}
+
+	public int getMaxGlobalOffset() {
+		return myReader.getTextView().sizeOfFullText();
 	}
 
 	// manage view
@@ -427,11 +449,11 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 	}
 
 	public String getZoneMap() {
-	  	return ScrollingPreferences.Instance().TapZoneMapOption.getValue();
+		return ScrollingPreferences.Instance().TapZoneMapOption.getValue();
 	}
 
 	public void setZoneMap(String name) {
-	  	ScrollingPreferences.Instance().TapZoneMapOption.setValue(name);
+		ScrollingPreferences.Instance().TapZoneMapOption.setValue(name);
 	}
 
 	public int getZoneMapHeight(String name) {

@@ -472,7 +472,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		return myModel != null ? myModel.getTextLength(paragraphIndex - 1) : 0;
 	}
 
-	protected final synchronized int sizeOfFullText() {
+	public final synchronized int sizeOfFullText() {
 		if (myModel == null || myModel.getParagraphsNumber() == 0) {
 			return 1;
 		}
@@ -512,6 +512,32 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			? 0 : getCurrentCharNumber(pageIndex, true);
 		int end = getCurrentCharNumber(pageIndex, false);
 		return Math.max(1, end - start);
+	}
+
+	public int getGlobalOffsetByPosition(ZLTextPosition position) {
+		// TODO: implement
+		return 0;
+	}
+
+	public ZLTextPosition getPositionByGlobalOffset(int offset) {
+		// TODO: implement
+		return null;
+	}
+
+	private int getGlobalOffset(ZLTextParagraphCursor cursor, int elementIndex, int charIndex) {
+		if (cursor == null) {
+			return -1;
+		}
+		final int paragraphIndex = cursor.Index;
+		int offset = myModel.getTextLength(paragraphIndex - 1);
+
+		for (int i = 0; i < elementIndex; ++i) {
+			final ZLTextElement element = paragraph.getElement(i);
+			if (element instanceof ZLTextWord) {
+				offset += ((ZLTextWord)element).Length;
+			} else {
+		}
+		return sizeOfText;
 	}
 
 	private int sizeOfTextBeforeCursor(ZLTextWordCursor wordCursor) {

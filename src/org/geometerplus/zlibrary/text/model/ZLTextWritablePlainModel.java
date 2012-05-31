@@ -106,6 +106,7 @@ public final class ZLTextWritablePlainModel extends ZLTextPlainModel implements 
 		blockOffset += len;
 		block[blockOffset++] = (char)(isCover ? 1 : 0);
 		myBlockOffset = blockOffset;
+		myTextSizes[myParagraphsNumber - 1] += 100;
 	}
 
 	public void addControl(byte textKind, boolean isStart) {

@@ -24,7 +24,7 @@ public interface Api {
 	List<String> getBookTags() throws ApiException;
 	String getBookFilePath() throws ApiException;
 	String getBookHash() throws ApiException;
-	String getBookUniqueId() throws ApiException;
+	//String getBookUniqueId() throws ApiException;
 	Date getBookLastTurningTime() throws ApiException;
 
 	// book information for book defined by id
@@ -34,7 +34,7 @@ public interface Api {
 	List<String> getBookTags(long id) throws ApiException;
 	String getBookFilePath(long id) throws ApiException;
 	String getBookHash(long id) throws ApiException;
-	String getBookUniqueId(long id) throws ApiException;
+	//String getBookUniqueId(long id) throws ApiException;
 	Date getBookLastTurningTime(long id) throws ApiException;
 
 	//long findBookIdByUniqueId(String uniqueId) throws ApiException;
@@ -50,6 +50,11 @@ public interface Api {
 	TextPosition getPageEnd() throws ApiException;
 	boolean isPageEndOfSection() throws ApiException;
 	boolean isPageEndOfText() throws ApiException;
+
+	// position utilities
+	int getGlobalOffsetByPosition(TextPosition position) throws ApiException;
+	TextPosition getPositionByGlobalOffset(int offset) throws ApiException;
+	int getMaxGlobalOffset() throws ApiException;
 
 	// manage view
 	void setPageStart(TextPosition position) throws ApiException;

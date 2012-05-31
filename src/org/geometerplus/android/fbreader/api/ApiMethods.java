@@ -41,6 +41,11 @@ interface ApiMethods {
 	int IS_PAGE_END_OF_TEXT = 703;
 	int IS_PAGE_END_OF_SECTION = 704;
 
+	// position utilities
+	int GET_GLOBAL_OFFSET_BY_POSITION = 751;
+	int GET_POSITION_BY_GLOBAL_OFFSET = 752;
+	int GET_MAX_GLOBAL_OFFSET = 753;
+
 	// view management
 	int SET_PAGE_START = 801;
 	int HIGHLIGHT_AREA = 802;

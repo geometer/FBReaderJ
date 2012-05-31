@@ -342,6 +342,7 @@ void ZLTextModel::addImage(const std::string &id, short vOffset, bool isCover) {
 	ZLCachedMemoryAllocator::writeUInt16(myLastEntryStart + 6 + len, isCover ? 1 : 0);
 	myParagraphs.back()->addEntry(myLastEntryStart);
 	++myParagraphLengths.back();
+	myTextSizes.back() += 100;
 }
 
 void ZLTextModel::addBidiReset() {

@@ -306,6 +306,18 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 		return requestInt(GET_ELEMENTS_NUMBER, envelope(paragraphIndex));
 	}
 
+	public int getGlobalOffsetByPosition(TextPosition position) throws ApiException {
+	  	return requestInt(GET_GLOBAL_OFFSET_BY_POSITION, new ApiObject[] { position });
+	}
+
+	public TextPosition getPositionByGlobalOffset(int offset) throws ApiException {
+		return requestTextPosition(GET_POSITION_BY_GLOBAL_OFFSET, envelope(offset));
+	}
+
+	public int getMaxGlobalOffset() throws ApiException {
+		return requestInt(GET_MAX_GLOBAL_OFFSET, EMPTY_PARAMETERS);
+	}
+
 	public void setPageStart(TextPosition position) throws ApiException {
 		request(SET_PAGE_START, new ApiObject[] { position });
 	}
