@@ -148,29 +148,14 @@ public final class FBReaderApp extends ZLApplication {
 		setView(BookTextView);
 	}
 
-	public void openBook(Book book, final Bookmark bookmark, final Runnable postAction) {
-		if (book == null) {
-			if (Model == null) {
-				book = Library.Instance().getRecentBook();
-				if (book == null || !book.File.exists()) {
-					book = Book.getByFile(Library.getHelpFile());
+	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
+		if (book != null || Model == null) {
+			runWithMessage("loadingBook", new Runnable() {
+				public void run() {
+					openBookInternal(book, bookmark);
 				}
-			}
-			if (book == null) {
-				return;
-			}
+			}, postAction);
 		}
-		if (Model != null) {
-			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
-				return;
-			}
-		}
-		final Book bookToOpen = book;
-		runWithMessage("loadingBook", new Runnable() {
-			public void run() {
-				openBookInternal(bookToOpen, bookmark);
-			}
-		}, postAction);
 	}
  
 	public void reloadBook() {
@@ -240,6 +225,21 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	synchronized void openBookInternal(Book book, Bookmark bookmark) {
+		if (book == null) {
+			book = Library.Instance().getRecentBook();
+			if (book == null || !book.File.exists()) {
+				book = Book.getByFile(Library.getHelpFile());
+			}
+			if (book == null) {
+				return;
+			}
+		}
+		if (Model != null) {
+			if (bookmark == null & book.File.getPath().equals(Model.Book.File.getPath())) {
+				return;
+			}
+		}
+
 		if (book != null) {
 			onViewChanged();
 
