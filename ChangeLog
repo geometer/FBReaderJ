@@ -1,4 +1,5 @@
 ===== 1.5.6 (Jun ??, 2012) =====
+* Can add custom catalogs even if opensearch links are not fully correct
 * More API methods
 
 ===== 1.5.5 (Jun 03, 2012) =====
