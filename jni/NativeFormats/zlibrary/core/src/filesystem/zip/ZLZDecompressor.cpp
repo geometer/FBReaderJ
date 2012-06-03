@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-#include <string.h>
+#include <cstring>
 
 #include <algorithm>
 
@@ -55,20 +55,19 @@ size_t ZLZDecompressor::decompress(ZLInputStream &stream, char *buffer, size_t m
 		} else {
 			myAvailableSize = 0;
 		}
-		while (myZStream->avail_in == 0) {
+		if (myZStream->avail_in == 0) {
 			break;
 		}
 		while (myZStream->avail_in > 0) {
 			myZStream->avail_out = OUT_BUFFER_SIZE;
 			myZStream->next_out = (Bytef*)myOutBuffer;
 			int code = ::inflate(myZStream, Z_SYNC_FLUSH);
-			if ((code != Z_OK) && (code != Z_STREAM_END)) {
+			if (code != Z_OK && code != Z_STREAM_END) {
 				break;
 			}
-			if (OUT_BUFFER_SIZE == myZStream->avail_out) {
-				break;
+			if (OUT_BUFFER_SIZE != myZStream->avail_out) {
+				myBuffer.append(myOutBuffer, OUT_BUFFER_SIZE - myZStream->avail_out);
 			}
-			myBuffer.append(myOutBuffer, OUT_BUFFER_SIZE - myZStream->avail_out);
 			if (code == Z_STREAM_END) {
 				myAvailableSize = 0;
 				stream.seek(0 - myZStream->avail_in, false);
