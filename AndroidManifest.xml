@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="105041" android:versionName="1.5.4" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.geometerplus.zlibrary.ui.android" android:versionCode="105051" android:versionName="1.5.5" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="5" android:maxSdkVersion="10"/>
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
@@ -90,6 +90,7 @@
 				<data android:mimeType="application/x-mobipocket-ebook"/>
 				<data android:mimeType="application/x-fictionbook+xml"/>
 				<data android:mimeType="application/x-fictionbook"/>
+				<data android:mimeType="text/plain"/>
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH"/>
