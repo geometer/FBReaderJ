@@ -357,29 +357,18 @@ public class Book {
 		return myTags != null ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
 	}
 
-	public List<String> getTags() {
-		if (myTags == null) {
-			return Collections.<String>emptyList();
-		}
-		List<String> result = new ArrayList<String>();
-		for (Tag a : myTags) {
-			result.add(a.Name);
-		}
-		return result;
-	}
-
-	public void setTags(List<String> list) {
-		myTags = null;
-		for (String s : list) {
-			addTag(s);
-		}
-	}
-
 	void addTagWithNoCheck(Tag tag) {
 		if (myTags == null) {
 			myTags = new ArrayList<Tag>();
 		}
 		myTags.add(tag);
+	}
+
+	public void removeAllTags() {
+		if (myTags != null) {
+			myTags = null;
+			myIsSaved = false;
+		}
 	}
 
 	public void addTag(Tag tag) {

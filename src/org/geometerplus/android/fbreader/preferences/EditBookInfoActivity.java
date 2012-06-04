@@ -173,13 +173,26 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 	}
 
 	private class TagsHolder implements ZLActivityPreference.ListHolder {
+		private List<String> myValues;
 
-		public List<String> getValue() {
-			return myBook.getTags();
+		public synchronized List<String> getValue() {
+			if (myValues == null) {
+				myValues = new LinkedList<String>();
+				for (Tag t : myBook.tags()) {
+					myValues.add(t.toString("/"));
+				}
+			}
+			return myValues;
 		}
 
-		public void setValue(List<String> l) {
-			myBook.setTags(l);
+		public synchronized void setValue(List<String> tags) {
+			if (!tags.equals(myValues)) {
+				myValues = null;
+				myBook.removeAllTags();
+				for (String t : tags) {
+					myBook.addTag(Tag.getTag(t.split("/")));
+				}
+			}
 		}
 	}
 
