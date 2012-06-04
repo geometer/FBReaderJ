@@ -58,11 +58,7 @@ public final class Tag {
 	}
 
 	public String toString(String delimiter) {
-		if (Parent == null) {
-			return Name;
-		} else {
-			return Parent.toString(delimiter) + delimiter + Name;
-		}
+		return Parent == null ? Name : Parent.toString(delimiter) + delimiter + Name;
 	}
 
 	@Override
