@@ -233,7 +233,14 @@ public class Book {
 		myAuthors.add(author);
 	}
 
-	private void addAuthor(Author author) {
+	public void removeAllAuthors() {
+		if (myAuthors != null) {
+			myAuthors = null;
+			myIsSaved = false;
+		}
+	}
+
+	public void addAuthor(Author author) {
 		if (author == null) {
 			return;
 		}
