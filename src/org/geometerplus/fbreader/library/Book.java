@@ -233,7 +233,14 @@ public class Book {
 		myAuthors.add(author);
 	}
 
-	private void addAuthor(Author author) {
+	public void removeAllAuthors() {
+		if (myAuthors != null) {
+			myAuthors = null;
+			myIsSaved = false;
+		}
+	}
+
+	public void addAuthor(Author author) {
 		if (author == null) {
 			return;
 		}
@@ -354,25 +361,7 @@ public class Book {
 	}
 
 	public List<Tag> tags() {
-		return (myTags != null) ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
-	}
-
-	public List<String> getTags() {
-		if (myTags == null) {
-			return Collections.<String>emptyList();
-		}
-		List<String> result = new ArrayList<String>();
-		for (Tag a : myTags) {
-			result.add(a.Name);
-		}
-		return result;
-	}
-
-	public void setTags(List<String> list) {
-		myTags = null;
-		for (String s : list) {
-			addTag(s);
-		}
+		return myTags != null ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
 	}
 
 	void addTagWithNoCheck(Tag tag) {
@@ -380,6 +369,13 @@ public class Book {
 			myTags = new ArrayList<Tag>();
 		}
 		myTags.add(tag);
+	}
+
+	public void removeAllTags() {
+		if (myTags != null) {
+			myTags = null;
+			myIsSaved = false;
+		}
 	}
 
 	public void addTag(Tag tag) {
