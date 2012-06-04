@@ -147,9 +147,8 @@ public class OPDSCustomNetworkLink extends OPDSNetworkLink implements ICustomNet
 			try {
 				ZLNetworkManager.Instance().perform(requests);
 			} catch (ZLNetworkException e) {
-				if (error == null) {
-					error = e;
-				}
+				// we do ignore errors in opensearch description loading/parsing
+				e.printStackTrace();
 			}
 		}
 

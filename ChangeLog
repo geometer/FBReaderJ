@@ -1,6 +1,13 @@
-===== 1.5.4 (May 27, 2012) =====
-* Minor issues in zip/ePub files
+===== 1.5.6 (Jun ??, 2012) =====
+* Can add custom catalogs even if opensearch links are not fully correct
 * More API methods
+
+===== 1.5.5 (Jun 03, 2012) =====
+* Fixed zip decompression (issue introduced in 1.5.4)
+
+===== 1.5.4 (Jun 03, 2012) =====
+* Minor issues in zip/ePub files
+* fixed file opening from the library
 
 ===== 1.5.3 (May 25, 2012) =====
 * Fixed book downloading for hosts containing '_' in name (e.g. for epubbud.com catalogue)
