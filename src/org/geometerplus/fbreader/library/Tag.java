@@ -41,12 +41,24 @@ public final class Tag {
 		return tag;
 	}
 
+	public static Tag getTag(String[] names) {
+		return getTag(names, names.length);
+	}
+
+	private static Tag getTag(String[] names, int count) {
+		return count == 0 ? null : getTag(getTag(names, count - 1), names[count - 1]);
+	}
+
 	public final Tag Parent;
 	public final String Name;
 
 	private Tag(Tag parent, String name) {
 		Parent = parent;
 		Name = name;
+	}
+
+	public String toString(String delimiter) {
+		return Parent == null ? Name : Parent.toString(delimiter) + delimiter + Name;
 	}
 
 	@Override
