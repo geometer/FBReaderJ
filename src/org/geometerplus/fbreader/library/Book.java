@@ -336,7 +336,7 @@ public class Book {
 	}
 
 	public List<Tag> tags() {
-		return (myTags != null) ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
+		return myTags != null ? Collections.unmodifiableList(myTags) : Collections.<Tag>emptyList();
 	}
 
 	void addTagWithNoCheck(Tag tag) {
