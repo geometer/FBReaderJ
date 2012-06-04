@@ -346,6 +346,13 @@ public class Book {
 		myTags.add(tag);
 	}
 
+	public void removeAllTags() {
+		if (myTags != null) {
+			myTags = null;
+			myIsSaved = false;
+		}
+	}
+
 	public void addTag(Tag tag) {
 		if (tag != null) {
 			if (myTags == null) {
