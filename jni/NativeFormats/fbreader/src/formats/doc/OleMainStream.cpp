@@ -83,13 +83,21 @@ bool OleMainStream::open() {
 		return true;
 	}
 
-	return readPieceTable(headerBuffer, tableEntry) &&
-			readBookmarks(headerBuffer, tableEntry) &&
-			readStylesheet(headerBuffer, tableEntry) &&
-			//readSectionsInfoTable(headerBuffer, tableEntry) && //it doesn't uses now
-			readParagraphStyleTable(headerBuffer, tableEntry) &&
-			readCharInfoTable(headerBuffer, tableEntry);
+	result = readPieceTable(headerBuffer, tableEntry);
 
+	if (!result) {
+		ZLLogger::Instance().println("OleMainStream", "error during reading piece table");
+		return false;
+	}
+
+	//result of reading following structures doesn't check, because all these
+	//problems can be ignored, and document can be showed anyway, maybe with wrong formatting
+	readBookmarks(headerBuffer, tableEntry);
+	readStylesheet(headerBuffer, tableEntry);
+	//readSectionsInfoTable(headerBuffer, tableEntry); //it isn't used now
+	readParagraphStyleTable(headerBuffer, tableEntry);
+	readCharInfoTable(headerBuffer, tableEntry);
+	return true;
 }
 
 const OleMainStream::Pieces &OleMainStream::getPieces() const {
@@ -491,7 +499,7 @@ bool OleMainStream::readCharInfoTable(const char *headerBuffer, const OleEntry &
 	}
 
 	char *formatPageBuffer = new char[OleStorage::BBD_BLOCK_SIZE];
-	for (size_t index = 0; index < size; ++index) {
+	for (size_t index = 0; index < charBlocks.size(); ++index) {
 		seek(charBlocks.at(index) * OleStorage::BBD_BLOCK_SIZE, true);
 		if (read(formatPageBuffer, OleStorage::BBD_BLOCK_SIZE) != OleStorage::BBD_BLOCK_SIZE) {
 			return false;
@@ -540,15 +548,15 @@ bool OleMainStream::readParagraphStyleTable(const char *headerBuffer, const OleE
 	}
 
 	char *formatPageBuffer = new char[OleStorage::BBD_BLOCK_SIZE];
-	for (size_t index = 0; index < size; ++index) {
+	for (size_t index = 0; index < paragraphBlocks.size(); ++index) {
 		seek(paragraphBlocks.at(index) * OleStorage::BBD_BLOCK_SIZE, true);
 		if (read(formatPageBuffer, OleStorage::BBD_BLOCK_SIZE) != OleStorage::BBD_BLOCK_SIZE) {
 			return false;
 		}
-		unsigned int cpara = OleUtil::getU1Byte(formatPageBuffer, 0x1ff); //offset with cpara (count of paragraphs)
-		for (unsigned int index2 = 0; index2 < cpara; ++index2) {
+		unsigned int paragraphsCount = OleUtil::getU1Byte(formatPageBuffer, 0x1ff); //offset with 'cpara' value (count of paragraphs)
+		for (unsigned int index2 = 0; index2 < paragraphsCount; ++index2) {
 			unsigned int offset = OleUtil::getU4Bytes(formatPageBuffer, index2 * 4);
-			unsigned int papxOffset = OleUtil::getU1Byte(formatPageBuffer, (cpara + 1) * 4 + index2 * 13) * 2;
+			unsigned int papxOffset = OleUtil::getU1Byte(formatPageBuffer, (paragraphsCount + 1) * 4 + index2 * 13) * 2;
 			if (papxOffset <= 0) {
 				continue;
 			}
@@ -609,7 +617,7 @@ bool OleMainStream::readSectionsInfoTable(const char *headerBuffer, const OleEnt
 
 	//reading the section properties
 	char tmpBuffer[2];
-	for (size_t index = 0; index < decriptorsCount; ++index) {
+	for (size_t index = 0; index < sectPage.size(); ++index) {
 		if (sectPage.at(index) == 0xffffffffUL) { //check for invalid record, to make default section info
 			SectionInfo sectionInfo;
 			sectionInfo.charPos = charPos.at(index);
@@ -617,14 +625,18 @@ bool OleMainStream::readSectionsInfoTable(const char *headerBuffer, const OleEnt
 			continue;
 		}
 		//getting number of bytes to read
-		seek(sectPage.at(index), true);
+		if (!seek(sectPage.at(index), true)) {
+			continue;
+		}
 		if (read(tmpBuffer, 2) != 2) {
-			return false;
+			continue;
 		}
 		size_t bytes = 2 + (size_t)OleUtil::getU2Bytes(tmpBuffer, 0);
 
+		if (!seek(sectPage.at(index), true)) {
+			continue;
+		}
 		char *formatPageBuffer = new char[bytes];
-		seek(sectPage.at(index), true);
 		if (read(formatPageBuffer, bytes) != bytes) {
 			delete formatPageBuffer;
 			continue;

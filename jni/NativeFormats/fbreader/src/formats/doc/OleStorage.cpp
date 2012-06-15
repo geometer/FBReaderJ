@@ -110,6 +110,12 @@ bool OleStorage::readBBD(char *oleBuf) {
 	char buffer[mySectorSize];
 	unsigned int bbdNumberBlocks = OleUtil::getU4Bytes(oleBuf, 0x2c); //number of big blocks
 
+	if (myDIFAT.size() < bbdNumberBlocks) {
+		//TODO maybe add check on myDIFAT == bbdNumberBlocks
+		ZLLogger::Instance().println("OleStorage", "Wrong number of FAT blocks value");
+		return false;
+	}
+
 	for (unsigned int i = 0; i < bbdNumberBlocks; ++i) {
 		int bbdSector = myDIFAT.at(i);
 		if (bbdSector >= (int)(myStreamSize / mySectorSize) || bbdSector < 0) {
@@ -118,7 +124,7 @@ bool OleStorage::readBBD(char *oleBuf) {
 		}
 		myInputStream->seek(BBD_BLOCK_SIZE + bbdSector * mySectorSize, true);
 		if (myInputStream->read(buffer, mySectorSize) != mySectorSize) {
-			ZLLogger::Instance().println("OleStorage", "Can't read BBD!");
+			ZLLogger::Instance().println("OleStorage", "Error during reading BBD!");
 			return false;
 		}
 		for (unsigned int j = 0; j < mySectorSize; j += 4) {
@@ -140,13 +146,20 @@ bool OleStorage::readSBD(char *oleBuf) {
 	char buffer[mySectorSize];
 	for (int i = 0; i < sbdCount; ++i) {
 		if (i != 0) {
+			if (sbdCur < 0 || (unsigned int)sbdCur >= myBBD.size()) {
+				ZLLogger::Instance().println("OleStorage", "error during parsing SBD");
+				return false;
+			}
 			sbdCur = myBBD.at(sbdCur);
 		}
 		if (sbdCur <= 0) {
 			break;
 		}
 		myInputStream->seek(BBD_BLOCK_SIZE + sbdCur * mySectorSize, true);
-		myInputStream->read(buffer, mySectorSize);
+		if (myInputStream->read(buffer, mySectorSize) != mySectorSize) {
+			ZLLogger::Instance().println("OleStorage", "reading error during parsing SBD");
+			return false;
+		}
 		for (unsigned int j = 0; j < mySectorSize; j += 4) {
 			mySBD.push_back(OleUtil::get4Bytes(buffer, j));
 		}
@@ -165,7 +178,10 @@ bool OleStorage::readProperties(char *oleBuf) {
 	char buffer[mySectorSize];
 	do {
 		myInputStream->seek(BBD_BLOCK_SIZE + propCur * mySectorSize, true);
-		myInputStream->read(buffer, mySectorSize);
+		if (myInputStream->read(buffer, mySectorSize) != mySectorSize) {
+			ZLLogger::Instance().println("OleStorage", "Error during reading properties");
+			return false;
+		}
 		for (unsigned int j = 0; j < mySectorSize; j += 128) {
 			myProperties.push_back(std::string(buffer + j, 128));
 		}
@@ -212,6 +228,10 @@ bool OleStorage::readOleEntry(int propNumber, OleEntry &e) {
 	int nameLength = OleUtil::getU2Bytes(property.c_str(), 0x40); //offset for value entry's name length
 	e.name.clear();
 	e.name.reserve(33); //max size of entry name
+
+	if ((unsigned int)nameLength >= property.size()) {
+		return false;
+	}
 	for (int i = 0; i < nameLength; i+=2) {
 		char c = property.at(i);
 		if (c != 0) {

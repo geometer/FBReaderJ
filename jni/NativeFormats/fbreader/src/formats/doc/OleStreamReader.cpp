@@ -198,14 +198,19 @@ bool OleStreamReader::fillBuffer(OleMainStream &stream) {
 		return false;
 	}
 
+	if (!stream.seek(piece.offset, true)) {
+		//TODO maybe in that case we should take next piece?
+		return false;
+	}
 	char *textBuffer = new char[piece.length];
-
-	stream.seek(piece.offset, true);
-	stream.read(textBuffer, piece.length);
+	size_t readedBytes = stream.read(textBuffer, piece.length);
+	if (readedBytes != (unsigned int)piece.length) {
+		ZLLogger::Instance().println("OleStreamReader", "not all bytes has been readed from piece");
+	}
 
 	myBuffer.clear();
 	if (!piece.isANSI) {
-		for (int i = 0; i < piece.length; i += 2) {
+		for (unsigned int i = 0; i < readedBytes; i += 2) {
 			ZLUnicodeUtil::Ucs2Char ch = OleUtil::getU2Bytes(textBuffer, i);
 			myBuffer.push_back(ch);
 		}
@@ -219,7 +224,7 @@ bool OleStreamReader::fillBuffer(OleMainStream &stream) {
 			}
 		}
 		std::string utf8String;
-		myConverter->convert(utf8String, std::string(textBuffer, piece.length));
+		myConverter->convert(utf8String, std::string(textBuffer, readedBytes));
 		ZLUnicodeUtil::utf8ToUcs2(myBuffer, utf8String);
 	}
 	myCurBufferPosition = 0;
