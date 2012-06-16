@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Turkish FBReaderJ resources, by jericho 1200 -->
+<resources>
+	<node name="library" value="FBReader Kitaplığı">
+		<node name="unknownAuthor" value="Yazar Bilinmiyor"/>
+		<node name="booksWithNoTags" value="Etiketsiz Kitaplar"/>
+		<node name="demo" value="örnek"/>
+		<node name="byAuthor" value="Yazarlar">
+			<node name="summary" value="Kitapları yazarlarına göre sırala"/>
+		</node>
+		<node name="byTitle" value="İsim">
+			<node name="summary" value="Kitapları isimlerine göre sırala"/>
+		</node>
+		<node name="bySeries" value="Seriler">
+			<node name="summary" value="Kitapları Serilerine göre sırala"/>
+		</node>
+		<node name="byTag" value="Etiket">
+			<node name="summary" value="Kitapları etiketlerine göre sırala"/>
+		</node>
+		<node name="recent" value="Recent">
+			<node name="summary" value="Şu an okunan"/>
+		</node>
+		<node name="favorites" value="Favoriler">
+			<node name="summary" value="Seçtiğim kitaplar"/>
+		</node>
+		<node name="found" value="Bulunan">
+			<node name="summary" value="%s için arama sonuçları"/>
+		</node>
+		<node name="fileTree" value="Dosya ağacı">
+			<node name="summary" value="Dosya sistemini tara"/>
+		</node>
+		<node name="fileTreeRoot" value="Cihaz">
+			<node name="summary" value="Cihazın tüm dosya sistemi"/>
+		</node>
+		<node name="fileTreeCard" value="Hafıza kartı">
+			<node name="summary" value="Hafıza kartı takılı"/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader Kitaplığı">
+			<node name="summary" value="FBReader kitap dizini"/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="Ara"/>
+		</node>
+		<node name="openBook" value="Oku"/>
+		<node name="showBookInfo" value="Kitabın künyesi"/>
+		<node name="shareBook" value="Kitabı paylaş"/>
+		<node name="deleteBook" value="Kitabı sil"/>
+		<node name="addToFavorites" value="Favorilere ekle"/>
+		<node name="removeFromFavorites" value="Favorilerden çıkar"/>
+	</node>
+	<node name="networkLibrary" value="FBReader ağ kitaplığı">
+		<node name="byAuthor" value="Yazarlar">
+			<node name="summary" value="Kitaplar yazarlarına göre sıralansın"/>
+		</node>
+		<node name="byTitle" value="İsim">
+			<node name="summary" value="Kitaplar isimlerine göre sıralansın"/>
+		</node>
+		<node name="byDate" value="Tarih">
+			<node name="summary" value="Kitaplar satın alındıkları tarihlere göre sıralansın"/>
+		</node>
+		<node name="bySeries" value="Seri">
+			<node name="summary" value="Kitaplar serilerine göre sıralansın"/>
+		</node>
+		<node name="search" value="Ara">
+			<node name="summary" value="Kitapları %s\'de ara"/>
+			<node name="summaryAllCatalogs" value="Kitapları tüm kataloglarda ara"/>
+			<node name="summaryInProgress" value="Arama sürüyor"/>
+		</node>
+		<node name="found" value="Bulunan">
+			<node name="summary" value="%s için arama sonuçları"/>
+		</node>
+		<node name="openCatalog" value="Katalog aç"/>
+		<node name="networkSearch" value="Ara"/>
+		<node name="showResults" value="Sonuçları göster"/>
+		<node name="showBooks" value="Kitapları göster"/>
+		<node name="download" value="İndir"/>
+		<node name="read" value="Cihazındaki kitabı oku"/>
+		<node name="delete" value="Cihazındaki kitabı sil"/>
+		<node name="readDemo" value="Örnek oku"/>
+		<node name="deleteDemo" value="Örneği sil"/>
+		<node name="downloadDemo" value="Örnek indir"/>
+		<node name="buy" value="(%s) satın al"/>
+		<node name="addToBasket" value="Sepete at"/>
+		<node name="removeFromBasket" value="Sepetten çıkar"/>
+		<node name="openBasket" value="Sepete git"/>
+		<node name="clearBasket" value="Sepeti temizle"/>
+		<node name="buyAllBooks" value="Hepsini satın al"/>
+		<node name="openInBrowser" value="Tarayıcıda aç"/>
+		<node name="stopLoading" value="Yüklemeyi durdur"/>
+		<node name="stopSearching" value="Aramayı durdur"/>
+		<node name="signIn" value="Giriş"/>
+		<node name="signOut" value="(%s) çıkış"/>
+		<node name="topup" value="Kredi hesabı (Bakiye: %s)"/>
+		<node name="topupTitle" value="Kredi hesabı"/>
+		<node name="topupViaBrowser" value="Sayfayı tarayıcıda aç"/>
+		<node name="authorizationMenuTitle" value="Eylem seç"/>
+		<node name="topupSummary" value="Şu anda: %s"/>
+		<node name="basket" value="Sepet"/>
+		<node name="basketSummaryEmpty" value="Kitap yok"/>
+		<node name="basketSummaryCountOnly" value="%0 kitap">
+			<node condition="value 1" value="%0 kitap"/>
+		</node>
+		<node name="basketSummary" value="%0 kitap (%1)">
+			<node condition="value 1" value="%0 kitap (%1)"/>
+		</node>
+		<node name="alreadyDownloading" value="Kitap indiriliyor"/>
+		<node name="alreadyDownloadingDemo" value="Örnek indiriliyor"/>
+		<node name="stoppingCatalogLoading" value="Yükleme durduruluyor"/>
+		<node name="stoppingNetworkSearch" value="Arama durduruluyor"/>
+		<node name="editCustomCatalog" value="Katalogu düzenle"/>
+		<node name="removeCustomCatalog" value="Katalogu sil"/>
+		<node name="addCustomCatalog" value="Katalog ekle"/>
+		<node name="addCustomCatalogSummary" value="Özelleştirilmiş OPDS katalogunu elle ekle"/>
+		<node name="confirmQuestions">
+			<node name="read" value="Cihazınızdan bir kitap okumak ister misiniz?"/>
+			<node name="download" value="Bu kitabı indirmek ister misiniz?"/>
+			<node name="readDemo" value="Örnek okumak ister misiniz?"/>
+			<node name="downloadDemo" value="Örnek indirmek ister misiniz?"/>
+			<node name="buy" value="Bu kitabı satın almak istiyor musunuz? (%s)"/>
+			<node name="openInBrowser" value="Bu katalogu tarayıcınoızda açmak ister misiniz?"/>
+		</node>
+		<node name="downloadingCatalogs" value="Katalog indiriliyor"/> <!-- used as notification title -->
+		<node name="searchingNetwork" value="ağdaki kitaplar taranıyor"/> <!-- used as notification title -->
+		<node name="addCatalog">
+			<node name="title" value="Katalog ekle"/>
+			<node name="editUrl" value="URL yaz"/>
+		</node>
+		<node name="menu">
+			<node name="networkSearch" value="Ara"/>
+			<node name="reload" value="Yenile"/>
+			<node name="signIn" value="Giriş"/>
+			<node name="signUp" value="Kayıt"/>
+			<node name="signOut" value="Çıkış (%s)"/>
+			<node name="topup" value="Top up account"/>
+			<node name="addCustomCatalog" value="Katalog ekle"/>
+			<node name="refreshCatalogsList" value="Katalogları yenile"/>
+			<node name="languages" value="Dil süzgeci"/>
+			<node name="clearBasket" value="Sepeti temizle"/>
+			<node name="buyAllBooks" value="Tüm kitapları satın al"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Kitabı satın al"/>
+		<node name="titleSeveralBooks" value="Kitapları satın al"/>
+		<node name="confirm" value="Bu kitabı satın almak istediğinizden emin misiniz: &#10;&#8220;%s&#8221;?"/>
+		<node name="confirmSeveralBooks" value="Bu kitapları satın almak istediğinizden emin misiniz: %s "/>
+		<node name="alreadyBought" value="Bu kitabı zaten satın almıştınız"/>
+		<node name="notAuthorized" value="Yetkilendirme gerekli"/>
+		<node name="noAccountInformation" value="Hesap durumu yüklenemiyor"/>
+		<node name="unsufficientFunds" value="Kitabın fiyatı %0 ve sizde sadece %1 var"/>
+		<node name="zeroFunds" value="Bu alımın maliyeti %0"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Kitap Künyesi"/>
+		<node name="fileInfo" value="Dosya Bilgileri"/>
+		<node name="description" value="Açıklama"/>
+		<node name="noDescription" value="Açıklama yok."/>
+		<node name="annotation" value="Annotation"/>
+		<node name="title" value="İsim:"/>
+		<node name="authors" value="Yazarlar:">
+			<node condition="value 1" value="Yazar:"/>
+		</node>
+		<node name="series" value="Diziler:"/>
+		<node name="indexInSeries" value="Seri Dizini:"/>
+		<node name="tags" value="Etiketler:">
+			<node condition="value 1" value="Etiket:"/>
+		</node>
+		<node name="language" value="Dil:"/>
+		<node name="name" value="İsim:"/>
+		<node name="type" value="Tür:"/>
+		<node name="size" value="Boyut:"/>
+		<node name="time" value="Son değiştirilme:"/>
+		<node name="sizeInBytes" value="%s bytes">
+			<node condition="value 1" value="%s byte"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="Katalog:"/>
+		<node name="extraLinks" value="İlgili Bağlantılar"/>
+		<node name="menu">
+			<node name="edit" value="Düzenle"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Kitap indirildi"/>
+		<node name="tickerError" value="İndirme hatası"/>
+		<node name="contentSuccess" value="İndirme tamamlandı"/>
+		<node name="contentError" value="İndirme başarısız"/>
+		<node name="downloadingStarted" value="İndirme işlemi başlatıldı"/>
+		<node name="alreadyDownloading" value="Bu kitap zaten indiriliyor"/>
+		<node name="cannotCreateDirectory" value="%s dizini oluşturulamadı"/>
+		<node name="cannotCreateFile" value="%s dosyası oluşturulamadı"/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Ağacı genişlet"/>
+		<node name="collapseTree" value="Ağacı Daralt"/>
+		<node name="readText" value="Kitabı okuyun"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Bu kitap"/>
+		<node name="allBooks" value="Tüm kitaplar"/>
+		<node name="found" value="Bulunan"/>
+		<node name="new" value="Yeni yer imi"/>
+		<node name="open" value="Aç"/>
+		<node name="edit" value="Yer imini düzenle"/>
+		<node name="delete" value="Yer imini sil"/>
+		<node name="menu">
+			<node name="search" value="Ara"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="Kitaplığı aç"/>
+		<node name="networkLibrary" value="Ağ kitaplığını aç"/>
+		<node name="previousBook" value="Önceki kitabı aç"/>
+		<node name="returnTo" value="Dön &#8230;"/>
+		<node name="back" value="Geri"/>
+		<node name="forward" value="İleri"/>
+		<node name="close" value="FBReader\'i kapat"/>
+	</node>
+	<node name="selection" value="Seçenekler">
+		<node name="copyToClipboard" value="Panoya kopyala"/>
+		<node name="openInDictionary" value="Sözlükte bul"/>
+		<node name="quoteFrom" value="%s den alıntı yap"/>
+		<node name="textInBuffer" value="Panoya kopyalanan:&#10;%s"/>
+		<node name="bookmarkCreated" value="Yer imi oluşturuldu:&#10;%s"/>
+		<node name="clearSelection" value="Sil"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="Ayarlar"/>
+		<node name="bookInfo" value="Kitabın künyesi"/>
+		<node name="library" value="Kitaplık"/>
+		<node name="toc" value="İçindekiler"/>
+		<node name="day" value="Gündüz"/>
+		<node name="night" value="Gece"/>
+		<node name="networkLibrary" value="Ağ kitaplığı"/>
+		<node name="navigate" value="Git">
+			<node name="toc" value="İçindekiler Tablosu"/>
+			<node name="gotoHome" value="Kitabın başlangıcına git"/>
+			<node name="gotoPageNumber" value="Sayfa&#8230;"/>
+			<node name="gotoSectionStart" value="Metnin başladığı kısma git"/>
+			<node name="gotoSectionEnd" value="Metnin sonuna git"/>
+			<node name="nextTOCSection" value="Sonraki bölüme geç"/>
+			<node name="previousTOCSection" value="Önceki bölüme geç"/>
+			<node name="undo" value="Geri al"/>
+			<node name="redo" value="İleri al"/>
+		</node>
+		<node name="shareBook" value="Kitabı paylaş"/>
+		<node name="search" value="Ara"/>
+		<node name="rotate" value="Ekranı döndür"/>
+		<node name="screenOrientation" value="Ekran Yönü"/>
+		<node name="screenOrientationSystem" value="Sistem"/>
+		<node name="screenOrientationSensor" value="Cihaz sensör hassasiyeti"/>
+		<node name="screenOrientationPortrait" value="Dikey"/>
+		<node name="screenOrientationLandscape" value="Yatay"/>
+		<node name="screenOrientationReversePortrait" value="Ters dikey"/>
+		<node name="screenOrientationReverseLandscape" value="Ters yatay"/>
+		<node name="increaseFont" value="Büyüt"/>
+		<node name="decreaseFont" value="Küçült"/>
+		<node name="toggleFullscreen" value="Tam ekran"/>
+		<node name="bookmarks" value="Yer imleri"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Dosya adı"/>
+		<node name="title" value="İsim"/>
+		<node name="language" value="Dil"/>
+		<node name="encoding" value="Kodlama"/>
+		<node name="authors" value="Author(s)" toBeTranslated="true"/>
+		<node name="tags" value="Tag(s)" toBeTranslated="true"/>
+		<node name="series" value="Series" toBeTranslated="true"/>
+	</node>
+  <node name="Preferences">
+    <node name="directories" value="Dizinler">
+      <node name="summary" value="Taranacak dizinler"/>
+      <node name="books" value="Kitap dizini"/>
+      <node name="fonts" value="Font dizini"/>
+      <node name="wallpapers" value="Duvarkağıdı dizini"/>
+    </node>
+    <node name="appearance" value="Görünüm">
+      <node name="summary" value="Ekran ayarları, durum çubuğu, düğme ışıkları"/>
+      <node name="screenOrientation" value="Ekran döndürme">
+        <node name="system" value="Sistem"/>
+        <node name="sensor" value="Cihaz dönüş hassasiyeti"/>
+        <node name="portrait" value="Dikey"/>
+        <node name="landscape" value="Yatay"/>
+        <node name="reversePortrait" value="Ters dikey"/>
+        <node name="reverseLandscape" value="Ters yatay"/>
+      </node>
+      <node name="autoOrientation" value="Otomatik döndürme">
+        <node name="summaryOn" value="Cihazınızı çevirdiğinizde ekran da o yönde otomatik döner"/>
+        <node name="summaryOff" value="Cihazınızı çevirseniz de ekran yönü sabit kalır"/>
+      </node>
+      <node name="showStatusBar" value="Durum çubuğunu göster">
+        <node name="summaryOn" value="Okuma modunda durum çubuğunu göster"/>
+        <node name="summaryOff" value="Okuma modunda durum çubuğunu gizle"/>
+      </node>
+      <node name="showActionBar" value="Eylem çubuğunu göster">
+        <node name="summaryOn" value="Okuma modunda Eylem çubuğunu göster"/>
+        <node name="summaryOff" value="Okuma modunda Eylem çubuğunu gizle"/>
+      </node>
+      <node name="showStatusBarWhenMenuIsActive" value="Menü açıkken durum çubuğunu göster">
+        <node name="summaryOn" value="Durum çubuğunu menü etkinleştirildiği zaman göster"/>
+        <node name="summaryOff" value="Menü etkinleştirildiğinde durum çubuğunu gösterme"/>
+      </node>
+      <node name="disableButtonLights" value="Okuma sırasında düğmeler devredışı kalsın">
+        <node name="summaryOn" value="Düğme ışıklarını kapat (bazı cihazlarda çalışmamaktadır)"/>
+        <node name="summaryOff" value="Düğme ışıklarına müdahale etme"/>
+      </node>
+      <node name="allowScreenBrightnessAdjustment" value="Ekran parlaklığı ayarı">
+        <node name="summaryOn" value="Parmağınızı ekranın sol yanında yukarı aşağı sürükleyerek parlaklığı ayarlayın"/>
+        <node name="summaryOff" value="Devre dışı"/>
+      </node>
+      <node name="dontTurnScreenOff" value="Ekran uyku moduna geçmesin">
+        <node name="0" value="Herzaman"/>
+        <node name="25" value="Kalan şarj yüzde 25\'in üstündeyken"/>
+        <node name="50" value="Kalan şarj yüzde 50\'nin üstündeyken"/>
+        <node name="100" value="Asla"/>
+      </node>
+      <node name="dontTurnScreenOffDuringCharging" value="Şarj sırasında ekranın uyku moduna geçmesin">
+        <node name="summaryOn" value="Cihaz şarj modundayken ekran uykuya geçmesin"/>
+        <node name="summaryOff" value="Cihaz şarj olurken bile ekran kapanabilsin"/>
+      </node>
+    </node>
+    <node name="text" value="Text">
+      <node name="summary" value="Font, heceleme, vs."/>
+      <node name="fontProperties" value="Font seçenekleri">
+        <node name="summary" value="Font yumuşatma seçenekleri"/>
+        <node name="antiAlias" value="Font çıkıntılarını düzelt">
+          <node name="summaryOn" value="Dolgulayıcı etkinleşti"/>
+          <node name="summaryOff" value="Dolgulayıcı devre dışı"/>
+        </node>
+        <node name="deviceKerning" value="Cihaz karakter aralığı">
+          <node name="summaryOn" value="Cihaz karakter aralığı etkin"/>
+          <node name="summaryOff" value="Cihaz karakter aralığı devre dışı"/>
+        </node>
+        <node name="dithering" value="Renkleri birleştir">
+          <node name="summaryOn" value="Renk birleştirme etkin"/>
+          <node name="summaryOff" value="Renk birleştirme devre dışı"/>
+        </node>
+        <node name="hinting" value="Hinting">
+          <node name="summaryOn" value="Font hinting is enabled"/>
+          <node name="summaryOff" value="Font hinting is disabled"/>
+        </node>
+        <node name="subpixel" value="Karelenmeyi gider">
+          <node name="summaryOn" value="Karelenme düzeltici etkin"/>
+          <node name="summaryOff" value="Karelenme düzeltici devre dışı"/>
+        </node>
+      </node>
+      <node name="font" value="Font ailesi">
+        <node name="unchanged" value="&lt;eski hali&gt;"/>
+      </node>
+      <node name="fontSize" value="Font büyüklüğü"/>
+      <node name="fontSizeDifference" value="Font büyüklüğü farkı"/>
+      <node name="fontStyle" value="Font stili">
+        <node name="regular" value="Normal"/>
+        <node name="bold" value="Kalın"/>
+        <node name="italic" value="Eğik"/>
+        <node name="boldItalic" value="Kalın ve eğik"/>
+      </node>
+      <node name="bold" value="Kalın">
+        <node name="summaryOn" value="kalın"/>
+        <node name="summaryOff" value="normal"/>
+        <node name="unchanged" value="&lt;eski hali&gt;"/>
+      </node>
+      <node name="italic" value="Eğik">
+        <node name="summaryOn" value="eğik"/>
+        <node name="summaryOff" value="normal"/>
+        <node name="unchanged" value="&lt;eski hali&gt;"/>
+      </node>
+      <node name="underlined" value="Altı çizili">
+        <node name="summaryOn" value="altı çizili"/>
+        <node name="summaryOff" value="normal"/>
+        <node name="unchanged" value="&lt;eski hali&gt;"/>
+      </node>
+      <node name="strikedThrough" value="Üzeri çizilmiş">
+        <node name="summaryOn" value="üzeri çizilmiş"/>
+        <node name="summaryOff" value="normal"/>
+        <node name="unchanged" value="&lt;eski hali&gt;"/>
+      </node>
+      <node name="lineSpacing" value="Satır Aralığı">
+        <node name="unchanged" value="&lt;eski hali&gt;"/>
+      </node>
+      <node name="alignment" value="Hizalama">
+        <node name="left" value="Sola dayalı"/>
+        <node name="right" value="Sağa dayalı"/>
+        <node name="center" value="Ortalanmış"/>
+        <node name="justify" value="İki yana dayalı"/>
+        <node name="unchanged" value="&lt;eski hali&gt;"/>
+      </node>
+      <node name="autoHyphenations" value="Otomatik heceleme">
+        <node name="summaryOn" value="Satır sonlarındaki kelimeleri otomatik hecele"/>
+        <node name="summaryOff" value="Kelimeleri otomatik heceleme"/>
+      </node>
+      <node name="allowHyphenations" value="Hecelemeye izin ver">
+        <node name="summaryOn" value="Kelimeleri hecele"/>
+        <node name="summaryOff" value="kelimeleri heceleme"/>
+        <node name="unchanged" value="&lt;eski hali&gt;"/>
+      </node>
+      <node name="firstLineIndent" value="İlk Satır Girintisi"/>
+      <node name="spaceBefore" value="Boşluk önce"/>
+      <node name="spaceAfter" value="Boşluk sonra"/>
+      <node name="leftIndent" value="Sol girinti"/>
+      <node name="rightIndent" value="Sağ girinti"/>
+      <node name="more" value="Daha Fazla Ayar">
+        <node name="summary" value="Başlıkları, vecizeleri vs. ayırma ayarları"/>
+        <node name="Regular Paragraph" value="Normal Paragraf">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Title" value="İsim">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Section Title" value="Bölüm başlığı">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Poem Title" value="Şiir İsmi">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Subtitle" value="Altyazı">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Annotation" value="Not">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Epigraph" value="Vecize">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Stanza" value="Dörtlük">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Verse" value="Dize">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Preformatted text" value="Önceden biçimlendirilmiş metin">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Image" value="Resim">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Cite" value="Yorum">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Author" value="Yazar">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Date" value="Tarih">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Internal Hyperlink" value="Dahili linkler">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Footnote" value="Dipnot">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Emphasis" value="Vurgu">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Strong" value="Koyu">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Subscript" value="Altsimge">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Superscript" value="Üstsimge">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Code" value="Kod">
+          <node name="summary" value=""/>
+        </node>
+        <node name="StrikeThrough" value="Üstü çizilmiş">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Italic" value="Eğik">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Bold" value="Kalın">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Definition" value="Tanımlama">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Definition Description" value="Tanımlama Tarif">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 1" value="Başlık 1">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 2" value="Başlık 2">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 3" value="Başlık 3">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 4" value="Başlık 4">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 5" value="Başlık 5">
+          <node name="summary" value=""/>
+        </node>
+        <node name="Header 6" value="Başlık 6">
+          <node name="summary" value=""/>
+        </node>
+        <node name="External Hyperlink" value="Dış Bağlantı">
+          <node name="summary" value=""/>
+        </node>
+      </node>
+    </node>
+    <node name="colors" value="Renkler &amp; duvarkağıtları">
+      <node name="summary" value="Renk ayarları"/>
+      <node name="background" value="Arkaplan">
+        <node name="solidColor" value="Düz renk"/>
+        <node name="leather" value="Deri"/>
+        <node name="sepia" value="Sepia"/>
+        <node name="wood" value="Ahşap"/>
+      </node>
+      <node name="backgroundColor" value="Arkaplan rengi"/>
+      <node name="selectionBackground" value="Arkaplan seçimi"/>
+      <node name="selectionForeground" value="Seçilen metin"/>
+      <node name="text" value="Normal metin"/>
+      <node name="hyperlink" value="Link"/>
+      <node name="hyperlinkVisited" value="Ziyaret edilmiş link"/>
+      <node name="highlighting" value="Arama sonuçları arkaplanı"/>
+      <node name="footer" value="Altbilgi"/>
+    </node>
+    <node name="margins" value="Aralıklar">
+      <node name="summary" value="Yazı aralığı"/>
+      <node name="left" value="Sol kenar"/>
+      <node name="right" value="Sağ kenar"/>
+      <node name="top" value="Üst kenar"/>
+      <node name="bottom" value="Alt kenar"/>
+    </node>
+    <node name="scrollBar" value="İlerleme göstergesi">
+      <node name="summary" value="Kaydırma Çubuğu  &amp; altbilgi ayarları"/>
+      <node name="scrollbarType" value="Kaydırma Çubuğu Tipi">
+        <node name="hide" value="Gizli"/>
+        <node name="show" value="Dikey Çubuk"/>
+        <node name="showAsProgress" value="İlerleme Göstergesi Dikey"/>
+        <node name="showAsFooter" value="Altbilgi"/>
+      </node>
+      <node name="footerHeight" value="Altbilgi yüksekliği"/>
+      <node name="footerColor" value="Altbilgi rengi"/>
+      <node name="tocMarks" value="İçerik işaretlerini göster">
+        <node name="summaryOn" value="İçerik işaretlerini altbilgi kısmında göster"/>
+        <node name="summaryOff" value="İçerik işaretlerini altbilgi kısmında gösterme"/>
+      </node>
+      <node name="showProgress" value="Sayfa numarası göster">
+        <node name="summaryOn" value="Altbilgide sayfa numarası göster"/>
+        <node name="summaryOff" value="Altbilgide sayfa numarası gösterme"/>
+      </node>
+      <node name="showBattery" value="Pil durumunu göster">
+        <node name="summaryOn" value="Altbilgide pil durumunu göster"/>
+        <node name="summaryOff" value="Altbilgide pil durumunu gösterme"/>
+      </node>
+      <node name="showClock" value="Saati Göster">
+        <node name="summaryOn" value="Altbilgide saati Göster"/>
+        <node name="summaryOff" value="Altbilgide saati Gösterme"/>
+      </node>
+      <node name="font" value="Font ailesi"/>
+    </node>
+    <node name="scrolling" value="Sayfa çevirme">
+      <node name="summary" value="Sayfalar nasıl çevirilsin"/>
+      <node name="fingerScrolling" value="Dokunmatik ekrandan sayfa çevirme">
+        <node name="byTap" value="Ekrana dokununca sayfa çevrilsin"/>
+        <node name="byFlick" value="Fiskeyle çevir"/>
+        <node name="byTapAndFlick" value="Dokunarak veya fiskeyle"/>
+      </node>
+      <node name="enableDoubleTapDetection" value="Çift dokunuş algılama">
+        <node name="summaryOn" value="Double tap to run navigation dialog/menu"/>
+        <node name="summaryOff" value="Çift dokunmayı yoksay"/>
+      </node>
+      <node name="volumeKeys" value="Ses düğmeleriyle sayfa çevir">
+        <node name="summaryOn" value="Sayfa çevirmek için ses tuşlarını kullan"/>
+        <node name="summaryOff" value="Ses tuşları sayfa değiştirmesin"/>
+      </node>
+      <node name="invertVolumeKeys" value="Ses düğmelerinin yönünü ters çevir">
+        <node name="summaryOn" value="Yükseltme (kısma) düğmesi önceki (sonraki) sayfayı açsın"/>
+        <node name="summaryOff" value="Kısma (yükseltme) düğmesi sonraki (önceki) sayfayı açsın"/>
+      </node>
+      <node name="animation" value="Animasyon">
+        <node name="none" value="Sayfaları animasyonsuz çevir"/>
+        <node name="curl" value="Kıvrılarak çevrilsin"/>
+        <node name="slide" value="Kayarak çevrilsin"/>
+        <node name="shift" value="Yer değiştirerek çevrilsin"/>
+      </node>
+      <node name="animationSpeed" value="Animasyon hızı">
+        <node name="fast" value="hızlı"/>
+        <node name="slow" value="yavaş"/>
+      </node>
+      <node name="horizontal" value="Yatay kaydırma">
+        <node name="summaryOn" value="Sayfaları yatay kaydır"/>
+        <node name="summaryOff" value="Sayfaları dikey kaydır"/>
+      </node>
+    </node>
+    <node name="tapZones" value="Dokunma bölgeleri">
+      <node name="summary" value="Dokunuş eylemleri"/>
+      <node name="tapZonesScheme" value="Dokunma bölgeleri şeması">
+        <node name="left_to_right" value="Soldan sağa sayfa kaydır"/>
+        <node name="right_to_left" value="Sağdan sola sayfa kaydır"/>
+        <node name="up" value="Aşağıdan yukarıya sayfa kaydır"/>
+        <node name="down" value="Yukarıdan aşağıya sayfa kaydır"/>
+        <node name="custom" value="Özel&#8230;"/>
+      </node>
+    </node>
+    <node name="dictionary" value="Sözlük">
+      <node name="summary" value="Sözlük ayarları"/>
+      <node name="dictionary" value="Sözlük"/>
+      <node name="translator" value="Çevirmen"/>
+      <node name="tappingAction" value="Uzun dokunma eylemi">
+        <node name="doNothing" value="Uzun dokunma eylemsiz"/>
+        <node name="selectSingleWord" value="Uzun dokunma bir kelime seçsin"/>
+        <node name="startSelecting" value="Uzun dokunma metin seçimine geçirsin"/>
+        <node name="openDictionary" value="Uzun dokunma tek kelime seçsin, bırakınca sözlük açılsın"/>
+      </node>
+      <node name="navigateOverAllWords" value="Tüm kelimeler üzerinde gezinme">
+        <node name="summaryOn" value="Key navigation visits all words"/>
+        <node name="summaryOff" value="Key navigation visits hyperlinks only"/>
+      </node>
+    </node>
+    <node name="images" value="Resimler">
+      <node name="summary" value="Resim gösterimi seçenekleri"/>
+      <node name="backgroundColor" value="Resim görünümü için arka plan rengi"/>
+      <node name="tappingAction" value="Uzun dokunma eylemi">
+        <node name="doNothing" value="Uzun dokunma eylemsiz"/>
+        <node name="selectImage" value="Uzun dokunma resmi seçsin"/>
+        <node name="openImageView" value="Uzun dokunma resmi açsın"/>
+      </node>
+    </node>
+    <node name="cancelMenu" value="İptal menüsü">
+      <node name="summary" value="Geri düğmesi eylem listesi"/>
+      <node name="library" value="Kitaplık">
+        <node name="summaryOn" value="'Kitaplık aç' seçeneğini göster"/>
+        <node name="summaryOff" value="'Kitaplık aç' seçeneğini gösterme"/>
+      </node>
+      <node name="networkLibrary" value="Ağ Kitaplığı">
+        <node name="summaryOn" value="'Ağ Kitaplığı aç' seçeneğini göster"/>
+        <node name="summaryOff" value="'Ağ Kitaplığı aç' seçeneğini gösterme"/>
+      </node>
+      <node name="previousBook" value="Önceki Kitap">
+        <node name="summaryOn" value="'Önceki Kitaba dön' seçeneğini göster"/>
+        <node name="summaryOff" value="'Önceki Kitaba dön' seçeneğini gösterme"/>
+      </node>
+      <node name="positions" value="Son 3 konum">
+        <node name="summaryOn" value="Kitapta kalınan yerlerden son üçü seçeneğini göster"/>
+        <node name="summaryOff" value="Kitapta kalınan yerlerden son üçü seçeneğini gösterme"/>
+      </node>
+      <node name="backKeyAction" value="Geri tuşu eylemi">
+        <node name="exit" value="FBReader Kapansın"/>
+        <node name="goBack" value="Geri dön"/>
+        <node name="cancelMenu" value="Çıkış menüsünü göster"/>
+      </node>
+      <node name="backKeyLongPressAction" value="Geri tuşuna uzun dokunma eylemi">
+        <node name="exit" value="FBReader Kapansın"/>
+        <node name="goBack" value="Geri dön"/>
+        <node name="cancelMenu" value="Çıkış menüsünü göster"/>
+        <node name="none" value="Eylemsiz"/>
+      </node>
+    </node>
+    <node name="tips" value="İpuçları">
+      <node name="summary" value="Günün ipucu ayarları"/>
+      <node name="showTips" value="İpuçlarını göster">
+        <node name="summaryOn" value="Günün ipucunu göster"/>
+        <node name="summaryOff" value="Gösterme"/>
+      </node>
+    </node>
+    <node name="about" value="FBReader Hakkında">
+      <node name="summary" value="Version info, contacts"/>
+      <node name="version" value="Version"/>
+      <node name="site" value="Visit our website">
+        <node name="url" value="http://www.fbreader.org/"/>
+      </node>
+      <node name="email" value="Send us an e-mail">
+        <node name="url" value="mailto:contact@geometerplus.com"/>
+      </node>
+      <node name="twitter" value="Follow us at twitter">
+        <node name="url" value="http://twitter.com/fbreader"/>
+      </node>
+    </node>
+  </node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="Kur"/>
+			<node name="update" value="Güncelle"/>
+			<node name="skip" value="Atla"/>
+			<node name="buy" value="Satın al"/>
+			<node name="buyAndDownload" value="Satın al ve indir"/>
+			<node name="continue" value="Devam et"/>
+			<node name="editUrl" value="URL\'yi düzenle"/>
+			<node name="tryAgain" value="Tekrar dene"/>
+			<node name="openBook" value="Oku"/>
+			<node name="editInfo" value="Düzenle"/>
+			<node name="reloadInfo" value="Yenile"/>
+			<node name="shareBook" value="Paylaş"/>
+			<node name="topup" value="Kontör"/>
+			<node name="pay" value="Öde"/>
+			<node name="refresh" value="Yenile"/>
+			<node name="authorize" value="Onay"/>
+			<node name="resetPosition" value="POzisyonu sıfırla" />
+			<node name="sendReport" value="Rapor gönder" />
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="Eklenti kur"/>
+			<node name="updateTitle" value="Eklenti güncelle"/>
+			<node name="dontAskAgain" value="Bir daha sorma"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="Sözlük indir"/>
+			<node name="message" value="%s indirmek ister misiniz?"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="Bu kitap geri dönüşü olmayan biçimde silinecek. Emin misiniz?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="Bu dosya zaten var, yeniden indirilsin mi?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="İndirilen kitap %s"/>
+			<node name="search" value="Aranıyor. Lütfen bekleyin&#8230;"/>
+			<node name="loadInfo" value="Bilgiler yükleniyor. Lütfen bekleyin&#8230;"/>
+			<node name="loadingBook" value="Kitap açılıyor. Lütfen bekleyin&#8230;"/>
+			<node name="loadingBookList" value="Kitaplık açılıyor. Lütfen bekleyin&#8230;"/>
+			<node name="creatingBooksDatabase" value="Kitap veri tabanı oluşturuluyor. Lütfen bekleyin&#8230;"/>
+			<node name="updatingBooksDatabase" value="Kitap veri tabanı güncelleniyor. Lütfen bekleyin&#8230;"/>
+			<node name="loadingNetworkLibrary" value="Kitaplık açılıyor. Lütfen bekleyin&#8230;"/>
+			<node name="authentication" value="Doğrulanıyor. Lütfen bekleyin&#8230;"/>
+			<node name="signOut" value="Çıkış yapılıyor. Lütfen bekleyin&#8230;"/>
+			<node name="purchaseBook" value="Kitap satın alınıyor. Lütfen bekleyin&#8230;"/>
+			<node name="loadingCatalogInfo" value="Katalog bilgisi yükleniyor. Lütfen bekleyin&#8230;"/>
+			<node name="loadingNetworkBookInfo" value="Kitap bilgisi yükleniyor. Lütfen bekleyin&#8230;"/>
+			<node name="updatingCatalogsList" value="Katalog listesi güncelleniyor. Lütfen bekleyin&#8230;"/>
+			<node name="updatingAccountInformation" value="Hesap bilgileri güncelleniyor. Lütfen bekleyint&#8230;"/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Sunucu hatası"/>
+			<node name="purchaseNotEnoughMoney" value="Paranız yetersiz"/>
+			<node name="purchaseMissingBook" value="Eksik kitap"/>
+			<node name="purchaseAlreadyPurchased" value="Satın alınmış"/>
+			<node name="bookNotPurchased" value="Kitap satın alınamadı"/>
+			<node name="downloadLimitExceeded" value="İndirme sınırı aşıldı"/>
+			<node name="noUserEmail" value="No user was registered&#10;with specified e-mail address"/>
+			<node name="unsupportedOperation" value="Desteklenmeyen işlem"/>
+			<node name="notAnOPDS" value="Bu bir OPDS kataloğu değil"/>
+			<node name="noRequiredInformation" value="Gerekli bilgi katalogda belirtilmemiş"/>
+			<node name="cacheDirectoryError" value="Önbellek dizini oluşturulamıyor"/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Kontrol"/>
+			<node name="unencryptedWarning" value="Parolanız gönderilecek"/>
+			<node name="login" value="Kullanıcı adı"/>
+			<node name="password" value="Şifre"/>
+			<node name="loginIsEmpty" value="Kullanıcı adı boş olamaz"/>
+			<node name="register" value="Kayıt ol"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="FBReader: özedl katalog ekle"/>
+			<node name="catalogTitle" value="Başlık"/>
+			<node name="catalogUrl" value="URL"/>
+			<node name="catalogSummary" value="Özet"/>
+			<node name="catalogTitleExample" value="Örn: Project Gutenberg catalog"/>
+			<node name="catalogUrlExample" value="Örn: http://m.gutenberg.org/"/>
+			<node name="catalogSummaryExample" value="Örn: Public domain books"/>
+			<node name="titleIsEmpty" value="Başlık kısmı doldurulmalı"/>
+			<node name="urlIsEmpty" value="URL kısmı doldurulmalı"/>
+			<node name="invalidUrl" value="Geçersiz URL"/>
+			<node name="titleAlreadyExists" value="Belirtilen başlık zaten kullanılıyor"/>
+			<node name="siteAlreadyExists" value="Belirtilen site zaten kullanılıyor"/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Dil filtresi"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="Günün ipucu" />
+			<node name="initializationText" value="FBReader günlük ipuçlarını okumak ister misiniz? Yeni ipuçları FBReader sitesinden indirilebilir. Haftada sadece 1-2 kb lik veri aktarımı harcar.&#10;&#10;İpuçları etkinleşsin mi?"/>
+			<node name="dontShowAgain" value="Tekrar sorma"/>
+			<node name="more" value="Sonraki ipucu"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Android Markete ulaşılamıyor. Lütfen %s elle indirin"/>
+		<node name="textNotFound" value="Kitapta buna uyan metin yok, üzgünüm"/>
+		<node name="bookNotFound" value="Kitaplıkta buna uyan kitap yok, üzgünüm"/>
+		<node name="bookmarkNotFound" value="Buna uyan yer imi yok"/>
+		<node name="cannotOpenBook" value="Bu kitap şu anda açılamıyor, üzgünüm"/>
+		<node name="dictionaryIsNotInstalled" value="Sözlük kurulamadı"/>
+		<node name="permissionDenied" value="İzin reddedildi"/>
+		<node name="noFavorites" value="Hiç favoriniz yok"/>
+		<node name="emptyCatalog" value="Katalog boş"/>
+		<node name="emptyBasket" value="Sepetiniz boş"/>
+		<node name="emptyNetworkSearchResults" value="Hiç kitap bulunamadı"/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Tarayıcı"/>
+		<node name="defaultBrowser" value="Varsayılan tarayıcı"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Bilinmeyen Hata"/>
+		<node name="unsupportedCompressionMethod" value="Desteklenmeyen Sıkıştırma Yöntemi"/>
+		<node name="encryptedFile" value="DRM-korunmuş dosya"/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="FBReader sorunu"/>
+			<node name="text" value="FBReader ön bellek dizinine yazmak için erişilemiyor. Hafıza kartınızı çıkarmayı ya da takmayı unutmuş olabilirsiniz. Lütfen bu sorunu giderin veya aşağıya bir başka dizin adı girin."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="FBReader sorunu"/>
+			<node name="text" value="FBReader yerel kitaplığı yükleyemedi. Yükleme sırasında hata oluşmuş olabilir. Sorun devam ederse FBReader\'i yeniden yüklemeyi deneyin."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="FBReader sorunu"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="'%s' okunurken hata oluştu"/>
+		<node name="errorReadingZip" value="'%s' çıkarılırken hata oluştu"/>
+		<node name="pluginNotFound" value="'%s' eklentisi yok"/>
+		<node name="unknownPluginType" value="Bilinmeyen eklenti tipi: %s"/>
+		<node name="fileNotFound" value="Dosya bulunamadı: %s"/>
+		<node name="opfFileNotFound" value="OPF %s\'de bulunamadı"/>
+		<node name="unsupportedFileFormat" value="'%s' dosya türü desteklenmiyor"/>
+		<node name="errorParsingRtf" value="Rtf parsing error in: %s"/>
+	</node>
+</resources>
