@@ -1,7 +1,7 @@
 ===== 1.5.6 (Jun ??, 2012) =====
 * Can add custom catalogs even if opensearch links are not fully correct
 * More API methods
-* (Partial) Turkish localization by jericho 1200
+* Turkish localization by SonySinger
 * Updated Chinese localization by Chris Yu
 
 ===== 1.5.5 (Jun 03, 2012) =====
