@@ -661,7 +661,7 @@
 				<node name="url" value="http://www.fbreader.org/"/>
 			</node>
 			<node name="email" value="给我们发送邮件">
-				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
 			<node name="twitter" value="关注我们的twitter">
 				<node name="url" value="http://twitter.com/fbreader"/>
