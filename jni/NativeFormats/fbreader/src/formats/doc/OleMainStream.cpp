@@ -197,7 +197,7 @@ std::string OleMainStream::getPiecesTableBuffer(const char *headerBuffer, OleStr
 	tableStream.seek(clxOffset, true);
 	tableStream.read(clxBuffer, clxLength);
 	std::string clx(clxBuffer, clxLength);
-	delete clxBuffer;
+	delete[] clxBuffer;
 
 	//2 step: searching for pieces table buffer at CLX
 	//(determines it by 0x02 as start symbol)
@@ -474,7 +474,7 @@ bool OleMainStream::readStylesheet(const char *headerBuffer, const OleEntry &tab
 			}
 		}
 	} while (styleSheetWasChanged);
-	delete buffer;
+	delete[] buffer;
 	return true;
 }
 
@@ -522,7 +522,7 @@ bool OleMainStream::readCharInfoTable(const char *headerBuffer, const OleEntry &
 			myCharInfoList.push_back(CharPosToCharInfo(charPos, charInfo));
 		}
 	}
-	delete formatPageBuffer;
+	delete[] formatPageBuffer;
 	return true;
 }
 
@@ -580,7 +580,7 @@ bool OleMainStream::readParagraphStyleTable(const char *headerBuffer, const OleE
 			myStyleInfoList.push_back(CharPosToStyle(charPos, styleInfo));
 		}
 	}
-	delete formatPageBuffer;
+	delete[] formatPageBuffer;
 	return true;
 }
 
@@ -638,14 +638,14 @@ bool OleMainStream::readSectionsInfoTable(const char *headerBuffer, const OleEnt
 		}
 		char *formatPageBuffer = new char[bytes];
 		if (read(formatPageBuffer, bytes) != bytes) {
-			delete formatPageBuffer;
+			delete[] formatPageBuffer;
 			continue;
 		}
 		SectionInfo sectionInfo;
 		sectionInfo.charPos = charPos.at(index);
 		getSectionInfo(formatPageBuffer + 2, bytes - 2, sectionInfo);
 		mySectionInfoList.push_back(sectionInfo);
-		delete formatPageBuffer;
+		delete[] formatPageBuffer;
 	}
 	return true;
 }
@@ -867,7 +867,7 @@ bool OleMainStream::readToBuffer(std::string &result, unsigned int offset, size_
 		return false;
 	}
 	result = std::string(buffer, length);
-	delete buffer;
+	delete[] buffer;
 	return true;
 }
 
