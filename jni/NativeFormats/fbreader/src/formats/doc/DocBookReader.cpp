@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,11 @@
 #include <vector>
 #include <string>
 
-#include <ZLInputStream.h>
 #include <ZLLogger.h>
 #include <ZLFile.h>
 #include <ZLStringUtil.h>
+#include <ZLFileImage.h>
+#include <ZLInputStream.h>
 
 #include "DocBookReader.h"
 #include "../../bookmodel/BookModel.h"
@@ -35,7 +36,8 @@
 
 DocBookReader::DocBookReader(BookModel &model, const std::string &encoding) :
 	OleStreamReader(encoding),
-	myModelReader(model) {
+	myModelReader(model),
+	myPictureCounter(0) {
 	myReadState = READ_TEXT;
 }
 
@@ -160,6 +162,7 @@ void DocBookReader::handleStartField() {
 
 void DocBookReader::handleSeparatorField() {
 	static const std::string HYPERLINK = "HYPERLINK";
+	static const std::string SEQUENCE = "SEQ";
 //	static const std::string PAGE = "PAGE";
 //	static const std::string PAGEREF = "PAGEREF";
 //	static const std::string SHAPE = "SHAPE";
@@ -183,6 +186,12 @@ void DocBookReader::handleSeparatorField() {
 		if (!result.at(i).empty()) {
 			splitted.push_back(result.at(i));
 		}
+	}
+
+	if (!splitted.empty() && splitted.at(0) == SEQUENCE) {
+		myReadFieldState = READ_FIELD_TEXT;
+		myHyperlinkTypeState = NO_HYPERLINK;
+		return;
 	}
 
 	if (splitted.size() < 2 || splitted.at(0) != HYPERLINK) {
@@ -221,9 +230,12 @@ void DocBookReader::handleEndField() {
 
 }
 
-void DocBookReader::handleStartOfHeading() {
-	//heading can be, for example, a picture
-	//TODO implement
+void DocBookReader::handlePicture(const ZLFileImage::Blocks &blocks) {
+	std::string number;
+	ZLStringUtil::appendNumber(number, myPictureCounter++);
+	myModelReader.addImageReference(number, 0, false);
+	ZLFile file(myModelReader.model().book()->file().path(), "image/auto");
+	myModelReader.addImage(number, new ZLFileImage(file, "", blocks));
 }
 
 void DocBookReader::handleOtherControlChar(ZLUnicodeUtil::Ucs2Char ucs2char) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #ifndef __OLESTREAM_H__
 #define __OLESTREAM_H__
 
+#include <ZLFileImage.h>
+
 #include "OleStorage.h"
 
 class OleStream {
@@ -37,6 +39,11 @@ public:
 	size_t offset();
 
 public:
+	ZLFileImage::Blocks getBlockPieceInfoList(unsigned int offset, unsigned int size) const;
+	static ZLFileImage::Blocks concatBlocks(const ZLFileImage::Blocks &blocks);
+	size_t fileOffset();
+
+public:
 	bool eof() const;
 
 protected:
@@ -47,7 +54,5 @@ protected:
 
 	unsigned int myOleOffset;
 };
-
-
 
 #endif /* __OLESTREAM_H__ */

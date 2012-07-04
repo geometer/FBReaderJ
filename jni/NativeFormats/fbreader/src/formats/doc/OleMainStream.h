@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,15 +106,21 @@ public:
 		bool newPage;
 		SectionInfo();
 	};
-
 	typedef std::vector<SectionInfo> SectionInfoList;
 
 	struct Bookmark {
 		unsigned int charPos;
 		std::string name;
 	};
-
 	typedef std::vector<Bookmark> Bookmarks;
+
+	struct PictureInfo {
+			unsigned int dataPos;
+
+			PictureInfo();
+	};
+	typedef std::pair<unsigned int, PictureInfo> CharPosToPictureInfo;
+	typedef std::vector<CharPosToPictureInfo> PictureInfoList;
 
 public:
 	OleMainStream(shared_ptr<OleStorage> storage, OleEntry oleEntry, shared_ptr<ZLInputStream> stream);
@@ -125,6 +131,8 @@ public:
 	const CharInfoList &getCharInfoList() const;
 	const StyleInfoList &getStyleInfoList() const;
 	const Bookmarks &getBookmarks() const;
+	const PictureInfoList &getPictureInfoList() const;
+	shared_ptr<OleStream> dataStream() const;
 
 private:
 	bool readFIB(const char *headerBuffer);
@@ -144,6 +152,7 @@ private: //formatting reader helpers methods
 	static void getCharInfo(unsigned int chpxOffset, unsigned int istd, const char *grpprlBuffer, unsigned int bytes, CharInfo &charInfo);
 	static void getStyleInfo(unsigned int papxOffset, const char *grpprlBuffer, unsigned int bytes, Style &styleInfo);
 	static void getSectionInfo(const char *grpprlBuffer, size_t bytes, SectionInfo &sectionInfo);
+	static bool getPictureInfo(unsigned int chpxOffset, const char *grpprlBuffer, unsigned int bytes, PictureInfo &pictureInfo);
 
 	static Style getStyleFromStylesheet(unsigned int istd, const StyleSheet &stylesheet);
 	static int getStyleIndex(unsigned int istd, const std::vector<bool> &isFilled, const StyleSheet &stylesheet);
@@ -151,6 +160,8 @@ private: //formatting reader helpers methods
 
 	static bool offsetToCharPos(unsigned int offset, unsigned int &charPos, const Pieces &pieces);
 	static bool readToBuffer(std::string &result, unsigned int offset, size_t length, OleStream &stream);
+
+	static unsigned int calcCountOfPLC(unsigned int totalSize, unsigned int elementSize);
 
 private:
 	enum PrlFlag {
@@ -171,8 +182,11 @@ private:
 	CharInfoList myCharInfoList;
 	StyleInfoList myStyleInfoList;
 	SectionInfoList mySectionInfoList;
+	PictureInfoList myPictureInfoList;
 
 	Bookmarks myBookmarks;
+
+	shared_ptr<OleStream> myDataStream;
 };
 
 #endif /* __OLEMAINSTREAM_H__ */

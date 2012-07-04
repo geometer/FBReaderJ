@@ -17,34 +17,21 @@
  * 02110-1301, USA.
  */
 
-#include <ZLInputStream.h>
+#ifndef __DOCIMAGEDATAREADER_H__
+#define __DOCIMAGEDATAREADER_H__
 
-#include "../../library/Book.h"
+#include <vector>
 
-#include "DocMetaInfoReader.h"
+#include "OleStream.h"
 
-DocMetaInfoReader::DocMetaInfoReader(Book &book) : myBook(book) {
-	myBook.removeAllAuthors();
-	myBook.setTitle(std::string());
-	myBook.setLanguage(std::string());
-	myBook.removeAllTags();
-}
+class DocImageDataReader {
 
-/*
-void DocMetaInfoReader::characterDataHandler(const char *text, size_t len) {
-}
+public:
+	DocImageDataReader(shared_ptr<OleStream> dataStream);
+	ZLFileImage::Blocks getImagePieceInfo(unsigned int dataPos);
 
-void DocMetaInfoReader::startElementHandler(int tag, const char **) {
-}
+private:
+	shared_ptr<OleStream> myDataStream;
+};
 
-void DocMetaInfoReader::endElementHandler(int tag) {
-}
-*/
-
-bool DocMetaInfoReader::readMetaInfo() {
-	myBook.removeAllAuthors();
-	myBook.setTitle(myBook.file().name(true));
-	myBook.setEncoding("windows-1251"); //TODO implement encoding retrieving
-	myBook.removeAllTags();
-	return true;
-}
+#endif /* __DOCIMAGEDATAREADER_H__ */

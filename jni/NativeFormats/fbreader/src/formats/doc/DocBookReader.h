@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ private:
 	void handleStartField();
 	void handleSeparatorField();
 	void handleEndField();
-	void handleStartOfHeading();
+	void handlePicture(const ZLFileImage::Blocks &blocks);
 	void handleOtherControlChar(ZLUnicodeUtil::Ucs2Char ucs2char);
 
 	//formatting:
@@ -89,6 +89,7 @@ private:
 	std::vector<FBTextKind> myKindStack;
 	shared_ptr<ZLTextStyleEntry> myCurStyleEntry;
 	OleMainStream::Style myCurStyleInfo;
+	unsigned int myPictureCounter;
 };
 
 inline DocBookReader::~DocBookReader() {}

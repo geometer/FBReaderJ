@@ -26,6 +26,7 @@
 #include <ZLUnicodeUtil.h>
 #include <ZLStringUtil.h>
 #include <ZLXMLNamespace.h>
+#include <ZLInputStream.h>
 #include <ZLLogger.h>
 
 #include "XHTMLReader.h"
