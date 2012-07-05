@@ -10,7 +10,6 @@ obj/
 epubs/
 mappings/
 READY/
-.idea/workspace.xml
 .classpath
 .settings
 *.so
