@@ -1,0 +1,1164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6dca56de-ad54-4abc-8e82-813df47490cf" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/MediaButtonIntentReceiver.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/build.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/application/48x48.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/application/64x64.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/booktree/tree-bookinfo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/booktree/tree-remove.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/booktree/tree-removetag.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/booktree/tree-taginfo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/addBook.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/bookInfo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/findNext.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/findPrevious.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/gotoHome.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/preferences.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/redo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/rotate.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/showHelp.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/showLibrary.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/showRecent.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/toc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/icons/toolbar/undo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/FBReaderJ.jad" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/build.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/data/FBReaderJ.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/data/default/keymap.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/data/default/menubar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/data/default/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/manifest.mf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/java/util/zip/ZipEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/java/util/zip/ZipException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/java/util/zip/ZipFile.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/java/util/zip/ZipInputStream.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/core/util/ArrayList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/core/util/Collections.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/core/util/Comparator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/core/util/File.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/core/util/HashMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/core/util/Locale.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/application/ZLJ2MEApplicationWindow.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/config/ZLJ2MEConfig.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/config/ZLJ2MEConfigManager.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/image/ZLJ2MEImageData.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/image/ZLJ2MEImageManager.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/library/ZLJ2MELibrary.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/library/ZLMIDlet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/view/ZLCanvas.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/view/ZLJ2MEPaintContext.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/j2me/src/org/zlibrary/ui/j2me/view/ZLJ2MEViewWidget.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/lib/antenna-bin-1.0.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/lib/junit.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/lib/proguard.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/manifest.mf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/data/default/keymap.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/data/default/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/data/default/toolbar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/fb2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/folder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/html.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/mobipocket.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/oeb.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/openreader.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/palm.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/plucker.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/rtf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/tcr.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/unknown.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/upfolder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/weasel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/icons/filetree/zipfolder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLConfigImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLConfigReader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLConfigWriter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLDeletedValuesSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLDeltaConfig.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLGroup.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLOptionID.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLOptionInfo.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLReader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLSimpleConfig.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLWriter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/core/xmlconfig/ZLXMLConfigManager.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/application/ZLSwingApplicationWindow.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLBoolean3OptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLBooleanOptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLChoiceOptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLColorOptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLComboOptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLKeyOptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLSpinOptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLStringOptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLSwingDialog.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLSwingDialogContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLSwingDialogManager.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLSwingOptionView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLSwingOptionsDialog.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/dialogs/ZLSwingSelectionDialog.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/image/ZLSwingImageData.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/image/ZLSwingImageManager.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/library/Main.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/library/ZLSwingLibrary.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/util/ZLSwingIconUtil.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/view/ZLSwingPaintContext.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/swing/src/org/geometerplus/zlibrary/ui/swing/view/ZLSwingViewWidget.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/annotation.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/annotation_before.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/annotation_before_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/annotation_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/cite.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/cite_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/date.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/date_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/empty_line.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/empty_line_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/epigraph.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/epigraph_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/ext_hyperlink.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/ext_hyperlink_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/filesystem/directory/testbookZip.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/filesystem/directory/testfb2book.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/filesystem/testbookZip.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/filesystem/testfb2book.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/footnote.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/footnote1.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/footnote_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/image.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/image_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/karenina.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/karenina_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/one_note.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/one_note_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/poem.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/poem_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/poem_title.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/poem_title_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/section.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/section_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/section_title.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/section_title_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/simple_notes.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/stanza.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/stanza_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/subtitle.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/subtitle_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test1.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test1_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test2.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test2_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test3.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test3_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test4.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test4_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test5.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test5_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test6.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test6_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test7.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test7_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test8.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/test8_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/text_author.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/text_author_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/title.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/title_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/tree1.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/tree1_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/tree2.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/tree2_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/tree2sections.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/tree2sections_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/verse.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/verse_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/whiteguard.fb2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/fb2/whiteguard_exp.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/application/en.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/application/fi.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/application/fr.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/application/it.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/application/ru.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/application/sv.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/application/uk.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/zlibrary/en.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/zlibrary/fi.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/zlibrary/fr.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/zlibrary/it.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/zlibrary/ru.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/zlibrary/sv.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/data/resources/zlibrary/uk.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/fbreader/collection/AllTests.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/fbreader/collection/TestBookCollection.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/fbreader/collection/TestBookList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/fbreader/formats/fb2/AllTests.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/fbreader/formats/fb2/TestFB2Reader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/core/resources/AllTests.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/core/resources/TestResources.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/description/AllTests.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/description/TestDescriptionBook.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/filesystem/TestALL.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/filesystem/TestZLDir.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/filesystem/TestZLFSManager.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/filesystem/TestZLFile.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/hyphenation/.TestTextTeXHyphenator.java.swp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/hyphenation/TestAll.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/hyphenation/TestTextTeXHyphenationPattern.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/hyphenation/TestTextTeXHyphenator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/model/ModelDumper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/model/TestAll.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/model/TestTextControlEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/model/TestTextEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/model/TestTextParagraph.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/model/TestTreeModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/model/TestTreeParagraph.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/model/TestZLTextModel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ConfigIOTests.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/TestAll.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/UtilTests.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLBoolean3OptionTests1.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLBoolean3OptionTests2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLBooleanOptionTests1.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLBooleanOptionTests2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLColorOptionTests1.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLColorOptionTests2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLConfigWriterTests.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLIntegerOptionTests1.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLIntegerOptionTests2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLIntegerRangeOptionTests1.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLIntegerRangeOptionTests2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLOptionTests.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLStringOptionTests1.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/ZLStringOptionTests2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/obsolete/test/org/test/zlibrary/options/examples/options.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/FBReader.java" afterPath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/FBReader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/Api.java" afterPath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/Api.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiClientImplementation.java" afterPath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiClientImplementation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiMethods.java" afterPath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiMethods.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiObject.java" afterPath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiServerImplementation.java" afterPath="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiServerImplementation.java" />
+    </list>
+    <ignored path="FBReder+.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <breakpoint_any>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <breakpoint_rules />
+    <ui_properties />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="FBReder+" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="FBReader.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/geometerplus/android/fbreader/FBReader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="349" column="0" selection-start="13324" selection-end="13324" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="165" selection-start="2825" selection-end="2825" vertical-scroll-proportion="0.33268103">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/build.xml" />
+        <option value="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiMethods.java" />
+        <option value="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/Api.java" />
+        <option value="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiClientImplementation.java" />
+        <option value="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiObject.java" />
+        <option value="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiServerImplementation.java" />
+        <option value="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/MediaButtonIntentReceiver.java" />
+        <option value="$PROJECT_DIR$/src/org/geometerplus/android/fbreader/FBReader.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="64" />
+    <option name="y" value="-4" />
+    <option name="width" value="1695" />
+    <option name="height" value="1006" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geometerplus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zlibrary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geometerplus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zlibrary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geometerplus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geometerplus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gen" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gen" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geometerplus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gen" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geometerplus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zlibrary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FBReder+" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fbreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Facets" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AndroidSDK/tools/ant" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+  </component>
+  <component name="RunManager" selected="Android Application.Fbreader">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="false" name="Fbreader" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="Fbreader" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="USB_DEVICE" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method>
+        <option name="AntTarget" enabled="true" antfile="file://$PROJECT_DIR$/build.xml" target="debug" />
+        <option name="Make" enabled="false" />
+      </method>
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Android Application.Fbreader" />
+    </list>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6dca56de-ad54-4abc-8e82-813df47490cf" name="Default" comment="" />
+      <created>1341431475086</created>
+      <updated>1341431475086</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="64" y="-4" width="1695" height="1006" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19162527" sideWeight="0.67026377" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905483" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905483" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17872341" sideWeight="0.67094517" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905483" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905483" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+    <buildFile url="file://$PROJECT_DIR$/build.xml">
+      <antCommandLine value="" />
+      <runInBackground value="true" />
+      <targetFilters />
+      <treeView value="true" />
+      <verbose value="true" />
+      <viewClosedWhenNoErrors value="false" />
+      <expanded value="true" />
+    </buildFile>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$USER_HOME$/AndroidSDK/tools/ant/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="882" column="0" selection-start="39943" selection-end="40735" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="93" selection-start="3234" selection-end="3234" vertical-scroll-proportion="0.72115386" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="184" column="46" selection-start="3517" selection-end="3517" vertical-scroll-proportion="0.37128714" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiClientImplementation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="346" column="5" selection-start="11197" selection-end="11197" vertical-scroll-proportion="0.6415094" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/Api.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="63" selection-start="2328" selection-end="2328" vertical-scroll-proportion="0.9096535" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="32" selection-start="1160" selection-end="1160" vertical-scroll-proportion="0.8168317" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/geometerplus/android/fbreader/api/ApiServerImplementation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/geometerplus/android/fbreader/MediaButtonIntentReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.37376237" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/geometerplus/android/fbreader/FBReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="349" column="0" selection-start="13324" selection-end="13324" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/resources/zlibrary/en.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="39" selection-start="1002" selection-end="1003" vertical-scroll-proportion="-11.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/resources/application/en.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="21" selection-start="52" selection-end="60" vertical-scroll-proportion="0.029354207">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="165" selection-start="2825" selection-end="2825" vertical-scroll-proportion="0.33268103">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Android (Fbreader)|Android</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>Android 4.0</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Fbreader</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.20000002" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>lib</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+
