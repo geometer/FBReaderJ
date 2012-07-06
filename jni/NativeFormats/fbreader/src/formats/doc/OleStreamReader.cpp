@@ -26,7 +26,7 @@
 #include "OleMainStream.h"
 #include "DocBookReader.h"
 #include "OleUtil.h"
-#include "DocImageDataReader.h"
+#include "DocInlineImageReader.h"
 
 #include "OleStreamReader.h"
 
@@ -43,8 +43,8 @@ const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_START_FIELD = 0x0013;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_SEPARATOR_FIELD = 0x0014;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_END_FIELD = 0x0015;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_ZERO_WIDTH_UNBREAKABLE_SPACE = 0xfeff;
-const ZLUnicodeUtil::Ucs2Char OleStreamReader::PICTURE = 0x0001;
-const ZLUnicodeUtil::Ucs2Char OleStreamReader::DRAWN_OBJECT = 0x0008;
+const ZLUnicodeUtil::Ucs2Char OleStreamReader::INLINE_IMAGE = 0x0001;
+const ZLUnicodeUtil::Ucs2Char OleStreamReader::FLOAT_IMAGE = 0x0008;
 
 //unicode values:
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::NULL_SYMBOL = 0x0;
@@ -69,7 +69,8 @@ void OleStreamReader::clear() {
 	myNextStyleInfoIndex = 0;
 	myNextCharInfoIndex = 0;
 	myNextBookmarkIndex = 0;
-	myNextPictureInfoIndex = 0;
+	myNextInlineImageInfoIndex = 0;
+	myNextFloatImageInfoIndex = 0;
 }
 
 bool OleStreamReader::readStream(OleMainStream &oleMainStream) {
@@ -125,8 +126,7 @@ bool OleStreamReader::readStream(OleMainStream &oleMainStream) {
 				case WORD_END_FIELD:
 					handleEndField();
 					break;
-				case PICTURE:
-					//pictures handle method is called from processPicture()
+				case INLINE_IMAGE: case FLOAT_IMAGE:
 					break;
 				default:
 					handleOtherControlChar(ucs2char);
@@ -157,34 +157,51 @@ bool OleStreamReader::getUcs2Char(OleMainStream &stream, ZLUnicodeUtil::Ucs2Char
 	}
 	ucs2char = myBuffer.at(myCurBufferPosition++);
 	processStyles(stream);
-	if (ucs2char == PICTURE) {
-		processPicture(stream);
+
+	if (ucs2char == INLINE_IMAGE) {
+		processInlineImage(stream);
+	} else if (ucs2char == FLOAT_IMAGE) {
+		processFloatImage(stream);
 	}
 	++myCurCharPos;
 	return true;
 }
 
-void OleStreamReader::processPicture(OleMainStream &stream) {
-	shared_ptr<OleStream> dataStream = stream.dataStream();
-	if (dataStream.isNull()) {
+void OleStreamReader::processInlineImage(OleMainStream &stream) {
+	const OleMainStream::InlineImageInfoList &imageInfoList = stream.getInlineImageInfoList();
+	if (imageInfoList.empty()) {
 		return;
 	}
-	const OleMainStream::PictureInfoList &pictureInfoList = stream.getPictureInfoList();
-	if (pictureInfoList.empty()) {
-		return;
+	//seek to curCharPos, because not all entries are real pictures
+	while(myNextInlineImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextInlineImageInfoIndex).first < myCurCharPos) {
+		++myNextInlineImageInfoIndex;
 	}
-	//seek to curCharPos, because not all entries in PictureInfo are real pictures
-	while(myNextPictureInfoIndex < pictureInfoList.size() && pictureInfoList.at(myNextPictureInfoIndex).first < myCurCharPos) {
-		++myNextPictureInfoIndex;
-	}
-	while (myNextPictureInfoIndex < pictureInfoList.size() && pictureInfoList.at(myNextPictureInfoIndex).first == myCurCharPos) {
-		OleMainStream::PictureInfo info = pictureInfoList.at(myNextPictureInfoIndex).second;
-		DocImageDataReader imageReader(dataStream);
-		ZLFileImage::Blocks list = imageReader.getImagePieceInfo(info.dataPos);
+	while (myNextInlineImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextInlineImageInfoIndex).first == myCurCharPos) {
+		OleMainStream::InlineImageInfo info = imageInfoList.at(myNextInlineImageInfoIndex).second;
+		ZLFileImage::Blocks list = stream.getInlineImage(info.dataPos);
 		if (!list.empty()) {
-			handlePicture(list);
+			handleImage(list);
 		}
-		++myNextPictureInfoIndex;
+		++myNextInlineImageInfoIndex;
+	}
+}
+
+void OleStreamReader::processFloatImage(OleMainStream &stream) {
+	const OleMainStream::FloatImageInfoList &imageInfoList = stream.getFloatImageInfoList();
+	if (imageInfoList.empty()) {
+		return;
+	}
+	//seek to curCharPos, because not all entries are real pictures
+	while(myNextFloatImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextFloatImageInfoIndex).first < myCurCharPos) {
+		++myNextFloatImageInfoIndex;
+	}
+	while (myNextFloatImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextFloatImageInfoIndex).first == myCurCharPos) {
+		OleMainStream::FloatImageInfo info = imageInfoList.at(myNextFloatImageInfoIndex).second;
+		ZLFileImage::Blocks list = stream.getFloatImage(info.shapeID);
+		if (!list.empty()) {
+			handleImage(list);
+		}
+		++myNextFloatImageInfoIndex;
 	}
 }
 

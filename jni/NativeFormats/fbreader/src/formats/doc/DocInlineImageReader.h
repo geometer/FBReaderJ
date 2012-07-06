@@ -17,21 +17,21 @@
  * 02110-1301, USA.
  */
 
-#ifndef __DOCIMAGEDATAREADER_H__
-#define __DOCIMAGEDATAREADER_H__
+#ifndef __DOCINLINEIMAGEREADER_H__
+#define __DOCINLINEIMAGEREADER_H__
 
 #include <vector>
 
 #include "OleStream.h"
 
-class DocImageDataReader {
+class DocInlineImageReader {
 
 public:
-	DocImageDataReader(shared_ptr<OleStream> dataStream);
+	DocInlineImageReader(shared_ptr<OleStream> dataStream);
 	ZLFileImage::Blocks getImagePieceInfo(unsigned int dataPos);
 
 private:
 	shared_ptr<OleStream> myDataStream;
 };
 
-#endif /* __DOCIMAGEDATAREADER_H__ */
+#endif /* __DOCINLINEIMAGEREADER_H__ */

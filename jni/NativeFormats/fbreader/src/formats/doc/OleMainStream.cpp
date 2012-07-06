@@ -26,6 +26,8 @@
 #include "OleUtil.h"
 #include "OleStorage.h"
 
+#include "DocInlineImageReader.h"
+
 #include "OleMainStream.h"
 
 OleMainStream::Style::Style() {
@@ -47,8 +49,12 @@ OleMainStream::SectionInfo::SectionInfo() :
 	newPage(true) {
 }
 
-OleMainStream::PictureInfo::PictureInfo() :
+OleMainStream::InlineImageInfo::InlineImageInfo() :
 	dataPos(0) {
+}
+
+OleMainStream::FloatImageInfo::FloatImageInfo() :
+	shapeID(0) {
 }
 
 OleMainStream::OleMainStream(shared_ptr<OleStorage> storage, OleEntry oleEntry, shared_ptr<ZLInputStream> stream) :
@@ -106,6 +112,7 @@ bool OleMainStream::open() {
 	//readSectionsInfoTable(headerBuffer, tableEntry); //it isn't used now
 	readParagraphStyleTable(headerBuffer, tableEntry);
 	readCharInfoTable(headerBuffer, tableEntry);
+	readFloatingImages(headerBuffer, tableEntry);
 	return true;
 }
 
@@ -125,12 +132,27 @@ const OleMainStream::Bookmarks &OleMainStream::getBookmarks() const {
 	return myBookmarks;
 }
 
-const OleMainStream::PictureInfoList &OleMainStream::getPictureInfoList() const {
-	return myPictureInfoList;
+const OleMainStream::InlineImageInfoList &OleMainStream::getInlineImageInfoList() const {
+	return myInlineImageInfoList;
 }
 
-shared_ptr<OleStream> OleMainStream::dataStream() const {
-	return myDataStream;
+const OleMainStream::FloatImageInfoList &OleMainStream::getFloatImageInfoList() const {
+	return myFloatImageInfoList;
+}
+
+ZLFileImage::Blocks OleMainStream::getFloatImage(unsigned int shapeID) const {
+	if (myFLoatImageReader.isNull()) {
+		return ZLFileImage::Blocks();
+	}
+	return myFLoatImageReader->getBlocksForShapeID(shapeID);
+}
+
+ZLFileImage::Blocks OleMainStream::getInlineImage(unsigned int dataPos) const {
+	if (myDataStream.isNull()) {
+		return ZLFileImage::Blocks();
+	}
+	DocInlineImageReader imageReader(myDataStream);
+	return imageReader.getImagePieceInfo(dataPos);
 }
 
 bool OleMainStream::readFIB(const char *headerBuffer) {
@@ -540,15 +562,68 @@ bool OleMainStream::readCharInfoTable(const char *headerBuffer, const OleEntry &
 			myCharInfoList.push_back(CharPosToCharInfo(charPos, charInfo));
 
 			if (chpxOffset != 0) {
-				PictureInfo pictureInfo;
-				if (getPictureInfo(chpxOffset, formatPageBuffer + 1, len - 1, pictureInfo)) {
-					myPictureInfoList.push_back(CharPosToPictureInfo(charPos, pictureInfo));
+				InlineImageInfo pictureInfo;
+				if (getInlineImageInfo(chpxOffset, formatPageBuffer + 1, len - 1, pictureInfo)) {
+					myInlineImageInfoList.push_back(CharPosToInlineImageInfo(charPos, pictureInfo));
 				}
 			}
 
 		}
 	}
 	delete[] formatPageBuffer;
+	return true;
+}
+
+bool OleMainStream::readFloatingImages(const char *headerBuffer, const OleEntry &tableEntry) {
+	//Plcspa structure is a table with information for FSPA (File Shape Address)
+	unsigned int beginPicturesInfo = OleUtil::getU4Bytes(headerBuffer, 0x01DA); // address of Plcspa structure
+	if (beginPicturesInfo == 0) {
+		return true; //there's no office art objects
+	}
+	unsigned int picturesInfoLength = OleUtil::getU4Bytes(headerBuffer, 0x01DE); // length of Plcspa structure
+	if (picturesInfoLength < 4) {
+		return false;
+	}
+
+	OleStream tableStream(myStorage, tableEntry, myBaseStream);
+	std::string buffer;
+	if (!readToBuffer(buffer, beginPicturesInfo, picturesInfoLength, tableStream)) {
+		return false;
+	}
+
+
+	static const unsigned int SPA_SIZE = 26;
+	size_t size = calcCountOfPLC(picturesInfoLength, SPA_SIZE);
+
+	std::vector<unsigned int> picturesBlocks;
+	for (size_t index = 0, tOffset = 0; index < size; ++index, tOffset += 4) {
+		picturesBlocks.push_back(OleUtil::getU4Bytes(buffer.c_str(), tOffset));
+	}
+
+	for (size_t index = 0, tOffset = (size + 1) * 4; index < size; ++index, tOffset += SPA_SIZE) {
+		unsigned int spid = OleUtil::getU4Bytes(buffer.c_str(), tOffset);
+		FloatImageInfo info;
+		unsigned int charPos = picturesBlocks.at(index);
+		info.shapeID = spid;
+		myFloatImageInfoList.push_back(CharPosToFloatImageInfo(charPos, info));
+	}
+
+	//DggInfo structure is office art object table data
+	unsigned int beginOfficeArtContent = OleUtil::getU4Bytes(headerBuffer, 0x22A); // address of DggInfo structure
+	if (beginOfficeArtContent == 0) {
+		return true; //there's no office art objects
+	}
+	unsigned int officeArtContentLength = OleUtil::getU4Bytes(headerBuffer, 0x022E); // length of DggInfo structure
+	if (officeArtContentLength < 4) {
+		return false;
+	}
+
+	shared_ptr<OleStream> newTableStream = new OleStream(myStorage, tableEntry, myBaseStream);
+	shared_ptr<OleStream> newMainStream = new OleStream(myStorage, myOleEntry, myBaseStream);
+	if (newTableStream->open() && newMainStream->open()) {
+		myFLoatImageReader = new DocFloatImageReader(beginOfficeArtContent, officeArtContentLength, newTableStream, newMainStream);
+		myFLoatImageReader->readAll();
+	}
 	return true;
 }
 
@@ -808,7 +883,7 @@ void OleMainStream::getSectionInfo(const char *grpprlBuffer, size_t bytes, Secti
 	}
 }
 
-bool OleMainStream::getPictureInfo(unsigned int chpxOffset, const char *grpprlBuffer, unsigned int bytes, PictureInfo &pictureInfo) {
+bool OleMainStream::getInlineImageInfo(unsigned int chpxOffset, const char *grpprlBuffer, unsigned int bytes, InlineImageInfo &pictureInfo) {
 	//p. 105 of [MS-DOC] documentation
 	unsigned int offset = 0;
 	bool isFound = false;

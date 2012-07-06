@@ -21,11 +21,11 @@
 #include <vector>
 #include <string>
 
+#include <ZLInputStream.h>
 #include <ZLLogger.h>
 #include <ZLFile.h>
 #include <ZLStringUtil.h>
 #include <ZLFileImage.h>
-#include <ZLInputStream.h>
 
 #include "DocBookReader.h"
 #include "../../bookmodel/BookModel.h"
@@ -230,7 +230,7 @@ void DocBookReader::handleEndField() {
 
 }
 
-void DocBookReader::handlePicture(const ZLFileImage::Blocks &blocks) {
+void DocBookReader::handleImage(const ZLFileImage::Blocks &blocks) {
 	std::string number;
 	ZLStringUtil::appendNumber(number, myPictureCounter++);
 	myModelReader.addImageReference(number, 0, false);

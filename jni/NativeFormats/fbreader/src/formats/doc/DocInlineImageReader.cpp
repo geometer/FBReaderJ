@@ -18,14 +18,15 @@
  */
 
 #include "OleUtil.h"
+#include "OleMainStream.h"
 
-#include "DocImageDataReader.h"
+#include "DocInlineImageReader.h"
 
-DocImageDataReader::DocImageDataReader(shared_ptr<OleStream> dataStream) :
+DocInlineImageReader::DocInlineImageReader(shared_ptr<OleStream> dataStream) :
 	myDataStream(dataStream) {
 }
 
-ZLFileImage::Blocks DocImageDataReader::getImagePieceInfo(unsigned int dataPos) {
+ZLFileImage::Blocks DocInlineImageReader::getImagePieceInfo(unsigned int dataPos) {
 	if (myDataStream.isNull()) {
 		return ZLFileImage::Blocks();
 	}
@@ -92,12 +93,12 @@ ZLFileImage::Blocks DocImageDataReader::getImagePieceInfo(unsigned int dataPos) 
 				myDataStream->seek(recordLen, false);
 				curOffset += recordLen;
 				break;
-			case 0xF01A: //EMF
-			case 0xF01B: //WMF
-			case 0xF01C: //PICT
+			case OleMainStream::EMF: //EMF
+			case OleMainStream::WMF: //WMF
+			case OleMainStream::PICT: //PICT
 				//TODO implement
 				return ZLFileImage::Blocks();
-			case 0xF01D: //JPEG
+			case OleMainStream::JPEG: case OleMainStream::JPEG2: //JPEG
 				myDataStream->seek(17, false);
 				curOffset += 17;
 				if (recordInstance == 0x46B || recordInstance == 0x6E3) {
@@ -106,7 +107,7 @@ ZLFileImage::Blocks DocImageDataReader::getImagePieceInfo(unsigned int dataPos) 
 				}
 				found = true;
 				break;
-			case 0xF01E: //PNG
+			case OleMainStream::PNG: //PNG
 				myDataStream->seek(17, false);
 				curOffset += 17;
 				if (recordInstance == 0x6E1) {
@@ -115,7 +116,7 @@ ZLFileImage::Blocks DocImageDataReader::getImagePieceInfo(unsigned int dataPos) 
 				}
 				found = true;
 				break;
-			case 0xF01F: //DIB (BMP without 14-bytes header)
+			case OleMainStream::DIB: //DIB (BMP without 14-bytes header)
 				myDataStream->seek(17, false);
 				curOffset += 17;
 				if (recordInstance == 0x7A9) {
@@ -124,7 +125,7 @@ ZLFileImage::Blocks DocImageDataReader::getImagePieceInfo(unsigned int dataPos) 
 				}
 				found = true;
 				break;
-			case 0xF020: //TIFF
+			case OleMainStream::TIFF: //TIFF
 				myDataStream->seek(17, false);
 				curOffset += 17;
 				if (recordInstance == 0x6E5) {
