@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,11 +259,11 @@ bool OleStorage::readOleEntry(int propNumber, OleEntry &e) {
 						chainCur < (int)(e.isBigBlock ? myBBD.size() : mySBD.size()) &&
 						e.blocks.size() <= e.length / (e.isBigBlock ? mySectorSize : myShortSectorSize));
 	}
-	e.length = std::min(e.length, (unsigned int)(e.isBigBlock ? mySectorSize : myShortSectorSize) * e.blocks.size());
+	e.length = std::min(e.length, (unsigned int)((e.isBigBlock ? mySectorSize : myShortSectorSize) * e.blocks.size()));
 	return true;
 }
 
-unsigned int OleStorage::getFileOffsetOfBlock(OleEntry &e, unsigned int blockNumber) {
+unsigned int OleStorage::getFileOffsetOfBlock(const OleEntry &e, unsigned int blockNumber) const {
 	unsigned int res;
 	if (e.isBigBlock) {
 		res = BBD_BLOCK_SIZE + e.blocks.at(blockNumber) * mySectorSize;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include "OleMainStream.h"
 #include "DocBookReader.h"
 #include "OleUtil.h"
+#include "DocInlineImageReader.h"
 
 #include "OleStreamReader.h"
 
@@ -42,13 +43,14 @@ const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_START_FIELD = 0x0013;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_SEPARATOR_FIELD = 0x0014;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_END_FIELD = 0x0015;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::WORD_ZERO_WIDTH_UNBREAKABLE_SPACE = 0xfeff;
+const ZLUnicodeUtil::Ucs2Char OleStreamReader::INLINE_IMAGE = 0x0001;
+const ZLUnicodeUtil::Ucs2Char OleStreamReader::FLOAT_IMAGE = 0x0008;
 
 //unicode values:
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::NULL_SYMBOL = 0x0;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::FILE_SEPARATOR = 0x1c;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::LINE_FEED = 0x000a;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::SOFT_HYPHEN = 0xad;
-const ZLUnicodeUtil::Ucs2Char OleStreamReader::START_OF_HEADING = 0x0001;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::SPACE = 0x20;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::SHORT_DEFIS = 0x2D;
 const ZLUnicodeUtil::Ucs2Char OleStreamReader::VERTICAL_LINE = 0x7C;
@@ -67,6 +69,8 @@ void OleStreamReader::clear() {
 	myNextStyleInfoIndex = 0;
 	myNextCharInfoIndex = 0;
 	myNextBookmarkIndex = 0;
+	myNextInlineImageInfoIndex = 0;
+	myNextFloatImageInfoIndex = 0;
 }
 
 bool OleStreamReader::readStream(OleMainStream &oleMainStream) {
@@ -122,8 +126,7 @@ bool OleStreamReader::readStream(OleMainStream &oleMainStream) {
 				case WORD_END_FIELD:
 					handleEndField();
 					break;
-				case START_OF_HEADING:
-					handleStartOfHeading();
+				case INLINE_IMAGE: case FLOAT_IMAGE:
 					break;
 				default:
 					handleOtherControlChar(ucs2char);
@@ -133,11 +136,11 @@ bool OleStreamReader::readStream(OleMainStream &oleMainStream) {
 			continue; //skip
 		} else {
 			//debug output
-			//std::string utf8String;
-			//ZLUnicodeUtil::Ucs2String ucs2String;
-			//ucs2String.push_back(ucs2char);
-			//ZLUnicodeUtil::ucs2ToUtf8(utf8String, ucs2String);
-			//printf("%s", utf8String.c_str());
+//			std::string utf8String;
+//			ZLUnicodeUtil::Ucs2String ucs2String;
+//			ucs2String.push_back(ucs2char);
+//			ZLUnicodeUtil::ucs2ToUtf8(utf8String, ucs2String);
+//			printf("%s", utf8String.c_str());
 
 			handleChar(ucs2char);
 		}
@@ -152,7 +155,57 @@ bool OleStreamReader::getUcs2Char(OleMainStream &stream, ZLUnicodeUtil::Ucs2Char
 			return false;
 		}
 	}
+	ucs2char = myBuffer.at(myCurBufferPosition++);
+	processStyles(stream);
 
+	if (ucs2char == INLINE_IMAGE) {
+		processInlineImage(stream);
+	} else if (ucs2char == FLOAT_IMAGE) {
+		processFloatImage(stream);
+	}
+	++myCurCharPos;
+	return true;
+}
+
+void OleStreamReader::processInlineImage(OleMainStream &stream) {
+	const OleMainStream::InlineImageInfoList &imageInfoList = stream.getInlineImageInfoList();
+	if (imageInfoList.empty()) {
+		return;
+	}
+	//seek to curCharPos, because not all entries are real pictures
+	while(myNextInlineImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextInlineImageInfoIndex).first < myCurCharPos) {
+		++myNextInlineImageInfoIndex;
+	}
+	while (myNextInlineImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextInlineImageInfoIndex).first == myCurCharPos) {
+		OleMainStream::InlineImageInfo info = imageInfoList.at(myNextInlineImageInfoIndex).second;
+		ZLFileImage::Blocks list = stream.getInlineImage(info.dataPos);
+		if (!list.empty()) {
+			handleImage(list);
+		}
+		++myNextInlineImageInfoIndex;
+	}
+}
+
+void OleStreamReader::processFloatImage(OleMainStream &stream) {
+	const OleMainStream::FloatImageInfoList &imageInfoList = stream.getFloatImageInfoList();
+	if (imageInfoList.empty()) {
+		return;
+	}
+	//seek to curCharPos, because not all entries are real pictures
+	while(myNextFloatImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextFloatImageInfoIndex).first < myCurCharPos) {
+		++myNextFloatImageInfoIndex;
+	}
+	while (myNextFloatImageInfoIndex < imageInfoList.size() && imageInfoList.at(myNextFloatImageInfoIndex).first == myCurCharPos) {
+		OleMainStream::FloatImageInfo info = imageInfoList.at(myNextFloatImageInfoIndex).second;
+		ZLFileImage::Blocks list = stream.getFloatImage(info.shapeID);
+		if (!list.empty()) {
+			handleImage(list);
+		}
+		++myNextFloatImageInfoIndex;
+	}
+}
+
+void OleStreamReader::processStyles(OleMainStream &stream) {
 	const OleMainStream::StyleInfoList &styleInfoList = stream.getStyleInfoList();
 	if (!styleInfoList.empty()) {
 		while (myNextStyleInfoIndex < styleInfoList.size() && styleInfoList.at(myNextStyleInfoIndex).first == myCurCharPos) {
@@ -179,10 +232,6 @@ bool OleStreamReader::getUcs2Char(OleMainStream &stream, ZLUnicodeUtil::Ucs2Char
 			++myNextBookmarkIndex;
 		}
 	}
-
-	ucs2char = myBuffer.at(myCurBufferPosition++);
-	++myCurCharPos;
-	return true;
 }
 
 bool OleStreamReader::fillBuffer(OleMainStream &stream) {
@@ -229,7 +278,7 @@ bool OleStreamReader::fillBuffer(OleMainStream &stream) {
 	}
 	myCurBufferPosition = 0;
 	++myNextPieceNumber;
-	delete textBuffer;
+	delete[] textBuffer;
 
 	return true;
 }

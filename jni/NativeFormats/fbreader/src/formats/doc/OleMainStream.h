@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <string>
 
 #include "OleStream.h"
+#include "DocFloatImageReader.h"
 
 class OleMainStream : public OleStream {
 public:
@@ -106,15 +107,38 @@ public:
 		bool newPage;
 		SectionInfo();
 	};
-
 	typedef std::vector<SectionInfo> SectionInfoList;
 
 	struct Bookmark {
 		unsigned int charPos;
 		std::string name;
 	};
-
 	typedef std::vector<Bookmark> Bookmarks;
+
+	struct InlineImageInfo {
+			unsigned int dataPos;
+			InlineImageInfo();
+	};
+	typedef std::pair<unsigned int, InlineImageInfo> CharPosToInlineImageInfo;
+	typedef std::vector<CharPosToInlineImageInfo> InlineImageInfoList;
+
+	struct FloatImageInfo {
+			unsigned int shapeID;
+			FloatImageInfo();
+	};
+	typedef std::pair<unsigned int, FloatImageInfo> CharPosToFloatImageInfo;
+	typedef std::vector<CharPosToFloatImageInfo> FloatImageInfoList;
+
+	enum ImageType { //see p. 60 [MS-ODRAW]
+		EMF = 0xF01A,
+		WMF = 0xF01B,
+		PICT  = 0xF01C,
+		JPEG  = 0xF01D,
+		PNG  = 0xF01E,
+		DIB  = 0xF01F,
+		TIFF = 0xF029,
+		JPEG2 = 0xF02A
+	};
 
 public:
 	OleMainStream(shared_ptr<OleStorage> storage, OleEntry oleEntry, shared_ptr<ZLInputStream> stream);
@@ -125,6 +149,11 @@ public:
 	const CharInfoList &getCharInfoList() const;
 	const StyleInfoList &getStyleInfoList() const;
 	const Bookmarks &getBookmarks() const;
+	const InlineImageInfoList &getInlineImageInfoList() const;
+	const FloatImageInfoList &getFloatImageInfoList() const;
+
+	ZLFileImage::Blocks getFloatImage(unsigned int shapeID) const;
+	ZLFileImage::Blocks getInlineImage(unsigned int dataPos) const;
 
 private:
 	bool readFIB(const char *headerBuffer);
@@ -134,6 +163,7 @@ private:
 	bool readSectionsInfoTable(const char *headerBuffer, const OleEntry &tableEntry);
 	bool readParagraphStyleTable(const char *headerBuffer, const OleEntry &tableEntry);
 	bool readCharInfoTable(const char *headerBuffer, const OleEntry &tableEntry);
+	bool readFloatingImages(const char *headerBuffer, const OleEntry &tableEntry);
 
 private: //readPieceTable helpers methods
 	static std::string getPiecesTableBuffer(const char *headerBuffer, OleStream &tableStream);
@@ -144,6 +174,7 @@ private: //formatting reader helpers methods
 	static void getCharInfo(unsigned int chpxOffset, unsigned int istd, const char *grpprlBuffer, unsigned int bytes, CharInfo &charInfo);
 	static void getStyleInfo(unsigned int papxOffset, const char *grpprlBuffer, unsigned int bytes, Style &styleInfo);
 	static void getSectionInfo(const char *grpprlBuffer, size_t bytes, SectionInfo &sectionInfo);
+	static bool getInlineImageInfo(unsigned int chpxOffset, const char *grpprlBuffer, unsigned int bytes, InlineImageInfo &pictureInfo);
 
 	static Style getStyleFromStylesheet(unsigned int istd, const StyleSheet &stylesheet);
 	static int getStyleIndex(unsigned int istd, const std::vector<bool> &isFilled, const StyleSheet &stylesheet);
@@ -151,6 +182,8 @@ private: //formatting reader helpers methods
 
 	static bool offsetToCharPos(unsigned int offset, unsigned int &charPos, const Pieces &pieces);
 	static bool readToBuffer(std::string &result, unsigned int offset, size_t length, OleStream &stream);
+
+	static unsigned int calcCountOfPLC(unsigned int totalSize, unsigned int elementSize);
 
 private:
 	enum PrlFlag {
@@ -171,8 +204,14 @@ private:
 	CharInfoList myCharInfoList;
 	StyleInfoList myStyleInfoList;
 	SectionInfoList mySectionInfoList;
+	InlineImageInfoList myInlineImageInfoList;
+	FloatImageInfoList myFloatImageInfoList;
 
 	Bookmarks myBookmarks;
+
+	shared_ptr<OleStream> myDataStream;
+
+	shared_ptr<DocFloatImageReader> myFLoatImageReader;
 };
 
 #endif /* __OLEMAINSTREAM_H__ */

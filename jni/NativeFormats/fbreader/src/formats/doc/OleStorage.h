@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2010 Geometer Plus <contact@geometerplus.com>
+ * Copyright (C) 2004-2012 Geometer Plus <contact@geometerplus.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,11 +55,11 @@ public:
 	const std::vector<OleEntry> &getEntries() const;
 	bool getEntryByName(std::string name, OleEntry &entry) const;
 
-	unsigned int getSectorSize();
-	unsigned int getShortSectorSize();
+	unsigned int getSectorSize() const;
+	unsigned int getShortSectorSize() const;
 
 public: //TODO make private
-	unsigned int getFileOffsetOfBlock(OleEntry &e, unsigned int blockNumber);
+	unsigned int getFileOffsetOfBlock(const OleEntry &e, unsigned int blockNumber) const;
 
 private:
 	bool readDIFAT(char *oleBuf);
@@ -86,7 +86,7 @@ private:
 };
 
 inline const std::vector<OleEntry> &OleStorage::getEntries() const { return myEntries; }
-inline unsigned int OleStorage::getSectorSize() { return mySectorSize; }
-inline unsigned int OleStorage::getShortSectorSize() { return myShortSectorSize; }
+inline unsigned int OleStorage::getSectorSize() const { return mySectorSize; }
+inline unsigned int OleStorage::getShortSectorSize() const { return myShortSectorSize; }
 
 #endif /* __OLESTORAGE_H__ */
