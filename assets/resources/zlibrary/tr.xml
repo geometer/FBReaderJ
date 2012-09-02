@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<node name="dialog">
+		<node name="button">
+			<node name="ok" value="Ok" toBeTranslated="true"/>
+			<node name="cancel" value="Cancel" toBeTranslated="true"/>
+			<node name="yes" value="Yes" toBeTranslated="true"/>
+			<node name="no" value="No" toBeTranslated="true"/>
+			<node name="apply" value="Apply" toBeTranslated="true"/>
+		</node>
+		<node name="networkError">
+			<node name="title" value="Network error" toBeTranslated="true"/>
+			<node name="unknownErrorMessage" value="Unknown error" toBeTranslated="true"/>
+			<node name="operationTimedOutMessage" value="Operation is timed out" toBeTranslated="true"/>
+			<node name="somethingWrongMessage" value="Something goes wrong for %s" toBeTranslated="true"/>
+			<node name="couldntCreateDirectoryMessage" value="Couldn't create a directory %s" toBeTranslated="true"/>
+			<node name="couldntCreateFileMessage" value="Couldn't create a file %s" toBeTranslated="true"/>
+			<node name="couldntConnectToNetworkMessage" value="Couldn't connect to the network" toBeTranslated="true"/>
+			<node name="couldntConnectMessage" value="Couldn't connect to host %s" toBeTranslated="true"/>
+			<node name="couldntResolveHostMessage" value="Couldn't resolve host %s" toBeTranslated="true"/>
+			<node name="authenticationFailed" value="Authentication failed" toBeTranslated="true"/>
+			<node name="unsupportedProtocol" value="Unsupported protocol" toBeTranslated="true"/>
+			<node name="invalidURL" value="Invalid URL" toBeTranslated="true"/>
+			<node name="hostCantBeReached" value="Host %s cannot be reached" toBeTranslated="true"/>
+			<node name="connectionRefused" value="Connection was refused by %s" toBeTranslated="true"/>
+		</node>
+	</node>
+	<node name="color">
+		<node name="red" value="Red" toBeTranslated="true"/>
+		<node name="green" value="Green" toBeTranslated="true"/>
+		<node name="blue" value="Blue" toBeTranslated="true"/>
+	</node>
+	<node name="language">
+		<node name="ar" value="Arabic" toBeTranslated="true"/>
+		<node name="cs" value="Czech" toBeTranslated="true"/>
+		<node name="de" value="German" toBeTranslated="true"/>
+		<node name="de-traditional" value="German (traditional orthography)" toBeTranslated="true"/>
+		<node name="el" value="Greek" toBeTranslated="true"/>
+		<node name="en" value="English" toBeTranslated="true"/>
+		<node name="eo" value="Esperanto" toBeTranslated="true"/>
+		<node name="es" value="Spanish" toBeTranslated="true"/>
+		<node name="fi" value="Finnish" toBeTranslated="true"/>
+		<node name="fr" value="French" toBeTranslated="true"/>
+		<node name="gl" value="Galician" toBeTranslated="true"/>
+		<node name="he" value="Hebrew" toBeTranslated="true"/>
+		<node name="hu" value="Hungarian" toBeTranslated="true"/>
+		<node name="id" value="Indonesian" toBeTranslated="true"/>
+		<node name="it" value="Italian" toBeTranslated="true"/>
+		<node name="lt" value="Lithuanian" toBeTranslated="true"/>
+		<node name="nl" value="Dutch" toBeTranslated="true"/>
+		<node name="no" value="Norwegian" toBeTranslated="true"/>
+		<node name="pl" value="Polish" toBeTranslated="true"/>
+		<node name="pt" value="Portuguese" toBeTranslated="true"/>
+		<node name="ro" value="Romanian" toBeTranslated="true"/>
+		<node name="ru" value="Russian" toBeTranslated="true"/>
+		<node name="sv" value="Swedish" toBeTranslated="true"/>
+		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="th" value="Thai" toBeTranslated="true"/>
+		<node name="tr" value="Turkish" toBeTranslated="true"/>
+		<node name="uk" value="Ukrainian" toBeTranslated="true"/>
+		<node name="vi" value="Vietnamese" toBeTranslated="true"/>
+		<node name="zh" value="Chinese" toBeTranslated="true"/>
+		<node name="other" value="Other" toBeTranslated="true"/>
+		<node name="multi" value="Multilanguage" toBeTranslated="true"/>
+	</node>
+	<node name="boolean3">
+		<node name="on" value="on" toBeTranslated="true"/>
+		<node name="off" value="off" toBeTranslated="true"/>
+		<node name="unchanged" value="unchanged" toBeTranslated="true"/>
+	</node>
+	<node name="keyOptionView">
+		<node name="actionFor" value="Action for Key" toBeTranslated="true"/>
+	</node>
+</resources>
