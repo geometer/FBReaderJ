@@ -9,6 +9,6 @@ for file in ../../assets/resources/application/*.xml; do
 	if [ "$1" == "-html" ]; then
 		echo "<tr><td>$lang</td><td>$(($all_count+$all_lcount))</td><td>$(($neg_count+$neg_lcount))</td>"
 	else
-		echo $lang $(($neg_count+$neg_lcount)) of $(($all_count+$all_lcount))
+		echo $lang $(($all_count+$all_lcount-$neg_count-$neg_lcount)) of $(($all_count+$all_lcount))
 	fi
 done
