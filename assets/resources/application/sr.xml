@@ -119,10 +119,10 @@
 			<node name="buy" value="Желите ли да купите ову књигу? (%s)"/>
 			<node name="openInBrowser" value="Желите ли да отворите овај каталог у прегледачу?"/>
 		</node>
+		<!-- used as notification title -->
 		<node name="downloadingCatalogs" value="Преузимање каталога"/>
 		<!-- used as notification title -->
 		<node name="searchingNetwork" value="Претраживање књига на мрежи"/>
-		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Додавање каталога"/>
 			<node name="editUrl" value="Ручно унесите адресу."/>
