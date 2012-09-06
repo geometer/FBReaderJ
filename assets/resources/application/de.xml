@@ -119,8 +119,10 @@
 			<node name="buy" value="Möchten Sie dieses Buch kaufen? (%s)"/>
 			<node name="openInBrowser" value="Möchten Sie diesen Katalog im Browser öffnen?"/>
 		</node>
-		<node name="downloadingCatalogs" value="Heruntergeladene Kataloge"/> <!-- used as notification title -->
-		<node name="searchingNetwork" value="Suche nach Büchern im Netzwerk"/> <!-- used as notification title -->
+		<!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Heruntergeladene Kataloge"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Suche nach Büchern im Netzwerk"/>
 		<node name="addCatalog">
 			<node name="title" value="Katalog hinzufügen"/>
 			<node name="editUrl" value="URL eingeben"/>
@@ -142,7 +144,7 @@
 	<node name="buyBook">
 		<node name="title" value="Buchkauf"/>
 		<node name="titleSeveralBooks" value="Bücher kaufen"/>
-		<node name="confirm" value="Möchten Sie das Buch&#10;&#8220;%s&#8221;&#10;wirklich kaufen?"/>
+		<node name="confirm" value="Möchten Sie das Buch&#10;“%s”&#10;wirklich kaufen?"/>
 		<node name="confirmSeveralBooks" value="Möchten Sie wirklich %s Bücher kaufen?"/>
 		<node name="alreadyBought" value="Buch wurde schon gekauft"/>
 		<node name="notAuthorized" value="Autorisierung wird benötigt"/>
@@ -285,7 +287,7 @@
 				<node name="summaryOn" value="Das Bild wird automatisch gedreht wenn das Gerät gedreht wird."/>
 				<node name="summaryOff" value="Das Bild wird nicht gedreht wenn das Gerät gedreht wird."/>
 			</node>
-				<node name="showStatusBar" value="Statuszeile anzeigen">
+			<node name="showStatusBar" value="Statuszeile anzeigen">
 				<node name="summaryOn" value="Statuszeile im Lesemodus anzeigen."/>
 				<node name="summaryOff" value="Statuszeile im Lesemodus verstecken."/>
 			</node>
@@ -307,8 +309,8 @@
 			</node>
 			<node name="dontTurnScreenOff" value="Ausschalten des Bildschirms verhindern">
 				<node name="0" value="Immer"/>
-					<node name="25" value="Falls Akkuladung &gt; 25%"/>
-					<node name="50" value="Falls Akkuladung &gt; 50%"/>
+				<node name="25" value="Falls Akkuladung &gt; 25%"/>
+				<node name="50" value="Falls Akkuladung &gt; 50%"/>
 				<node name="100" value="Nie"/>
 			</node>
 			<node name="dontTurnScreenOffDuringCharging" value="Ausschalten des Bildschirms beim Laden verhindern">
@@ -316,7 +318,7 @@
 				<node name="summaryOff" value="Bildschirm abschalten auch wenn das Geräte aufgeladen wird."/>
 			</node>
 		</node>
-			<node name="text" value="Textdarstellung">
+		<node name="text" value="Textdarstellung">
 			<node name="summary" value="Zeichensatz, Silbentrennung, etc."/>
 			<node name="fontProperties" value="Schriftoptimierung">
 				<node name="summary" value="Kantenglättung, Unterschneidung, etc."/>
@@ -585,14 +587,22 @@
 				<node name="summaryOff" value="Seiten vertikal umblättern"/>
 			</node>
 		</node>
- 		<node name="tapZones" value="Tipp-Zonen">                        <!--Tap zones-->
-			<node name="summary" value="Aktionen beim antippen"/>         <!--Actions on finger tap-->
-			<node name="tapZonesScheme" value="Schema">                   <!-- Tap zones scheme -->
-				<node name="left_to_right" value="Von links nach rechts"/> <!-- Left to right page scrolling -->
-				<node name="right_to_left" value="Von rechts nach links"/> <!-- Right to left page scrolling -->
-				<node name="up" value="Von unten nach oben"/>              <!-- Down to up page scrolling -->
-				<node name="down" value="Von oben nach unten"/>            <!-- Up to down page scrolling -->
-				<node name="custom" value="Benutzerdefiniert…"/>           <!-- Custom… -->
+		<node name="tapZones" value="Tipp-Zonen">
+			<!--Tap zones-->
+			<node name="summary" value="Aktionen beim antippen"/>
+			<!--Actions on finger tap-->
+			<node name="tapZonesScheme" value="Schema">
+				<!-- Tap zones scheme -->
+				<node name="left_to_right" value="Von links nach rechts"/>
+				<!-- Left to right page scrolling -->
+				<node name="right_to_left" value="Von rechts nach links"/>
+				<!-- Right to left page scrolling -->
+				<node name="up" value="Von unten nach oben"/>
+				<!-- Down to up page scrolling -->
+				<node name="down" value="Von oben nach unten"/>
+				<!-- Up to down page scrolling -->
+				<node name="custom" value="Benutzerdefiniert…"/>
+				<!-- Custom… -->
 			</node>
 		</node>
 		<node name="dictionary" value="Wörterbuch">
