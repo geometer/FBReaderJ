@@ -34,15 +34,28 @@ public abstract class ZLApplication {
 	public interface ExternalFileOpener {
 		public void openFile(ZLFile f, String appData);
 	}
-
-	protected ExternalFileOpener myFileOpener;
-
-	public void setFileOpener(ExternalFileOpener o) {
-		myFileOpener = o;
+	
+	public interface PluginFileOpener {
+		public void openFile(ZLFile f, String appData, int pageNum);
 	}
 
-	public boolean fileOpenerIsSet() {
-		return myFileOpener != null;
+	protected ExternalFileOpener myExternalFileOpener;
+	protected PluginFileOpener myPluginFileOpener;
+
+	public void setExternalFileOpener(ExternalFileOpener o) {
+		myExternalFileOpener = o;
+	}
+	
+	public boolean externalFileOpenerIsSet() {
+		return myExternalFileOpener != null;
+	}
+
+	public void setPluginFileOpener(PluginFileOpener o) {
+		myPluginFileOpener = o;
+	}
+
+	public boolean pluginFileOpenerIsSet() {
+		return myPluginFileOpener != null;
 	}
 
 	private static ZLApplication ourInstance;

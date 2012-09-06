@@ -396,4 +396,17 @@ public class ApiClientImplementation implements ServiceConnection, Api, ApiMetho
 			ApiObject.envelope(action)
 		});
 	}
+	
+	public TextPosition getStoredPosition(String file) throws ApiException {
+		return requestTextPosition(GET_STORED_POSITION, new ApiObject[] {
+			ApiObject.envelope(file)
+		});
+	}
+	
+	public void storeTextPosition(String file, TextPosition pos) throws ApiException {
+		request(SET_STORED_POSITION, new ApiObject[] {
+			ApiObject.envelope(file),
+			pos
+		});
+	}
 }

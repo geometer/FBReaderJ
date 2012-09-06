@@ -23,13 +23,16 @@ import java.util.*;
 
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.util.Log;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.config.ZLConfig;
+import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.fbreader.*;
+import org.geometerplus.fbreader.library.Book;
 
 public class ApiServerImplementation extends ApiInterface.Stub implements Api, ApiMethods {
 	public static void sendEvent(ContextWrapper context, String eventType) {
@@ -181,6 +184,11 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 					));
 				case DELETE_ZONEMAP:
 					deleteZoneMap(((ApiObject.String)parameters[0]).Value);
+					return ApiObject.Void.Instance;
+				case GET_STORED_POSITION:
+					return getStoredPosition(((ApiObject.String)parameters[0]).Value);
+				case SET_STORED_POSITION:
+					storeTextPosition(((ApiObject.String)parameters[0]).Value, (TextPosition)parameters[1]);
 					return ApiObject.Void.Instance;
 				default:
 					return unsupportedMethodError(method);
@@ -462,5 +470,21 @@ public class ApiServerImplementation extends ApiInterface.Stub implements Api, A
 
 	public void setTapZoneAction(String name, int h, int v, boolean singleTap, String action) {
 		TapZoneMap.zoneMap(name).setActionForZone(h, v, singleTap, action);
+	}
+	
+	public TextPosition getStoredPosition(String file) {
+		ZLTextPosition pos = Book.getByFile(ZLFile.createFileByPath(file)).getStoredPosition();
+		if (pos == null) {
+			TextPosition res = new TextPosition(0,0,0);
+			return res;
+		} else {
+			TextPosition res = new TextPosition(pos.getParagraphIndex(), pos.getElementIndex(), pos.getCharIndex());
+			return res;
+		}
+	}
+	
+	public void storeTextPosition(String file, TextPosition pos) {
+		ZLTextPosition res = new ZLTextFixedPosition(pos.ParagraphIndex, pos.ElementIndex, pos.CharIndex);
+		Book.getByFile(ZLFile.createFileByPath(file)).storePosition(res);
 	}
 }

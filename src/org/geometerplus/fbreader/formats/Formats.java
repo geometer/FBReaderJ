@@ -27,7 +27,8 @@ import java.util.Arrays;
 public abstract class Formats {
 
 	private static String PREDEFINED_FILETYPES = "fb2;ePub;Mobipocket;plain text;HTML;RTF;doc;PDF;DjVu";
-
+	private static String EXTERNAL_PLUGINS = "org.geometerplus.android.fbreaderpdf";
+	
 	public static String JAVA_OPTION = "fbreader_java";
 	public static String NATIVE_OPTION = "fbreader_native";
 
@@ -158,6 +159,11 @@ public abstract class Formats {
 		if (pkg.equals(JAVA_OPTION)) return FormatPlugin.Type.JAVA;
 		if (pkg.equals(NATIVE_OPTION)) return FormatPlugin.Type.NATIVE;
 		if (pkg.equals("")) return FormatPlugin.Type.NONE;
+		for (String s : listFromString(EXTERNAL_PLUGINS)) {
+			if (s.equalsIgnoreCase(pkg)) {
+				return FormatPlugin.Type.PLUGIN;
+			}
+		}
 		return FormatPlugin.Type.EXTERNAL;
 	}
 }

@@ -174,7 +174,18 @@ public final class FBReaderApp extends ZLApplication {
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
-					myFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue());
+					myExternalFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue());
+					closeWindow();
+				}
+			}, postAction);
+			return;
+		}
+		if (p.type() == FormatPlugin.Type.PLUGIN) {
+			Library.Instance().addBookToRecentList(book);
+			runWithMessage("extract", new Runnable() {
+				public void run() {
+					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
+					myPluginFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue(), 2);
 					closeWindow();
 				}
 			}, postAction);

@@ -19,43 +19,40 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
-import org.geometerplus.zlibrary.core.encodings.EncodingCollection;
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.image.ZLImage;
 
-import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.library.Book;
 
-public abstract class FormatPlugin {
-	private final String myFileType;
+public class PdfPluginFormatPlugin extends PluginFormatPlugin {
 
-	protected FormatPlugin(String fileType) {
-		myFileType = fileType;
+	private final String PACKAGE = "org.geometerplus.android.fbreaderpdf";//also in formats
+	
+	public PdfPluginFormatPlugin() {
+		super("PDF");
 	}
 
-	public final String supportedFileType() {
-		return myFileType;
+	@Override
+	public String getPackage() {
+		return PACKAGE;
 	}
 
-	public ZLFile realBookFile(ZLFile file) throws BookReadingException {
-		return file;
+	@Override
+	public void readMetaInfo(Book book) throws BookReadingException {
+		//TODO
 	}
-	public abstract void readMetaInfo(Book book) throws BookReadingException;
-	public abstract void readModel(BookModel model) throws BookReadingException;
-	public abstract void detectLanguageAndEncoding(Book book) throws BookReadingException;
-	public abstract ZLImage readCover(ZLFile file);
-	public abstract String readAnnotation(ZLFile file);
 
-	public enum Type {
-		ANY,
-		JAVA,
-		NATIVE,
-		EXTERNAL,
-		NONE,
-		PLUGIN
-	};
-	public abstract Type type();
+	@Override
+	public ZLImage readCover(ZLFile file) {
+		//TODO
+		return null;
+	}
 
-	public abstract EncodingCollection supportedEncodings();
+	@Override
+	public String readAnnotation(ZLFile file) {
+		//TODO
+		return null;
+	}
+
 }

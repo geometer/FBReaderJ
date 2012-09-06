@@ -63,6 +63,7 @@ public class PluginCollection {
 		addPlugin(new MobipocketPlugin());
 		addPlugin(new OEBPlugin());
 		addPlugin(new FB2ZipExternalPlugin());
+		addPlugin(new PdfPluginFormatPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
