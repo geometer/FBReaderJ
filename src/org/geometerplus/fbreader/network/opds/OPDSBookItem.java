@@ -211,6 +211,9 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 		for (String format : Formats.getAllFormats()) {
 			if (Formats.getStatus(format) != FormatPlugin.Type.NONE) {
 				FileType ft = FileTypeCollection.Instance.typeById(format);
+				if (ft == null) {
+					return BookUrlInfo.Format.NONE;
+				}
 				for (MimeType type1 : ft.mimeTypes()) {
 					if (type1.equals(type)) {
 						return ft.Id;
