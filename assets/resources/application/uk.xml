@@ -265,6 +265,9 @@
 	<node name="Preferences">
 		<node name="directories" value="Теки">
 			<node name="summary" value="Теки для пошуку файлів"/>
+			<node name="bookPath" value="Теки з книжками"/>
+			<node name="fontPath" value="Теки зі шрифтами"/>
+			<node name="wallpaperPath" value="Теки зі шпалерами"/>
 			<node name="books" value="Теки з книжками"/>
 			<node name="fonts" value="Теки зі шрифтами"/>
 			<node name="wallpapers" value="Теки зі шпалерами"/>

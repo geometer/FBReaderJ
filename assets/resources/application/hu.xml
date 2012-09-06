@@ -265,6 +265,9 @@
 	<node name="Preferences">
 		<node name="directories" value="Mappák">
 			<node name="summary" value="Mely mappákban keressen fájlokat"/>
+			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="Könyvek mappája"/>
 			<node name="fonts" value="Betűtípusok mappája"/>
 			<node name="wallpapers" value="Háttérképek mappája"/>

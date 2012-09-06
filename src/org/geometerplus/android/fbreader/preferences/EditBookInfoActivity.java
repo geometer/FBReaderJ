@@ -31,13 +31,14 @@ import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
 
-import org.geometerplus.fbreader.library.Book;
-import org.geometerplus.fbreader.formats.FormatPlugin;
+import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.library.BookInfoActivity;
 import org.geometerplus.android.fbreader.library.SQLiteBooksDatabase;
+import org.geometerplus.android.fbreader.preferences.activityprefs.*;
 
 class BookTitlePreference extends ZLStringPreference {
 	private final Book myBook;
@@ -148,9 +149,70 @@ class EncodingPreference extends ZLStringListPreference {
 
 public class EditBookInfoActivity extends ZLPreferenceActivity {
 	private Book myBook;
+	private final List<String> myAuthors = new ArrayList<String>();
+	private final List<String> myTags = new ArrayList<String>();
+	private ZLSpinnerActivityPreference myAuthorPref;
+	private ZLSpinnerActivityPreference myTagPref;
+
+	private final HashMap<Integer,ZLActivityPreference> myActivityPrefs =
+		new HashMap<Integer,ZLActivityPreference>();
 
 	public EditBookInfoActivity() {
 		super("BookInfo");
+	}
+
+	private class AuthorsHolder implements ZLActivityPreference.ListHolder {
+
+		public List<String> getValue() {
+			return myBook.getAuthors();
+		}
+
+		public void setValue(List<String> l) {
+			myBook.setAuthors(l);
+		}
+	}
+
+	private class TagsHolder implements ZLActivityPreference.ListHolder {
+		private List<String> myValues;
+
+		public synchronized List<String> getValue() {
+			if (myValues == null) {
+				myValues = new LinkedList<String>();
+				for (Tag t : myBook.tags()) {
+					myValues.add(t.toString("/"));
+				}
+			}
+			return myValues;
+		}
+
+		public synchronized void setValue(List<String> tags) {
+			if (!tags.equals(myValues)) {
+				myValues = null;
+				myBook.removeAllTags();
+				for (String t : tags) {
+					myBook.addTag(Tag.getTag(t.split("/")));
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		ZLActivityPreference p = myActivityPrefs.get(requestCode);
+		if (resultCode == RESULT_OK) {
+			p.setValue(data);
+		}
+		myBook.save();
+		myAuthors.clear();
+		myTags.clear();
+		for (Author a : BooksDatabase.Instance().loadAuthors()) {
+			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
+		}
+		myAuthorPref.setSuggestions(myAuthors);
+		for (Tag t : BooksDatabase.Instance().loadTags()) {
+			if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
+		}
+		myTagPref.setSuggestions(myTags);
 	}
 
 	@Override
@@ -169,9 +231,29 @@ public class EditBookInfoActivity extends ZLPreferenceActivity {
 			return;
 		}
 
+		for (Author a : BooksDatabase.Instance().loadAuthors()) {
+			if (!myAuthors.contains(a.DisplayName))	myAuthors.add(a.DisplayName);//TODO: booksdb should clean itself
+		}
+		for (Tag t : BooksDatabase.Instance().loadTags()) {
+			if (!myTags.contains(t.Name)) myTags.add(t.Name);//TODO: booksdb should clean itself
+		}
+
+		myAuthorPref = new ZLSpinnerActivityPreference(
+			this, new AuthorsHolder(), myActivityPrefs, myAuthors,
+			Resource, "authors"
+		);
+
+		myTagPref = new ZLSpinnerActivityPreference(
+			this, new TagsHolder(), myActivityPrefs, myTags,
+			Resource, "tags"
+		);
+
 		addPreference(new BookTitlePreference(this, Resource, "title", myBook));
+		addPreference(myAuthorPref);
+		addPreference(myTagPref);
 		addPreference(new LanguagePreference(this, Resource, "language", myBook));
 		addPreference(new EncodingPreference(this, Resource, "encoding", myBook));
+
 	}
 
 	@Override

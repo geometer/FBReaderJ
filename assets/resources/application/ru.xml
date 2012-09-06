@@ -280,6 +280,9 @@
 	<node name="Preferences">
 		<node name="directories" value="Каталоги">
 			<node name="summary" value="Где искать файлы"/>
+			<node name="bookPath" value="Каталоги с книгами"/>
+			<node name="fontPath" value="Каталоги со шрифтами"/>
+			<node name="wallpaperPath" value="Каталоги с обоями"/>
 			<node name="books" value="Каталог с книгами"/>
 			<node name="fonts" value="Каталог со шрифтами"/>
 			<node name="wallpapers" value="Каталог с обоями"/>

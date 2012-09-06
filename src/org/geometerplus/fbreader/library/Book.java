@@ -185,7 +185,7 @@ public class Book {
 
 		if (myTitle == null || myTitle.length() == 0) {
 			final String fileName = File.getShortName();
-			final int index = fileName.lastIndexOf('.');
+			final int index = (plugin.type() == FormatPlugin.Type.EXTERNAL ? -1 : fileName.lastIndexOf('.'));
 			setTitle(index > 0 ? fileName.substring(0, index) : fileName);
 		}
 		final String demoPathPrefix = Paths.mainBookDirectory() + "/Demos/";
@@ -206,6 +206,24 @@ public class Book {
 
 	public List<Author> authors() {
 		return (myAuthors != null) ? Collections.unmodifiableList(myAuthors) : Collections.<Author>emptyList();
+	}
+
+	public List<String> getAuthors() {
+		if (myAuthors == null) {
+			return Collections.<String>emptyList();
+		}
+		List<String> result = new ArrayList<String>();
+		for (Author a : myAuthors) {
+			result.add(a.DisplayName);
+		}
+		return result;
+	}
+
+	public void setAuthors(List<String> list) {
+		myAuthors = null;
+		for (String s : list) {
+			addAuthor(s);
+		}
 	}
 
 	void addAuthorWithNoCheck(Author author) {

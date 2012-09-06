@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.filesystem.*;
 
 import org.geometerplus.fbreader.tree.FBTree;
 import org.geometerplus.fbreader.Paths;
+import org.geometerplus.fbreader.formats.*;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 
 public final class Library extends AbstractLibrary {
@@ -165,7 +166,9 @@ public final class Library extends AbstractLibrary {
 		final HashSet<ZLFile> dirSet = new HashSet<ZLFile>();
 		final LinkedList<ZLPhysicalFile> fileList = new LinkedList<ZLPhysicalFile>();
 
-		dirQueue.offer(new ZLPhysicalFile(new File(Paths.BooksDirectoryOption().getValue())));
+		for (String s : Paths.BookPathOption().getValue()) {
+			dirQueue.offer(new ZLPhysicalFile(new File(s)));
+		}
 
 		while (!dirQueue.isEmpty()) {
 			for (ZLFile file : dirQueue.poll().children()) {
@@ -449,13 +452,33 @@ public final class Library extends AbstractLibrary {
 	@Override
 	public Book getRecentBook() {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
-		return recentIds.size() > 0 ? Book.getById(recentIds.get(0)) : null;
+		for (Long id : recentIds) {
+			try {
+				if (PluginCollection.Instance().getPlugin(Book.getById(id).File).type() != FormatPlugin.Type.EXTERNAL) {
+					return Book.getById(id);
+				}
+			} catch (NullPointerException e) {
+			}
+		}
+		return null;
 	}
 
 	@Override
 	public Book getPreviousBook() {
 		List<Long> recentIds = myDatabase.loadRecentBookIds();
-		return recentIds.size() > 1 ? Book.getById(recentIds.get(1)) : null;
+		boolean firstSkipped = false;
+		for (Long id : recentIds) {
+			if (firstSkipped) {
+				try {
+					if (PluginCollection.Instance().getPlugin(Book.getById(id).File).type() != FormatPlugin.Type.EXTERNAL) {
+						return Book.getById(id);
+					}
+				} catch (NullPointerException e) {
+				}
+			}
+			firstSkipped = true;
+		}
+		return null;
 	}
 
 	@Override

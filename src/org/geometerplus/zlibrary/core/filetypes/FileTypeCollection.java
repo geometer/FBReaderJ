@@ -36,6 +36,7 @@ public class FileTypeCollection {
 		addType(new FileTypeHtml());
 		addType(new SimpleFileType("plain text", "txt", MimeType.TYPES_TXT));
 		addType(new SimpleFileType("RTF", "rtf", MimeType.TYPES_RTF));
+		addType(new SimpleFileType("doc", "doc", MimeType.TYPES_DOC));
 		addType(new SimpleFileType("PDF", "pdf", MimeType.TYPES_PDF));
 		addType(new FileTypeDjVu());
 		addType(new SimpleFileType("ZIP archive", "zip", Collections.singletonList(MimeType.APP_ZIP)));
@@ -50,6 +51,9 @@ public class FileTypeCollection {
 	}
 
 	public FileType typeById(String id) {
+//		if (myTypes.get(id.toLowerCase()) == null) {
+//			addType(new SimpleFileType(id.toLowerCase(), id.toLowerCase(), MimeType.TEXT_PLAIN));
+//		}
 		return myTypes.get(id.toLowerCase());
 	}
 
@@ -59,6 +63,10 @@ public class FileTypeCollection {
 				return type;
 			}
 		}
+//		if (!file.getExtension().equals("") && !file.getExtension().contains("/")) {
+//			addType(new SimpleFileType(file.getExtension().toLowerCase(), file.getExtension().toLowerCase(), MimeType.TEXT_PLAIN));
+//			return myTypes.get(file.getExtension().toLowerCase());
+//		}
 		return null;
 	}
 

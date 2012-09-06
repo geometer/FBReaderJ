@@ -265,6 +265,9 @@
 	<node name="Preferences">
 		<node name="directories" value="Directoare">
 			<node name="summary" value="Directoare sa caute fisiere"/>
+			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="Directorul cu carti"/>
 			<node name="fonts" value="Directorul cu fonturi"/>
 			<node name="wallpapers" value="Imagini de Fundal director"/>

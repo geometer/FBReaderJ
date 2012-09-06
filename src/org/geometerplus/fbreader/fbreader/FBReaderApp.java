@@ -35,6 +35,10 @@ import org.geometerplus.fbreader.bookmodel.BookModel;
 import org.geometerplus.fbreader.bookmodel.BookReadingException;
 import org.geometerplus.fbreader.bookmodel.TOCTree;
 import org.geometerplus.fbreader.library.*;
+import org.geometerplus.fbreader.formats.*;
+import org.geometerplus.zlibrary.core.filetypes.*;
+
+import android.util.Log;
 
 public final class FBReaderApp extends ZLApplication {
 	public final ZLBooleanOption AllowScreenBrightnessAdjustmentOption =
@@ -149,13 +153,39 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openBook(final Book book, final Bookmark bookmark, final Runnable postAction) {
-		if (book != null || Model == null) {
+		if (Model != null) {
+			if (book == null || bookmark == null && book.File.getPath().equals(Model.Book.File.getPath())) {
+				return;
+			}
+		}
+		final Book bookToOpen = book;
+		if (book == null) {
 			runWithMessage("loadingBook", new Runnable() {
 				public void run() {
-					openBookInternal(book, bookmark);
+					openBookInternal(bookToOpen, bookmark);
 				}
 			}, postAction);
+			return;
 		}
+		final FormatPlugin p = PluginCollection.Instance().getPlugin(book.File);
+		if (p == null) return;
+		if (p.type() == FormatPlugin.Type.EXTERNAL) {
+			Library.Instance().addBookToRecentList(book);
+			runWithMessage("extract", new Runnable() {
+				public void run() {
+					ZLFile f = ((ExternalFormatPlugin)p).prepareFile(bookToOpen.File);
+					myFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue());
+					closeWindow();
+				}
+			}, postAction);
+			return;
+		}
+
+		runWithMessage("loadingBook", new Runnable() {
+			public void run() {
+				openBookInternal(bookToOpen, bookmark);
+			}
+		}, postAction);
 	}
  
 	public void reloadBook() {
@@ -342,15 +372,15 @@ public final class FBReaderApp extends ZLApplication {
 			book.insertIntoBookList();
 			return book;
 		}
-		if (file.isArchive()) {
-			for (ZLFile child : file.children()) {
-				book = Book.getByFile(child);
-				if (book != null) {
-					book.insertIntoBookList();
-					return book;
-				}
-			}
-		}
+//		if (file.isArchive()) {
+//			for (ZLFile child : file.children()) {
+//				book = Book.getByFile(child);
+//				if (book != null) {
+//					book.insertIntoBookList();
+//					return book;
+//				}
+//			}
+//		}
 		return null;
 	}
 

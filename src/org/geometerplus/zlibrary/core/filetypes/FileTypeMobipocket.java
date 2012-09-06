@@ -36,10 +36,15 @@ class FileTypeMobipocket extends FileTypePalm {
 
 	/*
 	@Override
-	public String extension() {
-		return "mobi";
+	public boolean acceptsExtension(String ext) {
+		return "mobi".equalsIgnoreCase(ext);
 	}
 	*/
+
+	@Override
+	public String extension(MimeType mimeType) {
+		return "mobi";
+	}
 
 	@Override
 	public List<MimeType> mimeTypes() {

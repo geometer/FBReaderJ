@@ -31,16 +31,18 @@ class FileTypeDjVu extends FileType {
 
 	@Override
 	public boolean acceptsFile(ZLFile file) {
-		final String extension = file.getExtension();
+		return acceptsExtension(file.getExtension());
+	}
+
+	@Override
+	public boolean acceptsExtension(String extension) {
 		return "djvu".equalsIgnoreCase(extension) || "djv".equalsIgnoreCase(extension);
 	}
 
-	/*
 	@Override
-	public String extension() {
+	public String extension(MimeType mimeType) {
 		return "djvu";
 	}
-	*/
 
 	@Override
 	public List<MimeType> mimeTypes() {

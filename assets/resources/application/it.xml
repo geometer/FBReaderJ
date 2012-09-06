@@ -266,6 +266,9 @@
 	<node name="Preferences">
 		<node name="directories" value="Cartelle">
 			<node name="summary" value="Cartella in cui cercare i File"/>
+			<node name="bookPath" value="Books directories" toBeTranslated="true"/>
+			<node name="fontPath" value="Fonts directories" toBeTranslated="true"/>
+			<node name="wallpaperPath" value="Wallpapers directories" toBeTranslated="true"/>
 			<node name="books" value="Cartella dei Libri"/>
 			<node name="fonts" value="Cartella dei Fonts"/>
 			<node name="wallpapers" value="Cartella degli Sfondi"/>

@@ -21,10 +21,11 @@ package org.geometerplus.fbreader.formats;
 
 import java.util.*;
 
-import org.geometerplus.zlibrary.core.filesystem.ZLFile;
+import org.geometerplus.zlibrary.core.filesystem.*;
 import org.geometerplus.zlibrary.core.filetypes.*;
 
 import org.geometerplus.fbreader.formats.fb2.FB2Plugin;
+import org.geometerplus.fbreader.formats.fb2.FB2ZipExternalPlugin;
 import org.geometerplus.fbreader.formats.oeb.OEBPlugin;
 import org.geometerplus.fbreader.formats.pdb.MobipocketPlugin;
 
@@ -61,6 +62,7 @@ public class PluginCollection {
 		addPlugin(new FB2Plugin());
 		addPlugin(new MobipocketPlugin());
 		addPlugin(new OEBPlugin());
+		addPlugin(new FB2ZipExternalPlugin());
 	}
 
 	private void addPlugin(FormatPlugin plugin) {
@@ -74,20 +76,55 @@ public class PluginCollection {
 	}
 
 	public FormatPlugin getPlugin(ZLFile file) {
-		return getPlugin(file, FormatPlugin.Type.ANY);
+		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
+		if (fileType == null) {
+			return null;
+		}
+		if (file instanceof ZLResourceFile) {
+			return getPlugin(fileType, FormatPlugin.Type.JAVA);
+		}
+		return getPlugin(fileType, Formats.getStatus(fileType.Id));
 	}
 
-	public FormatPlugin getPlugin(ZLFile file, FormatPlugin.Type formatType) {
-		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
-		return getPlugin(fileType, formatType);
+	private FormatPlugin getOrCreateExternalPlugin(FileType fileType) {
+		boolean exists = true;
+		final List<FormatPlugin> list = myPlugins.get(FormatPlugin.Type.EXTERNAL);
+		if (list == null) {
+			exists = false;
+		}
+		if (exists) {
+			for (FormatPlugin p : list) {
+				if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
+					return p;
+				}
+			}
+		}
+
+		FormatPlugin plugin;
+		FormatPlugin builtInPlugin = getPlugin(fileType, FormatPlugin.Type.NATIVE);
+		if (builtInPlugin == null) {
+			builtInPlugin = getPlugin(fileType, FormatPlugin.Type.JAVA);
+		}
+		if (builtInPlugin != null) {
+			plugin = new ExternalFormatPlugin(fileType.Id, builtInPlugin);
+		} else {
+			plugin = new ExternalFormatPlugin(fileType.Id);
+		}
+		addPlugin(plugin);
+		return plugin;
 	}
 
 	public FormatPlugin getPlugin(FileType fileType, FormatPlugin.Type formatType) {
 		if (fileType == null) {
 			return null;
 		}
-
-		if (formatType == FormatPlugin.Type.ANY) {
+		if (formatType == FormatPlugin.Type.NONE) {
+			return null;
+		}
+		
+		if (formatType == FormatPlugin.Type.EXTERNAL) {
+			return getOrCreateExternalPlugin(fileType);
+		} else if (formatType == FormatPlugin.Type.ANY) {
 			FormatPlugin p = getPlugin(fileType, FormatPlugin.Type.NATIVE);
 			if (p == null) {
 				p = getPlugin(fileType, FormatPlugin.Type.JAVA);
