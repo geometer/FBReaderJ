@@ -27,14 +27,14 @@ public class MergedInputStream extends InputStream {
     private InputStream myCurrentStream;
     private int myCurrentStreamNumber;
 
-	public MergedInputStream(InputStream[] streams) throws IOException {
+    public MergedInputStream(InputStream[] streams) throws IOException {
         myStreams = streams;
         myCurrentStream = streams[0];
         myCurrentStreamNumber = 0;
-	}
-	
-	@Override
-	public int read() throws IOException {
+    }
+
+    @Override
+    public int read() throws IOException {
         int readed = -1;
         boolean streamIsAvailable = true;
         while (readed == -1 && streamIsAvailable) {
@@ -44,10 +44,10 @@ public class MergedInputStream extends InputStream {
             }
         }
         return readed;
-	}
+    }
 
-	@Override
-	public int read(byte[] b, int off, int len) throws IOException {
+    @Override
+    public int read(byte[] b, int off, int len) throws IOException {
         int bytesToRead = len;
         int bytesReaded = 0;
         boolean streamIsAvailable = true;
@@ -63,10 +63,10 @@ public class MergedInputStream extends InputStream {
             }
         }
         return bytesReaded == 0 ? -1 : bytesReaded;
-	}
+    }
 
-	@Override
-	public long skip(long n) throws IOException {
+    @Override
+    public long skip(long n) throws IOException {
         long skipped = myCurrentStream.skip(n);
         boolean streamIsAvailable = true;
         while (skipped < n && streamIsAvailable) {
@@ -76,25 +76,25 @@ public class MergedInputStream extends InputStream {
             }
         }
         return skipped;
-	}
+    }
 
-	@Override
-	public int available() throws IOException {
+    @Override
+    public int available() throws IOException {
         int total = 0;
-		for (int i = myCurrentStreamNumber; i < myStreams.length; ++i) {
+        for (int i = myCurrentStreamNumber; i < myStreams.length; ++i) {
             total += myStreams[i].available();
         }
         return total;
-	}
+    }
 
-	@Override
-	public void reset() throws IOException {
+    @Override
+    public void reset() throws IOException {
         myCurrentStream = myStreams[0];
         myCurrentStreamNumber = 0;
         for (InputStream stream : myStreams) {
             stream.reset();
         }
-	}
+    }
 
     private boolean nextStream() {
         if (myCurrentStreamNumber + 1 >= myStreams.length) {

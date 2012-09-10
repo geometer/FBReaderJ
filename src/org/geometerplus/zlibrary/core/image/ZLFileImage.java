@@ -25,15 +25,15 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.util.*;
 
 public class ZLFileImage extends ZLSingleImage {
-	public static final String SCHEME = "imagefile";
+    public static final String SCHEME = "imagefile";
 
-	public static final String ENCODING_NONE = "";
-	public static final String ENCODING_HEX = "hex";
-	public static final String ENCODING_BASE64 = "base64";
+    public static final String ENCODING_NONE = "";
+    public static final String ENCODING_HEX = "hex";
+    public static final String ENCODING_BASE64 = "base64";
 
-	public static ZLFileImage byUrlPath(String urlPath) {
-		try {
-			final String[] data = urlPath.split("\000");
+    public static ZLFileImage byUrlPath(String urlPath) {
+        try {
+            final String[] data = urlPath.split("\000");
             int count = Integer.parseInt(data[2]);
             int[] offsets = new int[count];
             int[] lengths = new int[count];
@@ -41,21 +41,21 @@ public class ZLFileImage extends ZLSingleImage {
                 offsets[i] = Integer.parseInt(data[3 + i]);
                 lengths[i] = Integer.parseInt(data[3 + count + i]);
             }
-			return new ZLFileImage(
-				MimeType.IMAGE_AUTO,
-				ZLFile.createFileByPath(data[0]),
-				data[1],
-				offsets,
-                lengths
-			);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+            return new ZLFileImage(
+                    MimeType.IMAGE_AUTO,
+                    ZLFile.createFileByPath(data[0]),
+                    data[1],
+                    offsets,
+                    lengths
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	private final ZLFile myFile;
-	private final String myEncoding;
+    private final ZLFile myFile;
+    private final String myEncoding;
     private final int[] myOffsets;
     private final int[] myLengths;
 
@@ -70,12 +70,12 @@ public class ZLFileImage extends ZLSingleImage {
         myOffsets = offsets;
         myLengths = lengths;
     }
-	
-	public ZLFileImage(String mimeType, ZLFile file, String encoding, int offset, int length) {
-		this(MimeType.get(mimeType), file, encoding, offset, length);
-	}
 
-	public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int offset, int length) {
+    public ZLFileImage(String mimeType, ZLFile file, String encoding, int offset, int length) {
+        this(MimeType.get(mimeType), file, encoding, offset, length);
+    }
+
+    public ZLFileImage(MimeType mimeType, ZLFile file, String encoding, int offset, int length) {
         super(mimeType);
         myFile = file;
         myEncoding = encoding != null ? encoding : ENCODING_NONE;
@@ -83,13 +83,13 @@ public class ZLFileImage extends ZLSingleImage {
         myLengths = new int[1];
         myOffsets[0] = offset;
         myLengths[0] = length;
-	}
+    }
 
-	public ZLFileImage(MimeType mimeType, ZLFile file) {
-		this(mimeType, file, ENCODING_NONE, 0, (int)file.size());
-	}
+    public ZLFileImage(MimeType mimeType, ZLFile file) {
+        this(mimeType, file, ENCODING_NONE, 0, (int)file.size());
+    }
 
-	public String getURI() {
+    public String getURI() {
         String result = SCHEME + "://" + myFile.getPath() + "\000" + myEncoding + "\000" + myOffsets.length;
         for (int offset : myOffsets) {
             result += "\000" + offset;
@@ -98,11 +98,11 @@ public class ZLFileImage extends ZLSingleImage {
             result += "\000" + length;
         }
         return result;
-	}
+    }
 
-	@Override
-	public InputStream inputStream() {
-		try {
+    @Override
+    public InputStream inputStream() {
+        try {
             final InputStream stream;
             if (myOffsets.length == 1) {
                 final int offset = myOffsets[0];
@@ -118,18 +118,18 @@ public class ZLFileImage extends ZLSingleImage {
                 stream = new MergedInputStream(streams);
             }
             if (ENCODING_NONE.equals(myEncoding)) {
-				return stream;
-			} else if (ENCODING_HEX.equals(myEncoding)) {
-				return new HexInputStream(stream);
-			} else if (ENCODING_BASE64.equals(myEncoding)) {
-				return new Base64InputStream(stream);
-			} else {
-				System.err.println("unsupported encoding: " + myEncoding);
-				return null;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+                return stream;
+            } else if (ENCODING_HEX.equals(myEncoding)) {
+                return new HexInputStream(stream);
+            } else if (ENCODING_BASE64.equals(myEncoding)) {
+                return new Base64InputStream(stream);
+            } else {
+                System.err.println("unsupported encoding: " + myEncoding);
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
