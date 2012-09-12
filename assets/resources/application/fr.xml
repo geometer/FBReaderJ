@@ -46,7 +46,7 @@
 		</node>
 		<node name="openBook" value="Ouvrir ce livre"/>
 		<node name="showBookInfo" value="Info livre"/>
-		<node name="shareBook" value="Share book" toBeTranslated="true"/>
+		<node name="shareBook" value="Partager ce livre"/>
 		<node name="deleteBook" value="Supprimer ce livre"/>
 		<node name="addToFavorites" value="Ajouter aux favoris"/>
 		<node name="removeFromFavorites" value="Supprimer des favoris"/>
@@ -118,10 +118,10 @@
 			<node name="buy" value="Voulez-vous acheter ce livre? (%s)"/>
 			<node name="openInBrowser" value="Voulez-vous ouvrir ce catalogue dans le navigateur?"/>
 		</node>
+		<!-- used as notification title -->
 		<node name="downloadingCatalogs" value="Chargement des catalogues"/>
 		<!-- used as notification title -->
 		<node name="searchingNetwork" value="Recherche de livres sur le réseau"/>
-		<!-- used as notification title -->
 		<node name="addCatalog">
 			<node name="title" value="Ajouter un catalogue"/>
 			<node name="editUrl" value="Saisir une adresse (URL)"/>
@@ -203,8 +203,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
-		<node name="library" value="Open library" toBeTranslated="true"/>
-		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
+		<node name="library" value="Bibliothèque"/>
+		<node name="networkLibrary" value="Bibliothèque réseau"/>
 		<node name="previousBook" value="Ouvrir le livre précédent"/>
 		<node name="returnTo" value="Retourner à …"/>
 		<node name="back" value="Retour"/>
@@ -220,7 +220,7 @@
 		<node name="clearSelection" value="Effacer"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Partagé depuis l'application &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt; pour Android"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Paramètres"/>
@@ -241,12 +241,12 @@
 			<node name="undo" value="Revenir en arrière"/>
 			<node name="redo" value="Refaire l'action"/>
 		</node>
-		<node name="shareBook" value="Share book" toBeTranslated="true"/>
+		<node name="shareBook" value="Partager ce livre"/>
 		<node name="search" value="Rechercher"/>
 		<node name="rotate" value="Orienter l'écran"/>
 		<node name="screenOrientation" value="Orientation de l'écran"/>
 		<node name="screenOrientationSystem" value="Système"/>
-		<node name="screenOrientationSensor" value="Device orientation sensitive" toBeTranslated="true"/>
+		<node name="screenOrientationSensor" value="Détectée par les capteurs"/>
 		<node name="screenOrientationPortrait" value="Portrait"/>
 		<node name="screenOrientationLandscape" value="Paysage"/>
 		<node name="screenOrientationReversePortrait" value="Portrait inversé"/>
@@ -276,7 +276,7 @@
 			<node name="summary" value="Rotation, barre de statut"/>
 			<node name="screenOrientation" value="Orientation de l'écran">
 				<node name="system" value="Système"/>
-				<node name="sensor" value="Device orientation sensitive" toBeTranslated="true"/>
+				<node name="sensor" value="Détectée par les capteurs"/>
 				<node name="portrait" value="Portrait"/>
 				<node name="landscape" value="Paysage"/>
 				<node name="reversePortrait" value="Portrait inversé"/>
@@ -290,9 +290,9 @@
 				<node name="summaryOn" value="Afficher la barre de statut en mode lecture"/>
 				<node name="summaryOff" value="Cacher la barre de statut en mode lecture"/>
 			</node>
-			<node name="showActionBar" value="Show action bar" toBeTranslated="true">
-				<node name="summaryOn" value="Show action bar in reading mode" toBeTranslated="true"/>
-				<node name="summaryOff" value="Hide action bar in reading mode" toBeTranslated="true"/>
+			<node name="showActionBar" value="Montrer la barre d'actions">
+				<node name="summaryOn" value="Montrer la barre d'actions pendant la lecture"/>
+				<node name="summaryOff" value="Cacher la barre d'actions pendant la lecture"/>
 			</node>
 			<node name="showStatusBarWhenMenuIsActive" value="Afficher la barre de statut lorsque le menu est actif">
 				<node name="summaryOn" value="Afficher la barre  de statut lorsque le menu devient actif"/>
@@ -319,27 +319,27 @@
 		</node>
 		<node name="text" value="Texte">
 			<node name="summary" value="Polices, césures, etc."/>
-			<node name="fontProperties" value="Font properties" toBeTranslated="true">
-				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+			<node name="fontProperties" value="Propriétés de la police">
+				<node name="summary" value="Options de lissage de police"/>
+				<node name="antiAlias" value="Anticrénelage">
+					<node name="summaryOn" value="Anticrénelage activé"/>
+					<node name="summaryOff" value="Anticrénelage désactivé"/>
 				</node>
-				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				<node name="deviceKerning" value="Crénage du périphérique">
+					<node name="summaryOn" value="Crénage activé"/>
+					<node name="summaryOff" value="Crénage désactivé"/>
 				</node>
-				<node name="dithering" value="Dithering" toBeTranslated="true">
-					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				<node name="dithering" value="Tramage">
+					<node name="summaryOn" value="Tramage des couleurs activé"/>
+					<node name="summaryOff" value="Tramage des couleurs désactivé"/>
 				</node>
-				<node name="hinting" value="Hinting" toBeTranslated="true">
-					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				<node name="hinting" value="Indices">
+					<node name="summaryOn" value="Font hinting activé"/>
+					<node name="summaryOff" value="Font hinting désactivé"/>
 				</node>
-				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				<node name="subpixel" value="Lissage sous-pixel">
+					<node name="summaryOn" value="Lissage sous-pixel activé"/>
+					<node name="summaryOff" value="Lissage sous-pixel désactivé"/>
 				</node>
 			</node>
 			<node name="font" value="Famille de police">
@@ -363,14 +363,14 @@
 				<node name="summaryOff" value="normale"/>
 				<node name="unchanged" value="&lt;inchangé&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined" toBeTranslated="true">
-				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+			<node name="underlined" value="Soulignée">
+				<node name="summaryOn" value="Soulignée"/>
+				<node name="summaryOff" value="Régulière"/>
 				<node name="unchanged" value="&lt;inchangé&gt;"/>
 			</node>
-			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+			<node name="strikedThrough" value="Barrée">
+				<node name="summaryOn" value="Barrée"/>
+				<node name="summaryOff" value="Normale"/>
 				<node name="unchanged" value="&lt;inchangé&gt;"/>
 			</node>
 			<node name="lineSpacing" value="Espacement de lignes">
@@ -622,13 +622,13 @@
 		</node>
 		<node name="cancelMenu" value="Bouton retour">
 			<node name="summary" value="Liste des actions du bouton retour"/>
-			<node name="library" value="Library" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			<node name="library" value="Bibliothèque">
+				<node name="summaryOn" value="Afficher l'option 'Ouvrir bibliothèque'"/>
+				<node name="summaryOff" value="Ne pas afficher l'option 'Ouvrir bibliothèque'"/>
 			</node>
-			<node name="networkLibrary" value="Network library" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			<node name="networkLibrary" value="Librairie réseau">
+				<node name="summaryOn" value="Afficher l'option 'Ouvrir bibliothèque réseau'"/>
+				<node name="summaryOff" value="Ne pas afficher l'option 'Ouvrir bibliothèque réseau'"/>
 			</node>
 			<node name="previousBook" value="Livre précédent">
 				<node name="summaryOn" value="Permet de revenir au livre précédent"/>
@@ -657,16 +657,16 @@
 				<node name="summaryOff" value="Pas d'astuces"/>
 			</node>
 		</node>
-		<node name="about" value="About FBReader" toBeTranslated="true">
-			<node name="summary" value="Version info, contacts" toBeTranslated="true"/>
-			<node name="version" value="Version" toBeTranslated="true"/>
-			<node name="site" value="Visit our website" toBeTranslated="true">
+		<node name="about" value="À propos de FBReader">
+			<node name="summary" value="Numéro de version, contact"/>
+			<node name="version" value="Version"/>
+			<node name="site" value="Site web">
 				<node name="url" value="http://www.fbreader.org/"/>
 			</node>
-			<node name="email" value="Send us an e-mail" toBeTranslated="true">
-				<node name="url" value="mailto:contact@geometerplus.com" toBeTranslated="true"/>
+			<node name="email" value="Contact">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
 			</node>
-			<node name="twitter" value="Follow us at twitter" toBeTranslated="true">
+			<node name="twitter" value="Suivez nous sur twitter !">
 				<node name="url" value="http://twitter.com/fbreader"/>
 			</node>
 		</node>
@@ -684,13 +684,13 @@
 			<node name="openBook" value="Lire"/>
 			<node name="editInfo" value="Modifier"/>
 			<node name="reloadInfo" value="Recharger"/>
-			<node name="shareBook" value="Share" toBeTranslated="true"/>
+			<node name="shareBook" value="Partager"/>
 			<node name="topup" value="Recréditer"/>
 			<node name="pay" value="Payer"/>
 			<node name="refresh" value="Rafraîchir"/>
 			<node name="authorize" value="Autoriser"/>
 			<node name="resetPosition" value="Réinitialiser position"/>
-			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="sendReport" value="Envoyer un rapport"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Installer plugin"/>
@@ -803,17 +803,17 @@
 	</node>
 	<node name="error">
 		<node name="bookReading">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="title" value="Problème FBReader"/>
 		</node>
 	</node>
 	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Erreur survenue pendant la lecture de '%s'"/>
+		<node name="errorReadingZip" value="Erreur survenue pendant l'extraction de '%s'"/>
+		<node name="pluginNotFound" value="Aucun plugin pour '%s'"/>
+		<node name="unknownPluginType" value="Type de plugin inconnu: %s"/>
+		<node name="fileNotFound" value="Fichier non trouvé: %s"/>
+		<node name="opfFileNotFound" value="OPF non trouvé dans %s"/>
+		<node name="unsupportedFileFormat" value="Format de fichier non supporté '%s'"/>
+		<node name="errorParsingRtf" value="Rtf: erreur de paring dans: %s"/>
 	</node>
 </resources>
