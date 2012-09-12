@@ -48,7 +48,7 @@
 		<node name="it" value="Italiana"/>
 		<node name="lt" value="Lituaniana"/>
 		<node name="nl" value="Olandeza"/>
-		<node name="no" value="Norvegiana"/>
+		<node name="nb" value="Norvegiana"/>
 		<node name="pl" value="Poloneaza"/>
 		<node name="pt" value="Portugheza"/>
 		<node name="ro" value="Romana"/>

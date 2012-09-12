@@ -116,7 +116,7 @@ public abstract class ZLLanguageUtil {
 			case 0x11: return "ja";  // Japanese
 			case 0x12: return "ko";  // Korean
 			case 0x13: return "nl";  // Dutch
-			case 0x14: return "no";  // Norwegian
+			case 0x14: return "nb";  // Norwegian
 			case 0x15: return "pl";  // Polish
 			case 0x16: return "pt";  // Portuguese
 			case 0x17: return "rm";  // Romansh

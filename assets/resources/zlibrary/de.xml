@@ -51,7 +51,7 @@
 		<node name="it" value="Italienisch"/>
 		<node name="lt" value="Litauisch"/>
 		<node name="nl" value="Niederländisch"/>
-		<node name="no" value="Norwegisch"/>
+		<node name="nb" value="Norwegisch"/>
 		<node name="pl" value="Polnisch"/>
 		<node name="pt" value="Portugiesisch"/>
 		<node name="ro" value="Romanian" toBeTranslated="true"/>
