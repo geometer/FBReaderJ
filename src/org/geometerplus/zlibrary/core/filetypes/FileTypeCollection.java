@@ -39,6 +39,7 @@ public class FileTypeCollection {
 		addType(new SimpleFileType("PDF", "pdf", MimeType.TYPES_PDF));
 		addType(new FileTypeDjVu());
 		addType(new SimpleFileType("ZIP archive", "zip", Collections.singletonList(MimeType.APP_ZIP)));
+		addType(new SimpleFileType("MS Word document", "doc", MimeType.TYPES_DOC));
 	}
 
 	private void addType(FileType type) {
