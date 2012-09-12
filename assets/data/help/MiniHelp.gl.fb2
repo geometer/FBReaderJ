@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Sobre FBReaderJ</book-title> <lang>en</lang></title-info></description>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>Sobre FBReaderJ</book-title> <lang>gl</lang></title-info></description>
 <body>
 <title><p>Sobre FBReaderJ &FBReaderVersion;</p></title>
 <p>FBReaderJ é un lector de eBook para a <a l:href="http://www.android.com/">plataforma Android</a>. E é un clon do<a l:href="http://www.fbreader.org/">lector de libros FBReader</a> escrito en Java polos mesmo autores. FBReaderJ admite diversos formatos de eBook: <code>oeb</code>, <code>epub</code>, <code>fb2</code>. En futuras versións esta lista vaise a incrementar para admitir os mesmos formatos que o FBReader orixinal. Tamén acepta a lectura directa de arquivos <code>zip</code>, <code>tar</code> e <code>gzip</code>.</p>
