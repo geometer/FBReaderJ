@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>关于FBreaderJ</book-title> <lang>en</lang></title-info></description>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>关于FBreaderJ</book-title> <lang>zh</lang></title-info></description>
 <body>
 
 <title><p>关于FBreaderJ &FBReaderVersion;</p></title>

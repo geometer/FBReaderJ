@@ -166,7 +166,7 @@ bool AndroidUtil::init(JavaVM* jvm) {
 	Method_ZLFile_getPath = new StringMethod(Class_ZLFile, "getPath", "()");
 	Method_ZLFile_size = new LongMethod(Class_ZLFile, "size", "()");
 
-	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;II)V");
+	Constructor_ZLFileImage = new Constructor(Class_ZLFileImage, "(Ljava/lang/String;Lorg/geometerplus/zlibrary/core/filesystem/ZLFile;Ljava/lang/String;[I[I)V");
 
 	StaticMethod_Paths_cacheDirectory = new StaticObjectMethod(Class_Paths, "cacheDirectory", Class_java_lang_String, "()");
 
@@ -213,14 +213,25 @@ jobject AndroidUtil::createJavaImage(JNIEnv *env, const ZLFileImage &image) {
 	jobject javaFile = createJavaFile(env, image.file().path());
 	jstring javaEncoding = createJavaString(env, image.encoding());
 
+	std::vector<jint> offsets, sizes;
+	const ZLFileImage::Blocks &blocks = image.blocks();
+	for (size_t i = 0; i < blocks.size(); ++i) {
+		offsets.push_back((jint)blocks.at(i).offset);
+		sizes.push_back((jint)blocks.at(i).size);
+	}
+	jintArray javaOffsets = createJavaIntArray(env, offsets);
+	jintArray javaSizes = createJavaIntArray(env, sizes);
+
 	jobject javaImage = Constructor_ZLFileImage->call(
 		javaMimeType, javaFile, javaEncoding,
-		image.offset(), image.size()
+		javaOffsets, javaSizes
 	);
 
 	env->DeleteLocalRef(javaEncoding);
 	env->DeleteLocalRef(javaFile);
 	env->DeleteLocalRef(javaMimeType);
+	env->DeleteLocalRef(javaOffsets);
+	env->DeleteLocalRef(javaSizes);
 
 	return javaImage;
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>О FBReaderJ-у</book-title> <lang>en</lang></title-info></description>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>О FBReaderJ-у</book-title> <lang>sr</lang></title-info></description>
 <body>
 <title><p>О FBReader-у &FBReaderVersion;</p></title>
 <p>FBReader је читач е-књига. Он подржава формате <code>ePub</code> и <code>FB2</code>. Имајте на уму да књиге заштићене DRM-ом нису подржане. Ако имате било које датотеке у подржаним форматима, само их ставите у фасциклу <code>Books</code> на меморијској картици. Књиге ће бити на располагању у <a l:href="fbreader-action:library">библиотеци</a>. <a l:href="fbreader-action:networkLibrary">Мрежна библиотека</a> садржи велику збирку е-књига које можете да преузмете бесплатно или за одређену суму новца.</p>
