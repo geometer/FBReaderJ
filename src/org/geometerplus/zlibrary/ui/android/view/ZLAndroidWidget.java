@@ -56,6 +56,7 @@ public class ZLAndroidWidget extends View implements ZLViewWidget, View.OnLongCl
 		setFocusableInTouchMode(true);
 		setDrawingCacheEnabled(false);
 		setOnLongClickListener(this);
+	  	setLayerType(LAYER_TYPE_SOFTWARE, null);
 	}
 
 	@Override
