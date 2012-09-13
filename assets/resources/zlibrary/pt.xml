@@ -2,27 +2,27 @@
 <resources>
 	<node name="dialog">
 		<node name="button">
-			<node name="ok" value="Ok" />
-			<node name="cancel" value="Cancelar" />
-			<node name="yes" value="Sim" />
-			<node name="no" value="Não" />
-			<node name="apply" value="Aplicar" />
+			<node name="ok" value="Ok"/>
+			<node name="cancel" value="Cancelar"/>
+			<node name="yes" value="Sim"/>
+			<node name="no" value="Não"/>
+			<node name="apply" value="Aplicar"/>
 		</node>
 		<node name="networkError">
-			<node name="title" value="Erro de rede" />
-			<node name="unknownErrorMessage" value="Erro desconhecido" />
-			<node name="operationTimedOutMessage" value="Tempo de operação está esgotado" />
-			<node name="somethingWrongMessage" value="Algo dá errado para %s" />
-			<node name="couldntCreateDirectoryMessage" value="Não foi possível criar um diretório %s" />
-			<node name="couldntCreateFileMessage" value="Não foi possível criar um arquivo %s" />
-			<node name="couldntConnectToNetworkMessage" value="Não foi possível conectar à rede" />
-			<node name="couldntConnectMessage" value="Não foi possível conectar ao host %s" />
-			<node name="couldntResolveHostMessage" value="Não foi possível resolver host %s" />
-			<node name="authenticationFailed" value="Falha na autenticação" />
-			<node name="unsupportedProtocol" value="Protocolo não suportado" />
-			<node name="invalidURL" value="URL inválido" />
-			<node name="hostCantBeReached" value="Host %s não pode ser alcançado" />
-			<node name="connectionRefused" value="Conexão foi recusada por %s" />
+			<node name="title" value="Erro de rede"/>
+			<node name="unknownErrorMessage" value="Erro desconhecido"/>
+			<node name="operationTimedOutMessage" value="Tempo de operação está esgotado"/>
+			<node name="somethingWrongMessage" value="Algo dá errado para %s"/>
+			<node name="couldntCreateDirectoryMessage" value="Não foi possível criar um diretório %s"/>
+			<node name="couldntCreateFileMessage" value="Não foi possível criar um arquivo %s"/>
+			<node name="couldntConnectToNetworkMessage" value="Não foi possível conectar à rede"/>
+			<node name="couldntConnectMessage" value="Não foi possível conectar ao host %s"/>
+			<node name="couldntResolveHostMessage" value="Não foi possível resolver host %s"/>
+			<node name="authenticationFailed" value="Falha na autenticação"/>
+			<node name="unsupportedProtocol" value="Protocolo não suportado"/>
+			<node name="invalidURL" value="URL inválido"/>
+			<node name="hostCantBeReached" value="Host %s não pode ser alcançado"/>
+			<node name="connectionRefused" value="Conexão foi recusada por %s"/>
 		</node>
 	</node>
 	<node name="color">
@@ -31,44 +31,44 @@
 		<node name="blue" value="Blue" toBeTranslated="true"/>
 	</node>
 	<node name="language">
-		<node name="ar" value="Árabe" />
-		<node name="cs" value="Tcheco" />
-		<node name="de" value="Alemão" />
-		<node name="de-traditional" value="Alemão (ortografia tradicional)" />
-		<node name="el" value="Grego" />
-		<node name="en" value="Inglês" />
-		<node name="eo" value="Esperanto" />
-		<node name="es" value="Espanhol" />
-		<node name="fi" value="Finlandês" />
-		<node name="fr" value="Francês" />
-		<node name="gl" value="Galego" />
-		<node name="he" value="Hebraico" />
-		<node name="hu" value="Húngaro" />
-		<node name="id" value="Indonésio" />
-		<node name="it" value="Italiano" />
-		<node name="lt" value="Lituano" />
-		<node name="nl" value="Holandês" />
-		<node name="no" value="Norueguês" />
-		<node name="pl" value="Polonês" />
-		<node name="pt" value="Português" />
-		<node name="ro" value="Romeno" />
-		<node name="ru" value="Russo" />
-		<node name="sv" value="Sueco" />
-		<node name="ta" value="Tâmil" />
-		<node name="th" value="Tailandês" />
-		<node name="tr" value="Turco" />
-		<node name="uk" value="Ucraniano" />
-		<node name="vi" value="Vietnamita" />
-		<node name="zh" value="Chinês" />
-		<node name="other" value="Outro" />
-		<node name="multi" value="Multi-idioma" />
+		<node name="ar" value="Árabe"/>
+		<node name="cs" value="Tcheco"/>
+		<node name="de" value="Alemão"/>
+		<node name="de-traditional" value="Alemão (ortografia tradicional)"/>
+		<node name="el" value="Grego"/>
+		<node name="en" value="Inglês"/>
+		<node name="eo" value="Esperanto"/>
+		<node name="es" value="Espanhol"/>
+		<node name="fi" value="Finlandês"/>
+		<node name="fr" value="Francês"/>
+		<node name="gl" value="Galego"/>
+		<node name="he" value="Hebraico"/>
+		<node name="hu" value="Húngaro"/>
+		<node name="id" value="Indonésio"/>
+		<node name="it" value="Italiano"/>
+		<node name="lt" value="Lituano"/>
+		<node name="nl" value="Holandês"/>
+		<node name="nb" value="Norueguês"/>
+		<node name="pl" value="Polonês"/>
+		<node name="pt" value="Português"/>
+		<node name="ro" value="Romeno"/>
+		<node name="ru" value="Russo"/>
+		<node name="sv" value="Sueco"/>
+		<node name="ta" value="Tâmil"/>
+		<node name="th" value="Tailandês"/>
+		<node name="tr" value="Turco"/>
+		<node name="uk" value="Ucraniano"/>
+		<node name="vi" value="Vietnamita"/>
+		<node name="zh" value="Chinês"/>
+		<node name="other" value="Outro"/>
+		<node name="multi" value="Multi-idioma"/>
 	</node>
 	<node name="boolean3">
-		<node name="on" value="ligado" />
-		<node name="off" value="desligado" />
-		<node name="unchanged" value="inalterado" />
+		<node name="on" value="ligado"/>
+		<node name="off" value="desligado"/>
+		<node name="unchanged" value="inalterado"/>
 	</node>
 	<node name="keyOptionView">
-		<node name="actionFor" value="Ação para Tecla" />
+		<node name="actionFor" value="Ação para Tecla"/>
 	</node>
 </resources>

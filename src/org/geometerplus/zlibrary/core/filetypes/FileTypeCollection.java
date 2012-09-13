@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.fbreader.filetype;
+package org.geometerplus.zlibrary.core.filetypes;
 
 import java.util.*;
 
@@ -40,6 +40,7 @@ public class FileTypeCollection {
 		addType(new SimpleFileType("PDF", "pdf", MimeType.TYPES_PDF));
 		addType(new FileTypeDjVu());
 		addType(new SimpleFileType("ZIP archive", "zip", Collections.singletonList(MimeType.APP_ZIP)));
+		addType(new SimpleFileType("MS Word document", "doc", MimeType.TYPES_DOC));
 	}
 
 	private void addType(FileType type) {

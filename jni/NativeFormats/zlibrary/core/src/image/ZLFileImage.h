@@ -20,28 +20,53 @@
 #ifndef __ZLFILEIMAGE_H__
 #define __ZLFILEIMAGE_H__
 
+#include <vector>
+
 #include <ZLFile.h>
 
-#include "ZLStreamImage.h"
+#include "ZLImage.h"
 
-class ZLFileImage : public ZLStreamImage {
+class ZLFileImage : public ZLSingleImage {
+
+public:
+	struct Block {
+		unsigned int offset;
+		unsigned int size;
+
+		Block(unsigned int off, unsigned int s);
+	};
+	typedef std::vector<Block> Blocks;
 
 public:
 	ZLFileImage(const ZLFile &file, const std::string &encoding, size_t offset, size_t size = 0);
+	ZLFileImage(const ZLFile &file, const std::string &encoding, const Blocks &blocks);
 
 	//Kind kind() const;
 	const ZLFile &file() const;
+	const std::string &encoding() const;
+	const ZLFileImage::Blocks& blocks() const;
 
 protected:
 	//shared_ptr<ZLInputStream> inputStream() const;
 
 private:
 	const ZLFile myFile;
+	const std::string myEncoding;
+	Blocks myBlocks;
 };
 
-inline ZLFileImage::ZLFileImage(const ZLFile &file, const std::string &encoding, size_t offset, size_t size) : ZLStreamImage(file.mimeType(), encoding, offset, size), myFile(file) {}
+inline ZLFileImage::Block::Block(unsigned int off, unsigned int s) : offset(off), size(s) {}
+
+inline ZLFileImage::ZLFileImage(const ZLFile &file, const std::string &encoding, size_t offset, size_t size) : ZLSingleImage(file.mimeType()), myFile(file), myEncoding(encoding) {
+	myBlocks.push_back(Block(offset, size));
+}
+
+inline ZLFileImage::ZLFileImage(const ZLFile &file, const std::string &encoding, const ZLFileImage::Blocks &blocks) : ZLSingleImage(file.mimeType()), myFile(file), myEncoding(encoding), myBlocks(blocks) { }
+
 //inline ZLSingleImage::Kind ZLFileImage::kind() const { return FILE_IMAGE; }
 inline const ZLFile &ZLFileImage::file() const { return myFile; }
+inline const std::string &ZLFileImage::encoding() const { return myEncoding; }
+inline const ZLFileImage::Blocks &ZLFileImage::blocks() const { return myBlocks; }
 //inline shared_ptr<ZLInputStream> ZLFileImage::inputStream() const { return myFile.inputStream(); }
 
 #endif /* __ZLFILEIMAGE_H__ */

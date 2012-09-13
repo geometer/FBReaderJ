@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Serbian FBReaderJ resources, by Rancher -->
+<resources>
+	<node name="library" value="FBReader библиотека">
+		<node name="unknownAuthor" value="Непознат аутор"/>
+		<node name="booksWithNoTags" value="Књиге без ознака"/>
+		<node name="demo" value="пример"/>
+		<node name="byAuthor" value="По аутору">
+			<node name="summary" value="Књиге поређане по аутору"/>
+		</node>
+		<node name="byTitle" value="По наслову">
+			<node name="summary" value="Књиге поређане по наслову"/>
+		</node>
+		<node name="bySeries" value="По серијама">
+			<node name="summary" value="Књиге поређане по серијама"/>
+		</node>
+		<node name="byTag" value="По ознаци">
+			<node name="summary" value="Књиге поређане по ознаци"/>
+		</node>
+		<node name="recent" value="Скорашње">
+			<node name="summary" value="Недавно отворене књиге"/>
+		</node>
+		<node name="favorites" value="Омиљено">
+			<node name="summary" value="Изабране књиге"/>
+		</node>
+		<node name="found" value="Пронађено">
+			<node name="summary" value="Резултати претраге за: %s"/>
+		</node>
+		<node name="fileTree" value="Стабло датотека">
+			<node name="summary" value="Прегледајте систем датотека"/>
+		</node>
+		<node name="fileTreeRoot" value="Уређај">
+			<node name="summary" value="Пун систем датотека уређаја."/>
+		</node>
+		<node name="fileTreeCard" value="Меморијска картица">
+			<node name="summary" value="Меморијска картица која је убачена."/>
+		</node>
+		<node name="fileTreeLibrary" value="FBReader библиотека">
+			<node name="summary" value="FBReader-ова фасцикла са књигама."/>
+		</node>
+		<node name="menu">
+			<node name="localSearch" value="Претражи"/>
+		</node>
+		<node name="openBook" value="Отвори књигу"/>
+		<node name="showBookInfo" value="Подаци о књизи"/>
+		<node name="shareBook" value="Дели књигу"/>
+		<node name="deleteBook" value="Обриши књигу"/>
+		<node name="addToFavorites" value="Додај у омиљене"/>
+		<node name="removeFromFavorites" value="Уклони из омиљених"/>
+	</node>
+	<node name="networkLibrary" value="FBReader мрежна библиотека">
+		<node name="byAuthor" value="По аутору">
+			<node name="summary" value="Књиге поређане по аутору"/>
+		</node>
+		<node name="byTitle" value="По наслову">
+			<node name="summary" value="Књиге поређане по наслову"/>
+		</node>
+		<node name="byDate" value="По датуму">
+			<node name="summary" value="Књиге поређане по датуму куповине"/>
+		</node>
+		<node name="bySeries" value="По серијама">
+			<node name="summary" value="Књиге поређане по серијама"/>
+		</node>
+		<node name="search" value="Претрага">
+			<node name="summary" value="Претражите књиге на %s."/>
+			<node name="summaryAllCatalogs" value="Претражите књиге у свим каталозима."/>
+			<node name="summaryInProgress" value="Тражим…"/>
+		</node>
+		<node name="found" value="Пронађено">
+			<node name="summary" value="Резултати претраге за: %s"/>
+		</node>
+		<node name="openCatalog" value="Отвори каталог"/>
+		<node name="networkSearch" value="Претражи"/>
+		<node name="showResults" value="Прикажи резултате"/>
+		<node name="showBooks" value="Прикажи књиге"/>
+		<node name="download" value="Преузми"/>
+		<node name="read" value="Прочитај локални примерак"/>
+		<node name="delete" value="Обриши локални примерак"/>
+		<node name="readDemo" value="Прочитај узорак"/>
+		<node name="deleteDemo" value="Обриши узорак"/>
+		<node name="downloadDemo" value="Преузми узорак"/>
+		<node name="buy" value="Купи (%s)"/>
+		<node name="addToBasket" value="Додај у корпу"/>
+		<node name="removeFromBasket" value="Уклони из корпе"/>
+		<node name="openBasket" value="Отвори корпу"/>
+		<node name="clearBasket" value="Очисти корпу"/>
+		<node name="buyAllBooks" value="Купи све књиге"/>
+		<node name="openInBrowser" value="Отвори у прегледачу"/>
+		<node name="stopLoading" value="Заустави учитавање"/>
+		<node name="stopSearching" value="Заустави претрагу"/>
+		<node name="signIn" value="Пријави ме"/>
+		<node name="signOut" value="Одјави ме (%s)"/>
+		<node name="topup" value="Попуни налог (тренутно: %s)"/>
+		<node name="topupTitle" value="Попуна налога"/>
+		<node name="topupViaBrowser" value="Отвори страницу у прегледачу"/>
+		<node name="authorizationMenuTitle" value="Одабир радње"/>
+		<node name="topupSummary" value="Тренутно: %s"/>
+		<node name="basket" value="Корпа"/>
+		<node name="basketSummaryEmpty" value="Нема књига"/>
+		<node name="basketSummaryCountOnly" value="%0 књига">
+			<node condition="value 1" value="%0 књига"/>
+		</node>
+		<node name="basketSummary" value="%0 књига (%1)">
+			<node condition="value 1" value="%0 књига (%1)"/>
+		</node>
+		<node name="alreadyDownloading" value="Преузимам књигу…"/>
+		<node name="alreadyDownloadingDemo" value="Преузимам узорак…"/>
+		<node name="stoppingCatalogLoading" value="Заустављам учитавање…"/>
+		<node name="stoppingNetworkSearch" value="Заустављам претрагу…"/>
+		<node name="editCustomCatalog" value="Уреди каталог"/>
+		<node name="removeCustomCatalog" value="Уклони каталог"/>
+		<node name="addCustomCatalog" value="Додај каталог"/>
+		<node name="addCustomCatalogSummary" value="Додајте прилагођени OPDS каталог."/>
+		<node name="confirmQuestions">
+			<node name="read" value="Желите ли да прочитате локални примерак?"/>
+			<node name="download" value="Желите ли да преузмете ову књигу?"/>
+			<node name="readDemo" value="Желите ли да прочитате узорак?"/>
+			<node name="downloadDemo" value="Желите ли да преузмете узорак?"/>
+			<node name="buy" value="Желите ли да купите ову књигу? (%s)"/>
+			<node name="openInBrowser" value="Желите ли да отворите овај каталог у прегледачу?"/>
+		</node>
+		<!-- used as notification title -->
+		<node name="downloadingCatalogs" value="Преузимање каталога"/>
+		<!-- used as notification title -->
+		<node name="searchingNetwork" value="Претраживање књига на мрежи"/>
+		<node name="addCatalog">
+			<node name="title" value="Додавање каталога"/>
+			<node name="editUrl" value="Ручно унесите адресу."/>
+		</node>
+		<node name="menu">
+			<node name="networkSearch" value="Претражи"/>
+			<node name="reload" value="Освежи"/>
+			<node name="signIn" value="Пријави ме"/>
+			<node name="signUp" value="Отвори налог"/>
+			<node name="signOut" value="Одјави ме (%s)"/>
+			<node name="topup" value="Попуни налог"/>
+			<node name="addCustomCatalog" value="Додај каталог"/>
+			<node name="refreshCatalogsList" value="Освежи каталоге"/>
+			<node name="languages" value="Језички филтер"/>
+			<node name="clearBasket" value="Очисти корпу"/>
+			<node name="buyAllBooks" value="Купи све књиге"/>
+		</node>
+	</node>
+	<node name="buyBook">
+		<node name="title" value="Куповина књиге"/>
+		<node name="titleSeveralBooks" value="Куповина књига"/>
+		<node name="confirm" value="Желите ли да купите &#10;„%s“?"/>
+		<node name="confirmSeveralBooks" value="Желите ли да купите %s књиге?"/>
+		<node name="alreadyBought" value="Већ сте купили књигу"/>
+		<node name="notAuthorized" value="Потребна је провера идентитета"/>
+		<node name="noAccountInformation" value="Не могу да учитам стање налога"/>
+		<node name="unsufficientFunds" value="Ова књига кошта %0 а ви имате само %1"/>
+		<node name="zeroFunds" value="Ова књига кошта %0"/>
+	</node>
+	<node name="bookInfo">
+		<node name="bookInfo" value="Подаци о књизи"/>
+		<node name="fileInfo" value="Подаци о датотеци"/>
+		<node name="description" value="Опис"/>
+		<node name="noDescription" value="Нема описа."/>
+		<node name="annotation" value="Забелешка"/>
+		<node name="title" value="Наслов:"/>
+		<node name="authors" value="Аутори:">
+			<node condition="value 1" value="Аутор:"/>
+		</node>
+		<node name="series" value="Серија:"/>
+		<node name="indexInSeries" value="Попис у серији:"/>
+		<node name="tags" value="Ознаке:">
+			<node condition="value 1" value="Ознака:"/>
+		</node>
+		<node name="language" value="Језик:"/>
+		<node name="name" value="Назив:"/>
+		<node name="type" value="Врста:"/>
+		<node name="size" value="Величина:"/>
+		<node name="time" value="Последња измена:"/>
+		<node name="sizeInBytes" value="%s бајтова">
+			<node condition="value 1" value="%s бајт"/>
+		</node>
+		<node name="sizeInKiloBytes" value="%s kB"/>
+		<node name="catalog" value="Каталог:"/>
+		<node name="extraLinks" value="Сродне везе"/>
+		<node name="menu">
+			<node name="edit" value="Уреди"/>
+		</node>
+	</node>
+	<node name="bookDownloader">
+		<node name="tickerSuccess" value="Књига је преузета."/>
+		<node name="tickerError" value="Грешка при преузимању књиге."/>
+		<node name="contentSuccess" value="Преузимање је завршено."/>
+		<node name="contentError" value="Преузимање није завршено."/>
+		<node name="downloadingStarted" value="Преузимање књиге је започето."/>
+		<node name="alreadyDownloading" value="Књига се већ преузима."/>
+		<node name="cannotCreateDirectory" value="Не могу да направим фасциклу „%s“."/>
+		<node name="cannotCreateFile" value="Не могу да направим датотеку „%s“."/>
+	</node>
+	<node name="tocView">
+		<node name="expandTree" value="Прошири стабло"/>
+		<node name="collapseTree" value="Скупи стабло"/>
+		<node name="readText" value="Прочитај текст књиге"/>
+	</node>
+	<node name="bookmarksView">
+		<node name="thisBook" value="Ова књига"/>
+		<node name="allBooks" value="Све књиге"/>
+		<node name="found" value="Пронађено"/>
+		<node name="new" value="Нови обележивач"/>
+		<node name="open" value="Отвори"/>
+		<node name="edit" value="Уреди обележивач"/>
+		<node name="delete" value="Обриши обележивач"/>
+		<node name="menu">
+			<node name="search" value="Претражи"/>
+		</node>
+	</node>
+	<node name="cancelMenu">
+		<node name="library" value="Отвори библиотеку"/>
+		<node name="networkLibrary" value="Отвори мрежну библиотеку"/>
+		<node name="previousBook" value="Отвори претходну књигу"/>
+		<node name="returnTo" value="Врати ме на…"/>
+		<node name="back" value="Назад"/>
+		<node name="forward" value="Напред"/>
+		<node name="close" value="Затвори FBReader"/>
+	</node>
+	<node name="selection" value="Одабир">
+		<node name="copyToClipboard" value="Умножи"/>
+		<node name="openInDictionary" value="Отвори у речнику"/>
+		<node name="quoteFrom" value="Цитирај из „%s“"/>
+		<node name="textInBuffer" value="Умножено:&#10;%s"/>
+		<node name="bookmarkCreated" value="Обележивач је направљен:&#10;%s"/>
+		<node name="clearSelection" value="Очисти"/>
+	</node>
+	<node name="sharing">
+		<node name="sharedFrom" value="Поделио &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;."/>
+	</node>
+	<node name="menu">
+		<node name="preferences" value="Подешавања"/>
+		<node name="bookInfo" value="Подаци о књизи"/>
+		<node name="library" value="Библиотека"/>
+		<node name="toc" value="Садржај"/>
+		<node name="day" value="Дан"/>
+		<node name="night" value="Ноћ"/>
+		<node name="networkLibrary" value="Мрежна библиотека"/>
+		<node name="navigate" value="Навигација">
+			<node name="toc" value="Садржај"/>
+			<node name="gotoHome" value="Иди на почетак документа"/>
+			<node name="gotoPageNumber" value="Иди на страницу…"/>
+			<node name="gotoSectionStart" value="Иди на почетак одељка с текстом"/>
+			<node name="gotoSectionEnd" value="Иди на крај одељка с текстом"/>
+			<node name="nextTOCSection" value="Иди на следећу ставку садржаја"/>
+			<node name="previousTOCSection" value="Иди на претходну ставку садржаја"/>
+			<node name="undo" value="Иди назад"/>
+			<node name="redo" value="Иди напред"/>
+		</node>
+		<node name="shareBook" value="Дели књигу"/>
+		<node name="search" value="Претражи"/>
+		<node name="rotate" value="Обрни екран"/>
+		<node name="screenOrientation" value="Усмерење екрана"/>
+		<node name="screenOrientationSystem" value="Системско"/>
+		<node name="screenOrientationSensor" value="Осетљивост на усмерење"/>
+		<node name="screenOrientationPortrait" value="Усправно"/>
+		<node name="screenOrientationLandscape" value="Положено"/>
+		<node name="screenOrientationReversePortrait" value="Обрнуто усправно"/>
+		<node name="screenOrientationReverseLandscape" value="Обрнуто положено"/>
+		<node name="increaseFont" value="Увећај"/>
+		<node name="decreaseFont" value="Умањи"/>
+		<node name="toggleFullscreen" value="Цео екран"/>
+		<node name="bookmarks" value="Обележивачи"/>
+	</node>
+	<node name="BookInfo">
+		<node name="fileName" value="Име датотеке"/>
+		<node name="title" value="Наслов"/>
+		<node name="language" value="Језик"/>
+		<node name="encoding" value="Кодирање"/>
+		<node name="authors" value="Аутори"/>
+		<node name="tags" value="Ознаке"/>
+		<node name="series" value="Серија"/>
+	</node>
+	<node name="Preferences">
+		<node name="directories" value="Фасцикле">
+			<node name="summary" value="Фасцикле за тражење датотека."/>
+			<node name="books" value="Фасцикла са књигама"/>
+			<node name="fonts" value="Фасцикла са фонтовима"/>
+			<node name="wallpapers" value="Фасцикла са позадинама"/>
+		</node>
+		<node name="appearance" value="Изглед">
+			<node name="summary" value="Приказ подешавања, траке стања и осветљења дугмади."/>
+			<node name="screenOrientation" value="Усмерење екрана">
+				<node name="system" value="Систем"/>
+				<node name="sensor" value="Осетљивост на усмерење"/>
+				<node name="portrait" value="Усправно"/>
+				<node name="landscape" value="Положено"/>
+				<node name="reversePortrait" value="Обрнуто усправно"/>
+				<node name="reverseLandscape" value="Обрнуто положено"/>
+			</node>
+			<node name="autoOrientation" value="Самообртање">
+				<node name="summaryOn" value="Екран ће се обртати при померању уређаја"/>
+				<node name="summaryOff" value="Екран се неће обртати при померању уређаја"/>
+			</node>
+			<node name="showStatusBar" value="Трака стања">
+				<node name="summaryOn" value="Приказује траку стања у режиму читања."/>
+				<node name="summaryOff" value="Сакрива траку стања у режиму читања."/>
+			</node>
+			<node name="showActionBar" value="Трака за радње">
+				<node name="summaryOn" value="Приказује траку за радње у режиму читања."/>
+				<node name="summaryOff" value="Сакрива траку за радње у режиму читања."/>
+			</node>
+			<node name="showStatusBarWhenMenuIsActive" value="Трака стања кад је мени активан">
+				<node name="summaryOn" value="Приказује траку стања када мени постане активан."/>
+				<node name="summaryOff" value="Не приказује траку стања када мени постане активан."/>
+			</node>
+			<node name="disableButtonLights" value="Осветљење дугмади при читању">
+				<node name="summaryOn" value="Онемогућава осветљење дугмади (не ради на неким уређајима)."/>
+				<node name="summaryOff" value="Омогућава осветљење дугмади."/>
+			</node>
+			<node name="allowScreenBrightnessAdjustment" value="Прилагоди осветљење екрана">
+				<node name="summaryOn" value="Превлачењем прста нагоре/надоле дуж леве стране екрана."/>
+				<node name="summaryOff" value="Онемогућено."/>
+			</node>
+			<node name="dontTurnScreenOff" value="Спречи екран да зацрни">
+				<node name="0" value="Увек"/>
+				<node name="25" value="Док је ниво батерије већи од 25 одсто"/>
+				<node name="50" value="Док је ниво батерије већи од 50 одсто"/>
+				<node name="100" value="Никад"/>
+			</node>
+			<node name="dontTurnScreenOffDuringCharging" value="Спречи екран да зацрни током пуњења">
+				<node name="summaryOn" value="Спречава екран да зацрни ако се уређај пуни."/>
+				<node name="summaryOff" value="Искључује екран ако се уређај пуни."/>
+			</node>
+		</node>
+		<node name="text" value="Текст">
+			<node name="summary" value="Фонт, хифенација итд."/>
+			<node name="fontProperties" value="Својства фонта">
+				<node name="summary" value="Подешавања умекшавања фонта."/>
+				<node name="antiAlias" value="Умекшавање ивица">
+					<node name="summaryOn" value="Умекшавање ивица је омогућено."/>
+					<node name="summaryOff" value="Умекшавање ивица је онемогућено."/>
+				</node>
+				<node name="deviceKerning" value="Уклапање уређаја">
+					<node name="summaryOn" value="Уклапање уређаја је омогућено."/>
+					<node name="summaryOff" value="Уклапање уређаја је онемогућено."/>
+				</node>
+				<node name="dithering" value="Мешање боја">
+					<node name="summaryOn" value="Мешање боја је омогућено."/>
+					<node name="summaryOff" value="Мешање боја је онемогућено."/>
+				</node>
+				<node name="hinting" value="Дотеривање фонта">
+					<node name="summaryOn" value="Дотеривање фонта је омогућено."/>
+					<node name="summaryOff" value="Дотеривање фонта је онемогућено."/>
+				</node>
+				<node name="subpixel" value="Умекшавање потпиксела">
+					<node name="summaryOn" value="Умекшавање потпиксела је омогућено."/>
+					<node name="summaryOff" value="Умекшавање потпиксела је онемогућено."/>
+				</node>
+			</node>
+			<node name="font" value="Породица фонтова">
+				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			</node>
+			<node name="fontSize" value="Величина фонта"/>
+			<node name="fontSizeDifference" value="Разлика између величине фонта"/>
+			<node name="fontStyle" value="Стил фонта">
+				<node name="regular" value="Нормал"/>
+				<node name="bold" value="Масно"/>
+				<node name="italic" value="Курзив"/>
+				<node name="boldItalic" value="Масни курзив"/>
+			</node>
+			<node name="bold" value="Масно">
+				<node name="summaryOn" value="Масно"/>
+				<node name="summaryOff" value="Нормал"/>
+				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			</node>
+			<node name="italic" value="Курзив">
+				<node name="summaryOn" value="Курзив"/>
+				<node name="summaryOff" value="Нормал"/>
+				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			</node>
+			<node name="underlined" value="Подвучено">
+				<node name="summaryOn" value="Подвучено"/>
+				<node name="summaryOff" value="Нормал"/>
+				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			</node>
+			<node name="strikedThrough" value="Прецртано">
+				<node name="summaryOn" value="Прецртано"/>
+				<node name="summaryOff" value="Нормал"/>
+				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			</node>
+			<node name="lineSpacing" value="Размак између редова">
+				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			</node>
+			<node name="alignment" value="Поравнање">
+				<node name="left" value="Лево"/>
+				<node name="right" value="Десно"/>
+				<node name="center" value="Средина"/>
+				<node name="justify" value="Обострано"/>
+				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			</node>
+			<node name="autoHyphenations" value="Хифенација">
+				<node name="summaryOn" value="Дели речи на слогове."/>
+				<node name="summaryOff" value="Не дели речи на слогове."/>
+			</node>
+			<node name="allowHyphenations" value="Хифенација">
+				<node name="summaryOn" value="Дели речи на слогове"/>
+				<node name="summaryOff" value="Не дели речи на слогове"/>
+				<node name="unchanged" value="&lt;непромењено&gt;"/>
+			</node>
+			<node name="firstLineIndent" value="Увлачење првог реда"/>
+			<node name="spaceBefore" value="Размак пре"/>
+			<node name="spaceAfter" value="Размак после"/>
+			<node name="leftIndent" value="Лево увлачење"/>
+			<node name="rightIndent" value="Десно увлачење"/>
+			<node name="more" value="Више стилова">
+				<node name="summary" value="Одвојте подешавања за наслове, епиграфе итд."/>
+				<node name="Regular Paragraph" value="Обичан пасус">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Title" value="Наслов">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Section Title" value="Наслов одељка">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Poem Title" value="Наслов песме">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subtitle" value="Поднаслов">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Annotation" value="Забелешка">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Epigraph" value="Епиграф">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Stanza" value="Строфа">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Verse" value="Стих">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Preformatted text" value="Преобликован текст">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Image" value="Слика">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Cite" value="Цитат">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Author" value="Аутор">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Date" value="Датум">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Internal Hyperlink" value="Унутрашња хипервеза">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Footnote" value="Фуснота">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Emphasis" value="Истицање">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Strong" value="Јако">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Subscript" value="Индекс">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Superscript" value="Експонент">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Code" value="Кôд">
+					<node name="summary" value=""/>
+				</node>
+				<node name="StrikeThrough" value="Прецртано">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Italic" value="Курзив">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Bold" value="Масно">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition" value="Дефиниција">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Definition Description" value="Опис дефиниције">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 1" value="Заглавље 1">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 2" value="Заглавље 2">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 3" value="Заглавље 3">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 4" value="Заглавље 4">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 5" value="Заглавље 5">
+					<node name="summary" value=""/>
+				</node>
+				<node name="Header 6" value="Заглавље 6">
+					<node name="summary" value=""/>
+				</node>
+				<node name="External Hyperlink" value="Спољна хипервеза">
+					<node name="summary" value=""/>
+				</node>
+			</node>
+		</node>
+		<node name="colors" value="Боје и позадине">
+			<node name="summary" value="Подешавања боја."/>
+			<node name="background" value="Позадина">
+				<node name="solidColor" value="Чиста боја"/>
+				<node name="leather" value="Кожа"/>
+				<node name="sepia" value="Сепија"/>
+				<node name="wood" value="Дрво"/>
+			</node>
+			<node name="backgroundColor" value="Боја позадине"/>
+			<node name="selectionBackground" value="Изабрана позадина"/>
+			<node name="selectionForeground" value="Изабрани текст"/>
+			<node name="text" value="Нормал текст"/>
+			<node name="hyperlink" value="Текст хипервезе"/>
+			<node name="hyperlinkVisited" value="Посећен текст хипервезе"/>
+			<node name="highlighting" value="Позадина резултата претраге"/>
+			<node name="footer" value="Подножје"/>
+		</node>
+		<node name="margins" value="Маргине">
+			<node name="summary" value="Маргине текста."/>
+			<node name="left" value="Лева маргина"/>
+			<node name="right" value="Десна маргина"/>
+			<node name="top" value="Горња маргина"/>
+			<node name="bottom" value="Доња маргина"/>
+		</node>
+		<node name="scrollBar" value="Показатељ напретка">
+			<node name="summary" value="Подешавања клизача и подножја."/>
+			<node name="scrollbarType" value="Врста клизача">
+				<node name="hide" value="Сакриј"/>
+				<node name="show" value="Усправни клизач"/>
+				<node name="showAsProgress" value="Усправна трака с напретком"/>
+				<node name="showAsFooter" value="Водоравно подножје"/>
+			</node>
+			<node name="footerHeight" value="Висина подножја"/>
+			<node name="footerColor" value="Боја подножја"/>
+			<node name="tocMarks" value="Ознаке садржаја">
+				<node name="summaryOn" value="Приказује ознаке садржаја у подножју."/>
+				<node name="summaryOff" value="Не приказује ознаке садржаја у подножју."/>
+			</node>
+			<node name="showProgress" value="Број странице">
+				<node name="summaryOn" value="Приказује број странице у подножју."/>
+				<node name="summaryOff" value="Не приказује број странице у подножју."/>
+			</node>
+			<node name="showBattery" value="Ниво батерије">
+				<node name="summaryOn" value="Приказује ниво батерије у подножју."/>
+				<node name="summaryOff" value="Не приказује ниво батерије у подножју."/>
+			</node>
+			<node name="showClock" value="Сат">
+				<node name="summaryOn" value="Приказује сат у подножју."/>
+				<node name="summaryOff" value="Не приказује сат у подножју."/>
+			</node>
+			<node name="font" value="Породица фонтова"/>
+		</node>
+		<node name="scrolling" value="Листање страница">
+			<node name="summary" value="Како да листате странице."/>
+			<node name="fingerScrolling" value="Листање странице путем екрана">
+				<node name="byTap" value="Листа странице тапкањем"/>
+				<node name="byFlick" value="Листа странице лаганим додиром"/>
+				<node name="byTapAndFlick" value="Листа странице тапкањем или лаганим додиром"/>
+			</node>
+			<node name="enableDoubleTapDetection" value="Препознавање двоструког тапкања">
+				<node name="summaryOn" value="Двоструко тапкање покреће мени за навигацију."/>
+				<node name="summaryOff" value="Занемарује двострука тапкања."/>
+			</node>
+			<node name="volumeKeys" value="Окрени страницу уз помоћ тастера за звук">
+				<node name="summaryOn" value="Користи тастере за звук за листање страница."/>
+				<node name="summaryOff" value="Не користи тастере за звук за листање страница."/>
+			</node>
+			<node name="invertVolumeKeys" value="Обрни смер тастера за звук">
+				<node name="summaryOn" value="Тастер за појачавање/смањивање окреће на претходну/следећу страницу."/>
+				<node name="summaryOff" value="Тастер за смањивање/појачавање окреће на следећу/претходну страницу."/>
+			</node>
+			<node name="animation" value="Анимација">
+				<node name="none" value="Нема"/>
+				<node name="curl" value="Савијање"/>
+				<node name="slide" value="Клизање"/>
+				<node name="shift" value="Померање"/>
+			</node>
+			<node name="animationSpeed" value="Брзина анимације">
+				<node name="fast" value="брзо"/>
+				<node name="slow" value="споро"/>
+			</node>
+			<node name="horizontal" value="Водоравно клизање">
+				<node name="summaryOn" value="Клиза странице водоравно."/>
+				<node name="summaryOff" value="Клиза странице усправно."/>
+			</node>
+		</node>
+		<node name="tapZones" value="Зоне за тапкање">
+			<node name="summary" value="Радње при тапкању"/>
+			<node name="tapZonesScheme" value="Шема зона за тапкање">
+				<node name="left_to_right" value="Клизање странице слева надесно"/>
+				<node name="right_to_left" value="Клизање странице здесна налево"/>
+				<node name="up" value="Клизање странице одоздо нагоре"/>
+				<node name="down" value="Клизање странице одозго надоле"/>
+				<node name="custom" value="Прилагођено…"/>
+			</node>
+		</node>
+		<node name="dictionary" value="Речник">
+			<node name="summary" value="Подешавања речника"/>
+			<node name="dictionary" value="Речник"/>
+			<node name="translator" value="Преводилац"/>
+			<node name="tappingAction" value="Дуго тапкање">
+				<node name="doNothing" value="Дуго тапкање не ради ништа"/>
+				<node name="selectSingleWord" value="Дуго тапкање одабира једну реч"/>
+				<node name="startSelecting" value="Дуго тапкање започиње одабирање"/>
+				<node name="openDictionary" value="Дуго тапкање одабира реч, а отпуштање отвара речник"/>
+			</node>
+			<node name="navigateOverAllWords" value="Крећи се кроз све речи">
+				<node name="summaryOn" value="Навигација тастерима отвара све речи."/>
+				<node name="summaryOff" value="Навигација тастерима отвара само хипервезе."/>
+			</node>
+		</node>
+		<node name="images" value="Слике">
+			<node name="summary" value="Подешавања око приказивања слика."/>
+			<node name="backgroundColor" value="Боја позадине за приказ слика"/>
+			<node name="tappingAction" value="Дуго тапкање">
+				<node name="doNothing" value="Дуго тапкање не ради ништа"/>
+				<node name="selectImage" value="Дуго тапкање одабира слику"/>
+				<node name="openImageView" value="Дуго тапкање отвара слику"/>
+			</node>
+		</node>
+		<node name="cancelMenu" value="Мени за отказивање">
+			<node name="summary" value="Списак радњи с дугметом „Назад“."/>
+			<node name="library" value="Библиотека">
+				<node name="summaryOn" value="Приказује ставку „Отвори библиотеку“."/>
+				<node name="summaryOff" value="Не приказује ставку „Отвори библиотеку“."/>
+			</node>
+			<node name="networkLibrary" value="Мрежна библиотека">
+				<node name="summaryOn" value="Приказује ставку „Отвори мрежну библиотеку“."/>
+				<node name="summaryOff" value="Не приказује ставку „Отвори мрежну библиотеку“."/>
+			</node>
+			<node name="previousBook" value="Претходна књига">
+				<node name="summaryOn" value="Приказује ставку „Назад на претходну књигу“."/>
+				<node name="summaryOff" value="Не приказује ставку „Назад на претходну књигу“."/>
+			</node>
+			<node name="positions" value="Последња три положаја">
+				<node name="summaryOn" value="Приказује последња три положаја у књизи."/>
+				<node name="summaryOff" value="Не приказује последња три положаја у књизи."/>
+			</node>
+			<node name="backKeyAction" value="Тастер „Назад“">
+				<node name="exit" value="Затвори FBReader"/>
+				<node name="goBack" value="Иди назад"/>
+				<node name="cancelMenu" value="Прикажи мени за излаз"/>
+			</node>
+			<node name="backKeyLongPressAction" value="Дуг притисак на тастер „Назад“">
+				<node name="exit" value="Затвори FBReader"/>
+				<node name="goBack" value="Иди назад"/>
+				<node name="cancelMenu" value="Прикажи мени за излаз"/>
+				<node name="none" value="Нема радње"/>
+			</node>
+		</node>
+		<node name="tips" value="Савети">
+			<node name="summary" value="Подешавања дневних савета."/>
+			<node name="showTips" value="Савети">
+				<node name="summaryOn" value="Приказује дневне савете."/>
+				<node name="summaryOff" value="Не приказује дневне савете."/>
+			</node>
+		</node>
+		<node name="about" value="О програму">
+			<node name="summary" value="Подаци о верзији и контакт."/>
+			<node name="version" value="Верзија"/>
+			<node name="site" value="Посетите наш сајт">
+				<node name="url" value="http://www.fbreader.org/"/>
+			</node>
+			<node name="email" value="Пошаљите нам поруку">
+				<node name="url" value="mailto:contact@geometerplus.com"/>
+			</node>
+			<node name="twitter" value="Пратите нас на Твитеру">
+				<node name="url" value="http://twitter.com/fbreader"/>
+			</node>
+		</node>
+	</node>
+	<node name="dialog">
+		<node name="button">
+			<node name="install" value="Инсталирај"/>
+			<node name="update" value="Ажурирај"/>
+			<node name="skip" value="Прескочи"/>
+			<node name="buy" value="Купи"/>
+			<node name="buyAndDownload" value="Купи и преузми"/>
+			<node name="continue" value="Настави"/>
+			<node name="editUrl" value="Уреди адресу"/>
+			<node name="tryAgain" value="Пробај опет"/>
+			<node name="openBook" value="Прочитај"/>
+			<node name="editInfo" value="Уреди"/>
+			<node name="reloadInfo" value="Поново учитај"/>
+			<node name="shareBook" value="Дели"/>
+			<node name="topup" value="Попуни"/>
+			<node name="pay" value="Купи"/>
+			<node name="refresh" value="Освежи"/>
+			<node name="authorize" value="Одобри"/>
+			<node name="resetPosition" value="Поништи положај"/>
+			<node name="sendReport" value="Пошаљи извештај"/>
+		</node>
+		<node name="plugin">
+			<node name="installTitle" value="Инсталирање додатка"/>
+			<node name="updateTitle" value="Ажурирање додатка"/>
+			<node name="dontAskAgain" value="Не питај поново"/>
+		</node>
+		<node name="installDictionary">
+			<node name="title" value="Инсталирање речника"/>
+			<node name="message" value="Желите ли да инсталирате „%s“?"/>
+		</node>
+		<node name="deleteBookBox">
+			<node name="message" value="Књига ће заувек бити обрисана. Јесте ли сигурни?"/>
+		</node>
+		<node name="redownloadFileBox">
+			<node name="message" value="Датотека већ постоји. Поново је преузети?"/>
+		</node>
+		<node name="waitMessage">
+			<node name="downloadingFile" value="Преузимам књигу „%s“…"/>
+			<node name="search" value="Тражим…"/>
+			<node name="loadInfo" value="Учитавам податке…"/>
+			<node name="loadingBook" value="Отварам књигу…"/>
+			<node name="loadingBookList" value="Отварам библиотеку…"/>
+			<node name="creatingBooksDatabase" value="Правим базу књига…"/>
+			<node name="updatingBooksDatabase" value="Ажурирам базу књига…"/>
+			<node name="loadingNetworkLibrary" value="Отварам библиотеку…"/>
+			<node name="authentication" value="Проверавам идентитет…"/>
+			<node name="signOut" value="Одјављујем вас…"/>
+			<node name="purchaseBook" value="Купујем књигу…"/>
+			<node name="loadingCatalogInfo" value="Учитавам податке о каталогу…"/>
+			<node name="loadingNetworkBookInfo" value="Учитавам податке о књизи…"/>
+			<node name="updatingCatalogsList" value="Ажурирам списак каталога…"/>
+			<node name="updatingAccountInformation" value="Ажурирам податке о налогу…"/>
+		</node>
+		<node name="networkError">
+			<node name="internalError" value="Грешка у унутрашњем серверу."/>
+			<node name="purchaseNotEnoughMoney" value="Немате довољно новца."/>
+			<node name="purchaseMissingBook" value="Недостаје књига."/>
+			<node name="purchaseAlreadyPurchased" value="Већ сте купили."/>
+			<node name="bookNotPurchased" value="Књига није купљена."/>
+			<node name="downloadLimitExceeded" value="Ограничење за преузимање је прекорачено."/>
+			<node name="noUserEmail" value="Не постоји корисник&#10;с наведеном е-адресом."/>
+			<node name="unsupportedOperation" value="Неподржана радња."/>
+			<node name="notAnOPDS" value="Ово није OPDS каталог."/>
+			<node name="noRequiredInformation" value="Нису наведени потребни подаци у каталогу."/>
+			<node name="cacheDirectoryError" value="Не могу да направим фасциклу за привремене датотеке."/>
+		</node>
+		<node name="AuthenticationDialog">
+			<node name="title" value="Провера идентитета"/>
+			<node name="unencryptedWarning" value="Ваша лозинка ће бити послата нешифрована."/>
+			<node name="login" value="Корисничко име:"/>
+			<node name="password" value="Лозинка:"/>
+			<node name="loginIsEmpty" value="Корисничко име не сме бити празно."/>
+			<node name="register" value="Отвори налог"/>
+		</node>
+		<node name="CustomCatalogDialog">
+			<node name="title" value="Додавање каталога"/>
+			<node name="catalogTitle" value="Наслов:"/>
+			<node name="catalogUrl" value="Адреса:"/>
+			<node name="catalogSummary" value="Опис:"/>
+			<node name="catalogTitleExample" value="Нпр.: каталог Пројекта Гутенберг."/>
+			<node name="catalogUrlExample" value="Нпр.: http://m.gutenberg.org."/>
+			<node name="catalogSummaryExample" value="Нпр.: књиге у јавном власништву."/>
+			<node name="titleIsEmpty" value="Наслов не сме бити празан."/>
+			<node name="urlIsEmpty" value="Адреса не сме бити празна."/>
+			<node name="invalidUrl" value="Неисправна адреса."/>
+			<node name="titleAlreadyExists" value="Наведени наслов је већ у употреби."/>
+			<node name="siteAlreadyExists" value="Наведени сајт је већ у употреби."/>
+		</node>
+		<node name="languageFilterDialog">
+			<node name="title" value="Језички филтер"/>
+		</node>
+		<node name="tips">
+			<node name="title" value="Савет дана"/>
+			<node name="initializationText" value="Желите ли да читате FBReader-ове дневне савете? Нови савети се преузимају са званичног сајта, а очекивани пренос података је 1–2 килобајта за недељу дана.&#10;&#10;Омогућити савете?"/>
+			<node name="dontShowAgain" value="Не приказуј поново"/>
+			<node name="more" value="Следећи савет"/>
+		</node>
+	</node>
+	<node name="errorMessage">
+		<node name="cannotRunAndroidMarket" value="Не могу да приступим Гугл плеју. Ручно инсталирајте „%s“."/>
+		<node name="textNotFound" value="Нема траженог текста у књизи."/>
+		<node name="bookNotFound" value="Нема тражених књига у библиотеци."/>
+		<node name="bookmarkNotFound" value="Нема тражених обележивача."/>
+		<node name="cannotOpenBook" value="Не могу да отворим ову књигу."/>
+		<node name="dictionaryIsNotInstalled" value="Речник није инсталиран."/>
+		<node name="permissionDenied" value="Приступ је одбијен."/>
+		<node name="noFavorites" value="Ваш списак омиљених књига је празан."/>
+		<node name="emptyCatalog" value="Каталог је празан."/>
+		<node name="emptyBasket" value="Ваша корпа је празна."/>
+		<node name="emptyNetworkSearchResults" value="Нема тражених књига."/>
+	</node>
+	<node name="external">
+		<node name="browser" value="Прегледач"/>
+		<node name="defaultBrowser" value="Подразумевани прегледач"/>
+	</node>
+	<node name="mobipocketPlugin">
+		<node name="unknown" value="Непозната грешка"/>
+		<node name="unsupportedCompressionMethod" value="Неподржана метода сажимања."/>
+		<node name="encryptedFile" value="Датотека заштићена DRM-ом."/>
+	</node>
+	<node name="crash">
+		<node name="fixBooksDirectory">
+			<node name="title" value="Проблем с FBReader-ом"/>
+			<node name="text" value="FBReader-ова привремена фасцикла није доступна за писање. Можда сте заборавили да убаците или избаците меморијску картицу. Исправите овај проблем или унесите назив друге фасцикле испод."/>
+		</node>
+		<node name="missingNativeLibrary">
+			<node name="title" value="Проблем с FBReader-ом"/>
+			<node name="text" value="Не могу да учитам матичну библиотеку. Можда није правилно инсталирана. Ако се грешка не исправи, пробајте да поново инсталирате FBReader."/>
+		</node>
+	</node>
+	<node name="error">
+		<node name="bookReading">
+			<node name="title" value="Проблем с FBReader-ом"/>
+		</node>
+	</node>
+	<node name="bookReadingException">
+		<node name="errorReadingFile" value="Грешка при читању „%s“."/>
+		<node name="errorReadingZip" value="Грешка при отпакивању „%s“."/>
+		<node name="pluginNotFound" value="Нема додатка за „%s“."/>
+		<node name="unknownPluginType" value="Непозната врста додатка: %s."/>
+		<node name="fileNotFound" value="Не могу да пронађем датотеку: %s."/>
+		<node name="opfFileNotFound" value="Не могу да пронађем OPF у „%s“."/>
+		<node name="unsupportedFileFormat" value="Формат датотеке није подржан за „%s“."/>
+		<node name="errorParsingRtf" value="Грешка при рашчлањивању RTF-а у: %s."/>
+	</node>
+</resources>

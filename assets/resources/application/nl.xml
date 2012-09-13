@@ -213,7 +213,7 @@
 		<node name="openInDictionary" value="Openen in woordenboek"/>
 		<node name="quoteFrom" value="Quote van %s"/>
 		<node name="textInBuffer" value="Gekopieerd naar het klembord:&#10;%s"/>
-		<node name="bookmarkCreated" value="Bladwijzder gemaakt:&#10;%s"/>
+		<node name="bookmarkCreated" value="Bladwijzer gemaakt:&#10;%s"/>
 		<node name="clearSelection" value="Wissen"/>
 	</node>
 	<node name="sharing">
