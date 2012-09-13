@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0"
-xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>O programie FBReaderJ</book-title> <lang>en</lang></title-info></description>
+xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>O programie FBReaderJ</book-title> <lang>pl</lang></title-info></description>
 <body>
 <title><p>O programie FBReader &FBReaderVersion;</p></title>
 <p>FBReader jest programem do czytania ebooków. Wspierane formaty plików to <code>ePub</code> i <code>fb2</code>. Należy mieć na uwadze, że książki zabezpieczone DRM nie są wspierane. Jeśli posiadasz książki we wspieranych formatach, zapisz je w katalogu <code>Books</code> na karcie pamięci. Książki będą dostępne w <a l:href="fbreader-action:library">bibliotece</a>. <a l:href="fbreader-action:networkLibrary">Biblioteka sieciowa</a> zawiera dużą liczbę ebooków, które możesz bezpłatnie pobrać.</p>

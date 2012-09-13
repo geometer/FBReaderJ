@@ -19,10 +19,12 @@
 
 package org.geometerplus.fbreader.formats;
 
-import org.geometerplus.zlibrary.core.options.ZLStringOption;
-import org.geometerplus.fbreader.filetype.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.geometerplus.zlibrary.core.options.ZLStringOption;
+import org.geometerplus.zlibrary.core.filetypes.FileType;
+import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 
 public abstract class Formats {
 

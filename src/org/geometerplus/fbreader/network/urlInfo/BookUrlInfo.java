@@ -23,10 +23,10 @@ import java.io.File;
 
 import android.net.Uri;
 
+import org.geometerplus.zlibrary.core.filetypes.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.fbreader.filetype.*;
 
 // resolvedReferenceType -- reference type without any ambiguity (for example, DOWNLOAD_FULL_OR_DEMO is ambiguous)
 

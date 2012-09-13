@@ -53,13 +53,13 @@
 		<node name="it" value="Italien"/>
 		<node name="lt" value="Lithuanien"/>
 		<node name="nl" value="Néerlandais"/>
-		<node name="no" value="Norvégien"/>
+		<node name="nb" value="Norvégien"/>
 		<node name="pl" value="Polonais"/>
 		<node name="pt" value="Portugais"/>
 		<node name="ro" value="Roumain"/>
 		<node name="ru" value="Russe"/>
 		<node name="sv" value="Suédois"/>
-		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="ta" value="Tamil"/>
 		<node name="th" value="Thailandais"/>
 		<node name="tr" value="Turc"/>
 		<node name="uk" value="Ukrainien"/>

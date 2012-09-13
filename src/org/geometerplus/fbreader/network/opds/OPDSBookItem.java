@@ -22,8 +22,10 @@ package org.geometerplus.fbreader.network.opds;
 import java.util.*;
 import java.io.*;
 
-import org.geometerplus.zlibrary.core.network.*;
+import org.geometerplus.zlibrary.core.filetypes.FileType;
+import org.geometerplus.zlibrary.core.filetypes.FileTypeCollection;
 import org.geometerplus.zlibrary.core.money.Money;
+import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.core.util.MimeType;
 import org.geometerplus.zlibrary.core.util.ZLNetworkUtil;
 
@@ -33,7 +35,6 @@ import org.geometerplus.fbreader.network.atom.*;
 import org.geometerplus.fbreader.network.urlInfo.*;
 
 import org.geometerplus.fbreader.formats.*;
-import org.geometerplus.fbreader.filetype.*;
 
 public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 	public static OPDSBookItem create(INetworkLink link, String url) {

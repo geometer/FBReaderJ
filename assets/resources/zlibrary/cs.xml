@@ -49,7 +49,7 @@
 		<node name="it" value="Italsky"/>
 		<node name="lt" value="Litevsky"/>
 		<node name="nl" value="Dánsky"/>
-		<node name="no" value="Norsky"/>
+		<node name="nb" value="Norsky"/>
 		<node name="pl" value="Polsky"/>
 		<node name="pt" value="Portugalsky"/>
 		<node name="ro" value="Rumunsky"/>
@@ -73,4 +73,3 @@
 		<node name="actionFor" value="Akce pro klávesu"/>
 	</node>
 </resources>
-
