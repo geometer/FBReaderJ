@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- FBReaderJ, Traditional Chinese, by Fung.T -->
-<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>關於FBReaderJ</book-title> <lang>en</lang></title-info></description>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink"><description><title-info><author><last-name>FBReader</last-name></author> <book-title>關於FBReaderJ</book-title> <lang>zh_TW</lang></title-info></description>
 <body>
 <title><p>關於 FBReader &FBReaderVersion;</p></title>
 <p>FBReader 是一個電子書藉閱覽器。FBReader 支援<code>ePub</code>及<code>fb2</code>檔案格式。FBReader 現時不支援受DRM保護的文年。如你有受支援的書藉，只需將檔案放到SD記憶卡內的<code>Books</code>文件夾，該書即會在<a l:href="fbreader-action:library">書庫</a>出現。 <a l:href="fbreader-action:networkLibrary">網絡書庫</a> 有大量電子書藉可供免費下載或購買。</p>

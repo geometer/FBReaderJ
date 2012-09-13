@@ -43,7 +43,7 @@
 		</node>
 		<node name="openBook" value="Читати книжку"/>
 		<node name="showBookInfo" value="Деталі про книгу"/>
-		<node name="shareBook" value="Share book" toBeTranslated="true"/>
+		<node name="shareBook" value="Поділитись книгою"/>
 		<node name="deleteBook" value="Видалити книжку"/>
 		<node name="addToFavorites" value="Додати в улюблені"/>
 		<node name="removeFromFavorites" value="Прибрати з улюблених"/>
@@ -200,8 +200,8 @@
 		</node>
 	</node>
 	<node name="cancelMenu">
-		<node name="library" value="Open library" toBeTranslated="true"/>
-		<node name="networkLibrary" value="Open network library" toBeTranslated="true"/>
+		<node name="library" value="Відкрити бібліотеку"/>
+		<node name="networkLibrary" value="Відкрити мережеву бібліотеку"/>
 		<node name="previousBook" value="Відкрити поперердню книгу"/>
 		<node name="returnTo" value="Повернутися до …"/>
 		<node name="back" value="Назад"/>
@@ -217,7 +217,7 @@
 		<node name="clearSelection" value="Прибрати позначку"/>
 	</node>
 	<node name="sharing">
-		<node name="sharedFrom" value="Shared from &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;" toBeTranslated="true"/>
+		<node name="sharedFrom" value="Поширено з &lt;a href=&quot;http://www.fbreader.org/&quot;&gt;FBReader&lt;/a&gt;"/>
 	</node>
 	<node name="menu">
 		<node name="preferences" value="Налаштування"/>
@@ -238,7 +238,7 @@
 			<node name="undo" value="Назад"/>
 			<node name="redo" value="Вперед"/>
 		</node>
-		<node name="shareBook" value="Share book" toBeTranslated="true"/>
+		<node name="shareBook" value="Поділитись книгою"/>
 		<node name="search" value="Пошук"/>
 		<node name="rotate" value="Повернути"/>
 		<node name="screenOrientation" value="Орієнтація екрану"/>
@@ -297,7 +297,7 @@
 			</node>
 			<node name="disableButtonLights" value="Підсвічування апаратник клавіш">
 				<node name="summaryOn" value="Вимкнути підсвічування (не для всіх пристроїв)"/>
-				<node name="summaryOff" value="Не намагатись вимкнути підсвічування"/>
+				<node name="summaryOff" value="Не намагатись вимикати підсвічування"/>
 			</node>
 			<node name="allowScreenBrightnessAdjustment" value="Керування яскравістю екрану">
 				<node name="summaryOn" value="Жестом догори-донизу в лівій частині екрану"/>
@@ -315,28 +315,28 @@
 			</node>
 		</node>
 		<node name="text" value="Текст">
-			<node name="summary" value="Шрифти, переноси, etc."/>
-			<node name="fontProperties" value="Font properties" toBeTranslated="true">
-				<node name="summary" value="Font smoothing options" toBeTranslated="true"/>
-				<node name="antiAlias" value="Antialiasing" toBeTranslated="true">
-					<node name="summaryOn" value="Antialiasing is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Antialiasing is disabled" toBeTranslated="true"/>
+			<node name="summary" value="Шрифти, переноси, інше"/>
+			<node name="fontProperties" value="Властивості шрифту">
+				<node name="summary" value="Параметри згладжування шрифтів"/>
+				<node name="antiAlias" value="Антиаліасинг">
+					<node name="summaryOn" value="Антиаліасинг увімкнено"/>
+					<node name="summaryOff" value="Антиаліасинг вимкнено"/>
 				</node>
-				<node name="deviceKerning" value="Device kerning" toBeTranslated="true">
-					<node name="summaryOn" value="Device kerning is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Device kerning is disabled" toBeTranslated="true"/>
+				<node name="deviceKerning" value="Кернінг пристрою">
+					<node name="summaryOn" value="Використовувати кернінг пристрою"/>
+					<node name="summaryOff" value="Не використовувати кернінг пристрою"/>
 				</node>
-				<node name="dithering" value="Dithering" toBeTranslated="true">
-					<node name="summaryOn" value="Color dithering is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Color dithering is disabled" toBeTranslated="true"/>
+				<node name="dithering" value="Змішування">
+					<node name="summaryOn" value="Змішування кольорів увімкнено"/>
+					<node name="summaryOff" value="Змішування кольорів вимкнено"/>
 				</node>
-				<node name="hinting" value="Hinting" toBeTranslated="true">
-					<node name="summaryOn" value="Font hinting is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Font hinting is disabled" toBeTranslated="true"/>
+				<node name="hinting" value="Хінтинг">
+					<node name="summaryOn" value="Хінтинг шрифтів увімкнено"/>
+					<node name="summaryOff" value="Хінтинг шрифтів вимкнено"/>
 				</node>
-				<node name="subpixel" value="Subpixel smoothing" toBeTranslated="true">
-					<node name="summaryOn" value="Subpixel smoothing is enabled" toBeTranslated="true"/>
-					<node name="summaryOff" value="Subpixel smoothing is disabled" toBeTranslated="true"/>
+				<node name="subpixel" value="Субпіксильне згладжування">
+					<node name="summaryOn" value="Субпіксильне згладжування увімкнено"/>
+					<node name="summaryOff" value="Субпіксильне згладжування вимкнено"/>
 				</node>
 			</node>
 			<node name="font" value="Родина шрифту">
@@ -360,14 +360,14 @@
 				<node name="summaryOff" value="звичайний"/>
 				<node name="unchanged" value="&lt;не міняти&gt;"/>
 			</node>
-			<node name="underlined" value="Underlined" toBeTranslated="true">
-				<node name="summaryOn" value="underlined" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+			<node name="underlined" value="Підкреслений">
+				<node name="summaryOn" value="підкреслений"/>
+				<node name="summaryOff" value="звичайний"/>
 				<node name="unchanged" value="&lt;не міняти&gt;"/>
 			</node>
-			<node name="strikedThrough" value="Striked through" toBeTranslated="true">
-				<node name="summaryOn" value="striked through" toBeTranslated="true"/>
-				<node name="summaryOff" value="regular" toBeTranslated="true"/>
+			<node name="strikedThrough" value="Закреслений">
+				<node name="summaryOn" value="закреслений"/>
+				<node name="summaryOff" value="звичайний"/>
 				<node name="unchanged" value="&lt;не міняти&gt;"/>
 			</node>
 			<node name="lineSpacing" value="Інтервал">
@@ -395,7 +395,7 @@
 			<node name="leftIndent" value="Відступ зліва"/>
 			<node name="rightIndent" value="Відступ зправа"/>
 			<node name="more" value="Більше стилів">
-				<node name="summary" value="Окремі налаштування для заголовків, епіграфів, etc."/>
+				<node name="summary" value="Окремі налаштування для заголовків, епіграфів, інше"/>
 				<node name="Regular Paragraph" value="звичайного тексту">
 					<node name="summary" value=""/>
 				</node>
@@ -619,21 +619,21 @@
 		</node>
 		<node name="cancelMenu" value="Меню відміни">
 			<node name="summary" value="Список дій кнопки Назад"/>
-			<node name="library" value="Library" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'open library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open library' item" toBeTranslated="true"/>
+			<node name="library" value="Бібліотека">
+				<node name="summaryOn" value="Показувати 'відкрити бібліотеку'"/>
+				<node name="summaryOff" value="Сховати 'відкрити бібліотеку'"/>
 			</node>
-			<node name="networkLibrary" value="Network library" toBeTranslated="true">
-				<node name="summaryOn" value="Show 'open network library' item" toBeTranslated="true"/>
-				<node name="summaryOff" value="Don't show 'open network library' item" toBeTranslated="true"/>
+			<node name="networkLibrary" value="Мережева бібліотека">
+				<node name="summaryOn" value="Показувати 'відкрити мережеву бібліотеку'"/>
+				<node name="summaryOff" value="Сховати 'відкрити мережеву бібліотеку'"/>
 			</node>
 			<node name="previousBook" value="Попередня книга">
 				<node name="summaryOn" value="Показувати 'повернутись до попередньої книги'"/>
-				<node name="summaryOff" value="Не показувати 'повернутись до попередньої книги'"/>
+				<node name="summaryOff" value="Сховати 'повернутись до попередньої книги'"/>
 			</node>
 			<node name="positions" value="Останні 3 позиції">
 				<node name="summaryOn" value="Показувати елементи для останніх трьох позицій в книзі"/>
-				<node name="summaryOff" value="Не показувати елементи для останніх трьох позицій в книзі"/>
+				<node name="summaryOff" value="Сховати елементи для останніх трьох позицій в книзі"/>
 			</node>
 			<node name="backKeyAction" value="Дія кнопки назад">
 				<node name="exit" value="Закрити FBReader"/>
@@ -644,17 +644,17 @@
 				<node name="exit" value="Закрити FBReader"/>
 				<node name="goBack" value="Перейти назад"/>
 				<node name="cancelMenu" value="Показати меню відміни"/>
-				<node name="none" value="No action"/>
+				<node name="none" value="Нічого не робити"/>
 			</node>
 		</node>
-		<node name="tips" value="Tips">
+		<node name="tips" value="Поради">
 			<node name="summary" value="Налаштування щоденних порад"/>
 			<node name="showTips" value="Показувати поради">
 				<node name="summaryOn" value="Показувати щоденні поради"/>
 				<node name="summaryOff" value="Не показувати"/>
 			</node>
 		</node>
-		<node name="about" value="Закрити FBReader">
+		<node name="about" value="Про FBReader">
 			<node name="summary" value="Інформація про версію, контакти"/>
 			<node name="version" value="Версія"/>
 			<node name="site" value="Зайти на наш вебсайт">
@@ -681,13 +681,13 @@
 			<node name="openBook" value="Читати"/>
 			<node name="editInfo" value="Редагувати"/>
 			<node name="reloadInfo" value="Перезавантажити"/>
-			<node name="shareBook" value="Share" toBeTranslated="true"/>
+			<node name="shareBook" value="Поділитись"/>
 			<node name="topup" value="Поповнити рахунок"/>
 			<node name="pay" value="Заплатити"/>
 			<node name="refresh" value="Оновити"/>
 			<node name="authorize" value="Авторизуватись"/>
 			<node name="resetPosition" value="Скинути позицію"/>
-			<node name="sendReport" value="Send report" toBeTranslated="true"/>
+			<node name="sendReport" value="Відправити звіт"/>
 		</node>
 		<node name="plugin">
 			<node name="installTitle" value="Встановити plugin"/>
@@ -695,11 +695,11 @@
 			<node name="dontAskAgain" value="Не питати знову"/>
 		</node>
 		<node name="installDictionary">
-			<node name="title" value="Встановити словникy"/>
+			<node name="title" value="Встановити словник"/>
 			<node name="message" value="Ви хочете встановити %s?"/>
 		</node>
 		<node name="deleteBookBox">
-			<node name="message" value="Файл книги буде видалено необоротно. Продовжити?"/>
+			<node name="message" value="Файл книги буде видалено назавжди. Продовжити?"/>
 		</node>
 		<node name="redownloadFileBox">
 			<node name="message" value="Файл вже є на пристрої. Завантажити заново?"/>
@@ -707,7 +707,7 @@
 		<node name="waitMessage">
 			<node name="downloadingFile" value="Завантажується книга %s"/>
 			<node name="search" value="Йде пошук. Зачекайте, будь ласка…"/>
-			<node name="loadInfo" value="Loading information. Please, wait…"/>
+			<node name="loadInfo" value="Завантаження інформації. Зачекайте, будь ласка…"/>
 			<node name="loadingBook" value="Відкривається книга. Зачекайте, будь ласка…"/>
 			<node name="loadingBookList" value="Відкривається бібліотека. Зачекайте, будь ласка…"/>
 			<node name="creatingBooksDatabase" value="Створюється база книг. Зачекайте, будь ласка…"/>
@@ -800,17 +800,17 @@
 	</node>
 	<node name="error">
 		<node name="bookReading">
-			<node name="title" value="FBReader issue" toBeTranslated="true"/>
+			<node name="title" value="неполадка FBReader"/>
 		</node>
 	</node>
 	<node name="bookReadingException">
-		<node name="errorReadingFile" value="Error occured during reading '%s'" toBeTranslated="true"/>
-		<node name="errorReadingZip" value="Error occured during extracting '%s'" toBeTranslated="true"/>
-		<node name="pluginNotFound" value="No plugin for '%s'" toBeTranslated="true"/>
-		<node name="unknownPluginType" value="Unknown plugin type: %s" toBeTranslated="true"/>
-		<node name="fileNotFound" value="File is not found: %s" toBeTranslated="true"/>
-		<node name="opfFileNotFound" value="OPF is not found in %s" toBeTranslated="true"/>
-		<node name="unsupportedFileFormat" value="File format is not supported for '%s'" toBeTranslated="true"/>
-		<node name="errorParsingRtf" value="Rtf parsing error in: %s" toBeTranslated="true"/>
+		<node name="errorReadingFile" value="Виникла помилка під час читання '%s'"/>
+		<node name="errorReadingZip" value="Виникла помилка під час розпаковування '%s'"/>
+		<node name="pluginNotFound" value="Немає плагіну для '%s'"/>
+		<node name="unknownPluginType" value="Невідомий тип плагіну: %s"/>
+		<node name="fileNotFound" value="Файл не знайдено: %s"/>
+		<node name="opfFileNotFound" value="OPF не знайдено в %s"/>
+		<node name="unsupportedFileFormat" value="Формат файлу не підтримується для '%s'"/>
+		<node name="errorParsingRtf" value="Помилка обробки Rtf в: %s"/>
 	</node>
 </resources>
