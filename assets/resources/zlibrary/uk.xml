@@ -49,13 +49,13 @@
 		<node name="it" value="італійська"/>
 		<node name="lt" value="литовська"/>
 		<node name="nl" value="голландська"/>
-		<node name="no" value="норвезька"/>
+		<node name="nb" value="норвезька"/>
 		<node name="pl" value="польська"/>
 		<node name="pt" value="португальська"/>
 		<node name="ro" value="румунська"/>
 		<node name="ru" value="російська"/>
 		<node name="sv" value="шведська"/>
-		<node name="ta" value="Tamil" toBeTranslated="true"/>
+		<node name="ta" value="тамільська"/>
 		<node name="th" value="тайська"/>
 		<node name="tr" value="турецька"/>
 		<node name="uk" value="українська"/>
@@ -65,7 +65,7 @@
 		<node name="multi" value="Мультимовна"/>
 	</node>
 	<node name="boolean3">
-		<node name="on" value="включити"/>
+		<node name="on" value="увімкнути"/>
 		<node name="off" value="вимкнути"/>
 		<node name="unchanged" value="не міняти"/>
 	</node>
