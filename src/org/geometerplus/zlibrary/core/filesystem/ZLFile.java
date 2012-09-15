@@ -188,6 +188,11 @@ public abstract class ZLFile {
 		return getPath().equals(((ZLFile)o).getPath());
 	}
 
+	@Override
+	public String toString() {
+	  	return "ZLFile [" + getPath() + "]";
+	}
+
 	protected boolean isCached() {
 		return myIsCached;
 	}
