@@ -216,7 +216,7 @@ public class OPDSBookItem extends NetworkBookItem implements OPDSConstants {
 				}
 				for (MimeType type1 : ft.mimeTypes()) {
 					if (type1.equals(type)) {
-						return ft.Id;
+						return ft.extension(type);
 					}
 				}
 			}

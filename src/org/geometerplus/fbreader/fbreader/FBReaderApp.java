@@ -185,7 +185,7 @@ public final class FBReaderApp extends ZLApplication {
 			runWithMessage("extract", new Runnable() {
 				public void run() {
 					ZLFile f = ((PluginFormatPlugin)p).prepareFile(bookToOpen.File);
-					myPluginFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue(), 2);
+					myPluginFileOpener.openFile(f, Formats.filetypeOption(FileTypeCollection.Instance.typeForFile(bookToOpen.File).Id).getValue(), bookmark == null ? "" : bookmark.writeToString());
 					closeWindow();
 				}
 			}, postAction);

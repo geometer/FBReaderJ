@@ -70,12 +70,15 @@ public class Book {
 	}
 
 	public static Book getByFile(ZLFile bookFile) {
+		System.err.println("getByFile");
 		if (bookFile == null) {
+			System.err.println("bookFile == null");
 			return null;
 		}
 
 		final ZLPhysicalFile physicalFile = bookFile.getPhysicalFile();
 		if (physicalFile != null && !physicalFile.exists()) {
+			System.err.println("!physicalFile.exists()");
 			return null;
 		}
 
@@ -87,6 +90,7 @@ public class Book {
 		}
 
 		if (book != null && fileInfos.check(physicalFile, physicalFile != bookFile)) {
+			System.err.println("return book (1)");
 			return book;
 		}
 		fileInfos.save();
@@ -98,10 +102,12 @@ public class Book {
 				book.readMetaInfo();
 			}
 		} catch (BookReadingException e) {
+			e.printStackTrace();
 			return null;
 		}
 
 		book.save();
+		System.err.println("return book (2)");
 		return book;
 	}
 
