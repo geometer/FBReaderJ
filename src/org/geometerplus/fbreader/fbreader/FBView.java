@@ -328,6 +328,11 @@ public final class FBView extends ZLTextView {
 	}
 
 	@Override
+	public ImageFitting getImageFitting() {
+		return myReader.FitImagesToScreenOption.getValue();
+	}
+
+	@Override
 	public int getLeftMargin() {
 		return myReader.LeftMarginOption.getValue();
 	}
