@@ -43,7 +43,7 @@ public final class TagTree extends LibraryTree {
 	}
 
 	protected String getSortKey() {
-		return (Tag != null) ? Tag.Name : null;
+		return Tag != null ? Tag.Name : null;
 	}
 
 	@Override
