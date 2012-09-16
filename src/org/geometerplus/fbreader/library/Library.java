@@ -56,10 +56,15 @@ public final class Library extends AbstractLibrary {
 	private final static int STATUS_LOADING = 1;
 	private final static int STATUS_SEARCHING = 2;
 	private volatile int myStatusMask = 0;
+	private final Object myStatusLock = new Object();
 
-	private synchronized void setStatus(int status) {
-		myStatusMask = status;
-		fireModelChangedEvent(ChangeListener.Code.StatusChanged);
+	private void setStatus(int status) {
+		synchronized (myStatusLock) {
+			if (myStatusMask != status) {
+				myStatusMask = status;
+				fireModelChangedEvent(ChangeListener.Code.StatusChanged);
+			}
+		}
 	}
 
 	public Library(BooksDatabase db) {
@@ -341,12 +346,20 @@ public final class Library extends AbstractLibrary {
 		//         remove from recent/favorites list if no;
 		//         collect newly "orphaned" books
 		final Set<Book> orphanedBooks = new HashSet<Book>();
+		final Set<ZLPhysicalFile> physicalFiles = new HashSet<ZLPhysicalFile>();
 		int count = 0;
 		for (Book book : savedBooksByFileId.values()) {
 			synchronized (this) {
+				final ZLPhysicalFile file = book.File.getPhysicalFile();
+				if (file != null) {
+					physicalFiles.add(file);
+				}
+				if (file != book.File && file != null && file.getPath().endsWith(".epub")) {
+					myDatabase.deleteFromBookList(book.getId());
+					continue;
+				}
 				if (book.File.exists()) {
 					boolean doAdd = true;
-					final ZLPhysicalFile file = book.File.getPhysicalFile();
 					if (file == null) {
 						continue;
 					}
@@ -382,6 +395,9 @@ public final class Library extends AbstractLibrary {
 
 		final List<ZLPhysicalFile> physicalFilesList = collectPhysicalFiles();
 		for (ZLPhysicalFile file : physicalFilesList) {
+			if (physicalFiles.contains(file)) {
+				continue;
+			}
 			collectBooks(
 				file, fileInfos,
 				savedBooksByFileId, orphanedBooksByFileId,

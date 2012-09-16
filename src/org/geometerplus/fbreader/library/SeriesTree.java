@@ -64,6 +64,6 @@ public final class SeriesTree extends LibraryTree {
 
 	@Override
 	protected String getSortKey() {
-		return "SSK:" + super.getSortKey();
+		return " Series:" + super.getSortKey();
 	}
 }
