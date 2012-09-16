@@ -58,6 +58,8 @@ public final class FBReaderApp extends ZLApplication {
 
 	public final ZLColorOption ImageViewBackgroundOption =
 		new ZLColorOption("Colors", "ImageViewBackground", new ZLColor(255, 255, 255));
+	public final ZLEnumOption<FBView.ImageFitting> FitImagesToScreenOption =
+		new ZLEnumOption<FBView.ImageFitting>("Options", "FitImagesToScreen", FBView.ImageFitting.covers);
 	public static enum ImageTappingAction {
 		doNothing, selectImage, openImageView
 	}
