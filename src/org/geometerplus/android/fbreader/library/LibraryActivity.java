@@ -84,6 +84,12 @@ public class LibraryActivity extends TreeActivity implements MenuItem.OnMenuItem
 	}
 
 	@Override
+	public void onResume() {
+	  	super.onResume();
+		setProgressBarIndeterminateVisibility(!myLibrary.isUpToDate());
+	}
+
+	@Override
 	protected FBTree getTreeByKey(FBTree.Key key) {
 		return key != null ? myLibrary.getLibraryTree(key) : myLibrary.getRootTree();
 	}
