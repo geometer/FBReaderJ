@@ -31,6 +31,10 @@ import org.geometerplus.zlibrary.text.model.ZLTextMetrics;
 import org.geometerplus.zlibrary.text.view.style.*;
 
 abstract class ZLTextViewBase extends ZLView {
+	public static enum ImageFitting {
+		none, covers, all
+	}
+
 	private ZLTextStyle myTextStyle;
 	private int myWordHeight = -1;
 	private ZLTextMetrics myMetrics;
@@ -70,6 +74,8 @@ abstract class ZLTextViewBase extends ZLView {
 		}
 		return myWordHeight;
 	}
+
+	public abstract ImageFitting getImageFitting();
 
 	public abstract int getLeftMargin();
 	public abstract int getRightMargin();
@@ -165,6 +171,20 @@ abstract class ZLTextViewBase extends ZLView {
 		setTextStyle(myTextStyle.Base);
 	}
 
+	protected final ZLPaintContext.ScalingType getScalingType(ZLTextImageElement imageElement) {
+	  	switch (getImageFitting()) {
+		  	default:
+			case none:
+				return ZLPaintContext.ScalingType.IntegerCoefficient;
+			case covers:
+				return imageElement.IsCover
+					? ZLPaintContext.ScalingType.FitMaximum
+					: ZLPaintContext.ScalingType.IntegerCoefficient;
+			case all:
+				return ZLPaintContext.ScalingType.FitMaximum;
+		}
+	}
+
 	final int getElementWidth(ZLTextElement element, int charIndex) {
 		if (element instanceof ZLTextWord) {
 			return getWordWidth((ZLTextWord)element, charIndex);
@@ -173,9 +193,7 @@ abstract class ZLTextViewBase extends ZLView {
 			final ZLPaintContext.Size size = myContext.imageSize(
 				imageElement.ImageData,
 				getTextAreaSize(),
-				imageElement.IsCover
-					? ZLPaintContext.ScalingType.FitMaximum
-					: ZLPaintContext.ScalingType.IntegerCoefficient
+				getScalingType(imageElement)
 			);
 			return size != null ? size.Width : 0;
 		} else if (element == ZLTextElement.Indent) {
@@ -194,9 +212,7 @@ abstract class ZLTextViewBase extends ZLView {
 			final ZLPaintContext.Size size = myContext.imageSize(
 				imageElement.ImageData,
 				getTextAreaSize(),
-				imageElement.IsCover
-					? ZLPaintContext.ScalingType.FitMaximum
-					: ZLPaintContext.ScalingType.IntegerCoefficient
+				getScalingType(imageElement)
 			);
 			return (size != null ? size.Height : 0) +
 				Math.max(myContext.getStringHeight() * (myTextStyle.getLineSpacePercent() - 100) / 100, 3);
