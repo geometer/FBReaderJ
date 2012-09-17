@@ -626,6 +626,11 @@
 				<node name="selectImage" value="Langvarig trykk velger bildet"/>
 				<node name="openImageView" value="Langvarig trykk åpner bildevisning"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Avbryt meny">
 			<node name="summary" value="Handlingsliste for tilbakeknappen"/>

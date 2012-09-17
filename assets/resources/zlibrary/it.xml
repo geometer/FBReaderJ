@@ -50,7 +50,7 @@
 		<node name="lt" value="Lituano"/>
 		<node name="nl" value="Olandese"/>
 		<node name="nb" value="Norvegese"/>
-		<node name="pl" toBeTranslated="true" value="Polish"/>
+		<node name="pl" value="Polish" toBeTranslated="true"/>
 		<node name="pt" value="Portoghese"/>
 		<node name="ro" value="Romanian" toBeTranslated="true"/>
 		<node name="ru" value="Russo"/>

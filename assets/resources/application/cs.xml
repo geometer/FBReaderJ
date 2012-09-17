@@ -629,6 +629,11 @@
 				<node name="selectImage" value="Dlouhé klepnutí vybere obrázek"/>
 				<node name="openImageView" value="Dlouhé klepnutí otevře zobrazení obrázku"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Nabídka Zrušit">
 			<node name="summary" value="Seznam akcí tlačítka Zpět"/>

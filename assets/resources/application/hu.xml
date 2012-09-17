@@ -619,6 +619,11 @@
 				<node name="selectImage" value="A hosszú érintés kijelöli a képet"/>
 				<node name="openImageView" value="A hosszú érintés megnyitja a képnézőt"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Vissza menü">
 			<node name="summary" value="Vissza gomb műveletek"/>

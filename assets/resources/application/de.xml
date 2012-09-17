@@ -631,6 +631,11 @@
 				<node name="selectImage" value="Langes Antippen selektiert das Bild."/>
 				<node name="openImageView" value="Langes Antippen öffnet die Bildanzeige."/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Zurück-Menü">
 			<node name="summary" value="Aktion beim Drücken der Zurück-Taste."/>
