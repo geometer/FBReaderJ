@@ -617,6 +617,11 @@
 				<node name="selectImage" value="Tocco lungo seleziona l'immagine"/>
 				<node name="openImageView" value="Tocco lungo apre visualizzazione immagine"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Menu Annulla">
 			<node name="summary" value="Lista azioni pulsante Annulla"/>
