@@ -621,6 +621,11 @@
 				<node name="selectImage" value="Long tapping selects the image" toBeTranslated="true"/>
 				<node name="openImageView" value="Long tapping opens image view" toBeTranslated="true"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="取消選單">
 			<node name="summary" value="返回鍵動作列表"/>

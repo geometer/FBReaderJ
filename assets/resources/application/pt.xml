@@ -628,6 +628,11 @@
 				<node name="selectImage" value="Toque contínuo seleciona a imagem"/>
 				<node name="openImageView" value="Toque contínuo abre visualização de imagem"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Cancelar menu">
 			<node name="summary" value="Lista de ação da tecla Voltar"/>

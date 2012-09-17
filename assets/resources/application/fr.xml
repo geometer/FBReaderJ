@@ -619,6 +619,11 @@
 				<node name="selectImage" value="Un appui long selectionne l'image"/>
 				<node name="openImageView" value="Un appui long affiche l'image seule"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Bouton retour">
 			<node name="summary" value="Liste des actions du bouton retour"/>

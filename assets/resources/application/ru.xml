@@ -631,6 +631,11 @@
 				<node name="selectImage" value="Выделять картинку"/>
 				<node name="openImageView" value="Запускать полноэкранный просмотр"/>
 			</node>
+			<node name="fitImagesToScreen" value="Показывать на весь экран">
+				<node name="none" value="Никогда"/>
+				<node name="covers" value="Только обложки"/>
+				<node name="all" value="Все картинки"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Меню выхода из программы">
 			<node name="summary" value="Список действий при нажатии на кнопку 'Назад'"/>
