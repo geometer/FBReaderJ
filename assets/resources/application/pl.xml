@@ -619,6 +619,11 @@
 				<node name="selectImage" value="Przytrzymanie zaznacza obraz"/>
 				<node name="openImageView" value="Przytrzymanie otwiera podgląd obrazu"/>
 			</node>
+			<node name="fitImagesToScreen" value="Fit images to screen" toBeTranslated="true">
+				<node name="none" value="None" toBeTranslated="true"/>
+				<node name="covers" value="Covers only" toBeTranslated="true"/>
+				<node name="all" value="All" toBeTranslated="true"/>
+			</node>
 		</node>
 		<node name="cancelMenu" value="Przycisk wstecz">
 			<node name="summary" value="Menu przycisku wstecz"/>
